@@ -1,3 +1,9 @@
+## 6 oktober — Agent Zero-start geslaagd; gewone modelproef aansluiten
+
+Agent Zero’s eigen login is vernieuwd en leesbaar voor de native uitvoerder. De werkelijke native context is opgestart en schoon afgesloten (exit0, nul levende threads/modelcalls, netwerk en relay dicht). Oude bewijsbytes en dezelfde aggregate-authority zijn behouden. [Gereedheidsbewijs](evidence/product/p2-agentzero-owned-readiness-20261006.json) en [onafhankelijke GO](reviews/p2-agentzero-owned-readiness-review-20261006.json).
+
+De actuele vaste set bevat een ongebruikt, adaptercompatibel CM01/epoch1-slot voor Agent Zero. Alleen de bestaande native SDK-accounting moet nog op de bestaande parent/aggregate-route worden aangesloten. Dat is nu de gerichte uitvoeringsafhankelijkheid binnen P2.1; geen nieuwe set, matrix, modellen of budget. Gewone modeluitvoering, entitlement en kwaliteit zijn nog UNKNOWN. OpenClaw/Hermes hebben eigen aanmelding nodig; verse codes zodra Jaap klaarzit. Spraak geparkeerd;34/44 en eerdere acceptaties blijven behouden.
+
 ## 6 oktober — foutregistratie geïnstalleerd; echte concurrentlogin nodig
 
 De gewone HTTP-gespreksroute gebruikt nu de bestaande veilige diagnose: SDK-class/code/status van één causale SDK-fout, hashes en relatieve Eva-bronlocaties, zonder gesprekstekst, foutbody of geheimen. Een concrete reviewbevinding over maskerende wrappervelden is gecorrigeerd. Acht gerichte controles en de daadwerkelijke kandidaatimage met echte SDK-exceptie/no-network slagen. Tweebestands-overlay op de bestaande installatie is geïnstalleerd; bronhashes matchen, kern gezond en HTTP200. [Technisch verslag](evidence/product/p2-http-failure-diagnostics-20261006.json) en [onafhankelijke GO](reviews/p2-http-failure-diagnostics-review-20261006.json).

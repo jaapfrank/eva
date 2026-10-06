@@ -1,0 +1,424 @@
+{
+  "contract": "EvaAgentZeroOwnedNativeReadiness/v1",
+  "task": "P2.1",
+  "checkedAt": "2026-10-06T20:34:17.835681+00:00",
+  "status": "owned_auth_and_native_no_input_startup_ready",
+  "participant": "agent_zero",
+  "entry": "agent_zero:EV003-CM-01:epoch1",
+  "caseId": "EV003-CM-01",
+  "epoch": 1,
+  "finalInferenceAdmitted": false,
+  "sampleInputReleased": false,
+  "newNativeCommandStarted": true,
+  "preparationProviderInferenceCalls": 0,
+  "newAuthOrCatalogHTTPCalls": 0,
+  "credentialsCopied": false,
+  "credentialsOrPermissionsChanged": false,
+  "sourceOrModelChanged": false,
+  "historicalBinding": {
+    "publicBindingReceipt": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-agentzero-cm-binding-20261004.json",
+      "sha256": "0521b11dec866c69127d1e21ceb5bed056840aa6d832d5795c1220ca35a98338"
+    },
+    "accessRestoration": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
+      "sha256": "63b0a8aec04d849440e73302683e631a0ab0f7ff4264b4eac4c5dcf01da080f0"
+    },
+    "launcher": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/launch.py",
+      "sha256": "4ccf678464bf90b479e9d97de37345d6c8be556407a993cf3a13a76c7f854304"
+    },
+    "inspectWrapper": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/inspect-run.py",
+      "sha256": "70f21d3ffddda40ea36a99e2f2191013351712b5e3d9a20577c9a1e0947d297b"
+    },
+    "readinessAdmission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/admission.readiness.json",
+      "sha256": "38092dccd4bae12f7928079e5a2328e9321fc8c8626405e772d5ef1f64618245"
+    },
+    "oldReadinessReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/readiness/receipt.json",
+      "sha256": "f313ae1a290d0b6f2601c4cee92cc597a0c88732feaecf2c53e7d59d2f5da752"
+    },
+    "originalPlanSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "originalCommitmentSha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+    "originalProjectionSha256": "0c9aefba2b7ace184151405366630efbb98a5b200d5b3a13f16f27c25d9f12f0",
+    "nativeSourcePin": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+    "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7"
+  },
+  "preservedOriginalUnusedStatus": {
+    "oldReadinessProviderCalls": 0,
+    "oldReadinessOutcome": "unavailable_owned_native_auth_expired",
+    "oldStopBeforeContext": true,
+    "executionDirectoryExists": false,
+    "inspectPrivateDirectoryExists": false,
+    "finalSampleRemains": "unknown_not_executed",
+    "closedSamplesReplayed": false
+  },
+  "modelsRequiredUnchanged": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoningEffort": "none"
+    },
+    "allHelpers": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium"
+    },
+    "liveCatalogIsEntitlementEvidence": false,
+    "nativeEntitlementOrRejection": "UNKNOWN",
+    "substitutionAllowed": false
+  },
+  "originalPerSampleLimits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "sourceHashChecks": {
+    "cp001_accounting.py": {
+      "expectedSha256": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+      "actualSha256": "5507ff2c379f955319161c8da2015b8459d6c9610cfa529842904d5706d22e5f",
+      "matches": false,
+      "currentInstrumentationAdmissionSha256": "5507ff2c379f955319161c8da2015b8459d6c9610cfa529842904d5706d22e5f",
+      "historicalMismatchRetained": true
+    },
+    "ev003_agentzero_readback.py": {
+      "expectedSha256": "780c6693aefe51f61e77c3b20d848c9f2c5377772924692bd056b207fdc724a5",
+      "actualSha256": "780c6693aefe51f61e77c3b20d848c9f2c5377772924692bd056b207fdc724a5",
+      "matches": true
+    },
+    "ev003_python_calendar.py": {
+      "expectedSha256": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+      "actualSha256": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+      "matches": true
+    },
+    "p1_agentzero_bridge_probe.py": {
+      "expectedSha256": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+      "actualSha256": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+      "matches": true
+    },
+    "p1_agentzero_litellm_capabilities.json": {
+      "expectedSha256": "6f98bd8afc21330f3e8c30297bf252555b52af42abc8d9c040c64362ce8602c3",
+      "actualSha256": "6f98bd8afc21330f3e8c30297bf252555b52af42abc8d9c040c64362ce8602c3",
+      "matches": true
+    },
+    "p1_agentzero_oauth.json": {
+      "expectedSha256": "6cb70e4fe315fd7fa159f7b2171d41b7567908f9f73b985c7244ac1010e26f32",
+      "actualSha256": "6cb70e4fe315fd7fa159f7b2171d41b7567908f9f73b985c7244ac1010e26f32",
+      "matches": true
+    },
+    "p1_agentzero_presets.yaml": {
+      "expectedSha256": "69dfdd770a66faa3f8f6e643b36791bbb0bfc415e6f4d0613129369a9863dd65",
+      "actualSha256": "69dfdd770a66faa3f8f6e643b36791bbb0bfc415e6f4d0613129369a9863dd65",
+      "matches": true
+    },
+    "p1_agentzero_selection.json": {
+      "expectedSha256": "3a12a8cbe5fd0434c7f9beb29a1b192e9851e38ba25c7c18b9ab2f13c9940352",
+      "actualSha256": "3a12a8cbe5fd0434c7f9beb29a1b192e9851e38ba25c7c18b9ab2f13c9940352",
+      "matches": true
+    },
+    "p1_model_tunnel.py": {
+      "expectedSha256": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08",
+      "actualSha256": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08",
+      "matches": true
+    }
+  },
+  "ownedAuth": {
+    "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/native-auth-access-v1/agent-zero-owned/auth.json",
+    "sha256": "b82f4b97ac3ca87baa6636f2205394b19aaa9a98d6201b91e0dbf2f6a817b374",
+    "uid": 1000,
+    "gid": 1000,
+    "mode": "0o600",
+    "nativeUid": 1000,
+    "nativeGid": 1000,
+    "nativeUidReadable": true,
+    "exactReadOnlyAccessCheck": [
+      "runuser",
+      "-u",
+      "administrator",
+      "--",
+      "test",
+      "-r",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/native-auth-access-v1/agent-zero-owned/auth.json"
+    ],
+    "readAccessCheckExitCode": 0,
+    "expiryOrAccessNotRecheckedByAuthHTTPRequest": true,
+    "proofSource": "root_owned_uid_correction_receipt",
+    "correctionReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-access-restoration-20261006/agentzero-uid-correction.json",
+      "sha256": "68a7ca6cff3a34c6493f4caa9adbc1881e53aa9659d91b07b3ac85d53b70a9b8"
+    }
+  },
+  "cumulativeAuthority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef",
+    "registryOpenedOrChanged": false,
+    "currentEva2UsageUnknownGuardPreserved": true,
+    "budgetResetOrDonation": false,
+    "newReservationMade": false,
+    "finalAgentZeroAggregateBindingEstablished": false,
+    "reason": "No execution registration is reached in this no-input readiness; authority was referenced and read only for technical continuity metadata.",
+    "currentRowCount": 7,
+    "agentZeroRows": 0,
+    "actualBinding": {
+      "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+      "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "originalAgentZeroDatasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "originalCommitment": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261004.json",
+      "sha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf"
+    },
+    "originalDatasetMatchesAuthorityBinding": false,
+    "registryOpenedReadOnlyForMetadata": true
+  },
+  "existingCommandNotExecuted": [
+    "/usr/bin/python3",
+    "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/launch.py",
+    "--readiness-only",
+    "--admission",
+    "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/admission.readiness.json"
+  ],
+  "smallestNextAction": "Independent end review of this exact no-input readiness and closure. Separately inspect only the current committed original successor slot/adapter/aggregate binding before any final admission; no model or sample input is released.",
+  "quality": "UNKNOWN",
+  "humanRatingsAdded": 0,
+  "developmentCreditCost": "UNKNOWN",
+  "concreteBlockersHistorical": [
+    {
+      "class": "instrumentation_source_pin_mismatch",
+      "file": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/launch.py",
+      "line": 39,
+      "expectedSha256": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+      "actualSha256": "5507ff2c379f955319161c8da2015b8459d6c9610cfa529842904d5706d22e5f",
+      "scope": "existing accounting instrumentation changed since October 4; unchanged admission rejects it before resources"
+    },
+    {
+      "class": "immutable_readiness_output_already_exists",
+      "file": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/launch.py",
+      "line": 52,
+      "retainedOutput": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/readiness",
+      "scope": "existing launcher refuses to overwrite the retained expired-auth attempt"
+    },
+    {
+      "class": "owned_auth_unreadable_by_exact_native_uid",
+      "file": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/launch.py",
+      "line": 77,
+      "scope": "renewed native own store root:root0600 is unreadable by unchanged UID1000/GID1000 child"
+    }
+  ],
+  "readinessResumePreparation": {
+    "phase": "terminal_native_readiness_only",
+    "oldReadinessBytesPreserved": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/readiness/receipt.json",
+      "sha256": "f313ae1a290d0b6f2601c4cee92cc597a0c88732feaecf2c53e7d59d2f5da752"
+    },
+    "newSeparateOutput": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/readiness",
+    "changedAuthCauseAllowsPreparationContinuationOnly": true,
+    "candidateLauncher": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/launch-readiness-resume.private.py",
+      "sha256": "211ea871877fae7936f73ff3ea82afbc5b0673c6a341226e685abbd5758a6642"
+    },
+    "candidateNoInputWrapper": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/native-readiness-no-input.private.py",
+      "sha256": "c586bc2e4a4ca761c94e5e552b0c63a08746b76bb972fa83c7f6dbe37431f2c6"
+    },
+    "candidateAdmission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/admission.readiness-resume.private.json",
+      "sha256": "03925bbf33c6549fe01e2923da0fe026a203b13a872c980a12b7193d12f2532b"
+    },
+    "binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/readiness-binding.private.json",
+      "sha256": "a029b3213e8d4d823f6de4b1b4e9c18deb7d560e3c7535ce7833bd2f18b1e662"
+    },
+    "staticContract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/static-contract.private.json",
+      "sha256": "6ea93784426259ebc0221fd8af3c14c44555aa5f5a70e116e5340d4d00efb6ac"
+    },
+    "executedNativeProbeBase": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
+      "sha256": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40"
+    },
+    "explicitTransformedProbeSha256": "1ba7e8ed1d339f49f629aa10017e0ad395b1b69987b110c49076be70625323aa",
+    "codeChanges": [
+      "Only subscription readiness may omit both final and development inputs.",
+      "After existing network-denial, own-auth and native configuration initialization, perform native context startup/closure and return before case/ProviderSampleLedger/model inference/sample clock construction.",
+      "Launcher passes a metadata-only admission FD, never protected input FD, and retains old readiness output.",
+      "Launcher binds exact current accounting instrumentation, own-store byte hash/UID and unchanged authority hash.",
+      "Remove only unreachable temporary calendar-path prerequisite; retain native HERE/UID traversal and set PYTHONPATH to existing bound BENCH."
+    ],
+    "accountingSourceDiff": {
+      "retainedOldSource": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/accounting-c576-retained-for-diff.private.py",
+        "sha256": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f"
+      },
+      "historicalGitCommit": "1d490929e33db2cd238d72fb323b87375b9f646e",
+      "currentSource": {
+        "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+        "sha256": "5507ff2c379f955319161c8da2015b8459d6c9610cfa529842904d5706d22e5f"
+      },
+      "exactDiff": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/accounting-instrumentation-diff.private.patch",
+        "sha256": "6af4245c1bca63e42477318b7f0c31268c2ccaf4e9b9c08eb70dc10328f505b8"
+      },
+      "addedClass": "PersistentAggregateLedger",
+      "changedExistingClass": "ProviderSampleLedger",
+      "changeScope": "Optional aggregate constructor/persistence hooks; unchanged original limits/profiles; aggregate=None retains original observation rules.",
+      "eightOtherExistingTopLevelDefinitionsAstEqual": true,
+      "newReadinessGuardReturnsBeforeAnyProviderLedgerConstruction": true
+    },
+    "commandArgv": [
+      "/usr/bin/python3",
+      "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/launch-readiness-resume.private.py",
+      "--readiness-only",
+      "--admission",
+      "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/admission.readiness-resume.private.json"
+    ],
+    "inputOrExecutionModeAvailable": false,
+    "providerInferenceCalls": 0,
+    "authOrCatalogHTTPCalls": 0,
+    "sampleClockOrDeadlineCreated": false,
+    "registryOpenedForExecutionOrMutated": false,
+    "newSampleReservation": false,
+    "independentReview": {
+      "status": "GO_no_input_readiness_and_publication",
+      "scope": "no_input_native_readiness_and_closure_only",
+      "reviewer": "/root/p2_eva1_lease_review_20261006",
+      "reviewedPreparationPublicSha256": "ef37a45fbac06c1887f757ca14b97e696f0b57607bdc006768b9933e8021fc68",
+      "reviewedLauncherSha256": "211ea871877fae7936f73ff3ea82afbc5b0673c6a341226e685abbd5758a6642",
+      "reviewedAdmissionSha256": "03925bbf33c6549fe01e2923da0fe026a203b13a872c980a12b7193d12f2532b",
+      "reviewedResultSha256": "35e7a95c1a44480558d8ba915fd2d1c74aa27124eee7e7e34c5a262f69ade562",
+      "reviewReceipt": {
+        "path": "/home/administrator/project/Eva2/eva2/reviews/p2-agentzero-owned-readiness-review-20261006.json",
+        "sha256": "e9e0a1bef68687820e061e21fed6d0cd37119fd92a12b2cef5c180fc9d151715"
+      },
+      "finalInputOrInferenceGo": false,
+      "quality": "UNKNOWN",
+      "entitlement": "UNKNOWN"
+    },
+    "priorActualAttempt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/attempt-1-pre-resource-failure-technical.private.json",
+      "sha256": "235e8181179a08bbc495d78ea8559abfcae2494a747222543c9363fa52f88c1d"
+    },
+    "nativeLaunchCommandsAttempted": 2,
+    "nativeContextsStarted": 1,
+    "retainedPriorLauncher": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/history/launch-readiness-resume.private.py.before-unused-calendar-correction",
+      "sha256": "514f06f53d616edcd68feb18d518e2bef043ee7fe4cc1c888356c0d4a5fd8149"
+    },
+    "currentAdmissionSourceHashMatchesAll": true,
+    "preparationNativeStarts": 0
+  },
+  "finalSampleExecutionPrerequisites": {
+    "status": "not_admitted",
+    "originalSlotStillUnexecuted": true,
+    "originalDatasetSha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "authorityDatasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "exactExistingRegistryCannotBeRelabeled": true,
+    "counterOrSeedAdded": false,
+    "noNewRegistryOrBudget": true,
+    "existingOldFinalLauncherUsesOnlyPerSampleProviderLedger": true,
+    "contentFreeSeam": "Before any final input, the original Agent Zero payload/dataset binding and executable aggregate admission must be reconciled to the SAME immutable registry metadata under unchanged original authorization; current dataset hashes differ and no Agent Zero registry row exists.",
+    "nativeModelEntitlementOrRejection": "UNKNOWN",
+    "readinessGoWouldNotBeFinalSampleGo": true,
+    "previousEva2UsageUnknownRemains": true
+  },
+  "participantNativeSourceOrModelChanged": false,
+  "evaluatorReadinessInstrumentationChanged": true,
+  "actualReadiness": {
+    "execSession": 36717,
+    "terminalExitCode": 0,
+    "nativeOutcome": "native_context_ready_no_input",
+    "providerCalls": 0,
+    "modelInferenceInvocations": 0,
+    "sampleInputReleased": false,
+    "protectedInputFdPassed": false,
+    "protectedInputDecoded": false,
+    "nativeContextStarted": true,
+    "nativeContextClosed": true,
+    "nativeThreadsAlive": 0,
+    "providerLedgerCreated": false,
+    "sampleDeadlineCreated": false,
+    "scenarioClockCreated": false,
+    "sampleAdmitted": false,
+    "loginOrRefreshStarted": false,
+    "relayClosed": true,
+    "relayEventCount": 0,
+    "containerAbsent": true,
+    "networkAbsent": true,
+    "aggregateUnchanged": true,
+    "aggregateBeforeSha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef",
+    "aggregateAfterSha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef",
+    "oldReadinessUnchanged": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/readiness/receipt.json",
+      "sha256": "f313ae1a290d0b6f2601c4cee92cc597a0c88732feaecf2c53e7d59d2f5da752"
+    },
+    "actualNativeModelConfiguration": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "effort": "none"
+      },
+      "helper": {
+        "model": "gpt-6-astra",
+        "effort": "medium"
+      }
+    },
+    "artifacts": {
+      "receipt.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/readiness/receipt.json",
+        "sha256": "ad9ad699886c92eecbf50c8519bb5b108c7fc7f25d5c8602d98143a7a5b4eb23"
+      },
+      "sample/native-readiness.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/readiness/sample/native-readiness.json",
+        "sha256": "39f279c88c26a576f4f6ce3ca11de999c351b8597ab15d57335f528b682e7e4f"
+      },
+      "bound-admission.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/readiness/bound-admission.json",
+        "sha256": "94b503869f2bde0334acc81fa0f8caf64998629819d43fe0c7c45b009dbec4d8"
+      },
+      "child.log": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/readiness/child.log",
+        "sha256": "4c07df22be3726e965c313bdc7d0f0108ef149bd11d8652a2ea8cafdb873368a"
+      },
+      "sample/execution-source.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/readiness/sample/execution-source.json",
+        "sha256": "d8f353cf6fc551c3cc4d1db3a0a00f43ba9f64bc666dac489c3877cf8db9b7b3"
+      },
+      "sample/embedding-binding.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/owned-readiness-resume-20261006-v1/readiness/sample/embedding-binding.json",
+        "sha256": "403500be24c8df4d662af45c140844c2f5d2e584d3d0bde35d7a0c5e06a4f7e4"
+      }
+    },
+    "ordinaryModelExecutionConfirmed": false,
+    "entitlementOrRejection": "UNKNOWN",
+    "semanticOrHumanQuality": "UNKNOWN"
+  },
+  "priorPreResourceReadinessAttempt": {
+    "contract": "AgentZeroReadinessPreResourceFailure/v1",
+    "checkedAt": "2026-10-06T20:32:25.286629+00:00",
+    "entry": "agent_zero:EV003-CM-01:epoch1",
+    "commandLauncherSha256": "514f06f53d616edcd68feb18d518e2bef043ee7fe4cc1c888356c0d4a5fd8149",
+    "commandAdmissionSha256": "9d6d9344dba3d0c88164508e1401f14f2ac8a6c833563d830f06d9a1e7b1cdc5",
+    "returnCode": 1,
+    "failureClass": "AssertionError",
+    "failurePhase": "unused_calendar_dependency_guard_before_resource_creation",
+    "failureSourceLine": 45,
+    "missingPath": "/tmp/ev003-calendar-deps-20261004/cp312",
+    "nativeContextStarted": false,
+    "providerCalls": 0,
+    "modelInvocations": 0,
+    "inputDecoded": false,
+    "outputDirectoryCreated": false,
+    "networkOrContainerCreated": false,
+    "sampleLedgerOrReservationCreated": false,
+    "oldReadinessUnchanged": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution/agent-zero-cm01-epoch1/readiness/receipt.json",
+      "sha256": "f313ae1a290d0b6f2601c4cee92cc597a0c88732feaecf2c53e7d59d2f5da752"
+    },
+    "aggregateUnchanged": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+      "sha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef"
+    }
+  }
+}
