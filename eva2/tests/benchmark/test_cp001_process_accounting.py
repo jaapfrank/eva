@@ -225,3 +225,87 @@ def test_stop_arrives_before_reserved_permit_returns_no_dispatchable_attempt(tmp
         if proc is not None and proc.poll() is None:
             proc.kill()
             proc.wait()
+
+
+def agentzero_parent(tmp_path, name):
+    directory = tmp_path / name
+    directory.mkdir(mode=0o700)
+    book = ProviderSampleLedger(name, {"providerAttempts": 2,
+        "providerInputTokens": 24000, "providerOutputTokens": 4096},
+        {"contact": ("gpt-6-sol", "none"), "helper": ("gpt-6-astra", "medium")})
+    return ParentProcessAccounting(book, name, directory / "control.sock",
+        workers={"agent_zero": {"contact", "helper"}}).start()
+
+
+def agentzero_peer(parent, *, deadline=None):
+    from p1_agentzero_bridge_probe import AgentZeroParentLedger
+    return AgentZeroParentLedger(parent.request_id, {**parent.credentials("agent_zero"),
+        "monotonic_deadline": time.monotonic() + 10 if deadline is None else deadline})
+
+
+def test_agentzero_contact_helpers_wait_for_shared_parent_admission(tmp_path):
+    parent = agentzero_parent(tmp_path, "agentzero-shared")
+    peer = agentzero_peer(parent)
+    dispatched = []
+    try:
+        for role, model, effort in [("foreground_contact", "gpt-6-sol", "none"),
+                                    ("helper", "gpt-6-astra", "medium")]:
+            attempt = peer.begin(role, model, effort)
+            # This boundary represents the SDK dispatch; parent persisted it first.
+            assert parent.report()["ledger"]["provider_attempts"] == len(dispatched) + 1
+            assert parent.ledger.attempts[attempt]["role"] == ("contact" if role == "foreground_contact" else "helper")
+            dispatched.append(attempt)
+            peer.finish(attempt, {"input_tokens": 17, "output_tokens": 5, "total_tokens": 22})
+        from cp001_accounting import SampleStopped
+        with pytest.raises(SampleStopped):
+            peer.begin("helper", "gpt-6-astra", "medium")
+        assert len(dispatched) == 2
+        mirror = peer.report()
+        assert mirror["complete"] and mirror["total_usage"]["total_tokens"] == 44
+        assert mirror["parent_accounting_bound"] and not mirror["authoritative_local_registry"]
+        assert parent.report()["ledger"]["total_usage"] == mirror["total_usage"]
+        assert peer.close(settled=True)
+    finally:
+        parent.close()
+
+
+def test_agentzero_failed_sdk_usage_is_unknown_in_parent(tmp_path):
+    parent = agentzero_parent(tmp_path, "agentzero-failure")
+    peer = agentzero_peer(parent)
+    try:
+        attempt = peer.begin("helper", "gpt-6-astra", "medium")
+        peer.incomplete(attempt, "sdk_failed_usage_unknown")
+        report = parent.report()["ledger"]
+        assert report["provider_attempts"] == 1 and not report["complete"]
+        assert report["attempts"][0]["usage"] is None
+        assert all(value is None for value in report["total_usage"].values())
+        assert not peer.report()["complete"]
+        assert peer.close(settled=True)
+    finally:
+        parent.close()
+
+
+def test_agentzero_original_deadline_refuses_before_dispatch(tmp_path):
+    parent = agentzero_parent(tmp_path, "agentzero-expired")
+    peer = agentzero_peer(parent, deadline=time.monotonic() - 1)
+    try:
+        from cp001_accounting import SampleStopped
+        with pytest.raises(SampleStopped):
+            peer.begin("foreground_contact", "gpt-6-sol", "none")
+        assert parent.report()["ledger"]["provider_attempts"] == 0
+        assert peer.close(settled=True)
+    finally:
+        parent.close()
+
+
+def test_agentzero_final_parent_guard_precedes_private_input_read(monkeypatch, tmp_path):
+    from contextlib import ExitStack
+    from p1_agentzero_bridge_probe import _main
+    monkeypatch.setattr(sys, "argv", ["agentzero-probe", "--source", "unused", "--output", str(tmp_path / "unused"),
+        "--auth-store", "unused", "--dockerized=1", "--case", "native-loop", "--bind-stream",
+        "--embedding-cache", "unused", "--provider-mode", "subscription",
+        "--final-cm-inputs", "not-created-private-input", "--final-cm-admission", "not-created-admission"])
+    with ExitStack() as lifecycle, pytest.raises(SystemExit) as result:
+        _main(lifecycle)
+    assert result.value.code == 2
+    assert not (tmp_path / "unused").exists()

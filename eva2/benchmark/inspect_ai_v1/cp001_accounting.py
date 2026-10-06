@@ -16,6 +16,7 @@ from contextlib import contextmanager
 from pathlib import Path
 
 PARTICIPANTS = ("eva2", "eva1-bottie")
+AGGREGATE_PARTICIPANTS = (*PARTICIPANTS, "openclaw", "hermes", "agent_zero")
 USAGE_FIELDS = ("input_tokens", "output_tokens", "model_attempts", "tool_calls")
 LIMIT_FIELDS = (
     "model",
@@ -174,7 +175,11 @@ class PersistentAggregateLedger:
         self.binding = {"binding": binding, "families": plan["families"],
                         "aggregateLimits": self.total}
         self.lock = threading.RLock()
-        if participant not in PARTICIPANTS or not binding or not self.path.is_absolute():
+        declared_order = plan.get("executionOrder", {}).get("epochParticipantOrder")
+        eligible = PARTICIPANTS if declared_order is None else (
+            set(AGGREGATE_PARTICIPANTS).intersection(
+                name for epoch in declared_order for name in epoch))
+        if participant not in eligible or not binding or not self.path.is_absolute():
             raise ValueError("explicit participant and frozen comparison binding required")
         self.path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
         with self._connection() as db:

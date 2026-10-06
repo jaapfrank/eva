@@ -32,6 +32,61 @@ PROFILES = {"foreground_contact": ("gpt-6-sol", "none"),
             "helper": ("gpt-6-astra", "medium")}
 
 
+class AgentZeroParentLedger:
+    """Native SDK mirror of the existing authoritative parent, never a registry."""
+
+    def __init__(self, sample_id, control):
+        from cp001_process_accounting import ProcessSampleLedger
+        from math import isfinite
+        assert control["namespace"] == "agent_zero"
+        assert control["request_id"] == sample_id
+        deadline = control["monotonic_deadline"]
+        assert isinstance(deadline, (int, float)) and not isinstance(deadline, bool) and isfinite(deadline)
+        self.sample_id, self.deadline = sample_id, deadline
+        self.peer = ProcessSampleLedger(**{key: control[key] for key in
+            ("socket_path", "namespace", "request_id", "token")})
+
+    def __getattr__(self, name):
+        return getattr(self.peer, name)
+
+    @property
+    def stopped(self):
+        return self.peer.stopped
+
+    @stopped.setter
+    def stopped(self, reason):
+        self.peer.stopped = reason
+
+    def begin(self, role, model, effort):
+        if time.monotonic() >= self.deadline:
+            self.peer.stop_async_attempts("native sample wall envelope reached")
+            raise SampleStopped(self.peer.stopped)
+        parent_role = {"foreground_contact": "contact", "helper": "helper"}.get(role)
+        if parent_role is None:
+            self.peer.stop_async_attempts("unbound native Agent Zero role")
+            raise SampleStopped(self.peer.stopped)
+        attempt = self.peer.begin(parent_role, model, effort)
+        with self.peer.lock:
+            self.peer.attempts[attempt].update(id=attempt, sample_id=self.sample_id,
+                role=role, model=model, reasoning_effort=effort, parent_role=parent_role)
+        return attempt
+
+    def report(self):
+        from types import SimpleNamespace
+        with self.peer.lock:
+            mirror = SimpleNamespace(lock=self.peer.lock, sample_id=self.sample_id,
+                attempts=[dict(value) for _, value in sorted(self.peer.attempts.items())],
+                stopped=self.peer.stopped, stop_requested=self.peer.stop_requested,
+                async_attempts=self.peer.async_attempts, cancel_errors=self.peer.cancel_errors)
+            report = ProviderSampleLedger.report(mirror)
+        report.update(coverage="Native SDK mirror; authoritative usage and aggregate admission stay in parent",
+            parent_accounting_bound=True, authoritative_local_registry=False)
+        return report
+
+    def close(self, *, settled):
+        return self.peer.close(settled=settled)
+
+
 class NativeSyncOwnership:
     """Keep blocking native proxy work observable while its caller can stop."""
     def __init__(self, ledger, seconds):
@@ -102,6 +157,7 @@ def _main(lifecycle_stack) -> None:
     parser.add_argument("--bind-stream", action="store_true", help="Use the explicit comparison-side SDK stream guard")
     parser.add_argument("--provider-mode", choices=["fixture", "subscription"], default="fixture")
     parser.add_argument("--readiness-only", action="store_true")
+    parser.add_argument("--parent-accounting-control", type=Path)
     parser.add_argument("--development-case", choices=["C01", "C04"])
     parser.add_argument("--epoch", type=int, choices=[1, 2])
     parser.add_argument("--final-cm-inputs", type=Path)
@@ -120,6 +176,12 @@ def _main(lifecycle_stack) -> None:
         parser.error("final CM inputs and explicit admission must be supplied together")
     if args.final_cm_inputs and (args.development_case or args.case != "native-loop"):
         parser.error("final CM and development entrypoints are separate")
+    if subscription and args.final_cm_inputs and not args.readiness_only and not args.parent_accounting_control:
+        parser.error("final subscription requires authoritative parent accounting before input decoding")
+    parent_control = None
+    if args.parent_accounting_control:
+        assert subscription and not args.readiness_only
+        parent_control = json.loads(args.parent_accounting_control.read_text())
     final_cm = None
     if args.final_cm_inputs:
         admission = json.loads(args.final_cm_admission.read_text())
@@ -277,7 +339,8 @@ def _main(lifecycle_stack) -> None:
             socket.socket.connect, socket.socket.connect_ex = previous_connect, previous_connect_ex
 
     async def case(name, role, *, stream, partial=False, native_loop=False):
-        ledger = ProviderSampleLedger(name, limits, PROFILES)
+        ledger = (AgentZeroParentLedger(name, parent_control) if parent_control is not None
+                  else ProviderSampleLedger(name, limits, PROFILES))
         model_name, effort = PROFILES[role]
         upstreams, requests_seen, sdk_requests, native_responses, stream_bindings = [], [], [], [], []
         waiting = asyncio.Event()
@@ -296,6 +359,8 @@ def _main(lifecycle_stack) -> None:
         cm_turns = []
         sdk_idle_cleanup = []
         native_io = NativeSyncOwnership(ledger, limits["wallSeconds"])
+        if parent_control is not None:
+            native_io.deadline = ledger.deadline
         restore_native = []
 
         def sdk_usage(response):
@@ -375,7 +440,10 @@ def _main(lifecycle_stack) -> None:
                     raise SampleStopped("Native transport retries are not accounted")
                 kwargs["allow_redirects"] = False
                 kwargs["timeout"] = min(kwargs.get("timeout", 120), max(0.1, native_io.deadline-time.monotonic()))
-                wire_dispatches.add(attempt)  # Reserve before HTTP, including failed connects.
+                if ledger.stopped or time.monotonic() >= native_io.deadline:
+                    ledger.incomplete(attempt, "stopped_before_native_http_dispatch")
+                    raise SampleStopped(ledger.stopped or "native sample wall envelope reached")
+                wire_dispatches.add(attempt)  # Count actual HTTP entries, including failed connects.
                 response = original_request(method, url, **kwargs)
                 response.attempt = attempt
                 response.native_closed = False
@@ -650,7 +718,8 @@ def _main(lifecycle_stack) -> None:
                 from ev003_agentzero_readback import read_agentzero_snapshot
                 from helpers.defer import EventLoopThread
                 from plugins._memory.helpers.memory import get_agent_memory_subdir
-                native_io.deadline = time.monotonic() + limits["wallSeconds"]
+                if parent_control is None:
+                    native_io.deadline = time.monotonic() + limits["wallSeconds"]
                 whole_started = time.monotonic()
                 prior_session = 0
                 response_counts = {}
@@ -750,7 +819,8 @@ def _main(lifecycle_stack) -> None:
                     (output / "native-readiness.json").write_text(json.dumps({"status": "native_context_ready", "source_pin": PIN, "provider_calls": 0, "mode": "subscription", "sample": selected_slot["sample_id"], "limits": limits}) + "\n")
                     if args.readiness_only:
                         return
-                    native_io.deadline = time.monotonic() + limits["wallSeconds"]
+                    if parent_control is None:
+                        native_io.deadline = time.monotonic() + limits["wallSeconds"]
                 stimulus = selected_slot["stimulus"] if selected_slot else "Complete the offline native protocol check. No external tools."
                 native_started = time.monotonic()
                 native_task = native_context.communicate(agent.UserMessage(stimulus))
@@ -913,7 +983,11 @@ def _main(lifecycle_stack) -> None:
                 litellm_transport.aresponses = original_responses
             final_ownership = native_io.report()["quiescent"] and ledger.report()["active_async_attempts"] == 0
             final_dispatches = len(wire_dispatches) if final_ownership else None
+            parent_close_acknowledged = (ledger.close(settled=final_ownership)
+                if parent_control is not None else None)
             if failure is not None:
+                if parent_control is not None:
+                    failure["parent_accounting_close_acknowledged"] = parent_close_acknowledged
                 failure.update(externalInferenceRequests=final_dispatches if subscription else 0,
                                known_partial_dispatches=len(wire_dispatches),
                                native_io=native_io.report(), ledger=ledger.report(),
@@ -921,6 +995,9 @@ def _main(lifecycle_stack) -> None:
                                accounting_phase="after_native_and_transport_cleanup")
                 (output / "native-case-failure.json").write_text(json.dumps(failure, indent=2) + "\n")
             if result is not None:
+                if parent_control is not None:
+                    result["parent_accounting_close_acknowledged"] = parent_close_acknowledged
+                    result["whole_sample_complete"] = bool(result.get("whole_sample_complete") and parent_close_acknowledged)
                 result["http_dispatch_attempts"] = final_dispatches
                 result["known_partial_dispatches"] = len(wire_dispatches)
                 result["dispatch_accounting_phase"] = "after_native_and_transport_cleanup"

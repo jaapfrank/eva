@@ -1,8 +1,10 @@
-## 6 oktober — Agent Zero-start geslaagd; gewone modelproef aansluiten
+## 6 oktober — drie eigen logins hersteld; uitvoerroutes afzonderlijk beoordelen
 
-Agent Zero’s eigen login is vernieuwd en leesbaar voor de native uitvoerder. De werkelijke native context is opgestart en schoon afgesloten (exit0, nul levende threads/modelcalls, netwerk en relay dicht). Oude bewijsbytes en dezelfde aggregate-authority zijn behouden. [Gereedheidsbewijs](evidence/product/p2-agentzero-owned-readiness-20261006.json) en [onafhankelijke GO](reviews/p2-agentzero-owned-readiness-review-20261006.json).
+OpenClaw en Hermes zijn via verse native deviceflows werkelijk aangemeld (beide exit0, eigen store UID1000/mode0600, geen credentialkopie of modelinferentie tijdens login). [Loginbewijs](evidence/product/p2-competitor-device-login-20261006.json). Hun catalogus en bestaande gewone uitvoerroute worden nu gecontroleerd.
 
-De actuele vaste set bevat een ongebruikt, adaptercompatibel CM01/epoch1-slot voor Agent Zero. Alleen de bestaande native SDK-accounting moet nog op de bestaande parent/aggregate-route worden aangesloten. Dat is nu de gerichte uitvoeringsafhankelijkheid binnen P2.1; geen nieuwe set, matrix, modellen of budget. Gewone modeluitvoering, entitlement en kwaliteit zijn nog UNKNOWN. OpenClaw/Hermes hebben eigen aanmelding nodig; verse codes zodra Jaap klaarzit. Spraak geparkeerd;34/44 en eerdere acceptaties blijven behouden.
+Agent Zero heeft zijn eigen login/start/tokenvernieuwing en echte modeltoegang bevestigd. Eén oorspronkelijke CM01/epoch1 is uitgevoerd: zes SDK-pogingen, drie contactantwoorden en één helperantwoord; twee Astra-helpers kregen HTTP502 van de native proxy. Eerste-turn settlement stopte, de oorspronkelijke taak is niet afgerond. Bekende ondergrens29979input/197output; totale usage en kwaliteit UNKNOWN. Geen timeout (28,8s tegenover oorspronkelijke480s), geen herhaling of reset. Proces/HTTP/netwerk/container zijn gesloten; volledige native context/thread-cleanupreceipt ontbreekt. [Resultaat](evidence/product/p2-agentzero-original-cm01-result-20261006.json) en [onafhankelijke technische/publicatie-GO](reviews/p2-agentzero-parent-accounting-admission-review-20261006.json).
+
+De bestaande SDK-parentaccounting en de oorspronkelijke vijf-deelnemersvalidatie zijn gericht gecorrigeerd. Elf IPC- en negentien aggregatecontroles slagen; criteria/modellen/budget en oude UNKNOWN-registraties behouden. [Toelating](evidence/product/p2-agentzero-parent-accounting-binding-20261006.json). Spraak blijft geparkeerd;34/44 en eerdere acceptaties blijven behouden. Login/modelbereikbaarheid is geen bewijs van betere antwoordkwaliteit.
 
 ## 6 oktober — foutregistratie geïnstalleerd; echte concurrentlogin nodig
 

@@ -1,0 +1,634 @@
+{
+  "admission": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-agentzero-parent-accounting-binding-20261006.json",
+    "sha256": "ec8f35716222562907ee4ff952413c1dd1d6405309c622fee2a74954911661a4"
+  },
+  "admittedBytesPreserved": true,
+  "caseId": "EV003-CM-01",
+  "cause": {
+    "completeOriginalTaskPerformanceDemonstrated": false,
+    "contactModelAccessDemonstrated": true,
+    "deadlineFailure": false,
+    "externalUpstreamHttpStatus": "UNKNOWN",
+    "failedNativeSdkAttemptIds": [
+      3,
+      5
+    ],
+    "missingEvidence": "Native proxy non-200 response details and propagated SDK exception class were not retained. Existing SDK error handler records unknown usage and reraises without recording the inner class. Retained stdout/stderr/chat error records add no upstream cause.",
+    "nativeProxyHelperFailureStatus": 502,
+    "observedFailureTransition": {
+      "callerLine": 791,
+      "file": "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
+      "line": 747,
+      "phase": "first_user_turn_helper_settlement"
+    },
+    "observedTerminalExceptionClass": "SampleStopped",
+    "oneHelperModelResponseDemonstrated": true,
+    "productLossEstablished": false,
+    "propagatedInnerSdkExceptionClass": "UNKNOWN",
+    "retainedTechnicalCauseProjection": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/retained-failure-technical.private.json",
+      "sha256": "cecf8408a9241b5fd225f6d4a331336f58bc6521e2a5b45c126d0cbb4f10f02b"
+    },
+    "sdkUsageUnknownTransition": {
+      "catchLine": 580,
+      "file": "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
+      "recordUnknownUsageLine": 582,
+      "reraiseLine": 583
+    },
+    "sourceBoundNativeProxyFailureBranch": {
+      "evidence": "Retained 502 statuses deterministically select the existing non-200 native proxy branch.",
+      "file": "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py",
+      "raiseRuntimeErrorLine": 512,
+      "recordStatusLine": 505,
+      "rejectNon200Line": 507
+    },
+    "underlyingProviderCause": "UNKNOWN"
+  },
+  "closure": {
+    "containerAbsent": true,
+    "explicitCompleteNativeContextThreadCleanupReceipt": "UNKNOWN",
+    "nativeIdleCleanupAtException": [
+      {
+        "all_idle_done": true,
+        "idle_logging_closed": 0,
+        "other_pending": [
+          "RenameChat.change_name"
+        ]
+      },
+      {
+        "all_idle_done": true,
+        "idle_logging_closed": 1,
+        "other_pending": [
+          "DeferredTask._run"
+        ]
+      }
+    ],
+    "nativeProcessTerminated": true,
+    "nativeUidOpenedPrivateAuthority": false,
+    "networkAbsent": true,
+    "parentAccountingCloseAcknowledged": true,
+    "parentTerminal": {
+      "active_tasks": 0,
+      "cancel_errors": [],
+      "pending_local": 0,
+      "reported_settled": true,
+      "tracked_http_settled": true
+    },
+    "parentUnsettledEvents": 0,
+    "rawClosureReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/receipt.json",
+      "sha256": "0025196853d55c8fbbae82e12d44381922774e9a4a1fe7d121ea2b6816c55354"
+    },
+    "relayClosed": true,
+    "relayConnectEventCount": 3,
+    "rootAccountingSocketAbsent": true,
+    "trackedNativeHttp": {
+      "close_errors": [],
+      "pending_native_io": 0,
+      "quiescent": true
+    }
+  },
+  "contract": "P2AgentZeroOriginalCm01TerminalTechnical/v1",
+  "cost": {
+    "credits": "UNKNOWN",
+    "developmentCredits": "UNKNOWN",
+    "knownTokensLowerBound": 30176,
+    "sampleTotalTokens": "UNKNOWN"
+  },
+  "createdAt": "2026-10-06T21:14:11.740517+00:00",
+  "cumulativeAccounting": {
+    "afterReservationSha256": "c05cc7c70c5d7875241cc4210cfa5d01b9895ab804dd7b83b192725ff57a9b97",
+    "agentZeroUsageUnknownGuardPreserved": true,
+    "allHistoricalRowsRetained": true,
+    "authority": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+      "sha256": "a25612099447b7c128e0598fc08b73e0272ad542c4634e3131357f14b03d9090"
+    },
+    "beforeSampleSha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef",
+    "budgetDonation": false,
+    "copiedOrNewRegistry": false,
+    "eva2Cm04UsageUnknownGuardPreserved": true,
+    "frozenBinding": {
+      "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+      "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "fullSampleReservationsPerParticipant": {
+      "agent_zero": 1,
+      "eva1-bottie": 3,
+      "eva2": 4
+    },
+    "historicalEva1Cm01RawSdkUnknownPreserved": true,
+    "knownLowerBound": {
+      "knownInputTokensLowerBound": 161175,
+      "knownOutputTokensLowerBound": 6007,
+      "registeredProviderAttempts": 38
+    },
+    "registryReset": false,
+    "rowCount": 8,
+    "rows": [
+      {
+        "envelopeExceeded": false,
+        "family": "conversation_memory",
+        "kind": "active",
+        "knownInputTokensLowerBound": 29979,
+        "knownOutputTokensLowerBound": 197,
+        "participant": "agent_zero",
+        "registeredProviderAttempts": 6,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "revision": 13,
+        "sampleId": "agent_zero:EV003-CM-01:epoch1",
+        "stopRequested": true,
+        "unknownUsageAttemptCount": 2,
+        "usageUnknown": true,
+        "valueSha256": "a928f347b5183f5564fadfaba3320188dcd8b6d0f547d0250e9474ff0cba3dea"
+      },
+      {
+        "family": "conversation_memory",
+        "historicalEvidenceSha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+        "kind": "historical",
+        "knownInputTokensLowerBound": 0,
+        "knownOutputTokensLowerBound": 0,
+        "participant": "eva1-bottie",
+        "providerDispatchNotReached": true,
+        "providerUsageComplete": false,
+        "rawUsageMeasurement": "UNKNOWN",
+        "registeredProviderAttempts": 0,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "revision": 0,
+        "sampleId": "eva1-successor-cm01-epoch1-d171470a",
+        "usageUnknown": false,
+        "valueSha256": "ad6f6c73d8d238cadcf739df871694a04a6c410747b537380c66bd2c9a108966"
+      },
+      {
+        "family": "conversation_memory",
+        "historicalEvidenceSha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+        "kind": "historical",
+        "knownInputTokensLowerBound": 44420,
+        "knownOutputTokensLowerBound": 2317,
+        "participant": "eva1-bottie",
+        "providerDispatchNotReached": false,
+        "providerUsageComplete": true,
+        "rawUsageMeasurement": "COMPLETE",
+        "registeredProviderAttempts": 7,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "revision": 0,
+        "sampleId": "eva1-successor-cm02-epoch1-0734716d",
+        "usageUnknown": false,
+        "valueSha256": "813a3a8a0f86ea158e3ee38b8e371f2b73932e2f3ea329d46fb75a73e4288773"
+      },
+      {
+        "envelopeExceeded": false,
+        "family": "conversation_memory",
+        "kind": "active",
+        "knownInputTokensLowerBound": 35355,
+        "knownOutputTokensLowerBound": 1315,
+        "participant": "eva1-bottie",
+        "registeredProviderAttempts": 6,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "revision": 12,
+        "sampleId": "eva1-successor-cm03-epoch1-17ce05e0",
+        "stopRequested": false,
+        "unknownUsageAttemptCount": 0,
+        "usageUnknown": false,
+        "valueSha256": "d4068711e5dc1d6f64e41ea3cfa69631092b3de4bfa989a7b7faff3834dbba1c"
+      },
+      {
+        "family": "conversation_memory",
+        "historicalEvidenceSha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+        "kind": "historical",
+        "knownInputTokensLowerBound": 2829,
+        "knownOutputTokensLowerBound": 123,
+        "participant": "eva2",
+        "providerDispatchNotReached": false,
+        "providerUsageComplete": true,
+        "rawUsageMeasurement": "COMPLETE",
+        "registeredProviderAttempts": 1,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "revision": 0,
+        "sampleId": "eva2-successor-cm01-epoch1-d171470a",
+        "usageUnknown": false,
+        "valueSha256": "54e77d993c7a520295afbc1486a762f5902c959f6b3c013ed7f771cd7a225921"
+      },
+      {
+        "family": "conversation_memory",
+        "historicalEvidenceSha256": "cb473cd6fbead64cdcec39a7588046bb2f5df8ce9a5b63a1fc81b29a3ac68043",
+        "kind": "historical",
+        "knownInputTokensLowerBound": 25903,
+        "knownOutputTokensLowerBound": 1192,
+        "participant": "eva2",
+        "providerDispatchNotReached": false,
+        "providerUsageComplete": true,
+        "rawUsageMeasurement": "COMPLETE",
+        "registeredProviderAttempts": 9,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "revision": 0,
+        "sampleId": "eva2-successor-cm02-epoch1-0734716d",
+        "usageUnknown": false,
+        "valueSha256": "238ba99d431c174f023ae23bf1288051e855dd1c9ed3089a90206aada42c53ba"
+      },
+      {
+        "envelopeExceeded": false,
+        "family": "conversation_memory",
+        "kind": "active",
+        "knownInputTokensLowerBound": 22689,
+        "knownOutputTokensLowerBound": 863,
+        "participant": "eva2",
+        "registeredProviderAttempts": 8,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "revision": 22,
+        "sampleId": "eva2-successor-cm03-epoch1-17ce05e0",
+        "stopRequested": true,
+        "unknownUsageAttemptCount": 0,
+        "usageUnknown": false,
+        "valueSha256": "1e39df936f4c56c1446f337b84af46bd3228dec246933c15f9f6a7245843f09d"
+      },
+      {
+        "envelopeExceeded": false,
+        "family": "conversation_memory",
+        "kind": "active",
+        "knownInputTokensLowerBound": 0,
+        "knownOutputTokensLowerBound": 0,
+        "participant": "eva2",
+        "registeredProviderAttempts": 1,
+        "reservation": {
+          "providerAttempts": 16,
+          "providerInputTokens": 1048576,
+          "providerOutputTokens": 19200,
+          "speechRequests": 0,
+          "toolDispatches": 16,
+          "wallSeconds": 480
+        },
+        "revision": 5,
+        "sampleId": "eva2-successor-cm04-epoch1-e87d5a92",
+        "stopRequested": true,
+        "unknownUsageAttemptCount": 1,
+        "usageUnknown": true,
+        "valueSha256": "7cb6e90a5905b9387ed5f48259d91d8bef38f38f92f84007b261a313b4c2be1c"
+      }
+    ],
+    "totalUsage": "UNKNOWN"
+  },
+  "epoch": 1,
+  "evidence": {
+    "finalAuthorityTechnical": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/final-authority-technical.private.json",
+      "sha256": "11c37e438fda2830d02928d66baf58b258cab7ced8a2a4c0d38e7cbb85e797b5"
+    },
+    "firstTurnSettlementBeforeStop": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/sample/cm-settlement.private.json",
+      "sha256": "423a7192b49d4b5b2a69110d43658f45857c7d5b2d8cf6d6c76d87d97339e850"
+    },
+    "independentAdmissionReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-agentzero-parent-accounting-admission-review-20261006.json",
+      "sha256": "2d1fbd3fbb8d300bc14b46a6b578af2b93536357cd699977187fd8d1fb0bb447"
+    },
+    "inspectOriginalSummary": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/inspect-private/inspect-result-summary.json",
+      "sha256": "9df008ab654e5fd3559928a5b9c0bf3b963048dc7abf5b5492c7ed22ff6a3ba0"
+    },
+    "nativeExecutionSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/sample/execution-source.json",
+      "sha256": "03b422f05093f7be0d376f5e8c42abf1317113146b9b29b7c33c689d9d149bc3"
+    },
+    "nativeFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/sample/native-case-failure.json",
+      "sha256": "385b57fce24c891c6772d5c39669edd725219662553df7cb9eb806bf99af62f6"
+    },
+    "nativeSdkBinding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/sample/sdk-client-binding.jsonl",
+      "sha256": "198475315d195c474f9b4edf2c92d8e22abb6a6802e4f8e1d8ef395d7110a96b"
+    },
+    "safeProjection": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/terminal-safe-projection.private.json",
+      "sha256": "0cec83558d48bbc422ef5b4b7186403bdb3017b2940ad66b01bf1b1da43c49db"
+    },
+    "sdkBoundary": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/sample/sdk-request-boundary.json",
+      "sha256": "b27f1d446f7bc5b46cbd8e09eb238e538bf6a63416878bb339ebcfe26fa1991a"
+    }
+  },
+  "execSession": 26064,
+  "executeOnce": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execute-once.private.json",
+    "sha256": "70c21b143e15105a4605119a971eb1c8e479df7c7e22797a06ab83ecda6e2a57"
+  },
+  "execution": {
+    "absoluteDeadline": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/sample-deadlines/agent_zero-absolute-deadline.json",
+      "sha256": "6dbe3a154a4dc52fc106c05e8f41365d43b82ee2e2577fdf56ae1d777d4a0fc6"
+    },
+    "completedOriginalSample": false,
+    "completedOriginalUserTurnReadbacks": 0,
+    "completedOriginalUserTurnSettlements": 0,
+    "contactSdkRequestsAreNotUserTurnCount": true,
+    "deadlineRenewed": false,
+    "elapsedSeconds": 28.76375591100077,
+    "firstContentLatencySeconds": null,
+    "firstUserTurnNativeCommunicateReturned": true,
+    "inspectControllerExitCode": 0,
+    "inspectStatus": "success",
+    "latencyMeasurementLimit": "Only total native child elapsed time was durably retained; no per-attempt or first-content timing claim.",
+    "nativeAnswerLatencySeconds": null,
+    "nativeBridgeResultPresent": false,
+    "nativeChildExitCode": 1,
+    "nativeContextCountWithRetainedChat": 1,
+    "originalPlannedUserTurns": 3,
+    "originalWallLimitSeconds": 480,
+    "perAttemptLatencySeconds": null,
+    "successfulNativeResult": false,
+    "wallExpired": false
+  },
+  "family": "conversation_memory",
+  "frozenOriginalBindings": {
+    "caseSha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+    "commitmentSha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "criteriaUnchanged": true,
+    "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+    "modelRoles": {
+      "allHelpers": {
+        "model": "gpt-6-astra",
+        "reasoningEffort": "medium"
+      },
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoningEffort": "none"
+      }
+    },
+    "nativeSourcePin": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+    "newSetEpochReplayOrBudgetReset": false,
+    "participantSourceChanged": false,
+    "perSampleLimits": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "sourceHashes": {
+      "accounting": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291",
+      "adapter": "ca8e1bc60ffd09dae751e4d4eb64730fd0c3fe126eb7b4b2915a59c8cea7f40c",
+      "adapterDiff": "3102f4fdfd483efdab1acd97aac1fce8d50914ed26a97a3c41620af70b44134e",
+      "adapterRetainedBefore": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+      "ipcTests": "35d8e65703818c50b12a83d23048fbcbde690e04cd2e856a5185bacbbb8bd48e",
+      "nativeGlue": "2087ffaf4854a91908e780d5f6ad72092ff277669696dd688f93335c03df6b0a",
+      "processAccounting": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774"
+    },
+    "sourceProjectionSha256": "6233edb938006fb3087e32fb29e5ec3a219f63a0c166568f9a49fb09a2de6bd7"
+  },
+  "independentEndReview": {
+    "additionalCallsProbesReplayOrScorerExecutions": 0,
+    "aiJudgeUsed": false,
+    "comparisonWinEstablished": false,
+    "fullNativeContextThreadCleanupReceipt": "UNKNOWN",
+    "quality": "UNKNOWN",
+    "recordedHumanRaters": 0,
+    "requiredRealIndependentBlindedHumanRaters": 2,
+    "reviewReceipt": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-agentzero-parent-accounting-admission-review-20261006.json",
+      "sha256": "3c043802f71d49522783cac8d239f7aebda6de569929ac42c3c86314ab5a1d80"
+    },
+    "reviewedResultSha256": "e03eacd116259a6badd5d13e61c264ca0e8695b2ffe8360141c950dc6c94990a",
+    "reviewedSafeProjectionSha256": "0cec83558d48bbc422ef5b4b7186403bdb3017b2940ad66b01bf1b1da43c49db",
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "sampleTotalSdkUsage": "UNKNOWN",
+    "scope": "technical_unknown_result_report_and_publication_only",
+    "status": "GO_report_and_publication",
+    "verified": [
+      "parent_accounting_deadline_and_closure_bindings",
+      "same_authority_all_eight_row_digests_and_seven_prior_rows_preserved",
+      "six_sdk_attempts_four_completed_two_unknown_helper_usages",
+      "first_turn_helper_failure_partial_model_access_distinct_from_original_task_completion",
+      "tracked_http_native_process_network_container_closed",
+      "original_turn_readbacks_and_quality_unknown_preserved"
+    ]
+  },
+  "nextStep": {
+    "closedSampleReplayPermitted": false,
+    "currentAgentZeroUsageUnknownAdmissionGuard": "PRESERVED",
+    "newSampleOrModelCallAuthorized": false,
+    "productSourceCorrectionJustified": "UNKNOWN",
+    "qualityRemainsOpen": true,
+    "smallestFutureEvaluatorObservabilitySeam": "Record only technical non-200 native proxy status/cause class at existing BridgeTransport error branch and propagated SDK exception class before sdk_failed_usage_unknown; no provider/body/token content. This would improve future diagnosis but cannot recover missing usage or retroactively complete this closed sample."
+  },
+  "participant": "agent_zero",
+  "providerAccounting": {
+    "abortedAttempts": 2,
+    "accountingComplete": false,
+    "actualNativeHttpEntries": 6,
+    "attempts": [
+      {
+        "id": 0,
+        "model": "gpt-6-sol",
+        "nativeProxyStatus": 200,
+        "nativeResponseStream": true,
+        "reasoning_effort": "none",
+        "role": "contact",
+        "sample_id": "agent_zero:EV003-CM-01:epoch1",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 9577,
+          "output_tokens": 66,
+          "total_tokens": 9643
+        }
+      },
+      {
+        "id": 1,
+        "model": "gpt-6-sol",
+        "nativeProxyStatus": 200,
+        "nativeResponseStream": true,
+        "reasoning_effort": "none",
+        "role": "contact",
+        "sample_id": "agent_zero:EV003-CM-01:epoch1",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 9704,
+          "output_tokens": 66,
+          "total_tokens": 9770
+        }
+      },
+      {
+        "id": 2,
+        "model": "gpt-6-sol",
+        "nativeProxyStatus": 200,
+        "nativeResponseStream": true,
+        "reasoning_effort": "none",
+        "role": "contact",
+        "sample_id": "agent_zero:EV003-CM-01:epoch1",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 9804,
+          "output_tokens": 60,
+          "total_tokens": 9864
+        }
+      },
+      {
+        "id": 3,
+        "model": "gpt-6-astra",
+        "nativeProxyStatus": 502,
+        "nativeResponseStream": false,
+        "reasoning_effort": "medium",
+        "role": "helper",
+        "sample_id": "agent_zero:EV003-CM-01:epoch1",
+        "status": "aborted",
+        "usage": null
+      },
+      {
+        "id": 4,
+        "model": "gpt-6-astra",
+        "nativeProxyStatus": 200,
+        "nativeResponseStream": false,
+        "reasoning_effort": "medium",
+        "role": "helper",
+        "sample_id": "agent_zero:EV003-CM-01:epoch1",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 894,
+          "output_tokens": 5,
+          "total_tokens": 899
+        }
+      },
+      {
+        "id": 5,
+        "model": "gpt-6-astra",
+        "nativeProxyStatus": 502,
+        "nativeResponseStream": false,
+        "reasoning_effort": "medium",
+        "role": "helper",
+        "sample_id": "agent_zero:EV003-CM-01:epoch1",
+        "status": "aborted",
+        "usage": null
+      }
+    ],
+    "completedAttempts": 4,
+    "completedContactAttempts": 3,
+    "completedHelperAttempts": 1,
+    "contactAttempts": 3,
+    "externalActionDispatches": 0,
+    "helperAttempts": 3,
+    "knownPartialSdkUsage": {
+      "input_tokens": 29979,
+      "output_tokens": 197,
+      "total_tokens": 30176
+    },
+    "parentErrors": [],
+    "providerAttempts": 6,
+    "rawParentReport": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/parent-accounting-report.private.json",
+      "sha256": "2af4ee6664ee4e2d0099924b8290e844b3819620264a9b0724f907ff1d59ace9"
+    },
+    "rawSdkUsageUnknownPreserved": true,
+    "registeredCallsNotAssumedEquivalentToAllRealCalls": true,
+    "speechRequests": 0,
+    "stopReasonClass": "SDK_USAGE_UNKNOWN",
+    "stopRequested": true,
+    "toolDispatchNames": [
+      "memory_load",
+      "memory_save",
+      "response"
+    ],
+    "toolDispatchesRecorded": 3,
+    "totalSdkUsage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null
+    },
+    "unknownHelperUsageAttempts": 2
+  },
+  "quality": {
+    "aiJudgeUsed": false,
+    "comparisonWinner": "UNKNOWN",
+    "humanJudgmentsSubstituted": false,
+    "originalHumanRatings": [
+      null,
+      null
+    ],
+    "originalSampleDisposition": "UNKNOWN",
+    "originalSemanticScore": null,
+    "recordedHumanRaters": 0,
+    "requiredRealIndependentBlindedHumanRaters": 2,
+    "rescoringOrReplay": false,
+    "semanticQuality": "UNKNOWN",
+    "technicalModelAccessIsNotAnswerQuality": true
+  },
+  "readback": {
+    "durableMemoryRecordCount": 7,
+    "durableNativeChatPresent": true,
+    "durableReplyPresent": true,
+    "durableResponseLogRecordCount": 2,
+    "memoryContentOrAnswerCorrectnessAssessed": false,
+    "memoryIndexIntegrity": {
+      "mapping_matches_documents": true,
+      "native_hash_matches": true,
+      "native_hash_present": true,
+      "saved": true
+    },
+    "originalInRunReadbacksCompleted": 0,
+    "originalMemoryPredicates": "UNKNOWN",
+    "postTerminalNativeStarts": 0,
+    "postTerminalProviderCalls": 0,
+    "postTerminalReadOnlyInspection": true,
+    "postTerminalScorerInvocations": 0,
+    "responseLogCountDoesNotEstablishCompletedUserTurns": true,
+    "technicalReadback": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/retained-independent-readback-technical.private.json",
+      "sha256": "04e5a213b25c9b8de0ef07edbd220ff2309bef8f85431186190e2e8119cc5888"
+    }
+  },
+  "runHandle": "ev003-agentzero-successor-cm01-parent-20261006-v1",
+  "sampleId": "agent_zero:EV003-CM-01:epoch1",
+  "status": "terminal_first_turn_helper_failure_usage_and_quality_unknown",
+  "taskId": "P2.1"
+}

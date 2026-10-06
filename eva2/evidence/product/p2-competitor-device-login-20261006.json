@@ -1,0 +1,51 @@
+{
+  "contract": "p2-owned-native-device-login-v1",
+  "taskId": "P2.1",
+  "recordedAt": "2026-10-06T21:19:19.973630+00:00",
+  "status": "both_native_logins_saved",
+  "ownerConfirmation": "OpenClaw: Done Hermes: Done",
+  "participants": {
+    "openclaw": {
+      "profilePath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home",
+      "storePath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/auth.json",
+      "storeSha256": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0o600",
+      "status": "native_login_saved",
+      "externalInferenceRequests": 0,
+      "authMode": "chatgpt",
+      "source": "own-managed-codex-home",
+      "sessionId": 27215,
+      "exitCode": 0
+    },
+    "hermes": {
+      "profilePath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-native-owned",
+      "storePath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-native-owned/auth.json",
+      "storeSha256": "a4bb7b4ff4a092c1a2824439684bb164eba956f3a6d0aab44b2ba6a8035761b0",
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0o600",
+      "status": "native_login_saved",
+      "externalInferenceRequests": 0,
+      "provider": "openai-codex",
+      "source": "hermes-auth-store",
+      "baseUrl": "https://chatgpt.com/backend-api/codex",
+      "sessionId": 30337,
+      "exitCode": 0
+    }
+  },
+  "ordinaryModelExecution": "not_yet_checked_for_these_two",
+  "quality": "UNKNOWN",
+  "codesOrTokensPublished": false,
+  "credentialsCopiedOrAdopted": false,
+  "modelsProviderOrBudgetChanged": false,
+  "priorExpiredEvidencePreserved": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
+  "hermesLaunchCorrection": {
+    "cause": "buffered child stdout hid native public device code",
+    "oldSession": 75353,
+    "replacementSession": 30337,
+    "change": "existing native helper invoked with python -u; previous exact process cancelled before new code shared",
+    "modelCalls": 0
+  }
+}

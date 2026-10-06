@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T20:40:32.810643+00:00",
+        "checkedAt": "2026-10-06T20:52:50.843524+00:00",
         "deliveries": [
           {
             "title": "P2.1 · Agent Zero eigen login en native opstart hersteld",
@@ -4012,20 +4012,20 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Agent Zero-modelproef aansluiten",
+          "title": "P2.1 · OpenClaw en Hermes: uitvoerroute",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "Eigen login plus native startup/closure zijn onafhankelijk gecontroleerd. Er is een ongebruikt slot in de vaste vergelijkingsset. De bestaande modelregistratie van de native uitvoerder wordt aangesloten vóór de inhoudelijke proef.",
+          "detail": "Beide eigen aanmeldingen zijn voltooid. Hun catalogus en gewone uitvoerroute worden gecontroleerd. Agent Zero-modeltoegang bevestigd; oorspronkelijke taak bleef onvolledig door twee native-proxyHTTP502's.",
           "remaining": "Geen modelproef of kwaliteitswinst bewezen. OpenClaw/Hermes eigen login blijft nodig; oorspronkelijke CM04-UNKNOWN en accountingguard blijven behouden.",
-          "source": "eva2/evidence/product/p2-agentzero-owned-readiness-20261006.json",
+          "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T20:40:32.810643+00:00"
+          "reviewedAt": "2026-10-06T21:20:14.960463+00:00"
         },
         "next": {
-          "title": "Bestaande Agent Zero-CM01 uitvoeren na concrete toelating",
+          "title": "Oorspronkelijke native uitvoerroute bevestigen",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Dezelfde vaste set, modellen en authority; geen nieuwe matrix of budget. OpenClaw/Hermes starten pas na eigen aanmelding.",
+          "detail": "Eerst concrete bron-/profiel-/accountingbinding; daarna een oorspronkelijk ongebruikt slot indien toegelaten. Geen nieuwe matrix, modellen, budget of herhaling van gesloten proeven.",
           "remaining": "De nieuwe foutregistratie herstelt geen verloren meting en geeft geen nieuwe Eva2-sampletoelating.",
           "source": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json"
         },
@@ -4056,7 +4056,7 @@
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T20:40:32.810643+00:00"
+        "reviewedAt": "2026-10-06T20:52:50.843524+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -4364,32 +4364,32 @@
           {
             "name": "OpenClaw",
             "state": "incomplete",
-            "reason": "Verse native aanmelding is geëindigd zonder login: device_code_timeout. Beide codes zijn verlopen; meld wanneer je klaar bent om aan te melden, dan zet Codex verse codes klaar.",
-            "accessState": "login_required",
-            "executionState": "not_checked",
-            "checkedAt": "2026-10-06T20:17:11.137755+00:00",
-            "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
-            "label": "Login nodig"
+            "reason": "Verse eigen device-aanmelding geslaagd en native opgeslagen, UID1000/mode0600. Catalogus en gewone uitvoerroute worden nu gecontroleerd; nog geen inhoudelijke kwaliteitsuitslag.",
+            "accessState": "authenticated",
+            "executionState": "native_route_metadata_check",
+            "checkedAt": "2026-10-06T21:20:14.960463+00:00",
+            "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
+            "label": "Aangemeld · route wordt gecontroleerd"
           },
           {
             "name": "Hermes",
             "state": "incomplete",
-            "reason": "Verse native aanmelding is geëindigd zonder login: device_code_timeout. Beide codes zijn verlopen; meld wanneer je klaar bent om aan te melden, dan zet Codex verse codes klaar.",
-            "accessState": "login_required",
-            "executionState": "not_checked",
-            "checkedAt": "2026-10-06T20:17:11.137755+00:00",
-            "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
-            "label": "Login nodig"
+            "reason": "Verse eigen device-aanmelding geslaagd en native opgeslagen, UID1000/mode0600. Catalogus en gewone uitvoerroute worden nu gecontroleerd; nog geen inhoudelijke kwaliteitsuitslag.",
+            "accessState": "authenticated",
+            "executionState": "native_route_metadata_check",
+            "checkedAt": "2026-10-06T21:20:14.960463+00:00",
+            "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
+            "label": "Aangemeld · route wordt gecontroleerd"
           },
           {
             "name": "Agent Zero",
             "state": "incomplete",
-            "reason": "Eigen login en native startup/closure geslaagd, onafhankelijk GO. De vaste vergelijkingsset heeft een ongebruikt slot; SDK-accounting wordt nog aan de bestaande parent/aggregate-route gekoppeld. Geen modelproef of kwaliteitsuitslag bevestigd.",
+            "reason": "Eigen login/start/tokenvernieuwing en contactmodeltoegang bevestigd. De oorspronkelijke CM01 kreeg twee native-proxyHTTP502's bij Astra-helpers en stopte na28,8s; geen timeout. Bovenliggende oorzaak/volledige usage/kwaliteit onbekend. Proef schoon afgesloten; geen bewezen productverlies of kwaliteitswinnaar.",
             "accessState": "authenticated",
-            "executionState": "native_readiness_verified_model_binding_open",
-            "checkedAt": "2026-10-06T20:40:32.810643+00:00",
-            "source": "eva2/evidence/product/p2-agentzero-owned-readiness-20261006.json",
-            "label": "Aangemeld · native start geslaagd"
+            "executionState": "model_access_confirmed_original_task_unknown",
+            "checkedAt": "2026-10-06T21:15:09.989782+00:00",
+            "source": "eva2/evidence/product/p2-agentzero-original-cm01-result-20261006.json",
+            "label": "Aangemeld · proef onvolledig"
           },
           {
             "name": "OpenCode",
@@ -19535,7 +19535,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Sluit bestaande Agent Zero-accounting aan op dezelfde parent/aggregate-route en bind het bestaande ongebruikte CM01/epoch1-slot. Daarna onafhankelijke concrete toelating en gewone uitvoering. OpenClaw/Hermes eigen aanmelding blijft nodig.",
+              "nextAction": "Bevestig eigen catalogus en bestaande gewone route van de nu aangemelde OpenClaw/Hermes. Gebruik uitsluitend originele ongebruikte slots met dezelfde criteria/authority als concrete toelating haalbaar is; geen Agent Zero-replay.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19548,7 +19548,7 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T20:40:32.810643+00:00",
+              "checkedAt": "2026-10-06T21:20:14.960463+00:00",
               "assignment": {
                 "baseCommit": "ff5e3e47e02e1b47831d2b6014055657864ee402",
                 "owner": "/root",
@@ -19563,13 +19563,13 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Eigen login en native startup/closure onafhankelijk GO; gereedheidscontrole beëindigd. Bestaande actuele vaste set heeft een ongebruikt adaptercompatibel Agent Zero-CM01/epoch1-slot. Curator sluit uitsluitend de ontbrekende native SDK-accounting aan op dezelfde parent/aggregate-route vóór finaleinvoer.",
+                "currentAction": "OpenClaw27215 en Hermes30337 werkelijk exit0; eigen authstores UID1000/mode0600 bevestigd, geen inference. Curator controleert hun eigen catalogus/bestaande gewone adapterroute. Agent Zero-uitkomst onafhankelijk GO afgesloten, volledige taak/SDKtotal/kwaliteit UNKNOWN.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "eva2/evidence/product/p2-http-failure-diagnostics-20261006.json",
                   "meaning": "Gerichte oorspronkelijke diagnostische afhankelijkheid uitgevoerd, onafhankelijk GO, exact geïnstalleerd en gezonde kern bevestigd. Geen nieuwe productfunctie; login vereist."
                 },
-                "stage": "agentzero_parent_accounting_binding",
+                "stage": "openclaw_hermes_owned_catalog_and_route_metadata",
                 "currentNativePreparation": {
                   "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
                   "sessionId": 54196,
@@ -19677,7 +19677,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Sluit bestaande Agent Zero-accounting aan op dezelfde parent/aggregate-route en bind het bestaande ongebruikte CM01/epoch1-slot. Daarna onafhankelijke concrete toelating en gewone uitvoering. OpenClaw/Hermes eigen aanmelding blijft nodig.",
+                "nextAction": "Bevestig eigen catalogus en bestaande gewone route van de nu aangemelde OpenClaw/Hermes. Gebruik uitsluitend originele ongebruikte slots met dezelfde criteria/authority als concrete toelating haalbaar is; geen Agent Zero-replay.",
                 "actualUsage": {
                   "newProviderAttemptsRegistered": 1,
                   "newInputTokens": null,
@@ -19991,8 +19991,8 @@
                 },
                 "currentGoalTurn": {
                   "classification": "progress",
-                  "evidence": "eva2/evidence/product/p2-agentzero-owned-readiness-20261006.json",
-                  "meaning": "Eigen native auth toegang hersteld en werkelijke contextstartup/closure onafhankelijk GO. Geen extra productfunctie; gewone modeluitvoering wordt aangesloten."
+                  "evidence": "eva2/evidence/product/p2-agentzero-original-cm01-result-20261006.json",
+                  "meaning": "Eigen native auth hersteld, accounting op bestaande authority aangesloten en één originele CM01 uitgevoerd/afgesloten. Contactmodeltoegang bevestigd; volledige taak en kwaliteit UNKNOWN. Geen nieuwe productteller."
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -20024,14 +20024,95 @@
                   "reviewSha256": "e9e0a1bef68687820e061e21fed6d0cd37119fd92a12b2cef5c180fc9d151715"
                 },
                 "agentzeroFinalBinding": {
-                  "stage": "parent_accounting_preparation",
+                  "stage": "closed_technical_unknown_reviewed",
                   "existingSlot": "agent_zero:EV003-CM-01:epoch1",
                   "sameAuthority": true,
                   "existingAgentZeroRows": 0,
-                  "finalInputReleased": false,
+                  "finalInputReleased": true,
+                  "modelCalls": 6,
+                  "missing": "Adapter en oorspronkelijke deelnemersvalidatie gecorrigeerd; actual-ready en concrete inputvrijgave nog niet bevestigd.",
+                  "criteriaModelsAndBudgetsChanged": false,
+                  "adapterSha256": "ca8e1bc60ffd09dae751e4d4eb64730fd0c3fe126eb7b4b2915a59c8cea7f40c",
+                  "accountingSha256": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291",
+                  "ipcChecksPassed": 11,
+                  "aggregateChecksPassed": 19,
+                  "codeReview": "GO exact adapter and participant-validation deltas; full sample admission pending.",
+                  "sessionId": 26064,
+                  "runHandle": "ev003-agentzero-successor-cm01-parent-20261006-v1",
+                  "resourcePreparationActive": false,
+                  "review": "eva2/reviews/p2-agentzero-parent-accounting-admission-review-20261006.json",
+                  "reviewSha256": "3c043802f71d49522783cac8d239f7aebda6de569929ac42c3c86314ab5a1d80",
+                  "sessionActive": false,
+                  "actualReadySha256": "74324332f2819c22935d87da794cf3a3262c221c19e540060f287c84ac7e03f1",
+                  "originalEnvelopeReserved": true,
+                  "admissionSha256": "ec8f35716222562907ee4ff952413c1dd1d6405309c622fee2a74954911661a4",
+                  "releaseSha256": "70c21b143e15105a4605119a971eb1c8e479df7c7e22797a06ab83ecda6e2a57",
+                  "nativeChildPid": 3220453,
+                  "originalDeadlineSha256": "6dbe3a154a4dc52fc106c05e8f41365d43b82ee2e2577fdf56ae1d777d4a0fc6",
+                  "observedSdkReservations": 3,
+                  "observedCompletedAttempts": 2,
+                  "observedPendingAttempts": 0,
+                  "sessionTerminal": true,
+                  "inspectExitCode": 0,
+                  "nativeChildExitCode": 1,
+                  "elapsedSeconds": 28.763755911,
+                  "originalDeadlineExpired": false,
+                  "ordinaryExecutionCompleted": false,
+                  "cleanupConfirmed": true,
+                  "sameAuthorityTerminalSha256": "a25612099447b7c128e0598fc08b73e0272ad542c4634e3131357f14b03d9090",
+                  "resultPath": "eva2/evidence/product/p2-agentzero-original-cm01-result-20261006.json",
+                  "resultSha256": "bf42d8ff317511885f8f5c2bfc8dc88fb85974b5a13e1856827dfc6a8645a10c",
+                  "completedOriginalTurnReadbacks": 0,
+                  "contactModelAccessDemonstrated": true,
+                  "helperProxyStatus": 502,
+                  "underlyingProviderCause": "UNKNOWN",
+                  "usageUnknownGuardPreserved": true,
+                  "publicationReview": "GO technical UNKNOWN publication only"
+                },
+                "agentzeroOwnedRefresh": {
+                  "sessionId": 2206,
+                  "state": "verified",
+                  "nativeUid": 1000,
+                  "authSetupOnly": true,
                   "modelCalls": 0,
-                  "missing": "Existing native ProviderSampleLedger lacks parent/aggregate binding at p1_agentzero_bridge_probe.py:280.",
-                  "criteriaModelsAndBudgetsChanged": false
+                  "authorityOpened": false,
+                  "sessionTerminal": true,
+                  "failure": "JSONDecodeError in evaluator status parsing",
+                  "authRefreshResult": "success",
+                  "authSetupHttp": 1,
+                  "authHttpStatus": 200,
+                  "sameOwnedAccount": true,
+                  "storeMode": "0600",
+                  "storeSha256": "c19fd34221d3569ef9f4a57394b370df79cd1c774a80b8f49a91d3dafa944d07",
+                  "proofSha256": "a8da9cfc5f92948f1c69fe49f937867e7d10ce25fdde7f6f7b61a8cb39e2008e"
+                },
+                "agentzeroCurrentUsage": {
+                  "attempts": 6,
+                  "contactAttempts": 3,
+                  "helperAttempts": 3,
+                  "completedAttempts": 4,
+                  "abortedHelperAttempts": 2,
+                  "knownInputTokens": 29979,
+                  "knownOutputTokens": 197,
+                  "knownTotalTokens": 30176,
+                  "totalSdkTokens": null,
+                  "completeUsage": false,
+                  "credits": "UNKNOWN"
+                },
+                "currentNativeLogins": {
+                  "evidence": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
+                  "sha256": "2af3ae9d1ed4dd739875396c63d6e6ec88fc4608e6190aa292bb2b778d8cf41e",
+                  "openclaw": {
+                    "sessionId": 27215,
+                    "exitCode": 0,
+                    "state": "native_login_saved"
+                  },
+                  "hermes": {
+                    "sessionId": 30337,
+                    "exitCode": 0,
+                    "state": "native_login_saved"
+                  },
+                  "nativeInferenceDuringLogin": 0
                 }
               },
               "remaining": "CM02/CM03 technisch uitgevoerd; antwoordkwaliteit UNKNOWN. CM04 na één poging onbeslist en gesloten; geen algemene voorsprong. Oorspronkelijke dekking, twee CM02-beoordelingen en oorzaak/accounting blijven open.",

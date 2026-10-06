@@ -1,5 +1,6 @@
 """Original aggregate admission persists without inference or hidden case data."""
 from pathlib import Path
+import json
 import sys
 import subprocess
 
@@ -178,3 +179,37 @@ from cp001_process_accounting import ProcessSampleLedger
                              str(Path(__file__).resolve().parents[2] / "benchmark/inspect_ai_v1")],
                             capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
+
+
+def declared_plan():
+    frozen = json.loads((Path(__file__).resolve().parents[2] /
+                         "benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json").read_text())
+    return {**plan(), "executionOrder": frozen["executionOrder"]}
+
+
+@pytest.mark.parametrize("participant", ["openclaw", "hermes", "agent_zero"])
+def test_declared_native_participant_keeps_own_aggregate_and_unknown_guard(tmp_path, participant):
+    original = declared_plan()
+    path = tmp_path / "aggregate.db"
+    eva = PersistentAggregateLedger(path, original, BINDING, "eva2")
+    sample(eva).begin("contact", "fixture-model", "none")
+    native = PersistentAggregateLedger(path, original, BINDING, participant)
+    assert native.report()["admitted_samples"] == 0
+    complete(sample(native))
+    assert native.report()["known_observed"]["input_tokens"] == 10
+    assert eva.report()["usage_unknown"] is True
+    with pytest.raises(SampleStopped, match="aggregate usage is unknown"):
+        sample(eva, "next")
+    assert native.report()["admitted_samples"] == 1
+
+
+@pytest.mark.parametrize("original,participant", [
+    (plan(), "agent_zero"),
+    ({**plan(), "executionOrder": {"epochParticipantOrder": [["eva2"]]}}, "agent_zero"),
+    ({**plan(), "executionOrder": {"epochParticipantOrder": [["unregistered"]]}}, "unregistered"),
+])
+def test_undeclared_or_unknown_participant_rejected_before_store_creation(tmp_path, original, participant):
+    path = tmp_path / "aggregate.db"
+    with pytest.raises(ValueError, match="explicit participant"):
+        PersistentAggregateLedger(path, original, BINDING, participant)
+    assert not path.exists()

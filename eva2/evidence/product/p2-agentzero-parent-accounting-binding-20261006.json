@@ -1,0 +1,223 @@
+{
+  "contract": "Ev003AgentZeroParentAccountingBinding/v1",
+  "task": "P2.1",
+  "status": "admitted_one_available_original_cm_sample",
+  "sourceBasis": "ca05b7d9",
+  "entry": "agent_zero:EV003-CM-01:epoch1",
+  "participant": "agent_zero",
+  "caseId": "EV003-CM-01",
+  "epoch": 1,
+  "nativeParticipantSourceChanged": false,
+  "benchmarkAdapterChanged": true,
+  "providerCalls": 0,
+  "nativeContextsStarted": 0,
+  "nativeResourcesStarted": true,
+  "sampleInputReleased": false,
+  "absoluteDeadlineCreated": false,
+  "aggregateRegistryOpened": true,
+  "modelRoles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoningEffort": "none"
+    },
+    "allHelpers": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium"
+    }
+  },
+  "originalPerSampleLimits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "wallSeconds": 480,
+    "toolDispatches": 16,
+    "speechRequests": 0,
+    "externalActions": 0
+  },
+  "originalParticipantOrderRetained": [
+    "eva1-bottie",
+    "eva2",
+    "openclaw",
+    "hermes",
+    "agent_zero"
+  ],
+  "availableParticipant": "agent_zero",
+  "originalUnavailablePolicyUnchanged": true,
+  "sameAuthority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "agentZeroExistingRows": 0,
+    "historicalRowsRetained": 7,
+    "knownAttemptsLowerBound": 32,
+    "knownInputTokensLowerBound": 131196,
+    "knownOutputTokensLowerBound": 5810,
+    "eva2UnknownUsageUnchanged": true,
+    "unknownHistoricalUsageNotInferredZero": true,
+    "sameDatabaseNoCopyNoBootstrapNoResetNoDonation": true
+  },
+  "currentOriginalSlot": {
+    "committedDatasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "commitmentSha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "caseSha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+    "unused": true,
+    "closedOldDatasetNotReplayed": true,
+    "nativeTurns": 3,
+    "nativeSessions": 2,
+    "existingProjectorReused": true,
+    "oracleIncluded": false
+  },
+  "nativeBoundary": {
+    "uid": 1000,
+    "gid": 1000,
+    "ownAuthBytesUnchanged": false,
+    "authMode": "0600",
+    "nativeUidCannotReadAuthority": true,
+    "childReceivesOnlySealedParentBrokerControl": true,
+    "sameBrokerGuardBeforeSdkDispatch": true,
+    "sameParentCountsHelpersFailuresAndUnknownUsage": true,
+    "oneDurableAbsoluteDeadlineBeforeNativeLaunch": true,
+    "clockDependencyExistingPinned": "time-machine3.5.1/cp312",
+    "noNativeReadinessRepeat": true,
+    "ownAuthProfileUnchanged": true
+  },
+  "sourceHashes": {
+    "adapter": "ca8e1bc60ffd09dae751e4d4eb64730fd0c3fe126eb7b4b2915a59c8cea7f40c",
+    "accounting": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291",
+    "processAccounting": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774",
+    "nativeGlue": "2087ffaf4854a91908e780d5f6ad72092ff277669696dd688f93335c03df6b0a",
+    "ipcTests": "35d8e65703818c50b12a83d23048fbcbde690e04cd2e856a5185bacbbb8bd48e",
+    "adapterRetainedBefore": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+    "adapterDiff": "3102f4fdfd483efdab1acd97aac1fce8d50914ed26a97a3c41620af70b44134e"
+  },
+  "privateTechnicalBindings": {
+    "directory": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1",
+    "launcher": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/launch-parent-accounted-cm01.private.py",
+      "sha256": "56b93897830212ff406e69f39d34c22613e538ef872f6ca166e68751263ad02f"
+    },
+    "inspectWrapper": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/inspect-run-parent-accounted-cm01.private.py",
+      "sha256": "417c8556fabc5636cefb93f3c95edb18699413df814e35edf175f2de4ae41b5d"
+    },
+    "admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/parent-cm01-admission.private.json",
+      "sha256": "b96a9797900c855d577edb82454526960cefa1bfd663fbc41402c99912bf2167"
+    },
+    "developmentContract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/zero-inference-parent-development-contract.private.json",
+      "sha256": "54ee1b650821a7bf26efa3e7a5bc69bea7155fe410a9679ff6210ee341f8c3eb"
+    }
+  },
+  "focusedChecks": {
+    "ipcTestsPassed": 11,
+    "ipcSeconds": 3.15,
+    "boundLauncherMetadataOnly": "PASS",
+    "lockedInspectRuntime": "PASS",
+    "nativeCalendarImportOnly": "PASS",
+    "authorityUnchanged": true,
+    "zeroProviderCalls": true
+  },
+  "proposedResourcePreparationCommand": [
+    "/home/administrator/project/.eva2-artifacts/cp001-eval-env-20260912/bin/python",
+    "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/inspect-run-parent-accounted-cm01.private.py",
+    "--prepare",
+    "--admission",
+    "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/parent-cm01-admission.private.json"
+  ],
+  "commandNotStarted": false,
+  "executionGate": "Exactly one original AgentZero CM01/epoch1 admitted on existing26064; root writes O_EXCL execute-once with these final admitted bytes. No new command/sample/epoch/replay/reset.",
+  "quality": "UNKNOWN",
+  "recordedHumanRatings": 0,
+  "requiredIndependentBlindedHumanRatings": 2,
+  "entitlement": "UNKNOWN until actual admitted route succeeds; catalog omission not proof",
+  "credits": "UNKNOWN",
+  "independentReviewStatus": "GO_exact_AgentZero_CM01_epoch1_input_on_existing_handle",
+  "nativeOwnedAuthFreshness": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/native-owned-auth-freshness-technical.private.json",
+    "sha256": "a8da9cfc5f92948f1c69fe49f937867e7d10ce25fdde7f6f7b61a8cb39e2008e",
+    "sameOwnedAccount": true,
+    "nativeUid": 1000,
+    "nativeGid": 1000,
+    "mode": "0600",
+    "nativeRefreshWasDue": true,
+    "nativeShouldRefreshAfter": false,
+    "freshThroughOriginal480Seconds": true,
+    "nativeRefreshHttpRequests": 1,
+    "nativeRefreshHttpStatus": 200,
+    "catalogRequests": 0,
+    "loginFlows": 0,
+    "modelProviderCalls": 0,
+    "nativeContextsStarted": 0,
+    "beforeAuthSha256": "b82f4b97ac3ca87baa6636f2205394b19aaa9a98d6201b91e0dbf2f6a817b374",
+    "afterAuthSha256": "c19fd34221d3569ef9f4a57394b370df79cd1c774a80b8f49a91d3dafa944d07",
+    "earlierLocalFailuresRetained": true,
+    "authWasNotCopied": true,
+    "entitlement": "UNKNOWN"
+  },
+  "independentTechnicalReview": {
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "status": "GO_no_input_resource_preparation_only",
+    "reviewedPublicSha256": "622c06f8a300639e9aa22c560d6426e65d43663ec7cd975330faabd898dd2f5d",
+    "reviewedAdmissionSha256": "b96a9797900c855d577edb82454526960cefa1bfd663fbc41402c99912bf2167",
+    "inputGo": "GO_exact_original_CM01_epoch1_AgentZero_only",
+    "scope": "Historical no-input preparation GO; actual-input GO binds same live original slot separately",
+    "reviewPath": "eva2/reviews/p2-agentzero-parent-accounting-admission-review-20261006.json",
+    "preparationReviewSha256": "63800509e612333b260e807d5b9a5f3f16d0b9f550d1e35dece5fd59a90787c4"
+  },
+  "admitted": true,
+  "source_sha256": {
+    "launcher_sha256": "56b93897830212ff406e69f39d34c22613e538ef872f6ca166e68751263ad02f",
+    "probe_sha256": "ca8e1bc60ffd09dae751e4d4eb64730fd0c3fe126eb7b4b2915a59c8cea7f40c",
+    "inspect_wrapper_sha256": "417c8556fabc5636cefb93f3c95edb18699413df814e35edf175f2de4ae41b5d"
+  },
+  "execSession": 26064,
+  "runHandle": "ev003-agentzero-successor-cm01-parent-20261006-v1",
+  "actualReadiness": {
+    "status": "READY_WAITING_ORIGINAL_INPUT_ADMISSION",
+    "privateReadyPath": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/execution/actual-ready-technical.private.json",
+    "privateReadySha256": "74324332f2819c22935d87da794cf3a3262c221c19e540060f287c84ac7e03f1",
+    "sameAuthorityPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "authorityAfterReservationSha256": "c05cc7c70c5d7875241cc4210cfa5d01b9895ab804dd7b83b192725ff57a9b97",
+    "authorityProjectionPath": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/actual-authority-after-reservation-technical.private.json",
+    "authorityProjectionSha256": "b1a4fd38daecdff89132a3cd61203f4bc9cf4e1060b5a6598cc775a00a6c934d",
+    "historicalRowsRetained": 7,
+    "totalRows": 8,
+    "selectedOriginalParticipantRows": 1,
+    "selectedSampleRevision": 0,
+    "originalOwnEnvelopeReserved": true,
+    "providerAttempts": 0,
+    "controllerErrors": 0,
+    "unsettledEvents": 0,
+    "nativeContextStarted": false,
+    "nativeChildStarted": false,
+    "sampleDeadlineCreated": false,
+    "clockCreated": false,
+    "executeOnceCreated": false,
+    "sampleInputReleased": false,
+    "networkExternalEvents": 0,
+    "containerId": "0f955c0415582e808f6343c11293edb82006acc5f977ab314d79cf2b7969e725",
+    "networkId": "630fdbbf64d50f56b4c92ae0b15b0bf03fa3b80dc01aa399d27a074cb3904dcf",
+    "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+    "namespace": "net:[4026533539]",
+    "nativeUid": 1000,
+    "nativeGid": 1000,
+    "nativeUidCannotReadAuthority": true,
+    "authSha256": "c19fd34221d3569ef9f4a57394b370df79cd1c774a80b8f49a91d3dafa944d07",
+    "absoluteDeadlineBeforeChildLaunch": true,
+    "preparedReleasePath": "/home/administrator/project/.eva2-artifacts/ev003-agentzero-successor-cm01-parent-preparation-20261006-v1/prepared-one-time-input-release-technical.private.json",
+    "preparedReleaseSha256": "ad2574850017614cca842b92d9daec079d02f6a5ea845bb44e42219a404b91a5",
+    "sourcePinsUnchanged": true,
+    "independentInputReview": "GO_exact_original_CM01_epoch1_AgentZero_only"
+  },
+  "independentActualInputReview": {
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "status": "GO_one_original_CM01_epoch1_AgentZero_only",
+    "reviewPath": "eva2/reviews/p2-agentzero-parent-accounting-admission-review-20261006.json",
+    "reviewedReadySha256": "74324332f2819c22935d87da794cf3a3262c221c19e540060f287c84ac7e03f1",
+    "reviewedReleasePreparationSha256": "ad2574850017614cca842b92d9daec079d02f6a5ea845bb44e42219a404b91a5",
+    "reviewedPreAdmissionPublicSha256": "47a6401b05faa2990d8e6252a8eed54a7f2881d55311b9385a9a387f69dac60e",
+    "scope": "Actual same-authority/own sample reservation, ready network/controller/socket/nativeUID/source/ownauth/noinput/no deadline/owner-stop/execute-once and original480 before native child. No model entitlement or quality judgment."
+  }
+}
