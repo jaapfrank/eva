@@ -1,0 +1,143 @@
+{
+  "contract": "EvaComparisonPublicationReview/v1",
+  "taskId": "P2.2",
+  "reviewer": "/root/p2_independent_final_20261006",
+  "reviewedAt": "2026-10-06T08:14:21.772925+00:00",
+  "status": "GO_original_publication_finish",
+  "originalDoneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
+  "originalFinishSatisfied": true,
+  "approvalScope": "Only publishing all available comparison facts, losses and unknowns together in the existing installed project dashboard. Not P2.1, complete P2, product superiority or family acceptance.",
+  "baseCommit": "a516d779d046fe46066d12719a420e84288c1ee0",
+  "findings": [
+    {
+      "name": "latest_measurements",
+      "result": "GO",
+      "details": "Five actual native attempts/eight selected slots;36 provider attempts,172220 input,6605 output,14 native tool dispatches;contact19/helper17. Includes evaluator mapping failure and inconclusive XD01. XD02 remains unused UNKNOWN with no inference."
+    },
+    {
+      "name": "historical_outcomes",
+      "result": "GO",
+      "details": "All12 original CM publications preserved, later independent CM02 review applied only to its original objective assessment, both historical XD failures retained. Bool/null and incomplete-usage lower bounds match original public reports. Human/official semantic acceptance is never inferred from objective pass."
+    },
+    {
+      "name": "historical_measurements",
+      "result": "GO",
+      "details": "Known time, help and tool observations are published with original field boundaries; milliseconds converted to rounded seconds without renaming intervals as task speed. XD01:10 attempts,81961 input,2280 output,6 tools,151.547s;XD02:8 attempts,55594 input,1222 output,5 tools,55.723s. Unknown historical human help stays null."
+    },
+    {
+      "name": "comparison_coverage",
+      "result": "GO",
+      "details": "All six original families,12 cases×3 epochs each, missing participants and parked voice are visible. OpenClaw,Hermes,Agent Zero and OpenCode have no fabricated win/loss; missing admission or access remains unknown."
+    },
+    {
+      "name": "interpretation",
+      "result": "GO",
+      "details": "Dates/candidates are distinct; older cases are not scored as the changed installation. Existing equal-contact-model Eva1 source variant, differing functional roles, buffered JSON versus streamed first content, absent human ratings and unknown monetary/Codex costs are explicit. No general winner, overall speed, autonomy or efficiency advantage inferred."
+    },
+    {
+      "name": "installed_publication",
+      "result": "GO",
+      "details": "Read-only live project-state equals reviewed publication;served JS/CSS match installed SHA bindings. Existing browser control receipt attests overview shortcut,4 latest rows,5 metric rows,12 historical rows,historical XD time,zero JS errors and700px layout. Reviewer visually inspected retained screenshot."
+    }
+  ],
+  "resolvedCorrections": [
+    "Added historical XD runtime figures and explicit unknown help.",
+    "Preserved and displayed historical CM time observations rather than dropping known intervals.",
+    "Displayed current per-row tool counts3/0/6/0/5 and total14;preserved historical tool observations.",
+    "Historical labels explicitly distinguish objective conditions from still-open human evaluation."
+  ],
+  "consistencyChecks": {
+    "historicalTimeObservationsChecked": 242,
+    "historicalToolObservationsChecked": 31,
+    "publicEvidenceBindingsChecked": 18,
+    "sourceMismatches": [],
+    "originalTaskIdsUnchanged": 44,
+    "criteriaChanged": false,
+    "newDatasetOrEpoch": false
+  },
+  "liveViewVerification": {
+    "route": "http://localhost:44712/",
+    "stateRoute": "http://localhost:44712/project-state",
+    "tab": "Concurrenten & keuzes",
+    "htmlHttpStatus": 200,
+    "stateHttpStatus": 200,
+    "stateExactlyMatchesPublication": true,
+    "browserControlAttribution": "Coordinator executed existing Playwright/cached Chromium route; independent reviewer verified receipt,served assets and screenshot. No repeated UI/probe matrix.",
+    "screenshot": "/tmp/eva-p2-publication-20261006.png",
+    "screenshotSha256": "9ff63a686d9ea2404ca15fb65c97af5944f5d0c9c56eb2be1cdb679a8a8f8276",
+    "visualInspection": "Readable coloured result states,explicit no-general-superiority banner,new metrics,competitor unknowns and expandable historical/coverage/evidence sections.",
+    "servedAssets": [
+      {
+        "url": "http://localhost:44712/assets/index-DIGYhJM1.js",
+        "sha256": "cbaa1e01e2d1c23ed97b7ddbbb6f516d28a8db16006eca6a5982e4f902281353",
+        "matchesInstalledReceipt": true
+      },
+      {
+        "url": "http://localhost:44712/assets/index-rTSVrv08.css",
+        "sha256": "2805aee6b6cf3d7ac0c3cb51d834e33cfcdca245df7ac9d9172e4f2c2e9960f4",
+        "matchesInstalledReceipt": true
+      }
+    ],
+    "desktopCuaFailure": "First browser selection failed before UI action; not a product failure."
+  },
+  "bindings": [
+    {
+      "path": "eva2/evidence/product/p2-published-results-20261006.json",
+      "sha256": "7d4164584fc0cc9ebcfd8644f2d5939b3414d65770572e90aa725c1800b2bbad"
+    },
+    {
+      "path": "eva2/evidence/product/p2-publication-installed-20261006.json",
+      "sha256": "386dbd7233515930f9986f239ca320c2009aadbbb3d77a0cb1bcf2ea87812d18"
+    },
+    {
+      "path": "eva2/evidence/product/p2-independent-partial-results-20261006.json",
+      "sha256": "541018d2900403c5e000b3b1aa386fb22e38292fbdf537fa2bd2c0a62a6da601"
+    },
+    {
+      "path": "eva2/reviews/p2-native-admission-contract-review-20261006.json",
+      "sha256": "5ddad1db2d7d84ef1dab5398ac974677cfd527e5ae0fab06a1f18b5b7c8598d1"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx",
+      "sha256": "bdb2fa542e522cd204a348173c0a4038454e5db0ed19f298e06777a2a88ade0e"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css",
+      "sha256": "4a8cf3ba2808973a688f4079f0d26fb89000d223751811c7532fe1eb3a834913"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/index.html",
+      "sha256": "db23a7f87bfb719585ce23e92e01b86499656cb3f7d874fdd0dd748207e69f54"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/asset-manifest.json",
+      "sha256": "2ef7fbe91d256526145abc0c003efedeb96764cbbd0e0e5a69835b1b4e67a36b"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/assets/index-DIGYhJM1.js",
+      "sha256": "cbaa1e01e2d1c23ed97b7ddbbb6f516d28a8db16006eca6a5982e4f902281353"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/assets/index-rTSVrv08.css",
+      "sha256": "2805aee6b6cf3d7ac0c3cb51d834e33cfcdca245df7ac9d9172e4f2c2e9960f4"
+    }
+  ],
+  "notCompletedByThisReview": {
+    "P2.1": "Original native admission,remaining family/epoch coverage,available participant execution and human ratings remain incomplete.",
+    "overallSuperiorityProven": false,
+    "newHousemateProductFunction": false,
+    "familyAcceptance": "Seven-day practice and Jaap final opinion remain separate.",
+    "speech": "Parked;no speech action."
+  },
+  "reviewUsage": {
+    "controlledProviderCalls": 0,
+    "newModelTrials": 0,
+    "newProductTests": 0,
+    "privateDatasetReads": 0,
+    "sourceOrWorkboardEdits": 0,
+    "resourceOrAuthChanges": 0,
+    "codexDevelopmentCredits": null,
+    "monetaryCost": null
+  },
+  "completionActionForCoordinator": "P2.2 may now be marked completed against its unchanged original publication finish;P2.1,parent P2 and overall superiority must remain open."
+}

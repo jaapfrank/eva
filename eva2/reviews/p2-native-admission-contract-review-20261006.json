@@ -1,0 +1,212 @@
+{
+  "contract": "EvaIndependentNativeAdmissionSourceReview/v1",
+  "taskId": "P2.1",
+  "reviewer": "/root/p2_independent_final_20261006",
+  "checkedAt": "2026-10-06T07:58:02.353101+00:00",
+  "baseCommit": "a516d779d046fe46066d12719a420e84288c1ee0",
+  "scope": "Source-only original native resource/clock/role admission dependency and original P2.2 publication condition. No hidden cases, values, answers or oracle content published.",
+  "disposition": "NO_EXECUTION_GO_SOURCE_CONTRACTS_ONLY",
+  "sourceBindings": [
+    {
+      "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+      "relevantLines": [
+        8,
+        57,
+        72,
+        82,
+        105,
+        139
+      ]
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+      "relevantLines": [
+        29,
+        326
+      ]
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+      "relevantLines": [
+        1,
+        122,
+        129
+      ]
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+      "sha256": "586322f040fdc42c87559ccea6171c8a9715caf7af9d4298404a711431e01f7b",
+      "relevantLines": [
+        144
+      ]
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_collection_fixture.py",
+      "sha256": "863d1356aa1a94f5043e33f6bd250b1219dce58040e8cf30a76847329946d158",
+      "relevantLines": [
+        110,
+        188,
+        208,
+        264,
+        295
+      ]
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py",
+      "sha256": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+      "relevantLines": [
+        1,
+        49,
+        86,
+        99
+      ]
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py",
+      "sha256": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978",
+      "relevantLines": [
+        154,
+        226,
+        419
+      ]
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs",
+      "sha256": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+      "relevantLines": [
+        143,
+        175,
+        221
+      ]
+    },
+    {
+      "path": "eva2/tools/installer_browser_gateway.py",
+      "sha256": "c758bc5ddabf97661881bb219354ec489ec6c6907e1d2ef89086fa911d2dafb7",
+      "relevantLines": [
+        97
+      ]
+    },
+    {
+      "path": "eva2/design/product/execution-workboard-v1.json",
+      "sha256": "0060ac5d666cd351737c53aa5d270d48a58277bb8272f1158fc87b2f49e53feb",
+      "relevantLines": [
+        17158
+      ]
+    },
+    {
+      "path": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
+      "sha256": "9da786c3cd45932d59d10b5e75aa15c9429ca7b4ead659e661d31a5fb38428a5",
+      "relevantLines": [
+        375
+      ]
+    }
+  ],
+  "explicitOriginalRequirements": [
+    {
+      "requirement": "Available admitted participants only; unavailable access/adapter unknown, not loss. Full thresholds unchanged.",
+      "source": "eva2/design/product/comparable-agent-benchmarks-v1.md:8"
+    },
+    {
+      "requirement": "Same task/startdata/tools/network/hardware/envelope; prior networkless contract and native development case before final admission. Adapter errors and incomparable measurements unknown, not product loss.",
+      "source": "eva2/design/product/comparable-agent-benchmarks-v1.md:72"
+    },
+    {
+      "requirement": "Provision actual fixture resources and controlled native clocks/events; preserve hidden fixture/oracle data with curator. Bind every foreground/planning/helper/memory/retry attempt and one shared counter.",
+      "source": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json:326"
+    },
+    {
+      "requirement": "Contact Sol/none; all research/work/memory helpers Astra/medium; existing subscription route, no fallback.",
+      "source": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json:29"
+    },
+    {
+      "requirement": "Initial input only goes into Sample; provisioning callback return remains evaluator-owned. Native actor/audience/session/clock resolved before real ingress, no legacy A/B mapping.",
+      "source": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py:122"
+    }
+  ],
+  "findings": [
+    {
+      "area": "service_discovery",
+      "provenSourceFact": "CollectionFixture.request exposes the generic authenticated GET /schema and /collections operations. GET / is not a promised interface and falls through to404. The ordinary browser catalogue copies actual provider browser descriptions/schemas; resolved ConversationTurn serializes identity/text/time/audience, not fixture records.",
+      "where": "CollectionFixture.request lines188–214; installer_browser_gateway.browser_catalog lines97–128; cp001_native.eva2_request_for_turn lines144–166.",
+      "privateOperatorSourceFact": "Existing prepare_runtime_binding selects browser_catalog(rows), a browser MCP endpoint and its mandate. Existing prepare_resources starts a fresh about:blank profile. These do not advertise sealed fixture discovery descriptors.",
+      "privateOperatorLocations": {
+        "runtime_binding.py": "prepare_runtime_binding:27; browser_catalog:66; managed endpoints:78–82",
+        "prepare_resources.py": "fixture source/provisioning:100–110; browser initial page:134"
+      },
+      "interpretation": "Not projecting private fixture metadata is not itself a serializer defect: FinalDataset.with_fixture intentionally keeps callback output evaluator-owned. Source does not explicitly prescribe root redirects or adding /schema hints to the user input. The missing native-development admission proof leaves equal discoverability uncertain.",
+      "smallestPermittedCorrection": "Correct admission/provisioning evidence, using the already public generic service interface and existing browser/tool route on non-final development data. Verify actual advertised public interface, grants, transport and discovery opportunity identically for participants before inference. Preserve input bytes and hidden records/oracles. If no existing equivalent public discovery channel is established, remain UNKNOWN; no automatic endpoint hint, extra API tool or root redirect inferred from the observed final failure.",
+      "notAuthorizedHere": [
+        "Inject private fixture descriptors into task text or model instructions",
+        "Add solution hints or schema URLs selectively after results",
+        "New service-discovery layer/task-specific tool",
+        "Replay used cases or relabel failure as product win/loss"
+      ]
+    },
+    {
+      "area": "clock",
+      "provenSourceFact": "ScenarioCalendar.refresh binds generation/offset to ticking native Python clocks; auth/TLS/monotonic deadlines remain real. The original launcher publishes clock, waits acknowledgments from core/memory/delegated workers and resolves occurred_at from acknowledged offset. Fixture serve/http_server has no calendar parameter/control mount and Handler uses BaseHTTPRequestHandler.send_response, whose HTTP Date remains host-clock based.",
+      "where": "ev003_python_calendar.ScenarioCalendar.refresh:99–125; protect_native_auth:49; p1_eva2_native_worker.main:419–430; ev003_collection_fixture.http_server:264–292 and serve:295–301.",
+      "privateOperatorLocations": {
+        "launch.py": "publish_clock:189; clock_ack:195; acknowledged occurred_at:342–345",
+        "prepare_resources.py": "fixture container command:110"
+      },
+      "interpretation": "A source-visible clock-scope gap exists between simulated native time and synthetic HTTP Date. The original requirement explicitly controls native clocks/events; it does not justify changing live internet headers or global authentication time. The closed final case remains admission-uncertain; no inferred product fault or retroactive correction.",
+      "smallestPermittedCorrection": "If synthetic service current-time observations belong to scenario time, bind only those evaluator-owned service observations to the same existing ScenarioCalendar control/generation and acknowledge before original dispatch, while keeping provider auth/TLS and monotonic budgets real. Otherwise explicitly declare HTTP Date outside scenario-current-time evidence and refuse time-sensitive admission until comparable public time evidence is established. Do not change dates in inputs/data or already used resource instances.",
+      "requiredBeforeGo": [
+        "Document original controlled-clock scope for synthetic service time",
+        "Demonstrate zero-provider offline generation/settlement/HTTP-Date consistency using public development data",
+        "Preserve real auth/TLS and elapsed-time accounting",
+        "Fresh immutable adapter/source binding before any later separately admitted comparison"
+      ]
+    },
+    {
+      "area": "model_roles",
+      "provenSourceFact": "Eva1 configuredRole(model,effort) and bindRequest infer role from selected wire model/effort. Eva2 core Provider similarly classifies Sol as contact; memory/delegated explicitly use helper. Parent ledger checks role/model compatibility, but those checks alone do not independently prove each caller is foreground contact or a planning/memory helper.",
+      "where": "cp001_bottie_worker.configuredRole:143–146, bindRequest:183–185, fetch gate:221–224; p1_eva2_native_worker core Provider:154–160; delegated Provider:226–230; native memory transport:58–59.",
+      "privateOperatorLocations": {
+        "launch.py": "ProviderSampleLedger role map:246; ParentProcessAccounting allowed workers:247"
+      },
+      "interpretation": "Wire model/role accounting can be complete without full functional-role equivalence. Different numbers of foreground calls are not themselves violations. A preparatory helper cannot be made a permitted contact merely by relabeling the observed Sol request. No source-only proof that all native calls have equivalent functional roles was established.",
+      "smallestPermittedCorrection": "Record purpose-bound callsite roles from actual native entrypoints independently of chosen model, then validate against the original role map before dispatch. No role exemptions, guessed cache-key classifier or post-hoc relabeling. If the participant cannot support the fixed role policy without changing its source/model route, native admission for the controlled lane stays UNKNOWN; a separately declared source variant would require a new binding/freeze and cannot rewrite used native results.",
+      "notAuthorizedHere": [
+        "Change model quality/effort for a better final score",
+        "Infer helper purpose solely from the model already chosen",
+        "Convert native unequal-role results to a framework superiority claim",
+        "Modify or rescore historical results to pass"
+      ]
+    }
+  ],
+  "P22Assessment": {
+    "taskId": "P2.2",
+    "originalDoneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
+    "source": "eva2/design/product/execution-workboard-v1.json:17158",
+    "parentDependencies": [
+      "F1",
+      "P1"
+    ],
+    "explicitDependencyOnCompletedP21": false,
+    "decision": "P2.2 can independently complete by publishing all available factual wins/losses/unknowns with the required dimensions. Full P2 parent, P2.1 superiority criteria and family acceptance remain incomplete. No specification requires withholding an honest incomplete report until every P2.1 sample succeeds.",
+    "publicationConditions": [
+      "Include result quality, autonomy/extension outcomes, human help, timing, complete or lower-bound usage and unknown credits together",
+      "Cover named participants and original families; missing access/adapter/semantics explicitly UNKNOWN",
+      "Keep candidate/date/model/source variants distinct; historical evidence is not proof for changed current candidate",
+      "Preserve original losses, adapter errors and failed costs",
+      "No aggregate winner, incomplete-to-complete rewrite or extra product-function claim"
+    ]
+  },
+  "workPerformed": {
+    "controlledProviderCalls": 0,
+    "newInference": false,
+    "newDatasetOrEpoch": false,
+    "resourcesAuthFixturesStarted": false,
+    "privateFinalInputsOraclesChanged": false,
+    "productOrBenchmarkSourceChanged": false,
+    "testsExecuted": false,
+    "credits": null
+  },
+  "ownerOrProductDecisionRequired": false,
+  "nextAllowedAction": "Coordinator may correct only demonstrated general admission loss consistent with original contracts; bundle source-only/offline verification separately. This review grants no new inference or used-set retry."
+}

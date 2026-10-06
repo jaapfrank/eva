@@ -1,0 +1,55 @@
+{
+  "route": "http://localhost:44712/",
+  "tab": "Concurrenten & keuzes",
+  "overviewShortcutWorking": true,
+  "latestRows": 4,
+  "metricRows": 5,
+  "historicalRows": 12,
+  "historicalXdTimeVisible": true,
+  "consoleErrors": [],
+  "smallViewportNoPageOverflow": true,
+  "screenshot": "/tmp/eva-p2-publication-20261006.png",
+  "controlledProviderCalls": 0,
+  "contract": "EvaComparisonPublicationInstalled/v1",
+  "taskId": "P2.2",
+  "checkedAt": "2026-10-06T08:12:33.635177+00:00",
+  "baseCommit": "a516d779d046fe46066d12719a420e84288c1ee0",
+  "state": "awaiting_independent_publication_review",
+  "noProductComparisonWinner": true,
+  "fullP21Incomplete": true,
+  "originalTaskIds": 44,
+  "originalFinishConditionsUnchanged": true,
+  "priorAcceptancesRetained": true,
+  "installedBindings": [
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx",
+      "sha256": "bdb2fa542e522cd204a348173c0a4038454e5db0ed19f298e06777a2a88ade0e"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css",
+      "sha256": "4a8cf3ba2808973a688f4079f0d26fb89000d223751811c7532fe1eb3a834913"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/index.html",
+      "sha256": "db23a7f87bfb719585ce23e92e01b86499656cb3f7d874fdd0dd748207e69f54"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/asset-manifest.json",
+      "sha256": "2ef7fbe91d256526145abc0c003efedeb96764cbbd0e0e5a69835b1b4e67a36b"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/assets/index-DIGYhJM1.js",
+      "sha256": "cbaa1e01e2d1c23ed97b7ddbbb6f516d28a8db16006eca6a5982e4f902281353"
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-dist/assets/index-rTSVrv08.css",
+      "sha256": "2805aee6b6cf3d7ac0c3cb51d834e33cfcdca245df7ac9d9172e4f2c2e9960f4"
+    }
+  ],
+  "operatorIssues": [
+    "First CUA initialization failed in desktop sandbox helper; no UI action executed. Existing Playwright and cached Chromium used instead; no installation.",
+    "Temporary publication blocker used an object where existing UI expects text; restored text and retained metadata separately.",
+    "New overview shortcut referenced unavailable local setTab; replaced with parent onComparison callback. Same development view corrected; no rollback/model trial."
+  ],
+  "publicationEvidence": "eva2/evidence/product/p2-published-results-20261006.json"
+}

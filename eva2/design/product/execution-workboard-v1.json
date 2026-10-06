@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-06T07:33:07.108574+00:00",
+  "lastUpdated": "2026-10-06T07:54:51.149603+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -123,15 +123,15 @@
       ],
       "priorityDecision": "Eerst de vier huisgenootuitkomsten afmaken; geen actief spraakwerk. Vergelijkingsbewijs bepaalt de verbetering vóór bouwen.",
       "dashboardVerification": {
-        "checkedAt": "2026-10-05T23:34:24.615510+00:00",
-        "route": "http://127.0.0.1:44712/project-state",
-        "latestInstalledDeliveryPresent": true,
-        "activeTaskPresent": true,
-        "method": "Existing webapp data endpoint; HTML shell alone is not the dashboard data.",
-        "privateContentPrinted": false,
-        "newFrontendSource": false
+        "checkedAt": "2026-10-06T08:15:56.899036+00:00",
+        "route": "http://localhost:44712/",
+        "dataRoute": "http://localhost:44712/project-state",
+        "comparisonTab": "Concurrenten & keuzes",
+        "method": "Live Playwright using existing cached Chromium; overview shortcut,4 current resultrows,5 metrics,12 historical CMrows,historical XDtime,0JSerrors,700px no pageoverflow;JSON exact public report.",
+        "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
+        "newProviderCalls": 0
       },
-      "summary": "32/44 oorspronkelijke kleine taken afgerond. Enkele geheugenvoordelen gemeten; algemene voorsprong op Eva1/concurrenten niet bewezen. XD01/XD02 niet afgemaakt. Spraak geparkeerd.",
+      "summary": "34/44 oorspronkelijke kleine taken afgerond. P2.2 vergelijking eerlijk gepubliceerd; algemene voorsprong niet bewezen. R1.1 en volledige P2.1 blijven open; spraak geparkeerd.",
       "nextOutcomes": [
         {
           "title": "Opgeleverd · Taken afmaken en terugmelden",
@@ -1007,8 +1007,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T07:33:07.108574+00:00",
+        "checkedAt": "2026-10-06T07:54:51.149603+00:00",
         "deliveries": [
+          {
+            "title": "P2.2 · Vergelijkingsresultaten visueel gepubliceerd",
+            "date": "6 oktober",
+            "state": "installed",
+            "result": "Oorspronkelijke publicatietaak afgerond, onafhankelijk GO en live gecontroleerd. Nieuwe én eerdere geheugen-/combinatie-uitkomsten, kwaliteit, hulp, tijd, tools/tokens en onbekende kosten samen zichtbaar. Dit is geen extra huisgenootfunctie.",
+            "remaining": "Volledige P2.1, R1.1 en menselijke beoordelingen blijven open; geen algemene voorsprong bewezen.",
+            "source": "eva2/reviews/p2-publication-review-20261006.json"
+          },
           {
             "title": "P2 · Aparte vergelijking afgesloten, beperkte conclusie",
             "date": "6 oktober",
@@ -3845,30 +3853,32 @@
           }
         ],
         "now": {
-          "title": "Aparte meetronde gesloten · P2.1 nog onvolledig",
-          "state": "blocked",
-          "owner": "Codex · geen actieve modelproef",
-          "detail": "F1.2 afgerond. Eén objectief geheugenverschil ten gunste van Eva2; geen bevestigd combinatie-eindresultaat. Onze meetbinding, ongelijke modelrollen, ontbrekende native deelnemers en echte beoordelingen beperken de vergelijking. Geen algemene voorsprong bewezen."
+          "title": "P2.2 afgerond · Vergelijkingsresultaten gepubliceerd",
+          "state": "completed",
+          "owner": "Codex; onafhankelijke review afgerond",
+          "detail": "Visueel op de echte dashboardroute: kwaliteit, snelheid, hulp/zelfstandigheid, tool-/modelgebruik en onbekende kosten. Alle eerdere verliezen behouden. Geen nieuwe productfunctie of algemene winnaar.",
+          "doneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong."
         },
         "next": {
-          "title": "Oorspronkelijke vergelijkingsbinding verduidelijken",
-          "detail": "Codex heeft de meetafhankelijkheid: bronontdekking/gelijkwaardige native uitvoering. Geen productherbouw, herhaling van gebruikte eindgevallen, automatisch nieuwe matrix of spraakwerk. Volledige P2.1-eindvoorwaarden blijven staan."
+          "title": "R1.1 · Concrete providerconfiguratie verklaren",
+          "state": "nog niet gestart",
+          "detail": "Vaste proef eindigde bij een configuration-fout. Bestaande niet-afgeschermde metadata/bron onderzoeken vóór enige correctie; geen automatische retry. P2.1 volledige native meetdekking blijft afzonderlijk open."
         },
         "ownerAction": {
-          "title": "Deze ronde vraagt nu geen nieuwe handeling",
+          "title": "Voor deze oplevering hoef je niets te doen",
           "steps": [
-            "Je herstart en beide toestemmingen zijn gebruikt.",
-            "F1.2 is afgerond; persoonlijkheid en eerdere acceptaties blijven behouden.",
-            "Spraak blijft geparkeerd. Gezinsoordeel en volledige vergelijking blijven afzonderlijk."
+            "Open Concurrenten & keuzes voor de visuele vergelijking.",
+            "Je eerdere toestemming en herstart zijn verwerkt; geen proefherhaling gevraagd.",
+            "I1.2, zeven dagen gezinspraktijk en eindoordeel blijven menselijke beoordelingen; spraak blijft geparkeerd."
           ],
-          "expected": "33/44 oorspronkelijke kleine taken klaar. P2.1 en R1.1 zijn niet fictief voltooid.",
-          "detail": "De app-goalstatus blijft blocked; de tool kan die niet hervatten. Hervatten voor automatisch vervolg gebeurt in de app. Dit was geen nieuwe toestemmingsvraag of automatische vervolgproef."
+          "expected": "34/44 oorspronkelijke kleine taken klaar. P2.2 is een publicatie; volledige P2.1 en R1.1 niet afgerond.",
+          "detail": "App-goal actief. De volgende technische diagnose is nog niet gestart; geen modelproef of externe login loopt."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T07:33:07.108574+00:00"
+        "reviewedAt": "2026-10-06T08:15:56.899036+00:00"
       },
-      "reviewedAt": "2026-10-06T07:33:07.108574+00:00",
-      "checkedAt": "2026-10-06T07:33:07.108574+00:00",
+      "reviewedAt": "2026-10-06T08:15:56.899036+00:00",
+      "checkedAt": "2026-10-06T08:15:56.899036+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -3929,6 +3939,2352 @@
         "newTaskIds": false,
         "frozenCriteriaChanged": false,
         "newModelCalls": 0
+      },
+      "comparisonResults": {
+        "contract": "EvaPublishedComparisonResults/v1",
+        "taskId": "P2.2",
+        "publishedAt": "2026-10-06T08:03:21.061347+00:00",
+        "originalDoneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
+        "status": "published_partial_comparison_results",
+        "fullComparisonCompleted": false,
+        "overallSuperiorityProven": false,
+        "overallWinner": null,
+        "headline": "Enkele geheugenvoordelen; zelfstandig combinatiewerk nog geen bevestigd eindresultaat.",
+        "scope": "Aparte ronde van 6 oktober: CM01 / CM02 / XD01 / XD02, epoch 1. Eerdere vaste uitkomsten staan apart; geen nieuwe proef of herscore.",
+        "candidateBinding": {
+          "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
+          "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3"
+        },
+        "latestRows": [
+          {
+            "case": "CM01 · correctie later terughalen",
+            "eva1": {
+              "state": "unknown",
+              "label": "Onbekend: onze antwoordkoppeling faalde"
+            },
+            "eva2": {
+              "state": "observed",
+              "label": "Gecorrigeerde herinnering teruggehaald"
+            },
+            "meaning": "Geen geldig vergelijkingspaar; volledige semantische beoordeling ontbreekt."
+          },
+          {
+            "case": "CM02 · voorkeur later voortzetten",
+            "eva1": {
+              "state": "failed",
+              "label": "Gewijzigde voorkeur niet teruggehaald"
+            },
+            "eva2": {
+              "state": "observed",
+              "label": "Gewijzigde voorkeur teruggehaald"
+            },
+            "meaning": "Eén objectief geheugenverschil; geen algemene winnaar of volledig rolgelijke proef."
+          },
+          {
+            "case": "XD01 · twee diensten combineren",
+            "eva1": {
+              "state": "unknown",
+              "label": "Geen toegelaten actieadapter in deze proef"
+            },
+            "eva2": {
+              "state": "incomplete",
+              "label": "Geen afgerond resultaat; nul wijzigingen"
+            },
+            "meaning": "Gelijke toegang en meetklok waren vooraf niet voldoende aangetoond. Geen definitief productverlies."
+          },
+          {
+            "case": "XD02 · vergelijken en opslaan",
+            "eva1": {
+              "state": "unknown",
+              "label": "Geen toegelaten actieadapter in deze proef"
+            },
+            "eva2": {
+              "state": "unknown",
+              "label": "Niet uitgevoerd"
+            },
+            "meaning": "Gelijkwaardige proefbinding ontbreekt. Geen extra modelcalls."
+          }
+        ],
+        "latestMetrics": [
+          {
+            "case": "eva1-bottie:EV003-CM-01:epoch1",
+            "providerAttempts": 5,
+            "inputTokens": 26808,
+            "outputTokens": 1041,
+            "firstContentSeconds": null,
+            "sampleSecondsIncludingMemory": null,
+            "unplannedHumanHelp": 0,
+            "humanMinutes": 0,
+            "toolDispatches": 3,
+            "semanticScore": null,
+            "creditCost": null
+          },
+          {
+            "case": "eva2:EV003-CM-01:epoch1",
+            "providerAttempts": 8,
+            "inputTokens": 21782,
+            "outputTokens": 757,
+            "firstContentSeconds": [
+              8.363,
+              3.026,
+              2.9
+            ],
+            "sampleSecondsIncludingMemory": 62.123,
+            "unplannedHumanHelp": 0,
+            "humanMinutes": 0,
+            "toolDispatches": 0,
+            "semanticScore": null,
+            "creditCost": null
+          },
+          {
+            "case": "eva1-bottie:EV003-CM-02:epoch1",
+            "providerAttempts": 7,
+            "inputTokens": 44337,
+            "outputTokens": 1964,
+            "firstContentSeconds": [
+              24.737,
+              24.959,
+              7.863
+            ],
+            "sampleSecondsIncludingMemory": 59.374,
+            "unplannedHumanHelp": 0,
+            "humanMinutes": 0,
+            "toolDispatches": 6,
+            "semanticScore": null,
+            "creditCost": null
+          },
+          {
+            "case": "eva2:EV003-CM-02:epoch1",
+            "providerAttempts": 8,
+            "inputTokens": 22724,
+            "outputTokens": 1246,
+            "firstContentSeconds": [
+              6.66,
+              4.898,
+              2.974
+            ],
+            "sampleSecondsIncludingMemory": 74.55,
+            "unplannedHumanHelp": 0,
+            "humanMinutes": 0,
+            "toolDispatches": 0,
+            "semanticScore": null,
+            "creditCost": null
+          },
+          {
+            "case": "eva2:EV003-XD-01:epoch1",
+            "providerAttempts": 8,
+            "inputTokens": 56569,
+            "outputTokens": 1597,
+            "firstContentSeconds": null,
+            "sampleSecondsIncludingMemory": 53.327,
+            "unplannedHumanHelp": 0,
+            "humanMinutes": 0,
+            "toolDispatches": 5,
+            "semanticScore": null,
+            "creditCost": null
+          }
+        ],
+        "runtimeTotals": {
+          "providerAttempts": 36,
+          "inputTokens": 172220,
+          "outputTokens": 6605,
+          "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": true,
+          "actualNativeAttempts": 5,
+          "nativeToolDispatches": 14,
+          "creditCost": null,
+          "codexDevelopmentCredits": null,
+          "providerRoleCounts": {
+            "contactSolNone": 19,
+            "helperAstraMedium": 17
+          }
+        },
+        "housemateOutcomes": [
+          {
+            "name": "Geheugen",
+            "state": "observed",
+            "result": "Eén nieuwe recallvoorsprong; eerdere CM06/CM08-voordelen behouden. Oud CM01/CM07/CM12 niet gehaald. Geen algemene geheugenwinst bewezen."
+          },
+          {
+            "name": "Persoonlijkheid",
+            "state": "unknown",
+            "result": "M3.3 door Jaap geaccepteerd; geen gemeten voorkeur of voorsprong tegenover andere systemen."
+          },
+          {
+            "name": "Eigen initiatief",
+            "state": "unknown",
+            "result": "Bestaande technische bijdrage behouden; nut/timing/hinder en vergelijkingsvoordeel nog open."
+          },
+          {
+            "name": "Zelfstandig werk",
+            "state": "incomplete",
+            "result": "Eerdere XD01/XD02 niet afgerond; nieuwe XD01 zonder resultaat, maar native toelating onzeker. Geen bewijs dat algemene uitvoering slechter of beter is."
+          }
+        ],
+        "familyCoverage": [
+          {
+            "family": "conversation_memory",
+            "originalCases": 12,
+            "epochs": 3,
+            "selectedNewCases": 2,
+            "nativeAttempts": {
+              "eva2": 2,
+              "eva1-bottie": 2
+            },
+            "verifiedNativeReadbackEntries": {
+              "eva2": 2,
+              "eva1-bottie": 1
+            },
+            "notExecutedPerSelectedParticipant": 34,
+            "remainingBasis": "34 van de36 oorspronkelijke gevallen/epochs per geselecteerd systeem zijn in deze ronde niet uitgevoerd. Volledige beoordeling ontbreekt; één Eva1-antwoordkoppeling faalde."
+          },
+          {
+            "family": "cross_domain_actions",
+            "originalCases": 12,
+            "epochs": 3,
+            "selectedNewCases": 2,
+            "nativeAttempts": {
+              "eva2": 1,
+              "eva1-bottie": 0
+            },
+            "officialSuccessfulComparisonPairs": null,
+            "remainingBasis": "Gelijke toegang en bronontdekking vooraf niet aangetoond. Voor Eva1 ontbreekt de toegelaten meetadapter; dat bewijst geen ontbrekende productfunctie."
+          },
+          {
+            "family": "initiative",
+            "originalCases": 12,
+            "epochs": 3,
+            "nativeAttempts": 0,
+            "remainingBasis": "Geplande gebeurtenissen, afleidingen en beoordeling van het nut niet uitgevoerd in deze ronde."
+          },
+          {
+            "family": "browser_computer",
+            "originalCases": 12,
+            "epochs": 3,
+            "nativeAttempts": 0,
+            "remainingBasis": "Browsertransport aanwezig; de oorspronkelijke overname-, intrekking- en gebeurtenisgevallen niet uitgevoerd. Dit is geen beoordeling van browserherstart."
+          },
+          {
+            "family": "learning_projects",
+            "originalCases": 12,
+            "epochs": 3,
+            "nativeAttempts": 0,
+            "remainingBasis": "Vaste documentatie-, vaardigheids- en projecthervattingsgevallen niet uitgevoerd. R1 is een afzonderlijke proef."
+          },
+          {
+            "family": "voice_presence",
+            "originalCases": 12,
+            "epochs": 3,
+            "nativeAttempts": 0,
+            "status": "parked_by_owner",
+            "remainingBasis": "Geparkeerd op verzoek van Jaap; geen spraakbouw, installatie of fysieke proef."
+          }
+        ],
+        "unavailableParticipants": [
+          {
+            "name": "OpenClaw",
+            "state": "unknown",
+            "reason": "Actuele aanmelding, modellencatalogus en gewone uitvoerroute niet bevestigd."
+          },
+          {
+            "name": "Hermes",
+            "state": "unknown",
+            "reason": "Actuele aanmelding en gewone uitvoerroute niet toegelaten voor deze proef."
+          },
+          {
+            "name": "Agent Zero",
+            "state": "unknown",
+            "reason": "Bestaand toegangstoken verlopen; niet vernieuwd en geen proef uitgevoerd."
+          },
+          {
+            "name": "OpenCode",
+            "state": "unknown",
+            "reason": "Wel eerder als bron bekeken; geen actuele eindmeting in deze ronde."
+          }
+        ],
+        "history": [
+          {
+            "caseId": "EV003-CM-01",
+            "date": "20261004",
+            "source": "eva2/evidence/product/p2-cm01-paired-result-20261004.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 8,
+                  "inputTokens": 52645,
+                  "outputTokens": 2467,
+                  "complete": null,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "recordedIntervalSeconds",
+                    "seconds": 95.426,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "replyAndReadbackSeconds",
+                    "seconds": [
+                      43.431,
+                      33.228,
+                      15.194
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "fullSettlementSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "toolDispatches": 8
+                }
+              },
+              "eva2": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 8,
+                  "inputTokens": 22559,
+                  "outputTokens": 1186,
+                  "complete": null,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "recordedIntervalSeconds",
+                    "seconds": 81.58,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "firstContentSeconds",
+                    "seconds": [
+                      8.805,
+                      3.632,
+                      5.766
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "foregroundSeconds",
+                    "seconds": [
+                      10.828,
+                      5.454,
+                      7.071
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "fullSettlementSeconds",
+                    "seconds": [
+                      35.663,
+                      25.862,
+                      10.963
+                    ],
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "toolDispatches": 0
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-02",
+            "date": "20261004",
+            "source": "eva2/evidence/product/p2-cm02-paired-result-20261004.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 8,
+                  "inputTokens": 52629,
+                  "outputTokens": 2606,
+                  "complete": null,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": 0,
+                "timeObservations": [
+                  {
+                    "boundary": "conversationSecondsAfterReadiness",
+                    "seconds": 99.572,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "fullIntervalIncludingStartupSeconds",
+                    "seconds": 101.162,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "replyAndReadbackSeconds",
+                    "seconds": [
+                      50.078,
+                      32.913,
+                      16.423
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "fullSettlementSeconds",
+                    "seconds": [
+                      50.12,
+                      32.971,
+                      16.477
+                    ],
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": {
+                  "pair_extraUserInputs": 0,
+                  "pair_clarificationRequestsInAnswers": null
+                },
+                "toolObservations": {
+                  "totalToolDispatches": 8,
+                  "protocolDispatches": 6,
+                  "nativeMemoryDispatches": 2
+                }
+              },
+              "eva2": {
+                "objective": true,
+                "quality": "Objectieve voorwaarden gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 9,
+                  "inputTokens": 25933,
+                  "outputTokens": 1204,
+                  "complete": null,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": 0,
+                "timeObservations": [
+                  {
+                    "boundary": "conversationSecondsAfterReadiness",
+                    "seconds": 84.223,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "firstContentSeconds",
+                    "seconds": [
+                      6.256,
+                      5.953,
+                      3.201
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "foregroundSeconds",
+                    "seconds": [
+                      8.444,
+                      8.391,
+                      5.94
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "fullSettlementSeconds",
+                    "seconds": [
+                      27.095,
+                      26.266,
+                      22.332
+                    ],
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": {
+                  "pair_extraUserInputs": 0,
+                  "pair_clarificationRequestsInAnswers": null
+                },
+                "toolObservations": {
+                  "totalToolDispatches": 0
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-03",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm03-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": null,
+                "quality": "Objectief resultaat onbekend · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 6,
+                  "inputTokens": 35405,
+                  "outputTokens": 1391,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": 0,
+                "timeObservations": [
+                  {
+                    "boundary": "conversationSecondsAfterReadiness",
+                    "seconds": 56.22,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "fullIntervalIncludingStartupSeconds",
+                    "seconds": 59.942,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "firstContentSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "replyAndReadbackSeconds",
+                    "seconds": [
+                      31.377,
+                      12.721,
+                      11.96
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "fullSettlementSeconds",
+                    "seconds": [
+                      31.427,
+                      12.764,
+                      12.026
+                    ],
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": {
+                  "extraUserInputs": 0,
+                  "clarificationRequests": 0
+                },
+                "toolObservations": {
+                  "totalToolDispatches": 5,
+                  "protocolDispatches": 4,
+                  "nativeMemoryDispatches": 1
+                }
+              },
+              "eva2": {
+                "objective": null,
+                "quality": "Objectief resultaat onbekend · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 8,
+                  "inputTokens": 22812,
+                  "outputTokens": 853,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": 0,
+                "timeObservations": [
+                  {
+                    "boundary": "conversationSecondsAfterReadiness",
+                    "seconds": 89.336,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "firstContentSeconds",
+                    "seconds": [
+                      14.136,
+                      9.951,
+                      9.239
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "foregroundSeconds",
+                    "seconds": [
+                      15.475,
+                      11.812,
+                      10.124
+                    ],
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "fullSettlementSeconds",
+                    "seconds": [
+                      37.754,
+                      28.793,
+                      14.864
+                    ],
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": {
+                  "extraUserInputs": 0,
+                  "clarificationRequests": 0
+                },
+                "toolObservations": {
+                  "totalToolDispatches": 0
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-04",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm04-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 7,
+                  "inputTokens": 43054,
+                  "outputTokens": 1563,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "metrics.full_interval_ms",
+                    "seconds": 86.338,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.conversation_interval_ms",
+                    "seconds": 84.295,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[0].first_content_ms",
+                    "seconds": 52.723,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[0].foreground_ms",
+                    "seconds": 52.728,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[0].settled_ms",
+                    "seconds": 52.798,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[1].first_content_ms",
+                    "seconds": 10.395,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[1].foreground_ms",
+                    "seconds": 10.398,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[1].settled_ms",
+                    "seconds": 10.513,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[2].first_content_ms",
+                    "seconds": 16.738,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[2].foreground_ms",
+                    "seconds": 16.741,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "metrics.turns[2].settled_ms",
+                    "seconds": 16.792,
+                    "sourceUnit": "ms"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "metrics.tool_calls": 7,
+                  "metrics.protocol_tool_calls": 5,
+                  "metrics.ordinary_memory_reads": 2
+                }
+              },
+              "eva2": {
+                "objective": null,
+                "quality": "Objectief resultaat onbekend · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 1,
+                  "inputTokens": null,
+                  "outputTokens": null,
+                  "complete": false,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "metrics.first_content_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "metrics.foreground_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "metrics.settled_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "metrics.sample_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "metrics.inspect_wrapper.wrapper_wall_seconds",
+                    "seconds": 633.0,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "metrics.total_tool_calls": null,
+                  "metrics.observed_protocol_tools": 0
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-05",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm05-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": null,
+                "quality": "Objectief resultaat onbekend · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 6,
+                  "inputTokens": 34891,
+                  "outputTokens": 1508,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.sampleSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.fullConversationSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectWrapperSeconds",
+                    "seconds": 482.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].firstContentMs",
+                    "seconds": 29.431,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundMs",
+                    "seconds": 29.434,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledMs",
+                    "seconds": 29.489,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentMs",
+                    "seconds": 42.416,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundMs",
+                    "seconds": 42.419,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledMs",
+                    "seconds": 42.484,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentMs",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundMs",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledMs",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].firstContentMs",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].foregroundMs",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].settledMs",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "admittedDispatches": 5,
+                    "protocolDispatches": 4,
+                    "ordinaryMemoryDispatches": 1,
+                    "refusedProposals": 1,
+                    "externalEffectsDispatched": 0
+                  }
+                }
+              },
+              "eva2": {
+                "objective": true,
+                "quality": "Objectieve voorwaarden gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 10,
+                  "inputTokens": 27816,
+                  "outputTokens": 1231,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.sampleSeconds",
+                    "seconds": 118.205,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.fullConversationSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectWrapperSeconds",
+                    "seconds": 157.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].firstContentMs",
+                    "seconds": 20.406,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundMs",
+                    "seconds": 22.856,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledMs",
+                    "seconds": 45.944,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentMs",
+                    "seconds": 11.302,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundMs",
+                    "seconds": 13.466,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledMs",
+                    "seconds": 34.831,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentMs",
+                    "seconds": 6.89,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundMs",
+                    "seconds": 8.341,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledMs",
+                    "seconds": 13.62,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].firstContentMs",
+                    "seconds": 6.817,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].foregroundMs",
+                    "seconds": 7.677,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].settledMs",
+                    "seconds": 12.751,
+                    "sourceUnit": "ms"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "protocolConsumptions": 0,
+                    "refusedProposals": 0,
+                    "externalEffectsDispatched": 0,
+                    "completeReceipts": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-06",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm06-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 6,
+                  "inputTokens": 35379,
+                  "outputTokens": 1452,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.nativeLaunchThroughFinalSettlementSeconds",
+                    "seconds": 89.597,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.conversationThroughFinalSettlementSeconds",
+                    "seconds": 87.933,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.sampleSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectWrapperSeconds",
+                    "seconds": 92.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].firstContentMs",
+                    "seconds": 46.833,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundMs",
+                    "seconds": 46.837,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledMs",
+                    "seconds": 46.879,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentMs",
+                    "seconds": 23.653,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundMs",
+                    "seconds": 23.655,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledMs",
+                    "seconds": 23.746,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentMs",
+                    "seconds": 17.263,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundMs",
+                    "seconds": 17.266,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledMs",
+                    "seconds": 17.304,
+                    "sourceUnit": "ms"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "admittedDispatches": 5,
+                    "protocolDispatches": 4,
+                    "ordinaryMemoryDispatches": 1,
+                    "refusedProposals": 0,
+                    "externalEffectsDispatched": 0
+                  }
+                }
+              },
+              "eva2": {
+                "objective": true,
+                "quality": "Objectieve voorwaarden gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 8,
+                  "inputTokens": 21681,
+                  "outputTokens": 922,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.nativeLaunchThroughFinalSettlementSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.conversationThroughFinalSettlementSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.sampleSeconds",
+                    "seconds": 74.885,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectWrapperSeconds",
+                    "seconds": 113.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].firstContentMs",
+                    "seconds": 8.292,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundMs",
+                    "seconds": 10.681,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledMs",
+                    "seconds": 31.247,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentMs",
+                    "seconds": 3.728,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundMs",
+                    "seconds": 5.782,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledMs",
+                    "seconds": 25.902,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentMs",
+                    "seconds": 3.872,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundMs",
+                    "seconds": 5.998,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledMs",
+                    "seconds": 9.506,
+                    "sourceUnit": "ms"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "protocolConsumptions": 0,
+                    "refusedProposals": 0,
+                    "externalEffectsDispatched": 0,
+                    "completeReceipts": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-07",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm07-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 3,
+                  "inputTokens": 17410,
+                  "outputTokens": 1059,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timings.inspect_interval_seconds",
+                    "seconds": 56.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.native_full_elapsed_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.conversation_elapsed_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turn0_first_content_seconds",
+                    "seconds": 26.094,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turn0_exchange_elapsed_seconds",
+                    "seconds": 26.098,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turn0_with_ack_readback_seconds",
+                    "seconds": 26.187,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turn0_settled_seconds",
+                    "seconds": 26.195,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turn1_foreground_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turn1_settled_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "admitted": 6,
+                    "protocol": 2,
+                    "ordinary_memory": 4,
+                    "refused_external_proposals": 1,
+                    "external_actions_dispatched": 0
+                  }
+                }
+              },
+              "eva2": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 7,
+                  "inputTokens": 20274,
+                  "outputTokens": 1032,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timings.sample_seconds",
+                    "seconds": 106.699,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.inspect_interval_seconds",
+                    "seconds": 148.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].first_content_seconds",
+                    "seconds": 22.923,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].foreground_seconds",
+                    "seconds": 25.3,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].settled_seconds",
+                    "seconds": 46.785,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].first_content_seconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].foreground_seconds",
+                    "seconds": 31.447,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].settled_seconds",
+                    "seconds": 53.995,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "protocol": 0,
+                    "ordinary_memory": 1,
+                    "total_observed_executed": 1,
+                    "refused_external_proposals": 0,
+                    "external_actions_dispatched": 0,
+                    "basis": "One actual native core memory-tool call is present in durable reply usage and exact provider captures; protocol counter alone is not total tool count."
+                  }
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-08",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm08-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 5,
+                  "inputTokens": 27222,
+                  "outputTokens": 1180,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timings.native_full_elapsed_seconds",
+                    "seconds": 61.092,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.conversation_elapsed_seconds",
+                    "seconds": 59.535,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.inspect_interval_seconds",
+                    "seconds": 63.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].first_content_seconds",
+                    "seconds": 21.672,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].exchange_elapsed_seconds",
+                    "seconds": 21.676,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].reply_elapsed_seconds",
+                    "seconds": 21.676,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].settled_seconds",
+                    "seconds": 21.732,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].first_content_seconds",
+                    "seconds": 19.745,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].exchange_elapsed_seconds",
+                    "seconds": 19.747,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].reply_elapsed_seconds",
+                    "seconds": 19.747,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].settled_seconds",
+                    "seconds": 19.786,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].first_content_seconds",
+                    "seconds": 17.931,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].exchange_elapsed_seconds",
+                    "seconds": 17.937,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].reply_elapsed_seconds",
+                    "seconds": 17.937,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].settled_seconds",
+                    "seconds": 18.013,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "total_observed_executed": 5,
+                    "protocol": 3,
+                    "ordinary_memory": 2,
+                    "refused_external_proposals": 0,
+                    "external_actions_dispatched": 0
+                  }
+                }
+              },
+              "eva2": {
+                "objective": true,
+                "quality": "Objectieve voorwaarden gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 8,
+                  "inputTokens": 22763,
+                  "outputTokens": 1255,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timings.sample_seconds",
+                    "seconds": 93.948,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.inspect_interval_seconds",
+                    "seconds": 131.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].first_content_seconds",
+                    "seconds": 13.689,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].foreground_seconds",
+                    "seconds": 17.451,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].settled_seconds",
+                    "seconds": 45.235,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].first_content_seconds",
+                    "seconds": 3.252,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].foreground_seconds",
+                    "seconds": 6.038,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].settled_seconds",
+                    "seconds": 27.376,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].first_content_seconds",
+                    "seconds": 4.668,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].foreground_seconds",
+                    "seconds": 7.838,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].settled_seconds",
+                    "seconds": 13.308,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "protocol": 0,
+                    "ordinary_memory": 0,
+                    "total_observed_executed": 0,
+                    "refused_external_proposals": 0,
+                    "external_actions_dispatched": 0,
+                    "basis": "Native reply tool_calls and full provider captures checked in addition to protocol counter."
+                  }
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-09",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm09-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": null,
+                "quality": "Objectief resultaat onbekend · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 5,
+                  "inputTokens": null,
+                  "outputTokens": null,
+                  "complete": false,
+                  "lowerBound": {
+                    "input_tokens": 26038,
+                    "output_tokens": 1038,
+                    "total_tokens": 27076
+                  },
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timings.inspect_interval_seconds_rounded",
+                    "seconds": 105.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.native_full_elapsed_ms",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.conversation_elapsed_ms",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[0].reply_elapsed_ms",
+                    "seconds": 41.325,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[0].settled_elapsed_ms",
+                    "seconds": 41.379,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[0].first_content_ms",
+                    "seconds": 41.322,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[0].verified_end_ms",
+                    "seconds": 41.325,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[1].reply_elapsed_ms",
+                    "seconds": 60.079,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[1].settled_elapsed_ms",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[1].first_content_ms",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[1].verified_end_ms",
+                    "seconds": null,
+                    "sourceUnit": "ms"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "total": 3,
+                    "protocol": 3,
+                    "ordinary_memory": 0,
+                    "other_substantive": 0,
+                    "maximum": 16,
+                    "counts_are_dispatch_not_success": true
+                  }
+                }
+              },
+              "eva2": {
+                "objective": true,
+                "quality": "Objectieve voorwaarden gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 12,
+                  "inputTokens": 33351,
+                  "outputTokens": 1350,
+                  "complete": true,
+                  "lowerBound": {
+                    "input_tokens": 33351,
+                    "output_tokens": 1350,
+                    "total_tokens": 34701
+                  },
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timings.sample_seconds",
+                    "seconds": 131.064,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.inspect_interval_seconds_rounded",
+                    "seconds": 169.0,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].first_content_seconds",
+                    "seconds": 10.483,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].foreground_seconds",
+                    "seconds": 11.857,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].settled_seconds",
+                    "seconds": 28.931,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[0].model_first_content_ms",
+                    "seconds": 9.595,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[0].model_completed_ms",
+                    "seconds": 10.941,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[1].first_content_seconds",
+                    "seconds": 5.133,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].foreground_seconds",
+                    "seconds": 6.497,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].settled_seconds",
+                    "seconds": 30.963,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[1].model_first_content_ms",
+                    "seconds": 3.405,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[1].model_completed_ms",
+                    "seconds": 4.746,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[2].first_content_seconds",
+                    "seconds": 3.386,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].foreground_seconds",
+                    "seconds": 4.328,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].settled_seconds",
+                    "seconds": 30.544,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[2].model_first_content_ms",
+                    "seconds": 2.031,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[2].model_completed_ms",
+                    "seconds": 2.941,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[3].first_content_seconds",
+                    "seconds": 21.854,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[3].foreground_seconds",
+                    "seconds": 23.442,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[3].settled_seconds",
+                    "seconds": 29.337,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timings.turns[3].model_first_content_ms",
+                    "seconds": 21.528,
+                    "sourceUnit": "ms"
+                  },
+                  {
+                    "boundary": "timings.turns[3].model_completed_ms",
+                    "seconds": 23.092,
+                    "sourceUnit": "ms"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "total": 1,
+                    "protocol": 0,
+                    "ordinary_memory": 1,
+                    "other_substantive": 0,
+                    "maximum": 16,
+                    "counts_are_dispatch_not_success": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-10",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm10-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": null,
+                "quality": "Objectief resultaat onbekend · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 7,
+                  "inputTokens": null,
+                  "outputTokens": null,
+                  "complete": null,
+                  "lowerBound": {
+                    "input_tokens": 34885,
+                    "output_tokens": 1317,
+                    "total_tokens": 36202
+                  },
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.perTurn[0].foregroundSeconds",
+                    "seconds": 31.623,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledSeconds",
+                    "seconds": 31.677,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundSeconds",
+                    "seconds": 31.127,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledSeconds",
+                    "seconds": 31.184,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].foregroundSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].settledSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.sampleSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectSolverSeconds",
+                    "seconds": 69.35,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "total": 5,
+                    "protocol": 4,
+                    "ordinary": 1,
+                    "externalEffects": 0
+                  }
+                }
+              },
+              "eva2": {
+                "objective": true,
+                "quality": "Objectieve voorwaarden gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 12,
+                  "inputTokens": 34940,
+                  "outputTokens": 1284,
+                  "complete": null,
+                  "lowerBound": {
+                    "input_tokens": 34940,
+                    "output_tokens": 1284,
+                    "total_tokens": 36224
+                  },
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.perTurn[0].firstContentSeconds",
+                    "seconds": 8.34,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundSeconds",
+                    "seconds": 10.089,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledSeconds",
+                    "seconds": 26.476,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentSeconds",
+                    "seconds": 5.256,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundSeconds",
+                    "seconds": 6.979,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledSeconds",
+                    "seconds": 22.342,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundSeconds",
+                    "seconds": 2.834,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledSeconds",
+                    "seconds": 18.664,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].firstContentSeconds",
+                    "seconds": null,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].foregroundSeconds",
+                    "seconds": 3.083,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[3].settledSeconds",
+                    "seconds": 17.123,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.sampleSeconds",
+                    "seconds": 90.07,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectSolverSeconds",
+                    "seconds": 127.938,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "total": 0,
+                    "protocol": 0,
+                    "ordinary": 0,
+                    "externalEffects": 0
+                  }
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-11",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm11-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 5,
+                  "inputTokens": 34191,
+                  "outputTokens": 1551,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.launcherSeconds",
+                    "seconds": 71.494,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.conversationElapsedSeconds",
+                    "seconds": 69.961,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectSampleTotalSeconds",
+                    "seconds": 72.457,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].firstContentSeconds",
+                    "seconds": 40.619,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundSeconds",
+                    "seconds": 40.645,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledSeconds",
+                    "seconds": 40.718,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentSeconds",
+                    "seconds": 16.464,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundSeconds",
+                    "seconds": 16.466,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledSeconds",
+                    "seconds": 16.503,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentSeconds",
+                    "seconds": 12.692,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundSeconds",
+                    "seconds": 12.695,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledSeconds",
+                    "seconds": 12.738,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "totalToolDispatches": 6
+                }
+              },
+              "eva2": {
+                "objective": null,
+                "quality": "Objectief resultaat onbekend · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 8,
+                  "inputTokens": 23447,
+                  "outputTokens": 1361,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.sampleSeconds",
+                    "seconds": 96.901,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectSampleTotalSeconds",
+                    "seconds": 133.853,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].firstContentSeconds",
+                    "seconds": 21.767,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundSeconds",
+                    "seconds": 24.03,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledSeconds",
+                    "seconds": 47.011,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentSeconds",
+                    "seconds": 6.412,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundSeconds",
+                    "seconds": 9.179,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledSeconds",
+                    "seconds": 36.149,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentSeconds",
+                    "seconds": 1.631,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundSeconds",
+                    "seconds": 2.405,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledSeconds",
+                    "seconds": 5.672,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "totalToolDispatches": 0
+                }
+              }
+            }
+          },
+          {
+            "caseId": "EV003-CM-12",
+            "date": "20261005",
+            "source": "eva2/evidence/product/p2-cm12-paired-result-20261005.json",
+            "nativeSourceScope": "Original frozen Oct4 comparison; not whole-current-candidate equivalence.",
+            "participants": {
+              "eva1": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 5,
+                  "inputTokens": 27248,
+                  "outputTokens": 1049,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.launcherSeconds",
+                    "seconds": 49.752,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.conversationElapsedSeconds",
+                    "seconds": 48.202,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectSampleTotalSeconds",
+                    "seconds": 50.488,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].firstContentSeconds",
+                    "seconds": 16.76,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundSeconds",
+                    "seconds": 16.763,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledSeconds",
+                    "seconds": 16.833,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentSeconds",
+                    "seconds": 16.451,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundSeconds",
+                    "seconds": 16.455,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledSeconds",
+                    "seconds": 16.504,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentSeconds",
+                    "seconds": 14.819,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundSeconds",
+                    "seconds": 14.822,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledSeconds",
+                    "seconds": 14.861,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "protocol": 3,
+                    "ordinaryMemory": 1,
+                    "total": 4
+                  }
+                }
+              },
+              "eva2": {
+                "objective": false,
+                "quality": "Objectieve voorwaarden niet gehaald · menselijke beoordeling open",
+                "usage": {
+                  "providerAttempts": 9,
+                  "inputTokens": 25065,
+                  "outputTokens": 828,
+                  "complete": true,
+                  "lowerBound": null,
+                  "creditCost": null
+                },
+                "humanRatingsKnown": false,
+                "humanHelp": null,
+                "timeObservations": [
+                  {
+                    "boundary": "timing.sampleSeconds",
+                    "seconds": 72.378,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.inspectSampleTotalSeconds",
+                    "seconds": 110.911,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].firstContentSeconds",
+                    "seconds": 4.725,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].foregroundSeconds",
+                    "seconds": 6.247,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[0].settledSeconds",
+                    "seconds": 22.461,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].firstContentSeconds",
+                    "seconds": 2.815,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].foregroundSeconds",
+                    "seconds": 4.304,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[1].settledSeconds",
+                    "seconds": 19.482,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].firstContentSeconds",
+                    "seconds": 5.523,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].foregroundSeconds",
+                    "seconds": 6.753,
+                    "sourceUnit": "seconds"
+                  },
+                  {
+                    "boundary": "timing.perTurn[2].settledSeconds",
+                    "seconds": 22.323,
+                    "sourceUnit": "seconds"
+                  }
+                ],
+                "humanHelpObservations": null,
+                "toolObservations": {
+                  "tools": {
+                    "protocol": 0,
+                    "ordinaryMemory": 0,
+                    "total": 0
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "historicalWork": [
+          {
+            "case": "XD01",
+            "result": "Niet afgerond; beide diensten onveranderd. Eva1 niet uitvoerbaar in die proef; geen Eva1-verlies.",
+            "source": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
+            "sourceScope": "Eerdere frozen kandidaat; geen nieuwe score voor gewijzigde kandidaat.",
+            "usage": {
+              "providerAttempts": 10,
+              "inputTokens": 81961,
+              "outputTokens": 2280,
+              "nativeToolDispatches": 6,
+              "sampleSeconds": 151.547,
+              "foregroundSeconds": 12.276,
+              "terminalSettlementSeconds": 149.626,
+              "creditCost": null
+            },
+            "unplannedHumanHelp": null
+          },
+          {
+            "case": "XD02",
+            "result": "Niet afgerond; beide diensten onveranderd. Eva1 niet uitvoerbaar in die proef; geen Eva1-verlies.",
+            "source": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
+            "sourceScope": "Eerdere frozen kandidaat; geen nieuwe score voor gewijzigde kandidaat.",
+            "usage": {
+              "providerAttempts": 8,
+              "inputTokens": 55594,
+              "outputTokens": 1222,
+              "nativeToolDispatches": 5,
+              "sampleSeconds": 55.723,
+              "foregroundSeconds": 8.217,
+              "terminalSettlementSeconds": 53.893,
+              "creditCost": null
+            },
+            "unplannedHumanHelp": null
+          }
+        ],
+        "measurementLimits": [
+          "Eva1 is de bestaande variant met gelijk contactmodel, geen onaangepaste productie-Eva1. Contact/understanding Sol none; Eva2 gebruikt Astra medium voor geheugen/werk. Functionele rollen niet volledig gelijk bewezen.",
+          "Eerste inhoud meet Eva1 na gebufferd JSON-antwoord en Eva2 bij een stream-event. Totale tijden omvatten afzonderlijk geheugenwerk. Geen officiële relatieve snelheids- of kostenwinst.",
+          "Nul ongeplande menselijke hulp in de vijf nieuwe pogingen; mislukking zonder hulp is geen bewezen zelfstandige taakafronding. Hulp/tijd in oudere gevallen blijft onbekend waar niet gemeten.",
+          "Privégevallen met dezelfde persoon bewijzen geen persoonsgrenzen, gedeelde spraak of privacy in alle situaties.",
+          "Nieuwe CM-waarnemingen vervangen ontbrekende semantische eindbeoordeling niet. Twee echte beoordelaars en oorspronkelijke12 gevallen × 3 epochs per familie ontbreken. Spraak door eigenaar geparkeerd.",
+          "Creditkosten en Codex-ontwikkelverbruik onbekend. 172.220 invoer/6.605 uitvoer is alleen de volledige geselecteerde ronde van 6 oktober, inclusief mislukte/onbesliste pogingen. Historisch verbruik staat per geval; geen verzonnen totaal over alle weken.",
+          "Geen algemene winnaar. Niet-toegelaten toegang of ontbrekend bewijs telt als onbekend. Bestaande acceptaties en verliezen blijven behouden."
+        ],
+        "admissionClarification": {
+          "source": "eva2/reviews/p2-native-admission-contract-review-20261006.json",
+          "finding": "GET /schema is een bestaande generieke interface; root404 en niet geïnjecteerde private metadata bewijzen geen programmeerbug. Native discoverybewijs ontbreekt; synthetische HTTP-tijd en functionele rollen vragen oorspronkelijke admission. Geen hintlaag/endpointinjectie, scorerwijziging of herhaling."
+        },
+        "evidenceBindings": [
+          {
+            "path": "eva2/evidence/product/p2-independent-partial-results-20261006.json",
+            "sha256": "541018d2900403c5e000b3b1aa386fb22e38292fbdf537fa2bd2c0a62a6da601"
+          },
+          {
+            "path": "eva2/evidence/product/p2-independent-selected-final-20261006.md",
+            "sha256": "ccc58c097f7bbee959d02d15d4f0455091389045cbaa988423beab26d44b0cf9"
+          },
+          {
+            "path": "eva2/reviews/p2-native-admission-contract-review-20261006.json",
+            "sha256": "5ddad1db2d7d84ef1dab5398ac974677cfd527e5ae0fab06a1f18b5b7c8598d1"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm01-paired-result-20261004.json",
+            "sha256": "9fcf04c08d3f5de2ad6fbebe7ef915933dddcd2630a289296b4a680737921af4"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm02-paired-result-20261004.json",
+            "sha256": "febb217fa61bd0dfa7db97d382849fd9a211d93b9e9fb23486e09b76a6895f2d"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm02-independent-review-20261005.json",
+            "sha256": "dfad2f255022d7675530e4ca975856734194435ef55f9000e3d86f4102e09ecf"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm03-paired-result-20261005.json",
+            "sha256": "5e3741168d0178de23db18e9833effae2eda8f5c8d5db085366e004d058ff176"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm04-paired-result-20261005.json",
+            "sha256": "78f45b31404e259bcfb067d0c54fa0d17c371fcaf7f698955e451709934d25b6"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm05-paired-result-20261005.json",
+            "sha256": "364ee844a72842fb53576e5f770e8e1070e3161eb16c0688b77ad84ceafde1ea"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm06-paired-result-20261005.json",
+            "sha256": "09b1b2246acb80896d235158029cb35bd78421d14cfb2b34a752a8f2b44a82cf"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm07-paired-result-20261005.json",
+            "sha256": "f5e17844ef2efefaed1b1c6c458c80e05f49e75cfaf2aae76682227854f8d3df"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm08-paired-result-20261005.json",
+            "sha256": "6d6aa92981d33e62c4a27c5803fe2429c8ea1336203b1f19e809217448fb97f4"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm09-paired-result-20261005.json",
+            "sha256": "408c6573f2afb99b1e986cfb418db719f1ede6d526c823e99e71138876077550"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm10-paired-result-20261005.json",
+            "sha256": "acdf8e1bd86b01fa6461bbb4ec4b5c25363a1973775f5c2fc57e6f0d5cc7ff58"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm11-paired-result-20261005.json",
+            "sha256": "1c3d0da4762a573fe4b7c31d087933c4c2a5330374fc636eaa78521ba9ce373d"
+          },
+          {
+            "path": "eva2/evidence/product/p2-cm12-paired-result-20261005.json",
+            "sha256": "0791462b6e371a3073b50144f9b823b9316620820566960e03941cf218411129"
+          },
+          {
+            "path": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
+            "sha256": "3446649b18c30090d6e19759859799893289a265556c93b9522bb1fad84208c0"
+          },
+          {
+            "path": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
+            "sha256": "1adc87b33ba3d8cdf701f0f7e583354cfbf5ea799084aabf56a7506159b703db"
+          }
+        ],
+        "controlledProviderCallsForPublication": 0,
+        "codexDevelopmentCredits": null
       }
     },
     "pendingTechnicalReview": {
@@ -13413,7 +15769,7 @@
           ]
         }
       ],
-      "nextAction": "Deze aparte P2-ronde is gesloten. Eerst oorspronkelijke meetbinding en beschikbare gelijkwaardige deelnemers/toegang verduidelijken vóór meer vergelijkingsinference. F1.2 afgerond; R1 UNKNOWN; spraak geparkeerd.",
+      "nextAction": "P2.2 afgerond. Eerst R1.1 concrete providerconfiguration-oorzaak gericht verklaren uit toegestane bestaande metadata; geen proefherhaling of nieuwe criteria. Volledige P2.1-admission/dekking blijft open.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -16747,7 +19103,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Geen automatische herhaling of volledige matrix. Eerst concrete oorspronkelijke native discovery-/tijd-/rolbinding verduidelijken vóór een nieuwe afzonderlijke meetronde; geen productherbouw of gewijzigde criteria.",
+              "nextAction": "Establish original public native discovery, scenario-time scope and independently declared functional roles on development data before separately admitted further evaluation. Preserve used cases and criteria; no automatic replay or new hint layer.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -16755,24 +19111,25 @@
                 "expected": "Deze toegestane ronde is afgesloten; nu geen nieuwe handeling van Jaap nodig. Ontbrekende native toegang/beoordelingen blijven bij de volledige P2.1 zichtbaar.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T07:33:07.108574+00:00",
+              "checkedAt": "2026-10-06T08:02:40.030663+00:00",
               "assignment": {
-                "baseCommit": "d76c7fb09149156838aab392cdce5bd067241c77",
-                "owner": "/root/p2_independent_final_20261006",
+                "baseCommit": "a516d779d046fe46066d12719a420e84288c1ee0",
+                "owner": "/root",
                 "activeWorkers": [],
                 "files": [
-                  "/root: bewaart geïnstalleerde binding, bewijs, werkbord en Git."
+                  "/root: openbare native meetbinding, workboard/WERKBORD en integratie.",
+                  "/root/p2_independent_final_20261006: afzonderlijke admissionreview; geen bronwijzigingen, geheime inhoud of modelruns."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "XD01 oorspronkelijk eenmaal uitgevoerd; gemeten gebruik hieronder. Volgende oorspronkelijke proef alleen binnen de reeds vastgelegde familie-envelop. Creditkosten en Codex-ontwikkelverbruik onbekend.",
-                "currentAction": "Aparte ronde beëindigd, alle native model-/toolprocessen gestopt; bewijs behouden. Openbaar rapport vastgelegd. Geen nieuwe productfunctie, kandidaat-/criteriumwijziging of algemene winnaar.",
+                "estimate": "Gerichte openbare contractcontrole en zo nodig één kleinste adaptercorrectie met providerloze controle;0 geplande gecontroleerde modelcalls,credits Codex onbekend.",
+                "currentAction": "Source-only admission analysis completed; no model run or product correction. P2.2 publication follows separately.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "e02192e7: verliesvrije gedeelde catalogusguidance, bronreview GO,134 gerichte tests plus oude assertie vastgelegd. Beide images geïnstalleerd/gezond; gewone browseropdracht en verse24-toolcatalogus+schema-uitleg geslaagd. Geen extra producttaak, spraak of algemene winstclaim."
                 },
-                "stage": "selected_independent_round_closed_partial",
+                "stage": "native_source_contract_review_closed",
                 "finding": "Beide gesloten vergelijkingen ontvingen result.isError na gateway-RPC. De bestaande adapter verwijderde de detailtekst; de innerlijke foutoorzaak is niet meer vast te stellen.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
@@ -16830,7 +19187,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Algemene afwijzings-/afrondingsovergang gericht verklaren uit bestaand bewijs; oorzaak nog onbekend. Daarna kleinste voldoende algemene verbetering, geen ongewijzigde herhaling of nieuwe voorbeeldfunctie.",
+                "nextAction": "Establish original public native discovery, scenario-time scope and independently declared functional roles on development data before separately admitted further evaluation. Preserve used cases and criteria; no automatic replay or new hint layer.",
                 "actualUsage": {
                   "caseId": "EV003-XD-02",
                   "originalNativeRuns": 1,
@@ -17040,7 +19397,9 @@
                     "contactSolNone": 19,
                     "helperAstraMedium": 17
                   }
-                }
+                },
+                "historicalBaseCommit": "d76c7fb09149156838aab392cdce5bd067241c77",
+                "sourceAdmissionReview": "eva2/reviews/p2-native-admission-contract-review-20261006.json"
               },
               "remaining": "Geselecteerde ronde gesloten; volledige oorspronkelijke vergelijking blijft onvolledig. Vijf native pogingen, één objectief recallverschil; CM01-meetfout, XD01-admissiononzekerheid en XD02 ongebruikt UNKNOWN. Ontbrekende deelnemers, volledige12×3-dekking en twee echte beoordelingen blijven zichtbaar.",
               "latestEvidence": "eva2/evidence/product/p2-independent-partial-results-20261006.json",
@@ -17054,7 +19413,7 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": "Codex: oorspronkelijke meetbinding biedt fixture-bronontdekking niet aantoonbaar aan; geen geldige complete XD-vergelijking. Daarnaast native concurrententoegang/actieadapter en echte beoordelingen ontbreken. Geen bewijs dat Eva1 die vaardigheid mist.",
+              "blocker": "Volledige oorspronkelijke vergelijking nog open: gelijke bronontdekking, tijd/modelrollen en resterende gevallen vooraf aantonen; twee echte beoordelingen ontbreken. Dit is Codex-werk, geen nieuwe handeling van Jaap.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
@@ -17147,23 +19506,56 @@
               },
               "latestPreparationEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json",
               "ownerAuthorizationEvidence": "eva2/evidence/product/owner-resume-20261006.json",
-              "currentEvaluationEvidence": "eva2/evidence/product/p2-independent-partial-results-20261006.json"
+              "currentEvaluationEvidence": "eva2/evidence/product/p2-independent-partial-results-20261006.json",
+              "nativeAdmissionBlocker": {
+                "kind": "comparison_admission_and_original_coverage",
+                "reason": "Full original equal native admission, remaining coverage and two human ratings not established. Source review finished; private metadata omission/root404 is not a demonstrated product bug.",
+                "owner": "Codex",
+                "evidence": "eva2/reviews/p2-native-admission-contract-review-20261006.json"
+              }
             },
             {
               "id": "P2.2",
               "title": "Winsten én verliezen publiceren",
-              "status": "planned",
+              "status": "completed",
               "kind": "rapporteren",
               "doneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
               "owner": "Codex",
-              "nextAction": "Publiceer werkelijke winst/verlies tegenover Eva1 en concurrenten op resultaatkwaliteit, zelfstandig uitbreiden bij behoefte, menselijke hulp, snelheid en totaalverbruik. Geen algemene voorsprong of winst uit alleen aantallen ingebouwde functies afleiden.",
+              "nextAction": "Publicatie afgerond; oorspronkelijke volledige P2.1-vergelijking en gezinsacceptatie blijven open.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nu geen handeling nodig van jou. De volgende stap hierboven is voor Codex.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "checkedAt": "2026-10-06T08:15:56.899036+00:00",
+              "assignment": {
+                "baseCommit": "a516d779d046fe46066d12719a420e84288c1ee0",
+                "owner": "/root",
+                "files": [
+                  "Existing project dashboard publication and workboard; original comparison data immutable."
+                ],
+                "existing": "Independent closed selected round, original historical results and source-only admission review already exist.",
+                "gap": "Results are not yet presented together in the live comparison view.",
+                "finish": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
+                "estimate": "Existing public data and small existing-view addition;0 controlled provider calls;Codex credits unknown.",
+                "activeWorkers": [],
+                "stage": "completed_installed_publication",
+                "currentAction": "Oorspronkelijke P2.2 doneWhen gehaald; livebrowsercontrole en onafhankelijke GO. Geen modelproef voor publicatie."
+              },
+              "completedAt": "2026-10-06T08:15:56.899036+00:00",
+              "technicalComplete": true,
+              "installed": true,
+              "latestEvidence": "eva2/evidence/product/p2-published-results-20261006.json",
+              "review": "eva2/reviews/p2-publication-review-20261006.json",
+              "reviewSha256": "dc450ddbf6e555dc59a717f41b9c8985129e04f13e25ee4d9628a3ae597ac960",
+              "evidencePaths": [
+                "eva2/evidence/product/p2-published-results-20261006.json",
+                "eva2/evidence/product/p2-publication-installed-20261006.json",
+                "eva2/reviews/p2-publication-review-20261006.json"
+              ],
+              "remaining": "Dit publiceert deelresultaten en onbekenden; geen volledige vergelijking, nieuwe huisgenootfunctie of algemene voorsprong."
             }
           ],
           "responsibilityReview": {
@@ -17177,7 +19569,8 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "reviewer": "/root/p2_independent_final_20261006"
+          "reviewer": "/root/p2_independent_final_20261006",
+          "blocker": "P2.1 volledige oorspronkelijke meetdekking/admission en menselijke beoordelingen blijven open; P2.2 publicatie afgerond."
         },
         {
           "id": "F1",

@@ -1,3 +1,25 @@
+## 6 oktober — P2.2 afgerond: resultaten samen zichtbaar
+
+**P2.2 is afgerond, gepubliceerd en onafhankelijk GO.** In het bestaande dashboard staat onder **Concurrenten & keuzes** een visueel overzicht met kwaliteit, snelheid, menselijke hulp/zelfstandigheid, toolgebruik en modelverbruik. Alle 12 eerdere geheugengevallen en beide eerdere combinatietaken blijven met verliezen/onbekenden bewaard. De overzichtspagina heeft een directe knop. Geen nieuwe Eva-modelproef voor deze publicatie.
+
+| Stand | Betekenis |
+| --- | --- |
+| 34/44 oorspronkelijke kleine taken klaar | P2.2 is publicatie; geen extra huisgenootfunctie. |
+| P2.1 nog open | Volledige oorspronkelijke vergelijking en native voorwaarden/dekking niet voltooid. |
+| Enkele geheugenvoordelen | Eén nieuwe recallwaarneming tegenover Eva1; oude CM06/CM08-voordelen behouden. Geen algemene winnaar. |
+| R1.1 nog open | Proef UNKNOWN door providerconfiguration-fout; geen kandidaat toegepast of retry. |
+| Spraak geparkeerd | Geen spraakbouw, installatie of fysieke proef. |
+
+De gesloten aparte ronde gebruikte **36 providerpogingen, 172.220 invoer- en 6.605 uitvoertokens, 14 toolaanroepen**; creditkosten en Codex-ontwikkelverbruik onbekend. Deze publicatie gebruikte geen nieuwe gecontroleerde modelcalls. Actuele en historische kandidaat/rol-/tijdgrenzen zijn afzonderlijk zichtbaar. De oorspronkelijke 44 IDs, eindvoorwaarden en acceptaties zijn behouden.
+
+**Goal actief. Hierna:** R1.1 configuration-oorzaak gericht verklaren uit toegestane bestaande metadata; nog niet gestart. Geen nieuwe handeling van Jaap nodig voor deze publicatie. Oudere “nu”/goalblokkades hieronder zijn historische momentopnamen.
+
+[Publicatie en bewijsbindingen](evidence/product/p2-published-results-20261006.json) · [Live controle](evidence/product/p2-publication-installed-20261006.json) · [Onafhankelijke GO](reviews/p2-publication-review-20261006.json) · [Oorspronkelijke meetvoorwaarden](reviews/p2-native-admission-contract-review-20261006.json).
+
+## 6 oktober — goal hervat: oorspronkelijke native meetbinding
+
+P2.1 source-only hervat vanaf integratiecommit a516d779. Genoemde goal-/eigenaarbronnen gelezen;44 oorspronkelijke taken/eindvoorwaarden blijven staan. Root bezit de openbare meetbinding en integratie; onafhankelijke admissionreview bezit uitsluitend contractanalyse, geen bronwijziging of modelrun. Doel: alleen bewezen discovery-/tijd-/rolverlies in de bestaande native aansluiting verklaren en corrigeren. Geen verborgen eindset/scorer lezen, criteriawijziging, gebruikte proef herhalen, nieuwe resources/auth of spraakwerk.0 geplande gecontroleerde modelcalls; Codexcredits onbekend.
+
 ## 6 oktober — aparte vergelijking gesloten; F1.2 afgerond
 
 | Uitkomst | Werkelijk resultaat |
