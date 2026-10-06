@@ -1,0 +1,20 @@
+{
+  "contract": "EvaOwnerResumeAuthorization/v1",
+  "recordedAt": "2026-10-06T06:51:19.992387+00:00",
+  "source": "Direct human messages in this chat",
+  "ownerStatements": {
+    "restart": "herstart windows klaar.",
+    "R1": "R1 akkoord.",
+    "P2": "Ja, voer de aparte eindvergelijking uit"
+  },
+  "scope": {
+    "R1": "Exact prepared independent eight-run followup, unchanged original candidate/criteria/provider and cumulative accounting; up to96 new responses, unknown credits.",
+    "P2": "Separate final evaluation of changed independently bound candidate using same criteria/provider/existing envelopes; no automatic full matrix.",
+    "F1": "Actual Windows restart and original post-restart data/recall/endcheck."
+  },
+  "windowsBootUtc": "2026-10-06T06:39:55.5000000Z",
+  "previousBootUtc": "2026-10-01T09:48:48.5000000Z",
+  "bootChanged": true,
+  "speech": "parked",
+  "newFunctionClaimed": false
+}

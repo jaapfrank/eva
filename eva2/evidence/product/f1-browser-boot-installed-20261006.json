@@ -1,0 +1,101 @@
+{
+  "contract": "EvaF1BrowserBootInstalled/v1",
+  "checkedAt": "2026-10-06T07:20:51.741102+00:00",
+  "taskId": "F1.2",
+  "status": "installed_awaiting_independent_final_go",
+  "originalFinishConditionUnchanged": true,
+  "change": {
+    "module": "eva2/src/eva/operations/browser_session.py",
+    "sha256": "cdc15a042865ea3b2daea27d6d9f4cc606ad3fe64f52b833ab189cedcedef9ed",
+    "gap": "Known host reboot left stable Eva-owned browser mode requiring recovery; ordinary browser autostart could not proceed.",
+    "behavior": "Persist trusted boot identity; another proven boot with both exact processes stopped admits a fresh stopped generation. Existing admitted autostart starts that generation.",
+    "hostService": "eva-owner-browser.service",
+    "existingServiceRestartedOnce": true,
+    "coreWorkerImagesConfigurationUnchanged": true,
+    "speechChanged": false,
+    "ownerHandoffOrUncertainStateOverridden": false
+  },
+  "legacyMigration": {
+    "oldStateSha256": "82e343f43dc0116dc0c653d79dada275a7fe36d3a99ef327f3c8be77331fe4b9",
+    "originalSnapshotSha256": "d29042208a5a25c2021930d090b0cf301f642de61ccb5f02869a339f8ea4b7dc",
+    "onlyOldBootIdentityAdded": true,
+    "dataPreserved": true,
+    "provenPreviousBoot": "850edb18-8188-4247-ae67-e098d03f5f8f",
+    "actualBoot": "fa220e39-cde6-460a-aac4-38dc545f5341"
+  },
+  "ordinaryRoute": {
+    "factory": "McpAutonomyProviderFactory.build",
+    "adapter": "McpDiscoveryToolAdapter._browser_autostart",
+    "beforeState": "stopped",
+    "beforeRevision": 97,
+    "afterState": "eva",
+    "afterRevision": 99,
+    "browserReady": true,
+    "mcpReady": true,
+    "verifyGenerationPassed": true,
+    "originalWorkReplayed": false,
+    "pageActions": 0,
+    "modelCalls": 0
+  },
+  "verification": {
+    "focusedExistingTestsPassed": 33,
+    "workAndActionDeliveryEventsUnchangedAfterStart": true,
+    "retentionReceipt": "post-browser-autostart-retention.json"
+  },
+  "package": {
+    "changedSourceFiles": [
+      "src/eva/operations/browser_session.py"
+    ],
+    "sourceCount": 1225,
+    "other1224SourceHashesUnchanged": true,
+    "eightImagePinsUnchanged": true,
+    "existingVerifier": {
+      "verified": true,
+      "sources": 1225,
+      "actualImages": 8,
+      "manifestSha256": "88a7c6f6913749230f41108b6448072586299e83d91eea1091382ecd2e7dec1b",
+      "imageSetSha256": "4461090a4996af76a0625ad7f32afe7cdacd926cb4de7c16aedfbf7659442984",
+      "verificationReceiptSha256": "e49603e85275721f0d17ca761f618e7dd3f90f88a62e38e2322f190f393e1193"
+    },
+    "fullPackageStagingSha256": "7a905b26f0bc4a88c6475ab15bdff997a33a7b9074f1b7a3b80c035be41361ef",
+    "publicReleaseCreated": false
+  },
+  "preparationErrors": [
+    {
+      "description": "Operator probe assumed configured direct browser catalog; actual runtime uses admitted managed autonomy. Assertion failed before any status/control/start.",
+      "evidence": "browser-autostart-after-boot-terminal.json",
+      "effects": 0,
+      "modelCalls": 0,
+      "resumedAt": "previously unexecuted normal factory binding"
+    },
+    {
+      "description": "Operator called require_verified on the verifier's returned tuple after verification. Correct tuple projection recorded; no product modification or modelcall."
+    }
+  ],
+  "usage": {
+    "liveAutostartModelCalls": 0,
+    "liveAutostartPageActions": 0,
+    "originalTasksRepeated": 0,
+    "creditCost": null,
+    "developmentCredits": null,
+    "earlierOrdinaryRecall": "one request; accounting unknown, retained separately"
+  },
+  "limits": [
+    "This fixes restart continuity of the existing owned browser; it does not demonstrate completion of four housemate outcomes, competitive superiority or parked speech.",
+    "Independent final review pending. Original pre-boot/post-boot observations and initial NO_GO retained.",
+    "P2 isolated CM/XD resources unchanged; this host overlay is not covered by their frozen candidate results."
+  ],
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/f1-digital-candidate-20261006",
+  "evidenceSha256": {
+    "browser-boot-install-receipt.json": "13f3d0dada11c92739615fbab3ccef5f2ce45ee80aff351e35cabb31eabea498",
+    "browser-boot-install-plan.json": "61048e50f95523df54f2b7982ffd802bcb2ef4789decc3f7fcea9bd0c53d8f3a",
+    "browser-normal-autonomy-after-boot-started.json": "cab22bff5496bdc0d90a287d4d917deea45543950630d3b0352740c83310fa07",
+    "browser-normal-autonomy-after-boot-terminal.json": "65f8ee4d40086379cc10e5b7bf391aa59f6720f3dd16c1455225446c55db879e",
+    "browser-normal-autonomy-after-boot.stdout.private.json": "64a575b6c2644ecaca211849dc248b57c2028339bac0e8b903935e9f68194d11",
+    "browser-boot-package-alignment.json": "f42c71472101d651a481fd8d2af4287b17c36f4fdd9d27394f310bfdb443604a",
+    "browser-boot-package-verification.json": "cea79a2e5179a4625fde5d0c9462a088db234ca67a6079838582de62611de7c2",
+    "post-browser-autostart-retention.json": "19cf1e6753b23a00b33598ef9910b3366bbbae38fe1d70dec18373328f3d873e",
+    "browser-boot-focused-tests.json": "314dde6ac27af35b335b372365ca5b79be9d5b6d9cc1b7fbb188565f51f41a01",
+    "browser-autostart-after-boot-terminal.json": "e7504fd283be5b4dd2d13e6fcf226ea04b39bbde683d75727c6dcecd9f30acfb"
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "contract": "EvaComparisonDatasetCommitment/v1",
+  "createdAt": "2026-10-06T07:00:01.049523+00:00",
+  "status": "independent_partial_final_set_frozen_before_inference",
+  "curator": "/root/p2_independent_final_20261006",
+  "candidate": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
+    "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3"
+  },
+  "protocol": {
+    "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+    "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+  },
+  "dataset": {
+    "families": {
+      "conversation_memory": 2,
+      "cross_domain_actions": 2
+    },
+    "different_scenarios": 4,
+    "epochs": 3,
+    "inference_admitted": false,
+    "dataset_total_sha256": "7349476bb0e3ebbd7f76f8dc27375fad5815695bb22ae7e435e4c4b24be0f3f2",
+    "curation_provider_calls": 0,
+    "originalFullRequirement": {
+      "families": 6,
+      "casesPerFamily": 12,
+      "epochs": 3,
+      "samplesPerParticipant": 216
+    },
+    "selectedExecutionScope": {
+      "epoch": 1,
+      "maxEva1Eva2Samples": 8,
+      "fullMatrix": false,
+      "adaptiveExpansion": false
+    },
+    "humanScores": "unknown",
+    "fullSuperiorityClaim": false
+  },
+  "private_payloads": [
+    {
+      "name": "samples.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/holdout/samples.jsonl",
+      "sha256": "dcd621c1cf4ad6dfc86d70ab66b4345f7ec59214d1eaa1901adb91a82df826af",
+      "bytes": 1376,
+      "records": 4
+    },
+    {
+      "name": "fixtures.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/holdout/fixtures.jsonl",
+      "sha256": "f49640519f31fde6ff190e9d7b0a28fa518bdab9cb3f3d02d22fd669d6bbc9c5",
+      "bytes": 5220,
+      "records": 4
+    },
+    {
+      "name": "oracles.jsonl",
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/holdout/oracles.jsonl",
+      "sha256": "3eed5a05b9e6c27ce19614654fdd4768639daa942868869ce71d83082d0f1969",
+      "bytes": 5250,
+      "records": 4
+    }
+  ],
+  "private_curator_note": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/holdout/curator-note.md",
+    "sha256": "2d01b8585df594a7293f506c3bf4b49036a15f053245caa975c575894bde2b3c"
+  },
+  "protection": {
+    "owner": "root",
+    "directoryMode": "0700",
+    "fileMode": "0600",
+    "builderMayReadHiddenContent": false,
+    "retention": "Until original final comparison and review have been resolved; no automatic cleanup during active assessment."
+  },
+  "cases": [
+    {
+      "id": "EV003-CM-01",
+      "family": "conversation_memory",
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "status": "unscored",
+      "counts": {
+        "user_inputs": 3,
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2
+      },
+      "payload_sha256": {
+        "samples": "ed6e218325f156ef161891593b060f437f6593aa8cb8979c26e3e05849f9284a",
+        "fixtures": "5008ee0bbc886ea7c78f13e5c0809144f8a752520c60962469a75de097bda4f9",
+        "oracles": "3c0ce234aa37e841e8663eb35303cbb8b2943c6b005ea9354e82d4d8fb51420f"
+      },
+      "case_sha256": "80fa1efb6922c265ea00c7cb9ac0201719dfe451bd5906dbb44178c042cc2866"
+    },
+    {
+      "id": "EV003-CM-02",
+      "family": "conversation_memory",
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory"
+      ],
+      "required_evaluator_types": [
+        "independent_memory_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "status": "unscored",
+      "counts": {
+        "user_inputs": 3,
+        "setup_dialogue_turns": 0,
+        "scripted_events": 2
+      },
+      "payload_sha256": {
+        "samples": "4842938fc2d26bf6785686154ad04b06b331243a8f4fd566654750e116f6da67",
+        "fixtures": "7d6245096d7b13b3aa7bfb6cbb170a275280205ae4e7adb190f945906343f365",
+        "oracles": "16c95e7c28c7c75840f1b9a1fa6c86df52a264891d6a6fe195a4af1462fba170"
+      },
+      "case_sha256": "ebb086d064f3a7b85f846937de43335b0bd1595f0e5618d9667cb5c71df03770"
+    },
+    {
+      "id": "EV003-XD-01",
+      "family": "cross_domain_actions",
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "two_fixture_services",
+        "generic_browser_or_existing_http_tool",
+        "independent_effect_journal"
+      ],
+      "required_evaluator_types": [
+        "independent_collection_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "status": "unscored",
+      "counts": {
+        "user_inputs": 1,
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0
+      },
+      "payload_sha256": {
+        "samples": "616e9570ce3644892a34d0a989031b80af9febefb8d74f77b93bc2734c987a62",
+        "fixtures": "542e5b9d13ca65c54d46b41d2e3e86f7fde90a350b8d4fc6d16fc543df56238e",
+        "oracles": "d1c04bee1c6dde7627516051476e3e22e51ec0e3f7ef17d436bda712eb9cda13"
+      },
+      "case_sha256": "038edf2bf1a1eb4a8d9d6a7dc23483a1c32280795325861e440d75b9a2a1d5ff"
+    },
+    {
+      "id": "EV003-XD-02",
+      "family": "cross_domain_actions",
+      "required_resource_types": [
+        "controlled_clock",
+        "isolated_identity_memory",
+        "two_fixture_services",
+        "generic_browser_or_existing_http_tool",
+        "independent_effect_journal"
+      ],
+      "required_evaluator_types": [
+        "independent_collection_readback",
+        "native_trace",
+        "semantic_rubric",
+        "two_human_raters"
+      ],
+      "status": "unscored",
+      "counts": {
+        "user_inputs": 1,
+        "setup_dialogue_turns": 0,
+        "scripted_events": 0
+      },
+      "payload_sha256": {
+        "samples": "f364a88e524fd4c531d3b98615de23b497104360c7336584364336b32047102d",
+        "fixtures": "44723353c9aae574de7472d1fc4e3e84c2ef93bcddc142ce921b59634cc9617e",
+        "oracles": "ce66e935a3a0ce63e4351a0fbd7b22317ba56989f39aa70978bbef95a7cb6f1d"
+      },
+      "case_sha256": "3fe4422f0dbcdd464b55e47d2c1cc10e9c19b1de18f0569c3acdd3d84ee582e8"
+    }
+  ],
+  "remainingOriginalScope": {
+    "conversation_memory": {
+      "unexecutedDifferentCases": 10,
+      "unexecutedEpochs": 2
+    },
+    "cross_domain_actions": {
+      "unexecutedDifferentCases": 10,
+      "unexecutedEpochs": 2
+    },
+    "initiative": 12,
+    "browser_computer": 12,
+    "learning_projects": 12,
+    "voice_presence": {
+      "cases": 12,
+      "state": "parked_by_owner"
+    }
+  },
+  "preInferenceCurationCorrection": {
+    "reason": "XD selected time frame made explicit before any participant exposure or model use; archived first authored bytes retained privately.",
+    "archivedCommitmentSha256": "204062384069086a70eae70eb6cffbc6265074b080713c79e54441c305d78d4b",
+    "caseCountUnchanged": true,
+    "criteriaOrEnvelopesChanged": false,
+    "modelCalls": 0
+  }
+}

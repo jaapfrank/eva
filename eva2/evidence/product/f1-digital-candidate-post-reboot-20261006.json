@@ -1,0 +1,276 @@
+{
+  "contract": "EvaF1DigitalCandidatePostReboot/v1",
+  "checkedAt": "2026-10-06T07:00:50.545082+00:00",
+  "taskId": "F1.2",
+  "status": "awaiting_independent_final_review",
+  "ownerAuthorization": "eva2/evidence/product/owner-resume-20261006.json",
+  "windowsBoot": {
+    "before": "2026-10-01T09:48:48.5000000Z",
+    "after": "2026-10-06T06:39:55.5000000Z",
+    "changed": true
+  },
+  "restart": {
+    "automaticDockerStartupCompleted": true,
+    "dockerBuildkitInitializationSeconds": 200.481,
+    "dashboardProjectUrl": "http://localhost:44712/",
+    "ownerConversationUrl": "http://localhost:44711/internal/v1/dashboard/conversation",
+    "projectStateHttp": 200,
+    "ownerDashboardHttp": 200,
+    "runtimeReinstalled": false,
+    "runtimeRolledBack": false,
+    "speechSourceOrConfigurationChanged": false
+  },
+  "preservation": {
+    "bootReaderSha256": true,
+    "hostClients": true,
+    "work": true,
+    "deliveryEvents": true,
+    "memoryDocument": true,
+    "documents": true
+  },
+  "containers": [
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 2
+    },
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 2
+    },
+    {
+      "name": "eva2-household-speaker-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": null,
+      "restartCountBefore": 3,
+      "restartCountAfter": 3
+    },
+    {
+      "name": "eva2-owner-voice-media-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": null,
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-managed-b-slot3-hindsight-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-document-goal-worker-au006",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-mcp-gateway",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-document-projects-20260922",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-document-task-slot-2-20260913",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-document-task-slot-1-20260913",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-document-workspace-au006",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-shared-chrome",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-owner-voice-livekit-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": null,
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-managed-b-slot3-postgres-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "vb003-owner-browser-candidate-20260909T225932Z-10ed02-mcp",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": false,
+      "health": "starting",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "vb003-owner-browser-candidate-20260909T225932Z-10ed02-browser",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": false,
+      "health": "starting",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-workspace-filesystem",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": null,
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-managed-b-slot3-hindsight-access-lease-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": null,
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-managed-b-slot3-model-access-lease-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": null,
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    },
+    {
+      "name": "eva2-managed-b-slot3-hindsight-postgres-1",
+      "idImageConfigMountRestartPolicyUnchanged": true,
+      "runningBefore": true,
+      "runningAfter": true,
+      "health": "healthy",
+      "restartCountBefore": 0,
+      "restartCountAfter": 0
+    }
+  ],
+  "hostUnits": {
+    "count": 11,
+    "allActive": true,
+    "sameConfigAndUnitFiles": true
+  },
+  "ordinaryRecall": {
+    "httpStatus": 200,
+    "seconds": 6.907,
+    "contracts": [
+      "EvaInternalGroundedReply/v1"
+    ],
+    "originalWorkReplayed": false,
+    "creditCost": null
+  },
+  "ordinarySavedResults": [
+    {
+      "workId": "work:eva-chat:71363070-66ac-5b9a-b869-4b7d324aa2dd",
+      "httpStatus": 200,
+      "state": "succeeded",
+      "resultAvailable": true,
+      "savedResultHashUnchanged": true,
+      "generationUnchanged": true
+    },
+    {
+      "workId": "work:eva-chat:b416bca8-d11a-5113-93d1-7a579ef2d536",
+      "httpStatus": 200,
+      "state": "succeeded",
+      "resultAvailable": true,
+      "savedResultHashUnchanged": true,
+      "generationUnchanged": true
+    }
+  ],
+  "afterOrdinaryControls": {
+    "originalWorkBindingsStateResultUsageClaimsUnchanged": true,
+    "originalDeliveryAndActionEventsUnchanged": true,
+    "originalTasksReplayed": false
+  },
+  "usage": {
+    "ordinaryRecallForegroundRequests": 1,
+    "savedResultReadRequests": 2,
+    "savedResultReadModelCalls": 0,
+    "recallProviderAndTokenAccounting": "not_present_in_ordinary_reply; unknown",
+    "creditCost": null,
+    "developmentCredits": null,
+    "r1AndP2Usage": "separate_experiments_not_included"
+  },
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/f1-digital-candidate-20261006",
+  "evidenceSha256": {
+    "post-control-original-state.private.json": "c40ccabcc13c405f36df235dfbeca4f577738672fd2c800f43aa7f4473ec8e56",
+    "memory-after-reboot-terminal.json": "16464c0cc00ce1118c9a2d37f585ab653d3c91d7c3923f1242c9cf2e3721f7a4",
+    "memory-after-reboot.private.ndjson": "ed4a08ed622dbbc42acfa5a28f3afb5543ad41c893746f883d080732c0a62a86",
+    "after-reboot.private.json": "7c7d8446337e466bb43300f7524e3e112e3455b1559e98721792442730759b24",
+    "before-reboot.private.json": "d29042208a5a25c2021930d090b0cf301f642de61ccb5f02869a339f8ea4b7dc",
+    "ordinary-after-reboot-started.json": "b114e1a4ba4108ad23184c189746797c8b3be59c0319f693518c658a72bfdfd7",
+    "ordinary-results-after-reboot.private.json": "5fa073c9fb98490166513b7f4e1f3ea84db826366b0edb9c86071459376fdcf2"
+  },
+  "limits": [
+    "The ordinary memory response still requires independent semantic review.",
+    "Actual Windows restart and retained data do not establish overall competitive superiority or family acceptance.",
+    "Existing parked speech is preserved but has no physical audio assessment in this phase.",
+    "Two optional Eva-owned browser processes were running before Windows restart and stopped afterwards with their retained restartPolicy=no. IDs/images/configuration are unchanged; on-demand browser restart was not exercised by these memory/result read controls."
+  ],
+  "independentMetadataCorrection": "Corrected the initial inaccurate stopped-in-both-snapshots wording against the retained original snapshots; no source, runtime, data or finish-condition change."
+}

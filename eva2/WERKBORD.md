@@ -1,4 +1,35 @@
-# EVA2 werkbord
+## 6 oktober — F1.2 afgerond; aparte eindvergelijking loopt
+
+**F1.2 is technisch klaar en onafhankelijk GO.** Werkelijke Windows-herstart, dezelfde bewaarde gegevens, gewone herinnering/resultaatopvraag en normale browserautostart geslaagd. Geïnstalleerde hostmodule en lokaal pakket exact geverifieerd. Geen originele taak herhaald, geen nieuwe spraakbouw. **33/44 oorspronkelijke kleine taken klaar**; dit voltooit geen extra huisgenootuitkomst.
+
+**Nu P2.1:** vier verse geheugen-samples afgerond; twee vooraf gekozen combinatietaken worden eenmaal uitgevoerd. Een meetfout is geen Eva1-verlies. Menselijke scores, ontbrekende native concurrententoegang en verdere oorspronkelijke matrix blijven zichtbaar onbekend. R1.1 UNKNOWN, geen kandidaat toegepast. Jaaps toestemmingen en herstart ontvangen; nu geen nieuwe handeling nodig.
+
+[Definitieve onafhankelijke GO](reviews/f1-post-reboot-independent-review-20261006.md) · [Geïnstalleerde correctie](evidence/product/f1-browser-boot-installed-20261006.json) · [Openbare vergelijking](evidence/product/p2-independent-partial-results-20261006.json).
+
+## 6 oktober — browser na echte herstart weer zelfstandig beschikbaar
+
+Gerichte hostcorrectie geïnstalleerd: de bestaande Eva-browser start via Eva’s normale autonomieprovider weer zonder handeling van Jaap. Van stopped97 naar eva99; browser en MCP gereed. Het bestaande lokale pakket is gelijkgetrokken en geverifieerd. De oorspronkelijke twee taakresultaten/events zijn ook daarna exact behouden. Geen nieuwe modelcall, pagina-actie, core-installatie of spraakwerk voor deze correctie. F1.2 wacht op de definitieve gebundelde review; nog geen nieuwe hoofdtaak groen.
+
+P2.1: vier nieuwe CM-samples uitgevoerd. Eva2 haalde de gecorrigeerde voorkeur in beide gevallen later terug; Eva1 één niet, één meetbindingfout (geen productverlies). 28 modelpogingen, 115.651 invoer- en 5.008 uitvoertokens; credits onbekend. Twee geselecteerde XD-gevallen lopen nog. Menselijke scores, concurrententoegang en volledige vergelijkingsdekking blijven zichtbaar onbekend. R1 UNKNOWN, geen kandidaat toegepast. Nu geen handeling van Jaap nodig.
+
+[Geïnstalleerde correctie](evidence/product/f1-browser-boot-installed-20261006.json) · [Openbare tussenmeting](evidence/product/p2-independent-partial-results-20261006.json).
+
+Oudere vermeldingen van “nu”, ontbrekende toestemming en Docker-opstart hieronder zijn historische momentopnamen; bovenstaande stand en het actuele JSON-werkbord zijn leidend.
+
+## 6 oktober — herstartopvraag uitgevoerd; onafhankelijke beoordeling
+
+Dashboard weer bereikbaar. Dezelfde configuratie, taken, documenten en geheugen zijn na de echte Windows-herstart behouden. Gewone herinnering en twee opgeslagen taakresultaten zijn opgehaald; de oorspronkelijke taken zijn niet herhaald. F1.2 wacht alleen op onafhankelijke gebundelde nacontrole. R1 is eenmaal gestart en gestopt bij een providerconfiguration-fout: vier bevestigde reacties en één niet volledig gemeten poging; kandidaat en herhalingen ongemeten, geen winstclaim of retry. De aparte P2-beoordelaar bindt vier vooraf gekozen nieuwe CM/XD-gevallen aan de actuele kandidaat. Jaaps beslissingen zijn ontvangen; nu geen nieuwe handeling nodig. Spraak blijft geparkeerd.
+
+## 6 oktober — herstart en uitvoeringen vrijgegeven
+
+Jaap heeft Windows herstart en R1 plus de aparte eindvergelijking toegestaan.
+Nieuwe boot: 6 oktober 08:39:55 Nederlandse tijd. Geen nieuwe toestemming nodig.
+
+**Nu F1.2:** Docker-opstartjob104 is nog actief; de API antwoordt niet en bestaande
+eigenaardiensten wachten. Codex lokaliseert dit zonder herinstallatie/rollback.
+Daarna dezelfde bewaarde gegevens en gewone herinnering/resultaatopvraag.
+R1/P2 nog geen modelproef gestart. Spraak geparkeerd; **32/44 taken klaar**.
+[Eigenaarbesluiten](evidence/product/owner-resume-20261006.json).
 
 ## 6 oktober — exacte kandidaat voor de eindvergelijking
 

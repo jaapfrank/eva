@@ -1,0 +1,58 @@
+{
+  "contract": "EvaComparisonScopedExecutionAdmission/v1",
+  "preparedAt": "2026-10-06T07:02:45.070625+00:00",
+  "ownerAuthorization": {
+    "path": "eva2/evidence/product/owner-resume-20261006.json",
+    "statement": "Ja, voer de aparte eindvergelijking uit"
+  },
+  "candidate": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
+    "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3"
+  },
+  "dataset": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_dataset_commitment_20261006.json",
+    "sha256": "75cdde9af210db92a73999e4a9b393737cf67cf9fc9481f2998cb43ae3d5c31c"
+  },
+  "originalPlan": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "envelopesUnchanged": true
+  },
+  "selection": {
+    "epoch": 1,
+    "caseIds": [
+      "EV003-CM-01",
+      "EV003-CM-02",
+      "EV003-XD-01",
+      "EV003-XD-02"
+    ],
+    "participantOrder": [
+      "eva1-bottie",
+      "eva2",
+      "openclaw",
+      "hermes",
+      "agent_zero"
+    ],
+    "maxEva1Eva2Samples": 8,
+    "fullMatrix": false,
+    "adaptiveExpansion": false,
+    "extraEpochsAutomatic": false
+  },
+  "availability": {
+    "eva1-bottie": {
+      "conversation_memory": "native equal-model variant source/pins/resources bound; ready",
+      "cross_domain_actions": "unknown; no admitted native generic action execution adapter"
+    },
+    "eva2": {
+      "conversation_memory": "current native candidate source/images/lease/resources bound; ready",
+      "cross_domain_actions": "existing native browser/delegated/action fixture route mustbind beforeexecution"
+    },
+    "openclaw": "unknown; authenticated native supported contactcatalog and complete lifecycle/accounting not verified",
+    "hermes": "unknown; login not confirmed, complete native lifecycle not admitted",
+    "agent_zero": "unknown; owned accessJWT expired on2026-10-03T23:21:10Z; no refresh or login started"
+  },
+  "evaluation": "Original immutable scorer and criteria. Independent objective readback only; two genuine semantic/human raters absent => corresponding official outcome unknown. No AI-human substitution.",
+  "money": null,
+  "safetyStop": "Any privacy/mandate/duplicate effect violation, unknown dispatched usage or unsettled accounting stops further selected samples.",
+  "providerCallsAtAdmission": 0
+}

@@ -23,6 +23,7 @@ import stat
 import subprocess
 import tempfile
 import time
+from uuid import UUID
 
 from eva.adapters.connectors.browser_session import (
     BrowserSessionConflict, BrowserSessionError, fixed_origin, read_browser_http,
@@ -33,6 +34,14 @@ from eva.adapters.credentials.runtime_files import read_private_runtime_file_byt
 BROWSER_IMAGE = "lscr.io/linuxserver/chromium@sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8"
 MCP_IMAGE = "mcr.microsoft.com/playwright/mcp@sha256:e3f6a85f0fd771dd9440584bd905011f1b4ea25b115bfea8b796d17d23e7b767"
 _MODES = {"stopped", "starting", "eva", "taking_over", "owner", "resuming", "stopping", "recovery_required"}
+
+
+def _boot_identity(value=None):
+    if value is None:
+        value = Path("/proc/sys/kernel/random/boot_id").read_text().strip()
+    if not isinstance(value, str) or str(UUID(value)) != value:
+        raise ValueError("browser host boot identity must be canonical")
+    return value
 
 
 @dataclass(frozen=True)
@@ -126,11 +135,12 @@ class DockerBrowserContainers:
 
 class BrowserSessionHost:
     def __init__(self, *, containers: BrowserContainers, state_directory: Path,
-                 driver=None, readiness_seconds=30, viewer_control=None):
+                 driver=None, readiness_seconds=30, viewer_control=None, boot_id=None):
         self.containers = containers
         self.driver = driver or DockerBrowserContainers(containers)
         self.readiness_seconds = readiness_seconds
         self.viewer_control = viewer_control
+        self.boot_id = _boot_identity(boot_id)
         directory = state_directory.lstat()
         if (not state_directory.is_absolute() or not stat.S_ISDIR(directory.st_mode)
                 or stat.S_ISLNK(directory.st_mode) or directory.st_uid != os.geteuid()
@@ -156,10 +166,21 @@ class BrowserSessionHost:
                         or type(self.state.get("revision")) is not int
                         or self.state["revision"] < 0):
                     raise ValueError("browser state does not bind this container pair")
+                previous_boot = self.state.get("boot_id")
+                if previous_boot is not None:
+                    _boot_identity(previous_boot)
+                if (previous_boot is not None and previous_boot != self.boot_id
+                        and self.state["mode"] == "eva"):
+                    observed = self.driver.inspect()
+                    if not observed["browser_running"] and not observed["mcp_running"]:
+                        # A confirmed reboot ends the stable automation session.
+                        # Refresh its generation; never replay an in-flight action.
+                        self._transition("stopped", observed)
             else:
                 observed = self.driver.inspect()
                 self.state = {"binding": containers.binding, "revision": 0,
                               "mode": "recovery_required" if observed["browser_running"] or observed["mcp_running"] else "stopped",
+                              "boot_id": self.boot_id,
                               "browser_started_at": "", "mcp_started_at": ""}
                 self._save()
         except Exception:
@@ -189,7 +210,7 @@ class BrowserSessionHost:
                 os.unlink(temporary)
 
     def _transition(self, mode, observed=None):
-        self.state.update(mode=mode, revision=self.state["revision"] + 1,
+        self.state.update(mode=mode, revision=self.state["revision"] + 1, boot_id=self.boot_id,
                           changed_at=datetime.now(UTC).isoformat())
         if observed is not None:
             self.state.update({key: observed[key] for key in ("browser_started_at", "mcp_started_at")})

@@ -1,0 +1,206 @@
+{
+  "contract": "EvaR1IndependentFollowupResult/v1",
+  "recordedAt": "2026-10-06T07:03:49.619455+00:00",
+  "task": "R1.1",
+  "evaluator": "/root/r1_final_followup_20261006",
+  "decision": "UNKNOWN_NO_PROMOTION",
+  "comparisonComplete": false,
+  "newProductFunctionCompleted": false,
+  "ownerAuthorization": "eva2/evidence/product/owner-resume-20261006.json",
+  "whatAlreadyExisted": [
+    "Frozen ordinary method and generated version-1 advisory predictor",
+    "Independently admitted fresh two-case/two-arm/two-repeat follow-up and 15 offline checks",
+    "Existing Astra/medium and Sol/none subscription route and offline procedure executor"
+  ],
+  "whatWasAdded": [
+    "Current-runtime compatibility metadata and exact staging of frozen files",
+    "One authorized follow-up invocation, stopped outcome retained",
+    "Independent coverage/accounting judgment; no candidate, criteria or product-code change"
+  ],
+  "bindings": {
+    "driverSha256": "c6e10918fc43fa76afb0534bfb7ab5eddef7c9b54029be485def20e88c192887",
+    "artifactSha256": "cd3153b774514f97d09e004bd4a30502c777ca1363bea1075bc5b296829bee18",
+    "criteriaSha256": "4cf7fe60ff3e26fd0a36d03797645bcb1a19abbaac41e0c5c8461982e09b556c",
+    "casesSha256": "105478417bb112c846d25b33c3c044dcaefdb0678e771d66780fd95eacd56dd3",
+    "scorerSha256": "43ef6000b182b8bf789d0bcaeaf0897fa40985d5ad2f64d9f8d7b5b56e93e462",
+    "originalCandidateSourceSha256": "43fa6e355351c9c3daf16d32d72424d6dd85940d851a9313233e7aa84e280d40",
+    "independentAdmissionSha256": "7207b10c33eaefc0b63af0fbe6154511ba843e00d6c52129e021182e6ccd6238",
+    "currentRuntimeAdmissionPath": "/home/administrator/project/.eva2-artifacts/r1-followup-independent-20261003/runtime-admission-20261006.json",
+    "currentRuntimeAdmissionSha256": "aaf406269571598e1c53de9252a68b95dcca49a344229cef2c4ce0496ab520ce",
+    "coreImage": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+    "workerImage": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90",
+    "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+    "providerAndProcedureByteIdenticalToOriginal": true,
+    "adapterInitAndAuthenticationAstIdentical": true,
+    "adapterChangedMethodsUnusedByHarness": [
+      "_catalogue_model_view",
+      "_instructions",
+      "_receipt_model_view"
+    ],
+    "versions": {
+      "pydantic-ai-slim": "2.37.0",
+      "openai": "3.6.0",
+      "httpx2": "2.12.0"
+    },
+    "workProfile": [
+      "gpt-6-astra",
+      "medium"
+    ],
+    "contactProfile": [
+      "gpt-6-sol",
+      "none"
+    ],
+    "frozenFilesAndCriteriaUnchanged": true,
+    "stagedFileCount": 18
+  },
+  "execution": {
+    "schedulerStatus": "stopped_independent_hard_boundary_no_promotion",
+    "hostDisposition": "stop_round",
+    "hostReason": "unsettled_or_unattested_usage",
+    "plannedFreshRuns": 8,
+    "startedFreshRuns": 1,
+    "completedFreshRuns": 0,
+    "unrunFreshRuns": 7,
+    "candidateRunsStarted": 0,
+    "previousTaskRunsStarted": 1,
+    "historicalTaskRunsStartedNow": 2,
+    "admittedHistoricalPlannedTaskRuns": 9,
+    "firstRun": {
+      "case": "A",
+      "arm": "ordinary",
+      "repeat": 0,
+      "status": "failed",
+      "seconds": 11.428683789999923,
+      "attestedModelResponses": 4,
+      "toolOperations": 3,
+      "toolResultCharacters": 5454,
+      "episodesEntered": 1,
+      "episodeAgentReports": 0,
+      "effects": 0,
+      "deliveries": 0,
+      "predictions": 0,
+      "invalidOperations": 0,
+      "recordedHardTraceViolations": 0
+    },
+    "providerFailure": {
+      "class": "CodexProviderError",
+      "category": "configuration",
+      "sanitizedMessage": "Codex provider configuration",
+      "failedCallSeconds": 0.016433629999937693,
+      "failedCallAttested": false,
+      "upstreamHttpStatus": null,
+      "upstreamDispatchConfirmed": null,
+      "upstreamAttempts": null,
+      "preciseFailingConfigurationTransition": null
+    },
+    "ordinaryWorkCallsAttested": 3,
+    "contactCallsAttested": 1,
+    "observedSocialSeconds": 5.265088221000042,
+    "humanTaskHints": 0,
+    "automaticRetry": false,
+    "candidateRevision": false,
+    "promoted": false,
+    "productionEffects": false
+  },
+  "usage": {
+    "historical": {
+      "inputTokens": 30226,
+      "outputTokens": 5057,
+      "attestedResponses": 14
+    },
+    "newKnownAttested": {
+      "inputTokens": 6267,
+      "outputTokens": 133,
+      "attestedResponses": 4,
+      "cachedInputTokens": 0
+    },
+    "cumulativeKnownAttested": {
+      "inputTokens": 36493,
+      "outputTokens": 5190,
+      "attestedResponses": 18
+    },
+    "newUnattestedAttempts": 1,
+    "historicalAndNewCallRecords": 19,
+    "actualInputTokenTotal": null,
+    "actualOutputTokenTotal": null,
+    "unattestedUsageIsNotZero": true,
+    "creditCost": null,
+    "developerAssistantCredits": null,
+    "limitsUnchanged": {
+      "maximum_task_runs": 8,
+      "maximum_model_responses_per_task_run": 12,
+      "maximum_tool_operations_per_task_run": 24,
+      "maximum_total_input_tokens": 600000,
+      "maximum_total_output_tokens": 48000,
+      "maximum_tool_result_characters_per_run": 36000,
+      "maximum_predicted_plans_per_run": 6,
+      "maximum_transitions_per_predicted_plan": 12,
+      "includes": "Synthesis, development validation, both arms, social contact calls, repairs and all recorded helpers. No arbitrary elapsed-time pause is introduced."
+    },
+    "maximumNewResponses": 96
+  },
+  "rawEvidence": {
+    "container": "eva2-managed-b-slot3-core",
+    "path": "/tmp/r1-independent-evaluation-20261006/independent/comparison-report-20261006.json",
+    "sha256": "1e5ddd27c1eb48afd7f8bc3f0a0e2c28e667b9066596d991c39d2cae857ffc68",
+    "bytes": 35033,
+    "retainedInOriginalContainer": true,
+    "hostCopyCreated": false,
+    "copyBlockedByAutomaticApprovalReview": true,
+    "preservationRequirement": "Retain this container/file; private raw evidence has not been approved for host copying."
+  },
+  "independentAssessment": {
+    "scope": "Coverage, fixed stopping and measured accounting metadata only; no protected-oracle final score.",
+    "protectedStopHookExecuted": true,
+    "protectedStopHookReturnedTrue": true,
+    "protectedFinalGradeExecuted": false,
+    "protectedFinalGrade": null,
+    "correctnessScore": null,
+    "privacyAuthorityStopFinalPass": null,
+    "observedHardTraceViolationCount": 0,
+    "noViolationRecordedIsNotFullHardConditionPass": true,
+    "bestCandidateDifference": null,
+    "speedDifference": null,
+    "resourceDifference": null,
+    "reliabilityDifference": null,
+    "allCandidateCasesAndBothRepeatsUnmeasured": true,
+    "failureIsNotCandidateLoss": true,
+    "R1OriginalFinishConditionMet": false,
+    "separateFollowupRoundClosedUnknown": true
+  },
+  "automaticApprovalReview": [
+    {
+      "action": "Read held-out scorer implementation during evaluator-interface inspection",
+      "processStarted": false,
+      "reason": "Protected scorer was excluded from coordinator review; approved interface only.",
+      "safeAlternative": "No further source inspection; content-free metadata reads only."
+    },
+    {
+      "action": "Copy private raw report and directly invoke grade(report,cases)",
+      "processStarted": false,
+      "reason": "Direct scorer/cases import and raw copying were treated as bypassing protected boundary.",
+      "safeAlternative": "No retry/workaround; retain raw report in container and issue coverage UNKNOWN judgment."
+    }
+  ],
+  "limitations": [
+    "Only first ordinary arm started; no completed user result, candidate run, case B or repeat pair.",
+    "Configuration fault is sanitized; precise transition, HTTP/dispatch/attempt metadata unavailable.",
+    "One attempt has unknown usage; known totals are lower bounds.",
+    "Protected final correctness/hard-condition score unavailable after automatic-review rejection.",
+    "Four eligible uses per block do not cover the predeclared five-use savings horizon.",
+    "No installed-Eva, Eva1, competitor, statistical superiority or family acceptance evidence."
+  ],
+  "aideDistinction": {
+    "originalAIDE": "Search and measurement across code variants.",
+    "AIDE2": "Optimization of the research agent approach itself.",
+    "evaDemonstrated": "Fixed advisory predictor comparison attempted through reviewed scheduler; stopped before candidate measurement.",
+    "notDemonstrated": [
+      "Original AIDE reproduction",
+      "AIDE2 agent self-improvement",
+      "Executable-experience benefit",
+      "Amortized savings",
+      "Competitive superiority"
+    ]
+  },
+  "advice": "Do not adopt, rerun automatically, raise limits or start new variants. Preserve original and separate UNKNOWN rounds. R1.1 completion and meaningful technical distinction remain unmet. A further trial requires a concrete corrected configuration cause and independently admitted fresh evaluation."
+}

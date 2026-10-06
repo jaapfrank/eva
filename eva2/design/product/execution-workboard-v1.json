@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-06T00:16:45.415750+00:00",
+  "lastUpdated": "2026-10-06T07:27:19.198935+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1007,14 +1007,30 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T00:16:45.415750+00:00",
+        "checkedAt": "2026-10-06T07:27:19.198935+00:00",
         "deliveries": [
+          {
+            "title": "F1.2 afgerond · Herstart en gezamenlijke digitale werking",
+            "date": "6 oktober",
+            "state": "installed",
+            "result": "Na echte Windows-herstart hetzelfde geheugen, documenten en twee taakresultaten behouden en gewoon opgehaald. Concrete browserbootfout gecorrigeerd; Eva start haar bestaande browser weer zelfstandig via de normale provider. Bestaand lokaal pakket geverifieerd en onafhankelijke eind-GO.",
+            "remaining": "P2-eindvergelijking, R1 en echte gezinsacceptatie blijven afzonderlijk. Spraak geparkeerd. 33/44 oorspronkelijke kleine taken klaar.",
+            "source": "eva2/evidence/product/f1-post-reboot-independent-review-20261006.json"
+          },
+          {
+            "title": "R1-proef gestopt; geen verbetering aangetoond",
+            "date": "6 oktober",
+            "state": "investigated",
+            "result": "Eén vaste vervolguitvoering stopte bij een providerconfiguration-fout. Vier bevestigde modelreacties; kandidaat, tweede geval en herhalingen niet gemeten. Onafhankelijke meetdekkingsuitkomst UNKNOWN, geen toepassing.",
+            "remaining": "R1.1 niet afgerond. 6.267 bekende invoer- en 133 uitvoertokens plus één poging met onbekend verbruik. Geen automatische nieuwe proef.",
+            "source": "eva2/evidence/product/r1-followup-result-20261006.json"
+          },
           {
             "title": "Huidige eindkandidaat exact en onafhankelijk vastgelegd",
             "date": "6 oktober",
             "state": "investigated",
             "result": "Actuele core/worker, configuratiehashes, broncorrecties en modelrollen gebonden aan38 bestaande evaluatiebron-/lockpins. Onafhankelijke GO; oorspronkelijke regels en verliezen behouden. Geen nieuwe Eva-modelcalls of verborgen eindset gelezen.",
-            "remaining": "Voorbereiding, geen extra afgeronde functie. Separate eindbeoordelingsbesluit staat open; nog geen nieuwe eindset of inference uitgevoerd. Algemene voorsprong onbekend.",
+            "remaining": "Aparte eindvergelijking toegestaan en in voorbereiding bij onafhankelijke beoordelaar; nieuwe ongeziene set en uitvoering volgen. Algemene voorsprong blijft onbekend.",
             "source": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json"
           },
           {
@@ -3821,31 +3837,30 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Kandidaatbinding gereed; besluit open",
-          "state": "blocked",
-          "owner": "Jaap · besluit; Codex · toegelaten eindbeoordeling",
-          "detail": "Actuele images/configuratie,4 digitale broncorrecties, modelrollen en38 meetbron-/lockpins onafhankelijk gebonden. Geen nieuwe dataset/modelproef loopt. F1.2 herstart en R1-besluit blijven afzonderlijk; spraak geparkeerd."
+          "title": "P2.1 · Laatste proefbinding controleren",
+          "state": "in_progress",
+          "owner": "Onafhankelijke beoordelaar /root/p2_independent_final_20261006",
+          "detail": "F1.2 afgerond. Geheugenproeven opgeslagen. XD01 leverde geen resultaat; mogelijke ontbrekende bronmetadata in proefopstelling. De onafhankelijke beoordelaar toetst alleen de oorspronkelijke binding vóór ongebruikte XD02; geen herhaling."
         },
         "next": {
-          "title": "Gewijzigde eindkandidaat eerlijk vergelijken",
-          "detail": "Na toestemming nieuwe freeze/eindset met oorspronkelijke criteria en bestaande verbruiksgrenzen. Oude verliezen blijven staan; geen automatische volledige matrixstart."
+          "title": "Uitkomst van deze aparte vergelijking",
+          "detail": "Gemeten resultaten, verbruik, verliezen en ontbrekende dekking vastleggen. Geen winnaar of volledige P2.1-afronding zonder oorspronkelijke voorwaarden."
         },
         "ownerAction": {
-          "title": "Eén besluit voor de vergelijking",
+          "title": "Je herstart en toestemmingen zijn ontvangen",
           "steps": [
-            "Geen spraak-/speakerproef nodig: spraak op jouw verzoek geparkeerd.",
-            "P2.1: de oude vaste vergelijking was toegestaan. Voor de gewijzigde eindkandidaat staat nu één aparte toestemmingsvraag in deze chat; er loopt geen modelproef. De R1-innovatievraag blijft afzonderlijk open.",
-            "Voor F1.2: sla je werk op, kies Windows → Opnieuw opstarten en meld daarna Herstart klaar in deze chat. Er is geen automatische herstart ingesteld.",
-            "Persoonlijkheid M3.3 is geaccepteerd. Nut van initiatief en zeven dagen gezinsgebruik blijven jouw beoordeling. Native aanmeldingen voor concurrenten zijn nog niet actueel bevestigd."
+            "Nu geen handeling van jou nodig voor deze nacontrole en proeven.",
+            "Spraak blijft geparkeerd. Persoonlijkheid M3.3 blijft geaccepteerd.",
+            "Nut van initiatief en zeven dagen gezinsgebruik blijven afzonderlijke menselijke beoordelingen."
           ],
-          "expected": "M3.3 blijft geaccepteerd. Nut/initiatief en gezinsacceptatie afzonderlijk open; geen nieuwe spraakhandeling. 32/44 oorspronkelijke taken klaar.",
-          "detail": "Beantwoord de vraag in deze chat: aparte eindbeoordeling van de gewijzigde kandidaat toestaan, of nieuwe modelproeven uitstellen. Voor spraak hoef je nu niets te doen."
+          "expected": "33/44 oorspronkelijke kleine taken technisch klaar; F1.2 nu afgerond. Dit is geen extra afgeronde huisgenootuitkomst.",
+          "detail": "R1 akkoord en aparte eindvergelijking toegestaan. Geen automatische volledige vergelijkingsmatrix."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T00:15:32.108720+00:00"
+        "reviewedAt": "2026-10-06T07:25:14.153140+00:00"
       },
-      "reviewedAt": "2026-10-06T00:15:32.108720+00:00",
-      "checkedAt": "2026-10-06T00:16:45.415750+00:00",
+      "reviewedAt": "2026-10-06T07:25:14.153140+00:00",
+      "checkedAt": "2026-10-06T07:27:19.198935+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -13227,7 +13242,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
-      "currentStep": 7,
+      "currentStep": 8,
       "steps": [
         {
           "number": 1,
@@ -13390,7 +13405,7 @@
           ]
         }
       ],
-      "nextAction": "P2.1 aparte eindbeoordelingsbesluit afwachten; exacte kandidaatbinding en onafhankelijke GO gereed. Alleen bij besluit de toegelaten vergelijkingsroute vervolgen. F1.2 nacontrole na echte Windows-herstart; R1 apart besluit; menselijke acceptatie en spraak afzonderlijk.",
+      "nextAction": "Vooraf gekozen aparte P2 CM/XD-eindvergelijking afronden; F1.2 voltooid, R1 UNKNOWN. Geen automatische bredere proef of spraakbouw.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -16137,37 +16152,43 @@
               "status": "blocked",
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
-              "owner": "Codex /root",
-              "latestEvidence": "eva2/evidence/product/r1-incomplete-comparison-20260930.json",
+              "owner": "Codex",
+              "latestEvidence": "eva2/evidence/product/r1-followup-result-20261006.json",
               "assignment": {
-                "owner": "/root/background_execution_seam",
+                "owner": "/root",
                 "baseCommit": "a5009dddca814ce828158d28e552fb7d072d954e",
-                "stage": "independently_admitted_execution_approval_required",
+                "stage": "separate_followup_closed_unknown",
                 "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
                 "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
                 "gap": "Old driver stopped all eight planned runs on the first per-run response exhaustion. New programming tools do not change that cause. Independent review checks a separate driver which preserves a local failed outcome and continues fixed arms, while hard boundary/global/unknown failures still stop.",
                 "files": [
                   "eva2/experiments/r1-executable-experience-20260930/"
                 ],
-                "currentAction": "15 offline checks passed; source/protocol and fresh independent cases/scorer are frozen. Exact 8-run followup is ready, but auto-review denied execution. Explicit owner question pending; no alternate runner or repeated attempt.",
+                "currentAction": "Openbaar onafhankelijk meetdekkingsrapport verwerkt. Eén verse uitvoering; vier bevestigde reacties plus één onbekende poging. Geen kandidaat getest of geïnstalleerd.",
                 "finish": "Existing R1.1 finish condition retained: isolated comparison with ordinary methods, including learning cost. Source preparation alone does not complete R1 or technical distinction.",
                 "estimate": "Targeted existing-route preflight and bounded runnable continuation; no live model calls in preparation. Preserve explicit original experiment accounting; credits unknown.",
-                "activeWorkers": []
+                "activeWorkers": [],
+                "actualUsage": {
+                  "newKnownInputTokens": 6267,
+                  "newKnownOutputTokens": 133,
+                  "newAttestedResponses": 4,
+                  "newUnattestedAttempts": 1,
+                  "creditCost": null
+                }
               },
-              "remaining": "De eerder mislukte onderzoeksronde blijft afgesloten. De afzonderlijke vooraf vastgelegde 8-run vervolgproef is voorbereid en onafhankelijk beoordeeld; uitvoering wacht op expliciete toestemming na weigering door de automatische goedkeuringscontrole. Nog geen nieuwe modelcalls uitgevoerd.",
-              "checkedAt": "2026-10-05T02:13:15.233372+00:00",
-              "blocker": "Automatische goedkeuringsreview heeft de concrete 8-run vervolguitvoering geweigerd wegens ontbrekende expliciete eigenaarstoestemming voor dit nieuwe modelverbruik. Nog geen modelcalls of uitvoeringsproces gestart.",
+              "remaining": "Afzonderlijke vervolgproef afgesloten UNKNOWN; oorspronkelijke R1.1-eindvoorwaarde nog niet gehaald. Eerst concrete configuration-oorzaak aantonen/corrigeren vóór enige nieuwe, apart toegelaten proef.",
+              "checkedAt": "2026-10-06T06:58:41.938258+00:00",
+              "blocker": "Codex: vaste proef gestopt bij providerconfiguration-fout en onvolledig gemeten poging. Kandidaat/vergelijking niet uitgevoerd; geen handeling van Jaap nodig.",
               "previousBlocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef.",
-              "ownerActionRequired": true,
-              "nextAction": "Na expliciete toestemming alleen de exact beoordeelde proef uitvoeren. Tot die tijd ander zelfstandig productwerk vervolgen; geen ongewijzigde uitvoeringspoging.",
+              "ownerActionRequired": false,
+              "nextAction": "Geen automatische herhaling, hogere limieten of kandidaatinstallatie. Behoud rauw rapport; huidige proef heeft geen geldig verbeteringsresultaat.",
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "De concrete proef en vaste meetgrenzen zijn gereed; de goedkeuringsvraag staat in deze chat.",
-                "steps": [
-                  "Beantwoord de gezamenlijke vraag in deze chat: alleen vergelijking toestaan, vergelijking én innovatieproef toestaan, of beide voorlopig uitstellen. Voor innovatie geldt de bestaande proef van 8 runs met maximaal 96 nieuwe modelreacties; werkelijke creditkosten zijn onbekend."
-                ],
+                "availableNow": false,
+                "steps": [],
+                "expected": "Toestemming en herstart ontvangen; nu geen handeling van Jaap nodig.",
                 "blocksIndependentWork": false
-              }
+              },
+              "ownerAuthorizationEvidence": "eva2/evidence/product/owner-resume-20261006.json"
             },
             {
               "id": "R1.2",
@@ -16714,27 +16735,25 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Na expliciete toestemming gewijzigde kandidaat afzonderlijk bevriezen, nieuwe onafhankelijke ongeziene eindset vastleggen en alleen toegelaten oorspronkelijke vergelijkingen uitvoeren. Originele verliezen en criteria blijven staan.",
-              "ownerActionRequired": true,
+              "nextAction": "Actuele kandidaat onafhankelijk binden, verse ongeziene eindset vastleggen en vooraf gekozen originele CM/XD-taken op beschikbare deelnemers uitvoeren.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "purpose": "decision",
-                "readyWhen": "Concrete kandidaat en ongewijzigde beoordelingsvoorwaarden zijn vastgelegd; onafhankelijke protocolreview afgerond.",
-                "steps": [
-                  "Beantwoord de vraag in deze chat: aparte eindbeoordeling toestaan of nieuwe modelproeven uitstellen."
-                ],
-                "expected": "Eén expliciet besluit over de gewijzigde eindkandidaat; geen R1-proef of automatische volledige matrixstart.",
+                "availableNow": false,
+                "steps": [],
+                "expected": "Toestemming en herstart ontvangen; nu geen handeling van Jaap nodig.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T00:15:32.108720+00:00",
+              "checkedAt": "2026-10-06T07:27:19.198935+00:00",
               "assignment": {
                 "baseCommit": "d76c7fb09149156838aab392cdce5bd067241c77",
-                "owner": "/root",
-                "activeWorkers": [],
+                "owner": "/root/p2_independent_final_20261006",
+                "activeWorkers": [
+                  "/root/p2_independent_final_20261006"
+                ],
                 "files": [
                   "/root: bewaart geïnstalleerde binding, bewijs, werkbord en Git."
                 ],
@@ -16742,12 +16761,12 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "XD01 oorspronkelijk eenmaal uitgevoerd; gemeten gebruik hieronder. Volgende oorspronkelijke proef alleen binnen de reeds vastgelegde familie-envelop. Creditkosten en Codex-ontwikkelverbruik onbekend.",
-                "currentAction": "Exacte huidige kandidaatbinding onafhankelijk goedgekeurd. Geen nieuwe dataset/proef/uitvoering gestart; de bestaande afzonderlijke besluitvraag blijft open.",
+                "currentAction": "XD01 eenmaal uitgevoerd: geen eindresultaat,0schrijfacties,8modelcalls. Onafhankelijke beoordelaar controleert alleen oorspronkelijke discoverybinding vóór ongebruikte XD02; fixture-onzekerheid is geen bewezen productverlies.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "e02192e7: verliesvrije gedeelde catalogusguidance, bronreview GO,134 gerichte tests plus oude assertie vastgelegd. Beide images geïnstalleerd/gezond; gewone browseropdracht en verse24-toolcatalogus+schema-uitleg geslaagd. Geen extra producttaak, spraak of algemene winstclaim."
                 },
-                "stage": "changed_candidate_frozen_reviewed_owner_decision_pending",
+                "stage": "xd01_settled_admission_uncertain_xd02_unused",
                 "finding": "Beide gesloten vergelijkingen ontvingen result.isError na gateway-RPC. De bestaande adapter verwijderde de detailtekst; de innerlijke foutoorzaak is niet meer vast te stellen.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
@@ -17001,7 +17020,15 @@
                 "candidateFreeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261006.json",
                 "candidateFreezeSha256": "b145e0c7a6cecc69b3306aad5dba2f6afbb25e907ac56137d194822cc321c4cf",
                 "support": "Independent binding GO /root/xd01_runtime_review; no live executor",
-                "candidateFreezeEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json"
+                "candidateFreezeEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json",
+                "currentEvaluationUsage": {
+                  "providerAttempts": 36,
+                  "inputTokens": 172220,
+                  "outputTokens": 6605,
+                  "failedAdapterAttemptIncluded": true,
+                  "creditCost": null,
+                  "measurementScope": "four fresh CM samples and one settled XD01 attempt; XD02 unused"
+                }
               },
               "remaining": "CM01 beide mislukt; CM02 objectief Eva1 1/3/Eva2 3/3; CM03 onvolledige readbacks; CM04 Eva1 onvoldoende/Eva2 onbekend; CM05 Eva2 geslaagd/Eva1 onbekend; CM06 Eva2 geslaagd/Eva1 onvoldoende; CM07 beide onvoldoende en Eva1 groepsaflevering onvolledig; CM08 Eva2 geslaagd/Eva1 onvoldoende; CM09 en CM10 Eva2 geslaagd (elk 3/3+2/2), Eva1 onbekend door onvolledige uitvoering. CM11 Eva1 onvoldoende; Eva2 juiste antwoorden, verplichte geheugenvoorwaarde onbekend. CM12 beide onvoldoende; Eva2 mist opgeslagen context in het latere antwoord. XD01 Eva2 niet afgerond, Eva1 niet uitvoerbaar via de vastgelegde route (geen verliesclaim). Overige oorspronkelijke gevallen, concurrenttoegang en menselijke beoordeling blijven open. Geen algemene voorsprong of extra productfunctie. XD02: Eva2 niet afgerond; beide diensten ongewijzigd. Algemene voorsprong niet aangetoond.",
               "latestEvidence": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
@@ -17015,7 +17042,7 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": "Een gewijzigde kandidaat vereist volgens het bestaande protocol een nieuwe onafhankelijk gemaakte eindset. De eerdere toestemming bindt het oude vaste plan; de aparte eindbeoordeling vraagt het expliciete besluit dat nu in deze chat staat. Geen nieuwe meetronde gestart.",
+              "blocker": null,
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
@@ -17106,7 +17133,9 @@
                 "originalCaseRepeated": false,
                 "productChange": false
               },
-              "latestPreparationEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json"
+              "latestPreparationEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json",
+              "ownerAuthorizationEvidence": "eva2/evidence/product/owner-resume-20261006.json",
+              "currentEvaluationEvidence": "eva2/evidence/product/p2-independent-partial-results-20261006.json"
             },
             {
               "id": "P2.2",
@@ -17155,7 +17184,7 @@
           ],
           "outcome": "Geintegreerde eindkandidaat",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Managed installation, provenance, rollback and component checks already used.",
@@ -17210,31 +17239,27 @@
             {
               "id": "F1.2",
               "title": "Gezamenlijke werking en herstart controleren",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "eindcontrole",
               "doneWhen": "Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren.",
               "owner": "Codex",
-              "nextAction": "Na Jaaps Windows-herstart dezelfde diensten, configuratie, twee bewaarde resultaten, bestanden en geheugen controleren; daarna gewone herinnering/resultaatopvraag en onafhankelijke eindcontrole. Oorspronkelijke opdrachten niet herhalen.",
-              "ownerActionRequired": true,
+              "nextAction": "Geen F1.2-herhaling. Volg de aparte P2-uitvoering.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "Actuele geïnstalleerde versie vastgelegd en voorbereiding onafhankelijk goedgekeurd. Sla eerst je open werk op.",
-                "steps": [
-                  "Sla je werk op en kies in Windows Opnieuw opstarten.",
-                  "Open daarna deze Codex-chat en meld Herstart klaar."
-                ],
-                "expected": "Codex controleert dezelfde diensten, geheugen, resultaten en bestanden zonder oorspronkelijke taken opnieuw uit te voeren.",
+                "availableNow": false,
+                "steps": [],
+                "expected": "Toestemming en herstart ontvangen; nu geen handeling van Jaap nodig.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T23:58:12.229163+00:00",
+              "checkedAt": "2026-10-06T07:25:14.153140+00:00",
               "assignment": {
-                "baseCommit": "ab9e2211",
+                "baseCommit": "0c86bee73a9ab0db8fbb9a477b6280e91534d678",
                 "owner": "/root",
-                "support": "Independent GO /root/xd01_runtime_review; no executor currently running",
-                "stage": "prepared_reviewed_awaiting_actual_windows_restart",
+                "support": "Independent bundled F1 endreview /root/r1_final_followup_20261006",
+                "stage": "independent_go_installed_restart_endcheck_complete",
                 "existing": "F1.1 installed GO; same core/worker sources, verified package binding and existing component evidence.",
-                "gap": "Joint endcheck and actual computer restart of the composed candidate not yet evidenced.",
-                "currentAction": "Pakket met4 digitale bronnen en actuele kernpin gelijkgetrokken; bestaande verifier en onafhankelijke review akkoord. Geen actieve modelproef of installatie. Deze nacontrole wacht op de echte Windows-herstart.",
+                "gap": "Original F1.2 condition satisfied; no remaining independent work within this task.",
+                "currentAction": "Oorspronkelijke F1.2-eindvoorwaarde onafhankelijk GO: echte Windowsboot, dezelfde data/resultaten, normale herinnering en browserautostart, exacte geïnstalleerde bron en pakketbinding.",
                 "files": [
                   "existing F1 endcheck/provenance artifacts",
                   "existing boot observer configuration if needed"
@@ -17259,15 +17284,28 @@
                   "finish": "Existing package verifier accepts exact local images/source inventory; new snapshot retains original F1 data and binds current images. Does not complete actual restart or F1.2.",
                   "consumptionEstimate": "0 controlled model/provider calls; no new installation or original task replay. Codex development/credit costs unknown.",
                   "actualEvidence": "eva2/evidence/product/f1-digital-candidate-pre-reboot-20261006.json"
-                }
+                },
+                "changeDesign": {
+                  "existing": "Exact owned browser/MCP containers and serialized host lifecycle; real Windows restart and original task/data retention established.",
+                  "gap": "Retained stable Eva-mode is misclassified as uncertain recovery when both restartPolicy=no processes stop during a known host reboot.",
+                  "module": "operations/browser_session.py",
+                  "change": "Persist trusted host boot identity with control transitions; another confirmed boot and stable prior Eva-mode with both exact processes stopped becomes a new stopped generation. No tool/browser-action replay or owner handoff override.",
+                  "legacyMigration": "Only current retained F1 snapshot proves old kernel boot and running pair; preserve private old state and add that boot binding under stopped-manager lock. No generic guessed legacy boot.",
+                  "installation": "One existing host-controller process restart after focused tests and independent review; core/worker images/configurations/seccomp/evaluator resources unchanged.",
+                  "finish": "Existing ordinary browser autostart accepts stopped generation again; focused live lifecycle/readiness and retained original data confirmed. Original F1.2 condition retained.",
+                  "consumption": "No new model calls; existing Docker lifecycle only. Credits unknown."
+                },
+                "review": "eva2/evidence/product/f1-post-reboot-independent-review-20261006.json"
               },
-              "remaining": "Echte Windows-herstart, gewone geheugen-/resultaatopvraag en onafhankelijke nacontrole nog nodig. Actueel pakket en oorspronkelijke data onafhankelijk goedgekeurd. Geen snelheids- of concurrentiewinst geclaimd.",
-              "latestEvidence": "eva2/evidence/product/f1-digital-candidate-pre-reboot-20261006.json",
+              "remaining": "Geen zelfstandig uitvoerbaar werk binnen oorspronkelijke F1.2-eindvoorwaarde over. Vergelijking P2, R1, spraak en echte gezinsacceptatie blijven afzonderlijk.",
+              "latestEvidence": "eva2/evidence/product/f1-post-reboot-independent-review-20261006.json",
               "lastPassiveBootCheck": {
-                "checkedAt": "2026-10-05T23:48:12.557251+00:00",
-                "lastBootUtc": "2026-10-01T09:48:48.5000000Z",
-                "requiredNewBootObserved": false
-              }
+                "checkedAt": "2026-10-06T06:51:19.992387+00:00",
+                "lastBootUtc": "2026-10-06T06:39:55.5000000Z",
+                "requiredNewBootObserved": true
+              },
+              "blocker": null,
+              "ownerAuthorizationEvidence": "eva2/evidence/product/owner-resume-20261006.json"
             }
           ],
           "responsibilityReview": {
@@ -17281,7 +17319,7 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "reviewer": "/root/aide_final_evaluation"
+          "reviewer": "/root/r1_final_followup_20261006"
         },
         {
           "id": "F2",
@@ -17441,7 +17479,7 @@
       },
       "autonomousTechnicalGoal20261002": {
         "preparedAt": "2026-10-01T22:46:25.288933+00:00",
-        "state": "blocked_existing_owner_decisions_and_actual_restart",
+        "state": "owner_resumed_work_app_goal_status_remains_blocked",
         "goalSource": "C:/Users/jaapf/.codex/attachments/d91353b6-5d5a-4de3-bb46-8f22daaa18ef/goal-objective.md",
         "replacementAppObjective": "Voer het volledige bestaande Eva2-plan uit volgens de nieuwste eigenaarcorrectie in eva2/PROJECTDOEL.md en de actuele kleine taken. Centrale uitkomst: Eva als autonome, warme en vaardige digitale huisgenoot die zelf onderzoekt, programmeert, verbetert en nuttig werk afmaakt. Eerst L3.2/L3.3: ontbrekende algemene programmeer-/uitvoerings-/releaseovergangen aansluiten en Eva een echte verbetering laten opleveren. Spraak is ondersteunend. Behoud alle planeisen, acceptaties en het technische eindpunt; geen brede herbouw of test-/installatielussen. Houd het bestaande dashboard en Git bij; onafhankelijke eindvergelijking en gezinsacceptatie blijven zichtbaar.",
         "reason": "Remove obsolete C1/provider snapshot; prioritize complete installed user outcomes and separate autonomous technical completion from family acceptance.",
@@ -17456,7 +17494,9 @@
         "independentReview": "GO /root/open_questions_triage: complete project requirements, innovation/comparison/F2 retained; autonomous technical endpoint separate; product tasks/acceptance unchanged; goal paused and not falsely edited/activated.",
         "appStatus": "blocked",
         "goalFile": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective.md",
-        "statusCheckedAt": "2026-10-06T00:16:45.415750+00:00"
+        "statusCheckedAt": "2026-10-06T00:16:45.415750+00:00",
+        "executionResumedAt": "2026-10-06T06:51:19.992387+00:00",
+        "executionResumeEvidence": "eva2/evidence/product/owner-resume-20261006.json"
       },
       "ownerAutonomyPriority20261002": {
         "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
@@ -17578,7 +17618,10 @@
           "goalStatusChangeEligible": "blocked status applied; requested endstate not achieved",
           "requiredAction": "One owner decision, actual Windows restart or required human observation unlocks its corresponding existing task. No new repeated model run without authorization.",
           "goalStatusObserved": "blocked",
-          "goalStatusSource": "Successful update_goal(status=blocked), after third consecutive same-condition audit."
+          "goalStatusSource": "Successful update_goal(status=blocked), after third consecutive same-condition audit.",
+          "state": "historical_resolved_by_owner_input",
+          "resolutionEvidence": "eva2/evidence/product/owner-resume-20261006.json",
+          "appliesToCurrentTurn": false
         }
       },
       "ownerPriority20261005": {

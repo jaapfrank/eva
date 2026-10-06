@@ -1,0 +1,277 @@
+{
+  "contract": "EvaF1PostRebootIndependentReview/v1",
+  "reviewedAt": "2026-10-06T07:23:44.615309+00:00",
+  "task": "F1.2",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "decision": "GO_ORIGINAL_F1_2_TECHNICAL_END_CONDITION",
+  "originalFinishCondition": "Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren.",
+  "rootEvidence": "eva2/evidence/product/f1-digital-candidate-post-reboot-20261006.json",
+  "rootEvidenceSha256": "cac0aa6adc1b6b84b7519ac92b7be3da88d701bd9528db56ced78c9f4e76cb55",
+  "previousRootEvidenceSha256": "977d874e7cdff320e0215a5916c43bc0edaf80ae49b9e2c435e57ca3ca4febd5",
+  "reviewScope": "Original owner-authorized synthetic F1 fixtures; no EV003/R1 protected inputs, new tests, model calls or task replay.",
+  "preservedEvidence": {
+    "privateEvidenceHashChecks": {
+      "post-control-original-state.private.json": true,
+      "memory-after-reboot-terminal.json": true,
+      "memory-after-reboot.private.ndjson": true,
+      "after-reboot.private.json": true,
+      "before-reboot.private.json": true,
+      "ordinary-after-reboot-started.json": true,
+      "ordinary-results-after-reboot.private.json": true
+    },
+    "actualWindowsRestart": true,
+    "bootReaderUnchanged": true,
+    "all20ContainerIdentitiesImagesConfigsMountsRestartPoliciesUnchanged": true,
+    "all11HostUnitConfigsAndUnitFilesUnchangedAndActive": true,
+    "all3HostClientFilesUnchanged": true,
+    "sameOriginal2WorkBindingsAndOneClaimEach": true,
+    "sameOriginalDeliveryEventsAfterOrdinaryReads": true,
+    "sameOriginalMemoryDocumentIdentityAndContent": true,
+    "same2OriginalDocumentByteHashesAndSizes": true,
+    "bothSavedResultResponsesExactlyEqualToOriginal": true,
+    "bothSavedOutputHashesRecomputedFromText": true,
+    "sameGeneration1AndCallIdentity": true,
+    "recallCorrectToStoredReference": true,
+    "recallPromptDidNotIncludeAnswer": true,
+    "sameConversationMemoryBinding": true,
+    "recallGroundedReplyHashMatchesText": true
+  },
+  "recall": {
+    "http200": true,
+    "seconds": 6.907,
+    "humanCorrectAnswerHint": false,
+    "originalWorkReplayed": false,
+    "providerAndTokenAccounting": null,
+    "creditCost": null
+  },
+  "savedResultReads": {
+    "http200Count": 2,
+    "modelCalls": 0,
+    "originalVerifiedFlags": false,
+    "independentFileByteVerification": true,
+    "originalWorkReplayed": false
+  },
+  "concreteGap": {
+    "module": "eva2/src/eva/operations/browser_session.py",
+    "class": "BrowserSessionHost",
+    "method": "_status",
+    "savedMode": "eva",
+    "savedRevision": 96,
+    "observedState": "recovery_required",
+    "ownerControl": false,
+    "evaControl": false,
+    "browserReady": false,
+    "mcpReady": false,
+    "browserContainersBeforeRunning": true,
+    "browserContainersAfterRunning": false,
+    "bothRestartPolicies": "no",
+    "installedAutostartAdmissionValid": false,
+    "installedAutostartError": "managed browser is under owner control or requires explicit recovery; automatic resume is not allowed",
+    "effect": "Known Windows restart leaves retained Eva-mode inconsistent with stopped processes; existing ordinary authorized browser use cannot enter the stopped-to-start transition.",
+    "readOnlyConfiguredClientStatusRead": true,
+    "browserControlWrite": false,
+    "browserToolCalls": 0,
+    "modelCalls": 0,
+    "requiredCorrection": "Target the existing controller lifecycle/readiness transition for known restart/cold availability, preserving owner takeover, revoked access, generation binding and uncertain-action boundaries. Then review changed binding and read-only availability; no general rebuild or replay.",
+    "status": "resolved_on_installed_host_and_existing_ordinary_autostart",
+    "observationsAreHistorical": true
+  },
+  "metadataCorrectionsRequired": [
+    {
+      "field": "restart.dockerBuildkitInitializationSeconds",
+      "old": 200.485,
+      "correct": 200.481,
+      "basis": "Root supplied exact journal span correction."
+    },
+    {
+      "field": "limits optional-browser availability",
+      "oldClaim": "Stopped in both snapshots",
+      "correct": "Both optional browsers were active before restart and stopped afterwards; on-demand readiness is separately blocked by saved mode."
+    }
+  ],
+  "independentReviewerActions": {
+    "newTests": 0,
+    "newModelCalls": 0,
+    "newProviderCalls": 0,
+    "runtimeInstalls": 0,
+    "runtimeRollbacks": 0,
+    "houseActions": 0,
+    "browserControlWrites": 0
+  },
+  "limits": [
+    "F1.2 original bundled technical end condition is satisfied; the prior NO_GO and source-only GO remain historical evidence.",
+    "Root APIs retain verified=false; this review verifies synthetic original result/file retention independently and does not change that API field.",
+    "No overall product/competitive advantage, speech, seven-day family practice or F2 acceptance.",
+    "Independent R1 UNKNOWN result and P2 evaluation remain separate.",
+    "The installed host correction is outside P2 isolated frozen browser resource paths; its separate evidence is retained here."
+  ],
+  "correctiveSourceReview": {
+    "reviewedAt": "2026-10-06T07:14:24.106828+00:00",
+    "decision": "GO_FOR_EXACT_SOURCE_AND_BOUNDED_LEGACY_BINDING_INSTALL",
+    "installed": true,
+    "moduleSha256": "cdc15a042865ea3b2daea27d6d9f4cc606ad3fe64f52b833ab189cedcedef9ed",
+    "testsSha256": "e02eb7b516e947c2a5943201a3100cceddd2e5455d52b566ba1f9bd3887ae94d",
+    "originalFocusedTests": {
+      "passed": 33,
+      "seconds": 4.55,
+      "exitCode": 0,
+      "logSha256": "c016ca01125f77c695fcf154edbb8b8151f235ffbaec89a4e1a389eee2911dc9",
+      "reviewerRerun": false
+    },
+    "sourceResult": "Canonical different recorded boot + stable saved Eva mode + both exact pinned processes stopped is reconciled to stopped with one fresh generation; no start/action.",
+    "boundariesRetained": [
+      "Owner takeover and uncertain modes",
+      "Same-boot crash and absent legacy boot evidence",
+      "Partial running pair",
+      "Invalid boot identity fails closed without state overwrite",
+      "Atomic private persistence/exclusive lock",
+      "Existing compare-and-swap/fresh observation"
+    ],
+    "legacyEvidence": {
+      "stateSha256": "82e343f43dc0116dc0c653d79dada275a7fe36d3a99ef327f3c8be77331fe4b9",
+      "mode": "eva",
+      "revision": 96,
+      "bootMarkerAbsent": true,
+      "changedAt": "2026-10-05T22:31:29.308662+00:00",
+      "snapshotSha256": "d29042208a5a25c2021930d090b0cf301f642de61ccb5f02869a339f8ea4b7dc",
+      "snapshotAt": "2026-10-05T23:46:21.053344+00:00",
+      "oldKernelBoot": "850edb18-8188-4247-ae67-e098d03f5f8f",
+      "newWindowsBoot": "2026-10-06T06:39:55.5000000Z",
+      "exactPairIdsRunningBefore": true
+    },
+    "installConditions": [
+      "Stop only existing owner-browser manager and hold existing exclusive lock",
+      "Preserve exact original state bytes; verify exact old mode/revision/binding, no boot marker and timestamps",
+      "Add only evidenced old boot marker; no mode/revision reset",
+      "Restart same host unit once; no Docker/core/worker reinstall",
+      "Confirm stopped/new generation, then existing ordinary autostart once without page/model/replay",
+      "Bind local package source/manifest to exact corrected module before final GO"
+    ],
+    "P2Boundary": "Separate evaluator Chromium/MCP/gateway; controlled core/worker/benchmark pins unchanged. P2 does not prove this host correction.",
+    "reviewerNewTestsCallsRestartsStateWritesBrowserStarts": 0,
+    "installedConfirmation": "installedFinalReview"
+  },
+  "decisionHistory": [
+    {
+      "reviewedAt": "2026-10-06T07:08:29.566588+00:00",
+      "decision": "NO_GO_CONCRETE_BROWSER_RESTART_GAP",
+      "status": "historical; concrete observed gap subsequently corrected"
+    },
+    {
+      "reviewedAt": "2026-10-06T07:14:24.106828+00:00",
+      "decision": "GO_FOR_EXACT_SOURCE_AND_BOUNDED_LEGACY_BINDING_INSTALL",
+      "status": "historical; exact correction subsequently installed"
+    },
+    {
+      "reviewedAt": "2026-10-06T07:23:44.615309+00:00",
+      "decision": "GO_ORIGINAL_F1_2_TECHNICAL_END_CONDITION",
+      "status": "current"
+    }
+  ],
+  "originalFinishConditionSatisfied": true,
+  "independentlyExecutableWorkRemainingWithinF1_2": [],
+  "installedFinalReview": {
+    "reviewedAt": "2026-10-06T07:23:44.615309+00:00",
+    "decision": "GO_ORIGINAL_F1_2_TECHNICAL_END_CONDITION",
+    "publicInstalledReceipt": "eva2/evidence/product/f1-browser-boot-installed-20261006.json",
+    "publicInstalledReceiptSha256": "c1e634cd2b1373a5a318b1d1ad3746ef06d509709fab9dd36176e7a026fcfae1",
+    "moduleSha256": "cdc15a042865ea3b2daea27d6d9f4cc606ad3fe64f52b833ab189cedcedef9ed",
+    "testsSha256": "e02eb7b516e947c2a5943201a3100cceddd2e5455d52b566ba1f9bd3887ae94d",
+    "privateEvidenceSha256": {
+      "browser-boot-install-receipt.json": "13f3d0dada11c92739615fbab3ccef5f2ce45ee80aff351e35cabb31eabea498",
+      "browser-boot-install-plan.json": "61048e50f95523df54f2b7982ffd802bcb2ef4789decc3f7fcea9bd0c53d8f3a",
+      "browser-normal-autonomy-after-boot-started.json": "cab22bff5496bdc0d90a287d4d917deea45543950630d3b0352740c83310fa07",
+      "browser-normal-autonomy-after-boot-terminal.json": "65f8ee4d40086379cc10e5b7bf391aa59f6720f3dd16c1455225446c55db879e",
+      "browser-normal-autonomy-after-boot.stdout.private.json": "64a575b6c2644ecaca211849dc248b57c2028339bac0e8b903935e9f68194d11",
+      "browser-boot-package-alignment.json": "f42c71472101d651a481fd8d2af4287b17c36f4fdd9d27394f310bfdb443604a",
+      "browser-boot-package-verification.json": "cea79a2e5179a4625fde5d0c9462a088db234ca67a6079838582de62611de7c2",
+      "post-browser-autostart-retention.json": "19cf1e6753b23a00b33598ef9910b3366bbbae38fe1d70dec18373328f3d873e",
+      "browser-boot-focused-tests.json": "314dde6ac27af35b335b372365ca5b79be9d5b6d9cc1b7fbb188565f51f41a01",
+      "browser-autostart-after-boot-terminal.json": "e7504fd283be5b4dd2d13e6fcf226ea04b39bbde683d75727c6dcecd9f30acfb"
+    },
+    "actualInstalledLegacyBinding": {
+      "exactOldStateByteBackupSha256": "82e343f43dc0116dc0c653d79dada275a7fe36d3a99ef327f3c8be77331fe4b9",
+      "onlyEvidencedOldBootIdentityAdded": true,
+      "oldModeAndRevisionNotReset": true,
+      "sameExistingHostServiceRestartedOnce": true,
+      "actualHostServiceActive": true,
+      "coreWorkerInstallOrRollback": false,
+      "speechChange": false
+    },
+    "ordinaryAutostart": {
+      "existingFactory": "McpAutonomyProviderFactory.build / McpDiscoveryToolAdapter._browser_autostart",
+      "terminalExitCode": 0,
+      "stdoutSha256": "64a575b6c2644ecaca211849dc248b57c2028339bac0e8b903935e9f68194d11",
+      "beforeState": "stopped",
+      "beforeRevision": 97,
+      "afterState": "eva",
+      "afterRevision": 99,
+      "browserReady": true,
+      "mcpReady": true,
+      "freshObservationRequired": true,
+      "verifyGenerationPassed": true,
+      "modelCalls": 0,
+      "pageActions": 0,
+      "originalWorkReplayed": false
+    },
+    "independentConfiguredStatusRead": {
+      "readOnly": true,
+      "state": "eva",
+      "revision": 99,
+      "browserReady": true,
+      "mcpReady": true,
+      "ownerControl": false,
+      "evaControl": true,
+      "admittedByExistingAutostartStateValidator": true,
+      "actualRecordedBootId": "fa220e39-cde6-460a-aac4-38dc545f5341",
+      "controlWrites": 0,
+      "browserStarts": 0,
+      "modelCalls": 0,
+      "pageActions": 0
+    },
+    "package": {
+      "actualPackagedModuleSha256": "cdc15a042865ea3b2daea27d6d9f4cc606ad3fe64f52b833ab189cedcedef9ed",
+      "previousFullStagingSha256": "ab828c28d45baeb2f53b2cf29b856dba2d947372fff8256cc5b7791a44259e05",
+      "fullStagingSha256": "7a905b26f0bc4a88c6475ab15bdff997a33a7b9074f1b7a3b80c035be41361ef",
+      "independentlyComparedSourceKeys": 1225,
+      "onlyChangedSourcePath": "src/eva/operations/browser_session.py",
+      "other1224SourceHashesUnchanged": true,
+      "all8ImagePinsUnchanged": true,
+      "existingVerifierVerified": true,
+      "publicReleaseCreated": false
+    },
+    "originalDataAfterOrdinaryAutostart": {
+      "independentlyComparedWholeOriginalWorkAndEventRecords": true,
+      "exactlyEqualToPreviousPostControlState": true,
+      "postAutostartOriginalStateSha256": "c40ccabcc13c405f36df235dfbeca4f577738672fd2c800f43aa7f4473ec8e56",
+      "originalWorkReplayed": false,
+      "duplicatesIntroduced": false
+    },
+    "preparationErrorsRetained": [
+      {
+        "description": "Operator probe assumed configured direct browser catalog; actual runtime uses admitted managed autonomy. Assertion failed before any status/control/start.",
+        "evidence": "browser-autostart-after-boot-terminal.json",
+        "effects": 0,
+        "modelCalls": 0,
+        "resumedAt": "previously unexecuted normal factory binding"
+      },
+      {
+        "description": "Operator called require_verified on the verifier's returned tuple after verification. Correct tuple projection recorded; no product modification or modelcall."
+      }
+    ],
+    "noExtraFullTestInstallRollbackCycle": true,
+    "P2VersionBoundary": "P2 separate Chromium/MCP/gateway and frozen core/worker/config/resource pins remain unchanged. This installed host-controller correction is not tested by those P2 results.",
+    "accounting": {
+      "reviewerNewTests": 0,
+      "reviewerModelOrProviderCalls": 0,
+      "reviewerRuntimeWrites": 0,
+      "ordinaryAutostartModelCalls": 0,
+      "ordinaryAutostartPageActions": 0,
+      "savedResultReadModelCalls": 0,
+      "earlierOrdinaryRecallSeconds": 6.907,
+      "earlierOrdinaryRecallProviderTokensAndCreditCost": null,
+      "developmentCreditCost": null
+    },
+    "scopeLimit": "F1.2 technical end check only; not overall project acceptance, four completed housemate outcomes, P2 superiority, R1/AIDE2 benefit, parked speech or F2 seven-day family acceptance."
+  }
+}

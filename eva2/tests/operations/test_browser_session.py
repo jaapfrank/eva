@@ -119,3 +119,81 @@ def test_docker_driver_rejects_replaced_id_and_host_privileges_before_mutation(m
     browser["HostConfig"]["CapAdd"] = ["SYS_ADMIN"]
     with pytest.raises(BrowserSessionError):
         driver.inspect()
+
+
+BOOT_BEFORE = "850edb18-8188-4247-ae67-e098d03f5f8f"
+BOOT_AFTER = "fa220e39-cde6-460a-aac4-38dc545f5341"
+
+
+def test_confirmed_reboot_reopens_only_stable_stopped_eva_session(tmp_path):
+    tmp_path.chmod(0o700)
+    driver = Containers()
+    pair = BrowserContainers("a" * 64, "b" * 64)
+    host = BrowserSessionHost(containers=pair, state_directory=tmp_path,
+                              driver=driver, boot_id=BOOT_BEFORE)
+    active = asyncio.run(host.control("start", 0))
+    host.close()
+    driver.running = {"browser": False, "mcp": False}
+    calls = driver.calls[:]
+    host = BrowserSessionHost(containers=pair, state_directory=tmp_path,
+                              driver=driver, boot_id=BOOT_AFTER)
+    try:
+        status = asyncio.run(host.status())
+        assert status["state"] == "stopped"
+        assert status["revision"] == active["revision"] + 1
+        assert driver.calls == calls
+        assert json.loads((tmp_path / "state.json").read_text())["boot_id"] == BOOT_AFTER
+        with pytest.raises(BrowserSessionConflict):
+            asyncio.run(host.control("start", active["revision"]))
+        started = asyncio.run(host.control("start", status["revision"]))
+        assert started["eva_control"] and started["fresh_observation_required"]
+    finally:
+        host.close()
+    host = BrowserSessionHost(containers=pair, state_directory=tmp_path,
+                              driver=driver, boot_id=BOOT_AFTER)
+    try:
+        assert asyncio.run(host.status())["revision"] == started["revision"]
+        assert driver.calls == calls + [("start", "browser"), ("start", "mcp")]
+    finally:
+        host.close()
+
+
+@pytest.mark.parametrize("mode,previous_boot,running", [
+    ("eva", BOOT_AFTER, (False, False)),
+    ("eva", None, (False, False)),
+    ("owner", BOOT_BEFORE, (False, False)),
+    ("taking_over", BOOT_BEFORE, (False, False)),
+    ("starting", BOOT_BEFORE, (False, False)),
+    ("resuming", BOOT_BEFORE, (False, False)),
+    ("stopping", BOOT_BEFORE, (False, False)),
+    ("recovery_required", BOOT_BEFORE, (False, False)),
+    ("eva", BOOT_BEFORE, (True, False)),
+    ("eva", BOOT_BEFORE, (False, True)),
+])
+def test_reboot_does_not_override_owner_uncertainty_or_missing_boot_evidence(
+        tmp_path, mode, previous_boot, running):
+    tmp_path.chmod(0o700)
+    pair = BrowserContainers("a" * 64, "b" * 64)
+    state = {"binding": pair.binding, "revision": 41, "mode": mode,
+             "browser_started_at": "before", "mcp_started_at": "before"}
+    if previous_boot is not None:
+        state["boot_id"] = previous_boot
+    state_file = tmp_path / "state.json"
+    state_file.write_text(json.dumps(state))
+    state_file.chmod(0o600)
+    original = state_file.read_bytes()
+    driver = Containers()
+    driver.running = dict(zip(("browser", "mcp"), running))
+    host = BrowserSessionHost(containers=pair, state_directory=tmp_path,
+                              driver=driver, boot_id=BOOT_AFTER)
+    try:
+        status = asyncio.run(host.status())
+        assert status["state"] == "recovery_required"
+        assert status["revision"] == 41
+        assert not status["eva_control"]
+        assert not driver.calls
+        assert state_file.read_bytes() == original
+        with pytest.raises(BrowserSessionConflict):
+            asyncio.run(host.control("start", 41))
+    finally:
+        host.close()
