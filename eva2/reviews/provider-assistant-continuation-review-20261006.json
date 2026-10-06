@@ -89,7 +89,10 @@
     "concreteMissingRegression": null,
     "newTypedMessageSupportRequired": false,
     "newProviderRouteOrCredentialsAllowed": false,
-    "automaticR1RetryOrPromotionAllowed": false
+    "automaticR1RetryOrPromotionAllowed": false,
+    "soleRawReportPreservationDependencySatisfied": true,
+    "retentionMetadataArtifact": "eva2/evidence/product/r1-provider-failure-metadata-20261006.json",
+    "retentionMetadataArtifactSha256": "b8c91f21ccb1402a654c31546859b16c02a94ef4d108b9e8f6ce6a5899a816c2"
   },
   "accounting": {
     "reviewerNewTests": 0,
@@ -106,5 +109,53 @@
     "Live provider/backend success is not established by MockTransport tests.",
     "R1 remains UNKNOWN_NO_PROMOTION with original candidate, criteria and finish conditions retained.",
     "No product main-task completion, AIDE2 self-improvement, competitive superiority or family acceptance claim."
-  ]
+  ],
+  "protectedRawEvidencePreservation": {
+    "recordedAt": "2026-10-06T08:31:54.261297+00:00",
+    "decision": "EXACT_RAW_REPORT_PRESERVED_BEFORE_CORE_REPLACEMENT",
+    "originalContainer": "eva2-managed-b-slot3-core",
+    "originalPath": "/tmp/r1-independent-evaluation-20261006/independent/comparison-report-20261006.json",
+    "retentionContainer": "eva2-r1-evidence-20261006",
+    "retentionContainerId": "a27401131b3b2db4a8604e6583cea506895f5c3f7615a82d755f128c5c5e1644",
+    "retentionPath": "/tmp/comparison-report-20261006.json",
+    "sha256": "1e5ddd27c1eb48afd7f8bc3f0a0e2c28e667b9066596d991c39d2cae857ffc68",
+    "bytes": 35033,
+    "image": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+    "containerState": "created",
+    "containerStarted": false,
+    "networkMode": "none",
+    "mountCount": 0,
+    "entrypoint": [
+      "/bin/true"
+    ],
+    "fileMode": "0600",
+    "transfer": "One exact hash/length-guarded tar entry emitted by existing source-container Python, piped directly into docker cp destination-container:/tmp/.",
+    "verification": "Retained container archive contains one regular file; recomputed SHA256 and bytecount match the original.",
+    "hostRawFileCreated": false,
+    "protectedContentFieldsParsedOrPublished": false,
+    "scorerCasesOrOracleOpened": false,
+    "gradeInvoked": false,
+    "modelCalls": 0,
+    "automaticApprovalReviewAllowed": true,
+    "approvalRejectionOrBypass": false,
+    "originalSourceStillPresentAtPreservation": true,
+    "diagnosticHistory": {
+      "initialTransferCompleted": false,
+      "initialDestination": "eva2-r1-evidence-20261006:/tmp/",
+      "destinationDirectoryVerifiedPresent": true,
+      "initialSourceDockerArchiveExitCode": 1,
+      "initialSourceDockerArchiveBytes": 0,
+      "initialSourceDockerArchiveErrorCategories": [
+        "file_not_found",
+        "daemon_error"
+      ],
+      "sourceProcessExactFileHashAndLengthConfirmed": true,
+      "preciseDockerArchiveCause": null,
+      "correctedTransition": "Use the same admitted container-to-container tarstream, emitting the exact file from the source process rather than unavailable daemon-side source archive.",
+      "noUnchangedRetryOrAlternativeDisclosure": true
+    },
+    "retentionRequirement": "Retain this evidence container and file; do not start, prune or remove it during core replacement. Protected report content remains excluded from coordinator review.",
+    "R1OutcomeUnchanged": "UNKNOWN_NO_PROMOTION",
+    "replacementSafety": "The old core is no longer the only preserved raw-evidence location; source replacement must retain this independent stopped container."
+  }
 }

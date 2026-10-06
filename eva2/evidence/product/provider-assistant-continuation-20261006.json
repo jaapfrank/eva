@@ -57,17 +57,90 @@
     }
   ],
   "installation": {
-    "state": "independently_reviewed_installation_pending",
+    "checkedAt": "2026-10-06T08:34:43.614145+00:00",
+    "sourceCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+    "state": "installed_healthy_exact_shared_provider",
+    "sourceSha256": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd",
+    "containers": [
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "image": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+        "sourceCommitLabel": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+        "running": true,
+        "health": "healthy",
+        "configSha256": "f73739fca1896ca17e984b0ac47d9c957834c1a362dd264e56be49ccba98376e",
+        "hostConfigSha256": "4f945d0bb01d38be8f6d578348af81eb98aea78bc5798890024e92282933eb33",
+        "mountBindingsSha256": "0d86f8cbf15baeeff97c028c722639832969291b2c5e4663889ad77ffe35eafc",
+        "models": {
+          "EVA_CONVERSATION_CONTACT_MODEL": "gpt-6-sol",
+          "EVA_CONVERSATION_CONTACT_REASONING_EFFORT": "none",
+          "EVA_CONVERSATION_MODEL": "gpt-6-astra",
+          "EVA_CONVERSATION_REASONING_EFFORT": "medium"
+        },
+        "verifiedDigitalSourceHashes": {
+          "/opt/eva/src/eva/application/orchestration.py": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+          "/opt/eva/src/eva/adapters/connectors/mcp_gateway.py": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+          "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+          "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+          "/opt/eva/src/eva/adapters/model/openai_codex_provider.py": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd"
+        },
+        "importedProviderFile": "/opt/eva/src/eva/adapters/model/openai_codex_provider.py",
+        "sdk": "2.37.0",
+        "openai": "3.6.0"
+      },
+      {
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14",
+        "sourceCommitLabel": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+        "running": true,
+        "health": "healthy",
+        "configSha256": "7260b901136be39a15e9da9cdbdd1999fd1e297e04dbf628f444a680e3a9387a",
+        "hostConfigSha256": "10f3dd8dc15a2e32843ccaf2f55fad217d203d9865d7ac24c9efae8a8e61b7e3",
+        "mountBindingsSha256": "5353fd173a59ee20f0ac875be023cc7ed75410ec9d087741aa063b063c0e26cc",
+        "models": {
+          "EVA_CONVERSATION_CONTACT_MODEL": "gpt-6-sol",
+          "EVA_CONVERSATION_CONTACT_REASONING_EFFORT": "none",
+          "EVA_CONVERSATION_MODEL": "gpt-6-astra",
+          "EVA_CONVERSATION_REASONING_EFFORT": "medium"
+        },
+        "verifiedDigitalSourceHashes": {
+          "/opt/eva/src/eva/application/orchestration.py": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+          "/opt/eva/src/eva/adapters/connectors/mcp_gateway.py": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+          "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+          "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+          "/opt/eva/src/eva/adapters/model/openai_codex_provider.py": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd"
+        },
+        "importedProviderFile": "/opt/eva/src/eva/adapters/model/openai_codex_provider.py",
+        "sdk": "2.37.0",
+        "openai": "3.6.0"
+      }
+    ],
     "changedFiles": [
       "src/eva/adapters/model/openai_codex_provider.py"
     ],
-    "roles": [
-      "core",
-      "delegated-work-worker"
+    "changedComposeFields": [
+      "services.core.image",
+      "services.delegated-work-worker.image"
     ],
-    "dependencyChanged": false,
-    "migration": false,
-    "speechChanged": false
+    "newImageOfflineSDKContinuationCasesPassed": {
+      "core": 2,
+      "worker": 2
+    },
+    "dataVolumesRetained": true,
+    "dependenciesChanged": false,
+    "schemaChanged": false,
+    "speechChanged": false,
+    "realProviderCalls": 0,
+    "candidateFreeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
+    "candidateFreezeSha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
+    "originalR1CauseProven": false,
+    "windowsProjectDashboard": {
+      "url": "http://127.0.0.1:44712/",
+      "stateEndpointStatus": 200,
+      "currentTitle": "P2.1 · Aparte onafhankelijke eindvergelijking",
+      "latestInstalledTitle": "Providervervolgroute gerepareerd en geïnstalleerd",
+      "checkedFromWindows": true
+    }
   },
   "limitations": [
     "The exact failed R1 request was not retained; no historical case attribution or replay.",
@@ -76,7 +149,16 @@
   ],
   "independentReview": {
     "path": "eva2/reviews/provider-assistant-continuation-review-20261006.json",
-    "sha256": "d62a929d7b98d02e0a107232da5414943da98288a07991432205aefcdc6346c5",
-    "decision": "GO_EXACT_REVIEWED_SOURCE_INSTALLATION"
+    "sha256": "579bf832e7c3e04876f2648a1946a4f6dea06ee9bc52bfeaf9ad0d39c22526e5",
+    "decision": "GO_EXACT_REVIEWED_SOURCE_INSTALLATION",
+    "reviewedOriginalSha256": "d62a929d7b98d02e0a107232da5414943da98288a07991432205aefcdc6346c5",
+    "postReviewAppendix": "Same source GO retained; later internal closed-report-preservation metadata appended before core replacement."
+  },
+  "closedEvidenceRetention": {
+    "metadataPath": "eva2/evidence/product/r1-provider-failure-metadata-20261006.json",
+    "metadataSha256": "b8c91f21ccb1402a654c31546859b16c02a94ef4d108b9e8f6ce6a5899a816c2",
+    "internalStoppedNetworklessContainer": "eva2-r1-evidence-20261006",
+    "rawHostCopy": false,
+    "rawContentReadByBuilder": false
   }
 }

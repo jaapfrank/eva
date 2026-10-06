@@ -1,0 +1,278 @@
+{
+  "contract": "EvaComparisonCandidateFreeze/v1",
+  "checkedAt": "2026-10-06T08:34:43.614145+00:00",
+  "status": "new_installed_candidate_frozen_independent_delta_review_pending_no_inference",
+  "repositoryCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+  "scope": "Separate newly installed provider-history candidate; unchanged original EV003 families/criteria/providerroute. One contact/memory pair may be independently admitted; no old final case replay or automatic full matrix.",
+  "participantsManifest": {
+    "path": "eva2/benchmark/inspect_ai_v1/p1_participants_20260929.json",
+    "sha256": "71478165fea4a469e01debdf8107999d9fc84c3e4fe9d4fd4112297b9ba6607f",
+    "meaning": "Existing public setup/admission metadata, not new dataset or native execution permission."
+  },
+  "participants": [
+    {
+      "id": "eva2",
+      "sourceCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+      "sourceKind": "exact_existing_base_images_plus_reviewed_single_provider_overlay_not_full_repository_head",
+      "admissionAtFreeze": "owner_authorized_independent_delta_admission_pending",
+      "nativeState": "both_new_images_healthy_provider_module_hash_exact"
+    },
+    {
+      "id": "eva1-bottie",
+      "sourceCommit": "909bff513d7d7fd653d6a7f270d9e73facce430d",
+      "sourceKind": "actual_service_working_directory_head_with_declared_local_changes",
+      "admissionAtFreeze": "completed_fixed_development_only_no_further_run_admitted",
+      "nativeState": "fixed_development_executed",
+      "pinValidation": "Original reference pin retained; runtime/authorization/model/access must be independently checked before any fresh execution. No current native availability claim."
+    },
+    {
+      "id": "openclaw",
+      "sourceCommit": "eb377ac59e6c9fd6c7705028034812becf00271b",
+      "sourceKind": null,
+      "admissionAtFreeze": "not_admitted",
+      "nativeState": "unavailable_until_separate_admission",
+      "pinValidation": "Original reference pin retained; runtime/authorization/model/access must be independently checked before any fresh execution. No current native availability claim."
+    },
+    {
+      "id": "hermes",
+      "sourceCommit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+      "sourceKind": null,
+      "admissionAtFreeze": "not_admitted",
+      "nativeState": "unavailable_until_separate_admission",
+      "pinValidation": "Original reference pin retained; runtime/authorization/model/access must be independently checked before any fresh execution. No current native availability claim."
+    },
+    {
+      "id": "agent_zero",
+      "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+      "sourceKind": null,
+      "admissionAtFreeze": "not_admitted",
+      "nativeState": "unavailable_until_separate_admission",
+      "pinValidation": "Original reference pin retained; runtime/authorization/model/access must be independently checked before any fresh execution. No current native availability claim."
+    }
+  ],
+  "models": {
+    "foreground_contact": {
+      "model": "gpt-6-sol",
+      "reasoning": "none"
+    },
+    "all_model_helpers_including_memory": {
+      "model": "gpt-6-astra",
+      "reasoning": "medium"
+    },
+    "policy": "Exact role settings shared by all participants; no automatic model fallback or effort escalation in this run. Unsupported role setting is unavailable before inference."
+  },
+  "productImages": {
+    "eva2-managed-b-slot3-core": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+    "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14"
+  },
+  "referenceEvidence": [
+    {
+      "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+    },
+    {
+      "path": "eva2/evidence/product/f1-integrated-installed-20261003.json",
+      "sha256": "07623bbc8c0d979c96e55917253e4c48052effd8e90f3636cc19edbd5fd35e6d"
+    },
+    {
+      "path": "eva2/evidence/product/p2-tool-error-feedback-20261005.json",
+      "sha256": "8702347d2960ec7b3059dd844ca9ec86c98fbedd65337aa5a4cfeda4af2eb00a"
+    },
+    {
+      "path": "eva2/evidence/product/p2-catalogue-model-view-20261006.json",
+      "sha256": "a0bd348e02dc5d69b1c888770aacb3792ead636406bf51cdd1e04e6a37b7cb1d"
+    },
+    {
+      "path": "eva2/evidence/product/f1-digital-candidate-pre-reboot-20261006.json",
+      "sha256": "bcf78e19f3d64428ee359846e89888adef1d678955dfd7a203292d6d20f45a0e"
+    },
+    {
+      "path": "eva2/evidence/product/p2-changed-candidate-evaluation-decision-20261006.json",
+      "sha256": "ec6a0c3e43ac07f10524c771627e63be17e8e09772957bdf65705af825194de5"
+    }
+  ],
+  "openConditions": [
+    "Independent candidate delta and source-bound functional-role admission before curation/inference.",
+    "Same original full six families12cases×3epochs and two actual human ratings remain required for full P2.1; this selected pair cannot satisfy that finish.",
+    "Unavailable competitors remain UNKNOWN, no login/paidroute/fallbackchange.",
+    "Speech parked; no historical case replay/rescore/promotion."
+  ],
+  "curation": {
+    "owner": "/root/p2_independent_final_20261006",
+    "families": [
+      "conversation_memory",
+      "cross_domain_actions",
+      "initiative",
+      "browser_computer",
+      "learning_projects",
+      "voice_presence"
+    ],
+    "unseenCasesPerFamily": 12,
+    "epochs": 3,
+    "initiativeOpportunityCount": 6,
+    "initiativeDistractorCount": 6,
+    "humanRaters": 2,
+    "privateDirectory": "/home/administrator/project/.eva2-artifacts/ev003-provider-history-final-20261006/holdout",
+    "publicReceipt": "eva2/benchmark/inspect_ai_v1/ev003_provider_history_dataset_commitment_20261006.json",
+    "builderMayReadHiddenContent": false,
+    "modelRunsAdmitted": false,
+    "publish": "Structure, hashes and exact remaining setup only; no hidden stimuli, fixtures or oracle answers.",
+    "status": "not_started_for_new_provider_history_candidate",
+    "privateDirectoryCreated": false,
+    "fullSetRequirementPreserved": true,
+    "selectedPartialScope": {
+      "conversation_memory": 1,
+      "epoch": 1,
+      "fullMatrixAdmitted": false
+    }
+  },
+  "supersedesForChangedCandidateOnly": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
+    "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3",
+    "historicalResultsPreserved": true,
+    "closedPreviousRoundNotReplayed": true
+  },
+  "runtimeConfiguration": {
+    "hashEncoding": "SHA256 compact sorted-key UTF8 JSON ensure_ascii=False; Mounts sorted by Destination",
+    "containers": [
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "image": "sha256:959b80e8d556e3b80b6ba50f59c896f29d28f43de7e5b55429c12c19d47f7155",
+        "sourceCommitLabel": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+        "running": true,
+        "health": "healthy",
+        "configSha256": "f73739fca1896ca17e984b0ac47d9c957834c1a362dd264e56be49ccba98376e",
+        "hostConfigSha256": "4f945d0bb01d38be8f6d578348af81eb98aea78bc5798890024e92282933eb33",
+        "mountBindingsSha256": "0d86f8cbf15baeeff97c028c722639832969291b2c5e4663889ad77ffe35eafc",
+        "models": {
+          "EVA_CONVERSATION_CONTACT_MODEL": "gpt-6-sol",
+          "EVA_CONVERSATION_CONTACT_REASONING_EFFORT": "none",
+          "EVA_CONVERSATION_MODEL": "gpt-6-astra",
+          "EVA_CONVERSATION_REASONING_EFFORT": "medium"
+        },
+        "verifiedDigitalSourceHashes": {
+          "/opt/eva/src/eva/application/orchestration.py": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+          "/opt/eva/src/eva/adapters/connectors/mcp_gateway.py": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+          "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+          "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+          "/opt/eva/src/eva/adapters/model/openai_codex_provider.py": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd"
+        },
+        "importedProviderFile": "/opt/eva/src/eva/adapters/model/openai_codex_provider.py",
+        "sdk": "2.37.0",
+        "openai": "3.6.0"
+      },
+      {
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:fee8313778ab2a619d90e356a81a5c03f8789edaa9da181515923973f6814f14",
+        "sourceCommitLabel": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+        "running": true,
+        "health": "healthy",
+        "configSha256": "7260b901136be39a15e9da9cdbdd1999fd1e297e04dbf628f444a680e3a9387a",
+        "hostConfigSha256": "10f3dd8dc15a2e32843ccaf2f55fad217d203d9865d7ac24c9efae8a8e61b7e3",
+        "mountBindingsSha256": "5353fd173a59ee20f0ac875be023cc7ed75410ec9d087741aa063b063c0e26cc",
+        "models": {
+          "EVA_CONVERSATION_CONTACT_MODEL": "gpt-6-sol",
+          "EVA_CONVERSATION_CONTACT_REASONING_EFFORT": "none",
+          "EVA_CONVERSATION_MODEL": "gpt-6-astra",
+          "EVA_CONVERSATION_REASONING_EFFORT": "medium"
+        },
+        "verifiedDigitalSourceHashes": {
+          "/opt/eva/src/eva/application/orchestration.py": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+          "/opt/eva/src/eva/adapters/connectors/mcp_gateway.py": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+          "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+          "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "2888e28a47476f8093463bc4fac5e66f36f6e2223556c8955dc0274de5968d07",
+          "/opt/eva/src/eva/adapters/model/openai_codex_provider.py": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd"
+        },
+        "importedProviderFile": "/opt/eva/src/eva/adapters/model/openai_codex_provider.py",
+        "sdk": "2.37.0",
+        "openai": "3.6.0"
+      }
+    ],
+    "secretValuesPublished": false,
+    "historicalHostConfigEquality": "unknown; original raw HostConfig unavailable and digest differs. No product/image/source/Config alteration observed. Current HostConfig independently bound."
+  },
+  "existingEvaluationBindings": {
+    "eva2/benchmark/inspect_ai_v1/bridge_probe.py": "9d657d92a0535f1a315dba45b47354a2895836d4781cc95265c25122d78ecda6",
+    "eva2/benchmark/inspect_ai_v1/cp001.py": "cd6e2a3f67eacf3319876b0fcd208fb283301f8e3e12ba18f8b0ed82840c6160",
+    "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "c57637e389204ba9e816f430da40db073e217bf969b9968cc74f791f4854986f",
+    "eva2/benchmark/inspect_ai_v1/cp001_bottie_worker.mjs": "d9135079c1e2ce8b91cb57b4d1d39b376cb031f0fb9bedda2aa1f8958b58c73b",
+    "eva2/benchmark/inspect_ai_v1/cp001_fixture_worker.py": "7caf7a93ce1a6362ef0fdeb4841cb5029a3963ece2f82b123c1614a3d9495077",
+    "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py": "4d9b60a996b4fb221b5ad2cd77072ac36432b5349c3f0fbf96c81ba640ff8b85",
+    "eva2/benchmark/inspect_ai_v1/cp001_journal_admission.py": "bba74d4075b6b5e920202ffdee37cd7cbc9038540f077dc39ff45f43f5501901",
+    "eva2/benchmark/inspect_ai_v1/cp001_native.py": "586322f040fdc42c87559ccea6171c8a9715caf7af9d4298404a711431e01f7b",
+    "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py": "e2d1d3d63e64f84da2ddeef2bf032fe9e5b5153a50abddf0db9fe75dc607a774",
+    "eva2/benchmark/inspect_ai_v1/cp001_reader_receipt.py": "c229576026094c96d54da45917ce409a467c732a254b0fde8065f4fac1f9511e",
+    "eva2/benchmark/inspect_ai_v1/ev002_baseline.py": "d8b92b7aecdeb449febe43725a5124b41063cb9811350680e4a3605c39ca0c35",
+    "eva2/benchmark/inspect_ai_v1/ev003_action_accounting.py": "f804cd0d19e25905c7d802d468f2d70d40acbf6e0dacf633aef91bbbe18c3fa0",
+    "eva2/benchmark/inspect_ai_v1/ev003_agentzero_readback.py": "780c6693aefe51f61e77c3b20d848c9f2c5377772924692bd056b207fdc724a5",
+    "eva2/benchmark/inspect_ai_v1/ev003_bottie_readback.py": "53cffd1d746d05c4f93b5246bcf48086048c0b9d7b75cd42667d188a511c7568",
+    "eva2/benchmark/inspect_ai_v1/ev003_collection_fixture.py": "863d1356aa1a94f5043e33f6bd250b1219dce58040e8cf30a76847329946d158",
+    "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602",
+    "eva2/benchmark/inspect_ai_v1/ev003_node_calendar.test.mjs": "769f3f9d5a5fc5efadc1a744ac4f2352ab8a632470ed0bade8ae213e09ed2c60",
+    "eva2/benchmark/inspect_ai_v1/ev003_python_calendar.py": "2d00941d259ba2576c4c7703e5717834118286b35281002d0f671c379a691c48",
+    "eva2/benchmark/inspect_ai_v1/ev003_python_calendar_native_probe.py": "5b78e7e9853c5887994f53ce082c9b61f4ef8702a9cba577500efea483dc6bba",
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_bridge_probe.py": "434ef173c7e0bc37070b6395a1dcdbf5b1fb02986de12cbc0e85223a39029d40",
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_native_probe.py": "23024b9b6326195689dc7f84ef6b10d83df1d6213f190b44e1db4a7925f3d8f3",
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_preset_probe.py": "63fd84cd7f5150cb4c75903936ed8572bcea34ed3966aa8b97b564d987cf60b6",
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_request_probe.py": "2c468fc96a2f77fb42d760bb0d017c5dc0c878f0c1e121f46ce5648e9de4d63f",
+    "eva2/benchmark/inspect_ai_v1/p1_agentzero_transport_probe.py": "15df2184eb7ea5e6eef9820894351f655f1cbff5251127558835b2f2a4a533da",
+    "eva2/benchmark/inspect_ai_v1/p1_eva2_native_worker.py": "c4f08df0d4fcaae19ee09326300faf2e5a6af4019ba86c9629e50c4232a8a978",
+    "eva2/benchmark/inspect_ai_v1/p1_hermes_login.py": "d201bd5b610d1d69d055945192e366dd3adf11c449a52f12452697f47b8876ac",
+    "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py": "f4ccdf836e7f42034ccc59f693707f5ba587747aac1c9eb5ee0ddeff386a416d",
+    "eva2/benchmark/inspect_ai_v1/p1_hindsight_accounting_probe.py": "512766ab2dd0e0804062acdbb3b1c962613503b6266b8d78b7326b63762aed1e",
+    "eva2/benchmark/inspect_ai_v1/p1_hindsight_lifecycle_probe.py": "263a131e454392198c108e7897d1f6ef69c5f05ac6f932fd536f60a0f9d0e83d",
+    "eva2/benchmark/inspect_ai_v1/p1_httpx2_accounting_probe.py": "0bbb45198bdd3469fbfcd70689664e9dccf48bf1fa49c6296ccbb2ccfd566699",
+    "eva2/benchmark/inspect_ai_v1/p1_model_tunnel.py": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08",
+    "eva2/benchmark/inspect_ai_v1/p1_openclaw_catalog_probe.py": "ad486923d1de1e3cd75c3541758c0574ba982020b2af4a95f263c99cd8d4af4e",
+    "eva2/benchmark/inspect_ai_v1/p1_openclaw_config_probe.mjs": "7a452aa8924865a07e8877fa8a684cff65d0a77b11c25c727be5596b032e402e",
+    "eva2/benchmark/inspect_ai_v1/p1_openclaw_host_config_probe.py": "6d48370321a0e3968436e4a8436a22f7b6093efd03f21ac53888f91b74dc8272",
+    "eva2/benchmark/inspect_ai_v1/test_ev003_agentzero_evidence.py": "9005eb777e2ed18bbe060fce5fc1698f20177f1efd85c323fa01b8d163be60c0",
+    "eva2/benchmark/inspect_ai_v1/pylock.toml": "2826d5d25d138b81add376819b6ca73f27caba2df02ff74bd8e80c0a3fef5f5e",
+    "eva2/benchmark/inspect_ai_v1/calendar-requirements.txt": "82f6f913cf1ac2cc130af47705c983838219a414cd6dcb2580ca4cd0baa8aa39"
+  },
+  "originalConditions": {
+    "plan": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "meaning": "Criteria/family envelopes/provider roles reused unchanged; this is not continuation of the original dataset execution plan.",
+    "globalMatrixStarted": false,
+    "originalScorer": "eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+    "originalScorerSha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+  },
+  "verification": {
+    "imagesAndProviderImportsVerified": true,
+    "eachNewImageGenericOfflineContinuationsPassed": 2,
+    "realProviderCallsForInstall": 0,
+    "humanAcceptanceNotInferred": true,
+    "comparisonAdmissionNotInferred": true
+  },
+  "derivedFrom": {
+    "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_freeze_20261006.json",
+    "sha256": "b145e0c7a6cecc69b3306aad5dba2f6afbb25e907ac56137d194822cc321c4cf",
+    "unchangedOriginal": true,
+    "basis": "User-authorized changed-candidate comparison; coordinator approved separate actual post-restart binding without speculative historical equality."
+  },
+  "privateRuntimeBinding": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261006/postrestart-runtime-binding.private.json",
+    "sha256": "7602b20b7e1af5a653977182d82bd4f35563aeadc0cc8b550f59b92f1e6af649",
+    "secretValuesPublished": false
+  },
+  "sourceLayers": {
+    "baseImages": {
+      "core": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+      "worker": "sha256:78f38eae86c4935059b18829bb9eb5d055ab67b06d2e4b0da43ec95c6b8aef90"
+    },
+    "deltaCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
+    "deltaFiles": [
+      "src/eva/adapters/model/openai_codex_provider.py"
+    ],
+    "providerSha256": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd",
+    "allOtherSourceAndDependencyLayersUnchanged": true
+  },
+  "ownerAuthorization": {
+    "path": "eva2/evidence/product/p2-owner-final-authorization-20261006.json",
+    "sha256": "07a2d89326fa9a79d60c1e15ea64be6f8ff34be2b6333c7ec02a267e63491baf",
+    "explicitSeparateRun": true,
+    "automaticFullMatrix": false
+  }
+}

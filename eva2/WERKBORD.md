@@ -1,3 +1,9 @@
+## 6 oktober — providercorrectie geïnstalleerd; aparte eindvergelijking actief
+
+De kleinste **generieke providervervolgcorrectie draait in kern én werker**: bronhash exact, beide healthy;40/40 offlineproviderchecks en per nieuweimage2/2 echteSDKmockgevallen. Geen nieuwe dependencies/schema/spraakwijziging. Geen echte modelcalls tijdens reparatie/installatie. Gesloten R1-bewijs is intern behouden zonder inhoud naar host/chat te kopiëren. R1 blijft UNKNOWN; deze reparatie bewijst geen innovatie of voltooiing van R1.1.
+
+**P2.1 actief:** onafhankelijke nieuwe kandidaatfreeze/rolmapping en één ongeziene gewone contact/geheugenpair tegenover Eva1, binnen Jaaps zojuist gegeven toestemming. Alle criteria/44 taken/acceptaties behouden.34/44 blijft34/44; beperkte vergelijking is geen nieuwe huisgenootfunctie. Geen nieuwe handeling van Jaap nodig.
+
 ## 6 oktober — bewezen providervervolgfout en aparte vergelijking
 
 Jaap heeft de **aparte onafhankelijke eindvergelijking** expliciet toegestaan: dezelfde criteria/providerroute/verbruiksgrenzen, geen automatische volledige matrix. De oorspronkelijke finishvoorwaarden en34/44-afronding blijven staan.
