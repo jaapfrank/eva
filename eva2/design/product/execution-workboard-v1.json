@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-06T08:56:04.037513+00:00",
+  "lastUpdated": "2026-10-06T09:02:36.421928+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1007,7 +1007,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T08:56:04.037513+00:00",
+        "checkedAt": "2026-10-06T09:02:36.421928+00:00",
         "deliveries": [
           {
             "title": "Providervervolgroute gerepareerd en geïnstalleerd",
@@ -3868,7 +3868,7 @@
           "title": "P2.1 · Aparte onafhankelijke eindvergelijking",
           "state": "in_progress",
           "owner": "Onafhankelijke beoordelaar; Codex integreert alleen openbare resultaten",
-          "detail": "Kandidaat en modelrollen onafhankelijk gecontroleerd. Verse testpersoon/database/geheugenruimte aansluiten, daarna één ongezien chat/geheugenpaar Eva1/Eva2. Tot nu toe0 gecontroleerde providercalls; dezelfde criteria en bestaande route.",
+          "detail": "Verse testpersoon, database, geheugenbudget en gewone applicatielogin gereed. Onafhankelijke beoordelaar voert één ongezien chat/geheugenpaar Eva1/Eva2 uit met bestaande native meet- en scoreinterfaces. Algemene voorsprong nog onbekend.",
           "doneWhen": "Oorspronkelijke volledige P2.1-eindvoorwaarde blijft staan; een beperkte pair voltooit haar niet."
         },
         "next": {
@@ -3887,7 +3887,7 @@
           "detail": "Goal actief; aparte eindvergelijking toegestaan. Geen handeling van Jaap nodig. De test-runtime gebruikt een eigen persoon en geen kopie van privégegevens."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T08:56:04.037513+00:00"
+        "reviewedAt": "2026-10-06T09:02:36.421928+00:00"
       },
       "reviewedAt": "2026-10-06T08:15:56.899036+00:00",
       "checkedAt": "2026-10-06T08:19:50.712148+00:00",
@@ -19121,7 +19121,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Verse geïsoleerde scope via bestaande native API aansluiten; daarna één onafhankelijk gekozen CM-paar uitvoeren met de bestaande criteria en verbruiksgrenzen.",
+              "nextAction": "De onafhankelijke beoordelaar voert het gekozen ongeziene CM-paar uit; gebruik bestaande native meet- en Inspect-scoreinterfaces.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -19129,14 +19129,13 @@
                 "expected": "De aparte vergelijking is toegestaan en wordt voorbereid/uitgevoerd; geen handeling van Jaap nodig. De volledige vergelijking en menselijke beoordelingen blijven apart.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T08:56:04.037513+00:00",
+              "checkedAt": "2026-10-06T09:02:36.421928+00:00",
               "assignment": {
                 "baseCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root",
-                  "/root/p2_independent_final_20261006",
-                  "/root/r1_final_followup_20261006"
+                  "/root/p2_independent_final_20261006"
                 ],
                 "files": [
                   "/root: publieke scope-initializer, workboard/WERKBORD en Git-integratie.",
@@ -19147,7 +19146,7 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Eén oorspronkelijke CM-beoordeling, één epoch, Eva1/Eva2; bestaande samplegrenzen1.048.576input/19.200output/16calls per native sample blijven gelden. Geen automatische matrix; creditkosten onbekend.",
-                "currentAction": "Kandidaat en functionele modelrollen onafhankelijk GO; nieuwe lege testdatabase/geheugenruimte en native klok/accounting worden aangesloten vóór curatie. Nog0 gecontroleerde providercalls.",
+                "currentAction": "Verse testscope/schema/budget/applicatierol gereed en bevestigd; twee concrete setupfouten gericht gecorrigeerd vóór modelcalls. Native glue bindt nu de case; geen productwijziging/rollback.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "e02192e7: verliesvrije gedeelde catalogusguidance, bronreview GO,134 gerichte tests plus oude assertie vastgelegd. Beide images geïnstalleerd/gezond; gewone browseropdracht en verse24-toolcatalogus+schema-uitleg geslaagd. Geen extra producttaak, spraak of algemene winstclaim."
@@ -19422,7 +19421,8 @@
                   }
                 },
                 "historicalBaseCommit": "d76c7fb09149156838aab392cdce5bd067241c77",
-                "sourceAdmissionReview": "eva2/reviews/p2-native-admission-contract-review-20261006.json"
+                "sourceAdmissionReview": "eva2/reviews/p2-native-admission-contract-review-20261006.json",
+                "scopeInitializationReview": "eva2/reviews/p2-native-scope-initializer-review-20261006.json"
               },
               "remaining": "Geselecteerde ronde gesloten; volledige oorspronkelijke vergelijking blijft onvolledig. Vijf native pogingen, één objectief recallverschil; CM01-meetfout, XD01-admissiononzekerheid en XD02 ongebruikt UNKNOWN. Ontbrekende deelnemers, volledige12×3-dekking en twee echte beoordelingen blijven zichtbaar.",
               "latestEvidence": "eva2/evidence/product/p2-independent-partial-results-20261006.json",

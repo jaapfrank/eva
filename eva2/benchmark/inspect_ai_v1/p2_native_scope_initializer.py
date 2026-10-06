@@ -52,7 +52,7 @@ def initialize_scope(
                 "JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace "
                 "WHERE c.relkind IN ('r','p','v','m','f') "
                 "AND n.nspname NOT IN ('pg_catalog','information_schema') "
-                "AND n.nspname NOT LIKE 'pg_toast%'"
+                "AND left(n.nspname, 8) <> 'pg_toast'"
             ).scalar_one()
         if tables:
             raise ValueError("Only an empty isolated database may be initialized")

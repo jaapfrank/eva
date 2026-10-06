@@ -2,7 +2,7 @@
 
 De kleinste **generieke providervervolgcorrectie draait in kern én werker**: bronhash exact, beide healthy;40/40 offlineproviderchecks en per nieuweimage2/2 echteSDKmockgevallen. Geen nieuwe dependencies/schema/spraakwijziging. Geen echte modelcalls tijdens reparatie/installatie. Gesloten R1-bewijs is intern behouden zonder inhoud naar host/chat te kopiëren. R1 blijft UNKNOWN; deze reparatie bewijst geen innovatie of voltooiing van R1.1.
 
-**P2.1 actief:** kandidaat en functionele modelrollen onafhankelijk GO. Verse geïsoleerde testpersoon/database/geheugenruimte en bestaande native meetinterfaces worden aangesloten; daarna één ongeziene gewone contact/geheugenpair tegenover Eva1. Tot nu toe0 gecontroleerde providercalls. Jaaps toestemming geldt; geen automatische volledige matrix. Alle criteria/44 taken/acceptaties behouden.34/44 blijft34/44; beperkte vergelijking is geen nieuwe huisgenootfunctie. Geen nieuwe handeling van Jaap nodig.
+**P2.1 actief:** kandidaat en functionele modelrollen onafhankelijk GO. Verse geïsoleerde testpersoon/schema/geheugenbudget/applicatielogin zijn gereed; de onafhankelijke beoordelaar sluit de bestaande native meet- en scoreinterfaces aan voor één ongeziene gewone contact/geheugenpair tegenover Eva1. Setup gebruikte0 gecontroleerde providercalls; modelverbruik van de echte proef wordt apart gerapporteerd. Jaaps toestemming geldt; geen automatische volledige matrix. Alle criteria/44 taken/acceptaties behouden.34/44 blijft34/44; beperkte vergelijking is geen nieuwe huisgenootfunctie. Geen nieuwe handeling van Jaap nodig.
 
 ## 6 oktober — bewezen providervervolgfout en aparte vergelijking
 

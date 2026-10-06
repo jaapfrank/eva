@@ -1,10 +1,10 @@
 {
   "contract": "EvaP2NativeScopeInitializerIndependentReview/v1",
-  "reviewedAt": "2026-10-06T08:56:21.152619+00:00",
+  "reviewedAt": "2026-10-06T09:00:14.928210+00:00",
   "reviewer": "/root/r1_final_followup_20261006",
-  "decision": "GO_FOR_FRESH_ISOLATED_P2_SCOPE_INITIALIZATION",
+  "decision": "GO_FOR_EXACT_PRE_MUTATION_SCHEMA_QUERY_CORRECTION",
   "sourcePath": "eva2/benchmark/inspect_ai_v1/p2_native_scope_initializer.py",
-  "sourceSha256": "8b3e3761f5c12b424ead9b2fa828153b714f42c9f48cbbcb408b91ec658b8a4a",
+  "sourceSha256": "f331e4838e65091adccfe906ac532719a1a916ef15e191351e6deb90aecab8ae",
   "scope": "Static review of public initializer and the relevant existing public APIs only. Reviewer did not execute the helper, connect a database, inspect private evaluation files or run an experiment.",
   "checks": {
     "separateRuntimeApplicationRole": {
@@ -25,7 +25,7 @@
         49,
         58
       ],
-      "evidence": "Explicit permitted sample/dedicated P2 name must match setup and runtime database names; non-system ordinary/partitioned/view/materialized/foreign relations must be absent before migrations. No existing populated database is initialized."
+      "evidence": "Explicit permitted sample/dedicated P2 name must match setup and runtime database names; non-system ordinary/partitioned/view/materialized/foreign relations must be absent before migrations. No existing populated database is initialized. The pg_toast prefix exclusion now uses left(n.nspname, 8), avoiding the proven DBAPI percent-placeholder failure with the same excluded namespaces."
     },
     "dedicatedTemporaryRuntimeRoot": {
       "pass": true,
@@ -96,5 +96,36 @@
     "GO applies only to this exact helper in the caller-controlled fresh isolated P2 setup; it is not a runtime benchmark score or a product completion claim.",
     "Source validates explicit database names and application username; caller/evaluator remains responsible for admitted isolated server/DSN binding and actual runtime role readiness.",
     "Original comparison fixtures, criteria, budget and independent evaluator ownership remain unchanged."
-  ]
+  ],
+  "reviewHistory": [
+    {
+      "reviewedAt": "2026-10-06T08:56:21.152619+00:00",
+      "decision": "GO_FOR_FRESH_ISOLATED_P2_SCOPE_INITIALIZATION",
+      "sourceSha256": "8b3e3761f5c12b424ead9b2fa828153b714f42c9f48cbbcb408b91ec658b8a4a",
+      "status": "Historical initial static review; real startup later identified pre-mutation DBAPI placeholder error."
+    },
+    {
+      "reviewedAt": "2026-10-06T09:00:14.928210+00:00",
+      "decision": "GO_FOR_EXACT_PRE_MUTATION_SCHEMA_QUERY_CORRECTION",
+      "sourceSha256": "f331e4838e65091adccfe906ac532719a1a916ef15e191351e6deb90aecab8ae",
+      "status": "Current static follow-up review."
+    }
+  ],
+  "previousSourceSha256": "8b3e3761f5c12b424ead9b2fa828153b714f42c9f48cbbcb408b91ec658b8a4a",
+  "setupDefectCorrectionReview": {
+    "reportedFailure": "SQLAlchemy/psycopg exec_driver_sql rejected the percent character in literal LIKE pattern; driver accepts only %s, %b or %t placeholder syntax.",
+    "failureStage": "Initial empty-database relation count query",
+    "mutationReached": false,
+    "mutationConclusionBasis": "This read-only SELECT precedes schema installation, seed transaction and file creation in the reviewed function; root reports this exact stage failed.",
+    "oldPredicate": "AND n.nspname NOT LIKE 'pg_toast%'",
+    "newPredicate": "AND left(n.nspname, 8) <> 'pg_toast'",
+    "onlySourceChangeIndependentlyVerified": true,
+    "exactOldSourceReconstructedHash": "8b3e3761f5c12b424ead9b2fa828153b714f42c9f48cbbcb408b91ec658b8a4a",
+    "semanticConclusion": "Both exclude namespaces whose first eight characters equal pg_toast; the replacement removes the percent character interpreted by the DBAPI placeholder parser.",
+    "roleDatabasePathBudgetFixtureConditionsUnchanged": true,
+    "runtimeOrPrivateEvaluationExecutionByReviewer": false,
+    "providerCalls": 0,
+    "testRepeats": 0,
+    "goScope": "Resume the same admitted fresh isolated initializer at the failed setup step; no reset, rollback, new candidate, changed criteria or budget."
+  }
 }
