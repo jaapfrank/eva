@@ -1,3 +1,9 @@
+## 6 oktober — bestaande concurrenttoegang herstellen
+
+P2.1 volgt nu Jaaps concrete verzoek: de eigen aanmelding en gewone uitvoerroute van OpenClaw, Hermes en Agent Zero herstellen/controleren. Agent Zero heeft zijn eigen toegangstoken native vernieuwd en de live catalogus gelezen; nul modelinferentie. OpenClaw en Hermes hebben geen voltooide eigen device-aanmelding; verse native aanmelding wordt voorbereid. Bestaande installaties, profielen, modelkeuzes en providerroute blijven behouden. Aanmelding is geen kwaliteitsuitslag of extra Eva-functie.
+
+De gesloten CM04-uitkomst, onbekende SDKusage en oorspronkelijke accountingguard blijven staan. Geen replay, reset, gratis sample of brede matrix. Alleen werkelijk benodigde interactieve aanmelding vraagt hulp. Spraak blijft geparkeerd;34/44 blijft gelijk.
+
 ## 6 oktober — CM04 gesloten; geen kwaliteitsuitslag
 
 P2.1 heeft één oorspronkelijk Eva2-CM04/epoch1 uitgevoerd op session 54196. De eerste poging eindigde na 3,799 seconden met HTTP503, zonder bevestigd antwoord of SDKusage. De oorspronkelijke score blijftUNKNOWN; Eva1 was voor deze persoonswissel niet geldig aangesloten. Geen winnaar, productverlies of nieuwe afgeronde functie. Alleproefdiensten/tunnels zijn gestopt. Het [meetrapport](evidence/product/p2-original-next-cm04-result-20261006.json) heeft [onafhankelijke technische publicatieGO](reviews/p2-cm04-final-technical-review-20261006.json), uitsluitend voor deze beperkte onbesliste uitkomst.

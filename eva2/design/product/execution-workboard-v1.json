@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-06T09:22:25.713422+00:00",
+  "lastUpdated": "2026-10-06T19:59:10.483542+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T19:52:47.123266+00:00",
+        "checkedAt": "2026-10-06T20:02:25.617311+00:00",
         "deliveries": [
           {
             "title": "P2.1 · CM04 afgesloten zonder bevestigd resultaat",
@@ -3994,38 +3994,51 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Meetfout bij Codex; vergelijking onbeslist",
-          "state": "blocked",
+          "title": "P2.1 · Concurrenttoegang herstellen",
+          "state": "active",
           "owner": "Codex",
-          "detail": "CM04 brak na 3,8 seconden af met HTTP503. Geen bevestigd antwoord; tokengebruik en onderliggende oorzaak onbekend. De proef is gestopt en onafhankelijk gerapporteerd; geen nieuwe functie afgerond.",
-          "remaining": "Codex moet ontbrekende technische foutregistratie gericht oplossen. Oorspronkelijke accountingguard blokkeert nieuwe Eva2-proeven. Geen handeling van jou nodig voor deze fout.",
-          "source": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+          "detail": "Agent Zero: eigen token vernieuwd en live catalogus bereikbaar. OpenClaw/Hermes: verse native aanmeldingen lopen en wachten op Jaaps login.",
+          "remaining": "Aanmelden via de verse codes in deze chat; daarna opgeslagen profielen en native routes controleren. Vergelijkingskwaliteit blijft onbekend.",
+          "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-06T19:52:47.123266+00:00"
+          "reviewedAt": "2026-10-06T20:02:25.617311+00:00"
         },
         "next": {
-          "title": "P2.1 · Concrete fout vaststellen",
+          "title": "P2.1 · Uitvoerbaarheid per concurrent controleren",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
-          "remaining": "Antwoordkwaliteit volgens de oorspronkelijke opdrachtvoorwaarden beoordelen. Eva1 geldt niet als waarheid; kosten en snelheid blijven aparte metingen.",
+          "detail": "Bevestig eigen toegang en native route met dezelfde vastgelegde modelkeuzes. Bewaar ontbrekende metingen apart van toegang; geen brede matrix of replay.",
+          "remaining": "De gesloten CM04-meetfout en onbekend gebruik blijven een afzonderlijke Codex-afhankelijkheid.",
           "source": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json"
         },
         "ownerAction": {
-          "title": "Beoordeel de antwoorden anoniem",
+          "title": "OpenClaw/Hermes aanmelden · antwoordbeoordeling apart",
           "state": "requested",
           "taskId": "P2.1",
-          "detail": "Jij en een tweede persoon kunnen ieder afzonderlijk een opgeslagen antwoordpaar beoordelen. Er hoeft geen nieuwe opdracht naar Eva.",
+          "detail": "Alleen de echte login moet jij doen; Codex heeft beide verse native aanmeldingen gestart. De eerdere twee blinde antwoordbeoordelingen blijven daarnaast open.",
           "steps": [
+            "Open https://auth.openai.com/codex/device en meld je aan met je bestaande account.",
+            "Voer de twee verse codes uit deze chat na elkaar in: eerst OpenClaw, daarna Hermes.",
+            "Meld hier dat beide aanmeldingen klaar zijn; Codex controleert de opgeslagen native profielen.",
             "Laat twee verschillende mensen ieder hun eigen anonieme beoordelingspakket bekijken; bespreek antwoorden niet vooraf.",
             "Beoordelaar1: open C:/Users/jaapf/.codex/attachments/eec51102-8375-4ece-882e-47ed8aaf90d3/p2-cm02-rater-1/review.html.",
             "Beoordelaar2: open C:/Users/jaapf/.codex/attachments/c05e90fe-c091-4577-9955-9ff3970270c0/p2-cm02-rater-2/review.html.",
             "Vul ieder het eigen answer-sheet.md in en bewaar het als answer-sheet-completed.md in dezelfde map. Meld in deze chat dat beide klaarstaan."
           ],
-          "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel."
+          "expected": "Twee opgeslagen eigen aanmeldingen; Codex controleert die. Antwoordkwaliteit blijft een afzonderlijke menselijke beoordeling.",
+          "accessSignIn": {
+            "taskId": "P2.1",
+            "title": "OpenClaw en Hermes aanmelden",
+            "steps": [
+              "Open https://auth.openai.com/codex/device en meld je aan met je bestaande account.",
+              "Voer de twee verse codes uit deze chat na elkaar in: eerst OpenClaw, daarna Hermes.",
+              "Meld hier dat beide aanmeldingen klaar zijn; Codex controleert de opgeslagen native profielen."
+            ],
+            "codeStorage": "Codes remain in the active chat only; no tokens or login codes in repository."
+          }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T19:52:47.123266+00:00"
+        "reviewedAt": "2026-10-06T20:02:25.617311+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -4332,18 +4345,33 @@
         "unavailableParticipants": [
           {
             "name": "OpenClaw",
-            "state": "unknown",
-            "reason": "Actuele aanmelding, modellencatalogus en gewone uitvoerroute niet bevestigd."
+            "state": "incomplete",
+            "reason": "Eerdere eigen aanmelding niet voltooid. Codex zet een verse native aanmelding klaar; daarna catalogus en gewone route controleren.",
+            "accessState": "login_required",
+            "executionState": "not_checked",
+            "checkedAt": "2026-10-06T19:59:10.483542+00:00",
+            "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
+            "label": "Aanmelden bezig"
           },
           {
             "name": "Hermes",
-            "state": "unknown",
-            "reason": "Actuele aanmelding en gewone uitvoerroute niet toegelaten voor deze proef."
+            "state": "incomplete",
+            "reason": "Eerdere eigen aanmelding niet voltooid. Codex zet een verse native aanmelding klaar; daarna catalogus en gewone route controleren.",
+            "accessState": "login_required",
+            "executionState": "not_checked",
+            "checkedAt": "2026-10-06T19:59:10.483542+00:00",
+            "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
+            "label": "Aanmelden bezig"
           },
           {
             "name": "Agent Zero",
-            "state": "unknown",
-            "reason": "Bestaand toegangstoken verlopen; niet vernieuwd en geen proef uitgevoerd."
+            "state": "incomplete",
+            "reason": "Eigen toegangstoken op 6 oktober vernieuwd; actuele live catalogus gelezen. Gewone modeluitvoering en vergelijking nog niet bevestigd.",
+            "accessState": "authenticated",
+            "executionState": "not_checked",
+            "checkedAt": "2026-10-06T19:59:10.483542+00:00",
+            "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
+            "label": "Aangemeld · uitvoering open"
           },
           {
             "name": "OpenCode",
@@ -6588,6 +6616,13 @@
             "review": "eva2/reviews/p2-cm02-human-review-preparation-review-20261006.json",
             "newModelCalls": 0
           }
+        },
+        "competitorAccessRestoration": {
+          "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
+          "checkedAt": "2026-10-06T20:02:25.617311+00:00",
+          "status": "agentzero_access_restored_openclaw_hermes_native_login_waiting",
+          "providerInferenceRequests": 0,
+          "qualityVerdict": "unknown"
         }
       },
       "housemateSummary": {
@@ -19470,11 +19505,11 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "blocked",
+              "status": "active",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
+              "nextAction": "Herstel de eigen bestaande aanmelding van OpenClaw, Hermes en Agent Zero. Controleer native toegang/catalogus en de werkelijk aangesloten uitvoerroute; geen providerwissel of brede vergelijkingsmatrix. Gesloten CM04 en onbekend gebruik blijven behouden.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19487,26 +19522,24 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T19:52:47.123266+00:00",
+              "checkedAt": "2026-10-06T19:59:10.483542+00:00",
               "assignment": {
                 "baseCommit": "e432fa0347df9e5d946809e33e52a76948aa07f9",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
-                  "/root: actuele werkbord/WERKBORD en eventuele noodzakelijke algemene bronintegratie/Git.",
-                  "/root/p2_eva1_accounting_diagnosis_20261006: volgende oorspronkelijke-casevoorbereiding en gesaniteerde metadata/resultaat, private inputs/orakels blijven privé.",
-                  "/root/p2_eva1_lease_review_20261006: onafhankelijke concrete toelatings-/eindreview van dezelfde uitkomst; geen eigen uitvoering."
+                  "/root: bestaande concurrentprofielen, gesaniteerde toegangsregistratie, werkbord/WERKBORD en Git."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "CM04 éénmaal uitgevoerd en gesloten: HTTP503 na 3,799s, één aborted contactpoging, SDKusage/kwaliteit UNKNOWN. Native diensten/tunnels gestopt; technische publicatie onafhankelijk GO. Geen nieuwe productfunctie, replay of actieve volgende proef.",
+                "currentAction": "Agent Zero: eigen token native vernieuwd en live catalogus gelezen, nul inferentie. OpenClaw/Hermes: eerdere eigen device-aanmelding is niet voltooid; verse native aanmelding voorbereiden.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "e432fa03: één oorspronkelijk CM03-paar eenmaal uitgevoerd; volledige native accounting/readbacks/stop, onafhankelijke technische GO, duurzame oorspronkelijke aggregate-accounting gekoppeld en dashboard/Git gepubliceerd. Kwaliteit UNKNOWN en34/44 behouden; geen nieuwe Eva-functie."
                 },
-                "stage": "cm04_closed_unknown_result_published",
+                "stage": "competitor_owned_auth_restoration",
                 "currentNativePreparation": {
                   "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
                   "sessionId": 54196,
@@ -19614,7 +19647,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
+                "nextAction": "Herstel de eigen bestaande aanmelding van OpenClaw, Hermes en Agent Zero. Controleer native toegang/catalogus en de werkelijk aangesloten uitvoerroute; geen providerwissel of brede vergelijkingsmatrix. Gesloten CM04 en onbekend gebruik blijven behouden.",
                 "actualUsage": {
                   "newProviderAttemptsRegistered": 1,
                   "newInputTokens": null,
@@ -19901,6 +19934,13 @@
                   "registeredSampleProviderAttempts": 16,
                   "nativeExecutionActive": false,
                   "noActiveProcesses": true
+                },
+                "accessRestoration": {
+                  "source": "eva2/evidence/product/p2-competitor-access-restoration-20261006.json",
+                  "agentzero": "owned_native_refresh_and_live_catalog_confirmed",
+                  "openclaw": "native_login_waiting",
+                  "hermes": "native_login_waiting",
+                  "providerInferenceRequests": 0
                 }
               },
               "remaining": "CM02/CM03 technisch uitgevoerd; antwoordkwaliteit UNKNOWN. CM04 na één poging onbeslist en gesloten; geen algemene voorsprong. Oorspronkelijke dekking, twee CM02-beoordelingen en oorzaak/accounting blijven open.",

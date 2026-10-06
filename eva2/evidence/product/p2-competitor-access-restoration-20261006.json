@@ -1,0 +1,66 @@
+{
+  "contract": "EvaCompetitorOwnedAccessRestoration/v1",
+  "task": "P2.1",
+  "checkedAt": "2026-10-06T20:02:25.617311+00:00",
+  "ownerRequest": "Restore existing own login and ordinary execution readiness for OpenClaw, Hermes and Agent Zero.",
+  "status": "agentzero_access_restored_openclaw_hermes_native_login_waiting",
+  "existingInstallationsReused": true,
+  "credentialsCopied": false,
+  "providerChanged": false,
+  "modelPolicyChanged": false,
+  "productRuntimeChanged": false,
+  "participants": [
+    {
+      "name": "Agent Zero",
+      "access": "authenticated",
+      "nativeRefreshSucceeded": true,
+      "refreshHTTPCalls": 1,
+      "catalogHTTPCalls": 1,
+      "catalogSlugs": [
+        "gpt-reserve",
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "gpt-5.6-luna",
+        "gpt-5.5",
+        "codex-auto-review"
+      ],
+      "nativeOwnStoreMode": "0o600",
+      "sourceCommit": "e3051fb584b1a36be2b0a0c90606f1c2c2d356ec",
+      "ordinaryExecution": "not_confirmed",
+      "comparisonResult": "unknown",
+      "limitation": "Live catalog is not entitlement evidence; registered gpt-6-sol/gpt-6-astra are not listed. No model substitution or inference performed."
+    },
+    {
+      "name": "OpenClaw",
+      "access": "native_device_login_waiting",
+      "nativeVersion": "codex-cli 0.155.1",
+      "ownProfile": "openclaw-host-config-v1/state/agents/main/agent/codex-home",
+      "priorLogin": "Not logged in",
+      "ordinaryExecution": "not_confirmed",
+      "comparisonResult": "unknown",
+      "liveSession": 97230
+    },
+    {
+      "name": "Hermes",
+      "access": "native_device_login_waiting",
+      "sourceCommit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+      "ownProfile": "hermes-native-owned",
+      "priorLogin": "device_code_timeout",
+      "externalLoginAdoption": false,
+      "ordinaryExecution": "not_confirmed",
+      "comparisonResult": "unknown",
+      "liveSession": 52465
+    }
+  ],
+  "providerInferenceRequests": 0,
+  "modelTokens": 0,
+  "developmentCredits": null,
+  "runtimeCreditCost": null,
+  "retainedConditions": [
+    "No closed sample replay, new matrix, scoring or budget change.",
+    "CM04 unknown SDK usage and original cumulative accounting guard retained.",
+    "Authentication does not establish model entitlement, response quality or a completed comparison.",
+    "No voice work or product completion-counter change."
+  ],
+  "privateNativeRefreshReceiptSha256": "44d7f32cf3eeeb6a9c168f827ad6c4488a24bb232da2bc9aeab223c655a5defd"
+}
