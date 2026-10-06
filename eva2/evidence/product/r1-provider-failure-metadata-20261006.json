@@ -1,0 +1,198 @@
+{
+  "contract": "EvaR1ProviderFailureMetadata/v1",
+  "recordedAt": "2026-10-06T08:21:46.549638+00:00",
+  "task": "R1.1",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "scope": "Explain the existing sanitized configuration failure using fixed retained metadata and public provider/SDK source only; no new comparison or provider call.",
+  "decision": "EXACT_R1_FAILURE_TRANSITION_UNKNOWN_GENERIC_HISTORY_INCOMPATIBILITY_CONFIRMED_FROM_SOURCE",
+  "retainedRunMetadata": {
+    "sourcePublicEvidence": "eva2/evidence/product/r1-followup-result-20261006.json",
+    "sourcePublicEvidenceSha256": "465b79a3ab3384226e591fa436a8efc005809aa249c91efbdaf278dee876edc2",
+    "rawContainer": "eva2-managed-b-slot3-core",
+    "rawPath": "/tmp/r1-independent-evaluation-20261006/independent/comparison-report-20261006.json",
+    "rawSha256": "1e5ddd27c1eb48afd7f8bc3f0a0e2c28e667b9066596d991c39d2cae857ffc68",
+    "rawBytes": 35033,
+    "sameContainerAndBytesRetained": true,
+    "fixedMetadataWhitelistReadSucceeded": true,
+    "runCount": 1,
+    "failedUnattestedCallRecords": 1,
+    "failureClass": "CodexProviderError",
+    "failureCategory": "configuration",
+    "sanitizedMessage": "Codex provider configuration",
+    "failedCallSeconds": 0.016433629999937693,
+    "failedCallInputTokens": null,
+    "failedCallOutputTokens": null,
+    "failedCallAttested": false,
+    "availableKnownTechnicalFields": {
+      "report": [],
+      "run": [],
+      "failedCall": []
+    },
+    "checkedTechnicalFieldNames": [
+      "traceback",
+      "stacktrace",
+      "validationStage",
+      "validation_stage",
+      "requestShape",
+      "request_shape",
+      "requestMetadata",
+      "request_metadata",
+      "httpStatus",
+      "http_status",
+      "upstreamHttpStatus",
+      "networkStartedMs",
+      "network_started_ms",
+      "transport",
+      "cause",
+      "exceptionCause",
+      "exception_cause",
+      "attempts"
+    ],
+    "exactValidationStage": null,
+    "actualFailedRequestShape": null,
+    "httpStatus": null,
+    "upstreamDispatchConfirmed": null,
+    "upstreamAttempts": null
+  },
+  "publicSourceAssessment": {
+    "providerPath": "eva2/src/eva/adapters/model/openai_codex_provider.py",
+    "providerSha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+    "configurationRaiseSites": [
+      {
+        "function": "_codex_compatible_request",
+        "line": 425
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 441
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 443
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 445
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 448
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 453
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 458
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 462
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 470
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 473
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 476
+      },
+      {
+        "function": "_codex_compatible_request",
+        "line": 479
+      },
+      {
+        "function": "__call__",
+        "line": 538
+      },
+      {
+        "function": "__aenter__",
+        "line": 690
+      },
+      {
+        "function": "_load_credentials",
+        "line": 791
+      },
+      {
+        "function": "_load_credentials",
+        "line": 793
+      },
+      {
+        "function": "_load_credentials",
+        "line": 795
+      }
+    ],
+    "originalDriverPath": "eva2/experiments/r1-executable-experience-20260930/compare.py",
+    "originalDriverSha256": "d65ec27f5c4f90f2fe9e469bd747e25046e532507028cf6a98b33a59f7fcc7e3",
+    "driverFailureRecorderLines": [
+      141,
+      145,
+      250,
+      251
+    ],
+    "recordingBehavior": "ask stores class, unattested flag, null tokens and seconds; task_run stores class and str(error). No exception stack, cause, request shape or transport timing is retained in these records.",
+    "projectionFunction": "_codex_compatible_request",
+    "projectionAcceptedGenericForms": [
+      "nonempty plain system/user {content,role}",
+      "function_call",
+      "function_call_output"
+    ],
+    "projectionRejectedGenericForms": [
+      "plain assistant {content,role}",
+      "typed assistant message with output_text content"
+    ],
+    "projectionRejectLines": [
+      469,
+      470,
+      472,
+      473
+    ],
+    "SDK": {
+      "sdkSourcePath": "/usr/local/lib/python3.12/site-packages/pydantic_ai/models/openai.py",
+      "sdkSourceSha256": "17fe633f17111be52c8520be02089106a3472c251e910a24bae6557f5636aea1",
+      "methodSourceSha256": "674dec17a785b8e89b038c1c29402ecc93bba58c08ab602af3a4909b46bb9da1",
+      "methodStartLine": 3211,
+      "methodLines": 441,
+      "assistantTextMappingPresent": true,
+      "typedAssistantOutputMappingPresent": true,
+      "functionCallMappingPresent": true
+    },
+    "SDKBehavior": "Retained ModelResponse TextPart maps to plain assistant content or typed assistant message/output_text; tool calls map separately to function_call. Mixed text-plus-tool-call follow-up can therefore contain both accepted tool items and rejected assistant items.",
+    "genericMismatchConfirmedBySource": true,
+    "independentOfflineReproductionPerformedHere": false,
+    "exactR1AttributionProven": false,
+    "reasonAttributionUnknown": "The actual failed request shape and validation branch were not recorded. Configuration is shared by request projection and other local provider/credential setup paths; short duration alone is not branch or dispatch evidence."
+  },
+  "privacyAndEvaluationBoundary": {
+    "protectedScorerOrCasesOpened": false,
+    "protectedContentFieldsSelectedOrPublished": false,
+    "rawReportCopied": false,
+    "directGradeInvoked": false,
+    "criteriaOrCandidateChanged": false,
+    "automaticApprovalRetryOrWorkaround": false,
+    "newMetadataExtractionRejected": false,
+    "previousProtectedActionsStillNotRetried": true
+  },
+  "usage": {
+    "newControlledProviderCalls": 0,
+    "newModelCalls": 0,
+    "newAuthCalls": 0,
+    "newComparisonRuns": 0,
+    "automaticRetries": 0,
+    "creditCost": null,
+    "developerAssistantCredits": null,
+    "historicalAndNewComparisonAccounting": "Unchanged; one unattested prior attempt remains unknown, not zero."
+  },
+  "implication": {
+    "R1CurrentOutcome": "UNKNOWN_NO_PROMOTION",
+    "R1OriginalFinishConditionMet": false,
+    "noNewPermissionQuestionForSameMetadata": true,
+    "nextTechnicalEvidence": "A separate generic offline SDK reproduction can prove the adapter incompatibility. Without retained failed request metadata it cannot prove this was the exact R1 branch.",
+    "noAutomaticTrialOrPromotion": true
+  }
+}

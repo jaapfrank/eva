@@ -462,9 +462,11 @@ def _codex_compatible_request(
                 raise CodexProviderError("configuration")
             if role == "system":
                 instructions.append(content)
-            elif role == "user":
+            elif role in {"user", "assistant"}:
+                # SDK history includes assistant text before deferred tool results.
+                # Preserve its role and position instead of rejecting a valid continuation.
                 projected_input.append(
-                    {"content": content, "role": "user", "type": "message"}
+                    {"content": content, "role": role, "type": "message"}
                 )
             else:
                 raise CodexProviderError("configuration")

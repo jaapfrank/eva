@@ -1,0 +1,82 @@
+{
+  "contract": "EvaProviderContinuationCorrection/v1",
+  "taskIds": [
+    "R1.1",
+    "P2.1"
+  ],
+  "recordedAt": "2026-10-06T08:26:31.416190+00:00",
+  "existing": "The shared Codex provider, SDK deferred tools, stateless history and separate raw usage attestation already exist.",
+  "provenGap": "The installed SDK emits a plain assistant message before a deferred tool result. The adapter previously admitted only plain system/user messages and rejected this ordinary continuation before mock network dispatch.",
+  "change": "Admit the existing plain assistant role while retaining its content, role and order. No additional message shapes, model settings, tools or provider route.",
+  "before": {
+    "sourceSha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+    "pytestExitCode": 1,
+    "failed": 2,
+    "passed": 0,
+    "scope": "new generic SDK/Agent/DeferredToolResults test; TextPart with and without id",
+    "failure": "CodexProviderError category configuration, local _codex_compatible_request role rejection",
+    "retainedReceipt": "Current Codex tool result chunk 3a9277; printed traceback truncated, no standalone raw log retained."
+  },
+  "after": {
+    "pytestExitCode": 0,
+    "passed": 40,
+    "failed": 0,
+    "seconds": 3.15,
+    "scope": "eva2/tests/model/test_openai_codex_provider_shared.py",
+    "retainedReceipt": "Current Codex tool result chunk d325ec",
+    "stdout": "........................................                                 [100%]\n40 passed in 3.15s\n"
+  },
+  "sourceSha256": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd",
+  "testSha256": "9f28b58268f6cebadb3c5ea086f82387a55937096c5c95aa0dbff35ace815b9b",
+  "testEnvironment": {
+    "python": "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+    "pydanticAiSlim": "2.37.0",
+    "openai": "3.6.0",
+    "pytest": "8.4.2"
+  },
+  "command": [
+    "env",
+    "PYTHONPATH=eva2/src",
+    "<existing-python>",
+    "-m",
+    "pytest",
+    "eva2/tests/model/test_openai_codex_provider_shared.py",
+    "-q",
+    "--tb=short"
+  ],
+  "providerCalls": 0,
+  "network": "httpx2.MockTransport only, fake credentials, no live outbound route",
+  "originalR1CauseProven": false,
+  "r1OriginalFinishSatisfied": false,
+  "aide2GainProven": false,
+  "metadataEvidence": "eva2/evidence/product/r1-provider-failure-metadata-20261006.json",
+  "docs": [
+    {
+      "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+      "claim": "Stateless context includes earlier assistant responses in the next input."
+    }
+  ],
+  "installation": {
+    "state": "independently_reviewed_installation_pending",
+    "changedFiles": [
+      "src/eva/adapters/model/openai_codex_provider.py"
+    ],
+    "roles": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "dependencyChanged": false,
+    "migration": false,
+    "speechChanged": false
+  },
+  "limitations": [
+    "The exact failed R1 request was not retained; no historical case attribution or replay.",
+    "Offline compatibility is not an empirical competitive or AIDE2 advantage.",
+    "The frozen historical R1 and P2 candidates/reports remain unchanged."
+  ],
+  "independentReview": {
+    "path": "eva2/reviews/provider-assistant-continuation-review-20261006.json",
+    "sha256": "d62a929d7b98d02e0a107232da5414943da98288a07991432205aefcdc6346c5",
+    "decision": "GO_EXACT_REVIEWED_SOURCE_INSTALLATION"
+  }
+}

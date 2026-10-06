@@ -1,0 +1,110 @@
+{
+  "contract": "EvaIndependentProviderContinuationReview/v1",
+  "reviewedAt": "2026-10-06T08:27:25.587467+00:00",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "decision": "GO_INSTALL_EXACT_SHARED_PROVIDER_SOURCE_IN_EXISTING_CORE_AND_WORKER",
+  "scope": "Independent source/test/receipt review of the smallest proven generic stateless deferred-tool history incompatibility. No protected R1 data, new tests, provider calls or historical replay.",
+  "bindings": {
+    "sourcePath": "eva2/src/eva/adapters/model/openai_codex_provider.py",
+    "beforeSourceSha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+    "afterSourceSha256": "27400f795e7491c8f1031ab0a44d912a6f82ece165c25def4e9122820fbd4fbd",
+    "testPath": "eva2/tests/model/test_openai_codex_provider_shared.py",
+    "testSha256": "9f28b58268f6cebadb3c5ea086f82387a55937096c5c95aa0dbff35ace815b9b",
+    "implementationReceipt": "eva2/evidence/product/provider-assistant-continuation-20261006.json",
+    "implementationReceiptSha256": "026c0c718b02e718413308c966c1d93bee32b132a9af6d6cb75e27fe2fcc3c0b"
+  },
+  "independentFindings": [
+    {
+      "finding": "Only intended semantic change",
+      "result": "GO",
+      "evidence": "AST of old source with exactly role==user replaced by role in {user,assistant}, and emitted role=user replaced by emitted role=role, equals current source AST. No other executable semantic changes."
+    },
+    {
+      "finding": "Correct generic SDK boundary",
+      "result": "GO",
+      "evidence": "The new test uses the shared provider, real installed SDK Agent, message_history and DeferredToolResults with a mixed ModelResponse TextPart/ToolCallPart. It asserts assistant role/content/order, matching call IDs, returned tool data, unchanged model/reasoning/store/stream/parallel flags, one model request and raw usage attestation."
+    },
+    {
+      "finding": "Stateless TextPart.id handling",
+      "result": "GO",
+      "evidence": "Both None and nonempty TextPart.id are covered. Current provider profile omits stored item IDs, so the installed SDK serializes both into plain assistant text. No wider typed message/output_text acceptance is needed for this proven path."
+    },
+    {
+      "finding": "No added tool or execution authority",
+      "result": "GO",
+      "evidence": "Existing allowed top-level fields, exact plain message shape, nonempty string content, system instruction handling and function_call/function_call_output handling remain identical. Unknown roles/forms remain rejected. Preserving assistant role does not alter caller-owned tool execution or account/actor policy."
+    },
+    {
+      "finding": "Existing provider boundaries preserved",
+      "result": "GO",
+      "evidence": "No changes to model profiles, authentication/account binding, request/response bounds, store=false/stream=true, raw terminal usage attestation, cancellation, response error classification or max_retries=0."
+    },
+    {
+      "finding": "No exact historical R1 attribution",
+      "result": "UNKNOWN",
+      "evidence": "Retained R1 metadata contains no actual failed request shape, traceback or local branch. This generic source repair and its offline reproduction do not retrospectively prove the R1 configuration cause or an AIDE2/competitive advantage."
+    }
+  ],
+  "existingOfflineEvidence": {
+    "before": {
+      "failed": 2,
+      "scope": "generic SDK continuation test, with/without TextPart.id",
+      "category": "configuration",
+      "dispatch": "mock network not reached",
+      "toolReceiptChunk": "3a9277"
+    },
+    "after": {
+      "passed": 40,
+      "failed": 0,
+      "seconds": 3.15,
+      "scope": "whole existing shared provider test file",
+      "toolReceiptChunk": "d325ec"
+    },
+    "environment": {
+      "pydanticAiSlim": "2.37.0",
+      "openai": "3.6.0",
+      "pytest": "8.4.2"
+    },
+    "network": "MockTransport and fake credentials only",
+    "provenanceLimitation": "Implementer test results are bound by public receipt and source/test hashes; no standalone stdout log was retained. Reviewer did not rerun tests or assert independent execution.",
+    "relevantExistingRegressions": [
+      "account cannot change inside phase",
+      "request too large rejected before network",
+      "cancellation not relabelled",
+      "raw completion attestation",
+      "HTTP/protocol sanitization",
+      "rate-limit not silently retried",
+      "capabilities not expanded for other models"
+    ]
+  },
+  "installationReview": {
+    "authorized": true,
+    "targets": [
+      "existing core",
+      "existing delegated-work worker"
+    ],
+    "method": "Minimal overlay of exactly the reviewed provider file on the proven current images; no dependency, configuration, data or schema migration.",
+    "requiredBinding": "Installed module SHA must equal reviewed afterSourceSha256 in both targets; retain existing profiles/configuration/data and confirm ordinary process health. No need to repeat the protected experiment or full comparison for source installation.",
+    "installedConfirmedByThisReview": false,
+    "concreteMissingRegression": null,
+    "newTypedMessageSupportRequired": false,
+    "newProviderRouteOrCredentialsAllowed": false,
+    "automaticR1RetryOrPromotionAllowed": false
+  },
+  "accounting": {
+    "reviewerNewTests": 0,
+    "reviewerNewModelCalls": 0,
+    "reviewerNewProviderCalls": 0,
+    "reviewerNewAuthCalls": 0,
+    "historicalComparisonReplay": 0,
+    "creditCost": null,
+    "developerAssistantCredits": null,
+    "syntheticUsageAttestationIsNotActualBilledTokens": true
+  },
+  "limits": [
+    "GO is for installation of this exact source correction, not proof that it is already installed.",
+    "Live provider/backend success is not established by MockTransport tests.",
+    "R1 remains UNKNOWN_NO_PROMOTION with original candidate, criteria and finish conditions retained.",
+    "No product main-task completion, AIDE2 self-improvement, competitive superiority or family acceptance claim."
+  ]
+}

@@ -10,8 +10,12 @@ from typing import Any
 
 import httpx2
 import pytest
-from pydantic_ai import Agent, DeferredToolRequests, UnexpectedModelBehavior
+from pydantic_ai import Agent, DeferredToolRequests, DeferredToolResults, UnexpectedModelBehavior
 from pydantic_ai.messages import (
+    ModelRequest,
+    ModelResponse,
+    UserPromptPart,
+    ToolCallPart,
     PartDeltaEvent,
     PartStartEvent,
     TextPart,
@@ -405,6 +409,84 @@ def test_hosted_search_defers_external_action_in_one_request(model_name: str) ->
 
     asyncio.run(run())
 
+
+
+@pytest.mark.parametrize("message_id", [None, "msg_read_status"])
+def test_deferred_tool_continuation_preserves_assistant_text(message_id: str | None) -> None:
+    """The installed SDK must replay mixed text/tool history through the real seam."""
+    requests: list[dict[str, Any]] = []
+    definition = ToolDefinition(
+        name="read_status",
+        parameters_json_schema={
+            "type": "object", "properties": {}, "additionalProperties": False,
+        },
+        strict=True,
+    )
+
+    async def respond(request: httpx2.Request) -> httpx2.Response:
+        requests.append(json.loads(request.content))
+        return httpx2.Response(
+            200, headers={"content-type": "text/event-stream"},
+            stream=_Chunks(_sse("De status is gereed.")), request=request,
+        )
+
+    async def run() -> None:
+        provider = OpenAICodexProvider(
+            OpenAICodexProviderSettings(
+                endpoint="https://codex.test/responses",
+                model_name="gpt-6-astra", reasoning_effort="medium",
+            ),
+            credential_loader=lambda: ("access-a", "account-a"),
+            network_transport=httpx2.MockTransport(respond),
+        )
+        history = [
+            ModelRequest(parts=[UserPromptPart("Lees de status.")]),
+            ModelResponse(
+                parts=[
+                    TextPart("Ik lees de status.", id=message_id),
+                    ToolCallPart(
+                        "read_status", {}, tool_call_id="status_1", id="fc_status_1",
+                    ),
+                ],
+                model_name="gpt-6-astra", provider_name="openai",
+            ),
+        ]
+        async with provider as session:
+            result = await Agent(
+                session.model, retries=0, instructions="Lees de beschikbare status.",
+                toolsets=[ExternalToolset([definition])],
+                output_type=[str, DeferredToolRequests],
+            ).run(
+                None, message_history=history,
+                deferred_tool_results=DeferredToolResults(
+                    calls={"status_1": {"status": "ready"}},
+                ),
+                usage_limits=UsageLimits(request_limit=1, tool_calls_limit=1),
+            )
+            assert result.output == "De status is gereed."
+            assert session.model_requests == len(requests) == 1
+            assert session.consume_raw_usage() == RawUsageAttestation(17, 7, 24)
+        wire = requests[0]
+        assert wire["model"] == "gpt-6-astra"
+        assert wire["reasoning"]["effort"] == "medium"
+        assert wire["store"] is False and wire["stream"] is True
+        assert wire["parallel_tool_calls"] is False
+        assert "Lees de beschikbare status." in wire["instructions"]
+        assert [item["type"] for item in wire["input"]] == [
+            "message", "message", "function_call", "function_call_output",
+        ]
+        assistant = wire["input"][1]
+        assert assistant["role"] == "assistant"
+        # This provider profile omits stored item IDs. Even TextPart(id=...)
+        # becomes plain assistant text in the installed SDK's stateless history.
+        assert assistant["content"] == "Ik lees de status."
+        assert "id" not in assistant
+        call, returned = wire["input"][2:]
+        assert call["name"] == "read_status"
+        assert call["call_id"] == returned["call_id"] == "status_1"
+        assert json.loads(returned["output"]) == {"status": "ready"}
+
+    asyncio.run(run())
 
 @pytest.mark.parametrize("model_name", ["gpt-4.1", "gpt-6-unknown"])
 def test_astra_compatibility_does_not_expand_other_model_capabilities(

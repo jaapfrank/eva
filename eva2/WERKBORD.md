@@ -1,3 +1,15 @@
+## 6 oktober — bewezen providervervolgfout en aparte vergelijking
+
+Jaap heeft de **aparte onafhankelijke eindvergelijking** expliciet toegestaan: dezelfde criteria/providerroute/verbruiksgrenzen, geen automatische volledige matrix. De oorspronkelijke finishvoorwaarden en34/44-afronding blijven staan.
+
+De generieke echte SDK/Agent/DeferredToolResults-route is offline gereproduceerd: assistanttekst werd vóór netwerk afgewezen. Kleinste correctie behoudt rol/tekst/volgorde; **40/40 providercontroles geslaagd,0 echte providercalls**. Review en installatie samen in bestaande kern/werker volgen. Exacte oorzaak van de historische R1-fout is niet terug te halen uit de bewaarde metadata; R1 blijft UNKNOWN en geen AIDE²-winstclaim.
+
+Onafhankelijke P2-review bereidt één gewone privéchat/geheugenbeoordeling voor. Nieuwe kandidaatfreeze en brongebonden functionele modelrollen zijn nodig; geen nieuwe tools, hints, taak-ID’s, oude proefherhaling of spraakwerk. Geen handeling van Jaap nodig.
+
+## 6 oktober — R1.1: lokale providerfout verklaren
+
+R1.1 hervat vanaf264186f6. Root controleert openbare provider/SDK-vervolgberichten offline; onafhankelijke reviewer controleert uitsluitend toegestane gesanitiseerde foutmetadata. Exacte oorzaak nog onbekend. Geen verborgen scorer/cases, rawcopy, modelproef, auth, kandidaatwijziging of spraakwerk. **34/44 oorspronkelijke taken klaar.** P2.2-afronding en alle eerdere acceptaties behouden; metadata/sourcewerk voltooit R1.1 niet.
+
 ## 6 oktober — P2.2 afgerond: resultaten samen zichtbaar
 
 **P2.2 is afgerond, gepubliceerd en onafhankelijk GO.** In het bestaande dashboard staat onder **Concurrenten & keuzes** een visueel overzicht met kwaliteit, snelheid, menselijke hulp/zelfstandigheid, toolgebruik en modelverbruik. Alle 12 eerdere geheugengevallen en beide eerdere combinatietaken blijven met verliezen/onbekenden bewaard. De overzichtspagina heeft een directe knop. Geen nieuwe Eva-modelproef voor deze publicatie.

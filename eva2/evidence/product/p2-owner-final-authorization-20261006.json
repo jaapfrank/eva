@@ -1,0 +1,12 @@
+{
+  "contract": "EvaOwnerFinalComparisonAuthorization/v1",
+  "recordedAt": "2026-10-06T08:26:31.416190+00:00",
+  "taskId": "P2.1",
+  "question": "Mag ik de gewijzigde Eva2-versie opnieuw onafhankelijk vergelijken met Eva1 en de beschikbare concurrenten, met dezelfde criteria, providerroute en bestaande verbruiksgrenzen? Creditkosten zijn onbekend; ik start niet automatisch de volledige vergelijkingsmatrix.",
+  "answer": "Ja, voer de aparte eindvergelijking uit",
+  "newFullMatrixAutomaticallyAuthorized": false,
+  "sameCriteriaAndProviderRoute": true,
+  "separateFreshCandidateBindingRequired": true,
+  "historicalRoundsReplayAuthorized": false,
+  "creditCost": null
+}
