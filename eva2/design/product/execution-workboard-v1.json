@@ -1019,6 +1019,19 @@
         "checkedAt": "2026-10-06T22:04:30.799923+00:00",
         "deliveries": [
           {
+            "title": "P2.1 · OpenClaw en Hermes aangemeld; eerste Hermes-gespreksproef uitgevoerd",
+            "state": "tested",
+            "date": "2026-10-07",
+            "result": "Beide eigen aanmeldingen bevestigd. Hermes voerde drie gespreksbeurten uit over twee sessies, met opgeslagen geheugen: zeven modelpogingen, 17.498 invoer- en 275 uitvoertokens, 25,6 seconden voor de hele proef. De proef is afgesloten en onafhankelijk gecontroleerd.",
+            "remaining": "Antwoordkwaliteit is nog niet beoordeeld. De oorspronkelijke volledige toolmeting ontbreekt; de teller is apart gecorrigeerd zonder de proef opnieuw uit te voeren. Bij OpenClaw ontbreekt nog de aansluiting voor dezelfde klok- en geheugenmeting. Dit rondt P2.1 of een extra productfunctie niet af.",
+            "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
+            "review": "eva2/reviews/p2-hermes-parent-accounting-admission-review-20261006.json",
+            "additionalSources": [
+              "eva2/evidence/product/p2-openclaw-native-access-20261006.json",
+              "eva2/evidence/product/p2-hermes-tool-accounting-correction-20261006.json"
+            ]
+          },
+          {
             "title": "P2.1 · Agent Zero eigen login en native opstart hersteld",
             "state": "tested",
             "date": "2026-10-06",
@@ -4015,7 +4028,7 @@
           "title": "P2.1 · OpenClaw en Hermes: uitvoerroute",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "Eigen aanmeldingen hersteld; oorspronkelijke Hermes CM01 gesloten en beperkt onafhankelijk gepubliceerd (3beurten/7HTTP200/17498in+275out/25,6s). Algemene inline-toolteller apart bronmatig gecorrigeerd en onafhankelijk GO; oorspronkelijke tool-/kwaliteitsUNKNOWN blijft. OpenClaw transportbronGO, native klok/readbackmeting nog niet toegelaten. Geen actieve uitvoerders of modelproef.",
+          "detail": "OpenClaw en Hermes zijn aangemeld. Hermes heeft de eerste proef met drie gespreksbeurten en geheugen over twee sessies uitgevoerd. Antwoordkwaliteit blijft afzonderlijk te beoordelen. OpenClaw is nog niet klaar voor dezelfde vergelijkingsmeting. Er loopt momenteel geen modelproef.",
           "remaining": "P2.1 nog niet volledig afgerond: OpenClaw meetbinding, oorspronkelijke overige vergelijkingsuitkomsten en echte kwaliteitsbeoordelingen blijven zichtbaar. Vervolg nog niet gestart.",
           "source": "eva2/evidence/product/p2-hermes-original-cm01-result-20261006.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
