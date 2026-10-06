@@ -19520,12 +19520,7 @@
                 "resolvedAt": "2026-10-04T15:04:47.848198+00:00",
                 "scope": "Historical refusal before process creation; resolved through the same automatic review path after new synthetic-input provenance evidence. Counts here describe the rejected attempt only; current execution is in latestEvidence."
               },
-              "blocker": {
-                "type": "native_measurement_unknown",
-                "owner": "Codex",
-                "reason": "Geen geldig kwaliteitspaar; exacte meetfoutbron/antwoordroute niet vastgesteld. Geen externe eigenaarblokkade.",
-                "evidence": "eva2/evidence/product/p2-provider-history-independent-result-20261006.json"
-              },
+              "blocker": "Geen geldig kwaliteitspaar; exacte meetfoutbron/antwoordroute niet vastgesteld. Geen externe eigenaarblokkade.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
@@ -19628,7 +19623,13 @@
               "candidateFreeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
               "candidateFreezeSha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
               "publicationReview": "eva2/reviews/p2-provider-history-publication-review-20261006.json",
-              "publicationReviewSha256": "20984c7ee81a7ea96edfd9f8cd3463a81c18067357cc765872c230af67b27ae1"
+              "publicationReviewSha256": "20984c7ee81a7ea96edfd9f8cd3463a81c18067357cc765872c230af67b27ae1",
+              "blockerDetails": {
+                "type": "native_measurement_unknown",
+                "owner": "Codex",
+                "reason": "Geen geldig kwaliteitspaar; exacte meetfoutbron/antwoordroute niet vastgesteld. Geen externe eigenaarblokkade.",
+                "evidence": "eva2/evidence/product/p2-provider-history-independent-result-20261006.json"
+              }
             },
             {
               "id": "P2.2",
