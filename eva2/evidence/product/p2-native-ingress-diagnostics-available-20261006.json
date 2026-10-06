@@ -1,0 +1,39 @@
+{
+  "contract": "EvaPublicNativeDiagnosticsAvailability/v1",
+  "recordedAt": "2026-10-06T10:10:53.346900+00:00",
+  "taskId": "P2.1",
+  "state": "reviewed_public_observer_available",
+  "evidence": "eva2/evidence/product/p2-native-ingress-diagnostics-20261006.json",
+  "evidenceSha256": "0a30e3a08eb22356d21da84bf7634769f4401b4ba1c93cc1abc430936eb1615b",
+  "review": "eva2/reviews/p2-native-ingress-diagnostics-review-20261006.json",
+  "reviewSha256": "74c66e92aca76e3719816e7d02784af0d5dd5e4ae9d1ff38497d8f15689dcfe1",
+  "sourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/cp001_native.py": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py": "620c6f5b0cf83078e3a71dacd8be320edb2debea74c35d6421c939e0835fb93f",
+    "eva2/tests/benchmark/test_native_ingress_diagnostics.py": "ef5056276d65b0d63cc1065f7aa9d3b81a0c79a2f8e33af8eed60ebd0b20e6ed",
+    "eva2/tests/benchmark/test_cp001_native.py": "5034d6023f33a7b8b1e9f5078a351c83574b4d7a8b272ab4fe761d3c76886969"
+  },
+  "availability": "Current public glue imports current observer; existing benchmark driver mounts these source files read-only. Product core/worker files unchanged; no runtime reinstall/restart or benchmark process launch.",
+  "liveDashboard": {
+    "url": "http://127.0.0.1:44712/project-state",
+    "httpStatus": 200,
+    "observedBeforeFinalReviewRegistration": true,
+    "completedTasks": 34,
+    "totalTasks": 44
+  },
+  "preserved": {
+    "taskIDs": true,
+    "doneWhen": true,
+    "completedStatuses": true,
+    "oldComparisonUnknown": true,
+    "closedCaseNotRepeated": true
+  },
+  "controlledProviderCalls": 0,
+  "newFinalRuns": 0,
+  "creditCost": null,
+  "developmentCredits": null,
+  "productCompletion": false,
+  "P2_1Complete": false,
+  "generalSuperiority": false,
+  "remaining": "Original full final comparison and R1 remain open. Valid native admission must be established before further execution; no automatic closed-case replay or full matrix."
+}

@@ -1,0 +1,50 @@
+{
+  "contract": "EvaPublicNativeIngressDiagnostics/v1",
+  "recordedAt": "2026-10-06T10:07:41.253767+00:00",
+  "taskId": "P2.1",
+  "baseCommit": "89c0d22837f5281cbfe0b8826e4da6de6d9a2e92",
+  "existing": "Public native exchange, exact reply/hash validation, durable readback and UNKNOWN/timeout statuses retained.",
+  "provedGap": "The closed comparison retained ValueError/UNKNOWN but no HTTP status or public observer phase. Independent retained metadata verifies all four actual request scope bindings; the old fixed-scope hypothesis is unsupported.",
+  "diagnosisEvidence": "eva2/evidence/product/p2-provider-history-ingress-diagnosis-20261006.json",
+  "diagnosisSha256": "b9820581d263954f0b08a3ffdb86efa330831d981051fce6ede1e7eff980b252",
+  "change": "Existing public observer adds fixed phase/code and validated HTTP status. Both native transports retain status via a transport envelope; HTTP rejection and invalid JSON are content-free. No server error detail/body/frame/URL is retained. Non-200 transport envelopes remain rejected even if their bodies resemble valid replies.",
+  "preserved": [
+    "native inputs and exact identities",
+    "provider route and model roles",
+    "reply/hash/durable readback conditions",
+    "quality UNKNOWN unless independently scored",
+    "timeout and no-retry behavior",
+    "original task IDs, finish conditions and acceptance"
+  ],
+  "tests": {
+    "command": "existing venv python -m pytest eva2/tests/benchmark/test_cp001_native.py eva2/tests/benchmark/test_native_ingress_diagnostics.py -q",
+    "passed": 26,
+    "newFocusedCases": 8,
+    "pytestReportedSeconds": 0.17,
+    "mode": "injected offline I/O; no product servers/models/final data"
+  },
+  "sourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/cp001_native.py": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py": "620c6f5b0cf83078e3a71dacd8be320edb2debea74c35d6421c939e0835fb93f",
+    "eva2/tests/benchmark/test_native_ingress_diagnostics.py": "ef5056276d65b0d63cc1065f7aa9d3b81a0c79a2f8e33af8eed60ebd0b20e6ed",
+    "eva2/tests/benchmark/test_cp001_native.py": "5034d6023f33a7b8b1e9f5078a351c83574b4d7a8b272ab4fe761d3c76886969"
+  },
+  "availability": "Public comparison route imports current files. Product core/worker are unchanged; no runtime installation/restart is required for this observer-only correction.",
+  "evaluationClaims": {
+    "newFinalRuns": 0,
+    "sealedCaseReplay": false,
+    "protectedDatasetReadByBuilder": false,
+    "criteriaChanged": false,
+    "P2_1Complete": false,
+    "newProductCompletion": false,
+    "oldFailureOrigin": "UNKNOWN",
+    "generalSuperiority": false
+  },
+  "usage": {
+    "controlledProviderCalls": 0,
+    "runtimeModelTokens": 0,
+    "developmentCredits": null,
+    "creditCost": null
+  },
+  "remaining": "This repairs future diagnostic loss, not the unrecorded old failure or full final comparison. Independent review pending; no automatic new final run."
+}

@@ -1,0 +1,125 @@
+{
+  "contract": "EvaP2NativeIngressDiagnosticsIndependentReview/v1",
+  "reviewedAt": "2026-10-06T10:10:03.944255+00:00",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "decision": "GO_FOR_PUBLIC_OBSERVER_CORRECTION_ONLY",
+  "baseCommit": "89c0d22837f5281cbfe0b8826e4da6de6d9a2e92",
+  "sourceBindings": {
+    "eva2/benchmark/inspect_ai_v1/cp001_native.py": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+    "eva2/benchmark/inspect_ai_v1/p2_provider_history_native_glue.py": "620c6f5b0cf83078e3a71dacd8be320edb2debea74c35d6421c939e0835fb93f",
+    "eva2/tests/benchmark/test_native_ingress_diagnostics.py": "ef5056276d65b0d63cc1065f7aa9d3b81a0c79a2f8e33af8eed60ebd0b20e6ed",
+    "eva2/tests/benchmark/test_cp001_native.py": "5034d6023f33a7b8b1e9f5078a351c83574b4d7a8b272ab4fe761d3c76886969",
+    "eva2/evidence/product/p2-native-ingress-diagnostics-20261006.json": "0a30e3a08eb22356d21da84bf7634769f4401b4ba1c93cc1abc430936eb1615b",
+    "eva2/evidence/product/p2-provider-history-ingress-diagnosis-20261006.json": "b9820581d263954f0b08a3ffdb86efa330831d981051fce6ede1e7eff980b252"
+  },
+  "findings": [],
+  "scope": "Bundled review of the exact public native/glue diagnostic delta and eight injected offline tests. No protected final inputs/replies/scorer/processor/launcher read, no model/server/test replay or runtime modification.",
+  "justification": {
+    "retainedDiagnosisSha256": "b9820581d263954f0b08a3ffdb86efa330831d981051fce6ede1e7eff980b252",
+    "known": "The existing retained metadata confirms all four request scope bindings, but retained ValueError/UNKNOWN has no HTTP status or actual exception transition.",
+    "notProven": "The old fixed-scope hypothesis and exact historical throw origin remain unsupported/UNKNOWN.",
+    "smallestChange": "Observe only fixed public transport/validation/readback phases and validated HTTP status in the existing exchange seam; no broad diagnostic platform or new evaluation criteria."
+  },
+  "contractChecks": {
+    "plainBodyPostCallbacksRemainSupported": true,
+    "envelopeUnwrapsExactBodyWithoutContentSubstitution": true,
+    "envelopeStatusOtherThan200RejectedBeforeBodyValidationOrReadback": true,
+    "legacyReplyTextIdentityHashAndIndependentReadbackFunctionsUnchangedByAst": true,
+    "originalUsageQualityProductResultAndTimeoutStatusesRetained": true,
+    "qualityAndProductResultNotPromotedByHttp200": true,
+    "BottieSqlReadbackAndSignedAckUnchangedByAst": true,
+    "Eva2CommittedReplyAndMemorySettlementReadersUnchangedByAst": true,
+    "nativeProviderControlLedgerModelsAndRoleMappingUnchangedByAst": true,
+    "inputOutputAndTimeBoundsUnchanged": true,
+    "onePostNoNewRetryLoop": true,
+    "newFieldsAdditive": [
+      "http_status",
+      "diagnostic"
+    ]
+  },
+  "contentBoundary": {
+    "phases": [
+      "ingress",
+      "response_size",
+      "response_validation",
+      "readback",
+      "readback_validation"
+    ],
+    "fixedCodes": [
+      "http_rejected",
+      "invalid_json",
+      "response_size_exceeded",
+      "timeout",
+      "transport_error",
+      "invalid_value"
+    ],
+    "httpStatus": "Exact int type, range 100..599; strings, bools and out-of-range values become None.",
+    "exceptionStringsReasonsBodiesUrlsFramesIncluded": false,
+    "coreHttpRejection": "Close HTTPError without reading its error stream; raise fixed NativeIngressError with no chained reason.",
+    "invalidJsonAndOversizedResponse": "Only a fixed code/status reaches the returned diagnostic; raw body is not added to result/error text.",
+    "BottieRejection": "Existing private event retention is unchanged; the public diagnostic contains only fixed rejection code and sanitized status.",
+    "readbackFailure": "May retain an already validated native answer in the original evaluator-only result as before; it never copies exception/database detail into the new metadata.",
+    "publicationAdmission": "No new public response/answer/raw event publisher added by this source change."
+  },
+  "dependencyCompatibility": {
+    "publicImportsChecked": [
+      "cp001.py",
+      "cp001_process_accounting.py",
+      "cp001_accounting.py"
+    ],
+    "importMode": "Existing public adapters use ordinary cp001_native imports; no new requirement for their imports/callback shape.",
+    "cp001NativeModifiedExistingSymbols": [
+      "exchange"
+    ],
+    "cp001NativeAddedSymbols": [
+      "NativeHTTPResponse",
+      "NativeIngressError",
+      "_http_status",
+      "_exchange_diagnostic"
+    ],
+    "glueModifiedExistingSymbols": [
+      "BottieIO.post",
+      "core_exchange"
+    ],
+    "unknownFutureCallerNotAssumedCompatible": true,
+    "privateProcessorCompatibilityNotInspectedOrClaimed": true
+  },
+  "verification": {
+    "sourceAndTestAstReadWithoutExecution": true,
+    "existingNativeTestSourceUnchanged": true,
+    "coordinatorOfflineTestsPassed": 26,
+    "newFocusedTests": 8,
+    "pytestReportedSeconds": 0.17,
+    "evidenceHash": "0a30e3a08eb22356d21da84bf7634769f4401b4ba1c93cc1abc430936eb1615b",
+    "testBoundary": "Injected generic offline I/O: HTTP rejection, wrong success body, valid-looking error body/status, readback failure, normal envelope readback, unread/closed error stream, invalid JSON, Bottie rejection and sanitized invalid status/code.",
+    "reviewerRepeatedTests": 0,
+    "coreOrWorkerInstallationNeeded": false
+  },
+  "preservation": {
+    "historicalComparisonScoresRemainUnknown": true,
+    "newFinalRuns": 0,
+    "sealedCaseReplay": false,
+    "modelRouteRolesAndBudgetUnchanged": true,
+    "scorerCriteriaFinishConditionsAcceptancesUnchanged": true,
+    "P2_1Completed": false,
+    "newProductCompletion": false,
+    "generalSuperiorityClaim": false,
+    "speechWork": false
+  },
+  "reviewerActions": {
+    "protectedDataSourceReads": 0,
+    "modelCalls": 0,
+    "databaseOrServerCalls": 0,
+    "newTestsOrExperiments": 0,
+    "runtimeChanges": 0,
+    "sourceBoardGitEdits": 0,
+    "ownedReviewFilesWritten": 1,
+    "developmentCreditCost": "UNKNOWN"
+  },
+  "limitations": [
+    "GO covers diagnostic preservation on the public observer route, not a repaired historical product defect or valid comparison result.",
+    "The observer identifies its transition and HTTP status; it does not reveal a server traceback, infer cause from an old UNKNOWN or establish semantic quality.",
+    "No automatic new final run, protected-case replay, promotion or product installation is authorized by this review.",
+    "Original independent admission and accounting requirements apply before any future evaluation using these new source hashes."
+  ]
+}

@@ -7,6 +7,7 @@ contracts lack the complete paired budget/cancellation/readback admission.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import hashlib
 import json
 from pathlib import Path
@@ -385,6 +386,45 @@ def independent_readback(
     return result
 
 
+@dataclass(frozen=True)
+class NativeHTTPResponse:
+    """Transport envelope only; no reply validation or scoring."""
+    body: object
+    status: int
+
+
+class NativeIngressError(ValueError):
+    """Content-free transport failure; never retain an error response body."""
+    CODES = frozenset({"http_rejected", "invalid_json", "response_size_exceeded"})
+
+    def __init__(self, code: str, http_status: int | None = None):
+        if code not in self.CODES:
+            raise ValueError("unknown ingress failure code")
+        super().__init__(code)
+        self.code = code
+        self.http_status = http_status
+
+
+def _http_status(value: object) -> int | None:
+    return value if type(value) is int and 100 <= value <= 599 else None
+
+
+def _exchange_diagnostic(phase: str, error: Exception, http_status: int | None) -> dict:
+    # Only fixed observer phases/codes and a validated status may leave the
+    # transport. Exception strings, response bodies, URLs and frames stay out.
+    if isinstance(error, NativeIngressError):
+        code = error.code
+        http_status = _http_status(error.http_status) or http_status
+    elif isinstance(error, TimeoutError):
+        code = "timeout"
+    elif isinstance(error, OSError):
+        code = "transport_error"
+        http_status = _http_status(getattr(error, "code", None)) or http_status
+    else:
+        code = "invalid_value"
+    return {"phase": phase, "code": code, "http_status": http_status}
+
+
 def exchange(
     participant: str,
     path: str,
@@ -424,7 +464,10 @@ def exchange(
         "server_quiescent": None,
         "quality": None,
         "readback": None,
+        "http_status": None,
+        "diagnostic": None,
     }
+    phase = "ingress"
     started = time.monotonic()
     if len(json.dumps(body).encode()) > input_bytes:
         result["status"] = "input_budget_exceeded"
@@ -434,16 +477,25 @@ def exchange(
         response = post(
             path, body, timeout_seconds=timeout_seconds, max_response_bytes=output_bytes
         )
+        if isinstance(response, NativeHTTPResponse):
+            result["http_status"] = _http_status(response.status)
+            if result["http_status"] != 200:
+                raise NativeIngressError("http_rejected", response.status)
+            response = response.body
+        phase = "response_size"
         if len(json.dumps(response).encode()) > output_bytes:
             result["status"] = "output_budget_exceeded"
             return result
+        phase = "response_validation"
         text = response_text(participant, body, response)
         result["answer"] = text
         result["first_content_ms"] = (time.monotonic() - started) * 1000
+        phase = "readback"
         remaining = timeout_seconds - (time.monotonic() - started)
         if remaining <= 0:
             raise TimeoutError
         durable = readback(body, timeout_seconds=remaining)
+        phase = "readback_validation"
         result["readback"] = independent_readback(participant, body, text, durable)
         result["usage"] = result["readback"]["conversation_usage"]
         if time.monotonic() - started > timeout_seconds:
@@ -455,12 +507,16 @@ def exchange(
             result["status"] = (
                 "readback_unknown" if durable is None else "readback_failed"
             )
-    except TimeoutError:
+    except TimeoutError as error:
         result["status"] = "timeout_execution_unknown"
-    except (OSError, ValueError):
+        result["diagnostic"] = _exchange_diagnostic(phase, error, result["http_status"])
+    except (OSError, ValueError) as error:
         result["status"] = "execution_unknown"
+        result["diagnostic"] = _exchange_diagnostic(phase, error, result["http_status"])
     finally:
         result["elapsed_ms"] = (time.monotonic() - started) * 1000
+    if result["diagnostic"] is not None:
+        result["http_status"] = result["diagnostic"]["http_status"]
     return result
 
 

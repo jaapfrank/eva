@@ -1,3 +1,13 @@
+## 6 oktober — P2.1: oorzaak onbekend, meetmetadata gericht gecorrigeerd
+
+Onafhankelijke inhoudsvrije diagnose bevestigt dat de werkelijk ingediende request bij de nieuwe scope paste. De vermoedelijke vaste-IDfout is dus niet aangetoond. HTTPstatus en foutframe ontbreken; de oude oorzaak blijft **UNKNOWN**.
+
+De bestaande publieke meetroute verloor foutonderscheid. Zij registreert nu alleen een vaste fase, vaste foutcode en geldige HTTPstatus: geen exceptiontekst, HTTPfoutbody, URL of gespreksinhoud. **26 gerichte offlinecontroles geslaagd**, onafhankelijke review **GO**. De gewone invoer, antwoord-/hashcontrole, teruglezing, oorspronkelijke criteria en geen-herhaling blijven gelijk. Geen productruntimewijziging, nieuwe modelproef of afgesloten eindvraag herhaald;0gecontroleerde providercalls, ontwikkelcredits onbekend. **34/44 blijft gelijk; P2.1 is niet afgerond.**
+
+[Inhoudsvrije diagnose](evidence/product/p2-provider-history-ingress-diagnosis-20261006.json) · [Gerichte correctie en bewijs](evidence/product/p2-native-ingress-diagnostics-20261006.json) · [Onafhankelijke GO](reviews/p2-native-ingress-diagnostics-review-20261006.json) · [Beschikbaarheid](evidence/product/p2-native-ingress-diagnostics-available-20261006.json).
+
+De publieke adapterbron is beschikbaar voor de bestaande vergelijkingsroute; productkern/werker blijven gelijk, dus geen herinstallatie/herstart. Volgende bestaande stap: geldige native admission aantonen vóór verdere oorspronkelijke eindbeoordeling. Geen automatische oude proefherhaling.
+
 ## 6 oktober — vier productuitkomsten en actuele taakstand zichtbaar
 
 De oude **2/9-hoofdteller** gebruikte historische kaarten/eisen, terwijl de actuele kleine lijst **34/44** uit het bouwplan gebruikt. Deze twee tellers waren niet vergelijkbaar. Van de34afrondingen zijn10installatie-, vergelijkings- of eindcontroletaken (O/P/F).

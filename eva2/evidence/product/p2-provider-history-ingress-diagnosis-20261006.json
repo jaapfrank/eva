@@ -1,0 +1,85 @@
+{
+  "P2_1Complete": false,
+  "caseId": "EV003-PH-CM-01",
+  "codeOrCriteriaChanged": false,
+  "contract": "EvaP2ClosedIngressDiagnosis/v1",
+  "date": "2026-10-06",
+  "epoch": 1,
+  "eva1": {
+    "attributionLimit": "Zero observed provider dispatch plus durable native replies does not identify fallback, deterministic reply, error handling or another no-model path without an explicit completion classification.",
+    "explicitCompletionFallbackFlags": [
+      {
+        "explicitFallbackFlagRecorded": false,
+        "fallbackClassification": "UNKNOWN",
+        "turnIndex": 0
+      },
+      {
+        "explicitFallbackFlagRecorded": false,
+        "fallbackClassification": "UNKNOWN",
+        "turnIndex": 1
+      },
+      {
+        "explicitFallbackFlagRecorded": false,
+        "fallbackClassification": "UNKNOWN",
+        "turnIndex": 2
+      }
+    ],
+    "fallbackClassification": "UNKNOWN",
+    "nativeResponsesDurablyReadBack": 3,
+    "nativeTerminalRealModelCalls": 0,
+    "nativeToolDispatches": 0,
+    "processReturnCode": 0,
+    "providerDispatchAbsentWithinBoundNativeInstrumentation": true,
+    "quiescent": true,
+    "readerStopped": true,
+    "registeredProviderAttempts": 0
+  },
+  "eva2": {
+    "actualRecordedPublicCodeFrames": [],
+    "actualRequestScopeMatches": {
+      "audiencePrincipal": true,
+      "installation": true,
+      "principal": true,
+      "tenant": true
+    },
+    "actualWireRequestPreserved": "KNOWN",
+    "allFourBindingsMatch": true,
+    "attributionLimit": "The saved outer class does not identify the request wire, HTTP/JSON response, response_text, readback or evaluator guard as the original cause. No raw response/status or traceback was recorded.",
+    "exchangeStatus": "execution_unknown",
+    "firstContentMs": null,
+    "httpStatuses": [],
+    "oldFixedCp001ScopeMismatchSupported": false,
+    "publicObserverPhaseRule": {
+      "function": "exchange",
+      "kind": "Static public source ordering, not an observed exception frame.",
+      "module": "eva2/benchmark/inspect_ai_v1/cp001_native.py",
+      "observation": "Successful response_text would populate answer and first_content_ms before readback. The recorded first_content_ms is null; no successfully validated reply/readback is proven.",
+      "readbackLine": 446,
+      "responseTextLine": 440
+    },
+    "rawHttpResponsePreserved": "UNKNOWN",
+    "readbackIntegrity": "UNKNOWN",
+    "registeredHttpStatus": "UNKNOWN",
+    "reportedOuterFailureClass": "ValueError",
+    "standardNativeErrorCode": "UNKNOWN",
+    "submittedNativeRequests": 1,
+    "successfullyValidatedReplyAndReadbackReached": false,
+    "throwOrigin": "UNKNOWN",
+    "verifiedEndMs": null
+  },
+  "evidenceBoundary": "Only already saved actual native request, exchange and terminal metadata; no protected input, answer, oracle, expected fact, IDs, private source or exception text published.",
+  "generalSuperiorityClaim": false,
+  "newModelCalls": 0,
+  "newProductCompletionClaim": false,
+  "newRuntimeOrResourceStarts": 0,
+  "noReplay": true,
+  "preservedHashes": {
+    "actualEva2TurnRecord": "e72a9d9b9b91cbd086b0ebe4a19438dc6d68619f8b412154ed8d003bed530928",
+    "closedPublicResult": "fa5b77de9837dcf8f42d5ffd49ffa67ae0c5ca3433660ae4656794f54ae1c871",
+    "nativeBottieTerminal": "a50e5bb90ad7aa62227fee6612654f283fda41955c485bebf17f6f849c62be33",
+    "originalPublicObserver": "586322f040fdc42c87559ccea6171c8a9715caf7af9d4298404a711431e01f7b",
+    "scopeAndReadyMetadata": "7ae56d9e1c73ad3f19fc86bab00c7cce15aba862c1272f8fd22fa77d1e16f8f9"
+  },
+  "remaining": "Generic public meet-transition attribution lacks an already recorded native HTTP status/raw response/frame. Diagnosis does not authorize replaying this sealed case.",
+  "status": "content_free_diagnosis_complete_original_comparison_unknown"
+}

@@ -6,9 +6,10 @@ All text, native replies and raw events stay in the evaluator-owned output.
 from __future__ import annotations
 import json, os, queue, sqlite3, subprocess, threading, time
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from cp001_accounting import ProviderSampleLedger
-from cp001_native import NativeProviderControl, exchange, read_eva2_committed_reply, read_eva2_memory_settlement
+from cp001_native import NativeHTTPResponse, NativeIngressError, NativeProviderControl, exchange, read_eva2_committed_reply, read_eva2_memory_settlement
 from cp001_process_accounting import ParentProcessAccounting
 
 def ledger_for(sample_id, plan):
@@ -61,8 +62,9 @@ class BottieIO:
     def post(self, path, body, *, timeout_seconds, max_response_bytes):
         response=self.transact({"path":path,"body":body,"timeout_ms":max(1,int(timeout_seconds*1000)),
             "max_bytes":max_response_bytes,"sample_role":"contact"},timeout_seconds)
-        if response.get("status")!=200: raise ValueError("Native HTTP response did not complete")
-        return response["body"]
+        if response.get("status")!=200:
+            raise NativeIngressError("http_rejected", response.get("status"))
+        return NativeHTTPResponse(response["body"], 200)
 
     def readback(self, body, *, timeout_seconds):
         connection=sqlite3.connect(Path(self.ready["database"]).resolve().as_uri()+"?mode=ro",uri=True,
@@ -97,10 +99,21 @@ def core_exchange(base_url, body, core_engine, *, timeout_seconds):
     def post(path, value, *, timeout_seconds, max_response_bytes):
         request=Request(base_url+path,data=json.dumps(value).encode(),
             headers={"Content-Type":"application/json"},method="POST")
-        with urlopen(request,timeout=timeout_seconds) as response:
-            data=response.read(max_response_bytes+1)
-        if len(data)>max_response_bytes: raise ValueError("Native body size limit exceeded")
-        return json.loads(data)
+        try:
+            with urlopen(request,timeout=timeout_seconds) as response:
+                status=response.status
+                data=response.read(max_response_bytes+1)
+        except HTTPError as error:
+            # Do not read, retain or publish the server's error detail/body.
+            status=error.code
+            error.close()
+            raise NativeIngressError("http_rejected", status) from None
+        if len(data)>max_response_bytes:
+            raise NativeIngressError("response_size_exceeded", status)
+        try:
+            return NativeHTTPResponse(json.loads(data), status)
+        except (ValueError, UnicodeDecodeError):
+            raise NativeIngressError("invalid_json", status) from None
     return exchange("eva2","/internal/v1/turns/respond",body,post=post,
         readback=lambda value,timeout_seconds:read_eva2_committed_reply(
             core_engine,value,timeout_seconds=timeout_seconds),
