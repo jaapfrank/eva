@@ -1,0 +1,100 @@
+{
+  "contract": "EvaP2NativeScopeInitializerIndependentReview/v1",
+  "reviewedAt": "2026-10-06T08:56:21.152619+00:00",
+  "reviewer": "/root/r1_final_followup_20261006",
+  "decision": "GO_FOR_FRESH_ISOLATED_P2_SCOPE_INITIALIZATION",
+  "sourcePath": "eva2/benchmark/inspect_ai_v1/p2_native_scope_initializer.py",
+  "sourceSha256": "8b3e3761f5c12b424ead9b2fa828153b714f42c9f48cbbcb408b91ec658b8a4a",
+  "scope": "Static review of public initializer and the relevant existing public APIs only. Reviewer did not execute the helper, connect a database, inspect private evaluation files or run an experiment.",
+  "checks": {
+    "separateRuntimeApplicationRole": {
+      "pass": true,
+      "lines": [
+        37,
+        39,
+        82,
+        89
+      ],
+      "evidence": "Runtime DSN must name eva_dbos and the explicit isolated database; privileged setup DSN is used only for existing migration/initialization. Seed transaction switches to eva_dbos; runtime file contains only supplied application DSN, not migration/admin DSN."
+    },
+    "freshEmptyDatabaseAdmission": {
+      "pass": true,
+      "lines": [
+        32,
+        39,
+        49,
+        58
+      ],
+      "evidence": "Explicit permitted sample/dedicated P2 name must match setup and runtime database names; non-system ordinary/partitioned/view/materialized/foreign relations must be absent before migrations. No existing populated database is initialized."
+    },
+    "dedicatedTemporaryRuntimeRoot": {
+      "pass": true,
+      "lines": [
+        40,
+        46,
+        87,
+        102
+      ],
+      "evidence": "Resolved path must remain under the dedicated /tmp evaluation prefix. Existing core-dsn/runtime-budget files are refused; O_EXCL prevents overwrite. Directory/file creation uses 0700/0600, optional explicit UID ownership, and no external runtime material is read/copied."
+    },
+    "exactExistingBudgetConservation": {
+      "pass": true,
+      "lines": [
+        60,
+        77,
+        90,
+        111
+      ],
+      "evidence": "Existing canonical RuntimeResourceBudget validator verifies source hash and budget shape. Dataclass replacement changes only synthetic tenant/installation scope; budget_payload and source hash are preserved. No amount/limit/model profile is raised or substituted."
+    },
+    "publicStaticFixtureAndExistingAPIs": {
+      "pass": true,
+      "lines": [
+        28,
+        30,
+        66,
+        85
+      ],
+      "evidence": "Exactly five public static base facts (tenant, installation, identity pack, policy pack, owner principal) are selected from the public fixed fixture catalog. Existing migration and PostgresNoor4DRepository APIs retain exact row/hash/scope checks; no personal-memory/procedure/evaluation-case seed is written."
+    },
+    "noProtectedOrModelInputsLoaded": {
+      "pass": true,
+      "evidence": "Public source has no imports or reads of final cases, holdout oracle/scorer, evaluator implementation, provider/model or owner-data runtime. CLI reads only supplied DSN and budget files; DSNs are not emitted. Error output is exception class only."
+    },
+    "contentFreeReceipt": {
+      "pass": true,
+      "lines": [
+        103,
+        114,
+        135,
+        138
+      ],
+      "evidence": "Receipt reports scope IDs, public seed names, revision, role, budget hashes and file names; no credential, private case or answer content is printed."
+    }
+  },
+  "publicDependencySha256": {
+    "eva2/tests/portable/test_portable_restore_full_schema.py": "027aa8200af4dba1a8dc16b9c1109540872c088a315f164b3e96904578a2476a",
+    "eva2/tests/support/noor_4d_repository.py": "515e4950207f6e2a05bdf4374fd0045fc0d79a1fc193fb7dcf23be6768d7f132",
+    "eva2/src/eva/contracts/runtime_budget.py": "23a42ca1c66149401d525c2440ad47adef57e5a8e3a7012073f32c61f7880109",
+    "eva2/src/eva/operations/install_schema.py": "decebe24b11fb634a6ef9c91167e1355e7abcea8491000617e23f23d58802fa1",
+    "eva2/src/eva/adapters/postgres/connection.py": "ccd736796a9dc9395bf1ea361b1ae8cf8bbfabba923c29914ba6f8437eec6349",
+    "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d"
+  },
+  "concreteBlockingFinding": null,
+  "reviewerActions": {
+    "helperExecutions": 0,
+    "databaseConnections": 0,
+    "privateEvaluationFilesRead": 0,
+    "modelsLoaded": 0,
+    "providerOrAuthCalls": 0,
+    "newExperiments": 0,
+    "productCodeChanges": 0,
+    "criteriaChanges": 0,
+    "budgetChanges": 0
+  },
+  "limits": [
+    "GO applies only to this exact helper in the caller-controlled fresh isolated P2 setup; it is not a runtime benchmark score or a product completion claim.",
+    "Source validates explicit database names and application username; caller/evaluator remains responsible for admitted isolated server/DSN binding and actual runtime role readiness.",
+    "Original comparison fixtures, criteria, budget and independent evaluator ownership remain unchanged."
+  ]
+}

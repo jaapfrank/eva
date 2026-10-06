@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-06T07:54:51.149603+00:00",
+  "lastUpdated": "2026-10-06T08:56:04.037513+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1007,7 +1007,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-06T08:35:48.905367+00:00",
+        "checkedAt": "2026-10-06T08:56:04.037513+00:00",
         "deliveries": [
           {
             "title": "Providervervolgroute gerepareerd en geïnstalleerd",
@@ -3868,7 +3868,7 @@
           "title": "P2.1 · Aparte onafhankelijke eindvergelijking",
           "state": "in_progress",
           "owner": "Onafhankelijke beoordelaar; Codex integreert alleen openbare resultaten",
-          "detail": "Nieuwe kern/werker geïnstalleerd en gebonden. Eén ongezien gewoon chat/geheugengeval met Eva1/Eva2 na native admission; dezelfde criteria/providerroute. Geen automatische volledige matrix.",
+          "detail": "Kandidaat en modelrollen onafhankelijk gecontroleerd. Verse testpersoon/database/geheugenruimte aansluiten, daarna één ongezien chat/geheugenpaar Eva1/Eva2. Tot nu toe0 gecontroleerde providercalls; dezelfde criteria en bestaande route.",
           "doneWhen": "Oorspronkelijke volledige P2.1-eindvoorwaarde blijft staan; een beperkte pair voltooit haar niet."
         },
         "next": {
@@ -3884,10 +3884,10 @@
             "I1.2, zeven dagen gezinspraktijk en eindoordeel blijven menselijke beoordelingen; spraak blijft geparkeerd."
           ],
           "expected": "34/44 oorspronkelijke kleine taken klaar. P2.2 is een publicatie; volledige P2.1 en R1.1 niet afgerond.",
-          "detail": "Goal actief; nu gerichte providerdiagnose. Geen nieuwe handeling van Jaap nodig of eindproef gestart."
+          "detail": "Goal actief; aparte eindvergelijking toegestaan. Geen handeling van Jaap nodig. De test-runtime gebruikt een eigen persoon en geen kopie van privégegevens."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-06T08:36:22.338514+00:00"
+        "reviewedAt": "2026-10-06T08:56:04.037513+00:00"
       },
       "reviewedAt": "2026-10-06T08:15:56.899036+00:00",
       "checkedAt": "2026-10-06T08:19:50.712148+00:00",
@@ -19121,31 +19121,33 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Onafhankelijke nieuwe kandidaatbinding en brongebonden functionele modelrollen afronden voor één gewone chat/geheugenbeoordeling; dezelfde criteria/providerroute, geen automatische matrix.",
+              "nextAction": "Verse geïsoleerde scope via bestaande native API aansluiten; daarna één onafhankelijk gekozen CM-paar uitvoeren met de bestaande criteria en verbruiksgrenzen.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "steps": [],
-                "expected": "Deze toegestane ronde is afgesloten; nu geen nieuwe handeling van Jaap nodig. Ontbrekende native toegang/beoordelingen blijven bij de volledige P2.1 zichtbaar.",
+                "expected": "De aparte vergelijking is toegestaan en wordt voorbereid/uitgevoerd; geen handeling van Jaap nodig. De volledige vergelijking en menselijke beoordelingen blijven apart.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-06T08:35:48.905367+00:00",
+              "checkedAt": "2026-10-06T08:56:04.037513+00:00",
               "assignment": {
                 "baseCommit": "bd20df8e904c1a6aa6cf9081acb3cad1831beefc",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root",
-                  "/root/p2_independent_final_20261006"
+                  "/root/p2_independent_final_20261006",
+                  "/root/r1_final_followup_20261006"
                 ],
                 "files": [
-                  "/root: openbare native meetbinding, workboard/WERKBORD en integratie.",
-                  "/root/p2_independent_final_20261006: afzonderlijke admissionreview; geen bronwijzigingen, geheime inhoud of modelruns."
+                  "/root: publieke scope-initializer, workboard/WERKBORD en Git-integratie.",
+                  "/root/p2_independent_final_20261006: aparte native meetbinding, ongeziene beoordeling en inhoudsvrije resultaten; geen productwijzigingen.",
+                  "/root/r1_final_followup_20261006: gerichte onafhankelijke review van alleen de openbare initializer."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Gerichte openbare contractcontrole en zo nodig één kleinste adaptercorrectie met providerloze controle;0 geplande gecontroleerde modelcalls,credits Codex onbekend.",
-                "currentAction": "Werkelijke nieuwe kern/werker healthy en bronhash exact; onafhankelijke brongebonden rolmapping gereed. Na admission één nieuwe gewone contact/geheugenpair, geen volledige matrix.",
+                "estimate": "Eén oorspronkelijke CM-beoordeling, één epoch, Eva1/Eva2; bestaande samplegrenzen1.048.576input/19.200output/16calls per native sample blijven gelden. Geen automatische matrix; creditkosten onbekend.",
+                "currentAction": "Kandidaat en functionele modelrollen onafhankelijk GO; nieuwe lege testdatabase/geheugenruimte en native klok/accounting worden aangesloten vóór curatie. Nog0 gecontroleerde providercalls.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": "e02192e7: verliesvrije gedeelde catalogusguidance, bronreview GO,134 gerichte tests plus oude assertie vastgelegd. Beide images geïnstalleerd/gezond; gewone browseropdracht en verse24-toolcatalogus+schema-uitleg geslaagd. Geen extra producttaak, spraak of algemene winstclaim."
