@@ -19968,13 +19968,9 @@
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
                 "currentAction": "Geen vergelijking of bouwwerk actief. Vorige geheugencorrectie geïnstalleerd; bestaande proefregistraties en ontbrekende beoordelingen nu gecontroleerd.",
                 "previousGoalTurn": {
-                  "classification": "progress",
-                  "evidence": [
-                    "eva2/evidence/product/memory-selection-correction-20261007.json",
-                    "eva2/reviews/memory-selection-installed-review-20261007.json"
-                  ],
-                  "sourceCommit": "f8ac4afa7138d7e81dd53a4391274ff10d3c47bd",
-                  "meaning": "Exacte algemene geheugencorrectie geïnstalleerd, onafhankelijk gecontroleerd, bestaand pakket en GitHub bijgewerkt. Geen nieuwe producttaak fictief voltooid."
+                  "classification": "no_progress",
+                  "sourceCommit": "70a9d7dd177f917540e336f6b261b4bf48dd0955",
+                  "meaning": "Bestaande open voorwaarden opnieuw gecontroleerd en zichtbaar gemaakt; geen nieuwe productfunctie of uitvoerbaar bewijs."
                 },
                 "stage": "awaiting_valid_evaluation_conditions",
                 "currentNativePreparation": {
@@ -20850,9 +20846,9 @@
                 "memorySelectionCorrectionEvidence": "eva2/evidence/product/memory-selection-correction-20261007.json",
                 "currentBlockedAudit": {
                   "condition": "Remaining original evaluation cannot resume with unrecoverable historical usage and spent admissions; remaining independent work is parked speech or human judgement.",
-                  "consecutiveGoalTurns": 1,
-                  "previousGoalTurnClassification": "progress",
-                  "revalidatedAt": "2026-10-07T00:58:22.999201+00:00",
+                  "consecutiveGoalTurns": 2,
+                  "previousGoalTurnClassification": "no_progress",
+                  "revalidatedAt": "2026-10-07T00:59:35.995082+00:00",
                   "evidence": [
                     "eva2/evidence/product/p2-current-round-decision-20261007.json",
                     "eva2/reviews/r1-current-readiness-20261006.json",
@@ -20865,7 +20861,33 @@
                     false,
                     false
                   ],
-                  "goalMarkedBlocked": false
+                  "goalMarkedBlocked": false,
+                  "observations": [
+                    {
+                      "turn": 1,
+                      "sourceCommit": "70a9d7dd177f917540e336f6b261b4bf48dd0955",
+                      "classification": "no_progress"
+                    },
+                    {
+                      "turn": 2,
+                      "classification": "no_progress",
+                      "originalAggregateUnchanged": true,
+                      "activeOriginalProcesses": [],
+                      "humanCompletedSheets": [
+                        false,
+                        false
+                      ]
+                    }
+                  ]
+                },
+                "lastProgressGoalTurn": {
+                  "classification": "progress",
+                  "evidence": [
+                    "eva2/evidence/product/memory-selection-correction-20261007.json",
+                    "eva2/reviews/memory-selection-installed-review-20261007.json"
+                  ],
+                  "sourceCommit": "f8ac4afa7138d7e81dd53a4391274ff10d3c47bd",
+                  "meaning": "Exacte algemene geheugencorrectie geïnstalleerd, onafhankelijk gecontroleerd, bestaand pakket en GitHub bijgewerkt. Geen nieuwe producttaak fictief voltooid."
                 }
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
