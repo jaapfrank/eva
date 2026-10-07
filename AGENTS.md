@@ -12,8 +12,10 @@ gebouwde catalogus van voorbeeldfuncties.
 Een droommodus gebruikt de bestaande initiatief-/reflectieroute wanneer het
 rustig is en aantoonbaar voldoende capaciteit beschikbaar is. Zij verwerkt echte
 ervaringen, onderzoekt mogelijkheden en vergelijkt voorstellen binnen dezelfde
-toegang en verbruiksafspraken. Gezinsgebruik en lopend werk krijgen voorrang;
-geen continue modelcalls om aanwezigheid te simuleren. Een gekozen uitbreiding
+toegang en verbruiksafspraken. Gezinsgebruik en lopend werk krijgen voorrang. Droomwerk maakt plaats zodra
+het gezin Eva aanspreekt of actief werk capaciteit nodig heeft; hervatten gebruikt
+de bewaarde taakstatus. Beschikbare rekenruimte én de bestaande modelverbruiksruimte
+bepalen of een onderzoeksronde past. Geen continue modelcalls om aanwezigheid te simuleren. Een gekozen uitbreiding
 moet werkelijk gecontroleerd en bruikbaar worden, met onafhankelijke beoordeling
 voor eigen wijzigingen en behoud van persoonsgrenzen en stoppen. Onderzoeken,
 kiezen, toepassen en aangetoond beter werken blijven afzonderlijke resultaten.

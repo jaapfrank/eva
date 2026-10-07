@@ -10,8 +10,9 @@ of tokenbesparing. Zie evidence/product/l3-context-candidate-b-installed-2026100
 L3.7 is onafhankelijk GO_DONE: de volgende gewone ronde gebruikte de beste
 actuele bron/status en eerdere ervaring en stopte terecht zonder nieuw tekort;
 hervatten/replay herhaalde geen toepassing. De resterende oorspronkelijke P2.1-
-vergelijking volgt; menselijke beoordelingen blijven afzonderlijk zichtbaar. Apps/add-ons horen bij dezelfde cyclus; droommodus is nog niet
-gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
+vergelijking blijft afzonderlijk zichtbaar. Apps/add-ons vallen onder dezelfde
+verbetercyclus; aansluiting van iedere uitbreidingssoort is niet bewezen en de
+automatische droommodus is nog niet gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
 
 
 ## P2.1 actueel 7 oktober — latere herinnering met drie dezelfde systemen
@@ -33,10 +34,15 @@ De native uitvoering/resources zijn gesloten; geen replay of extra productfuncti
 De voorafgaande backup-padvraag was een evaluatorfout: submappen verloren bij
 voorbereiding, oude backup wel behouden; nul oorspronkelijke invoer/modelcalls.
 
-P2.1 blijft open. Eerst alleen beschikbaarheid van de bestaande Hermes-groepsroute
-voor oorspronkelijke CM07 bepalen; huidige Eva1/OpenClaw-routes onbeschikbaar.
-Nog geen projectie/nieuwe toelating/automatische matrix. Matching Eva2-CM06 ontbreekt;
-oudere andere inputsets blijven apart.
+P2.1 blijft open. De beschikbaarheidscontrole is afgerond: Hermes kan de oorspronkelijke
+CM07-herkomst privé→groep met bestaande broncode weergeven, maar uitvoering is niet
+toegelaten of beproefd. De huidige Eva1/OpenClaw-routes bieden geen passend vergelijkingspaar.
+Een losse Hermes-run verandert het huidige besluit niet en wordt daarom niet gestart.
+Geen projectie, nieuwe modelcalls of automatische matrix. Nog open: een beslisrelevant
+vergelijkingspaar met dezelfde oorspronkelijke voorwaarden en twee echte menselijke
+antwoordbeoordelingen. Matching Eva2-CM06 ontbreekt; oudere inputsets blijven apart.
+Bewijs beschikbaarheid: evidence/product/p2-hermes-cm07-availability-20261007.json;
+review: reviews/p2-hermes-cm07-availability-review-20261007.json.
 Bewijs: evidence/product/p2-hermes-original-cm06-result-20261007.json;
 review: reviews/p2-hermes-original-cm06-result-review-20261007.json.
 
@@ -174,8 +180,10 @@ gebouwde catalogus van voorbeeldfuncties.
 Een droommodus gebruikt de bestaande initiatief-/reflectieroute wanneer het
 rustig is en aantoonbaar voldoende capaciteit beschikbaar is. Zij verwerkt echte
 ervaringen, onderzoekt mogelijkheden en vergelijkt voorstellen binnen dezelfde
-toegang en verbruiksafspraken. Gezinsgebruik en lopend werk krijgen voorrang;
-geen continue modelcalls om aanwezigheid te simuleren. Een gekozen uitbreiding
+toegang en verbruiksafspraken. Gezinsgebruik en lopend werk krijgen voorrang. Droomwerk maakt plaats zodra
+het gezin Eva aanspreekt of actief werk capaciteit nodig heeft; hervatten gebruikt
+de bewaarde taakstatus. Beschikbare rekenruimte én de bestaande modelverbruiksruimte
+bepalen of een onderzoeksronde past. Geen continue modelcalls om aanwezigheid te simuleren. Een gekozen uitbreiding
 moet werkelijk gecontroleerd en bruikbaar worden, met onafhankelijke beoordeling
 voor eigen wijzigingen en behoud van persoonsgrenzen en stoppen. Onderzoeken,
 kiezen, toepassen en aangetoond beter werken blijven afzonderlijke resultaten.

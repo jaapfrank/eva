@@ -1,0 +1,270 @@
+{
+  "contract": "EV003OriginalHermesAvailability/v1",
+  "created_at": "2026-10-07T21:58:33.886923+00:00",
+  "task": "P2.1",
+  "basis_commit": "fb43f206b63dda41559adfad48a72d99ebecbafb",
+  "entry": "hermes:EV003-CM-07:epoch1",
+  "decision": "GO_METADATA_ONLY_NO_SAMPLE_ADMISSION",
+  "bindings": {
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "case_sha256": "eb4f59b9b736fbe696a8f5eb2ef526570412a262a9cade50a18948196fd2bedc",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "protocol_sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "native_source_pin": "f97608f178d1ffeca59860195ab7da295f7c8e5f"
+  },
+  "shape": {
+    "user_turns": 2,
+    "setup_turns": 0,
+    "verified_identities": 2,
+    "actor_order": [
+      0,
+      1
+    ],
+    "audience_order": [
+      "private",
+      "verified_shared"
+    ],
+    "sessions": 2,
+    "session_indices": [
+      0,
+      1
+    ],
+    "calendar_generations": [
+      0,
+      0
+    ],
+    "elapsed_clock_offsets_ms": [
+      0,
+      0
+    ],
+    "additional_services_files_browser_audio": 0
+  },
+  "availability": {
+    "slot_unused": true,
+    "next_original_hermes_case_in_ascending_order": true,
+    "native_origin_representation_supported_by_current_source": true,
+    "state": "source_mapping_compatible_not_execution_admitted",
+    "product_loss": false,
+    "existing_access": "Own ordinary native subscription route completed CM06; no fresh credential/lease/network probe in this review.",
+    "native_fields": [
+      "user_id",
+      "chat_id",
+      "chat_type",
+      "gateway_session_key"
+    ],
+    "mapping": "Preserve exact original verified actor IDs. Use the existing ordinary dm origin for the first private session and group origin for the distinct shared conversation; derive deterministic keys with the pinned native builder and its unchanged defaults.",
+    "durable_controls": "Before accepting results, require actual SessionDB user_id/chat_id/chat_type/session_key and origin_json to match the original person/audience mapping, plus exact physical model-context readback.",
+    "memory_policy": "One ordinary profile, SessionDB and global MemoryStore. No profile split, privacy filter, new memory rule or favorable isolation policy.",
+    "model_context_limit": "Group origin persistence does not prove audience-aware model behavior or safe shared memory. The bound CLI does not add the gateway context formatter; retain that native behavior rather than insert a benchmark instruction.",
+    "current_parent_limitation": "Closed CM06 parent binds three turns and its own case/paths. A case-specific two-turn/count/path/history binding would be necessary before any CM07 preparation; generic probe already accepts two turns.",
+    "source_compatibility_is_not_runtime_or_quality_proof": true,
+    "resource_preparation_admitted": false,
+    "input_admitted": false
+  },
+  "other_participants": {
+    "eva1_bottie": "Current fixed private route remains unavailable/UNKNOWN for the required shared audience; not a product loss.",
+    "openclaw": "Current admitted direct/private recorder route remains unavailable/UNKNOWN for the required shared audience; not a product loss.",
+    "eva2": "Historical unresolved SDK-usage admission guard retained; no matching successor CM07 result.",
+    "agent_zero": "Participant-specific historical usage guard retained.",
+    "all_current_successor_cm07_slots_unused": true
+  },
+  "comparison_decision": {
+    "run_hermes_only_cm07_now": false,
+    "reason": "It could describe another narrow Hermes shared-audience behavior, but currently supplies no matched eligible comparison and cannot remove existing hard privacy failures, missing Eva2 comparison or absent human ratings. It does not change the current acceptance/no-superiority decision.",
+    "original_rule": "Protocol83–102 keeps all conditions, safety gates and human assessment; insufficient evidence ends the bounded round with that conclusion rather than continuing until a win. This is not a new quota or removal of fixed coverage.",
+    "current_bounded_matched_round": "closed_results_retained_incomplete_no_general_winner",
+    "full_P2_1_completed": false,
+    "remaining_original_coverage": "UNKNOWN/open, not silently waived.",
+    "formal_1080_ceiling_is_execution_order": false,
+    "formal_1080_ceiling_is_automatic_authorization": false,
+    "no_later_case_or_epoch_selected": true
+  },
+  "next_existing_dependency": {
+    "technical": "Before another original model run, establish a decision-relevant matched shared-audience comparison through already existing ordinary participant routes and unchanged original controls. This review does not authorize building a new route or tuning privacy behavior.",
+    "human": "The existing two independent blind human ratings of retained admissible comparison evidence remain a real prerequisite; no AI substitution.",
+    "current_action": "Record this availability and bounded-round disposition; preserve P2.1 and missing coverage as open. No CM07 projection/admission/run follows automatically.",
+    "new_task_id_or_budget": false
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256_before_and_after": "3463998e855a2448fa98877df30121ae57681ff37c2cd1439b4e46d298dd568a",
+    "rows": 21,
+    "all_values_and_revisions_preserved": true,
+    "canonical_sha256": "825d0659fc02ea38f6ca1d8d84c35ffa90f54ce8df04e5bd0c67f00d3483bf36",
+    "registered_attempts": 136,
+    "known_usage_lower_bound": {
+      "input_tokens": 1445016,
+      "output_tokens": 13961,
+      "total_tokens": 1458977
+    },
+    "historical_unknown_usage_attempts": 3,
+    "full_usage_complete": false,
+    "money": null,
+    "credits": null,
+    "new_reservations": 0
+  },
+  "references": {
+    "commitment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/dataset-commitment.private.json",
+      "sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d"
+    },
+    "plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "protocol": {
+      "path": "/home/administrator/project/Eva2/eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+      "source_lines": [
+        [
+          75,
+          81
+        ],
+        [
+          83,
+          102
+        ]
+      ]
+    },
+    "scorer": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    "adapter": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+      "sha256": "c1b07c0e22388fbd8d40140d295bd0a4b83cb5770faa25341c8d32d136e437ee",
+      "source_lines": [
+        [
+          346,
+          377
+        ],
+        [
+          380,
+          396
+        ],
+        [
+          520,
+          545
+        ]
+      ]
+    },
+    "native_constructor_and_origin": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/run_agent.py",
+      "sha256": "244da863d3c21591a3b5326dc14c2962d4e31131dda52df628502cd9fcbfea33",
+      "source_lines": [
+        [
+          83,
+          105
+        ],
+        [
+          289,
+          310
+        ],
+        [
+          368,
+          376
+        ]
+      ]
+    },
+    "native_init_and_memory": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/agent/agent_init.py",
+      "sha256": "ce93f1d5acd4727d0005b46d7054d8892a55c820be40ebc7f594695f576b4d81",
+      "source_lines": [
+        [
+          1259,
+          1296
+        ],
+        [
+          2302,
+          2306
+        ],
+        [
+          2359,
+          2363
+        ]
+      ]
+    },
+    "native_session_key": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/gateway/session.py",
+      "sha256": "2ea0ebedcd4e6b3b41ce446e2b6ef63f40c72c200fa5e0c106249eb6e599dbd6",
+      "source_lines": [
+        [
+          633,
+          641
+        ],
+        [
+          673,
+          714
+        ]
+      ]
+    },
+    "native_memory_directory": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/tools/memory_tool.py",
+      "sha256": "214870bfcc4c67cc502459d16dda9bd4627e58ae521d73ee03e41afc598f6178",
+      "source_lines": [
+        [
+          38,
+          40
+        ]
+      ]
+    },
+    "native_gateway_formatter": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/gateway/session.py",
+      "sha256": "2ea0ebedcd4e6b3b41ce446e2b6ef63f40c72c200fa5e0c106249eb6e599dbd6",
+      "source_lines": [
+        [
+          375,
+          402
+        ],
+        [
+          421,
+          433
+        ]
+      ]
+    },
+    "native_gateway_formatter_caller": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/gateway/run_agent_cache.py",
+      "sha256": "d7ca693e68f798353d4759a9747f15c5b2ad4e36aac43d5393e32b15990d4a72",
+      "source_lines": [
+        [
+          625,
+          632
+        ]
+      ]
+    },
+    "existing_availability": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-original-remaining-availability-20261007.json",
+      "sha256": "833731f8ca47781f1989f0c17cf65e7abfa4ad0a38b0b547ecf0e204455511a5"
+    },
+    "closed_cm06_result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+      "sha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059"
+    },
+    "closed_cm05_result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+      "sha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80"
+    },
+    "previous_round_decision": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-current-round-decision-20261007.json",
+      "sha256": "ed43fadeaec6c95d4ce439bb0ed8a8867027123b44749fc13abda65ade529e22"
+    }
+  },
+  "protected_technical_record": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-cm07-availability-20261007/availability-technical.private.json",
+    "sha256": "bd11b80a706f431c48fa0f11a8326bc475191ec2f54c53ef9e6618ea4cbfccab"
+  },
+  "activity": {
+    "model_calls": 0,
+    "native_starts": 0,
+    "auth_calls": 0,
+    "tests": 0,
+    "resources_started": 0,
+    "reservations": 0,
+    "projections": 0,
+    "source_edits": 0,
+    "criteria_changes": 0,
+    "protected_content_disclosed": false
+  }
+}

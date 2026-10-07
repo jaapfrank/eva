@@ -1,0 +1,67 @@
+{
+  "contract": "EvaIndependentPublicationReview/v1",
+  "recorded_at": "2026-10-07T22:04:02.982145+00:00",
+  "task": "P2.1",
+  "decision": "GO_PUBLICATION_ONLY",
+  "basis_commit": "fb43f206b63dda41559adfad48a72d99ebecbafb",
+  "reviewed_files": [
+    {
+      "path": "/home/administrator/project/Eva2/AGENTS.md",
+      "sha256": "8710834e8106b268ff4f48bc06066894104eb5f8abd167c40630b935017bdde2"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/PROJECTDOEL.md",
+      "sha256": "570d005d6e8369bdd922e5f9dd0e201aaa58202ccd44b7fe803298849e72d759"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/WERKBORD.md",
+      "sha256": "52be54f9147fdcd3bf3495bb49d05db6a74db5f56bcaa8af76c90c08232f59de"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/design/product/execution-workboard-v1.json",
+      "sha256": "a959c011218e9bef9355b3b9010a2aee4d272f4648c813a4934892ca7a0c0438"
+    }
+  ],
+  "evidence": {
+    "availability": {
+      "path": "eva2/evidence/product/p2-hermes-cm07-availability-20261007.json",
+      "sha256": "20ccdaa23fe5659ac15a78eee003e67c3bf0b1d6092608fb825ff1da8f30955b"
+    },
+    "availability_review": {
+      "path": "eva2/reviews/p2-hermes-cm07-availability-review-20261007.json",
+      "sha256": "ccff08bf954b456570ecf2c73e3ff98cd3f9d97f3a79bb7108e0cc0bcd352149"
+    },
+    "l3_original_closure": {
+      "path": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json",
+      "sha256": "e6454d56627ffd938cbb11515873338cef1cbee662f4760c2aa91654220f8662"
+    }
+  },
+  "checks": {
+    "all_48_ids_statuses_doneWhen_unchanged": true,
+    "completed_count": 39,
+    "L3_4_to_7_acceptances_preserved": true,
+    "apps_addons_same_improvement_policy_not_all_extension_kinds_proven": true,
+    "automatic_dream_capacity_scheduling_planned_not_implemented": true,
+    "household_and_active_work_preemption_saved_state_resume_compute_and_existing_model_budget_explicit": true,
+    "CM07_source_compatibility_not_runtime_privacy_or_quality_proof": true,
+    "CM07_no_projection_admission_run_or_unpaired_matrix_selected": true,
+    "current_metadata_zero_calls_distinct_from_closed_CM06_usage": true,
+    "last_native_execution_actual_usage_and_comparisonResults_unchanged": true,
+    "P2_1_in_progress_human_ratings_costs_and_missing_comparison_open": true,
+    "no_new_capability_completion_or_general_superiority_claim": true
+  },
+  "findings": [],
+  "limits": [
+    "Documentation/status publication only; no implementation, runtime release, sample admission or full P2.1 completion.",
+    "Existing bounded CM06 results and CM05 privacy failures remain scoped; human quality and unknown historical usage are not replaced."
+  ],
+  "reviewer_activity": {
+    "model_calls": 0,
+    "native_calls": 0,
+    "auth_calls": 0,
+    "tests": 0,
+    "resources_started": 0,
+    "protected_content_disclosed": false,
+    "shared_files_changed": 0
+  }
+}

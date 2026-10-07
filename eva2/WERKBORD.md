@@ -21,14 +21,22 @@ Uitvoering/resources volledig gesloten; geen replay. Backup-padvraag was
 evaluatorvoorbereiding zonder oorspronkelijke input/calls; oude backup behouden.
 
 48 kleine taken/39 afgerond blijven ongewijzigd; geen extra productfunctie.
-P2.1 blijft open. Eerst alleen bestaande Hermes-groepsroute op oorspronkelijke
-CM07-beschikbaarheid beoordelen; Eva1/OpenClaw daarvoor onbeschikbaar. Geen nieuwe
-projectie/toelating of automatische matrix. L3.4–L3.7 geïnstalleerd; apps/add-ons
-volgen dezelfde verbetercyclus, automatische droommodus nog niet gebouwd.
+P2.1 blijft open. CM07-beschikbaarheid is vastgesteld: bestaande Hermes-broncode
+kan privé-/groepsherkomst bewaren; dit bewijst geen veilige groepsherinnering.
+Eva1/OpenClaw bieden in de huidige proefroute geen passend vergelijkingspaar.
+Daarom geen losse Hermes-run, projectie of automatische matrix. De resterende
+vergelijkingsdekking en twee menselijke antwoordbeoordelingen blijven open.
+L3.4–L3.7 zijn geïnstalleerd. Apps/add-ons vallen onder dezelfde verbetercyclus;
+alle uitbreidingssoorten aansluiten is nog niet bewezen. Automatische droommodus
+is nog niet gebouwd: echte ervaringen verwerken en verbeteringen onderzoeken bij
+rust en beschikbare reken-/verbruiksruimte, met voorrang voor gezin en actief werk.
+Dit is een vastgelegde productrichting, geen extra afgeronde taak.
 Spraak geparkeerd; I1.2/F2 en echte menselijke antwoordbeoordelingen blijven apart.
 
 Resultaat: evidence/product/p2-hermes-original-cm06-result-20261007.json.
 Review: reviews/p2-hermes-original-cm06-result-review-20261007.json.
+Beschikbaarheid: evidence/product/p2-hermes-cm07-availability-20261007.json.
+Review: reviews/p2-hermes-cm07-availability-review-20261007.json.
 Actuele taak: P2.1 in design/product/execution-workboard-v1.json.
 
 ## Eerder 7 oktober — Hermes en OpenClaw falen dezelfde persoonsgrensproef

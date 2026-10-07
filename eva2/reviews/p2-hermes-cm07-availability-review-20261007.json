@@ -1,0 +1,43 @@
+{
+  "contract": "EV003IndependentAvailabilityReview/v1",
+  "created_at": "2026-10-07T21:58:33.886923+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-07:epoch1",
+  "decision": "GO_METADATA_ONLY_NO_SAMPLE_ADMISSION",
+  "evidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-cm07-availability-20261007.json",
+    "sha256": "20ccdaa23fe5659ac15a78eee003e67c3bf0b1d6092608fb825ff1da8f30955b"
+  },
+  "protected_technical_record": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-cm07-availability-20261007/availability-technical.private.json",
+    "sha256": "bd11b80a706f431c48fa0f11a8326bc475191ec2f54c53ef9e6618ea4cbfccab"
+  },
+  "checks": {
+    "original_case_commitment_plan_and_ascending_unused_slot_bound": true,
+    "existing_two_turn_dm_group_constructor_and_durable_origin_support_distinguished_from_model_behavior": true,
+    "ordinary_session_defaults_global_memory_and_policy_unchanged": true,
+    "no_new_model_context_instruction_or_hidden_case_advice": true,
+    "eva1_openclaw_current_route_unavailability_not_product_loss": true,
+    "hermes_only_current_comparison_relevance_insufficient_for_new_selected_run": true,
+    "original_safety_human_conditions_and_missing_coverage_preserved": true,
+    "all21_authority_rows136attempts_three_unknowns_unchanged": true
+  },
+  "findings": [],
+  "limits": [
+    "Source compatibility only, not live readiness, access freshness, safe shared recall or case success.",
+    "Existing CM06 parent cannot be silently reused as a two-turn CM07 admission.",
+    "No full P2.1 completion, new matrix, replay, source repair or next-case release."
+  ],
+  "reviewer_activity": {
+    "model_calls": 0,
+    "native_starts": 0,
+    "auth_calls": 0,
+    "tests": 0,
+    "resources_started": 0,
+    "reservations": 0,
+    "projections": 0,
+    "source_edits": 0,
+    "criteria_changes": 0,
+    "protected_content_disclosed": false
+  }
+}
