@@ -91,14 +91,15 @@
     "fullL3_6Complete": false,
     "fullL3_7Complete": false,
     "semanticQualityGain": "UNKNOWN",
-    "ordinaryCompletionRouteAfterCorrection": "GO_SOURCE_ONLY_INSTALLATION_PENDING"
+    "ordinaryCompletionRouteAfterCorrection": "GO_INSTALLED_TECHNICAL_COMPLETION_CORRECTION",
+    "installedCorrectionReview": "GO"
   },
   "privacy": "No task text, model replies, source body, personal IDs or protected final data are published in this review.",
   "priorDiagnosisReviewSha256": "d1675f7f63bbd4ef435b4e631c89f0d88459231cf2d9d9195ecab29943e02d62",
   "functionalCorrection": {
     "reviewedAt": "2026-10-07T10:50:27.822618+00:00",
     "decision": "GO",
-    "scope": "Exact source correction for honest completion of a retained development comparison. Installed delivery remains pending.",
+    "scope": "Exact source correction for honest completion of a retained development comparison. This source review preceded installation; see installedCorrection for the final installed decision.",
     "evidence": {
       "path": "eva2/evidence/product/l3-ordinary-improvement-outcome-20261007.json",
       "sha256": "a7e2ec53cc2794faea16286ee946cb4ff4262bc3b23fac264b40a3f3d1cd92a4"
@@ -141,5 +142,90 @@
       "fullL3_6Complete": false,
       "fullL3_7Complete": false
     }
-  }
+  },
+  "priorSourceReviewSha256": "a4a3900da68f4af463244fa3cb02657bb46e87d6ed0477c3a3291a057e2a01d1",
+  "installedCorrection": {
+    "reviewedAt": "2026-10-07T10:57:41.999626+00:00",
+    "decision": "GO",
+    "evidence": {
+      "path": "eva2/evidence/product/l3-ordinary-completion-installed-20261007.json",
+      "sha256": "7bb7402aeb76dd5f294559d98d4121b608d53f8f4aa6587c1d7d538f278608c8"
+    },
+    "sourceCommit": "f6b81de0f1195319a75d331a4b13804a5a3d08f0",
+    "runtimeImagesAndTwoSourceHashesIndependentlyVerified": true,
+    "actualServicesHealthyAsUID65532": true,
+    "runtimeChecks": {
+      "eva2-managed-b-slot3-core": {
+        "installedLossCompletionAccepted": true,
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362",
+          "adapters/postgres/component_improvement_actions.py": "956c63ffefd8ba9de414c4ff71197c978dd3edd17df50ef6837b68aceda3c9d2"
+        },
+        "image": "sha256:7c97a99b58d2b8f4a1932f35c608df596b4a3d2e1b0c8f0d98b25d4f86077a2a",
+        "health": "healthy",
+        "user": "65532:65532"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "installedLossCompletionAccepted": true,
+        "sourceHashes": {
+          "bootstrap/delegated_digital_runner.py": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362",
+          "adapters/postgres/component_improvement_actions.py": "956c63ffefd8ba9de414c4ff71197c978dd3edd17df50ef6837b68aceda3c9d2"
+        },
+        "image": "sha256:51d0fbba9f761598b3d3316b5f4b8dd5df84f6d1ca7cb76f57d1e68f4df272fe",
+        "health": "healthy",
+        "user": "65532:65532"
+      }
+    },
+    "retainedReceiptPredicateReplayReported": {
+      "actualPreservedLossReceiptUsed": true,
+      "actualPreservedStateVerifiedDocumentProofUsed": true,
+      "acceptedBothImages": true,
+      "historicalTaskReclassified": false
+    },
+    "newModelCalls": 0,
+    "newReviewerTests": 0,
+    "historicalLastRejectedCall": "UNKNOWN",
+    "candidateInstalled": false,
+    "semanticQualityGain": "UNKNOWN",
+    "fullL3_6Complete": false,
+    "fullL3_7Complete": false,
+    "historicalBlocker": {
+      "configSha256": "ddfcd0f59c9085eb0e1b9f1e437a861f49de9df5e254ab31ef60156c548628c0",
+      "field": "final_component_assessments.publisher.installed",
+      "actualType": "string",
+      "requiredType": "exact object with path and sha256",
+      "source": "ComponentReleasePublisher.__init__:22 calls _artifact; reviewed_component_application.py:45-47 rejects this scalar binding.",
+      "expectedArtifactPath": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/loss-completion-compose.private.json",
+      "artifactSha256": "c8f8b9470e759f344605eb677a1298c4597afb80dd7b5fc79067d104add5df69",
+      "artifactImagePinsMatchBothRunningImages": true,
+      "hostProcessObservation": "No process with the expected eva.operations.component_evaluation_service module argument was observed during this read-only check.",
+      "smallestCorrection": "Restore the existing path/sha256 object, keep exact f6b81 integration commit and compose bytes, then start the existing host and verify its binding/health. No source or image rebuild is needed."
+    },
+    "materialBlockers": [],
+    "hostBindingResolution": {
+      "reviewedAt": "2026-10-07T11:01:01.342568+00:00",
+      "decision": "GO",
+      "evidence": {
+        "path": "eva2/evidence/product/l3-ordinary-completion-host-binding-20261007.json",
+        "sha256": "7bb638616c652dd9eec0f16d94571427cb41613d04b6d383882d258c5ba82f4d"
+      },
+      "actualHostConfigSha256": "15940832f428ace068a2996be453245d52adb3d23c0e61b53ee6b394c41f690e",
+      "installedArtifactBindingType": "exact path/sha256 object",
+      "installedArtifactSha256": "c8f8b9470e759f344605eb677a1298c4597afb80dd7b5fc79067d104add5df69",
+      "sourceCommit": "f6b81de0f1195319a75d331a4b13804a5a3d08f0",
+      "artifactImagePinsMatchReviewedRunningImages": true,
+      "currentProcessPid": 3229014,
+      "moduleAndConfigurationProcessArgumentsIndependentlyVerified": true,
+      "constructorPreflightPassedReported": true,
+      "healthFromBothInstalledContainersReported": {
+        "httpStatus": 200,
+        "status": "ready"
+      },
+      "newReviewerHTTPOrModelCalls": 0,
+      "newReviewerTests": 0,
+      "newImageBuilds": false,
+      "scope": "Resolve only the existing host configuration binding and installed completion wiring. Historical internal_error and baseline_retained outcome remain unchanged."
+    }
+  },
+  "priorInstalledBlockerReviewSha256": "3d38fe8e2af6100eca48f2bab77ff5bd5ee667c4e199d21e0ab362661ee68822"
 }

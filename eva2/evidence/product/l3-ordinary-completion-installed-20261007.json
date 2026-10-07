@@ -1,0 +1,39 @@
+{
+  "contract": "EvaOrdinaryCompletionInstalled/v1",
+  "sourceCommit": "f6b81de0f1195319a75d331a4b13804a5a3d08f0",
+  "checkedAt": "2026-10-07",
+  "runtimeChecks": {
+    "eva2-managed-b-slot3-core": {
+      "installedLossCompletionAccepted": true,
+      "sourceHashes": {
+        "bootstrap/delegated_digital_runner.py": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362",
+        "adapters/postgres/component_improvement_actions.py": "956c63ffefd8ba9de414c4ff71197c978dd3edd17df50ef6837b68aceda3c9d2"
+      },
+      "image": "sha256:7c97a99b58d2b8f4a1932f35c608df596b4a3d2e1b0c8f0d98b25d4f86077a2a",
+      "health": "healthy",
+      "user": "65532:65532"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "installedLossCompletionAccepted": true,
+      "sourceHashes": {
+        "bootstrap/delegated_digital_runner.py": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362",
+        "adapters/postgres/component_improvement_actions.py": "956c63ffefd8ba9de414c4ff71197c978dd3edd17df50ef6837b68aceda3c9d2"
+      },
+      "image": "sha256:51d0fbba9f761598b3d3316b5f4b8dd5df84f6d1ca7cb76f57d1e68f4df272fe",
+      "health": "healthy",
+      "user": "65532:65532"
+    }
+  },
+  "actualPreservedLossReceiptUsed": true,
+  "actualPreservedStateVerifiedDocumentProofUsed": true,
+  "historicTaskStateUnchanged": "ambiguous/internal_error",
+  "historicalLastRejectedCallUnknown": true,
+  "candidateInstalled": false,
+  "semanticImprovementVerified": false,
+  "testSummary": "111 targeted tests passed; only missing jsonschema test dependency corrected, remaining1 test passed with reused readonly host dependencies;112combined.",
+  "modelRequestsForCorrection": 0,
+  "rollbacks": 0,
+  "publisherUsesActualNewImagesAndSourceCommit": true,
+  "independentFinalExperimentConsumed": false,
+  "limits": "Completion predicate replay on actual retained receipts, not a restored old model run or a complete L3.6/L3.7/dream/addon outcome."
+}

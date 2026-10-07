@@ -1,3 +1,32 @@
+## Actueel 7 oktober — geïnstalleerde cyclusaansluiting, ontwikkelproef gelijkspel
+
+De technische overdracht van een gekozen kandidaat naar onafhankelijke beoordeling,
+bronimport en beheerde toepassing is geïnstalleerd. De gewone chat liet Eva zelf een
+kandidaat maken. Die vond dezelfde 5/5 ontwikkelverwijzingen en gebruikte dezelfde 5514
+contextbytes als de huidige versie: geen voordeel, dus geen kandidaatinstallatie.
+De kandidaat en meting blijven bewaard; de aparte eindbeoordeling is niet verbruikt.
+
+De uitvoering liep na de bewaarde vergelijking vast op een documentlengtecontrole.
+De laatste afgewezen modelcall is niet duurzaam beschikbaar; de precieze inhoud
+wordt niet verzonnen. Een afzonderlijk aangetoond afrondingsdefect (een opgeslagen
+vergelijking telde niet als eindresultaat) is gecorrigeerd en geïnstalleerd in gezonde
+kern/werker, met 112 gerichte controles en een controle met de echte behouden
+vergelijkings-/documentbewijzen. Dit herstelt niet fictief de oude taakstatus.
+De hostconfigbinding is daarna gericht hersteld; de bestaande host is vanuit
+beide geïnstalleerde containers bereikbaar. Onafhankelijke opleverreview GO;
+de eerdere configuratiefout blijft geregistreerd.
+
+L3.6 blijft open: er is nog geen nieuwe gekozen winnaar onafhankelijk beoordeeld.
+L3.7 en droommodus/apps blijven expliciet onvoltooid. Geen ongewijzigde proefherhaling
+of extra variant om alleen een reeds maximale ontwikkelscore groen te krijgen.
+Deze technische stap kostte geen extra runtime-modelcalls; de echte ontwikkelproef
+gebruikte 9 werkmodelaanvragen, 177327 invoer- en 2054 uitvoertokens. Credits onbekend.
+
+Bewijs: eva2/evidence/product/l3-ordinary-improvement-outcome-20261007.json en
+l3-ordinary-completion-installed-20261007.json, de hostbindingreceipt en de
+bijbehorende onafhankelijke review. Afgeronde kleine taken blijven 37/48;
+een technische correctie verhoogt de hoofduitkomstenteller niet.
+
 ## 7 oktober — L3.5 geïnstalleerd; verder bij L3.6
 
 ## Actueel 7 oktober — L3.6: gekozen winnaar naar onafhankelijke beoordeling

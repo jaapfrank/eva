@@ -1,0 +1,35 @@
+{
+  "schema": "EvaInstalledComponentHostBinding/v1",
+  "recordedAt": "2026-10-07T11:00:25.907935+00:00",
+  "task": "L3.6",
+  "previousFailure": "publisher.installed was incorrectly encoded as a path string; constructor requires an artifact object",
+  "correction": "Existing publisher configuration restored to path/sha256 object; preflight constructor succeeded; only existing host service restarted",
+  "service": {
+    "MainPID": "3229014",
+    "ExecMainStatus": "0",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "publisherInstalledArtifact": {
+    "pathName": "loss-completion-compose.private.json",
+    "sha256": "c8f8b9470e759f344605eb677a1298c4597afb80dd7b5fc79067d104add5df69",
+    "hashVerified": true
+  },
+  "healthFromInstalledContainers": {
+    "eva2-managed-b-slot3-core": {
+      "exit": 0,
+      "response": "200\n{\"status\":\"ready\"}",
+      "error_type": null
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "exit": 0,
+      "response": "200\n{\"status\":\"ready\"}",
+      "error_type": null
+    }
+  },
+  "modelCalls": 0,
+  "runtimeImagesRebuilt": false,
+  "candidateApplied": false,
+  "l36Complete": false,
+  "dreamModeDelivered": false
+}
