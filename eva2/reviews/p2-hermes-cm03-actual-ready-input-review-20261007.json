@@ -1,0 +1,92 @@
+{
+  "contract": "P2HermesOriginalActualReadyInputIndependentReview/v1",
+  "task": "P2.1",
+  "reviewer": "/root/aide_final_evaluation",
+  "entry": "hermes:EV003-CM-03:epoch1",
+  "decision": "GO_ONE_ORIGINAL_INPUT_RELEASE_AFTER_METADATA_FINALIZATION",
+  "blockingFindings": [],
+  "execSession": 34615,
+  "restartOrSecondReservationAdmitted": false,
+  "reviewedFinalDraft": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/final-input-admission-draft.private.json",
+    "sha256": "cde9e1f33e9e1d489416a22783024281ae7e661495daab40ff10d7528aa7b59a"
+  },
+  "reviewedReleaseDraft": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/input-release-draft.private.json",
+    "sha256": "58209d088de8dab3782e45193f0143270f72f59122dbbf73cbc47793ee03a09a"
+  },
+  "resourcePreparationAdmissionSha256": "f51d090190f530fa20e668c2956516b1a61ef9c373baa7d02c3915e1bb33f758",
+  "actualReady": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+    "sha256": "5846132f057fa7f2f80879beba6b4cd75d4d5e988ed4188cda754083d020f987",
+    "providerAttempts": 0,
+    "inputReleased": false,
+    "nativeContexts": 0,
+    "sampleDeadlineCreated": false,
+    "controllerErrors": [],
+    "externalNetworkEvents": [],
+    "nativeUid": 1000,
+    "nativeCannotReadAuthority": true
+  },
+  "authority": {
+    "beforeSha256": "277b45f6b42963af86471f60661d54363103646fa455bd0ecdfae0f08484a767",
+    "afterOneReservationSha256": "f886f16433cd2d71af203f6f600fd85ce0ae90c09582a5a4378285751bf7e5ab",
+    "rows": 11,
+    "selectedRevision": 0,
+    "selectedAttempts": 0,
+    "prior9RawValueHashesAndRevisionsEqual": true,
+    "prior9SnapshotSha256": "0681ebb951d94b240500da4a917ac87bd7cf9c0407248cc3c0242339e8cabe82",
+    "closedCm02ExactRowValueMatchesRetainedTerminalParentAndFrozenIdentity": true,
+    "closedCm02Revision": 15,
+    "closedCm02ParentSha256": "524597c62900f9c7468482c6d16c626ffb9e8c8a82e12778f1ca5d68a1619e9b",
+    "all10PriorRowsPreserved": true,
+    "historicalUnknownsPreserved": true,
+    "noResetOrQuotaDonation": true
+  },
+  "binding": {
+    "preparationReviewSha256": "7f9f0d74ecbc4b68ee018d96878f8d77b45d1480f82467d3c9f8f27ee83e3103",
+    "caseSha256": "6fe1d9826e4ce8482f4aea7935012af42c8feab107ed40087a339c28622182d7",
+    "projectionSha256": "d58873abcdaea9ad2eb01075dcb4c1a1ad40478772af491b95581efffd2420d2",
+    "projectionEqualitySha256": "0840346f58337bf369e0b1791dbd16fae104f786c63a0c1a5df79f8201d4362a",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "sourceSha256": {
+      "launcher_sha256": "ad3c931a3eac61a7d189a213936663adfe1e26d9ce8ab3d3bbac44a326ba7ee9",
+      "probe_sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+      "inspect_wrapper_sha256": "94652242456a44528742df3e36a53ebe38f008d0d3633bb3e8449ac1e5d2366f"
+    },
+    "exactThreeReleasePinsMatch": true,
+    "all52PreparationFilePinsUnchanged": true,
+    "originalStructureAndOrderPreserved": true,
+    "nativeOwnedAuthHashUnchanged": true,
+    "nativeAuthFreshnessReceiptSha256": "529253a3c3a4e494a9967eedb379a33395d469a9c300b343145fa2651a666eca"
+  },
+  "unchangedExecutionLimits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "toolDispatches": 16,
+    "wallSeconds": 480,
+    "speechRequests": 0,
+    "externalActions": 0
+  },
+  "finalizationAllowed": "Finalize only admitted/readiness/review status and review provenance in the reviewed final draft; bind that final hash into the reviewed release and create execute-once using O_EXCL for this same waiting parent. No source, input, criteria, limits, authority identity, reservation or process replacement.",
+  "retainedObligations": [
+    "Shared absolute deadline starts before child launch; all turns/helpers/tools use one unchanged ledger.",
+    "Stop, stream/native background settlement and exact context/durable readbacks remain required; postexecution evidence decides outcomes.",
+    "Original scorer and two real independent human ratings remain separate; no pass inferred from readiness."
+  ],
+  "publicReadyEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-cm03-actual-ready-20261007.json",
+    "sha256": "873892e1cbfe3e399f8608706fb129454fe18b2fd5cbffd5d73bf8c9991f740e"
+  },
+  "humanRatings": [
+    null,
+    null
+  ],
+  "quality": "UNKNOWN",
+  "reviewerTests": 0,
+  "reviewerModelCalls": 0,
+  "reviewerReservations": 0,
+  "reviewerRuntimeStarts": 0
+}

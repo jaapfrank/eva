@@ -1,3 +1,13 @@
+## 7 oktober — P2.1: Hermes-vergeetfout onafhankelijk vastgesteld
+
+Eén oorspronkelijke CM03 is uitgevoerd: drie berichten, een nieuwe sessie een dag later. **Vergeten faalt:** de gevraagde inhoud blijft in actief geheugen en de laatste aangeboden modelcontext. Eén van twee verplichte geheugencontroles slaagt; de drie responsepredicaten bewijzen geen correcte opslagclaim. Het laatste antwoord onthult de inhoud niet. Er is geen afzonderlijke harde safety-failure uit retentie alleen afgeleid. [Resultaat](evidence/product/p2-hermes-original-cm03-result-20261007.json) · [Onafhankelijke review](reviews/p2-hermes-original-cm03-result-review-20261007.json).
+
+Eva1 en Eva2 onthullen in dezelfde oorspronkelijke case niets in hun laatste antwoord; Eva1’s laatste geheugenopname is leeg. Volledige latere context- en audit-uitsluiting ontbreekt in hun oorspronkelijke bewijs. Hun ruwe scores blijven onbekend en ongewijzigd: **geen volledige matched geheugenwinst of algemene kwaliteitswinnaar**. De menselijke beoordeling blijft afzonderlijk open.
+
+Gemeten Hermes-verbruik: **7 modelpogingen, 17.467 invoer- en 252 uitvoertokens, 2 geheugenhandelingen, 24,637 seconden**. Alle 7 exacte modelcontexten, opgeslagen antwoorden, toolmetingen en native/parent-afsluiting zijn gecontroleerd. Bron, modellen, criteria en eerdere gevallen zijn behouden; geen nieuwe code, testherhaling, runtimeherstart of spraakwerk. De oorspronkelijke registratie bevat 59 pogingen; 213.659 invoer- en 6.879 uitvoertokens als ondergrens, 3 oude onbekende SDK-metingen behouden. Creditkosten blijven onbekend.
+
+**34/44 blijft gelijk.** Het dashboard toont de negatieve vergeetuitkomst, de beperkte baselines en het werkelijke resterende werk. Geen modelproef of uitvoerder actief; een volgende oorspronkelijke proef is nog niet toegelaten. De vorige beurt leverde CM02 op GitHub op (commit4d6f9172); deze beurt leverde nieuwe onafhankelijke beslisinformatie binnen P2.1.
+
 ## 7 oktober — P2.1: Hermes-CM02 uitgevoerd en onafhankelijk beoordeeld
 
 Beide eigen aanmeldingen zijn bevestigd. Eén oorspronkelijke Hermes-geheugenproef is afgerond: **3 berichten over 2 gesprekken, 7 modelpogingen, 17.519 invoer- en 345 uitvoertokens**. Het native interval duurde 26,037 seconden. Alle 7 modelcontexten en 2 geheugenhandelingen zijn bewaard; uitvoering, afsluiting en kalenderherstel zijn bevestigd. Geen herhaling, gewijzigde criteria of spraakwerk.
@@ -5,6 +15,8 @@ Beide eigen aanmeldingen zijn bevestigd. Eén oorspronkelijke Hermes-geheugenpro
 Onafhankelijk zijn **3/3 feitelijke antwoordvoorwaarden en 2/2 geheugencontroles ondersteund**. Eva1 en Eva2 ondersteunen in dezelfde oorspronkelijke case ook 2/2 geheugencontroles. Officiële kwaliteit blijft onbekend: twee echte onafhankelijke menselijke beoordelingen ontbreken. Verschillende meetgrenzen en onbekende antwoordkwaliteit verhinderen een algemene snelheid- of efficiëntiewinnaar; creditkosten zijn onbekend. [Resultaat](evidence/product/p2-hermes-original-cm02-result-20261007.json) · [Review](reviews/p2-hermes-original-cm02-result-review-20261007.json).
 
 De bestaande contextregistratie is gericht aangevuld en 20 gerelateerde IPC/SDK-controles slagen. Eén metadatahashmap is vóór invoer gecorrigeerd zonder herstart. De oorspronkelijke verbruiksregistratie bevat nu 52 pogingen: 196.192 invoer- en 6.627 uitvoertokens als ondergrens; het SDK-verbruik van 3 historische pogingen blijft onbekend. **34/44 blijft gelijk**; dit is een vergelijkingsresultaat, geen nieuwe Eva-productfunctie. Oude CM01- en OpenClaw-beperkingen blijven behouden. Het dashboard toont deze uitslag; bron en rapporten worden samen gepubliceerd. Geen modelproef of uitvoerder actief; resterende vergelijking is nog niet gestart.
+
+**Vervolg nu:** één oorspronkelijke Hermes CM03 wordt voorbereid met dezelfde uitvoerder en criteria: drie berichten, nieuwe sessie een dag later. De evaluator bewaart de oorspronkelijke invoer afzonderlijk; geen modelproef gestart, herhaling of nieuwe matrix. De vorige beurt was concrete voortgang: Hermes CM02 en het dashboard staan op GitHub in commit4d6f9172.
 
 ## 7 oktober — onafhankelijke beoordeling van de bewaarde Hermes-uitkomst
 

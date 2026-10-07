@@ -1,0 +1,33 @@
+{
+  "contract": "P2HermesOriginalCm03InputAdmission/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T23:57:13.238309+00:00",
+  "entry": "hermes:EV003-CM-03:epoch1",
+  "execSession": 34615,
+  "decision": "GO_ONE_ORIGINAL_CM03_INPUT_RELEASE",
+  "review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm03-actual-ready-input-review-20261007.json",
+    "sha256": "3a26ace1583259bfe3e544e410bed41dad916c21002c02e803d54d1744c86664",
+    "reviewer": "/root/aide_final_evaluation",
+    "reviewed_draft_sha256": "cde9e1f33e9e1d489416a22783024281ae7e661495daab40ff10d7528aa7b59a",
+    "scope": "Exactly one original unused Hermes CM03/epoch1 on exec34615; same source/models/provider/rules/limits."
+  },
+  "finalAdmissionPath": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/final-input-admission.private.json",
+  "finalAdmissionSha256": "347c97249e296469d6a0f16f218cebae668017b920eedf7858c27e6a847136fe",
+  "releaseSha256": "b7fa644756dbc6146cb39b7d05fe07f30a82fbc6d522d41daf088eb6da1fe96b",
+  "actualReadySha256": "5846132f057fa7f2f80879beba6b4cd75d4d5e988ed4188cda754083d020f987",
+  "originalPlanSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "originalDatasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "originalCaseSha256": "6fe1d9826e4ce8482f4aea7935012af42c8feab107ed40087a339c28622182d7",
+  "sourceSha256": {
+    "launcher_sha256": "ad3c931a3eac61a7d189a213936663adfe1e26d9ce8ab3d3bbac44a326ba7ee9",
+    "probe_sha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+    "inspect_wrapper_sha256": "94652242456a44528742df3e36a53ebe38f008d0d3633bb3e8449ac1e5d2366f"
+  },
+  "sameRetainedProcess": true,
+  "historicalRowsPreserved": 10,
+  "criteriaModelsLimitsChanged": false,
+  "quality": "UNKNOWN",
+  "newProductFunction": false,
+  "creditCost": null
+}

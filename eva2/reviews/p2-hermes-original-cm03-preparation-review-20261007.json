@@ -1,0 +1,152 @@
+{
+  "contract": "P2HermesOriginalPreparationIndependentReview/v1",
+  "task": "P2.1",
+  "reviewer": "/root/aide_final_evaluation",
+  "entry": "hermes:EV003-CM-03:epoch1",
+  "decision": "GO_RESOURCE_PREPARATION_ONLY",
+  "resourcePreparationAdmissible": true,
+  "originalInputAdmitted": false,
+  "reviewedPreparation": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm03-preparation-20261007.json",
+    "sha256": "63bb8e4cf9a543c02cefc13dcf3a727349d7e3926903e038d326542c14c56d98"
+  },
+  "reviewedDraft": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/parent-cm03-preparation-draft.private.json",
+    "sha256": "9bbd66cc99ee3d528abd9225861a2e5b4701d8d10ba66a11e8cfe7626ec3188b"
+  },
+  "bindings": {
+    "cm03-epoch1.native-inputs.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/cm03-epoch1.native-inputs.private.json",
+      "sha256": "d58873abcdaea9ad2eb01075dcb4c1a1ad40478772af491b95581efffd2420d2"
+    },
+    "projection-equality-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/projection-equality-technical.private.json",
+      "sha256": "0840346f58337bf369e0b1791dbd16fae104f786c63a0c1a5df79f8201d4362a"
+    },
+    "launch-parent-accounted-cm03.private.py": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/launch-parent-accounted-cm03.private.py",
+      "sha256": "ad3c931a3eac61a7d189a213936663adfe1e26d9ce8ab3d3bbac44a326ba7ee9"
+    },
+    "inspect-run-parent-accounted-cm03.private.py": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/inspect-run-parent-accounted-cm03.private.py",
+      "sha256": "94652242456a44528742df3e36a53ebe38f008d0d3633bb3e8449ac1e5d2366f"
+    },
+    "bound-no-input-contract.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/bound-no-input-contract.private.json",
+      "sha256": "9285f4799a1c0236c0fca6f06971245bc703a358381f16253a5fc933baf9561f"
+    },
+    "native-owned-auth-freshness-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/native-owned-auth-freshness-technical.private.json",
+      "sha256": "529253a3c3a4e494a9967eedb379a33395d469a9c300b343145fa2651a666eca"
+    },
+    "launcher-no-input-check-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/launcher-no-input-check-technical.private.json",
+      "sha256": "9d9e1a6bc2c3845b7459ed887eb655a4de835a51fe9836d92a0ed913aeba14bd"
+    }
+  },
+  "nativeAdapterSha256": "4792738899f2e29ce38c41eb1be2ebfaa7ca90ad39bf33c84f67232b254a7f96",
+  "caseSha256": "6fe1d9826e4ce8482f4aea7935012af42c8feab107ed40087a339c28622182d7",
+  "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "models": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "ordering": {
+    "rule": "epoch, family, case, participant; available original slots only",
+    "nextExecutableOriginalPreparation": "hermes:EV003-CM-03:epoch1",
+    "eva1Eva2SameCaseClosed": true,
+    "openclawEarlierSlot": "UNKNOWN: original controlled-clock binding NO_GO; no original input",
+    "agentZeroEarlierSlots": "UNKNOWN: participant-specific unresolved historical usage blocks admission",
+    "laterWorkOrInitiativePrioritized": false
+  },
+  "findings": {
+    "blocking": [],
+    "nativeShapeCompatible": {
+      "userTurns": 3,
+      "setupTurns": 0,
+      "actorIndices": [
+        0,
+        0,
+        0
+      ],
+      "sessionIndices": [
+        0,
+        0,
+        1
+      ],
+      "clockGenerations": [
+        0,
+        0,
+        1
+      ],
+      "offsetMilliseconds": [
+        0,
+        0,
+        86400000
+      ],
+      "audience": "private",
+      "services": 0,
+      "browser": false,
+      "audio": false
+    },
+    "originalValuesPreserved": true,
+    "sourceDelta": "CM02 template case/resource/profile identifiers plus explicit immutable closed-CM02 receipt guard; native source, parent budget/stop, tool accounting, context retention and evaluator unchanged.",
+    "filePins": {
+      "total": 52,
+      "independentlyHashedWithoutCredentialRead": 51,
+      "mismatches": 0,
+      "ownedAuthPinReusedFromNativeFreshnessReceipt": true
+    },
+    "freshProfileEntries": [
+      "SOUL.md",
+      "config.yaml"
+    ],
+    "memoryOrSessionOrAuthCopied": false,
+    "authority": {
+      "sha256": "277b45f6b42963af86471f60661d54363103646fa455bd0ecdfae0f08484a767",
+      "rows": 10,
+      "selectedEntryUnused": true,
+      "existingHermesEntries": 2,
+      "existingHermesUnresolvedUsage": false,
+      "noResetOrHistoricalReplacement": true
+    },
+    "closedReceipts": {
+      "CM01": "8e99c58ab663a49aaaea8c109362ebe9278c3925c2eca37d6aac6eaac98ed954",
+      "CM02": "bd22e525b3624ba9a17674e188b003218477a9d9af91dac3f9a9d7a5f13b88bc"
+    }
+  },
+  "requiredRetainedEvidence": [
+    "Per-turn independent durable native response and memory snapshots.",
+    "Exact outbound request bytes with turn/session/calendar binding and no headers.",
+    "Actual native tool entries plus all foreground/helper/stream/queue accounting and settlement before clock or session transition.",
+    "Absolute cumulative 480-second deadline, actual parent close acknowledgement and native/resource closure."
+  ],
+  "nextGate": "Finalize resource-preparation flag and review provenance only. Existing Inspect wrapper may prepare this unused slot; review actual-ready receipt, unchanged historical authority rows and final input/release binding before one original input release. No automatic release or retry.",
+  "quality": "UNKNOWN",
+  "humanRatings": [
+    null,
+    null
+  ],
+  "newTests": 0,
+  "newNativeCalls": 0,
+  "newProviderCalls": 0,
+  "newAuthorityReservationsByReviewer": 0,
+  "remaining": "Original execution/result observation and the unchanged fixed evaluator requirements; no technical readiness or wrapper success is a task-quality score.",
+  "preparationDiagnosticsPreserved": "Two curator metadata assumptions failed before any write (technical run ID vs entry key; private audience tag). Original values were not modified; details retained in equality receipt."
+}

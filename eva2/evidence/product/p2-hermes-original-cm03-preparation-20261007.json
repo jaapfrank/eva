@@ -1,0 +1,93 @@
+{
+  "contract": "P2HermesOriginalCm03Preparation/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-06T23:53:01.796039+00:00",
+  "entry": "hermes:EV003-CM-03:epoch1",
+  "status": "preparation_review_pending",
+  "case_sha256": "6fe1d9826e4ce8482f4aea7935012af42c8feab107ed40087a339c28622182d7",
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "sourceUnchanged": true,
+  "existingChecksReused": 20,
+  "newTests": 0,
+  "nativeCalls": 0,
+  "authorityReservations": 0,
+  "profile": "Fresh native profile with only original byte-equal config/SOUL; no memory/session/auth copy.",
+  "structure": {
+    "turns": 3,
+    "setup": 0,
+    "actors": 1,
+    "sessions": [
+      0,
+      0,
+      1
+    ],
+    "clockGenerations": [
+      0,
+      0,
+      1
+    ],
+    "offsetsMilliseconds": [
+      0,
+      0,
+      86400000
+    ]
+  },
+  "preparationFiles": {
+    "cm03-epoch1.native-inputs.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/cm03-epoch1.native-inputs.private.json",
+      "sha256": "d58873abcdaea9ad2eb01075dcb4c1a1ad40478772af491b95581efffd2420d2"
+    },
+    "projection-equality-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/projection-equality-technical.private.json",
+      "sha256": "0840346f58337bf369e0b1791dbd16fae104f786c63a0c1a5df79f8201d4362a"
+    },
+    "launch-parent-accounted-cm03.private.py": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/launch-parent-accounted-cm03.private.py",
+      "sha256": "ad3c931a3eac61a7d189a213936663adfe1e26d9ce8ab3d3bbac44a326ba7ee9"
+    },
+    "inspect-run-parent-accounted-cm03.private.py": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/inspect-run-parent-accounted-cm03.private.py",
+      "sha256": "94652242456a44528742df3e36a53ebe38f008d0d3633bb3e8449ac1e5d2366f"
+    },
+    "parent-cm03-preparation-draft.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/parent-cm03-preparation-draft.private.json",
+      "sha256": "9bbd66cc99ee3d528abd9225861a2e5b4701d8d10ba66a11e8cfe7626ec3188b"
+    },
+    "bound-no-input-contract.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/bound-no-input-contract.private.json",
+      "sha256": "9285f4799a1c0236c0fca6f06971245bc703a358381f16253a5fc933baf9561f"
+    },
+    "native-owned-auth-freshness-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/native-owned-auth-freshness-technical.private.json",
+      "sha256": "529253a3c3a4e494a9967eedb379a33395d469a9c300b343145fa2651a666eca"
+    },
+    "launcher-no-input-check-technical.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm03-preparation-20261007-v1/launcher-no-input-check-technical.private.json",
+      "sha256": "9d9e1a6bc2c3845b7459ed887eb655a4de835a51fe9836d92a0ed913aeba14bd"
+    }
+  },
+  "limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "models": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "authoritySha256Before": "277b45f6b42963af86471f60661d54363103646fa455bd0ecdfae0f08484a767",
+  "quality": "UNKNOWN",
+  "newProductFunction": false,
+  "credits": null
+}
