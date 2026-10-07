@@ -139,6 +139,29 @@ def prepare_component_release(draft, report):
             "installation through the existing managed release process"],
         "guidance": "Bewaar dit exacte pakket met de documenttool. Verwachte winst is geen meting; "
             "een nul-exitcode is geen installatiebesluit. Noem de resterende beoordeling expliciet."}
+    if "draft_step" in draft:
+        payload["draft_step"] = draft["draft_step"]
     if "candidate_lineage" in draft:
         payload["candidate_lineage"] = draft["candidate_lineage"]
+    return {**payload, "candidate_package_sha256": canonical_sha256(payload)}
+
+
+def bind_selected_release(package, selection):
+    """Freeze the exact measured winner; selection is not final approval."""
+    from eva.contracts.canonical_json import canonical_sha256
+    if (selection.get("contract") != "EvaComponentDevelopmentSelection/v1"
+            or selection.get("state") != "candidate_selected"
+            or selection.get("installed") is not False
+            or selection.get("semantic_improvement_verified") is not False
+            or selection.get("path") != package.get("path")
+            or selection.get("baseline_sha256") != package.get("baseline_sha256")
+            or selection.get("selected_candidate_sha256") != package.get("candidate_sha256")
+            or selection.get("selected_draft_step") != package.get("draft_step")
+            or selection.get("selected_evaluation_step") != package["evaluation"].get("evaluation_step")
+            or selection.get("assessment_sha256") !=
+                package["evaluation"].get("development_assessment", {}).get("assessment_sha256")):
+        raise ValueError("release differs from selected development winner")
+    payload = {key: value for key, value in package.items() if key != "candidate_package_sha256"}
+    payload["development_selection"] = selection
+    payload["development_selection_sha256"] = canonical_sha256(selection)
     return {**payload, "candidate_package_sha256": canonical_sha256(payload)}

@@ -23,6 +23,7 @@ class ComponentEvaluationClient:
     timeout_seconds: int = 120
     reviewed_releases: tuple[tuple[str, str], ...] = ()
     suite_bindings: tuple[tuple[str, str], ...] = ()
+    final_assessment_scopes: tuple[tuple[str, str], ...] = ()
 
     def _post(self, endpoint, payload, *, limit=160000):
         token = Path(self.token_file).read_text().strip()
@@ -40,9 +41,23 @@ class ComponentEvaluationClient:
             raise ValueError("component host response must be an object")
         return value
 
-    def application(self, action, *, review_id, request_id, task_id):
+    def assess(self, package, *, request_id, task_id, scope_sha256):
+        if dict(self.final_assessment_scopes).get(package["path"]) != scope_sha256:
+            raise ValueError("no independent final assessment for this source")
+        result = self._post("/component-assessment", {"action": "request", "package": package,
+            "request_id": request_id, "task_id": task_id, "scope_sha256": scope_sha256})
+        if (result.get("review_id") != package["candidate_package_sha256"]
+                or result.get("request_id") != request_id or result.get("task_id") != task_id
+                or result.get("independent_final") is not True or result.get("installed") is not False):
+            raise ValueError("independent handoff binding differs")
+        return result
+
+    def application(self, action, *, review_id, request_id, task_id, scope_sha256=None):
         if review_id not in dict(self.reviewed_releases):
-            raise ValueError("component review is not configured")
+            if action != "status" or scope_sha256 not in dict(self.final_assessment_scopes).values():
+                raise ValueError("component review is not configured")
+            return self._post("/component-assessment", {"action": "status",
+                "review_id": review_id, "scope_sha256": scope_sha256}, limit=16384)
         return self._post("/reviewed-component", {"action": action, "review_id": review_id,
             "request_id": request_id, "task_id": task_id}, limit=16384)
 
@@ -75,7 +90,7 @@ def configured_component_evaluator():
         return None
     data = json.loads(Path(config_path).read_text())
     required = {"url", "token_file", "allowed_paths", "suite_sha256", "timeout_seconds"}
-    if not required <= set(data) or set(data) - required - {"reviewed_releases", "suite_bindings"}:
+    if not required <= set(data) or set(data) - required - {"reviewed_releases", "suite_bindings", "final_assessment_scopes"}:
         raise ValueError("component evaluator configuration fields differ")
     url = urlsplit(data["url"])
     if (url.scheme not in {"http", "https"} or not url.hostname or url.username or url.password
@@ -96,6 +111,12 @@ def configured_component_evaluator():
             or any(not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value)
                    for value in suites.values())):
         raise ValueError("invalid component development suite bindings")
+    final = data.get("final_assessment_scopes", {})
+    if (not isinstance(final, dict) or set(final) - set(data["allowed_paths"])
+            or any(not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value)
+                   for value in final.values())):
+        raise ValueError("invalid independent final assessment scopes")
     return ComponentEvaluationClient(**{**data, "allowed_paths": tuple(data["allowed_paths"]),
                                         "reviewed_releases": tuple(sorted(reviews.items())),
-                                        "suite_bindings": tuple(sorted(suites.items()))})
+                                        "suite_bindings": tuple(sorted(suites.items())),
+                                        "final_assessment_scopes": tuple(sorted(final.items()))})

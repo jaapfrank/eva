@@ -1,0 +1,105 @@
+{
+  "contract": "EvaL3ContextFinalPreregistration/v1",
+  "task_id": "L3.6",
+  "state": "preregistered_before_candidate_no_execution",
+  "baseline_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "candidate_sha256": null,
+  "new_application_not_reopening_closed_trials": true,
+  "criteria_unchanged_from": {
+    "path": "eva2/experiments/aide-20260929/criteria.json",
+    "sha256": "ca0e25657bb71e12f0bd1ff8dee64e7c85a343050d8a8f28f679ca76d84dc93e"
+  },
+  "private_registration": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/registration.private.json",
+    "sha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44"
+  },
+  "host_config": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/host-config.private.json",
+    "sha256": "685cb1189105739e574c010941bf8e81a89829c74ebd3e1cf80d0b8746bd743a"
+  },
+  "evaluation": {
+    "image": "sha256:57d7bd50104eff33584a9b6157b6449bc12460168b8eb8ba418152cee4a4b21c",
+    "command": [
+      "/usr/local/bin/python",
+      "-B",
+      "/private-final/suite_runner.py"
+    ],
+    "deadline_seconds": 60,
+    "output_bytes": 65536,
+    "memory_mb": 256,
+    "cpus": 1.0,
+    "pids": 64
+  },
+  "scorer": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/trusted_scorer.py",
+    "sha256": "cad5c8c475b8617ad592e8a3c88b8e9a4f697efc0f4112b16375747d780d6dd5",
+    "function": "assess(report, *, candidate_source, answer_evidence=None)"
+  },
+  "frozen_payload_sha256": {
+    "criteria": "4d83baddcfd41bf71b44872da7bc0c2dccae23f07cc68cc6401620be53fa13ca",
+    "dataset": "85a73a4555487724b9236f377da310a1001cb1e958314d5da347220bf3c270f8",
+    "baseline": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+    "inputs": "95bdd17037eb07ca021dbad17c11b7114ea398879d50ebf98fe649d94516bb37",
+    "runner": "6a542d85c0e5ddafc420fce6533826e30b7be6c5e5d61dd1fef8e82d9a722da1",
+    "invocation": "7d9aac11afc7bae3ce94f8960a8ff9ef44eb695d2594786e794fc2d83eae5244",
+    "criterion_checks": "3c468880cccc22cba4ba2e555b8c4fb49e4e9a94fc408ec918d731edf6944785",
+    "scorer": "cad5c8c475b8617ad592e8a3c88b8e9a4f697efc0f4112b16375747d780d6dd5",
+    "provider_driver": "93d50f9239927ca8b2bb1963aba2499ee69d99a8478627a6ad929bfd7ccc707e",
+    "dockerfile": "38af64e2e3d7acd2ab71da43b145b110a7483b9461e26ed3216920cd3e2fd802"
+  },
+  "case_count": 16,
+  "question_count": 16,
+  "original_hard_conditions_preserved": true,
+  "model_answer_quality": null,
+  "promotion_decision": null,
+  "answer_stage": {
+    "execution_admitted": false,
+    "maximumCalls": 24,
+    "questions": 4,
+    "repetitions": 3,
+    "model": "gpt-6-sol",
+    "reasoning": "none",
+    "automaticRetries": 0,
+    "tools": 0,
+    "maximumSecondsPerCall": 30,
+    "separate_preregistered_admission_required": true,
+    "historical_usage_preserved": true,
+    "credits": null
+  },
+  "separation": {
+    "candidate_image_contains": [
+      "input_only_cases",
+      "unchanged_single_input_invocation",
+      "suite_runner"
+    ],
+    "oracle_in_image": false,
+    "scorer_in_image": false,
+    "raw_final_stdout_to_builder": false,
+    "expected_answers_to_candidate": false,
+    "final_feedback_to_optimizer": false,
+    "personal_data": false
+  },
+  "structural_validation": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/structural-validation.json",
+    "sha256": "1aef97f218dee8713ce503158a663f54ee8f2ef060a408df0afc2229ea768ef9"
+  },
+  "local_preparation_failures_preserved": 3,
+  "model_calls": 0,
+  "candidate_runs": 0,
+  "baseline_runs": 0,
+  "installed": false,
+  "limitations": [
+    "No candidate or quality result exists; image build and syntax/schema checks are not an assessment pass",
+    "Deterministic reference inclusion/context bytes never prove model answer quality, token saving or latency",
+    "Final feedback may not guide a candidate revision; contaminated final cases require fresh registration under original research rule",
+    "Historical Oct3 and R1 results/allowances remain closed and unchanged"
+  ],
+  "pre_candidate_scorer_correction": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/preregistration-correction.json",
+    "sha256": "7c06c8afc4e9d9bd633383ed87860a4a45d473de80979f243884cc2a43864319"
+  },
+  "answer_stage_interface": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/answer-stage-interface.private.json",
+    "sha256": "b1faa40a181a42d2c0ef6ca48aaa5b92e521e9136f6ca33869d92cda1ded8a20"
+  }
+}

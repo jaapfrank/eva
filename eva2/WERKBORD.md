@@ -1,5 +1,12 @@
 ## 7 oktober — L3.5 geïnstalleerd; verder bij L3.6
 
+## Actueel 7 oktober — L3.6: gekozen winnaar naar onafhankelijke beoordeling
+
+De overdracht is gebouwd en op de te installeren bron gecontroleerd (68 gerichte checks). De bestaande bronimport, core-/worker-imagebouw en beheerde toepassing worden hergebruikt. Installatie van deze aansluiting volgt; daarna moet een echte door Eva gemaakte kandidaat de afzonderlijke eindbeoordeling doorlopen. L3.6 blijft in uitvoering. Een technische fixture, broncheckpoint of pakket is geen slimmere Eva en geen extra afgeronde huisgenootuitkomst.
+
+Uitbreidingen, apps en add-ons vallen eveneens onder de verbetercyclus. De eerste componentaansluiting bewijst hun volledige uitvoering nog niet. Droommodus volgt bestaande initiatief/reflectie bij rust en aantoonbare capaciteit; dat is nog niet geïmplementeerd.
+
+
 Eva heeft nu de algemene ontwikkelkeuze: meerdere bewaarde kandidaten met dezelfde
 vaste hostcriteria vergelijken, kwaliteit vóór verbruik kiezen en binnen dezelfde
 taak de gekozen kandidaat vervolgen. Kern, achtergrondwerker en bestaande host

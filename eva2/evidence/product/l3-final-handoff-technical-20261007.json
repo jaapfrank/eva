@@ -1,0 +1,95 @@
+{
+  "contract": "EvaL3FinalHandoffTechnicalEvidence/v1",
+  "task": "L3.6",
+  "checkedAt": "2026-10-07T10:22:20.727928+00:00",
+  "state": "source_and_candidate_images_verified_not_installed",
+  "baseCommit": "cc65fc93ea4f9bbf1eae30d52495ba0086aef5aa",
+  "concreteGap": "Selected development package was not handed to separate final assessment and managed publication; old host accepted only static reviewed/prebuilt releases.",
+  "reused": [
+    "isolated ComponentEvaluator",
+    "separate host scorer",
+    "exact component importer",
+    "existing core/worker overlay format",
+    "ReviewedComponentApplications",
+    "image-only update_runtime",
+    "existing PREPARE and application-status tools"
+  ],
+  "sourceHashes": {
+    "application/component_improvements.py": "407f88b3bffb004651e2ae0284c5228316803c2a57803f3d98cb4341b5f04c6e",
+    "adapters/postgres/component_improvement_actions.py": "a85e362e586816d33dff73ea03b80ded0c06e8d6c61a9090714b565978f29868",
+    "adapters/connectors/component_evaluation.py": "f6011fe2e95b59e942c54bc4c23698f7e4b597537dea406e9abf27ccd0a6b8ea",
+    "operations/component_final_assessment.py": "7003bdbc32f4382a46433b9aa93af1dc4d6b6b61038da2b45f6be66fd515c3d8",
+    "operations/component_release_publisher.py": "0d6f2ba22c58150078ef26adb209830a1b71c08034d943234b6a1d8c7af504aa",
+    "operations/component_evaluation_service.py": "15700f7d5aceb5e69e7a498e21d709a64a53be8d16f57d119bee7bc0f9ab452a",
+    "operations/reviewed_component_application.py": "51205d7373984da2829a7083b9178f5cfa8008a7abf4618644e4555eddf4ac07"
+  },
+  "candidateImages": {
+    "core": "sha256:be913510da1fa79b26f3d0e7655c7df3c4cf0472dc739d430a676106f56b07e0",
+    "delegated-work-worker": "sha256:b691d464c68359d24bc40b8719a4fa0c99ea65409d0c4d8c5d636ac4792f50bf"
+  },
+  "packagedSourceHashesVerified": true,
+  "focusedChecks": {
+    "passed": 68,
+    "elapsedSeconds": 11.89,
+    "actualChangedImageSourceFirst": true,
+    "disposablePostgresCases": 4,
+    "unchangedHostOnlyTestShim": "eva.operations.component_application_runtime",
+    "shimSha256": "fa33406d5fe4c702d1aa94531569361b99a40b79586435ca837ca9cb5c876871"
+  },
+  "technicalPublisherFixture": {
+    "all_existing_import_build_application_bindings_valid": true,
+    "before_images": "sha256:7d5cec68cceb98e159bfdb65b6d5d7ed0af3022b376e87503e670323806ff83c",
+    "candidate_images": {
+      "core": "sha256:174c19abff4ee3f9fe6611def67e4f65af7ab3691ee630ac9ae0a7f3b3526a49",
+      "delegated-work-worker": "sha256:7b8e365707e241bb8f5954b692bdb1bda70fe2b21328afd23753a5e9513724b1"
+    },
+    "candidate_source_hash": "10b3320a710d12568cbffc584a164ab9c0f370b63399608db7ca0881c790e72e",
+    "contract": "EvaL3PublicationTechnicalFixture/v1",
+    "elapsed_seconds": 5.243,
+    "installed": false,
+    "limitations": [
+      "Synthetic trusted approval exercises packaging only, not actual independent approval or smarter Eva."
+    ],
+    "model_calls": 0,
+    "runtime_application_requested": false
+  },
+  "privateReceipts": {
+    "actual-image-focused-tests-host-shim.private.log": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/actual-image-focused-tests-host-shim.private.log",
+      "sha256": "196e7c0dbde5f2636bbb833bece9f024752252254e109e2b659335df5ca87cee"
+    },
+    "publisher-fixture-proof.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/publisher-fixture-proof.json",
+      "sha256": "4367a1059734c3268990a33a7951495848255e4b0ebafdd3b7f63ef77250403a"
+    },
+    "assessor-init.private.log": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/assessor-init.private.log",
+      "sha256": "86fd8d42c30cbd8e0097422d368ed32a1b05ef0bb5271bf5942bb611a66d2f8d"
+    }
+  },
+  "independentFinalPreregistration": {
+    "path": "eva2/evidence/product/l3-context-final-preregistration-20261007.json",
+    "sha256": "77c27be273fddeb5c2085aeac1fd62c4bdae06759c6db7fdff049c68ac0b811d"
+  },
+  "reviewCorrections": [
+    "content-free public projection",
+    "publishing status",
+    "receipt reconciliation after finalphase crash",
+    "busy-task wait retains answer phase",
+    "nullable provider schema separate from integer internal validation"
+  ],
+  "retainedPreparationErrors": [
+    "wrong fixture source/migrations priority",
+    "omitted unchanged host-only test shim"
+  ],
+  "runtimeModelCalls": 0,
+  "developmentCreditCost": null,
+  "semanticImprovementVerified": false,
+  "limitations": [
+    "No new Eva-authored candidate evaluated yet",
+    "Original context promotion requires separate real answer-quality/latency evidence",
+    "This handoff supports existing admitted component scope; general apps/addons and quiet/capacity dream cycle are still open",
+    "No full L3.6/L3.7 or main-outcome completion from technical fixtures",
+    "Historical AIDE/R1/P2 evidence unchanged"
+  ]
+}

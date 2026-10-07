@@ -161,6 +161,18 @@ class ReviewedComponentApplications:
         info = self.root.stat()
         if not self.root.is_dir() or info.st_uid != os.geteuid() or stat.S_IMODE(info.st_mode) & 0o077:
             raise ValueError("application receipts require a private host-owned directory")
+        self.registry = self.root / "accepted-releases"
+        self.registry.mkdir(mode=0o700, exist_ok=True)
+        registry_info = self.registry.stat()
+        if self.registry.is_symlink() or registry_info.st_uid != os.geteuid() or registry_info.st_mode & 0o077:
+            raise ValueError("accepted release registry must be private")
+        for stored in self.registry.glob("*.json"):
+            release = load_object(_path(stored))
+            review_id = _identifier(stored.stem)
+            _verify_release(review_id, release)
+            if review_id in self.releases and self.releases[review_id] != release:
+                raise ValueError("registered accepted release changed")
+            self.releases[review_id] = release
         self._lock_file = _path(self.root / ".dispatcher.lock", exists=False).open("a+b")
         try:
             fcntl.flock(self._lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -216,6 +228,19 @@ class ReviewedComponentApplications:
         return {key: job[key] for key in ("request_id", "review_id", "task_id", "state")} | {
             "installed": job["state"] == "completed",
             **({"reason": job["reason"]} if "reason" in job else {})}
+
+    def register(self, review_id, release):
+        """Trusted independent final publisher only; not an HTTP/model operation."""
+        _verify_release(_identifier(review_id), release)
+        with self.condition:
+            if self.closed:
+                raise ValueError("application dispatcher is closed")
+            previous = self.releases.get(review_id)
+            if previous is not None and previous != release:
+                raise ValueError("accepted release registration changed")
+            if previous is None:
+                _save(self.registry / (review_id + ".json"), release, initial=True)
+                self.releases[review_id] = json.loads(json.dumps(release))
 
     def request(self, review_id, request_id, task_id):
         _identifier(review_id)

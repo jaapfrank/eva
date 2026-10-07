@@ -188,3 +188,57 @@ def test_measured_selection_continuation_and_replay_use_same_task_winner(databas
         component("foreign").execute(turn, child_call, step_index=7)
     with pytest.raises(ConversationConflict):
         component().execute(turn, replace(compare_call, arguments={"evaluation_steps": [4, 4]}), step_index=7)
+
+
+def test_selected_release_handoff_is_durable_and_bound_to_actual_task(database, tmp_path):
+    from eva.adapters.postgres.component_improvement_actions import EVALUATE, COMPARE, PREPARE
+    from eva.contracts.canonical_json import canonical_sha256
+    from tests.application.test_component_improvements import arguments
+    from tests.application.test_component_development import entry
+    turn = ConversationTurn.private("component-final-test", "installation", "owner",
+        "conversation", "message", "Improve a component", "2026-09-24T12:00:00Z")
+    PostgresConversationJournal(database, external_timeline_scope(
+        turn.tenant_id, turn.installation_id, "test")).admit(turn)
+    source = "VALUE = 1\n"
+    (tmp_path / "example.py").write_text(source)
+    scope = canonical_sha256({k: getattr(turn,k) for k in ("tenant_id","installation_id","principal_id")})
+    calls = []
+    class Evaluator:
+        final_assessment_scopes = (("example.py",scope),)
+        def evaluate(self, draft):
+            value=entry(2,hits=3)["report"]
+            value.update(relative_path=draft["path"],baseline_sha256=draft["source_sha256"],
+                         candidate_sha256=draft["candidate_sha256"])
+            return value
+        def assess(self, package, **kw):
+            assert kw["task_id"] == "work:component-final"
+            assert kw["scope_sha256"] == scope
+            calls.append((package,kw))
+            return {"review_id":package["candidate_package_sha256"],"state":"queued","installed":False}
+    def component(execution="final"):
+        spec=SimpleNamespace(execution_id=execution,work_id="work:component-final",
+            source=SimpleNamespace(model_dump=lambda **kw: {"message":turn.message_id}))
+        value=ComponentImprovementActions(database,spec,turn,lambda value:None,lambda value:None,lambda:NOW)
+        value.root,value.evaluator=tmp_path,Evaluator()
+        value.action_names=(DRAFT,EVALUATE,COMPARE,PREPARE)
+        return value
+    component().execute(turn,ConversationActionCall("draft",DRAFT,
+        arguments(source,"VALUE = 1","VALUE = 3")),step_index=1)
+    component().execute(turn,ConversationActionCall("eval",EVALUATE,{"draft_step":1}),step_index=2)
+    choice=component().execute(turn,ConversationActionCall("compare",COMPARE,{"evaluation_steps":[2]}),step_index=3)
+    call=ConversationActionCall("release",PREPARE,{"evaluation_step":2,"selection_step":3})
+    result=component().execute(turn,call,step_index=4)
+    assert component().execute(turn,call,step_index=4)==result and len(calls)==1
+    package=result.output["operation_result"]["package"]
+    assert package["development_selection"]==choice.output["operation_result"]
+    assert package["draft_step"]==1
+    assert result.output["operation_result"]["final_assessment_handoff"]["installed"] is False
+    with pytest.raises(ConversationConflict):
+        component("other").execute(turn,call,step_index=5)
+    with pytest.raises(ConversationConflict):
+        component().execute(turn,replace(call,arguments={"evaluation_step":2,"selection_step":2}),step_index=5)
+    # An explicitly unselected legacy package never enters independent assessment.
+    legacy=component().execute(turn,replace(call,call_id="legacy",arguments={
+        "evaluation_step":2,"selection_step":None}),step_index=6)
+    assert legacy.output["operation_result"]["contract"]=="EvaComponentReleaseCandidate/v1"
+    assert len(calls)==1

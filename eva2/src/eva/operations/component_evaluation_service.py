@@ -33,7 +33,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -67,12 +67,13 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None):
         self.evaluator = evaluator
         self.component_suites = component_suites or {}
         self.procedure_executor = procedure_executor
         self.programming_workspaces = programming_workspaces
         self.reviewed_applications = reviewed_applications
+        self.final_assessments = final_assessments
         self.token = token
         self.allowed_paths = allowed_paths
         self.execution_lock = threading.Lock()
@@ -213,7 +214,49 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             return
         self._reply(200, result)
 
+    def _final_component(self):
+        if self.server.final_assessments is None:
+            self._reply(404, {"error": "not_found"})
+            return
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        try:
+            lengths = self.headers.get_all("Content-Length", [])
+            types = self.headers.get_all("Content-Type", [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all("Transfer-Encoding") or len(types) != 1
+                    or types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                raise ValueError()
+            length = int(lengths[0])
+            if not 1 <= length <= 160000:
+                raise ValueError()
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError()
+            value = json.loads(raw, object_pairs_hook=_object)
+            if not isinstance(value, dict):
+                raise ValueError()
+            if value.get("action") == "request" and set(value) == {
+                    "action", "package", "request_id", "task_id", "scope_sha256"}:
+                result = self.server.final_assessments.request(value["package"],
+                    request_id=value["request_id"], task_id=value["task_id"], scope_sha256=value["scope_sha256"])
+            elif value.get("action") == "status" and set(value) == {"action", "review_id", "scope_sha256"}:
+                result = self.server.final_assessments.status(value["review_id"], scope_sha256=value["scope_sha256"])
+            else:
+                raise ValueError()
+        except (ValueError, KeyError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {"error": "invalid_final_assessment"})
+            return
+        except Exception:
+            self._reply(500, {"error": "final_assessment_unconfirmed"})
+            return
+        self._reply(200, result)
+
     def do_POST(self):
+        if self.path == "/component-assessment":
+            self._final_component()
+            return
         if self.path == "/reviewed-component":
             self._reviewed_component()
             return
@@ -294,6 +337,13 @@ def main():
     if "reviewed_component_applications" in config:
         from eva.operations.component_application_runtime import configured_component_applications
         applications = configured_component_applications(config["reviewed_component_applications"])
+    final_assessments = None
+    if "final_component_assessments" in config:
+        if applications is None:
+            raise ValueError("final assessment requires the existing application queue")
+        from eva.operations.component_final_assessment import configured_final_assessments
+        final_assessments = configured_final_assessments(config["final_component_assessments"],
+            applications=applications, runtime_config=config["reviewed_component_applications"]["runtime"])
     component_suites = {}
     from eva.operations.component_development import DevelopmentAssessment
     suites = config.get("component_suites", {})
@@ -310,7 +360,7 @@ def main():
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
                           allowed_paths=allowed_paths, procedure_executor=executor,
                           programming_workspaces=programming, reviewed_applications=applications,
-                          component_suites=component_suites) as server:
+                          component_suites=component_suites, final_assessments=final_assessments) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)
@@ -318,6 +368,8 @@ def main():
         try:
             server.serve_forever(poll_interval=0.5)
         finally:
+            if final_assessments is not None:
+                final_assessments.close()
             if applications is not None:
                 applications.close()
             if programming is not None:

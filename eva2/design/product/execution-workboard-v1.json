@@ -19338,23 +19338,34 @@
               "authorizedBy": "Jaap, 7 oktober 2026: ga door met AIDE² voor slimmer gedrag, maak duidelijke taken en maak Eva2 af.",
               "ownerActionRequired": false,
               "activeExecution": true,
-              "nextAction": "De bestaande onafhankelijke kandidaatbeoordeling koppelen aan de bestaande beheerde aanvraag/toepassing; geen nieuwe optimalisator of installatieplatform.",
+              "nextAction": "De hashgebonden, gecontroleerde aansluiting installeren; daarna één door Eva gemaakte winnaar op de vooraf vastgelegde onafhankelijke eindbeoordeling aanbieden. Alleen echt gemeten voordeel toepassen.",
               "assignment": {
-                "baseCommit": "f594e7a572802b28ff30ccbda00de287b797605c",
+                "baseCommit": "cc65fc93ea4f9bbf1eae30d52495ba0086aef5aa",
                 "owner": "/root",
                 "activeWorkers": [
-                  "/root"
+                  "/root",
+                  "/root/p2_eva1_lease_review_20261006"
                 ],
                 "files": [
-                  "existing component evaluator/review/application host",
-                  "existing component import and managed image update"
+                  "src/eva/application/component_improvements.py",
+                  "src/eva/adapters/postgres/component_improvement_actions.py",
+                  "src/eva/adapters/connectors/component_evaluation.py",
+                  "src/eva/operations/component_final_assessment.py",
+                  "src/eva/operations/component_release_publisher.py",
+                  "src/eva/operations/component_evaluation_service.py",
+                  "src/eva/operations/reviewed_component_application.py"
                 ],
-                "gap": "Er bestaat één operator-verpakte goedgekeurde kandidaat. De overgang van een nieuw geselecteerde kandidaat naar onafhankelijke beoordeling en beheerde toepassing is nog niet als herbruikbare cyclus geleverd.",
+                "gap": "Een gekozen pakket werd niet automatisch naar de afzonderlijke eindbeoordeling en bestaande beheerde bronimport/toepassing overgedragen. Die technische aansluiting is gebouwd; echte Eva-kandidaat en eindresultaat blijven vereist.",
                 "estimate": "Bestaande host en review-/pakketbinding hergebruiken; geen reviewmodel dat zijn eigen kandidaat goedkeurt. Eén samengevoegde toepassing; credits onbekend.",
                 "doneWhen": "De gekozen exacte kandidaat doorloopt een gescheiden eindbeoordeling op vooraf vastgelegde afgeschermde taken. Alleen gemeten voordeel kan via de bestaande beheerde route worden toegepast; verlies blijft bewaard. Dit vereist geen handmatig door Codex geschreven kandidaat of nieuw installatiepad.",
-                "stage": "locate_existing_independent_assessment_application_transition"
+                "stage": "source_verified_install_handoff_then_real_candidate"
               },
-              "checkedAt": "2026-10-07T09:53:18.773284+00:00"
+              "checkedAt": "2026-10-07T10:22:59.863798+00:00",
+              "currentResult": "Bron en beide kandidaatimages gecontroleerd: 68 gerichte checks, inclusief vier echte tijdelijke databaseproeven. Echte bronimport en beide Docker-overlays als technische fixture bevestigd; nog geen draaiende toepassing of bewezen slimmere Eva.",
+              "evidence": [
+                "eva2/evidence/product/l3-final-handoff-technical-20261007.json",
+                "eva2/evidence/product/l3-context-final-preregistration-20261007.json"
+              ]
             },
             {
               "id": "L3.7",

@@ -1,0 +1,105 @@
+{
+  "contract": "EvaL3FinalHandoffSourceReview/v1",
+  "task": "L3.6",
+  "reviewedAt": "2026-10-07T10:25:04.438740+00:00",
+  "reviewer": "independent bounded source reviewer",
+  "baseCommit": "cc65fc93ea4f9bbf1eae30d52495ba0086aef5aa",
+  "decision": "GO",
+  "scope": "Technical source handoff for selected-candidate independent final assessment, exact publication and the existing application queue. Installation and a real selected candidate assessment remain pending.",
+  "evidence": {
+    "path": "eva2/evidence/product/l3-final-handoff-technical-20261007.json",
+    "sha256": "3342ddee4c5a7de0a62a867d30f1df98c92f7ca72992204b0ee0507292783192"
+  },
+  "sourceBindings": [
+    {
+      "path": "eva2/src/eva/application/component_improvements.py",
+      "sha256": "407f88b3bffb004651e2ae0284c5228316803c2a57803f3d98cb4341b5f04c6e"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
+      "sha256": "a85e362e586816d33dff73ea03b80ded0c06e8d6c61a9090714b565978f29868"
+    },
+    {
+      "path": "eva2/src/eva/adapters/connectors/component_evaluation.py",
+      "sha256": "f6011fe2e95b59e942c54bc4c23698f7e4b597537dea406e9abf27ccd0a6b8ea"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_final_assessment.py",
+      "sha256": "7003bdbc32f4382a46433b9aa93af1dc4d6b6b61038da2b45f6be66fd515c3d8"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_release_publisher.py",
+      "sha256": "0d6f2ba22c58150078ef26adb209830a1b71c08034d943234b6a1d8c7af504aa"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_evaluation_service.py",
+      "sha256": "15700f7d5aceb5e69e7a498e21d709a64a53be8d16f57d119bee7bc0f9ab452a"
+    },
+    {
+      "path": "eva2/src/eva/operations/reviewed_component_application.py",
+      "sha256": "51205d7373984da2829a7083b9178f5cfa8008a7abf4618644e4555eddf4ac07"
+    }
+  ],
+  "candidateImages": {
+    "core": "sha256:be913510da1fa79b26f3d0e7655c7df3c4cf0472dc739d430a676106f56b07e0",
+    "worker": "sha256:b691d464c68359d24bc40b8719a4fa0c99ea65409d0c4d8c5d636ac4792f50bf",
+    "packagedSourceHashesVerified": true,
+    "installed": false
+  },
+  "independentPreregistration": {
+    "path": "eva2/evidence/product/l3-context-final-preregistration-20261007.json",
+    "sha256": "77c27be273fddeb5c2085aeac1fd62c4bdae06759c6db7fdff049c68ac0b811d",
+    "reviewScope": "Hash binding only; protected final data not read."
+  },
+  "checks": {
+    "focusedPassed": 68,
+    "elapsedSeconds": 11.89,
+    "actualCandidateImageSourceFirst": true,
+    "disposablePostgresCases": 4,
+    "network": "none",
+    "hostOnlyUnchangedTestShim": {
+      "module": "eva.operations.component_application_runtime",
+      "sha256": "fa33406d5fe4c702d1aa94531569361b99a40b79586435ca837ca9cb5c876871"
+    },
+    "testLogSha256": "196e7c0dbde5f2636bbb833bece9f024752252254e109e2b659335df5ca87cee",
+    "assessorInitLogSha256": "86fd8d42c30cbd8e0097422d368ed32a1b05ef0bb5271bf5942bb611a66d2f8d",
+    "reviewerTestsRun": 0,
+    "providerCalls": 0,
+    "credits": null,
+    "wholeSuitePassClaim": false,
+    "preparationErrorsRetained": true
+  },
+  "publisherFixture": {
+    "proofSha256": "4367a1059734c3268990a33a7951495848255e4b0ebafdd3b7f63ef77250403a",
+    "matchesPublicEvidence": true,
+    "existingImporterGitAndBothDockerOverlaysVerified": true,
+    "existingReleaseBinderVerified": true,
+    "runtimeApplicationRequested": false,
+    "installed": false,
+    "modelCalls": 0,
+    "limitation": "Synthetic trusted approval packaging verifies technical bindings; it does not establish independent semantic approval or smarter Eva."
+  },
+  "findings": {
+    "materialBlockers": [],
+    "resolved": [
+      "Status accepts publishing and answer_assessing.",
+      "Public decision exposes only fixed-name numeric pairs, counters, booleans and SHA bindings; reasons map to fixed codes.",
+      "Unconfirmed final phase reconciles an existing registered application receipt without redispatch.",
+      "Waiting for answer evidence preserves the retained assessment phase; readiness completes the existing report rather than re-running candidates.",
+      "PREPARE separates nullable strict provider schema from legacy internal integer validation and retains the original replay call."
+    ],
+    "bindingReview": "Selected draft, evaluation, baseline, candidate, protocol and package hashes remain exact. Independent scorer receives exact bytes outside the candidate container; retained answer evidence completes the same assessment. Persisted dispatch phases and existing application receipts prevent automatic duplicate physical application. Stop and status remain responsive during assessment and publication."
+  },
+  "publicationLimits": {
+    "installation": "PENDING",
+    "realSelectedCandidateFinalAssessment": "PENDING",
+    "semanticQualityGain": "UNKNOWN",
+    "fullL3_6Complete": false,
+    "fullL3_7Complete": false,
+    "autonomousAIDE2GainClaim": false,
+    "appsAddonsOrDreamCompletionClaim": false,
+    "protectedInputsRead": false,
+    "originalClosedAIDEOrP2BudgetsChanged": false
+  },
+  "conclusion": "GO for this exact technical source handoff and candidate image bindings. This review does not approve a semantic gain, complete L3.6, or attest an installed release."
+}
