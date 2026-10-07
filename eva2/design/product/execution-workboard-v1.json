@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-07T12:47:25.122198+00:00",
+  "lastUpdated": "2026-10-07T12:55:56.217274+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -16449,7 +16449,7 @@
       "authorizedBy": "Jaap",
       "status": "active",
       "outcome": "Eva als herkenbare huisgenoot met sterk geheugen, nuttig eigen initiatief en zelfstandig digitaal werk bruikbaar opleveren. Spraakwerk is geparkeerd; bestaande acceptaties en de afgesproken eindvergelijking/gezinsacceptatie blijven bewaard.",
-      "currentStep": 8,
+      "currentStep": 7,
       "steps": [
         {
           "number": 1,
@@ -16612,7 +16612,7 @@
           ]
         }
       ],
-      "nextAction": "L3.6 geïnstalleerd en gecontroleerd. L3.7: beste actuele versie en ervaring hergebruiken in de volgende toegelaten ronde, zonder dubbele toepassing. Daarna werkelijk resterend productwerk/P2; spraak blijft geparkeerd.",
+      "nextAction": "L3.6–L3.7 afgerond. P2.1: bestaande OpenClaw-klokbinding gericht corrigeren en één oorspronkelijk ongebruikte, geldig toegelaten vergelijking afmaken. Menselijke beoordelingen blijven apart; spraak geparkeerd.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -19115,7 +19115,7 @@
           ],
           "outcome": "Eigen verbetering beoordelen",
           "effort": "M",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "General programming executor and typed source/command inputs are installed. Eva wrote and ran a reusable program; independent synthetic functional check18/18 passed. Existing documents/procedures and managed component review/release remain available.",
@@ -19127,7 +19127,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "aideExperiment": {
             "state": "closed_unsuccessful",
             "source": "eva2/experiments/aide-20260929/README.md",
@@ -19330,7 +19330,7 @@
             {
               "id": "L3.6",
               "title": "Beste kandidaat onafhankelijk beoordelen en werkelijk toepassen",
-              "status": "done",
+              "status": "completed",
               "kind": "bouwen",
               "owner": "Codex",
               "doneWhen": "De gekozen exacte kandidaat doorloopt een gescheiden eindbeoordeling op vooraf vastgelegde afgeschermde taken. Alleen gemeten voordeel kan via de bestaande beheerde route worden toegepast; verlies blijft bewaard. Dit vereist geen handmatig door Codex geschreven kandidaat of nieuw installatiepad.",
@@ -19395,21 +19395,19 @@
             {
               "id": "L3.7",
               "title": "Volledige verbetercyclus op gewone Eva aantonen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "praktijk",
               "owner": "Codex",
               "doneWhen": "Een echte algemene werkwijzeverbetering begint via gewone chat of de bestaande toegelaten initiatiefroute, levert aantoonbaar beter taakgedrag op en wordt werkelijk toegepast. Een volgende toegelaten ronde gebruikt de beste actuele versie en eerdere ervaring; stoppen/hervatten herhaalt geen toepassing. Hulp, fouten, kwaliteit, snelheid en totaal verbruik blijven zichtbaar.",
               "createdAt": "2026-10-07T08:43:50.921114+00:00",
               "authorizedBy": "Jaap, 7 oktober 2026: ga door met AIDE² voor slimmer gedrag, maak duidelijke taken en maak Eva2 af.",
               "ownerActionRequired": false,
-              "activeExecution": true,
-              "nextAction": "Bestaande gewone route laten voortbouwen op exacte geïnstalleerde versie en bewaarde ervaring; alleen een aantoonbaar nieuw tekort rechtvaardigt nieuwe varianten. Gesloten proeven blijven gesloten.",
+              "activeExecution": false,
+              "nextAction": "Afgerond; geen herhaling voor activiteit. P2.1 resterende oorspronkelijke vergelijking.",
               "assignment": {
                 "baseCommit": "454395cd9407e264c3c1698c08a2c3080b50d9c3",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "existing ordinary chat/delegated route",
                   "existing initiative and approved memory",
@@ -19418,18 +19416,23 @@
                 "gap": "De toepassing van 3 oktober bewijst één geholpen verbetering, geen volledige terugkerende AIDE²-cyclus of bredere kwaliteitswinst.",
                 "estimate": "Eén vooraf geregistreerde passende gebruikersproef via bestaande route, met afzonderlijke ontwikkeling/eindbeoordeling. Geen brede matrix of heropening van oude afgesloten proeven; credits onbekend.",
                 "doneWhen": "Een echte algemene werkwijzeverbetering begint via gewone chat of de bestaande toegelaten initiatiefroute, levert aantoonbaar beter taakgedrag op en wordt werkelijk toegepast. Een volgende toegelaten ronde gebruikt de beste actuele versie en eerdere ervaring; stoppen/hervatten herhaalt geen toepassing. Hulp, fouten, kwaliteit, snelheid en totaal verbruik blijven zichtbaar.",
-                "stage": "ordinary_reuse_resumed_after_canonical_status_correction"
+                "stage": "completed_bounded_reusable_cycle"
               },
-              "checkedAt": "2026-10-07T12:47:25.122198+00:00",
-              "currentResult": "Eerste volledige verbetering is geïnstalleerd. Volgende gewone leesronde liep vast door kommagetal in statusreceipt; exacte oorzaak gecorrigeerd op host, 15 tests en echte client/receiptcheck geslaagd. Zelfde leeswerk getypeerd hervat. Volledige volgende ronde nog niet afgerond.",
+              "checkedAt": "2026-10-07T12:55:56.217274+00:00",
+              "currentResult": "Onafhankelijke GO_DONE op originele eindvoorwaarde. Eerste gemeten verbetering toegepast; volgende gewone ronde gebruikt beste actuele bron/status en eerdere ervaring, bewaart een zelfstandig teruggelezen notitie en stopt zonder nieuw tekort. Getypeerd hervatten/replay herhaalde geen toepassing. Geen tweede optimalisatie, droomplanner of brede superioriteitsclaim.",
               "activeWorkId": "work:eva-resume:1c4cb65e-289d-51a6-ac89-d0f210d45fab",
-              "latestEvidence": "eva2/evidence/product/l3-canonical-status-installed-20261007.json",
+              "latestEvidence": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
               "evidence": [
-                "eva2/evidence/product/l3-canonical-status-installed-20261007.json"
-              ]
+                "eva2/evidence/product/l3-canonical-status-installed-20261007.json",
+                "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
+                "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
+              ],
+              "completedAt": "2026-10-07T12:55:56.217274+00:00",
+              "installedReviewState": "GO_DONE_original_bounded_finish",
+              "installedReviewSha256": "e6454d56627ffd938cbb11515873338cef1cbee662f4760c2aa91654220f8662"
             }
           ],
-          "latestEvidence": "eva2/evidence/product/l3-context-candidate-b-installed-20261007.json",
+          "latestEvidence": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "eerstvolgende algemene vaardigheid",
@@ -19443,7 +19446,7 @@
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
           "completionClarification": "A failed AIDE experiment may close that experiment, not the autonomous programming outcome. Preserve L3.1 historical closure. General programming requires a useful Eva-authored change executed, independently checked, installed and verified through her own route; one component microfix is bounded evidence only. De groene L3-status betreft de afgebakende toepassing; geen volledige AIDE²-cyclus of bewezen verbetering in alle vier huisgenootuitkomsten.",
-          "nextAction": "L3.7: vervolgronde vanuit werkelijk geïnstalleerde beste versie en bewaarde ervaring; geen herhaling van gesloten AIDE/R1/contextproef. Apps/add-ons vallen onder dezelfde algemene cyclus; droommodus nog niet gebouwd.",
+          "nextAction": "Afgerond: één onafhankelijk gemeten en toegepaste verbetering met herbruikbare vervolgroute. Droomplanner/appsbenchmark en bredere kwaliteitswinst zijn niet bewezen.",
           "executorAdmissionCheck": {
             "checkedAt": "2026-10-02T00:35:22.610151+00:00",
             "installedCore": "eva2-managed-b-slot3-core",
@@ -20288,11 +20291,14 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T07:45:05.817947+00:00",
+              "checkedAt": "2026-10-07T12:55:56.217274+00:00",
               "assignment": {
                 "baseCommit": "4f9646e135ee78dee57b3359188e527ee50e9680",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root",
+                  "/root/aide_final_evaluation"
+                ],
                 "files": [
                   "/root: gerichte generieke OpenClaw-meetadaptercorrectie alleen na concreet brondefect; bestaand board/Git.",
                   "/root/aide_final_evaluation: beschermde technische provenance/toelating/ongebruikte-slotbeslissing; geen cases/antwoorden/scorer naar root."
@@ -20301,7 +20307,7 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte bestaande bron-/metadatacontrole met0 geplande provider/authcalls; oorspronkelijke P2.1-voorwaarden en deelnemergebruik behouden. Creditkosten onbekend.",
-                "currentAction": "Na afgesloten R1.1: bestaande OpenClaw-tegenstrijdige klokbinding gericht verklaren en kleinste voldoende meetadaptercorrectie voorbereiden. Eigen native aanmelding/route behouden; geen model/authcall of herhaalde/nieuwe cases.",
+                "currentAction": "Gerichte klok-/bronbindingscontrole met bestaande metadata, nul nieuwe model/authcalls; afzonderlijke evaluator bepaalt oorspronkelijke ongebruikte toelating.",
                 "previousGoalTurn": {
                   "classification": "no_progress",
                   "sourceCommit": "123d27edc4867fbd773e21e31f05f93f5682b292",
@@ -21714,7 +21720,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "L3",
+      "activeSliceId": "P2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
@@ -21986,8 +21992,10 @@
             "reportedBy": "independent evaluator; final semantic judgment pending"
           },
           "candidateInstalled": true,
-          "nextTaskId": "L3.7",
-          "latestCompletedTaskId": "L3.6"
+          "nextTaskId": "P2.1",
+          "latestCompletedTaskId": "L3.7",
+          "fullL3_7Completed": true,
+          "reusableCycleCompleted": true
         }
       }
     },

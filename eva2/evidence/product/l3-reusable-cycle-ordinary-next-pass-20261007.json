@@ -1,0 +1,77 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "task": "L3.7",
+  "checkedAt": "2026-10-07T12:52:26.151377+00:00",
+  "status": "ordinary_next_pass_complete_independent_closure_review_pending",
+  "original_done_when": "Een echte algemene werkwijzeverbetering begint via gewone chat of de bestaande toegelaten initiatiefroute, levert aantoonbaar beter taakgedrag op en wordt werkelijk toegepast. Een volgende toegelaten ronde gebruikt de beste actuele versie en eerdere ervaring; stoppen/hervatten herhaalt geen toepassing. Hulp, fouten, kwaliteit, snelheid en totaal verbruik blijven zichtbaar.",
+  "first_complete_cycle": "eva2/evidence/product/l3-context-candidate-b-installed-20261007.json",
+  "following_admitted_pass": {
+    "kind": "read-only preparation under existing task route; no additional optimization allowance",
+    "original_work_id": "work:eva-chat:e9415b7d-a182-538f-a832-ee02b27e3fb0",
+    "typed_resume_work_id": "work:eva-resume:1c4cb65e-289d-51a6-ac89-d0f210d45fab",
+    "state": "succeeded",
+    "completed_at": "2026-10-07T12:48:36Z",
+    "actual_best_source_sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+    "installed_status_read_verified": true,
+    "actual_source_read_verified": true,
+    "experience_source": "/proof-state/l3-context-candidate-b-package.json",
+    "conclusion": "Actual best source and independent current status supersede historic package installed=false; public development gain alone is not answer gain. No new proven deficit/admission, so no new variant or experiment.",
+    "new_variant_evaluation_or_application_calls": 0
+  },
+  "document": {
+    "owner_path": "/proof-state/l3-context-next-round-note.txt",
+    "actual_file": "/var/lib/docker/volumes/eva2-workspace-files/_data/l3-context-next-round-note.txt",
+    "bytes": 2886,
+    "sha256": "18637d16d6d642de27525a8bdd9034db50c9e7fcfbf86ab1cda060af8349c6eb",
+    "independent_host_readback": true
+  },
+  "reuse_and_recovery": {
+    "same_execution_id": "work:eva-chat:e9415b7d-a182-538f-a832-ee02b27e3fb0",
+    "prior_failed_status_read": "eva2/evidence/product/l3-canonical-status-installed-20261007.json",
+    "existing_completed_application_replayed_after_host_restart": true,
+    "same_containers_images_and_started_at_through_following_pass": true,
+    "no_repeated_application": true,
+    "explicit_midflight_owner_cancel_in_this_pass": false,
+    "stop_during_assessment": "Existing separately tested cancellation path retained; not a new physical/human acceptance."
+  },
+  "usage": {
+    "successful_readonly_resume": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 8,
+      "tool_calls": 7,
+      "input_tokens": 109567,
+      "output_tokens": 1633,
+      "total_tokens": 111200,
+      "cost_usd_micros": null
+    },
+    "prior_failed_readonly_attempt": {
+      "measurement": "partial",
+      "completed_model_responses": 1,
+      "tool_calls": 1,
+      "input_tokens": 6431,
+      "output_tokens": 89,
+      "total_tokens": 6520
+    },
+    "known_background_token_subtotal": 117720,
+    "includes_foreground_and_all_development_work": false,
+    "credits": null,
+    "quality_before_cost": true
+  },
+  "human_help": [
+    "Codex pre-registered diagnostic deficit and independent assessment; prior technical correction assistance remains recorded.",
+    "Codex corrected document/model/host handoffs and canonical status projection, then used existing typed resume.",
+    "No extra household choice/login/physical action required for these two passes."
+  ],
+  "original_aide": "Variant generation, comparison and selection.",
+  "aide2": "Improvement of agent orchestration/control; this application changes context selection feeding Eva task answers, with a separate measured direct-answer win.",
+  "actually_proven": "One Eva-authored measured context improvement through ordinary route, independent evaluation and managed application, followed by current-version/experience preparation that stops without an unnecessary repeat.",
+  "not_proven": [
+    "Broader personality, business, autonomous initiative or coding superiority.",
+    "A second new optimization/promotion cycle.",
+    "Automatic idle-capacity scheduling or installed apps/add-ons benchmark.",
+    "Full replication of the original AIDE² paper.",
+    "Standalone general framework for unrestricted module installation."
+  ]
+}

@@ -1,21 +1,19 @@
-## Actueel 7 oktober — L3.6 klaar: Eva’s kwaliteitsverbetering geïnstalleerd
+## Actueel 7 oktober — L3.6–L3.7 afgerond; resterende vergelijking
 
-Eva maakte zelf contextkandidaat B via gewone chat en de bestaande uitvoering.
-De aparte eindbeoordeling accepteerde de exacte kandidaat: één extra vraag
-rechtstreeks beantwoord in drie van drie herhalingen, zonder kwaliteitsregressies
-of harde fouten. Geen aantoonbare tokenbesparing of brede superioriteitsclaim.
-De beheerde route importeerde, bouwde en installeerde dezelfde kandidaat;
-kern en werker zijn gezond en exacte bronhashes zijn teruggelezen.
+Eva’s eigen contextverbetering is onafhankelijk geaccepteerd, geïnstalleerd en
+teruggelezen. Eén extra vraag werd 3/3 rechtstreeks beantwoord zonder regressies.
+De volgende gewone ronde gebruikte de beste geïnstalleerde versie en eerdere
+ervaring, bewaarde een teruggelezen vervolgnotitie en stopte zonder nieuw tekort.
+Onafhankelijke GO_DONE op de oorspronkelijke L3.7-eindvoorwaarde; toepassing niet
+herhaald. Geen brede superioriteits-, tweede optimalisatie- of droomplannerclaim.
 
-L3.6 is klaar. De eerste statuslezing voor L3.7 is gericht hersteld: tijdmetingen
-gebruiken canonieke microseconden; het oude eindbewijs is bytegelijk behouden.
-De echte client/receiptcontrole slaagt; dezelfde leesopdracht is hervat.
-L3.7 is nu actief: de volgende toegelaten ronde moet beste versie
-en eerdere ervaring hergebruiken, zonder dubbele toepassing. Apps/add-ons vallen
-onder dezelfde cyclus; de voorgestelde droommodus is nog niet gebouwd.
-Antwoordvergelijking: 24 modelcalls, 13.973 tokens, geen toolcalls/retries.
-Ontwikkelverbruik en eerdere fouten staan apart; creditkosten blijven onbekend.
-Bewijs: evidence/product/l3-context-candidate-b-installed-20261007.json.
+Actief: P2.1, de bestaande OpenClaw-klok-/bronbinding en resterende oorspronkelijke
+vergelijking. Geen nieuwe brede matrix, nieuwe providerroute of afgesloten proef.
+Apps/add-ons horen bij dezelfde verbetercyclus; droommodus is nog niet gebouwd.
+Bekend achtergrondverbruik vervolgronde117.720tokens (partial/subtotaal);
+antwoordvergelijking apart13.973tokens. Credits en volledig ontwikkeltotaal onbekend.
+Bewijs: evidence/product/l3-context-candidate-b-installed-20261007.json en
+reviews/l3-reusable-cycle-closure-review-20261007.json.
 
 ## Actueel 7 oktober — volledige documentovergang geïnstalleerd, exact werk hervat
 

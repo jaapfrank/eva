@@ -1,0 +1,90 @@
+{
+  "contract": "EvaIndependentDeliveryClosureReview/v1",
+  "recordedAt": "2026-10-07",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "task": "L3.7",
+  "decision": "GO_DONE",
+  "reviewedEvidence": {
+    "path": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
+    "sha256": "27be9fc9cad1206fb689887ceae7518f45a80f2db695dca55a70af879679a6b9"
+  },
+  "originalFinishCondition": {
+    "source": "eva2/design/product/execution-workboard-v1.json",
+    "sourceSha256AtReview": "29882d64b864df0d9b73f21776046143afbff8575a77264a4bc52203a10ddfe0",
+    "doneWhen": "Een echte algemene werkwijzeverbetering begint via gewone chat of de bestaande toegelaten initiatiefroute, levert aantoonbaar beter taakgedrag op en wordt werkelijk toegepast. Een volgende toegelaten ronde gebruikt de beste actuele versie en eerdere ervaring; stoppen/hervatten herhaalt geen toepassing. Hulp, fouten, kwaliteit, snelheid en totaal verbruik blijven zichtbaar.",
+    "matchesPublicReport": true
+  },
+  "basis": [
+    {
+      "condition": "Real improvement begins through ordinary route, improves task behavior and is applied",
+      "finding": "Satisfied by the already independently reviewed Eva-authored B cycle, its separate measured direct-answer gain and exact managed installed source.",
+      "evidence": {
+        "path": "eva2/reviews/l3-context-candidate-b-installed-review-20261007.json",
+        "sha256": "c70a2b80b01c757893a1850742d423f5fa842f32700d201fea0d351344c34b2d"
+      }
+    },
+    {
+      "condition": "Next admitted round uses the best current version and earlier experience",
+      "finding": "Satisfied by actual successful typed read-only continuation. The saved note correctly distinguishes historic package flags from completed installed status, uses current B and separates development gain from independent answer gain.",
+      "workId": "work:eva-resume:1c4cb65e-289d-51a6-ac89-d0f210d45fab",
+      "originalExecutionId": "work:eva-chat:e9415b7d-a182-538f-a832-ee02b27e3fb0",
+      "bestSourceSha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844"
+    },
+    {
+      "condition": "Stop/resume does not repeat application",
+      "finding": "The failed status read was repaired and the same work resumed through the existing typed correction. Exact completed application replay after host reload returns completed/installed=true; container IDs, image IDs and startedAt remain equal. Existing separately tested cancellation handling is retained.",
+      "liveMidflightCancelInThisPass": false
+    },
+    {
+      "condition": "Help, errors, quality, speed and total consumption remain visible",
+      "finding": "Report retains human technical help and the failed first status read; earlier independent result retains bounded quality/timing. Following-pass usage is explicitly partial, with known failed+successful background subtotal117720 tokens and unknown credits. It does not claim an exhaustive foreground/development total."
+    }
+  ],
+  "interpretation": {
+    "secondNewOptimizationOrPromotionRequiredByDoneWhen": false,
+    "reason": "The original condition requires reuse in a following admitted round, not another winner. Its successful read-only preparation observes no new proven deficit or optimization allowance and correctly stops; forcing a new variant would exceed the demonstrated admission.",
+    "remainingGapForThisDoneWhen": null,
+    "notCompletedByThisReview": [
+      "Automatic idle-capacity dream scheduling",
+      "An apps/add-ons execution benchmark",
+      "Broad autonomous superiority or full AIDE2 replication",
+      "Project/family acceptance"
+    ]
+  },
+  "independentReadbacks": {
+    "savedNote": {
+      "actualPath": "/var/lib/docker/volumes/eva2-workspace-files/_data/l3-context-next-round-note.txt",
+      "bytes": 2886,
+      "sha256": "18637d16d6d642de27525a8bdd9034db50c9e7fcfbf86ab1cda060af8349c6eb",
+      "independentlyRead": true
+    },
+    "technicalMetadataRoot": "/home/administrator/project/.eva2-artifacts/l3-later-round-20261007",
+    "metadataBindings": {
+      "completed-readonly-result.private.json": "0e8f901e18c33d3ce22240850d334fcbc92206e25ae5565daea3be22a4e8bad2",
+      "completed-component-receipts.private.json": "89e0a87b30d7da6d88574716734670610e36363ccb2ac25d25be9733bfeb8599",
+      "typed-readonly-resume.private.json": "44b053f9a38ffb45d5fff9e8b42007904ca3f80ba396732da3fa4e801dd14216",
+      "installed-canonical-status-check.private.json": "17ce3ca7e352d065b5b9517a7d9eb10b166e626f90492d4c059c04a355394221",
+      "exact-completed-application-replay.private.json": "421465588d416e3903075d459a05b6d1f5fcd52ce90c83f21f5ac49497f623de",
+      "runtime-before.private.json": "09ed03c867bbc0ef1881625171af7332f6ad1163443bfc6b1cacf5bfd24502a5",
+      "runtime-after-ordinary-followup.private.json": "09ed03c867bbc0ef1881625171af7332f6ad1163443bfc6b1cacf5bfd24502a5",
+      "runtime-after-replay.private.json": "37a2131fba32c994dedcb112e4b15592c8b6eb7b91f30d9b722ee3977404ebf6"
+    },
+    "runtimeEquality": "Parsed container IDs, images and startedAt are equal across all three snapshots; replay snapshot bytes have a distinct hash.",
+    "scope": "Public report, original finish condition, already accepted installed review, actual authorized note and selected technical metadata only. No protected final data read."
+  },
+  "usageVisibility": {
+    "successfulBackgroundPassTokens": 111200,
+    "priorFailedBackgroundPassTokens": 6520,
+    "knownBackgroundSubtotalTokens": 117720,
+    "measurement": "partial",
+    "credits": null,
+    "includesAllForegroundAndDevelopmentWork": false
+  },
+  "reviewerActions": {
+    "modelCalls": 0,
+    "benchmarkCalls": 0,
+    "testsRun": 0,
+    "sourceOrRuntimeChanges": 0
+  },
+  "materialDefects": []
+}

@@ -1,14 +1,16 @@
 # Eva — digitale huisgenoot die leert en handelt
 
-## Actuele uitvoering 7 oktober — L3.6 geïnstalleerd, L3.7 volgt
+## Actuele uitvoering 7 oktober — L3.6–L3.7 afgerond, P2.1 volgt
 
 De gewone Eva-route maakte contextkandidaat B, liet deze afzonderlijk beoordelen
 en paste de exact geaccepteerde versie via de bestaande beheerde route toe.
 Een extra eindvraag werd 3/3 rechtstreeks beantwoord; geen regressies of harde
 fouten. Dat bewijst één beperkte kwaliteitsverbetering, geen algemene voorsprong
 of tokenbesparing. Zie evidence/product/l3-context-candidate-b-installed-20261007.json.
-L3.7 blijft open voor hergebruik van beste actuele versie/ervaring en toepassing
-zonder herhaling. Apps/add-ons horen bij dezelfde cyclus; droommodus is nog niet
+L3.7 is onafhankelijk GO_DONE: de volgende gewone ronde gebruikte de beste
+actuele bron/status en eerdere ervaring en stopte terecht zonder nieuw tekort;
+hervatten/replay herhaalde geen toepassing. De resterende oorspronkelijke P2.1-
+vergelijking volgt; menselijke beoordelingen blijven afzonderlijk zichtbaar. Apps/add-ons horen bij dezelfde cyclus; droommodus is nog niet
 gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
 
 
@@ -44,8 +46,10 @@ beoordeling en toepassing aansluiten, en de volledige gewone gebruikersroute
 met een volgende ronde aantonen. De uitbreiding van L3 is nieuw geautoriseerd
 resterend werk, geen verlies van eerdere acceptatie.
 
-L3.4 en L3.5 zijn geïnstalleerd en onafhankelijk gecontroleerd. Hervat bij
-L3.6 en maak L3.6–L3.7 achtereenvolgens bruikbaar; herhaal L3.4/L3.5 niet. Hergebruik de gedeelde uitvoering, het programmeerwerk, de evaluator
+L3.4–L3.7 zijn afgerond en onafhankelijk gecontroleerd: één gemeten betere
+contextkandidaat toegepast, vervolgens de beste versie/ervaring gebruikt zonder
+onnodige herhaling. Geen brede superioriteitsclaim of gebouwde droomplanner.
+Hervat bij werkelijk resterend P2.1; herhaal eerdere varianten/proeven niet. Hergebruik de gedeelde uitvoering, het programmeerwerk, de evaluator
 en toepassing; geen tweede agentplatform. Originele proeven/criteria en verbruik
 blijven bewaard; dit heropent geen afgesloten AIDE- of R1-proef. Registreer een
 nieuwe passende toepassing alleen vooraf en binnen de bestaande providerroute
