@@ -1,0 +1,159 @@
+{
+  "contract": "OpenClawProcessScopeDesignReview/v1",
+  "task": "P2.1",
+  "reviewer": "/root/aide_final_evaluation",
+  "checked_at_utc": "2026-10-07T15:10:08.348155+00:00",
+  "decision": "GO_BOUNDED_DESIGN_WITH_REQUIRED_BINDINGS",
+  "implementation_reviewed": false,
+  "runtime_proven": false,
+  "original_sample_admission": "NO_GO",
+  "new_fixture_authorized": false,
+  "design": "Root controller remains outside a dedicated nondelegated cgroup-v2 scope. Actor enters before native execution. Root freezes only the retirement barrier, validates exact registered control processes, retains correlated evidence and always thaws. Preserve native cleanup; equivalent_native_settled is separate.",
+  "original_conditions": {
+    "case": "EV003-CM-01",
+    "epoch": 1,
+    "participant": "openclaw",
+    "slot_remains_unused": true,
+    "original_criteria_and_caps_unchanged": true,
+    "literal_cleanup_closed_is_original_requirement": false,
+    "basis": "Original protocol lines70-81 requires equal resources and bounded work including helpers; lines83-91 preserves incomplete outcomes and unknown usage. It does not prescribe the OpenClaw cleanup field. Actual termination may be independently proved without overwriting uncertain or claiming task success.",
+    "preserve": "Same native user/profile/route/tools/model roles/network/clock and per-case envelope; no CPU/memory/pids/network limit or inherited resource-envelope change. Bookkeeping/freezer overhead remains within the existing monotonic deadline.",
+    "privileges": "Dormant parent line91 already drops groups and capability sets. NoNewPrivs must not remove an originally admitted service or silently replace native policy; it supplies exec privilege containment, not new actor authority."
+  },
+  "minimum_required_facts": [
+    {
+      "id": "membership_before_fork",
+      "requirement": "Root establishes a real domain cgroup and immutable identity before any actor/native fork or exec. Verify actor membership at a launch barrier, with PID/starttime, boot/PID namespace and scope filesystem identity. Migrating a parent after children exist is insufficient."
+    },
+    {
+      "id": "no_escape",
+      "requirement": "Delegate=no; root-only directory and migration controls, including common ancestors. Observe UID/groups/capability sets/NoNewPrivs and no actor-writable migration FD. Any admitted external execution broker must also be scoped/accounted or equivalence is refused. NoNewPrivs alone does not prove this."
+    },
+    {
+      "id": "registration",
+      "requirement": "Root records exact control PID+starttime identities before workload; no names, wildcard ancestry or actor-provided allowlist. SO_PEERCRED binds peer identity and cgroup; root independently reads kernel membership. Peer credentials do not authenticate actor-supplied census contents."
+    },
+    {
+      "id": "stable_census",
+      "requirement": "After matching pre-close readback and physical exit, admissions remain closed. Root outside the scope freezes it, waits for frozen=1, checks every live member/descendant against the fixed control identities, saves the receipt and thaws in finally within the same deadline. Unexpected members or missing/raced evidence refuse. A live unfrozen cgroup.procs snapshot minus allowlist is insufficient."
+    },
+    {
+      "id": "native_work",
+      "requirement": "Retain existing complete current-sample usage, zero pending SDK/tools, actual native client readbacks/background-terminal checks and queue flushes. Observe the exact pinned factory result for this client/turn. Missing observation or active authority refuses equivalence absent separate release proof. Factory absence covers only that branch, not all possible in-process delegated work; active or unobserved delegated work must also refuse."
+    },
+    {
+      "id": "binding_and_stop",
+      "requirement": "Receipt binds scope generation, client/exit, admitted thread+turn hashes, clock generation, private readback hash, census and authority/pending facts. Refuse missing/stale/replayed/mismatched evidence. Recheck owner stop/deadline after retention and before continuation. Do not extend caps or reset counters."
+    },
+    {
+      "id": "separate_predicate",
+      "requirement": "Keep native cleanup=uncertain and native_closed=false exactly as returned. equivalent_native_settled requires the whole conjunction above, never exit alone or post-test emptiness. Errors/timeouts and original quality/scorer remain separate."
+    }
+  ],
+  "external_spawn_configuration_check": {
+    "scope": "Retained public config, original technical CM01 config/driver, current native config key shape and offered public tool names only; no machine-wide account/socket audit.",
+    "explicit_external_gateway_nodes_mcp_browser_or_sandbox_configured": false,
+    "native_home_sections": [
+      "projects"
+    ],
+    "advertised_spawn_tools": [
+      "sessions_spawn",
+      "multi_agent_v1.spawn_agent"
+    ],
+    "advertised_command_tool": "exec_command",
+    "source_anchor": "sessions-spawn-tool-AW-VALLJ.mjs:3321 default local placement/configured cloud profile; 3539-3543 in-process gateway without override.",
+    "conclusion": "No explicitly configured external spawn provider found. General local/delegated tools are offered, so this does not prove all OS execution brokers unreachable.",
+    "concrete_unproven_fact": "Dormant CM01 parent line95 inherits environment except listed app/provider prefixes, without explicitly excluding DBUS/XDG runtime variables, and enters only a network namespace. The actual launcher must bind absence or in-scope ownership of usable off-scope execution authority. Machine-wide availability was not inspected or changed."
+  },
+  "native_anchors": {
+    "factory": "run-attempt-BHu11r7h.mjs:5909 requires sandbox.enabled, backend and retainSourceAuthority.",
+    "source_release": "dynamic-tools-BDXl-8Cw.mjs:1241-1277 binds client/thread/turn and releases source only after zero holds/commands.",
+    "exit_and_uncertain": "client-Cs08OXVQ.mjs:3984-3993 and4000-4006.",
+    "adapter_guard": "Reviewed baseline p1_openclaw_parent_accounting.mjs:454-490; new equivalent predicate implementation is not approved by this design review."
+  },
+  "kernel_references": [
+    {
+      "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
+      "sections": [
+        "Organizing Processes and Threads",
+        "Delegation Containment",
+        "Core Interface Files"
+      ],
+      "facts": "Forked children inherit membership; moving a parent does not move existing descendants. Migration needs destination/common-ancestor write access. cgroup.procs is not an atomic ordered process snapshot. Freezing reports completion via cgroup.events; populated is recursive. These support scope accounting without new resource limits."
+    },
+    {
+      "url": "https://docs.kernel.org/userspace-api/no_new_privs.html",
+      "facts": "The inherited flag blocks exec-based setuid/file-capability gains, not existing privileges or non-exec privilege transfer."
+    }
+  ],
+  "bindings": {
+    "original_contract": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-native-admission-contract-review-20261006.json",
+      "sha256": "5ddad1db2d7d84ef1dab5398ac974677cfd527e5ae0fab06a1f18b5b7c8598d1"
+    },
+    "original_plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "prior_runtime_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-retirement-readback-runtime-review-20261007.json",
+      "sha256": "355733168c6a61460d79840c38ceb50a4f2b730b0798b65a4ae46de70bf1e496"
+    },
+    "dormant_parent": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/launch-parent-accounted-cm01.private.py",
+      "sha256": "424c57b0702c967462bd5a03745dd8e58e5f125ca9f930d0f95d97aebe4310e7"
+    },
+    "dormant_driver": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/native-openclaw-cm.private.mjs",
+      "sha256": "824bbba82dd3b1c25fc21f61a3f5f7d5617303f837c35ba0c6ad3ebf3d7ae791"
+    },
+    "original_contact_config": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/contact.json",
+      "sha256": "b59a1b86fcaa20df5b16fe515fa64c9d5be9a4cc2fbde9ad8f9279a98adeffc0"
+    },
+    "public_config": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/openclaw.json",
+      "sha256": "7b0d92de9f1a991c9ba808d1928c287b0281fda76ef1e28008859c49cfc58865"
+    },
+    "native_home_config": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/config.toml",
+      "sha256": "a8697aea090330aab2f871c71c574c0f0d87334659171f4895c2a8dffc3c899b"
+    },
+    "public_tool_catalog": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/contexts/134-attempt-2-original.json",
+      "sha256": "4d212a79637992d400d0af964fe13486743c0de9ac913b88e98060de2bafeb33"
+    },
+    "native_factory": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/run-attempt-BHu11r7h.mjs",
+      "sha256": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376"
+    },
+    "native_client": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/client-Cs08OXVQ.mjs",
+      "sha256": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da"
+    },
+    "native_authority": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/dynamic-tools-BDXl-8Cw.mjs",
+      "sha256": "0f01116c4505f4e8e6c0958f23d998402f9ae79cf8f65b2684a74f221fe38e4a"
+    },
+    "native_sessions_spawn": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/sessions-spawn-tool-AW-VALLJ.mjs",
+      "sha256": "51b8f2a30dc0a018a61c8e2f4baa470e2f7f52af060540cf0ceccd79e79d5c89"
+    }
+  },
+  "reviewed_adapter_baseline": {
+    "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "git_commit": "99e5e120d84224238e90c8f922b1f8123b88c71a",
+    "sha256": "8b54c170fefbbde7126c9934faed32ea86af3303479d4663765e545b2c8b56aa"
+  },
+  "parallel_edit_boundary": "Root began the scope implementation during this review. A pre-write hash assertion stopped before any review file existed; the design binds the reviewed committed baseline, not the unreviewed working-tree implementation.",
+  "activity": {
+    "tests": 0,
+    "actor_starts": 0,
+    "model_calls": 0,
+    "auth_calls": 0,
+    "original_input_reads": 0,
+    "authority_mutations": 0,
+    "children": 0
+  },
+  "next_step": "Implement the bounded scope receipt in the existing controller/accounting route, then review concrete source and evidence. This design review authorizes neither a runtime trial nor original input."
+}

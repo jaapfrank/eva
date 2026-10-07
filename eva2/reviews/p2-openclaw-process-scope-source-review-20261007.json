@@ -1,0 +1,182 @@
+{
+  "contract": "OpenClawProcessScopeSourceReview/v1",
+  "task": "P2.1",
+  "reviewer": "/root/aide_final_evaluation",
+  "checked_at_utc": "2026-10-07T15:22:22.890559+00:00",
+  "decision": "GO_BOUNDED_SOURCE_AND_CONDITIONAL_PUBLIC_CHECKS",
+  "original_sample_admission": "NO_GO",
+  "negative_os_fixture_authorized": true,
+  "ordinary_public_fixture_authorized": "ONLY_AFTER_EXPECTED_NEGATIVE_OS_CHECK_AND_CLEAN_CLOSURE",
+  "reviewed_sources": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "bf8b4126fc02c16d789ae115a6f2bf8d326d11f1b63ca9b4ac30d20d8daac7a6"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "d00853e4196bbed1e976e47deb460a65c452b4e1091a06c37164b81c6f5609ea"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "ac02e418854c6e8483f83bdcb6ef0e723e62acd09761d93d8f1d746e7e3fbdb5"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/run-public-composition.private.py",
+      "sha256": "e08d43b1ccd5beb1cdd9a7cc250b70c3f714dc2ba0f06b4845a60ca93d404f72"
+    }
+  ],
+  "scope": "Exact final source delta reviewed; one kernel descendant-rejection check followed conditionally by one changed-cause public ordinary composition. No original-input or complete-comparison admission.",
+  "positive_findings": [
+    "The existing newline IPC reader enforces a65536-byte maximum and object shape; response binding is compared before accepting the scope receipt.",
+    "The server uses SO_PEERCRED and root-owned socket-directory checks; the proposed corrections retain that trust boundary.",
+    "Missing or non-null native source-authority observations reject the equivalent route; the source anchor observes the pinned factory rather than manufacturing an authority.",
+    "Existing native retirement and cleanup uncertain are preserved. No native product file, original criterion or hidden input is changed by this reviewed delta.",
+    "Readback, physical exit and process-scope evidence are represented separately; no provider body or credential is added to the scope receipt."
+  ],
+  "evidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/scope-focused.public.json",
+      "sha256": "c432df757c34afc02d25f24be0b2507f68522798287ce9efdc29f1140d685d6d"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/scope-focused.public.txt",
+      "sha256": "b79b92de422b78cad0400bbc50b7778662e194f59b25c3b56a4964b9d5eed1d6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/scope-focused-corrected-retained.public.json",
+      "sha256": "82aee3abe9be4a993a73c4097e976d0fa1ab9628516eed027f0da7594d3aeb99"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/scope-focused-corrected-retained.public.txt",
+      "sha256": "ec3ffd470c617f52b4b2578da06efc092f3b4a9e0ec5323513c97aa5b6ca5100"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/scope-guard-delta.public.json",
+      "sha256": "e91f4813387b2a75944c47822b578ccd761a377c770e5cf3ecb8e4bd0c0c1ea8"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/scope-guard-delta.public.txt",
+      "sha256": "3f151ade4adf6c48721b79b851fa91e8e2bf9e51a2fd18d8f9a221e9c74d1cd6"
+    }
+  ],
+  "evidence_limit": "Retained two unit passes cover the scope-equivalence stub on the preceding guard-delta version. The final post-retention checks, shared fixture deadline and bounded cleanup edits were source-reviewed, not rerun by the reviewer. Kernel cgroup behavior is not yet demonstrated.",
+  "remaining_original_admission_limits": [
+    "Public and CM01 config lack an explicitly configured external spawn provider, but generic local/delegated tools remain offered. No general OS-broker inaccessibility claim is supported.",
+    "Factory not_created only excludes that native authority branch; queued or in-process delegated work still needs the existing native lifecycle/accounting checks.",
+    "No complete three-turn/two-session/clock-advance native composition or original slot admission is established by source review."
+  ],
+  "owner_corrections_pending": false,
+  "reviewer_activity": {
+    "tests": 0,
+    "actor_starts": 0,
+    "model_calls": 0,
+    "auth_calls": 0,
+    "original_input_reads": 0,
+    "authority_mutations": 0,
+    "source_edits": 0,
+    "children": 0
+  },
+  "superseded_decision": {
+    "decision": "NO_GO_PENDING_BOUNDED_SOURCE_CORRECTIONS",
+    "review_sha256": "3dc622db88bfb7c0dd0780b965f27960d270e2c0caabdaf5d75447bbd293303c",
+    "reviewed_sources": [
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+        "sha256": "63a0aec4d6ec14c1a48d709a4c8f7eb88530951c714665d60f0bbb2806bf6aa2"
+      },
+      {
+        "path": "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+        "sha256": "ddb11e22133e9b27686d0fe7b5b1acfcdbb8613a047308359d1fa183a6f35250"
+      },
+      {
+        "path": "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+        "sha256": "e93afb8a5e69fe3d997eff4f288d3995862bd6fb984dbe7172be88d5c806db5e"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/run-public-composition.private.py",
+        "sha256": "971c9ed1a0e3d9e3adc6b59843c4df41f7c312095393f36e6d351d5cedeb483a"
+      }
+    ]
+  },
+  "resolved_findings": [
+    {
+      "id": "group_boundary",
+      "priority": 1,
+      "anchor": "private controller:31",
+      "problem": "--init-groups differs from the original CM01 parent --clear-groups and may add service authority. Root identity validation checks Uid/capabilities but not Gid/Groups.",
+      "minimum_correction": "Preserve clear-groups and verify all Gid fields plus the empty supplementary group set.",
+      "status": "resolved_by_final_source_delta_for_bounded_public_checks"
+    },
+    {
+      "id": "deadline_after_io",
+      "priority": 1,
+      "anchor": "OpenClawNativeProcessScope.request; RootOwnedNativeProcessScope._serve_scope/_frozen_census; verifyRetiredNativeScope:526-546; controller:33-48",
+      "problem": "Frame reads/responses lack the shared deadline. Already-frozen census can accept after expiry; JS caches a receipt after retention without a final stop/deadline/settled check. The launcher grants communicate another120s after its startup poll.",
+      "minimum_correction": "Use one absolute start+120 deadline throughout waits/frames/census; use remaining time for communicate. Check before and after final retention/receipt I/O and before a positive continuation decision.",
+      "status": "resolved_by_final_source_delta_for_bounded_public_checks"
+    },
+    {
+      "id": "current_final_settlement",
+      "priority": 1,
+      "anchor": "verifyRetiredNativeScope:527 and closeNative:581-593",
+      "problem": "Cached per-client receipts bypass current checks; equivalent_native_settled depends on receipt presence and may remain true after later work. Prior receipts prove historical retirement, not current global closure.",
+      "minimum_correction": "Retain historical receipts but require fresh global pending/coverage/queue checks and a final correlated scope census for current closure. A queued/in-process task cannot be discharged by cgroup census alone.",
+      "status": "resolved_by_final_source_delta_for_bounded_public_checks"
+    },
+    {
+      "id": "all_path_cleanup",
+      "priority": 1,
+      "anchor": "private controller:31-55",
+      "problem": "Scope startup and controller construction precede any enclosing cleanup finally. Errors there can leave actor processes; killpg(systemd-run) alone does not establish entire scope termination.",
+      "minimum_correction": "An encompassing finally must thaw and stop/reap only the exact owned scope on failure, including constructor/registration errors. Preserve errors/remaining processes, never report success from forced cleanup.",
+      "status": "resolved_by_final_source_delta_for_bounded_public_checks"
+    },
+    {
+      "id": "scope_generation_binding",
+      "priority": 2,
+      "anchor": "RootOwnedNativeProcessScope.__init__/_frozen_census; scope client register/inspect",
+      "problem": "Receipt scope identity is only a path hash; the registration uses current census identities without explicit launcher generation/root-bound expected peer.",
+      "minimum_correction": "Bind scope UUID plus filesystem dev/inode and exact root-recorded Node peer/parent PID+starttime before native execution; enforce that identity at each census and response.",
+      "status": "resolved_by_final_source_delta_for_bounded_public_checks"
+    }
+  ],
+  "findings": [],
+  "correction_anchors": {
+    "original_user_boundary": "Private controller38-40: clear-groups, UID/GID1000, NoNewPrivs, empty capability sets; Python496-511 verifies actual Uid/Gid/Groups/capabilities.",
+    "root_registration": "Controller50-67 binds exact Node parent/peer executable hashes and PID/starttime before socket availability; Python447-458 revalidates the root binding.",
+    "scope_identity": "Python449-450 stores path/dev/inode/generation; 475-494 revalidates identity and root-only hierarchy/migration controls.",
+    "authenticated_bounded_frames": "Python559-572 uses SO_PEERCRED, expected peer/UID/GID/nonce, bounded object frame and same absolute deadline; JS48-85 validates root socket, response deadline and scope identity.",
+    "freeze_barrier": "Python513-549 freezes, waits for frozen1, enumerates exact identities, fsyncs root receipt, checks deadline and always thaws.",
+    "retirement_guard": "JS529-572 verifies actual readback/exit and observed absent authority, checks after scope reply AND final private retention, then rechecks current stop/deadline/pending state before returning readbacks.",
+    "current_global_closure": "JScloseNative retains historical client receipts but requires fresh final scope census, global settled checks and queue flush; equivalent_native_settled is separate from native_closed.",
+    "one_deadline": "Controller25/31/68-70 and test603 use the same absolute start+120 boundary; response/census share it.",
+    "owned_cleanup": "Controller75-103 finally thaws and stops only the exact owned unit, uses bounded cleanup/reaping and exact owned cgroup kill if needed; cleanup errors and leftovers remain explicit."
+  },
+  "conditional_public_check_contract": {
+    "negative_check": {
+      "count": 1,
+      "native_actor_calls": 0,
+      "model_calls": 0,
+      "required": "Accept exact registered controls alone; reject a real surviving local descendant without positive retirement receipt; terminate/reap the owned descendant/scope and retain rejection plus cleanup metadata."
+    },
+    "ordinary_confirmation": {
+      "count": 1,
+      "condition": "Run only after the negative check establishes that expected rejection and clean owned-scope closure, with no unrelated error/timeout/leftover substituted as success.",
+      "native_turns": 3,
+      "sessions": 2,
+      "calendar_advances": 1,
+      "tool_limit": 16,
+      "seventeenth_pre_dispatch_refusal_required": true,
+      "deadline_seconds": 120,
+      "upstream": "Existing public mocked transport only; zero external inference and original inputs."
+    },
+    "stop_if_unexpected": "Retain every failure/UNKNOWN; no unchanged repetition or original input release.",
+    "inprocess_limit": "The exact public mock requests only the existing fixed native reader commands. This does not prove arbitrary delegated or broker-backed work is scoped. Keep source-authority, native client/pending, tool, queue and readback guards; any active/unobserved work refuses equivalence.",
+    "native_cleanup": "Preserve uncertain/native_closed=false exactly. Equivalent process settlement is separate and cannot imply task quality or original sample admission."
+  },
+  "publication_limits": [
+    "Source/check permission only; no installed product feature, native runtime success or completed P2.1 claim.",
+    "No changed original budget, task, profile, tool policy, provider route or scoring.",
+    "Local broker unreachability remains unproved. No general off-scope execution or in-process quiescence claim may be inferred from this public fixed-command fixture."
+  ]
+}

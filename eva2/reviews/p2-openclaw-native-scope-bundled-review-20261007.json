@@ -1,0 +1,160 @@
+{
+  "contract": "OpenClawNativeScopeBundledReview/v1",
+  "task": "P2.1",
+  "reviewedAt": "2026-10-07T16:03:33.969690+00:00",
+  "independent": true,
+  "decision": {
+    "reviewedSource": "GO",
+    "boundedPublicNativeRuntime": "GO",
+    "publicationCheckpoint": "GO",
+    "originalSampleAdmission": "NO_GO_SEPARATE_BINDING_REQUIRED",
+    "productCompletion": false
+  },
+  "bindings": {
+    "publicReport": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-process-scope-preparation-20261007.json",
+      "sha256": "ce03f855831b666e65e6a7fa448b2f8616a2021cda13e3171e9062eff440e782"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/ordinary-execution.public.json",
+      "sha256": "bebaf248e45f5294e6741a02cfc0f181b26fa55b208a5421f130df53825f398b"
+    },
+    "technicalReceipt": {
+      "path": "/tmp/eva-p2-openclaw-process-scope-20261007-z6hq5wko/composition-technical.private.json",
+      "sha256": "f911b994e5d532ef640b1d60b1e458a3d9bcfb50f8e96145e2d8ed0f4fba850e"
+    },
+    "testLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/ordinary-composition.public.txt",
+      "sha256": "861bf70ad7ab2a1ccf3c23e059117a8ff24e9b3095d36bce7cb0a08b3aa3df58"
+    },
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284"
+    },
+    "processAccounting": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "d00853e4196bbed1e976e47deb460a65c452b4e1091a06c37164b81c6f5609ea"
+    },
+    "fixture": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "3e4408ac5058d0da5f1abb08d2be28784cbf0161bdb1ecbf705bdf1e52a20c10"
+    },
+    "controller": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/run-public-composition.private.py",
+      "sha256": "2761598cff600c2d5c88f8c6209d6e9d1b995471f410c60b7d31536c93d7cbdb"
+    },
+    "workboard": {
+      "path": "/home/administrator/project/Eva2/eva2/design/product/execution-workboard-v1.json",
+      "sha256": "692dcbe45eeaf1258b962970231236ded1ea5bc51351810566747c48ad4a2aaa"
+    },
+    "workboardTop": {
+      "path": "/home/administrator/project/Eva2/eva2/WERKBORD.md",
+      "sha256": "74693b89d971f8b39baaf41552443271f3b8958c52be9b6c7290d263c6951dfa"
+    },
+    "originalConditionReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-process-scope-original-condition-review-20261007.json",
+      "sha256": "8479529aa6b2b288e7e4722d0f3f8270f566eb2a425ca9b5f4c342ca46b5d937"
+    }
+  },
+  "runtime": {
+    "exitCode": 0,
+    "timedOut": false,
+    "parentElapsedSeconds": 212.05845933499222,
+    "totalDeadlineSeconds": 480,
+    "nativePerTurnTimeoutSeconds": 120,
+    "completedNativeReadbackTurns": 3,
+    "nativeThreads": 2,
+    "scenarioGenerations": [
+      0,
+      0,
+      1
+    ],
+    "nativePreAccepted": 16,
+    "nativeCommandTerminals": 16,
+    "nativePostSettlements": 16,
+    "seventeenthRefusedBeforeBody": true,
+    "toolCoverage": true,
+    "coverageFailure": null,
+    "preparationFailures": 0,
+    "syntheticCompletedSDKRows": 4,
+    "syntheticInputTokens": 68,
+    "syntheticOutputTokens": 12,
+    "syntheticUsagePaidOrRealModelUsage": false,
+    "realInferenceCalls": 0,
+    "originalInputs": 0,
+    "nativeClosedLiteral": false,
+    "equivalentNativeSettled": true,
+    "matchedPhysicalClientExits": 3,
+    "nullNativeSourceAuthorityObservations": 3,
+    "pendingSDK": 0,
+    "pendingTools": 0,
+    "cancelErrors": [],
+    "queuesFlushed": true,
+    "perClientFrozenRetirementReceipts": 3,
+    "freshFinalFrozenScope": true,
+    "scopePopulatedAfterStop": false,
+    "namespacePidsAfterStop": [],
+    "scopeErrors": [],
+    "cleanupErrors": [],
+    "scopeStopExitCode": 5,
+    "scopeStopInterpretation": "Owned scope had already disappeared after normal actor exit; code5 is retained, not reported as stop success0."
+  },
+  "independentRetainedChecks": {
+    "all21PublicReportFileReferencesPresentAndHashMatched": true,
+    "all4OutboundBodyCaptureHashesMatched": true,
+    "all3NativeThreadReadbackHashesMatched": true,
+    "nativeReadbacksIdleNoActiveTurnOrBackgroundTerminal": true,
+    "sameFirstThreadHasOneThenTwoCompletedTurnsAndSecondThreadOneCompletedTurn": true,
+    "all6RootScopeReceiptHashesMatched": true,
+    "rootScopesFrozenOnlyRegisteredControllersZeroWorkloadProcesses": true,
+    "sixEnumeratedOperatorArtifactHashesEqual": true,
+    "nativeCleanupReclassified": false,
+    "retainedThreadReadbackSha256": [
+      "4144a99c81ea9f56b7a7ddb83ded0519f17093f934b332c7d31b099d013b475c",
+      "3234e4df12c0bb485d9a86995e19cbc22c13f4fcdcb82eb4e4c6a7e89e75e934",
+      "e08b0933d7b3b5f39efcc36a4f2e5ef3cb69321c223bdd2321b6d177b2f6cad1"
+    ]
+  },
+  "publication": {
+    "reportConsistentWithReceipts": true,
+    "P21Status": "in_progress",
+    "completedTasks": 39,
+    "totalTasks": 48,
+    "staleCurrentFindingAndNextActionCorrected": true,
+    "previousValuesExplicitlyHistorical": true,
+    "workboardTopKeepsOriginalSampleUnstartedAndNoQualityWin": true,
+    "allPriorFailuresPreserved": true,
+    "creditCost": null
+  },
+  "remainingOriginalRunnerBinding": {
+    "dormantParent": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/launch-parent-accounted-cm01.private.py",
+      "sha256": "424c57b0702c967462bd5a03745dd8e58e5f125ca9f930d0f95d97aebe4310e7"
+    },
+    "dormantChild": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/native-openclaw-cm.private.mjs",
+      "sha256": "824bbba82dd3b1c25fc21f61a3f5f7d5617303f837c35ba0c6ad3ebf3d7ae791"
+    },
+    "concreteGap": "The dormant child does not supply nativeProcessScope and still derives success, pending-at-close and parent ACK from literal native_closed. Its parent lacks the reviewed root scope and NoNewPrivileges launch binding. The successful public controller is not yet the original runner.",
+    "smallestTransition": [
+      "Connect the reviewed root-owned scope/controller to the existing original parent/child using the actual registered controller identities, original deadline and existing real cumulative provider/tool ledger. Preserve original UID/groups/capabilities, controlled clock, profile/session/memory/readback route and resource rights.",
+      "Retain literal native cleanup/native_closed. Use the independently evidenced equivalent-native-settled conjunction for original success/pending/parent-ACK only when all original current-work, source, queue, SDK/tool, readback, exit and scope conditions hold; never replace it with a constant or empty-process snapshot.",
+      "Refresh exact source/controller/module pins and existing preparation/admission/Inspect bindings for the same unused slot and authority. Review the concrete original-runner delta and actual readiness before releasing original input. No new case, reset, quota transfer or closed-case replay."
+    ]
+  },
+  "limitations": [
+    "This proves the stated public ordinary route with synthetic upstream, not real model answer quality, provider latency, monetary savings or comparative superiority.",
+    "Scope evidence covers the observed work. Universal OS broker unreachability is neither proved nor a new original criterion; any actually started off-scope work still needs bound terminal/release evidence or remains unknown.",
+    "The native source-authority factory was actually observed not-created for all three clients; this is not a claim that every possible source/delegated route is absent.",
+    "No installation or extra product task completion is claimed."
+  ],
+  "reviewActivity": {
+    "newTests": 0,
+    "actorStarts": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedInputReads": 0,
+    "authorityMutations": 0,
+    "childAgents": 0
+  }
+}

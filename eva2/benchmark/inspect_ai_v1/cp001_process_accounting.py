@@ -422,3 +422,162 @@ class ProcessSampleLedger:
             self._stream.close()
             self._socket.close()
         return acknowledged
+
+
+class RootOwnedNativeProcessScope:
+    """Evaluator-owned cgroup census; no inference or workload authority.
+
+    The controller lives outside this root-owned, non-delegated cgroup. Actors
+    must enter it before their first exec. Only the two pre-native Node test
+    processes are allowed to survive retirement; every descendant is included.
+    """
+
+    def __init__(self, cgroup_path, socket_path, receipt_dir, *, node_sha256,
+                 uid, deadline_monotonic, nonce, root_binding, generation):
+        import hashlib
+        import time
+        self.hashlib, self.time = hashlib, time
+        self.cgroup = Path(cgroup_path).resolve(strict=True)
+        base = Path("/sys/fs/cgroup").resolve(strict=True)
+        if base not in self.cgroup.parents or os.geteuid() != 0:
+            raise ValueError("root-owned native cgroup required")
+        self.path, self.receipt_dir = Path(socket_path), Path(receipt_dir)
+        self.node_sha256, self.uid = node_sha256, uid
+        self.deadline, self.nonce = deadline_monotonic, nonce
+        self.allowed, self.receipts, self.errors = root_binding["processes"], [], []
+        self.peer_pid = root_binding["peer_pid"]
+        stat = self.cgroup.stat()
+        self.scope_identity = {"path":str(self.cgroup),"device":stat.st_dev,"inode":stat.st_ino,"generation":generation}
+        self.registered = False
+        self.closed = False
+        self._protect_cgroup()
+        child = self.allowed.get(self.peer_pid)
+        if len(self.allowed) != 2 or not child or child["parent_pid"] not in self.allowed or any(row["executable_sha256"] != self.node_sha256 for row in self.allowed.values()):
+            raise ValueError("exact root pre-bound Node parent and peer required")
+        if {pid:self._process_identity(pid) for pid in self.allowed} != self.allowed:
+            raise ValueError("root pre-bound native controllers changed")
+        if (self.path.parent.stat().st_uid != 0 or
+                self.path.parent.stat().st_mode & 0o022 or self.path.exists()):
+            raise ValueError("immutable root socket directory required")
+        self.server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self.server.bind(str(self.path))
+        os.chown(self.path, 0, uid)
+        os.chmod(self.path, 0o660)
+        self.server.listen(1)
+        self.server.settimeout(0.2)
+        self.thread = threading.Thread(target=self._serve_scope, daemon=True)
+        self.thread.start()
+
+    def _check_deadline(self):
+        if self.closed or self.time.monotonic() >= self.deadline:
+            raise ValueError("original native scope deadline reached")
+
+    def _protect_cgroup(self):
+        stat = self.cgroup.stat()
+        if (stat.st_dev,stat.st_ino) != (self.scope_identity["device"],self.scope_identity["inode"]):
+            raise ValueError("native cgroup generation changed")
+        base = Path("/sys/fs/cgroup").resolve(strict=True)
+        paths = [self.cgroup, *self.cgroup.parents]
+        for path in paths:
+            if path == base.parent:
+                break
+            stat = path.stat()
+            if stat.st_uid != 0 or stat.st_mode & 0o022:
+                raise ValueError("native cgroup hierarchy writable by actor")
+            if path == base:
+                break
+        for directory in [self.cgroup, *self.cgroup.rglob("*")]:
+            if directory.is_dir():
+                for path in [directory, directory/"cgroup.procs", directory/"cgroup.threads"]:
+                    stat = path.stat()
+                    if stat.st_uid != 0 or stat.st_mode & 0o022:
+                        raise ValueError("native cgroup membership writable by actor")
+
+    def _process_identity(self, pid):
+        proc = Path("/proc")/str(pid)
+        raw = (proc/"stat").read_text()
+        fields = raw[raw.rfind(")")+2:].split()
+        status = dict(line.split(":", 1) for line in (proc/"status").read_text().splitlines() if ":" in line)
+        relative = self.cgroup.relative_to("/sys/fs/cgroup")
+        if (proc/"cgroup").read_text().strip() != "0::/" + str(relative):
+            raise ValueError("native peer outside owned cgroup")
+        if (any(int(v) != self.uid for v in status["Uid"].split()) or
+            any(int(v) != self.uid for v in status["Gid"].split()) or status["Groups"].split()):
+            raise ValueError("native peer UID differs")
+        if (status["NoNewPrivs"].strip() != "1" or
+            any(int(status[k].strip(), 16) for k in ["CapInh", "CapPrm", "CapEff", "CapBnd", "CapAmb"])):
+            raise ValueError("native peer may acquire privilege")
+        return {"pid": pid, "parent_pid": int(fields[1]), "start_ticks": int(fields[19]),
+                "executable_sha256": self.hashlib.sha256((proc/"exe").read_bytes()).hexdigest()}
+
+    def _frozen_census(self, peer, register, binding):
+        self._check_deadline()
+        self._protect_cgroup()
+        freeze = self.cgroup/"cgroup.freeze"
+        try:
+            freeze.write_text("1")
+            while "frozen 1" not in (self.cgroup/"cgroup.events").read_text().splitlines():
+                self._check_deadline()
+                if self.time.monotonic() >= self.deadline:
+                    raise ValueError("native scope freeze not confirmed within original deadline")
+                self.time.sleep(0.01)
+            self._check_deadline()
+            directories = [self.cgroup, *[p for p in self.cgroup.rglob("*") if p.is_dir()]]
+            members = sorted({int(value) for path in directories for value in (path/"cgroup.procs").read_text().split()})
+            identities = {pid:self._process_identity(pid) for pid in members}
+            if identities != self.allowed or peer != self.peer_pid:
+                raise ValueError("native workload remains or controller identity changed")
+            if register:
+                if self.registered:
+                    raise ValueError("native scope already registered")
+                self.registered = True
+            elif not self.registered:
+                raise ValueError("native scope registration missing")
+            receipt = {"contract":"RootOwnedNativeProcessScope/v1", "sequence":len(self.receipts)+1,
+                       "phase":"register" if register else "retirement", "scope_sha256":self.hashlib.sha256(json.dumps(self.scope_identity,sort_keys=True).encode()).hexdigest(),
+                       "frozen_confirmed":True, "member_identities":list(identities.values()),
+                       "only_registered_controllers":True, "native_workload_processes":0,
+                       "binding":binding, "observed_monotonic":self.time.monotonic()}
+            path = self.receipt_dir/f"scope-{receipt['sequence']:03d}.json"
+            with path.open("x") as stream:
+                json.dump(receipt, stream, sort_keys=True); stream.flush(); os.fsync(stream.fileno())
+            os.chmod(path, 0o600)
+            self.receipts.append({"path":str(path),"sha256":self.hashlib.sha256(path.read_bytes()).hexdigest()})
+            self._check_deadline()
+            return receipt
+        finally:
+            freeze.write_text("0")
+
+    def _serve_scope(self):
+        import struct
+        try:
+            while not self.closed:
+                try:
+                    connection, _ = self.server.accept()
+                except socket.timeout:
+                    continue
+                with connection, connection.makefile("rb") as stream:
+                    self._check_deadline()
+                    connection.settimeout(max(0.001,self.deadline-self.time.monotonic()))
+                    pid, uid, gid = struct.unpack("3i", connection.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12))
+                    request = _read(stream)
+                    if uid != self.uid or gid != self.uid or pid != self.peer_pid or request.get("nonce") != self.nonce:
+                        raise ValueError("native scope peer refused")
+                    operation = request.get("op")
+                    binding = request.get("binding")
+                    if operation not in {"register","retirement"} or not isinstance(binding, dict) or (operation == "register" and binding.get("controller_pid") != pid):
+                        raise ValueError("native scope operation refused")
+                    response = self._frozen_census(pid, operation == "register", binding)
+                    self._check_deadline()
+                    _write(connection, threading.Lock(), {"receipt":response})
+        except Exception as error:
+            if not self.closed:
+                self.errors.append(type(error).__name__)
+            # A dropped connection never returns a positive receipt.
+
+    def close(self):
+        self.closed = True
+        self.server.close()
+        self.thread.join(timeout=2)
+        if self.thread.is_alive():
+            self.errors.append("scope_controller_thread_not_closed")

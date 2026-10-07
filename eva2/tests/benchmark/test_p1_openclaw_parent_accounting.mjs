@@ -1,3 +1,5 @@
+import {existsSync} from 'node:fs';
+import {OpenClawNativeProcessScope} from '../../benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs';
 /** Public fixtures. Ordinary native composition uses own auth with mocked upstream and no real inference. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -12,14 +14,80 @@ import { dirname } from 'node:path';
 import { OpenClawProcessLedger, OpenClawAccounting, NATIVE_PINS, installOpenClawAccounting } from '../../benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs';
 
 class FakeLedger {
-  constructor() { this.rows = []; this.stopHandlers = new Set(); this.stopReason = null; }
+  constructor(limits=null) {
+    this.rows = []; this.stopHandlers = new Set(); this.stopReason = null;
+    this.limits = limits ? Object.freeze({...limits}) : null;
+    this.pendingUsage = limits ? Object.freeze({...limits.pendingUsage}) : null;
+  }
   check() { if (this.stopReason) throw new Error('stopped'); }
   stop(reason) { this.stopReason = reason; for (const f of this.stopHandlers) f(); }
-  async begin(role, model, effort) { this.check(); const id = this.rows.length; this.rows.push({id,role,model,effort,status:'pending'}); return id; }
-  async settle(id, usage) { this.rows[id].usage = usage; this.rows[id].status = usage ? 'completed' : 'unknown'; if (!usage) this.stop('unknown'); }
+  validUsage(value) {
+    return value && ['input_tokens','output_tokens','total_tokens'].every(key=>Number.isSafeInteger(value[key]) && value[key]>=0)
+      && value.total_tokens===value.input_tokens+value.output_tokens;
+  }
+  totals() {
+    return this.rows.reduce((sum,row)=>{
+      const value=row.status==='pending'?this.pendingUsage:row.usage;
+      if (this.limits && !this.validUsage(value)) throw new Error('unknown synthetic usage');
+      if(value){sum.input_tokens+=value.input_tokens;sum.output_tokens+=value.output_tokens;}
+      return sum;
+    },{input_tokens:0,output_tokens:0});
+  }
+  async begin(role, model, effort) {
+    this.check();
+    if(this.limits){
+      if(this.rows.length>=this.limits.attempts){this.stop('synthetic attempt cap');throw new Error('synthetic attempt cap');}
+      const totals=this.totals();
+      if(totals.input_tokens+this.pendingUsage.input_tokens>this.limits.inputTokens
+        || totals.output_tokens+this.pendingUsage.output_tokens>this.limits.outputTokens){
+        this.stop('synthetic token cap');throw new Error('synthetic token cap');
+      }
+    }
+    const id = this.rows.length; this.rows.push({id,role,model,effort,status:'pending'}); return id;
+  }
+  async settle(id, value) {
+    const row=this.rows[id];
+    if(!row || row.status!=='pending') return;
+    row.usage=value;row.status=value?'completed':'unknown';
+    if(!value || (this.limits && !this.validUsage(value))){row.status='unknown';this.stop('unknown');return false;}
+    if(this.limits){
+      const totals=this.totals();
+      if(totals.input_tokens>this.limits.inputTokens || totals.output_tokens>this.limits.outputTokens){
+        this.stop('synthetic token overshoot');return false;
+      }
+    }
+  }
 }
 const usage = {input_tokens:17,output_tokens:3,total_tokens:20};
 const event = {type:'response.completed',response:{id:'public-response',usage}};
+await test('public synthetic ledger enforces shared attempts, reserved tokens, unknown usage and stop',async()=>{
+  const limits={attempts:16,inputTokens:1048576,outputTokens:19200,pendingUsage:usage};
+  const capped=new FakeLedger(limits);
+  for(let i=0;i<16;i++)await capped.settle(await capped.begin('contact','gpt-6-sol','none'),usage);
+  await assert.rejects(capped.begin('helper','gpt-6-astra','medium'),/synthetic attempt cap/);
+  assert.equal(capped.rows.length,16);
+  for(const limit of ['inputTokens','outputTokens']){
+    const pending=new FakeLedger({...limits,[limit]:limit==='inputTokens'?17:3});
+    await pending.begin('contact','gpt-6-sol','none');
+    await assert.rejects(pending.begin('helper','gpt-6-astra','medium'),/synthetic token cap/);
+    assert.equal(pending.rows.length,1);
+  }
+  const overshoot=new FakeLedger({...limits,inputTokens:17});
+  const overshootId=await overshoot.begin('contact','gpt-6-sol','none');
+  const actual={input_tokens:18,output_tokens:3,total_tokens:21};
+  assert.equal(await overshoot.settle(overshootId,actual),false);
+  assert.deepEqual(overshoot.rows[0].usage,actual);
+  await assert.rejects(overshoot.begin('contact','gpt-6-sol','none'),/stopped/);
+  for(const value of [null,{input_tokens:17,output_tokens:3}]){
+    const unknown=new FakeLedger(limits);
+    assert.equal(await unknown.settle(await unknown.begin('contact','gpt-6-sol','none'),value),false);
+    assert.equal(unknown.rows[0].status,'unknown');
+    await assert.rejects(unknown.begin('contact','gpt-6-sol','none'),/stopped/);
+  }
+  const stopped=new FakeLedger(limits);stopped.stop('owner stop');
+  await assert.rejects(stopped.begin('contact','gpt-6-sol','none'),/stopped/);
+});
+
 const nativeBody = (kind='turn', extra={}) => ({model:'gpt-6-sol',reasoning:{effort:'low'},input:[{role:'user',content:'Public fixture.'}],
   client_metadata:{'x-codex-turn-metadata':JSON.stringify({thread_id:'public-thread',request_kind:kind,...extra})}});
 const observer = ledger => new OpenClawAccounting(ledger, 20, {now:()=>10});
@@ -82,6 +150,45 @@ await test('calendar refuses mismatched turn/zone, duplicate carrier, stale gene
     assert.throws(()=>o.prepareBody(body));
     writeFileSync(clock,JSON.stringify({...state,generation:1}));refuses(body);
     assert.equal(ledger.rows.length,0);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+await test('calendar resumes only the exact settled same-thread original environment',async()=>{
+  const dir=mkdtempSync(tmpdir()+'/openclaw-calendar-resume-');const clock=dir+'/clock.json';
+  const state={contract:'EvaScenarioCalendar/v1',generation:0,offsetMilliseconds:Date.parse('2020-01-02T12:00:00Z')-Date.now()};
+  writeFileSync(clock,JSON.stringify(state),{mode:0o600});
+  const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,clockFile:clock});
+  const first=publicCalendarBody('first-turn');first.body.client_metadata['x-codex-turn-metadata']=JSON.stringify({turn_id:'first-turn',thread_id:'resume-thread',request_kind:'turn'});
+  // The captured ordinary resume has one initial environment; the helper's extra ambiguous historical carrier belongs to other tests.
+  first.body.input.pop();
+  try{
+    o.temporalContext(()=>({openclaw_temporal_context:{kind:'application',value:first.temporal}}));
+    const bound=o.prepareBody(first.body,Buffer.from(JSON.stringify(first.body)));
+    const next=structuredClone(first.body);
+    next.client_metadata.turn_id='next-turn';
+    next.client_metadata['x-codex-turn-metadata']=JSON.stringify({turn_id:'next-turn',thread_id:'resume-thread',request_kind:'turn'});
+    const current=structuredClone(next.input[1]);current.internal_chat_message_metadata_passthrough.turn_id='next-turn';next.input.push(current);
+    const bytes=Buffer.from(JSON.stringify(next));
+    assert.throws(()=>o.prepareBody(next,bytes),/resumed native environment reference unknown/);
+    const id=await ledger.begin('contact','gpt-6-sol','none');
+    await o.event({attempt_id:id,status:'pending',calendar_binding:bound.accounting.calendarBinding},
+      {type:'response.completed',response:{id:'settled-initial-environment',status:'completed',usage}});
+    const before=JSON.stringify(next);const resumed=o.prepareBody(next,bytes);
+    assert.equal(JSON.stringify(next),before);assert.deepEqual(resumed.accounting.nativeOriginalBodyBytes,bytes);
+    assert.equal(resumed.accounting.calendarBinding.environment_turn_id,'first-turn');
+    assert.ok(resumed.accounting.calendarBinding.environment_source_response_id_sha256);
+    assert.equal(resumed.body.input[2].content[0].text.includes('<current_date>2020-01-02</current_date>'),true);
+    assert.deepEqual(resumed.body.input[1],next.input[1]);
+    for(const change of ['thread','environment','duplicate','generation']){
+      const wrong=structuredClone(next);
+      if(change==='thread')wrong.client_metadata['x-codex-turn-metadata']=JSON.stringify({turn_id:'next-turn',thread_id:'other-thread',request_kind:'turn'});
+      if(change==='environment')wrong.input[2].content[0].text+=' changed';
+      if(change==='duplicate')wrong.input.push(structuredClone(wrong.input[2]));
+      if(change==='generation'){
+        writeFileSync(clock,JSON.stringify({...state,generation:1}));
+        o.temporalContext(()=>({openclaw_temporal_context:{kind:'application',value:first.temporal}}));
+      }
+      assert.throws(()=>o.prepareBody(wrong,Buffer.from(JSON.stringify(wrong))),/resumed native environment reference unknown/);
+    }
   }finally{rmSync(dir,{recursive:true,force:true});}
 });
 await test('calendar supports native typed tool history and only settled same-thread-turn incremental responses',async()=>{
@@ -545,6 +652,50 @@ await test('actual owned relay activates synchronous pre and post planning witho
 
 // One bundled actual ordinary CLI fixture. Its profile is supplied by the private
 // preparation owner; all input/tool responses below are public and upstream is fake.
+await test('native frozen scope proves equivalent retirement without relabeling uncertain cleanup',async()=>{
+  const ledger=new FakeLedger();const o=observer(ledger);o.observeTools=true;let inspections=0;
+  const client={closed:true,serverRequests:{active:new Map()},pending:new Map()};
+  o.clients.set(client,new Set(['scope-thread']));o.nativeCloseReads.set(client,[{thread_id:'scope-thread',turn_count:1}]);
+  o.nativeClosed.set(client,{cleanup:'uncertain'});o.nativeTransportExits.set(client,{transport_exited:true,matched_client:true});
+  o.nativeSourceAuthorities.set(client,undefined);o.nativeQueues.set('scope-unit',{packageRoot:'/public',queue:{flush:async()=>{}}});
+  o.nativeProcessScope={inspect:async binding=>{inspections++;return {contract:'RootOwnedNativeProcessScope/v1',phase:'retirement',
+    frozen_confirmed:true,only_registered_controllers:true,native_workload_processes:0,binding};}};
+  assert.equal((await o.nativeSettlement()).length,1);
+  const result=await o.closeNative();assert.equal(result.native_closed,false);assert.equal(result.equivalent_native_settled,true);
+  assert.equal(result.transport_results[0].cleanup,'uncertain');assert.equal(inspections,2);
+  for(const fault of ['active-source','missing-source','live-workload','binding-change']){
+    const bad=observer(new FakeLedger());bad.observeTools=true;bad.clients.set(client,new Set(['scope-thread']));
+    bad.nativeCloseReads.set(client,[{thread_id:'scope-thread'}]);bad.nativeClosed.set(client,{cleanup:'uncertain'});
+    bad.nativeQueues.set('scope-unit',{packageRoot:'/public',queue:{flush:async()=>{}}});
+    bad.nativeTransportExits.set(client,{transport_exited:true});
+    if(fault!=='missing-source')bad.nativeSourceAuthorities.set(client,fault==='active-source'?{holds:1}:null);
+    bad.nativeProcessScope={inspect:async binding=>({contract:'RootOwnedNativeProcessScope/v1',phase:'retirement',
+      frozen_confirmed:true,only_registered_controllers:true,native_workload_processes:fault==='live-workload'?1:0,
+      binding:fault==='binding-change'?{}:binding})};
+    await assert.rejects(bad.nativeSettlement(),/native (process\/source scope not settled|frozen scope receipt differs)/);
+  }
+});
+
+async function registeredRootScope(){
+  const control=JSON.parse(process.env.OPENCLAW_ROOT_SCOPE_CONTROL);
+  const stop=control.deadline_monotonic;
+  while(!existsSync(control.socket_path)){
+    assert.ok(Number(process.hrtime.bigint())/1e9<stop,'root scope controller unavailable');
+    await new Promise(resolve=>setTimeout(resolve,10));
+  }
+  const scope=new OpenClawNativeProcessScope(control);await scope.register();return scope;
+}
+await test('real root frozen scope rejects a surviving local descendant',
+  {skip:process.env.OPENCLAW_ROOT_SCOPE_NEGATIVE!=='1'},async()=>{
+    const scope=await registeredRootScope();
+    const binding={public_fixture:'no-native-work'};
+    assert.equal((await scope.inspect(binding)).native_workload_processes,0);
+    const {spawn}=await import('node:child_process');const {once}=await import('node:events');
+    const child=spawn(process.execPath,['-e','setInterval(()=>{},1000)'],{stdio:'ignore'});
+    try{await assert.rejects(scope.inspect({public_fixture:'surviving-descendant'}),/scope controller closed without receipt/);}
+    finally{child.kill();await once(child,'exit');}
+});
+
 await test('public ordinary actor composition binds native calendar, model bodies, tools and one-shot readbacks',
   {skip:process.env.OPENCLAW_PUBLIC_COMPOSITION !== '1'}, async()=>{
   const plugin=process.env.OPENCLAW_PINNED_PLUGIN;const host=process.env.OPENCLAW_PINNED_HOST;
@@ -554,8 +705,9 @@ await test('public ordinary actor composition binds native calendar, model bodie
   const {a:withPluginInstallRoots,i:resolvePluginInstallRoots}=await import(pathToFileURL(host+'/dist/install-root-context-DEOzYnOP.mjs'));
   assert.equal(process.env.HOME,dirname(operatorState),'native HOME must belong to the existing UID1000 operator');
   return await withPluginInstallRoots(resolvePluginInstallRoots({...process.env,OPENCLAW_STATE_DIR:operatorState}),async()=>{
-  const ledger=new FakeLedger();const deadline=Number(process.hrtime.bigint())/1e9+120;
-  const o=new OpenClawAccounting(ledger,deadline,{clockFile,privateModelContextDir:contexts,observeTools:true});
+  const ledger=new FakeLedger({attempts:16,inputTokens:1048576,outputTokens:19200,pendingUsage:usage});const deadline=process.env.OPENCLAW_ROOT_SCOPE_CONTROL?JSON.parse(process.env.OPENCLAW_ROOT_SCOPE_CONTROL).deadline_monotonic:Number(process.hrtime.bigint())/1e9+120;
+  const nativeProcessScope=process.env.OPENCLAW_ROOT_SCOPE_CONTROL?await registeredRootScope():null;
+  const o=new OpenClawAccounting(ledger,deadline,{clockFile,privateModelContextDir:contexts,observeTools:true,nativeProcessScope});
   const publishClock=(generation,offsetMilliseconds)=>{
     const path=clockFile+'.tmp';writeFileSync(path,JSON.stringify({contract:'EvaScenarioCalendar/v1',generation,offsetMilliseconds}),{mode:0o600});renameSync(path,clockFile);
   };
@@ -631,10 +783,10 @@ await test('public ordinary actor composition binds native calendar, model bodie
     // The same installed pre-execution observer must reject a 17th identity before a body callback.
     let deniedBodyCalls=0;assert.throws(()=>{o.nativeToolBefore({toolUseId:'public-cap-denied-17',toolName:'exec_command',rawPayload:{session_id:sessions[1]}});deniedBodyCalls++;},/original tool cap/);
     assert.equal(deniedBodyCalls,0);assert.equal(o.tools.size,16);capRefused=true;
-    close=await o.closeNative(plugin);assert.equal(close.native_closed,true);assert.equal(close.pending_sdk,0);assert.equal(close.pending_tools,0);
+    close=await o.closeNative(plugin);assert.equal(nativeProcessScope?close.equivalent_native_settled:close.native_closed,true);assert.equal(close.pending_sdk,0);assert.equal(close.pending_tools,0);
   } finally {
     close=await o.closeNative(plugin);hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;
-    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',completedNativeTurns,physicalFakeCalls:physical,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
+    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',completedNativeTurns,physicalFakeCalls:physical,syntheticCaps:ledger.limits,syntheticUsagePaidOrRealModelUsage:false,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,equivalent_native_settled:close.equivalent_native_settled,native_process_scope_receipts:close.native_process_scope_receipts,final_native_process_scope_receipt:close.final_native_process_scope_receipt,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
   }
   });
 });

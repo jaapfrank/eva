@@ -1,64 +1,37 @@
-## Actueel 7 oktober — L3.6–L3.7 afgerond; resterende vergelijking
+## Actueel 7 oktober — eigen verbetering geïnstalleerd; eindvergelijking open
 
-Eva’s eigen contextverbetering is onafhankelijk geaccepteerd, geïnstalleerd en
-teruggelezen. Eén extra vraag werd 3/3 rechtstreeks beantwoord zonder regressies.
-De volgende gewone ronde gebruikte de beste geïnstalleerde versie en eerdere
-ervaring, bewaarde een teruggelezen vervolgnotitie en stopte zonder nieuw tekort.
-Onafhankelijke GO_DONE op de oorspronkelijke L3.7-eindvoorwaarde; toepassing niet
-herhaald. Geen brede superioriteits-, tweede optimalisatie- of droomplannerclaim.
+**Afgerond: L3.6–L3.7.** Eva’s eigen contextverbetering is onafhankelijk
+geaccepteerd, geïnstalleerd en teruggelezen. Een extra vraag werd 3/3 rechtstreeks
+beantwoord, zonder regressies. De volgende gewone ronde gebruikte de beste
+versie en eerdere ervaring, bewaarde een teruggelezen vervolgnotitie en stopte.
+Dit bewijst die verbetering en vervolgroute; geen algemene voorsprong op alle
+concurrenten. De automatische droomplanner is nog niet gebouwd.
 
-Actief: P2.1. Kalenderbinding en echte owned-relayplanning zijn bevestigd.
-De eenmalige gewijzigde publieke routecontrole bewees twee native uitvoeringen,
-maar volledige accounting/afsluiting en de timeoutoorzaak blijven onbekend.
-Geen echte modelcalls, oorspronkelijke sample of ongewijzigde herhaling.
-Codex vervolgt bij de concrete meetroute; geen productverlies-/voorsprongclaim.
-De publieke uitvoer bevat twee geslaagde commando’s, dertien geweigerde hookroutes
-en één hooktimeout. De oorzaak is nog niet bewezen. Inhoudsvrije duurzame
-callbackregistratie plus controle na opslag zijn gebouwd: 3 gerichte controles
-geslaagd, 0 model-/actorcalls. Eén gewijzigde publieke diagnose volgt pas na
-onafhankelijke bronreview; geen oorspronkelijke proef gestart.
-Die diagnose bevestigde nu de oorzaak: native voltooiing kwam vóór de post-hook;
-onze evaluator stopte ten onrechte terwijl het commando echt was uitgevoerd.
-Exacte tool/thread/turn-correlatie gecorrigeerd, 6 gerichte controles geslaagd.
-Onafhankelijke bron-GO en gewijzigde publieke bevestiging zijn uitgevoerd:
-16/16 native commando’s én nacontroles geregistreerd, zonder coverage-stop of
-pre-hookfout. Eerste beurt eindigde daarna met parent-local HTTP502 en geen
-antwoord; dezelfde sessie registreerde opnieuw. Volledige driebeurtenlus,
-verbruiksregistratie en native afsluiting blijven UNKNOWN. Geen echte modelcalls,
-oorspronkelijke sample, nieuwe runtime-installatie of extra productafronding.
-De verborgen voorbereidingsfout is nu bewezen uit36 private foutregistraties:
-de kalendercontrole verwachtte tekstmetadata op getypeerde toolresultaten. Ook
-geldige incrementele vervolgberichten werden daardoor geweigerd. Die concrete
-oorzaak is gecorrigeerd: volledige toolhistorie blijft ongewijzigd; incrementele
-context vereist een werkelijk settled antwoord van dezelfde thread/beurt/klok.
-Vier gerichte controles en exact bewaarde mislukte vervolgberichten geslaagd.
-Onafhankelijke bronreview GO; één gewijzigde publieke routebevestiging is klaar.
-De kalendercorrectie werkt werkelijk:16 tools,2 settled synthetische SDK-aanvragen,
-eerste CLI-antwoord en0 voorbereidingsfouten. Daarna weigert nativeSettlement de
-door OpenClaw als uncertain gemelde sluiting. Driebeurtenreadback en geldige
-afsluiting blijven onbewezen; de oorspronkelijke vergelijking is nog niet gestart.
-Onafhankelijke runtime-GO voor het broncheckpoint. De native retire-overgang sluit
-de verbinding vóór onze teruglezing. Volgende gerichte correctie: vóór retirement
-teruglezen; fysieke exit en bronbeëindiging afzonderlijk bewijzen. Native uncertain
-blijft intact. Geen ongewijzigde proefherhaling.
-P2.1 blijft open; deze evaluatorcorrectie telt niet als extra gezinsfunctie.
-De volgende gerichte correctie is gebouwd: awaited teruglezing vóór de echte
-retirement-anchor; gewone sluiting blijft plaatsvinden als teruglezen faalt.
-Exacte transportexit wordt apart waargenomen. Twee lifecycle-/negatieve controles
-en de bestaande native proxy-import slaagden. De gecombineerde relaycontrole
-raakte een al zonder observatie geïmporteerde ESM-cache; de ongewijzigde relaytest
-slaagde in een afzonderlijk proces. Eerste mislukking blijft bewaard. Bronreview GO; één gewijzigde publieke bevestiging
-is terminal:83,13s,16 tools,2 settled synthetische aanvragen,1 CLI-antwoord.
-Echte idle thread met1 afgeronde beurt vóór sluiting bewaard;0 actieve beurten en
-0 achtergrondterminals. Exacte bijbehorende transportexit bevestigd. Volledige
-source-authority/bronbeëindiging en3beurtenlus nog niet bewezen; native uncertain
-blijft intact. Nu runtime-review en bestaande beëindigingscontrole gericht
-aansluiten; geen ongewijzigde proefherhaling of oorspronkelijke sample.
-Apps/add-ons horen bij dezelfde verbetercyclus; droommodus is nog niet gebouwd.
-Bekend achtergrondverbruik vervolgronde117.720tokens (partial/subtotaal);
-antwoordvergelijking apart13.973tokens. Credits en volledig ontwikkeltotaal onbekend.
-Bewijs: evidence/product/l3-context-candidate-b-installed-20261007.json en
-reviews/l3-reusable-cycle-closure-review-20261007.json.
+**Nu: P2.1.** De volledige publieke native OpenClaw-route is geslaagd:
+drie beurten, twee sessies, één dagovergang,16voltooide toolresultaten en een
+werkelijk afgeronde procesafsluiting. Doorlooptijd212s met4nagebootste
+modelantwoorden (68synthetische input-/12outputtokens), nul echte modelcalls.
+De oorspronkelijke cleanup=uncertain blijft staan; de extra native/state-/queue-/
+exit-/bevroren-scopebewijzen bevestigen de werkelijk afgeronde uitvoering.
+Dit bewijst de meetroute, geen antwoordkwaliteit of algemene voorsprong.
+
+**Eerstvolgende handeling:** de oorspronkelijke runner en geldige toelating aan
+deze gecontroleerde route binden. De gebundelde onafhankelijke bron-/runtime-/
+publicatiereview is geslaagd. De ongebruikte oorspronkelijke OpenClaw-sample is nog niet gestart.
+De eerdere120s-timeout en320s-fout op overgeërfde omgeving blijven bewaard;
+vier gerichte kalendercontroles en de gecorrigeerde native route zijn geslaagd.
+Werkelijke ongeregistreerde externe uitvoering blijft onbekend. Geen nieuwe
+matrix, herhaling van afgesloten gevallen of extra gezinsfunctie geteld.
+
+**Jouw open handeling:** twee afzonderlijke mensen beoordelen de al beschikbare
+anonieme antwoordpakketten bij P2.1. Dat blokkeert Codex’ technische werk niet.
+De spraaktaken blijven geparkeerd volgens de eigenaarprioriteit.
+
+Actuele kleine taken: audit.deliveryPlan.implementationSlices[].remainingTasks
+in eva2/design/product/execution-workboard-v1.json. Geïnstalleerd resultaat:
+eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json.
+Native teruglezing/exit:
+eva2/evidence/product/p2-openclaw-retirement-readback-correction-20261007.json.
 
 ## Actueel 7 oktober — volledige documentovergang geïnstalleerd, exact werk hervat
 

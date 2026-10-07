@@ -1,0 +1,157 @@
+{
+  "contract": "OpenClawProcessScopeDeadlineResultReview/v1",
+  "reviewedAt": "2026-10-07T15:38:09.735407+00:00",
+  "task": "P2.1",
+  "independent": true,
+  "decision": {
+    "publication": "GO",
+    "public480SecondDesign": "GO_WITH_REQUIRED_CAP_BINDING",
+    "nextPublicExecution": "NOT_YET_ADMITTED",
+    "originalSample": "NO_GO"
+  },
+  "scope": "Retained public composition and exact original time-envelope interpretation only; no original input, authority mutation, new runtime, test or provider call by reviewer.",
+  "bindings": {
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/ordinary-execution.public.json",
+      "sha256": "b6166677b94f3c9126c55364ef3bf9ca9c5cddbef3e9919db3cf895de22fde5b"
+    },
+    "postStopScopeReadback": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/post-stop-scope-readback.public.json",
+      "sha256": "707fedcccc40ad9d0e35197d601253ae9b8f9c3cf2a56d5dbea8d39c2c2a894a"
+    },
+    "brokerMetadata": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/local-broker-metadata.public.json",
+      "sha256": "0f754c13638c04fa4ed8b6a7b9b84c56821aaa50605cceefb5dbf8dddc7862d2"
+    },
+    "originalPlan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "priorClientBindingReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-process-scope-client-binding-review-20261007.json",
+      "sha256": "495260d67bdf259f1eb9486aa1c8da45c60bd9bc29f10ef83e5b869531af4c5b"
+    },
+    "kernelNegative": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/negative-execution.public.json",
+      "sha256": "5b3519e7e74bf8c356705124dad71e184b364a4b4a69f2997e5a8534a4074764"
+    },
+    "accountingSource": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "9f0900ad925887873bea6caac33305df86c8ca6c8ac969e01e3223f0de07233d"
+    },
+    "processSource": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "d00853e4196bbed1e976e47deb460a65c452b4e1091a06c37164b81c6f5609ea"
+    },
+    "fixtureSource": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "ac02e418854c6e8483f83bdcb6ef0e723e62acd09761d93d8f1d746e7e3fbdb5"
+    },
+    "controller": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/run-public-composition.private.py",
+      "sha256": "e08d43b1ccd5beb1cdd9a7cc250b70c3f714dc2ba0f06b4845a60ca93d404f72"
+    }
+  },
+  "observedResult": {
+    "exitCode": 1,
+    "controllerTimedOut": true,
+    "singleAbsoluteDeadlineSeconds": 120,
+    "elapsedIncludingStopCleanupSeconds": 122.04726634599501,
+    "verifiedNativeReadbackTurns": 1,
+    "intendedPublicTurns": 3,
+    "verifiedOrdinal": 0,
+    "toolPreAcceptedAndReturned": 16,
+    "correlatedCommandTerminals": 16,
+    "postSettlements": 16,
+    "preErrors": 0,
+    "coverageStops": 0,
+    "completedSyntheticSDKResponses": 2,
+    "syntheticInputTokens": 34,
+    "syntheticOutputTokens": 6,
+    "syntheticUsageIsPaidOrRealModelUsage": false,
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "firstTurn": "Genuine pre-retirement thread readback, matching physical client exit and root frozen scope receipt precede public_turn_readback_settled.",
+    "nextTransition": "Second relay and null native-source-authority observation exist; no second completed/readback-settled turn or terminal composition receipt. Global deadline ended this later startup interval.",
+    "fullCompositionSucceeded": false,
+    "nativeCleanupFieldReclassified": false,
+    "operatorByteEquality": "Only the six enumerated execution-receipt files; no general owner-state or broker-work claim.",
+    "evidence": [
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-rlmdy3qz/contexts/140-native-observation.json",
+        "sha256": "6769a71d9c4bd1d46e90d06aef585c31bb3ae0988fac0e4211cccb77ea404297"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-rlmdy3qz/contexts/141-native-observation.json",
+        "sha256": "4e7c152541cfd5b9b4e794b0b3e25ee34df7a40bbdb4ac5ca4db1af4d2c05c0c"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-rlmdy3qz/contexts/142-native-observation.json",
+        "sha256": "3ab15c7672dc7da49d3bb5dd3e0f8a5d033e5d126b7ebfef5c6777c6cdcbffc7"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-rlmdy3qz/contexts/143-native-observation.json",
+        "sha256": "22d65aedf3f5ed2ef0a4cdcfeb1311d51fbc335536f757a578b456e4b070441d"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-rlmdy3qz/contexts/144-native-observation.json",
+        "sha256": "08301fc85bda186c146459d1959d3e7241e7d4923bd8c33c0a742a675cbd7e3b"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-rlmdy3qz/contexts/146-native-observation.json",
+        "sha256": "895b267770fb0074b2ea00e0f2bdcc0e3cc4772ac1959896711331bdc2527b60"
+      }
+    ]
+  },
+  "cleanup": {
+    "initialScopePopulatedAfterStop": true,
+    "initialNamespacePids": [],
+    "initialCleanupErrors": [],
+    "laterRootReadbackScopeAbsent": true,
+    "retainedScopeIdentitySha256": "d0e8c63c2119adb18726b21e14e7304cf715e526bb526ee44d1bdccdec1b1ebd",
+    "interpretation": "Later exact-identity readback resolves eventual owned-scope absence; it does not rewrite the initially populated observation or prove synchronous termination at that earlier instant."
+  },
+  "deadlineDecision": {
+    "originalPerSampleLimits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "wallSeconds": 480,
+      "toolDispatches": 16,
+      "speechRequests": 0
+    },
+    "reason": "The 120-second public helper combines a three-turn ordinary route under a smaller total limit than the already frozen 480-second conversation-memory sample envelope. Mirroring 480 seconds for this public technical confirmation is a bounded control correction, not a new original case, transfer of an unused allowance, reset or successful replay.",
+    "originalEntryRemainsUnusedAndUnadmitted": true,
+    "requirements": [
+      "Preserve this failed 120-second execution and all earlier receipts. A changed public confirmation must be separately retained.",
+      "One inherited monotonic 480-second deadline starts at the same parent boundary and includes startup, discovery, every native turn/helper/retry, readback and settlement. Keep native per-turn timeout 120 seconds and separately report bounded stop-cleanup overhead.",
+      "Keep public inputs/profile, three turns/two sessions/one calendar transition, sixteen native tools and seventeenth-tool refusal assertions unchanged. No original input, real inference, auth call or original authority reservation.",
+      "Before any next public dispatch, bind the frozen 16-attempt and cumulative token limits in the synthetic ledger; unknown usage, cap exhaustion, deadline and owner stop must refuse further dispatch. Preserve actual usage/overshoot rather than claiming a provider-side output cap.",
+      "Root must bind the precise changed fixture/controller hashes before execution; this review approves the bounded design, not unreviewed future source."
+    ],
+    "concreteCurrentGap": {
+      "path": "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "lines": [
+        16,
+        20,
+        21,
+        603,
+        654
+      ],
+      "finding": "FakeLedger.begin currently checks only stopReason and appends a row; it does not enforce sixteen attempts. settle likewise lacks cumulative token ceilings. Therefore the existing public fixture cannot yet claim the same full original cap enforcement. Tool admission is separately capped by the accounting source."
+    }
+  },
+  "limitations": [
+    "Local user/system broker sockets and relevant environment variables are present; metadata did not connect to brokers. Cgroup membership and an empty namespace do not prove absence of externally brokered work.",
+    "Successful bounded first-turn settlement does not prove all three native turns, final close, complete accounting or original sample admission.",
+    "Original quality, money/credits and comparative superiority are not measured by this public synthetic fixture."
+  ],
+  "reviewActivity": {
+    "newTests": 0,
+    "actorStarts": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "originalInputReads": 0,
+    "originalAuthorityMutations": 0
+  }
+}

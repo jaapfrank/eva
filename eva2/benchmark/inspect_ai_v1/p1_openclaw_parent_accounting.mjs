@@ -43,6 +43,49 @@ const nativeFailure = error => {
 };
 
 
+/** Root controller observes an owned OS scope; this client grants no execution. */
+export class OpenClawNativeProcessScope {
+  constructor({socket_path, nonce, deadline_monotonic}) {
+    const path = resolve(socket_path); const directory = lstatSync(dirname(path)); const socket = lstatSync(path);
+    if (realpathSync(dirname(path)) !== dirname(path) || directory.uid !== 0 || (directory.mode & 0o022) || directory.isSymbolicLink()
+        || socket.uid !== 0 || !socket.isSocket() || socket.isSymbolicLink()
+        || typeof nonce !== 'string' || !nonce || !Number.isFinite(deadline_monotonic)) throw new Error('root-owned native scope socket required');
+    this.path=path;this.nonce=nonce;this.registered=false;this.scope=null;this.deadline=deadline_monotonic;
+  }
+  async request(op,binding) {
+    return await new Promise((resolve,reject)=>{
+      if(monotonic()>=this.deadline){reject(new Error('original native scope deadline reached'));return;}
+      const connection=net.createConnection(this.path);let raw='';
+      const timer=setTimeout(()=>{connection.destroy();reject(new Error('original native scope deadline reached'));},Math.max(1,(this.deadline-monotonic())*1000));
+      connection.on('close',()=>clearTimeout(timer));
+      connection.on('connect',()=>connection.write(JSON.stringify({op,nonce:this.nonce,binding})+'\n'));
+      connection.on('error',reject);
+      connection.on('data',bytes=>{
+        raw+=bytes.toString('utf8');
+        if(Buffer.byteLength(raw)>MAX_FRAME){connection.destroy();reject(new Error('scope receipt too large'));return;}
+        if(!raw.includes('\n'))return;
+        try{const value=JSON.parse(raw.slice(0,raw.indexOf('\n')));connection.end();
+          if(!value.receipt||monotonic()>=this.deadline)throw new Error('scope receipt missing or original deadline reached');resolve(value.receipt);
+        }catch(error){connection.destroy();reject(error);}
+      });
+      connection.on('end',()=>{if(!raw.includes('\n'))reject(new Error('scope controller closed without receipt'));});
+    });
+  }
+  async register() {
+    if(this.registered)throw new Error('native scope already registered');
+    const receipt=await this.request('register',{controller_pid:process.pid});
+    if(receipt.contract!=='RootOwnedNativeProcessScope/v1'||receipt.phase!=='register'
+        ||!receipt.frozen_confirmed||!receipt.only_registered_controllers
+        ||!receipt.member_identities.some(row=>row.pid===process.pid))throw new Error('native scope registration differs');
+    this.scope=receipt.scope_sha256;this.registered=true;return receipt;
+  }
+  async inspect(binding) {
+    if(!this.registered)throw new Error('native scope registration required');
+    const receipt=await this.request('retirement',binding);
+    if(receipt.scope_sha256!==this.scope)throw new Error('native cgroup identity changed');return receipt;
+  }
+}
+
 /** Same authenticated frame protocol as ProcessSampleLedger; the parent owns storage. */
 export class OpenClawProcessLedger {
   constructor(control, { timeoutMs = 10000 } = {}) {
@@ -136,7 +179,7 @@ export class OpenClawProcessLedger {
 
 /** Observes original Responses bytes, never transcript/model-catalog/rate-limit summaries. */
 export class OpenClawAccounting {
-  constructor(ledger, deadline, { now = monotonic, save = () => {}, clockFile = null, privateModelContextDir = null, observeTools = false } = {}) {
+  constructor(ledger, deadline, { now = monotonic, save = () => {}, clockFile = null, privateModelContextDir = null, observeTools = false, nativeProcessScope = null } = {}) {
     if (!Number.isFinite(deadline)) throw new Error('original absolute deadline required');
     this.ledger = ledger; this.deadline = deadline; this.now = now; this.save = save;
     this.calls = []; this.active = new Set(); this.wsAttempts = new WeakMap();
@@ -144,7 +187,7 @@ export class OpenClawAccounting {
     this.privateModelContextDir = privateModelContextDir; this.observeTools = observeTools;
     this.tools = new Map(); this.clients = new Map(); this.nativeReadbacks = [];
     this.nativeModuleBindings = new Map(); this.nativeQueues = new Map();
-    this.toolCoverage = true; this.nativeCoverageFailure = null; this.nativeObservationReceipts = []; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map(); this.nativeTransportExits = new Map();
+    this.toolCoverage = true; this.nativeCoverageFailure = null; this.nativeObservationReceipts = []; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map(); this.nativeTransportExits = new Map(); this.nativeSourceAuthorities = new Map(); this.nativeScopeReceipts = new Map(); this.nativeProcessScope = nativeProcessScope;
     this.stop = () => { for (const cancel of this.active) cancel(); };
     ledger.stopHandlers?.add(this.stop);
   }
@@ -236,8 +279,37 @@ export class OpenClawAccounting {
         carriers.set(kind, { i, j, text: content.text });
       }
     }
-    const environment = carriers.get('environments.environment_context');
+    let environment = carriers.get('environments.environment_context');
     const application = carriers.get('additional_content.openclaw_temporal_context');
+    let environmentSource = null;
+    if (!environment && application) {
+      // Resume retains the initial environment message under its original turn.
+      // Require the identical message from a completed same-thread response.
+      const retained = (body.input ?? []).flatMap((message,i)=>{
+        const metadata=message.internal_chat_message_metadata_passthrough;
+        if (!metadata || metadata.turn_id===turnId || !Array.isArray(metadata.content_item_kinds)
+            || !metadata.content_item_kinds.includes('environments.environment_context')) return [];
+        if (message.type!=='message' || message.role!=='user' || !Array.isArray(message.content)
+            || metadata.content_item_kinds.length!==message.content.length || !Number.isFinite(metadata.create_time)) {
+          throw new Error('resumed native environment metadata differs');
+        }
+        return metadata.content_item_kinds.flatMap((kind,j)=>kind==='environments.environment_context'?[{i,j,text:message.content[j]?.text}]:[]);
+      });
+      const candidate=retained.length===1?retained[0]:null;
+      const message=candidate?body.input[candidate.i]:null;
+      const content=candidate?message.content[candidate.j]:null;
+      const source=[...this.nativeCompletedResponses.entries()].find(([,binding])=>candidate
+        && binding.native_thread_id_sha256===digest(native.thread_id ?? null)
+        && typeof native.thread_id==='string' && native.thread_id
+        && binding.generation===state.generation
+        && binding.canonical_clock_state_sha256===readback.canonical_clock_state_sha256
+        && binding.environment_turn_id===message.internal_chat_message_metadata_passthrough.turn_id
+        && binding.native_environment_original_message_sha256===digest(message));
+      if (!source || content.type!=='input_text' || typeof content.text!=='string') {
+        throw new Error('resumed native environment reference unknown or differs');
+      }
+      environment=candidate;environmentSource=source[0];
+    }
     if (!environment && !application && typeof body.previous_response_id === 'string' && body.previous_response_id) {
       const inherited = this.nativeCompletedResponses.get(digest(body.previous_response_id));
       if (!inherited || typeof native.thread_id !== 'string' || !native.thread_id || inherited.turn_id !== turnId
@@ -279,6 +351,9 @@ export class OpenClawAccounting {
     return { body:{...body,input}, calendarBinding:{
       turn_id:turnId,native_thread_id_sha256:digest(native.thread_id ?? null),generation:state.generation,canonical_clock_state_sha256:digest(state),
       native_temporal_context_sha256:readback.native_temporal_context_sha256,
+      environment_turn_id:body.input[environment.i].internal_chat_message_metadata_passthrough.turn_id,
+      native_environment_original_message_sha256:digest(body.input[environment.i]),
+      environment_source_response_id_sha256:environmentSource,
       changed_field:'/input/'+environment.i+'/content/'+environment.j+'/text/current_date',
       native_date_changed:nativeDates[0][1] !== date
     }, nativeOriginalBodyBytes:originalBytes, nativeCalendarPrebindingBodyBytes:Buffer.from(JSON.stringify(body)) };
@@ -474,6 +549,41 @@ export class OpenClawAccounting {
     this.recordNativeObservation('native_pre_retirement_readback',{client_closed:false,
       readbacks:reads.map(({thread_id,...row})=>({...row,thread_id_sha256:digest(thread_id)}))});
   }
+  bindNativeSourceAuthority(client, authority) {
+    if (!client) throw new Error('native authority client missing');
+    this.turnParams('source/observe', null, client);
+    if (this.nativeSourceAuthorities.has(client) && this.nativeSourceAuthorities.get(client) !== authority) {
+      throw new Error('native source authority identity changed');
+    }
+    this.nativeSourceAuthorities.set(client, authority);
+    this.recordNativeObservation('native_source_authority_factory',{created:authority !== undefined && authority !== null});
+  }
+  async verifyRetiredNativeScope(client) {
+    if (this.nativeScopeReceipts.has(client)) return this.nativeScopeReceipts.get(client);
+    if (!this.nativeProcessScope || !client.closed || !this.nativeCloseReads.has(client)
+        || !this.nativeTransportExits.get(client)?.transport_exited
+        || !this.nativeSourceAuthorities.has(client)
+        || this.nativeSourceAuthorities.get(client) != null || !await this.settled()) {
+      throw new Error('native process/source scope not settled');
+    }
+    const binding = {native_thread_ids_sha256:[...this.clients.get(client)].map(digest),
+      retained_readback_sha256:digest(this.nativeCloseReads.get(client)),
+      matching_transport_exit_sha256:digest(this.nativeTransportExits.get(client)),
+      native_source_authority:'not_created'};
+    const receipt = await this.nativeProcessScope.inspect(binding);
+    if (receipt?.contract !== 'RootOwnedNativeProcessScope/v1' || receipt.phase !== 'retirement'
+        || !receipt.frozen_confirmed || !receipt.only_registered_controllers
+        || receipt.native_workload_processes !== 0 || digest(receipt.binding) !== digest(binding)) {
+      throw new Error('native frozen scope receipt differs');
+    }
+    this.check();
+    if (!await this.settled()) throw new Error('native work changed during scope inspection');
+    this.recordNativeObservation('native_retired_scope_confirmed',receipt);
+    this.check();
+    if (!await this.settled()) throw new Error('native work changed during scope retention');
+    this.nativeScopeReceipts.set(client,receipt);
+    return receipt;
+  }
   async nativeSettlement() {
     this.check();
     if (!this.observeTools || !this.clients.size || !await this.settled()) throw new Error('native actor lifecycle not settled');
@@ -482,11 +592,15 @@ export class OpenClawAccounting {
     for (const client of this.clients.keys()) {
       if (client.closed) {
         const retained = this.nativeCloseReads.get(client);
-        if (!retained || this.nativeClosed.get(client)?.cleanup !== 'closed') throw new Error('native close/readback was not confirmed');
+        if (!retained) throw new Error('native close/readback was not confirmed');
+        if (this.nativeProcessScope) await this.verifyRetiredNativeScope(client);
+        else if (this.nativeClosed.get(client)?.cleanup !== 'closed') throw new Error('native close/readback was not confirmed');
         reads.push(...retained);
       } else reads.push(...await this.readNativeClient(client));
     }
     if (!reads.length) throw new Error('native original turn readback unavailable');
+    this.check();
+    if (!await this.settled()) throw new Error('native work changed during readback retention');
     this.nativeReadbacks.push(reads); return reads;
   }
   async flushNativeQueues() {
@@ -505,12 +619,34 @@ export class OpenClawAccounting {
       try { results.push(client.closed ? this.nativeClosed.get(client) : await client.closeAndWait()); }
       catch (error) { results.push(this.nativeClosed.get(client) ?? null); errors.push(nativeFailure(error)); }
     }
+    for (const client of this.clients.keys()) {
+      if (this.nativeProcessScope && !this.nativeScopeReceipts.has(client)) {
+        try { await this.verifyRetiredNativeScope(client); } catch(error) { errors.push(nativeFailure(error)); }
+      }
+    }
     let queues = [];
     try { queues = await this.flushNativeQueues(); } catch(error) { errors.push(nativeFailure(error)); }
+    let finalScope = null;
+    if (this.nativeProcessScope && this.clients.size) {
+      try {
+        if (!await this.settled() || [...this.clients.keys()].some(client=>!this.nativeScopeReceipts.has(client))) throw new Error('native global work not settled');
+        const binding={phase:'final_closure',retired_scope_receipts_sha256:digest([...this.nativeScopeReceipts.values()])};
+        finalScope = await this.nativeProcessScope.inspect(binding);
+        if (finalScope?.contract !== 'RootOwnedNativeProcessScope/v1' || finalScope.phase !== 'retirement'
+            || digest(finalScope.binding) !== digest(binding) || !finalScope.frozen_confirmed
+            || !finalScope.only_registered_controllers || finalScope.native_workload_processes !== 0
+            || !await this.settled()) throw new Error('native final scope not settled');
+        await this.flushNativeQueues();
+        if (this.now() >= this.deadline || !await this.settled()) throw new Error('native work or deadline changed during final queue flush');
+      } catch(error) { finalScope=null;errors.push(nativeFailure(error)); }
+    }
     return { clients: results.length, transport_results: results, cancel_errors: errors, native_closed: results.length > 0 && errors.length === 0 && results.every(result => result?.cleanup === 'closed'), pending_sdk: this.calls.filter(r=>['pending','settling'].includes(r.status)).length,
       pending_tools: [...this.tools.values()].filter(r=>['reserved','running'].includes(r.status)).length,
       physical_transports_exited:results.length > 0 && [...this.clients.keys()].every(client=>this.nativeTransportExits.get(client)?.transport_exited === true),
       physical_transport_exit_receipts:[...this.clients.keys()].map(client=>this.nativeTransportExits.get(client) ?? null),
+      equivalent_native_settled:results.length > 0 && errors.length === 0 && await this.settled() && (!this.nativeProcessScope || finalScope !== null) && [...this.clients.keys()].every(client =>
+        this.nativeProcessScope ? this.nativeScopeReceipts.has(client) : this.nativeClosed.get(client)?.cleanup === 'closed'),
+      native_process_scope_receipts:[...this.nativeScopeReceipts.values()], final_native_process_scope_receipt:finalScope,
       native_unregister_queues: queues, native_module_bindings: [...this.nativeModuleBindings.values()],
       tool_coverage: this.toolCoverage, native_dispatched_tools: [...this.tools.values()].filter(r=>r.dispatched).length };
   }
@@ -551,8 +687,8 @@ export class OpenClawAccounting {
     if (row.status === 'completed' && value.type === 'response.completed'
         && value.response?.status === 'completed' && typeof value.response.id === 'string'
         && value.response.id && row.calendar_binding) {
-      const {turn_id,native_thread_id_sha256,generation,canonical_clock_state_sha256,native_temporal_context_sha256} = row.calendar_binding;
-      const binding = {turn_id,native_thread_id_sha256,generation,canonical_clock_state_sha256,native_temporal_context_sha256};
+      const {turn_id,native_thread_id_sha256,generation,canonical_clock_state_sha256,native_temporal_context_sha256,environment_turn_id,native_environment_original_message_sha256} = row.calendar_binding;
+      const binding = {turn_id,native_thread_id_sha256,generation,canonical_clock_state_sha256,native_temporal_context_sha256,environment_turn_id,native_environment_original_message_sha256};
       const key = digest(value.response.id);const previous = this.nativeCompletedResponses.get(key);
       if (previous && digest(previous) !== digest(binding)) {
         this.ledger.stop('native response calendar identity changed');throw new Error('native response calendar identity changed');
@@ -702,6 +838,8 @@ export function installOpenClawAccounting(accounting, pluginRoot, pins, { hostRo
         'let __evaRetirementReadbackError; try { await __evaAccounting.beforeNativeClose(state.client); } catch(error) { __evaRetirementReadbackError = error; }\n\t\tconst retired = clearSharedCodexAppServerClientIfCurrentAndUnclaimed(state.client);');
       source = replaceOnce(source, 'if (params.oneShotCliRun && result?.cleanup !== "closed") throw new Error("Codex one-shot client cleanup could not be confirmed");',
         'if (__evaRetirementReadbackError) throw __evaRetirementReadbackError;\n\t\tif (params.oneShotCliRun && result?.cleanup !== "closed") throw new Error("Codex one-shot client cleanup could not be confirmed");');
+      source = replaceOnce(source, 'resources.nativeProcessAuthority?.bindTurn(turnClient, threadId, acceptedTurnId);',
+        '__evaAccounting.bindNativeSourceAuthority(turnClient, resources.nativeProcessAuthority);\n\t\t\tresources.nativeProcessAuthority?.bindTurn(turnClient, threadId, acceptedTurnId);');
       // The same ordinary registration and trusted native config share this event list.
       // Observation adds no tool authority and leaves disabled/restricted native policy intact.
       source = replaceOnce(source,

@@ -1,0 +1,83 @@
+{
+  "contract": "OpenClawProcessScopeOriginalConditionReview/v1",
+  "reviewedAt": "2026-10-07T15:47:30.706031+00:00",
+  "task": "P2.1",
+  "independent": true,
+  "decision": "GO_ORIGINAL_CONDITION_INTERPRETATION_ONLY",
+  "runtimeDecision": "NOT_ASSESSED",
+  "originalSampleAdmission": "NO_GO",
+  "conclusion": "The original requirement concerns complete accounting, native cancellation and independently observed completion/effects of all work actually started, including helpers, memory, retries and concurrent/resumed work. Universal unreachability of every possible OS execution broker is not an explicit original admission or scoring condition.",
+  "originalSources": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+      "anchors": [
+        "lines7-15: individually admitted available participants; unchanged original conditions/accounting and no unused-budget transfer",
+        "lines70-81: equal resources, helpers within shared caps, native development admission and adapter uncertainty",
+        "lines83-91: incomplete conditions and usage stay unknown",
+        "lines93-102: safety and incomplete-evidence limits"
+      ]
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+      "anchors": [
+        "executionPrerequisites[3]: complete bound accounting, native cancellation and independent effect readback",
+        "executionPrerequisites[4]: one cumulative counter across concurrent tasks, process restart and resume"
+      ]
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-native-admission-contract-review-20261006.json",
+      "sha256": "5ddad1db2d7d84ef1dab5398ac974677cfd527e5ae0fab06a1f18b5b7c8598d1"
+    }
+  ],
+  "interpretation": {
+    "literalNativeCleanupClosedRequired": false,
+    "universalBrokerUnreachabilityRequired": false,
+    "actualStartedWorkRequired": "Every actual dispatched tool, native/delegated/background task, SDK request and acquired source/lifetime holder must be covered by the original shared limits and a valid terminal/cancellation/release observation. Missing or opaque relevant work evidence remains unknown.",
+    "validEvidenceConjunction": "Matching genuine thread/background readbacks, settled SDK/tool accounting, native queue flushes, observed source-authority state/release, matching physical exit and an exact frozen process-scope census can establish the stated local work closure without rewriting cleanup=uncertain.",
+    "brokerPresence": "The mere existence of local broker sockets or environment variables does not prove invocation, escaping work, a safety failure or incomplete runtime closure. Do not invent those outcomes.",
+    "brokerLimit": "A local command terminal or empty cgroup does not prove that an actually invoked external broker task has ended. If such work is started, retain its task/source ownership and terminal/release/effect evidence; if a concrete relevant dispatch remains unclassified or unobserved, preserve UNKNOWN. No speculative machine-wide audit is required.",
+    "priorDesignClarification": "The prior no-escape/broker condition was a sufficient evidence strategy for relying on a local cgroup as a complete process witness, not a new universal benchmark criterion. Its valid requirement remains: admitted or actually used off-scope execution must be accounted for. General broker unreachability is not necessary when the actual work and holder graph is otherwise conclusively observed.",
+    "noPolicyChange": "Do not disable ordinary native tools, change network/resource rights, add a new privacy policy, reclassify native cleanup or alter original scoring merely to obtain closure."
+  },
+  "currentTechnicalBindings": {
+    "accounting": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "9f0900ad925887873bea6caac33305df86c8ca6c8ac969e01e3223f0de07233d",
+      "anchors": [
+        "497-518 actual thread/background/pending readback before close",
+        "520-552 actual source factory observation plus physical-exit/frozen-scope conjunction",
+        "555-580 native settlement and actual queue flush",
+        "582-619 final current-work checks and separate equivalent_native_settled"
+      ]
+    },
+    "brokerMetadata": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/local-broker-metadata.public.json",
+      "sha256": "0f754c13638c04fa4ed8b6a7b9b84c56821aaa50605cceefb5dbf8dddc7862d2"
+    },
+    "priorDesignReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-process-scope-design-review-20261007.json",
+      "sha256": "1d1790c7b8ac185dc9c4fe80adb9deffe9ba562cc28cbc91bd16fcd77ea09522"
+    },
+    "publicCapAdmission": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-process-scope-cap-binding-review-20261007.json",
+      "sha256": "63c079b9bfdc3085a6ba72a0ea013644b240657a1b2f832623aa9f6a69c0d5dd"
+    }
+  },
+  "limitsOfThisReview": [
+    "The public 480-second composition is still a separate pending runtime assessment; no runtime GO is granted here.",
+    "Factory not-created proves only absence of that particular native source-authority branch. It does not prove absence of every possible delegated task.",
+    "The public fixed read-only command fixture cannot by itself prove coverage of arbitrary original-case command or broker behavior. Original admission must preserve applicable native accounting/stop/readback evidence and report unsupported actual paths honestly.",
+    "Original unused entry, caps, authority, protected inputs, scorer and prior closed results remain unchanged."
+  ],
+  "activity": {
+    "newTests": 0,
+    "actorStarts": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedInputReads": 0,
+    "authorityMutations": 0,
+    "childAgents": 0
+  }
+}

@@ -16612,7 +16612,7 @@
           ]
         }
       ],
-      "nextAction": "L3.4–L3.7 geïnstalleerd en onafhankelijk afgerond. P2.1: kalender/owned planning bevestigd, volledige native meetroute nog onbekend; één publieke routecontrole bewaard zonder modelcalls. Geen ongewijzigde herhaling. Apps/add-ons behoren tot de verbetercyclus; droommodus nog niet gebouwd. Spraak geparkeerd.",
+      "nextAction": "P2.1: publieke native OpenClaw-driebeurtenroute onafhankelijk GO (2sessies/dagovergang/16tools/afsluiting,212s), nul echte modelcalls. Nu bestaande oorspronkelijke parent/child-runner aan dezelfde scope+equivalent-afsluiting binden en apart toelaten; originele vragen/budget behouden.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -20278,7 +20278,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Echte afgeronde native beurt vóór sluiting teruggelezen; matchende procesexit bevestigd. Nog ontbreekt bewijs voor beëindiging van bron-/overig gestart werk. Bestaande source-authority/procescontrole aansluiten vóór verdere vaste beurten; geen reset van native uncertain of oorspronkelijke sample.",
+              "nextAction": "P2.1: publieke native OpenClaw-driebeurtenroute onafhankelijk GO (2sessies/dagovergang/16tools/afsluiting,212s), nul echte modelcalls. Nu bestaande oorspronkelijke parent/child-runner aan dezelfde scope+equivalent-afsluiting binden en apart toelaten; originele vragen/budget behouden.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20291,9 +20291,9 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T14:57:13.198337+00:00",
+              "checkedAt": "2026-10-07T16:04:43.407535+00:00",
               "assignment": {
-                "baseCommit": "f618e256450ea13298ef4a905641dc623cd02444",
+                "baseCommit": "99e5e120d84224238e90c8f922b1f8123b88c71a",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root"
@@ -20301,19 +20301,20 @@
                 "files": [
                   "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
                   "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
-                  "existing public P2.1 evidence and workboard"
+                  "existing public P2.1 evidence and workboard",
+                  "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py"
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte bestaande publieke fixture zonder externe modelcalls; pas na onafhankelijke toelating het ongebruikte oorspronkelijke OpenClaw-CM01-slot. Creditkosten onbekend.",
-                "currentAction": "Echte afgeronde native beurt vóór sluiting teruggelezen; matchende procesexit bevestigd. Nog ontbreekt bewijs voor beëindiging van bron-/overig gestart werk. Bestaande source-authority/procescontrole aansluiten vóór verdere vaste beurten; geen reset van native uncertain of oorspronkelijke sample.",
+                "currentAction": "P2.1: publieke native OpenClaw-driebeurtenroute onafhankelijk GO (2sessies/dagovergang/16tools/afsluiting,212s), nul echte modelcalls. Nu bestaande oorspronkelijke parent/child-runner aan dezelfde scope+equivalent-afsluiting binden en apart toelaten; originele vragen/budget behouden.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "sourceCommit": "f618e256450ea13298ef4a905641dc623cd02444",
                   "meaning": "Actual calendar correction proved and pushed; private package/status refreshed. Native first reply/16tools/2synthetic SDK rows complete; full original sample not admitted. Confirmed source retirement closes before evaluator readback."
                 },
-                "stage": "openclaw_native_readback_exit_confirmed_source_authority_gap",
+                "stage": "openclaw_public_native_scope_independent_go_original_runner_binding_next",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -20364,7 +20365,7 @@
                   "newProviderCalls": 0,
                   "retainedPreparation": true
                 },
-                "finding": "Nieuwe openbare native proef: HTTP500 vóór modelaanroep. Account eva_dbos kan SET LOCAL ROLE eva_runtime niet uitvoeren. Oude gesloten eindproef: exacte oorzaak blijft onbekend.",
+                "finding": "Publieke driebeurtenroute met dagovergang, 16tools, exacte hergebruikte omgeving en equivalent native/state-/exit-/scopebewijs geslaagd. Oorspronkelijke runner is nog niet aan die scope/predicate gebonden; dit is een evaluatorkoppeling, geen bewezen productverlies.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -20421,7 +20422,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Twee echte afzonderlijke kwaliteitsbeoordelingen ontvangen. R1/P2 alleen hervatten als geldige cumulatieve verbruiksregistratie en onafhankelijke toelating binnen vastgelegde voorwaarden beschikbaar zijn. Geen nieuwe set, reset, herhaling of spraakwerk.",
+                "nextAction": "P2.1: publieke native OpenClaw-driebeurtenroute onafhankelijk GO (2sessies/dagovergang/16tools/afsluiting,212s), nul echte modelcalls. Nu bestaande oorspronkelijke parent/child-runner aan dezelfde scope+equivalent-afsluiting binden en apart toelaten; originele vragen/budget behouden.",
                 "actualUsage": {
                   "scope": "This CM04 native sample only",
                   "providerAttempts": 7,
@@ -20734,11 +20735,12 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "classification": "no_progress",
-                  "newProductFunctions": 0,
-                  "modelCalls": 0,
-                  "newOriginalRuns": 0,
-                  "creditCost": null,
+                  "classification": "progress",
+                  "scope": "P2.1 native comparison preparation",
+                  "actualResult": "Completed and independently verified public native three-turn composition with exact context lineage, clock, tools, readback and process settlement.",
+                  "productFunctionCompleted": false,
+                  "originalSampleRepeated": false,
+                  "realProviderCalls": 0,
                   "developmentCredits": null
                 },
                 "agentzeroReadiness": {
@@ -21337,6 +21339,161 @@
                   "runtimeReview": "eva2/reviews/p2-openclaw-retirement-readback-runtime-review-20261007.json",
                   "runtimeReviewSha256": "355733168c6a61460d79840c38ceb50a4f2b730b0798b65a4ae46de70bf1e496",
                   "publicationDecision": "GO bounded source checkpoint; original sample NO_GO."
+                },
+                "processScopeDesign": {
+                  "existing": "Parent controller, actual native thread/readback/exit and ledger/queue observation.",
+                  "gap": "Full local descendant/source-lifetime proof absent after native cleanup uncertain.",
+                  "change": "Exact root-owned pre-fork process scope, frozen census with PID/starttime; observe pinned source-authority factory without enabling sandbox.",
+                  "finish": "Unchanged three-turn/two-session/calendar-advance public composition, negative live-descendant refusal and original caps verified with actual independent closure receipt.",
+                  "scope": "Evaluator only; not a product feature, runtime installation or original-sample admission.",
+                  "designReview": "eva2/reviews/p2-openclaw-process-scope-design-review-20261007.json",
+                  "sourceFiles": [
+                    "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+                    "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+                    "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs"
+                  ],
+                  "focusedChecksPassed": 2,
+                  "syntheticFixtureFailuresRetained": true,
+                  "realProviderCalls": 0,
+                  "originalInputs": 0,
+                  "creditCost": null,
+                  "sourceReview": "eva2/reviews/p2-openclaw-process-scope-source-review-20261007.json",
+                  "sourceReviewSha256": "97c4a7a27f21dd556bff58618002d639b91b6a5d5b26794e5245ef0cfa6681ee",
+                  "kernelNegativeFixture": {
+                    "elapsedSeconds": 1.931114326012903,
+                    "passed": true,
+                    "expectedRefusal": true,
+                    "scopeReceipts": 2,
+                    "namespaceProcessesRemaining": 0,
+                    "cleanupErrors": [],
+                    "scopePopulatedAfterStop": false,
+                    "scopeStopExitCode": 5,
+                    "source": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/negative-execution.public.json",
+                    "sha256": "5b3519e7e74bf8c356705124dad71e184b364a4b4a69f2997e5a8534a4074764"
+                  },
+                  "ordinaryFixture": {
+                    "active": false,
+                    "sessionId": 91592,
+                    "originalInputs": 0,
+                    "externalInferenceCalls": 0,
+                    "exitCode": 1,
+                    "elapsedSeconds": 43.11717636600952,
+                    "completedNativeTurns": 0,
+                    "syntheticSdkCalls": 0,
+                    "nativeTools": 0,
+                    "failure": "native authority client missing",
+                    "privateReceipt": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/startup-client-failure-retained/ordinary-execution.public.json"
+                  },
+                  "brokerContainmentProved": false,
+                  "brokerMetadataEvidence": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/local-broker-metadata.public.json",
+                  "correctedClientBinding": {
+                    "sourceSha256": "9f0900ad925887873bea6caac33305df86c8ca6c8ac969e01e3223f0de07233d",
+                    "before": "Final config callback precedes state.client assignment.",
+                    "after": "Observe same actual authority and turnClient at existing accepted-turn bindTurn anchor.",
+                    "repeatedKernelNegative": false,
+                    "changedOrdinaryFixtureStarted": true,
+                    "review": "eva2/reviews/p2-openclaw-process-scope-client-binding-review-20261007.json",
+                    "reviewSha256": "495260d67bdf259f1eb9486aa1c8da45c60bd9bc29f10ef83e5b869531af4c5b"
+                  },
+                  "currentOrdinaryFixture": {
+                    "state": "terminal_success_pending_independent_runtime_review",
+                    "execSession": 33281,
+                    "execution": {
+                      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/ordinary-execution.public.json",
+                      "sha256": "bebaf248e45f5294e6741a02cfc0f181b26fa55b208a5421f130df53825f398b"
+                    },
+                    "controllerLog": {
+                      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/ordinary-resume-corrected-controller.public.txt",
+                      "sha256": "455ea89473562114de75a0d6ac70272c83e4def4f94769ec04ac3c5cd5d9fdbf"
+                    },
+                    "technicalOutput": {
+                      "path": "/tmp/eva-p2-openclaw-process-scope-20261007-z6hq5wko/composition-technical.private.json",
+                      "sha256": "f911b994e5d532ef640b1d60b1e458a3d9bcfb50f8e96145e2d8ed0f4fba850e"
+                    },
+                    "testLog": {
+                      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/ordinary-composition.public.txt",
+                      "sha256": "861bf70ad7ab2a1ccf3c23e059117a8ff24e9b3095d36bce7cb0a08b3aa3df58"
+                    },
+                    "exitCode": 0,
+                    "timedOut": false,
+                    "elapsedSeconds": 212.05845933499222,
+                    "completedNativeReadbackTurns": 3,
+                    "sessionsUsed": 2,
+                    "scenarioGenerations": [
+                      0,
+                      0,
+                      1
+                    ],
+                    "syntheticProviderCalls": 4,
+                    "syntheticInputTokens": 68,
+                    "syntheticOutputTokens": 12,
+                    "syntheticUsagePaidOrRealModelUsage": false,
+                    "realInferenceCalls": 0,
+                    "originalInputs": 0,
+                    "toolPreAccepted": 16,
+                    "actualNativeTerminals": 16,
+                    "toolPostSettlements": 16,
+                    "seventeenthToolRefusedBeforeBody": true,
+                    "nativeCleanupFieldReclassified": false,
+                    "nativeClosedLiteral": false,
+                    "equivalentNativeSettled": true,
+                    "allPhysicalTransportsExited": true,
+                    "pendingSdk": 0,
+                    "pendingTools": 0,
+                    "cancelErrors": [],
+                    "retirementScopeReceiptCount": 3,
+                    "freshFinalScopeReceipt": true,
+                    "scopePopulatedAfterStop": false,
+                    "namespacePidsAfterStop": [],
+                    "cleanupErrors": [],
+                    "scopeErrors": [],
+                    "sixEnumeratedOperatorArtifactHashesUnchanged": true,
+                    "nativePreparationFailures": 0
+                  },
+                  "deadlineBinding": {
+                    "originalEnvelopeSeconds": 480,
+                    "previousPublicHelperSeconds": 120,
+                    "changedPublicFixtureSourceSha256": "5630c9bc73678ffccb3ee366467fbeb012b05da1b2ce6b34fe192b76754ace4d",
+                    "controllerSha256": "2761598cff600c2d5c88f8c6209d6e9d1b995471f410c60b7d31536c93d7cbdb",
+                    "capsUnitExitCode": 0,
+                    "publicEvidence": "eva2/evidence/product/p2-openclaw-process-scope-preparation-20261007.json",
+                    "originalSampleAdmitted": false,
+                    "publicExecutionActive": false,
+                    "execSession": 88277,
+                    "deltaReview": "eva2/reviews/p2-openclaw-process-scope-cap-binding-review-20261007.json",
+                    "deltaReviewSha256": "63c079b9bfdc3085a6ba72a0ea013644b240657a1b2f832623aa9f6a69c0d5dd",
+                    "terminalExitCode": 1,
+                    "timedOut": false
+                  },
+                  "resumedEnvironmentCorrection": {
+                    "existing": "Native resume preserves original same-thread environment metadata; completed readback and 16tools already proved.",
+                    "gap": "Evaluator wrongly requires regenerated current-turn environment.",
+                    "change": "Unique byte-equivalent prior environment is accepted only from actual completed same-thread/same-generation response. Current temporal/byte/history/mismatch/stop rules preserved.",
+                    "sourceSha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284",
+                    "fixtureSha256": "3e4408ac5058d0da5f1abb08d2be28784cbf0161bdb1ecbf705bdf1e52a20c10",
+                    "focusedChecksPassed": 4,
+                    "nativeRunApproved": true,
+                    "originalSampleAdmitted": false,
+                    "evidence": "eva2/evidence/product/p2-openclaw-process-scope-preparation-20261007.json",
+                    "nativeExecutionActive": false,
+                    "execSession": 33281,
+                    "review": "eva2/reviews/p2-openclaw-resumed-environment-correction-review-20261007.json",
+                    "reviewSha256": "49df34397fca50c8affb66aa9d61aa5631e42ae11087ac555c756b8a63221c26",
+                    "terminalExitCode": 0,
+                    "completedNativeTurns": 3
+                  },
+                  "bundledReview": {
+                    "path": "eva2/reviews/p2-openclaw-native-scope-bundled-review-20261007.json",
+                    "sha256": "ad70af6fb934e371d488d98987b77da4b35145e8ca1582fa6ff2cb83a4dd1e63",
+                    "publicRuntime": "GO",
+                    "originalSample": "NO_GO"
+                  }
+                },
+                "historicalCurrentFieldsBeforeNativeScopeClosure": {
+                  "finding": "Nieuwe openbare native proef: HTTP500 vóór modelaanroep. Account eva_dbos kan SET LOCAL ROLE eva_runtime niet uitvoeren. Oude gesloten eindproef: exacte oorzaak blijft onbekend.",
+                  "nextAction": "Twee echte afzonderlijke kwaliteitsbeoordelingen ontvangen. R1/P2 alleen hervatten als geldige cumulatieve verbruiksregistratie en onafhankelijke toelating binnen vastgelegde voorwaarden beschikbaar zijn. Geen nieuwe set, reset, herhaling of spraakwerk.",
+                  "historicalOnly": true,
+                  "supersededAt": "2026-10-07T16:02:43.703674+00:00"
                 }
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",

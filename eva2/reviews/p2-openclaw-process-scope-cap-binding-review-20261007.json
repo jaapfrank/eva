@@ -1,0 +1,115 @@
+{
+  "contract": "OpenClawProcessScopeCapBindingReview/v1",
+  "reviewedAt": "2026-10-07T15:43:31.212372+00:00",
+  "task": "P2.1",
+  "independent": true,
+  "decision": {
+    "source": "GO",
+    "oneChangedPublicComposition": "GO",
+    "originalSample": "NO_GO"
+  },
+  "scope": "Only the synthetic ledger cap delta and one inherited public parent deadline of 480 seconds; no original input or sample admission.",
+  "bindings": {
+    "fixture": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "5630c9bc73678ffccb3ee366467fbeb012b05da1b2ce6b34fe192b76754ace4d"
+    },
+    "controller": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/run-public-composition.private.py",
+      "sha256": "2761598cff600c2d5c88f8c6209d6e9d1b995471f410c60b7d31536c93d7cbdb"
+    },
+    "unchangedAccounting": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "9f0900ad925887873bea6caac33305df86c8ca6c8ac969e01e3223f0de07233d"
+    },
+    "unchangedProcessAccounting": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "d00853e4196bbed1e976e47deb460a65c452b4e1091a06c37164b81c6f5609ea"
+    },
+    "capUnitReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/cap-binding-unit.public.json",
+      "sha256": "e979d38586fdece67483e8423e69b2079af1fa3a9a9ae420739fa4dcdb1fb9a7"
+    },
+    "capUnitLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/cap-binding-unit.public.txt",
+      "sha256": "48a5d1bd2d8d7416fe3b6efee8db8c2a7b9f9b4453aeb24af478bae0b88ab80c"
+    },
+    "retained120SecondFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/deadline-120-failure-retained/ordinary-execution.public.json",
+      "sha256": "b6166677b94f3c9126c55364ef3bf9ca9c5cddbef3e9919db3cf895de22fde5b"
+    },
+    "priorDeadlineReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-process-scope-deadline-result-review-20261007.json",
+      "sha256": "61cd90a282dc161dfdab29e9c2408dd87e79d1894f864d75967cc82b30ef4645"
+    },
+    "kernelNegative": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/negative-execution.public.json",
+      "sha256": "5b3519e7e74bf8c356705124dad71e184b364a4b4a69f2997e5a8534a4074764"
+    },
+    "postStopScopeReadback": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/post-stop-scope-readback.public.json",
+      "sha256": "707fedcccc40ad9d0e35197d601253ae9b8f9c3cf2a56d5dbea8d39c2c2a894a"
+    }
+  },
+  "findings": [],
+  "verifiedDelta": {
+    "reverseOnlyCapDeltaReconstructsPriorFixtureSha256": "ac02e418854c6e8483f83bdcb6ef0e723e62acd09761d93d8f1d746e7e3fbdb5",
+    "reverseOnlyDeadlineAndReceiptLabelReconstructsPriorControllerSha256": "e08d43b1ccd5beb1cdd9a7cc250b70c3f714dc2ba0f06b4845a60ca93d404f72",
+    "maximumTotalAttempts": 16,
+    "maximumCumulativeInputTokens": 1048576,
+    "maximumCumulativeOutputTokens": 19200,
+    "pendingSyntheticReservation": {
+      "input_tokens": 17,
+      "output_tokens": 3,
+      "total_tokens": 20
+    },
+    "behavior": [
+      "Each accepted begin, including helpers and retries, consumes one shared attempt before dispatch; the seventeenth begin is refused.",
+      "All pending rows reserve the fixed fake response usage before admitting another request.",
+      "Settlement retains actual received usage and overshoot; absent or invalid usage becomes unknown and stops future dispatch.",
+      "Owner stop is checked before begin; accounting transport deadline/stop checks are unchanged.",
+      "Limits are optional for existing unit fixtures and explicitly enabled for this ordinary public composition."
+    ],
+    "singleInheritedMonotonicDeadlineSeconds": 480,
+    "nativePerTurnTimeoutSeconds": 120,
+    "deadlineBoundary": "Unchanged parent start; discovery, startup, all turns/helpers, readback and settlement share the same deadline. Bounded stop cleanup remains separately reported.",
+    "unchanged": [
+      "three public turns",
+      "two public sessions",
+      "one calendar advance",
+      "sixteen native tool admissions and seventeenth refusal assertion",
+      "native configuration and mocked upstream",
+      "native cleanup field and separate equivalent settlement predicates",
+      "root process scope and original admission criteria"
+    ]
+  },
+  "evidence": {
+    "rootCapUnit": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "receiptElapsedSeconds": 0.18455890098994132,
+      "actorStarts": 0,
+      "realProviderCalls": 0,
+      "originalInputReads": 0
+    },
+    "reviewerRanTests": false,
+    "kernelNegativeReusedWithoutRerun": true,
+    "failed120SecondReceiptByteIdentical": true
+  },
+  "authorizedNextStep": "Exactly one changed public ordinary composition using these bound files and the existing public fixture profile. This mirrors the frozen original CM time ceiling; it neither consumes nor transfers an original unused sample allowance. No real inference/auth call, original input or authority reservation is admitted.",
+  "limitations": [
+    "Full three-turn runtime and final settlement remain unproved until the public confirmation completes.",
+    "Synthetic 17/3 reservations are valid only for the fixed fake upstream; they are not a real provider usage estimate or hard provider-side output cap.",
+    "Local brokers are not proved unreachable. Scope receipts establish only their stated local process facts; no general containment or external-work closure claim.",
+    "Native cleanup=uncertain remains unchanged; original sample remains NO_GO."
+  ],
+  "reviewerActivity": {
+    "tests": 0,
+    "actorStarts": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "originalInputReads": 0,
+    "authorityMutations": 0
+  }
+}

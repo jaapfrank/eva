@@ -1,0 +1,135 @@
+{
+  "contract": "OpenClawResumedEnvironmentCorrectionReview/v1",
+  "task": "P2.1",
+  "reviewedAt": "2026-10-07T15:54:42.618802+00:00",
+  "independent": true,
+  "decision": {
+    "source": "GO",
+    "oneChangedPublicNativeConfirmation": "GO",
+    "originalSample": "NO_GO",
+    "runtimeSuccess": "NOT_PROVEN"
+  },
+  "bindings": {
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284"
+    },
+    "fixture": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "3e4408ac5058d0da5f1abb08d2be28784cbf0161bdb1ecbf705bdf1e52a20c10"
+    },
+    "unchangedController": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/run-public-composition.private.py",
+      "sha256": "2761598cff600c2d5c88f8c6209d6e9d1b995471f410c60b7d31536c93d7cbdb"
+    },
+    "diagnosis": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/resumed-environment-diagnosis.public.json",
+      "sha256": "881f26434eb43fb06f4940267cc1cfd389b4981fae9ed9f7f3ab67402db8a0d9"
+    },
+    "failedExecution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/resumed-environment-failure-retained/ordinary-execution.public.json",
+      "sha256": "0de6a71aeeade156af7ba5bbc129190c42a7a5f816ca22e46787b3ae14c0ddf9"
+    },
+    "focusedChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/resumed-calendar-exact-public-shape.public.json",
+      "sha256": "40f7b5088a83725a2e93452f12babdff0213a67afed376224b566e8a99af81b8"
+    },
+    "focusedLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/resumed-calendar-exact-public-shape.public.txt",
+      "sha256": "11566ed7f9e1bd0d62f6fdba47f33cc87055a3870f753034fc712761607902d8"
+    }
+  },
+  "confirmedCause": {
+    "elapsedSeconds": 320.84516271900793,
+    "exitCode": 1,
+    "timedOut": false,
+    "completedNativeReadbackTurns": 1,
+    "completedNativeTools": 16,
+    "syntheticSDKResponses": 2,
+    "syntheticInputTokens": 34,
+    "syntheticOutputTokens": 6,
+    "preDispatchPreparationFailures": 108,
+    "realInferenceCalls": 0,
+    "originalInputs": 0,
+    "sameNativeThread": true,
+    "currentTurnChanged": true,
+    "initialEnvironmentCount": 1,
+    "resumedEnvironmentCount": 1,
+    "environmentParsedObjectAndSerializedDigestEqual": true,
+    "environmentTurnRemainsEarlier": true,
+    "currentTemporalCarrierCount": 1,
+    "failure": "The observer required a newly generated current-turn environment even though the ordinary native resume retained its original same-thread environment. Current-turn temporal context was present.",
+    "evidence": [
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-4o1m1azk/contexts/4-attempt-1-original.json",
+        "sha256": "402a3af7e849bfa0ad88ed6d3fef358e4515fdb36796c3249e1e9b4bcc31db2f"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-4o1m1azk/contexts/148-native-preparation-failed.json",
+        "sha256": "e5c0cad646018c4fb70907c7e1982b1471f4b76ce1d2e66bc2fb46e265eae3a1"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-4o1m1azk/contexts/149-native-observation.json",
+        "sha256": "9be89dafd0fb1e071ab2aa22e8257a69b36d4e7975246d0320592e8a929d3e4f"
+      }
+    ]
+  },
+  "correctedSource": {
+    "anchors": [
+      "scenarioBody lines282-312: exact unique resumed environment selection",
+      "scenarioBody lines330-359: unchanged current temporal/zone/date validation and date-only binding",
+      "event lines673-697: first native terminal identity, successful parent settlement and exact completed-response cache"
+    ],
+    "requirementsEnforced": [
+      "Only when a current temporal carrier exists and no current environment exists, consider exactly one older message environment.",
+      "Require exact original message digest and environment turn identity from a successfully settled completed response in the same native thread and same acknowledged generation/clock state.",
+      "Preserve current-turn temporal validation; retain original/prebinding bytes and metadata/history; change only the selected existing current_date field.",
+      "Unknown, different-thread, mutated, duplicated or stale environment lineage is rejected before dispatch. Existing terminal replay, rejected settlement and incomplete-response cache guards remain."
+    ],
+    "reverseExactDeltaRestoresPriorSourceSha256": "9f0900ad925887873bea6caac33305df86c8ca6c8ac969e01e3223f0de07233d",
+    "reverseOnlyNewResumeTestRestoresPriorFixtureSha256": "5630c9bc73678ffccb3ee366467fbeb012b05da1b2ce6b34fe192b76754ace4d"
+  },
+  "retainedPreparationFailures": [
+    {
+      "binding": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/resumed-calendar-focused.public.json",
+        "sha256": "5e7c4baf518cfde4eeec248fa3b8bcc24e3db85246897ad31529bc5297bba7bd"
+      },
+      "outcome": "3 passed / 1 failed: first source omitted the two new environment fields from the successful terminal cache. Reviewer found the same missing transition; final source includes both fields."
+    },
+    {
+      "binding": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/resumed-calendar-retention-corrected.public.json",
+        "sha256": "fa78b16e5ec0854bbe28aa68dc55470b6af78b1a05cc0641790d18c24a726795"
+      },
+      "outcome": "Positive new fixture still included an additional deliberately historical helper environment. Only that new positive fixture was corrected to match the retained ordinary single-environment shape; the strict uniqueness guard and earlier fixtures remain unchanged."
+    }
+  ],
+  "validation": {
+    "focusedTestsPassed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "receiptElapsedSeconds": 0.1707629110023845,
+    "nativeActorStarts": 0,
+    "realInferenceCalls": 0,
+    "originalInputs": 0,
+    "reviewerTests": 0,
+    "findingRemaining": null
+  },
+  "authorizedScope": "Exactly one changed public confirmation with the same original-shaped three turns, two sessions, calendar transition, sixteen-tool cap and seventeenth refusal assertion. Existing parent total480/per-turn120 and shared attempt/token caps remain. No real provider/auth calls, original input, authority reservation or closed-original replay is admitted.",
+  "limitations": [
+    "This is source and focused-fixture evidence, not full ordinary native runtime success.",
+    "The previous 480-second native failure and both failed preparation receipts remain preserved.",
+    "Native cleanup remains unchanged; equivalent settlement still requires actual readback, physical exit, source/pending/queue and frozen-scope evidence. Broker presence does not prove use; actual off-scope work would still require bound terminal/release evidence.",
+    "Original criteria, data, scorer, participant slot and budgets are unchanged."
+  ],
+  "activity": {
+    "newTests": 0,
+    "actorStarts": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedInputReads": 0,
+    "authorityMutations": 0,
+    "childAgents": 0
+  }
+}

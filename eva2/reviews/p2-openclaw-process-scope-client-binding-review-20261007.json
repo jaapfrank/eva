@@ -1,0 +1,134 @@
+{
+  "contract": "OpenClawProcessScopeClientBindingReview/v1",
+  "task": "P2.1",
+  "reviewer": "/root/aide_final_evaluation",
+  "checked_at_utc": "2026-10-07T15:28:33.958406+00:00",
+  "decision": "GO_ONE_CHANGED_CAUSE_PUBLIC_ORDINARY_CONFIRMATION",
+  "original_sample_admission": "NO_GO",
+  "findings": [],
+  "exact_delta": {
+    "previous_adapter_sha256": "bf8b4126fc02c16d789ae115a6f2bf8d326d11f1b63ca9b4ac30d20d8daac7a6",
+    "new_adapter_sha256": "9f0900ad925887873bea6caac33305df86c8ca6c8ac969e01e3223f0de07233d",
+    "only_observation_anchor_changed": true,
+    "verification": "Reversing the single replaceOnce-anchor replacement reconstructs exactly the previous source SHA. Python, tests and private controller remain byte-identical to the prior source GO.",
+    "old_fault": "The config callback observed state.client before native startup assigned it, causing the evaluator fixed error native authority client missing.",
+    "new_anchor": "Pinned run-attempt-BHu11r7h.mjs:8006 establishes turnClient; after successful turn/start response and acceptedTurnId at8122, observe resources.nativeProcessAuthority immediately before the unchanged optional bindTurn at8123.",
+    "same_authority": "The native resources object returns the actual factory result at5930; no authority is constructed, injected or relabelled by the observer.",
+    "error_behavior": "Native bindTurn and following assert/abort guards remain. If observation throws after accepted turn/start, the existing catch at8132-8144 interrupts/releases the accepted native route. Missing observation remains a settlement refusal.",
+    "timing_limit": "The moved observation occurs after turn/start is accepted; it is settlement evidence, not a new claim of pre-input authority admission."
+  },
+  "retained_runtime": {
+    "ordinary_startup_failure": {
+      "elapsed_seconds": 43.11717636600952,
+      "exit_code": 1,
+      "controller_timeout": false,
+      "error_origin": "evaluator callback placement",
+      "fixed_error": "native authority client missing",
+      "completed_native_turns": 0,
+      "sdk_rows": 0,
+      "physical_mock_calls": 0,
+      "tool_rows": 0,
+      "external_inference_calls": 0,
+      "original_inputs": 0,
+      "namespace_remaining": [],
+      "scope_populated_after_stop": false,
+      "cleanup_errors": [],
+      "systemctl_stop_exit_code": 5
+    },
+    "kernel_negative": {
+      "reuse_without_repeat": true,
+      "exit_code": 0,
+      "elapsed_seconds": 1.931114326012903,
+      "positive_scope_receipts": 2,
+      "third_positive_receipt": false,
+      "expected_rejection_class": "ValueError",
+      "namespace_remaining": [],
+      "scope_populated_after_stop": false,
+      "cleanup_errors": [],
+      "systemctl_stop_exit_code": 5,
+      "qualification": "The unit had already exited/disappeared; do not present code5 as a successful stop command."
+    }
+  },
+  "allowed_confirmation": {
+    "count": 1,
+    "cause_changed": "Observe the native authority at the actual known turn client instead of the earlier config callback.",
+    "native_turns": 3,
+    "sessions": 2,
+    "calendar_advances": 1,
+    "tool_cap": 16,
+    "seventeenth_pre_dispatch_refusal": true,
+    "cumulative_deadline_seconds": 120,
+    "provider": "Existing isolated public mock only",
+    "external_inference_calls": 0,
+    "original_inputs": 0,
+    "on_failure": "Retain outcome and stop; no unchanged repeat or original sample approval."
+  },
+  "limits": [
+    "No framework/native byte, profile, clock, model, tool policy, original criteria or budget changes.",
+    "cleanup=uncertain and native_closed remain native facts; equivalent settlement is separate.",
+    "Local broker unreachability and arbitrary delegated execution remain unproved. The public fixed-reader fixture cannot establish general containment or original sample admission.",
+    "Syntax was reported by the source owner; this reviewer ran no syntax check, test or actor."
+  ],
+  "bindings": {
+    "adapter": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "9f0900ad925887873bea6caac33305df86c8ca6c8ac969e01e3223f0de07233d"
+    },
+    "scope_controller_module": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "d00853e4196bbed1e976e47deb460a65c452b4e1091a06c37164b81c6f5609ea"
+    },
+    "test": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "ac02e418854c6e8483f83bdcb6ef0e723e62acd09761d93d8f1d746e7e3fbdb5"
+    },
+    "public_controller": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/run-public-composition.private.py",
+      "sha256": "e08d43b1ccd5beb1cdd9a7cc250b70c3f714dc2ba0f06b4845a60ca93d404f72"
+    },
+    "native_module": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/run-attempt-BHu11r7h.mjs",
+      "sha256": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376"
+    },
+    "prior_source_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-process-scope-source-review-20261007.json",
+      "sha256": "97c4a7a27f21dd556bff58618002d639b91b6a5d5b26794e5245ef0cfa6681ee"
+    },
+    "negative_kernel_check": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/negative-execution.public.json",
+      "sha256": "5b3519e7e74bf8c356705124dad71e184b364a4b4a69f2997e5a8534a4074764"
+    },
+    "retained_failed_execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/startup-client-failure-retained/ordinary-execution.public.json",
+      "sha256": "f981ee4ae63ca3a08d9b7fd6faa4d7661bf6d9d69e2bf53918626cb41f9fdf14"
+    },
+    "retained_failed_log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/startup-client-failure-retained/ordinary-composition.public.txt",
+      "sha256": "69599a66f3fafdce0778d44839aee72d1898c73cc7acb3f41ad006dc2e931bcb"
+    },
+    "retained_failed_technical": {
+      "path": "/tmp/eva-p2-openclaw-process-scope-20261007-tbbe9b9a/composition-technical.private.json",
+      "sha256": "c592306c63aab5da7411358be3962c793a7e0604c6f9c7bd658c03eea10599d6"
+    }
+  },
+  "kernel_scope_receipts": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/scope-6551b576d38048e19fab3ddb81d43176/scope-001.json",
+      "sha256": "db56548bbb4bf1dd83141e78097e64dd5ea7636efe08b6a7d7ef49897ae1cb12"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-process-scope-20261007/scope-6551b576d38048e19fab3ddb81d43176/scope-002.json",
+      "sha256": "b1cea26e3a89dc714b0e79f9bd2a4ecc2b53f8bf24cd1fd81be00c4ae43bd731"
+    }
+  ],
+  "reviewer_activity": {
+    "tests": 0,
+    "actor_starts": 0,
+    "model_calls": 0,
+    "auth_calls": 0,
+    "original_input_reads": 0,
+    "source_edits": 0,
+    "authority_mutations": 0,
+    "children": 0
+  }
+}
