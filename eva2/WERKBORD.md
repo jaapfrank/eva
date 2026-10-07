@@ -1,3 +1,9 @@
+## 7 oktober — geen actieve bouw of proef; resterende voorwaarden zichtbaar
+
+Vorige beurt: geïnstalleerde geheugencorrectie (f8ac4afa), dus voortgang. Deze beurt: geen nieuwe functionaliteit; oorspronkelijke P2-registratie ongewijzigd, geen origineel proefproces actief en beide ingevulde menselijke beoordelingen ontbreken. P2.1 is daarom zichtbaar geblokkeerd in plaats van alsof er actief gebouwd wordt. R1 blijft onvolledig met verloren verbruiksgegevens en gebruikte toelating. Geen nieuwe proef, budgetreset, herhaling of spraakwerk gestart. App-goal blijft actief; huidige blokkeringsaudit begint bij1 opeenvolgende beurt.
+
+De twee kwaliteitsbeoordelingen hebben werkende lokale pakketten en instructies bij P2.1. Gezinsnut/stilte (I1.2) en eindacceptatie blijven echte menselijke beoordelingen. De afgesloten rondes en gemiste volledige vergelijking blijven behouden; technisch onderscheid/AIDE² en algemene superioriteit zijn niet bewezen.
+
 ## 7 oktober — geheugenselectiecorrectie geïnstalleerd
 
 De algemene fout is afgemaakt: een observatie zonder verifieerbare bron verdringt geen toegelaten herinnering meer. Kern en werker importeren exact dezelfde correctie, zijn gezond en behouden configuratie/gegevens. Het bestaande pakket is mee bijgewerkt; overige1224 bronhashes en zeven inventorypins behouden.3 gerichte controles slagen op de nieuwe image zonder productbron-mount; onafhankelijke installatie-/pakketreview GO.0 nieuwe modelcalls, geen rollback of spraakwerk.

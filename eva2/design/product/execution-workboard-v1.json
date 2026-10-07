@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T00:54:44.175669+00:00",
+        "checkedAt": "2026-10-07T00:58:22.999201+00:00",
         "deliveries": [
           {
             "title": "Geheugen · toegelaten herinnering wordt niet verdrongen",
@@ -4078,22 +4078,22 @@
           }
         ],
         "now": {
-          "title": "Geheugen · selectiecorrectie opgeleverd",
-          "state": "in_progress",
+          "title": "Vergelijking · concrete blokkades",
+          "state": "blocked",
           "owner": "Codex",
-          "detail": "Toegelaten herinneringen worden niet meer verdrongen door een observatie zonder verifieerbare bron. Geïnstalleerd in kern/werker, beide gezond; bestaande pakketbron bijgewerkt en onafhankelijk beoordeeld.",
-          "remaining": "Oorspronkelijke resterende vergelijking en twee menselijke kwaliteitsbeoordelingen; spraak geparkeerd.",
-          "source": "eva2/evidence/product/memory-selection-correction-20261007.json",
+          "detail": "Oorspronkelijke vergelijking en R1/AIDE² zijn onvolledig afgesloten. Ontbrekend historisch SDK-verbruik en gebruikte onafhankelijke toelating laten geen nieuwe uitvoering binnen de bestaande voorwaarden toe. Twee menselijke kwaliteitsbeoordelingen ontbreken; spraak blijft geparkeerd.",
+          "remaining": "Twee menselijke beoordelingen; geldige hervatting van R1/P2 ontbreekt. Geen proefproces actief.",
+          "source": "eva2/evidence/product/p2-current-round-decision-20261007.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-07T00:22:43.560326+00:00",
+          "reviewedAt": "2026-10-07T00:58:22.999201+00:00",
           "taskId": "P2.1",
           "evidence": "eva2/evidence/product/p2-current-round-decision-20261007.json"
         },
         "next": {
-          "title": "Open eindvoorwaarden blijven zichtbaar",
+          "title": "Twee onafhankelijke kwaliteitsbeoordelingen",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Volledige vergelijking en echte gezins-/kwaliteitsbeoordeling zijn nog open. Deze correctie voltooit geen extra hoofdonderdeel en bewijst geen algemene voorsprong.",
+          "detail": "Beide bestaande P2.1-pakketten staan klaar. Ieder vult het eigen antwoordblad in; links en stappen staan bij de taak. Dit heft de afzonderlijke verbruiks-/toelatingsblokkade niet op.",
           "remaining": "Oorspronkelijke vergelijkingsdekking en menselijke beoordelingen blijven open; een reparatie bewijst geen vergelijkingswinst.",
           "source": "eva2/evidence/product/p2-cm12-paired-result-20261005.json"
         },
@@ -4119,7 +4119,7 @@
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-07T00:22:43.560326+00:00"
+        "reviewedAt": "2026-10-07T00:58:22.999201+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -19936,11 +19936,11 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Gebruik het afgesloten onvolledige vergelijkingsbesluit en bestaande open eindvoorwaarden. Twee onafhankelijke menselijke kwaliteitsbeoordelingen ontbreken; gesloten meetsets niet herhalen, oorspronkelijke toelating/verbruiksgrenzen niet resetten.",
+              "nextAction": "Twee echte afzonderlijke kwaliteitsbeoordelingen ontvangen. R1/P2 alleen hervatten als geldige cumulatieve verbruiksregistratie en onafhankelijke toelating binnen vastgelegde voorwaarden beschikbaar zijn. Geen nieuwe set, reset, herhaling of spraakwerk.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19953,7 +19953,7 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T00:54:44.175669+00:00",
+              "checkedAt": "2026-10-07T00:58:22.999201+00:00",
               "assignment": {
                 "baseCommit": "59e0f3365af6efa39fed7322a73ebd3f63eadf37",
                 "owner": "/root",
@@ -19966,16 +19966,17 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Algemene geheugenselectiecorrectie geïnstalleerd en onafhankelijk beoordeeld: een bronloze observatie verdringt geen toegelaten herinnering meer. Kern/werker gezond; bestaand pakket gelijkgetrokken. P2.1 en volledige vergelijking blijven open.",
+                "currentAction": "Geen vergelijking of bouwwerk actief. Vorige geheugencorrectie geïnstalleerd; bestaande proefregistraties en ontbrekende beoordelingen nu gecontroleerd.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": [
-                    "eva2/evidence/product/p2-hermes-original-cm02-result-20261007.json",
-                    "eva2/reviews/p2-hermes-original-cm02-result-review-20261007.json"
+                    "eva2/evidence/product/memory-selection-correction-20261007.json",
+                    "eva2/reviews/memory-selection-installed-review-20261007.json"
                   ],
-                  "meaning": "Eén oorspronkelijke Hermes-geheugenproef uitgevoerd, onafhankelijk beoordeeld en samen met dashboard gepubliceerd op GitHub commit4d6f9172. Geen productafronding of algemene kwaliteitswinnaar."
+                  "sourceCommit": "f8ac4afa7138d7e81dd53a4391274ff10d3c47bd",
+                  "meaning": "Exacte algemene geheugencorrectie geïnstalleerd, onafhankelijk gecontroleerd, bestaand pakket en GitHub bijgewerkt. Geen nieuwe producttaak fictief voltooid."
                 },
-                "stage": "memory_selection_correction_installed",
+                "stage": "awaiting_valid_evaluation_conditions",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -20083,7 +20084,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Gebruik het afgesloten onvolledige vergelijkingsbesluit en bestaande open eindvoorwaarden. Twee onafhankelijke menselijke kwaliteitsbeoordelingen ontbreken; gesloten meetsets niet herhalen, oorspronkelijke toelating/verbruiksgrenzen niet resetten.",
+                "nextAction": "Twee echte afzonderlijke kwaliteitsbeoordelingen ontvangen. R1/P2 alleen hervatten als geldige cumulatieve verbruiksregistratie en onafhankelijke toelating binnen vastgelegde voorwaarden beschikbaar zijn. Geen nieuwe set, reset, herhaling of spraakwerk.",
                 "actualUsage": {
                   "scope": "This CM04 native sample only",
                   "providerAttempts": 7,
@@ -20396,12 +20397,10 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "classification": "progress",
+                  "classification": "no_progress",
+                  "newProductFunctions": 0,
                   "modelCalls": 0,
-                  "originalCasesRepeated": 0,
-                  "diagnosticToolOperations": 2,
-                  "installedMemoryCorrection": true,
-                  "productTasksCompleted": 0,
+                  "newOriginalRuns": 0,
                   "creditCost": null,
                   "developmentCredits": null
                 },
@@ -20848,7 +20847,26 @@
                 },
                 "roundDecisionEvidence": "eva2/evidence/product/p2-current-round-decision-20261007.json",
                 "executionDiagnosisEvidence": "eva2/evidence/product/p2-current-execution-diagnosis-20261007.json",
-                "memorySelectionCorrectionEvidence": "eva2/evidence/product/memory-selection-correction-20261007.json"
+                "memorySelectionCorrectionEvidence": "eva2/evidence/product/memory-selection-correction-20261007.json",
+                "currentBlockedAudit": {
+                  "condition": "Remaining original evaluation cannot resume with unrecoverable historical usage and spent admissions; remaining independent work is parked speech or human judgement.",
+                  "consecutiveGoalTurns": 1,
+                  "previousGoalTurnClassification": "progress",
+                  "revalidatedAt": "2026-10-07T00:58:22.999201+00:00",
+                  "evidence": [
+                    "eva2/evidence/product/p2-current-round-decision-20261007.json",
+                    "eva2/reviews/r1-current-readiness-20261006.json",
+                    "eva2/reviews/r1-current-readiness-review-20261006.json"
+                  ],
+                  "authoritativeAggregateSha256": "28ef3624b52851edd152818efdc6d93399b4e0bdb252de9f299ed5f063e57b3c",
+                  "aggregateUnchanged": true,
+                  "activeOriginalProcesses": [],
+                  "humanCompletedSheets": [
+                    false,
+                    false
+                  ],
+                  "goalMarkedBlocked": false
+                }
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
               "latestEvidence": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",
@@ -20859,7 +20877,7 @@
                 "evidence": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
                 "reason": "Eén aborted contactpoging, SDKusageNULL; bestaande cumulatieve toelatingsguard sluit nieuwe Eva2-sample uit. Ontbrekende gestructureerde upstreamfoutregistratie verklaard; geen concrete upstreamcorrectie bewezen."
               },
-              "blocker": "Codex: eerste native poging HTTP503; upstreamoorzaak en SDKusage onbekend. Oorspronkelijke cumulatieve guard blokkeert nieuwe Eva2-toelating.",
+              "blocker": "Oorspronkelijke vergelijking en R1/AIDE² zijn onvolledig afgesloten. Ontbrekend historisch SDK-verbruik en gebruikte onafhankelijke toelating laten geen nieuwe uitvoering binnen de bestaande voorwaarden toe. Twee menselijke kwaliteitsbeoordelingen ontbreken; spraak blijft geparkeerd.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
