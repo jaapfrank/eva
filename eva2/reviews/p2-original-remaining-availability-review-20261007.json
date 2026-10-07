@@ -1,0 +1,37 @@
+{
+  "contract": "Ev003IndependentAvailabilityReview/v1",
+  "created_at": "2026-10-07T21:10:51.442364+00:00",
+  "task": "P2.1",
+  "decision": "GO_METADATA_ONLY",
+  "reviewed": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-original-remaining-availability-20261007.json",
+    "sha256": "833731f8ca47781f1989f0c17cf65e7abfa4ad0a38b0b547ecf0e204455511a5"
+  },
+  "binding_checks": {
+    "original_commitment_plan_protocol_scorer_unchanged": true,
+    "authority19_rows_sha_unchanged": true,
+    "eva1_and_openclaw_cm07_unused": true,
+    "cm07_verified_shared_control_not_satisfied_by_bound_private_routes": true,
+    "unavailable_is_unknown_not_loss_or_missing_login": true,
+    "hermes_cm01_through_cm04_consumed_cm05_unused": true,
+    "hermes_cm05_matches_retained_openclaw_case_and_dataset": true,
+    "three_turn_adapter_and_parent_guard_gap_explicit": true,
+    "original_limits_and_person_memory_policy_preserved": true,
+    "no_full_matrix_or_next_sample_admission": true,
+    "human_quality_and_cost_unknowns_preserved": true
+  },
+  "findings": [],
+  "next_action": "Prepare only the existing Hermes CM05 four-turn count/entry binding and protected original projection for independent source review; then separately verify actual readiness before any execution. No CM07 projection or run.",
+  "limitations": [
+    "Availability is scoped to the already bound native routes, not a general product capability verdict.",
+    "Prior safety failures, unknown usage and incomplete comparison remain; no promotion or general winner."
+  ],
+  "reviewer_activity": {
+    "tests": 0,
+    "model_calls": 0,
+    "auth_requests": 0,
+    "native_starts": 0,
+    "authority_mutations": 0,
+    "private_input_projection": 0
+  }
+}

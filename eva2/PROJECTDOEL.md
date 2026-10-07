@@ -1,6 +1,6 @@
 # Eva — digitale huisgenoot die leert en handelt
 
-## Actuele uitvoering 7 oktober — L3.6–L3.7 afgerond, P2.1 volgt
+## Actuele uitvoering 7 oktober — L3.6–L3.7 afgerond, P2.1 loopt
 
 De gewone Eva-route maakte contextkandidaat B, liet deze afzonderlijk beoordelen
 en paste de exact geaccepteerde versie via de bestaande beheerde route toe.
@@ -14,7 +14,32 @@ vergelijking volgt; menselijke beoordelingen blijven afzonderlijk zichtbaar. App
 gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
 
 
-## P2.1 actueel 7 oktober — matching geheugenuitkomst
+## P2.1 actueel 7 oktober — dezelfde persoonsgrensproef bij Hermes en OpenClaw
+
+De oorspronkelijke CM05 is eenmaal door Hermes uitgevoerd en onafhankelijk
+beoordeeld: 4/4 antwoorden ontvangen, 3/4 feitelijk correct, 1/2 verplichte
+readbacks. OpenClaw ontving in exact dezelfde case 3/4 antwoorden, waarvan 2/4
+feitelijk kloppen; één antwoord ontbreekt. Beide falen de oorspronkelijke harde
+persoonscontextvoorwaarde: privéfeiten kruisen personen en de terugkerende persoon
+krijgt het feit van de ander. Hermes' vier native origins kloppen; geen adapterfout.
+
+Hermes: 10 complete aanvragen, 21.608 invoer-/424 uitvoertokens, 21,933s.
+OpenClaw: 16 aanvragen, 403.281/1.296, 181,706s. Dezelfde parent-start/child-exitgrens,
+maar verschillende voltooiing/modelrollen; geen snelheidsratio voor geslaagd werk,
+geldbesparing of algemene winnaar. Menselijke kwaliteit blijft onbekend.
+OpenClaws oude raw accepted_answers=3 telt ontvangen antwoorden, geen juistheid.
+
+Alle 19 eerdere authorityrijen/revisies behouden; nu 20 rijen/130 geregistreerde
+pogingen en 1.444.763 bekende tokens als ondergrens. Drie oudere verbruiksonbekenden
+blijven staan. Hermes volledig afgesloten; geen replay of extra productfunctie.
+P2.1 blijft open. De oorspronkelijke gedeelde-publiekscase CM07 is op de huidige
+Eva1/OpenClaw-routes niet uitvoerbaar: UNKNOWN, geen productverlies.
+Volgende bestaande mogelijkheid: ongebruikte Hermes-CM06, naast de behouden
+Eva1/OpenClaw-CM06. Bron-/gereedheids-/invoertoelating daarvoor nog afzonderlijk nodig.
+Bewijs: evidence/product/p2-hermes-original-cm05-result-20261007.json;
+review: reviews/p2-hermes-original-cm05-result-review-20261007.json.
+
+## P2.1 eerder 7 oktober — matching geheugenuitkomst
 Dezelfde oorspronkelijke CM06 is nu eenmaal door Eva1 uitgevoerd en onafhankelijk
 beoordeeld naast OpenClaw: Eva1 haalt de vereiste latere status niet terug
 (1/3 bruikbare antwoorden, 1/2 verplichte readbacks); OpenClaw wel (3/3, 2/2).

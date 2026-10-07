@@ -343,6 +343,18 @@ def install_hermes_tool_accounting(observer, model_tools, agent_class, tool_limi
     agent_class._execute_tool_calls = tool_batch
 
 
+def native_hermes_turns(participant):
+    """Use the admitted original packet's count without changing any turn."""
+    turns = participant["turns"]
+    if not isinstance(turns, list) or not turns:
+        raise ValueError("native Hermes original turns must be a nonempty list")
+    if any(not isinstance(t, dict) or type(t.get("ordinal")) is not int for t in turns):
+        raise ValueError("native Hermes original ordinal must be an integer")
+    if [t["ordinal"] for t in turns] != list(range(len(turns))):
+        raise ValueError("native Hermes original ordinals must be contiguous and ordered")
+    return turns
+
+
 def native_hermes_identity(participant, turn):
     """Forward original actor/audience controls to existing native origin fields."""
     identity = turn.get("native_identity")
@@ -407,14 +419,14 @@ def run_native_cm(args):
     observer = HermesSDKAccounting(ledger, deadline, output / "sdk-attempts-technical.json")
     restore, agents, turn_results, observed_responses, tool_events, error = [], [], [], [], [], None
     calendar = None; db = None; close_ack = False; close_errors = []; case = None; credentials = None
-    clock_restored = False; pending_native = None
+    clock_restored = False; pending_native = None; expected_turn_count = 0
     try:
         observer.check()  # No private case bytes before actual parent/deadline gate.
         with os.fdopen(args.native_cm_input_fd) as fd: case = json.load(fd)
         if case.get("contract") != "Ev003PrivateNativeInputs/v1" or case.get("oracle_included") is not False:
             raise ValueError("exact original native input contract required")
-        participant = case["participants"]["hermes"]; turns = participant["turns"]
-        assert len(turns) == 3 and [t["ordinal"] for t in turns] == [0,1,2]
+        participant = case["participants"]["hermes"]; turns = native_hermes_turns(participant)
+        expected_turn_count = len(turns)
         identities = [native_hermes_identity(participant, turn) for turn in turns]
         session_bindings = {}
         for turn, identity in zip(turns, identities):
@@ -569,7 +581,7 @@ def run_native_cm(args):
         close_ack=ledger.close(settled=observer.settled() and not observer.streams and not close_errors
             and pending_native=={"background_reviews":0,"idle_queue":0})
     report={"contract":"HermesNativeCmParentOutcome/v1","case_id":case["case_id"] if case is not None else None,"epoch":case["epoch"] if case is not None else None,"participant":"hermes",
-        "turn_count":len(turn_results),"native_responses_received":len(observed_responses),"successful_result":len(turn_results)==3 and error is None,
+        "turn_count":len(turn_results),"expected_turn_count":expected_turn_count,"native_responses_received":len(observed_responses),"successful_result":expected_turn_count > 0 and len(turn_results)==expected_turn_count and error is None,
         "error":error,"sdk_attempts":observer.calls,"tool_dispatches":tool_events,"parent_mirror":ledger.report(),
         "parent_close_acknowledged":close_ack,"close_errors":close_errors,"scenario_clock_restored":clock_restored,"native_pending_at_close":pending_native,
         "external_inference_requests":len(observer.wire_dispatches),

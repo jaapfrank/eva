@@ -1,0 +1,44 @@
+{
+  "contract": "OriginalHermesCm05SourcePreparation/v1",
+  "date": "2026-10-07T21:19:39.945109+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-05:epoch1",
+  "basisCommit": "ba52a37db19f523dff66d0fee2a14bc1468ab4ea",
+  "concreteGap": "Existing evaluator input and completion were fixed to3turns; the next original case has4.",
+  "change": "Derive count from unchanged admitted packet; ordered ordinals required; parent and Inspect bind the exact original4turn case. No native personality,memory policy,source,modelrole or criterion change.",
+  "sources": {
+    "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py": "c1b07c0e22388fbd8d40140d295bd0a4b83cb5770faa25341c8d32d136e437ee",
+    "eva2/tests/benchmark/test_hermes_native_tool_accounting.py": "f9dd8e138f4b2e97bfd3b7a3c7c9a0fc0804cf448da550dc7194c0b3f1e07ebf"
+  },
+  "sourceBindingSha256": "0f38ac8e5648c05a71e4982dcf265ccda7d7407182e4619844ab9e0ac5fb0102",
+  "resourceAdmissionSha256": "51eebee9a0bb2d72192e514406f07292d6c7893478a058decbaa08c72dc4307c",
+  "sourceReview": {
+    "path": "eva2/reviews/p2-hermes-cm05-source-review-20261007.json",
+    "sha256": "8c0a432e147c15fd939fc2e1e66630b0fed00c871dc4cc7cc0778d1ad8afbd9f"
+  },
+  "verification": {
+    "publicPacketBoundaryTests": 1,
+    "publicModelsOrNativeStarts": 0,
+    "typedParentNoNativePreflight": true,
+    "pinnedInspectImportsVerified": true,
+    "actualSourcePins": 56,
+    "old19AuthorityRowsPreservedBeforeLaunch": true,
+    "freshOwnedAuthUnderActualUid": 1000,
+    "authRefreshOrCopy": false,
+    "profileMemoryOrSessionCopied": false,
+    "configAndSoulUnchanged": true,
+    "nativeConfigBackupPreserved": true
+  },
+  "preparationIssuesPreserved": [
+    "Prior closed profile moved under execution/native-profile; old live path missing before anycopy",
+    "First metadata check read nonexistent ISOexpires_at field; native JWT expiry valid, no auth/modelrequest",
+    "Nested instrumentation table stale; corrected to actual import/filepins before resourceadmission",
+    "Empty native-created memories directory misdescribed as nonempty state; actual memory/session empty, backup retained"
+  ],
+  "originalInputsReleased": false,
+  "newProviderCallsForPreparation": 0,
+  "newProductFunction": false,
+  "developmentCredits": null,
+  "runtimeInstallOrRestart": false,
+  "inputReadinessSeparate": true
+}

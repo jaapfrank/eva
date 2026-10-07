@@ -1,0 +1,133 @@
+{
+  "activity": {
+    "criteria_changes": 0,
+    "models": 0,
+    "native_starts": 0,
+    "protected_content_disclosed": false,
+    "reservations": 0
+  },
+  "authority": {
+    "all_historical_rows_and_revisions_preserved": true,
+    "historical_usage_unknowns": 3,
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "rows": 19,
+    "sha256_unchanged": "707f5d502dca4de191d938a919ef6eb33458b7d60110300bb000e389e5107593",
+    "slot_unused": true
+  },
+  "bindings": {
+    "case_sha256": "928a518791001ba235b1e3ee3fa34f0f70058307f3b643530f29dc2b0358ac86",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+  },
+  "case_id": "EV003-CM-05",
+  "contract": "Ev003HermesOriginalEntryContract/v1",
+  "date": "2026-10-07",
+  "decision": "ORIGINAL_PROJECTION_READY_NOT_ADMITTED",
+  "entry": "hermes:EV003-CM-05:epoch1",
+  "epoch": 1,
+  "equality": {
+    "criteria_changed": false,
+    "oracle_included": false,
+    "original_audience_grants_unchanged": true,
+    "original_initial_clock_timezone_and_events_exact": true,
+    "original_input_utf8_and_order_exact": true,
+    "original_session_controls_exact": true,
+    "original_verified_principals_exact": true,
+    "same_committed_inputs_as_retained_openclaw_cm05": true
+  },
+  "equality_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "3315690f45f5c33c16341d77cdfd1f8841954236a2e940af7bea25435f240ec8"
+  },
+  "historical_source_not_current_pin": "83fa87fd2e39360f72b4264e1970f5245f62ececc0ea8d5157a46c863da936c6 is historical CM04 binding evidence, not the corrected four-turn source pin. Current source/parent count binding awaits separate review.",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "input_admitted": false,
+  "limits_unchanged": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "matching_original_openclaw_result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json",
+    "sha256": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+  },
+  "native_mapping": {
+    "chat_id": "UUIDv5 URL namespace over <dataset>:<case>:<epoch>:hermes:private-chat:<principal>; same person retains the same private chat.",
+    "chat_type": "dm",
+    "constructor_fields": [
+      "user_id",
+      "chat_id",
+      "chat_type",
+      "gateway_session_key"
+    ],
+    "context_id": "UUIDv5 URL namespace over <dataset>:<case>:<epoch>:hermes:session:<index>; four distinct original sessions.",
+    "gateway_session_key": "Existing native default-profile build_session_key: agent:main:cli:dm:<chat_id>. This is origin metadata, not new authentication.",
+    "memory": "One ordinary profile and SessionDB, unchanged profile-global MemoryStore; no person split or new privacy policy.",
+    "platform": "cli",
+    "run_id": "First12 hex of UUIDv5 URL namespace over <dataset>:<case>:<epoch>:hermes.",
+    "user_id": "Exact original canonical principal indexed by original identity order."
+  },
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/cm05-epoch1.native-inputs.private.json",
+    "sha256": "4ff9898c0ca7437555964684fc1adfaf47c48f9b80106e38837f2bb6d3cbb19e"
+  },
+  "quality_score": null,
+  "readbacks_required": [
+    "Exact durable native reply/session origin user_id,chat_id,chat_type,session_key and origin_json after each of four turns.",
+    "Unmodified native memory snapshots and every actual outgoing foreground/helper model body, bound to original actor/session/clock.",
+    "Full original attempts/raw usage/tools/deadline/stop/native settlement and physical closure; original factual and both required independent readback conditions only.",
+    "Two real human ratings remain null absent actual independent raters."
+  ],
+  "remaining_binding": "Bind admitted count4 and ordinals[0,1,2,3] in corrected native adapter and parent success predicate, exact entry/isolated paths and preserved19-row history; separate source and actual-readiness review before one-time input release.",
+  "resource_preparation_admitted": false,
+  "schema": {
+    "clock": "{generation,offset_delta_milliseconds}",
+    "native_identity": "{user_id,chat_id,chat_type,gateway_session_key}",
+    "provisioning": "actors:[{actor_index,user_id}],audience_kind:private,memory_subdir:default",
+    "root": "Ev003PrivateNativeInputs/v1",
+    "turn": "{actor_index,ordinal,session_index,context_id,text,clock,native_identity}"
+  },
+  "shape": {
+    "actor_count": 2,
+    "actor_indices": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "audience": "private",
+    "calendar_advance_count": 1,
+    "clock_generations": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "clock_offset_deltas_ms": [
+      0,
+      0,
+      86400000,
+      86400000
+    ],
+    "extra_fixtures": 0,
+    "session_count": 4,
+    "session_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "setup_turn_count": 0,
+    "turn_count": 4,
+    "unknown_person_turns": 0
+  },
+  "source_review_admitted": false,
+  "task": "P2.1"
+}

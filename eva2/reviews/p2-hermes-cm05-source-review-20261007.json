@@ -1,0 +1,142 @@
+{
+  "contract": "Ev003IndependentHermesSourceReview/v1",
+  "created_at": "2026-10-07T21:17:39.114723+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-05:epoch1",
+  "decision": "GO_RESOURCE_PREPARATION_ONLY",
+  "original_input_admitted": false,
+  "source_binding": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/source-binding-cm05-proposed.private.json",
+    "sha256": "0f38ac8e5648c05a71e4982dcf265ccda7d7407182e4619844ab9e0ac5fb0102"
+  },
+  "proposed_config": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/parent-cm05-resource-proposed.private.json",
+    "sha256": "21fc18861e8499b0398d6d89a3b4c16fa375b1b03086b20e8479da655196008d"
+  },
+  "reviewed_sources": {
+    "launcher_sha256": "5a9a854918859a3add5182bb07ca54eaa6c87e07cda88a8daf2f5f45bc2303a5",
+    "probe_sha256": "c1b07c0e22388fbd8d40140d295bd0a4b83cb5770faa25341c8d32d136e437ee",
+    "inspect_wrapper_sha256": "82fe51eb302d09701c5d1151223aba0b91e3a445bc7c9c38c3437ed1605bbd35"
+  },
+  "test_sha256": "f9dd8e138f4b2e97bfd3b7a3c7c9a0fc0804cf448da550dc7194c0b3f1e07ebf",
+  "projection_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm05-origin-projection-review-20261007.json",
+    "sha256": "06ddb2a88ac5ea18cbb891f40b7fb6cfa16c3f83db9d9c4c31e7f950a1f0f481"
+  },
+  "projection_sha256": "4ff9898c0ca7437555964684fc1adfaf47c48f9b80106e38837f2bb6d3cbb19e",
+  "equality_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "3315690f45f5c33c16341d77cdfd1f8841954236a2e940af7bea25435f240ec8"
+  },
+  "case_sha256": "928a518791001ba235b1e3ee3fa34f0f70058307f3b643530f29dc2b0358ac86",
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "checks": {
+    "actual_filepins_matched": 56,
+    "instrumentation_table_matches_actual_files": true,
+    "exact_packet_four_turns_bound_to_parent_and_terminal_count": true,
+    "ordered_ordinals_integer_and_contiguous": true,
+    "original_actors_A_B_A_B_and_four_private_sessions_unchanged": true,
+    "clock_generations_0_0_1_1_and_one_day_offset_preserved": true,
+    "ordinary_native_identity_and_global_memory_policy_unchanged": true,
+    "native_sources_and_provider_model_roles_unchanged": true,
+    "exact_outbound_context_retention_and_tool_accounting_reused": true,
+    "same_single_480s_deadline_before_native_start_and_stop_path_reused": true,
+    "original_scorer_and_locked_Inspect_mock_envelope_no_AI_judge": true,
+    "unused_slot_and_closed_Hermes_CM01_through_CM04_receipt_guards": true,
+    "current_authority19_rows_hash_unchanged": true,
+    "profile_has_no_memory_sessions_state_db_or_auth": true,
+    "profile_config_SOUL_equal_retained_CM04": true,
+    "native_auto_created_config_backup_equal_config_retained": true,
+    "input_release_and_execution_absent": true
+  },
+  "count_scope": "The generic decoder retains the actual nonempty ordered packet. This admission pins the curator-verified packet to exactly four turns and the parent requires count4/ordinals[0,1,2,3] and matching native expected/completed counts; no other count is admitted.",
+  "prior_evidence_reused": {
+    "cm04_source_and_native_origin_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm04-preparation-review-20261007.json",
+      "sha256": "742b1aeb5b838411ff18c3518ff18c2445c0663df0532584d67d82df7e376521"
+    },
+    "closed_cm04_terminal_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-original-cm04-result-review-20261007.json",
+      "sha256": "39a08991aecd179d3b9bb0d4d01688a2f26050f6a51d57e932c851e8137447cc"
+    },
+    "historical_83fa_probe_is_not_current_pin": true
+  },
+  "retained_verification": {
+    "source_only_preflight": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/source-preflight-no-native.private.json",
+      "sha256": "f898ad4f0ecc8ed98970b50ef4bd19f554d5caf4be3209af041e64ddcd1288cb"
+    },
+    "bound_no_input_contract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/bound-no-input-contract.private.json",
+      "sha256": "54ea589a5832c741bafe042f01e0d8ca803ed7f986adb9df67fdf8a84d508bcc"
+    },
+    "owned_auth_freshness": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/native-owned-auth-freshness-technical.private.json",
+      "sha256": "67057f1f0ef295e4d3889c07bd57ff6820c3338ff961be4987a893ad9f97f26c"
+    },
+    "public_count_test": {
+      "reported_passed": 1,
+      "evidence": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/source-binding-cm05-proposed.private.json",
+        "sha256": "0f38ac8e5648c05a71e4982dcf265ccda7d7407182e4619844ab9e0ac5fb0102"
+      },
+      "new_reviewer_test_runs": 0,
+      "native_starts": 0,
+      "provider_calls": 0
+    },
+    "auth_hash_unchanged": "c8f3c66b5b613d9d2369529a63e077d9ec5befccffd4ae225f88e195c16400b2",
+    "native_UID1000_freshness_observation": "Retained offline native JWT-expiry/access evidence; no refresh or credential copy."
+  },
+  "resolved_metadata_findings": [
+    "Stale cp001_process_accounting instrumentation hash corrected to actual6e07a0 binding; old proposed records retained.",
+    "Profile-empty flag corrected to empty memory/session state while preserving config/SOUL and native identical config backup."
+  ],
+  "prior_preparation_issues_preserved": [
+    "Lookup of closed profile at its old live path failed before copying; reused retained config/SOUL.",
+    "Native auth metadata does not have tokens.expires_at; preserved false-negative receipt and bound native JWT-expiry result."
+  ],
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "707f5d502dca4de191d938a919ef6eb33458b7d60110300bb000e389e5107593",
+    "rows": 19,
+    "new_reservations_by_review": 0,
+    "historical_usage_unknown_attempts": 3
+  },
+  "limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "human_ratings": [
+    null,
+    null
+  ],
+  "quality_score": null,
+  "credits": null,
+  "permitted_finalization": {
+    "resource_preparation_admitted": true,
+    "admitted": false,
+    "input_admitted": false,
+    "readiness_admitted": false,
+    "other_changes": [
+      "review_status",
+      "preparation_review_provenance"
+    ],
+    "destination": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/parent-cm05-resource-admission.private.json"
+  },
+  "remaining_gate": "Independently verify the same actual waiting parent/resources, exact new reservation and preserved19-row history, source/access/clock/stop controls before a separately bound one-time final input release. Native completion/closure and quality require actual terminal evidence.",
+  "findings": [],
+  "reviewer_activity": {
+    "tests": 0,
+    "model_calls": 0,
+    "native_starts": 0,
+    "auth_requests": 0,
+    "authority_mutations": 0,
+    "source_edits": 0
+  }
+}

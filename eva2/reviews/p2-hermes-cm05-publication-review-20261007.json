@@ -1,0 +1,97 @@
+{
+  "contract": "EV003PublicationDataReview/v1",
+  "created_at": "2026-10-07T21:32:50.478178+00:00",
+  "task": "P2.1",
+  "decision": "GO_PUBLICATION_AND_REVIEWED_SOURCE_CHECKPOINT_ONLY",
+  "reviewed_files": [
+    {
+      "path": "eva2/PROJECTDOEL.md",
+      "sha256": "a90b581d4979c7e01db7be327bca3a0932ebde2e42c724de28b2b9a2748e4943"
+    },
+    {
+      "path": "eva2/WERKBORD.md",
+      "sha256": "15991bb343fade9a2aa9f74358439a4f178f936e692b20f745159db9ae9ce524"
+    },
+    {
+      "path": "eva2/design/product/execution-workboard-v1.json",
+      "sha256": "b08e30264f8ae6e823bef19b756aa03c13e0a66807de89e36ce671cd408e3218"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+      "sha256": "c1b07c0e22388fbd8d40140d295bd0a4b83cb5770faa25341c8d32d136e437ee"
+    },
+    {
+      "path": "eva2/tests/benchmark/test_hermes_native_tool_accounting.py",
+      "sha256": "f9dd8e138f4b2e97bfd3b7a3c7c9a0fc0804cf448da550dc7194c0b3f1e07ebf"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+      "sha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80"
+    },
+    {
+      "path": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
+      "sha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1"
+    },
+    {
+      "path": "eva2/reviews/p2-hermes-cm05-source-review-20261007.json",
+      "sha256": "8c0a432e147c15fd939fc2e1e66630b0fed00c871dc4cc7cc0778d1ad8afbd9f"
+    },
+    {
+      "path": "eva2/evidence/product/p2-hermes-cm05-source-preparation-20261007.json",
+      "sha256": "190c7efb8912e8c6ba2ca71885f15e83b987c8288f35437655230984dd3c6159"
+    }
+  ],
+  "checks": {
+    "hermes_native_4_of_4_distinguished_from_factual_3_of_4": true,
+    "openclaw_native_3_of_4_distinguished_from_factual_2_of_4": true,
+    "original_openclaw_raw_accepted_answers_3_not_rescored": true,
+    "both_hard_person_context_failures_preserved": true,
+    "hermes_required_readbacks_1_of_2_and_human_nulls_preserved": true,
+    "usage_10_calls_21608_input_424_output_roles_6_sol_none_4_astra_medium": true,
+    "parent_to_child_elapsed_boundary_21_932726_seconds_preserved": true,
+    "cumulative_20_rows_130_attempts_1444763_token_lower_bound_3_unknowns": true,
+    "no_monetary_cost_or_overall_quality_winner_invented": true,
+    "closed_matching_cm06_results_and_legacy_input_distinction_retained": true,
+    "active_now_next_followup_runtime_totals_and_assignment_reference_closed_cm05": true,
+    "historical_stale_assignment_summaries_preserved_separately": true,
+    "native_context_started_true_active_false_and_objective_false_consistent": true,
+    "next_hermes_cm06_is_metadata_only_not_admitted": true,
+    "publication_review_self_hash_remains_null": true,
+    "no_protected_questions_answers_memory_values_or_oracles_in_reviewed_delta": true
+  },
+  "task_invariants": {
+    "existing_ids": 48,
+    "completed": 39,
+    "id_status_doneWhen_equal_to_HEAD": true,
+    "p2_1": "in_progress",
+    "new_product_function": false
+  },
+  "decoder_review": {
+    "decision": "GO_REUSED_SOURCE_REVIEW",
+    "change": "The admitted nonempty packet retains its exact turn objects and contiguous integer ordinals. Completion requires the exact admitted count; CM05 parent independently binds four turns and packet hash.",
+    "unchanged": "Native identity, memory policy, provider roles, tool caps, clock, context retention and stop/close semantics.",
+    "public_test": "Existing focused AST-only boundary fixture accepts unchanged 3/4-turn lists and rejects malformed/duplicate/reordered/gapped/noninteger ordinals. Retained pass receipt reused; no test run by reviewer.",
+    "scope": "Count decoding is not new case admission, a changed scoring criterion or a new runtime product function."
+  },
+  "resolved_publication_findings": [
+    "Earlier CM06 assignment finding/evidence/usage and unexecuted-CM05 next-decision were archived and current fields corrected.",
+    "Current native context flags and CM05 objective result now agree with terminal evidence.",
+    "Comparison scope, Hermes availability summary, current execution and old blocked-audit state now reflect the closed CM05 outcome while preserving history."
+  ],
+  "limitations": [
+    "Both participants failed this original privacy case; lower observed Hermes time/tokens do not establish a successful-task speed ratio or general superiority.",
+    "Required human ratings and monetary/credit totals remain unknown; historical missing SDK usage remains visible.",
+    "No new original case, resource preparation, input release or replay is authorized by this review."
+  ],
+  "reviewer_activity": {
+    "source_and_retained_metadata_only": true,
+    "tests_run": 0,
+    "native_starts": 0,
+    "model_calls": 0,
+    "auth_calls": 0,
+    "shared_files_changed": 0
+  },
+  "remaining_findings": []
+}

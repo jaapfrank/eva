@@ -1,0 +1,60 @@
+{
+  "contract": "EV003IndependentTerminalReview/v1",
+  "created_at": "2026-10-07T21:27:42.837202+00:00",
+  "decision": "GO_PUBLICATION_ONLY",
+  "entry": "hermes:EV003-CM-05:epoch1",
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+    "sha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80"
+  },
+  "protected_assessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/terminal-independent-assessment.private.json",
+    "sha256": "e5c905aa6320bd05447496949b4c4050bfb38ad72d65bf85609dd2c996d1d9bd"
+  },
+  "checked": {
+    "original_case_input_order_person_session_clock_binding": true,
+    "all_four_sqlite_replies_match_retained_native_results": true,
+    "all_four_native_identity_origins_match_original": true,
+    "all_ten_exact_outbound_context_hashes_and_bytes_match": true,
+    "complete_sdk_usage_including_four_helpers": true,
+    "56_bound_files_match_including_three_relocated_profile_files": true,
+    "own_auth_bytes_unchanged": true,
+    "all_19_previous_authority_values_and_revisions_exact": true,
+    "parent_native_stop_and_resource_closure_confirmed": true,
+    "original_criteria_and_official_null_scores_preserved": true,
+    "matching_openclaw_case_preserved_without_rescoring": true
+  },
+  "outcome": {
+    "native_replies": "4/4",
+    "factual_supported": "3/4",
+    "original_semantic_conditions": [
+      false,
+      false,
+      true
+    ],
+    "required_readbacks": "1/2",
+    "objective_pass": false,
+    "hard_person_context_privacy_gate": false,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "whole_quality": "UNKNOWN"
+  },
+  "limitations": [
+    "Technical completion does not establish quality or override the proven privacy/memory failure.",
+    "No independent human ratings or monetary/credit totals exist.",
+    "Historical three unknown provider attempts remain; cumulative tokens are lower bounds.",
+    "The earlier preparation metadata issues and all prior closed originals remain retained; they are not scored as product losses.",
+    "Next-case information is metadata only, with no source/input admission or execution authorized by this review."
+  ],
+  "activity": {
+    "retained_readonly_inspection": true,
+    "new_model_calls": 0,
+    "new_native_runs": 0,
+    "tests": 0,
+    "replays": 0,
+    "source_changes": 0,
+    "shared_board_changes": 0
+  }
+}

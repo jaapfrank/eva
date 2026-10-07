@@ -1,0 +1,86 @@
+{
+  "authority_unchanged": true,
+  "checks": {
+    "criteria_changed": false,
+    "oracle_included": false,
+    "original_audience_grants_unchanged": true,
+    "original_initial_clock_timezone_and_events_exact": true,
+    "original_input_utf8_and_order_exact": true,
+    "original_session_controls_exact": true,
+    "original_verified_principals_exact": true,
+    "same_committed_inputs_as_retained_openclaw_cm05": true
+  },
+  "closed_cases_preserved": true,
+  "contract": "Ev003IndependentHermesProjectionReview/v1",
+  "criteria_or_participant_memory_policy_changed": false,
+  "date": "2026-10-07",
+  "decision": "GO_ORIGINAL_PROJECTION_ONLY",
+  "entry": "hermes:EV003-CM-05:epoch1",
+  "equality_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "3315690f45f5c33c16341d77cdfd1f8841954236a2e940af7bea25435f240ec8"
+  },
+  "findings": [],
+  "human_ratings": [
+    null,
+    null
+  ],
+  "input_admission": false,
+  "model_calls": 0,
+  "native_starts": 0,
+  "original_binding": {
+    "case_sha256": "928a518791001ba235b1e3ee3fa34f0f70058307f3b643530f29dc2b0358ac86",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+  },
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/cm05-epoch1.native-inputs.private.json",
+    "sha256": "4ff9898c0ca7437555964684fc1adfaf47c48f9b80106e38837f2bb6d3cbb19e"
+  },
+  "public_entry_contract": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-cm05-entry-contract-20261007.json",
+    "sha256": "6f05c4cab199e24d0e3a1b46ce0e456e999a544c48df0e8c16e6e3351e1053f3"
+  },
+  "remaining_gate": "Independent bundled corrected source/parent/Inspect review, then actual readiness and separate one-time release.",
+  "reservations": 0,
+  "resource_admission": false,
+  "shape": {
+    "actor_count": 2,
+    "actor_indices": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "audience": "private",
+    "calendar_advance_count": 1,
+    "clock_generations": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "clock_offset_deltas_ms": [
+      0,
+      0,
+      86400000,
+      86400000
+    ],
+    "extra_fixtures": 0,
+    "session_count": 4,
+    "session_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "setup_turn_count": 0,
+    "turn_count": 4,
+    "unknown_person_turns": 0
+  },
+  "source_admission": false,
+  "source_scope": "Reuse reviewed CM04 identity mapping and pure native session-key function; no approval of the new count-source delta, launcher or runtime is issued here. Historical83fa source is not a current pin.",
+  "task": "P2.1",
+  "tests": 0
+}

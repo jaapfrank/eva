@@ -1,0 +1,160 @@
+{
+  "contract": "Ev003IndependentHermesActualReadinessReview/v1",
+  "created_at": "2026-10-07T21:20:12.520819+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-05:epoch1",
+  "decision": "GO_ONE_ORIGINAL_HERMES_CM05_SAME_WAITING_PARENT",
+  "source_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm05-source-review-20261007.json",
+    "sha256": "8c0a432e147c15fd939fc2e1e66630b0fed00c871dc4cc7cc0778d1ad8afbd9f"
+  },
+  "resource_admission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/parent-cm05-resource-admission.private.json",
+    "sha256": "51eebee9a0bb2d72192e514406f07292d6c7893478a058decbaa08c72dc4307c"
+  },
+  "actual_ready": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+    "sha256": "f5126b6fb43206dca783b952ea5ff5c4f3f7d7f70c89a8643484a5d3182625f3"
+  },
+  "inspect_binding": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+    "sha256": "c9387e798a6b986c9b55c13b213ff520c217eac5e28b5452f50bcd38bbb6c0c3"
+  },
+  "inspect_import_preflight": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/inspect-import-preflight.private.json",
+    "sha256": "de439916b44f52b692b20e94c8406d3f811c5176956f57f4b98072f199590802"
+  },
+  "waiting_execution": {
+    "exec_session": 3069,
+    "wrapper_pid": 2752378,
+    "parent_pid": 2752564,
+    "run_handle": "hermes-cm05-8c1d3766-82a5-4b83-90cc-3d6add025d54",
+    "actual_expected_scripts_root_UID_and_parent_relationship_verified": true,
+    "accounting_socket_bound_to_actual_parent": true,
+    "native_actor_started": false
+  },
+  "actual_resources": {
+    "container_id": "5086d516763b3b3a5c97f99c862134add5a67f21799fa4cd7a3f5e274b7a9d47",
+    "network_id": "8cab746f7790ab13a69965d9ffb3e900f088502ca2efa65af381575f328d4216",
+    "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+    "namespace": "net:[4026534261]",
+    "owned_labels_and_running_namespace_match": true,
+    "internal_network": true,
+    "actual_ipv4_rules": "loopback plus exact parent gateway TCP tunnel port then reject all",
+    "actual_ipv6_rules": "loopback then reject all",
+    "native_UID1000_owned_auth_readable": true,
+    "native_UID1000_authority_unreadable": true,
+    "auth_sha256_unchanged": "c8f3c66b5b613d9d2369529a63e077d9ec5befccffd4ae225f88e195c16400b2",
+    "freshness_evidence": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/native-owned-auth-freshness-technical.private.json",
+      "sha256": "67057f1f0ef295e4d3889c07bd57ff6820c3338ff961be4987a893ad9f97f26c"
+    },
+    "native_auth_request_or_refresh": false
+  },
+  "bindings": {
+    "source_pins_all56_match": true,
+    "source_sha256": {
+      "launcher_sha256": "5a9a854918859a3add5182bb07ca54eaa6c87e07cda88a8daf2f5f45bc2303a5",
+      "probe_sha256": "c1b07c0e22388fbd8d40140d295bd0a4b83cb5770faa25341c8d32d136e437ee",
+      "inspect_wrapper_sha256": "82fe51eb302d09701c5d1151223aba0b91e3a445bc7c9c38c3437ed1605bbd35"
+    },
+    "projection_sha256": "4ff9898c0ca7437555964684fc1adfaf47c48f9b80106e38837f2bb6d3cbb19e",
+    "projection_equality": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm05-preparation-20261007-v1/projection-equality-technical.private.json",
+      "sha256": "3315690f45f5c33c16341d77cdfd1f8841954236a2e940af7bea25435f240ec8"
+    },
+    "case_sha256": "928a518791001ba235b1e3ee3fa34f0f70058307f3b643530f29dc2b0358ac86",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "turns": 4,
+    "actors": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "sessions": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "clock_generations": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "clock_offsets_ms": [
+      0,
+      0,
+      86400000,
+      86400000
+    ],
+    "ordinary_profile_person_memory_policy_unchanged": true
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "before_sha256": "707f5d502dca4de191d938a919ef6eb33458b7d60110300bb000e389e5107593",
+    "after_one_reservation_sha256": "8fa2ea7a3a96bf1c0d4469f66db6431a140192c8d8133ce621fe36c3c670ba82",
+    "rows": 20,
+    "new_entry_revision": 0,
+    "new_entry_attempts": 0,
+    "prior19_values_and_revisions_exact": true,
+    "prior19_canonical_sha256": "8477d480d75a01adf3549ac7faa27b073b55e9cb29f9137decd0578eb439c909",
+    "canonical_recipe": "Sorted participant,sample_id rows containing participant,sample_id,revision and SHA256 of original raw value UTF-8; compact sorted-key JSON.",
+    "prior_digest_evidence": "Independent pre-reservation metadata observation, exec chunk a9569d, and unchanged prior authority707f5d.",
+    "historical_usage_unknown_attempts_preserved": 3,
+    "reset_or_replacement": false
+  },
+  "pre_release_state": {
+    "provider_attempts": 0,
+    "input_released": false,
+    "native_context_started": false,
+    "deadline_started": false,
+    "release_exists": false,
+    "owner_stop_exists": false,
+    "controller_errors": [],
+    "external_network_events": [],
+    "worker_connected": false
+  },
+  "original_conditions": {
+    "limits": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "model_roles": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      }
+    },
+    "deadline": "One original480-second monotonic deadline after release, before native child launch; no timer reset.",
+    "required_readbacks": "Every native reply/origin/session, unchanged memory snapshots and all exact foreground/helper contexts; complete native/tool/accounting/stop/closure.",
+    "human_ratings": [
+      null,
+      null
+    ],
+    "quality_score": null,
+    "cost_or_credits": null
+  },
+  "approved_action": "Root may atomically release once to this exact retained waiting parent with ready/run/source/final-admission hashes. This review creates no release and permits no restart or replay.",
+  "findings": [],
+  "reviewer_activity": {
+    "tests": 0,
+    "model_calls": 0,
+    "auth_requests": 0,
+    "native_starts": 0,
+    "authority_mutations": 0,
+    "release_written": false
+  }
+}

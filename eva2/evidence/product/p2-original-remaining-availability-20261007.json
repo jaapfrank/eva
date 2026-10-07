@@ -1,0 +1,288 @@
+{
+  "contract": "Ev003RemainingOriginalAvailability/v1",
+  "created_at": "2026-10-07T21:10:51.438923+00:00",
+  "task": "P2.1",
+  "basis_commit": "ba52a37db19f523dff66d0fee2a14bc1468ab4ea",
+  "decision": "GO_METADATA_ONLY_NO_SAMPLE_ADMISSION",
+  "bindings": {
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "protocol_sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256_before_and_after": "707f5d502dca4de191d938a919ef6eb33458b7d60110300bb000e389e5107593",
+    "rows": 19,
+    "all_existing_values_and_revisions_unchanged": true,
+    "registered_attempts": 120,
+    "known_usage_lower_bound": {
+      "input_tokens": 1409409,
+      "output_tokens": 13322,
+      "total_tokens": 1422731
+    },
+    "historical_unknown_usage_attempts": 3,
+    "whole_usage_complete": false,
+    "money": null,
+    "credits": null,
+    "new_reservations": 0
+  },
+  "cm07": {
+    "case_id": "EV003-CM-07",
+    "epoch": 1,
+    "case_sha256": "eb4f59b9b736fbe696a8f5eb2ef526570412a262a9cade50a18948196fd2bedc",
+    "shape": {
+      "turns": 2,
+      "setup_turns": 0,
+      "verified_synthetic_identities": 2,
+      "actor_order": [
+        0,
+        1
+      ],
+      "initial_audience": "private",
+      "required_transition": "verified_shared_audience_conversation",
+      "extra_fixture_services_files_browser_audio": 0
+    },
+    "participants": {
+      "eva1-bottie": {
+        "slot_unused": true,
+        "disposition": "unavailable_unknown_not_loss",
+        "product_loss": false,
+        "native_admission": false,
+        "cause": "The bound CM03/CM06 route sets one fixed EVA_WEB_SENDER, uses a private chat body without a person/audience selector and reads one fixed person; it cannot express the required verified shared audience.",
+        "access": "Existing owned subscription route was used successfully in the closed CM06. This is an adapter/audience limitation, not evidence of missing login; current lease freshness was not re-probed."
+      },
+      "openclaw": {
+        "slot_unused": true,
+        "disposition": "unavailable_unknown_not_loss",
+        "product_loss": false,
+        "native_admission": false,
+        "cause": "The bound recorder/CLI route requires nativeInboundContext.ChatType=direct and durable entry plus origin.chatType=direct. It has no admitted mapping/readback for this shared audience. This does not assert that OpenClaw as a product lacks all group support.",
+        "source_lines": [
+          77,
+          84,
+          109,
+          115,
+          120,
+          122
+        ],
+        "access": "Own authenticated native route and completed CM06 remain proven; no new authentication or current session probe. Missing shared-audience admission is separate."
+      }
+    },
+    "projection_created": false,
+    "criteria_or_person_policy_changed": false,
+    "required_before_any_future_admission": "An existing native shared identity/audience carrier and durable audience readback would have to satisfy the unchanged original controls. No private substitution, speaker-as-owner assumption, profile split or new route is approved."
+  },
+  "next_bounded_original_preparation": {
+    "participant": "hermes",
+    "case_id": "EV003-CM-05",
+    "epoch": 1,
+    "entry": "hermes:EV003-CM-05:epoch1",
+    "slot_unused": true,
+    "case_sha256": "928a518791001ba235b1e3ee3fa34f0f70058307f3b643530f29dc2b0358ac86",
+    "shape": {
+      "turns": 4,
+      "setup_turns": 0,
+      "verified_actors": 2,
+      "actor_order": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "audience": "private",
+      "sessions": 4,
+      "session_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "clock_generations": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "clock_offset_deltas_ms": [
+        0,
+        0,
+        86400000,
+        86400000
+      ],
+      "extra_fixture_services_files_browser_audio": 0
+    },
+    "selection": "Hermes CM01–04 are consumed. Ascending original case order makes CM05 next for Hermes; do not jump to CM06 or start later unpaired OpenClaw cases. Existing OpenClaw CM05 uses the exact same committed case/dataset and is retained, not replayed.",
+    "matched_comparator_already_closed": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json",
+      "sha256": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+    },
+    "native_identity_support": "Existing native_hermes_identity and durable SessionDB readback forward user_id/chat_id/chat_type/gateway_session_key per admitted session; retain one ordinary profile and global MemoryStore. No privacy policy improvement is authorized.",
+    "concrete_remaining_source_gap": {
+      "adapter_input_line": 417,
+      "adapter_success_line": 572,
+      "parent_success_line": 138,
+      "finding": "Both the current evaluator adapter and parent success predicate are fixed to three turns; the original next case requires four. Current source cannot execute CM05 unchanged.",
+      "smallest_change": "Bind the exact original admitted turn/ordinal count consistently at input and terminal checks; derive only case IDs/isolated paths/unused slot/history and unchanged clock/person controls in the existing parent/Inspect route."
+    },
+    "preparation_eligible": true,
+    "source_ready_for_cm05": false,
+    "resource_preparation_admitted": false,
+    "input_admitted": false,
+    "remaining_prerequisites": [
+      "Curator-only unchanged original four-turn projection with technical equality; no oracle to builder.",
+      "Independent review of the narrow count/entry binding, current source pins and all 19 preserved authority rows, with closed Hermes CM01–04 guards.",
+      "Same original owned provider/model roles; current native access freshness and actual isolated readiness checked before separate one-time admission.",
+      "Complete all model/helper/tool accounting, original clock/person/session readbacks and native/physical stop within the unchanged single sample envelope."
+    ],
+    "limits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "wallSeconds": 480,
+      "toolDispatches": 16,
+      "speechRequests": 0
+    },
+    "models": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoningEffort": "none"
+      },
+      "allResearchWorkAndMemoryHelpers": {
+        "model": "gpt-6-astra",
+        "reasoningEffort": "medium"
+      },
+      "providerRoute": "Existing registered subscription routes only; no paid fallback or automatic model escalation"
+    },
+    "existing_cm04_control_config_templates": {
+      "parent-cm04-preparation-draft.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/parent-cm04-preparation-draft.private.json",
+        "sha256": "f89febe8ea19d00a071245a034e69d36ae99bc6dcdac4f2671fda382bcffaead"
+      },
+      "parent-cm04-resource-admission.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/parent-cm04-resource-admission.private.json",
+        "sha256": "319c0238c7c7948f86079fad93b06b8250dcd4fefd71fb8daf3381a62183b7eb"
+      },
+      "final-input-admission.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/final-input-admission.private.json",
+        "sha256": "2b5ab8db42da544018d024aa3c507ae85e9e93ca13fc00e3cd0e602efb123ecc"
+      },
+      "native-owned-auth-freshness-technical.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/native-owned-auth-freshness-technical.private.json",
+        "sha256": "118becf75e98ea742592b16f017dcfba182c66c1f7aa10b2388e7863979679b8"
+      }
+    },
+    "count_binding_contract": {
+      "original_cm05_turns": 4,
+      "maximum_user_inputs_in_original_CM_family": 4,
+      "ordinal_sequence": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "success_requires_all_admitted_turns": true,
+      "same_count_bound_in_private_packet_admission_parent_and_native_report": true,
+      "count_is_not_a_new_budget_or_native_policy": true
+    }
+  },
+  "other_remaining_barriers": {
+    "eva2": "Participant-specific unresolved historical SDK usage guard remains; no later sample is admitted by this record.",
+    "agent_zero": "Participant-specific unresolved historical usage guard remains.",
+    "human_quality": "Two real independent ratings remain absent/null; technical/objective evidence cannot replace them.",
+    "voice": "Parked under owner priority; no audio substitution or new speech work.",
+    "current_access": "Retained own access is distinct from current case-specific admission. This metadata decision refreshes no credentials or runtime lease."
+  },
+  "scope_interpretation": {
+    "protocol_lines": [
+      [
+        7,
+        15
+      ],
+      [
+        83,
+        102
+      ]
+    ],
+    "earlier_round_snapshot_preserved": true,
+    "earlier_round_limitation": "The earlier Hermes-only stop conclusion and all original failures remain. A now-retained matching OpenClaw CM05 result makes a bounded matched comparison possible to prepare; it cannot erase earlier safety failures or establish general superiority.",
+    "formal_1080_ceiling_authorizes_automatic_matrix": false,
+    "unused_budget_redistributed": false,
+    "closed_samples_replayed": false,
+    "new_family_or_epoch_selected": false,
+    "full_P2_1_completed": false,
+    "overall_winner": null
+  },
+  "references": {
+    "commitment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/dataset-commitment.private.json",
+      "sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d"
+    },
+    "plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "protocol": {
+      "path": "/home/administrator/project/Eva2/eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+    },
+    "scorer": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    "owner_authorization": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-owner-authorization-20261005.json",
+      "sha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5"
+    },
+    "closed_matched_cm06": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
+      "sha256": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d"
+    },
+    "eva1_existing_availability": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-successor-cm05-availability-20261007.json",
+      "sha256": "c62731e5c6806abd6ad64da59b735da3606420f4780713747627dc08d70a338e"
+    },
+    "eva1_current_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/source-binding-recovery1.private.json",
+      "sha256": "68c8d47002fb335a472aaad0bdf05c5a772cfb4e69f3280b0227be6bde2633c9"
+    },
+    "openclaw_current_child": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/native-openclaw-cm.private.mjs",
+      "sha256": "33021daba01755a6fa82c143688be0019ac9c1789f2e389adda7e177c2728a0b"
+    },
+    "hermes_current_native_adapter": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+      "sha256": "83fa87fd2e39360f72b4264e1970f5245f62ececc0ea8d5157a46c863da936c6"
+    },
+    "hermes_current_parent": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/launch-parent-accounted-cm04.private.py",
+      "sha256": "9e8c2eb661e6f449e8e53e46049a9020d292d90709061cf00aacf4ac717c8cf8"
+    },
+    "hermes_origin_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm04-origin-projection-review-20261007.json",
+      "sha256": "92d9de9c7b5e33ad2ab8b25fc2d3aa10eff2ae293cb5eb54bece14e65904e3ec"
+    },
+    "hermes_preparation_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm04-preparation-review-20261007.json",
+      "sha256": "742b1aeb5b838411ff18c3518ff18c2445c0663df0532584d67d82df7e376521"
+    },
+    "openclaw_matching_cm05": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json",
+      "sha256": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+    },
+    "earlier_round_decision": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-current-round-decision-20261007.json",
+      "sha256": "ed43fadeaec6c95d4ce439bb0ed8a8867027123b44749fc13abda65ade529e22"
+    }
+  },
+  "activity": {
+    "model_calls": 0,
+    "auth_requests": 0,
+    "native_starts": 0,
+    "tests": 0,
+    "authority_mutations": 0,
+    "projections": 0,
+    "protected_content_disclosed": false
+  }
+}

@@ -12,6 +12,24 @@ import unittest
 
 
 class NativeToolAccountingContract(unittest.TestCase):
+    def test_original_packet_retains_all_turns_and_rejects_reordered_input(self):
+        # Exercise the packet boundary without loading a provider or private case.
+        import ast
+        probe = Path(__file__).resolve().parents[2] / "benchmark/inspect_ai_v1/p1_hermes_startup_probe.py"
+        definition = next(n for n in ast.parse(probe.read_text()).body
+            if isinstance(n, ast.FunctionDef) and n.name == "native_hermes_turns")
+        namespace = {}
+        exec(compile(ast.Module(body=[definition], type_ignores=[]), str(probe), "exec"), namespace)
+        decode = namespace["native_hermes_turns"]
+        for count in (3, 4):
+            turns = [{"ordinal": n, "public_payload": {"unchanged": n}} for n in range(count)]
+            self.assertIs(decode({"turns": turns}), turns)
+        for malformed in ([], {}, [{"ordinal": 0}, {"ordinal": 0}],
+                [{"ordinal": 1}, {"ordinal": 0}], [{"ordinal": 0}, {"ordinal": 2}],
+                [{"ordinal": False}], [{}]):
+            with self.assertRaises(ValueError):
+                decode({"turns": malformed})
+
     def test_native_origins_share_profile_without_added_privacy_policy(self):
         source = Path(os.environ["HERMES_NATIVE_SOURCE"])
         bench = Path(__file__).resolve().parents[2] / "benchmark" / "inspect_ai_v1"

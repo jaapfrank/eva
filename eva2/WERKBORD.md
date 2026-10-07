@@ -1,4 +1,35 @@
-## Actueel 7 oktober — dezelfde geheugenproef: Eva1 faalt, OpenClaw slaagt
+## Actueel 7 oktober — Hermes en OpenClaw falen dezelfde persoonsgrensproef
+
+| Oorspronkelijke CM05 | Antwoorden ontvangen | Feitelijk goed | Persoonsgrens |
+| --- | --- | --- | --- |
+| Hermes | 4/4 | 3/4 | Faalt |
+| OpenClaw | 3/4 | 2/4 | Faalt |
+
+Hermes houdt de privéfeiten niet per persoon gescheiden. Een terugkerende persoon
+krijgt het feit van de ander; de native persoons-/sessieorigins zijn wel correct.
+OpenClaws oorspronkelijke verlies blijft exact behouden. Zijn oude raw
+accepted_answers=3 telt ontvangen antwoorden, geen drie feitelijk goede antwoorden.
+Menselijke kwaliteit en algemene superioriteit blijven onbekend.
+
+Hermes: 10 complete aanvragen, 21.608 invoer-/424 uitvoertokens, 21,933s.
+OpenClaw: 16 aanvragen, 403.281/1.296, 181,706s. Dezelfde parent-start/child-exitgrens;
+verschillende voltooiing/modelrollen, geen snelheidsratio voor geslaagd werk.
+Credits/geld onbekend. Alle 19 oude authorityrijen exact; nu 20/130 pogingen,
+1.444.763 bekende ondergrenstokens en drie oude verbruiksonbekenden.
+Hermes' uitvoering/resources zijn volledig afgesloten; geen replay.
+
+48 bestaande kleine taken, 39 afgerond; deze vergelijking is geen extra productfunctie.
+P2.1 blijft open. De gedeelde-publiekscase CM07 is op huidige Eva1/OpenClaw-routes
+niet uitvoerbaar (UNKNOWN). De ongebruikte Hermes-CM06 kan dezelfde behouden
+Eva1/OpenClaw-geheugenproef aanvullen; bron-/gereedheids-/invoertoelating nog nodig.
+L3.4–L3.7 blijven geïnstalleerd. De cyclus geldt ook voor apps/add-ons/uitbreidingen;
+automatische droommodus is nog niet gebouwd. Spraak blijft geparkeerd.
+
+Resultaat: evidence/product/p2-hermes-original-cm05-result-20261007.json.
+Review: reviews/p2-hermes-original-cm05-result-review-20261007.json.
+Actuele kleine taak: P2.1 in design/product/execution-workboard-v1.json.
+
+## Eerder 7 oktober — dezelfde geheugenproef: Eva1 faalt, OpenClaw slaagt
 
 De oorspronkelijke matching CM06 is eenmaal door Eva1 uitgevoerd en onafhankelijk
 beoordeeld. De latere status komt niet terug: 1/3 bruikbare antwoorden en 1/2
