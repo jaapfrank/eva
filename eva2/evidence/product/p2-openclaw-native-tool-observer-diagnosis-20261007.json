@@ -1,0 +1,134 @@
+{
+  "contract": "P2OpenClawNativeToolObserverDiagnosis/v1",
+  "date": "2026-10-07",
+  "decision": "NO_GO_ORIGINAL_SAMPLE",
+  "scope": "Read-only targeted retained public fixture and pinned native tool-observer source; no new trial or original input.",
+  "execution": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/resolved-mock-native-composition/ordinary-execution.public.json",
+    "sha256": "35c59c0c81418f03ca46191be3313c1d0e004147cd6dd69df437d2d774dd57fe"
+  },
+  "technicalReceipt": {
+    "path": "/tmp/eva-p2-openclaw-resolved-native-20261007-bhze782b/composition-technical.private.json",
+    "sha256": "591da4d382155d07394c9c6ea23dd84e2761e84bc0c13ad80eaa102f42aaf560"
+  },
+  "outgoingPublicRequest": {
+    "path": "/tmp/eva-p2-openclaw-resolved-native-20261007-bhze782b/contexts/3-attempt-1-websocket.json",
+    "sha256": "f708b13f2680d1cc64eee59be4efb19921ac5075d9229a287cbc8d2e3c74503d"
+  },
+  "sourceSha256": "29c4e9b7ed32fad239533abc84b50f4ad61d059ddaf70d1bbe63df20dd728150",
+  "testSha256": "e31552360b44d3f0f8f5d9de88408743587a2bc02a412022bd0dbdb5b791eae9",
+  "retainedRuntime": {
+    "elapsedSeconds": 119.65952637299779,
+    "exitCode": 1,
+    "controllerTimedOut": false,
+    "completedNativeTurns": 0,
+    "physicalMockResponses": 1,
+    "mockSdkUsage": {
+      "inputTokens": 17,
+      "outputTokens": 3,
+      "totalTokens": 20,
+      "kind": "synthetic fixture values, not actual model billing"
+    },
+    "mockSdkRowStatus": "completed",
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "observerToolRows": 0,
+    "observerDispatchedTools": 0,
+    "toolCoverage": false,
+    "nativeClosed": false,
+    "seventeenthRefusalObserved": false,
+    "operatorEnumeratedHashesEqual": true
+  },
+  "independentRolloutMetadata": {
+    "artifact": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/sessions/2026/10/07/rollout-2026-10-07T15-19-49-01a11685-3063-7160-818a-9cf587068cbc.jsonl",
+      "sha256": "b71dc2a1a96b19f15677c8525a5ab2ba906d256a1a6d8bf202e7f5bc29505c75"
+    },
+    "threadIdSha256": "8a3e788d465b5111b292b7379718c2f45f510fb05d15ca88a7c142d055e8730b",
+    "boundBy": "Exact thread_id from this public outgoing native capture; no other thread contents inspected.",
+    "functionCalls": 16,
+    "functionCallOutputs": 16,
+    "requestedFunction": "exec_command",
+    "completedItemTypes": {
+      "UserMessage": 1,
+      "CommandExecution": 16
+    },
+    "completedCommandItems": 16,
+    "commandExitCodeZeroCount": 16,
+    "callOutputAndCommandIdsExactlyMatch": true,
+    "metadataOnly": true,
+    "contentNotReported": [
+      "arguments",
+      "command",
+      "stdout",
+      "stderr",
+      "aggregated_output",
+      "formatted_output",
+      "messages"
+    ]
+  },
+  "establishedTransition": "The native rollout proves sixteen completed built-in command executions and matching function outputs. The evaluator recorded zero pre-dispatch/settled tool rows and set coverage false on an uncorrelated item/completed. This is a benchmark-observer coverage failure; zero observed tool rows is not zero native execution.",
+  "notEstablished": [
+    "The adapter did not retain the exact live notification that first set coverage false; its precise item type/id and first-stop ordering remain UNKNOWN. The rollout uses PascalCase item variants, whereas the app-server source uses camelCase; no casing-fix conclusion follows from that difference alone.",
+    "The retained record does not establish why the pre-tool observer was absent: event planning, invocation, early policy refusal or another path cannot be distinguished solely from zero rows.",
+    "No complete three-turn/two-session loop, original tool-cap enforcement/refusal or full native/background close was established."
+  ],
+  "sourceBoundaries": [
+    {
+      "source": {
+        "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+        "sha256": "29c4e9b7ed32fad239533abc84b50f4ad61d059ddaf70d1bbe63df20dd728150"
+      },
+      "lines": "293-344,571-577",
+      "finding": "The adapter reserves through nativeToolBefore/dynamicTool, settles through nativeToolAfter/dynamicTool, and stops on an uncorrelated completion. Its existing load hook patches function bodies but does not itself declare required native relay events."
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/native-hook-relay-Bfyv8cuh.mjs",
+        "sha256": "e58fa02170a4d63f7c2e98de8c7514ac46906fae19538b131fd6e2f2b1fedb6a"
+      },
+      "lines": "411-415,998-1034,1043-1107,1407-1422",
+      "finding": "exec_command normalizes to exec. PreToolUse is conditional on executionAdmission, existing policy or configured loop detection; PostToolUse is separately conditional on an after hook/result middleware. runNativeHookRelayPreToolUse performs ordinary policy first, then executionAdmission.admit. A loaded module does not prove the callbacks are enabled or reached."
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/thread-requests-BLvGkP2R.mjs",
+        "sha256": "dadfd66ae8e31932fd34b5108572f669f873cd49c7615b453b2bf4f9d0bc5354"
+      },
+      "lines": "1323-1379,1516-1556",
+      "finding": "The ordinary plugin creates an owned relay and uses executionAdmission{toolNames:[exec],admit} when nativeProcessAuthority exists. buildCodexNativeHookRelayConfig emits synchronous trusted native hooks only for selected events whose shouldRelayEvent is true."
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/run-attempt-BHu11r7h.mjs",
+        "sha256": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376"
+      },
+      "lines": "5846-5909",
+      "finding": "The existing ordinary binding supplies process admission only with nativeProcessAuthority and nativeToolSurfaceEnabled; nativeProcessAuthority construction is conditional on sandbox backend plus retainSourceAuthority. No claim that omitted public sandbox config alone proves the actual evaluated runtime branch."
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/client-Cs08OXVQ.mjs",
+        "sha256": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da"
+      },
+      "lines": "3999-4006,4099-4115",
+      "finding": "Native closeAndWait deliberately reports cleanup uncertain after nativeExecutionObserved. Native command notifications set that flag. Thus a command-capable sample cannot infer complete native shutdown only from a closed app-server process or force this flag to closed."
+    }
+  ],
+  "smallestExistingBinding": {
+    "api": "registerOwnedNativeHookRelay (native-hook-relay export i), reached by existing registerNativeHookRelayForBundledRuntime/createCodexNativeHookRelay; executionAdmission{toolNames,admit(invocation,assertAdmissionCurrent)}",
+    "necessaryWork": "Connect evaluator cap accounting to the actual owned pre-execution admission while preserving existing native policy, authority, canonical tool aliases and exact thread/turn/tool IDs. Retain/correlate native completion as a post-execution observation. Do not fabricate reservations from item/started or completion, bypass native policy, or treat module loading as admission coverage.",
+    "scopeLimit": "The existing private API is a concrete source seam, not a newly validated all-tools binding. Coverage of other built-ins, dynamic tools/helpers and the native post/close path still needs bounded source and execution evidence before an original sample.",
+    "closure": "Reuse independent thread/read(includeTurns), thread/backgroundTerminals/list, actual native process authority/physical transport exit and parent acknowledgement. Preserve cleanup uncertain unless those original settlement conditions are independently demonstrated."
+  },
+  "interpretation": "Calendar and mock transport progress are retained. The failure is not a product-quality loss and does not change original criteria, tool cap, source versions or closed outcomes. No immediate original admission or replay is authorized.",
+  "reviewerActivity": {
+    "testsRun": 0,
+    "runtimeStarts": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "originalProtectedContentReads": 0,
+    "agentsSpawned": 0,
+    "onlyWrittenFile": "eva2/evidence/product/p2-openclaw-native-tool-observer-diagnosis-20261007.json"
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "contract": "P2OpenClawNativeToolObserverRuntimeIndependentReview/v1",
+  "date": "2026-10-07",
+  "decision": "RETAINED_PUBLIC_COMPOSITION_INCOMPLETE",
+  "sourceDecision": "GO_AS_PREVIOUSLY_REVIEWED",
+  "runtimeDecision": "UNKNOWN",
+  "originalSampleAdmission": "NO_GO",
+  "quality": "UNKNOWN",
+  "scope": "Exact public fixture and its thread-bound retained rollout only; metadata review without arguments, command text, tool output, messages, other conversations or protected original inputs.",
+  "sourceSha256": "6087733e38bc6bc83ecb6053d8b41320cfac7e3eda9adfc9b64561743e7d6876",
+  "testSha256": "62541c60ebe2da897d0079ea8cbe4471873e959abcd1fd297f47008dc7a6aecb",
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-native-tool-observer-review-20261007.json",
+    "sha256": "bf411a28a65079d4475b3e62b661777d06b7a446d96e47477007e823a74af784"
+  },
+  "ownedPlanningEvidence": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/owned-relay-planning-test.public.json",
+      "sha256": "3f8c33db3035512042376f835f81539daea2991462631b1170af539af8d61fb1"
+    },
+    "passed": 1,
+    "scope": "Actual owned planning only; not actual callbacks/complete actor execution."
+  },
+  "execution": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/ordinary-execution.public.json",
+      "sha256": "d45702bd49e1d29859d2681932549ae082463526f99da432e35261ea864a824e"
+    },
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/ordinary-composition.public.txt",
+      "sha256": "639608737804ca6c7c73fff7facb8cd39e198b4e57cff947a664660998ee6984"
+    },
+    "exitCode": -15,
+    "timedOut": true,
+    "controllerBudgetSeconds": 120,
+    "elapsedIncludingStopCleanupSeconds": 122.07477144300356,
+    "namespacePidsAtTestExitCount": 1,
+    "namespaceEmptyAtThatObservation": false,
+    "laterNamespaceClosure": "UNKNOWN",
+    "terminalTechnicalReceiptPresent": false
+  },
+  "threadEvidence": {
+    "rollout": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/sessions/2026/10/07/rollout-2026-10-07T15-37-56-01a11695-c68f-75a0-889e-891f8d101da5.jsonl",
+      "sha256": "a90d70f185fb7051ffb3832fb439d194098d5fe3db45b2aad046787000344c35"
+    },
+    "binding": "Exact session ID matches the thread_id in the retained outgoing public request. No other rollout was read.",
+    "nativeFunctionRequests": 16,
+    "nativeFunctionName": "exec_command",
+    "correlatedFunctionResultRecords": 16,
+    "completedCommandExecutionItems": 2,
+    "completedCommandIds": [
+      "public-call-1-0",
+      "public-call-1-2"
+    ],
+    "completedCommandStatus": "completed",
+    "completedCommandExitCodes": [
+      0,
+      0
+    ],
+    "provenNativeExecutionsLowerBound": 2,
+    "remainingRequestedCommandExecutionStatus": "UNKNOWN",
+    "remainingRequestsWithoutCommandExecutionCompletionMetadata": 14,
+    "otherCompletedItems": {
+      "UserMessage": 1
+    },
+    "taskStartedRecords": 1,
+    "taskCompleteRecords": 0,
+    "turnAbortedRecords": 1,
+    "turnAbortReason": "interrupted",
+    "turnAbortDurationMs": 74788,
+    "interpretation": "Sixteen function result records do not prove sixteen physical executions. Only the two matching completed CommandExecution items establish successful native execution from the permitted metadata."
+  },
+  "accounting": {
+    "durableObserverToolRows": null,
+    "durableObserverDispatchedTools": null,
+    "preCallbackCount": null,
+    "postCallbackCount": null,
+    "toolCoverage": "UNKNOWN",
+    "seventeenthToolRefusal": "UNKNOWN",
+    "completeProviderAccounting": "UNKNOWN",
+    "retainedSyntheticUsageRecords": 1,
+    "retainedSyntheticUsage": {
+      "inputTokens": 17,
+      "cachedInputTokens": 0,
+      "outputTokens": 3,
+      "totalTokens": 20
+    },
+    "usageScope": "One native token_usage_record for the public mocked response; these are synthetic values, not paid model usage or a complete parent-ledger settlement.",
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "originalAuthorityReads": 0,
+    "originalAuthorityWrites": 0,
+    "interpretation": "Absent terminal observer evidence is not evidence of zero callbacks, zero dispatches or zero requests."
+  },
+  "calendar": {
+    "status": "PASS_FOR_CAPTURED_REQUEST",
+    "model": "gpt-6-sol",
+    "effort": "none",
+    "beforeToOutgoing": "Exactly one native current_date value changed; every other decoded value is equal. This is not an original-to-outgoing sole-field claim.",
+    "captures": [
+      {
+        "path": "/tmp/eva-p2-openclaw-observed-native-20261007-eh4o2w27/contexts/1-attempt-1-original.json",
+        "sha256": "900c87ef54a3b095abde2f98c3a81c82a0a7190409967f83e11dfc66c62c2a1e"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-observed-native-20261007-eh4o2w27/contexts/2-attempt-1-calendar-before.json",
+        "sha256": "76fd5c0a62c450bb3f3a827387cdb8c43c9c43b1137a1b73e13a411b17ce6bca"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-observed-native-20261007-eh4o2w27/contexts/3-attempt-1-websocket.json",
+        "sha256": "f3635cffabdc87a973cf583716c7fa02d000f69778c6b9074af65db493d346a5"
+      }
+    ]
+  },
+  "targetedFailureMetadata": {
+    "rolloutExplicitHookOrErrorEventRecords": 0,
+    "logRecognizedErrorClassOrCode": null,
+    "freshFixtureDiagnosticEventRows": 0,
+    "freshFixtureHookBridgeRowsAtRead": 0,
+    "firstCoverageFailure": null,
+    "timeoutCause": "UNKNOWN",
+    "interpretation": "No explicit hook-runtime error class/code or durable callback receipt was present in the inspected metadata. Empty final bridge rows do not prove that no relay ran or that native cleanup completed."
+  },
+  "closure": {
+    "nativeClosed": null,
+    "nativeCloseStatus": "UNKNOWN",
+    "pendingSdk": null,
+    "pendingTools": null,
+    "backgroundSettlement": "UNKNOWN",
+    "interpretation": "Controller timeout/termination and two completed commands do not establish native, parent or process closure. Existing cleanup=uncertain semantics remain unchanged."
+  },
+  "operatorEvidence": {
+    "enumeratedFiles": 6,
+    "enumeratedBeforeAfterHashesEqual": true,
+    "scope": "Only the six enumerated config/state DB/WAL/SHM/auth/cache files in the retained execution receipt; no whole-filesystem or whole-profile immutability claim."
+  },
+  "nextActionBoundary": "No new composition is authorized by this review. Preserve this failure; another runtime check requires a newly demonstrated cause/change. Original sample stays NO_GO until complete observation, accounting/readbacks and native settlement are actually supported.",
+  "reviewerActivity": {
+    "testsRun": 0,
+    "nativeRuns": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "originalProtectedContentReads": 0,
+    "agentsSpawned": 0,
+    "onlyWrittenFile": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json"
+  }
+}

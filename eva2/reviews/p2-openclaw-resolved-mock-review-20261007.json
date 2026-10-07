@@ -1,0 +1,89 @@
+{
+  "contract": "P2OpenClawResolvedMockIndependentReview/v1",
+  "date": "2026-10-07",
+  "decision": "GO_ONE_CHANGED_CAUSE_PUBLIC_COMPOSITION",
+  "originalSampleAdmission": "NO_GO",
+  "quality": "UNKNOWN",
+  "scope": "Only public mock transport plus the pre-execution correction to select an actually offered native read-only tool; no independent test or original input.",
+  "unchangedAdapter": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "29c4e9b7ed32fad239533abc84b50f4ad61d059ddaf70d1bbe63df20dd728150"
+  },
+  "previousTest": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/candidate-test.mjs",
+    "sha256": "18dde307e185d556eeb98037dc8d00f80cad1e74a7ff9f338c255a1112588772"
+  },
+  "reviewedTest": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "e31552360b44d3f0f8f5d9de88408743587a2bc02a412022bd0dbdb5b791eae9"
+  },
+  "findings": [],
+  "sourceAssessment": [
+    "The mock load hook is registered after the source-pinned accounting hook. It calls next first and requires that exact module URL in observer.nativeModuleBindings, so the native module hash/capture-root checks run before the fixture rewrites imports.",
+    "Only the pinned inference-proxy module and exactly one import of each selected SDK transport module are replaced. Other modules pass through. Missing, duplicate or unverified imports fail closed.",
+    "The three fake transport implementations preserve the previous public fixture behavior: fake fetch, fake outbound WebSocket with native local WebSocketServer, and no external proxy agent. Calendar, accounting, native CLI/session/memory and tool code are unchanged.",
+    "Both the installed-proxy test and ordinary composition use the same new helper. This removes dependence on the previous resolve-only interception for these imports; it does not prove the cause of the earlier ordinary-loop timeout."
+  ],
+  "retainedVerification": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/resolved-mock-proxy.public.json",
+    "sha256": "f573f9e73a624adad5094dfc141e6193dd724d8bfe993ba63549d1b243cc8198",
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/resolved-mock-proxy.public.txt",
+      "sha256": "4f60e6e2c5a4885daae5780c18afcc882c868318179dc17b96d65f9aaf038495"
+    },
+    "passed": 1,
+    "failed": 0,
+    "elapsedSeconds": 3.2928919739933917,
+    "nodeVersion": "24.16.0",
+    "scope": "Actual installed pinned proxy/client with public fake HTTP and WS; ordinary registry-driven composition not yet exercised on this delta.",
+    "externalInferenceCalls": 0,
+    "originalInputs": 0
+  },
+  "nextPublicComposition": {
+    "count": 1,
+    "controllerSeconds": 120,
+    "reason": "A concrete fixture interception change is now bound and the direct native HTTP/WS boundary passed; one retained public ordinary composition can determine whether the registry/captured-module route reaches the mock and settles.",
+    "requirements": "Use existing public synthetic fixture and pinned native route in an isolated namespace, with no real provider traffic or original authority/input. Preserve every prior attempt and its usage/closure unknowns. Record a new execution-specific technical receipt; never reuse the stale earlier receipt.",
+    "notAuthorized": "No original sample, changed original criterion, replayed closed case, allowance reset or native/framework modification."
+  },
+  "preservedRuntimeReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-calendar-runtime-review-20261007.json",
+    "sha256": "dd4d4e23a827f7254eef80db0755404a62df5a342222061c902ab930d930dba9"
+  },
+  "limitations": [
+    "Earlier ordinary hang cause remains UNKNOWN; this review approves a bounded changed-fixture check, not a claimed historical repair.",
+    "Original sample remains NO_GO until actual native calendar consistency, full ordinary loop, tool/provider accounting, durable readbacks and native/background/parent closure are established."
+  ],
+  "reviewerActivity": {
+    "testsRun": 0,
+    "nativeRuns": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedOriginalContentReads": 0,
+    "agentsSpawned": 0,
+    "onlyWrittenFile": "eva2/reviews/p2-openclaw-resolved-mock-review-20261007.json"
+  },
+  "previousReviewSha256": "df33e4781e813663d158e0172dc93a1057ebccc0ba314b007ea02e9f5e89d209",
+  "mockBindingReviewedTest": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "33b487ccd9be146be56265915fb525c1dd000a3df3c87f14ddee37cdc94d0ea7"
+  },
+  "publicToolFixtureCorrection": {
+    "decision": "GO_WITHIN_THE_SAME_SINGLE_PUBLIC_COMPOSITION",
+    "boundTestSha256": "e31552360b44d3f0f8f5d9de88408743587a2bc02a412022bd0dbdb5b791eae9",
+    "exactDeltaVerified": "Reversing only the tool selector, fixed public read arguments and two assertion labels reconstructs the previously reviewed 33b487cc bytes exactly.",
+    "retainedPublicBody": {
+      "path": "/tmp/eva-p2-openclaw-calendar-native-20261007-v4uhbqi8/contexts/3-attempt-1-http.json",
+      "sha256": "a77a9efbe87bff10dfb6df9bb28c59ca10fe309380e5759408861f8f4b341145"
+    },
+    "observedOffering": {
+      "exec_command": true,
+      "exec_command_type": "function",
+      "exec_command_namespace": null,
+      "memory_get": false
+    },
+    "action": "Sixteen ordinary offered exec_command calls, each exactly cat MEMORY.md in the fresh public fixture workspace, login false, output cap 50 and yield time 1000ms. No owner path, file modification, network command or original input.",
+    "unchanged": "Existing preseeded public memory, three turns/two sessions/calendar, same tool cap and seventeenth refusal observer, native/model/accounting source, original criteria and original admission NO_GO.",
+    "evidenceLimit": "The previous direct proxy check belongs to test 33b487cc. This new tool-choice delta is source-reviewed only; no new test, tool execution or native composition result is claimed. Selecting exec_command is not evidence of native memory retrieval quality or completed execution."
+  }
+}

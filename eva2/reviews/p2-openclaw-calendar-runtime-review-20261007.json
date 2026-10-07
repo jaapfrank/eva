@@ -1,0 +1,205 @@
+{
+  "contract": "P2OpenClawCalendarRuntimeIndependentReview/v1",
+  "date": "2026-10-07",
+  "decision": "CALENDAR_BINDING_OBSERVED_NATIVE_LOOP_INCOMPLETE",
+  "originalSampleAdmission": "NO_GO",
+  "quality": "UNKNOWN",
+  "scope": "Only retained public synthetic composition request differences and execution metadata; no original case or new runtime activity.",
+  "sourceSha256": "29c4e9b7ed32fad239533abc84b50f4ad61d059ddaf70d1bbe63df20dd728150",
+  "testSha256": "18dde307e185d556eeb98037dc8d00f80cad1e74a7ff9f338c255a1112588772",
+  "previousSourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-calendar-correction-review-20261007.json",
+    "sha256": "0652f6b2308b3447e1874d6cb975f6c8f43f2826b9393e3cbcdded885771cc1d",
+    "bytes": 7085,
+    "mtimeUtc": "2026-10-07T13:06:14.584695+00:00"
+  },
+  "execution": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/ordinary-execution.public.json",
+    "sha256": "0255c250dee719d1ebcf01c959ea9ac20e3704fe523118129cf4fa2468b6020d",
+    "bytes": 3432,
+    "mtimeUtc": "2026-10-07T13:10:42.449065+00:00",
+    "output": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/ordinary-composition.public.txt",
+      "sha256": "9b51198805fd482ca41bb8691aabdbc0f0c14b819645aa589c9c2b0f9d5a62bc",
+      "bytes": 4452,
+      "mtimeUtc": "2026-10-07T13:10:42.445014+00:00"
+    },
+    "launcher": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/run-public-composition.private.py",
+      "sha256": "7324b806666c252e4a4de890a1fd848abed1b2553dc8f2776acfe33bb08c73db",
+      "bytes": 4575,
+      "mtimeUtc": "2026-10-07T13:08:51.993774+00:00"
+    },
+    "nodeBinary": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/runtime/node-v24.16.0-linux-x64/bin/node",
+      "sha256": "b2959781cc5a74c357ffa02367efa8a0330cbb1c9cb347732fdfaaaca381cbcd",
+      "bytes": 123438592,
+      "mtimeUtc": "2026-05-21T00:03:58+00:00"
+    },
+    "nodeVersionBinding": "v24.16.0 from exact launch path; no new version invocation",
+    "exitCode": -15,
+    "timedOut": true,
+    "recordedElapsedSeconds": 110.38191395699687,
+    "originalInputs": 0,
+    "externalInferenceCalls": 0
+  },
+  "calendarObservation": {
+    "originalDecodedRequest": {
+      "path": "/tmp/eva-p2-openclaw-calendar-native-20261007-v4uhbqi8/contexts/1-attempt-1-original.json",
+      "sha256": "eb79ba59b23375ab50a6c432cbab673ed9fe41c4647ca11e28c91e7dde0ed743",
+      "bytes": 87382,
+      "mtimeUtc": "2026-10-07T13:10:15.484384+00:00"
+    },
+    "calendarPrebindingRequest": {
+      "path": "/tmp/eva-p2-openclaw-calendar-native-20261007-v4uhbqi8/contexts/2-attempt-1-calendar-before.json",
+      "sha256": "05627bc5f9db9c07781577d4f2ae233652bffdf0ec5af3e9ca7105f0125b4875",
+      "bytes": 99694,
+      "mtimeUtc": "2026-10-07T13:10:15.488387+00:00"
+    },
+    "outgoingPreparedRequest": {
+      "path": "/tmp/eva-p2-openclaw-calendar-native-20261007-v4uhbqi8/contexts/3-attempt-1-http.json",
+      "sha256": "a77a9efbe87bff10dfb6df9bb28c59ca10fe309380e5759408861f8f4b341145",
+      "bytes": 99694,
+      "mtimeUtc": "2026-10-07T13:10:15.492391+00:00"
+    },
+    "filesPrivate": true,
+    "calendarDiffPaths": [
+      "/input/1/content/1/text"
+    ],
+    "onlyOneCurrentDateReplacementByteExact": true,
+    "publicSyntheticNativeDateBefore": "2026-10-07",
+    "publicSyntheticNativeDateAfter": "2020-01-02",
+    "publicSyntheticApplicationDate": "2020-01-02",
+    "environmentContentKind": "environments.environment_context",
+    "applicationContentKind": "additional_content.openclaw_temporal_context",
+    "bothCarriersMatchTopLevelAndNestedTurnId": true,
+    "timezoneUnchanged": "Europe/Amsterdam",
+    "allOtherPrebindingRequestBytesUnchanged": true,
+    "applicationCarrierUnchanged": true,
+    "clientAndMessageMetadataUnchanged": true,
+    "model": "gpt-6-sol",
+    "reasoningEffort": "none",
+    "originalToPrebindingDifference": [
+      "/instructions"
+    ],
+    "originalToPrebindingBoundary": "Existing native context preparation precedes calendar binding. Therefore only the prebinding-to-outgoing comparison proves a sole date change; no original-to-outgoing single-field claim.",
+    "scopeLimit": "One retained native prepared request. Capture before dispatch is not proof of upstream receipt, completed inference, full native session loop or later-generation/helper coverage.",
+    "clockFile": {
+      "path": "/tmp/eva-p2-openclaw-calendar-native-20261007-v4uhbqi8/clock.json",
+      "sha256": "7926668dab06170830a0c10af29cca58ab02e3934015de2ecc071c06b90fc338",
+      "bytes": 87,
+      "mtimeUtc": "2026-10-07T13:08:52.548902+00:00"
+    }
+  },
+  "excludedStaleReceipt": {
+    "path": "/tmp/eva-p2-openclaw-calendar-native-20261007-v4uhbqi8/composition-technical.private.json",
+    "sha256": "e129ee92e0c2c40125ffe8df17dcbf0e66b44434fe86d2240e8607f162177d54",
+    "bytes": 686,
+    "mtimeUtc": "2026-10-07T13:07:36.816069+00:00",
+    "usableForLatestExecution": false,
+    "reason": "Its mtime precedes the latest Node24 clock/config and all three new captures; it belongs to the retained earlier Node22 preparation. Its zero counts and close flags must not describe this latest execution."
+  },
+  "accountingAndClosure": {
+    "latestCompleteTerminalTechnicalReceiptAvailable": false,
+    "providerUsage": "UNKNOWN",
+    "inputTokens": null,
+    "outputTokens": null,
+    "completedNativeTurns": null,
+    "physicalMockCalls": null,
+    "toolDispatches": null,
+    "nativeClosed": null,
+    "fullNativeBackgroundSettlement": "UNKNOWN",
+    "namespacePidsAtTestExit": 1,
+    "namespaceEmptyAfterCleanup": "UNKNOWN",
+    "observedPreparedAttemptContexts": 1,
+    "rule": "Do not copy old receipt zeroes, infer known-zero usage from external isolation, or infer native closure from controller exit."
+  },
+  "timingBoundary": {
+    "fixtureCumulativeDeadlineSeconds": 120,
+    "priorLauncherPreflightSeconds": 11.620098396990215,
+    "lastProcessCommunicateTimeoutSeconds": 108.37990160300978,
+    "sumAdmissionWaitBudgetSeconds": 120.0,
+    "lastRecordedProcessAndStopSeconds": 110.38191395699687,
+    "recordedCumulativePreparationAndStopSeconds": 122.00201235398708,
+    "stopOverheadOverNominalBudgetSeconds": 2.0020123539870838,
+    "interpretation": "Launcher used the remainder of the existing 120-second fixture bound before termination. Recorded elapsed includes about two seconds of stop handling beyond that bound; it is not proof that native work settled within 120 seconds."
+  },
+  "operatorPreservation": {
+    "enumeratedFileHashesEqual": true,
+    "enumeratedFiles": [
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/openclaw.json",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-wal",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-shm",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/auth.json",
+      "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/models_cache.json"
+    ],
+    "scope": "Includes enumerated config, actual registry DB/WAL/SHM, auth and model-cache files; no whole-filesystem preservation claim. No credential contents read by reviewer."
+  },
+  "retainedPreflightFailures": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-home-preflight-failure",
+      "retainedFiles": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-home-preflight-failure/ordinary-composition.public.txt",
+          "sha256": "f6f06109e1a01c5f53b4d30779545e229130796e8807d811d84e5db20009b129",
+          "bytes": 1373,
+          "mtimeUtc": "2026-10-07T13:07:25.662887+00:00"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-home-preflight-failure/ordinary-execution.public.json",
+          "sha256": "ac7a2f49cfed274f22a550cccae9d1569f2b8c78d6f378b0f84908177e456490",
+          "bytes": 3377,
+          "mtimeUtc": "2026-10-07T13:07:25.663292+00:00"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-home-preflight-failure/run-public-composition.private.py",
+          "sha256": "16781a77f3d872b23dd34f987673b70830c7a9b65746aa6ddd4734a38bb42748",
+          "bytes": 4446,
+          "mtimeUtc": "2026-10-07T13:07:25.662182+00:00"
+        }
+      ]
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-node-preflight-failure",
+      "retainedFiles": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-node-preflight-failure/composition-technical.private.json",
+          "sha256": "e129ee92e0c2c40125ffe8df17dcbf0e66b44434fe86d2240e8607f162177d54",
+          "bytes": 686,
+          "mtimeUtc": "2026-10-07T13:08:51.993547+00:00"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-node-preflight-failure/ordinary-composition.public.txt",
+          "sha256": "e358770c2dce8b7d1d061a944200ce403fffac3c88ec579ebbeb5d583643f9e0",
+          "bytes": 2486,
+          "mtimeUtc": "2026-10-07T13:08:51.993430+00:00"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-node-preflight-failure/ordinary-execution.public.json",
+          "sha256": "365257f3855048b149b9d41ecaae9c6e98b1afee2d2962101eeb2ce95c03e828",
+          "bytes": 3432,
+          "mtimeUtc": "2026-10-07T13:08:51.993490+00:00"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-node-preflight-failure/run-public-composition.private.py",
+          "sha256": "73b1fb3a73ddc0d78c9918fef8910bdb34bccbdba6e356a79ea737ac87b90db4",
+          "bytes": 4542,
+          "mtimeUtc": "2026-10-07T13:08:51.993342+00:00"
+        }
+      ]
+    }
+  ],
+  "remainingBoundary": "Calendar conflict is corrected in this actual retained request. The ordinary mock transport/loop failure remains unresolved here; no cause, product loss, successful accounting or sample admission inferred. Root performs any separate source diagnosis.",
+  "reviewerActivity": {
+    "newTests": 0,
+    "nativeRuns": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "originalProtectedContentReads": 0,
+    "reservations": 0,
+    "modifiedFiles": [
+      "eva2/reviews/p2-openclaw-calendar-runtime-review-20261007.json"
+    ]
+  }
+}

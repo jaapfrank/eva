@@ -34,6 +34,56 @@ await test('native operation controls select explicit contact/helper without alt
   }
   assert.throws(()=>o.prepareBody(nativeBody('unrecognized')));
 });
+// Public serialized native shape; intentionally not positioned at fixed input indices.
+const publicCalendarBody = (turnId='public-turn') => {
+  const temporal='## Temporal Context\nCurrent date: 2020-01-02\nTime zone: Europe/Amsterdam\n';
+  const message=(role,kind,text,id=turnId)=>({type:'message',role,
+    internal_chat_message_metadata_passthrough:{turn_id:id,create_time:42.5,content_item_kinds:[kind]},
+    content:[{type:'input_text',text}]});
+  return {body:{...nativeBody(),client_metadata:{turn_id:turnId,'x-codex-turn-metadata':JSON.stringify({turn_id:turnId,request_kind:'turn'})},
+    input:[message('user','user.text','Leave my example <current_date>1999-12-31</current_date> alone.'),
+      message('developer','additional_content.openclaw_temporal_context','<openclaw_temporal_context>'+temporal+'</openclaw_temporal_context>'),
+      message('user','environments.environment_context','<environment_context><current_date>2026-10-07</current_date><timezone>Europe/Amsterdam</timezone></environment_context>'),
+      message('user','environments.environment_context','Historical environment stays unchanged.','old-turn')]},temporal};
+};
+await test('same native turn binds only its environment date, retains original bytes and acknowledged calendar', async()=>{
+  const dir=mkdtempSync(tmpdir()+'/openclaw-calendar-');chmodSync(dir,0o700);const clock=dir+'/clock.json';
+  const state={contract:'EvaScenarioCalendar/v1',generation:0,offsetMilliseconds:Date.parse('2020-01-02T12:00:00Z')-Date.now()};
+  writeFileSync(clock,JSON.stringify(state),{mode:0o600});
+  const o=new OpenClawAccounting(new FakeLedger(),20,{now:()=>10,clockFile:clock,privateModelContextDir:dir});
+  const {body,temporal}=publicCalendarBody();const original=Buffer.from(JSON.stringify(body,null,2));const unchanged=JSON.stringify(body);
+  try{
+    o.temporalContext(()=>({openclaw_temporal_context:{kind:'application',value:temporal}}));
+    const result=o.prepareBody(body,original);const after=structuredClone(result.body);
+    assert.equal(after.input[2].content[0].text,body.input[2].content[0].text.replace('2026-10-07','2020-01-02'));
+    after.input[2].content[0].text=body.input[2].content[0].text;
+    assert.deepEqual(after,{...body,reasoning:{effort:'none'}});assert.equal(JSON.stringify(body),unchanged);
+    const row={};o.captureContext(row,Buffer.from(JSON.stringify(result.body)),result.accounting);
+    assert.deepEqual(readFileSync(row.native_original_model_context.path),original);
+    assert.deepEqual(JSON.parse(readFileSync(row.native_calendar_prebinding_context.path)),{...body,reasoning:{effort:'none'}});
+    assert.equal(row.calendar_binding.generation,0);assert.equal(row.calendar_binding.native_date_changed,true);
+    assert.equal(row.calendar_binding.changed_field,'/input/2/content/0/text/current_date');
+    assert.ok(Date.now()>Date.parse('2026-01-01'));
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+await test('calendar refuses mismatched turn/zone, duplicate carrier, stale generation and absent originals before permits',()=>{
+  const dir=mkdtempSync(tmpdir()+'/openclaw-calendar-');const clock=dir+'/clock.json';
+  const state={contract:'EvaScenarioCalendar/v1',generation:0,offsetMilliseconds:Date.parse('2020-01-02T12:00:00Z')-Date.now()};
+  writeFileSync(clock,JSON.stringify(state),{mode:0o600});const ledger=new FakeLedger();
+  const o=new OpenClawAccounting(ledger,20,{now:()=>10,clockFile:clock});
+  const {body,temporal}=publicCalendarBody();
+  try{
+    o.temporalContext(()=>({openclaw_temporal_context:{kind:'application',value:temporal}}));
+    const refuses=changed=>assert.throws(()=>o.prepareBody(changed,Buffer.from(JSON.stringify(changed))));
+    const differentTurn=structuredClone(body);differentTurn.input[2].internal_chat_message_metadata_passthrough.turn_id='wrong';refuses(differentTurn);
+    const zone=structuredClone(body);zone.input[2].content[0].text=zone.input[2].content[0].text.replace('Europe/Amsterdam','UTC');refuses(zone);
+    const duplicate=structuredClone(body);duplicate.input.push(duplicate.input[2]);refuses(duplicate);
+    const alteredTemporal=structuredClone(body);alteredTemporal.input[1].content[0].text+='instructions';refuses(alteredTemporal);
+    assert.throws(()=>o.prepareBody(body));
+    writeFileSync(clock,JSON.stringify({...state,generation:1}));refuses(body);
+    assert.equal(ledger.rows.length,0);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});
 await test('foreground native turn/start overrides both actual carriers without catalog edits', () => {
   const o=observer(new FakeLedger());const original={model:'gpt-6-sol',effort:null,collaborationMode:{mode:'default',settings:{model:'gpt-6-sol',reasoning_effort:null}}};
   const result=o.turnParams('turn/start',original);
@@ -62,6 +112,23 @@ await test('parent refusal and absolute deadline prevent any physical transport'
   assert.equal(sent,0);assert.equal(ledger.rows.length,0);
   const fresh=new FakeLedger();const expired=new OpenClawAccounting(fresh,9,{now:()=>10});
   await assert.rejects(expired.begin(o.prepareBody(nativeBody()).accounting,'http'));assert.equal(fresh.rows.length,0);
+});
+await test('stop or deadline during durable context retention prevents both HTTP and WS dispatch',async()=>{
+  for(const transport of ['http','websocket']) for(const stop of ['deadline','owner']){
+    const ledger=new FakeLedger();let now=10;let physical=0;
+    const o=new OpenClawAccounting(ledger,20,{now:()=>now});
+    o.captureContext=()=>{if(stop==='deadline')now=21;else ledger.stop('owner stop during retention');};
+    const prepared=o.prepareBody(nativeBody());prepared.bytes=Buffer.from(JSON.stringify(prepared.body));
+    if(transport==='http'){
+      await assert.rejects(o.fetch(async()=>{physical++;},{url:'https://chatgpt.com/backend-api/codex/responses',auditContext:'codex-parent-local-inference',init:{}},prepared.accounting));
+    }else{
+      class Remote extends EventEmitter{send(){physical++;}terminate(){this.emit('close');}}
+      await assert.rejects(o.wsSend(new Remote(),prepared,{},()=>{}));
+      await new Promise(resolve=>setImmediate(resolve));
+    }
+    assert.equal(physical,0);assert.equal(ledger.rows.length,1);assert.equal(ledger.rows[0].usage,null);
+    assert.notEqual(o.calls[0].dispatched,true);
+  }
 });
 await test('missing raw usage stops before a retry; rate-limit summaries are not usage', async()=>{
   const ledger=new FakeLedger();const o=observer(ledger);let sent=0;
@@ -144,6 +211,25 @@ await test('native transport failure class/code/status retained; message/body ex
   assert.deepEqual(other.calls[0].transport_failure,{error_class:'ConnectError',error_code:'ECONNRESET',http_status:502});
   assert.equal(JSON.stringify(other.calls).includes('PRIVATE'),false);
 });
+// Mock only an already pinned native proxy's imports after ordinary registry resolution.
+// Captured plugins can resolve SDK aliases before the test's resolve hook is consulted.
+const mockNativeProxy = (wsSDK, observer) => registerHooks({load(url,context,next){
+  const result=next(url,context);
+  if(!new URL(url).pathname.endsWith('/inference-proxy-b-aJMSxm.mjs')) return result;
+  if(!observer.nativeModuleBindings.has(url))throw new Error('unverified native mock proxy');
+  let source=Buffer.from(result.source).toString('utf8');
+  const mocks={'ssrf-runtime':'export const fetchWithSsrFGuard=p=>globalThis.__openclawPublicFakeFetch(p);export const isBlockedHostnameOrIp=()=>false;export const resolvePinnedHostnameWithPolicy=()=>({lookup:()=>{throw new Error("External DNS forbidden")}});'};
+  if(wsSDK){
+    mocks['websocket-runtime']='export {WebSocketServer,rejectWebSocketUpgrade} from '+JSON.stringify(wsSDK)+';export const WebSocket=globalThis.__openclawPublicFakeWebSocket;';
+    mocks['fetch-runtime']='export const createNodeProxyAgent=()=>null;';
+  }
+  for(const [name,implementation] of Object.entries(mocks)){
+    const original='from "openclaw/plugin-sdk/'+name+'";';
+    if(source.split(original).length!==2)throw new Error('native mock import differs');
+    source=source.replace(original,'from '+JSON.stringify('data:text/javascript,'+encodeURIComponent(implementation))+';');
+  }
+  return {...result,source};
+}});
 const plugin=process.env.OPENCLAW_PINNED_PLUGIN;
 await test('actual installed proxy and native client load exact overlay; public fake HTTP and WS pass that ordinary boundary', {skip:!plugin}, async()=>{
   const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,Number(process.hrtime.bigint())/1e9+15);
@@ -162,19 +248,8 @@ await test('actual installed proxy and native client load exact overlay; public 
     physical++;actualWire=JSON.parse(await new Response(params.init.body).text());
     return {response:new Response('data: '+JSON.stringify(event)+'\n\n',{headers:{'content-type':'text/event-stream'}}),release:async()=>{}};
   };
-  const fake=registerHooks({resolve(specifier,context,next){
-    if(specifier==='openclaw/plugin-sdk/ssrf-runtime' && context.parentURL?.endsWith('/inference-proxy-b-aJMSxm.mjs')) {
-      return {url:'data:text/javascript,'+encodeURIComponent('export const fetchWithSsrFGuard=(p)=>globalThis.__openclawPublicFakeFetch(p);export const isBlockedHostnameOrIp=()=>false;export const resolvePinnedHostnameWithPolicy=()=>({lookup:()=>{throw new Error("External DNS forbidden")}});'),shortCircuit:true};
-    }
-    if(wsSDK && specifier==='openclaw/plugin-sdk/websocket-runtime' && context.parentURL?.endsWith('/inference-proxy-b-aJMSxm.mjs')) {
-      return {url:'data:text/javascript,'+encodeURIComponent(`export {WebSocketServer,rejectWebSocketUpgrade} from ${JSON.stringify(wsSDK)};export const WebSocket=globalThis.__openclawPublicFakeWebSocket;`),shortCircuit:true};
-    }
-    if(wsSDK && specifier==='openclaw/plugin-sdk/fetch-runtime' && context.parentURL?.endsWith('/inference-proxy-b-aJMSxm.mjs')) {
-      return {url:'data:text/javascript,'+encodeURIComponent('export const createNodeProxyAgent=()=>null;'),shortCircuit:true};
-    }
-    return next(specifier,context);
-  }});
   const hook=installOpenClawAccounting(o,plugin,NATIVE_PINS);let proxy;
+  const fake=mockNativeProxy(wsSDK,o);
   try {
     const {createCodexInferenceProxy}=await import(pathToFileURL(plugin+'/dist/.setup/inference-proxy-b-aJMSxm.mjs'));
     const {t:Client}=await import(pathToFileURL(plugin+'/dist/.setup/client-Cs08OXVQ.mjs'));
@@ -203,6 +278,36 @@ await test('actual installed proxy and native client load exact overlay; public 
   } finally {await proxy?.close();hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;}
 });
 
+// Actual owned relay planning, with fresh public state; no native actor/model request.
+await test('actual owned relay activates synchronous pre and post planning without changing ordinary public relay policy',
+  {skip:!process.env.OPENCLAW_PINNED_PLUGIN || !process.env.OPENCLAW_PINNED_HOST}, async()=>{
+  const plugin=process.env.OPENCLAW_PINNED_PLUGIN;const host=process.env.OPENCLAW_PINNED_HOST;
+  const state=mkdtempSync(tmpdir()+'/openclaw-owned-relay-');const previous=process.env.OPENCLAW_STATE_DIR;
+  process.env.OPENCLAW_STATE_DIR=state;
+  const o=new OpenClawAccounting(new FakeLedger(),20,{now:()=>10,observeTools:true});
+  const overlay=installOpenClawAccounting(o,plugin,NATIVE_PINS,{hostRoot:host});const relays=[];
+  try{
+    const {i:owned,r:ordinary}=await import(pathToFileURL(host+'/dist/native-hook-relay-Bfyv8cuh.mjs'));
+    const params={provider:'codex',sessionId:randomUUID(),allowedEvents:['pre_tool_use','post_tool_use'],preToolUseLoopDetection:false};
+    const observed=owned(params);relays.push(observed);await observed.ready;
+    assert.equal(observed.shouldRelayEvent('pre_tool_use'),true);
+    assert.equal(observed.shouldRelayEvent('post_tool_use'),true);
+    assert.equal(observed.toolMatcherForEvent('pre_tool_use'),undefined);
+    assert.equal(observed.toolMatcherForEvent('post_tool_use'),undefined);
+    assert.deepEqual(observed.allowedEvents,params.allowedEvents);
+    const unchanged=ordinary({...params,sessionId:randomUUID(),__evaToolAccounting:true});relays.push(unchanged);await unchanged.ready;
+    assert.equal(unchanged.shouldRelayEvent('pre_tool_use'),false);
+    assert.equal(unchanged.shouldRelayEvent('post_tool_use'),false);
+    assert.equal(o.tools.size,0);assert.equal(o.calls.length,0);
+  }finally{
+    for(const relay of relays)relay.unregister();
+    for(const relay of relays)await relay.drain();
+    overlay.close();
+    if(previous===undefined)delete process.env.OPENCLAW_STATE_DIR;else process.env.OPENCLAW_STATE_DIR=previous;
+    rmSync(state,{recursive:true,force:true});
+  }
+});
+
 // One bundled actual ordinary CLI fixture. Its profile is supplied by the private
 // preparation owner; all input/tool responses below are public and upstream is fake.
 await test('public ordinary actor composition binds native calendar, model bodies, tools and one-shot readbacks',
@@ -224,8 +329,8 @@ await test('public ordinary actor composition binds native calendar, model bodie
   writeFileSync(workspace+'/USER.md','Public fixture owner.\n',{mode:0o600});
   const completed=[];let physical=0;let toolRequested=false;let counter=0;
   const fakeTerminal=body=>{
-    const responseId='public-response-'+(++counter);const tool=body.tools?.find(t=>t.name==='memory_get');
-    const output=!toolRequested && tool ? (toolRequested=true,Array.from({length:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify({path:'MEMORY.md'})})))
+    const responseId='public-response-'+(++counter);const tool=body.tools?.find(t=>t.type==='function' && t.name==='exec_command');
+    const output=!toolRequested && tool ? (toolRequested=true,Array.from({length:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify({cmd:'cat MEMORY.md',workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})))
       : [{type:'message',id:'public-message-'+counter,role:'assistant',status:'completed',content:[{type:'output_text',text:'Public fixture reply.',annotations:[]}]}];
     const response={id:responseId,object:'response',created_at:1,status:'completed',model:body.model,output,usage};
     return [{type:'response.created',response:{...response,status:'in_progress',output:[]}},
@@ -254,14 +359,8 @@ await test('public ordinary actor composition binds native calendar, model bodie
   }
   globalThis.__openclawPublicFakeWebSocket=FakeRemote;
   const wsSDK=pathToFileURL(host+'/dist/plugin-sdk/websocket-runtime.js').href;
-  const fake=registerHooks({resolve(specifier,context,next){
-    if(context.parentURL?.endsWith('/inference-proxy-b-aJMSxm.mjs')){
-      if(specifier==='openclaw/plugin-sdk/ssrf-runtime') return {url:'data:text/javascript,'+encodeURIComponent('export const fetchWithSsrFGuard=p=>globalThis.__openclawPublicFakeFetch(p);export const isBlockedHostnameOrIp=()=>false;export const resolvePinnedHostnameWithPolicy=()=>({lookup:()=>{throw new Error("External DNS forbidden")}});'),shortCircuit:true};
-      if(specifier==='openclaw/plugin-sdk/websocket-runtime') return {url:'data:text/javascript,'+encodeURIComponent(`export {WebSocketServer,rejectWebSocketUpgrade} from ${JSON.stringify(wsSDK)};export const WebSocket=globalThis.__openclawPublicFakeWebSocket;`),shortCircuit:true};
-      if(specifier==='openclaw/plugin-sdk/fetch-runtime') return {url:'data:text/javascript,'+encodeURIComponent('export const createNodeProxyAgent=()=>null;'),shortCircuit:true};
-    }return next(specifier,context);
-  }});
   const hook=installOpenClawAccounting(o,plugin,NATIVE_PINS,{hostRoot:host});
+  const fake=mockNativeProxy(wsSDK,o);
   const logs=[];const runtime={log:line=>logs.push(line),error:line=>logs.push(line),exit:code=>{if(code)throw new Error('native fixture exit');}};
   const sessions=[randomUUID(),randomUUID()];let completedNativeTurns=0;let close=null;let capRefused=false;
   try {
@@ -276,7 +375,7 @@ await test('public ordinary actor composition binds native calendar, model bodie
     assert.deepEqual(o.scenarioReadbacks.map(row=>row.generation),[0,0,1]);
     assert.ok(physical>=3);assert.equal(ledger.rows.length,physical);
     assert.ok(ledger.rows.every(row=>row.status==='completed'));assert.ok(o.calls.every(row=>row.native_model_context));
-    assert.ok(toolRequested,'native memory_get must be offered and executed by the ordinary loop');
+    assert.ok(toolRequested,'offered native file reader must execute through the ordinary loop');
     assert.equal(o.tools.size,16);assert.equal([...o.tools.values()].filter(row=>row.dispatched).length,16);assert.equal(o.toolCoverage,true);
     for(const [index,{body}] of completed.entries()){
       const text=JSON.stringify(body);const applicationDates=[...text.matchAll(/Current date(?: and time)?: (\d{4}-\d{2}-\d{2})/g)].map(m=>m[1]);
@@ -285,12 +384,12 @@ await test('public ordinary actor composition binds native calendar, model bodie
       assert.ok(nativeDates.every(date=>applicationDates.includes(date)),'second contradictory native model-visible calendar');
     }
     // The same installed pre-execution observer must reject a 17th identity before a body callback.
-    let deniedBodyCalls=0;assert.throws(()=>{o.nativeToolBefore({toolUseId:'public-cap-denied-17',toolName:'memory_get',rawPayload:{session_id:sessions[1]}});deniedBodyCalls++;},/original tool cap/);
+    let deniedBodyCalls=0;assert.throws(()=>{o.nativeToolBefore({toolUseId:'public-cap-denied-17',toolName:'exec_command',rawPayload:{session_id:sessions[1]}});deniedBodyCalls++;},/original tool cap/);
     assert.equal(deniedBodyCalls,0);assert.equal(o.tools.size,16);capRefused=true;
     close=await o.closeNative(plugin);assert.equal(close.native_closed,true);assert.equal(close.pending_sdk,0);assert.equal(close.pending_tools,0);
   } finally {
     close=await o.closeNative(plugin);hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;
-    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',completedNativeTurns,physicalFakeCalls:physical,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
+    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',completedNativeTurns,physicalFakeCalls:physical,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
   }
   });
 });

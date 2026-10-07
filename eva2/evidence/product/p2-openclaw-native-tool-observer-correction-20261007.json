@@ -1,0 +1,98 @@
+{
+  "contract": "P2OpenClawOwnedNativeRelayObservation/v1",
+  "checkedAt": "2026-10-07T13:42:24.538349+00:00",
+  "decision": "NO_GO_ORIGINAL_SAMPLE",
+  "existing": "Pinned existing owned native relay, ordinary policy, trusted synchronous hook configuration and evaluator loader already existed. The prior public rollout executed16 commands, but the evaluator recorded zero tools.",
+  "change": "Only the evaluator loader marks its owned relay with a module-private Symbol; it activates selected pre/post planning and their all-tool matcher. Both ordinary registration and trusted configuration receive the same local selected events. Native policy, disabled route, actual owned admission/retention and package bytes remain unchanged. First coverage failure metadata is retained without content.",
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "6087733e38bc6bc83ecb6053d8b41320cfac7e3eda9adfc9b64561743e7d6876"
+  },
+  "testSource": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "62541c60ebe2da897d0079ea8cbe4471873e959abcd1fd297f47008dc7a6aecb"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-native-tool-observer-review-20261007.json",
+    "sha256": "bf411a28a65079d4475b3e62b661777d06b7a446d96e47477007e823a74af784"
+  },
+  "planningTest": {
+    "decision": "PASS",
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "elapsedSeconds": 3.423064307993627,
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/owned-relay-planning-test.public.json",
+      "sha256": "3f8c33db3035512042376f835f81539daea2991462631b1170af539af8d61fb1"
+    },
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/owned-relay-planning-test.public.txt",
+      "sha256": "95d4da9afa40e72c06faaadc25327c1970f06cd87dc5a1a7c5b66886b5b195cd"
+    },
+    "nativeActorStarts": 0,
+    "providerCalls": 0
+  },
+  "oneChangedCausePublicComposition": {
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/ordinary-execution.public.json",
+      "sha256": "d45702bd49e1d29859d2681932549ae082463526f99da432e35261ea864a824e"
+    },
+    "launcher": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/run-public-composition.private.py",
+      "sha256": "11466b4363648bb09181f42bee2d266041bcbdaa76ae2d4eba5cbd48ab395095"
+    },
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/ordinary-composition.public.txt",
+      "sha256": "639608737804ca6c7c73fff7facb8cd39e198b4e57cff947a664660998ee6984"
+    },
+    "fixtureRoot": "/tmp/eva-p2-openclaw-observed-native-20261007-eh4o2w27",
+    "controllerBudgetSeconds": 120,
+    "elapsedSecondsIncludingStopCleanup": 122.07477144300356,
+    "controllerTimedOut": true,
+    "exitCode": -15,
+    "terminalTechnicalReceiptPresent": false,
+    "completeOrdinaryThreeTurnComposition": "UNKNOWN",
+    "observerToolCount": "UNKNOWN",
+    "completeProviderMockSettlement": "UNKNOWN",
+    "fullNativeClosure": "UNKNOWN",
+    "nativeCloseSemantics": "The pinned native client deliberately reports cleanup uncertain after native command execution. Neither source planning nor tool completion replaces separate native process-authority and closure evidence.",
+    "operatorEnumeratedHashesEqual": true,
+    "externalInferenceCalls": 0,
+    "authCalls": 0,
+    "originalInputs": 0,
+    "originalAuthorityWrites": 0,
+    "nativeFrameworkModified": false,
+    "runtimeBillableTokens": 0,
+    "codexDevelopmentCredits": "unknown",
+    "syntheticUsage": "Any mock usage is a public fixture constant and is not actual billing.",
+    "fixtureNetworkNamespace": "isolated loopback-only; namespace remaining processes were targeted for stop on test exit, not a native close-pass claim",
+    "independentDurableNativeMetadata": {
+      "requestedCommands": 16,
+      "matchingResultRecords": 16,
+      "provenCompletedCommandExecutions": 2,
+      "provenExitCodeZero": 2,
+      "otherFourteenExecutions": "UNKNOWN",
+      "observerCallbacks": "UNKNOWN",
+      "completeParentAccounting": "UNKNOWN",
+      "actualTimeoutCause": "UNKNOWN",
+      "syntheticUsageRecord": {
+        "inputTokens": 17,
+        "outputTokens": 3,
+        "totalTokens": 20,
+        "actualBilling": false
+      }
+    }
+  },
+  "limitations": [
+    "No original CM case, no winner, no native full-coverage or close-pass claim.",
+    "No unmodified composition retry. A specific changed cause or missing evidence must justify any further trial.",
+    "No new Eva product function, app/add-on benchmark or dream scheduler delivered by this evaluator correction."
+  ],
+  "currentTask": "P2.1 remains in progress; installed independently accepted L3.6/L3.7 unchanged.",
+  "nextAction": "Use the independent retained metadata assessment to isolate the observer/runtime boundary before original admission; preserve every original criterion and historical unknown.",
+  "independentRuntimeReview": {
+    "path": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
+    "sha256": "690e32c174fb22d7abda90e6289855a83040df351b5da5d03b95358a88fd24ff"
+  }
+}

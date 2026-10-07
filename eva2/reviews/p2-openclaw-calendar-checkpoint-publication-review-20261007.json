@@ -1,0 +1,91 @@
+{
+  "contract": "P2OpenClawCalendarCheckpointPublicationIndependentReview/v1",
+  "date": "2026-10-07",
+  "decision": "GO_SOURCE_CHECKPOINT_PUBLICATION",
+  "findings": [],
+  "scope": "Only the named correction evidence, current P2.1 and ownerAide2Continuation changes, delivery next action and current WERKBORD paragraph. No renewed historical assessment or runtime admission.",
+  "reviewed": {
+    "evidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-native-tool-observer-correction-20261007.json",
+      "sha256": "dc360143222ca4eef33ad70eca2da14e8d3a6a6f57bb2a1ba190641a8d97db53"
+    },
+    "workboardSnapshot": {
+      "path": "/home/administrator/project/Eva2/eva2/design/product/execution-workboard-v1.json",
+      "sha256": "72f9fcc6395fd682031157a305108d5b3bea65b87c9e312dbe68dd2a3b13f790"
+    },
+    "werkbordSnapshot": {
+      "path": "/home/administrator/project/Eva2/eva2/WERKBORD.md",
+      "sha256": "82f2fbfd08a469bf9365aaa9bb6f05ef46ef8ad31d91d4decce862252c15cf0e"
+    }
+  },
+  "authoritativeReviews": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-native-tool-observer-review-20261007.json",
+      "sha256": "bf411a28a65079d4475b3e62b661777d06b7a446d96e47477007e823a74af784"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
+      "sha256": "690e32c174fb22d7abda90e6289855a83040df351b5da5d03b95358a88fd24ff"
+    }
+  ],
+  "verifiedClaims": {
+    "sourceDecision": "GO",
+    "actualOwnedPlanningTestsPassed": 1,
+    "runtimeDecision": "UNKNOWN",
+    "originalSampleAdmission": "NO_GO",
+    "provenNativeCommandExecutions": 2,
+    "otherFourteenRequestedExecutions": "UNKNOWN",
+    "observerCallbacks": "UNKNOWN",
+    "completeParentAccounting": "UNKNOWN",
+    "nativeClosure": "UNKNOWN",
+    "timeoutCause": "UNKNOWN",
+    "controllerBudgetSeconds": 120,
+    "elapsedIncludingStopCleanupSeconds": 122.07477144300356,
+    "terminalTechnicalReceiptPresent": false,
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "syntheticUsage": {
+      "inputTokens": 17,
+      "outputTokens": 3,
+      "totalTokens": 20,
+      "actualBilling": false
+    },
+    "newProductTaskCompletion": false,
+    "runtimeReleaseClaim": false,
+    "newTrialAdmission": false
+  },
+  "workboardChecks": {
+    "completed": 39,
+    "total": 48,
+    "inProgress": 1,
+    "planned": 8,
+    "currentTask": "P2.1",
+    "currentTaskStatus": "in_progress",
+    "completedStatusesChangedByThisCheckpoint": false,
+    "L3_4ThroughL3_7": "Retained completed outcomes; continuation metadata now agrees with existing installed/independently closed evidence.",
+    "remainingWork": "Missing durable observer coverage and native closure remain Codex technical work. Human ratings remain separate and do not authorize a native retry.",
+    "ordinaryRepeatAuthorized": false
+  },
+  "referenceChecks": {
+    "hashedCorrectionReferencesChecked": 9,
+    "allMatched": true,
+    "installedCandidateEvidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/l3-context-candidate-b-installed-20261007.json",
+      "sha256": "0c3170cd5bafab4c633d819e64591b782f1df5a16389788a73fe053a9e258057"
+    },
+    "reusableCycleClosureReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/l3-reusable-cycle-closure-review-20261007.json",
+      "sha256": "e6454d56627ffd938cbb11515873338cef1cbee662f4760c2aa91654220f8662"
+    }
+  },
+  "publicationBoundary": "GO publishes reviewed evaluator source and retained evidence only. It does not install a product feature, complete P2.1, admit an original sample, prove full native settlement or authorize another composition without a newly established cause/change.",
+  "reviewerActivity": {
+    "testsRun": 0,
+    "nativeRuns": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedOriginalContentReads": 0,
+    "agentsSpawned": 0,
+    "onlyWrittenFile": "eva2/reviews/p2-openclaw-calendar-checkpoint-publication-review-20261007.json"
+  }
+}

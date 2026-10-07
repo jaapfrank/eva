@@ -1,0 +1,120 @@
+{
+  "contract": "P2OpenClawNativeToolObserverIndependentReview/v1",
+  "date": "2026-10-07",
+  "decision": "GO_SOURCE_AND_ONE_CHANGED_CAUSE_PUBLIC_COMPOSITION",
+  "originalSampleAdmission": "NO_GO",
+  "nativeClosure": "UNKNOWN",
+  "quality": "UNKNOWN",
+  "scope": "Only the owned native relay observation activation and content-free first coverage-failure metadata; no original case, framework/binary edit or new runtime proof.",
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "6087733e38bc6bc83ecb6053d8b41320cfac7e3eda9adfc9b64561743e7d6876"
+  },
+  "test": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "62541c60ebe2da897d0079ea8cbe4471873e959abcd1fd297f47008dc7a6aecb"
+  },
+  "findings": [],
+  "exactDelta": {
+    "previousSourceSha256": "29c4e9b7ed32fad239533abc84b50f4ad61d059ddaf70d1bbe63df20dd728150",
+    "previousTestSha256": "e31552360b44d3f0f8f5d9de88408743587a2bc02a412022bd0dbdb5b791eae9",
+    "verified": "Reversing only the owned marker/event-planning and first-failure metadata changes reconstructs the previous source and test hashes exactly."
+  },
+  "sourceAssessment": [
+    {
+      "anchors": [
+        "adapter:553-560",
+        "adapter:579-590",
+        "native-hook-relay-Bfyv8cuh.mjs:1411-1417,1495-1502"
+      ],
+      "finding": "The exact pinned host module is overlaid only with observeTools. A module-local Symbol is added only by registerOwnedNativeHookRelay, survives its rest/spread into command-plan params, and is copied to the runtime registration before publication. Ordinary public registration does not receive that marker."
+    },
+    {
+      "anchors": [
+        "adapter:569-574",
+        "run-attempt-BHu11r7h.mjs:5847-5862,5901-5905"
+      ],
+      "finding": "The local selected event list adds only pre_tool_use/post_tool_use and feeds both registration and native trusted-hook config. The restricted-policy early return and ordinary enabled/disabled options remain unchanged."
+    },
+    {
+      "anchors": [
+        "adapter:587-596",
+        "native-hook-relay-Bfyv8cuh.mjs:1012-1035,1043-1107,1646",
+        "thread-requests-BLvGkP2R.mjs:1516-1556"
+      ],
+      "finding": "Only marked pre/post planning gets localWork true and an undefined match-all tool matcher. Allowed events, identity/lifetime checks, ordinary policy, assertActive, original executionAdmission, retention and synchronous native command/trusted-hash construction remain. Reservation is still after ordinary policy and before executionAdmission; it is not physical execution evidence."
+    },
+    {
+      "anchors": [
+        "adapter:334-347"
+      ],
+      "finding": "The first coverage failure retains only bounded item type, digests of item/thread IDs and internal observed reservation status. It does not retain commands/results or reinterpret a missing observation as execution."
+    },
+    {
+      "anchors": [
+        "adapter:315-319,334-347,364-405"
+      ],
+      "finding": "Existing post-hook settlement and missing/reserved completion rejection are unchanged; item/started is not treated as dispatch. This change does not prove actual callback ordering or complete tool coverage. Native cleanup uncertain remains unmodified and cannot become closed from tool counters alone."
+    }
+  ],
+  "nativeSourceBindings": [
+    {
+      "file": "native-hook-relay-Bfyv8cuh.mjs",
+      "sha256": "e58fa02170a4d63f7c2e98de8c7514ac46906fae19538b131fd6e2f2b1fedb6a"
+    },
+    {
+      "file": "run-attempt-BHu11r7h.mjs",
+      "sha256": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376"
+    },
+    {
+      "file": "thread-requests-BLvGkP2R.mjs",
+      "sha256": "dadfd66ae8e31932fd34b5108572f669f873cd49c7615b453b2bf4f9d0bc5354"
+    }
+  ],
+  "retainedVerification": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/owned-relay-planning-test.public.json",
+      "sha256": "3f8c33db3035512042376f835f81539daea2991462631b1170af539af8d61fb1"
+    },
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/native-relay-observation/owned-relay-planning-test.public.txt",
+      "sha256": "95d4da9afa40e72c06faaadc25327c1970f06cd87dc5a1a7c5b66886b5b195cd"
+    },
+    "passed": 1,
+    "failed": 0,
+    "elapsedSeconds": 3.423064307993627,
+    "nativeActors": 0,
+    "modelCalls": 0,
+    "scope": "Actual installed owned relay registration/planning/drain on fresh public state. Both pre/post enabled with undefined matcher; ordinary public relay remains disabled even with a lookalike string property. Not a full ordinary actor/config/invocation composition."
+  },
+  "nextPublicComposition": {
+    "count": 1,
+    "controllerSeconds": 120,
+    "reason": "The previous retained native executions lacked evaluator pre/post coverage; this delta activates the existing selected synchronous relay and its match-all planning. A changed-cause public composition can establish actual pre/post delivery, identities, cap behavior and remaining lifecycle limits.",
+    "conditions": [
+      "Reuse the existing isolated public synthetic fixture and pinned ordinary route; zero external inference/auth calls and zero original inputs/authority operations.",
+      "Preserve all previous failures and their unknowns; use an execution-specific new receipt.",
+      "Keep native disabled/restricted policy intact. Missing, reserved-only or unmatched tool observations remain failures; no item/started dispatch inference.",
+      "Record tool accounting and native close separately; cleanup uncertain remains UNKNOWN even if all tool observations succeed."
+    ],
+    "notGranted": "No original sample admission, closed-case replay, criterion/budget reset or native framework/binary change."
+  },
+  "preservedDiagnosis": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-native-tool-observer-diagnosis-20261007.json",
+    "sha256": "00c2d0ef0e77bfaf00d2c5983360ab8b2fa081dbfe7fcf0b0908d14fe66eda3e"
+  },
+  "limitations": [
+    "Runtime pre/post invocation, generated trusted-hook execution and whole-loop coverage are not established by the planning test.",
+    "Original sample remains NO_GO until its native loop, exact accounting/readbacks and closure are actually supported.",
+    "No quality, memory advantage or competitive success follows from this source review."
+  ],
+  "reviewerActivity": {
+    "testsRun": 0,
+    "nativeRuns": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedOriginalContentReads": 0,
+    "agentsSpawned": 0,
+    "onlyWrittenFile": "eva2/reviews/p2-openclaw-native-tool-observer-review-20261007.json"
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "contract": "P2OpenClawCalendarCorrection/v1",
+  "recordedDate": "2026-10-07",
+  "taskId": "P2.1",
+  "decision": "native_calendar_bounded_pass_full_original_route_not_admitted",
+  "originalSampleAdmitted": false,
+  "fullTaskCompleted": false,
+  "semanticQuality": "UNKNOWN",
+  "generalSuperiorityProven": false,
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "29c4e9b7ed32fad239533abc84b50f4ad61d059ddaf70d1bbe63df20dd728150"
+  },
+  "publicFixture": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "e31552360b44d3f0f8f5d9de88408743587a2bc02a412022bd0dbdb5b791eae9"
+  },
+  "changed": "Existing evaluator seam binds only the current native environment date to the acknowledged scenario calendar; content kind/turn/timezone/generation checked; original/pre-calendar/outgoing bytes retained.",
+  "preserved": {
+    "originalCasesAndCriteria": true,
+    "originalProviderRoles": "Sol/none contact; Astra/medium helper",
+    "operatorAuthAndNativeRegistryHashesUnchanged": true,
+    "nativeFrameworkOrBinaryModified": false,
+    "originalAuthorityChanged": false,
+    "originalSlotUsed": false,
+    "closedCasesRepeated": false
+  },
+  "calendarEvidence": {
+    "independentReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-calendar-runtime-review-20261007.json",
+      "sha256": "dd4d4e23a827f7254eef80db0755404a62df5a342222061c902ab930d930dba9"
+    },
+    "result": "One retained actual native request: pre-calendar to outgoing is exactly the date-substring replacement. Same current turn/timezone. Original to pre-calendar also includes existing native preparation of instructions; not claimed date-only.",
+    "fullLoopClaim": false
+  },
+  "focusedVerification": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/focused-tests.public.json",
+      "sha256": "be7a577b894053ade62e6bbac1db650a89c27ab704253a1f594031da0f047cd6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/stop-boundary-tests.public.json",
+      "sha256": "880211a05345f12733d779d185ccd559198fef41c780050eb2919eddb46a8e8a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/resolved-mock-proxy.public.json",
+      "sha256": "f573f9e73a624adad5094dfc141e6193dd724d8bfe993ba63549d1b243cc8198"
+    }
+  ],
+  "reviews": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-calendar-correction-review-20261007.json",
+      "sha256": "0652f6b2308b3447e1874d6cb975f6c8f43f2826b9393e3cbcdded885771cc1d"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-resolved-mock-review-20261007.json",
+      "sha256": "4cc13a763691049bca3cbb346acfec69dd0dc4791f66539e0269ff8456354acb"
+    }
+  ],
+  "developmentHistory": {
+    "launcherHomeFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-home-preflight-failure/ordinary-execution.public.json",
+      "sha256": "ac7a2f49cfed274f22a550cccae9d1569f2b8c78d6f378b0f84908177e456490"
+    },
+    "launcherNodeFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/launcher-node-preflight-failure/ordinary-execution.public.json",
+      "sha256": "365257f3855048b149b9d41ecaae9c6e98b1afee2d2962101eeb2ce95c03e828"
+    },
+    "firstNativeIncomplete": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/ordinary-execution.public.json",
+      "sha256": "0255c250dee719d1ebcf01c959ea9ac20e3704fe523118129cf4fa2468b6020d"
+    },
+    "firstNativeTechnicalReceiptWasStaleAndExcluded": true,
+    "changedCauseComposition": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/resolved-mock-native-composition/ordinary-execution.public.json",
+      "sha256": "35c59c0c81418f03ca46191be3313c1d0e004147cd6dd69df437d2d774dd57fe"
+    },
+    "changedCauseTechnicalReceipt": {
+      "path": "/tmp/eva-p2-openclaw-resolved-native-20261007-bhze782b/composition-technical.private.json",
+      "sha256": "591da4d382155d07394c9c6ea23dd84e2761e84bc0c13ad80eaa102f42aaf560"
+    },
+    "oldMockHangExactCause": "UNKNOWN",
+    "changedFixture": "Verified resolved proxy imports mocked; actually offered exec_command reads only seeded public MEMORY.md."
+  },
+  "latestOrdinaryObservation": {
+    "elapsedSeconds": 119.65952637299779,
+    "exitCode": 1,
+    "controllerTimedOut": false,
+    "completedNativeTurns": 0,
+    "mockResponses": 1,
+    "settledMockProviderRows": 1,
+    "mockUsage": {
+      "input_tokens": 17,
+      "output_tokens": 3,
+      "total_tokens": 20
+    },
+    "mockUsageIsSyntheticAndNotRealModelConsumption": true,
+    "observedToolRows": 0,
+    "observedDispatchedTools": 0,
+    "toolCoverage": false,
+    "seventeenthRefusalProven": false,
+    "nativeClosed": false,
+    "pendingSdkReported": 0,
+    "pendingToolsReported": 0,
+    "completeLoopToolCoverageAndNativeClose": "UNKNOWN / not established",
+    "nextDiagnosis": "An item/completed lacked pre-dispatch correlation; exact item kind and native boundary remain to be diagnosed. Zero observed rows is not proof no builtin executed.",
+    "providerRolesActualCoverage": "contact Sol/none observed; native helper dispatch not established"
+  },
+  "usage": {
+    "externalInferenceCalls": 0,
+    "originalModelCalls": 0,
+    "authCalls": 0,
+    "CodexDevelopmentCredits": null,
+    "historicalUnknownUsagePreserved": true
+  },
+  "nextExistingTask": "P2.1: identify and correct the concrete native observation boundary. No unmodified repetition or broad matrix."
+}

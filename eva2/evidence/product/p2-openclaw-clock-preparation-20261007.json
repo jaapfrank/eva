@@ -1,0 +1,226 @@
+{
+  "contract": "P2OpenClawClockPreparation/v1",
+  "date": "2026-10-07",
+  "decision": "GO_TARGETED_TECHNICAL_PREPARATION_ONLY",
+  "originalSampleAdmission": "NO_GO",
+  "quality": "UNKNOWN",
+  "scope": "Read-only retained evidence and original unused-slot check; this receipt is not permission to reserve, prepare runtime resources or execute.",
+  "originalSlot": {
+    "entry": "openclaw:EV003-CM-01:epoch1",
+    "caseSha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+    "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "unused": true,
+    "openclawAuthorityRows": 0,
+    "originalReservations": 0,
+    "originalAttempts": 0,
+    "eligibleForOriginalPreparation": true,
+    "shape": {
+      "turn_count": 3,
+      "setup_turn_count": 0,
+      "actor_count": 1,
+      "session_count": 2,
+      "session_indices": [
+        0,
+        0,
+        1
+      ],
+      "clock_generations": [
+        0,
+        0,
+        1
+      ],
+      "calendar_advance_count": 1
+    },
+    "audience": "one verified private person, isolated ordinary native owner/workspace, persistent memory across both sessions",
+    "perSampleLimits": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "budgetRedistribution": false
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "28ef3624b52851edd152818efdc6d93399b4e0bdb252de9f299ed5f063e57b3c",
+    "rows": 12,
+    "registeredAttempts": 66,
+    "historicalUnknownAttemptCount": 3,
+    "historicalUnknownsPreserved": true,
+    "participantAdmissionScope": "cp001_accounting.py:212-220 reads participant-specific rows; other participants unresolved usage is not automatically an OpenClaw reservation. The separate public development unknown remains explicitly unknown.",
+    "noMutation": true
+  },
+  "protocol": {
+    "path": "/home/administrator/project/Eva2/eva2/design/product/comparable-agent-benchmarks-v1.md",
+    "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "references": [
+      "7-15: individually admitted available participants; absent participants remain unknown, no budget donation",
+      "93-102: no complete superiority from incomplete evidence; no testing until a win"
+    ],
+    "interpretation": "The original unused OpenClaw slot may be technically prepared under the existing plan. This does not reopen closed cases or remove current-round inconclusiveness/full-coverage and human requirements."
+  },
+  "decisiveClockDefect": {
+    "retainedActualBody": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-public-composition/1-attempt-1-http.body.private.json",
+      "sha256": "65be9f8ebb58ccc0f293508ee31542812844d6248d39210f0330925dd21a8fe5"
+    },
+    "bodyContainsOriginalHeldoutMaterial": false,
+    "observedModel": "gpt-6-sol",
+    "observedEffort": "none",
+    "applicationCarrier": {
+      "kind": "additional_content.openclaw_temporal_context",
+      "observedRole": "developer",
+      "observedPath": "/input/4/content/0/text",
+      "publicSyntheticDate": "2020-01-02",
+      "syntax": "<openclaw_temporal_context>## Temporal Context\\nCurrent date: YYYY-MM-DD\\nTime zone: IANA_ZONE\\n...</openclaw_temporal_context>"
+    },
+    "nativeEnvironmentCarrier": {
+      "kind": "environments.environment_context",
+      "observedRole": "user",
+      "observedPath": "/input/1/content/1/text",
+      "publicSyntheticDate": "2026-10-07",
+      "syntax": "<environment_context>...<current_date>YYYY-MM-DD</current_date><timezone>IANA_ZONE</timezone>...</environment_context>",
+      "envelopeSha256": "a72258b181b4be5675fafdab2395a38e0ec6de13e7f2f92b1db258f278a7daf0"
+    },
+    "sameTurnId": true,
+    "sameObservedTimezone": "Europe/Amsterdam",
+    "provenance": "The existing native OpenClaw application formatter is scenario-bound. The same actual Codex serialized request independently includes its native environment current_date. The retained body proves the contradiction; no claim of a discovered Rust internal formatting function."
+  },
+  "minimumClockBinding": {
+    "status": "source-level correction proposal, not implemented or validated by this review",
+    "existingSeam": "p1_openclaw_parent_accounting.mjs:191-199 prepareBody; existing shared native proxy serialization hook at line 508",
+    "selector": "For message content[j], use internal_chat_message_metadata_passthrough.content_item_kinds[j], not observed array indices. Bind its metadata.turn_id to client_metadata.turn_id and parsed x-codex-turn-metadata.turn_id, and to the same-turn native application carrier.",
+    "metadataSchema": {
+      "turn_id": "string",
+      "create_time": "number; preserve unchanged",
+      "content_item_kinds": "array of strings aligned with content items"
+    },
+    "dateContract": "Exactly one native environment current_date, YYYY-MM-DD in the same resolved IANA timezone and acknowledged scenario generation as the ordinary application carrier. Refuse missing, ambiguous or conflicting bindings before dispatch.",
+    "calendarStateSchema": {
+      "contract": "EvaScenarioCalendar/v1",
+      "generation": "nonnegative safe integer",
+      "offsetMilliseconds": "finite number"
+    },
+    "clockSemantics": "Real elapsed ticking offset is constant during native work; move to the next generation only after native reply/background/memory settlement. Auth/TLS/deadline/metadata timestamps remain real.",
+    "preservation": "Retain original and outgoing private request bytes and bind the difference to the one environment date field. Do not add instructions, replace user content, alter framework/binary/OS clocks or manually dispatch tools."
+  },
+  "currentBindings": {
+    "adapter": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "d894b39f516c21f875e691d0ceee39ef2e37980380b9282b6a62a4cbef2377ca"
+    },
+    "calendar": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs",
+      "sha256": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602"
+    },
+    "nativeTemporalCarrier": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/thread-lifecycle-B3mfz1TG.mjs",
+      "sha256": "d278e65190cb7e9a9187962fd413187bdd09e5e431454e9287f29ab15f6d9bce"
+    },
+    "nativeDateFormatter": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/date-time-CaOYkXPL.mjs",
+      "sha256": "98e20008267cd6be2f4a8ce583f70e7e6fd26f85cef7e08470c83d031f061e79"
+    },
+    "nativeInstallRootContext": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-runtime/node_modules/openclaw/dist/install-root-context-DEOzYnOP.mjs",
+      "sha256": "183efb7c56b83c63c9662954bb047df680c457a5a64efb52fdb82ddc9b166ee5"
+    },
+    "codexBinary": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "sha256": "0753dfe1d8b87a52436deb13eb1c549661ef4c84fee2c5aa688385eebeccb761"
+    },
+    "versions": {
+      "openclaw": "2026.9.6",
+      "codex": "0.155.1",
+      "node": "24.16.0"
+    }
+  },
+  "existingPrivatePreparation": {
+    "projection": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/cm01-epoch1.native-inputs.private.json",
+      "sha256": "2abe017212dfc53c19b91b10eed991172cc55af80a95b3de0ec92cf6d4e4135e"
+    },
+    "projectionTechnicalReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/projection-contract-technical.private.json",
+      "sha256": "9292921a96eacb7891751e198a4ebac9b832f952ff5a7b83f3011f7263bfdba2"
+    },
+    "draft": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/parent-cm01-preparation-draft.private.json",
+      "sha256": "f493b2d806d10e27d52844bd525580979cf48ab544b8c3fa1419f2c3649061b1"
+    },
+    "draftAdmitted": false,
+    "draftResourcePreparationAdmitted": false,
+    "newProjectionOrAuthorityCreated": false
+  },
+  "retainedUsage": {
+    "publicCompositionDevelopmentPermits": 1,
+    "developmentPermitUsage": null,
+    "developmentPermitStatus": "UNKNOWN",
+    "physicalMockCalls": 0,
+    "externalInferenceCalls": 0,
+    "originalSampleCalls": 0,
+    "nativeCompletedTurns": 0,
+    "nativeToolDispatches": 0,
+    "completedNativeReadbacks": 0,
+    "actualUnregisterQueuesFlushed": 2,
+    "nativeClosed": false,
+    "moneyOrCredits": null,
+    "warning": "Zero physical mock calls/empty namespace do not convert unknown permit usage or incomplete native close into success."
+  },
+  "remainingAdmissionPrerequisites": [
+    "Consistent actual native model-visible calendars under the narrow evaluator binding, without changed ordinary instructions or source version.",
+    "Retained evidence for ordinary three-turn/two-session completion, durable native memory/session and exact model-context readbacks.",
+    "Actual native tool accounting and original 16-tool cap/refusal, helper coverage, full native/background/parent closure and deadline semantics; source intent/zero tool dispatch is not completed runtime coverage.",
+    "Fresh exact source/runtime/access/authority binding before any original release; prior own-login evidence is not a new freshness check."
+  ],
+  "reusablePublicFixture": {
+    "config": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-public-composition/openclaw.json",
+      "sha256": "9badd33438bc19aa35742c24cb475416180e6017a41e62fa5440efb306af339d"
+    },
+    "executionMetadata": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-composition-20261007/final-public-composition/execution-metadata.public.json",
+      "sha256": "70bede66cb15d27c32de54c3bdc94263bfbd0cfe25484c6b4e0d24f3b50b0f0a"
+    },
+    "source": "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sourceSha256": "2608b6d69dfe8216d8c22ef6a37dd786540e3ab21354e213990ae80062633116",
+    "preserve": "Genuine operator install roots, accessible owned HOME, ordinary default app-server argv, discovery enabled, configured model policy, fresh workspace/state and loopback-only public mock transport.",
+    "limit": "Existing cumulative public fixture 120 seconds; no new execution authorized by this receipt. Full original launch argv is not recorded in the execution metadata; reuse the existing test entry rather than claiming a complete retained command manifest."
+  },
+  "evidence": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-native-loop-binding-20261007.json",
+      "sha256": "33f6a1cb6e2d40d6aeea4185a45b36e6b343a46fd3606b1a4b3b57e929e131e5"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+      "sha256": "443dc2739b86471c39a7dd25bb51e8c0ca16248c71425b2c893c15e1aa1e4b58"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-current-round-decision-20261007.json",
+      "sha256": "ed43fadeaec6c95d4ce439bb0ed8a8867027123b44749fc13abda65ade529e22"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json",
+      "sha256": "41612c1f5feee987cb5bf0a6a9945b30733384fe50bb84a9c2a2ef6c750e4161"
+    }
+  ],
+  "historicalBoundary": "The earlier config-origin plugin rejection is retained but is no longer the decisive blocker: genuine existing owner-root registration was observed. Current clock failure and incomplete native-loop evidence remain. Full native registry byte preservation was not established by that public fixture.",
+  "reviewerActivity": {
+    "modelCalls": 0,
+    "authCalls": 0,
+    "newTestsOrTrials": 0,
+    "runtimeStarts": 0,
+    "reservations": 0,
+    "protectedOriginalContentReads": 0,
+    "authorityWrites": 0,
+    "onlyWrittenFile": "eva2/evidence/product/p2-openclaw-clock-preparation-20261007.json"
+  }
+}

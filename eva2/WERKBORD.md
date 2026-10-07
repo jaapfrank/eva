@@ -7,8 +7,11 @@ ervaring, bewaarde een teruggelezen vervolgnotitie en stopte zonder nieuw tekort
 Onafhankelijke GO_DONE op de oorspronkelijke L3.7-eindvoorwaarde; toepassing niet
 herhaald. Geen brede superioriteits-, tweede optimalisatie- of droomplannerclaim.
 
-Actief: P2.1, de bestaande OpenClaw-klok-/bronbinding en resterende oorspronkelijke
-vergelijking. Geen nieuwe brede matrix, nieuwe providerroute of afgesloten proef.
+Actief: P2.1. Kalenderbinding en echte owned-relayplanning zijn bevestigd.
+De eenmalige gewijzigde publieke routecontrole bewees twee native uitvoeringen,
+maar volledige accounting/afsluiting en de timeoutoorzaak blijven onbekend.
+Geen echte modelcalls, oorspronkelijke sample of ongewijzigde herhaling.
+Codex vervolgt bij de concrete meetroute; geen productverlies-/voorsprongclaim.
 Apps/add-ons horen bij dezelfde verbetercyclus; droommodus is nog niet gebouwd.
 Bekend achtergrondverbruik vervolgronde117.720tokens (partial/subtotaal);
 antwoordvergelijking apart13.973tokens. Credits en volledig ontwikkeltotaal onbekend.

@@ -1,0 +1,99 @@
+{
+  "contract": "P2OpenClawCalendarCorrectionIndependentReview/v1",
+  "date": "2026-10-07",
+  "baseCommit": "84f7b330",
+  "decision": "GO_SOURCE_AND_CHANGED_CAUSE_PUBLIC_COMPOSITION",
+  "originalSampleAdmission": "NO_GO",
+  "runtimeReleaseAdmitted": false,
+  "quality": "UNKNOWN",
+  "scope": "Only the benchmark calendar/provenance delta and its retained focused regressions. No original execution, framework/binary modification or criterion change.",
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "29c4e9b7ed32fad239533abc84b50f4ad61d059ddaf70d1bbe63df20dd728150"
+  },
+  "tests": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "18dde307e185d556eeb98037dc8d00f80cad1e74a7ff9f338c255a1112588772"
+  },
+  "reviewedBoundaries": [
+    "scenarioBody selects native content_item_kinds aligned with content items and the current turn_id; top-level and native metadata turn IDs must match. Historical turns and user examples are left unchanged.",
+    "The same-turn native application carrier must match the previously acknowledged formatter hash, calendar-state hash and generation. Its YYYY-MM-DD date is checked using the same IANA timezone and ticking scenario offset; the environment timezone must agree.",
+    "The only additional calendar mutation is the selected environment current_date text. Existing model/effort binding is separately preserved. Body metadata, create_time, user content, OS/auth/TLS and monotonic deadlines are not rewritten.",
+    "The native proxy passes its original decoded JSON bytes into the common preparation seam used by HTTP and WebSocket. Private O_EXCL/0600/fsync artifacts retain those original bytes, the body after existing native/model preparation but before calendar binding, and the outgoing JSON body. These are application JSON bytes, not headers or compressed HTTP wire bytes.",
+    "Missing or ambiguous current carriers, mismatched turn/timezone, stale generation or absent original bytes refuse preparation before a permit. Helper requests take the same strict calendar path; unsupported helper carrier shapes stop rather than inheriting a guessed date.",
+    "Both physical transport boundaries now recheck the existing ledger/deadline after synchronous retention and the final save. The dispatched flag is set only after this last check, immediately before the transport call. A retained permit without dispatch remains usage-unknown under the existing accounting policy."
+  ],
+  "resolvedFindings": [
+    {
+      "finding": "Synchronous expanded context retention could cross the deadline before the next event-loop timer.",
+      "resolution": "Existing check() added immediately before physical HTTP/WS dispatch after retention/save."
+    },
+    {
+      "finding": "The initial correction marked row.dispatched before the final stop check.",
+      "resolution": "Marker moved after the final check; the focused assertion proves no physical dispatch and no dispatched=true for both transports under deadline and owner stop."
+    }
+  ],
+  "retainedVerification": {
+    "bundled": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/focused-tests.public.json",
+      "sha256": "be7a577b894053ade62e6bbac1db650a89c27ab704253a1f594031da0f047cd6",
+      "log": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/focused-tests.public.txt",
+        "sha256": "b3196d40563f9c998ead5b792930f316e6b9d3de2f9d6e64d7572609ba8319cf"
+      },
+      "passed": 13,
+      "failed": 0,
+      "skipped": 1,
+      "elapsedSeconds": 3.8699239149864297,
+      "boundSourceSha256": "ff083660c57420d2c203185bb812362ab83dbcf68f38dfa94799d07f5feafb33",
+      "boundTestSha256": "cbbd02efe7118f74d670e980c83f5cac4c3664de62e83782c19e558a89ca3da3",
+      "scope": "Calendar positive/negative regressions, existing transport/IPC suite and actual pinned proxy/client with fake HTTP/WS; ordinary composition skipped."
+    },
+    "finalDelta": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/stop-boundary-tests.public.json",
+      "sha256": "880211a05345f12733d779d185ccd559198fef41c780050eb2919eddb46a8e8a",
+      "log": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-correction-20261007/stop-boundary-tests.public.txt",
+        "sha256": "c66f0f2b314546ec772c69dc28b24ba6a6d28f4bf4444c8a822ea0afeb4eed65"
+      },
+      "passed": 1,
+      "failed": 0,
+      "elapsedSeconds": 0.17084894300205633,
+      "scope": "Only the changed final dispatch-marker assertion, both transports times deadline/owner-stop. No full-suite rerun claimed on final hashes."
+    },
+    "reviewerNewTests": 0,
+    "externalInferenceCalls": 0,
+    "originalInputs": 0
+  },
+  "nextBoundedEvidence": "One changed-cause public synthetic ordinary composition is technically justified to observe the actual serialized matching calendars and native loop. Preserve prior failures. Use the existing fixture, pinned native route and cumulative public fixture bound; this is not an original sample admission.",
+  "remainingOriginalAdmission": [
+    "Actual ordinary three-turn/two-session completion and consistent model-visible calendar, including any helpers/continuations actually invoked.",
+    "Native memory/session/model-context readbacks, original tool cap and refusal evidence, complete provider/tool accounting and native/background/parent closure.",
+    "A separately bound current original admission and existing authority; no unused allowance reset or original input released by this review."
+  ],
+  "limits": "The current clock regressions use public synthetic native schema. The enabled pinned-proxy test verifies overlay and fake HTTP/WS passage without a scenario clock; their combination is source/regression evidence, not a completed real ordinary calendar loop. Prior public development usage-unknown and native-close unknown remain unchanged. No quality, superiority or full-coverage conclusion.",
+  "priorEvidence": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-clock-preparation-20261007.json",
+      "sha256": "7c24a9c4cd8bdfe5d810f7f7618b4606de682e82b0117dead1478bd34f2e7705"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+      "sha256": "443dc2739b86471c39a7dd25bb51e8c0ca16248c71425b2c893c15e1aa1e4b58"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-native-binding-final-review-20261007.json",
+      "sha256": "41612c1f5feee987cb5bf0a6a9945b30733384fe50bb84a9c2a2ef6c750e4161"
+    }
+  ],
+  "reviewerActivity": {
+    "modelCalls": 0,
+    "authCalls": 0,
+    "nativeRuns": 0,
+    "originalProtectedContentReads": 0,
+    "reservations": 0,
+    "modifiedFiles": [
+      "eva2/reviews/p2-openclaw-calendar-correction-review-20261007.json"
+    ]
+  }
+}

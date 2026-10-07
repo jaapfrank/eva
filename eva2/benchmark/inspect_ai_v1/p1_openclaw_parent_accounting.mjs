@@ -144,7 +144,7 @@ export class OpenClawAccounting {
     this.privateModelContextDir = privateModelContextDir; this.observeTools = observeTools;
     this.tools = new Map(); this.clients = new Map(); this.nativeReadbacks = [];
     this.nativeModuleBindings = new Map(); this.nativeQueues = new Map();
-    this.toolCoverage = true; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map();
+    this.toolCoverage = true; this.nativeCoverageFailure = null; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map();
     this.stop = () => { for (const cancel of this.active) cancel(); };
     ledger.stopHandlers?.add(this.stop);
   }
@@ -188,7 +188,70 @@ export class OpenClawAccounting {
       collaborationMode: { ...params.collaborationMode, settings: { ...params.collaborationMode.settings,
         model: 'gpt-6-sol', reasoning_effort: 'none' } } } : {}) };
   }
-  prepareBody(body) {
+  /** Bind only the native environment date belonging to this ordinary turn. */
+  scenarioBody(body, native, originalBytes) {
+    if (!this.clockFile) return { body };
+    this.check();
+    const turnId = body.client_metadata?.turn_id;
+    if (typeof turnId !== 'string' || !turnId || native.turn_id !== turnId
+        || !Buffer.isBuffer(originalBytes) || originalBytes.length > MAX_NATIVE_BODY) {
+      throw new Error('exact native turn and original bytes required for calendar');
+    }
+    const readback = this.scenarioReadbacks.at(-1);
+    const state = JSON.parse(readFileSync(this.clockFile, 'utf8'));
+    if (!readback || digest(state) !== readback.canonical_clock_state_sha256) {
+      throw new Error('scenario calendar generation changed before dispatch');
+    }
+    const carriers = new Map();
+    for (const [i, message] of (body.input ?? []).entries()) {
+      const metadata = message.internal_chat_message_metadata_passthrough;
+      if (metadata?.turn_id !== turnId) continue;
+      const kinds = metadata.content_item_kinds;
+      if (!Array.isArray(kinds) || !Array.isArray(message.content)
+          || kinds.length !== message.content.length || !Number.isFinite(metadata.create_time)) {
+        throw new Error('native content metadata differs');
+      }
+      for (const [j, kind] of kinds.entries()) {
+        if (!['environments.environment_context', 'additional_content.openclaw_temporal_context'].includes(kind)) continue;
+        const content = message.content[j];
+        if (carriers.has(kind) || content.type !== 'input_text' || typeof content.text !== 'string'
+            || message.role !== (kind.startsWith('environments.') ? 'user' : 'developer')) {
+          throw new Error('native calendar carrier missing or ambiguous');
+        }
+        carriers.set(kind, { i, j, text: content.text });
+      }
+    }
+    const environment = carriers.get('environments.environment_context');
+    const application = carriers.get('additional_content.openclaw_temporal_context');
+    const temporal = application?.text.match(/^<openclaw_temporal_context>([\s\S]*)<\/openclaw_temporal_context>$/);
+    const date = temporal?.[1].match(/^Current date: (\d{4}-\d{2}-\d{2})$/m)?.[1];
+    const zone = temporal?.[1].match(/^Time zone: ([^\r\n]+)$/m)?.[1];
+    const nativeDates = [...(environment?.text ?? '').matchAll(/<current_date>(\d{4}-\d{2}-\d{2})<\/current_date>/g)];
+    const nativeZones = [...(environment?.text ?? '').matchAll(/<timezone>([^<]+)<\/timezone>/g)];
+    if (!environment || !date || !zone || nativeDates.length !== 1 || nativeZones.length !== 1
+        || nativeZones[0][1] !== zone
+        || digest({kind:'application', value:temporal[1]}) !== readback.native_temporal_context_sha256) {
+      throw new Error('same-turn native calendar context differs');
+    }
+    // Offset ticking is local to this date value; all OS/auth/deadline clocks stay real.
+    const parts = new Intl.DateTimeFormat('en-CA', {timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit'})
+      .formatToParts(new Date(Date.now() + state.offsetMilliseconds));
+    const civilDate = ['year','month','day'].map(kind => parts.find(part => part.type === kind)?.value).join('-');
+    if (date !== civilDate) throw new Error('scenario date changed before dispatch');
+    const text = environment.text.replace(nativeDates[0][0], '<current_date>'+date+'</current_date>');
+    const input = body.input.map((message, i) => i !== environment.i ? message : {...message,
+      content:message.content.map((content,j) => j !== environment.j ? content : {...content,text})});
+    if (digest(JSON.parse(readFileSync(this.clockFile, 'utf8'))) !== digest(state)) {
+      throw new Error('scenario calendar changed during binding');
+    }
+    return { body:{...body,input}, calendarBinding:{
+      turn_id:turnId,generation:state.generation,canonical_clock_state_sha256:digest(state),
+      native_temporal_context_sha256:readback.native_temporal_context_sha256,
+      changed_field:'/input/'+environment.i+'/content/'+environment.j+'/text/current_date',
+      native_date_changed:nativeDates[0][1] !== date
+    }, nativeOriginalBodyBytes:originalBytes, nativeCalendarPrebindingBodyBytes:Buffer.from(JSON.stringify(body)) };
+  }
+  prepareBody(body, originalBytes) {
     const metadata = body.client_metadata;
     const native = JSON.parse(metadata?.['x-codex-turn-metadata']);
     const helper = Boolean(native.parent_thread_id || native.subagent_kind || metadata?.['x-openai-subagent'] || metadata?.['x-codex-parent-thread-id'])
@@ -196,7 +259,9 @@ export class OpenClawAccounting {
     if (!helper && !['turn','prewarm'].includes(native.request_kind)) throw new Error('unbound native operation');
     const role = helper ? 'helper' : 'contact';
     const model = helper ? 'gpt-6-astra' : 'gpt-6-sol'; const effort = helper ? 'medium' : 'none';
-    return { body: { ...body, model, reasoning: { ...(body.reasoning ?? {}), effort } }, accounting: { role, model, effort } };
+    const selected = { ...body, model, reasoning: { ...(body.reasoning ?? {}), effort } };
+    const {body:bound,...calendar} = this.scenarioBody(selected,native,originalBytes);
+    return { body:bound, accounting:{role,model,effort,...calendar} };
   }
   retainPrivate(bytes, label) {
     if (!this.privateModelContextDir) throw new Error('private native context directory required');
@@ -212,8 +277,16 @@ export class OpenClawAccounting {
     try { fsyncSync(directory); } finally { closeSync(directory); }
     return { path, sha256: createHash('sha256').update(bytes).digest('hex'), bytes: bytes.length };
   }
-  captureContext(row, bytes) {
-    if (!this.privateModelContextDir) return;
+  captureContext(row, bytes, binding) {
+    if (!this.privateModelContextDir) {
+      if (binding?.calendarBinding) throw new Error('private calendar evidence required');
+      return;
+    }
+    if (binding?.calendarBinding) {
+      row.native_original_model_context = this.retainPrivate(binding.nativeOriginalBodyBytes, `attempt-${this.calls.length}-original`);
+      row.native_calendar_prebinding_context = this.retainPrivate(binding.nativeCalendarPrebindingBodyBytes, `attempt-${this.calls.length}-calendar-before`);
+      row.calendar_binding = binding.calendarBinding;
+    }
     row.native_model_context = this.retainPrivate(bytes, `attempt-${this.calls.length}-${row.transport}`);
     this.save(this.calls.map(({ cleanup, ...row }) => row));
   }
@@ -267,7 +340,10 @@ export class OpenClawAccounting {
     if (['userMessage','agentMessage','plan','reasoning','contextCompaction','enteredReviewMode','exitedReviewMode'].includes(p.item.type)) return;
     const row = this.tools.get(p.item.id);
     if (!row || ['reserved','cancelled'].includes(row.status)) {
-      this.toolCoverage = false; this.ledger.stop('native tool completion without dispatch observation');
+      this.toolCoverage = false;
+      this.nativeCoverageFailure ??= { item_type: typeof p.item.type === 'string' && /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(p.item.type) ? p.item.type : 'UNKNOWN',
+        item_id_sha256: digest(p.item.id ?? null), thread_id_sha256: digest(threadId ?? null), observed_status: row?.status ?? 'unreserved' };
+      this.ledger.stop('native tool completion without dispatch observation');
     }
   }
   async readNativeClient(client) {
@@ -363,8 +439,10 @@ export class OpenClawAccounting {
     let guarded;
     try {
       this.check();
-      this.captureContext(row, binding.nativeBodyBytes);
-      row.dispatched = true; row.dispatched_monotonic = this.now(); this.save(this.calls.map(({ cleanup, ...row }) => row));
+      this.captureContext(row, binding.nativeBodyBytes, binding);
+      this.save(this.calls.map(({ cleanup, ...row }) => row));
+      this.check(); // Retention/save are synchronous: recheck immediately before physical dispatch.
+      row.dispatched = true; row.dispatched_monotonic = this.now();
       guarded = await original({ ...params, signal: AbortSignal.any([controller.signal, ...params.signal ? [params.signal] : []]),
         init: { ...params.init, signal: AbortSignal.any([controller.signal, ...params.init.signal ? [params.init.signal] : []]) } });
       row.http_status = guarded.response.status; this.save(this.calls.map(({ cleanup, ...row }) => row));
@@ -415,8 +493,10 @@ export class OpenClawAccounting {
     remote.once('close', closed); remote.once('error', closed);
     try {
       this.check();
-      this.captureContext(row, prepared.bytes);
-      row.dispatched = true; row.dispatched_monotonic = this.now(); this.save(this.calls.map(({ cleanup, ...row }) => row));
+      this.captureContext(row, prepared.bytes, prepared.accounting);
+      this.save(this.calls.map(({ cleanup, ...row }) => row));
+      this.check(); // Retention/save are synchronous: recheck immediately before physical dispatch.
+      row.dispatched = true; row.dispatched_monotonic = this.now();
       remote.send(prepared.bytes, options, error => { if (error) closed(error); callback(error); });
     } catch (error) { closed(error); throw error; }
   }
@@ -487,11 +567,27 @@ export function installOpenClawAccounting(accounting, pluginRoot, pins, { hostRo
       source = replaceOnce(source, 'let additionalContext = buildCodexTemporalAdditionalContext(params, { sessionStatusAvailable: options.sessionStatusAvailable === true });',
         'let additionalContext = __evaAccounting.temporalContext(() => buildCodexTemporalAdditionalContext(params, { sessionStatusAvailable: options.sessionStatusAvailable === true }));');
     } else if (dynamicModule) {
+      // The same ordinary registration and trusted native config share this event list.
+      // Observation adds no tool authority and leaves disabled/restricted native policy intact.
+      source = replaceOnce(source,
+        'const relayEvents = requiresProcessAdmission && !nativeHookRelayEvents.includes("pre_tool_use") ? [...nativeHookRelayEvents, "pre_tool_use"] : nativeHookRelayEvents;',
+        'const relayEvents = [...new Set([...(requiresProcessAdmission && !nativeHookRelayEvents.includes("pre_tool_use") ? [...nativeHookRelayEvents, "pre_tool_use"] : nativeHookRelayEvents), "pre_tool_use", "post_tool_use"])];');
       source = replaceOnce(source, 'const response = await handleDynamicToolCallWithTimeout({',
         'const response = await __evaAccounting.dynamicTool(call, () => handleDynamicToolCallWithTimeout({');
       source = replaceOnce(source, '\t\t\t\t\t});\n\t\t\t\t\trecordCodexDynamicToolResult(projector, call, response, toCodexDynamicToolProtocolResponse(response));',
         '\t\t\t\t\t}));\n\t\t\t\t\trecordCodexDynamicToolResult(projector, call, response, toCodexDynamicToolProtocolResponse(response));');
     } else if (nativeHookModule) {
+      source = "const __evaOwnedToolAccounting = Symbol('evaluator-owned native tool accounting');\n" + source;
+      // Mark only the existing owned relay. Its ordinary synchronous hook builder then
+      // enables all-tool observation while native policy, lifetime and admission remain.
+      source = replaceOnce(source, 'function registerOwnedNativeHookRelay(params) {',
+        'function registerOwnedNativeHookRelay(params) { params = {...params, [__evaOwnedToolAccounting]: true};');
+      source = replaceOnce(source, '\t\tpartialRegistration = registration;',
+        '\t\tregistration[__evaOwnedToolAccounting] = params[__evaOwnedToolAccounting] === true;\n\t\tpartialRegistration = registration;');
+      source = replaceOnce(source, 'function nativeHookRelayEventHasLocalWork(registration, event) {',
+        'function nativeHookRelayEventHasLocalWork(registration, event) { if (registration[__evaOwnedToolAccounting] && ["pre_tool_use","post_tool_use"].includes(event)) return true;');
+      source = replaceOnce(source, 'function nativeHookRelayEventToolMatcher(registration, event) {',
+        'function nativeHookRelayEventToolMatcher(registration, event) { if (registration[__evaOwnedToolAccounting] && ["pre_tool_use","post_tool_use"].includes(event)) return undefined;');
       source = replaceOnce(source, 'async function runNativeHookRelayPreToolUse(params) {',
         'async function runNativeHookRelayPreToolUse(params) { try { return await __evaNativePreToolUse(params); } catch(error) { __evaAccounting.cancelNativeTool(params.invocation); throw error; } }\nasync function __evaNativePreToolUse(params) {');
       source = replaceOnce(source, '\ttry {\n\t\tif (params.executionAdmission?.toolNames.includes(toolName)) {',
@@ -505,7 +601,7 @@ export function installOpenClawAccounting(accounting, pluginRoot, pins, { hostRo
         source = replaceOnce(source, 'async closeAndWait(options) {', 'async closeAndWait(options) {\n\t\tlet readbackError; try { await __evaAccounting.beforeNativeClose(this); } catch(error) { readbackError = error; }\n\t\tconst result = await this.__evaCloseAndWait(options); __evaAccounting.nativeClosed.set(this, result); if (readbackError) throw readbackError; return result;\n\t}\n\tasync __evaCloseAndWait(options) {');
       }
     } else {
-      source = replaceOnce(source, 'const rewritten = Buffer.from(JSON.stringify(prepared.body));', 'const normalized = __evaAccounting.prepareBody(prepared.body);\n\t\tconst rewritten = Buffer.from(JSON.stringify(normalized.body));\n\t\tnormalized.accounting.nativeBodyBytes = rewritten;');
+      source = replaceOnce(source, 'const rewritten = Buffer.from(JSON.stringify(prepared.body));', 'const normalized = __evaAccounting.prepareBody(prepared.body, bytes);\n\t\tconst rewritten = Buffer.from(JSON.stringify(normalized.body));\n\t\tnormalized.accounting.nativeBodyBytes = rewritten;');
       source = replaceOnce(source, 'bytes: rewritten,', 'bytes: rewritten,\n\t\t\taccounting: normalized.accounting,');
       source = replaceOnce(source, '...createUploadBody(body, requestSignal, release),', '...createUploadBody(body, requestSignal, release),\n\t\t\taccounting: prepared.accounting,');
       source = replaceOnce(source, 'guarded = await fetchWithSsrFGuard({', 'guarded = await __evaAccounting.fetch(fetchWithSsrFGuard, {');

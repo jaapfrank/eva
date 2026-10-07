@@ -16612,7 +16612,7 @@
           ]
         }
       ],
-      "nextAction": "L3.6–L3.7 afgerond. P2.1: bestaande OpenClaw-klokbinding gericht corrigeren en één oorspronkelijk ongebruikte, geldig toegelaten vergelijking afmaken. Menselijke beoordelingen blijven apart; spraak geparkeerd.",
+      "nextAction": "L3.4–L3.7 geïnstalleerd en onafhankelijk afgerond. P2.1: kalender/owned planning bevestigd, volledige native meetroute nog onbekend; één publieke routecontrole bewaard zonder modelcalls. Geen ongewijzigde herhaling. Apps/add-ons behoren tot de verbetercyclus; droommodus nog niet gebouwd. Spraak geparkeerd.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -20278,7 +20278,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Maak bestaande native clockbinding correct en controleer onafhankelijke toelating vóór één oorspronkelijk ongebruikt OpenClawgeval. Overige onbekende metingen en menselijke beoordelingen blijven zichtbaar.",
+              "nextAction": "Gerichte diagnose van de ontbrekende duurzame observerregistratie en native afsluitbevoegdheid vóór een volgende proef. Kalenderbinding en planningbewijs hergebruiken; gewone programmeringsfout blijft Codex-werk, geen handeling voor Jaap. Geen oorspronkelijke vergelijking claimen.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20291,29 +20291,29 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T12:55:56.217274+00:00",
+              "checkedAt": "2026-10-07T13:43:34.034140+00:00",
               "assignment": {
-                "baseCommit": "4f9646e135ee78dee57b3359188e527ee50e9680",
+                "baseCommit": "84f7b330",
                 "owner": "/root",
                 "activeWorkers": [
-                  "/root",
-                  "/root/aide_final_evaluation"
+                  "/root"
                 ],
                 "files": [
-                  "/root: gerichte generieke OpenClaw-meetadaptercorrectie alleen na concreet brondefect; bestaand board/Git.",
-                  "/root/aide_final_evaluation: beschermde technische provenance/toelating/ongebruikte-slotbeslissing; geen cases/antwoorden/scorer naar root."
+                  "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+                  "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+                  "existing public P2.1 evidence and workboard"
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Gerichte bestaande bron-/metadatacontrole met0 geplande provider/authcalls; oorspronkelijke P2.1-voorwaarden en deelnemergebruik behouden. Creditkosten onbekend.",
-                "currentAction": "Gerichte klok-/bronbindingscontrole met bestaande metadata, nul nieuwe model/authcalls; afzonderlijke evaluator bepaalt oorspronkelijke ongebruikte toelating.",
+                "estimate": "Gerichte bestaande publieke fixture zonder externe modelcalls; pas na onafhankelijke toelating het ongebruikte oorspronkelijke OpenClaw-CM01-slot. Creditkosten onbekend.",
+                "currentAction": "Broncorrectie en echte owned planning gecontroleerd. Eén publieke native routecontrole gestopt zonder terminalreceipt: twee commando-uitvoeringen bewezen; volledige accounting/afsluiting en precieze timeoutoorzaak onbekend. Geen oorspronkelijke sample gestart of ongewijzigde herhaling.",
                 "previousGoalTurn": {
                   "classification": "no_progress",
                   "sourceCommit": "123d27edc4867fbd773e21e31f05f93f5682b292",
                   "meaning": "Dezelfde oorspronkelijke proefregistratie en ontbrekende beoordelingen; geen onafhankelijk uitvoerbaar vervolg."
                 },
-                "stage": "openclaw_original_clock_binding_preparation",
+                "stage": "openclaw_native_tool_observer_public_composition_closed_unknown",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -21247,7 +21247,7 @@
                 "preparationResult": "De bestaande native metadata identificeert beide kalenderdragers per beurt. Gerichte adaptercorrectie en gewone publieke routecontrole zijn nog Codex-werk; geen oorspronkelijk geval, modelcall of authcall uitgevoerd."
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
-              "latestEvidence": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+              "latestEvidence": "eva2/evidence/product/p2-openclaw-native-tool-observer-correction-20261007.json",
               "executionBlocker": {
                 "owner": "Codex",
                 "kind": "native503_unresolved_sdk_usage",
@@ -21419,7 +21419,14 @@
                 "failureCause": "HTTP503 at first native ingress; upstreamcause unavailable after generic API RuntimeError boundary.",
                 "newSampleUsage": "UNKNOWN"
               },
-              "priorBlockerBeforeOpenClawContinuation": "Oorspronkelijke vergelijking en R1/AIDE² zijn onvolledig afgesloten. Ontbrekend historisch SDK-verbruik en gebruikte onafhankelijke toelating laten geen nieuwe uitvoering binnen de bestaande voorwaarden toe. Twee menselijke kwaliteitsbeoordelingen ontbreken; spraak blijft geparkeerd."
+              "priorBlockerBeforeOpenClawContinuation": "Oorspronkelijke vergelijking en R1/AIDE² zijn onvolledig afgesloten. Ontbrekend historisch SDK-verbruik en gebruikte onafhankelijke toelating laten geen nieuwe uitvoering binnen de bestaande voorwaarden toe. Twee menselijke kwaliteitsbeoordelingen ontbreken; spraak blijft geparkeerd.",
+              "clockPreparationEvidence": "eva2/evidence/product/p2-openclaw-clock-preparation-20261007.json",
+              "clockRuntimeReview": "eva2/reviews/p2-openclaw-calendar-runtime-review-20261007.json",
+              "resolvedMockReview": "eva2/reviews/p2-openclaw-resolved-mock-review-20261007.json",
+              "nativeToolDiagnosisEvidence": "eva2/evidence/product/p2-openclaw-native-tool-observer-diagnosis-20261007.json",
+              "publicPreparationEvidence": "eva2/evidence/product/p2-openclaw-calendar-correction-20261007.json",
+              "nativeToolRuntimeReview": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
+              "nativeToolCheckpointPublicationReview": "eva2/reviews/p2-openclaw-calendar-checkpoint-publication-review-20261007.json"
             },
             {
               "id": "P2.2",
@@ -21960,10 +21967,10 @@
           "L3.7"
         ],
         "existingProductOutcomeCount": 4,
-        "countRule": "De oorspronkelijke44 taken met35 eerdere afrondingen blijven bewaard. Met de vier gevraagde vervolgopdrachten zijn37/48 kleine taken afgerond; L3.4 en L3.5 zijn daarvan nu af. Geen extra afgeronde hoofduitkomst.",
+        "countRule": "De oorspronkelijke44 taken en eerdere afrondingen blijven bewaard. Met de vier gevraagde vervolgopdrachten zijn39/48 kleine taken afgerond; L3.4–L3.7 zijn af. Geen extra afgeronde hoofduitkomst.",
         "finishRule": "De herbruikbare cyclus werkt en één geschikte werkwijzeverbetering is onafhankelijk aangetoond en toegepast; geen eindeloze optimalisatie als eindvoorwaarde.",
-        "latestCompletedTaskId": "L3.5",
-        "nextTaskId": "L3.6",
+        "latestCompletedTaskId": "L3.7",
+        "nextTaskId": "P2.1",
         "extensionClarification": {
           "recordedAt": "2026-10-07T09:50:30.565496+00:00",
           "source": "eva2/PROJECTDOEL.md",
@@ -21972,7 +21979,7 @@
           "implementedDreamMode": false
         },
         "latestTechnicalUpdate": {
-          "checkedAt": "2026-10-07T12:23:34.056782+00:00",
+          "checkedAt": "2026-10-07T13:43:34.034140+00:00",
           "installedIndependentHandoff": true,
           "ordinaryDevelopmentCandidate": "candidate_b_saved_and_task_succeeded",
           "newQualityGain": true,
@@ -21980,7 +21987,7 @@
           "independentFinalState": "accept",
           "answerStage": "24_of_24_calls_completed_independent_accept",
           "dreamModeImplemented": false,
-          "evidence": "eva2/evidence/product/l3-ordinary-candidate-b-completed-20261007.json",
+          "evidence": "eva2/evidence/product/l3-context-candidate-b-installed-20261007.json",
           "answerUsage": {
             "input_tokens": 12879,
             "output_tokens": 1094,
@@ -21989,13 +21996,14 @@
             "tool_calls": 0,
             "retries": 0,
             "credit_costs": "unknown",
-            "reportedBy": "independent evaluator; final semantic judgment pending"
+            "reportedBy": "Independent evaluator; completed semantic assessment and bounded candidate acceptance."
           },
           "candidateInstalled": true,
           "nextTaskId": "P2.1",
           "latestCompletedTaskId": "L3.7",
           "fullL3_7Completed": true,
-          "reusableCycleCompleted": true
+          "reusableCycleCompleted": true,
+          "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       }
     },
