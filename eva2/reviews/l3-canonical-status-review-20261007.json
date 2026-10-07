@@ -1,0 +1,58 @@
+{
+  "contract": "EvaIndependentBoundedSourceReview/v1",
+  "recordedAt": "2026-10-07",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "outcome": "GO",
+  "scope": "L3.7 canonical public status projection and existing host-only deployment; no new assessment or application",
+  "sourceBindings": {
+    "eva2/src/eva/operations/component_final_assessment.py": "f01b1b0d9ee843adcbdc40e894a9af22e1022fab160d646481044879e948905b",
+    "eva2/tests/operations/test_component_final_assessment.py": "68a81e451ad564f37894c403aa1458a6d6153e81f534617c30eca1cabe8c6b0a"
+  },
+  "findings": {
+    "provenFailure": "Retained median_seconds floats fail the existing canonical JSON tool-receipt contract.",
+    "correction": "Named time aggregates are projected to integer median_microseconds with Decimal scaling; other named numeric aggregates accept exact integers only. Non-finite times and fractional non-time metrics are omitted.",
+    "actualRetainedTimeProjection": {
+      "baseline": 4250311,
+      "candidate": 4105494
+    },
+    "projectionBoundary": "Microsecond rounding applies only to the public tool status view; original scorer values, criteria, decision, report and their artifact hashes remain unchanged.",
+    "retainedLegacyStatus": "_result reprojects source-bound retained decisions without mutating job.public. Existing empty legacy test stubs remain supported.",
+    "privacy": "Existing fixed aggregate names, mapped reasons, booleans and SHA-only binding allowlist remain; no raw final data, answers, queries or exception text is added.",
+    "replay": "Status reads do not dispatch assessors, publishers or application requests. Existing application_requested jobs remain terminal and retain the existing managed application readback.",
+    "canonicalLimits": "Existing canonical JSON integer range and other receipt constraints remain in force; no budget or schema limit is raised."
+  },
+  "retainedBindings": {
+    "candidateSha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+    "decisionAnswerArtifactSha256": "ec6b36c7d8d8890d08ff3c0f41ed10adc2f5c6f70fb66668af90e8351b9128f7",
+    "isolatedReportArtifactSha256": "7448ffa39bd297556beab295316390910a76a36e1c13b38848dcfd55f00a3713",
+    "reviewId": "0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a",
+    "requestId": "fe7da6d349c0d8694c748dabde0cbc3c7a0f69df57e88889468069549e667d63"
+  },
+  "verification": {
+    "reviewer": "Read-only current two-file diff and existing canonical JSON/restart/status control paths; no independent test or runtime execution.",
+    "rootFocusedTests": {
+      "passed": 15,
+      "seconds": "4.65",
+      "providerCalls": 0
+    },
+    "rootReceiptBoundaryChecks": {
+      "passed": 2,
+      "seconds": "0.88",
+      "includesActualConversationActionReceipt": true,
+      "subsetOfFocusedCases": true,
+      "providerCalls": 0
+    },
+    "coverage": "Retained legacy status canonicalization, original retained decision unchanged, hash binding preserved, invalid numeric projection and idempotence."
+  },
+  "deploymentReview": {
+    "outcome": "GO",
+    "plan": "Copy only the exact corrected final-assessment module to the existing host shadow and restart that existing host service. Preserve configuration, queued receipts, immutable decision/report/package/protocol and completed application.",
+    "restartScope": "Terminal completed application status only; no isolated assessment, answer inference, publisher or physical application repetition.",
+    "installedVerification": "Pending root installed source/status binding; this receipt records source and bounded plan GO."
+  },
+  "limitations": [
+    "No new model or evaluation calls performed by reviewer.",
+    "No candidate change, acceptance-criteria change, quality bonus, full AIDE or dream-mode completion follows from this status correction."
+  ],
+  "materialDefects": []
+}

@@ -285,3 +285,39 @@ def test_transient_readiness_read_does_not_consume_or_repeat_assessment(tmp_path
         state[0] = "ready"
         wait(q, review, "rejected")
         assert len(invocations) == 1 and not app.calls
+
+
+def test_retained_final_status_is_canonical_without_changing_original_decision(tmp_path, package):
+    from eva.contracts.canonical_json import canonical_json_bytes
+    legacy = {"decision": "reject", "candidate_sha256": package["candidate_sha256"],
+        "baseline_sha256": package["baseline_sha256"],
+        "median_seconds": {"baseline": 4.250311392002914, "candidate": 4.105493601004127},
+        "context_bytes": {"baseline": 100, "candidate": 99},
+        "binding": {"isolated_report_sha256": "a" * 64}}
+    with queue(tmp_path, package) as (q, _, _):
+        review = q.request(package, request_id=REQUEST, task_id=TASK, scope_sha256=SCOPE)["review_id"]
+        wait(q, review, "rejected")
+        q.jobs[review]["public"] = deepcopy(legacy)
+        status = q.status(review, scope_sha256=SCOPE)
+        assert canonical_json_bytes(status)
+        from eva.application.conversation import ConversationActionCall, ConversationActionReceipt
+        call = ConversationActionCall("status-read", "get_reviewed_component_application", {"review_id": review})
+        assert ConversationActionReceipt(call, status).output == status
+        assert "median_seconds" not in status["assessment"]
+        assert status["assessment"]["median_microseconds"] == {
+            "baseline": 4250311, "candidate": 4105494}
+        assert status["assessment"]["binding"] == legacy["binding"]
+        assert q.jobs[review]["public"] == legacy
+
+
+def test_public_projection_keeps_scaled_time_and_drops_invalid_numbers(package):
+    from eva.operations.component_final_assessment import public_decision
+    from eva.contracts.canonical_json import canonical_json_bytes
+    result = {"decision": "reject", "median_seconds": {
+        "baseline": float("inf"), "candidate": 2},
+        "input_tokens": {"baseline": 3.5, "candidate": 4}}
+    public = public_decision(result, package)
+    assert public["median_microseconds"] == {"candidate": 2000000}
+    assert public["input_tokens"] == {"candidate": 4}
+    assert public_decision(public, package) == public
+    assert canonical_json_bytes(public)

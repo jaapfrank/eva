@@ -1,6 +1,7 @@
 """Sealed selected-candidate transfer to independent assessment and managed application."""
 from __future__ import annotations
 import fcntl
+from decimal import Decimal
 import importlib.util
 import json
 import math
@@ -14,7 +15,7 @@ from tools.import_component_release import canonical, digest, load_object
 
 _TERMINAL = {"rejected", "awaiting_independent_answer_assessment", "cancelled", "unconfirmed", "application_requested"}
 _METRICS = {"hard_failures", "included_references", "context_bytes", "input_tokens",
-            "output_tokens", "median_seconds"}
+            "output_tokens", "median_microseconds"}
 _COUNTERS = {"case_count", "static_failure_count", "relevance_regressions", "required_references",
              "newly_answerable_questions", "answer_calls", "correctness_regressions",
              "new_direct_answer_wins", "model_calls_performed_by_scorer"}
@@ -32,12 +33,19 @@ def public_decision(result, package):
         "baseline_sha256": package["baseline_sha256"],
         "semantic_improvement_verified": decision == "accept",
         "answer_assessment_required": decision == "needs_independent_answer_assessment"}
-    def numeric(item):
-        return type(item) is int or (type(item) is float and math.isfinite(item))
+    # Tool receipts use canonical JSON: floats are forbidden. Keep time units
+    # explicit and leave original scorer/decision artifacts untouched.
     for key in _METRICS:
         if isinstance(result.get(key), dict):
             value[key] = {leg: result[key][leg] for leg in ("baseline", "candidate")
-                          if numeric(result[key].get(leg))}
+                          if type(result[key].get(leg)) is int}
+    seconds = result.get("median_seconds")
+    if isinstance(seconds, dict):
+        value["median_microseconds"] = {
+            leg: int((Decimal(str(seconds[leg])) * 1_000_000).to_integral_value())
+            for leg in ("baseline", "candidate")
+            if (type(seconds.get(leg)) is int or
+                (type(seconds.get(leg)) is float and math.isfinite(seconds[leg])))}
     for key in _COUNTERS:
         if type(result.get(key)) is int:
             value[key] = result[key]
@@ -196,7 +204,13 @@ class FinalComponentAssessments:
     def _result(self, job):
         result = {k: job[k] for k in ("review_id", "request_id", "task_id", "state")}
         result.update(installed=False, independent_final=True)
-        if "public" in job: result["assessment"] = job["public"]
+        if "public" in job:
+            # Re-project retained legacy decisions as well as newly scored ones.
+            public = job["public"]
+            result["assessment"] = (
+                public_decision(public, public)
+                if {"decision", "candidate_sha256", "baseline_sha256"} <= public.keys()
+                else public)
         if "reason" in job: result["reason"] = job["reason"]
         # A crash after accepted application request must not hide its real receipt.
         registered = job["review_id"] in getattr(self.applications, "releases", {})

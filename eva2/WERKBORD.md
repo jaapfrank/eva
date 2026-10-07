@@ -7,7 +7,10 @@ of harde fouten. Geen aantoonbare tokenbesparing of brede superioriteitsclaim.
 De beheerde route importeerde, bouwde en installeerde dezelfde kandidaat;
 kern en werker zijn gezond en exacte bronhashes zijn teruggelezen.
 
-L3.6 is klaar. L3.7 is nu actief: de volgende toegelaten ronde moet beste versie
+L3.6 is klaar. De eerste statuslezing voor L3.7 is gericht hersteld: tijdmetingen
+gebruiken canonieke microseconden; het oude eindbewijs is bytegelijk behouden.
+De echte client/receiptcontrole slaagt; dezelfde leesopdracht is hervat.
+L3.7 is nu actief: de volgende toegelaten ronde moet beste versie
 en eerdere ervaring hergebruiken, zonder dubbele toepassing. Apps/add-ons vallen
 onder dezelfde cyclus; de voorgestelde droommodus is nog niet gebouwd.
 Antwoordvergelijking: 24 modelcalls, 13.973 tokens, geen toolcalls/retries.

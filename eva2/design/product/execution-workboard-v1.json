@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-07T12:33:22.123482+00:00",
+  "lastUpdated": "2026-10-07T12:47:25.122198+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -19418,10 +19418,15 @@
                 "gap": "De toepassing van 3 oktober bewijst één geholpen verbetering, geen volledige terugkerende AIDE²-cyclus of bredere kwaliteitswinst.",
                 "estimate": "Eén vooraf geregistreerde passende gebruikersproef via bestaande route, met afzonderlijke ontwikkeling/eindbeoordeling. Geen brede matrix of heropening van oude afgesloten proeven; credits onbekend.",
                 "doneWhen": "Een echte algemene werkwijzeverbetering begint via gewone chat of de bestaande toegelaten initiatiefroute, levert aantoonbaar beter taakgedrag op en wordt werkelijk toegepast. Een volgende toegelaten ronde gebruikt de beste actuele versie en eerdere ervaring; stoppen/hervatten herhaalt geen toepassing. Hulp, fouten, kwaliteit, snelheid en totaal verbruik blijven zichtbaar.",
-                "stage": "installed_best_version_reuse_preparation"
+                "stage": "ordinary_reuse_resumed_after_canonical_status_correction"
               },
-              "checkedAt": "2026-10-07T12:33:22.123482+00:00",
-              "currentResult": "Eerste volledige gewone Eva-route met gemeten betere contextkandidaat is geïnstalleerd (L3.6). Volgende toegelaten ronde en hergebruik zonder dubbele toepassing nog te controleren."
+              "checkedAt": "2026-10-07T12:47:25.122198+00:00",
+              "currentResult": "Eerste volledige verbetering is geïnstalleerd. Volgende gewone leesronde liep vast door kommagetal in statusreceipt; exacte oorzaak gecorrigeerd op host, 15 tests en echte client/receiptcheck geslaagd. Zelfde leeswerk getypeerd hervat. Volledige volgende ronde nog niet afgerond.",
+              "activeWorkId": "work:eva-resume:1c4cb65e-289d-51a6-ac89-d0f210d45fab",
+              "latestEvidence": "eva2/evidence/product/l3-canonical-status-installed-20261007.json",
+              "evidence": [
+                "eva2/evidence/product/l3-canonical-status-installed-20261007.json"
+              ]
             }
           ],
           "latestEvidence": "eva2/evidence/product/l3-context-candidate-b-installed-20261007.json",

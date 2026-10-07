@@ -1,0 +1,47 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "task": "L3.7",
+  "checkedAt": "2026-10-07T12:47:25.122198+00:00",
+  "status": "canonical_status_correction_installed_readonly_resume_running",
+  "proven_failure": {
+    "class": "ValueError",
+    "message": "floating-point JSON numbers are forbidden; use scaled integers",
+    "fingerprint": "0f3691ce516220bf8ca7d4e3eb0efa27b46dcc29faf54d298a95868c6590b4cc",
+    "cause": "Retained independent final status included median_seconds floats; actual ConversationActionReceipt rejects them."
+  },
+  "change": "Host-only public status uses integer median_microseconds; original hashed scorer/decision/report/package remain unchanged.",
+  "source_sha256": "f01b1b0d9ee843adcbdc40e894a9af22e1022fab160d646481044879e948905b",
+  "review": "eva2/reviews/l3-canonical-status-review-20261007.json",
+  "checks": [
+    "15 focused final-assessment tests passed in4.65s.",
+    "2 changed actual-receipt/projection regressions passed in0.88s.",
+    "Installed ordinary component client result instantiated as a valid ConversationActionReceipt.",
+    "Same completed application replay after host reload preserves exact container IDs/images/startedAt.",
+    "Original isolated report, private/public final decision and selected package byte hashes unchanged."
+  ],
+  "installed_receipt_status": {
+    "installed": true,
+    "state": "application_requested",
+    "median_microseconds": {
+      "baseline": 4250311,
+      "candidate": 4105494
+    },
+    "canonical_receipt_valid": true
+  },
+  "original_readonly_work": "work:eva-chat:e9415b7d-a182-538f-a832-ee02b27e3fb0",
+  "typed_resume_work": "work:eva-resume:1c4cb65e-289d-51a6-ac89-d0f210d45fab",
+  "failed_readonly_usage": {
+    "measurement": "partial",
+    "completed_model_responses": 1,
+    "tool_calls": 1,
+    "input_tokens": 6431,
+    "output_tokens": 89,
+    "total_tokens": 6520,
+    "credits": null
+  },
+  "new_variant_final_evaluation_or_application_calls": 0,
+  "ordinary_model_continuation": "active; actual final result not yet claimed",
+  "L3_7_complete": false,
+  "dream_mode_implemented": false,
+  "resume_request_for_work": "work:eva-chat:e9415b7d-a182-538f-a832-ee02b27e3fb0"
+}
