@@ -31,11 +31,21 @@ _SCHEMAS = {
                           "start_line": {"type": "integer", "minimum": 1}}},
     DRAFT: {"type": "object", "additionalProperties": False,
             "required": ["path", "source_sha256", "old_text", "new_text", "problem", "expected_gain", "verification_plan"],
-            "properties": {key: {"type": "string", "maxLength": limit,
+            "properties": {"parent_draft_step": {"type": "integer", "minimum": 0},
+                **{key: {"type": "string", "maxLength": limit,
                                  **({"minLength": 1} if key != "new_text" else {})}
                 for key, limit in (("path", 240), ("source_sha256", 64), ("old_text", 8192),
-                    ("new_text", 8192), ("problem", 1500), ("expected_gain", 1500), ("verification_plan", 3000))}},
+                    ("new_text", 8192), ("problem", 1500), ("expected_gain", 1500), ("verification_plan", 3000))}}},
 }
+
+
+def _draft_provider_schema():
+    # Strict model schemas require every property. Null starts a first draft;
+    # the internal action schema retains compatibility with existing omitted fields.
+    schema = _SCHEMAS[DRAFT]
+    return {**schema, "required": list(schema["properties"]), "properties": {
+        **schema["properties"], "parent_draft_step": {
+            **schema["properties"]["parent_draft_step"], "type": ["integer", "null"]}}}
 
 
 def component_descriptors():
@@ -79,12 +89,15 @@ def component_descriptors():
             _SCHEMAS[READ], "Broninzage bewijst geen verbetering of geïnstalleerde wijziging."),
         ConversationToolDescriptor(DRAFT,
             "Maak bij een gevraagde eigen verbetering een voorstel voor één Python-component tot 32 KiB. "
-            "Gebruik de gelezen bronhash, één exact tekstfragment en de vervanging. Beschrijf het concrete "
+            "Gebruik de gelezen bronhash, één exact tekstfragment en de vervanging. Met parent_draft_step "
+            "bouw je verder op een eerdere kandidaat uit deze taak; source_sha256 is dan diens "
+            "candidate_sha256. Laat parent_draft_step null voor een eerste voorstel. Vergelijking en uiteindelijke patch blijven aan de oorspronkelijke "
+            "geïnstalleerde versie gebonden. Een eerdere kandidaat is niet automatisch beter. Beschrijf het concrete "
             "probleem, verwachte winst en hoe die later gemeten kan worden. Vergelijk bestaande oplossingen "
             "met de aangeboden onderzoekstools waar relevant. Bij doorgaan naar evaluatie hoeft geen apart "
             "document te worden geschreven; bewaar bij stoppen hier het voorstel met "
             "save_workspace_document(component_step=draft_step).",
-            _SCHEMAS[DRAFT], "De patch en kandidaat zijn alleen een voorstel. Bewaar het eindresultaat en meld de "
+            _draft_provider_schema(), "De patch en kandidaat zijn alleen een voorstel. Bewaar het eindresultaat en meld de "
             "vindplaats; geen claim van geslaagde tests, gemeten winst of installatie."),
     )
 
@@ -154,7 +167,10 @@ class ComponentImprovementActions:
     def execute(self, turn, call, *, step_index=0):
         if not self.available_for(turn) or call.name not in self.action_names or type(step_index) is not int or step_index < 0:
             raise ConversationConflict("component action scope differs")
-        validate_schema_value(call.arguments, _SCHEMAS[call.name], "component_action")
+        arguments = call.arguments
+        if call.name == DRAFT and arguments.get("parent_draft_step") is None:
+            arguments = {key: value for key, value in arguments.items() if key != "parent_draft_step"}
+        validate_schema_value(arguments, _SCHEMAS[call.name], "component_action")
         replay = self.pending(turn, step_index=step_index)
         if replay is not None:
             if replay.call != call:
@@ -210,10 +226,22 @@ class ComponentImprovementActions:
             value["evaluation_step"] = step_index
             scope = "isolated_measurement"
         else:
+            parent = None
+            if call.name == DRAFT and call.arguments.get("parent_draft_step") is not None:
+                parent_step = call.arguments["parent_draft_step"]
+                if type(parent_step) is not int or not 0 <= parent_step < step_index:
+                    raise ConversationConflict("parent draft requires an earlier step")
+                receipt = self.pending(turn, step_index=parent_step)
+                if (receipt is None or receipt.call.name != DRAFT
+                        or receipt.output.get("status") != "verified"):
+                    raise ConversationConflict("parent draft does not exist in this task")
+                parent = receipt.output["operation_result"]
             value = (read_component(self.root, **call.arguments) if call.name == READ
-                     else draft_component(self.root, call.arguments))
+                     else draft_component(self.root, call.arguments, parent=parent))
             if call.name == DRAFT:
                 value["draft_step"] = step_index
+                if parent is not None:
+                    value["candidate_lineage"]["parent_draft_step"] = parent_step
             scope = "source_read" if call.name == READ else "unexecuted_proposal"
         output = {"status": "verified", "operation_result": value, "scope": scope,
                   "component_step": step_index}

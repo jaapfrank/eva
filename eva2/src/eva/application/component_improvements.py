@@ -51,26 +51,49 @@ def read_component(root, path, start_line=1):
             "next_line": start_line + len(selected) if start_line + len(selected) <= len(lines) else None}
 
 
-def draft_component(root, arguments):
+def draft_component(root, arguments, *, parent=None):
     target = component_source(root, arguments["path"])
     if target.suffix != ".py" or not target.is_file() or target.stat().st_size > 32768:
         raise ValueError("drafts support Python components up to 32 KiB")
     raw = target.read_bytes()
     before = hashlib.sha256(raw).hexdigest()
-    if before != arguments["source_sha256"]:
-        raise ValueError("installed component changed since it was read")
-    source = raw.decode("utf-8")
+    installed_source = raw.decode("utf-8")
+    source = installed_source
+    lineage = None
+    if parent is None:
+        if before != arguments["source_sha256"]:
+            raise ValueError("installed component changed since it was read")
+    else:
+        parent_source = parent.get("candidate_content")
+        ancestors = parent.get("candidate_lineage", {}).get("ancestor_candidate_sha256s", [])
+        if (parent.get("contract") != "EvaComponentImprovementDraft/v1"
+                or parent.get("path") != arguments["path"]
+                or parent.get("source_sha256") != before
+                or not isinstance(parent_source, str)
+                or len(parent_source.encode("utf-8")) > 32768
+                or hashlib.sha256(parent_source.encode("utf-8")).hexdigest() != parent.get("candidate_sha256")
+                or not isinstance(ancestors, list)
+                or any(not isinstance(item, str) or not re.fullmatch(r"[0-9a-f]{64}", item) for item in ancestors)):
+            raise ValueError("parent candidate source binding differs")
+        if arguments["source_sha256"] != parent["candidate_sha256"]:
+            raise ValueError("parent candidate changed since it was selected")
+        source = parent_source
+        lineage = {"parent_candidate_sha256": parent["candidate_sha256"],
+                   "ancestor_candidate_sha256s": [*ancestors, parent["candidate_sha256"]]}
     old, new = arguments["old_text"], arguments["new_text"]
     if not old or old == new or source.count(old) != 1:
         raise ValueError("component patch requires one exact distinct replacement")
     candidate = source.replace(old, new, 1)
     if len(candidate.encode()) > 32768:
         raise ValueError("candidate exceeds 32 KiB")
-    diff = difflib.unified_diff(source.splitlines(keepends=True),
+    if candidate == installed_source:
+        raise ValueError("candidate does not change the installed component")
+    # The release diff always includes all changes from the installed reference.
+    diff = difflib.unified_diff(installed_source.splitlines(keepends=True),
         candidate.splitlines(keepends=True), fromfile="a/" + arguments["path"],
         tofile="b/" + arguments["path"])
     patch = "".join(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n" for line in diff)
-    return {"contract": "EvaComponentImprovementDraft/v1", "path": arguments["path"],
+    result = {"contract": "EvaComponentImprovementDraft/v1", "path": arguments["path"],
             "source_sha256": before, "candidate_sha256": hashlib.sha256(candidate.encode()).hexdigest(),
             "patch": patch, "candidate_content": candidate,
             "problem": arguments["problem"], "expected_gain": arguments["expected_gain"],
@@ -78,6 +101,9 @@ def draft_component(root, arguments):
             "installed": False, "checks_executed": False, "measured_gain": None,
             "guidance": "Bewaar patch, kandidaat en meetplan met de bestaande documenttool. "
                         "Dit voorstel is niet uitgevoerd of geïnstalleerd; verwachte winst is geen meting."}
+    if lineage is not None:
+        result["candidate_lineage"] = lineage
+    return result
 
 
 def prepare_component_release(draft, report):
@@ -113,4 +139,6 @@ def prepare_component_release(draft, report):
             "installation through the existing managed release process"],
         "guidance": "Bewaar dit exacte pakket met de documenttool. Verwachte winst is geen meting; "
             "een nul-exitcode is geen installatiebesluit. Noem de resterende beoordeling expliciet."}
+    if "candidate_lineage" in draft:
+        payload["candidate_lineage"] = draft["candidate_lineage"]
     return {**payload, "candidate_package_sha256": canonical_sha256(payload)}

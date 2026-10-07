@@ -85,3 +85,51 @@ def test_exact_component_document_is_durable_and_replay_keeps_original_call(data
 
     empty_call = replace(call, arguments={"path": "/allowed/proposal.json", "component_step": None, "content": ""})
     assert component().resolve_document_call(turn, empty_call, 3).arguments == {"path": "/allowed/proposal.json", "content": ""}
+
+
+def test_candidate_continuation_is_durable_and_cannot_cross_task(database, tmp_path):
+    from eva.adapters.postgres.component_improvement_actions import EVALUATE, PREPARE
+    from tests.application.test_component_improvements import arguments, report
+
+    turn = ConversationTurn.private("component-continuation-test", "installation", "owner", "conversation",
+                                    "message", "Improve a component", "2026-09-24T12:00:00Z")
+    scope = external_timeline_scope(turn.tenant_id, turn.installation_id, "test")
+    PostgresConversationJournal(database, scope).admit(turn)
+    dispatched = []
+    class Evaluator:
+        def evaluate(self, draft):
+            assert draft["source_sha256"] == hashlib.sha256(source.encode()).hexdigest()
+            return report(draft)
+    def component(execution="execution:continuation"):
+        spec = SimpleNamespace(execution_id=execution,
+                               source=SimpleNamespace(model_dump=lambda **kw: {"message": turn.message_id}))
+        instance = ComponentImprovementActions(database, spec, turn, lambda value: None,
+            lambda value: dispatched.append(value), lambda: NOW)
+        instance.root, instance.evaluator = tmp_path, Evaluator()
+        instance.action_names = (DRAFT, EVALUATE, PREPARE)
+        return instance
+    source = "VALUE = 1\nSTYLE = 'plain'\n"
+    (tmp_path / "example.py").write_text(source)
+    first = component().execute(turn, ConversationActionCall("first", DRAFT,
+        {**arguments(source, "VALUE = 1", "VALUE = 2"), "parent_draft_step": None}), step_index=1)
+    child_args = {**arguments(first.output["operation_result"]["candidate_content"], "'plain'", "'warm'"),
+                  "parent_draft_step": 1}
+    call = ConversationActionCall("child", DRAFT, child_args)
+    child = component().execute(turn, call, step_index=2)
+    # A fresh adapter obtains the exact stored parent and child through PostgreSQL.
+    assert component().pending(turn, step_index=1) == first
+    assert component().execute(turn, call, step_index=2) == child
+    assert len(dispatched) == 2
+    with pytest.raises(ConversationConflict, match="does not exist in this task"):
+        component("execution:other").execute(turn, call, step_index=2)
+    with pytest.raises(ConversationConflict, match="scope differs"):
+        component().execute(replace(turn, message_id="other"), call, step_index=2)
+    with pytest.raises(ConversationConflict, match="earlier step"):
+        component().execute(turn, replace(call, arguments={**child_args, "parent_draft_step": 3}), step_index=3)
+    evaluated = component().execute(turn, ConversationActionCall("evaluate", EVALUATE, {"draft_step": 2}), step_index=3)
+    prepared = component().execute(turn, ConversationActionCall("prepare", PREPARE, {"evaluation_step": 3}), step_index=4)
+    package = prepared.output["operation_result"]
+    assert package["candidate_lineage"]["parent_draft_step"] == 1
+    assert package["baseline_sha256"] == hashlib.sha256(source.encode()).hexdigest()
+    assert package["candidate_sha256"] == evaluated.output["operation_result"]["candidate_sha256"]
+    assert package["installed"] is False

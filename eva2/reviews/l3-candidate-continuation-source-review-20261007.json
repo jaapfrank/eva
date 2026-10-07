@@ -1,0 +1,51 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "recordedDate": "2026-10-07",
+  "task": "L3.4",
+  "decision": "GO",
+  "scope": "Candidate continuation source checkpoint; installed delivery and measured product benefit are not established by this review.",
+  "baseCommit": "dd894f46b3c9d462ecbac8dcfaa49a1fd2d28675",
+  "sourceBindings": {
+    "eva2/src/eva/application/component_improvements.py": "0364db9c7e33e90386f4820c9ce5d37344e3521fefb062240a9db2d6a79356d5",
+    "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "0210fb6ce6b7b10c12b3c7057d8b3de7a76e94517fbc9b900f0383a7675be226"
+  },
+  "testBindings": {
+    "eva2/tests/application/test_component_improvements.py": "42e0506a0a0f9e1741a1ad248925326887c625a8accef94b547d90d06924fe19",
+    "eva2/tests/postgres/test_component_document_reference.py": "fab74c02da414183b9053204206a4cccb51f8ec28954245ec1741b9e20f24bb2"
+  },
+  "findings": [
+    "A continuation can select only an earlier verified draft in the same authorized task and indexed timeline. Exact call replay remains enforced; another task, source scope, stale parent or changed installed source is refused.",
+    "The selected parent content and candidate hash are checked. Each cumulative candidate, evaluator baseline and release patch remain bound to the original installed source hash; proposal generation does not write installed source.",
+    "Candidate lineage is included in the canonical release package hash. Existing evaluator, source importer and reviewed application bindings continue to verify the original baseline, cumulative candidate and exact package; independent benefit and installation review remain required.",
+    "The strict provider schema requires all properties and allows null only for parent_draft_step. Internal legacy validation still accepts omission; execute removes null only for validation and retains the original call for replay and persistence. Non-null parents still require an exact earlier integer step.",
+    "No shared provider/validator, authority scope, model route, score threshold or dependency change is introduced by the reviewed delta."
+  ],
+  "verification": {
+    "existingInstalledDependencyImage": "sha256:83d89945822c79995e73fd3436f7081dcb233935c53a9647368e68f11ebed96f",
+    "behaviorDurabilityRelease": {
+      "receiptPath": "/home/administrator/project/.eva2-artifacts/l3-candidate-continuation-20261007/final-focused-tests.json",
+      "receiptSha256": "25ef8193f8fd5382f347cb1cd0c78e391c09aa6955e224709ae24a081fcf3287",
+      "logSha256": "b272fb9886f6f5f18ed607c55808d0b109382061ab8b32db8ac37fa82b308bfb",
+      "passed": 20,
+      "batchExitCode": 1,
+      "retainedFailure": "The added schema test omitted the installed mapper required visibility keyword; this test call was corrected without changing product source."
+    },
+    "actualProviderSchemaSerialization": {
+      "receiptPath": "/home/administrator/project/.eva2-artifacts/l3-candidate-continuation-20261007/provider-schema-tests.json",
+      "receiptSha256": "5823fc4bb733da3a19a8161725231a716acb731068d18efcdd996f8ec56f2bad",
+      "logSha256": "3c3525ee7824cc138fcf96c89360be04df0f0e3d593f185799386d4898900faa",
+      "passed": 1,
+      "exitCode": 0,
+      "network": "none",
+      "boundary": "Installed Pydantic OpenAIResponsesModel.prepare_request and _map_tool_definition; strict nullable first-draft schema verified."
+    },
+    "providerCalls": 0,
+    "reviewerTestRuns": 0,
+    "database": "Disposable isolated fixture; production data unchanged per retained proof.",
+    "wholeSuitePassClaim": false
+  },
+  "materialDefects": [],
+  "installationStatus": "PENDING_BOUND_INSTALLED_VERIFICATION",
+  "measuredBenefit": "UNKNOWN",
+  "privacy": "Only source, public synthetic fixtures and technical verification metadata reviewed; no protected benchmark questions, answers or oracles read."
+}

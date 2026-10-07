@@ -1,3 +1,21 @@
+## 7 oktober — L3.4 gebouwd; gebundelde installatie volgt
+
+Jaap heeft vier kleine vervolgtaken gevraagd voor één herbruikbare AIDE²-cyclus.
+L3.4 voegt voortbouwen op een kandidaat toe aan de bestaande gedeelde
+draft/evaluate/release-route. De oorspronkelijke geïnstalleerde bron blijft de
+vergelijkingsbasis; herkomst en exacte hervatting blijven bewaard. Twintig gerichte
+gedrag-/opslag-/releasecontroles en één afzonderlijke controle van het echte
+providerschema slagen; de aanvankelijke schema-testaanroepfout blijft geregistreerd.
+Geen betaalde modelcalls. Onafhankelijke bronreview GO; de kern/werkerinstallatie
+en bronbinding worden nu afgemaakt. Nog geen nieuwe kwaliteitswinst aangetoond.
+
+L3.1–L3.3 en eerdere acceptaties blijven behouden. L3.5–L3.7 staan gepland:
+varianten kiezen, onafhankelijke beoordeling/toepassing en de gewone volledige
+cyclus aantonen. De oorspronkelijke35/44 afrondingen blijven staan; vier nieuwe
+gevraagde vervolgopdrachten vergroten het plan tot48, zonder extra hoofduitkomst.
+Spraak blijft geparkeerd. De app-goaltekst is bijgewerkt; de appstatus blijft
+geblokkeerd tot Jaap het bestaande goal hervat.
+
 ## 7 oktober — R1.1 uitgevoerd en afgesloten: geen adoptie
 
 De cumulatieve driver is hersteld en onafhankelijk gecontroleerd. Alle zeven ongebruikte oorspronkelijke posities zijn eenmaal uitgevoerd; eerste failure, negentien historische callrecords en aparte bewezen nul-modelverbruiksettlement blijven bewaard. De oorspronkelijke scorer beoordeelt alle zeven nieuwe taakuitkomsten als mislukt. Drie volledige paren, geen succesvolle volledige opdracht; de aangeboden voorspeller werd niet aangeroepen. Geen voordeel, kandidaat niet toepassen en geen automatische vervolgvariant.

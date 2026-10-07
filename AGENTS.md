@@ -1,5 +1,28 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaaropdracht 7 oktober 2026 — herbruikbare AIDE²-cyclus afmaken
+
+Jaap vraagt de ontbrekende AIDE²-cyclus nu daadwerkelijk te bouwen en de nodige
+kleine overgangstaken zichtbaar te maken. De vier bestaande huisgenootuitkomsten
+blijven leidend; geen nieuwe hoofdtaken of vaste functies per voorbeeld.
+L3.1–L3.3 en de geïnstalleerde contextverbetering blijven afgerond. De vier
+expliciet gevraagde vervolgtaken L3.4–L3.7 staan op het bestaande werkbord:
+voortbouwen op een kandidaat, varianten op resultaatkwaliteit kiezen, onafhankelijke
+beoordeling en toepassing aansluiten, en de volledige gewone gebruikersroute
+met een volgende ronde aantonen. De uitbreiding van L3 is nieuw geautoriseerd
+resterend werk, geen verlies van eerdere acceptatie.
+
+Begin met L3.4 en maak die werkelijke overgang geïnstalleerd bruikbaar voordat je
+verbreedt. Hergebruik de gedeelde uitvoering, het programmeerwerk, de evaluator
+en toepassing; geen tweede agentplatform. Originele proeven/criteria en verbruik
+blijven bewaard; dit heropent geen afgesloten AIDE- of R1-proef. Registreer een
+nieuwe passende toepassing alleen vooraf en binnen de bestaande providerroute
+en concreet beschikbare toelating. Eindpunt is één herbruikbare verbetercyclus
+met aangetoond beter taakgedrag, geen oneindige zoektocht naar steeds betere Eva.
+De lopende P2-vergelijking blijft open en gebruikt alleen resterend geldig bewijs;
+een menselijke beoordeling blokkeert geen onafhankelijk bouwbaar productwerk.
+Spraak blijft geparkeerd volgens de prioriteit van 5 oktober.
+
 ## Eigenaarverduidelijking 7 oktober 2026 — AIDE² maakt Eva beter
 
 Het hoofddoel van AIDE² is dat Eva aantoonbaar slimmer en zelfstandiger handelt:
