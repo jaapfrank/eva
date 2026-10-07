@@ -1,0 +1,185 @@
+{
+  "contract": "EvaIndependentInstalledDeliveryReview/v1",
+  "recordedDate": "2026-10-07",
+  "task": "L3.5",
+  "decision": "GO",
+  "scope": "Installed fixed public development comparison, durable same-task selection and selected-parent continuation. No independent semantic approval or autonomous AIDE2 outcome is established.",
+  "sourceCommit": "f594e7a572802b28ff30ccbda00de287b797605c",
+  "sourceReview": {
+    "path": "eva2/reviews/l3-development-selection-source-review-20261007.json",
+    "sha256": "d41d7b566ed7ac4edb92d05cd1d9d3322f36a3930e40d220a66f999535ec746f"
+  },
+  "installedEvidence": {
+    "path": "eva2/evidence/product/l3-development-selection-installed-20261007.json",
+    "sha256": "6ee56fe712f2411220c6430aac51785bc486f756b12bfdbacb4a401f721c6e56"
+  },
+  "sourceBindings": {
+    "eva2/src/eva/application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+    "eva2/src/eva/application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+    "eva2/src/eva/operations/component_development.py": "8b672db72ab8d5b28baaa69da7e8aa354011af42ebf144349d7ad86643ea4604",
+    "eva2/src/eva/operations/component_evaluation.py": "74f84f5b3e627185d10c077cc0135443bb49054b485b4ce504a64abc99063794",
+    "eva2/src/eva/operations/component_evaluation_service.py": "63d779acc243614f08747b8183a432e30af0a486d783ead8187ce40d6ea5d18d",
+    "eva2/src/eva/adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+    "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+    "eva2/src/eva/contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028",
+    "eva2/tests/application/test_component_development.py": "e2234662035f573a6ff7dd6d45ca06f9fade04328446076722ee748017980f1c",
+    "eva2/tests/application/test_component_improvements.py": "ebad8c5ff3c31d106330196c281b60cf9fbbca432b12596e31ea2ae3c7a63b26",
+    "eva2/tests/operations/test_component_development_host.py": "2bd532eee2d4c8c486f65eeb61df66552129c7d06f4efbbf2c6314046847496d",
+    "eva2/tests/postgres/test_component_document_reference.py": "327b45546db9f765543651e2053362de233928097653990c729d7673d632687f"
+  },
+  "actualRuntimeSourceBindings": {
+    "eva2-managed-b-slot3-core": {
+      "allReviewedRuntimeSourcesMatch": true,
+      "sourceFiles": {
+        "application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+        "application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+        "adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+        "adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+        "contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028"
+      }
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "allReviewedRuntimeSourcesMatch": true,
+      "sourceFiles": {
+        "application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+        "application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+        "adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+        "adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+        "contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028"
+      }
+    }
+  },
+  "actualHostSourceBindings": {
+    "operations/component_development.py": "8b672db72ab8d5b28baaa69da7e8aa354011af42ebf144349d7ad86643ea4604",
+    "operations/component_evaluation.py": "74f84f5b3e627185d10c077cc0135443bb49054b485b4ce504a64abc99063794",
+    "operations/component_evaluation_service.py": "63d779acc243614f08747b8183a432e30af0a486d783ead8187ce40d6ea5d18d",
+    "application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+    "contracts/canonical_json.py": "ac3f8e1fa2e1ca130b5a7aa116eac9b3fdbc6ff3da265953d7ad65f230f18822",
+    "contracts/base.py": "578c72f40bb2cf4794cfb8b7eede54b56db4416d9dfef92aafabe936b480279a"
+  },
+  "services": {
+    "core": {
+      "image": "sha256:7d5cec68cceb98e159bfdb65b6d5d7ed0af3022b376e87503e670323806ff83c",
+      "state": "running",
+      "health": "healthy",
+      "user": "65532:65532",
+      "imageEnvironmentRetained": true,
+      "actualEnvironmentMatchesPreparedConfiguration": true,
+      "entrypointRetained": true,
+      "commandRetained": true,
+      "mountsRetained": true,
+      "current_container": "4b2ca6833e054e7943e7608b4436eefb140d0354e96713acd6a7a1852ae3dbae"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:93e746afc78c5f457686bbf723cc2e4910c39ff30da49cf574d2361648cef30f",
+      "state": "running",
+      "health": "healthy",
+      "user": "65532:65532",
+      "imageEnvironmentRetained": true,
+      "actualEnvironmentMatchesPreparedConfiguration": true,
+      "entrypointRetained": true,
+      "commandRetained": true,
+      "mountsRetained": true,
+      "current_container": "d511f265b40d6e1b829a3f047518aaf649de469a0414a78067db990a7099204d"
+    }
+  },
+  "hostService": "active",
+  "routeFindings": {
+    "method": "Real installed client HTTP /evaluate and trusted host scoring, followed by durable synthetic task selection, continuation, exact replay and authorization stop.",
+    "path": "adapters/postgres/delegated_work_actions.py",
+    "baselineSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+    "referenceHits": 5,
+    "requiredTotal": 5,
+    "cheaperInferiorFixture": {
+      "hits": 4,
+      "contextBytes": 5507,
+      "selected": false
+    },
+    "equalQualitySmallerFixture": {
+      "hits": 5,
+      "contextBytes": 5369,
+      "selected": true
+    },
+    "referenceContextBytes": 5514,
+    "selectedCandidateSha256": "adf80ac1e75095bed80fc7124d0e7cde6cf06eee4a777565f1d173c3b2cc5e0c",
+    "selectedDraftStep": 2,
+    "selectedEvaluationStep": 4,
+    "assessmentSha256": "98489dfd45d87820783f9b69499c801f2a825ec7336d4dbb1a836768d799fa68",
+    "criteriaSha256": "4f2bbe29c89fb0c2bb8a0d31a7decd432a417827533ae3a0f782755b23e49422",
+    "continuedWinner": {
+      "parent_candidate_sha256": "adf80ac1e75095bed80fc7124d0e7cde6cf06eee4a777565f1d173c3b2cc5e0c",
+      "ancestor_candidate_sha256s": [
+        "adf80ac1e75095bed80fc7124d0e7cde6cf06eee4a777565f1d173c3b2cc5e0c"
+      ],
+      "parent_draft_step": 2
+    },
+    "exactReplay": true,
+    "syntheticAuthorizationStopRespected": true,
+    "installedBaselineUnchanged": true,
+    "candidateApplied": false,
+    "runtimeModelCalls": 0
+  },
+  "package": {
+    "verified": true,
+    "sourceFileCount": 1233,
+    "imageCount": 8,
+    "metadataSha256AtReview": "2d9d54ac33b57f43bc2ee527d4b19b3275dbd4b90cf90bc1c167a2fb4fb76d48",
+    "overlaySourceCommit": "f594e7a572802b28ff30ccbda00de287b797605c",
+    "historicalDevelopmentSourceBase": "aca98ba68a262c16a11f495d489cb70e81b8c30b",
+    "imageInventory": {
+      "browser": "sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+      "browser-mcp": "sha256:e3f6a85f0fd771dd9440584bd905011f1b4ea25b115bfea8b796d17d23e7b767",
+      "hindsight": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "livekit": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "living-core": "sha256:7d5cec68cceb98e159bfdb65b6d5d7ed0af3022b376e87503e670323806ff83c",
+      "mcp-gateway": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "postgres": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "voice-media": "sha256:2e9092a057dbcaa089bc91b00f27c9abd7feff429257d54f7a90a642917e69f6"
+    },
+    "overlayImages": {
+      "core": "sha256:7d5cec68cceb98e159bfdb65b6d5d7ed0af3022b376e87503e670323806ff83c",
+      "worker": "sha256:93e746afc78c5f457686bbf723cc2e4910c39ff30da49cf574d2361648cef30f"
+    },
+    "reviewedSourceAndTestOverlayBindingsMatch": true,
+    "previousOtherSevenImagesPreserved": true,
+    "freshInstallationExecuted": false,
+    "publicRelease": false,
+    "metadataLimit": "AtReview binds this metadata version. Later MD/board status updates may change package metadata; reviewed executable source and overlay image bindings remain the required identity."
+  },
+  "verification": {
+    "focusedCasesPassed": 45,
+    "actualBuiltCoreBehavioralAndSchemaCasesPassed": 28,
+    "actualBuiltCoreDurableCasesPassed": 3,
+    "reviewerTestRuns": 0,
+    "runtimeModelCalls": 0,
+    "imageOnlyInstallations": 1,
+    "rollbacks": 0,
+    "dependencyInstallations": 0,
+    "retainedInstallationCorrections": [
+      "Mounted client configuration readability for existing UID65532",
+      "Unchanged canonical hash/base dependencies included in actual host source snapshot",
+      "Started already-created worker after core health recovery"
+    ],
+    "retainedProblems": [
+      "Initial harness setup errors recorded in technical receipt",
+      "Mounted client config initially unreadable; mode corrected for unchanged runtime UID",
+      "Actual host snapshot initially missed canonical/base imports; unchanged dependencies added and actual host import validated",
+      "Installed synthetic fixture initially used microseconds; corrected to the existing whole-second clock contract",
+      "Package checker supplied readonly because minimal service image intentionally excludes host-only verifier"
+    ],
+    "configurationFinding": "The actual services retain runtime user, image environment, entrypoint, command and mounts; environment values match the prepared configuration. Only the admitted path/suite client and host configuration extension is intended.",
+    "hostFinding": "The actual host snapshot binds all reviewed host modules and unchanged canonical/base dependencies; actual host validation and HTTP evaluation succeeded."
+  },
+  "materialDefects": [],
+  "deliveryLimits": {
+    "operatorFixturesOnly": true,
+    "semanticImprovementVerified": false,
+    "autonomousAide2Outcome": false,
+    "independentEndAssessment": "L3.6 remains open",
+    "ordinaryRealImprovementCycle": "L3.7 remains open",
+    "allAppAddonAssessmentAdaptersDelivered": false,
+    "dreamCapacitySchedulingDelivered": false,
+    "originalAideR1RecordsAndClosedBudgetsRetained": true
+  },
+  "privacy": "Only the same reviewed source identities and public technical synthetic evidence examined; no protected final cases, questions, answers or oracle contents read, and no new model or benchmark execution."
+}

@@ -32,8 +32,8 @@ beoordeling en toepassing aansluiten, en de volledige gewone gebruikersroute
 met een volgende ronde aantonen. De uitbreiding van L3 is nieuw geautoriseerd
 resterend werk, geen verlies van eerdere acceptatie.
 
-L3.4 is geïnstalleerd en onafhankelijk gecontroleerd. Hervat bij L3.5 en maak
-L3.5–L3.7 achtereenvolgens bruikbaar; herhaal L3.4 niet. Hergebruik de gedeelde uitvoering, het programmeerwerk, de evaluator
+L3.4 en L3.5 zijn geïnstalleerd en onafhankelijk gecontroleerd. Hervat bij
+L3.6 en maak L3.6–L3.7 achtereenvolgens bruikbaar; herhaal L3.4/L3.5 niet. Hergebruik de gedeelde uitvoering, het programmeerwerk, de evaluator
 en toepassing; geen tweede agentplatform. Originele proeven/criteria en verbruik
 blijven bewaard; dit heropent geen afgesloten AIDE- of R1-proef. Registreer een
 nieuwe passende toepassing alleen vooraf en binnen de bestaande providerroute

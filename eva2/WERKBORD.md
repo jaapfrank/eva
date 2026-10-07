@@ -1,3 +1,26 @@
+## 7 oktober — L3.5 geïnstalleerd; verder bij L3.6
+
+Eva heeft nu de algemene ontwikkelkeuze: meerdere bewaarde kandidaten met dezelfde
+vaste hostcriteria vergelijken, kwaliteit vóór verbruik kiezen en binnen dezelfde
+taak de gekozen kandidaat vervolgen. Kern, achtergrondwerker en bestaande host
+zijn aangesloten en gezond. Exacte hervatting en stoppen zijn gecontroleerd.
+Onafhankelijke bron- en opleverreview GO. Het installatiepakket bevat dezelfde
+bron/image-overlay; eerdere gegevens, functies en acceptaties blijven bewaard.
+
+De gecontroleerde varianten zijn technische fixtures. Zij bewijzen selectie en
+aansluiting, geen slimmer antwoord of volledige autonome AIDE²-winst. De oorspronkelijke
+35/44 afrondingen blijven staan; met L3.4/L3.5 en vier gevraagde vervolgopdrachten
+staat de afzonderlijke teller nu37/48. Geen extra huisgenootuitkomst wordt groen.
+
+Het goal is actief bij **L3.6**, de bestaande onafhankelijke eindbeoordeling en
+werkelijke toepassing aansluiten. Daarna L3.7: gewone autonome verbetercyclus.
+Ook apps/add-ons vallen onder die cyclus; de droomrichting bij rust/capaciteit is
+vastgelegd, nog niet als nieuw droommechanisme geleverd. Spraak blijft geparkeerd.
+Geen nieuwe runtime-modelcalls voor deze aansluiting; ontwikkelcredits onbekend.
+
+Bewijs: eva2/evidence/product/l3-development-selection-installed-20261007.json.
+Opleverreview: eva2/reviews/l3-development-selection-installed-review-20261007.json.
+
 ## 7 oktober — actief bij L3.5; uitbreidingen vallen ook onder verbetering
 
 Het app-goal is door Jaap hervat. L3.4 blijft geïnstalleerd en afgerond;

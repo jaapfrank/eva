@@ -1,0 +1,647 @@
+{
+  "contract": "EvaInstalledDevelopmentSelection/v1",
+  "taskId": "L3.5",
+  "state": "installed_independent_delivery_review_pending",
+  "sourceCommit": "f594e7a572802b28ff30ccbda00de287b797605c",
+  "recordedAt": "2026-10-07T09:48:16.831399+00:00",
+  "existing": [
+    "Scoped source/draft/evaluate/release/application route",
+    "L3.4 candidate ancestry and exact replay",
+    "Existing isolated host, programming/procedure/review functions",
+    "Original public development cases/scorer; originals unchanged"
+  ],
+  "added": [
+    "Fixed host assessment outside candidate workspace",
+    "Quality-first comparison of durable candidate reports under identical baseline/suite/rules",
+    "Selection tied to same-task exact winner; existing candidate continuation",
+    "Path-specific assessment/image/command client binding; existing endpoint retained",
+    "Actual 35.5 KiB agent component admitted under existing 64 KiB evaluator/import bound"
+  ],
+  "preregistration": "eva2/evidence/product/l3-development-selection-preregistered-20261007.json",
+  "sourceReview": "eva2/reviews/l3-development-selection-source-review-20261007.json",
+  "focusedVerification": {
+    "uniqueCasesPassed": 45,
+    "actualBuiltCoreBehavioralAndSchemaCasesPassed": 28,
+    "actualBuiltCoreDurableCasesPassed": 3
+  },
+  "installation": {
+    "sourceCommit": "f594e7a572802b28ff30ccbda00de287b797605c",
+    "hostService": "active",
+    "runtimeUpdateStatus": "running_after_targeted_corrections",
+    "initialUpdateStatus": "incomplete_inspect_retained_installation",
+    "corrections": [
+      "Mounted client configuration readability for existing UID65532",
+      "Unchanged canonical hash/base dependencies included in actual host source snapshot",
+      "Started already-created worker after core health recovery"
+    ],
+    "imageOnlyInstallations": 1,
+    "rollbacks": 0,
+    "containers": {
+      "core": {
+        "image": "sha256:7d5cec68cceb98e159bfdb65b6d5d7ed0af3022b376e87503e670323806ff83c",
+        "state": "running",
+        "health": "healthy",
+        "user": "65532:65532",
+        "imageEnvironmentRetained": true,
+        "actualEnvironmentMatchesPreparedConfiguration": true,
+        "entrypointRetained": true,
+        "commandRetained": true,
+        "mountsRetained": true,
+        "current_container": "4b2ca6833e054e7943e7608b4436eefb140d0354e96713acd6a7a1852ae3dbae"
+      },
+      "delegated-work-worker": {
+        "image": "sha256:93e746afc78c5f457686bbf723cc2e4910c39ff30da49cf574d2361648cef30f",
+        "state": "running",
+        "health": "healthy",
+        "user": "65532:65532",
+        "imageEnvironmentRetained": true,
+        "actualEnvironmentMatchesPreparedConfiguration": true,
+        "entrypointRetained": true,
+        "commandRetained": true,
+        "mountsRetained": true,
+        "current_container": "d511f265b40d6e1b829a3f047518aaf649de469a0414a78067db990a7099204d"
+      }
+    }
+  },
+  "actualInstalledSourceBindings": {
+    "eva2-managed-b-slot3-core": {
+      "allReviewedRuntimeSourcesMatch": true,
+      "sourceFiles": {
+        "application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+        "application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+        "adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+        "adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+        "contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028"
+      }
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "allReviewedRuntimeSourcesMatch": true,
+      "sourceFiles": {
+        "application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+        "application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+        "adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+        "adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+        "contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028"
+      }
+    }
+  },
+  "installedRoute": {
+    "contract": "EvaInstalledDevelopmentSelectionProof/v1",
+    "fixtureAuthor": "Codex-controlled synthetic task",
+    "path": "adapters/postgres/delegated_work_actions.py",
+    "baselineSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+    "selectedCandidateSha256": "adf80ac1e75095bed80fc7124d0e7cde6cf06eee4a777565f1d173c3b2cc5e0c",
+    "evaluations": [
+      {
+        "step": 3,
+        "baseline": {
+          "hardFailures": 0,
+          "requiredHits": 5,
+          "requiredTotal": 5,
+          "contextBytes": 5514,
+          "cases": [
+            {
+              "id": "named_late",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1444
+            },
+            {
+              "id": "ordinary",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1028
+            },
+            {
+              "id": "recent_named",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1152
+            },
+            {
+              "id": "no_match",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 945
+            },
+            {
+              "id": "stop",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 945
+            },
+            {
+              "id": "denied",
+              "requiredHits": 0,
+              "requiredTotal": 0,
+              "hardFailures": [],
+              "contextBytes": 0
+            }
+          ]
+        },
+        "candidate": {
+          "hardFailures": 0,
+          "requiredHits": 4,
+          "requiredTotal": 5,
+          "contextBytes": 5507,
+          "cases": [
+            {
+              "id": "named_late",
+              "requiredHits": 0,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1437
+            },
+            {
+              "id": "ordinary",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1028
+            },
+            {
+              "id": "recent_named",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1152
+            },
+            {
+              "id": "no_match",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 945
+            },
+            {
+              "id": "stop",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 945
+            },
+            {
+              "id": "denied",
+              "requiredHits": 0,
+              "requiredTotal": 0,
+              "hardFailures": [],
+              "contextBytes": 0
+            }
+          ]
+        },
+        "suiteImage": "sha256:e137babcc704fa0e73d5df5c56e28da34066244ccc366d5b152c0f574b828242",
+        "assessmentSha256": "98489dfd45d87820783f9b69499c801f2a825ec7336d4dbb1a836768d799fa68",
+        "elapsedMs": {
+          "baseline": 2521,
+          "candidate": 2020
+        }
+      },
+      {
+        "step": 4,
+        "baseline": {
+          "hardFailures": 0,
+          "requiredHits": 5,
+          "requiredTotal": 5,
+          "contextBytes": 5514,
+          "cases": [
+            {
+              "id": "named_late",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1444
+            },
+            {
+              "id": "ordinary",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1028
+            },
+            {
+              "id": "recent_named",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1152
+            },
+            {
+              "id": "no_match",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 945
+            },
+            {
+              "id": "stop",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 945
+            },
+            {
+              "id": "denied",
+              "requiredHits": 0,
+              "requiredTotal": 0,
+              "hardFailures": [],
+              "contextBytes": 0
+            }
+          ]
+        },
+        "candidate": {
+          "hardFailures": 0,
+          "requiredHits": 5,
+          "requiredTotal": 5,
+          "contextBytes": 5369,
+          "cases": [
+            {
+              "id": "named_late",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1415
+            },
+            {
+              "id": "ordinary",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 999
+            },
+            {
+              "id": "recent_named",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 1123
+            },
+            {
+              "id": "no_match",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 916
+            },
+            {
+              "id": "stop",
+              "requiredHits": 1,
+              "requiredTotal": 1,
+              "hardFailures": [],
+              "contextBytes": 916
+            },
+            {
+              "id": "denied",
+              "requiredHits": 0,
+              "requiredTotal": 0,
+              "hardFailures": [],
+              "contextBytes": 0
+            }
+          ]
+        },
+        "suiteImage": "sha256:e137babcc704fa0e73d5df5c56e28da34066244ccc366d5b152c0f574b828242",
+        "assessmentSha256": "98489dfd45d87820783f9b69499c801f2a825ec7336d4dbb1a836768d799fa68",
+        "elapsedMs": {
+          "baseline": 1969,
+          "candidate": 2019
+        }
+      }
+    ],
+    "selection": {
+      "contract": "EvaComponentDevelopmentSelection/v1",
+      "state": "candidate_selected",
+      "path": "adapters/postgres/delegated_work_actions.py",
+      "baseline_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+      "assessment_sha256": "98489dfd45d87820783f9b69499c801f2a825ec7336d4dbb1a836768d799fa68",
+      "criteria_sha256": "4f2bbe29c89fb0c2bb8a0d31a7decd432a417827533ae3a0f782755b23e49422",
+      "criteria": {
+        "id": "l3-public-context-development-v1",
+        "metrics": [
+          {
+            "kind": "quality",
+            "name": "requiredHits",
+            "direction": "maximize"
+          },
+          {
+            "kind": "resource",
+            "name": "contextBytes",
+            "direction": "minimize"
+          }
+        ],
+        "objective": "Relevant authorized task context, measured on the existing public development tasks; no claim about final answer intelligence.",
+        "hard_checks": {
+          "hardFailures": 0
+        },
+        "case_count_metric": "requiredTotal"
+      },
+      "baseline_metrics": {
+        "cases": [
+          {
+            "id": "named_late",
+            "contextBytes": 1444,
+            "hardFailures": [],
+            "requiredHits": 1,
+            "requiredTotal": 1
+          },
+          {
+            "id": "ordinary",
+            "contextBytes": 1028,
+            "hardFailures": [],
+            "requiredHits": 1,
+            "requiredTotal": 1
+          },
+          {
+            "id": "recent_named",
+            "contextBytes": 1152,
+            "hardFailures": [],
+            "requiredHits": 1,
+            "requiredTotal": 1
+          },
+          {
+            "id": "no_match",
+            "contextBytes": 945,
+            "hardFailures": [],
+            "requiredHits": 1,
+            "requiredTotal": 1
+          },
+          {
+            "id": "stop",
+            "contextBytes": 945,
+            "hardFailures": [],
+            "requiredHits": 1,
+            "requiredTotal": 1
+          },
+          {
+            "id": "denied",
+            "contextBytes": 0,
+            "hardFailures": [],
+            "requiredHits": 0,
+            "requiredTotal": 0
+          }
+        ],
+        "contextBytes": 5514,
+        "hardFailures": 0,
+        "requiredHits": 5,
+        "requiredTotal": 5
+      },
+      "candidates": [
+        {
+          "evaluation_step": 3,
+          "draft_step": 1,
+          "candidate_sha256": "a6ceeb37d33e43a49f8e93d2ac76222124d4f7071629af7caa14e0019579343d",
+          "metrics": {
+            "cases": [
+              {
+                "id": "named_late",
+                "contextBytes": 1437,
+                "hardFailures": [],
+                "requiredHits": 0,
+                "requiredTotal": 1
+              },
+              {
+                "id": "ordinary",
+                "contextBytes": 1028,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "recent_named",
+                "contextBytes": 1152,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "no_match",
+                "contextBytes": 945,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "stop",
+                "contextBytes": 945,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "denied",
+                "contextBytes": 0,
+                "hardFailures": [],
+                "requiredHits": 0,
+                "requiredTotal": 0
+              }
+            ],
+            "contextBytes": 5507,
+            "hardFailures": 0,
+            "requiredHits": 4,
+            "requiredTotal": 5
+          },
+          "elapsed_ms": 2020,
+          "error": null,
+          "rank": [
+            4,
+            -5507
+          ]
+        },
+        {
+          "evaluation_step": 4,
+          "draft_step": 2,
+          "candidate_sha256": "adf80ac1e75095bed80fc7124d0e7cde6cf06eee4a777565f1d173c3b2cc5e0c",
+          "metrics": {
+            "cases": [
+              {
+                "id": "named_late",
+                "contextBytes": 1415,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "ordinary",
+                "contextBytes": 999,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "recent_named",
+                "contextBytes": 1123,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "no_match",
+                "contextBytes": 916,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "stop",
+                "contextBytes": 916,
+                "hardFailures": [],
+                "requiredHits": 1,
+                "requiredTotal": 1
+              },
+              {
+                "id": "denied",
+                "contextBytes": 0,
+                "hardFailures": [],
+                "requiredHits": 0,
+                "requiredTotal": 0
+              }
+            ],
+            "contextBytes": 5369,
+            "hardFailures": 0,
+            "requiredHits": 5,
+            "requiredTotal": 5
+          },
+          "elapsed_ms": 2019,
+          "error": null,
+          "rank": [
+            5,
+            -5369
+          ]
+        }
+      ],
+      "selected_draft_step": 2,
+      "selected_evaluation_step": 4,
+      "selected_candidate_sha256": "adf80ac1e75095bed80fc7124d0e7cde6cf06eee4a777565f1d173c3b2cc5e0c",
+      "installed": false,
+      "semantic_improvement_verified": false,
+      "guidance": "Ontwikkelkeuze, geen onafhankelijke eindbeoordeling of installatie. Bij gelijkspel of verlies blijft de bestaande versie staan.",
+      "selection_step": 5
+    },
+    "continuedWinner": {
+      "parent_candidate_sha256": "adf80ac1e75095bed80fc7124d0e7cde6cf06eee4a777565f1d173c3b2cc5e0c",
+      "ancestor_candidate_sha256s": [
+        "adf80ac1e75095bed80fc7124d0e7cde6cf06eee4a777565f1d173c3b2cc5e0c"
+      ],
+      "parent_draft_step": 2
+    },
+    "exactReplay": true,
+    "stopRespected": true,
+    "installedBaselineUnchanged": true,
+    "runtimeModelCalls": 0,
+    "candidateApplied": false,
+    "autonomousAide2Outcome": false
+  },
+  "hostDependencies": {
+    "dependencies": {
+      "contracts/base.py": "578c72f40bb2cf4794cfb8b7eede54b56db4416d9dfef92aafabe936b480279a",
+      "contracts/canonical_json.py": "ac3f8e1fa2e1ca130b5a7aa116eac9b3fdbc6ff3da265953d7ad65f230f18822"
+    },
+    "sourceChanged": false,
+    "actualHostValidationExit": 0
+  },
+  "installerPackage": {
+    "sourceFilesUpdated": {
+      "src/eva/application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+      "src/eva/application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+      "src/eva/operations/component_development.py": "8b672db72ab8d5b28baaa69da7e8aa354011af42ebf144349d7ad86643ea4604",
+      "src/eva/operations/component_evaluation.py": "74f84f5b3e627185d10c077cc0135443bb49054b485b4ce504a64abc99063794",
+      "src/eva/operations/component_evaluation_service.py": "63d779acc243614f08747b8183a432e30af0a486d783ead8187ce40d6ea5d18d",
+      "src/eva/adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+      "src/eva/adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+      "src/eva/contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028",
+      "tests/application/test_component_development.py": "e2234662035f573a6ff7dd6d45ca06f9fade04328446076722ee748017980f1c",
+      "tests/application/test_component_improvements.py": "ebad8c5ff3c31d106330196c281b60cf9fbbca432b12596e31ea2ae3c7a63b26",
+      "tests/operations/test_component_development_host.py": "2bd532eee2d4c8c486f65eeb61df66552129c7d06f4efbbf2c6314046847496d",
+      "tests/postgres/test_component_document_reference.py": "327b45546db9f765543651e2053362de233928097653990c729d7673d632687f",
+      "PROJECTDOEL.md": "3b1639c09c896c05254831a76ba16c38f125175f004d46582d24934c0b40211c",
+      "WERKBORD.md": "62bce1cf7b779eaea861f11237f5c6c9b626d28278e67f2754173fcc1515ab3f"
+    },
+    "sourceFileCount": 1233,
+    "imageCount": 8,
+    "previousOtherSevenImagesPreserved": true,
+    "developmentSourceBasePreserved": "aca98ba68a262c16a11f495d489cb70e81b8c30b",
+    "sourceOverlayCommit": "f594e7a572802b28ff30ccbda00de287b797605c",
+    "verified": true,
+    "verifierSuppliedReadonlyForCheck": true,
+    "freshInstallationExecuted": false,
+    "publicRelease": false,
+    "metadataSha256AtReview": "2d9d54ac33b57f43bc2ee527d4b19b3275dbd4b90cf90bc1c167a2fb4fb76d48",
+    "developmentImageInventory": {
+      "browser": "sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+      "browser-mcp": "sha256:e3f6a85f0fd771dd9440584bd905011f1b4ea25b115bfea8b796d17d23e7b767",
+      "hindsight": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "livekit": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "living-core": "sha256:7d5cec68cceb98e159bfdb65b6d5d7ed0af3022b376e87503e670323806ff83c",
+      "mcp-gateway": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "postgres": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "voice-media": "sha256:2e9092a057dbcaa089bc91b00f27c9abd7feff429257d54f7a90a642917e69f6"
+    },
+    "developmentSelectionOverlayImages": {
+      "core": "sha256:7d5cec68cceb98e159bfdb65b6d5d7ed0af3022b376e87503e670323806ff83c",
+      "worker": "sha256:93e746afc78c5f457686bbf723cc2e4910c39ff30da49cf574d2361648cef30f"
+    },
+    "developmentSelectionOverlaySourceFiles": {
+      "src/eva/application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+      "src/eva/application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+      "src/eva/operations/component_development.py": "8b672db72ab8d5b28baaa69da7e8aa354011af42ebf144349d7ad86643ea4604",
+      "src/eva/operations/component_evaluation.py": "74f84f5b3e627185d10c077cc0135443bb49054b485b4ce504a64abc99063794",
+      "src/eva/operations/component_evaluation_service.py": "63d779acc243614f08747b8183a432e30af0a486d783ead8187ce40d6ea5d18d",
+      "src/eva/adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+      "src/eva/adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+      "src/eva/contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028",
+      "tests/application/test_component_development.py": "e2234662035f573a6ff7dd6d45ca06f9fade04328446076722ee748017980f1c",
+      "tests/application/test_component_improvements.py": "ebad8c5ff3c31d106330196c281b60cf9fbbca432b12596e31ea2ae3c7a63b26",
+      "tests/operations/test_component_development_host.py": "2bd532eee2d4c8c486f65eeb61df66552129c7d06f4efbbf2c6314046847496d",
+      "tests/postgres/test_component_document_reference.py": "327b45546db9f765543651e2053362de233928097653990c729d7673d632687f",
+      "PROJECTDOEL.md": "3b1639c09c896c05254831a76ba16c38f125175f004d46582d24934c0b40211c",
+      "WERKBORD.md": "62bce1cf7b779eaea861f11237f5c6c9b626d28278e67f2754173fcc1515ab3f"
+    },
+    "overlaySourceFilesVerified": true
+  },
+  "measuredUsage": {
+    "newRuntimeModelCallsForThisDelivery": 0,
+    "newRuntimeModelTokensForThisDelivery": 0,
+    "developmentCredits": "unknown",
+    "reviewModelTokens": "not available in per-task telemetry",
+    "dependencyInstallations": 0,
+    "imageOnlyInstallations": 1,
+    "rollbacks": 0,
+    "ordinaryRuntimeActivityOutsideThisProof": "not attributed to this delivery"
+  },
+  "retainedProblems": [
+    "Initial harness setup errors recorded in technical receipt",
+    "Mounted client config initially unreadable; mode corrected for unchanged runtime UID",
+    "Actual host snapshot initially missed canonical/base imports; unchanged dependencies added and actual host import validated",
+    "Installed synthetic fixture initially used microseconds; corrected to the existing whole-second clock contract",
+    "Package checker supplied readonly because minimal service image intentionally excludes host-only verifier"
+  ],
+  "limits": [
+    "Both tested variants were controlled operator fixtures, not Eva-authored useful improvements",
+    "The actual context reference already hits 5/5 public requirements; equal-quality size tiebreak demonstrates the interface, not smarter answers",
+    "Development choice does not approve installation or independent semantic gain",
+    "No autonomous AIDE2 cycle, competitor superiority, general app/addon assessment coverage or dream scheduling demonstrated",
+    "L3.6/L3.7 and existing end conditions remain open; original AIDE/R1 records and closed budgets unchanged"
+  ],
+  "ownerExtensionClarification": {
+    "appliesTo": [
+      "kernel variants",
+      "apps",
+      "addons",
+      "extensions"
+    ],
+    "dreamMode": "Use existing initiative/reflection only during quiet periods with sufficient measured capacity; family/active work takes priority",
+    "implementationClaim": false
+  },
+  "next": "L3.6: reusable independent exact-candidate final assessment and managed application; then L3.7 real ordinary improvement cycle.",
+  "actualHostSourceBindings": {
+    "operations/component_development.py": "8b672db72ab8d5b28baaa69da7e8aa354011af42ebf144349d7ad86643ea4604",
+    "operations/component_evaluation.py": "74f84f5b3e627185d10c077cc0135443bb49054b485b4ce504a64abc99063794",
+    "operations/component_evaluation_service.py": "63d779acc243614f08747b8183a432e30af0a486d783ead8187ce40d6ea5d18d",
+    "application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+    "contracts/canonical_json.py": "ac3f8e1fa2e1ca130b5a7aa116eac9b3fdbc6ff3da265953d7ad65f230f18822",
+    "contracts/base.py": "578c72f40bb2cf4794cfb8b7eede54b56db4416d9dfef92aafabe936b480279a"
+  }
+}
