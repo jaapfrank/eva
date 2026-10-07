@@ -926,3 +926,115 @@ def test_durable_retain_retries_with_job_and_preserves_attempt_limit(failures: i
     assert attempts == min(failures + 1, 3)
     assert state.retry_count == attempts
     assert state.status == ("completed" if failures == 1 else "needs_help")
+
+def test_new_foreground_during_idle_stage_defers_later_stages_without_waiting(monkeypatch):
+    from threading import Thread
+    clock = [100.0]
+    monkeypatch.setattr("eva.application.memory_background.time.monotonic", lambda: clock[0])
+    entered, finish = Event(), Event()
+    calls = []
+
+    def first():
+        calls.append("first")
+        entered.set()
+        assert finish.wait(2)
+
+    worker = HindsightColdPathWorker(SimpleNamespace(), idle_seconds=1,
+        idle_tasks=(first, lambda: calls.append("second")), idle_capacity=lambda: True)
+    clock[0] = 102.0
+    idle = Thread(target=worker._schedule_reflection_if_idle)
+    idle.start()
+    assert entered.wait(2)
+    # This returns while the first background stage remains blocked.
+    with worker.foreground():
+        assert not finish.is_set()
+        finish.set()
+        idle.join(2)
+        assert not idle.is_alive()
+    assert calls == ["first"]
+    clock[0] += 2
+    worker._idle_tasks = (lambda: calls.append("resumed"),)
+    worker._schedule_reflection_if_idle()
+    assert calls == ["first", "resumed"]
+
+
+def test_overlapping_foreground_and_capacity_deferral_preserve_pending_scopes(monkeypatch):
+    clock = [100.0]
+    monkeypatch.setattr("eva.application.memory_background.time.monotonic", lambda: clock[0])
+    maintained = []
+    capacity = [False]
+    worker = HindsightColdPathWorker(
+        SimpleNamespace(maintain_person_scope=lambda *scope: maintained.append(scope)),
+        idle_seconds=1, idle_capacity=lambda: capacity[0])
+    scope = ("tenant", "installation", "person")
+    worker._reflection_scopes.add(scope)
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert worker._reflection_scopes == {scope}
+    assert maintained == []
+    capacity[0] = True
+    outer, inner = worker.foreground(), worker.foreground()
+    outer.__enter__()
+    inner.__enter__()
+    inner.__exit__(None, None, None)
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert maintained == []  # One overlapping conversation is still active.
+    outer.__exit__(None, None, None)
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert maintained == [scope]
+    assert worker._reflection_scopes == set()
+
+
+def test_foreground_exception_releases_busy_and_unknown_capacity_starts_nothing(monkeypatch):
+    clock = [100.0]
+    monkeypatch.setattr("eva.application.memory_background.time.monotonic", lambda: clock[0])
+    calls = []
+    def unknown():
+        raise OSError("unavailable")
+    worker = HindsightColdPathWorker(SimpleNamespace(), idle_seconds=1,
+        idle_tasks=(lambda: calls.append("model"),), idle_capacity=unknown)
+    with pytest.raises(ValueError):
+        with worker.foreground():
+            raise ValueError("foreground failed")
+    assert worker._foreground_count == 0
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert calls == []
+    assert worker.last_error == "idle capacity unavailable: OSError"
+
+@pytest.mark.parametrize("during", ["capacity", "admission"])
+def test_foreground_during_blocking_admission_defers_current_and_remaining_scopes(monkeypatch, during):
+    clock = [100.0]
+    monkeypatch.setattr("eva.application.memory_background.time.monotonic", lambda: clock[0])
+    maintained, reservations = [], []
+    entered = []
+    def begin():
+        context = worker.foreground()
+        context.__enter__()
+        entered.append(context)
+    def capacity():
+        if during == "capacity":
+            begin()
+        return True
+    def reserve(**kwargs):
+        reservations.append(kwargs)
+        if during == "admission":
+            begin()
+        return SimpleNamespace(admitted=True)
+    worker = HindsightColdPathWorker(
+        SimpleNamespace(maintain_person_scope=lambda *scope: maintained.append(scope)),
+        idle_seconds=1, idle_capacity=capacity,
+        reflection_budget=SimpleNamespace(admit_background_reflection=reserve))
+    scopes = {("tenant", "installation", "one"), ("tenant", "installation", "two")}
+    worker._reflection_scopes.update(scopes)
+    clock[0] += 2
+    try:
+        worker._schedule_reflection_if_idle()
+        assert maintained == []
+        assert worker._reflection_scopes == scopes
+        assert len(reservations) == (1 if during == "admission" else 0)
+    finally:
+        for context in entered:
+            context.__exit__(None, None, None)

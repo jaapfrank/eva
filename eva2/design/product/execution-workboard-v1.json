@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T22:01:39.684721+00:00",
+        "checkedAt": "2026-10-07T22:11:22.821309+00:00",
         "deliveries": [
           {
             "title": "L3.7 · Herbruikbare cyclus via gewone Eva voltooid",
@@ -4133,22 +4133,22 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Beschikbaarheidsbesluit vastgelegd",
+          "title": "L3/I1 · Droomwerk laat ruimte voor gesprekken",
           "state": "in_progress",
           "owner": "Codex",
-          "taskId": "P2.1",
-          "detail": "Hermes kan privé-/groepsherkomst bewaren. Dat is broncompatibiliteit, geen geslaagde groepsproef. Zonder passend vergelijkingspaar geen losse Hermes-run. De bestaande kwaliteitsverschillen blijven zichtbaar.",
-          "remaining": "P2.1 blijft open: nog ontbrekende oorspronkelijke vergelijkingsdekking en twee echte antwoordbeoordelingen. Een losse Hermes-groepsproef verandert het besluit niet; huidige Eva1/OpenClaw-proefroutes geven geen passend paar. CM06 en eerdere persoonsgrensverliezen behouden; geen algemene winnaar.",
-          "source": "eva2/evidence/product/p2-hermes-cm07-availability-20261007.json",
-          "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar."
+          "taskId": "L3",
+          "detail": "Bestaande automatische idle route hergebruiken. Nieuw gesprek direct als activiteit tellen; voor iedere volgende optionele stap rust, rekenruimte, actieve opdrachten en bestaand budget controleren.",
+          "remaining": "Gerichte controle, onafhankelijke review en installatie. Geen nieuwe appspecifieke functie of extra afgeronde taak; P2 blijft open.",
+          "source": "eva2/src/eva/application/memory_background.py",
+          "doneWhen": "Werkelijke installatie gebruikt deze gate; foreground wacht niet op idle werk, latere stappen wijken en eerder taakwerk blijft behouden."
         },
         "next": {
-          "title": "P2.1 · Ontbrekend vergelijkingsbewijs",
+          "title": "P2.1 · Vergelijkingsbewijs en gezinsbeoordeling",
           "state": "planned",
           "owner": "Codex",
           "taskId": "P2.1",
-          "detail": "Eerst een beslisrelevant vergelijkingspaar onder de oorspronkelijke voorwaarden via bestaande gewone routes. Twee echte blinde antwoordbeoordelingen blijven open. Geen automatische nieuwe matrix.",
-          "remaining": "L3.4–L3.7 geïnstalleerd. Apps/add-ons vallen onder dezelfde cyclus; niet alle uitbreidingssoorten beproefd. Automatische droommodus bij rust en overcapaciteit is gepland, nog niet gebouwd. Spraak geparkeerd.",
+          "detail": "Bestaande vergelijking blijft beperkt; geen losse Hermes-run zonder beslisrelevant paar. Menselijke beoordelingen blijven afzonderlijk.",
+          "remaining": "Droomwerk is nog niet geïnstalleerd. L3.4–L3.7 oorspronkelijke acceptaties blijven behouden.",
           "source": "eva2/evidence/product/p2-hermes-cm07-availability-20261007.json"
         },
         "ownerAction": {
@@ -20156,7 +20156,7 @@
               "implementationBoundary": "L3.5 levert de vaste ontwikkelkeuze voor aangesloten Python-suites; geen claim dat alle uitbreidingssoorten al zijn aangesloten."
             },
             "dreamMode": {
-              "state": "planned_not_implemented",
+              "state": "in_progress_existing_idle_route_capacity_and_priority",
               "route": "bestaande initiatief-/reflectieroute",
               "conditions": [
                 "rustig gezinsgebruik",
@@ -20166,7 +20166,23 @@
               ],
               "purpose": "Echte ervaringen verwerken en nuttige verbeteringen/uitbreidingen onderzoeken; geen doorlopende modelcalls om activiteit te tonen.",
               "yieldAndResume": "Maak plaats zodra gezinsgebruik of actief werk capaciteit nodig heeft; hervat via bewaarde taakstatus.",
-              "implementationBoundary": "De herbruikbare cyclus is geïnstalleerd; een automatische capaciteitsplanner voor droomwerk is niet gebouwd."
+              "implementationBoundary": "De herbruikbare cyclus is geïnstalleerd; een automatische capaciteitsplanner voor droomwerk is niet gebouwd.",
+              "owner": "Codex",
+              "startedAt": "2026-10-07T22:11:22.821309+00:00",
+              "baseCommit": "099168141b5cfeaf102f8736dbba2c35fedba8d6",
+              "gap": "Bestaande idle route controleert rust alleen vóór de reeks en registreert useractiviteit pas bij memory submit; geen capaciteitscheck.",
+              "change": "Gedeelde respond telt actieve gesprekken; optionele stappen herchecken rust/capaciteit, actieve opdrachten en bestaand dagelijks budget. Gestarte stap mag afronden; geen directe annulering of nieuwe optimalisatieproef.",
+              "files": [
+                "src/eva/application/memory_background.py",
+                "src/eva/bootstrap/runtime.py",
+                "src/eva/bootstrap/idle_capacity.py",
+                "src/eva/adapters/postgres/delegated_work.py",
+                "src/eva/adapters/postgres/runtime_resource_usage.py"
+              ],
+              "finish": "Werkelijke installatie gebruikt deze gate; foreground wacht niet op idle werk, latere stappen wijken en eerder taakwerk blijft behouden.",
+              "originalL3AcceptancesUnchanged": true,
+              "providerCalls": 0,
+              "credits": null
             }
           },
           "aideWorkspaceFollowup": {

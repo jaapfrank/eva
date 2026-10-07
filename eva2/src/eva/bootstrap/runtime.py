@@ -1157,6 +1157,17 @@ class PostgresHindsightMemoryRuntime:
         turn: ConversationTurn,
         recent_messages: tuple[RecentConversationMessage, ...] = (),
     ) -> GroundedReply:
+        from eva.application.initiative_execution import current_initiative
+        if current_initiative() is not None:
+            return self._respond_admitted(turn, recent_messages)
+        with self._cold_path.foreground():
+            return self._respond_admitted(turn, recent_messages)
+
+    def _respond_admitted(
+        self,
+        turn: ConversationTurn,
+        recent_messages: tuple[RecentConversationMessage, ...] = (),
+    ) -> GroundedReply:
         from eva.application.initiative_execution import require_initiative_context
         require_initiative_context(turn)
         check_cancellation()
@@ -2207,6 +2218,7 @@ def create_runtime_app() -> FastAPI:
                     budget=reflection_budget, principal_id=settings.background_principal_id,
                     authorize_initiative=lambda: runtime._initiative_authority().policy())
                 idle_tasks = (*idle_tasks, household_initiatives.run_once)
+    from eva.bootstrap.idle_capacity import idle_capacity_available
     runtime = PostgresHindsightMemoryRuntime(
         engine,
         memory,
@@ -2215,6 +2227,10 @@ def create_runtime_app() -> FastAPI:
             memory,
             idle_seconds=settings.cold_path_idle_seconds,
             idle_tasks=idle_tasks,
+            idle_capacity=lambda: idle_capacity_available(
+                model=model, reflection_budget=reflection_budget,
+                delegated_work_store=delegated_work_store,
+            ),
             service_tasks=service_tasks,
             outbox=memory_outbox,
             reflection_budget=reflection_budget,

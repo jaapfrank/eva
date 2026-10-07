@@ -1,0 +1,55 @@
+{
+  "contract": "EvaExistingIdleRouteFocusedVerification/v1",
+  "recordedAt": "2026-10-07T22:16:20.229396+00:00",
+  "taskScope": "Existing L3/I1 owner clarification; preserve original L3.4–7 acceptance",
+  "baseCommit": "099168141b5cfeaf102f8736dbba2c35fedba8d6",
+  "command": "PYTHONPATH=eva2/src /home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python -m pytest -q eva2/tests/application/test_memory_background.py eva2/tests/bootstrap/test_idle_capacity.py",
+  "exitCode": 0,
+  "stdout": "...............................                                          [100%]\n31 passed in 3.32s\n",
+  "sourceHashes": {
+    "src/eva/application/memory_background.py": "7cad97c796af9002fff780cbd36ac5dde66da3f621e60589f86e863788d9d1be",
+    "src/eva/bootstrap/runtime.py": "abf4d57fc6bbdccb8e06094072cb77a567ecd51f2042387f1d5d26be4f9f6015",
+    "src/eva/bootstrap/idle_capacity.py": "16b5ff43e033b8b55029f0c8ddb4733439f4cfbb96a5323fc73871fefcd86c14",
+    "src/eva/adapters/postgres/delegated_work.py": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3",
+    "src/eva/adapters/postgres/runtime_resource_usage.py": "82c20f995283d78c3f8a7602d061bf1d86c6145872aa5db8834c64460c1c7312",
+    "tests/application/test_memory_background.py": "86a3eccaefb8330ddaff786c3a6bb3c7a323b9196a17d2b78ce0a14f242c6776",
+    "tests/bootstrap/test_idle_capacity.py": "752cfbdefd1a86851a55bf56a4319115fb5d8d103400f613470bc585a9b06ab1"
+  },
+  "earlierVerification": [
+    {
+      "phase": "initial collection",
+      "error": "missing PYTHONPATH",
+      "testsExecuted": 0
+    },
+    {
+      "phase": "initial delta",
+      "passed": 27,
+      "changedCause": "source review found whole-second contract and blocking-check boundaries"
+    },
+    {
+      "phase": "boundary correction",
+      "passed": 30,
+      "changedCause": "scoped activity predicate correction plus real SQL-method test added"
+    }
+  ],
+  "coverage": [
+    "shared respond early return and exception release",
+    "overlapping conversations",
+    "foreground during blocking idle stage/capacity/budget admission",
+    "pending scopes retained",
+    "unknown capacity suppresses optional calls",
+    "real daily-budget time contract",
+    "scoped existing active-work SQL and stopped-call terminal semantics",
+    "container CPU quota"
+  ],
+  "limits": [
+    "Focused tests, not installed runtime verification.",
+    "CPU load indication does not prove RAM/GPU headroom.",
+    "Daily allowance and model admission do not measure provider subscription credits.",
+    "Started blocking stage finishes to checkpoint; no immediate cancellation claim.",
+    "In-memory reflection scopes are not new restart-persistent state."
+  ],
+  "providerCalls": 0,
+  "nativeComparisonCalls": 0,
+  "credits": null
+}

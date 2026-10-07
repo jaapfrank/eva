@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import contextmanager
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 import hashlib
@@ -127,6 +128,7 @@ class SemanticMemoryColdPathWorker:
         idle_seconds: float = 300.0,
         retry_delay_seconds: float = 2.0,
         idle_tasks: tuple[Callable[[], object], ...] = (),
+        idle_capacity: Callable[[], bool] | None = None,
         service_tasks: tuple[Callable[[], object], ...] = (),
         outbox: DurableMemoryOutboxPort | None = None,
         reflection_budget: BackgroundReflectionBudgetPort | None = None,
@@ -140,6 +142,8 @@ class SemanticMemoryColdPathWorker:
         self._idle_seconds = idle_seconds
         self._retry_delay_seconds = retry_delay_seconds
         self._idle_tasks = idle_tasks
+        self._idle_capacity = idle_capacity
+        self._foreground_count = 0
         self._service_tasks = service_tasks
         self._outbox = outbox
         self._reflection_budget = reflection_budget
@@ -155,6 +159,38 @@ class SemanticMemoryColdPathWorker:
         self._last_activity = time.monotonic()
         self._reflection_scopes: set[tuple[str, str, str]] = set()
         self._last_error: str | None = None
+
+    @contextmanager
+    def foreground(self):
+        """Prioritize overlapping conversations without waiting for an idle task."""
+        with self._lock:
+            self._foreground_count += 1
+            self._last_activity = time.monotonic()
+        try:
+            yield
+        finally:
+            with self._lock:
+                self._foreground_count -= 1
+                self._last_activity = time.monotonic()
+
+    def _idle_due(self) -> bool:
+        with self._lock:
+            return (not self._stop.is_set() and not self._foreground_count
+                    and time.monotonic() - self._last_activity >= self._idle_seconds)
+
+    def _idle_ready(self, *, check_capacity: bool = True) -> bool:
+        if not self._idle_due():
+            return False
+        if check_capacity and self._idle_capacity is not None:
+            try:
+                if self._idle_capacity() is not True:
+                    return False
+            except Exception as error:
+                with self._lock:
+                    self._last_error = f"idle capacity unavailable: {type(error).__name__}"
+                return False
+        # Capacity/database reads must not conceal a newly arrived conversation.
+        return self._idle_due()
 
     @property
     def last_error(self) -> str | None:
@@ -518,8 +554,6 @@ class SemanticMemoryColdPathWorker:
         with self._lock:
             if time.monotonic() - self._last_activity < self._idle_seconds:
                 return
-            scopes = tuple(self._reflection_scopes)
-            self._reflection_scopes.clear()
         if self._storage_budget is not None:
             now = datetime.now(tz=UTC).replace(microsecond=0)
             try:
@@ -539,8 +573,15 @@ class SemanticMemoryColdPathWorker:
                 except Exception as error:
                     with self._lock:
                         self._last_error = f"{type(error).__name__}: {error}"
-        for tenant_id, installation_id, principal_id in scopes:
-            if self._stop.is_set():
+        if not self._idle_ready():
+            return
+        with self._lock:
+            scopes = tuple(self._reflection_scopes)
+            self._reflection_scopes.clear()
+        for index, (tenant_id, installation_id, principal_id) in enumerate(scopes):
+            if not self._idle_ready():
+                with self._lock:
+                    self._reflection_scopes.update(scopes[index:])
                 return
             try:
                 if self._reflection_budget is not None:
@@ -557,6 +598,12 @@ class SemanticMemoryColdPathWorker:
                         )
                     if not admitted:
                         continue
+                # The current reservation may have filled the last allowance.
+                # Recheck activity, not budget, after its blocking admission.
+                if not self._idle_ready(check_capacity=False):
+                    with self._lock:
+                        self._reflection_scopes.update(scopes[index:])
+                    return
                 self._memory.maintain_person_scope(
                     tenant_id, installation_id, principal_id
                 )
@@ -567,9 +614,9 @@ class SemanticMemoryColdPathWorker:
                         (tenant_id, installation_id, principal_id)
                     )
         for task in self._idle_tasks:
-            # A stop during the preceding blocking provider call must not
-            # fall through into another model run or outgoing delivery.
-            if self._stop.is_set():
+            # Finish an already started stage, then yield before another
+            # optional model run or delivery. Durable tasks retain their state.
+            if not self._idle_ready():
                 return
             try:
                 task()

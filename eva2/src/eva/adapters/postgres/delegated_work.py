@@ -1210,6 +1210,20 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             finally:
                 transaction.rollback()
 
+    def has_pending_or_running_work(self) -> bool:
+        """Return only installation activity, never private task contents."""
+        with self._engine.connect() as connection:
+            self._scope(connection)
+            return bool(connection.scalar(sa.select(sa.exists().where(
+                delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                delegated_work_runs.c.installation_id == self._scope_value.installation_id,
+                sa.or_(
+                    delegated_work_runs.c.state == "call_started",
+                    sa.and_(delegated_work_runs.c.state == "admitted",
+                            delegated_work_runs.c.stop_requested_at.is_(None)),
+                ),
+            ))))
+
     def workboard(
         self,
         *,

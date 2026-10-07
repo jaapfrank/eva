@@ -180,6 +180,27 @@ class PostgresDailyReflectionBudget:
             raise OperationalTimelineError("reflection budget totals differ")
         return installation_used, dict(people)
 
+    def has_installation_capacity(self, *, now: datetime) -> bool:
+        """Read the existing allowance; actual execution still reserves its slot."""
+        day = self._day(now)
+        thread_id = f"runtime-reflections:{day}"
+        try:
+            self._timeline.load(thread_id)
+        except OperationalTimelineError as error:
+            if str(error) == "thread does not exist":
+                return self._installation_limit > 0
+            raise
+        events = self._timeline.events(thread_id)
+        if not events:
+            raise OperationalTimelineError("reflection budget timeline is empty")
+        used, _people = self._usage(
+            events[-1].payload.get("data"), expected_day=day,
+            expected_person_limit=self._person_limit,
+            expected_installation_limit=self._installation_limit,
+            expected_source_budget_sha256=self._source_budget_sha256,
+        )
+        return used < self._installation_limit
+
     def admit_background_reflection(
         self,
         *,

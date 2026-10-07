@@ -1,0 +1,87 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "recorded_at": "2026-10-07T22:16:51.336864+00:00",
+  "scope": "Existing L3/I1 idle-stage capacity and foreground priority",
+  "base_commit": "099168141b5cfeaf102f8736dbba2c35fedba8d6",
+  "decision": "GO_SOURCE",
+  "reviewed_files": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/application/memory_background.py",
+      "sha256": "7cad97c796af9002fff780cbd36ac5dde66da3f621e60589f86e863788d9d1be"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/bootstrap/runtime.py",
+      "sha256": "abf4d57fc6bbdccb8e06094072cb77a567ecd51f2042387f1d5d26be4f9f6015"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/bootstrap/idle_capacity.py",
+      "sha256": "16b5ff43e033b8b55029f0c8ddb4733439f4cfbb96a5323fc73871fefcd86c14"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/postgres/delegated_work.py",
+      "sha256": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/postgres/runtime_resource_usage.py",
+      "sha256": "82c20f995283d78c3f8a7602d061bf1d86c6145872aa5db8834c64460c1c7312"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/tests/application/test_memory_background.py",
+      "sha256": "86a3eccaefb8330ddaff786c3a6bb3c7a323b9196a17d2b78ce0a14f242c6776"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/tests/bootstrap/test_idle_capacity.py",
+      "sha256": "752cfbdefd1a86851a55bf56a4319115fb5d8d103400f613470bc585a9b06ab1"
+    }
+  ],
+  "test_evidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/l3-idle-capacity-priority-tests-20261008.json",
+    "sha256": "64587dff5f76663419ea4e53c39b242f166e80aae7a3d65f1883e29fc22613a7",
+    "passed": 31,
+    "failed": 0,
+    "elapsed_seconds": 3.32,
+    "reviewer_repeated_tests": false
+  },
+  "checks": {
+    "owner_AGENTS_12_22_authorizes_existing_route_change": true,
+    "exception_safe_overlap_counter_covers_shared_foreground_respond": true,
+    "native_initiative_guard_retained_without_false_foreground_label": true,
+    "foreground_stop_rechecked_after_capacity_and_budget_IO": true,
+    "post_budget_check_does_not_reject_own_last_reservation": true,
+    "unexecuted_reflection_scopes_preserved": true,
+    "budget_peek_read_only_existing_actual_admission_unchanged": true,
+    "whole_second_UTC_budget_contract_matches": true,
+    "scoped_work_EXISTS_includes_stopping_call_until_terminal": true,
+    "no_private_task_payload_or_person_mapping_added": true,
+    "original_list_owned_sort_unchanged": true,
+    "services_and_expiry_deletion_outside_capacity_gate": true,
+    "production_capacity_callback_wired": true,
+    "task_ids_status_doneWhen_unchanged_48_tasks_39_completed": true
+  },
+  "resolved_findings": [
+    "Initial capacity timestamp had microseconds rejected by the existing budget contract; now normalized and covered by the actual method test.",
+    "Initial activity check preceded blocking capacity IO; local foreground/stop state is now rechecked afterwards.",
+    "Initial budget-admission-to-maintenance boundary lacked a fresh activity check; current and remaining scopes now defer without undoing consumed budget.",
+    "Initial active-work query excluded a running call after stop request; call_started remains busy until terminal.",
+    "Intermediate predicate patch affected list_owned sorting; that unrelated change is restored."
+  ],
+  "findings": [],
+  "limits": [
+    "Source and focused regression GO only; installed source and actual runtime wiring require their separate retained verification.",
+    "Running blocking stages may finish to checkpoint; foreground does not wait for idle-stage completion. No instant cancellation claim.",
+    "CPU load versus affinity/container quota is a conservative CPU indicator, not RAM/GPU capacity proof.",
+    "Daily reflection allowance and existing model admission are not remaining provider subscription credits; credits remain unknown.",
+    "A budget reservation already consumed when foreground arrives is not refunded; no new allowance is manufactured.",
+    "Restored in-memory reflection scopes are not new crash-persistent state; existing durable task checkpoints remain the resume mechanism.",
+    "No P2 admission, case, criteria change, new task ID, function completion or general quality improvement is established here."
+  ],
+  "reviewer_activity": {
+    "models": 0,
+    "native_comparison_calls": 0,
+    "tests": 0,
+    "resources_started": 0,
+    "product_source_edits": 0,
+    "board_edits": 0,
+    "protected_input_read": false
+  }
+}
