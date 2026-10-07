@@ -14,13 +14,14 @@ vergelijking volgt; menselijke beoordelingen blijven afzonderlijk zichtbaar. App
 gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
 
 
-## P2.1 — oorspronkelijke vergelijking aansluiten
+## P2.1 — oorspronkelijke vergelijking en gerichte oorzaakcorrectie
 
-De gecontroleerde native OpenClaw-meetroute is aan de oorspronkelijke runner
-gekoppeld. Een gerichte publieke nul-modelproef bevestigt verzegelde invoer,
-de exacte root-parent en detectie/stop van achterblijvende processen. Dit is
-evaluatorkoppeling, geen nieuwe productfunctie of bewezen voorsprong. Afzonderlijke
-onafhankelijke toelating en de oorspronkelijke vergelijkingsproef staan nog open.
+De oorspronkelijke OpenClaw-CM01-proef is eenmaal uitgevoerd, maar vóór de
+eerste modelcall vastgelopen door een fout in de proefomgeving: loopback-POST
+ging naar de CONNECT-only externe proxy. Alleen die proxybinding is gecorrigeerd;
+de publieke gerichte controle geeft501→200 zonder externe modelcalls. De
+oorspronkelijke sample/deadline/bron en UNKNOWN blijven bewaard. Dit is geen
+productkwaliteitsverlies, geslaagde vergelijking of nieuwe productfunctie.
 Zie evidence/product/p2-openclaw-original-runner-binding-20261007.json.
 
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus

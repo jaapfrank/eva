@@ -2,7 +2,7 @@
   "contract": "EvaP2OriginalRunnerBinding/v1",
   "date": "2026-10-07",
   "task": "P2.1",
-  "status": "source_review_go_original_resource_preparation_admitted",
+  "status": "original_cm01_unknown_retained_proxy_delta_independent_go",
   "priorSourceCheckpoint": "864e3ab508f67153c3ab6873e8098169f908cc88",
   "preserved": [
     "original protected CM01 projection unchanged",
@@ -79,5 +79,68 @@
     "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/parent-cm01-source-admission.private.json",
     "sha256": "918cdd83691a6c7523fa58b6ad7662652f87d0d36306594871ab14f393da9917",
     "inputReleased": false
+  },
+  "originalPreparation": {
+    "sourceCheckpoint": "960a3c658407ee758582c7ce1c48d276300bfe10",
+    "execSession": 73959,
+    "actualReadyPath": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+    "actualReadySha256": "294064ef48f0ea203b25b8739808a9d33e49b2edf28bbc12f0fbdaa8b4ad8e46",
+    "authorityAfterReservationSha256": "3ccde7efb50fccf9d288e28283db013f43603fb75dcf79fade6ee0540528e578",
+    "inputReleasedToNative": false,
+    "nativeContextStarted": false,
+    "providerAttempts": 0,
+    "originalSampleDeadlineCreated": false
+  },
+  "originalTerminal": {
+    "entry": "openclaw:EV003-CM-01:epoch1",
+    "execSession": 73959,
+    "exitCode": 0,
+    "inspectEnvelopeStatus": "success",
+    "nativeOutcome": "native_cm_incomplete",
+    "nativeReturncode": 1,
+    "completedNativeTurns": 0,
+    "elapsedSeconds": 53.980145491994335,
+    "wallExpired": false,
+    "providerAttempts": 0,
+    "providerUsageComplete": false,
+    "tokenUsage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null
+    },
+    "nativeQuality": "UNKNOWN",
+    "receiptPath": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/receipt.json",
+    "receiptSha256": "aa15ae3c8e2f6a6e29d685efe4e1c8d13be09f0ea045ee7d3a84c383111f5837",
+    "nativeReportSha256": "d620709e42acbc9771043603087b0c81c8347512903e1b1c32ff9fd2a0497025",
+    "containerAbsent": true,
+    "networkAbsent": true,
+    "scopeEmptyRemoved": true,
+    "cleanupErrors": [],
+    "originalSampleRepeated": false,
+    "failureClassification": "Evaluator environment binding: loopback /responses POST misdirected to CONNECT-only tunnel; before SDK begin/capture."
+  },
+  "readinessReview": {
+    "path": "eva2/reviews/p2-openclaw-original-cm01-readiness-review-20261007.json",
+    "sha256": "144c8e76e0b6eaf30ce027a6a391a463f1fcec67a8982d2b6ef9f16491d7e674"
+  },
+  "correctedEnvironment": {
+    "executedParentSha256": "829c53e77b6b65298c4f8e288d6b9092d69105a3e321083e6d0ac9fdfffe76d3",
+    "correctedParentSha256": "3ef9b5136f45843ed5b4157f73afc180899f9020e326b6e9c3eed12823e98658",
+    "change": "NO_PROXY and no_proxy loopback only:127.0.0.1,localhost,::1. External HTTPS/ledger/firewall unchanged.",
+    "proofPath": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/loopback-proxy-seam-proof/receipt.public.json",
+    "proofSha256": "f7dd23c76adadadca2e8d89571f20a0c65bc8d60d58e72270bb9dae444d916f5",
+    "oldLocalHttpStatus": 501,
+    "correctedLocalHttpStatus": 200,
+    "externalPublicHostStillOnTunnelHttpStatus": 501,
+    "externalNetworkEvents": 0,
+    "originalRepeated": false,
+    "proofScope": "Existing httpx environment seam; no second full native or original result."
+  },
+  "terminalReview": {
+    "path": "eva2/reviews/p2-openclaw-original-cm01-terminal-review-20261007.json",
+    "sha256": "0b73856c108c1b4f2e7f3a771b13d713ab6188f1a49d336cb9949cccc8c43aea",
+    "publicationGo": true,
+    "minimalSourceDeltaGo": true,
+    "originalCaseRepeatAdmitted": false
   }
 }

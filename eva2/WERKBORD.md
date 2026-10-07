@@ -7,24 +7,19 @@ versie en eerdere ervaring, bewaarde een teruggelezen vervolgnotitie en stopte.
 Dit bewijst die verbetering en vervolgroute; geen algemene voorsprong op alle
 concurrenten. De automatische droomplanner is nog niet gebouwd.
 
-**Nu: P2.1.** De volledige publieke native OpenClaw-route is geslaagd:
-drie beurten, twee sessies, één dagovergang,16voltooide toolresultaten en een
-werkelijk afgeronde procesafsluiting. Doorlooptijd212s met4nagebootste
-modelantwoorden (68synthetische input-/12outputtokens), nul echte modelcalls.
-De oorspronkelijke cleanup=uncertain blijft staan; de extra native/state-/queue-/
-exit-/bevroren-scopebewijzen bevestigen de werkelijk afgeronde uitvoering.
-Dit bewijst de meetroute, geen antwoordkwaliteit of algemene voorsprong.
+**Nu: P2.1.** De oorspronkelijke native OpenClaw-CM01-proef is eenmaal
+uitgevoerd en na54s gestopt vóór de eerste modelcall:0voltooide beurten.
+Inspect sloot de meetroute af; dat is geen geslaagde native taak of kwaliteitsoordeel.
+De oorzaak is afgebakend: lokale POST-aanvragen werden via de externe proxy
+aan de CONNECT-only tunnel aangeboden (HTTP501). Alleen de loopbackproxy-instelling
+is gecorrigeerd; de gerichte nul-providercontrole geeft501→200, extern verkeer
+blijft op dezelfde tunnel. De oorspronkelijke uitvoering en bron blijven bewaard;
+geen automatische herhaling. Processcope, container en netwerk zijn aantoonbaar weg.
 
-**Eerstvolgende handeling:** onafhankelijke toelating van de nu aangesloten
-oorspronkelijke runner. De gerichte nul-modelcontrole bevestigt één native proces
-met dezelfde root-parent, behoud van verzegelde invoerdescriptors en weigering
-van een achterblijvend kindproces. De negatieve weigering blijft als ValueError
-bewaard; de eigen processcope is leeg en verwijderd. De volledige driebeurtenproef
-wordt hergebruikt. De ongebruikte oorspronkelijke OpenClaw-sample is nog niet gestart.
-De eerdere120s-timeout en320s-fout op overgeërfde omgeving blijven bewaard;
-vier gerichte kalendercontroles en de gecorrigeerde native route zijn geslaagd.
-Werkelijke ongeregistreerde externe uitvoering blijft onbekend. Geen nieuwe
-matrix, herhaling van afgesloten gevallen of extra gezinsfunctie geteld.
+**Eerstvolgende handeling:** de onafhankelijke terminal-/bronreview vastleggen en
+alleen een volgende geldige oorspronkelijke toelating gebruiken. Eerdere publieke
+native driebeurten-/16toolbewijzen blijven geldig binnen hun beperkte scope.
+Zij bewijzen geen antwoordkwaliteit. Geen nieuwe matrix of extra gezinsfunctie geteld.
 
 **Jouw open handeling:** twee afzonderlijke mensen beoordelen de al beschikbare
 anonieme antwoordpakketten bij P2.1. Dat blokkeert Codex’ technische werk niet.

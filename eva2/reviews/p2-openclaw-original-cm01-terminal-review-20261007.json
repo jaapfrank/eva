@@ -1,0 +1,298 @@
+{
+  "schema": "p2-openclaw-original-cm01-terminal-review/v1",
+  "date": "2026-10-07",
+  "reviewer": "independent_evaluator",
+  "publication_decision": "GO_WITH_LIMITATIONS",
+  "original_result": "execution_unknown",
+  "technical_classification": "evaluator_transport_environment_binding_failure_before_accounted_sampling",
+  "entry": "openclaw:EV003-CM-01:epoch1",
+  "original_execution": {
+    "one_released_original_execution": true,
+    "input_released": true,
+    "native_user_message_item_observed": true,
+    "completed_native_turns": 0,
+    "declared_session_count": 2,
+    "verified_completed_sessions": 0,
+    "inspect_status": "success",
+    "launcher_exit": 0,
+    "native_child_exit": 1,
+    "native_outcome": "native_cm_incomplete",
+    "elapsed_seconds": 53.980145491994335,
+    "timing_boundary": "Persisted original parent monotonic start before child launch through child exit; preparation and parent cleanup excluded.",
+    "original_wall_limit_seconds": 480,
+    "wall_expired": false,
+    "replay_or_replacement_permitted_by_this_review": false
+  },
+  "diagnosis": {
+    "error_class": "Error",
+    "http_status": 501,
+    "safe_error_category": "unsupported_http_post",
+    "fixed_safe_error_text": "Unsupported method ('POST')",
+    "failing_transition": "Native Codex local Responses POST -> ordinary loopback parent-local inference proxy; the launcher proxy environment instead routes local HTTP through its CONNECT-only egress tunnel.",
+    "evidence": [
+      "Retained diagnostic identifies a loopback Responses URL and a standard Python HTTP501 unsupported-POST response; endpoint value is intentionally not published.",
+      "Pinned parent line180 sets both HTTP_PROXY/http_proxy and HTTPS_PROXY/https_proxy to the egress ModelTunnel, sets NO_PROXY empty, and supplies no loopback exclusion.",
+      "Pinned ModelTunnel Handler implements CONNECT only; the inherited Python BaseHTTPRequestHandler returns HTTP501 for unsupported POST.",
+      "Pinned native inference proxy binds loopback and explicitly accepts POST; its own failure response is HTTP502, not the retained HTTP501.",
+      "No model-body captures, SDK/accounting rows or tool rows were created. The native observer recorded userMessage completion, then physical client exit."
+    ],
+    "attribution": "Concrete comparison-launcher environment defect. Neither missing login nor original task-quality failure is established.",
+    "wire_evidence_limit": "No raw HTTP request journal was retained at the CONNECT-only handler. The routing attribution is supported by the exact retained native response and source/environment bindings, not a packet capture.",
+    "smallest_general_correction": "Bind loopback-only NO_PROXY and no_proxy consistently for the ordinary native local inference proxy; keep remote HTTPS on the existing endpoint-only tunnel and retain every original cap, source, authority and accounting guard.",
+    "correction_not_executed_or_admitted_here": false,
+    "initial_sqlite_maintenance_warnings": "Two rejected maintenance operations were followed by a resolved maintenance operation. The terminal surfaced error is HTTP501; no SQLite repair is justified by this trace.",
+    "preparation_gap": "The successful public mocked native proof did not exercise this original forward-proxy environment. The earlier source/readiness GO did not establish actual local-HTTP bypass under that environment.",
+    "correction_status": "Root made the separately reviewed environment-only source correction and retained a local zero-provider proof; no original retry or sample admission followed."
+  },
+  "usage": {
+    "registered_provider_attempts": 0,
+    "registered_sdk_rows": 0,
+    "observed_native_tool_rows": 0,
+    "provider_usage_complete": false,
+    "sdk_total_usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null
+    },
+    "known_partial_usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    },
+    "native_egress_tunnel_connections": 11,
+    "egress_note": "Tunnel connections are not inference counts. No model attempt or billable usage is inferred from connections; authoritative incomplete accounting and null totals are preserved.",
+    "money": null,
+    "credits": null
+  },
+  "closure": {
+    "parent_close_acknowledged": true,
+    "parent_controller_errors": [],
+    "parent_stop_reason": "child closed without tracked HTTP settlement",
+    "reported_settled": false,
+    "reported_active_tasks": 1,
+    "native_clients": 1,
+    "physical_transports_exited": true,
+    "native_cleanup": "uncertain",
+    "native_closed": false,
+    "equivalent_native_settled": false,
+    "native_pending_at_close": null,
+    "pending_sdk": 0,
+    "pending_tools": 0,
+    "native_cancel_errors": [
+      {
+        "error_class": "Error",
+        "error_code": null,
+        "http_status": null
+      },
+      {
+        "error_class": "Error",
+        "error_code": null,
+        "http_status": null
+      }
+    ],
+    "native_unregister_queues_flushed": 2,
+    "native_source_authority_created": false,
+    "scope_receipts": 1,
+    "scope_receipt_phases": [
+      "register"
+    ],
+    "retirement_or_final_native_scope_receipts": 0,
+    "root_scope_populated_after_stop": false,
+    "root_scope_removed": true,
+    "root_scope_cleanup_errors": [],
+    "root_scope_errors": [],
+    "owned_node_pid_absent": true,
+    "owned_container_absent": true,
+    "owned_network_absent": true,
+    "scope_note": "Root cleanup and physical transport exit are proven; successful native retirement/readback settlement is not."
+  },
+  "original_assessment": {
+    "objective_completion": null,
+    "semantic_score": null,
+    "required_readback_results": null,
+    "hard_privacy_safety_results": null,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "quality": "UNKNOWN",
+    "product_quality_loss_inferred": false,
+    "reason": "No completed native response or required memory readback. A technically incomplete measurement cannot establish an original quality pass or loss.",
+    "criteria_or_dataset_changed": false,
+    "ai_judge_used": false
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "before_execution_sha256": "3ccde7efb50fccf9d288e28283db013f43603fb75dcf79fade6ee0540528e578",
+    "after_execution_sha256": "762bdff35eb9a03d64ca10c976267ff588df70b5520229162aa32b82a6a72a68",
+    "rows": 13,
+    "selected_revision": 2,
+    "selected_attempts": 0,
+    "selected_stop_requested": true,
+    "prior12_values_and_revisions_match_readiness_observations": true,
+    "comparison_basis": "Exact per-row value SHA256 and revision from this independent reviewer readiness tool output, compared read-only after execution.",
+    "registered_attempts": 66,
+    "historical_unknown_usage_attempts": 3,
+    "known_usage_lower_bound": {
+      "input_tokens": 227953,
+      "output_tokens": 7117,
+      "total_tokens": 235070
+    },
+    "whole_registry_usage_complete": false,
+    "new_zero_attempt_row_usage_unknown_flag": false,
+    "new_row_complete": false,
+    "no_reset_or_replay": true
+  },
+  "final_release_binding": {
+    "source_map_file_pins_entry_limits_unchanged": true,
+    "only_final_admission_delta_keys": [
+      "readiness_admitted",
+      "actual_ready_sha256",
+      "review_status",
+      "admitted",
+      "independent_readiness_review"
+    ],
+    "final_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/parent-cm01-final-admission.private.json",
+      "sha256": "a3e3a752843d51511605939991a296c4aa1faad0a39fa0420e16142bb0607399"
+    },
+    "execute_once": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execute-once.private.json",
+      "sha256": "9930b57d4044aba20dcd1a48b006b321f7a8deef7cd4491e3c866def97f5773f"
+    },
+    "deadline": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/sample-deadlines/openclaw-absolute-deadline.json",
+      "sha256": "7fbd6eb03a9b5c269ad3c556b118038eb6ebf0fccd6bee631db98088ffa298d6"
+    }
+  },
+  "source_bindings": {
+    "parent_sha256": "829c53e77b6b65298c4f8e288d6b9092d69105a3e321083e6d0ac9fdfffe76d3",
+    "child_sha256": "2b4ab225b52674a03993b24584217ac2e97d8ce81553280535da9211eddbbccb",
+    "observer_sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284",
+    "process_accounting_sha256": "6e07a07ca1b4976ce798a567864e9a139650fe5f2fbbdf892188af7bfa7c26d4",
+    "native_proxy_sha256": "eb514a3aba831f47742be8e23db369280ebd020da27b7c52d1e8029066dd9b1d",
+    "native_client_sha256": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da",
+    "tunnel_sha256": "12bd58796a92eb09096dab3a484ed3aeb6d5c8f1724fccdc2827ffa3f269bb08",
+    "python_http_server_sha256": "6ef28116c245a8e5e7f2d57f17607b7df706fd86110cf1c5a2b8416151b41248",
+    "source_anchors": {
+      "parent": "launch-parent-accounted-cm01.private.py:180",
+      "tunnel": "eva2/benchmark/inspect_ai_v1/p1_model_tunnel.py:22-58",
+      "native_proxy": "inference-proxy-b-aJMSxm.mjs:242-303,538-552",
+      "stdlib": "/usr/lib/python3.12/http/server.py:417-424"
+    },
+    "native_version": "openclaw-2026.9.6+codex-2026.9.6 / Codex executable0.155.1"
+  },
+  "original_bindings": {
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "projection_sha256": "2abe017212dfc53c19b91b10eed991172cc55af80a95b3de0ec92cf6d4e4135e",
+    "limits": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    }
+  },
+  "artifacts": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/receipt.json",
+      "sha256": "aa15ae3c8e2f6a6e29d685efe4e1c8d13be09f0ea045ee7d3a84c383111f5837"
+    },
+    "native_technical": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/sample/native-cm-technical.json",
+      "sha256": "d620709e42acbc9771043603087b0c81c8347512903e1b1c32ff9fd2a0497025"
+    },
+    "parent_after_close": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/parent-accounting-after-close.private.json",
+      "sha256": "fdcba1276a2ee8bf0088d6f9c58ae2ed9c7ea759d377eba156fd47a9d87eeb7a"
+    },
+    "stderr_private": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/child.stderr.private.log",
+      "sha256": "ddc306540fa76ed782c7651d9d143a6c0322529dd162c9da1c42c08b5bfaa1e7"
+    },
+    "runtime_output_private": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/sample/runtime-output.private.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "pre_bound_root": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/native-scope/pre-bound-root.private.json",
+      "sha256": "98f8841faa4f7d131a9cdb0f4186ea6751e93d44f0e362ed36c12fcd71b6a956"
+    },
+    "registration_scope": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/native-scope/scope-001.json",
+      "sha256": "a2cbf8f373fda166e38e105bf477d4683f4f16f33228416bec12ca4224595186"
+    },
+    "inspect_summary": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/inspect-private/inspect-result-summary.json",
+      "sha256": "5d0abcb4c3f6acb2d2682e7958476606fdc4256f8ef559b2158a3c16b2c1d2e4"
+    },
+    "native_observation_metadata": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/sample/exact-model-context-private/1-native-observation.json",
+        "sha256": "cd13ab6b18b90a6d5c7f1e00978f96544470ba307d04f3461c419751cd6d8c9f"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/sample/exact-model-context-private/2-native-observation.json",
+        "sha256": "313b11b53552cb73c1fe3e709be8ce894e72840496fc520857d35f584395a680"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/sample/exact-model-context-private/3-native-observation.json",
+        "sha256": "0d2daf0938abe6d5f9caebd4f34cb3f33d2f5af3c5b628c55168f7fa01a35036"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/sample/exact-model-context-private/4-native-observation.json",
+        "sha256": "661ae7fa6a2e7a5d4e51e61f80844b742e05f2bd72df20cdc99caef7917e6a90"
+      }
+    ],
+    "executed_parent_source": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/executed-parent-source.private.py",
+      "sha256": "829c53e77b6b65298c4f8e288d6b9092d69105a3e321083e6d0ac9fdfffe76d3"
+    }
+  },
+  "reviewer_activity": {
+    "new_tests": 0,
+    "native_starts": 0,
+    "model_calls": 0,
+    "auth_calls": 0,
+    "original_case_replays": 0,
+    "source_changes": 0,
+    "authority_changes": 0,
+    "protected_questions_or_answers_disclosed": false
+  },
+  "next_action_boundary": "Root may publish the original UNKNOWN result and the separately qualified environment-only source correction. Any later unused original entry needs new entry-specific source/readiness admission within the same authority; no CM01 replay, reset or replacement is authorized.",
+  "source_correction_review": {
+    "decision": "GO_SOURCE_DELTA_ONLY",
+    "corrected_parent": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/launch-parent-accounted-cm01.private.py",
+      "sha256": "3ef9b5136f45843ed5b4157f73afc180899f9020e326b6e9c3eed12823e98658"
+    },
+    "executed_parent_source_preserved_byte_identical": true,
+    "exact_delta": "NO_PROXY and no_proxy both bind only 127.0.0.1,localhost,::1; all other parent source bytes unchanged.",
+    "original_source_admission_and_release_not_relabelled": true,
+    "original_limits_authority_model_profile_accounting_firewall_unchanged": true,
+    "retained_focused_evidence": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/loopback-proxy-seam-proof/receipt.public.json",
+      "sha256": "f7dd23c76adadadca2e8d89571f20a0c65bc8d60d58e72270bb9dae444d916f5"
+    },
+    "focused_evidence_scope": "Existing httpx and ModelTunnel local seam; not the actual Rust client or a full ordinary native/original conversation.",
+    "focused_outcomes": {
+      "old_loopback_status": 501,
+      "corrected_loopback_status": 200,
+      "corrected_response_valid": true,
+      "local_posts": 1,
+      "non_loopback_http_still_uses_connect_only_tunnel_status": 501,
+      "elapsed_seconds": 0.1906785760074854,
+      "external_network_requests": 0,
+      "external_inference_calls": 0,
+      "original_inputs": 0
+    },
+    "proof_preservation_limit": "The proof directory retains the technical receipt only, no separate script/log. The source delta was independently inspected; the reported focused check was not rerun by the reviewer.",
+    "effect": "Addresses the identified local-proxy environment defect without adding a provider route or weakening the remote egress restriction.",
+    "admission_boundary": "Only a later properly admitted unused original entry may bind this corrected source. This is not renewed admission, release, deadline or quota for the already consumed CM01 slot."
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "schema": "p2-openclaw-original-cm01-readiness-review/v1",
+  "date": "2026-10-07",
+  "reviewer": "independent_evaluator",
+  "decision": "GO",
+  "scope": "Final admission and one execute-once release for the already reserved original OpenClaw CM01 epoch1 on the retained waiting process; no restart, replacement reservation or additional case.",
+  "entry": "openclaw:EV003-CM-01:epoch1",
+  "run_handle": "ev003-openclaw-cm01-parent-20261007-v1",
+  "root_execution_session": 73959,
+  "bindings": {
+    "source_review": {
+      "path": "eva2/reviews/p2-openclaw-original-runner-binding-review-20261007.json",
+      "sha256": "acb1cfa66464bf025e37a681f8f42ca9b904428dbb01f32d95a7bee162269bce"
+    },
+    "source_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/parent-cm01-source-admission.private.json",
+      "sha256": "918cdd83691a6c7523fa58b6ad7662652f87d0d36306594871ab14f393da9917"
+    },
+    "actual_ready": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+      "sha256": "294064ef48f0ea203b25b8739808a9d33e49b2edf28bbc12f0fbdaa8b4ad8e46"
+    },
+    "inspect_run_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+      "sha256": "5a352338503081736334239383deb94de14ee024c0eb9f4be4e571d2901a86d7"
+    },
+    "source_sha256": {
+      "launcher_sha256": "829c53e77b6b65298c4f8e288d6b9092d69105a3e321083e6d0ac9fdfffe76d3",
+      "probe_sha256": "2b4ab225b52674a03993b24584217ac2e97d8ce81553280535da9211eddbbccb",
+      "inspect_wrapper_sha256": "b09b2d09ea7deed7b1ba9443fe7e9358881739f07aeaa4379c8fb0d24e786089"
+    },
+    "native_observer_sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284",
+    "process_accounting_sha256": "6e07a07ca1b4976ce798a567864e9a139650fe5f2fbbdf892188af7bfa7c26d4",
+    "projection_sha256": "2abe017212dfc53c19b91b10eed991172cc55af80a95b3de0ec92cf6d4e4135e",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "authority_path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "authority_before_sha256": "28ef3624b52851edd152818efdc6d93399b4e0bdb252de9f299ed5f063e57b3c",
+    "authority_after_reservation_sha256": "3ccde7efb50fccf9d288e28283db013f43603fb75dcf79fade6ee0540528e578",
+    "verified_file_pins": 31,
+    "file_pin_mismatches": []
+  },
+  "actual_process_and_resource_observations": {
+    "inspect_pid": 1027751,
+    "waiting_parent_pid": 1027984,
+    "parent_is_direct_child_of_inspect": true,
+    "inspect_and_parent_uid": 0,
+    "container_id": "11184fe830588f7515f96035158d195fa74b9600813d1af6f34db5d7b5d0d959",
+    "container_name": "ev003-openclaw-cm01-parent-v1",
+    "container_pid": 1028175,
+    "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+    "container_running": true,
+    "network_id": "131a0aff26d41c7ea3d43d1ecd49bfb751187500018598d9a78a045bfce70738",
+    "network_name": "ev003-openclaw-cm01-parent-v1-net",
+    "network_internal": true,
+    "subnet": "10.254.93.0/24",
+    "namespace": "net:[4026534261]",
+    "exact_resource_label": {
+      "eva.p1.openclaw-envelope": "ev003-openclaw-cm01-parent-20261007-v1"
+    },
+    "network_has_only_owned_namespace_carrier": true,
+    "namespace_carrier_user": "10001:10001",
+    "native_actor_uid_gid": [
+      1000,
+      1000
+    ],
+    "native_actor_not_started": true,
+    "native_uid_gid_note": "The Docker sleep container is the namespace carrier. The reviewed setpriv actor has not started; its UID/GID binding is separate.",
+    "ipv4_egress": "loopback plus only TCP 10.254.93.1:46093; remaining output rejected",
+    "ipv6_egress": "loopback only; remaining output rejected",
+    "parent_owns_actual_tunnel_listener": true,
+    "parent_owns_actual_accounting_listener": true,
+    "tunnel_source_allows_only_original_subnet_to_chatgpt_443_connect": true,
+    "accounting_socket": {
+      "path": "/tmp/ev003-openclaw-cm01-parent-20261007-v1/accounting.sock",
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0600"
+    },
+    "authority_native_inaccessible": {
+      "file_owner": 0,
+      "file_mode": "0600",
+      "parent_directory_owner": 0,
+      "parent_directory_mode": "0700"
+    },
+    "ready_controller_errors": [],
+    "ready_network_external_events": [],
+    "ready_connected_native_workers": 0
+  },
+  "unreleased_state": {
+    "provider_attempts": 0,
+    "active_async_attempts": 0,
+    "unsettled_control_events": 0,
+    "stop": null,
+    "stop_requested": false,
+    "input_released": false,
+    "native_context_started": false,
+    "native_profile_exists": false,
+    "sample_output_exists": false,
+    "sample_deadline_directory_exists": false,
+    "execute_once_exists": false,
+    "owner_stop_exists": false
+  },
+  "native_auth_metadata": {
+    "sha256": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+    "uid": 1000,
+    "gid": 1000,
+    "mode": "0600",
+    "access_token_expiry_utc": "2026-10-16T21:16:16+00:00",
+    "access_token_valid_beyond_original_480_seconds": true,
+    "id_token_expiry_utc": "2026-10-06T22:16:16+00:00",
+    "id_token_distinguished_from_access_token": true,
+    "network_auth_or_refresh_calls": 0,
+    "credentials_disclosed": false,
+    "provider_entitlement_success_claim": false
+  },
+  "authority_and_order": {
+    "historical_rows": 12,
+    "current_rows": 13,
+    "openclaw_rows": 1,
+    "selected_revision": 0,
+    "selected_attempts": 0,
+    "selected_identity_limits_and_profiles_match_original": true,
+    "aggregate_binding_matches_original": true,
+    "historical_preservation_basis": "Reviewed parent checked the exact prior authority hash before opening the same authority. Unchanged pinned open_sample performs an INSERT for the previously absent participant/sample key at revision 0; the retained waiting path has no attempt/save. Current historical rows and cumulative counters match the last closed result. No separate prior 12-row byte snapshot was required or created by this review.",
+    "direct_prior_snapshot_row_comparison_performed": false,
+    "historical_reference": {
+      "path": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",
+      "sha256": "28fd8fbc8c07855eff2b7f4a5a28f486450d1de7b2d8a8f0b86837ca03df7c15"
+    },
+    "registered_attempts": 66,
+    "historical_unknown_usage_attempts": 3,
+    "known_usage_lower_bound": {
+      "input_tokens": 227953,
+      "output_tokens": 7117,
+      "total_tokens": 235070
+    },
+    "whole_registry_usage_complete": false,
+    "whole_registry_total_usage": null,
+    "other_participant_unknown_guards_preserved": true,
+    "no_reset_or_budget_donation": true
+  },
+  "original_limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "model_roles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "epoch": 1,
+  "inspect": {
+    "version": "0.3.263",
+    "lock_sha256": "2826d5d25d138b81add376819b6ca73f27caba2df02ff74bd8e80c0a3fef5f5e",
+    "source_admission_projection_case_plan_and_limits_match": true,
+    "semantic_and_human_scores": "unjudged"
+  },
+  "authorized_next_transition": {
+    "executor": "root",
+    "same_waiting_process_only": true,
+    "final_admission_must_bind_this_review_and_actual_ready": true,
+    "permitted_metadata_delta": "Final reviewed/admitted/readiness flags and provenance with exact existing entry, source, projection, authority reservation, model and cap bindings.",
+    "release_must_be_created_once": "O_EXCL at the existing execute-once.private.json, binding final admission hash, actual-ready hash, run handle and exact three-source map.",
+    "deadline": "One original 480-second parent deadline, created before native child launch.",
+    "no_automatic_retry_or_replacement_reservation": true
+  },
+  "limitations": [
+    "This is admission readiness, not a completed OpenClaw sample or measured quality advantage.",
+    "Actual native scope/exit/readback and full usage must still be proven by the original execution; literal native_closed uncertainty remains separate from validated equivalent settlement.",
+    "No new blanket OS-broker isolation condition is imposed. Actually started off-scope work still needs terminal/source-release evidence.",
+    "The three historical unknown-usage attempts remain unknown and do not become zero.",
+    "Official semantic/human quality is unjudged; retained original criteria and independent terminal assessment remain required."
+  ],
+  "reviewer_activity": {
+    "tests": 0,
+    "actor_starts": 0,
+    "provider_calls": 0,
+    "auth_calls": 0,
+    "original_input_decodes": 0,
+    "authority_mutations": 0,
+    "resource_starts": 0,
+    "source_changes": 0
+  },
+  "human_ratings": [
+    null,
+    null
+  ]
+}
