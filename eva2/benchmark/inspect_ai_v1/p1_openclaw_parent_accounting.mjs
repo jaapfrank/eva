@@ -500,15 +500,21 @@ export class OpenClawAccounting {
     // All installed non-tool item variants; a new variant cannot silently escape coverage.
     if (['userMessage','agentMessage','plan','reasoning','contextCompaction','enteredReviewMode','exitedReviewMode'].includes(p.item.type)) return;
     const row = this.tools.get(p.item.id);
-    // Native command completion can precede its post hook. Count only a terminal
-    // command bound to the admitted tool, native thread and turn; never a reservation.
-    if (row && row.status !== 'cancelled' && p.item.type === 'commandExecution'
-        && row.name_sha256 === digest('exec') && row.thread_id === threadId
+    // Native command/patch completion can precede its post hook. Each supported
+    // terminal still requires the admitted tool, native thread and turn.
+    const commandTerminal = p.item.type === 'commandExecution'
+      && row?.name_sha256 === digest('exec') && Number.isSafeInteger(p.item.exitCode);
+    const patchTerminal = p.item.type === 'fileChange'
+      && row?.name_sha256 === digest('apply_patch') && Array.isArray(p.item.changes);
+    if (row && row.status !== 'cancelled' && (commandTerminal || patchTerminal)
+        && row.thread_id === threadId
         && typeof threadId === 'string' && threadId
         && typeof p.turnId === 'string' && p.turnId
         && row.turn_id_sha256 === digest(p.turnId)
-        && p.item.status === 'completed' && Number.isSafeInteger(p.item.exitCode)) {
-      const terminal = {item_type:p.item.type, status:p.item.status, exit_code:p.item.exitCode};
+        && p.item.status === 'completed') {
+      const terminal = commandTerminal
+        ? {item_type:p.item.type, status:p.item.status, exit_code:p.item.exitCode}
+        : {item_type:p.item.type, status:p.item.status, changes_sha256:digest(p.item.changes)};
       if (row.native_terminal && JSON.stringify(row.native_terminal) !== JSON.stringify(terminal)) {
         this.toolCoverage = false; this.ledger.stop('native tool terminal changed'); return;
       }
@@ -518,7 +524,7 @@ export class OpenClawAccounting {
         native_thread_id_sha256:digest(threadId),native_turn_id_sha256:digest(p.turnId),...terminal});
       return;
     }
-    if (p.item.type === 'commandExecution' || !row || ['reserved','cancelled'].includes(row.status)) {
+    if (['commandExecution','fileChange'].includes(p.item.type) || !row || ['reserved','cancelled'].includes(row.status)) {
       this.toolCoverage = false;
       this.nativeCoverageFailure ??= { item_type: typeof p.item.type === 'string' && /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(p.item.type) ? p.item.type : 'UNKNOWN',
         item_id_sha256: digest(p.item.id ?? null), thread_id_sha256: digest(threadId ?? null), observed_status: row?.status ?? 'unreserved' };

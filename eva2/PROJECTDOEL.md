@@ -24,6 +24,14 @@ oorspronkelijke sample/deadline/bron en UNKNOWN blijven bewaard. Dit is geen
 productkwaliteitsverlies, geslaagde vergelijking of nieuwe productfunctie.
 Zie evidence/product/p2-openclaw-original-runner-binding-20261007.json.
 
+CM02 is vervolgens eenmaal uitgevoerd: 3 complete SDK-afrekeningen,
+68.898 invoer-/375 uitvoertokens, 77,065s. De evaluator stopte ten onrechte bij
+een completed fileChange vóór de matching post-hook. Alleen die getypeerde
+apply_patch-overgang is gecorrigeerd (5 checks en onafhankelijke GO).
+CM02 blijft onvolledig/kwaliteit UNKNOWN; geen nieuwe productfunctie of
+vergelijkingswinst. Alle historische resultaten en oorspronkelijke criteria
+blijven behouden. Volgende oorspronkelijke ongebruikte case: CM03.
+
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 
 Het hervatte app-goal is actief. Wijzigingen aan de aansturing staan in deze

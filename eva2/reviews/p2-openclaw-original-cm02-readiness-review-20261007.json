@@ -1,0 +1,217 @@
+{
+  "contract": "Ev003OpenClawOriginalCmReadinessReview/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "reviewer": "independent_evaluator",
+  "entry": "openclaw:EV003-CM-02:epoch1",
+  "decision": "GO_FINAL_ADMISSION_AND_ONE_ATOMIC_RELEASE",
+  "execution_session": 37907,
+  "run_handle": "ev003-openclaw-cm02-native-118df587",
+  "bindings": {
+    "source_review": {
+      "path": "eva2/reviews/p2-openclaw-original-cm02-source-review-20261007.json",
+      "sha256": "1c6324bb3a80263856bce3159f6a6232c1a75a34161227bf84bc3193387d98c1"
+    },
+    "source_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/source-admission.private.json",
+      "sha256": "ebeb46299f61e0c78518c8d0e0ceaa304b221832500ac020647cecfdb2be09b0"
+    },
+    "actual_ready": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+      "sha256": "de5370f60b130a6982e816eaa8fd4b64019c3fc1219254f97d64d863d5b33858"
+    },
+    "inspect_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+      "sha256": "32ff4e27fa74ecde6cc568d805d512be42838f43e1851705ada674370462b73c"
+    },
+    "source_sha256": {
+      "launcher_sha256": "f4d4ad9009f8844f718f3f18d4d2dacb81984da437476078a53245071352d5c6",
+      "probe_sha256": "02f4cba612bad147e89bbf59163fc23382c77c7917d76c24362c8825ff91bcf9",
+      "inspect_wrapper_sha256": "5d57fae3b9998bc4a070ce69db58329a5e34b4f7869452ec84cef19f697b30a8"
+    },
+    "native_observer_sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284",
+    "projection_sha256": "3940181aa519a7025192a7af9cb0fd3959c136b37aa6fb895e6e22d5f6c11ed9",
+    "projection_contract_sha256": "f2b918d11ba9a381682d3bffd11c85f073acd2d2da07a52648f8c05beef18926",
+    "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "verified_file_pins": 33,
+    "mismatches": []
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "before_sha256": "762bdff35eb9a03d64ca10c976267ff588df70b5520229162aa32b82a6a72a68",
+    "after_one_reservation_sha256": "facdfb09c4c7d23fc418a1a6a641307b4cc1c64db3ba905b42511cc15244ac62",
+    "rows": 14,
+    "new_rows": 1,
+    "selected_revision": 0,
+    "selected_attempts": 0,
+    "selected_stop": null,
+    "prior_rows": 13,
+    "all_prior_values_and_revisions_exactly_preserved": true,
+    "prior_canonical_digest": "1537d9e8effcdc00ed67129d08d774583cab8ed7f2b868e8f2d28638b1f40522",
+    "historical_snapshot_sha256": "1ca9c04f3af7dab991476fd7ef570cf11f899147a00c538d884957786f359d88",
+    "closed_cm01_receipt_sha256": "aa15ae3c8e2f6a6e29d685efe4e1c8d13be09f0ea045ee7d3a84c383111f5837",
+    "closed_cm01_unknown_and_stop_preserved": true,
+    "registered_attempts": 66,
+    "historical_unknown_usage_attempts": 3,
+    "known_usage_lower_bound": {
+      "input_tokens": 227953,
+      "output_tokens": 7117,
+      "total_tokens": 235070
+    },
+    "whole_registry_usage_complete": false,
+    "no_reset_donation_or_replacement": true
+  },
+  "actual_resources": {
+    "inspect_pid": 1164708,
+    "waiting_root_parent_pid": 1167200,
+    "parent_direct_child_of_inspect": true,
+    "root_uid_verified": true,
+    "container_id": "bce66a3d0171ff99666cbc74993147c694796cc8d49c815fc80e5e0b45b1d57c",
+    "container_pid": 1168557,
+    "container_name": "ev003-openclaw-cm02-parent-v1",
+    "container_running": true,
+    "container_readonly": true,
+    "container_cap_drop": [
+      "ALL"
+    ],
+    "container_carrier_user": "10001:10001",
+    "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+    "network_id": "8e5711dc957a65d7ad8d3007f0a9d8281a548547431433a6bff588b56a7c56ef",
+    "network_name": "ev003-openclaw-cm02-parent-v1-net",
+    "network_internal": true,
+    "namespace": "net:[4026534259]",
+    "exact_label": {
+      "eva.p1.openclaw-envelope": "ev003-openclaw-cm02-native-118df587"
+    },
+    "only_owned_container_in_network": true,
+    "ipv4_rule": "loopback plus TCP gateway10.254.93.1:46637 only; all remaining output rejected",
+    "ipv6_rule": "loopback only; remaining output rejected",
+    "tunnel_listener_owned_by_waiting_parent": true,
+    "accounting_listener_owned_by_waiting_parent": true,
+    "accounting_socket_uid_gid": [
+      1000,
+      1000
+    ],
+    "accounting_socket_mode": "0600",
+    "native_actor_uid_gid": [
+      1000,
+      1000
+    ],
+    "native_actor_started": false,
+    "namespace_carrier_is_not_native_actor": true,
+    "root_authority_file_mode": "0600",
+    "root_authority_directory_mode": "0700",
+    "native_cannot_read_authority": true
+  },
+  "pre_release_state": {
+    "provider_attempts": 0,
+    "active_async_attempts": 0,
+    "unsettled_events": 0,
+    "controller_errors": [],
+    "ready_network_events": [],
+    "stop_requested": false,
+    "stop": null,
+    "native_worker_seen": false,
+    "input_released": false,
+    "native_context_started": false,
+    "native_profile_exists": false,
+    "sample_output_exists": false,
+    "sample_deadline_exists": false,
+    "execute_once_exists": false,
+    "owner_stop_exists": false
+  },
+  "auth_metadata": {
+    "sha256": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+    "uid_gid": [
+      1000,
+      1000
+    ],
+    "mode": "0600",
+    "same_previously_verified_access_token_expiry_utc": "2026-10-16T21:16:16+00:00",
+    "fresh_through_original_480_second_bound": true,
+    "auth_refreshed": false,
+    "auth_or_entitlement_network_probe": false
+  },
+  "source_and_original_contract": {
+    "source_admission_delta_only": [
+      "resource_preparation_admitted",
+      "review_status",
+      "independent_source_review"
+    ],
+    "exact_three_release_source_pins": true,
+    "inspect_original_case_epoch_dataset_projection_limits_match": true,
+    "inspect_version": "0.3.263",
+    "inspect_lock_sha256": "2826d5d25d138b81add376819b6ca73f27caba2df02ff74bd8e80c0a3fef5f5e",
+    "limits": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "model_roles": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      }
+    },
+    "structural_controls": {
+      "turns": 3,
+      "persons": 1,
+      "private_only": true,
+      "setup": 0,
+      "sessions": [
+        0,
+        0,
+        1
+      ],
+      "clock_generations": [
+        0,
+        0,
+        1
+      ],
+      "offset_deltas_ms": [
+        0,
+        0,
+        2160000000
+      ]
+    },
+    "reviewed_loopback_proxy_bypass_preserved_in_pinned_parent": true,
+    "native_scope_and_equivalent_settlement_guards_preserved": true,
+    "original_inputs_and_criteria_unchanged": true
+  },
+  "permitted_transition": "Root may finalize only the bound final readiness/admitted flags and provenance, then atomically publish exactly one fully written exclusive execute-once file binding this ready hash, final admission hash, run handle and exact source map to the same waiting process. Start one original480s deadline before child launch. No resource restart, duplicate reservation, old-slot replay or automatic retry.",
+  "limitations": [
+    "Readiness is not a successful original native result or quality advantage.",
+    "The closed CM01 and three historical unknown-usage attempts remain unchanged.",
+    "Actual request accounting, native memory/context readbacks and source-holder/physical/scope settlement remain required from this original execution.",
+    "Literal native cleanup uncertainty remains distinct from the separately evidenced equivalent-settlement predicate; no new blanket broker-isolation rule.",
+    "Official semantic and human ratings remain unjudged."
+  ],
+  "reviewer_activity": {
+    "tests": 0,
+    "probes": 0,
+    "resource_starts": 0,
+    "actor_starts": 0,
+    "provider_calls": 0,
+    "auth_calls": 0,
+    "input_decodes": 0,
+    "authority_mutations": 0,
+    "admissions_written": 0,
+    "releases_written": 0
+  },
+  "human_ratings": [
+    null,
+    null
+  ]
+}

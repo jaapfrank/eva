@@ -1,6 +1,6 @@
 {
   "contract": "EvaP2OriginalRunnerBinding/v1",
-  "date": "2026-10-07",
+  "date": "2026-10-07T17:01:47.167645+00:00",
   "task": "P2.1",
   "status": "original_cm01_unknown_retained_proxy_delta_independent_go",
   "priorSourceCheckpoint": "864e3ab508f67153c3ab6873e8098169f908cc88",
@@ -142,5 +142,74 @@
     "publicationGo": true,
     "minimalSourceDeltaGo": true,
     "originalCaseRepeatAdmitted": false
+  },
+  "nextOriginalCM02": {
+    "entry": "openclaw:EV003-CM-02:epoch1",
+    "status": "original_evaluator_incomplete_retained_source_delta_go",
+    "caseId": "EV003-CM-02",
+    "epoch": 1,
+    "originalOrderRetained": true,
+    "closedCM01Replayed": false,
+    "originalQuestionsChanged": false,
+    "criteriaChanged": false,
+    "runtimeImagesChanged": false,
+    "sourceCheckpoint": "ccf29e8cc557e3e71a314a4857ec1145b58087ef",
+    "sourceSha256": {
+      "launcher": "f4d4ad9009f8844f718f3f18d4d2dacb81984da437476078a53245071352d5c6",
+      "probe": "02f4cba612bad147e89bbf59163fc23382c77c7917d76c24362c8825ff91bcf9",
+      "inspect": "5d57fae3b9998bc4a070ce69db58329a5e34b4f7869452ec84cef19f697b30a8"
+    },
+    "projectionContract": "eva2/evidence/product/p2-openclaw-next-entry-contract-20261007.json",
+    "sourceReview": {
+      "path": "eva2/reviews/p2-openclaw-original-cm02-source-review-20261007.json",
+      "sha256": "1c6324bb3a80263856bce3159f6a6232c1a75a34161227bf84bc3193387d98c1"
+    },
+    "readinessReview": {
+      "path": "eva2/reviews/p2-openclaw-original-cm02-readiness-review-20261007.json",
+      "sha256": "6d9eed36773a4397d6e846986af9c140de4be1184f796072c67ddad34d44bd24"
+    },
+    "originalHistoricalRows": 13,
+    "historicalRowsCanonicalSha256": "1537d9e8effcdc00ed67129d08d774583cab8ed7f2b868e8f2d28638b1f40522",
+    "authorityAfterReservationSha256": "facdfb09c4c7d23fc418a1a6a641307b4cc1c64db3ba905b42511cc15244ac62",
+    "sourceAdmissionSha256": "ebeb46299f61e0c78518c8d0e0ceaa304b221832500ac020647cecfdb2be09b0",
+    "readySha256": "de5370f60b130a6982e816eaa8fd4b64019c3fc1219254f97d64d863d5b33858",
+    "finalAdmissionSha256": "0aba81e2d73094da5723ad732f105b55b9998468cd27bca6aa1dec8a5ad37167",
+    "releaseSha256": "a8df493c48075654978392b27bdf901f3a941061343a4459ca97ddee18a5e134",
+    "quality": "UNKNOWN",
+    "usage": {
+      "providerAttempts": 3,
+      "inputTokens": 68898,
+      "outputTokens": 375,
+      "totalTokens": 69273,
+      "providerUsageComplete": true,
+      "creditCost": null
+    },
+    "terminalReceiptSha256": "99f7fbe23d3c4762438479e876364635def8702b4278a94a49cc9f6cc9e6c8a2",
+    "nativeReportSha256": "5846c6d959eba0707564db8e7fb90c1344a1a7fe1e3dc885e3213d778b784518",
+    "elapsedSeconds": 77.06503247799992,
+    "wallExpired": false,
+    "nativeReturncode": 1,
+    "completedTurns": 0,
+    "containerAbsent": true,
+    "networkAbsent": true,
+    "processScopeAbsent": true,
+    "classification": "evaluator_native_file_change_terminal_before_post_gap",
+    "terminalReview": {
+      "path": "eva2/reviews/p2-openclaw-original-cm02-terminal-review-20261007.json",
+      "sha256": "2727f162e6d1b5619dfbfcb308d3d209ea078237ae188e0c8b1027de7623f157",
+      "decision": "GO_CORRECT_PUBLICATION_AND_SOURCE_DELTA_NO_REPLAY"
+    },
+    "sourceCorrection": {
+      "sourceSha256": "b6b7031a26702070ccdaeac6c44fbaa6603e1c9a5f4a292732c956789c72e486",
+      "testSha256": "20eb2c5ade54b84caddef771e1074f1c5cf470a2f0013323e737c9d18d0cd17a",
+      "focusedChecksPassed": 5,
+      "providerCalls": 0,
+      "originalReplay": false,
+      "scope": "typed admitted fileChange terminal before post; no calendar or criteria changes",
+      "checkReceiptSha256": "e4159219233130337a64efc101ba73b396b8833b65a2eefbe54a1d79e12436d4",
+      "nativeFullCompositionRetested": false
+    },
+    "nativeReadbacksConfirmed": false,
+    "replayed": false
   }
 }

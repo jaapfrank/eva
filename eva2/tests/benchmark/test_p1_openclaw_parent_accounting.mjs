@@ -571,6 +571,50 @@ await test('correlated native terminal before post settles once and keeps result
   assert.equal(row.settled_monotonic,settled);assert.equal(ledger.stopReason,null);
 });
 
+await test('native patch terminal before post settles once without requiring command metadata', () => {
+  const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+  const invocation={toolUseId:'public-patch',toolName:'apply_patch',turnId:'public-patch-turn',rawPayload:{session_id:'public-patch-thread'}};
+  const row=o.nativeToolBefore(invocation);
+  const p={threadId:'public-patch-thread',turnId:'public-patch-turn',
+    item:{id:invocation.toolUseId,type:'fileChange',status:'completed',changes:[{path:'public-note.txt',kind:'add',diff:'+public fixture'}]}};
+  o.nativeNotification({}, {method:'item/completed',params:p});
+  assert.equal(row.dispatched,true);assert.equal(row.status,'settled');
+  assert.equal(o.toolCoverage,true);assert.equal(ledger.stopReason,null);
+  assert.equal(row.native_terminal.item_type,'fileChange');
+  assert.equal('exit_code' in row.native_terminal,false);
+  assert.match(row.native_terminal.changes_sha256,/^[a-f0-9]{64}$/);
+  assert.equal(JSON.stringify(row).includes('public-note.txt'),false);
+  const settled=row.settled_monotonic;
+  o.nativeNotification({}, {method:'item/completed',params:p});o.nativeToolAfter(invocation);
+  assert.equal(o.tools.size,1);assert.equal(row.settled_monotonic,settled);
+  assert.equal(ledger.stopReason,null);
+  p.item.changes=[{path:'changed.txt',kind:'add',diff:'+different'}];
+  o.nativeNotification({}, {method:'item/completed',params:p});
+  assert.equal(o.toolCoverage,false);assert.equal(ledger.stopReason,'native tool terminal changed');
+});
+
+await test('native patch terminal rejects missing or mismatched admission before and after post', () => {
+  for(const afterPost of [false,true])for(const changed of ['unreserved','cancelled','thread','turn','name','status','changes','type','missing-turn']) {
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+    const invocation={toolUseId:'public-negative-patch',toolName:'apply_patch',turnId:'public-patch-turn',rawPayload:{session_id:'public-patch-thread'}};
+    if(changed==='name')invocation.toolName='exec';
+    if(changed==='missing-turn')delete invocation.turnId;
+    const row=changed==='unreserved'?null:o.nativeToolBefore(invocation);
+    if(changed==='cancelled')o.cancelNativeTool(invocation);
+    if(afterPost && row && changed!=='cancelled')o.nativeToolAfter(invocation);
+    const p={threadId:'public-patch-thread',turnId:'public-patch-turn',
+      item:{id:invocation.toolUseId,type:'fileChange',status:'completed',changes:[]}};
+    if(changed==='thread')p.threadId='other-thread';
+    if(changed==='turn')p.turnId='other-turn';
+    if(changed==='status')p.item.status='inProgress';
+    if(changed==='changes')delete p.item.changes;
+    if(changed==='type')p.item.type='commandExecution';
+    o.nativeNotification({}, {method:'item/completed',params:p});
+    assert.equal(o.toolCoverage,false,changed);assert.ok(ledger.stopReason,changed);
+    if(!afterPost)assert.equal(row?.dispatched??false,false,changed);
+  }
+});
+
 await test('native terminal requires exact admitted command identity and real terminal metadata', () => {
   for(const changed of ['unreserved','cancelled','thread','turn','name','status','exit','type','missing-turn']) {
     const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});

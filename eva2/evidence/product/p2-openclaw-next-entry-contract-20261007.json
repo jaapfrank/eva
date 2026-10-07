@@ -1,0 +1,175 @@
+{
+  "contract": "Ev003OpenClawNextOriginalEntryContract/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "entry": "openclaw:EV003-CM-02:epoch1",
+  "case_id": "EV003-CM-02",
+  "epoch": 1,
+  "family": "conversation_memory",
+  "decision": "TECHNICALLY_COMPATIBLE_AFTER_ENTRY_BINDING",
+  "inference_admitted": false,
+  "original_order": {
+    "family_order_unchanged": true,
+    "case_order": "Ascending committed case ID within family, epoch1 before later epochs",
+    "previous_openclaw_entry": "openclaw:EV003-CM-01:epoch1",
+    "previous_result": "execution_unknown",
+    "previous_closed_entry_not_replayed": true,
+    "selected_entry_unused": true,
+    "selection_by_measured_outcome": false
+  },
+  "binding": {
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "authority_path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "authority_sha256": "762bdff35eb9a03d64ca10c976267ff588df70b5520229162aa32b82a6a72a68",
+    "current_corrected_parent_sha256": "3ef9b5136f45843ed5b4157f73afc180899f9020e326b6e9c3eed12823e98658",
+    "current_native_child_sha256": "2b4ab225b52674a03993b24584217ac2e97d8ce81553280535da9211eddbbccb",
+    "current_observer_sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284"
+  },
+  "structural_controls": {
+    "user_turns": 3,
+    "setup_turns": 0,
+    "actors": 1,
+    "actor_order": [
+      0,
+      0,
+      0
+    ],
+    "audience": "original verified private person only",
+    "unknown_person": false,
+    "shared_audience": false,
+    "sessions": 2,
+    "session_order": [
+      0,
+      0,
+      1
+    ],
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "clock_offset_deltas_milliseconds": [
+      0,
+      0,
+      2160000000
+    ],
+    "calendar_advances": 1,
+    "other_fixture_events": 0,
+    "additional_services_or_credentials": 0
+  },
+  "native_compatibility": {
+    "same_three_turn_two_session_single_person_shape": true,
+    "existing_clock_binding_supports_original_delta": true,
+    "native_memory_policy_change_required": false,
+    "new_product_or_tool_implementation_required": false,
+    "current_hardcoded_cm01_files_not_directly_executable_for_cm02": true
+  },
+  "minimum_entry_binding": [
+    "Create oracle-free CM02 OpenClaw packet using existing independently attested original CM02 input/control projection; retain exact messages, clock, verified principal and descriptive private audience.",
+    "Use participant/case/epoch/session-scoped deterministic native context IDs; session0 ID is reused for turns0/1 and session1 is distinct. Same fresh native profile and memory persist across the two sessions.",
+    "Adapt only case/entry/resource/profile/output identifiers, packet path/hash, casehash and current source pins in existing parent/child/Inspect. Keep the corrected loopback proxy exception.",
+    "Replace the parent blanket no-OpenClaw-history assertion with exact target-slot-unused and preserved closed CM01 receipt/row checks, using the same authority; never reset or donate CM01 reservation.",
+    "Perform bundled entry-specific source review, resource preparation and actual-ready final release review before any original input."
+  ],
+  "required_retained_evidence": [
+    "Exact unchanged admitted ingress and native visible response for each turn.",
+    "Durable effective native session entry, mirrored transcript and actual native workspace/memory readbacks after each turn.",
+    "Exact outgoing model request bytes, including helpers, bound to original turn/session/calendar generation without auth headers.",
+    "Complete SDK and actual native tool accounting under one cumulative sample deadline and cap.",
+    "Native readback, source-holder settlement, physical exit and root scope evidence before session/calendar advance and final parent close."
+  ],
+  "accounting_eligibility": {
+    "current_rows": 13,
+    "current_openclaw_rows": 1,
+    "closed_cm01_revision": 2,
+    "closed_cm01_registered_attempts": 0,
+    "closed_cm01_stop_retained": true,
+    "closed_cm01_usage_unknown_flag": false,
+    "closed_cm01_envelope_exceeded": false,
+    "existing_participant_local_unresolved_guard_blocks_cm02": false,
+    "basis": "Pinned PersistentAggregateLedger._rows is participant-local; _unresolved tests usage_unknown, exceeded envelope or non-completed attempt rows. The zero-attempt stopped CM01 has none of those flags. Its incomplete result and original reservation remain unchanged.",
+    "other_participants_historical_unknown_attempts": 3,
+    "no_new_reservation": true
+  },
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "toolDispatches": 16,
+    "wallSeconds": 480,
+    "speechRequests": 0,
+    "externalActions": 0
+  },
+  "model_roles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "existing_equality_lineage": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm02-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "087e5bc9494524fda3e7d720708ea0b909c1044c7f1508d69f051ac639a4eebb",
+    "input_projection_sha256": "d99f7ab31660717151c09b70657a853a3903fef2c617e439762ba74339c37d76"
+  },
+  "projection_status": "materialized_original_controls_equal_native_admission_pending",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "activity": {
+    "model_calls": 0,
+    "auth_calls": 0,
+    "resource_starts": 0,
+    "reservations": 0,
+    "admissions_written": 0,
+    "releases_written": 0,
+    "source_changes": 0
+  },
+  "preparation_notes": [
+    "One read-only schema query assumed a per-turn actor_index; existing single-person native packets instead use provisioning.actor_id. Key-only inspection corrected that query; no files, resources or original inputs were changed."
+  ],
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/cm02-epoch1.native-inputs.private.json",
+    "sha256": "3940181aa519a7025192a7af9cb0fd3959c136b37aa6fb895e6e22d5f6c11ed9",
+    "technical_equality_path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/projection-contract-technical.private.json",
+    "technical_equality_sha256": "f2b918d11ba9a381682d3bffd11c85f073acd2d2da07a52648f8c05beef18926",
+    "oracle_included": false,
+    "input_clock_actor_audience_preserved": true,
+    "protection": {
+      "directory_owner_uid": 0,
+      "directory_mode": "0700",
+      "file_owner_uid": 0,
+      "file_mode": "0600"
+    }
+  },
+  "native_packet_schema": {
+    "provisioning": [
+      "actor_id",
+      "audience_kind"
+    ],
+    "turn": [
+      "clock",
+      "context_id",
+      "ordinal",
+      "session_index",
+      "text"
+    ],
+    "clock": [
+      "generation",
+      "offset_delta_milliseconds"
+    ],
+    "global_clock": [
+      "initial",
+      "mode",
+      "timezone"
+    ]
+  }
+}

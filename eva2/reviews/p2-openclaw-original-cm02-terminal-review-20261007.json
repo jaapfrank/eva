@@ -1,0 +1,326 @@
+{
+  "contract": "Ev003IndependentTerminalReview/v1",
+  "recorded_at": "2026-10-07T17:00:46.249743+00:00",
+  "entry": "openclaw:EV003-CM-02:epoch1",
+  "decision": "GO_FOR_TRUTHFUL_TERMINAL_PUBLICATION_AND_NARROW_SOURCE_CORRECTION",
+  "execution_classification": "EVALUATOR_TOOL_TERMINAL_ORDER_GAP_ORIGINAL_QUALITY_UNKNOWN",
+  "original_sample_closed": true,
+  "replay_or_new_sample_admitted": false,
+  "original_bindings": {
+    "case_sha256": "f882c57fd68b8a4222c6a2bcdcb4caf7ad0bc1f5adf9b660bd8ae6d249c60393",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "projection_sha256": "3940181aa519a7025192a7af9cb0fd3959c136b37aa6fb895e6e22d5f6c11ed9",
+    "limits": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "model_roles": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      }
+    }
+  },
+  "measured": {
+    "inspect_envelope_status": "success",
+    "native_outcome": "native_cm_incomplete",
+    "native_returncode": 1,
+    "native_successful_result": false,
+    "completed_original_turns": 0,
+    "planned_original_turns": 3,
+    "planned_sessions": 2,
+    "observed_calendar_generations": [
+      0
+    ],
+    "elapsed_seconds": 77.06503247799992,
+    "timing_boundary": "released parent sample through child termination; preparation excluded",
+    "wall_expired": false,
+    "provider_attempts": 3,
+    "provider_usage_complete": true,
+    "input_tokens": 68898,
+    "output_tokens": 375,
+    "total_tokens": 69273,
+    "model": "gpt-6-sol",
+    "reasoning_effort": "none",
+    "helper_attempts": 0,
+    "tool_reservations": 3,
+    "tool_post_settlements": 3,
+    "tool_dispatches_observed": 3,
+    "command_terminals_completed": 2,
+    "file_change_terminals_completed": 1,
+    "tool_coverage": false,
+    "monetary_cost": null
+  },
+  "diagnosis": {
+    "owner": "benchmark evaluator adapter",
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/executed-instrumentation-source.private.mjs",
+      "sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284"
+    },
+    "source_anchor": "nativeNotification, lines 490-527; command-only terminal branch 505-520, reserved-row stop 521-526",
+    "native_item_type": "fileChange",
+    "native_tool_name": "apply_patch",
+    "item_status": "completed",
+    "error_class": "Error",
+    "error_code": null,
+    "first_stop_reason": "native tool completion without dispatch observation",
+    "exact_correlation": {
+      "tool_id_sha256": "960a9e7dae7d41279293d2f89ce1a2e0557161ab9d74dffb6e5973574b5f34a2",
+      "thread_id_sha256": "6208558630ee785b9480a4f928015b9fa2644c9533817329b14dc26b088cdc3f",
+      "turn_id_sha256": "fee8b886b773b223b3802a67cfd7f0bf99b16368b9aeecca388d3088676aee9b"
+    },
+    "sequence": [
+      {
+        "phase": "pre_hook_return",
+        "monotonic": 123093.151568792
+      },
+      {
+        "phase": "fileChange_completed_while_reserved",
+        "monotonic": 123093.176765944
+      },
+      {
+        "phase": "first_coverage_stop",
+        "monotonic": 123093.17899688
+      },
+      {
+        "phase": "matching_post_settlement",
+        "monotonic": 123093.66078069
+      }
+    ],
+    "conclusion": "The admitted native patch completed before its matching post callback. The evaluator accepted this ordering only for commandExecution, stopped the ledger on the still-reserved fileChange row, and retained that stop after the later post settlement. This establishes a measurement defect, not a participant quality failure.",
+    "secondary_failures": {
+      "pre_stop_calendar_bind_rejections": 3,
+      "subsequent_native_full_body_fallbacks_reaching_completed_sdk": 3,
+      "post_stop_body_bind_rejections": 36,
+      "post_stop_fixed_message": "OpenClaw parent accounting stopped",
+      "new_sdk_dispatches_after_first_stop": 0,
+      "parent_close_stop": "child closed without tracked HTTP settlement"
+    },
+    "secondary_limit": "The three earlier local calendar refusals were recovered by the retained native full-body route. Their separate causes are not repaired or generalized by this review.",
+    "retained_transition_evidence": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/37-native-observation.json",
+        "sha256": "a790917ad5e0141abb6eb33d67bd4a07268da28c5c08188319de3694c1e625ad"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/38-native-observation.json",
+        "sha256": "c368e23732c9cf60ac752ec4aaf7ed3d6bd6b57d712166965c2debf06ca97544"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/39-native-observation.json",
+        "sha256": "dd4afeae8bb80f5bda5b2852146ebd4e57cba899c43917ed8918cb0e5b11834c"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/40-native-observation.json",
+        "sha256": "9e18ea3d34bcf70c70b3481aa82c38c1c029603c71ea0b6102b59350ec7c7c45"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/41-native-observation.json",
+        "sha256": "71ecc399ac5dc8c9b5d757344bd0a1f78f3fa7bff659a69d9125bc0d17de4907"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/42-native-observation.json",
+        "sha256": "08f7def80032e8cb651f7f612c6500619e2685a4ba1280a6433f359fcdd9d4cf"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/43-native-observation.json",
+        "sha256": "da29954b00e8a74415e1015d71ba9dbf4cc158be5036110793602dfbf6215334"
+      }
+    ]
+  },
+  "original_assessment": {
+    "objective_completion": null,
+    "semantic_score": null,
+    "required_readback_results": null,
+    "hard_privacy_safety_results": null,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "quality": "UNKNOWN",
+    "product_quality_loss_inferred": false,
+    "official_native_response_count": 0,
+    "verified_complete_native_turn_readbacks": 0,
+    "reason": "No completed original turn, official returned answer, or settled required memory readback was retained. Intermediate agent/tool activity cannot substitute for the fixed original answer/readback conditions. Inspect success and SDK settlement do not establish quality.",
+    "criteria_or_dataset_changed": false,
+    "ai_judge_used": false
+  },
+  "closure": {
+    "parent_close_ack": true,
+    "physical_native_clients_exited": 2,
+    "native_closed": false,
+    "literal_native_cleanup": "uncertain",
+    "equivalent_native_settled": false,
+    "pending_sdk": 0,
+    "pending_tools": 0,
+    "native_cancel_error_count": 3,
+    "native_cancel_error_classes": [
+      "Error"
+    ],
+    "native_retirement_scope_receipts": 0,
+    "root_registration_scope_receipts": 1,
+    "root_scope_populated_after_stop": false,
+    "root_scope_absent": true,
+    "root_scope_errors": [],
+    "root_cleanup_errors": [],
+    "own_container_absent": true,
+    "own_network_absent": true,
+    "limitation": "Physical exits and root resource cleanup are established; native retirement/readback settlement is not. Parent ACK acknowledges a reported unsettled close."
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "before_sha256": "762bdff35eb9a03d64ca10c976267ff588df70b5520229162aa32b82a6a72a68",
+    "after_sha256": "e8ce5a758ab7a66b6affbbfd19d308cbdd18d39dffd5630781d7c770f154d5ba",
+    "rows": 14,
+    "all_13_prior_rows_and_revisions_exact": true,
+    "prior_rows_evidence": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/historical-rows-before-technical.private.json",
+      "sha256": "1ca9c04f3af7dab991476fd7ef570cf11f899147a00c538d884957786f359d88"
+    },
+    "prior_rows_canonical_sha256": "1537d9e8effcdc00ed67129d08d774583cab8ed7f2b868e8f2d28638b1f40522",
+    "current_row_revision": 8,
+    "current_usage_unknown": false,
+    "current_envelope_exceeded": false,
+    "cumulative_known_lower_bounds": {
+      "registered_attempts": 69,
+      "known_input_tokens": 296851,
+      "known_output_tokens": 7492,
+      "historical_attempts_with_unknown_usage": 3,
+      "known_total_tokens": 304343
+    },
+    "all_historical_unknown_usage_preserved": true,
+    "closed_cm01_receipt_sha256": "aa15ae3c8e2f6a6e29d685efe4e1c8d13be09f0ea045ee7d3a84c383111f5837",
+    "no_reset_or_replacement": true
+  },
+  "context_retention": {
+    "sdk_rows": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/sdk-attempts-technical.json",
+      "sha256": "21237b7721c9a2c89798673b4535ddf1d16c10527128fa80f68577623a45e049"
+    },
+    "original_prebinding_outgoing_artifacts_verified": 9,
+    "all_hashes_and_lengths_match": true,
+    "artifacts": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/6-attempt-1-original.json",
+        "sha256": "4154496714b7f1d11e3a8fbc14780c2c29b40ffc8e9fa3138061beb6c7e64724"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/7-attempt-1-calendar-before.json",
+        "sha256": "ee6ff7ab4ebdc2bc66cdeeaa560ccb3f371a19065f59911e6e2e0881882e5f6b"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/8-attempt-1-websocket.json",
+        "sha256": "6132bb6c915928378ebec7a688cd75dff6871bf434a126ebd46a7318e279cc79"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/20-attempt-2-original.json",
+        "sha256": "aa00bf0f3becc11350dee72a419e361a0fa507bfcf0ab80bfefea8d76e944dbf"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/21-attempt-2-calendar-before.json",
+        "sha256": "76d4ef9ea2ed4fd97c2c67ce119041ac2e68d472dfe6bee2fceed19426f02eb6"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/22-attempt-2-websocket.json",
+        "sha256": "93119237fd5f89967aacfa1708110d41b66f6cf94691d61c2e3021434b5c1d45"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/33-attempt-3-original.json",
+        "sha256": "3f7459d1f49435bd3b0328189415acc9147969aa93fe6518f522e5e86e2b5b71"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/34-attempt-3-calendar-before.json",
+        "sha256": "2eb3cb33dd471e1898f4bf193aa74561729cc7feae59c8c4b331b3f5137e16c0"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/exact-model-context-private/35-attempt-3-websocket.json",
+        "sha256": "fddfb2908f363a429a07f62059bfa758fcf78b396ab7e521f870ecc0b2455179"
+      }
+    ],
+    "raw_context_or_tool_content_published": false
+  },
+  "source_correction_review": {
+    "decision": "GO_SOURCE_ONLY",
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "b6b7031a26702070ccdaeac6c44fbaa6603e1c9a5f4a292732c956789c72e486"
+    },
+    "tests": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "20eb2c5ade54b84caddef771e1074f1c5cf470a2f0013323e737c9d18d0cd17a"
+    },
+    "focused_checks": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/file-change-terminal-focused-checks.public.json",
+      "sha256": "e4159219233130337a64efc101ba73b396b8833b65a2eefbe54a1d79e12436d4"
+    },
+    "test_result": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0,
+      "duration_ms": 127.220142
+    },
+    "test_provenance": "Root retained the actual completed exec output (chunk 0c8a41); reviewer read the receipt and source/test delta without rerunning.",
+    "scope": "Only completed fileChange with array changes and exact admitted apply_patch/id/thread/turn joins the existing terminal-before-post handling; changes are hashed, not exposed. Delayed post remains idempotent. Changed duplicate terminal, cancelled/unreserved/wrong-name/thread/turn/status/type/missing metadata remain fail-closed. Command behavior, calendar, caps, ordinary policy and physical closure are unchanged.",
+    "original_execution_instrumentation_preserved": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/executed-instrumentation-source.private.mjs",
+      "sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284"
+    },
+    "full_native_confirmation_performed_for_correction": false,
+    "past_or_future_sample_release_admitted": false
+  },
+  "evidence": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/receipt.json",
+      "sha256": "99f7fbe23d3c4762438479e876364635def8702b4278a94a49cc9f6cc9e6c8a2"
+    },
+    "native_technical": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/native-cm-technical.json",
+      "sha256": "5846c6d959eba0707564db8e7fb90c1344a1a7fe1e3dc885e3213d778b784518"
+    },
+    "runtime_output": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/sample/runtime-output.private.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "parent_after_close": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/parent-accounting-after-close.private.json",
+      "sha256": "d8a6c8e9e776e15dde6c94dc4d0cc84d1edbe5f8c514f3650fab6d488942fcd5"
+    },
+    "stderr": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execution/child.stderr.private.log",
+      "sha256": "f28e5fe5a941d8aae4e584d0836bc3219003c033548f2d0d4c6d68a60b30e133"
+    },
+    "final_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/parent-cm02-final-admission.private.json",
+      "sha256": "0aba81e2d73094da5723ad732f105b55b9998468cd27bca6aa1dec8a5ad37167"
+    },
+    "exclusive_release": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm02-preparation-20261007-v1/execute-once.private.json",
+      "sha256": "a8df493c48075654978392b27bdf901f3a941061343a4459ca97ddee18a5e134"
+    },
+    "readiness_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm02-readiness-review-20261007.json",
+      "sha256": "6d9eed36773a4397d6e846986af9c140de4be1184f796072c67ddad34d44bd24"
+    }
+  },
+  "review_activity": {
+    "new_tests": 0,
+    "model_or_auth_calls": 0,
+    "native_starts": 0,
+    "original_replays": 0,
+    "source_or_authority_changes": 0,
+    "held_out_content_disclosed": false
+  }
+}
