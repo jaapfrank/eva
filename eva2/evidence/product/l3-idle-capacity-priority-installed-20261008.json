@@ -1,0 +1,96 @@
+{
+  "contract": "eva.product.idle-capacity-priority-installed.v1",
+  "recordedAt": "2026-10-07T22:27:41.725435+00:00",
+  "existingTaskIds": [
+    "L3",
+    "I1"
+  ],
+  "sourceCommit": "3616a3f34b65e374d41f92a142ac88e99e180c39",
+  "state": "installed_independently_reviewed",
+  "existing": "Automatic idle reflection, interest exploration, prototype and release preparation, expression/initiative stages and existing daily reflection allowance.",
+  "gap": "Activity was checked before the whole batch and recorded only after conversation response; optional stages had no CPU/work/capacity gate.",
+  "change": "Use the existing shared conversation and idle route. Track overlapping foreground conversations; recheck activity between optional stages and after capacity/budget reads. Gate optional stages on current CPU headroom, existing autonomous/model allowance and installation-scoped admitted/running delegated work.",
+  "installation": {
+    "services": {
+      "core": {
+        "container": "eva2-managed-b-slot3-core",
+        "image": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+        "health": "healthy",
+        "restartCount": 0,
+        "sourceHashes": {
+          "application/memory_background.py": "7cad97c796af9002fff780cbd36ac5dde66da3f621e60589f86e863788d9d1be",
+          "bootstrap/runtime.py": "45af7c238bc6b623f0eb5036812649fed7b0e5991fab1640568f4988285a9252",
+          "bootstrap/idle_capacity.py": "16b5ff43e033b8b55029f0c8ddb4733439f4cfbb96a5323fc73871fefcd86c14",
+          "adapters/postgres/delegated_work.py": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3",
+          "adapters/postgres/runtime_resource_usage.py": "82c20f995283d78c3f8a7602d061bf1d86c6145872aa5db8834c64460c1c7312"
+        }
+      },
+      "delegated-work-worker": {
+        "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:6ec3e9291a28feded8bcd0225dd55c81af6f0bbaf2c551b7a3e89007a366539a",
+        "health": "healthy",
+        "restartCount": 0,
+        "sourceHashes": {
+          "application/memory_background.py": "7cad97c796af9002fff780cbd36ac5dde66da3f621e60589f86e863788d9d1be",
+          "bootstrap/runtime.py": "45af7c238bc6b623f0eb5036812649fed7b0e5991fab1640568f4988285a9252",
+          "bootstrap/idle_capacity.py": "16b5ff43e033b8b55029f0c8ddb4733439f4cfbb96a5323fc73871fefcd86c14",
+          "adapters/postgres/delegated_work.py": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3",
+          "adapters/postgres/runtime_resource_usage.py": "82c20f995283d78c3f8a7602d061bf1d86c6145872aa5db8834c64460c1c7312"
+        }
+      }
+    },
+    "configuration": "Only core/worker images changed; existing mounts, data, environment and other service configuration retained by the existing updater.",
+    "oneBundledUpdate": true,
+    "dependencyDownloads": 0,
+    "rollbacks": 0,
+    "priorRuntimeVariant": "Exact existing seven-line restore-activation omission retained in development images; canonical repository guard retained. Separate hashes and normalization are in image-binding evidence."
+  },
+  "verification": {
+    "focusedTests": 31,
+    "durationSeconds": 3.32,
+    "productionWiringProbe": {
+      "productionFactoryUsed": true,
+      "sharedForegroundGateBound": true,
+      "capacityCallbackBound": true,
+      "idleCallbacks": 7,
+      "dailyBudgetReadOnlyRevisionUnchanged": true,
+      "dailyAllowanceAvailable": true,
+      "activeDelegatedWork": false,
+      "optionalCapacityAvailableAtObservation": true,
+      "probeWorkersStarted": false,
+      "manualModelCalls": 0,
+      "userConversationInvoked": false,
+      "allApplicationFieldsPrivate": true
+    },
+    "bothRunningContainersExactSourceHashes": true,
+    "sourceReview": "eva2/reviews/l3-idle-capacity-priority-source-review-20261008.json",
+    "independentRuntimeReview": "eva2/reviews/l3-idle-capacity-priority-runtime-review-20261008.json",
+    "imageBinding": "eva2/evidence/product/l3-idle-capacity-priority-image-binding-20261008.json",
+    "testReceipt": "eva2/evidence/product/l3-idle-capacity-priority-tests-20261008.json",
+    "privateReceiptHashes": {
+      "build.json": "f0084b8b4138b4c5df59f6720560f8d5d69217445403be65ec7bcf88e882cd04",
+      "update.private.json": "c45a089c5a449cf3c8ae0858d04921b86ab62eed083abef1a7e5af4bb3a38765",
+      "prebuild-binding.json": "6a00a9e592597a20399b820bb8d5cc6382af99e3c86ca81479d4e1a78f56dfef",
+      "installed-wiring-probe.json": "125e92665eee61e9b5a8b1e3753c53c8329f90f05db738247a976a82aaece5f2"
+    },
+    "runtimeVerificationSha256": "fa34480ef74492b3763c2df1c628cd970df2f3ab30054eb37f629866e61e7457",
+    "independentDecision": "GO_INSTALLED_BINDING_AND_BOUNDED_PUBLICATION",
+    "independentRuntimeReviewSha256": "93c20a4321147f074e4c8d0fd048200888bcc201a76bbbb1b03d06da24ef7375"
+  },
+  "usage": {
+    "manualRuntimeModelCallsForThisDelivery": 0,
+    "newModelComparisonCalls": 0,
+    "runtimeAutonomousUsage": "not_measured_by_this_delivery",
+    "developmentCredits": null
+  },
+  "limitations": [
+    "Existing optional idle stages are reused; no new general optimizer/platform or proof that every app/add-on type is integrated.",
+    "CPU load/affinity/cgroup gate is an indication, not a RAM/GPU capacity guarantee.",
+    "The existing daily allowance is an admission budget, not a live subscription-credit meter.",
+    "A started blocking stage may finish to its checkpoint; this is not immediate cancellation.",
+    "Deferred reflection scopes are retained in process memory; this adds no durable restart checkpoint.",
+    "No real family experience or independent improvement-quality comparison was run for this scheduling correction.",
+    "Original L3 acceptances, closed AIDE/R1 trials, P2 conditions and 48/39 task counts unchanged."
+  ],
+  "userUse": "No dashboard action is required. The existing automatic idle route may run during quiet periods within admitted capacity; normal chat remains foreground. Improvements still require the existing scoped development, independent evaluation and reviewed application route."
+}

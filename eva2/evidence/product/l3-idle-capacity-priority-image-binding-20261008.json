@@ -1,0 +1,67 @@
+{
+  "contract": "EvaPreservedManagedImageBinding/v1",
+  "recordedAt": "2026-10-07T22:19:46.576995+00:00",
+  "taskScope": "Existing L3/I1 idle capacity/priority",
+  "baseCommit": "099168141b5cfeaf102f8736dbba2c35fedba8d6",
+  "currentImages": {
+    "core": "sha256:abae98b04e2ece802452cab215fa61ff18042f30759ee36239655ca4565531e1",
+    "delegated-work-worker": "sha256:807f8c7b35537e39b7bd39b537132430eb08d65eccea15425ab2dd98ec0623a5"
+  },
+  "repositoryChangedSourceHashes": {
+    "application/memory_background.py": "7cad97c796af9002fff780cbd36ac5dde66da3f621e60589f86e863788d9d1be",
+    "bootstrap/runtime.py": "abf4d57fc6bbdccb8e06094072cb77a567ecd51f2042387f1d5d26be4f9f6015",
+    "bootstrap/idle_capacity.py": "16b5ff43e033b8b55029f0c8ddb4733439f4cfbb96a5323fc73871fefcd86c14",
+    "adapters/postgres/delegated_work.py": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3",
+    "adapters/postgres/runtime_resource_usage.py": "82c20f995283d78c3f8a7602d061bf1d86c6145872aa5db8834c64460c1c7312"
+  },
+  "proposedImageSourceHashes": {
+    "application/memory_background.py": "7cad97c796af9002fff780cbd36ac5dde66da3f621e60589f86e863788d9d1be",
+    "bootstrap/runtime.py": "45af7c238bc6b623f0eb5036812649fed7b0e5991fab1640568f4988285a9252",
+    "bootstrap/idle_capacity.py": "16b5ff43e033b8b55029f0c8ddb4733439f4cfbb96a5323fc73871fefcd86c14",
+    "adapters/postgres/delegated_work.py": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3",
+    "adapters/postgres/runtime_resource_usage.py": "82c20f995283d78c3f8a7602d061bf1d86c6145872aa5db8834c64460c1c7312"
+  },
+  "existingImageSourceHashes": {
+    "eva2-managed-b-slot3-core": {
+      "application/memory_background.py": "7239107217649f513cd2cd09020723026e617351adafb9b22b94d7a6b373ebf8",
+      "bootstrap/runtime.py": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+      "bootstrap/idle_capacity.py": null,
+      "adapters/postgres/delegated_work.py": "658c74e6359ac145ec1ee2728ef360938e0cc74da727a0cfb04fce05c6868fb4",
+      "adapters/postgres/runtime_resource_usage.py": "54548d2af83c74599a6dbbfa04fc5e080b8593fe07d3862342b6bdef96973317"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "application/memory_background.py": "7239107217649f513cd2cd09020723026e617351adafb9b22b94d7a6b373ebf8",
+      "bootstrap/runtime.py": "1ec444b7e676b45cd48987dd54cbbabae97420c93768ab098733e7baa9ebd66b",
+      "bootstrap/idle_capacity.py": null,
+      "adapters/postgres/delegated_work.py": "658c74e6359ac145ec1ee2728ef360938e0cc74da727a0cfb04fce05c6868fb4",
+      "adapters/postgres/runtime_resource_usage.py": "54548d2af83c74599a6dbbfa04fc5e080b8593fe07d3862342b6bdef96973317"
+    }
+  },
+  "existingManagedRuntimeVariant": {
+    "importRemoved": "\nfrom eva.operations.restore_activation import require_restore_activation\n",
+    "engineGuardBlockRemoved": "    try:\n        require_restore_activation(engine)\n    except BaseException:\n        engine.dispose()\n        raise\n",
+    "inBothExistingImagesBeforeThisChange": true,
+    "deterministicNormalizedOriginalEqualsBothInstalledSources": true,
+    "canonicalRepositoryGuardUnchanged": true,
+    "newGuardRemoval": false,
+    "normalizerPath": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/normalize-runtime-source.py",
+    "normalizerSha256": "551c8ae7eb9aaae6ccb66776481f41aef7b650db3c6ff35acd23c2b0bfe2bdbf",
+    "proposedRuntimeSourcePath": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/context/src/bootstrap/runtime.py"
+  },
+  "preflightHistory": [
+    {
+      "phase": "canonical-source-equivalence",
+      "mismatch": "bootstrap/runtime.py only; existing seven-line managed runtime variant; no build/install/modelcall"
+    },
+    {
+      "phase": "prebuild baseline lookup",
+      "cause": "Git executed as root returned no trusted source; corrected to administrator Git inside WSL",
+      "buildStarted": false,
+      "runtimeChanged": false,
+      "providerCalls": 0
+    }
+  ],
+  "liveRuntimeChanged": false,
+  "buildStarted": false,
+  "providerCalls": 0
+}

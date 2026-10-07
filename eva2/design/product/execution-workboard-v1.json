@@ -1016,15 +1016,26 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T22:11:22.821309+00:00",
+        "checkedAt": "2026-10-07T22:27:41.725435+00:00",
         "deliveries": [
+          {
+            "title": "L3/I1 · Droomwerk geeft gesprekken en opdrachten voorrang",
+            "date": "2026-10-08",
+            "state": "installed",
+            "taskId": "L3",
+            "result": "Bestaande automatische achtergrondroute controleert rust, CPU-ruimte, lopend taakwerk en bestaande verbruiksruimte tussen stappen. Gesprekken wachten niet op het idle-slot. Kern/werker gezond;31 gerichte controles en werkelijke aansluiting gecontroleerd.",
+            "remaining": "Een begonnen stap mag aflopen. Alle apps/add-ons zelfstandig verbeteren, RAM/GPU-capaciteit en gezinsbeleving niet hiermee bewezen; oorspronkelijke taakafrondingen ongewijzigd.",
+            "source": "eva2/evidence/product/l3-idle-capacity-priority-installed-20261008.json",
+            "review": "eva2/reviews/l3-idle-capacity-priority-runtime-review-20261008.json",
+            "usage": "0 nieuwe runtime-modelcalls voor deze controle/aanpassing; ontwikkelcredits onbekend."
+          },
           {
             "title": "L3.7 · Herbruikbare cyclus via gewone Eva voltooid",
             "date": "2026-10-07",
             "state": "installed",
             "taskId": "L3.7",
             "result": "De volgende gewone ronde gebruikt de beste actuele versie en eerdere ervaring. Zonder nieuw tekort stopt Eva terecht; hervatten herhaalt geen toepassing. Onafhankelijke GO_DONE.",
-            "remaining": "Apps/add-ons vallen onder dezelfde uitvoering; automatische droomplanning is nog niet gebouwd. Geen algemene superioriteit aangetoond.",
+            "remaining": "Apps/add-ons vallen onder dezelfde uitvoering; bestaande idle-stappen zijn nu capaciteits-/activiteitsgestuurd. Niet iedere uitbreidingssoort en geen algemene superioriteit bewezen.",
             "source": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
             "review": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json",
             "usage": "Bewaard in de bestaande proefregistratie; geen nieuwe modelcalls voor deze dashboardpublicatie."
@@ -4133,13 +4144,14 @@
           }
         ],
         "now": {
-          "title": "L3/I1 · Droomwerk laat ruimte voor gesprekken",
-          "state": "in_progress",
+          "title": "L3/I1 · Gespreksvoorrang in droomwerk geïnstalleerd",
+          "state": "installed",
           "owner": "Codex",
           "taskId": "L3",
-          "detail": "Bestaande automatische idle route hergebruiken. Nieuw gesprek direct als activiteit tellen; voor iedere volgende optionele stap rust, rekenruimte, actieve opdrachten en bestaand budget controleren.",
-          "remaining": "Gerichte controle, onafhankelijke review en installatie. Geen nieuwe appspecifieke functie of extra afgeronde taak; P2 blijft open.",
-          "source": "eva2/src/eva/application/memory_background.py",
+          "detail": "Bestaande automatische achtergrondroute controleert rust, CPU-ruimte, lopend taakwerk en bestaande verbruiksruimte tussen stappen. Gesprekken wachten niet op het idle-slot. Kern/werker gezond;31 gerichte controles en werkelijke aansluiting gecontroleerd.",
+          "remaining": "Een begonnen stap mag aflopen. Alle apps/add-ons zelfstandig verbeteren, RAM/GPU-capaciteit en gezinsbeleving niet hiermee bewezen; oorspronkelijke taakafrondingen ongewijzigd.",
+          "source": "eva2/evidence/product/l3-idle-capacity-priority-installed-20261008.json",
+          "review": "eva2/reviews/l3-idle-capacity-priority-runtime-review-20261008.json",
           "doneWhen": "Werkelijke installatie gebruikt deze gate; foreground wacht niet op idle werk, latere stappen wijken en eerder taakwerk blijft behouden."
         },
         "next": {
@@ -4147,8 +4159,8 @@
           "state": "planned",
           "owner": "Codex",
           "taskId": "P2.1",
-          "detail": "Bestaande vergelijking blijft beperkt; geen losse Hermes-run zonder beslisrelevant paar. Menselijke beoordelingen blijven afzonderlijk.",
-          "remaining": "Droomwerk is nog niet geïnstalleerd. L3.4–L3.7 oorspronkelijke acceptaties blijven behouden.",
+          "detail": "De bestaande CM07-routes hebben geen geldig vergelijkingspaar. Beschikbare resultaten blijven staan; P2.1 en gezinsbeoordeling afzonderlijk afronden zodra de vereiste toegang/beoordeling aanwezig is.",
+          "remaining": "Oorspronkelijke vergelijkingsdekking en twee echte menselijke antwoordbeoordelingen staan open. Geen nieuwe matrix of ongewijzigde proefherhaling.",
           "source": "eva2/evidence/product/p2-hermes-cm07-availability-20261007.json"
         },
         "ownerAction": {
@@ -7702,10 +7714,10 @@
         }
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-07T22:01:39.684721+00:00",
+        "checkedAt": "2026-10-07T22:27:41.725435+00:00",
         "basis": "De vier eigenaaruitkomsten uit ownerHousematePlan20261002 en bestaande acceptaties/bewijzen; geen nieuwe taakafronding.",
         "headline": "Persoonlijkheid en gekozen geheugenfuncties geaccepteerd. Initiatief en zelfstandig werk nog niet als geheel afgerond.",
-        "note": "48 kleine taken, 39 afgerond; de teller is geen productpercentage. Apps, add-ons en andere uitbreidingen vallen onder de verbetercyclus. Automatische droommodus bij rust en beschikbare capaciteit is gepland, nog niet gebouwd. Vergelijking en gezinsacceptatie blijven apart; spraak is geparkeerd.",
+        "note": "48 kleine taken,39 afgerond; geen productpercentage. Apps/add-ons vallen onder de verbetercyclus. Bestaand automatisch droomwerk controleert nu rust, CPU-/werk-/verbruiksruimte en geeft gesprekken voorrang. Niet alle uitbreidingssoorten of algemene superioriteit bewezen. Vergelijking en gezinsacceptatie apart; spraak geparkeerd.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -20156,7 +20168,7 @@
               "implementationBoundary": "L3.5 levert de vaste ontwikkelkeuze voor aangesloten Python-suites; geen claim dat alle uitbreidingssoorten al zijn aangesloten."
             },
             "dreamMode": {
-              "state": "in_progress_existing_idle_route_capacity_and_priority",
+              "state": "installed_existing_idle_capacity_and_priority",
               "route": "bestaande initiatief-/reflectieroute",
               "conditions": [
                 "rustig gezinsgebruik",
@@ -20165,8 +20177,8 @@
                 "actief werk en gesprek krijgen voorrang"
               ],
               "purpose": "Echte ervaringen verwerken en nuttige verbeteringen/uitbreidingen onderzoeken; geen doorlopende modelcalls om activiteit te tonen.",
-              "yieldAndResume": "Maak plaats zodra gezinsgebruik of actief werk capaciteit nodig heeft; hervat via bewaarde taakstatus.",
-              "implementationBoundary": "De herbruikbare cyclus is geïnstalleerd; een automatische capaciteitsplanner voor droomwerk is niet gebouwd.",
+              "yieldAndResume": "Controle voor de volgende optionele stap; begonnen stap mag eindigen. Bestaande taakstatus blijft behouden, uitgestelde reflecties alleen in procesgeheugen.",
+              "implementationBoundary": "Bestaande automatische reflectie-/initiatiefstappen hebben nu gespreksvoorrang, CPU-/werk-/dagbudgetcontrole. Geen nieuw droomplatform of bewijs dat alle app-/add-onsoorten zelfstandig verbeteren.",
               "owner": "Codex",
               "startedAt": "2026-10-07T22:11:22.821309+00:00",
               "baseCommit": "099168141b5cfeaf102f8736dbba2c35fedba8d6",
@@ -20182,7 +20194,12 @@
               "finish": "Werkelijke installatie gebruikt deze gate; foreground wacht niet op idle werk, latere stappen wijken en eerder taakwerk blijft behouden.",
               "originalL3AcceptancesUnchanged": true,
               "providerCalls": 0,
-              "credits": null
+              "credits": null,
+              "checkedAt": "2026-10-07T22:27:41.725435+00:00",
+              "completedAt": "2026-10-07T22:27:41.725435+00:00",
+              "sourceCommit": "3616a3f34b65e374d41f92a142ac88e99e180c39",
+              "latestEvidence": "eva2/evidence/product/l3-idle-capacity-priority-installed-20261008.json",
+              "independentReview": "eva2/reviews/l3-idle-capacity-priority-runtime-review-20261008.json"
             }
           },
           "aideWorkspaceFollowup": {

@@ -1,5 +1,23 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Actueel 8 oktober — bestaand droomwerk maakt ruimte voor het gezin
+
+De bestaande automatische reflectie-/initiatiefroute is gericht aangepast en
+geïnstalleerd. Gesprekken worden vóór de antwoordvorming als activiteit geteld;
+tussen optionele stappen controleert Eva rust, CPU-ruimte, lopend taakwerk en de
+bestaande dagelijkse verbruiksruimte. Een begonnen stap mag aflopen; volgende
+stappen wachten. Stoppen en expliciete opdrachten blijven via hun bestaande route.
+
+31 gerichte controles slagen; dezelfde vijf bronbestanden zijn in beide gezonde
+draaiende containers teruggelezen. De productiefactory bevestigt de aansluiting
+zonder modelaanroep. Onafhankelijke bron- en installatiereview geeft GO. Het bewijs staat bij
+evidence/product/l3-idle-capacity-priority-installed-20261008.json.
+Dit is een gerichte correctie binnen L3/I1, geen nieuwe taak of algemeen droomplatform.
+De CPU-indicatie bewijst geen RAM/GPU-capaciteit; het dagbudget is geen creditmeter.
+Uitgestelde reflecties blijven alleen in procesgeheugen. Zelfstandig verbeteren van
+iedere app/add-onsoort en gezinsbeleving zijn hiermee niet bewezen.
+L3.4–L3.7 en de oorspronkelijke P2-/gezinsvoorwaarden blijven onveranderd.
+
 ## Actuele uitvoering 7 oktober — L3.6–L3.7 afgerond, P2.1 loopt
 
 De gewone Eva-route maakte contextkandidaat B, liet deze afzonderlijk beoordelen
@@ -12,7 +30,7 @@ actuele bron/status en eerdere ervaring en stopte terecht zonder nieuw tekort;
 hervatten/replay herhaalde geen toepassing. De resterende oorspronkelijke P2.1-
 vergelijking blijft afzonderlijk zichtbaar. Apps/add-ons vallen onder dezelfde
 verbetercyclus; aansluiting van iedere uitbreidingssoort is niet bewezen en de
-automatische droommodus is nog niet gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
+bestaande automatische idle-route heeft nu voorrang voor gesprekken/taakwerk en capaciteitscontrole. Alle uitbreidingssoorten zelfstandig verbeteren is niet aangetoond. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
 
 
 ## P2.1 actueel 7 oktober — latere herinnering met drie dezelfde systemen

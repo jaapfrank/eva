@@ -36,7 +36,10 @@ resterend werk, geen verlies van eerdere acceptatie.
 
 L3.4–L3.7 zijn afgerond en onafhankelijk gecontroleerd: één gemeten betere
 contextkandidaat toegepast, vervolgens de beste versie/ervaring gebruikt zonder
-onnodige herhaling. Geen brede superioriteitsclaim of gebouwde droomplanner.
+onnodige herhaling. Geen brede superioriteitsclaim of nieuw droomplatform.
+De bestaande idle-route is op 8 oktober gericht geïnstalleerd met gespreksvoorrang
+en CPU-/werk-/dagbudgetcontrole; begonnen stappen mogen aflopen. Alle app-/add-onsoorten
+zelfstandig verbeteren en RAM/GPU-capaciteit zijn hiermee niet bewezen.
 Hervat bij werkelijk resterend P2.1; herhaal eerdere varianten/proeven niet. Hergebruik de gedeelde uitvoering, het programmeerwerk, de evaluator
 en toepassing; geen tweede agentplatform. Originele proeven/criteria en verbruik
 blijven bewaard; dit heropent geen afgesloten AIDE- of R1-proef. Registreer een

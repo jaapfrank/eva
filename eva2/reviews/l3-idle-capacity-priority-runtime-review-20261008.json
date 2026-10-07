@@ -1,0 +1,85 @@
+{
+  "contract": "EvaIndependentInstalledBindingReview/v1",
+  "recorded_at": "2026-10-07T22:27:28.301364+00:00",
+  "scope": "Existing L3/I1 idle capacity and household priority",
+  "decision": "GO_INSTALLED_BINDING_AND_BOUNDED_PUBLICATION",
+  "source_commit": "3616a3f34b65e374d41f92a142ac88e99e180c39",
+  "source_review": {
+    "path": "eva2/reviews/l3-idle-capacity-priority-source-review-20261008.json",
+    "sha256": "460b85103b345d03badcbf00d80f5dbdf9c6362e05485ecb49b5cc6aac75dd54"
+  },
+  "receipts": {
+    "runtime-verification.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/runtime-verification.json",
+      "sha256": "fa34480ef74492b3763c2df1c628cd970df2f3ab30054eb37f629866e61e7457"
+    },
+    "build.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/build.json",
+      "sha256": "f0084b8b4138b4c5df59f6720560f8d5d69217445403be65ec7bcf88e882cd04"
+    },
+    "update.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/update.private.json",
+      "sha256": "c45a089c5a449cf3c8ae0858d04921b86ab62eed083abef1a7e5af4bb3a38765"
+    },
+    "prebuild-binding.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/prebuild-binding.json",
+      "sha256": "6a00a9e592597a20399b820bb8d5cc6382af99e3c86ca81479d4e1a78f56dfef"
+    },
+    "installed-wiring-probe.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/installed-wiring-probe.json",
+      "sha256": "125e92665eee61e9b5a8b1e3753c53c8329f90f05db738247a976a82aaece5f2"
+    },
+    "installed-wiring-probe.py": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/installed-wiring-probe.py",
+      "sha256": "94be9429c07bd54a6efdc8a7d13c8bcc98e20c482e86fec076676e00e79960fd"
+    },
+    "installed-wiring-probe.stdout": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/installed-wiring-probe.stdout",
+      "sha256": "5ef2585e0d5b073610928b05e7108e50d173a0502457f9e23f721b947f5d5cf7"
+    },
+    "core-Dockerfile": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/core-Dockerfile",
+      "sha256": "cad39a2e6bad70cd00990eb2fa84e5c8c5195f8baeb86174dd673f3beaa6d634"
+    },
+    "delegated-work-worker-Dockerfile": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-idle-capacity-priority-20261008/delegated-work-worker-Dockerfile",
+      "sha256": "555dd0c69f5732c938d230f55fb16471e0b673243bba4469876d4fde6798b8d0"
+    }
+  },
+  "installed_images": {
+    "core": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+    "delegated-work-worker": "sha256:6ec3e9291a28feded8bcd0225dd55c81af6f0bbaf2c551b7a3e89007a366539a"
+  },
+  "checks": {
+    "retained_build_update_runtime_hash_chain_matches": true,
+    "both_services_healthy_restart_count_zero_at_recorded_observation": true,
+    "five_actual_module_hashes_match_reviewed_image_sources": true,
+    "only_two_compose_image_values_changed_existing_configuration_preserved": true,
+    "seven_line_existing_managed_runtime_variant_preserved_canonical_guard_unchanged": true,
+    "actual_factory_created_runtime_and_bound_capacity_callback_without_lifespan": true,
+    "read_only_daily_allowance_revision_unchanged_and_scoped_active_work_method_observed": true,
+    "foreground_counter_suppresses_optional_admission_at_observation": true,
+    "source_unit_coverage_supplies_shared_respond_and_concurrency_checks": true,
+    "48_task_ids_statuses_doneWhen_39_completed_unchanged": true
+  },
+  "allowed_claim": "The reviewed capacity/foreground-priority change is installed in core and delegated worker; its actual production factory wiring and bounded read-only gates are verified. It defers subsequent optional stages while household work has priority, using existing controls.",
+  "limits": [
+    "No end-user conversation or real model trial was invoked by this verification; no measured answer-quality, latency, full AIDE2, all-apps/addons or P2 advantage claim.",
+    "Factory wiring was observed without lifespan and without starting probe workers; it is not a live scheduling-cycle user acceptance test.",
+    "Already started blocking stages may finish to a checkpoint; no immediate cancellation or resource preemption claim.",
+    "CPU-load/affinity/quota indication does not prove RAM/GPU headroom; daily allowance/model-route admission is not remaining provider credit measurement.",
+    "Reflection-scope set remains process memory; existing durable worker state is distinct.",
+    "Manual model calls were zero. Autonomous runtime usage was not measured by this delivery; credits remain unknown.",
+    "Preserving the existing managed image variant is not a new restore test or changed repository restore policy."
+  ],
+  "findings": [],
+  "reviewer_activity": {
+    "new_tests": 0,
+    "model_calls": 0,
+    "native_comparison_calls": 0,
+    "runtime_probes": 0,
+    "resources_started": 0,
+    "product_or_shared_docs_edits": 0,
+    "retained_evidence_only": true
+  }
+}

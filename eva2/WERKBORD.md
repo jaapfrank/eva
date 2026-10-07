@@ -1,3 +1,20 @@
+## Actueel 8 oktober — gesprekken krijgen voorrang op droomwerk
+
+**Geïnstalleerd:** bestaande automatische achtergrondstappen controleren rust,
+CPU-ruimte, actieve opdrachten en dagbudget vóór vervolg. Een gesprek wacht niet
+op de achtergrondlock. Begonnen werk mag eindigen; er is geen directe annulering.
+
+**Bewijs:** 31 gerichte controles, productiefactory-aansluiting en exacte vijf
+bronhashes in gezonde kern/werker. Geen nieuwe modelaanroep voor deze controle.
+**Grens:** geen algemeen app-optimalisatieplatform, RAM/GPU- of creditmeter,
+duurzame checkpoint voor uitgestelde reflecties of nieuwe gezinsacceptatie.
+**Volgende bestaande stap:** P2.1; resterende oorspronkelijke dekking en echte
+menselijke antwoordbeoordeling. Geen ongewijzigde proef of losse Hermes-run.
+
+48 kleine taken / 39 afgerond blijven staan. Spraak geparkeerd; I1.2/F2 apart.
+Bewijs: evidence/product/l3-idle-capacity-priority-installed-20261008.json.
+Review: reviews/l3-idle-capacity-priority-runtime-review-20261008.json.
+
 ## Actueel 7 oktober — dezelfde latere herinnering: kwaliteit verschilt
 
 | Oorspronkelijke CM06 | Kernfeiten | Volledige inhoud | Geheugenopdracht |
@@ -20,17 +37,16 @@ geslaagd werk of creditbesparing. Alle20 oude registraties exact; nu21/136 pogin
 Uitvoering/resources volledig gesloten; geen replay. Backup-padvraag was
 evaluatorvoorbereiding zonder oorspronkelijke input/calls; oude backup behouden.
 
-48 kleine taken/39 afgerond blijven ongewijzigd; geen extra productfunctie.
+48 kleine taken / 39 afgerond blijven ongewijzigd; geen extra productfunctie.
 P2.1 blijft open. CM07-beschikbaarheid is vastgesteld: bestaande Hermes-broncode
 kan privé-/groepsherkomst bewaren; dit bewijst geen veilige groepsherinnering.
 Eva1/OpenClaw bieden in de huidige proefroute geen passend vergelijkingspaar.
 Daarom geen losse Hermes-run, projectie of automatische matrix. De resterende
 vergelijkingsdekking en twee menselijke antwoordbeoordelingen blijven open.
 L3.4–L3.7 zijn geïnstalleerd. Apps/add-ons vallen onder dezelfde verbetercyclus;
-alle uitbreidingssoorten aansluiten is nog niet bewezen. Automatische droommodus
-is nog niet gebouwd: echte ervaringen verwerken en verbeteringen onderzoeken bij
-rust en beschikbare reken-/verbruiksruimte, met voorrang voor gezin en actief werk.
-Dit is een vastgelegde productrichting, geen extra afgeronde taak.
+alle uitbreidingssoorten aansluiten is nog niet bewezen. De bestaande automatische
+idle-route is op 8 oktober gericht geïnstalleerd met gespreksvoorrang en controle van
+CPU-/werk-/verbruiksruimte. Dit is geen extra afgeronde taak of algemeen droomplatform.
 Spraak geparkeerd; I1.2/F2 en echte menselijke antwoordbeoordelingen blijven apart.
 
 Resultaat: evidence/product/p2-hermes-original-cm06-result-20261007.json.
