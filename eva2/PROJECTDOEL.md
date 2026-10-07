@@ -14,7 +14,33 @@ vergelijking volgt; menselijke beoordelingen blijven afzonderlijk zichtbaar. App
 gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
 
 
-## P2.1 actueel 7 oktober — dezelfde persoonsgrensproef bij Hermes en OpenClaw
+## P2.1 actueel 7 oktober — latere herinnering met drie dezelfde systemen
+
+De oorspronkelijke CM06 is nu ook eenmaal door Hermes uitgevoerd en onafhankelijk
+beoordeeld naast dezelfde Eva1/OpenClaw-input. Hermes haalt 3/3 kernfeiten terug
+en passeert 2/2 technische readbacks, maar slechts 2/3 volledige inhoudsvoorwaarden:
+een vereiste kwalificatie uit de correctie ontbreekt later in geheugen/context/antwoord.
+De volledige opdracht faalt. Eva1 mist de latere status (1/3 kernfeiten, 2/3 inhoud,
+1/2 readbacks); OpenClaw bewaart het geheel (3/3, 3/3, 2/2). Geen algemene winnaar.
+
+Hermes gebruikt 6 complete SDK-aanvragen: 4 contact Sol/none, 2 helper Astra/medium;
+13.999 invoer-/215 uitvoertokens, 15,726s parent-start tot child-exit. OpenClaw
+heeft dezelfde tijdgrens, Eva1 eindigt vóór stoppen; geen ratio voor geslaagd werk.
+Alle 20 oude authorityrijen exact; nu 21 rijen/136 pogingen en 1.458.977 bekende
+tokens als ondergrens. Drie oude verbruiksonbekenden, menselijke kwaliteit en
+geldkosten blijven onbekend. Eerdere persoonsgrensverliezen niet ongedaan gemaakt.
+De native uitvoering/resources zijn gesloten; geen replay of extra productfunctie.
+De voorafgaande backup-padvraag was een evaluatorfout: submappen verloren bij
+voorbereiding, oude backup wel behouden; nul oorspronkelijke invoer/modelcalls.
+
+P2.1 blijft open. Eerst alleen beschikbaarheid van de bestaande Hermes-groepsroute
+voor oorspronkelijke CM07 bepalen; huidige Eva1/OpenClaw-routes onbeschikbaar.
+Nog geen projectie/nieuwe toelating/automatische matrix. Matching Eva2-CM06 ontbreekt;
+oudere andere inputsets blijven apart.
+Bewijs: evidence/product/p2-hermes-original-cm06-result-20261007.json;
+review: reviews/p2-hermes-original-cm06-result-review-20261007.json.
+
+## P2.1 eerder 7 oktober — dezelfde persoonsgrensproef bij Hermes en OpenClaw
 
 De oorspronkelijke CM05 is eenmaal door Hermes uitgevoerd en onafhankelijk
 beoordeeld: 4/4 antwoorden ontvangen, 3/4 feitelijk correct, 1/2 verplichte

@@ -1,0 +1,41 @@
+{
+  "contract": "EV003OriginalSourcePreparation/v1",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-06:epoch1",
+  "baseCommit": "38c24435fc4850c1aa774a43b4f1fc27479b642c",
+  "createdAt": "2026-10-07T21:38:33.482662+00:00",
+  "gap": "Missing original Hermes CM06 result beside already closed same-input Eva1/OpenClaw. Generic native turn/person/calendar/provider route already exists.",
+  "change": "Only current original case/profile/count/source binding, exact protected input filename and CM05 receipt preservation guard. Native probe, framework source, original criteria and provider roles unchanged.",
+  "expectedTurns": 3,
+  "profileConfigOnly": true,
+  "credentialsCopied": false,
+  "nativeAuthFresh": true,
+  "originalCaseRepeated": false,
+  "sourceBindingSha256": "f7ca6402c69a01450c5ecc4688b77944f488fa7fd519fb2f8657d99f8a4ce0e5",
+  "proposedConfigSha256": "31ef5aee83b8d16ef62de700f0a3b8af95f4e7753a52d091df98ec4472e8febe",
+  "projectionSha256": "2b43442e552b723e5aa37e6979bf2db989e2976a9c0a4a84c0c01f65bdd1292a",
+  "filePins": 55,
+  "preflight": {
+    "nativeStarts": 0,
+    "providerCalls": 0,
+    "resourcesStarted": false,
+    "noNativeSha256": "668a56e65b63ba72be4bb8c4734ca8c0a6954cb1b7a7c93913caa680b6ac7dc2",
+    "pinnedInspectImportSha256": "ade1cbcce74a6d0418b2983c2469ad9c74fd3cb4747a8ebf19ac26b54a28237a",
+    "existingPublicBoundaryTestReused": true,
+    "newTestRuns": 0
+  },
+  "preparationIssue": {
+    "cause": "Preparation used the old configuration backup basename and lost its backups/config subdirectories; exact old backup remains retained.",
+    "correction": "Bind the actual current runtime config.yaml/SOUL.md only; administrative native backups are not imported as configuration inputs.",
+    "effect": "No reservation, original input release or modelcall; no old backup deleted or original run repeated."
+  },
+  "authorityBeforeSha256": "f49a5394c8f7a81b03db581d5ddcafd68dd478d0074c69ccde0511f074556896",
+  "sourceReviewPending": true,
+  "resourcePreparationAdmitted": false,
+  "inputAdmitted": false,
+  "newProductFunction": false,
+  "credits": null,
+  "metadataOnlyPrecision": true,
+  "priorSourceBindingSha256": "992b8368e6b17e7088b6341a677628bf94585691f0f877eaf4748af5bb7d4ba1",
+  "priorProposedConfigSha256": "8cc8fd63eb3ef39e5f661d1452d1261120c6599b2be8f66b52e2095f15a77277"
+}

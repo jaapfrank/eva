@@ -1,0 +1,101 @@
+{
+  "contract": "Ev003IndependentHermesActualReadyReview/v1",
+  "created_at": "2026-10-07T21:43:37.050011+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-06:epoch1",
+  "decision": "GO_ONE_ORIGINAL_CM06_SAME_WAITING_PARENT",
+  "actual_ready": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+    "sha256": "d25ad166f5db8b7488c299ab08f55c6cda1a634962957ce454c8bc1af59a0d8c"
+  },
+  "resource_admission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/parent-cm06-resource-admission-metadata-corrected.private.json",
+    "sha256": "a27f4a932c1a28687b367bd114667e89e51425851cfdb4dbb20ac76ae142f391"
+  },
+  "source_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm06-source-review-20261007.json",
+    "sha256": "809949e3edb88e70ab90da97ef6e5600310504b534c9ba4b9f6219016ef62cff"
+  },
+  "projection_equality": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "b6adf23c10acfca91b83d383f8cbcbe504672c8237f1b3beb7913565fbd5fe3d"
+  },
+  "inspect_binding": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+    "sha256": "5ac9dd2e24039e29382fc2e979aefb9967eaf749b1e5f6117a16e6216bb215ec"
+  },
+  "same_process": {
+    "exec_session": 65202,
+    "inspect_pid": 2871430,
+    "inspect_starttime_ticks": 14040180,
+    "parent_pid": 2871618,
+    "parent_starttime_ticks": 14040507,
+    "run_handle": "hermes-cm06-daa61b70-9b92-4dfb-b01f-b9258aefc20b",
+    "container_id": "0eb0d1147f26fc5e785cb820ff29f77dacb17fefa377ad8e16bd0902fcde6435",
+    "network_id": "e8947c41ae04c70b65b191ac3d3cedde2a64b361f6404342c63f81a4c2bc78fa",
+    "namespace": "net:[4026534261]"
+  },
+  "checks": {
+    "original_three_turn_private_actor_two_session_three_day_clock_binding_unchanged": true,
+    "all_55_actual_file_hashes_match_source_admission": true,
+    "pinned_inspect_interpreter_lock_and_ordinary_unjudged_scorer_bound": true,
+    "actual_root_parent_and_wrapper_alive_with_exact_corrected_admission": true,
+    "actual_parent_owns_accounting_socket_and_allowed_gateway_listener": true,
+    "owned_internal_container_namespace_image_and_network_labels_match": true,
+    "namespace_egress_only_loopback_and_parent_model_tunnel_ipv4_ipv6_reject_rest": true,
+    "current_own_auth_uid1000_readable_hash_unchanged_authority_unreadable": true,
+    "zero_attempts_no_native_worker_or_context_no_release_deadline_or_owner_stop": true,
+    "controller_errors_empty_and_no_external_events_at_ready": true,
+    "all_20_historical_raw_values_and_revisions_exact": true,
+    "new_row_21_selected_original_reservation_revision_zero": true,
+    "original_caps_models_provider_roles_stop_and_native_readbacks_unchanged": true
+  },
+  "authority": {
+    "before_sha256": "f49a5394c8f7a81b03db581d5ddcafd68dd478d0074c69ccde0511f074556896",
+    "after_single_reservation_sha256": "6d5b46f5310500f11d793bec829e975e0714898e40eb39bb7bf82196384a1eee",
+    "rows": 21,
+    "historical_rows": 20,
+    "historical_canonical_sha256": "86af4b8dbc2dff7c25b8ab48588e626a1c9733dd1d7a477cf6170fa307755b27",
+    "selected_revision": 0,
+    "selected_attempts": 0,
+    "three_historical_usage_unknowns_preserved": true
+  },
+  "original_limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "model_roles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "human_ratings": [
+    null,
+    null
+  ],
+  "quality_score": null,
+  "permitted_action": "Coordinator may write one exclusive execute-once release bound to this final admission, ready hash, run handle and unchanged three source hashes, for this same waiting parent only.",
+  "remaining_obligations": "Original native process validates its sealed packet and source/accounting controls, starts one inherited 480-second monotonic envelope after release, retains all actual replies/origins/memory/contact-helper contexts/usage/stop/closure for independent terminal assessment. No quality or quiescence outcome is inferred from readiness.",
+  "prior_metadata_precision": "Superseded unused admission and initial source review remain retained; the active parent uses only the corrected a27f4a admission.",
+  "findings": [],
+  "reviewer_activity": {
+    "readonly_process_socket_network_rules_file_permission_and_authority_inspection": true,
+    "new_tests": 0,
+    "native_probes": 0,
+    "models": 0,
+    "auth_refreshes": 0,
+    "new_reservations": 0,
+    "new_resources": 0,
+    "release_written": false
+  }
+}

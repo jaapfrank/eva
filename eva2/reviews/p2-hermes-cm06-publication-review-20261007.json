@@ -1,0 +1,91 @@
+{
+  "contract": "EV003IndependentPublicationReview/v1",
+  "created_at": "2026-10-07T21:52:41.276118+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-06:epoch1",
+  "decision": "GO_PUBLICATION_ONLY",
+  "publication_files": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/PROJECTDOEL.md",
+      "sha256": "432fd8a22207b6a53dac8d9277d52a84d0e306cecde3d09c48bab8f68631afde"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/WERKBORD.md",
+      "sha256": "d0a37f7f45f75fc8958ecba7c8f1e0f5b074284361a6c7edf7de1ce4b438ddc9"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/design/product/execution-workboard-v1.json",
+      "sha256": "d4b9efb6d67eb116c1b449d6a252135d420c95d3d61b2ef5dd088f8475406a04"
+    }
+  ],
+  "new_evidence_and_reviews": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-cm06-entry-contract-20261007.json",
+      "sha256": "d2808aa875808bef80a99a32f13a7683a5ef14a7beffb082fb7c3241087fc475"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-cm06-source-preparation-20261007.json",
+      "sha256": "7611654484a20b793dc4b63306460a2cd67fb6a7914b7ca1b1c28777cccaf858"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+      "sha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm06-origin-projection-review-20261007.json",
+      "sha256": "12a001e27298e7b5fb495150b907479ff29e04ca6dc5d845d2cf8d50d46ea9fd"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm06-ready-review-20261007.json",
+      "sha256": "b7f302008e0f08ac18fa46e6f3f1aa610729bbaa772ad19b9b5aed3d6a97998c"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm06-source-review-20261007.json",
+      "sha256": "809949e3edb88e70ab90da97ef6e5600310504b534c9ba4b9f6219016ef62cff"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
+      "sha256": "705f9cb56283e5e0de60a46e90fa44e9ea91f1edb8bb6383c766ca9257a5ae19"
+    }
+  ],
+  "scope": "Changed current CM06 publication fields, seven retained stage/result files and this eighth publication review; no runtime release or new original admission.",
+  "checks": {
+    "hermes_native3_core3_semantic2_readbacks2_objective_false_distinguished": true,
+    "matched_eva1_core1_semantic2_failure_openclaw_core3_semantic3_pass_preserved": true,
+    "matching_eva2_absent_legacy_different_inputs_not_compared": true,
+    "prior_cm05_privacy_failures_and_prior_followup_metrics_retained": true,
+    "six_calls_four_sol_none_two_astra_medium_13999in215out_verified": true,
+    "elapsed15_726007_parent_to_childexit_and_comparator_time_boundaries_correct": true,
+    "authority21rows136attempts_lowerbound1458977_three_unknowns_correct": true,
+    "human_ratings_whole_quality_money_credits_unknown_no_general_winner": true,
+    "all48_task_ids_statuses_doneWhen_unchanged39completed": true,
+    "P2_1_open_execution_inactive_no_new_product_function_or_voice_work": true,
+    "current_dashboard_overview_next_followup_runtimeTotals_and_result_bindings_correct": true,
+    "current_native_preparation_binds_corrected_used_admission_a27f4a": true,
+    "backup_basename_subdirectory_error_honestly_retained_old_backup_not_deleted": true,
+    "earlier_preparation_and_admission_records_preserved_as_stage_snapshots": true,
+    "authority_mutations_unknown_one_added_sample_row_separately_recorded": true,
+    "publication_review_pointer_current_sha_null_avoids_circular_binding": true,
+    "next_action_only_cm07_existing_route_availability_no_new_case_release": true,
+    "no_protected_questions_answers_or_oracles_in_changed_publication": true
+  },
+  "resolved_findings": [
+    "currentGoalTurn.authorityMutations corrected from 0 to null; registeredSampleRowsAdded=1 retained.",
+    "Three decimal-comma spacing mistakes in the current WERKBORD paragraph corrected."
+  ],
+  "remaining_findings": [],
+  "limitations": [
+    "Objective partial memory failure is not a human-quality score; two real ratings remain absent.",
+    "The lower token use and measured duration do not prove successful-task savings or general superiority.",
+    "Source/admission snapshots are retained historical stages, not permission for a new run.",
+    "This review changes no task status, criteria, source, authority, access or resources."
+  ],
+  "reviewer_activity": {
+    "new_model_calls": 0,
+    "native_starts": 0,
+    "tests": 0,
+    "replays": 0,
+    "source_edits": 0,
+    "board_doc_edits": 0
+  }
+}

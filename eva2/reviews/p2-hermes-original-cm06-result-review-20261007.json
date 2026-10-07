@@ -1,0 +1,73 @@
+{
+  "contract": "EV003IndependentTerminalReview/v1",
+  "created_at": "2026-10-07T21:48:38.861307+00:00",
+  "entry": "hermes:EV003-CM-06:epoch1",
+  "decision": "GO_PUBLISH_RETAINED_RESULT_ONLY",
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+    "sha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059"
+  },
+  "protected_assessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/terminal-independent-assessment.private.json",
+    "sha256": "5cbc193468ea280abeafffb298d0e665eed9ebc8cefbf88e82bb8cf9579a55f3"
+  },
+  "binding": {
+    "receipt_sha256": "ea361c23da678eb0cde6cd941039ac18a2d128569bdc5a70cbe5d328cd4644e9",
+    "native_report_sha256": "cc3e6cfdd8f6b7e577bbabe2e72f202786cbea9528e00e764679a4c0656048ca",
+    "final_admission_sha256": "0259478f1ca72aa3a9b5d460b2f79733555a1f08fa29b713558e5a6dbf1665f9",
+    "release_sha256": "a45aeaa59eaebca173b0a7dfbea72800a702e1c49565e905f67624d72b715a6f",
+    "source_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm06-source-review-20261007.json",
+      "sha256": "809949e3edb88e70ab90da97ef6e5600310504b534c9ba4b9f6219016ef62cff"
+    },
+    "ready_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm06-ready-review-20261007.json",
+      "sha256": "b7f302008e0f08ac18fa46e6f3f1aa610729bbaa772ad19b9b5aed3d6a97998c"
+    }
+  },
+  "checks": {
+    "exact_original_identity_session_clock_and_inputs": true,
+    "three_answers_native_SQL_memory_snapshots_and_six_physical_context_bodies_reviewed": true,
+    "all_six_raw_usages_and_roles_complete": true,
+    "twenty_prior_authority_raw_values_and_revisions_exact": true,
+    "native_parent_and_physical_resource_closure_verified": true,
+    "frozen_sources_auth_and_retained_profile_config_equal": true,
+    "official_null_semantic_and_two_null_human_scores_preserved": true,
+    "matching_successor_comparisons_preserved_without_legacy_cross_hash_claim": true,
+    "protected_content_excluded_from_public_output": true
+  },
+  "outcome": {
+    "native_answers": 3,
+    "factual_supported": 3,
+    "semantic_conditions_passed": 2,
+    "semantic_conditions_required": 3,
+    "required_readbacks_passed": 2,
+    "objective_pass": false,
+    "whole_quality": "UNKNOWN"
+  },
+  "concrete_finding": "Later recall preserves the correct broad status but omits a required qualification from the correction. This is an admitted native continuity limitation, not evaluator/transport failure. Memory readback and full semantic conjunction are kept distinct.",
+  "accounting": {
+    "calls": 6,
+    "input_tokens": 13999,
+    "output_tokens": 215,
+    "total_tokens": 14214,
+    "registry_rows": 21,
+    "registered_attempts": 136,
+    "known_tokens_lower_bound": 1458977,
+    "historical_usage_unknowns": 3
+  },
+  "limits": [
+    "Publication only; no new sample, projection, source repair or admission.",
+    "Earlier backup-path metadata mistake is retained as preparation-only; no participant loss.",
+    "Post-settlement helper/relay diagnostics and local mirror disconnect retained; authoritative raw usage and ACK establish this run accounting.",
+    "Human quality and monetary totals remain unknown; no general superiority/full P2.1 completion."
+  ],
+  "reviewer_activity": {
+    "new_provider_calls": 0,
+    "new_native_runs": 0,
+    "tests": 0,
+    "replays": 0,
+    "criterion_changes": 0,
+    "authority_mutations": 0
+  }
+}

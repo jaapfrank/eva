@@ -1,0 +1,157 @@
+{
+  "activity": {
+    "criteria_changes": 0,
+    "models": 0,
+    "native_starts": 0,
+    "protected_content_disclosed": false,
+    "reservations": 0
+  },
+  "authority": {
+    "all_historical_rows_and_revisions_preserved": true,
+    "hermes_usage_guard_clear": true,
+    "historical_rows_canonical_sha256": "86af4b8dbc2dff7c25b8ab48588e626a1c9733dd1d7a477cf6170fa307755b27",
+    "historical_usage_unknowns": 3,
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "rows": 20,
+    "sha256_unchanged": "f49a5394c8f7a81b03db581d5ddcafd68dd478d0074c69ccde0511f074556896",
+    "slot_unused": true
+  },
+  "bindings": {
+    "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+  },
+  "case_id": "EV003-CM-06",
+  "contract": "Ev003HermesOriginalEntryContract/v1",
+  "current_generic_probe": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+    "sha256": "c1b07c0e22388fbd8d40140d295bd0a4b83cb5770faa25341c8d32d136e437ee"
+  },
+  "date": "2026-10-07",
+  "decision": "ORIGINAL_PROJECTION_READY_NOT_ADMITTED",
+  "entry": "hermes:EV003-CM-06:epoch1",
+  "epoch": 1,
+  "equality": {
+    "criteria_changed": false,
+    "oracle_included": false,
+    "original_audience_grants_unchanged": true,
+    "original_initial_clock_timezone_and_events_exact": true,
+    "original_input_utf8_and_order_exact": true,
+    "original_session_controls_exact": true,
+    "original_verified_principals_exact": true,
+    "same_committed_inputs_as_retained_eva1_cm06": true,
+    "same_committed_inputs_as_retained_openclaw_cm06": true
+  },
+  "equality_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "b6adf23c10acfca91b83d383f8cbcbe504672c8237f1b3beb7913565fbd5fe3d"
+  },
+  "human_ratings": [
+    null,
+    null
+  ],
+  "input_admitted": false,
+  "limits_unchanged": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "matching_original_results": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
+      "sha256": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+      "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
+    }
+  ],
+  "missing_native_mechanism": null,
+  "models_unchanged": {
+    "allResearchWorkAndMemoryHelpers": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium"
+    },
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoningEffort": "none"
+    },
+    "providerRoute": "Existing registered subscription routes only; no paid fallback or automatic model escalation"
+  },
+  "native_mapping": {
+    "chat_id": "UUIDv5 URL namespace over <dataset>:<case>:<epoch>:hermes:private-chat:<principal>; same person retains the same private chat.",
+    "chat_type": "dm",
+    "constructor_fields": [
+      "user_id",
+      "chat_id",
+      "chat_type",
+      "gateway_session_key"
+    ],
+    "context_id": "UUIDv5 URL namespace over <dataset>:<case>:<epoch>:hermes:session:<index>; turns0/1 share one original native session, turn2 uses the second.",
+    "gateway_session_key": "Existing native default-profile build_session_key: agent:main:cli:dm:<chat_id>. This is origin metadata, not new authentication.",
+    "memory": "One ordinary profile and SessionDB, unchanged profile-global MemoryStore; no person split or new privacy policy.",
+    "platform": "cli",
+    "run_id": "First12 hex of UUIDv5 URL namespace over <dataset>:<case>:<epoch>:hermes.",
+    "user_id": "Exact original canonical principal indexed by original identity order."
+  },
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/native-inputs.private.json",
+    "sha256": "2b43442e552b723e5aa37e6979bf2db989e2976a9c0a4a84c0c01f65bdd1292a"
+  },
+  "quality_score": null,
+  "readbacks_required": [
+    "Exact durable native reply and session origin user_id/chat_id/chat_type/session_key/origin_json after every original turn.",
+    "Original two-session continuity, initial timezone/clock and one three-day advance; execution/authentication time remains separate.",
+    "Unmodified native memory snapshots and every actual contact/helper request body, bound to original person/session/calendar generation.",
+    "Complete attempts/raw usage/tools/deadline/stop/native settlement and physical closure; apply only original factual and required readback conditions.",
+    "Two actual independent human ratings remain null until supplied."
+  ],
+  "remaining_binding": "Mechanical CM06 source/Inspect isolated-path, exact three-turn count, unused-entry and twenty-row history/closed-CM05 guards; separate source and actual-ready/input admission.",
+  "resource_preparation_admitted": false,
+  "schema": {
+    "clock": "{generation,offset_delta_milliseconds}",
+    "native_identity": "{user_id,chat_id,chat_type,gateway_session_key}",
+    "participant_key": "hermes",
+    "provisioning": "actors:[{actor_index,user_id}],audience_kind:private,memory_subdir:default",
+    "root": "Ev003PrivateNativeInputs/v1",
+    "turn": "{actor_index,ordinal,session_index,context_id,text,clock,native_identity}"
+  },
+  "scope_boundary": "Only requested original Hermes CM06 preparation to fill existing matching CM06 comparison. No replay, new criteria, memory policy, budget redistribution or automatic full matrix.",
+  "shape": {
+    "actor_count": 1,
+    "actor_indices": [
+      0,
+      0,
+      0
+    ],
+    "audience": "private",
+    "calendar_advance_count": 1,
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "clock_offset_deltas_ms": [
+      0,
+      0,
+      259200000
+    ],
+    "extra_fixtures": 0,
+    "session_count": 2,
+    "session_indices": [
+      0,
+      0,
+      1
+    ],
+    "setup_turn_count": 0,
+    "turn_count": 3,
+    "unknown_person_turns": 0
+  },
+  "source_review_admitted": false,
+  "task": "P2.1"
+}

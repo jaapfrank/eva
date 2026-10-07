@@ -1,4 +1,37 @@
-## Actueel 7 oktober — Hermes en OpenClaw falen dezelfde persoonsgrensproef
+## Actueel 7 oktober — dezelfde latere herinnering: kwaliteit verschilt
+
+| Oorspronkelijke CM06 | Kernfeiten | Volledige inhoud | Geheugenopdracht |
+| --- | --- | --- | --- |
+| Eva1 | 1/3 | 2/3 | Faalt: latere status ontbreekt |
+| Hermes | 3/3 | 2/3 | Faalt: vereiste nuance verloren |
+| OpenClaw | 3/3 | 3/3 | Geslaagd in deze proef |
+
+Alle drie ontvingen 3/3 native antwoorden. Hermes' 2/2 readbacks slagen, maar een
+vereiste kwalificatie ontbreekt later in geheugen/context/antwoord. Kernfeiten
+zijn daarom geen volledig correcte taak. Menselijke kwaliteit/algemene winnaar
+onbekend; er is geen matching Eva2-resultaat met deze exacte successor-input.
+CM05-persoonsgrensverliezen en eerdere andere inputsets blijven behouden.
+
+Hermes:6 complete aanvragen (4 Sol/none+2 Astra/medium), 13.999 invoer-/215 uitvoertokens,
+15,726 s parent-start→child-exit. Eva1:7,43.408/1.674,44,574 s vóór stoppen;
+OpenClaw:12,285.381/1.521,123,410 s tot child-exit. Geen snelheidsratio voor
+geslaagd werk of creditbesparing. Alle20 oude registraties exact; nu21/136 pogingen,
+1.458.977 bekende ondergrenstokens en3 historische verbruiksonbekenden.
+Uitvoering/resources volledig gesloten; geen replay. Backup-padvraag was
+evaluatorvoorbereiding zonder oorspronkelijke input/calls; oude backup behouden.
+
+48 kleine taken/39 afgerond blijven ongewijzigd; geen extra productfunctie.
+P2.1 blijft open. Eerst alleen bestaande Hermes-groepsroute op oorspronkelijke
+CM07-beschikbaarheid beoordelen; Eva1/OpenClaw daarvoor onbeschikbaar. Geen nieuwe
+projectie/toelating of automatische matrix. L3.4–L3.7 geïnstalleerd; apps/add-ons
+volgen dezelfde verbetercyclus, automatische droommodus nog niet gebouwd.
+Spraak geparkeerd; I1.2/F2 en echte menselijke antwoordbeoordelingen blijven apart.
+
+Resultaat: evidence/product/p2-hermes-original-cm06-result-20261007.json.
+Review: reviews/p2-hermes-original-cm06-result-review-20261007.json.
+Actuele taak: P2.1 in design/product/execution-workboard-v1.json.
+
+## Eerder 7 oktober — Hermes en OpenClaw falen dezelfde persoonsgrensproef
 
 | Oorspronkelijke CM05 | Antwoorden ontvangen | Feitelijk goed | Persoonsgrens |
 | --- | --- | --- | --- |

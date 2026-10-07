@@ -1,0 +1,155 @@
+{
+  "contract": "Ev003IndependentHermesSourceReview/v1",
+  "created_at": "2026-10-07T21:41:00.491248+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-06:epoch1",
+  "decision": "GO_RESOURCE_PREPARATION_ONLY",
+  "source_binding": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/source-binding-cm06-proposed.private.json",
+    "sha256": "f7ca6402c69a01450c5ecc4688b77944f488fa7fd519fb2f8657d99f8a4ce0e5"
+  },
+  "proposed_config": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/parent-cm06-resource-proposed.private.json",
+    "sha256": "31ef5aee83b8d16ef62de700f0a3b8af95f4e7753a52d091df98ec4472e8febe"
+  },
+  "reviewed_sources": {
+    "launcher": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/launch-parent-accounted-cm06.private.py",
+      "sha256": "78accd677182c3fcd9b3a26b5f2aa811dbe0e054a78d36eabf21600b3189e7aa"
+    },
+    "inspect_wrapper": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/inspect-run-parent-accounted-cm06.private.py",
+      "sha256": "4978487a28e03409a5c22ace2cd8a143ff9f33181aec56e494cb81aa79c1d49d"
+    },
+    "unchanged_probe": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+      "sha256": "c1b07c0e22388fbd8d40140d295bd0a4b83cb5770faa25341c8d32d136e437ee"
+    }
+  },
+  "projection_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm06-origin-projection-review-20261007.json",
+    "sha256": "12a001e27298e7b5fb495150b907479ff29e04ca6dc5d845d2cf8d50d46ea9fd"
+  },
+  "equality_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "b6adf23c10acfca91b83d383f8cbcbe504672c8237f1b3beb7913565fbd5fe3d"
+  },
+  "checks": {
+    "all_55_file_pins_current": true,
+    "nested_instrumentation_and_three_release_source_hashes_match_actual_pins": true,
+    "mechanical_case_paths_count_and_closed_cm05_guard_only": true,
+    "original_three_turn_one_private_actor_two_sessions_three_day_advance": true,
+    "original_case_commitment_dataset_plan_scorer_bound": true,
+    "same_native_framework_profile_config_soul_and_global_memory_policy": true,
+    "no_auth_memory_or_session_state_copy": true,
+    "own_auth_bytes_and_retained_offline_freshness_bound": true,
+    "inspect_metadata_precedes_native_launch_no_generate_or_ai_judge": true,
+    "original_contact_helper_context_and_usage_retention_reused": true,
+    "single_480_second_deadline_starts_only_after_separate_release": true,
+    "original_caps_provider_roles_endpoint_only_network_stop_and_close_unchanged": true,
+    "exact_unused_slot_and_prior_20_rows_preserved": true,
+    "old_cm01_to_cm05_receipts_preserved": true
+  },
+  "profile_note": {
+    "loaded_configuration_files": [
+      "config.yaml",
+      "SOUL.md"
+    ],
+    "administrative_native_backup": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-native-owned/profiles/ev003-cm06-epoch1-parent-20261007-v1/backups/config/config.yaml.good.20261007-233526",
+      "sha256": "c9b71dc846c8b2322a26b51ad94b523e0b686172c1b40745ac2a017064a09689"
+    },
+    "backup_equal_to_config": true,
+    "explanation": "The native offline helper created a fresh byte-identical administrative backup. The older CM05 backup remains in its retained execution profile; the initial lookup lost its backups/config relative path. Current loaded config/SOUL and all 55 runtime/source pins remain unchanged."
+  },
+  "retained_verification": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/source-preflight-no-native.private.json",
+      "sha256": "668a56e65b63ba72be4bb8c4734ca8c0a6954cb1b7a7c93913caa680b6ac7dc2"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/inspect-import-preflight.private.json",
+      "sha256": "ade1cbcce74a6d0418b2983c2469ad9c74fd3cb4747a8ebf19ac26b54a28237a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/native-owned-auth-freshness-technical.private.json",
+      "sha256": "1d73034a1f9d4e6ffc8353eb2d57f83cf553b2c254c3d903297dc2c01ef64a11"
+    }
+  ],
+  "prior_evidence_reused": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm05-source-review-20261007.json",
+      "sha256": "8c0a432e147c15fd939fc2e1e66630b0fed00c871dc4cc7cc0778d1ad8afbd9f"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-hermes-cm05-publication-review-20261007.json",
+      "sha256": "e84e1a21f2bbac288defdbde8e4ab41f7c57d8c1aff351f2564b7af21edbe8e3"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+      "sha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80"
+    }
+  ],
+  "preparation_issue_preserved": {
+    "cause": "Preparation used the old configuration backup basename and lost its backups/config subdirectories; exact old backup remains retained.",
+    "correction": "Bind the actual current runtime config.yaml/SOUL.md only; administrative native backups are not imported as configuration inputs.",
+    "effect": "No reservation, original input release or modelcall; no old backup deleted or original run repeated."
+  },
+  "authority": {
+    "sha256": "f49a5394c8f7a81b03db581d5ddcafd68dd478d0074c69ccde0511f074556896",
+    "rows": 20,
+    "canonical_sha256": "86af4b8dbc2dff7c25b8ab48588e626a1c9733dd1d7a477cf6170fa307755b27",
+    "slot_unused": true,
+    "three_historical_usage_unknowns_preserved": true
+  },
+  "limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "model_roles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "human_ratings": [
+    null,
+    null
+  ],
+  "quality_score": null,
+  "input_admitted": false,
+  "readiness_admitted": false,
+  "permitted_finalization": "Create a separate immutable resource admission by setting only resource_preparation_admitted=true, retaining inspect_wrapper_active=true, and adding source-review status/provenance. All final/input/readiness flags remain false.",
+  "remaining_gate": "Fresh actual same-process resource/access/source/accounting/history readiness and separate original input admission/release. No original execution authorized here.",
+  "findings": [],
+  "reviewer_activity": {
+    "tests": 0,
+    "native_starts": 0,
+    "model_calls": 0,
+    "auth_calls": 0,
+    "reservations": 0,
+    "builder_source_changes": 0
+  },
+  "metadata_precision": {
+    "earlier_review_retained": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/source-review-before-metadata-precision.private.json",
+      "sha256": "eaa5f0849ecd558e4633c02df60817c762d95cd93bfda67a88b5804bd8b14c6a"
+    },
+    "earlier_resource_admission_retained": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/parent-cm06-resource-admission.private.json",
+      "sha256": "986a9444f5051a71c8379cf15a1f23b6d066ef0481fd7db3bedc8b37024b678f"
+    },
+    "earlier_resource_admission_superseded_unused": true,
+    "only_metadata_changed": true,
+    "correction": "Old CM05 backup was present; basename-only lookup lost the subdirectory. No removed/rotated backup or new runtime correction is claimed."
+  }
+}

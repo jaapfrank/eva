@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T21:30:41.638925+00:00",
+        "checkedAt": "2026-10-07T21:50:49.658586+00:00",
         "deliveries": [
           {
             "title": "L3.7 · Herbruikbare cyclus via gewone Eva voltooid",
@@ -4133,23 +4133,23 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Hermes en OpenClaw: persoonsgeheugen faalt",
+          "title": "P2.1 · Latere herinnering: verschil inhoudelijk vastgesteld",
           "state": "in_progress",
           "owner": "Codex",
           "taskId": "P2.1",
-          "detail": "Dezelfde oorspronkelijke CM05: Hermes ontvangt 4/4 antwoorden, waarvan 3/4 feitelijk kloppen; OpenClaw ontvangt 3/4, waarvan 2/4 kloppen. Beide brengen privé-informatie in de context van de andere persoon. Onafhankelijk beoordeeld; geen geslaagde persoonsgeheugenopdracht.",
-          "remaining": "P2.1 blijft open voor resterende uitvoerbare oorspronkelijke dekking en twee echte onafhankelijke antwoordbeoordelingen. Hermes en OpenClaw falen beide de CM05-persoonsgrens; geen algemene winnaar of extra productfunctie.",
-          "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+          "detail": "Dezelfde oorspronkelijke CM06:Hermes haalt kernfeiten terug maar verliest een vereiste nuance; Eva1 mist de latere status; OpenClaw bewaart de volledige herinnering. Onafhankelijk beoordeeld, geen algemene winnaar.",
+          "remaining": "P2.1 blijft open voor resterende oorspronkelijke uitvoerbare dekking en twee echte antwoordbeoordelingen. Hermes verliest een vereiste nuance, Eva1 mist de latere status, OpenClaw bewaart de volledige herinnering. Eerdere persoonsgrensverliezen behouden; geen algemene winnaar.",
+          "source": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar."
         },
         "next": {
-          "title": "P2.1 · Bestaande Hermes-geheugenproef aanvullen",
+          "title": "P2.1 · Bestaande groepsroute toetsen op beschikbaarheid",
           "state": "planned",
           "owner": "Codex",
           "taskId": "P2.1",
-          "detail": "De oorspronkelijke Hermes-CM06 is nog ongebruikt en past bij dezelfde bestaande Eva1/OpenClaw-CM06. Eerst bron en werkelijke gereedheid binden; geen nieuwe matrix of herhaling.",
+          "detail": "Alleen bepalen of Hermes de oorspronkelijke gedeelde-publiekscase CM07 via de bestaande native groepsroute kan uitvoeren. Eva1/OpenClaw hiervoor onbeschikbaar; geen nieuwe casevrijgave of automatische matrix.",
           "remaining": "I1.2/F2 en de twee menselijke antwoordbeoordelingen blijven apart. Spraak geparkeerd; automatische droommodus nog niet gebouwd.",
-          "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json"
+          "source": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json"
         },
         "ownerAction": {
           "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
@@ -4241,14 +4241,14 @@
       "comparisonResults": {
         "contract": "EvaPublishedComparisonResults/v1",
         "taskId": "P2.2",
-        "publishedAt": "2026-10-07T21:30:41.638925+00:00",
+        "publishedAt": "2026-10-07T21:50:49.658586+00:00",
         "originalDoneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
         "status": "partial_matched_original_result_published",
         "fullComparisonCompleted": false,
         "overallSuperiorityProven": false,
         "overallWinner": null,
-        "headline": "Persoonsgrenzen: Hermes en OpenClaw falen dezelfde oorspronkelijke proef.",
-        "scope": "Oorspronkelijke vergelijkingsdekking met afzonderlijke gesloten resultaten; huidige gematchte successor CM05 voor Hermes/OpenClaw. CM06 Eva1/OpenClaw behouden; oudere andere inputsets apart.",
+        "headline": "Dezelfde latere herinnering: OpenClaw volledig, Hermes verliest nuance, Eva1 mist status.",
+        "scope": "Oorspronkelijke dekking met afzonderlijke gesloten resultaten; huidige exact gematchte successor CM06 voor Eva1/Hermes/OpenClaw. Legacy-inputsets en eerdere persoonsgrensverliezen blijven apart.",
         "candidateBinding": {
           "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
           "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3"
@@ -4474,19 +4474,45 @@
             "sdkUsageComplete": true,
             "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
             "scope": "Same original successor CM05 as OpenClaw; objective/privacy failure, human quality UNKNOWN."
+          },
+          {
+            "case": "hermes:EV003-CM-06:epoch1",
+            "providerAttempts": 6,
+            "inputTokens": 13999,
+            "outputTokens": 215,
+            "firstContentSeconds": null,
+            "sampleSecondsIncludingMemory": null,
+            "parentThroughChildExitSeconds": 15.726007043005666,
+            "timingBoundary": "Parent monotonic start immediately before native child launch through child exit; preparation and subsequent parent cleanup excluded.",
+            "unplannedHumanHelp": null,
+            "humanMinutes": null,
+            "toolDispatches": 1,
+            "semanticScore": null,
+            "objectiveCompletion": false,
+            "nativeAnswersReceived": 3,
+            "factualSupported": 3,
+            "originalSemanticConditionsPassed": 2,
+            "originalSemanticConditionsRequired": 3,
+            "requiredAnswers": 3,
+            "requiredReadbacksPassed": 2,
+            "requiredReadbacksRequired": 2,
+            "creditCost": null,
+            "sdkUsageComplete": true,
+            "source": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+            "scope": "Same original successor CM06 as Eva1/OpenClaw; narrow core facts/readbacks pass but required qualification fails. Human quality UNKNOWN."
           }
         ],
         "runtimeTotals": {
-          "providerAttempts": 130,
+          "providerAttempts": 136,
           "inputTokens": null,
           "outputTokens": null,
-          "knownInputTokensLowerBound": 1431017,
-          "knownOutputTokensLowerBound": 13746,
+          "knownInputTokensLowerBound": 1445016,
+          "knownOutputTokensLowerBound": 13961,
           "registeredUnknownUsageAttempts": 3,
           "usageComplete": false,
           "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": false,
           "actualNativeAttempts": null,
-          "registeredSampleRows": 20,
+          "registeredSampleRows": 21,
           "nativeToolDispatches": null,
           "creditCost": null,
           "codexDevelopmentCredits": null,
@@ -4494,10 +4520,10 @@
             "contactSolNone": null,
             "helperAstraMedium": null
           },
-          "scope": "Current successor frozen-set cumulative authority through original Hermes CM05. Known token values are LOWER BOUNDS;3 historical usage unknowns remain. No full totals or credit-cost estimate.",
-          "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
-          "authoritySha256": "f49a5394c8f7a81b03db581d5ddcafd68dd478d0074c69ccde0511f074556896",
-          "knownTotalTokensLowerBound": 1444763
+          "scope": "Current successor frozen-set cumulative authority through original Hermes CM06. Known token values LOWER BOUNDS;3historical usage unknowns retained. No full totals or credit-cost estimate.",
+          "source": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+          "authoritySha256": "3463998e855a2448fa98877df30121ae57681ff37c2cd1439b4e46d298dd568a",
+          "knownTotalTokensLowerBound": 1458977
         },
         "housemateOutcomes": [
           {
@@ -4595,14 +4621,14 @@
           {
             "name": "Hermes",
             "state": "failed",
-            "reason": "Eigen login bevestigd; oorspronkelijke CM05 onafhankelijk afgesloten:4/4 antwoorden ontvangen,3/4 feitelijk correct. Privéfeiten kruisen de modelcontext van twee personen; terugkerende persoon krijgt het andere feit. Oorspronkelijke persoonscontextgate faalt. Eerdere CM03/CM04-verliezen blijven behouden; menselijke kwaliteit onbekend.",
+            "reason": "Eigen native route bevestigd; oorspronkelijke CM06:3/3kernfeiten maar2/3inhoudsvoorwaarden doordat een vereiste nuance later ontbreekt. Volledige geheugenopdracht faalt. CM03/CM04/CM05-verliezen behouden; menselijke kwaliteit onbekend.",
             "accessState": "authenticated",
-            "executionState": "original_cm05_closed_person_context_failure_human_quality_unknown",
-            "checkedAt": "2026-10-07T21:30:41.638925+00:00",
-            "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
-            "label": "Persoonsgrens en vergeten falen",
+            "executionState": "original_cm06_closed_partial_memory_failure_human_quality_unknown",
+            "checkedAt": "2026-10-07T21:50:49.658586+00:00",
+            "source": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+            "label": "Nuance en persoonsgrenzen nog onvoldoende",
             "independentAssessmentSource": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
-            "review": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json"
+            "review": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json"
           },
           {
             "name": "Agent Zero",
@@ -6776,68 +6802,76 @@
           {
             "path": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
             "sha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1"
+          },
+          {
+            "path": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+            "sha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059"
+          },
+          {
+            "path": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
+            "sha256": "705f9cb56283e5e0de60a46e90fa44e9ea91f1edb8bb6383c766ca9257a5ae19"
           }
         ],
         "controlledProviderCallsForPublication": 0,
         "codexDevelopmentCredits": null,
         "followup": {
-          "headline": "Persoonsgrenzen: Hermes en OpenClaw falen dezelfde oorspronkelijke proef.",
-          "scope": "Dezelfde oorspronkelijke CM05/epoch1: dataset, criteria, input, personen, privésessies en klok gelijk; native frameworkversies en modelrollen afzonderlijk behouden.",
+          "headline": "Dezelfde latere herinnering: OpenClaw volledig, Hermes verliest nuance, Eva1 mist status.",
+          "scope": "Dezelfde oorspronkelijke CM06/epoch1:input,privépersoon,sessies,klok en criteria gelijk. Kernfeiten, volledige inhoudsvoorwaarden en technische readbacks apart.",
           "rows": [
             {
-              "name": "Hermes · CM05",
+              "name": "Eva1 · CM06",
               "quality": {
                 "state": "failed",
-                "label": "Persoonsgrens faalt"
+                "label": "Latere status ontbreekt"
               },
-              "nativeReplies": "4 / 4",
-              "acceptedAnswers": "3 / 4",
-              "execution": "3/4 antwoorden feitelijk correct; 1/2 verplichte readbacks. Privéfeiten worden in één profiel samengevoegd; de terugkerende persoon krijgt het feit van de ander. Vier native origins kloppen: geen adapterfout.",
+              "nativeReplies": "3 / 3",
+              "acceptedAnswers": "1 / 3 kernfeiten",
+              "execution": "1/3kernfeiten,2/3inhoudsvoorwaarden,1/2readbacks. De latere status ontbreekt in antwoord/context; opdracht faalt.",
               "transportMs": [],
-              "providerAttemptsRegistered": 10,
-              "observedToolDispatches": 2,
-              "completeInputTokens": 21608,
-              "completeOutputTokens": 424
+              "providerAttemptsRegistered": 7,
+              "observedToolDispatches": 6,
+              "completeInputTokens": 43408,
+              "completeOutputTokens": 1674
             },
             {
-              "name": "OpenClaw · CM05",
+              "name": "Hermes · CM06",
               "quality": {
                 "state": "failed",
-                "label": "Persoonsgrens faalt"
+                "label": "Vereiste nuance verloren"
               },
-              "nativeReplies": "3 / 4",
-              "acceptedAnswers": "2 / 4",
-              "execution": "2/4 antwoorden feitelijk correct; één onjuist en één ontbreekt. Privécontext kruist personen en de gedeelde notitie wordt overschreven. Het vierde antwoord ontbreekt bij de oorspronkelijke 16-aanvragenlimiet.",
+              "nativeReplies": "3 / 3",
+              "acceptedAnswers": "3 / 3 kernfeiten",
+              "execution": "3/3kernfeiten,2/3inhoudsvoorwaarden,2/2readbacks. Een vereiste kwalificatie ontbreekt in later geheugen/context/antwoord; volledige opdracht faalt.",
               "transportMs": [],
-              "providerAttemptsRegistered": 16,
-              "observedToolDispatches": 10,
-              "completeInputTokens": 403281,
-              "completeOutputTokens": 1296
+              "providerAttemptsRegistered": 6,
+              "observedToolDispatches": 1,
+              "completeInputTokens": 13999,
+              "completeOutputTokens": 215
             },
             {
-              "name": "Eva1 · matching CM05",
+              "name": "OpenClaw · CM06",
               "quality": {
-                "state": "unknown",
-                "label": "Route onbeschikbaar"
+                "state": "observed",
+                "label": "Volledige herinnering correct"
               },
-              "nativeReplies": "Niet uitgevoerd",
-              "acceptedAnswers": null,
-              "execution": "De bestaande vaste éénpersoonsroute ondersteunt deze oorspronkelijke tweepersoonscase niet. UNKNOWN; geen productverlies.",
+              "nativeReplies": "3 / 3",
+              "acceptedAnswers": "3 / 3 kernfeiten",
+              "execution": "3/3kernfeiten,3/3inhoudsvoorwaarden,2/2readbacks. Dezelfde oorspronkelijke geheugenopdracht objectief geslaagd. Menselijke kwaliteit onbekend.",
               "transportMs": [],
-              "providerAttemptsRegistered": null,
-              "observedToolDispatches": null,
-              "completeInputTokens": null,
-              "completeOutputTokens": null
+              "providerAttemptsRegistered": 12,
+              "observedToolDispatches": 11,
+              "completeInputTokens": 285381,
+              "completeOutputTokens": 1521
             },
             {
-              "name": "Eva2 · matching CM05",
+              "name": "Eva2 · matching CM06",
               "quality": {
                 "state": "unknown",
                 "label": "Geen matching resultaat"
               },
               "nativeReplies": "Niet uitgevoerd",
               "acceptedAnswers": null,
-              "execution": "Geen resultaat met deze exacte opvolgerbinding. Oudere resultaten blijven afzonderlijk; geen Eva2-score verzonnen.",
+              "execution": "Oudere Eva1/Eva2-CM06 heeft andere inputbinding. Geen matching Eva2-score verzonnen; eerdere resultaten blijven apart.",
               "transportMs": [],
               "providerAttemptsRegistered": null,
               "observedToolDispatches": null,
@@ -6845,31 +6879,35 @@
               "completeOutputTokens": null
             }
           ],
-          "usage": "Hermes: 10 complete modelaanvragen, 21.608 invoer-/424 uitvoertokens. OpenClaw: 16, 403.281/1.296. Minder tokens compenseren de persoonsgrensfout niet; geld-/creditkosten onbekend.",
-          "humanHelpNote": "Twee echte menselijke beoordelingen ontbreken. Geen algemeen kwaliteitsoordeel of benodigde-hulpmeting verzonnen.",
-          "nextAction": "De gesloten Hermes/OpenClaw-CM05-uitkomst publiceren; daarna alleen de bestaande ongebruikte Hermes-CM06-binding voorbereiden, zonder eerdere proeven te herhalen.",
-          "remaining": "P2.1 blijft open voor resterende uitvoerbare oorspronkelijke dekking en twee echte onafhankelijke antwoordbeoordelingen. Hermes en OpenClaw falen beide de CM05-persoonsgrens; geen algemene winnaar of extra productfunctie.",
-          "timingNote": "Hermes:21,933s; OpenClaw:181,706s. Beide parent-start tot child-exit, zonder voorbereiding en latere opruiming. Verschillende voltooiing en modelrollen; geen snelheidsratio voor geslaagd werk.",
+          "usage": "Hermes:6 complete aanvragen,13.999invoer-/215uitvoertokens. Eva1:7,43.408/1.674. OpenClaw:12,285.381/1.521. Minder tokens compenseren geheugenverlies niet; geld-/creditkosten onbekend.",
+          "humanHelpNote": "Twee echte menselijke beoordelingen ontbreken. Kernfeitenvoorwaarden meten geen volledig antwoordoordeel of algemene intelligentie.",
+          "nextAction": "De gesloten matching geheugenuitkomst publiceren; daarna alleen bestaande Hermes-groepsroute beoordelen voor oorspronkelijke gedeelde-publiekscase CM07. Geen eerdere proef herhalen of automatische matrix.",
+          "remaining": "P2.1 blijft open voor resterende oorspronkelijke uitvoerbare dekking en twee echte antwoordbeoordelingen. Hermes verliest een vereiste nuance, Eva1 mist de latere status, OpenClaw bewaart de volledige herinnering. Eerdere persoonsgrensverliezen behouden; geen algemene winnaar.",
+          "timingNote": "Hermes15,726s en OpenClaw123,410s:parent-start→child-exit. Eva1 44,574s eindigt bij antwoord/geheugen vóór stoppen. Verschillende meetgrenzen/rollen/voltooiing; geen snelheidsratio voor geslaagd werk.",
           "configurationNotes": [
-            "Hermes:6 contactaanvragen gpt-6-sol/none en4 helpers gpt-6-astra/medium. OpenClaw:16 contactaanvragen sol/none; bestaande providerroute behouden.",
-            "OpenClaws oude raw accepted_answers=3 betekent ontvangen native antwoorden, niet drie feitelijk goede antwoorden. De oorspronkelijke score is niet gewijzigd.",
-            "CM06 blijft behouden: Eva1 mist de latere status (1/3), OpenClaw haalt deze terug (3/3). Eenpersoonssucces heft de CM05-persoonsgrensfout niet op.",
-            "Originele eindvoorwaarden en historische verlies-/UNKNOWN-uitkomsten blijven staan; geen extra productfunctie."
+            "Hermes4contactsol/none+2helperastra/medium; Eva1/OpenClaw gewone contactsol/none via bestaande providerroute.",
+            "Hermes en OpenClaw faalden CM05-persoonsgrenzen. Deze éénpersoonscase maakt die verliezen niet ongedaan.",
+            "Een smalle readback en3kernfeiten kunnen slagen terwijl een volledige oorspronkelijke inhoudsvoorwaarde faalt; geen gewijzigde criteria of score.",
+            "De voorafgaande evaluatorpadfout was voorbereiding zonder models/reservation; oude metadata/admission bewaard en ongebruikt, slechts gecorrigeerde admission gebruikt."
           ],
-          "resources": "Hermes native 4/4, nul SDK/achtergrondwerk pending; child/parent/container/netwerk beëindigd. Alle19 oudere authorityrijen/revisies exact behouden; nu20rijen/130pogingen.",
-          "automaticReviewNote": "Onafhankelijke terminale GO voor beperkte resultaatpublicatie. Officiële Inspect-score en menselijke ratings blijven null.",
+          "resources": "Hermes3/3native,6SDK volledig,nulpending/closeerrors; child/parent/container/netwerk beëindigd en klokhersteld. Alle20oudereauthorityrijen/revisies exact behouden; nu21/136pogingen.",
+          "automaticReviewNote": "Onafhankelijke terminale GO voor beperkte publicatie. Officiële Inspect-score en menselijke ratings blijven null.",
           "evidenceBindings": [
             {
-              "path": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
-              "sha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80"
+              "path": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+              "sha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059"
             },
             {
-              "path": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
-              "sha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1"
+              "path": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
+              "sha256": "705f9cb56283e5e0de60a46e90fa44e9ea91f1edb8bb6383c766ca9257a5ae19"
             },
             {
-              "path": "eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json",
-              "sha256": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+              "path": "eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
+              "sha256": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d"
+            },
+            {
+              "path": "eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+              "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
             }
           ]
         },
@@ -7437,17 +7475,111 @@
                 "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
               }
             ]
+          },
+          {
+            "headline": "Persoonsgrenzen: Hermes en OpenClaw falen dezelfde oorspronkelijke proef.",
+            "scope": "Dezelfde oorspronkelijke CM05/epoch1: dataset, criteria, input, personen, privésessies en klok gelijk; native frameworkversies en modelrollen afzonderlijk behouden.",
+            "rows": [
+              {
+                "name": "Hermes · CM05",
+                "quality": {
+                  "state": "failed",
+                  "label": "Persoonsgrens faalt"
+                },
+                "nativeReplies": "4 / 4",
+                "acceptedAnswers": "3 / 4",
+                "execution": "3/4 antwoorden feitelijk correct; 1/2 verplichte readbacks. Privéfeiten worden in één profiel samengevoegd; de terugkerende persoon krijgt het feit van de ander. Vier native origins kloppen: geen adapterfout.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 10,
+                "observedToolDispatches": 2,
+                "completeInputTokens": 21608,
+                "completeOutputTokens": 424
+              },
+              {
+                "name": "OpenClaw · CM05",
+                "quality": {
+                  "state": "failed",
+                  "label": "Persoonsgrens faalt"
+                },
+                "nativeReplies": "3 / 4",
+                "acceptedAnswers": "2 / 4",
+                "execution": "2/4 antwoorden feitelijk correct; één onjuist en één ontbreekt. Privécontext kruist personen en de gedeelde notitie wordt overschreven. Het vierde antwoord ontbreekt bij de oorspronkelijke 16-aanvragenlimiet.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 16,
+                "observedToolDispatches": 10,
+                "completeInputTokens": 403281,
+                "completeOutputTokens": 1296
+              },
+              {
+                "name": "Eva1 · matching CM05",
+                "quality": {
+                  "state": "unknown",
+                  "label": "Route onbeschikbaar"
+                },
+                "nativeReplies": "Niet uitgevoerd",
+                "acceptedAnswers": null,
+                "execution": "De bestaande vaste éénpersoonsroute ondersteunt deze oorspronkelijke tweepersoonscase niet. UNKNOWN; geen productverlies.",
+                "transportMs": [],
+                "providerAttemptsRegistered": null,
+                "observedToolDispatches": null,
+                "completeInputTokens": null,
+                "completeOutputTokens": null
+              },
+              {
+                "name": "Eva2 · matching CM05",
+                "quality": {
+                  "state": "unknown",
+                  "label": "Geen matching resultaat"
+                },
+                "nativeReplies": "Niet uitgevoerd",
+                "acceptedAnswers": null,
+                "execution": "Geen resultaat met deze exacte opvolgerbinding. Oudere resultaten blijven afzonderlijk; geen Eva2-score verzonnen.",
+                "transportMs": [],
+                "providerAttemptsRegistered": null,
+                "observedToolDispatches": null,
+                "completeInputTokens": null,
+                "completeOutputTokens": null
+              }
+            ],
+            "usage": "Hermes: 10 complete modelaanvragen, 21.608 invoer-/424 uitvoertokens. OpenClaw: 16, 403.281/1.296. Minder tokens compenseren de persoonsgrensfout niet; geld-/creditkosten onbekend.",
+            "humanHelpNote": "Twee echte menselijke beoordelingen ontbreken. Geen algemeen kwaliteitsoordeel of benodigde-hulpmeting verzonnen.",
+            "nextAction": "De gesloten Hermes/OpenClaw-CM05-uitkomst publiceren; daarna alleen de bestaande ongebruikte Hermes-CM06-binding voorbereiden, zonder eerdere proeven te herhalen.",
+            "remaining": "P2.1 blijft open voor resterende uitvoerbare oorspronkelijke dekking en twee echte onafhankelijke antwoordbeoordelingen. Hermes en OpenClaw falen beide de CM05-persoonsgrens; geen algemene winnaar of extra productfunctie.",
+            "timingNote": "Hermes:21,933s; OpenClaw:181,706s. Beide parent-start tot child-exit, zonder voorbereiding en latere opruiming. Verschillende voltooiing en modelrollen; geen snelheidsratio voor geslaagd werk.",
+            "configurationNotes": [
+              "Hermes:6 contactaanvragen gpt-6-sol/none en4 helpers gpt-6-astra/medium. OpenClaw:16 contactaanvragen sol/none; bestaande providerroute behouden.",
+              "OpenClaws oude raw accepted_answers=3 betekent ontvangen native antwoorden, niet drie feitelijk goede antwoorden. De oorspronkelijke score is niet gewijzigd.",
+              "CM06 blijft behouden: Eva1 mist de latere status (1/3), OpenClaw haalt deze terug (3/3). Eenpersoonssucces heft de CM05-persoonsgrensfout niet op.",
+              "Originele eindvoorwaarden en historische verlies-/UNKNOWN-uitkomsten blijven staan; geen extra productfunctie."
+            ],
+            "resources": "Hermes native 4/4, nul SDK/achtergrondwerk pending; child/parent/container/netwerk beëindigd. Alle19 oudere authorityrijen/revisies exact behouden; nu20rijen/130pogingen.",
+            "automaticReviewNote": "Onafhankelijke terminale GO voor beperkte resultaatpublicatie. Officiële Inspect-score en menselijke ratings blijven null.",
+            "evidenceBindings": [
+              {
+                "path": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                "sha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80"
+              },
+              {
+                "path": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
+                "sha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1"
+              },
+              {
+                "path": "eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json",
+                "sha256": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+              }
+            ]
           }
         ],
         "roundDisposition": {
-          "recordedAt": "2026-10-07T21:30:41.638925+00:00",
+          "recordedAt": "2026-10-07T21:50:49.658586+00:00",
           "state": "incomplete_no_general_winner",
           "fullP2Completed": false,
           "evidence": "eva2/evidence/product/p2-current-round-decision-20261007.json",
           "furtherHermesOnlyCM05Started": false,
           "missingCoverageAndHumanRatingsRemainOpen": true,
-          "latestOriginalResult": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
-          "matchedHermesOpenClawCM05Closed": true
+          "latestOriginalResult": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+          "matchedHermesOpenClawCM05Closed": true,
+          "matchedHermesEva1OpenClawCM06Closed": true
         },
         "historicalRuntimeTotals": [
           {
@@ -7517,6 +7649,29 @@
             "source": "eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
             "authoritySha256": "707f5d502dca4de191d938a919ef6eb33458b7d60110300bb000e389e5107593",
             "knownTotalTokensLowerBound": 1422731
+          },
+          {
+            "providerAttempts": 130,
+            "inputTokens": null,
+            "outputTokens": null,
+            "knownInputTokensLowerBound": 1431017,
+            "knownOutputTokensLowerBound": 13746,
+            "registeredUnknownUsageAttempts": 3,
+            "usageComplete": false,
+            "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": false,
+            "actualNativeAttempts": null,
+            "registeredSampleRows": 20,
+            "nativeToolDispatches": null,
+            "creditCost": null,
+            "codexDevelopmentCredits": null,
+            "providerRoleCounts": {
+              "contactSolNone": null,
+              "helperAstraMedium": null
+            },
+            "scope": "Current successor frozen-set cumulative authority through original Hermes CM05. Known token values are LOWER BOUNDS;3 historical usage unknowns remain. No full totals or credit-cost estimate.",
+            "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+            "authoritySha256": "f49a5394c8f7a81b03db581d5ddcafd68dd478d0074c69ccde0511f074556896",
+            "knownTotalTokensLowerBound": 1444763
           }
         ],
         "historicalScopeBeforeMatchedHermesCM05": "Oorspronkelijke vergelijkingsdekking met afzonderlijke gesloten resultaten; huidige gematchte successor CM06 voor Eva1/OpenClaw. Oudere andere inputsets blijven apart.",
@@ -7531,6 +7686,19 @@
           "label": "Persoonsgrens en vergeten falen",
           "independentAssessmentSource": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
           "review": "eva2/reviews/p2-hermes-original-cm04-result-review-20261007.json"
+        },
+        "historicalScopeBeforeMatchedHermesCM06": "Oorspronkelijke vergelijkingsdekking met afzonderlijke gesloten resultaten; huidige gematchte successor CM05 voor Hermes/OpenClaw. CM06 Eva1/OpenClaw behouden; oudere andere inputsets apart.",
+        "historicalHermesAvailabilityBeforeCM06": {
+          "name": "Hermes",
+          "state": "failed",
+          "reason": "Eigen login bevestigd; oorspronkelijke CM05 onafhankelijk afgesloten:4/4 antwoorden ontvangen,3/4 feitelijk correct. Privéfeiten kruisen de modelcontext van twee personen; terugkerende persoon krijgt het andere feit. Oorspronkelijke persoonscontextgate faalt. Eerdere CM03/CM04-verliezen blijven behouden; menselijke kwaliteit onbekend.",
+          "accessState": "authenticated",
+          "executionState": "original_cm05_closed_person_context_failure_human_quality_unknown",
+          "checkedAt": "2026-10-07T21:30:41.638925+00:00",
+          "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+          "label": "Persoonsgrens en vergeten falen",
+          "independentAssessmentSource": "eva2/evidence/product/p2-hermes-cm01-independent-assessment-20261007.json",
+          "review": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json"
         }
       },
       "housemateSummary": {
@@ -20738,7 +20906,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "De gesloten Hermes/OpenClaw-CM05-uitkomst publiceren; daarna alleen de bestaande ongebruikte Hermes-CM06-binding voorbereiden, zonder eerdere proeven te herhalen.",
+              "nextAction": "De gesloten matching geheugenuitkomst publiceren; daarna alleen bestaande Hermes-groepsroute beoordelen voor oorspronkelijke gedeelde-publiekscase CM07. Geen eerdere proef herhalen of automatische matrix.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20751,9 +20919,9 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T21:30:41.638925+00:00",
+              "checkedAt": "2026-10-07T21:50:49.658586+00:00",
               "assignment": {
-                "baseCommit": "ba52a37db19f523dff66d0fee2a14bc1468ab4ea",
+                "baseCommit": "38c24435fc4850c1aa774a43b4f1fc27479b642c",
                 "owner": "/root",
                 "activeWorkers": [
                   "Codex",
@@ -20768,36 +20936,37 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Hergebruik bestaande native-routebewijzen; alleen nieuwe case-/historiekbinding beoordelen. Oorspronkelijk proefbudget behouden; creditkosten onbekend.",
-                "currentAction": "De gesloten Hermes/OpenClaw-CM05-uitkomst publiceren; daarna alleen de bestaande ongebruikte Hermes-CM06-binding voorbereiden, zonder eerdere proeven te herhalen.",
+                "currentAction": "De gesloten matching geheugenuitkomst publiceren; daarna alleen bestaande Hermes-groepsroute beoordelen voor oorspronkelijke gedeelde-publiekscase CM07. Geen eerdere proef herhalen of automatische matrix.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "previousTurnClassification": "progress",
-                  "previousAuthoritativeOutcome": "Original OpenClaw CM06 objective pass independently published; source365868a2.18 rows retained, no legacy pairing; dashboard stale fields corrected.",
-                  "stage": "successor_eva1_cm06_result_published",
-                  "actualProviderCalls": 7,
+                  "previousAuthoritativeOutcome": "Same original Eva1/OpenClaw CM06 independently assessed,published and committed/pushed as ba52a37d; status package verified1340files/8unchanged images. Native run closed,no replay.",
+                  "stage": "hermes_cm05_result_published",
+                  "actualProviderCalls": 10,
                   "originalInputsReleased": true,
                   "resourcesStarted": true,
+                  "authorityMutations": null,
+                  "pendingExecutionHandle": false,
                   "newProductFunction": false,
                   "credits": null,
-                  "concretePreparation": "CM05 unknown/unavailable recorded without input; same original CM06 projected; baseline-only source assembled with full request-context retention.",
-                  "modelCalls": 7,
-                  "inputReleased": true,
-                  "authorityMutations": null,
-                  "tests": "Python AST, Node syntax and read-only exact source/history/lease/import/Inspect preflight; no native startup or provider probe",
-                  "originalNativeInputs": 3,
-                  "preparationIssue": {
-                    "cause": "load_final_dataset kreeg str in plaats van Path; fout vóór dataset.sample/Task/solver/native uitvoer.",
-                    "effect": "Geen oorspronkelijke vraag aan Eva1, reservering, deadline of modelcall; authority18rows exact behouden.",
-                    "correction": "Alleen Path-type bij bestaande evaluator; gecontroleerde lege roots/clock/preload hergebruiken, oude fout/release behouden.",
-                    "state": "causal_correction_independently_admitted_and_one_native_run_closed",
-                    "productLoss": false,
-                    "automaticRestart": false
-                  },
-                  "pendingExecutionHandle": false,
-                  "inputTokens": 43408,
-                  "outputTokens": 1674,
-                  "totalTokens": 45082,
-                  "elapsedSeconds": 44.57372733799275,
+                  "concreteNextAction": "Existing unused Hermes CM06 metadata confirmed; separate original source/readiness/input admission needed before execution.",
+                  "concretePreparation": "Original shared-audience availability published by independent evaluator; next matched HermesCM05 projected exactly. Existing evaluator3turn restriction generalized; original4turn parent/Inspect source bound and no-native preflight passed.",
+                  "tests": "1public original packet boundary test; Python AST and existing parent --check without native startup. No original test repeated.",
+                  "preparationIssues": [
+                    "Retained old config found under execution/native-profile; initial lookup before anycopy/modelcall",
+                    "Own native JWT fresh; initial metadata helper read nonexistent tokens.expires_at, false negative preserved"
+                  ],
+                  "registeredSampleRowsAdded": 1,
+                  "sourceReview": "eva2/reviews/p2-hermes-cm05-source-review-20261007.json",
+                  "originalInputs": 4,
+                  "originalNativeInputsPlanned": 4,
+                  "readinessReview": "eva2/reviews/p2-hermes-cm05-ready-review-20261007.json",
+                  "nativeOriginalExecutions": 1,
+                  "modelCalls": 10,
+                  "inputTokens": 21608,
+                  "outputTokens": 424,
+                  "totalTokens": 22032,
+                  "elapsedSeconds": 21.932726069004275,
                   "nativeCompletion": true,
                   "objectiveCompletion": false,
                   "wholeQuality": "UNKNOWN",
@@ -20805,65 +20974,76 @@
                     null,
                     null
                   ],
-                  "independentResultEvidence": "eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
-                  "independentTerminalReview": "eva2/reviews/p2-eva1-successor-cm06-terminal-review-20261007.json",
+                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                  "independentTerminalReview": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
                   "publicationModelCalls": 0,
-                  "registeredSampleRowsAdded": 1
+                  "comparisonOutcome": {
+                    "hermes": {
+                      "nativeResponses": "4/4",
+                      "factualSupported": "3/4",
+                      "privacyPass": false
+                    },
+                    "openclaw": {
+                      "nativeResponses": "3/4",
+                      "factualSupported": "2/4",
+                      "privacyPass": false
+                    },
+                    "generalWinner": null
+                  }
                 },
-                "stage": "hermes_cm05_result_published",
+                "stage": "hermes_cm06_result_published",
                 "currentNativePreparation": {
-                  "entry": "hermes:EV003-CM-05:epoch1",
-                  "caseId": "EV003-CM-05",
+                  "entry": "hermes:EV003-CM-06:epoch1",
+                  "caseId": "EV003-CM-06",
                   "participant": "hermes",
                   "epoch": 1,
                   "currentStage": "closed_original_independently_assessed",
                   "resourcePreparationActive": false,
                   "nativeExecutionActive": false,
-                  "execSessionId": 3069,
-                  "actualInspectWrapperPID": 2752378,
-                  "actualParentPID": 2752564,
-                  "providerAttempts": 10,
+                  "providerAttempts": 6,
                   "inputReleased": true,
-                  "absoluteSampleDeadlineCreated": true,
                   "nativeContextStarted": true,
-                  "sourceBindingSha256": "0f38ac8e5648c05a71e4982dcf265ccda7d7407182e4619844ab9e0ac5fb0102",
-                  "proposedConfigSha256": "21fc18861e8499b0398d6d89a3b4c16fa375b1b03086b20e8479da655196008d",
-                  "sourceReview": "eva2/reviews/p2-hermes-cm05-source-review-20261007.json",
-                  "sourceReviewSha256": "8c0a432e147c15fd939fc2e1e66630b0fed00c871dc4cc7cc0778d1ad8afbd9f",
-                  "resourceAdmissionSha256": "51eebee9a0bb2d72192e514406f07292d6c7893478a058decbaa08c72dc4307c",
-                  "actualReadySha256": "f5126b6fb43206dca783b952ea5ff5c4f3f7d7f70c89a8643484a5d3182625f3",
-                  "authorityAfterReservationSha256": "8fa2ea7a3a96bf1c0d4469f66db6431a140192c8d8133ce621fe36c3c670ba82",
-                  "oldAuthorityRows": 19,
-                  "ordinaryNativeSourceChanged": false,
-                  "filePins": 56,
-                  "expectedTurns": 4,
-                  "ownNativeAuthFresh": true,
                   "newProductFunction": false,
-                  "readinessReview": "eva2/reviews/p2-hermes-cm05-ready-review-20261007.json",
-                  "readinessReviewSha256": "196b5cc248bfe5d9b1f67c25f06227bff2cd549747a3f11385c509d492ca9b19",
-                  "finalAdmissionSha256": "8b5ebc24a0daa489e6c98c3833bc4867614724a8d71f76c7caf5fa29f4bdfd51",
-                  "releaseSha256": "2f166a62dadf52da8d6db8c05eaaee91ad4e4199b60b5ef19edff369a0ec2fda",
-                  "releasedAt": "2026-10-07T21:20:37.684663+00:00",
-                  "inputTokens": 21608,
-                  "outputTokens": 424,
-                  "totalTokens": 22032,
-                  "receivedTurns": 4,
-                  "nativeResponses": 4,
-                  "providerUsageComplete": true,
+                  "sourceBindingSha256": "f7ca6402c69a01450c5ecc4688b77944f488fa7fd519fb2f8657d99f8a4ce0e5",
+                  "proposedConfigSha256": "31ef5aee83b8d16ef62de700f0a3b8af95f4e7753a52d091df98ec4472e8febe",
+                  "projectionSha256": "2b43442e552b723e5aa37e6979bf2db989e2976a9c0a4a84c0c01f65bdd1292a",
+                  "expectedTurns": 3,
+                  "filePins": 55,
+                  "nativeProbeChanged": false,
+                  "ownNativeAuthFresh": true,
+                  "execSessionId": 65202,
+                  "actualInspectWrapperPID": 2871430,
+                  "actualParentPID": 2871618,
+                  "resourceAdmissionSha256": "a27f4a932c1a28687b367bd114667e89e51425851cfdb4dbb20ac76ae142f391",
+                  "actualReadySha256": "d25ad166f5db8b7488c299ab08f55c6cda1a634962957ce454c8bc1af59a0d8c",
+                  "authorityAfterReservationSha256": "6d5b46f5310500f11d793bec829e975e0714898e40eb39bb7bf82196384a1eee",
+                  "sourceReviewSha256": "809949e3edb88e70ab90da97ef6e5600310504b534c9ba4b9f6219016ef62cff",
+                  "nativeContextActive": false,
+                  "absoluteSampleDeadlineCreated": true,
+                  "readinessReview": "eva2/reviews/p2-hermes-cm06-ready-review-20261007.json",
+                  "readinessReviewSha256": "b7f302008e0f08ac18fa46e6f3f1aa610729bbaa772ad19b9b5aed3d6a97998c",
+                  "finalAdmissionSha256": "0259478f1ca72aa3a9b5d460b2f79733555a1f08fa29b713558e5a6dbf1665f9",
+                  "releaseSha256": "a45aeaa59eaebca173b0a7dfbea72800a702e1c49565e905f67624d72b715a6f",
+                  "releasedAt": "2026-10-07T21:43:52.585710+00:00",
+                  "inputTokens": 13999,
+                  "outputTokens": 215,
+                  "totalTokens": 14214,
+                  "elapsedSeconds": 15.726007043005666,
                   "nativeCompletion": true,
                   "objectiveCompletion": false,
+                  "receivedTurns": 3,
+                  "nativeResponses": 3,
+                  "providerUsageComplete": true,
                   "parentExitCode": 0,
                   "nativeStopVerified": true,
                   "containerAbsent": true,
                   "networkAbsent": true,
-                  "elapsedSeconds": 21.932726069004275,
-                  "nativeReceiptSha256": "26528dba5f752b7385c27260e5d8bdea638be124dcfa2bb11783efd9ec49dbfe",
-                  "nativeReportSha256": "f9c39f1aed9a2a60141053a5e92b1e7e154163427ab1b663ff25b8b39ccb9340",
-                  "authorityAfterSha256": "f49a5394c8f7a81b03db581d5ddcafd68dd478d0074c69ccde0511f074556896",
-                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
-                  "resultSha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80",
-                  "independentReviewSha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1",
-                  "nativeContextActive": false
+                  "nativeReceiptSha256": "ea361c23da678eb0cde6cd941039ac18a2d128569bdc5a70cbe5d328cd4644e9",
+                  "nativeReportSha256": "cc3e6cfdd8f6b7e577bbabe2e72f202786cbea9528e00e764679a4c0656048ca",
+                  "authorityAfterSha256": "3463998e855a2448fa98877df30121ae57681ff37c2cd1439b4e46d298dd568a",
+                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+                  "resultSha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059",
+                  "independentReviewSha256": "705f9cb56283e5e0de60a46e90fa44e9ea91f1edb8bb6383c766ca9257a5ae19"
                 },
                 "evaluatorCorrection": {
                   "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
@@ -20903,7 +21083,7 @@
                   "newProviderCalls": 0,
                   "retainedPreparation": true
                 },
-                "finding": "Gematchte oorspronkelijke CM05: Hermes native4/4, feitelijk3/4; OpenClaw native3/4, feitelijk2/4. Beide falen de harde persoonscontextgate. Native origins correct; geen algemene winnaar of extra functie.",
+                "finding": "Dezelfde oorspronkelijke CM06:Hermes kernfeiten3/3 maar inhoudsvoorwaarden2/3 door nuanceverlies; Eva1 latere status ontbreekt(1/3kernfeiten),OpenClaw3/3volledig. Alle nativebeurten ontvangen; geen algemene winnaar.",
                 "previousBlockedAudit": {
                   "condition": "Mandatory private evaluation-data processing/semantic review awaiting explicit owner authorization after automatic review denial",
                   "consecutiveGoalTurns": 3,
@@ -20960,27 +21140,27 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "De gesloten Hermes/OpenClaw-CM05-uitkomst publiceren; daarna alleen de bestaande ongebruikte Hermes-CM06-binding voorbereiden, zonder eerdere proeven te herhalen.",
+                "nextAction": "De gesloten matching geheugenuitkomst publiceren; daarna alleen bestaande Hermes-groepsroute beoordelen voor oorspronkelijke gedeelde-publiekscase CM07. Geen eerdere proef herhalen of automatische matrix.",
                 "actualUsage": {
-                  "scope": "One original Hermes CM05; development comparison, not household runtime",
-                  "providerAttempts": 10,
-                  "contactAttempts": 6,
-                  "helperAttempts": 4,
-                  "inputTokens": 21608,
-                  "outputTokens": 424,
-                  "totalTokens": 22032,
-                  "elapsedSeconds": 21.932726069004275,
-                  "timingBoundary": "Parent monotonic start before native child launch through child exit; excludes preparation and subsequent parent resource cleanup.",
+                  "scope": "One original Hermes CM06; development comparison, not household runtime",
+                  "providerAttempts": 6,
+                  "contactAttempts": 4,
+                  "helperAttempts": 2,
+                  "inputTokens": 13999,
+                  "outputTokens": 215,
+                  "totalTokens": 14214,
+                  "elapsedSeconds": 15.726007043005666,
+                  "timingBoundary": "Parent monotonic start immediately before native child launch through child exit; preparation and subsequent parent cleanup excluded.",
                   "credits": null,
                   "householdRuntimeUsage": false,
-                  "knownRegistryLowerBoundTokens": 1444763,
+                  "knownRegistryLowerBoundTokens": 1458977,
                   "historicalUnknowns": 3
                 },
-                "review": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
+                "review": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
                 "sourcePreparationEvidence": "eva2/evidence/product/p2-xd01-native-binding-20261005.json",
                 "resourcePreparationEvidence": "eva2/evidence/product/p2-xd01-browser-resources-20261005.json",
                 "preparationStateEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
-                "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
                 "currentPreparationUsage": {
                   "realProviderCalls": 0,
                   "syntheticProviderAttempts": 1,
@@ -20997,25 +21177,26 @@
                 "currentSourceReviewStatus": "targeted_resume_delta_go",
                 "latestPreparationIssue": "Een projectieaudience bleef na actorcorrectie verwijzen naar de conceptmapping. Normale API weigert dit vóór invoer; geen productverlies. Eén operationeel veld gecorrigeerd en meetvoorbereiding bewaard. Bestaande lege memoryschema hervatten, geen reset of resourceherbouw.",
                 "currentExecution": {
-                  "entry": "hermes:EV003-CM-05:epoch1",
-                  "caseId": "EV003-CM-05",
+                  "entry": "hermes:EV003-CM-06:epoch1",
+                  "caseId": "EV003-CM-06",
                   "epoch": 1,
                   "participantOrder": [
                     "hermes"
                   ],
                   "active": false,
                   "terminalExitCode": 0,
-                  "providerAttemptsRegistered": 10,
+                  "providerAttemptsRegistered": 6,
                   "accountingComplete": true,
-                  "nativeReplies": 4,
+                  "nativeReplies": 3,
+                  "factualSupported": 3,
+                  "originalSemanticConditionsPassed": 2,
                   "objectiveCompletion": false,
-                  "hardPersonContextPrivacyGate": false,
                   "quality": "UNKNOWN",
                   "servicesStopped": true,
-                  "resultPath": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
-                  "resultSha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80",
-                  "finalReviewPath": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
-                  "finalReviewSha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1"
+                  "resultPath": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+                  "resultSha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059",
+                  "finalReviewPath": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
+                  "finalReviewSha256": "705f9cb56283e5e0de60a46e90fa44e9ea91f1edb8bb6383c766ca9257a5ae19"
                 },
                 "prebuildDecisionEvidence": "eva2/evidence/product/p2-prebuild-decision-20261005.json",
                 "independentFinding": {
@@ -21157,18 +21338,18 @@
                 "support": "Independent binding GO /root/xd01_runtime_review; no live executor",
                 "candidateFreezeEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json",
                 "currentEvaluationUsage": {
-                  "scope": "One original Hermes CM05; development comparison, not household runtime",
-                  "providerAttempts": 10,
-                  "contactAttempts": 6,
-                  "helperAttempts": 4,
-                  "inputTokens": 21608,
-                  "outputTokens": 424,
-                  "totalTokens": 22032,
-                  "elapsedSeconds": 21.932726069004275,
-                  "timingBoundary": "Parent monotonic start before native child launch through child exit; excludes preparation and subsequent parent resource cleanup.",
+                  "scope": "One original Hermes CM06; development comparison, not household runtime",
+                  "providerAttempts": 6,
+                  "contactAttempts": 4,
+                  "helperAttempts": 2,
+                  "inputTokens": 13999,
+                  "outputTokens": 215,
+                  "totalTokens": 14214,
+                  "elapsedSeconds": 15.726007043005666,
+                  "timingBoundary": "Parent monotonic start immediately before native child launch through child exit; preparation and subsequent parent cleanup excluded.",
                   "credits": null,
                   "householdRuntimeUsage": false,
-                  "knownRegistryLowerBoundTokens": 1444763,
+                  "knownRegistryLowerBoundTokens": 1458977,
                   "historicalUnknowns": 3
                 },
                 "historicalBaseCommit": "d76c7fb09149156838aab392cdce5bd067241c77",
@@ -21176,7 +21357,7 @@
                 "scopeInitializationReview": "eva2/reviews/p2-native-scope-initializer-review-20261006.json",
                 "finalDatasetCommitment": "eva2/benchmark/inspect_ai_v1/ev003_provider_history_dataset_commitment_20261006.json",
                 "nativeDriverReview": "eva2/reviews/p2-provider-history-native-driver-review-20261006.json",
-                "currentEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                "currentEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
                 "currentIngressDiagnosis": "eva2/evidence/product/p2-provider-history-ingress-diagnosis-20261006.json",
                 "currentIngressCorrection": "eva2/evidence/product/p2-native-ingress-diagnostics-20261006.json",
                 "currentIngressCorrectionReview": "eva2/reviews/p2-native-ingress-diagnostics-review-20261006.json",
@@ -21278,33 +21459,31 @@
                 "currentGoalTurn": {
                   "classification": "progress",
                   "previousTurnClassification": "progress",
-                  "previousAuthoritativeOutcome": "Same original Eva1/OpenClaw CM06 independently assessed,published and committed/pushed as ba52a37d; status package verified1340files/8unchanged images. Native run closed,no replay.",
-                  "stage": "hermes_cm05_result_published",
-                  "actualProviderCalls": 10,
+                  "previousAuthoritativeOutcome": "Closed original Hermes/OpenClaw CM05 independently published and pushed38c24435; status/harness package1352files8unchangedimages verified. No replay.",
+                  "stage": "hermes_cm06_result_published",
+                  "actualProviderCalls": 6,
                   "originalInputsReleased": true,
                   "resourcesStarted": true,
-                  "authorityMutations": null,
                   "pendingExecutionHandle": false,
                   "newProductFunction": false,
                   "credits": null,
-                  "concreteNextAction": "Existing unused Hermes CM06 metadata confirmed; separate original source/readiness/input admission needed before execution.",
-                  "concretePreparation": "Original shared-audience availability published by independent evaluator; next matched HermesCM05 projected exactly. Existing evaluator3turn restriction generalized; original4turn parent/Inspect source bound and no-native preflight passed.",
-                  "tests": "1public original packet boundary test; Python AST and existing parent --check without native startup. No original test repeated.",
-                  "preparationIssues": [
-                    "Retained old config found under execution/native-profile; initial lookup before anycopy/modelcall",
-                    "Own native JWT fresh; initial metadata helper read nonexistent tokens.expires_at, false negative preserved"
-                  ],
-                  "registeredSampleRowsAdded": 1,
-                  "sourceReview": "eva2/reviews/p2-hermes-cm05-source-review-20261007.json",
-                  "originalInputs": 4,
-                  "originalNativeInputsPlanned": 4,
-                  "readinessReview": "eva2/reviews/p2-hermes-cm05-ready-review-20261007.json",
+                  "authorityMutations": null,
+                  "concreteNextAction": "Original CM07 Hermes group-origin/audience availability only; no new original selection or execution yet.",
+                  "concretePreparation": "Exact protected3turn CM06 projection; unchanged native probe, bound actual runtime config/SOUL and no-native/pinnedInspect preflight passed. Old administrative backup retained; no memory/credential copy.",
+                  "sourceReview": "eva2/reviews/p2-hermes-cm06-source-review-20261007.json",
+                  "preparationIssue": {
+                    "cause": "Preparation used the old configuration backup basename and lost its backups/config subdirectories; exact old backup remains retained.",
+                    "correction": "Bind the actual current runtime config.yaml/SOUL.md only; administrative native backups are not imported as configuration inputs.",
+                    "effect": "No reservation, original input release or modelcall; no old backup deleted or original run repeated."
+                  },
+                  "tests": "Reuse previous public3/4-turn boundary proof; current Python AST/no-native binding and pinnedInspect import checks only.",
+                  "originalNativeInputsPlanned": 3,
+                  "modelCalls": 6,
                   "nativeOriginalExecutions": 1,
-                  "modelCalls": 10,
-                  "inputTokens": 21608,
-                  "outputTokens": 424,
-                  "totalTokens": 22032,
-                  "elapsedSeconds": 21.932726069004275,
+                  "inputTokens": 13999,
+                  "outputTokens": 215,
+                  "totalTokens": 14214,
+                  "elapsedSeconds": 15.726007043005666,
                   "nativeCompletion": true,
                   "objectiveCompletion": false,
                   "wholeQuality": "UNKNOWN",
@@ -21312,19 +21491,28 @@
                     null,
                     null
                   ],
-                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
-                  "independentTerminalReview": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
+                  "originalNativeInputs": 3,
+                  "registeredSampleRowsAdded": 1,
+                  "originalInputs": 3,
+                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+                  "independentTerminalReview": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
                   "publicationModelCalls": 0,
                   "comparisonOutcome": {
                     "hermes": {
-                      "nativeResponses": "4/4",
-                      "factualSupported": "3/4",
-                      "privacyPass": false
+                      "nativeResponses": "3/3",
+                      "coreFacts": "3/3",
+                      "semanticConditions": "2/3",
+                      "objectivePass": false
+                    },
+                    "eva1": {
+                      "coreFacts": "1/3",
+                      "semanticConditions": "2/3",
+                      "objectivePass": false
                     },
                     "openclaw": {
-                      "nativeResponses": "3/4",
-                      "factualSupported": "2/4",
-                      "privacyPass": false
+                      "coreFacts": "3/3",
+                      "semanticConditions": "3/3",
+                      "objectivePass": true
                     },
                     "generalWinner": null
                   }
@@ -21774,11 +21962,11 @@
                 "executionDiagnosisEvidence": "eva2/evidence/product/p2-current-execution-diagnosis-20261007.json",
                 "memorySelectionCorrectionEvidence": "eva2/evidence/product/memory-selection-correction-20261007.json",
                 "currentBlockedAudit": {
-                  "condition": "Prior global no-resumption statement no longer applies:unused original Hermes cases available; three historical usage unknowns still constrain affected participant continuations.",
+                  "condition": "No overall blocked condition:bounded original availability decision remains. Historical participant-specific usage guards and absent human ratings retained.",
                   "consecutiveGoalTurns": 0,
                   "previousGoalTurnClassification": "progress",
                   "classification": "progress",
-                  "revalidatedAt": "2026-10-07T21:32:08.684429+00:00",
+                  "revalidatedAt": "2026-10-07T21:50:49.658586+00:00",
                   "blockedThresholdSatisfied": false,
                   "requestedAppGoalStatus": null,
                   "activeOriginalProcesses": [],
@@ -21787,7 +21975,7 @@
                     false
                   ],
                   "evidence": [
-                    "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json"
+                    "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json"
                   ]
                 },
                 "lastProgressGoalTurn": {
@@ -22071,75 +22259,58 @@
                 },
                 "sourcePreparationAdmissionSha256": "918cdd83691a6c7523fa58b6ad7662652f87d0d36306594871ab14f393da9917",
                 "previousNativePreparation": {
-                  "entry": "eva1-bottie:EV003-CM-06:epoch1",
-                  "caseId": "EV003-CM-06",
+                  "entry": "hermes:EV003-CM-05:epoch1",
+                  "caseId": "EV003-CM-05",
+                  "participant": "hermes",
                   "epoch": 1,
-                  "participant": "eva1-bottie",
+                  "currentStage": "closed_original_independently_assessed",
                   "resourcePreparationActive": false,
                   "nativeExecutionActive": false,
-                  "providerAttempts": 7,
+                  "execSessionId": 3069,
+                  "actualInspectWrapperPID": 2752378,
+                  "actualParentPID": 2752564,
+                  "providerAttempts": 10,
                   "inputReleased": true,
-                  "sourceBindingSha256": "68c8d47002fb335a472aaad0bdf05c5a772cfb4e69f3280b0227be6bde2633c9",
-                  "parentSha256": "9b322db21b0851fda9be78e2fb1ac4d9cbe975f51c8b4da47b6e18aa69403fb5",
-                  "observerSha256": "da245b647fc63eb2b6f12314f03610f2eb6221c844ebefa2fec326934e4d0919",
-                  "projectionEvidence": "eva2/evidence/product/p2-eva1-successor-cm06-entry-contract-20261007.json",
-                  "predecessorAvailability": "eva2/evidence/product/p2-eva1-successor-cm05-availability-20261007.json",
-                  "sourceReview": "eva2/reviews/p2-eva1-successor-cm06-source-review-20261007.json",
-                  "ownAccess": "existing_lease_valid_actual_uid1000_readable_no_renewal",
-                  "oldAuthorityRows": 18,
-                  "authorityUnchanged": false,
                   "absoluteSampleDeadlineCreated": true,
-                  "reservationsCreated": 1,
+                  "nativeContextStarted": true,
+                  "sourceBindingSha256": "0f38ac8e5648c05a71e4982dcf265ccda7d7407182e4619844ab9e0ac5fb0102",
+                  "proposedConfigSha256": "21fc18861e8499b0398d6d89a3b4c16fa375b1b03086b20e8479da655196008d",
+                  "sourceReview": "eva2/reviews/p2-hermes-cm05-source-review-20261007.json",
+                  "sourceReviewSha256": "8c0a432e147c15fd939fc2e1e66630b0fed00c871dc4cc7cc0778d1ad8afbd9f",
+                  "resourceAdmissionSha256": "51eebee9a0bb2d72192e514406f07292d6c7893478a058decbaa08c72dc4307c",
+                  "actualReadySha256": "f5126b6fb43206dca783b952ea5ff5c4f3f7d7f70c89a8643484a5d3182625f3",
+                  "authorityAfterReservationSha256": "8fa2ea7a3a96bf1c0d4469f66db6431a140192c8d8133ce621fe36c3c670ba82",
+                  "oldAuthorityRows": 19,
+                  "ordinaryNativeSourceChanged": false,
+                  "filePins": 56,
+                  "expectedTurns": 4,
+                  "ownNativeAuthFresh": true,
                   "newProductFunction": false,
-                  "currentStage": "closed_native_objective_failure_independently_reviewed",
-                  "sourceReviewSha256": "8ab0dfde7e151419eaab14a55f269faa86a74ba436c9260469b8635c8115bd02",
-                  "sourceAdmissionSha256": "a32510971665de133d265146ced77e60c71f04ad9da17015981fa56f8d174065",
-                  "execSessionId": 19083,
-                  "actualParentPID": 2614996,
-                  "actualReadySha256": "9ea7d897445b3f69eea7730c034c4c561f182fda9fb5437d5085e9c614713a4b",
-                  "readyParentRunning": false,
-                  "originalDeadlineStarted": true,
-                  "readinessReview": "eva2/reviews/p2-eva1-successor-cm06-recovery1-ready-review-20261007.json",
-                  "readinessReviewSha256": "5ac2e48e7db363d39ca1dbf3940d5d5c7cf48319cad4980b33d435877f269709",
-                  "finalAdmissionSha256": "3e2ce76e2ce340a21e4ada8580faa8c384c0fecccbf7474de4a0f4754ec653ca",
-                  "releaseSha256": "6d0c4a6638103b601263aade88035029694986bfed980fee4622479d61259059",
-                  "releasedAt": "2026-10-07T20:51:53.910352+00:00",
-                  "parentExitCode": 0,
-                  "nativeInputs": 3,
-                  "previousReleasedParentPID": 2582760,
-                  "sourceCorrectionSha256": "9b322db21b0851fda9be78e2fb1ac4d9cbe975f51c8b4da47b6e18aa69403fb5",
-                  "sourceCorrectionBindingSha256": "68c8d47002fb335a472aaad0bdf05c5a772cfb4e69f3280b0227be6bde2633c9",
-                  "preparationIssue": {
-                    "cause": "load_final_dataset kreeg str in plaats van Path; fout vóór dataset.sample/Task/solver/native uitvoer.",
-                    "effect": "Geen oorspronkelijke vraag aan Eva1, reservering, deadline of modelcall; authority18rows exact behouden.",
-                    "correction": "Alleen Path-type bij bestaande evaluator; gecontroleerde lege roots/clock/preload hergebruiken, oude fout/release behouden.",
-                    "state": "causal_correction_and_retained_resource_recovery_independently_admitted",
-                    "productLoss": false,
-                    "automaticRestart": false
-                  },
-                  "recoverySourceReview": "eva2/reviews/p2-eva1-successor-cm06-recovery1-source-review-20261007.json",
-                  "recoverySourceReviewSha256": "c8636b8ed355ebdc32d7ae1876af918803259183b1d392826abd0e04b37689bb",
+                  "readinessReview": "eva2/reviews/p2-hermes-cm05-ready-review-20261007.json",
+                  "readinessReviewSha256": "196b5cc248bfe5d9b1f67c25f06227bff2cd549747a3f11385c509d492ca9b19",
+                  "finalAdmissionSha256": "8b5ebc24a0daa489e6c98c3833bc4867614724a8d71f76c7caf5fa29f4bdfd51",
+                  "releaseSha256": "2f166a62dadf52da8d6db8c05eaaee91ad4e4199b60b5ef19edff369a0ec2fda",
+                  "releasedAt": "2026-10-07T21:20:37.684663+00:00",
+                  "inputTokens": 21608,
+                  "outputTokens": 424,
+                  "totalTokens": 22032,
+                  "receivedTurns": 4,
+                  "nativeResponses": 4,
                   "providerUsageComplete": true,
-                  "inputTokens": 43408,
-                  "outputTokens": 1674,
-                  "totalTokens": 45082,
                   "nativeCompletion": true,
-                  "completedTurns": 3,
-                  "modelContextCaptures": 7,
-                  "nativeStopVerified": true,
-                  "oldAuthorityRowsPreserved": true,
-                  "elapsedSeconds": 44.57372733799275,
-                  "nativeEvidenceSha256": "90c4091cd75fc6b6edca3fe42ee8c319d23ff117603863a3ca8c87267523a79d",
-                  "inspectSummarySha256": "d71801ef443754a04b763d525ee14592b68507f536ba4330ab415098e23505ad",
                   "objectiveCompletion": false,
-                  "acceptedAnswers": 1,
-                  "requiredAnswers": 3,
-                  "requiredReadbacksPassed": 1,
-                  "requiredReadbacksRequired": 2,
-                  "authorityRows": 19,
-                  "terminalReview": "eva2/reviews/p2-eva1-successor-cm06-terminal-review-20261007.json",
-                  "terminalReviewSha256": "80c7cdb142ed5d16b9c7d18e0bcf5d024a1b18789919e529d9ce69bbf98e817e",
-                  "historicalSourceAdmissionSha256BeforeRecovery": "a5519c1cecdf90e0feea19a7353533e632d16227281c2b09aa78469703ad40b9"
+                  "parentExitCode": 0,
+                  "nativeStopVerified": true,
+                  "containerAbsent": true,
+                  "networkAbsent": true,
+                  "elapsedSeconds": 21.932726069004275,
+                  "nativeReceiptSha256": "26528dba5f752b7385c27260e5d8bdea638be124dcfa2bb11783efd9ec49dbfe",
+                  "nativeReportSha256": "f9c39f1aed9a2a60141053a5e92b1e7e154163427ab1b663ff25b8b39ccb9340",
+                  "authorityAfterSha256": "f49a5394c8f7a81b03db581d5ddcafd68dd478d0074c69ccde0511f074556896",
+                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                  "resultSha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80",
+                  "independentReviewSha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1",
+                  "nativeContextActive": false
                 },
                 "nextNativePreparation": {
                   "participant": "openclaw",
@@ -22437,15 +22608,16 @@
                 "updatedAt": "2026-10-07T21:19:10.518931+00:00",
                 "nextComparisonDecision": {
                   "participant": "hermes",
-                  "case": "EV003-CM-06",
+                  "case": "EV003-CM-07",
                   "epoch": 1,
-                  "turns": 3,
-                  "matchingComparator": "Same original successor Eva1/OpenClaw CM06 already retained; no replay",
-                  "availabilityEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                  "turns": 2,
+                  "state": "availability_question_only_no_new_sample_admission",
+                  "requiredControl": "Verified shared audience;2identities. Existing Eva1/OpenClaw matchingroutes unavailable UNKNOWN.",
+                  "availabilityEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
                   "sourceAdmissionGranted": false,
                   "inputAdmissionGranted": false,
                   "providerCalls": 0,
-                  "state": "metadata_only_not_admitted"
+                  "question": "Can the already existing ordinary Hermes group-origin and durable audience route satisfy the original CM07 controls without changing participant policy, and is a further case decision-relevant given unavailable matched counterparts? Record that bounded availability disposition before selecting any new original run."
                 },
                 "previousNativePreparationAtCM06Eva1": {
                   "caseId": "EV003-CM-01",
@@ -22563,40 +22735,23 @@
                   "independentReviewSha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1",
                   "nativeContextActive": false
                 },
-                "remaining": "P2.1 blijft open voor resterende uitvoerbare oorspronkelijke dekking en twee echte onafhankelijke antwoordbeoordelingen. Hermes en OpenClaw falen beide de CM05-persoonsgrens; geen algemene winnaar of extra productfunctie.",
+                "remaining": "P2.1 blijft open voor resterende oorspronkelijke uitvoerbare dekking en twee echte antwoordbeoordelingen. Hermes verliest een vereiste nuance, Eva1 mist de latere status, OpenClaw bewaart de volledige herinnering. Eerdere persoonsgrensverliezen behouden; geen algemene winnaar.",
                 "nextExistingStep": {
-                  "status": "metadata_only_not_admitted",
-                  "entry": "hermes:EV003-CM-06:epoch1",
-                  "slot_currently_unused": true,
-                  "shape": {
-                    "user_turns": 3,
-                    "setup_turns": 0,
-                    "verified_private_actors": 1,
-                    "sessions": 2,
-                    "calendar_generations": [
-                      0,
-                      0,
-                      1
-                    ],
-                    "elapsed_clock_offsets_ms": [
-                      0,
-                      0,
-                      259200000
-                    ]
+                  "status": "availability_question_only_no_new_sample_admission",
+                  "next_ordered_case": "EV003-CM-07",
+                  "epoch": 1,
+                  "eva1_openclaw_hermes_slots_unused": true,
+                  "required_control": "Verified shared-audience transition with two identities and two original turns.",
+                  "existing_eva1_openclaw_disposition": "Current bound private routes are unavailable/UNKNOWN for this shared-audience case, not product losses; preserve existing availability record.",
+                  "hermes_source_fact": "Pinned native_hermes_turns accepts a positive contiguous admitted count; native_hermes_identity permits dm/group and validates persisted user/chat/type/session key. The CM06 parent still binds three turns. No original CM07 group projection or admission exists.",
+                  "concrete_remaining_question": "Can the already existing ordinary Hermes group-origin and durable audience route satisfy the original CM07 controls without changing participant policy, and is a further case decision-relevant given unavailable matched counterparts? Record that bounded availability disposition before selecting any new original run.",
+                  "availability_reference": {
+                    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-original-remaining-availability-20261007.json",
+                    "sha256": "833731f8ca47781f1989f0c17cf65e7abfa4ad0a38b0b547ecf0e204455511a5"
                   },
-                  "comparison": "Existing matching successor Eva1 and OpenClaw CM06 are closed. A separately reviewed original Hermes CM06 preparation would fill that existing matched comparison, not replay them or create a new matrix.",
-                  "prerequisites": [
-                    "Unchanged original CM06 curator projection and fixed case/plan binding.",
-                    "Existing generic Hermes route source preparation, current own access, unused-slot/history preservation and separate actual-ready/input admission."
-                  ],
-                  "not_authorized_here": [
-                    "Projection",
-                    "Reservation",
-                    "Resource launch",
-                    "Original input release",
-                    "Model call"
-                  ],
-                  "limits": "Existing per-case caps only; the formal matrix ceiling is not a mandate. CM07 verified shared-audience routes remain unavailable/UNKNOWN, not product losses. Prior participant failures and human-quality unknowns remain."
+                  "other_guards": "Eva2/AgentZero unresolved historical usage guards and two absent human ratings remain. No matrix ceiling is execution authority.",
+                  "no_projection_reservation_execution_or_later_case_selected": true,
+                  "P2_1_completed": false
                 },
                 "historicalAssignmentBeforeHermesCM05Publication": {
                   "finding": "Gematchte oorspronkelijke CM06: Eva1 voltooit native3/3, maar1/3 antwoorden bruikbaar en1/2vereiste readbacks; opdracht faalt. OpenClaw3/3antwoorden en2/2readbacks; opdracht slaagt. Geen algemene winnaar of nieuwe Eva-functie.",
@@ -22713,10 +22868,97 @@
                   "blockedThresholdSatisfied": true,
                   "requestedAppGoalStatus": "blocked",
                   "goalMarkedBlockedAtAuditCheck": false
+                },
+                "historicalAssignmentBeforeHermesCM06Publication": {
+                  "finding": "Gematchte oorspronkelijke CM05: Hermes native4/4, feitelijk3/4; OpenClaw native3/4, feitelijk2/4. Beide falen de harde persoonscontextgate. Native origins correct; geen algemene winnaar of extra functie.",
+                  "nextAction": "De gesloten Hermes/OpenClaw-CM05-uitkomst publiceren; daarna alleen de bestaande ongebruikte Hermes-CM06-binding voorbereiden, zonder eerdere proeven te herhalen.",
+                  "review": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
+                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                  "currentEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                  "actualUsage": {
+                    "scope": "One original Hermes CM05; development comparison, not household runtime",
+                    "providerAttempts": 10,
+                    "contactAttempts": 6,
+                    "helperAttempts": 4,
+                    "inputTokens": 21608,
+                    "outputTokens": 424,
+                    "totalTokens": 22032,
+                    "elapsedSeconds": 21.932726069004275,
+                    "timingBoundary": "Parent monotonic start before native child launch through child exit; excludes preparation and subsequent parent resource cleanup.",
+                    "credits": null,
+                    "householdRuntimeUsage": false,
+                    "knownRegistryLowerBoundTokens": 1444763,
+                    "historicalUnknowns": 3
+                  },
+                  "currentEvaluationUsage": {
+                    "scope": "One original Hermes CM05; development comparison, not household runtime",
+                    "providerAttempts": 10,
+                    "contactAttempts": 6,
+                    "helperAttempts": 4,
+                    "inputTokens": 21608,
+                    "outputTokens": 424,
+                    "totalTokens": 22032,
+                    "elapsedSeconds": 21.932726069004275,
+                    "timingBoundary": "Parent monotonic start before native child launch through child exit; excludes preparation and subsequent parent resource cleanup.",
+                    "credits": null,
+                    "householdRuntimeUsage": false,
+                    "knownRegistryLowerBoundTokens": 1444763,
+                    "historicalUnknowns": 3
+                  },
+                  "nextComparisonDecision": {
+                    "participant": "hermes",
+                    "case": "EV003-CM-06",
+                    "epoch": 1,
+                    "turns": 3,
+                    "matchingComparator": "Same original successor Eva1/OpenClaw CM06 already retained; no replay",
+                    "availabilityEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                    "sourceAdmissionGranted": false,
+                    "inputAdmissionGranted": false,
+                    "providerCalls": 0,
+                    "state": "metadata_only_not_admitted"
+                  },
+                  "currentExecution": {
+                    "entry": "hermes:EV003-CM-05:epoch1",
+                    "caseId": "EV003-CM-05",
+                    "epoch": 1,
+                    "participantOrder": [
+                      "hermes"
+                    ],
+                    "active": false,
+                    "terminalExitCode": 0,
+                    "providerAttemptsRegistered": 10,
+                    "accountingComplete": true,
+                    "nativeReplies": 4,
+                    "objectiveCompletion": false,
+                    "hardPersonContextPrivacyGate": false,
+                    "quality": "UNKNOWN",
+                    "servicesStopped": true,
+                    "resultPath": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+                    "resultSha256": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80",
+                    "finalReviewPath": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
+                    "finalReviewSha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1"
+                  },
+                  "currentBlockedAudit": {
+                    "condition": "Prior global no-resumption statement no longer applies:unused original Hermes cases available; three historical usage unknowns still constrain affected participant continuations.",
+                    "consecutiveGoalTurns": 0,
+                    "previousGoalTurnClassification": "progress",
+                    "classification": "progress",
+                    "revalidatedAt": "2026-10-07T21:32:08.684429+00:00",
+                    "blockedThresholdSatisfied": false,
+                    "requestedAppGoalStatus": null,
+                    "activeOriginalProcesses": [],
+                    "humanCompletedSheets": [
+                      false,
+                      false
+                    ],
+                    "evidence": [
+                      "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json"
+                    ]
+                  }
                 }
               },
-              "remaining": "P2.1 blijft open voor resterende uitvoerbare oorspronkelijke dekking en twee echte onafhankelijke antwoordbeoordelingen. Hermes en OpenClaw falen beide de CM05-persoonsgrens; geen algemene winnaar of extra productfunctie.",
-              "latestEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+              "remaining": "P2.1 blijft open voor resterende oorspronkelijke uitvoerbare dekking en twee echte antwoordbeoordelingen. Hermes verliest een vereiste nuance, Eva1 mist de latere status, OpenClaw bewaart de volledige herinnering. Eerdere persoonsgrensverliezen behouden; geen algemene winnaar.",
+              "latestEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
               "executionBlocker": {
                 "owner": "Codex",
                 "kind": "native503_unresolved_sdk_usage",
@@ -22802,26 +23044,28 @@
               },
               "latestPreparationIssue": "CM04 terminale UNKNOWN-rapportage onafhankelijk GO; exacte upstreamoorzaak niet vastgelegd, generieke HTTP503 en incompleet SDKgebruik behouden.",
               "independentFinding": {
-                "entry": "hermes:EV003-CM-05:epoch1",
-                "nativeResponses": 4,
-                "expectedResponses": 4,
+                "entry": "hermes:EV003-CM-06:epoch1",
+                "nativeResponses": 3,
+                "expectedResponses": 3,
                 "factualSupported": 3,
-                "requiredReadbacksPassed": 1,
+                "originalSemanticConditionsPassed": 2,
+                "originalSemanticConditionsRequired": 3,
+                "requiredReadbacksPassed": 2,
                 "requiredReadbacksRequired": 2,
                 "objectivePass": false,
-                "hardPersonContextPrivacyGate": false,
-                "nativeIdentityOriginsMatch": true,
+                "finding": "Kernfeiten teruggehaald, maar een vereiste kwalificatie ontbreekt in later geheugen/context/antwoord.",
+                "priorPrivacyFailuresReversed": false,
                 "humanRatings": [
                   null,
                   null
                 ],
                 "wholeQuality": "UNKNOWN",
-                "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
-                "review": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json"
+                "source": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+                "review": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json"
               },
-              "latestPreparationEvidence": "eva2/evidence/product/p2-hermes-cm05-source-preparation-20261007.json",
+              "latestPreparationEvidence": "eva2/evidence/product/p2-hermes-cm06-source-preparation-20261007.json",
               "ownerAuthorizationEvidence": "eva2/evidence/product/p2-owner-final-authorization-20261006.json",
-              "currentEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
+              "currentEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
               "nativeAdmissionBlocker": {
                 "kind": "comparison_admission_and_original_coverage",
                 "reason": "Full original equal native admission, remaining coverage and two human ratings not established. Source review finished; private metadata omission/root404 is not a demonstrated product bug.",
@@ -22830,13 +23074,13 @@
               },
               "candidateFreeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
               "candidateFreezeSha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
-              "publicationReview": "eva2/reviews/p2-hermes-cm05-publication-review-20261007.json",
+              "publicationReview": "eva2/reviews/p2-hermes-cm06-publication-review-20261007.json",
               "publicationReviewSha256": null,
               "blockerDetails": {
                 "type": "original_comparison_incomplete",
                 "owner": "Codex",
-                "reason": "P2.1 blijft open voor resterende uitvoerbare oorspronkelijke dekking en twee echte onafhankelijke antwoordbeoordelingen. Hermes en OpenClaw falen beide de CM05-persoonsgrens; geen algemene winnaar of extra productfunctie.",
-                "evidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json"
+                "reason": "P2.1 blijft open voor resterende oorspronkelijke uitvoerbare dekking en twee echte antwoordbeoordelingen. Hermes verliest een vereiste nuance, Eva1 mist de latere status, OpenClaw bewaart de volledige herinnering. Eerdere persoonsgrensverliezen behouden; geen algemene winnaar.",
+                "evidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json"
               },
               "activeExecution": false,
               "currentReadbackAssessmentEvidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
@@ -22901,12 +23145,13 @@
               "publicPreparationEvidence": "eva2/evidence/product/p2-openclaw-calendar-correction-20261007.json",
               "nativeToolRuntimeReview": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
               "nativeToolCheckpointPublicationReview": "eva2/reviews/p2-openclaw-calendar-checkpoint-publication-review-20261007.json",
-              "updatedAt": "2026-10-07T21:30:41.638925+00:00",
-              "review": "eva2/reviews/p2-hermes-original-cm05-result-review-20261007.json",
-              "reviewSha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1",
-              "previousEvaluationEvidence": "eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
+              "updatedAt": "2026-10-07T21:50:49.658586+00:00",
+              "review": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
+              "reviewSha256": "705f9cb56283e5e0de60a46e90fa44e9ea91f1edb8bb6383c766ca9257a5ae19",
+              "previousEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
               "historicalPublicationReviewBeforeMatchedEva1CM06": "eva2/reviews/p2-openclaw-cm06-publication-review-20261007.json",
-              "historicalPublicationReviewBeforeMatchedHermesCM05": "eva2/reviews/p2-eva1-successor-cm06-publication-review-20261007.json"
+              "historicalPublicationReviewBeforeMatchedHermesCM05": "eva2/reviews/p2-eva1-successor-cm06-publication-review-20261007.json",
+              "historicalPublicationReviewBeforeMatchedHermesCM06": "eva2/reviews/p2-hermes-cm05-publication-review-20261007.json"
             },
             {
               "id": "P2.2",

@@ -1,0 +1,86 @@
+{
+  "authority_unchanged": true,
+  "checks": {
+    "criteria_changed": false,
+    "oracle_included": false,
+    "original_audience_grants_unchanged": true,
+    "original_initial_clock_timezone_and_events_exact": true,
+    "original_input_utf8_and_order_exact": true,
+    "original_session_controls_exact": true,
+    "original_verified_principals_exact": true,
+    "same_committed_inputs_as_retained_eva1_cm06": true,
+    "same_committed_inputs_as_retained_openclaw_cm06": true
+  },
+  "closed_cases_preserved": true,
+  "contract": "Ev003IndependentHermesProjectionReview/v1",
+  "criteria_or_participant_memory_policy_changed": false,
+  "date": "2026-10-07",
+  "decision": "GO_ORIGINAL_PROJECTION_ONLY",
+  "entry": "hermes:EV003-CM-06:epoch1",
+  "equality_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "b6adf23c10acfca91b83d383f8cbcbe504672c8237f1b3beb7913565fbd5fe3d"
+  },
+  "findings": [],
+  "historical_rows": 20,
+  "historical_rows_canonical_sha256": "86af4b8dbc2dff7c25b8ab48588e626a1c9733dd1d7a477cf6170fa307755b27",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "input_admission": false,
+  "model_calls": 0,
+  "native_starts": 0,
+  "original_binding": {
+    "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+  },
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm06-preparation-20261007-v1/native-inputs.private.json",
+    "sha256": "2b43442e552b723e5aa37e6979bf2db989e2976a9c0a4a84c0c01f65bdd1292a"
+  },
+  "public_entry_contract": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-cm06-entry-contract-20261007.json",
+    "sha256": "d2808aa875808bef80a99a32f13a7683a5ef14a7beffb082fb7c3241087fc475"
+  },
+  "remaining_gate": "Mechanical CM06 source/Inspect isolated-path, exact three-turn count, unused-entry and twenty-row history/closed-CM05 guards; separate source and actual-ready/input admission.",
+  "reservations": 0,
+  "resource_admission": false,
+  "shape": {
+    "actor_count": 1,
+    "actor_indices": [
+      0,
+      0,
+      0
+    ],
+    "audience": "private",
+    "calendar_advance_count": 1,
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "clock_offset_deltas_ms": [
+      0,
+      0,
+      259200000
+    ],
+    "extra_fixtures": 0,
+    "session_count": 2,
+    "session_indices": [
+      0,
+      0,
+      1
+    ],
+    "setup_turn_count": 0,
+    "turn_count": 3,
+    "unknown_person_turns": 0
+  },
+  "source_admission": false,
+  "source_scope": "Reuse existing admitted-count decoder and native identity/session/clock mechanism; this projection review does not admit the new parent/Inspect source, resources or input.",
+  "task": "P2.1",
+  "tests": 0
+}
