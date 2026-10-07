@@ -1,0 +1,52 @@
+{
+  "contract": "EvaHermesNativeOriginBinding/v1",
+  "recordedAt": "2026-10-07T00:10:44.304033+00:00",
+  "task": "P2.1",
+  "originalEntry": "hermes:EV003-CM-04:epoch1",
+  "sourceBaseCommit": "9293ca0b68ccb76104b250f0891d31a0a4cfd404",
+  "specificGap": "Existing adapter used one fixed actor_id for three original sessions belonging to two actors. Native Hermes already accepts origin fields; no product privacy policy added.",
+  "delta": {
+    "source": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+    "sourceSha256": "83fa87fd2e39360f72b4264e1970f5245f62ececc0ea8d5157a46c863da936c6",
+    "test": "eva2/tests/benchmark/test_hermes_native_tool_accounting.py",
+    "testSha256": "ac66b44c36298b7ad657d328f87885e725e05931e40ee880a3918e2c38bc7b3c",
+    "behavior": "Forward exact original per-turn native user_id/chat_id/chat_type/gateway_session_key, fixed existing CLI platform; reject missing multi-person binding and mismatch with original actor table; independent durable SessionDB origin readback after every turn.",
+    "retained": [
+      "one native profile",
+      "one native SessionDB",
+      "native profile-global MemoryStore",
+      "original session/calendar controls",
+      "full exact outgoing contexts",
+      "Sol/none contact, Astra/medium helpers",
+      "all SDK/tool/deadline/parent accounting"
+    ],
+    "notAdded": [
+      "profile isolation",
+      "memory filtering",
+      "new privacy policy",
+      "prompt hints",
+      "new provider route",
+      "new platform"
+    ]
+  },
+  "focusedVerification": {
+    "nativeToolGuardFixture": "PASS",
+    "nativeThreeSessionTwoActorOriginFixture": "PASS",
+    "realNativeAIAgentConstructed": 3,
+    "nativeSessionRowsReadBack": 3,
+    "sharedMemorySentinelPreserved": true,
+    "networkConnectForbidden": true,
+    "providerCalls": 0,
+    "realAuthUsed": false,
+    "testFixtureCorrection": "First combined test run failed before constructor: prior native import changed tempfile scratch default into deleted earlier fixture. New fixture now uses explicit /tmp parent; unchanged-source native fixture then passes.",
+    "fullTestSuiteRepeated": false
+  },
+  "originalCaseRepeated": false,
+  "criteriaChanged": false,
+  "sourceOnly": true,
+  "runtimeInstalled": false,
+  "sampleAdmitted": false,
+  "aggregateModified": false,
+  "newProductTaskCompleted": false,
+  "credits": "UNKNOWN"
+}

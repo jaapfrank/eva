@@ -12,6 +12,67 @@ import unittest
 
 
 class NativeToolAccountingContract(unittest.TestCase):
+    def test_native_origins_share_profile_without_added_privacy_policy(self):
+        source = Path(os.environ["HERMES_NATIVE_SOURCE"])
+        bench = Path(__file__).resolve().parents[2] / "benchmark" / "inspect_ai_v1"
+        with tempfile.TemporaryDirectory(prefix="hermes-public-origin-fixture-", dir="/tmp") as fixture:
+            profile = Path(fixture)
+            os.environ["HERMES_HOME"] = fixture
+            os.environ["CODEX_HOME"] = str(profile / "empty-codex-home")
+            sys.path[:0] = [str(bench), str(source)]
+            from p1_hermes_startup_probe import native_hermes_identity, readback_hermes_identity
+            from run_agent import AIAgent
+            from hermes_state import SessionDB
+            from tools.memory_tool import get_memory_dir
+            from unittest.mock import patch
+
+            participant = {"provisioning": {"actors": [
+                {"actor_index": 0, "user_id": "public-person-a"},
+                {"actor_index": 1, "user_id": "public-person-b"}]}}
+            turns = [{"actor_index": actor_index, "native_identity": {
+                "user_id": f"public-person-{letter}", "chat_id": f"public-dm-{letter}",
+                "chat_type": "dm", "gateway_session_key": f"cli:dm:public-dm-{letter}"}}
+                for actor_index, letter in ((0, "a"), (1, "b"), (0, "a"))]
+            shared = profile / "memories"
+            shared.mkdir()
+            (shared / "MEMORY.md").write_text("Public shared memory sentinel")
+            db = SessionDB(profile / "state.db")
+            try:
+                with patch("socket.socket.connect", side_effect=AssertionError("fixture must not use network")):
+                    for n, turn in enumerate(turns):
+                        identity = native_hermes_identity(participant, turn)
+                        actor = AIAgent(model="gpt-6-sol", provider="openai-codex",
+                            api_key="public-test-not-a-secret", base_url="http://127.0.0.1:9",
+                            reasoning_config={"effort": "none"}, enabled_toolsets=["memory"],
+                            quiet_mode=True, load_soul_identity=True, skip_memory=False,
+                            skip_background_review=False, session_id=f"public-origin-session-{n}",
+                            session_db=db, cwd=fixture, **identity)
+                        try:
+                            self.assertEqual(actor._user_id, identity["user_id"])
+                            self.assertEqual(actor._chat_id, identity["chat_id"])
+                            self.assertEqual(actor._chat_type, "dm")
+                            self.assertEqual(actor._gateway_session_key, identity["gateway_session_key"])
+                            actor._ensure_db_session()
+                            row = db.get_session(actor.session_id)
+                            readback_hermes_identity({"session": row}, identity)
+                            self.assertEqual(get_memory_dir(), shared)
+                            self.assertEqual((shared / "MEMORY.md").read_text(), "Public shared memory sentinel")
+                            wrong = dict(identity, user_id="public-wrong-person")
+                            with self.assertRaisesRegex(ValueError, "person/audience differs"):
+                                readback_hermes_identity({"session": row}, wrong)
+                        finally:
+                            actor.close()
+                with self.assertRaisesRegex(ValueError, "fixed actor fallback"):
+                    native_hermes_identity(participant, {})
+                with self.assertRaisesRegex(ValueError, "original actor binding"):
+                    native_hermes_identity(participant, dict(turns[0], actor_index=1))
+                malformed = dict(turns[0]["native_identity"])
+                del malformed["chat_id"]
+                with self.assertRaisesRegex(ValueError, "every original origin field"):
+                    native_hermes_identity(participant, dict(turns[0], native_identity=malformed))
+            finally:
+                db.close()
+
     def test_native_inline_batch_fallback_cap_and_stop(self):
         source = Path(os.environ["HERMES_NATIVE_SOURCE"])
         bench = Path(__file__).resolve().parents[2] / "benchmark" / "inspect_ai_v1"

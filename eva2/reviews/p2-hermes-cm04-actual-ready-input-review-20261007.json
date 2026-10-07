@@ -1,0 +1,133 @@
+{
+  "contract": "EvaIndependentHermesActualReadyInputReview/v1",
+  "recordedDate": "2026-10-07",
+  "entry": "hermes:EV003-CM-04:epoch1",
+  "decision": "GO_ONE_ORIGINAL_CM04_INPUT_RELEASE",
+  "scope": "Existing resource process 1075 only; one original unused slot, no retry/reset or altered criterion. Reviewer does not create execute-once release.",
+  "resourceAdmission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/parent-cm04-resource-admission.private.json",
+    "sha256": "319c0238c7c7948f86079fad93b06b8250dcd4fefd71fb8daf3381a62183b7eb"
+  },
+  "finalDraft": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/final-input-admission-draft.private.json",
+    "sha256": "8819505e8f5231e84f77139f15b50ddec90ba30313f3ed3ece17504006e01c7a"
+  },
+  "actualReady": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+    "sha256": "9722fead8cc51e70a9c3cd9cd534752bddf9cd869380ebd6c75158854074396b",
+    "execSession": 1075,
+    "providerAttempts": 0,
+    "inputReleased": false,
+    "nativeContextStarted": false,
+    "sampleDeadlineCreated": false
+  },
+  "binding": {
+    "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "caseSha256": "a9d08889d8115e68ce68d2851d5ed73bd34f73e655620b096409babaeef292a5",
+    "projectionSha256": "5f96d65820f9d06d0d31709db32c1bbec961afb65d0137546bbe8b380743995f",
+    "sourceSha256": {
+      "launcher_sha256": "9e8c2eb661e6f449e8e53e46049a9020d292d90709061cf00aacf4ac717c8cf8",
+      "probe_sha256": "83fa87fd2e39360f72b4264e1970f5245f62ececc0ea8d5157a46c863da936c6",
+      "inspect_wrapper_sha256": "3e875fdf0164cee124ff09a43a1726fa3f58cebd0ce87776ee087351907ceddb"
+    },
+    "nativeSourcePin": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+    "originalModels": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      }
+    }
+  },
+  "checks": {
+    "actualContainerRunningPinnedImage": true,
+    "actualInternalNetworkLabelAndNamespaceMatch": true,
+    "nativeUid": 1000,
+    "nativeCannotReadAuthority": true,
+    "endpointOnlyProxy": true,
+    "networkEvents": 0,
+    "controllerErrors": 0,
+    "noncredentialPinsMatched": 53,
+    "credentialBinding": "Retained actual-ready own-auth hash and offline native freshness metadata, unchanged; no credential value read by reviewer.",
+    "projectionControls": {
+      "actors": [
+        0,
+        1,
+        0
+      ],
+      "sessions": [
+        0,
+        1,
+        2
+      ],
+      "generations": [
+        0,
+        0,
+        0
+      ],
+      "offsetDeltasMs": [
+        0,
+        0,
+        0
+      ],
+      "privatePrincipalScopes": 2
+    },
+    "nativeOriginReadback": "Every native session must persist exact user_id/chat_id/chat_type/session_key/origin_json and exact reply.",
+    "nativeMemory": "One unchanged profile-global MemoryStore; no added privacy filtering or profile split.",
+    "contexts": "All outgoing foreground/helper body bytes retained with original turn/session/clock binding.",
+    "stop": "Same absolute 480s deadline created before child launch; parent stop, stream/tool/native settlement and close/ACK retained.",
+    "releaseAbsent": true
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "beforeSha256": "4d11354ac4a3f09d4ba4a9bb88d635366743f68cb2dab39654c15e6a8d701875",
+    "afterReservationSha256": "9617c08cb6663c443fa1b365df15181b704d8716c9a3c0d0969c99587fe06324",
+    "rowsBefore": 11,
+    "rowsAfter": 12,
+    "newReservationRevision": 0,
+    "newReservedAttempts": 16,
+    "actualNewAttempts": 0,
+    "prior9ValuesAndRevisionsByteHashMatched": true,
+    "closedCm02Cm03TerminalAttemptsStopIdentityAndRevisionMatched": true,
+    "closedCm02ValueSha256": "8d33aa9f11fb9a4a22ee3c026f9e18584d2793aa3d6a37c2bacccd0d4e43e052",
+    "closedCm03ValueSha256": "b38507346b2475f9cbc6024b6565c2d391d23220c7ccadae89e91ad5dcf0647e",
+    "priorRegisteredAttempts": 59,
+    "historicalUsageUnknownAttempts": 3,
+    "wholeUsageComplete": false,
+    "resetOrDonation": false
+  },
+  "limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "findings": [],
+  "preparationDiagnosticsPreserved": [
+    "Previously recorded pre-resource metadata assertions remain bound.",
+    "Read-only reviewer row comparison first accessed attempts outside stored report; corrected nested schema without modifying authority or executing resources."
+  ],
+  "allowedFinalization": [
+    "admitted=true",
+    "readiness_admitted=true",
+    "review_status",
+    "input_review_provenance"
+  ],
+  "executeOnceCreatedByReviewer": false,
+  "newTests": 0,
+  "newNativeRuns": 0,
+  "newModelCalls": 0,
+  "semanticScore": null,
+  "humanRatings": [
+    null,
+    null
+  ],
+  "credits": "UNKNOWN"
+}

@@ -1,0 +1,92 @@
+{
+  "contract": "EvaIndependentHermesPreparationReview/v1",
+  "recordedDate": "2026-10-07",
+  "entry": "hermes:EV003-CM-04:epoch1",
+  "decision": "GO_RESOURCE_PREPARATION_ONLY",
+  "originalInputAdmitted": false,
+  "draft": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/parent-cm04-preparation-draft.private.json",
+    "sha256": "f89febe8ea19d00a071245a034e69d36ae99bc6dcdac4f2671fda382bcffaead"
+  },
+  "reviewedSources": {
+    "launcher_sha256": "9e8c2eb661e6f449e8e53e46049a9020d292d90709061cf00aacf4ac717c8cf8",
+    "probe_sha256": "83fa87fd2e39360f72b4264e1970f5245f62ececc0ea8d5157a46c863da936c6",
+    "inspect_wrapper_sha256": "3e875fdf0164cee124ff09a43a1726fa3f58cebd0ce87776ee087351907ceddb"
+  },
+  "originProjectionReview": {
+    "path": "eva2/reviews/p2-hermes-cm04-origin-projection-review-20261007.json",
+    "sha256": "92d9de9c7b5e33ad2ab8b25fc2d3aa10eff2ae293cb5eb54bece14e65904e3ec"
+  },
+  "projectionSha256": "5f96d65820f9d06d0d31709db32c1bbec961afb65d0137546bbe8b380743995f",
+  "equalitySha256": "e3f6578f80398ecb1d9a838b7ef29f0383ea38cae7a5ce52619bdd74698d0554",
+  "caseSha256": "a9d08889d8115e68ce68d2851d5ed73bd34f73e655620b096409babaeef292a5",
+  "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "authorityBefore": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "4d11354ac4a3f09d4ba4a9bb88d635366743f68cb2dab39654c15e6a8d701875",
+    "rows": 11,
+    "registeredAttempts": 59,
+    "historicalUsageUnknownAttempts": 3,
+    "exactSlotUnused": true,
+    "modifiedByReviewer": false
+  },
+  "bindingChecks": {
+    "totalPinnedFiles": 54,
+    "independentNoncredentialHashesMatched": 53,
+    "credentialBinding": "Retained own-auth hash and offline native freshness metadata; no credential value read or new auth request by reviewer.",
+    "freshProfile": "Only byte-bound original config.yaml and SOUL.md; no copied memory, sessions or auth.",
+    "parentDelta": "CM03 to CM04 identifiers plus explicit closed-CM03 receipt guard; authority path unchanged.",
+    "inspectDelta": "Only original case/entry/launcher/task labels; same sealed dataset, scorer and locked mock-plumbing.",
+    "nativeDelta": "Reviewed existing constructor identity forwarding and durable SessionDB origin assertions; one native profile/global MemoryStore.",
+    "endpointAndStop": "Unchanged prior parent ledger, endpoint-only proxy, absolute deadline, child stop/ACK and scoped cleanup."
+  },
+  "retainedNoInputCheck": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/bound-no-input-contract.private.json",
+    "sha256": "4fdafea4ba15ea143ab6b25dffe46058c1faaffaa2ff670872043c266972a37e"
+  },
+  "retainedNativeAuthFreshness": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/native-owned-auth-freshness-technical.private.json",
+    "sha256": "118becf75e98ea742592b16f017dcfba182c66c1f7aa10b2388e7863979679b8",
+    "provider_calls": 0,
+    "auth_http_requests": 0,
+    "fresh_through_original_480_seconds": true,
+    "credential_copied": false
+  },
+  "preparationCorrectionsRetained": [
+    "Root guard-insertion indentation metadata assertion before resource/input start.",
+    "Root native token metadata nesting assertion before resource/input start.",
+    "Reviewer final plan display treated family list as dictionary after completed pin/authority checks; read-only output error, no writes, source change or execution."
+  ],
+  "findings": [],
+  "limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "approvedFinalization": {
+    "resource_preparation_admitted": true,
+    "admitted": false,
+    "readiness_admitted": false,
+    "allowedOtherChanges": [
+      "review_status",
+      "preparation_review_provenance"
+    ]
+  },
+  "nextGate": "Review actual-ready, preserved prior authority rows, unchanged bound source/profile/access and exact final release before original input.",
+  "priorClosedCasesUnchanged": true,
+  "newTests": 0,
+  "newNativeRuns": 0,
+  "newModelCalls": 0,
+  "reviewerReservations": 0,
+  "qualityScore": null,
+  "humanRatings": [
+    null,
+    null
+  ],
+  "credits": "UNKNOWN"
+}

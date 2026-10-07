@@ -343,6 +343,47 @@ def install_hermes_tool_accounting(observer, model_tools, agent_class, tool_limi
     agent_class._execute_tool_calls = tool_batch
 
 
+def native_hermes_identity(participant, turn):
+    """Forward original actor/audience controls to existing native origin fields."""
+    identity = turn.get("native_identity")
+    if identity is None:
+        if participant["provisioning"].get("actors"):
+            raise ValueError("multi-person native input cannot use a fixed actor fallback")
+        return {"platform": "cli", "user_id": participant["provisioning"]["actor_id"]}
+    keys = {"user_id", "chat_id", "chat_type", "gateway_session_key"}
+    if not isinstance(identity, dict) or set(identity) != keys:
+        raise ValueError("native Hermes identity requires every original origin field")
+    if any(not isinstance(v, str) or not v for v in identity.values()):
+        raise ValueError("native Hermes origin fields must be nonempty strings")
+    if identity["chat_type"] not in ("dm", "group"):
+        raise ValueError("native Hermes audience is not admitted")
+    actors = participant["provisioning"].get("actors")
+    if actors:
+        matches = [actor for actor in actors if actor["actor_index"] == turn.get("actor_index")]
+        if len(matches) != 1 or matches[0]["user_id"] != identity["user_id"]:
+            raise ValueError("native Hermes user differs from original actor binding")
+    return {"platform": "cli", **identity}
+
+
+def readback_hermes_identity(snapshot, identity):
+    """Verify native durable origin; profile-global memory remains untouched."""
+    if "chat_id" not in identity:
+        return  # Legacy single-actor binding, unchanged.
+    session = snapshot.get("session") or {}
+    origin = session.get("origin_json")
+    if isinstance(origin, str):
+        origin = json.loads(origin)
+    if not isinstance(origin, dict):
+        raise ValueError("native Hermes durable origin absent")
+    for key in ("user_id", "chat_id", "chat_type"):
+        if session.get(key) != identity[key] or origin.get(key) != identity[key]:
+            raise ValueError("native Hermes durable person/audience differs")
+    if session.get("session_key") != identity["gateway_session_key"]:
+        raise ValueError("native Hermes durable conversation key differs")
+    if origin.get("platform") != identity["platform"]:
+        raise ValueError("native Hermes durable platform differs")
+
+
 def run_native_cm(args):
     """One reviewed native Hermes CM sample. The parent alone opens the private registry."""
     import asyncio, functools, threading
@@ -374,6 +415,13 @@ def run_native_cm(args):
             raise ValueError("exact original native input contract required")
         participant = case["participants"]["hermes"]; turns = participant["turns"]
         assert len(turns) == 3 and [t["ordinal"] for t in turns] == [0,1,2]
+        identities = [native_hermes_identity(participant, turn) for turn in turns]
+        session_bindings = {}
+        for turn, identity in zip(turns, identities):
+            binding = (turn["context_id"], tuple(sorted(identity.items())))
+            prior = session_bindings.setdefault(turn["session_index"], binding)
+            if prior != binding:
+                raise ValueError("one original native session cannot change person/audience")
         retained = {key: os.environ[key] for key in ("PATH","HOME","LANG","PYTHONPATH","HTTPS_PROXY","HTTP_PROXY","ALL_PROXY","NO_PROXY") if key in os.environ}
         os.environ.clear(); os.environ.update(retained)
         os.environ.update(HERMES_HOME=str(profile), CODEX_HOME=str(profile / "empty-codex-home"), HERMES_CWD=str(profile))
@@ -457,7 +505,7 @@ def run_native_cm(args):
                 if observer.settled() and not observer.streams and not pending_reviews and QUEUE.pending_count()==0:
                     return {"sdk_pending":0,"native_reviews_pending":0,"idle_queue_pending":0}
                 time.sleep(min(.05,max(.001,deadline-observer.monotonic())))
-        for turn in turns:
+        for turn, identity in zip(turns, identities):
             if turn_results:
                 settle();state={"contract":"EvaScenarioCalendar/v1","generation":turn["clock"]["generation"],"offsetMilliseconds":offset+turn["clock"]["offset_delta_milliseconds"]}
                 clock.write_text(json.dumps(state));assert calendar.refresh()==state
@@ -466,7 +514,7 @@ def run_native_cm(args):
                 actor=AIAgent(model="gpt-6-sol",provider="openai-codex",base_url=credentials["base_url"],api_key=credentials["api_key"],
                     reasoning_config={"effort":"none"},enabled_toolsets=["memory"],quiet_mode=True,load_soul_identity=True,
                     skip_memory=False,skip_background_review=False,session_id=turn["context_id"],session_db=db,
-                    platform="cli",user_id=participant["provisioning"]["actor_id"],cwd=str(profile),run_budget_seconds=max(.001,deadline-observer.monotonic()))
+                    **identity,cwd=str(profile),run_budget_seconds=max(.001,deadline-observer.monotonic()))
                 agents.append(actor);prior_session=turn["session_index"]
             with observer.lock:
                 observer.current_turn = {"ordinal": turn["ordinal"], "session_index": turn["session_index"],
@@ -479,6 +527,7 @@ def run_native_cm(args):
             (output/"native-responses.private.json").write_text(json.dumps(observed_responses,indent=2,default=str)+"\n")
             settlement=settle();snapshot=read_hermes_saved_state(profile,actor.session_id)
             if snapshot["reply_text"] != final:raise ValueError("durable native Hermes response differs")
+            readback_hermes_identity(snapshot, identity)
             entry={"ordinal":turn["ordinal"],"session_index":turn["session_index"],"context_id":actor.session_id,
                    "native_result":result,"independent_readback":snapshot,"settlement":settlement,
                    "elapsed_seconds":observer.monotonic()-started,"calendar":calendar.refresh()}

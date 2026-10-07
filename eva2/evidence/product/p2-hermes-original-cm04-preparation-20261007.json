@@ -1,0 +1,66 @@
+{
+  "contract": "EvaOriginalHermesPreparation/v1",
+  "recordedAt": "2026-10-07T00:14:04.962778+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-04:epoch1",
+  "caseSha256": "a9d08889d8115e68ce68d2851d5ed73bd34f73e655620b096409babaeef292a5",
+  "actorCount": 2,
+  "actorSequence": [
+    0,
+    1,
+    0
+  ],
+  "sessionSequence": [
+    0,
+    1,
+    2
+  ],
+  "clockGenerations": [
+    0,
+    0,
+    0
+  ],
+  "clockOffsetsMilliseconds": [
+    0,
+    0,
+    0
+  ],
+  "audience": "original_private_person_circles",
+  "projectionSha256": "5f96d65820f9d06d0d31709db32c1bbec961afb65d0137546bbe8b380743995f",
+  "equalitySha256": "e3f6578f80398ecb1d9a838b7ef29f0383ea38cae7a5ce52619bdd74698d0554",
+  "launcherSha256": "9e8c2eb661e6f449e8e53e46049a9020d292d90709061cf00aacf4ac717c8cf8",
+  "inspectWrapperSha256": "3e875fdf0164cee124ff09a43a1726fa3f58cebd0ce87776ee087351907ceddb",
+  "probeSha256": "83fa87fd2e39360f72b4264e1970f5245f62ececc0ea8d5157a46c863da936c6",
+  "draftSha256": "f89febe8ea19d00a071245a034e69d36ae99bc6dcdac4f2671fda382bcffaead",
+  "authorityBeforeSha256": "4d11354ac4a3f09d4ba4a9bb88d635366743f68cb2dab39654c15e6a8d701875",
+  "originalPerSampleLimits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "sourceDelta": "Existing native origin kwargs and durable native session identity readback; same profile-global memory, no added isolation policy.",
+  "closedOriginalCM03Retained": {
+    "result_sha256": "d796754ae3bb666d1266a5c2e8effaf214a4699755a13e4d1a91718bfed135a3",
+    "receipt_sha256": "57be0c10faa3d48c7a4201294f4a4a0401c84adfee28c7f65f6ced3796eaa0e5",
+    "replayed": false
+  },
+  "sourceReview": "eva2/reviews/p2-hermes-cm04-origin-projection-review-20261007.json",
+  "originalInputOpenedToBuilder": false,
+  "providerCalls": 0,
+  "reservations": 0,
+  "nativeExecutionStarted": false,
+  "resourcePreparationStarted": false,
+  "runtimeInstalled": false,
+  "newProductFunction": false,
+  "developmentCreditCost": null,
+  "preparationCorrections": [
+    "Public fixture scratch parent after native temporary-directory override; no model call.",
+    "Closed-receipt insertion indentation before script write; no resources.",
+    "Native auth token nesting lookup before any network/resources."
+  ],
+  "status": "resource_preparation_review_pending_actual_input_not_admitted"
+}

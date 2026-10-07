@@ -1,0 +1,22 @@
+{
+  "contract": "EvaOriginalHermesActualReady/v1",
+  "recordedAt": "2026-10-07T00:15:09.289182+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-04:epoch1",
+  "execSession": 1075,
+  "actualReadySha256": "9722fead8cc51e70a9c3cd9cd534752bddf9cd869380ebd6c75158854074396b",
+  "resourceAdmissionSha256": "319c0238c7c7948f86079fad93b06b8250dcd4fefd71fb8daf3381a62183b7eb",
+  "authorityAfterReservationSha256": "9617c08cb6663c443fa1b365df15181b704d8716c9a3c0d0969c99587fe06324",
+  "nativeUid": 1000,
+  "authorityNotReadableByNativeUid": true,
+  "endpointOnlyNetwork": true,
+  "externalNetworkEvents": 0,
+  "providerAttempts": 0,
+  "nativeContextStarted": false,
+  "inputReleased": false,
+  "originalDeadlineCreated": false,
+  "reservationCount": 1,
+  "resourceStartCount": 1,
+  "newRuntimeInstall": false,
+  "actualInputReview": "pending"
+}

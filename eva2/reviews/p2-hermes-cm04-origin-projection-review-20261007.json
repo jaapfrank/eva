@@ -1,0 +1,137 @@
+{
+  "contract": "EvaIndependentHermesOriginProjectionReview/v1",
+  "recordedDate": "2026-10-07",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-04:epoch1",
+  "sourceBaseCommit": "9293ca0b68ccb76104b250f0891d31a0a4cfd404",
+  "decision": "GO_SOURCE_AND_ORIGINAL_PROJECTION_ONLY",
+  "resourcePreparationAdmitted": false,
+  "originalInputAdmitted": false,
+  "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "caseSha256": "a9d08889d8115e68ce68d2851d5ed73bd34f73e655620b096409babaeef292a5",
+  "projection": {
+    "mode": "0600",
+    "owner_uid": 0,
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/cm04-epoch1.native-inputs.private.json",
+    "sha256": "5f96d65820f9d06d0d31709db32c1bbec961afb65d0137546bbe8b380743995f"
+  },
+  "equalityReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-hermes-owned-cm04-preparation-20261007-v1/projection-equality-technical.private.json",
+    "sha256": "e3f6578f80398ecb1d9a838b7ef29f0383ea38cae7a5ce52619bdd74698d0554"
+  },
+  "source": {
+    "path": "eva2/benchmark/inspect_ai_v1/p1_hermes_startup_probe.py",
+    "sha256": "83fa87fd2e39360f72b4264e1970f5245f62ececc0ea8d5157a46c863da936c6"
+  },
+  "test": {
+    "path": "eva2/tests/benchmark/test_hermes_native_tool_accounting.py",
+    "sha256": "ac66b44c36298b7ad657d328f87885e725e05931e40ee880a3918e2c38bc7b3c"
+  },
+  "retainedVerification": {
+    "path": "eva2/evidence/product/p2-hermes-native-origin-binding-20261007.json",
+    "sha256": "1d2b30719c2976ba8f5e994552114210b88b11462c021089178483b373a33b81",
+    "reportedFocusedTestsPassed": 2,
+    "actualNativeConstructors": 3,
+    "durableOriginRows": 3,
+    "modelCalls": 0,
+    "reviewerRepeatedTests": 0,
+    "scope": "Native constructors and durable origin rows, not an executed original conversation or privacy outcome. First temporary-directory fixture failure remains recorded in source evidence."
+  },
+  "shape": {
+    "setupTurns": 0,
+    "turns": 3,
+    "actors": [
+      0,
+      1,
+      0
+    ],
+    "sessions": [
+      0,
+      1,
+      2
+    ],
+    "clockGenerations": [
+      0,
+      0,
+      0
+    ],
+    "clockOffsetDeltasMs": [
+      0,
+      0,
+      0
+    ],
+    "privatePrincipalScopes": 2,
+    "sharedAudiences": 0,
+    "services": 0,
+    "files": 0,
+    "browser": 0,
+    "audio": 0
+  },
+  "nativeMapping": {
+    "constructorFields": [
+      "user_id",
+      "chat_id",
+      "chat_type",
+      "gateway_session_key"
+    ],
+    "platform": "cli",
+    "chatType": "dm",
+    "principal": "Exact original canonical principal for each actor; no fixed-person fallback.",
+    "chat": "Deterministic private chat per original principal, stable on return.",
+    "session": "Distinct original context_id at every session transition; same native profile and SessionDB throughout.",
+    "sessionKey": "Existing native build_session_key default-profile layout for CLI/dm chat; this is origin metadata, not new gateway authentication.",
+    "keySource": {
+      "evaluated_pure_function_only": true,
+      "function": "build_session_key",
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/hermes-source/gateway/session.py",
+      "sha256": "2ea0ebedcd4e6b3b41ce446e2b6ef63f40c72c200fa5e0c106249eb6e599dbd6"
+    },
+    "memory": "Existing profile-global MemoryStore remains shared, without added filter, split or privacy policy."
+  },
+  "reviewFindings": [],
+  "sourceChecks": [
+    "Multi-person inputs cannot fall back to a fixed actor; per-turn identity must match original actor table.",
+    "A session cannot change person, audience or context_id; each original session constructs the ordinary native AIAgent.",
+    "Durable user_id, chat_id, chat_type, session_key and origin_json are checked after exact reply readback.",
+    "Changes preserve existing provider/tool accounting, exact outbound context retention, settlement barriers, deadline and native memory behavior.",
+    "Original text, clock, principals and private audiences preserved by existing projector; no oracle included."
+  ],
+  "remainingAdmission": [
+    "Hash-bind concrete new parent/Inspect preparation and native files to this projection and source.",
+    "Verify exact unused entry and retained prior authority history before resource preparation.",
+    "Review actual-ready, exact source/profile/access/namespace and final input release before one original run."
+  ],
+  "originalCaps": {
+    "providerAttempts": 16,
+    "inputTokens": 1048576,
+    "outputTokens": 19200,
+    "wallSeconds": 480,
+    "toolDispatches": 16,
+    "externalEffects": 0
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "4d11354ac4a3f09d4ba4a9bb88d635366743f68cb2dab39654c15e6a8d701875",
+    "rows": 11,
+    "registeredAttempts": 59,
+    "historicalUnknownUsageAttempts": 3,
+    "modified": false
+  },
+  "readbacksRequired": [
+    "Exact replies and native origin per original session",
+    "Unmodified native memory snapshots and complete foreground/helper outbound model bodies",
+    "Original factual and independent memory conditions; official two-human judgments remain separate"
+  ],
+  "closedCasesUnchanged": true,
+  "newOriginalReservations": 0,
+  "newNativeRuns": 0,
+  "newModelCalls": 0,
+  "criteriaChanged": false,
+  "qualityScore": null,
+  "humanRatings": [
+    null,
+    null
+  ],
+  "credits": "UNKNOWN"
+}

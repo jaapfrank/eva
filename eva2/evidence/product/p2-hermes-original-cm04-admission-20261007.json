@@ -1,0 +1,23 @@
+{
+  "contract": "EvaOriginalHermesInputAdmission/v1",
+  "recordedAt": "2026-10-07T00:17:13.011573+00:00",
+  "task": "P2.1",
+  "entry": "hermes:EV003-CM-04:epoch1",
+  "execSession": 1075,
+  "finalAdmissionSha256": "2b5ab8db42da544018d024aa3c507ae85e9e93ca13fc00e3cd0e602efb123ecc",
+  "releaseSha256": "9dc2cf0669d9930e4594d5f01d1d5bd00823c005cb422a9b87f44049b9d74527",
+  "actualReadySha256": "9722fead8cc51e70a9c3cd9cd534752bddf9cd869380ebd6c75158854074396b",
+  "sourceSha256": {
+    "launcher_sha256": "9e8c2eb661e6f449e8e53e46049a9020d292d90709061cf00aacf4ac717c8cf8",
+    "probe_sha256": "83fa87fd2e39360f72b4264e1970f5245f62ececc0ea8d5157a46c863da936c6",
+    "inspect_wrapper_sha256": "3e875fdf0164cee124ff09a43a1726fa3f58cebd0ce87776ee087351907ceddb"
+  },
+  "review": "eva2/reviews/p2-hermes-cm04-actual-ready-input-review-20261007.json",
+  "reviewSha256": "d169761665e1c85b90ad8f5708a9b55a3248d532058367e01306ef74841b5c3a",
+  "releasedOnce": true,
+  "restarted": false,
+  "previousOriginalCasesPreserved": true,
+  "sameSharedNativeMemory": true,
+  "actualSDKUsage": "pending",
+  "creditCost": null
+}
