@@ -1,0 +1,70 @@
+{
+  "taskId": "R1.1",
+  "checkedAt": "2026-10-07T07:23:56.298669+00:00",
+  "kind": "cumulative_comparison_driver_correction_not_product_feature",
+  "state": "reviewed_pending_isolated_execution",
+  "ownerRequest": "Finish the driver and real comparison; retain original conditions and prior failures.",
+  "preserved": {
+    "originalFrozenFiles": true,
+    "candidateAndOrdinaryMethod": true,
+    "casesAndScorer": true,
+    "perRunAndAggregateCaps": true,
+    "providerProfiles": {
+      "work": "gpt-6-astra/medium",
+      "contact": "gpt-6-sol/none"
+    },
+    "closedRawUsageAndFailures": true,
+    "noFailedPositionReplay": true
+  },
+  "correction": {
+    "cumulativeHistoryIncludesOriginalConstructionAndClosedFollowup": true,
+    "retainedFollowupPosition": 0,
+    "remainingPositions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "historicalRuns": 2,
+    "plannedRemainingRuns": 7,
+    "previouslyAdmittedTotalRuns": 9,
+    "legacyConstructionRows": "Only exact original index0/index1 hashes; no generic absent-attested acceptance.",
+    "unknownUsage": "Original NULL retained; separate source-bound no-dispatch finding.",
+    "singleUseAdmission": true,
+    "atomicReportWrites": true
+  },
+  "historicalAccounting": {
+    "inputTokens": 36493,
+    "outputTokens": 5190,
+    "measuredResponses": 18,
+    "attemptRecords": 19,
+    "localPreDispatchFailures": 1,
+    "derivedModelUseForLocalFailure": 0,
+    "creditCost": null
+  },
+  "sourceHashes": {
+    "compare_followup.py": "48d7fc3595d7f04c185a2fed8509623c30e7d420c3bbd130472582e97cdedd33",
+    "test_followup.py": "977641469bb135406f63b67c2deb1d846a263a75df7ac0907f4213ebfe667663"
+  },
+  "verification": {
+    "offlinePassed": 36,
+    "seconds": 3.24,
+    "network": "none",
+    "providerCalls": 0,
+    "coreImage": "sha256:83d89945822c79995e73fd3436f7081dcb233935c53a9647368e68f11ebed96f",
+    "receiptSha256": "0d81e388179d0abc14413e45d2e12578eb7c9f816201bf8f8e921ee0867fbb18"
+  },
+  "sources": [
+    "eva2/reviews/r1-local-predispatch-settlement-20261007.json",
+    "eva2/experiments/r1-executable-experience-20260930/followup-20261003/PROTOCOL.md"
+  ],
+  "claims": {
+    "betterEva": false,
+    "completedComparison": false,
+    "AIDE2AgentSelfImprovement": false,
+    "extraProductCompletion": false
+  }
+}

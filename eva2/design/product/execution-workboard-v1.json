@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T00:58:22.999201+00:00",
+        "checkedAt": "2026-10-07T07:23:56.298669+00:00",
         "deliveries": [
           {
             "title": "Geheugen · toegelaten herinnering wordt niet verdrongen",
@@ -4078,24 +4078,24 @@
           }
         ],
         "now": {
-          "title": "Geen uitvoerbaar vervolg binnen huidige proefafspraken",
-          "state": "blocked",
+          "title": "R1.1 · Bestaande vergelijking afmaken",
+          "state": "in_progress",
           "owner": "Codex",
-          "detail": "P2/R1: verloren verbruiksgegevens en afgesloten toelating verhinderen uitvoering binnen oorspronkelijke voorwaarden. Beide menselijke beoordelingen ontbreken. Derde opeenvolgende beurt zonder voortgang; geen proefproces actief.",
-          "remaining": "Een geldig meetvervolg binnen vastgelegde voorwaarden of expliciet gewijzigd meetbesluit; twee echte kwaliteitsbeoordelingen; gezinsacceptatie. Spraak blijft geparkeerd.",
-          "source": "eva2/evidence/product/p2-current-round-decision-20261007.json",
-          "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "reviewedAt": "2026-10-07T00:58:22.999201+00:00",
-          "taskId": "P2.1",
-          "evidence": "eva2/evidence/product/p2-current-round-decision-20261007.json"
+          "taskId": "R1.1",
+          "detail": "Cumulatieve driver onafhankelijk positief beoordeeld;36 controles. Ontbrekende poging bronmatig vóór modelverzending gestopt, rawNULL bewaard. Eenmalige hervatting gebruikt alleen zeven ongebruikte posities.",
+          "remaining": "Werkelijke vergelijking en onafhankelijke uitslag; geen extra Eva-functie of bewezen voorsprong door alleen de driver te repareren.",
+          "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
+          "source": "eva2/evidence/product/r1-cumulative-resume-correction-20261007.json",
+          "reviewedAt": "2026-10-07T07:23:56.298669+00:00"
         },
         "next": {
-          "title": "Twee onafhankelijke kwaliteitsbeoordelingen",
+          "title": "R1.1 · Restant uitvoeren en beoordelen",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Beide bestaande P2.1-pakketten staan klaar. Ieder vult het eigen antwoordblad in; links en stappen staan bij de taak. Dit heft de afzonderlijke verbruiks-/toelatingsblokkade niet op.",
-          "remaining": "Oorspronkelijke vergelijkingsdekking en menselijke beoordelingen blijven open; een reparatie bewijst geen vergelijkingswinst.",
-          "source": "eva2/evidence/product/p2-cm12-paired-result-20261005.json"
+          "taskId": "R1.1",
+          "detail": "Zelfde kandidaat, taken, beoordelingsregels en providerroute. Eerste afgebroken positie wordt bewaard en niet opnieuw uitgevoerd.",
+          "remaining": "P2-vergelijking en echte menselijke kwaliteitsbeoordelingen blijven afzonderlijk open.",
+          "source": "eva2/experiments/r1-executable-experience-20260930/criteria.json"
         },
         "ownerAction": {
           "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
@@ -4119,7 +4119,7 @@
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-07T00:58:22.999201+00:00"
+        "reviewedAt": "2026-10-07T07:23:56.298669+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -19315,7 +19315,7 @@
           ],
           "outcome": "Uitvoerbare ervaring vergelijken",
           "effort": "M research",
-          "status": "blocked",
+          "status": "in_progress",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Ordinary procedure reuse is the comparison baseline; task-model concept has prior art and no Eva implementation evidence.",
@@ -19328,32 +19328,35 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "dashboardComponent": "projects",
           "remainingTasks": [
             {
               "id": "R1.1",
               "title": "Ervaringsmodel begrensd vergelijken",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
               "owner": "Codex",
-              "latestEvidence": "eva2/reviews/r1-current-readiness-20261006.json",
+              "latestEvidence": "eva2/evidence/product/r1-cumulative-resume-correction-20261007.json",
               "assignment": {
                 "owner": "/root",
-                "baseCommit": "ad570046ac2364f8822ce43299fbd2798e2ad82e",
-                "stage": "original_readiness_closed_no_go",
+                "baseCommit": "d296090e136d7b459fe9590638fa213147f27544",
+                "stage": "independent_resume_admission",
                 "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
                 "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
-                "gap": "Codex: oude R1-driver mist het afgesloten vervolgverbruik; één poging heeft onbekend verbruik en de oorspronkelijke onafhankelijke toelating is al gebruikt. Geen geldige hervatting binnen bestaande voorwaarden aangetoond.",
+                "gap": "De aangepaste driver moet de zeven resterende oorspronkelijke posities nog werkelijk uitvoeren en onafhankelijk laten beoordelen.",
                 "files": [
-                  "/root: werkbord/WERKBORD/Git-integratie; uitsluitend noodzakelijke bestaande broncorrectie na concreet aangetoond tekort.",
-                  "/root/r1_final_followup_20261006: gesanitiseerde technische R1-gereedheid/provenance; geen bron, geheime inhoud naar root, scorer, werkbord of Git."
+                  "/root: compare_followup.py, gerichte neutrale tests, bestaand werkbord en Git-integratie.",
+                  "/root/aide_final_evaluation: beschermde historische rapporten, brongebonden verbruiksbeoordeling en onafhankelijke toelating/eindbeoordeling; geen proefinhoud naar bouwer."
                 ],
-                "currentAction": "Gereedheidscontrole afgesloten: geen bruikbare bestaande toelating;0 provider-/executor-/authcalls. Oorspronkelijke resultaten behouden; R1 niet herhaald.",
+                "currentAction": "Driverbron positief onafhankelijk beoordeeld,36 gerichte controles. Brongebonden settlement verklaart laatste poging als lokaal vóór modelverzending; rawNULL behouden. Eenmalige hervatting van alleen zeven ongebruikte posities wordt voorbereid.",
                 "finish": "Oorspronkelijke R1.1-eindvoorwaarde behouden; deze gereedheidscontrole voltooit die niet.",
-                "estimate": "Gerichte technische voorbereiding met bestaande bron/bewijs en0 geplande provider-/proefcalls. Vervolg alleen binnen oorspronkelijke vastgelegde experimentgrenzen; Codexcredits onbekend.",
-                "activeWorkers": [],
+                "estimate": "Eén gerichte drivercorrectie en onafhankelijke beoordeling; maximaal zeven resterende oorspronkelijke posities binnen bestaande 1+8=9 toelating en 600.000/48.000-tokenenvelop. Onbekend verbruik wordt niet nul verondersteld; creditkosten onbekend.",
+                "activeWorkers": [
+                  "/root",
+                  "/root/aide_final_evaluation"
+                ],
                 "actualUsage": {
                   "newKnownInputTokens": 6267,
                   "newKnownOutputTokens": 133,
@@ -19372,14 +19375,23 @@
                   "experimentRuns": 0,
                   "creditCost": "UNKNOWN",
                   "scope": "This closed readiness check; historical usage retained separately."
+                },
+                "previousStage": "original_readiness_closed_no_go",
+                "cumulativeHistoricalAccounting": {
+                  "inputTokens": 36493,
+                  "outputTokens": 5190,
+                  "measuredResponses": 18,
+                  "attemptRecords": 19,
+                  "localPreDispatchFailures": 1,
+                  "derivedModelUseForLocalFailure": 0,
+                  "creditCost": null
                 }
               },
               "remaining": "Oorspronkelijke R1.1-vergelijking en gemeten AIDE²/innovatievoordeel blijven open. Providercompatibiliteit bevestigd; geen nieuwe uitvoering of voltooiing.",
-              "checkedAt": "2026-10-06T17:57:44.357521+00:00",
-              "blocker": "Codex: oude R1-driver mist het afgesloten vervolgverbruik; één poging heeft onbekend verbruik en de oorspronkelijke onafhankelijke toelating is al gebruikt. Geen geldige hervatting binnen bestaande voorwaarden aangetoond.",
+              "checkedAt": "2026-10-07T07:23:56.298669+00:00",
               "previousBlocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef.",
               "ownerActionRequired": false,
-              "nextAction": "Bewaar beide afgesloten onbekende rondes. Hervat alleen bij geldige cumulatieve accounting en onafhankelijke toelating binnen oorspronkelijke voorwaarden; geen automatische nieuwe set, budgetreset of vervangende proef. P2-beoordeling kan onafhankelijk verder.",
+              "nextAction": "Repareer cumulatieve accounting en hervatten op de bestaande positie; voer het toegelaten restant uit en behoud ook fouten en verliezen.",
               "ownerInstructions": {
                 "availableNow": false,
                 "steps": [],
@@ -19388,7 +19400,7 @@
               },
               "ownerAuthorizationEvidence": "eva2/evidence/product/owner-resume-20261006.json",
               "previousBlocker20261006": "Codex: vaste proef gestopt bij providerconfiguration-fout en onvolledig gemeten poging. Kandidaat/vergelijking niet uitgevoerd; geen handeling van Jaap nodig.",
-              "activeExecution": false,
+              "activeExecution": true,
               "review": "eva2/reviews/r1-current-readiness-review-20261006.json"
             },
             {

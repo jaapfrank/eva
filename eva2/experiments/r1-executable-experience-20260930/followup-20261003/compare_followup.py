@@ -4,17 +4,25 @@ The frozen task runner owns every provider/tool/guard call and awaits social wor
 This wrapper changes only the decision to schedule the next fixed run.
 """
 import asyncio
+from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum
 import hashlib
 import importlib.util
 import inspect
 import json
+import os
 from pathlib import Path
 import sys
 
 ORDER=((0,'A','ordinary'),(0,'A','predictor'),(0,'B','predictor'),(0,'B','ordinary'),
        (1,'A','predictor'),(1,'A','ordinary'),(1,'B','ordinary'),(1,'B','predictor'))
+# The frozen generator retained measured usage before the attested field existed.
+# Only these two exact construction rows use that historical schema.
+LEGACY_CONSTRUCTION_CALLS={
+    0:'8abf8098fab194b1af8e47f8e28dd2452b6a01c698b80fb73c7172510f7d50b3',
+    1:'1d524f78f0751466f99184985e1584c49cf31911e84f45d05ab05d350e21dc5e',
+}
 LOCAL_REASONS={
     'frozen response envelope reached':'responses',
     'frozen tool envelope reached':'tools',
@@ -81,8 +89,11 @@ def disposition(result,budget,call_start):
 
 
 async def schedule(*,cases,artifact,adapter,work,contact,budget,limits,run,save,report,grade_stop=None):
+    # A retained prefix is part of the outcome, including a failed first run.
+    # Resuming never retries it or turns it into a successful observation.
+    offset=schedule_offset(report.get('runs',[]))
     try:
-        for repeat,name,arm in ORDER:
+        for repeat,name,arm in ORDER[offset:]:
             start=len(budget.calls)
             result=await run(cases[name],arm,repeat,artifact,adapter,work,contact,budget,limits)
             verdict=disposition(result,budget,start)
@@ -111,6 +122,113 @@ async def schedule(*,cases,artifact,adapter,work,contact,budget,limits,run,save,
         raise
 
 
+
+def schedule_offset(runs):
+    if not isinstance(runs,list) or len(runs)>len(ORDER):
+        raise ValueError('retained schedule prefix invalid')
+    for expected,row in zip(ORDER,runs):
+        if (type(row.get('repeat')) is not int or (row.get('repeat'),row.get('case'),row.get('arm'))!=expected
+                or row.get('status') not in ('completed','failed')):
+            raise ValueError('retained schedule prefix differs')
+    return len(runs)
+
+
+def row_sha(row):
+    return hashlib.sha256(json.dumps(row,sort_keys=True,separators=(',',':'),
+        ensure_ascii=False).encode()).hexdigest()
+
+
+def accounting(calls,settlements):
+    """Resolve only source-bound independent no-dispatch findings; retain raw rows."""
+    if not isinstance(calls,list) or not isinstance(settlements,list):
+        raise ValueError('historical accounting invalid')
+    resolved={}
+    for finding in settlements:
+        index=finding.get('callIndex')
+        if (type(index) is not int or index<0 or index>=len(calls) or index in resolved
+                or finding.get('callSha256')!=row_sha(calls[index])
+                or finding.get('classification')!='local_pre_dispatch_failure'
+                or type(finding.get('inputTokens')) is not int or finding['inputTokens']!=0
+                or type(finding.get('outputTokens')) is not int or finding['outputTokens']!=0):
+            raise ValueError('independent usage settlement invalid')
+        resolved[index]=finding
+    input_tokens=output_tokens=responses=0
+    for index,row in enumerate(calls):
+        measured=(row.get('attested') is True or ('attested' not in row
+            and LEGACY_CONSTRUCTION_CALLS.get(index)==row_sha(row)))
+        if (measured and type(row.get('inputTokens')) is int
+                and type(row.get('outputTokens')) is int
+                and row['inputTokens']>=0 and row['outputTokens']>=0):
+            if index in resolved:raise ValueError('attested usage must not be replaced')
+            input_tokens+=row['inputTokens'];output_tokens+=row['outputTokens'];responses+=1
+        elif (row.get('attested') is False and row.get('inputTokens') is None
+                and row.get('outputTokens') is None and index in resolved):
+            # Zero provider use is a separate dispatch finding, not a provider
+            # attestation. The failed attempt and its duration remain unchanged.
+            pass
+        else:raise ValueError('historical provider usage remains unsettled')
+    return {'inputTokens':input_tokens,'outputTokens':output_tokens,
+        'responses':responses,'attempts':len(calls),'settledLocalFailures':len(resolved)}
+
+
+def bound_json(path,digest,label):
+    if not isinstance(digest,str) or sha(path)!=digest:
+        raise ValueError(label+' source differs')
+    return json.loads(Path(path).read_bytes())
+
+
+def resume_history(root,admission):
+    original=json.loads((root/'comparison-report.json').read_bytes())
+    original_calls=original['usage']['calls']
+    original_totals=accounting(original_calls,[])
+    if (original_totals['inputTokens'],original_totals['outputTokens'],
+            original_totals['responses'])!=(30226,5057,14):
+        raise ValueError('historical original accounting differs')
+    binding=admission.get('resume')
+    if binding is None:return deepcopy(original_calls),[],[],original_totals
+    previous=bound_json(binding['reportPath'],binding['reportSha256'],'closed followup report')
+    used=bound_json(binding['usedAdmissionPath'],binding['usedAdmissionSha256'],'used admission')
+    if (used.get('decision')!='GO' or used.get('previousTaskRuns')!=1
+            or used.get('followupTaskRuns')!=8 or used.get('historicalTaskRunsTotal')!=9
+            or used.get('taskRunAccountingApproved') is not True
+            or previous.get('admission')!=used
+            or any(used.get(key)!=admission.get(key) for key in
+                ('artifactSha256','criteriaSha256','casesSha256','scorerSha256'))
+            or used.get('freshIndependentCases') is not True):
+        raise ValueError('original followup admission binding differs')
+    runs=previous['runs'];offset=schedule_offset(runs)
+    if (offset!=1 or previous.get('status') not in
+            ('stopped_no_promotion','stopped_independent_hard_boundary_no_promotion')
+            or admission.get('previousTaskRuns')!=1+offset
+            or admission.get('remainingTaskRuns')!=len(ORDER)-offset):
+        raise ValueError('only unused original followup positions may resume')
+    calls=previous['usage']['calls']
+    if calls[:len(original_calls)]!=original_calls:
+        raise ValueError('original accounting prefix differs')
+    findings=bound_json(binding['settlementPath'],binding['settlementSha256'],'independent settlement')
+    if (findings.get('decision')!='GO' or findings.get('reportSha256')!=binding['reportSha256']
+            or findings.get('usedAdmissionSha256')!=binding['usedAdmissionSha256']):
+        raise ValueError('independent cumulative accounting approval required')
+    settlements=findings['settlements'];totals=accounting(calls,settlements)
+    if (admission.get('cumulativeUsage')!=totals
+            or totals['inputTokens']>admission['maximumTotalInputTokens']
+            or totals['outputTokens']>admission['maximumTotalOutputTokens']):
+        raise ValueError('cumulative admitted accounting differs')
+    return deepcopy(calls),deepcopy(runs),deepcopy(settlements),totals
+
+
+def seed_budget(original,calls,settlements,limits):
+    totals=accounting(calls,settlements)
+    if (totals['inputTokens']>limits['maximum_total_input_tokens']
+            or totals['outputTokens']>limits['maximum_total_output_tokens']):
+        raise ValueError('historical research envelope exceeded')
+    budget=original.Budget([],limits)
+    budget.calls=deepcopy(calls)
+    budget.input=totals['inputTokens'];budget.output=totals['outputTokens']
+    budget.responses=totals['responses']
+    return budget
+
+
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
@@ -128,7 +246,8 @@ def admitted_inputs(admission_path,cases_path,scorer_path):
             or admission.get('scorerSha256')!=sha(scorer_path)
             or admission['casesSha256']==freeze['curator']['casesSha256']
             or admission.get('freshIndependentCases') is not True
-            or admission.get('previousTaskRuns')!=1
+            or admission.get('previousTaskRuns')!=(2 if admission.get('resume') else 1)
+            or (admission.get('resume') and admission.get('remainingTaskRuns')!=7)
             or admission.get('followupTaskRuns')!=8
             or admission.get('historicalTaskRunsTotal')!=9
             or admission.get('taskRunAccountingApproved') is not True):
@@ -152,11 +271,11 @@ async def main():
     original=importlib.util.module_from_spec(spec);spec.loader.exec_module(original)
     criteria=json.loads((root/'criteria.json').read_bytes());limits=criteria['budget']
     if limits['maximum_task_runs']!=len(ORDER):raise ValueError('fixed schedule differs')
-    previous=json.loads((root/'comparison-report.json').read_bytes())
-    historical=previous['usage']['calls']
-    if (sum(row['inputTokens'] for row in historical)!=30226
-            or sum(row['outputTokens'] for row in historical)!=5057 or len(historical)!=14):
-        raise ValueError('historical complete accounting differs')
+    if admission.get('resume') and (
+            admission.get('maximumTotalInputTokens')!=limits['maximum_total_input_tokens']
+            or admission.get('maximumTotalOutputTokens')!=limits['maximum_total_output_tokens']):
+        raise ValueError('original aggregate envelope differs')
+    historical,retained_runs,settlements,totals=resume_history(root,admission)
     settings=original.RuntimeSettings.from_environment()
     adapter=original.PydanticConversationModel(auth_file=Path(settings.conversation_auth_file),model=settings.conversation_model)
     work=original.OpenAICodexProviderSettings(endpoint=adapter._endpoint,model_name=settings.conversation_model,
@@ -165,12 +284,27 @@ async def main():
         reasoning_effort=settings.conversation_contact_reasoning_effort,timeout_seconds=adapter._timeout_seconds,maximum_request_bytes=65536)
     if (work.model_name,work.reasoning_effort,contact.model_name,contact.reasoning_effort)!=('gpt-6-astra','medium','gpt-6-sol','none'):
         raise ValueError('frozen provider profiles differ')
-    budget=original.Budget(historical,limits)
-    report={'kind':'isolated_R1_followup_not_installed_Eva','status':'prepared','runs':[],
-        'admission':admission,'historicalUsageIncluded':True,'historicalTaskRuns':1,'plannedNewTaskRuns':8,
+    budget=seed_budget(original,historical,settlements,limits)
+    report={'kind':'isolated_R1_followup_not_installed_Eva','status':'prepared','runs':retained_runs,
+        'admission':admission,'historicalUsageIncluded':True,
+        'historicalTaskRuns':admission['previousTaskRuns'],'plannedNewTaskRuns':len(ORDER)-len(retained_runs),
+        'historicalSettlements':settlements,'historicalAccounting':totals,
+        'usage':{'inputTokens':budget.input,'outputTokens':budget.output,
+                 'responses':budget.responses,'calls':budget.calls},
         'promoted':False,'creditCost':None,'developerAssistantCredits':None}
     def save(value):
-        output_path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
+        temporary=output_path.with_name(output_path.name+'.writing')
+        with temporary.open('w',encoding='utf-8') as handle:
+            handle.write(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
+            handle.flush();os.fsync(handle.fileno())
+        temporary.replace(output_path)
+    # Single-use source-bound admission: a different output name cannot silently
+    # replay the same remaining positions. Claim only after offline validation.
+    claim_path=admission_path.with_name(admission_path.name+'.consumed')
+    with claim_path.open('x',encoding='utf-8') as handle:
+        handle.write(json.dumps({'admissionSha256':sha(admission_path),
+            'outputPath':str(output_path)})+'\n')
+        handle.flush();os.fsync(handle.fileno())
     save(report)
     await schedule(cases=cases,artifact=json.loads((root/'generated-artifact.json').read_bytes()),adapter=adapter,
         work=work,contact=contact,budget=budget,limits=limits,run=task_runner(original),save=save,report=report,grade_stop=scorer.should_stop)

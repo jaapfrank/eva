@@ -1,0 +1,144 @@
+{
+  "contract": "EvaR1IndependentSourceBoundSettlement/v1",
+  "recordedAt": "2026-10-07T07:21:53.451752+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "decision": "GO",
+  "scope": "Additive accounting settlement of one closed local failure; no raw usage overwrite, task rescore, replay or provider call.",
+  "reportSha256": "1e5ddd27c1eb48afd7f8bc3f0a0e2c28e667b9066596d991c39d2cae857ffc68",
+  "usedAdmissionSha256": "7207b10c33eaefc0b63af0fbe6154511ba843e00d6c52129e021182e6ccd6238",
+  "reportRetention": {
+    "container": "eva2-r1-evidence-20261006",
+    "path": "/tmp/comparison-report-20261006.json",
+    "bytes": 35033,
+    "stagedExactBytes": true
+  },
+  "settlements": [
+    {
+      "callIndex": 18,
+      "callSha256": "98dc61f571fd38ecf084fac7facdc5cd569790ca5ba9d886720e9a836bf130f0",
+      "classification": "local_pre_dispatch_failure",
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "modelDispatches": 0,
+      "rawAttested": false,
+      "rawNullFieldsPreserved": true,
+      "evidenceKind": "source_bound_control_flow_proof",
+      "exactConfigurationBranch": null
+    }
+  ],
+  "canonicalCallHash": "SHA256 of UTF-8 json.dumps(row,sort_keys=True,separators=(comma,colon),ensure_ascii=False)",
+  "bindings": {
+    "originalReportSha256": "a963d08acf58d7c7decd8e2efb23e856a7a43d32644009cc84e254541f7c451f",
+    "originalDriverSha256": "d65ec27f5c4f90f2fe9e469bd747e25046e532507028cf6a98b33a59f7fcc7e3",
+    "originalFollowupDriverSha256": "c6e10918fc43fa76afb0534bfb7ab5eddef7c9b54029be485def20e88c192887",
+    "runtimeAdmissionSha256": "aaf406269571598e1c53de9252a68b95dcca49a344229cef2c4ce0496ab520ce",
+    "retainedImage": "sha256:17709b26406e6c96d37665e36d69c8ceaeb96dde355fe07da8fb9a5d415effd6",
+    "providerSourceSha256": "efdaf9e083ef15ee77b16a1015b7cfb1ac5cd82538e47840404fa5a290ca843f",
+    "openaiClientSha256": "e2421659ea3ebd4ede9c940ae449e3cea65c096f21d97a1ece44f194aeda85ae",
+    "openaiBaseClientSha256": "53dc8c82344056600a08f51df158956827bdcc1a15cd4d3e1ce905a22663bd4c",
+    "pydanticUsageSha256": "7a1a380f46abd2a2dcbc53fa26e958277e3cfbac0e537b509e9b13d646cdcb78",
+    "pydanticAgentGraphSha256": "3b396254d603638371af103a26d7cf2aebc5a49eb96f23abf2909029770a3a62",
+    "pydanticOpenaiModelSha256": "17fe633f17111be52c8520be02089106a3472c251e910a24bae6557f5636aea1"
+  },
+  "proof": [
+    {
+      "source": "compare.py",
+      "lines": [
+        119,
+        145
+      ],
+      "finding": "Each ask constructs a fresh provider session. The failed record is created inside that session after entry. Agent retries=0 and UsageLimits(request_limit=1). Exactly one failed record and matching run CodexProviderError/configuration are retained; the concurrent social call is separately attested."
+    },
+    {
+      "source": "openai_codex_provider.py",
+      "lines": [
+        263,
+        367
+      ],
+      "finding": "Fresh transport starts model_requests at zero, network retries=0. Request projection and its configuration errors occur before network.handle_async_request; duplicate model requests raise protocol instead."
+    },
+    {
+      "source": "openai_codex_provider.py",
+      "lines": [
+        418,
+        479
+      ],
+      "finding": "Request-shape configuration errors are raised before sending the first model request."
+    },
+    {
+      "source": "openai_codex_provider.py",
+      "lines": [
+        525,
+        540
+      ],
+      "finding": "Rotating credential callback configuration errors occur during SDK request preparation."
+    },
+    {
+      "source": "openai/_client.py + openai/_base_client.py",
+      "lines": [
+        1396,
+        1429,
+        1673,
+        1699
+      ],
+      "finding": "The actual installed SDK awaits credential preparation before building/sending the request; provider sets max_retries=0."
+    },
+    {
+      "source": "pydantic_ai/usage.py + pydantic_ai/_agent_graph.py",
+      "lines": [
+        516,
+        520,
+        1654,
+        1766
+      ],
+      "finding": "The request limit is checked before any subsequent model invocation. A completed first request cannot be followed by a second credential/projection call in this one-request Agent.run."
+    },
+    {
+      "source": "openai_codex_provider.py",
+      "lines": [
+        325,
+        333,
+        799,
+        829
+      ],
+      "finding": "Attestation consumption raises protocol, not configuration. Sanitization preserves existing CodexProviderError and maps response/status/transport/stream failures to other categories; it never constructs configuration from an upstream response."
+    },
+    {
+      "source": "openai_codex_provider.py",
+      "lines": [
+        679,
+        795
+      ],
+      "finding": "Remaining configuration sites are provider entry/import/credential validation, all before model sending; session close performs no credential/model operation."
+    }
+  ],
+  "cumulativeUsage": {
+    "inputTokens": 36493,
+    "outputTokens": 5190,
+    "responses": 18,
+    "attempts": 19,
+    "settledLocalFailures": 1
+  },
+  "legacyConstructionSchema": {
+    "rawRowsUnchanged": true,
+    "source": "generate.py:62-69 consumes raw usage but omits an attested key",
+    "sourceSha256": "006fe639a1aa6aad2ddc8bb7fc81e1c53455a5293ae3972dc45a6cf39febe65a",
+    "evidenceSha256": "e67497bd8288c75985c3d0db9d50b16939b394b45fdbe7096c958252a207cc3d",
+    "rowHashes": [
+      "8abf8098fab194b1af8e47f8e28dd2452b6a01c698b80fb73c7172510f7d50b3",
+      "1d524f78f0751466f99184985e1584c49cf31911e84f45d05ab05d350e21dc5e"
+    ]
+  },
+  "limits": [
+    "No remote terminal attestation is invented. Zero inference follows from the pinned one-request control flow, not elapsed time or missing network logs.",
+    "The exact local configuration branch and the original task outcome remain unresolved/closed; no successful task or precise history-incompatibility attribution follows.",
+    "Original 19 rows and stopped run remain byte-equivalent; admission to unused positions is separate. Monetary credits remain unknown."
+  ],
+  "reviewUsage": {
+    "modelCalls": 0,
+    "authCalls": 0,
+    "tests": 0,
+    "resourcesStarted": 0,
+    "scorerInvocations": 0
+  }
+}
