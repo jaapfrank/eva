@@ -1,4 +1,12 @@
-## 7 oktober — geen actieve bouw of proef; resterende voorwaarden zichtbaar
+## 7 oktober — R1.1 uitgevoerd en afgesloten: geen adoptie
+
+De cumulatieve driver is hersteld en onafhankelijk gecontroleerd. Alle zeven ongebruikte oorspronkelijke posities zijn eenmaal uitgevoerd; eerste failure, negentien historische callrecords en aparte bewezen nul-modelverbruiksettlement blijven bewaard. De oorspronkelijke scorer beoordeelt alle zeven nieuwe taakuitkomsten als mislukt. Drie volledige paren, geen succesvolle volledige opdracht; de aangeboden voorspeller werd niet aangeroepen. Geen voordeel, kandidaat niet toepassen en geen automatische vervolgvariant.
+
+R1.1 is daarmee als **onderzoeksvergelijking afgerond**, R1.2 behoudt afwijzing. Dit is geen extra gezinsfunctie, bewezen innovatie of AIDE²-agentverbetering.35/44 kleine opdrachten afgerond; grote huisgenootuitkomsten worden hierdoor niet fictief groen.84 nieuwe modelreacties,202.092 invoer-/3.809 uitvoertokens;247.584 cumulatieve tokens inclusief leerverbruik. Creditkosten en toerekening van Codex-ontwikkelverbruik zijn onbekend. Proefcontainer verwijderd; productinstallatie en gegevens ongewijzigd.
+
+Bewijs: eva2/evidence/product/r1-cumulative-comparison-result-20261007.json. Onafhankelijke review: eva2/reviews/r1-cumulative-comparison-result-review-20261007.json. Vervolg nog niet gestart: brede P2.1-vergelijking en menselijke kwaliteit blijven open. Spraak geparkeerd; app-goalstatus niet gewijzigd.
+
+## Eerdere stand 7 oktober — geen actieve bouw of proef; resterende voorwaarden zichtbaar
 
 Vorige beurt: geïnstalleerde geheugencorrectie (f8ac4afa), dus voortgang. Deze beurt: geen nieuwe functionaliteit; oorspronkelijke P2-registratie ongewijzigd, geen origineel proefproces actief en beide ingevulde menselijke beoordelingen ontbreken. P2.1 is daarom zichtbaar geblokkeerd in plaats van alsof er actief gebouwd wordt. R1 blijft onvolledig met verloren verbruiksgegevens en gebruikte toelating. Geen nieuwe proef, budgetreset, herhaling of spraakwerk gestart. App-goal blijft actief; huidige blokkeringsaudit telt3 opeenvolgende beurten zonder voortgang. De derde controle bevestigt dezelfde proefregistratie en ontbrekende beoordelingen; geen nieuwe run of functie. De app-goalstatus wordt daarom nu naar geblokkeerd gewijzigd; geen voltooiingsclaim.
 

@@ -2,7 +2,7 @@
   "taskId": "R1.1",
   "checkedAt": "2026-10-07T07:23:56.298669+00:00",
   "kind": "cumulative_comparison_driver_correction_not_product_feature",
-  "state": "reviewed_pending_isolated_execution",
+  "state": "executed_and_independently_assessed_no_adoption",
   "ownerRequest": "Finish the driver and real comparison; retain original conditions and prior failures.",
   "preserved": {
     "originalFrozenFiles": true,
@@ -63,8 +63,22 @@
   ],
   "claims": {
     "betterEva": false,
-    "completedComparison": false,
+    "completedComparison": true,
     "AIDE2AgentSelfImprovement": false,
     "extraProductCompletion": false
+  },
+  "review": [
+    "eva2/reviews/r1-cumulative-driver-review-20261007.json",
+    "eva2/reviews/r1-cumulative-resume-review-20261007.json"
+  ],
+  "executionAdmissionSha256": "038cab325f451e2511f48f6d288745c8f94f64b50f10892e7a8a89b88e7b10a6",
+  "sourceCheckpoint": "66941c34e766ba3fb874787de1c41f791a630f12",
+  "result": {
+    "path": "eva2/evidence/product/r1-cumulative-comparison-result-20261007.json",
+    "sha256": "425f84969b8546b9aae56d3760d13228a369d6385690b7aa4e1be6af3b7b698b"
+  },
+  "finalReview": {
+    "path": "eva2/reviews/r1-cumulative-comparison-result-review-20261007.json",
+    "sha256": "1c273df3250f188933e7565c84898b0cac4eed98486366c9b4eb0c3f805a3feb"
   }
 }

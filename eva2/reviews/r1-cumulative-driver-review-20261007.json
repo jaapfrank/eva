@@ -1,0 +1,119 @@
+{
+  "contract": "R1CumulativeDriverIndependentReview/v1",
+  "date": "2026-10-07",
+  "task": "R1.1",
+  "decision": "GO_SOURCE_CHECKPOINT",
+  "executionAdmission": "PENDING_SEPARATE_INDEPENDENT_CURATOR_ADMISSION",
+  "scope": "Read-only independent review of the cumulative followup driver/test delta and offered offline proof; no original case, answer, rubric or model execution.",
+  "source": {
+    "path": "eva2/experiments/r1-executable-experience-20260930/followup-20261003/compare_followup.py",
+    "sha256": "48d7fc3595d7f04c185a2fed8509623c30e7d420c3bbd130472582e97cdedd33"
+  },
+  "test": {
+    "path": "eva2/experiments/r1-executable-experience-20260930/followup-20261003/test_followup.py",
+    "sha256": "977641469bb135406f63b67c2deb1d846a263a75df7ac0907f4213ebfe667663"
+  },
+  "offlineProof": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/offline-tests.json",
+      "sha256": "0d81e388179d0abc14413e45d2e12578eb7c9f816201bf8f8e921ee0867fbb18"
+    },
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/offline-tests.log",
+      "sha256": "fab691912fe1a83682a5a6e9fb8ecc40abd25033c55ce8ab491f2caadca31501"
+    },
+    "image": "sha256:83d89945822c79995e73fd3436f7081dcb233935c53a9647368e68f11ebed96f",
+    "passed": 36,
+    "failed": 0,
+    "testSeconds": 3.24,
+    "exitCode": 0,
+    "network": "none",
+    "providerCalls": 0,
+    "reviewerRanAdditionalTests": false
+  },
+  "findings": {
+    "schedule": {
+      "fixedOrderChanged": false,
+      "retainedPrefixRequiresExactOriginalOrderAndTerminalStatus": true,
+      "resumeRequiresExactlyOneRetainedFollowupPosition": true,
+      "closedPositionReplayed": false,
+      "unusedPositions": 7,
+      "cumulativeTaskRunAccounting": "1 original + 1 retained closed followup + 7 unused = 9",
+      "retainedResultsCopiedWithoutChangingOutcome": true
+    },
+    "accounting": {
+      "originalFourteenRowsIncludedOnce": true,
+      "seedMethod": "Construct original Budget with empty calls, then assign exact cumulative raw calls/input/output/measured responses; native inflight remains0.",
+      "nativeBudgetCounterBasis": "Coordinator supplied bounded extraction of original Budget.__init__/admit/retain; no additional counter or dispatch cap is omitted.",
+      "rawRowsAndUnknownTokenFieldsPreserved": true,
+      "unsettledUsageRejected": true,
+      "measuredUsageCannotBeReplacedBySettlement": true,
+      "localZeroBasis": "Only explicit independent GO settlement bound to closed-report/used-admission hashes and exact call index/canonical row hash; classification local_pre_dispatch_failure with integer0 input/output. This is separate dispatch accounting, not SDK usage attestation.",
+      "legacyConstructionBasis": {
+        "allowedIndices": [
+          0,
+          1
+        ],
+        "rowHashes": {
+          "0": "8abf8098fab194b1af8e47f8e28dd2452b6a01c698b80fb73c7172510f7d50b3",
+          "1": "1d524f78f0751466f99184985e1584c49cf31911e84f45d05ab05d350e21dc5e"
+        },
+        "requiresAbsentAttestedKey": true,
+        "nonnegativeIntegerTokensRequired": true,
+        "changedShiftedOrUnknownSchemaRejected": true,
+        "rawSchemaNormalized": false
+      },
+      "aggregateEnvelopeReset": false,
+      "newQuota": false,
+      "originalAdmitReservation": "Existing65536 input-token reservation per prospective inflight request. The source comment request-byte room is not proof of a byte-to-token upper bound.",
+      "postCompletionOverrunInvalidatesRound": true
+    },
+    "bindingAndSingleUse": {
+      "frozenOriginalFilesVerified": true,
+      "currentDriverArtifactCriteriaCasesScorerHashesRequired": true,
+      "retainedOriginalAccountingPrefixEqualityRequired": true,
+      "closedReportAndUsedAdmissionSourceBound": true,
+      "independentSettlementSourceBound": true,
+      "resumeCapsMustEqualOriginalCriteria": true,
+      "existingOutputCannotBeOverwritten": true,
+      "claim": "Exclusive admission-path .consumed file is created and file-fsynced before schedule/model calls; changing only output path cannot reuse that exact admission.",
+      "reportWrites": "Temporary report file is flushed/file-fsynced before atomic replace.",
+      "claimExecutedByReviewer": false
+    },
+    "unchangedControls": {
+      "workProfile": "gpt-6-astra/medium",
+      "contactProfile": "gpt-6-sol/none",
+      "providerProfilesChanged": false,
+      "responseToolPredictionAndToolResultLimitsChanged": false,
+      "criteriaRubricPredictorOrCasesChanged": false,
+      "stopOnNewUnattestedUsageInflightAggregateOverrunHardTraceSocialFailureOrIndependentHardStop": true,
+      "automaticPromotion": false
+    }
+  },
+  "coordinatorProvidedPendingExecutionBinding": {
+    "independentSettlementSha256": "f4dbb6c12a39ab554961d1aa9d40b3c337796fbc62fc09104c2831a05cc07681",
+    "cumulativeInputTokens": 36493,
+    "cumulativeOutputTokens": 5190,
+    "measuredResponses": 18,
+    "rawAttemptRows": 19,
+    "sourceBoundNoDispatchFindingIndex": 18,
+    "rawSdkUnknownPreserved": true,
+    "metadataReviewedForConcreteExecutionAdmission": false
+  },
+  "materialDefects": [],
+  "reviewerActivity": {
+    "sourceAndTestEdits": 0,
+    "privateHeldoutReads": 0,
+    "taskOrAnswerDisclosure": 0,
+    "modelCalls": 0,
+    "nativeExecutions": 0,
+    "newTests": 0
+  },
+  "publicationLimits": {
+    "R1OutcomeCompleted": false,
+    "qualityOrPredictorWinProven": false,
+    "installedEvaPromotion": false,
+    "creditCost": "UNKNOWN"
+  },
+  "conclusion": "GO for this exact cumulative-driver source checkpoint. Preserve the closed first followup position and all raw history; run only seven unused positions after separately bound independent execution admission. No new cases, rubric, model profiles, limits or budget reset are authorized by this review."
+}

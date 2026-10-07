@@ -1,0 +1,66 @@
+{
+  "schema": "EvaR1IndependentFinalReview/v1",
+  "reviewedAt": "2026-10-07T07:38:14.805310+00:00",
+  "decision": "GO_PUBLICATION_OF_COMPLETED_BOUNDED_COMPARISON_NO_ADOPTION",
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/r1-cumulative-comparison-result-20261007.json",
+    "sha256": "425f84969b8546b9aae56d3760d13228a369d6385690b7aa4e1be6af3b7b698b"
+  },
+  "assessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/independent/independent-final-assessment.private.json",
+    "sha256": "ef604cb71c47c190b4fdf2d2ca3408410c30818ae9e1b073b17e1a2394f1fbe1"
+  },
+  "actualReport": {
+    "path": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/independent/comparison-report-resumed-20261007.private.json",
+    "sha256": "fee62ef6d7f0359cf24d41e94c1916d7f39a02a3ffa0171103f5ece4b1fe0cfc"
+  },
+  "fixedScorerGrades": {
+    "path": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/independent/original-scorer-grades.private.json",
+    "sha256": "8b06f7c0ae7f655e6ac03ce59e8f422f97b059a9e204d18bddb374819834bbb0"
+  },
+  "verified": {
+    "originalCasesScorerCriteriaCandidateUnchanged": true,
+    "originalReportAnd19CallsUnchanged": true,
+    "retainedBaselineQualityUnknown": true,
+    "onlySevenUnusedPositionsExecuted": true,
+    "noNewVariantOrQuota": true,
+    "all84NewProviderResponsesAttested": true,
+    "rawNullNotOverwritten": true,
+    "historicalLocalFailureSettledOnlyByBoundSourceEvidence": true,
+    "knownCumulativeTokensRecomputed": true,
+    "constructionCostsIncluded": true,
+    "threePairsHaveNoSuccessfulTaskOutcome": true,
+    "zeroHardBoundaryViolationsInNewOutcomes": true,
+    "noPromotionOrAIDE2Claim": true,
+    "singleUseClaimRetained": true,
+    "ownContainerAbsent": true,
+    "privateArtifactsRetained": true
+  },
+  "newInferenceForAssessment": 0,
+  "newTestsByReviewer": 0,
+  "earlierFocusedSourceEvidenceReused": {
+    "tests": 36,
+    "elapsedSeconds": 3.24,
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/offline-tests.json",
+      "sha256": "0d81e388179d0abc14413e45d2e12578eb7c9f816201bf8f8e921ee0867fbb18"
+    }
+  },
+  "scopeLimit": "This review closes the admitted isolated measurement and original scorer judgment only. Product task state, installation, broader P2 comparison and family acceptance are not changed here.",
+  "boundedToolTraceCheck": {
+    "sourceOfferVerified": true,
+    "wireOfferDirectObservation": null,
+    "serviceRequestsAndTracesMatch": 74,
+    "serviceFailures": 0,
+    "continuationWorkCalls": 67,
+    "concreteRouteDefect": false,
+    "predictorQualityComparedAfterActualInvocation": false,
+    "noNewCallsTestsOrRawEdits": true
+  },
+  "originalR11FinishCondition": {
+    "source": "eva2/design/product/execution-workboard-v1.json: audit.deliveryPlan remainingTasks R1.1.doneWhen",
+    "text": "E\u00e9n passende ge\u00efsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
+    "mayCloseAsResearchComparison": true,
+    "doesNotCompleteInnovationOrAIDE2Claim": true
+  }
+}

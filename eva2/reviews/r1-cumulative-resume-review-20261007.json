@@ -1,0 +1,82 @@
+{
+  "contract": "EvaR1IndependentCumulativeResumeReview/v1",
+  "recordedAt": "2026-10-07T07:24:06.523098+00:00",
+  "reviewer": "/root/aide_final_evaluation",
+  "decision": "GO_SOURCE_BOUND_UNUSED_SEVEN_PENDING_ROOT_DISPATCH",
+  "scope": "One bounded source, cumulative-accounting, retained-prefix and protected staging review; no original runtime execution.",
+  "source": {
+    "driver": "/home/administrator/project/Eva2/eva2/experiments/r1-executable-experience-20260930/followup-20261003/compare_followup.py",
+    "driverSha256": "48d7fc3595d7f04c185a2fed8509623c30e7d420c3bbd130472582e97cdedd33",
+    "test": "/home/administrator/project/Eva2/eva2/experiments/r1-executable-experience-20260930/followup-20261003/test_followup.py",
+    "testSha256": "977641469bb135406f63b67c2deb1d846a263a75df7ac0907f4213ebfe667663",
+    "originalFrozenFilesUnchanged": true
+  },
+  "evidence": {
+    "offlineReceiptPath": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/offline-tests.json",
+    "offlineReceiptSha256": "0d81e388179d0abc14413e45d2e12578eb7c9f816201bf8f8e921ee0867fbb18",
+    "offlineLogPath": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/offline-tests.log",
+    "offlineLogSha256": "fab691912fe1a83682a5a6e9fb8ecc40abd25033c55ce8ab491f2caadca31501",
+    "reusedResult": "36 passed in 3.24s, exit0, networknone, 0providers",
+    "testsRepeatedByReviewer": 0
+  },
+  "admission": {
+    "path": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/independent/resume-admission.private.json",
+    "sha256": "038cab325f451e2511f48f6d288745c8f94f64b50f10892e7a8a89b88e7b10a6",
+    "singleUseClaimPath": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/independent/resume-admission.private.json.consumed",
+    "claimAbsentAtReview": true,
+    "outputAbsentAtReview": true
+  },
+  "settlement": {
+    "path": "/home/administrator/project/.eva2-artifacts/r1-cumulative-resume-20261007/independent/local-predispatch-settlement.private.json",
+    "sha256": "f4dbb6c12a39ab554961d1aa9d40b3c337796fbc62fc09104c2831a05cc07681",
+    "publicPath": "eva2/reviews/r1-local-predispatch-settlement-20261007.json"
+  },
+  "retainedHistory": {
+    "originalReportSha256": "a963d08acf58d7c7decd8e2efb23e856a7a43d32644009cc84e254541f7c451f",
+    "followupReportSha256": "1e5ddd27c1eb48afd7f8bc3f0a0e2c28e667b9066596d991c39d2cae857ffc68",
+    "usedAdmissionSha256": "7207b10c33eaefc0b63af0fbe6154511ba843e00d6c52129e021182e6ccd6238",
+    "original14RowsExactPrefix": true,
+    "retainedCallRows": 19,
+    "rawNullFieldsUnchanged": true,
+    "closedFirstRunUnchanged": true,
+    "unusedScheduleOffset": 1,
+    "remainingPositions": 7,
+    "historicalTaskRunsFormula": "1 + 1 + 7 = 9",
+    "cumulativeUsage": {
+      "inputTokens": 36493,
+      "outputTokens": 5190,
+      "responses": 18,
+      "attempts": 19,
+      "settledLocalFailures": 1
+    }
+  },
+  "findingsResolved": [
+    {
+      "finding": "Actual two legacy construction records omit attested key; first candidate accounting rejected them.",
+      "correction": "Only exact index0/index1 canonical source-bound hashes are accepted; changed or relocated rows still fail. Frozen generate.py consumes raw usage before recording these rows.",
+      "tests": "One added real-accounting-schema check; earlier 35-check evidence retained."
+    }
+  ],
+  "checks": [
+    "Same independently admitted cases/scorer/predictor/criteria hashes; no new data or oracle read.",
+    "Prefix and used admission are exact; unknown row is separately settled by pinned pre-dispatch proof, never overwritten.",
+    "Only ORDER[1:] may run; all original hard/provider/unknown-usage/aggregate stops still apply to new results.",
+    "O_EXCL admission.consumed precedes schedule; output atomic replacement retains complete current result before next case.",
+    "Cumulative token totals seed original Budget; per-run/source limits remain frozen.",
+    "Private report staged from stopped retention archive with exact hash/length; root0700 directory and root0600 files."
+  ],
+  "limits": [
+    "Source/staging GO does not itself start or certify current provider/executor availability; exact bound image/environment and separate implementation-review outcome are root dispatch conditions.",
+    "The first ordinary follow-up remains harnessfailure/missing quality; no candidate win from that missing pair.",
+    "At most three complete pairs plus unmatched candidate are possible; original section9 and protected final evaluator remain decisive.",
+    "No product function, competitive superiority, amortized savings or full AIDE2 claim."
+  ],
+  "usage": {
+    "modelCalls": 0,
+    "authCalls": 0,
+    "newTests": 0,
+    "nativeStarts": 0,
+    "scorerInvocations": 0,
+    "developmentCredits": null
+  }
+}

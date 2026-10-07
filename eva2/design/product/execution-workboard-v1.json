@@ -1016,8 +1016,19 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T07:23:56.298669+00:00",
+        "checkedAt": "2026-10-07T07:42:22.272287+00:00",
         "deliveries": [
+          {
+            "title": "R1.1 · Echte vergelijking afgerond — geen adoptie",
+            "date": "2026-10-07",
+            "state": "tested",
+            "result": "Zeven ongebruikte posities eenmaal uitgevoerd; drie volledige paren. Beide werkwijzen0 volledige taakpasses binnen oorspronkelijke voorwaarden. De kandidaat gebruikte de voorspeller niet;0 aangetoond voordeel. Onafhankelijke publicatie-GO, kandidaat afgewezen.",
+            "remaining": "Dit voltooit de onderzoeksopdracht, geen extra gezinsfunctie. Brede Eva1/concurrentenvergelijking en aantoonbare AIDE²-/innovatievoorsprong blijven open.",
+            "source": "eva2/evidence/product/r1-cumulative-comparison-result-20261007.json",
+            "review": "eva2/reviews/r1-cumulative-comparison-result-review-20261007.json",
+            "taskId": "R1.1",
+            "usage": "84 nieuwe modelreacties;202.092 invoer-/3.809 uitvoertokens. Cumulatief247.584tokens incl leerverbruik; euro-/Codexcreditkosten onbekend."
+          },
           {
             "title": "Geheugen · toegelaten herinnering wordt niet verdrongen",
             "date": "2026-10-07",
@@ -4078,24 +4089,24 @@
           }
         ],
         "now": {
-          "title": "R1.1 · Bestaande vergelijking afmaken",
-          "state": "in_progress",
+          "title": "R1.1 · Afgerond met onafhankelijke uitslag",
+          "state": "completed",
           "owner": "Codex",
           "taskId": "R1.1",
-          "detail": "Cumulatieve driver onafhankelijk positief beoordeeld;36 controles. Ontbrekende poging bronmatig vóór modelverzending gestopt, rawNULL bewaard. Eenmalige hervatting gebruikt alleen zeven ongebruikte posities.",
-          "remaining": "Werkelijke vergelijking en onafhankelijke uitslag; geen extra Eva-functie of bewezen voorsprong door alleen de driver te repareren.",
-          "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
-          "source": "eva2/evidence/product/r1-cumulative-resume-correction-20261007.json",
-          "reviewedAt": "2026-10-07T07:23:56.298669+00:00"
+          "detail": "Zeven ongebruikte posities eenmaal uitgevoerd; drie volledige paren. Beide werkwijzen0 volledige taakpasses binnen oorspronkelijke voorwaarden. De kandidaat gebruikte de voorspeller niet;0 aangetoond voordeel. Onafhankelijke publicatie-GO, kandidaat afgewezen.",
+          "remaining": "Dit voltooit de onderzoeksopdracht, geen extra gezinsfunctie. Brede Eva1/concurrentenvergelijking en aantoonbare AIDE²-/innovatievoorsprong blijven open. Vervolg nog niet gestart.",
+          "source": "eva2/evidence/product/r1-cumulative-comparison-result-20261007.json",
+          "reviewedAt": "2026-10-07T07:42:22.272287+00:00",
+          "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik."
         },
         "next": {
-          "title": "R1.1 · Restant uitvoeren en beoordelen",
+          "title": "P2.1 · Brede vergelijking verder afmaken",
           "state": "planned",
           "owner": "Codex",
-          "taskId": "R1.1",
-          "detail": "Zelfde kandidaat, taken, beoordelingsregels en providerroute. Eerste afgebroken positie wordt bewaard en niet opnieuw uitgevoerd.",
-          "remaining": "P2-vergelijking en echte menselijke kwaliteitsbeoordelingen blijven afzonderlijk open.",
-          "source": "eva2/experiments/r1-executable-experience-20260930/criteria.json"
+          "taskId": "P2.1",
+          "detail": "Gebruik vaste oorspronkelijke taken en bestaande resultaten. Nog open: geldige eigen native uitvoering van deelnemers, ontbrekende metingen en twee echte antwoordbeoordelingen; geen algemene winnaar claimen.",
+          "remaining": "P2.1 blijft afzonderlijk open; gesloten rondes en oorspronkelijke voorwaarden behouden.",
+          "source": "eva2/evidence/product/p2-current-round-decision-20261007.json"
         },
         "ownerAction": {
           "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
@@ -4119,7 +4130,7 @@
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-07T07:23:56.298669+00:00"
+        "reviewedAt": "2026-10-07T07:42:22.272287+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -16590,7 +16601,7 @@
           ]
         }
       ],
-      "nextAction": "Leg de ontbrekende technische foutclass/code/status vast op de bestaande provider-/SDK-grens vóór de generieke API503. Behoud gesloten CM04 en onbekend SDKgebruik; geen replay of nieuwe Eva2-toelating voorbij de oorspronkelijke accountingguard. Twee echte CM02-beoordelingen blijven apart open.",
+      "nextAction": "R1.1 afgerond zonder adoptie; P2.1 is eerstvolgende vergelijking, nog niet gestart. Behoud vier huisgenootuitkomsten en geparkeerde spraak.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -19315,7 +19326,7 @@
           ],
           "outcome": "Uitvoerbare ervaring vergelijken",
           "effort": "M research",
-          "status": "in_progress",
+          "status": "completed",
           "specification": "eva2/design/blueprint-2026-09-28/delivery-plan.md",
           "baselineDecision": {
             "existingCapability": "Ordinary procedure reuse is the comparison baseline; task-model concept has prior art and no Eva implementation evidence.",
@@ -19328,41 +19339,75 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "dashboardComponent": "projects",
           "remainingTasks": [
             {
               "id": "R1.1",
               "title": "Ervaringsmodel begrensd vergelijken",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "onderzoek",
               "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik.",
               "owner": "Codex",
-              "latestEvidence": "eva2/evidence/product/r1-cumulative-resume-correction-20261007.json",
+              "latestEvidence": "eva2/evidence/product/r1-cumulative-comparison-result-20261007.json",
               "assignment": {
                 "owner": "/root",
-                "baseCommit": "d296090e136d7b459fe9590638fa213147f27544",
-                "stage": "independent_resume_admission",
+                "baseCommit": "66941c34e766ba3fb874787de1c41f791a630f12",
+                "stage": "completed_original_comparison_no_adoption",
                 "outcome": "Determine a distinct, bounded intervention for change-aware reuse before comparing it with the existing ordinary skill route.",
                 "existing": "JSON Patch learning and different-input reuse already work; copy execution and precondition checks are not a new task model. Full learning replay is not admitted by the existing experiment envelope.",
-                "gap": "De aangepaste driver moet de zeven resterende oorspronkelijke posities nog werkelijk uitvoeren en onafhankelijk laten beoordelen.",
+                "gap": "Geen resterende R1.1-uitvoering; afwijzings-/onzekerheidsuitkomst behouden.",
                 "files": [
                   "/root: compare_followup.py, gerichte neutrale tests, bestaand werkbord en Git-integratie.",
                   "/root/aide_final_evaluation: beschermde historische rapporten, brongebonden verbruiksbeoordeling en onafhankelijke toelating/eindbeoordeling; geen proefinhoud naar bouwer."
                 ],
-                "currentAction": "Driverbron positief onafhankelijk beoordeeld,36 gerichte controles. Brongebonden settlement verklaart laatste poging als lokaal vóór modelverzending; rawNULL behouden. Eenmalige hervatting van alleen zeven ongebruikte posities wordt voorbereid.",
+                "currentAction": "Afgerond: zeven ongebruikte posities eenmaal uitgevoerd en met oorspronkelijke scorer onafhankelijk beoordeeld. NO_ADOPTION; geen vervolgbouw/proef gestart.",
                 "finish": "Oorspronkelijke R1.1-eindvoorwaarde behouden; deze gereedheidscontrole voltooit die niet.",
                 "estimate": "Eén gerichte drivercorrectie en onafhankelijke beoordeling; maximaal zeven resterende oorspronkelijke posities binnen bestaande 1+8=9 toelating en 600.000/48.000-tokenenvelop. Onbekend verbruik wordt niet nul verondersteld; creditkosten onbekend.",
-                "activeWorkers": [
-                  "/root",
-                  "/root/aide_final_evaluation"
-                ],
+                "activeWorkers": [],
                 "actualUsage": {
-                  "newKnownInputTokens": 6267,
-                  "newKnownOutputTokens": 133,
-                  "newAttestedResponses": 4,
-                  "newUnattestedAttempts": 1,
-                  "creditCost": null
+                  "new": {
+                    "attempts": 84,
+                    "responses": 84,
+                    "inputTokens": 202092,
+                    "outputTokens": 3809,
+                    "totalTokens": 205901,
+                    "cachedInputTokens": 9600,
+                    "toolOperations": 74,
+                    "unknownModelUsage": 0,
+                    "byProfile": {
+                      "gpt-6-astra/medium": {
+                        "responses": 81,
+                        "inputTokens": 201921,
+                        "outputTokens": 3742
+                      },
+                      "gpt-6-sol/none": {
+                        "responses": 3,
+                        "inputTokens": 171,
+                        "outputTokens": 67
+                      }
+                    }
+                  },
+                  "priorIncluded": {
+                    "attemptRecords": 19,
+                    "responses": 18,
+                    "inputTokens": 36493,
+                    "outputTokens": 5190,
+                    "settledLocalFailures": 1
+                  },
+                  "cumulative": {
+                    "attemptRecords": 103,
+                    "responses": 102,
+                    "inputTokens": 238585,
+                    "outputTokens": 8999,
+                    "totalTokens": 247584,
+                    "sourceBoundLocalNoDispatchFailures": 1,
+                    "rawNullRecordCountPreserved": 1,
+                    "settledUnknownModelUsage": 0
+                  },
+                  "experimentSeconds": 331.712979,
+                  "creditCost": null,
+                  "developerAssistantCredits": null
                 },
                 "previousGoalTurn": {
                   "classification": "progress",
@@ -19385,23 +19430,46 @@
                   "localPreDispatchFailures": 1,
                   "derivedModelUseForLocalFailure": 0,
                   "creditCost": null
+                },
+                "resumeAdmissionSha256": "038cab325f451e2511f48f6d288745c8f94f64b50f10892e7a8a89b88e7b10a6",
+                "commandManifestSha256": "7fdf15336f45aeafacdbd7a77563676075b924dd05d6bb5b81aae9d82f6de538",
+                "liveComparisonProgress": {
+                  "newPositionsFinished": 7,
+                  "newPositionsPlanned": 7,
+                  "newSuccessfulTaskRuns": 0,
+                  "localResponseLimitFailures": 7,
+                  "newModelResponses": 84,
+                  "cumulativeAttemptRecords": 103,
+                  "cumulativeInputTokens": 238585,
+                  "cumulativeOutputTokens": 8999,
+                  "unknownNewUsage": false,
+                  "creditCost": null,
+                  "matchedPairsMeasured": 3
+                },
+                "retainedReportSha256": "fee62ef6d7f0359cf24d41e94c1916d7f39a02a3ffa0171103f5ece4b1fe0cfc",
+                "previousActualUsage": {
+                  "newKnownInputTokens": 6267,
+                  "newKnownOutputTokens": 133,
+                  "newAttestedResponses": 4,
+                  "newUnattestedAttempts": 1,
+                  "creditCost": null
                 }
               },
-              "remaining": "Oorspronkelijke R1.1-vergelijking en gemeten AIDE²/innovatievoordeel blijven open. Providercompatibiliteit bevestigd; geen nieuwe uitvoering of voltooiing.",
-              "checkedAt": "2026-10-07T07:23:56.298669+00:00",
+              "remaining": "Deze onderzoeksvergelijking is afgesloten met geen adoptie. Technische innovatie/AIDE²-verbetering en algemene voorsprong zijn hiermee niet bewezen; geen automatisch vervolgexperiment.",
+              "checkedAt": "2026-10-07T07:42:22.272287+00:00",
               "previousBlocker": "Vaste proef onvolledig: referentie bereikte12modelreacties vóór tweede deelresultaat. Kandidaat/B/herhalingen niet gemeten; eindvoorwaarde vergelijking niet gehaald. Deze ronde afgeslotenUNKNOWN zonder automatische vervolgproef.",
               "ownerActionRequired": false,
-              "nextAction": "Repareer cumulatieve accounting en hervatten op de bestaande positie; voer het toegelaten restant uit en behoud ook fouten en verliezen.",
+              "nextAction": "Behoud gewone werkwijzen en alle eerdere uitslagen. Geen kandidaat installeren of nieuwe variant starten; brede P2.1-vergelijking blijft afzonderlijk open.",
               "ownerInstructions": {
                 "availableNow": false,
                 "steps": [],
-                "expected": "Toestemming en herstart ontvangen; nu geen handeling van Jaap nodig.",
+                "expected": "Geen handeling nodig voor R1.1; vergelijking en oorspronkelijke beoordeling zijn afgerond.",
                 "blocksIndependentWork": false
               },
               "ownerAuthorizationEvidence": "eva2/evidence/product/owner-resume-20261006.json",
               "previousBlocker20261006": "Codex: vaste proef gestopt bij providerconfiguration-fout en onvolledig gemeten poging. Kandidaat/vergelijking niet uitgevoerd; geen handeling van Jaap nodig.",
-              "activeExecution": true,
-              "review": "eva2/reviews/r1-current-readiness-review-20261006.json"
+              "activeExecution": false,
+              "review": "eva2/reviews/r1-cumulative-comparison-result-review-20261007.json"
             },
             {
               "id": "R1.2",
@@ -19417,7 +19485,7 @@
           ],
           "owner": "/root",
           "reviewer": "/root/aide_final_evaluation",
-          "disposition": "Optional frozen round closed inconclusive; R1.1 comparison unmet and technical distinction open.",
+          "disposition": "Original bounded comparison completed including learning cost; NO_ADOPTION. Candidate effectiveness and AIDE² advantage unproven; no automatic next variant.",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "technische innovatie",
@@ -21389,7 +21457,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "P2",
+      "activeSliceId": null,
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
