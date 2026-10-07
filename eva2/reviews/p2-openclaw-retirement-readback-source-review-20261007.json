@@ -1,0 +1,131 @@
+{
+  "schema": "EvaIndependentOpenClawRetirementReadbackSourceReview/v1",
+  "at": "2026-10-07T14:50:38.609970+00:00",
+  "decision": "GO_SOURCE_AND_ONE_CHANGED_CAUSE_PUBLIC_DIAGNOSTIC",
+  "sourceSha256": "8b54c170fefbbde7126c9934faed32ea86af3303479d4663765e545b2c8b56aa",
+  "testSha256": "129da94ff263dca7dcf8770b1e920fe239d6af4e0599335d00b827b7cd5a1ccc",
+  "bindings": {
+    "retirement-focused.public.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/retirement-focused.public.json",
+      "sha256": "458ac6d499e4dab8f0595b5419ee0981b2358dc861e70d3ee2e5ec693f3b63fd",
+      "logPath": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/retirement-focused.public.txt",
+      "logSha256": "85cc695150db948c1e07e12a54a9d4c4c7309cc8902074faf4327ce2c06e54d7"
+    },
+    "owned-relay-isolated.public.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/owned-relay-isolated.public.json",
+      "sha256": "ea0590f8a3312bb44ca9c9f8c58afce3a68dedf86324b4c92164b4287e1fa881",
+      "logPath": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/owned-relay-isolated.public.txt",
+      "logSha256": "fa56c11d0ecc42b1f815c48bd2b86c4683a6b0e08c9bf749a82aa83264e489bf"
+    }
+  },
+  "nativeModules": {
+    "client-Cs08OXVQ.mjs": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/client-Cs08OXVQ.mjs",
+      "sha256": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da"
+    },
+    "shared-client-DA4VR4Eb.mjs": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/shared-client-DA4VR4Eb.mjs",
+      "sha256": "079bf068c24205f3ff6dd359f5edde2a14359bcef80608f32e68706ff47a334d"
+    },
+    "run-attempt-BHu11r7h.mjs": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/run-attempt-BHu11r7h.mjs",
+      "sha256": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376"
+    }
+  },
+  "priorRuntimeReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-calendar-continuation-runtime-review-20261007.json",
+    "sha256": "3c04f2eb19fb8d76e99822c08d6fb3d442d07ef845a14f17485ecb00c20d4279"
+  },
+  "reviewedDelta": {
+    "exactPinnedRetirementAnchor": true,
+    "readbackAwaitedBeforeOrdinaryClearAndSynchronousClose": true,
+    "readbackErrorCaughtSoOrdinaryRetirementAndCloseStillAttempted": true,
+    "readbackErrorPropagatedAfterOrdinaryClose": true,
+    "readbackUsesExistingThreadAndBackgroundTerminalApis": true,
+    "pendingRequestAndActiveBackgroundRefusalsPreserved": true,
+    "rawThreadReadbackOnlyPrivate": true,
+    "durablePublicShapeContainsHashedThreadIdsAndPrivateArtifactReferencesOnly": true,
+    "exitUsesExistingNativeCallbackAndActualSameClientTransportExitedFlag": true,
+    "nativeClientSetsTransportExitedBeforeLaterExitHandler": true,
+    "missingOrMismatchedExitCannotProvePhysicalExit": true,
+    "physicalExitSeparateFromNativeCleanupVerdict": true,
+    "nativeExecutionObservedUnchanged": true,
+    "nativeSettlementAndNativeClosedPredicatesUnchanged": true,
+    "oneShotPolicyAuthorityProfileAndClockUnchanged": true,
+    "providerToolCapsAndStopChecksUnchanged": true,
+    "nativeFrameworkFilesUnchanged": true
+  },
+  "sourceAnchors": {
+    "registrationAndExit": "p1_openclaw_parent_accounting.mjs:177-186",
+    "readbackRetention": "p1_openclaw_parent_accounting.mjs:454-475",
+    "unchangedSettlementGate": "p1_openclaw_parent_accounting.mjs:477-490",
+    "separatePhysicalFacts": "p1_openclaw_parent_accounting.mjs:500-515",
+    "pinnedAwaitedRetirementOverlay": "p1_openclaw_parent_accounting.mjs:684-704",
+    "nativeExitFlagOrdering": "client-Cs08OXVQ.mjs:3727-3731",
+    "nativeExitApiAndUncertainty": "client-Cs08OXVQ.mjs:3984-4006",
+    "nativeSynchronousRetirement": "shared-client-DA4VR4Eb.mjs:3179-3208",
+    "nativeOrdinaryCleanup": "run-attempt-BHu11r7h.mjs:5622-5639"
+  },
+  "reusedVerification": {
+    "combinedRun": {
+      "exitCode": 1,
+      "pass": 3,
+      "fail": 1,
+      "skip": 0,
+      "elapsedSeconds": 4.321019132999936,
+      "passed": [
+        "Readback before close and physical exit without cleanup relabeling",
+        "Pending/background/missing-exit/mismatched-exit negatives",
+        "Actual pinned native proxy/client HTTP and websocket overlay"
+      ],
+      "failed": "Owned relay planning assertion after earlier same-process proxy import"
+    },
+    "isolatedOwnedRelayRun": {
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "skip": 0,
+      "elapsedSeconds": 2.886840890001622,
+      "sameSourceAndAssertions": true
+    },
+    "cacheQualification": "The earlier proxy check imports the native relay without observeTools; subsequent installation cannot reinstrument an already cached ESM module. The fresh-process relay result is retained separately. This does not claim the combined suite passed.",
+    "actorLaunches": 0,
+    "providerAttempts": 0,
+    "newRetirementAnchorRuntimeCoverage": "Source reviewed; focused lifecycle tests use a synthetic client. The new ordinary actor path has not yet executed."
+  },
+  "limitations": [
+    "An observed app-server transport exit is not proof that all native child/background work or source-authority holds are settled.",
+    "The native cleanup uncertain result is preserved and still blocks nativeSettlement; this overlay is diagnostic, not an original-sample admission fix.",
+    "The added await covers the proved shared one-shot retirement path; no broader lifecycle or isolated-client equivalence claim is made.",
+    "Evidence I/O can fail closed and make readback unavailable; missing evidence cannot become a pass."
+  ],
+  "permittedPublicDiagnostic": {
+    "maximumRuns": 1,
+    "freshNodeProcess": true,
+    "onlyOrdinaryCompositionSelected": true,
+    "publicSyntheticOnly": true,
+    "turns": 3,
+    "sessions": 2,
+    "calendarAdvances": 1,
+    "toolCap": 16,
+    "cumulativeControllerSeconds": 120,
+    "noExternalInference": true,
+    "noOriginalInputsOrAuthority": true,
+    "sameNativeProfileAndMockTransport": true,
+    "changedCause": "Move durable readback before the proved native synchronous retirement and separately observe physical transport exit."
+  },
+  "originalSampleAdmission": "NO_GO",
+  "nativePhysicalClosure": "UNKNOWN",
+  "fullThreeTurnComposition": "NOT_ESTABLISHED",
+  "productCompletionClaim": false,
+  "findings": [],
+  "reviewerActions": {
+    "testsRun": 0,
+    "actorLaunches": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "originalDataReads": 0,
+    "sourceChanges": 0,
+    "writes": "Only this review file"
+  }
+}

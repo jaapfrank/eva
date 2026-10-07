@@ -1,0 +1,142 @@
+{
+  "contract": "EvaComparisonRetirementReadbackCorrection/v1",
+  "taskId": "P2.1",
+  "checkedAt": "2026-10-07T14:57:13.198337+00:00",
+  "decision": "PRE_CLOSE_READBACK_AND_PHYSICAL_EXIT_CONFIRMED_FULL_COMPOSITION_NOT_ADMITTED",
+  "sourceSha256": "8b54c170fefbbde7126c9934faed32ea86af3303479d4663765e545b2c8b56aa",
+  "testSha256": "129da94ff263dca7dcf8770b1e920fe239d6af4e0599335d00b827b7cd5a1ccc",
+  "integrationBase": "f618e256450ea13298ef4a905641dc623cd02444",
+  "provenCause": "Native retirement calls client.close before closeAndWait; the old closeAndWait-only observer skipped already closed clients and lost the ordinary readback.",
+  "change": {
+    "retirement": "Await existing readNativeClient at exact pinned retirement anchor; capture errors and still perform ordinary native close before rethrowing.",
+    "physicalExit": "Use existing pinned client.addTransportExitHandler and exact client.transportExited flag; record content-free independent receipt.",
+    "preserved": [
+      "native cleanup uncertain",
+      "nativeSettlement full closure gate",
+      "original criteria/input/budget",
+      "native framework bytes",
+      "current production images"
+    ]
+  },
+  "focusedVerification": {
+    "newLifecycleAndNegativeTests": 2,
+    "existingProxyImportCheck": 1,
+    "combinedRunExitCode": 1,
+    "combinedRunPasses": 3,
+    "combinedOwnedRelayCacheFailureRetained": true,
+    "isolatedOwnedRelayPass": true,
+    "changedCauseForIsolatedCheck": "The prior actual proxy test imported the relay without observation; ESM cache prevents later instrumentation in the same process. Fresh process changed only import lifetime, no assertions/policy.",
+    "actorLaunches": 0,
+    "providerAttempts": 0
+  },
+  "ordinaryPublicConfirmation": {
+    "fixtureRoot": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq",
+    "elapsedSeconds": 83.12653976700676,
+    "timedOut": false,
+    "exitCode": 1,
+    "cliReturns": 1,
+    "nativeTools": 16,
+    "postChecks": 16,
+    "coverageFailure": null,
+    "sdkAttempts": 2,
+    "sdkCompleted": 2,
+    "syntheticSdkUsage": {
+      "inputTokens": 34,
+      "outputTokens": 6,
+      "totalTokens": 40
+    },
+    "preCloseReadback": {
+      "retained": true,
+      "clientClosedAtReadback": false,
+      "threadStatus": "idle",
+      "turnStatuses": [
+        "completed"
+      ],
+      "activeTurns": 0,
+      "backgroundTerminals": 0,
+      "itemTypes": {
+        "userMessage": 1,
+        "commandExecution": 16,
+        "agentMessage": 1
+      },
+      "privateReceipt": {
+        "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/contexts/138-native-thread-readback.json",
+        "sha256": "d61c0d48e80ed0629d7f7a47a945cc710b5fee4581e822bd21f57758ec4d377b"
+      }
+    },
+    "physicalExit": {
+      "observed": true,
+      "matchedClient": true,
+      "matchesReadbackThread": true,
+      "allObservedTransportsExited": true
+    },
+    "pendingSdk": 0,
+    "pendingTools": 0,
+    "nativeClosedAccordingToNativeCleanup": false,
+    "verifiedWholeFixtureTurns": 0,
+    "plannedTurns": 3,
+    "plannedSessions": [
+      0,
+      0,
+      1
+    ],
+    "plannedClockGenerations": [
+      0,
+      0,
+      1
+    ],
+    "cap17CheckReached": false,
+    "namespacePidsAtTestExit": []
+  },
+  "remaining": {
+    "nativeFullCleanup": "Not established; native cleanup uncertain is intact. Matched app-server exit and empty terminal list do not alone prove source-authority release/all spawned work.",
+    "threeTurns": "Not reached under unchanged nativeSettlement guard",
+    "originalUnusedSlot": "NOT_STARTED_NO_GO",
+    "nextAction": "Identify existing source/process authority proof sufficient for actual full termination and equivalent original conditions before advancing the fixed loop. No native flag reset, no unchanged fixture replay."
+  },
+  "preservation": {
+    "originalInputs": 0,
+    "originalAuthorityReads": 0,
+    "originalAuthorityWrites": 0,
+    "externalInferenceCalls": 0,
+    "sixEnumeratedOperatorArtifactsUnchanged": true,
+    "authCopiedOrModified": false,
+    "productionInstallOrRollback": false,
+    "newProductCompletion": false
+  },
+  "cost": {
+    "publicUsageSynthetic": true,
+    "newRuntimeProviderAttempts": 0,
+    "developmentCredits": "UNKNOWN"
+  },
+  "receipts": {
+    "sourceReview": {
+      "path": "eva2/reviews/p2-openclaw-retirement-readback-source-review-20261007.json",
+      "sha256": "3deb73054d584e5144c5920d10aafee52eca00a0ad6d3aa04af4df8480f98b30"
+    },
+    "focused": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/retirement-focused.public.json",
+      "sha256": "458ac6d499e4dab8f0595b5419ee0981b2358dc861e70d3ee2e5ec693f3b63fd"
+    },
+    "isolatedRelay": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/owned-relay-isolated.public.json",
+      "sha256": "ea0590f8a3312bb44ca9c9f8c58afce3a68dedf86324b4c92164b4287e1fa881"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/ordinary-execution.public.json",
+      "sha256": "c2927cc6f5591d7407238799d1523fbded172c8e812a75f3f50362f75efd755a"
+    },
+    "technical": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/composition-technical.private.json",
+      "sha256": "017fda1a8598293abe9487a05fabbfa76bcd8a219e4cef5fdf868f85adeff4dc"
+    },
+    "preCloseObservation": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/contexts/139-native-observation.json",
+      "sha256": "dc41a22b6833fdfda9ee750d4fd4f42e7a737c6215d05f2d23ee4ad930dfa8fd"
+    },
+    "physicalExitObservation": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/contexts/140-native-observation.json",
+      "sha256": "7b5d2c8e052f200273b631a86069965a27755c5a8e2125b8bdb7b3c3f2d9fe66"
+    }
+  }
+}

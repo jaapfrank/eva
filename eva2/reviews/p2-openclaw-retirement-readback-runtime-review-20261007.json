@@ -1,0 +1,168 @@
+{
+  "contract": "OpenClawRetirementReadbackRuntimeReview/v1",
+  "task": "P2.1",
+  "reviewer": "/root/aide_final_evaluation",
+  "checked_at_utc": "2026-10-07T15:01:46.180985+00:00",
+  "decision": "GO_BOUNDED_SOURCE_AND_RUNTIME_CHECKPOINT_PUBLICATION",
+  "original_sample_admission": "NO_GO",
+  "new_runtime_authorized": false,
+  "findings": [],
+  "bindings": {
+    "report": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-retirement-readback-correction-20261007.json",
+      "sha256": "fad006add6671e5eefa70b9a0bac8fb6f2dca479ef44ff8662ea583473dc5461"
+    },
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "8b54c170fefbbde7126c9934faed32ea86af3303479d4663765e545b2c8b56aa"
+    },
+    "test": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "129da94ff263dca7dcf8770b1e920fe239d6af4e0599335d00b827b7cd5a1ccc"
+    },
+    "source_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-retirement-readback-source-review-20261007.json",
+      "sha256": "3deb73054d584e5144c5920d10aafee52eca00a0ad6d3aa04af4df8480f98b30"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/ordinary-execution.public.json",
+      "sha256": "c2927cc6f5591d7407238799d1523fbded172c8e812a75f3f50362f75efd755a"
+    },
+    "technical": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/composition-technical.private.json",
+      "sha256": "017fda1a8598293abe9487a05fabbfa76bcd8a219e4cef5fdf868f85adeff4dc"
+    },
+    "readback": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/contexts/138-native-thread-readback.json",
+      "sha256": "d61c0d48e80ed0629d7f7a47a945cc710b5fee4581e822bd21f57758ec4d377b"
+    },
+    "pre_retirement": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/contexts/139-native-observation.json",
+      "sha256": "dc41a22b6833fdfda9ee750d4fd4f42e7a737c6215d05f2d23ee4ad930dfa8fd"
+    },
+    "physical_exit": {
+      "path": "/tmp/eva-p2-openclaw-retirement-readback-20261007-5zbtyjyq/contexts/140-native-observation.json",
+      "sha256": "7b5d2c8e052f200273b631a86069965a27755c5a8e2125b8bdb7b3c3f2d9fe66"
+    },
+    "original_admission_contract": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-native-admission-contract-review-20261006.json",
+      "sha256": "5ddad1db2d7d84ef1dab5398ac974677cfd527e5ae0fab06a1f18b5b7c8598d1"
+    }
+  },
+  "retained_observations": {
+    "exit_code": 1,
+    "controller_timeout": false,
+    "elapsed_seconds": 83.12653976700676,
+    "ordinary_cli_returns": 1,
+    "pre_close_readback_observed": true,
+    "native_thread_status": "idle",
+    "native_completed_turns_in_readback": 1,
+    "native_readback_item_counts": {
+      "userMessage": 1,
+      "commandExecution": 16,
+      "agentMessage": 1
+    },
+    "active_turns": 0,
+    "background_terminals": 0,
+    "tool_terminals": 16,
+    "tool_post_settlements": 16,
+    "tool_coverage_failure": null,
+    "sdk_rows_completed": 2,
+    "synthetic_input_tokens": 34,
+    "synthetic_output_tokens": 6,
+    "matched_client_physical_exit": true,
+    "all_observed_client_transports_exited": true,
+    "native_closed": false,
+    "native_cleanup": "uncertain",
+    "pending_sdk": 0,
+    "pending_tools": 0,
+    "native_cancel_errors": [],
+    "actual_unregister_queues_flushed": true,
+    "namespace_pids_at_test_exit": [],
+    "completed_whole_fixture_turns": 0,
+    "planned_fixture_turns": 3,
+    "tool_17_cap_assertion_reached": false,
+    "calendar_generations_observed": [
+      0
+    ]
+  },
+  "interpretation": [
+    "The retained native thread readback proves one completed turn. The zero verified/completed fixture counter is the unchanged nativeSettlement rejection and does not mean the new readback was absent.",
+    "The exact client exited after the pre-retirement readback. That separately proves transport termination, while native cleanup remains uncertain.",
+    "No successful three-turn/two-session/clock-advance composition, cap-17 check, or complete native process/source-lifetime closure is claimed.",
+    "The 34/6 token counts belong to two synthetic mock responses; they are not paid inference usage or a cost estimate."
+  ],
+  "original_requirement_vs_guard": {
+    "protocol_path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+    "protocol_sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "protocol_anchors": [
+      {
+        "lines": [
+          70,
+          81
+        ],
+        "meaning": "Same native resources and bounded work including helpers; adapter failures or incomparable boundaries remain unknown."
+      },
+      {
+        "lines": [
+          83,
+          91
+        ],
+        "meaning": "All semantic conditions are required; missing usage remains unknown."
+      }
+    ],
+    "literal_cleanup_closed_is_original_requirement": false,
+    "current_adapter_guard": "p1_openclaw_parent_accounting.mjs:483-485 requires retained readback plus cleanup=closed for an already closed client; closeNative:510 uses the same native field.",
+    "native_source_reason": "client-Cs08OXVQ.mjs:4000-4006 conservatively returns cleanup=uncertain after nativeExecutionObserved, even when the transport has physically exited.",
+    "guard_changed_in_this_review": false,
+    "equivalent_actual_termination_evidence_may_be_assessed_separately": true
+  },
+  "smallest_remaining_binding": {
+    "required_fact": "Bind actual client/turn ownership to complete native command/subprocess and source-hold settlement before allowing a following turn or accepting final sample closure.",
+    "available_native_seam": {
+      "factory": "run-attempt-BHu11r7h.mjs:5909 requires sandbox.enabled, a sandbox backend and hostCapabilities.retainSourceAuthority.",
+      "authority": "dynamic-tools-BDXl-8Cw.mjs:1241-1254 binds client/thread/turn; 1256-1277 retains/releases admission and only releases source after zero holds and commands; 1279-1299 cancels/terminates owned processes.",
+      "profile_limit": "The retained fixture config has no configured sandbox. This review does not establish that the native authority factory is active and does not authorize enabling a different sandbox/profile to obtain a passing result.",
+      "identity_helpers": "shared-client-DA4VR4Eb.mjs:2463-2471 exposes successful spawn/runtime identity; 3077-3087 captures managed local-process lifetime. Neither helper alone proves process-tree settlement."
+    },
+    "existing_evaluator_scope_alternative": "The existing controller already enumerates its owned network namespace after test exit. A separate, exact client/turn-bound per-retirement scope receipt could be assessed if the existing scope is first shown to contain all native descendants without escape and the native workload members are absent while new admissions remain closed. Current after-test emptiness alone does not supply that proof.",
+    "controller_path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-retirement-readback-20261007/run-public-composition.private.py",
+    "controller_sha256": "aed3e386389930f1a02ffe6b1a0b34e39c43e500cd16eb51b2f264bc26204918",
+    "controller_anchors": "23: owned Node process; 34-42: namespace census only after the test process terminates.",
+    "native_cleanup_flag_must_remain_unchanged": true,
+    "next_scope": "Choose one existing ownership/termination carrier and review that concrete technical binding; do not repeat the unchanged fixture or release original inputs."
+  },
+  "native_source_bindings": {
+    "client-Cs08OXVQ.mjs": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/client-Cs08OXVQ.mjs",
+      "sha256": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da"
+    },
+    "shared-client-DA4VR4Eb.mjs": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/shared-client-DA4VR4Eb.mjs",
+      "sha256": "079bf068c24205f3ff6dd359f5edde2a14359bcef80608f32e68706ff47a334d"
+    },
+    "run-attempt-BHu11r7h.mjs": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/run-attempt-BHu11r7h.mjs",
+      "sha256": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376"
+    },
+    "dynamic-tools-BDXl-8Cw.mjs": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/dynamic-tools-BDXl-8Cw.mjs",
+      "sha256": "0f01116c4505f4e8e6c0958f23d998402f9ae79cf8f65b2684a74f221fe38e4a"
+    }
+  },
+  "verification_and_preservation": {
+    "method": "Read-only retained receipt/hash, content-free thread/observer metadata and narrowly relevant source inspection; no reviewer runtime or tests.",
+    "source_focused_evidence_reused": true,
+    "combined_cache_failure_and_isolated_pass_preserved": true,
+    "model_context_capture_hashes_verified": 2,
+    "operator_byte_equality_scope": "Only the six enumerated files in the execution receipt; not all operator state.",
+    "original_inputs": 0,
+    "external_inference_calls": 0,
+    "reviewer_tests": 0,
+    "original_authority_untouched": true,
+    "original_criteria_unchanged": true,
+    "human_quality": null,
+    "monetary_cost": null,
+    "task_completion_or_runtime_release_claimed": false
+  }
+}

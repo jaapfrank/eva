@@ -144,7 +144,7 @@ export class OpenClawAccounting {
     this.privateModelContextDir = privateModelContextDir; this.observeTools = observeTools;
     this.tools = new Map(); this.clients = new Map(); this.nativeReadbacks = [];
     this.nativeModuleBindings = new Map(); this.nativeQueues = new Map();
-    this.toolCoverage = true; this.nativeCoverageFailure = null; this.nativeObservationReceipts = []; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map();
+    this.toolCoverage = true; this.nativeCoverageFailure = null; this.nativeObservationReceipts = []; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map(); this.nativeTransportExits = new Map();
     this.stop = () => { for (const cancel of this.active) cancel(); };
     ledger.stopHandlers?.add(this.stop);
   }
@@ -175,7 +175,16 @@ export class OpenClawAccounting {
     } finally { calendar.restore(); }
   }
   turnParams(method, params, client) {
-    if (this.observeTools && client && !this.clients.has(client)) this.clients.set(client, new Set());
+    if (this.observeTools && client && !this.clients.has(client)) {
+      this.clients.set(client, new Set());
+      if (typeof client.addTransportExitHandler === 'function') client.addTransportExitHandler(exited => {
+        const matched = exited === client && client.transportExited === true;
+        this.nativeTransportExits.set(client, {matched_client:matched,transport_exited:matched,monotonic:this.now()});
+        this.recordNativeObservation('native_transport_exit',{matched_client:matched,transport_exited:matched,
+          native_thread_ids_sha256:[...this.clients.get(client)].map(digest)});
+        if (!matched) this.ledger.stop('native physical exit identity differs');
+      });
+    }
     if (this.observeTools && client && method === 'turn/start' && typeof params?.threadId === 'string') this.clients.get(client).add(params.threadId);
     if (method !== 'turn/start') return params;
     this.check();
@@ -460,7 +469,10 @@ export class OpenClawAccounting {
   async beforeNativeClose(client) {
     if (!this.observeTools || !this.clients.has(client) || client.closed) return;
     if (!await this.settled()) throw new Error('native work remains unsettled at close');
-    this.nativeCloseReads.set(client, await this.readNativeClient(client));
+    const reads = await this.readNativeClient(client);
+    this.nativeCloseReads.set(client, reads);
+    this.recordNativeObservation('native_pre_retirement_readback',{client_closed:false,
+      readbacks:reads.map(({thread_id,...row})=>({...row,thread_id_sha256:digest(thread_id)}))});
   }
   async nativeSettlement() {
     this.check();
@@ -497,6 +509,8 @@ export class OpenClawAccounting {
     try { queues = await this.flushNativeQueues(); } catch(error) { errors.push(nativeFailure(error)); }
     return { clients: results.length, transport_results: results, cancel_errors: errors, native_closed: results.length > 0 && errors.length === 0 && results.every(result => result?.cleanup === 'closed'), pending_sdk: this.calls.filter(r=>['pending','settling'].includes(r.status)).length,
       pending_tools: [...this.tools.values()].filter(r=>['reserved','running'].includes(r.status)).length,
+      physical_transports_exited:results.length > 0 && [...this.clients.keys()].every(client=>this.nativeTransportExits.get(client)?.transport_exited === true),
+      physical_transport_exit_receipts:[...this.clients.keys()].map(client=>this.nativeTransportExits.get(client) ?? null),
       native_unregister_queues: queues, native_module_bindings: [...this.nativeModuleBindings.values()],
       tool_coverage: this.toolCoverage, native_dispatched_tools: [...this.tools.values()].filter(r=>r.dispatched).length };
   }
@@ -684,6 +698,10 @@ export function installOpenClawAccounting(accounting, pluginRoot, pins, { hostRo
       source = replaceOnce(source, 'let additionalContext = buildCodexTemporalAdditionalContext(params, { sessionStatusAvailable: options.sessionStatusAvailable === true });',
         'let additionalContext = __evaAccounting.temporalContext(() => buildCodexTemporalAdditionalContext(params, { sessionStatusAvailable: options.sessionStatusAvailable === true }));');
     } else if (dynamicModule) {
+      source = replaceOnce(source, 'const retired = clearSharedCodexAppServerClientIfCurrentAndUnclaimed(state.client);',
+        'let __evaRetirementReadbackError; try { await __evaAccounting.beforeNativeClose(state.client); } catch(error) { __evaRetirementReadbackError = error; }\n\t\tconst retired = clearSharedCodexAppServerClientIfCurrentAndUnclaimed(state.client);');
+      source = replaceOnce(source, 'if (params.oneShotCliRun && result?.cleanup !== "closed") throw new Error("Codex one-shot client cleanup could not be confirmed");',
+        'if (__evaRetirementReadbackError) throw __evaRetirementReadbackError;\n\t\tif (params.oneShotCliRun && result?.cleanup !== "closed") throw new Error("Codex one-shot client cleanup could not be confirmed");');
       // The same ordinary registration and trusted native config share this event list.
       // Observation adds no tool authority and leaves disabled/restricted native policy intact.
       source = replaceOnce(source,

@@ -351,6 +351,56 @@ const mockNativeProxy = (wsSDK, observer) => registerHooks({load(url,context,nex
   return {...result,source};
 }});
 const plugin=process.env.OPENCLAW_PINNED_PLUGIN;
+
+await test('pre-retirement native readback survives close; physical exit never relabels uncertain cleanup',async()=>{
+  const directory=mkdtempSync(tmpdir()+'/openclaw-retirement-');chmodSync(directory,0o700);
+  const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,privateModelContextDir:directory,observeTools:true});
+  let exitHandler;const order=[];
+  const client={closed:false,transportExited:false,serverRequests:{active:new Set()},pending:new Map(),
+    addTransportExitHandler(handler){exitHandler=handler;},
+    async request(method){order.push(method);assert.equal(this.closed,false);
+      return method==='thread/read'?{thread:{id:'public-thread',status:{type:'idle'},turns:[{status:'completed'}]}}:{data:[]};},
+    async closeAndWait(){order.push('close');this.closed=true;this.transportExited=true;exitHandler(this);return {cleanup:'uncertain'};}
+  };
+  try{
+    o.turnParams('turn/start',{threadId:'public-thread'},client);
+    o.nativeQueues.set('public-module',{packageRoot:'public-package',queue:{async flush(){}}});
+    await o.beforeNativeClose(client);const nativeResult=await client.closeAndWait();o.nativeClosed.set(client,nativeResult);
+    assert.deepEqual(order,['thread/read','thread/backgroundTerminals/list','close']);
+    const retained=o.nativeCloseReads.get(client);assert.equal(retained.length,1);assert.equal(retained[0].active_turns,0);
+    assert.equal(JSON.parse(readFileSync(retained[0].private_native_thread.path)).thread.turns[0].status,'completed');
+    await assert.rejects(o.nativeSettlement(),/native close\/readback was not confirmed/);
+    const closure=await o.closeNative();assert.equal(closure.native_closed,false);assert.equal(closure.physical_transports_exited,true);
+    assert.equal(closure.transport_results[0].cleanup,'uncertain');assert.equal(closure.pending_sdk,0);assert.equal(closure.pending_tools,0);
+    const phases=o.nativeObservationReceipts.map(r=>JSON.parse(readFileSync(r.path)));
+    assert.deepEqual(phases.map(r=>r.phase),['native_pre_retirement_readback','native_transport_exit']);
+    assert.equal(phases[0].client_closed,false);assert.equal(phases[1].matched_client,true);
+    assert.equal(ledger.rows.length,0);
+  }finally{rmSync(directory,{recursive:true,force:true});}
+});
+await test('retirement observation refuses pending/background work and requires the actual matching exit event',async()=>{
+  for(const reason of ['pending','background','closed-without-exit','mismatched-exit']){
+    const directory=mkdtempSync(tmpdir()+'/openclaw-retirement-negative-');chmodSync(directory,0o700);
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,privateModelContextDir:directory,observeTools:true});
+    let handler;const client={closed:false,transportExited:false,serverRequests:{active:new Set()},pending:new Map(),
+      addTransportExitHandler(h){handler=h;},async request(method){return method==='thread/read'
+        ?{thread:{id:'public-thread',status:{type:'idle'},turns:[{status:'completed'}]}}
+        :{data:reason==='background'?[{id:'public-active-terminal'}]:[]};}};
+    try{
+      o.turnParams('turn/start',{threadId:'public-thread'},client);
+      o.nativeQueues.set('public-module',{packageRoot:'public-package',queue:{async flush(){}}});
+      if(reason==='pending')client.pending.set('public-unresolved',{});
+      if(['pending','background'].includes(reason)){
+        await assert.rejects(o.beforeNativeClose(client));assert.equal(o.nativeCloseReads.has(client),false);
+      }else await o.beforeNativeClose(client);
+      client.closed=true;o.nativeClosed.set(client,{cleanup:'uncertain'});
+      if(reason==='mismatched-exit'){client.transportExited=true;handler({transportExited:true});}
+      const closure=await o.closeNative();assert.equal(closure.native_closed,false);assert.equal(closure.physical_transports_exited,false);
+      assert.equal(closure.transport_results[0].cleanup,'uncertain');assert.equal(ledger.rows.length,0);
+    }finally{rmSync(directory,{recursive:true,force:true});}
+  }
+});
+
 await test('actual installed proxy and native client load exact overlay; public fake HTTP and WS pass that ordinary boundary', {skip:!plugin}, async()=>{
   const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,Number(process.hrtime.bigint())/1e9+15);
   let physical=0;let actualWire;
@@ -584,7 +634,7 @@ await test('public ordinary actor composition binds native calendar, model bodie
     close=await o.closeNative(plugin);assert.equal(close.native_closed,true);assert.equal(close.pending_sdk,0);assert.equal(close.pending_tools,0);
   } finally {
     close=await o.closeNative(plugin);hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;
-    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',completedNativeTurns,physicalFakeCalls:physical,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
+    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',completedNativeTurns,physicalFakeCalls:physical,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
   }
   });
 });

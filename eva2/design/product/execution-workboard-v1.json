@@ -20278,7 +20278,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Eerste antwoord/16tools/SDK-accounting bevestigd. Onze teruglezing komt na native client.close(); verplaats die vóór gewone retirement en bewijs fysieke exit/bronbeëindiging apart. Native cleanup uncertain blijft intact; geen oorspronkelijke sample of ongewijzigde herhaling.",
+              "nextAction": "Echte afgeronde native beurt vóór sluiting teruggelezen; matchende procesexit bevestigd. Nog ontbreekt bewijs voor beëindiging van bron-/overig gestart werk. Bestaande source-authority/procescontrole aansluiten vóór verdere vaste beurten; geen reset van native uncertain of oorspronkelijke sample.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20291,9 +20291,9 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T14:41:56.455923+00:00",
+              "checkedAt": "2026-10-07T14:57:13.198337+00:00",
               "assignment": {
-                "baseCommit": "e888ba64fd5cfc8b280f688deccea711fde109c6",
+                "baseCommit": "f618e256450ea13298ef4a905641dc623cd02444",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root"
@@ -20307,13 +20307,13 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte bestaande publieke fixture zonder externe modelcalls; pas na onafhankelijke toelating het ongebruikte oorspronkelijke OpenClaw-CM01-slot. Creditkosten onbekend.",
-                "currentAction": "Eerste antwoord/16tools/SDK-accounting bevestigd. Onze teruglezing komt na native client.close(); verplaats die vóór gewone retirement en bewijs fysieke exit/bronbeëindiging apart. Native cleanup uncertain blijft intact; geen oorspronkelijke sample of ongewijzigde herhaling.",
+                "currentAction": "Echte afgeronde native beurt vóór sluiting teruggelezen; matchende procesexit bevestigd. Nog ontbreekt bewijs voor beëindiging van bron-/overig gestart werk. Bestaande source-authority/procescontrole aansluiten vóór verdere vaste beurten; geen reset van native uncertain of oorspronkelijke sample.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "sourceCommit": "source_checkpoint_pending",
-                  "meaning": "Hidden calendar-preparation defect proved and corrected; exact retained failures and8 focused calendar/accounting checks passed; actual public native loop returns first answer with16 settled tools and2 synthetic settled SDK rows. No original sample; next defect is readback after native retirement plus separate physical/source cleanup."
+                  "sourceCommit": "f618e256450ea13298ef4a905641dc623cd02444",
+                  "meaning": "Actual calendar correction proved and pushed; private package/status refreshed. Native first reply/16tools/2synthetic SDK rows complete; full original sample not admitted. Confirmed source retirement closes before evaluator readback."
                 },
-                "stage": "openclaw_calendar_confirmed_retirement_readback_gap",
+                "stage": "openclaw_native_readback_exit_confirmed_source_authority_gap",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -21309,6 +21309,34 @@
                   "runtimeReview": "eva2/reviews/p2-openclaw-calendar-continuation-runtime-review-20261007.json",
                   "runtimeReviewSha256": "3c04f2eb19fb8d76e99822c08d6fb3d442d07ef845a14f17485ecb00c20d4279",
                   "sourceCheckpointApproved": true
+                },
+                "retirementReadbackDesign": {
+                  "existing": "Native request and background-terminal readback plus exact close wrapper exist; actual client provides addTransportExitHandler/transportExited.",
+                  "gap": "Shared-client retirement calls client.close before closeAndWait observer; no readback survives.",
+                  "change": "Await readback at exact pinned native retirement anchor; always execute native close even if readback fails. Observe exact physical transport exit separately.",
+                  "preserve": "Do not relabel cleanup uncertain, change semantic criteria, switch framework/provider, reset original trials or install runtime images.",
+                  "finish": "Actual fresh public loop retains a genuine pre-close native readback and matching physical-exit receipt; original sample remains NO_GO without required full closure.",
+                  "sourceSha256": "8b54c170fefbbde7126c9934faed32ea86af3303479d4663765e545b2c8b56aa",
+                  "testSha256": "129da94ff263dca7dcf8770b1e920fe239d6af4e0599335d00b827b7cd5a1ccc",
+                  "focusedChecksPassed": 3,
+                  "isolatedRelayCheckPassed": true,
+                  "combinedRelayCacheFailureRetained": true,
+                  "providerAttempts": 0,
+                  "actorLaunches": 0,
+                  "publicFixtureNotStarted": false,
+                  "sourceReview": "eva2/reviews/p2-openclaw-retirement-readback-source-review-20261007.json",
+                  "sourceReviewSha256": "3deb73054d584e5144c5920d10aafee52eca00a0ad6d3aa04af4df8480f98b30",
+                  "publicFixtureStarted": true,
+                  "evidence": "eva2/evidence/product/p2-openclaw-retirement-readback-correction-20261007.json",
+                  "publicFixtureTerminal": true,
+                  "actualPreCloseReadback": true,
+                  "actualPhysicalExit": true,
+                  "nativeCleanupUncertainPreserved": true,
+                  "wholeThreeTurnFixtureSucceeded": false,
+                  "originalSampleStarted": false,
+                  "runtimeReview": "eva2/reviews/p2-openclaw-retirement-readback-runtime-review-20261007.json",
+                  "runtimeReviewSha256": "355733168c6a61460d79840c38ceb50a4f2b730b0798b65a4ae46de70bf1e496",
+                  "publicationDecision": "GO bounded source checkpoint; original sample NO_GO."
                 }
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",

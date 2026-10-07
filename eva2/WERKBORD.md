@@ -42,6 +42,18 @@ de verbinding vóór onze teruglezing. Volgende gerichte correctie: vóór retir
 teruglezen; fysieke exit en bronbeëindiging afzonderlijk bewijzen. Native uncertain
 blijft intact. Geen ongewijzigde proefherhaling.
 P2.1 blijft open; deze evaluatorcorrectie telt niet als extra gezinsfunctie.
+De volgende gerichte correctie is gebouwd: awaited teruglezing vóór de echte
+retirement-anchor; gewone sluiting blijft plaatsvinden als teruglezen faalt.
+Exacte transportexit wordt apart waargenomen. Twee lifecycle-/negatieve controles
+en de bestaande native proxy-import slaagden. De gecombineerde relaycontrole
+raakte een al zonder observatie geïmporteerde ESM-cache; de ongewijzigde relaytest
+slaagde in een afzonderlijk proces. Eerste mislukking blijft bewaard. Bronreview GO; één gewijzigde publieke bevestiging
+is terminal:83,13s,16 tools,2 settled synthetische aanvragen,1 CLI-antwoord.
+Echte idle thread met1 afgeronde beurt vóór sluiting bewaard;0 actieve beurten en
+0 achtergrondterminals. Exacte bijbehorende transportexit bevestigd. Volledige
+source-authority/bronbeëindiging en3beurtenlus nog niet bewezen; native uncertain
+blijft intact. Nu runtime-review en bestaande beëindigingscontrole gericht
+aansluiten; geen ongewijzigde proefherhaling of oorspronkelijke sample.
 Apps/add-ons horen bij dezelfde verbetercyclus; droommodus is nog niet gebouwd.
 Bekend achtergrondverbruik vervolgronde117.720tokens (partial/subtotaal);
 antwoordvergelijking apart13.973tokens. Credits en volledig ontwikkeltotaal onbekend.
