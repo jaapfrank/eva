@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "authority_sha256": "69372d5efe177c1602ccbe924096cb8a6b765f086aba09bacd94e88f0e1678b8",
+    "packet_sha256": "98568697e6448bb207802a7042aa4d251ab6dde1d2d561069d1ea614f71542bc",
+    "parent_pid": 2614996,
+    "parent_sha256": "9b322db21b0851fda9be78e2fb1ac4d9cbe975f51c8b4da47b6e18aa69403fb5",
+    "parent_start_ticks": 13732907,
+    "read_only_loader_check_sha256": "56a1f7341b848bde95564f015c0bf3cf16552829e93ba2a8c8cddfcddeac1186",
+    "ready_path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/parent-ready-technical-recovery1.private.json",
+    "ready_sha256": "9ea7d897445b3f69eea7730c034c4c561f182fda9fb5437d5085e9c614713a4b",
+    "source_admission_sha256": "a32510971665de133d265146ced77e60c71f04ad9da17015981fa56f8d174065",
+    "source_binding_sha256": "68c8d47002fb335a472aaad0bdf05c5a772cfb4e69f3280b0227be6bde2633c9",
+    "source_review_sha256": "c8636b8ed355ebdc32d7ae1876af918803259183b1d392826abd0e04b37689bb"
+  },
+  "contract": "Ev003IndependentReadyReview/v1",
+  "created_at": "2026-10-07T20:51:07.601226+00:00",
+  "decision": "GO_ONE_ORIGINAL_EVA1_CM06",
+  "entry": "eva1-bottie:EV003-CM-06:epoch1",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "mandatory_preinput_sequence": "Root releases once to this PID; unchanged Inspect original sample and fixed scorer; reserve unused slot; one480s deadline before worker launch; actual native source/access/fresh database/calendar-ready checks before first input. No reset or retry after native start.",
+  "quality_pass": null,
+  "reviewer_activity": {
+    "auth_calls": 0,
+    "file_process_metadata_only": true,
+    "model_calls": 0,
+    "native_starts": 0,
+    "release_written": false,
+    "reservations": 0,
+    "tests": 0
+  },
+  "scope": "Same live recovery parent PID2614996 on retained empty resources; first actual original native execution remains unstarted.",
+  "verified": {
+    "authority_and_all18_previous_rows_unchanged": true,
+    "new_release_and_owner_stop_absent": true,
+    "original_clock_preload_command_lock_unchanged": true,
+    "original_slot_unused": true,
+    "owned_lease_same_readable_and_valid_beyond_480s": true,
+    "previous_failed_parent_consumed_release_and_failure_unchanged": true,
+    "provider_calls_reservations_native_starts_deadlines_inputs_zero": true,
+    "retained_uid1000_roots_still_empty_0700": true,
+    "same_current_root_parent_alive_no_native_child": true
+  }
+}

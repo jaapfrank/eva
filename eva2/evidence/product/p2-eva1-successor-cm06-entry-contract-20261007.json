@@ -1,0 +1,186 @@
+{
+  "actor_count": 1,
+  "actor_indices": [
+    0,
+    0,
+    0
+  ],
+  "audience": "private_person",
+  "authority": {
+    "all_rows_preserved": true,
+    "authority_path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "authority_sha256": "69372d5efe177c1602ccbe924096cb8a6b765f086aba09bacd94e88f0e1678b8",
+    "canonical_sha256": "a9dc59713adbd587474abde10f41b933747bc643faf0a9014f58cdfc5fffb620",
+    "eva1_historical_usage_guard_clear": true,
+    "other_participant_unknowns_preserved": true,
+    "row_count": 18,
+    "selected_slot_unused": true
+  },
+  "availability": "structurally_supported_by_existing_fixed_person_route_pending_source_and_actual_readiness",
+  "basis_commit": "365868a2fcb0013de199d012f03ce744a32c6005",
+  "calendar_advance_count": 1,
+  "case_id": "EV003-CM-06",
+  "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+  "clock_generations": [
+    0,
+    0,
+    1
+  ],
+  "clock_offset_deltas_milliseconds": [
+    0,
+    0,
+    259200000
+  ],
+  "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+  "contract": "Ev003NativeEntryContract/v1",
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "date": "2026-10-07",
+  "entry": "eva1-bottie:EV003-CM-06:epoch1",
+  "epoch": 1,
+  "equality": {
+    "criteria_changed": false,
+    "oracle_included": false,
+    "original_actor_and_principal_exact": true,
+    "original_audience_and_grants_unchanged": true,
+    "original_initial_clock_timezone_and_events_exact": true,
+    "original_setup_count_preserved": true,
+    "original_text_utf8_and_order_exact": true,
+    "same_input_as_completed_openclaw_cm06": true,
+    "session_boundary_controls_exact": true
+  },
+  "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+  "extra_fixtures": {
+    "audio": 0,
+    "browser_pages": 0,
+    "files": 0,
+    "services": 0
+  },
+  "human_ratings": [
+    null,
+    null
+  ],
+  "inference_admitted": false,
+  "legacy_CM06_pair_is_matching_successor": false,
+  "legacy_note": "Legacy 20261005 CM06 used different committed input/fixture records; it is neither replayed nor substituted here.",
+  "limits_unchanged": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "models_unchanged": {
+    "allResearchWorkAndMemoryHelpers": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium"
+    },
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoningEffort": "none"
+    },
+    "providerRoute": "Existing registered subscription routes only; no paid fallback or automatic model escalation"
+  },
+  "native_mapping": {
+    "clock": "Initial/timezone bytes equal original fixture; preserve initial base offset. Advance exactly once by259200000ms only after prior ACK and native/provider settlement; require generation1 quiescent refresh ACK before final input. Never change provider authentication/monotonic time.",
+    "conversation_ids": "Deterministic uuid5-derived IDs using participant/case/epoch/session, web:ev003- prefix; same session for turns0/1, fresh session for2.",
+    "memory": "One fresh ordinary native profile/SQLite; preserve memory within the scenario and across the two conversations. No added privacy policy, identity substitution or preloaded answers.",
+    "request_ids": "Deterministic uuid5-derived ID using participant/case/epoch/ordinal.",
+    "route": "Existing BottieIO and exchange(eva1-bottie,/api/chat) plus actual ACK/readback; same fixed-person CM03 native route.",
+    "sender": "Set fixed EVA_WEB_SENDER from provisioning.actors[0].EVA_WEB_SENDER once; exact original display-name to canonical principal mapping stays private.",
+    "source_transition": "Consume this oracle-free packet instead of decoding a full held fixture in builder code. Native API/control behavior remains as CM03; only case/resource/source binding changes."
+  },
+  "original_event_advances_milliseconds": [
+    0,
+    0,
+    259200000
+  ],
+  "original_mandate_canonical_sha256": "11a010bfd0837822156e755091f5306cb3cc870f2f4a0ffa232f61fac6f0c415",
+  "original_native_start_canonical_sha256": "01c0bb53d356b2f584d889f7d872600c2bb3d3ddd3b3b354e5e52d281c1943b9",
+  "packet": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/cm06-epoch1.native-inputs.private.json",
+    "sha256": "98568697e6448bb207802a7042aa4d251ab6dde1d2d561069d1ea614f71542bc"
+  },
+  "participant": "eva1-bottie",
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "provider_calls": 0,
+  "readbacks_required": [
+    "Actual native reply committed readback and delivery ACK for every turn.",
+    "Verified fixed person/private identity on native requests and persisted reply/history/memory; both conversations and original clock generations.",
+    "Independent retained SQLite/person-memory snapshots and complete actual model context including helpers; no inference of memory success from presence alone.",
+    "Full provider attempts/raw usage/tools/stop/pending/physical closure under the original single total480s deadline and fixed aggregate; human scores remain null."
+  ],
+  "remaining_admission": [
+    "Exact derived source/Inspect/accounting/context-retention bindings and own native access reviewed for this unused entry.",
+    "Actual isolated ready process/identity/clock/source/authority/history/stop evidence, followed by a separate one-time input release."
+  ],
+  "reservations_created": 0,
+  "resource_preparation_admitted": false,
+  "resources_started": 0,
+  "schema": {
+    "body": "{conversation_id,request_id,text}",
+    "clock": "{generation,offset_delta_milliseconds}",
+    "dispatch_fields": "client_ack_public_key receives actual ready.public_key immediately before native /api/chat; not included in static body",
+    "participant_key": "eva1-bottie",
+    "provisioning": {
+      "actors": "array[{actor_index,source_principal_id,resolved_person,EVA_WEB_SENDER}]",
+      "initial_actor_index": "integer"
+    },
+    "root": "Ev003PrivateNativeInputs/v1",
+    "turn": "{actor_index,ordinal,session_index,path,body,clock,dispatch_fields,requires_previous_reply_ack_and_native_settlement}"
+  },
+  "scope_boundary": "Only the explicitly requested matching original Eva1 CM06 preparation. Formal family/matrix ceilings do not authorize automatic additional execution; no slot replay or unused-budget donation.",
+  "semantic_scores": null,
+  "session_count": 2,
+  "session_indices": [
+    0,
+    0,
+    1
+  ],
+  "setup_turn_count": 0,
+  "source_binding": {
+    "CM05_availability": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-successor-cm05-availability-20261007.json",
+      "sha256": "c62731e5c6806abd6ad64da59b735da3606420f4780713747627dc08d70a338e"
+    },
+    "commitment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/dataset-commitment.private.json",
+      "sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d"
+    },
+    "evaluator": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    "existing_CM03_native_processor": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/one-pair-processor.private.py",
+      "sha256": "a2ab85135bd2172873803090eea4767a4737e5251d45263377a7ec327a49bf64"
+    },
+    "existing_input_packet_schema": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-final-20261004/execution-inputs/cm06-epoch1.native-inputs.private.json",
+      "sha256": "c2311aa5358cc054bf04cf1c6c2629ad2727b066342b6e33fac1372d3278ad43"
+    },
+    "matching_OpenClaw_projection": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/cm06-epoch1.native-inputs.private.json",
+      "sha256": "212d7e077fb215620c60eca51726d403abc60a444f3cd6ad7af96d947c42e676"
+    },
+    "matching_OpenClaw_result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+      "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
+    },
+    "original_event_projector": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/original-event-projector.private.py",
+      "sha256": "414736c6ad13bf84b439f1584eab5e4359bdfee1355b30b9909cd94bb50553a8"
+    },
+    "plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    }
+  },
+  "status": "original_matching_successor_projection_prepared_not_admitted",
+  "technical_contract": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/projection-contract-technical.private.json",
+    "sha256": "6bd5d0611b6f3716939fbc6bbc9c3270bfb03a25a65a7117278d650b5b723066"
+  },
+  "turn_count": 3,
+  "unknown_person_turns": 0
+}

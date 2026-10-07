@@ -1,0 +1,71 @@
+{
+  "bindings": {
+    "authority_sha256": "69372d5efe177c1602ccbe924096cb8a6b765f086aba09bacd94e88f0e1678b8",
+    "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "loader_validation_path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/loader-binding-validation-recovery1.private.json",
+    "loader_validation_sha256": "56a1f7341b848bde95564f015c0bf3cf16552829e93ba2a8c8cddfcddeac1186",
+    "packet_sha256": "98568697e6448bb207802a7042aa4d251ab6dde1d2d561069d1ea614f71542bc",
+    "parent_path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/parent-inspect-native-recovery1.private.py",
+    "parent_sha256": "9b322db21b0851fda9be78e2fb1ac4d9cbe975f51c8b4da47b6e18aa69403fb5",
+    "prior_source_review_sha256": "8ab0dfde7e151419eaab14a55f269faa86a74ba436c9260469b8635c8115bd02",
+    "source_binding_sha256": "68c8d47002fb335a472aaad0bdf05c5a772cfb4e69f3280b0227be6bde2633c9"
+  },
+  "checks": {
+    "all_18_prior_rows_and_revisions_preserved": true,
+    "no_sample_task_solver_or_score_invoked_by_check": true,
+    "original_480s_still_starts_once_before_first_worker_launch": true,
+    "original_evidence_preserved": true,
+    "original_slot_unused": true,
+    "read_only_pinned_loader_with_Path_passed": true,
+    "same_packet_plan_scorer_provider_roles_caps": true,
+    "source_pins_match": true,
+    "worker_ready_source_lease_calendar_checks_before_first_input": true
+  },
+  "contract": "Ev003IndependentPreparationRecoveryReview/v1",
+  "created_at": "2026-10-07T20:49:49.915800+00:00",
+  "decision": "GO_SOURCE_PREPARATION_ONLY",
+  "delta": [
+    "Wrap the existing commitment filename in Path at the unchanged loader call.",
+    "Use separately named recovery source/admission/ready/release/Inspect/failure records; previous records remain immutable.",
+    "Reuse currently empty UID1000 private roots and exact unchanged external calendar/preload bytes; no data clearing or calendar/timer reset."
+  ],
+  "entry": "eva1-bottie:EV003-CM-06:epoch1",
+  "execution_admitted": false,
+  "input_admitted": false,
+  "next_gate": "New live parent readiness on these retained empty resources must be independently admitted before root writes its separately bound release.",
+  "prior_failure": {
+    "boundary": "Before dataset object return, Sample/Task/solver, reservation, deadline, worker and native input.",
+    "cause": "JSON string was passed to pinned loader requiring pathlib.Path.read_bytes().",
+    "classification": "evaluator_pre_input_orchestration_failure",
+    "deadlines_started": 0,
+    "native_inputs": 0,
+    "native_workers": 0,
+    "outer_error_class": "DatasetBindingError",
+    "parent_terminated": true,
+    "provider_attempts": 0,
+    "quality_loss": false,
+    "reservations": 0,
+    "retained_sha256": {
+      "execute-once.private.json": "a2f840252d78398b2e239f8a2a8f8145ad1b8a5547987a9dfe6f2e6cef655a49",
+      "final-admission.private.json": "bbbcaf5bb2dfd1a743a47fbb815e4890254a1c78d7ddea62cee87dd6b4081a19",
+      "parent-failure.private.json": "216ab45098431122df4eda978d11186b5f097d0d28b019d052670e093adad4d0",
+      "parent-inspect-native.private.py": "951037553b1c357a3e5128ffe4517bb3082b5c52dd2694aec96561b4c4c39a7a",
+      "parent-ready-technical.private.json": "ac29751138b1c85c8d22f7a4b5fa1bb38d1752e599aef8f6f52dc4d1d4bcce4e",
+      "source-admission.private.json": "a5519c1cecdf90e0feea19a7353533e632d16227281c2b09aa78469703ad40b9",
+      "source-binding.private.json": "af855442441d9edfb808f70d8a77be26dccea5d53f460db16cb7dda42ea2af34"
+    }
+  },
+  "quality_pass": null,
+  "reviewer_activity": {
+    "auth_calls": 0,
+    "held_content_disclosed": false,
+    "model_calls": 0,
+    "native_starts": 0,
+    "read_only_loader_binding_checks": 1,
+    "reservations": 0,
+    "scoring_calls": 0
+  },
+  "scope": "Cause-bound recovery of an unexecuted original slot, not replay of a native sample; fresh waiting-parent readiness and separate one-time release remain required."
+}

@@ -1,0 +1,87 @@
+{
+  "basis_commit": "365868a2fcb0013de199d012f03ce744a32c6005",
+  "bindings": {
+    "authority_before_sha256": "69372d5efe177c1602ccbe924096cb8a6b765f086aba09bacd94e88f0e1678b8",
+    "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "initial_calendar_sha256": "608ba8cdfe9fe87bf4617c5bac49aab78f9f0714e4e8c283274ad4a18625eb42",
+    "native_manifest_sha256": "d2f99e4b61126c9b325415e6b1fb923cf52df04842b14da3b02b3f9aece0a291",
+    "packet_sha256": "98568697e6448bb207802a7042aa4d251ab6dde1d2d561069d1ea614f71542bc",
+    "parent_sha256": "951037553b1c357a3e5128ffe4517bb3082b5c52dd2694aec96561b4c4c39a7a",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "projection_contract_sha256": "6bd5d0611b6f3716939fbc6bbc9c3270bfb03a25a65a7117278d650b5b723066",
+    "request_retention_sha256": "da245b647fc63eb2b6f12314f03610f2eb6221c844ebefa2fec326934e4d0919",
+    "scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "source_binding_path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/source-binding.private.json",
+    "source_binding_sha256": "af855442441d9edfb808f70d8a77be26dccea5d53f460db16cb7dda42ea2af34"
+  },
+  "bounded_preparation_corrections": [
+    "Replaced unchecked single writeSync with complete writeFileSync(fd, UTF-8 Buffer); retained fsync and post-I/O live check.",
+    "Explicit chmod0755 on root-owned calendar/control directories corrects umask077 traversal; protected data/capture roots remain0700."
+  ],
+  "checks": {
+    "actual_lease_access_and_expiry_checked_without_refresh": true,
+    "clock_and_control_parents_explicit_0755_data_and_captures_private_0700": true,
+    "fixed_inspect_scorer_no_model_judge": true,
+    "full_body_write_fsync_and_post_io_stop_deadline_check": true,
+    "historical_unknowns_preserved": true,
+    "import_inserted_before_worker_at_command_index_5": true,
+    "mandatory_native_ready_source_access_calendar_checks_before_input": true,
+    "native_source_pins_previously_verified": 87,
+    "no_headers_or_response_drain_or_request_mutation": true,
+    "one_original_480s_deadline_before_worker_launch": true,
+    "ordinary_exchange_ack_and_person_sqlite_readback_reused": true,
+    "original_clock_timezone_and_single_advance_preserved": true,
+    "original_entry_unused": true,
+    "original_model_roles_provider_and_caps_unchanged": true,
+    "physical_request_body_retention_before_dispatch_including_helpers": true,
+    "projection_matches_current_successor_cm06": true,
+    "same_parent_waits_without_worker_deadline_reservation_or_input": true,
+    "source_pins_match": 16,
+    "stop_failures_unknown_usage_and_native_close_failures_remain_visible": true,
+    "three_turns_one_verified_private_actor_two_sessions": true,
+    "unchanged_history_rows": 18
+  },
+  "contract": "Ev003IndependentSourceReview/v1",
+  "created_at": "2026-10-07T20:43:41.202690+00:00",
+  "decision": "GO_SOURCE_PREPARATION_ONLY",
+  "entry": "eva1-bottie:EV003-CM-06:epoch1",
+  "execution_admitted": false,
+  "human_ratings": [
+    null,
+    null
+  ],
+  "input_admitted": false,
+  "limitations": [
+    "No actual prepared parent or new native execution is claimed.",
+    "Native worker readiness and unchanged current lease/source/calendar must pass after the later single release and before first input; the original deadline cannot restart.",
+    "All actual tool/helper/provider effects and final context/readbacks require terminal independent assessment; human ratings and money remain unknown.",
+    "This is a source/preparation decision, not product quality, input release, or a replay of a closed case."
+  ],
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "quality_pass": null,
+  "reused_evidence": [
+    "eva2/evidence/product/p2-original-next-cm03-result-20261006.json",
+    "eva2/evidence/product/p2-eva1-successor-cm05-availability-20261007.json",
+    "eva2/evidence/product/p2-eva1-successor-cm06-entry-contract-20261007.json"
+  ],
+  "reviewer_activity": {
+    "auth_calls": 0,
+    "held_content_disclosed": false,
+    "model_calls": 0,
+    "native_starts": 0,
+    "new_tests": 0,
+    "reservations": 0,
+    "resources_started": 0,
+    "source_and_retained_evidence_only": true
+  },
+  "scope": "One matching original successor Eva1 CM06 resource preparation; actual parent readiness and one-time input admission remain separate."
+}

@@ -1,0 +1,104 @@
+{
+  "activity": {
+    "authority_mutations": 0,
+    "input_released": false,
+    "model_calls": 0,
+    "protected_content_disclosed": false,
+    "resources_started": 0,
+    "tests": 0
+  },
+  "authority": {
+    "historical_rows": 18,
+    "historical_rows_canonical_sha256": "a9dc59713adbd587474abde10f41b933747bc643faf0a9014f58cdfc5fffb620",
+    "historical_unknown_usage_preserved": true,
+    "new_reservation": false,
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "selected_slot_unused": true,
+    "sha256_unchanged": "69372d5efe177c1602ccbe924096cb8a6b765f086aba09bacd94e88f0e1678b8"
+  },
+  "available_participant_policy": {
+    "automaticFullMatrixLaunch": false,
+    "availableAdmittedParticipantsOnly": true,
+    "budgetRedistribution": false,
+    "changeAfterHiddenResults": false,
+    "currentlyAdmittedFinalSamples": 0,
+    "missingAccessOrAdapter": "unknown_not_loss",
+    "properlyAdmittedProductFailure": "failed_with_original_trace",
+    "retryForBetterScore": false
+  },
+  "basis_commit": "365868a2fcb0013de199d012f03ce744a32c6005",
+  "bindings": {
+    "case_sha256": "928a518791001ba235b1e3ee3fa34f0f70058307f3b643530f29dc2b0358ac86",
+    "commitment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/dataset-commitment.private.json",
+      "sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d"
+    },
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "native_route": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/one-pair-processor.private.py",
+      "sha256": "a2ab85135bd2172873803090eea4767a4737e5251d45263377a7ec327a49bf64"
+    },
+    "plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "prior_same_limitation": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
+      "sha256": "05ce75636961143997b1bdc5566c9af7bf39c623b211bc5bcd7f8b97de2e82b8"
+    },
+    "projector": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/original-event-projector.private.py",
+      "sha256": "414736c6ad13bf84b439f1584eab5e4359bdfee1355b30b9909cd94bb50553a8"
+    }
+  },
+  "case_id": "EV003-CM-05",
+  "contract": "Ev003OriginalParticipantAvailability/v1",
+  "date": "2026-10-07",
+  "entry": "eva1-bottie:EV003-CM-05:epoch1",
+  "epoch": 1,
+  "human_ratings": [
+    null,
+    null
+  ],
+  "native_admission": false,
+  "next_original_availability_step": "CM06 epoch1 structural/source preparation only, after this unavailable disposition; no replay or budget redistribution.",
+  "participant": "eva1-bottie",
+  "product_loss": false,
+  "quality": null,
+  "reason": "The existing CM03 route binds one fixed EVA_WEB_SENDER and reads one fixed person. CM05 requires two verified private persons across four sessions; changing conversation IDs alone does not supply the required person transition. No participant policy or profile split is introduced.",
+  "reason_class": "native_ingress_resolved_actor_transition_unavailable",
+  "shape": {
+    "actor_order": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "calendar_advances": 1,
+    "clock_generations": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "extra_fixtures": 0,
+    "private_sessions": 4,
+    "setup_turns": 0,
+    "turns": 4,
+    "verified_actors": 2
+  },
+  "source_anchors": {
+    "chat_body_without_actor_selector": [
+      58,
+      59
+    ],
+    "fixed_sender_and_command": [
+      46,
+      47
+    ],
+    "projector_single_identity_gate": 6,
+    "single_person_readback": 64
+  },
+  "status": "unavailable_unknown_not_loss",
+  "task": "P2.1"
+}

@@ -14,7 +14,26 @@ vergelijking volgt; menselijke beoordelingen blijven afzonderlijk zichtbaar. App
 gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
 
 
-## P2.1 — oorspronkelijke vergelijking en gerichte oorzaakcorrectie
+## P2.1 actueel 7 oktober — matching geheugenuitkomst
+Dezelfde oorspronkelijke CM06 is nu eenmaal door Eva1 uitgevoerd en onafhankelijk
+beoordeeld naast OpenClaw: Eva1 haalt de vereiste latere status niet terug
+(1/3 bruikbare antwoorden, 1/2 verplichte readbacks); OpenClaw wel (3/3, 2/2).
+Eva1 gebruikt 43.408 invoer-/1.674 uitvoertokens in 7 complete aanvragen,
+OpenClaw 285.381/1.521 in 12. Minder verbruik compenseert het gemiste resultaat niet.
+De tijdmetingen hebben verschillende eindgrenzen; geen snelheidswinnaar.
+Eva2 heeft geen resultaat met deze exacte successor-input; legacy CM06 blijft apart.
+Twee echte menselijke beoordelingen, resterende oorspronkelijke dekking en algemene
+superioriteit blijven open. OpenClaws eerdere CM05-persoons-/privacyverlies blijft staan.
+Eva1-CM05 was op de bestaande vaste éénpersoonsroute niet uitvoerbaar: UNKNOWN,
+geen productverlies. De voorafgaande evaluator-Path-fout kostte nul modelcalls;
+die is gericht gecorrigeerd, waarna één werkelijke oorspronkelijke uitvoering volgde.
+Bewijs: evidence/product/p2-eva1-successor-cm06-result-20261007.json;
+review: reviews/p2-eva1-successor-cm06-terminal-review-20261007.json.
+Daarna alleen de oorspronkelijke beschikbaarheid van gedeelde-publieksgebruik bepalen
+op bestaande routes; geen automatische matrix, proefherhaling of nieuwe providerroute.
+Dit is vergelijkingsbewijs, geen extra afgeronde huisgenootfunctie.
+
+## P2.1 historie — oorspronkelijke vergelijking en gerichte oorzaakcorrectie
 
 De oorspronkelijke OpenClaw-CM01-proef is eenmaal uitgevoerd, maar vóór de
 eerste modelcall vastgelopen door een fout in de proefomgeving: loopback-POST

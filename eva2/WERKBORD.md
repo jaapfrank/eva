@@ -1,4 +1,33 @@
-## Actueel 7 oktober — CM06: latere herinnering bij OpenClaw klopt
+## Actueel 7 oktober — dezelfde geheugenproef: Eva1 faalt, OpenClaw slaagt
+
+De oorspronkelijke matching CM06 is eenmaal door Eva1 uitgevoerd en onafhankelijk
+beoordeeld. De latere status komt niet terug: 1/3 bruikbare antwoorden en 1/2
+verplichte readbacks. OpenClaw haalt in dezelfde input/proef 3/3 en 2/2.
+Dit is één objectieve geheugenuitkomst; menselijke kwaliteit en algemene winnaar
+blijven onbekend. Er is geen Eva2-resultaat met deze exacte successor-input.
+
+Eva1: 7 complete aanvragen, 43.408 invoer-/1.674 uitvoertokens, 44,574s vóór stoppen.
+OpenClaw: 12 aanvragen, 285.381/1.521 tokens, 123,410s tot child-exit.
+Verschillende tijdgrenzen; geen snelheidsratio. Lagere tokens maken Eva1 hier
+niet beter. Credits/geld onbekend; drie oudere verbruiksonbekenden blijven bewaard.
+De voorafgaande Path-fout was evaluatorarbeid vóór invoer/modelcalls, geen
+Eva1-productverlies. Na onafhankelijke gerichte correctie één originele uitvoering;
+alle 18 eerdere registraties/revisies exact behouden. Nu 19 rijen/120 pogingen.
+
+Eva1-CM05 is op de bestaande vaste éénpersoonsroute onbeschikbaar, UNKNOWN.
+OpenClaws eerdere CM05-persoons-/privacyverlies blijft staan; legacy CM06 blijft apart.
+P2.1 blijft open voor overige oorspronkelijke dekking en twee echte beoordelingen.
+Vervolg: bestaande toegang tot gedeelde-publieksgebruik metadata-only bepalen,
+zonder nieuwe case-uitvoering of ongewijzigde herhaling.
+48 bestaande kleine taken, 39 afgerond; geen nieuwe productfunctie of gewijzigde teller.
+L3.4–L3.7 blijven geïnstalleerd. Apps/add-ons vallen onder dezelfde verbetercyclus;
+automatische droommodus is nog niet gebouwd. Spraak blijft geparkeerd.
+
+Resultaat: evidence/product/p2-eva1-successor-cm06-result-20261007.json.
+Review: reviews/p2-eva1-successor-cm06-terminal-review-20261007.json.
+Actuele kleine taak: P2.1 in design/product/execution-workboard-v1.json.
+
+## Eerder 7 oktober — CM06: latere herinnering bij OpenClaw klopt
 
 De oorspronkelijke OpenClaw-CM06 is eenmaal uitgevoerd. De onafhankelijke
 inhoudelijke beoordeling ondersteunt alle drie feitelijke voorwaarden en beide

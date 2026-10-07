@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "authority_before_sha256": "69372d5efe177c1602ccbe924096cb8a6b765f086aba09bacd94e88f0e1678b8",
+    "packet_sha256": "98568697e6448bb207802a7042aa4d251ab6dde1d2d561069d1ea614f71542bc",
+    "parent_pid": 2582760,
+    "parent_sha256": "951037553b1c357a3e5128ffe4517bb3082b5c52dd2694aec96561b4c4c39a7a",
+    "parent_start_ticks": 13697013,
+    "ready_path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/parent-ready-technical.private.json",
+    "ready_sha256": "ac29751138b1c85c8d22f7a4b5fa1bb38d1752e599aef8f6f52dc4d1d4bcce4e",
+    "source_admission_sha256": "a5519c1cecdf90e0feea19a7353533e632d16227281c2b09aa78469703ad40b9",
+    "source_binding_sha256": "af855442441d9edfb808f70d8a77be26dccea5d53f460db16cb7dda42ea2af34",
+    "source_review_path": "/home/administrator/project/Eva2/eva2/reviews/p2-eva1-successor-cm06-source-review-20261007.json",
+    "source_review_sha256": "8ab0dfde7e151419eaab14a55f269faa86a74ba436c9260469b8635c8115bd02"
+  },
+  "contract": "Ev003IndependentReadyReview/v1",
+  "created_at": "2026-10-07T20:45:34.916920+00:00",
+  "decision": "GO_ONE_ORIGINAL_EVA1_CM06",
+  "entry": "eva1-bottie:EV003-CM-06:epoch1",
+  "limitations": [
+    "Readiness does not assert native startup or a successful original outcome.",
+    "No new run, model/auth call, reservation or release was performed by the reviewer.",
+    "Original profile, roles, grants, packet, clocks, scorer and historical results remain unchanged."
+  ],
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "mandatory_same_process_sequence": [
+    "Root writes one release bound to this ready receipt, final admission and parent PID.",
+    "Existing Inspect loads the unchanged original sample and scorer; no AI judge.",
+    "Reserve only this unused original slot and persist one absolute480-second deadline before native launch.",
+    "Verify actual native source, owned access, fresh database, provider mode and calendar quiescence/generation before first original input.",
+    "Keep original request/ACK/native readbacks, every physical provider body and raw usage, helper/tool/stop evidence; retain any failure without restart."
+  ],
+  "quality_or_human_pass": null,
+  "scope": "Same waiting root parent only; root owns the single release. Native worker startup checks remain mandatory before first input.",
+  "verified": {
+    "actual_uid_access_checked_by_bound_parent": true,
+    "all_18_prior_row_values_and_revisions_preserved": true,
+    "current_owned_lease_hash_permissions_and_freshness_match": true,
+    "external_calendar_and_preload_match_with_required_traversal": true,
+    "historical_unknowns_preserved": true,
+    "inspect_runtime_and_lock_bound": true,
+    "native_data_and_capture_roots_empty_private_uid1000": true,
+    "no_child_native_worker": true,
+    "no_provider_calls_reservation_input_context_or_sample_deadline": true,
+    "original_slot_unused": true,
+    "release_and_owner_stop_absent": true,
+    "same_pinned_root_parent_alive_waiting": true,
+    "source_identities_match": true
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "accepted_answers": 1,
+  "authority": {
+    "all18_prior_values_and_revisions_exact": true,
+    "cumulative_registered_attempts": 120,
+    "historical_unknown_usage_attempts": 3,
+    "known_usage_lower_bound": {
+      "input_tokens": 1409409,
+      "output_tokens": 13322,
+      "total_tokens": 1422731
+    },
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "prior_canonical_sha256": "a9dc59713adbd587474abde10f41b933747bc643faf0a9014f58cdfc5fffb620",
+    "reset_or_replay": false,
+    "rows": 19,
+    "selected_revision": 14,
+    "sha256": "707f5d502dca4de191d938a919ef6eb33458b7d60110300bb000e389e5107593",
+    "whole_registry_total_usage": null,
+    "whole_registry_usage_complete": false
+  },
+  "bindings": {
+    "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "native_manifest_sha256": "d2f99e4b61126c9b325415e6b1fb923cf52df04842b14da3b02b3f9aece0a291",
+    "packet_sha256": "98568697e6448bb207802a7042aa4d251ab6dde1d2d561069d1ea614f71542bc",
+    "parent_sha256": "9b322db21b0851fda9be78e2fb1ac4d9cbe975f51c8b4da47b6e18aa69403fb5",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "protocol_sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "retention_observer_sha256": "da245b647fc63eb2b6f12314f03610f2eb6221c844ebefa2fec326934e4d0919",
+    "scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "source_binding_sha256": "68c8d47002fb335a472aaad0bdf05c5a772cfb4e69f3280b0227be6bde2633c9",
+    "worker_sha256": "4ee595e33a6de19825d1b71da475c7efeb0ea285782b0c9a7cb3fa0ca1409dd7"
+  },
+  "contract": "Ev003IndependentTerminalReview/v1",
+  "created_at": "2026-10-07T20:58:19.613950+00:00",
+  "decision": "GO_PUBLICATION_OF_RETAINED_RESULT",
+  "entry": "eva1-bottie:EV003-CM-06:epoch1",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "objective_completion": false,
+  "original_semantic_conditions": [
+    false,
+    true,
+    true
+  ],
+  "protected_assessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva1-successor-cm06-preparation-20261007-v1/terminal-independent-assessment.private.json",
+    "sha256": "7e9e53350c52c6170b47fbb37d9bbcb1e714a623ca25d913d28b73d170aebf16"
+  },
+  "publication_limits": [
+    "Only one matched original objective result; no Eva1 default truth, general superiority or human-quality claim.",
+    "No new sample admission, participant-policy repair, replay, runtime change or P2.1 completion."
+  ],
+  "required_readbacks": [
+    false,
+    true
+  ],
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
+    "sha256": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d"
+  },
+  "reviewer_activity": {
+    "held_content_disclosed_to_builder": false,
+    "new_model_calls": 0,
+    "new_native_starts": 0,
+    "new_reservations": 0,
+    "new_tests": 0,
+    "retained_evidence_only": true
+  },
+  "source_and_ready_reviews": [
+    "eva2/reviews/p2-eva1-successor-cm06-recovery1-source-review-20261007.json",
+    "eva2/reviews/p2-eva1-successor-cm06-recovery1-ready-review-20261007.json"
+  ],
+  "verified": {
+    "actual_input_reply_sql_and_ack_binding": true,
+    "all18_previous_authority_values_and_revisions_unchanged": true,
+    "native_roles_helpers_retries_tools_and_clock_covered": true,
+    "native_stop_eof_and_physical_exit": true,
+    "no_raw_scorer_or_closed_outcome_rewritten": true,
+    "original_eligible_person_memory_and_all_dispatched_contexts": true,
+    "same_original_openclaw_comparison_bound": true,
+    "seven_raw_usage_settlements_and_complete_physical_capture": true,
+    "zero_call_preinput_failure_retained_separately": true
+  },
+  "whole_case_quality": "UNKNOWN"
+}

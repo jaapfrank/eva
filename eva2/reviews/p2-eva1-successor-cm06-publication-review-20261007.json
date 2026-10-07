@@ -1,0 +1,66 @@
+{
+  "schema": "eva2.independent-publication-review.v1",
+  "checkedAt": "2026-10-07T21:06:46.636900+00:00",
+  "decision": "GO_PUBLICATION_ONLY",
+  "reviewer": "independent_protected_data_evaluator",
+  "taskId": "P2.1",
+  "scope": "Current Eva1 successor CM06 publication paragraphs, audit.projectDashboard.deliveryOverview/comparisonResults and P2.1 current assignment fields only.",
+  "publicationSha256": {
+    "eva2/PROJECTDOEL.md": "c86eb0f91f7288407c8b946f6721ecca48e240b39497d7f0f5107e55ce1d49dd",
+    "eva2/WERKBORD.md": "daa8a2ce92e761bc0d00ede7c0cf0538da2220675a42037f6e1b1f3bc072c20e",
+    "eva2/design/product/execution-workboard-v1.json": "e8a1ed99571928688dbe68b1cfe395ca9689dee284fc11994c2897975bf8040b"
+  },
+  "evidence": {
+    "eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d",
+    "eva2/reviews/p2-eva1-successor-cm06-terminal-review-20261007.json": "80c7cdb142ed5d16b9c7d18e0bcf5d024a1b18789919e529d9ce69bbf98e817e"
+  },
+  "checks": {
+    "originalMatchedInputAndCasePreserved": true,
+    "eva1Native3Of3DistinctFromAccepted1Of3ObjectiveFalse": true,
+    "readbacks1Of2CorrectlyLabelledRequiredReadbacks": true,
+    "openclawAccepted3Of3Readbacks2Of2WithoutGeneralSuperiorityClaim": true,
+    "openclawLiteralNativeClosedFalseDistinctFromEquivalentSettlement": true,
+    "priorCM05PrivacyFailureAndFixedPersonUnavailabilityPreserved": true,
+    "legacyDifferentInputPairNotPresentedAsMatched": true,
+    "elapsedTimeBoundariesExplicitNoSpeedRatio": true,
+    "humanQualityAndMoneyUnknown": true,
+    "preInputPathFailureSeparateFromOneOriginalNativeRun": true,
+    "currentRecoverySourceAdmissionAndHistoricalPredecessorBothCorrect": true,
+    "currentExecutionInactiveAndLatestEvidenceBound": true,
+    "authorityMutationsUnknownAndOneRegisteredRowAdded": true,
+    "noProtectedContentOrCriteriaChange": true,
+    "CM07MetadataNextOnlyNoProjectionAdmissionOrRun": true
+  },
+  "unchangedTasks": {
+    "idsStatusAndDoneWhenEqualHEAD": true,
+    "total": 48,
+    "completed": 39,
+    "planned": 8,
+    "in_progress": 1,
+    "P2.1": "in_progress"
+  },
+  "aggregate": {
+    "registeredRows": 19,
+    "registeredAttempts": 120,
+    "knownInputTokensLowerBound": 1409409,
+    "knownOutputTokensLowerBound": 13322,
+    "knownTotalTokensLowerBound": 1422731,
+    "historicalUsageUnknownAttempts": 3,
+    "usageComplete": false,
+    "fullTotalsAndMoney": null
+  },
+  "limitations": [
+    "Publication evidence is not a new product function or full P2.1 completion.",
+    "Only the exact matched successor CM06 objective comparison is supported; human ratings and general superiority remain unknown.",
+    "No next original execution is admitted by this review."
+  ],
+  "findings": [],
+  "reviewerActivity": {
+    "readOnlyPublicationAndExistingEvidenceInspection": true,
+    "tests": 0,
+    "modelCalls": 0,
+    "nativeStarts": 0,
+    "newInputs": 0,
+    "onlyWrittenFile": "eva2/reviews/p2-eva1-successor-cm06-publication-review-20261007.json"
+  }
+}
