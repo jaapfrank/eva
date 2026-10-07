@@ -1,0 +1,154 @@
+{
+  "schema": "OpenClawCodeModeIdentityIndependentReview/v1",
+  "date": "2026-10-07",
+  "taskId": "P2.1",
+  "decision": "GO_source_public_positive_binding_and_publication_only",
+  "original_sample_admission": false,
+  "original_quality_claim": false,
+  "closed_CM01_through_CM04": "UNKNOWN_UNCHANGED_NO_REPLAY",
+  "bindings": {
+    "final_source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "b87e2a9067733c78958f52b5a1196a928dbc1cc33514d378c69b852233084c67"
+    },
+    "final_test": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "c0627dccf28f193161ac5455aee90f1e45d4b3a7f4b732c46f53f5448ee8a95c"
+    },
+    "executed_source": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/executed-instrumentation-source.private.mjs",
+      "sha256": "d75b54f4cf644ab92abc0bb68c10ae0a4da116e70d5bf2351ce6619b7666de9a"
+    },
+    "executed_fixture": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/executed-public-fixture-source.private.mjs",
+      "sha256": "c0627dccf28f193161ac5455aee90f1e45d4b3a7f4b732c46f53f5448ee8a95c"
+    },
+    "source_before_execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/source-before-execution.public.json",
+      "sha256": "105c3fe6ee30df069bca5aede4b544219258a472e4287fe80b3c51535cda7acd"
+    },
+    "public_report": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-codemode-identity-correction-20261007.json",
+      "sha256": "109d7d0bbd52fa98865f3a66849331930cdfe8a18cbee5facb9caa10a11d44ee"
+    },
+    "public_recovery": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/recovery.public.json",
+      "sha256": "ac3407a5b0a1c564545287b7643a3e94256fd605fb15bee90714a4cd105d24d6"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/ordinary-execution.public.json",
+      "sha256": "f4dd32af9726b6efa9d0c7d7cc721d32d2ec52f24fa7b27d847badf731d1a4da"
+    },
+    "technical": {
+      "path": "/tmp/eva-p2-openclaw-process-scope-20261007-qry00yj1/composition-technical.private.json",
+      "sha256": "b0a82cf9ff6f9426ed213fa69d7d4b42cf226c5bb50cb9bc6ff11fbf07974c04"
+    },
+    "final_focused_checks": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/final-focused-checks.public.json",
+      "sha256": "07baf508489536f8b5b45c50cc0a777705bc2c1267963c13c341ae0a0e0cfba1"
+    },
+    "public_failure_diagnosis": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-codemode-20261007/diagnosis.public.json",
+      "sha256": "a5c3c6e71de3182b3f2a006f4d4c22f38f918dfb0c2157f148fc8d053c676505"
+    }
+  },
+  "source_findings": {
+    "identity": "Public native pre/callback/terminal/post have identical tool ID, thread and turn. The observed Code Mode hook name is namespace+tool with no separator; direct explicit null remains distinct; absent namespace is refused.",
+    "scope": "The native registry handler/tool selection, policy, SDK/tool caps, terminal acceptance and settlement branches remain unchanged. Only evaluator callback name and turn binding change.",
+    "resolved_stop_boundary": "The executed candidate added diagnostic fsync after reserveTool check. Final source removes exactly that write; no I/O or await remains between the existing reservation check and dispatch. The reviewer-requested correction is complete.",
+    "proof_reuse": "Native recovery ran executed d75 source. Final b87 source is not claimed to have had a native rerun. Exact no-I/O delta reviewed separately, with retained 11-pass final focused checks.",
+    "remaining_concrete_findings": []
+  },
+  "observed_public_runtime": {
+    "exit_code": 0,
+    "elapsed_seconds": 180.18849312799284,
+    "elapsed_boundary": "retained root controller ordinary execution including cleanup",
+    "native_turns": 3,
+    "scenario_generations": [
+      0,
+      0,
+      1
+    ],
+    "native_dispatched_tools": 16,
+    "mix": {
+      "code_mode_memory_tool": 1,
+      "existing_native_exec_reads": 15
+    },
+    "tool_coverage": true,
+    "seventeenth_refused_before_body": true,
+    "dynamic_body_entered_and_returned": true,
+    "synthetic_sdk_calls": 4,
+    "synthetic_input_tokens": 68,
+    "synthetic_output_tokens": 12,
+    "synthetic_usage_is_real_or_paid": false,
+    "external_inference_calls": 0,
+    "original_inputs": 0,
+    "total_seconds_cap": 480,
+    "native_per_turn_seconds_cap": 120,
+    "attempt_cap": 16,
+    "tool_cap": 16,
+    "input_token_cap": 1048576,
+    "output_token_cap": 19200
+  },
+  "closure": {
+    "literal_native_closed": false,
+    "equivalent_native_settled": true,
+    "physical_matched_transport_exits": 3,
+    "pending_sdk": 0,
+    "pending_tools": 0,
+    "native_cancel_errors": [],
+    "native_unregister_queues_flushed": 6,
+    "root_scope_receipt_hashes_verified": 6,
+    "fresh_final_frozen_census": true,
+    "only_exact_registered_controllers": true,
+    "native_workload_processes": 0,
+    "namespace_pids_after": [],
+    "scope_populated_after": false,
+    "scope_stop_exit_code": 5,
+    "scope_errors": [],
+    "cleanup_errors": [],
+    "note": "Exit code 5 is retained; absent/empty scope is supported by the separate final census and cleanup evidence, not relabeled as stop exit zero."
+  },
+  "retained_readbacks": [
+    {
+      "path": "/tmp/eva-p2-openclaw-process-scope-20261007-qry00yj1/contexts/141-native-thread-readback.json",
+      "sha256": "967aaed91eb6f427f526d900f567a57bc8caa2193ff2ac6769f4a3c570352d07"
+    },
+    {
+      "path": "/tmp/eva-p2-openclaw-process-scope-20261007-qry00yj1/contexts/156-native-thread-readback.json",
+      "sha256": "f94cc431a2962c792b7dc121cd50de37c471066409be1070695424b22cb5b8ad"
+    },
+    {
+      "path": "/tmp/eva-p2-openclaw-process-scope-20261007-qry00yj1/contexts/171-native-thread-readback.json",
+      "sha256": "18fbf696cf7026fc72df2e0cef704bf8065ed014e755bbf0855c1a159590f17f"
+    }
+  ],
+  "authority_and_registry_scope": {
+    "original_authority": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+      "sha256": "a227dd6fde52a51590741bc7b664e850afa66f9b8bf098768dc8a7be58f1d0e8"
+    },
+    "original_authority_unchanged": true,
+    "enumerated_operator_artifact_hashes_unchanged": 6,
+    "equality_claim_limited_to_enumerated_files": true,
+    "existing_native_registry_and_package_guard_reused": true,
+    "no_original_reservation_or_budget_reset": true,
+    "local_broker_unreachability_proved": false
+  },
+  "verification": {
+    "reused_final_focused_passed": 11,
+    "failed": 0,
+    "duration_milliseconds": 147.007194,
+    "reviewer_tests": 0,
+    "reviewer_actor_runs": 0,
+    "reviewer_provider_or_auth_calls": 0,
+    "reviewer_original_content_reads_this_review": 0
+  },
+  "publication_limits": [
+    "This closes the demonstrated evaluator identity-binding defect only; it is no product function, quality win or original case result.",
+    "CM01 through CM04 remain closed UNKNOWN with original source/result receipts retained.",
+    "Any next original input requires its own existing-order source and actual-readiness admission; none is granted here.",
+    "Canonical native cleanup remains uncertain/false; equivalent settlement is a separate evidence-based predicate.",
+    "Synthetic usage does not establish paid cost or credits; credits remain unknown."
+  ]
+}

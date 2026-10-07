@@ -430,7 +430,7 @@ await test('stop or deadline during durable native reservation refuses the dynam
       return retained;
     };
     try{
-      await assert.rejects(o.dynamicTool({callId:'public-denied',tool:'exec',threadId:'public-thread'},async()=>{bodies++;}),/deadline|stopped/);
+      await assert.rejects(o.dynamicTool({callId:'public-denied',tool:'exec',namespace:null,threadId:'public-thread',turnId:'public-turn'},async()=>{bodies++;}),/deadline|stopped/);
       assert.equal(bodies,0);assert.equal(o.tools.get('public-denied').dispatched,false);
       assert.equal(o.tools.get('public-denied').status,'cancelled');
       assert.equal(JSON.parse(readFileSync(o.nativeObservationReceipts.at(-1).path)).phase,'cancelled_before_dispatch');
@@ -553,6 +553,42 @@ await test('actual installed proxy and native client load exact overlay; public 
       }finally{local.terminate();}
     }
   } finally {await proxy?.close();hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;}
+});
+
+await test('native dynamic callback binds observed Code Mode name before body and keeps direct null separate', async()=>{
+  for(const namespace of ['openclaw',null]){
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+    const call={callId:'public-dynamic-bind',threadId:'public-thread',turnId:'public-turn',tool:'memory_search',namespace};
+    const hook={toolUseId:call.callId,toolName:namespace===null?call.tool:namespace+call.tool,
+      turnId:call.turnId,rawPayload:{session_id:call.threadId}};
+    const row=o.nativeToolBefore(hook);let bodies=0;
+    const result=await o.dynamicTool(call,async()=>{bodies++;return {success:false};});
+    assert.equal(result.success,false,'body response failure is not rewritten');
+    assert.equal(bodies,1);assert.equal(o.tools.size,1);
+    assert.equal(row.dispatched,true);assert.equal(row.status,'settled');
+    o.nativeNotification({}, {method:'item/completed',params:{threadId:call.threadId,turnId:call.turnId,
+      item:{id:call.callId,type:'dynamicToolCall',tool:call.tool,namespace,status:'failed',success:false}}});
+    o.nativeToolAfter(hook);
+    assert.equal(o.toolCoverage,true);assert.equal(ledger.stopReason,null);
+    await assert.rejects(o.dynamicTool(call,async()=>{bodies++;}),/executed twice/);
+    assert.equal(bodies,1);
+  }
+});
+await test('native dynamic callback refuses changed namespace tool thread turn and absent namespace before body', async()=>{
+  for(const change of [{namespace:'other'},{tool:'other'},{threadId:'other'},{turnId:'other'},
+      {namespace:undefined},{namespace:''},{namespace:4},{turnId:undefined}]){
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+    const call={callId:'public-dynamic-negative',threadId:'public-thread',turnId:'public-turn',tool:'memory_search',namespace:'openclaw'};
+    const row=o.nativeToolBefore({toolUseId:call.callId,toolName:'openclawmemory_search',turnId:call.turnId,rawPayload:{session_id:call.threadId}});
+    let bodies=0;
+    await assert.rejects(o.dynamicTool({...call,...change},async()=>{bodies++;}),/native tool identity changed|exact native dynamic/);
+    assert.equal(bodies,0);assert.equal(row.dispatched,false);assert.equal(row.status,'reserved');
+  }
+  const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+  let bodies=0;
+  await assert.rejects(o.dynamicTool({callId:'public-absent',threadId:'public-thread',turnId:'public-turn',tool:'public_lookup'},
+    async()=>{bodies++;}),/exact native dynamic/);
+  assert.equal(bodies,0);assert.equal(o.tools.size,0);
 });
 
 await test('native dynamic identity is recorded privately without granting unbound terminal coverage', () => {
@@ -822,10 +858,51 @@ await test('public ordinary actor composition binds native calendar, model bodie
   writeFileSync(workspace+'/MEMORY.md','Public persistent memory marker: blue notebook.\n',{mode:0o600});
   writeFileSync(workspace+'/USER.md','Public fixture owner.\n',{mode:0o600});
   const failedToolRecovery=process.env.OPENCLAW_PUBLIC_FAILED_TOOL_RECOVERY==='1';
+  const dynamicIdentityFixture=['1','code-mode','code-mode-recovery'].includes(process.env.OPENCLAW_PUBLIC_DYNAMIC_IDENTITY);
+  const dynamicIdentityCodeMode=['code-mode','code-mode-recovery'].includes(process.env.OPENCLAW_PUBLIC_DYNAMIC_IDENTITY);
+  const dynamicIdentityRecovery=process.env.OPENCLAW_PUBLIC_DYNAMIC_IDENTITY==='code-mode-recovery';
+  assert.ok(!(failedToolRecovery && dynamicIdentityFixture),'separate public diagnostic hypotheses');
+  const publicDynamicIdentity=[];
+  if(dynamicIdentityFixture){
+    const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
+    const before=o.nativeToolBefore.bind(o),after=o.nativeToolAfter.bind(o);
+    o.nativeToolBefore=(invocation,registration)=>{
+      publicDynamicIdentity.push({phase:'pre',toolName:invocation.toolName,...o.nativeIdentity(invocation,registration)});
+      return before(invocation,registration);
+    };
+    o.nativeToolAfter=(invocation,registration)=>{
+      publicDynamicIdentity.push({phase:'post',toolName:invocation.toolName,...o.nativeIdentity(invocation,registration)});
+      return after(invocation,registration);
+    };
+    const dynamic=o.dynamicTool.bind(o);
+    o.dynamicTool=async(call,body)=>{
+      const observation={phase:'handler',tool:call.tool,namespace:call.namespace ?? null,namespacePresent:Object.hasOwn(call,'namespace'),native_turn_id_sha256:hash(call.turnId),
+        tool_id_sha256:hash(call.callId),native_thread_id_sha256:hash(call.threadId),bodyEntered:false,returned:false};
+      publicDynamicIdentity.push(observation);
+      try{
+        const result=await dynamic(call,async()=>{observation.bodyEntered=true;return await body();});
+        observation.returned=true;return result;
+      }catch(error){observation.error=error.message;throw error;}
+    };
+    const notification=o.nativeNotification.bind(o);
+    o.nativeNotification=(client,value)=>{
+      const p=value.params;
+      if(value.method==='item/completed' && p?.item?.type==='dynamicToolCall')
+        publicDynamicIdentity.push({phase:'completed',tool:p.item.tool,namespace:p.item.namespace,
+          status:p.item.status,success:p.item.success,tool_id_sha256:hash(p.item.id),
+          native_thread_id_sha256:hash(p.threadId),native_turn_id_sha256:hash(p.turnId)});
+      return notification(client,value);
+    };
+  }
   const completed=[];let physical=0;let toolRequested=false;let counter=0;
   const fakeTerminal=body=>{
-    const responseId='public-response-'+(++counter);const tool=body.tools?.find(t=>t.type==='function' && t.name==='exec_command');
-    const output=!toolRequested && tool ? (toolRequested=true,Array.from({length:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify({cmd:failedToolRecovery&&i===15?'exit 127':'cat MEMORY.md',workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})))
+    const responseId='public-response-'+(++counter);
+    const tool=body.tools?.find(t=>dynamicIdentityCodeMode ? t.type==='custom' && t.name==='exec' : t.type==='function' && (dynamicIdentityFixture ? t.name==='agents_list' : t.name==='exec_command'));
+    if(dynamicIdentityFixture)publicDynamicIdentity.push({phase:'offered',names:(body.tools??[]).filter(t=>t.type==='function').map(t=>t.name),selected:tool?.name ?? null});
+    const output=!toolRequested && tool ? (toolRequested=true,dynamicIdentityCodeMode?
+      [{type:'custom_tool_call',id:'public-custom-'+counter,call_id:'public-call-'+counter+'-0',name:tool.name,input:"const t = ALL_TOOLS.find(x => x.name.endsWith('memory_search')); if (!t) throw new Error('public memory search unavailable'); const r = await tools[t.name]({query:'Public absent notebook marker',maxResults:1}); text(r);"},
+       ...(dynamicIdentityRecovery?Array.from({length:15},(_,i)=>({type:'function_call',id:'public-command-'+counter+'-'+i,call_id:'public-command-call-'+counter+'-'+i,name:body.tools.find(t=>t.type==='function'&&t.name==='exec_command').name,arguments:JSON.stringify({cmd:'cat MEMORY.md',workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})):[])]:
+      Array.from({length:dynamicIdentityFixture?1:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify(dynamicIdentityFixture?{}:{cmd:failedToolRecovery&&i===15?'exit 127':'cat MEMORY.md',workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})))
       : [{type:'message',id:'public-message-'+counter,role:'assistant',status:'completed',content:[{type:'output_text',text:'Public fixture reply.',annotations:[]}]}];
     const response={id:responseId,object:'response',created_at:1,status:'completed',model:body.model,output,usage};
     return [{type:'response.created',response:{...response,status:'in_progress',output:[]}},
@@ -899,7 +976,7 @@ await test('public ordinary actor composition binds native calendar, model bodie
     close=await o.closeNative(plugin);assert.equal(nativeProcessScope?close.equivalent_native_settled:close.native_closed,true);assert.equal(close.pending_sdk,0);assert.equal(close.pending_tools,0);
   } finally {
     close=await o.closeNative(plugin);hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;
-    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',failedToolRecoveryFixture:failedToolRecovery,failedNativeTerminals:[...o.tools.values()].filter(row=>row.native_terminal?.status==='failed').map(row=>row.native_terminal),completedNativeTurns,physicalFakeCalls:physical,syntheticCaps:ledger.limits,syntheticUsagePaidOrRealModelUsage:false,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,equivalent_native_settled:close.equivalent_native_settled,native_process_scope_receipts:close.native_process_scope_receipts,final_native_process_scope_receipt:close.final_native_process_scope_receipt,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
+    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',dynamicIdentityFixture,dynamicIdentityCodeMode,dynamicIdentityRecovery,publicDynamicIdentity,failedToolRecoveryFixture:failedToolRecovery,failedNativeTerminals:[...o.tools.values()].filter(row=>row.native_terminal?.status==='failed').map(row=>row.native_terminal),completedNativeTurns,physicalFakeCalls:physical,syntheticCaps:ledger.limits,syntheticUsagePaidOrRealModelUsage:false,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,equivalent_native_settled:close.equivalent_native_settled,native_process_scope_receipts:close.native_process_scope_receipts,final_native_process_scope_receipt:close.final_native_process_scope_receipt,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
   }
   });
 });

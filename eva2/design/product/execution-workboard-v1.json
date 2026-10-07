@@ -16612,7 +16612,7 @@
           ]
         }
       ],
-      "nextAction": "De bestaande native dynamic-tool namespace/naamkoppeling met publieke gegevens aantonen en alleen de ontbrekende getypeerde overgang corrigeren; daarna pas een oorspronkelijke ongebruikte case. Geen CM01–04-herhaling.",
+      "nextAction": "De volgende nog ongebruikte oorspronkelijke OpenClaw-case voorbereiden met bron- en actuele-runtime-toelating op de gerepareerde route. Geen CM01–04-herhaling, geen nieuwe brede vergelijking.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -20278,7 +20278,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "De bestaande native dynamic-tool namespace/naamkoppeling met publieke gegevens aantonen en alleen de ontbrekende getypeerde overgang corrigeren; daarna pas een oorspronkelijke ongebruikte case. Geen CM01–04-herhaling.",
+              "nextAction": "De volgende nog ongebruikte oorspronkelijke OpenClaw-case voorbereiden met bron- en actuele-runtime-toelating op de gerepareerde route. Geen CM01–04-herhaling, geen nieuwe brede vergelijking.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20291,13 +20291,11 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T17:27:27.670596+00:00",
+              "checkedAt": "2026-10-07T18:49:21.208125+00:00",
               "assignment": {
-                "baseCommit": "3750345982462566c7e21145c68ae74321859a90",
+                "baseCommit": "87a3edd5c4e490af1c09ebddddd5a1b8fdb4a6ab",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "Existing P2.1 evidence and workboard",
                   "Private original CM02 parent/child/Inspect binding; protected inputs owned by independent curator"
@@ -20306,18 +20304,22 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Hergebruik bestaande native-routebewijzen; alleen nieuwe case-/historiekbinding beoordelen. Oorspronkelijk proefbudget behouden; creditkosten onbekend.",
-                "currentAction": "CM04 eenmaal uitgevoerd en onafhankelijk als UNKNOWN gesloten: 1/3 beurt, twee juiste privéorigins, 7 volledig afgerekende SDK-calls. De evaluator stopte bij dynamicToolCall failed zonder exact namespace/naamverband. Bodyuitvoering onbekend; geen volledige privacy- of kwaliteitspass, geen herhaling.",
+                "currentAction": "Geneste native Code Mode-identiteit gericht gecorrigeerd en onafhankelijk GO. Publieke native route: 3 beurten,16 tools,cap17 geweigerd,readbacks/afsluiting;11 finalchecks geslaagd. Nul echte provider/modelcalls. Volgende oorspronkelijke case nog niet toegelaten.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "scope": "CM04 original executed once, UNKNOWN retained; minimal observation reviewed",
-                  "originalCalls": 7,
-                  "originalInputTokens": 158724,
-                  "originalOutputTokens": 498,
-                  "realProviderCallsForFocusedChecks": 0,
+                  "concreteOutcome": "Public reproduction found namespace+tool hook mismatch; minimal source correction plus no-I/O review delta;3native turns/16tools/guard/closure verified. Original results untouched.",
+                  "actualProviderCalls": 0,
+                  "originalInputs": 0,
+                  "originalCasesReplayed": false,
+                  "syntheticReplyCountAcrossFourLocalRuns": 12,
+                  "publicNativeRecoverySeconds": 180.18849312799284,
+                  "finalFocusedChecks": 11,
+                  "finalFocusedChecksDurationMilliseconds": 147.007194,
+                  "credits": "unknown; synthetic replies are not paid Eva/provider usage",
                   "runtimeImagesChanged": false,
-                  "nextExecutableActionExists": true
+                  "newProductFunction": false
                 },
-                "stage": "openclaw_original_cm04_unknown_retained_dynamic_identity_binding_pending",
+                "stage": "openclaw_codemode_identity_corrected_reviewed",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-01",
                   "epoch": 1,
@@ -20434,7 +20436,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "De bestaande native dynamic-tool namespace/naamkoppeling met publieke gegevens aantonen en alleen de ontbrekende getypeerde overgang corrigeren; daarna pas een oorspronkelijke ongebruikte case. Geen CM01–04-herhaling.",
+                "nextAction": "De volgende nog ongebruikte oorspronkelijke OpenClaw-case voorbereiden met bron- en actuele-runtime-toelating op de gerepareerde route. Geen CM01–04-herhaling, geen nieuwe brede vergelijking.",
                 "actualUsage": {
                   "scope": "Original CM04 only; development comparison",
                   "providerAttempts": 7,
@@ -21642,7 +21644,7 @@
                   "nativeTools": 16,
                   "elapsedSeconds": 180.95119165799406
                 },
-                "checkedAt": "2026-10-07T18:05:48.238212+00:00",
+                "checkedAt": "2026-10-07T18:49:21.208125+00:00",
                 "cm04Preparation": {
                   "entry": "openclaw:EV003-CM-04:epoch1",
                   "directory": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1",
@@ -21684,6 +21686,22 @@
                   "sourceObservationStatus": "GO_source_checkpoint_only",
                   "sourceObservationProviderCalls": 0,
                   "nativeIdentityNormalizationProven": false
+                },
+                "publicDynamicIdentityDiagnostic": {
+                  "allPublicRunsTerminal": true,
+                  "codeModeIdentityMappingProven": true,
+                  "originalCasesReplayed": false,
+                  "actualModelCalls": 0,
+                  "livePublicExecutionHandle": null,
+                  "publicProbeUsesOriginalInput": false,
+                  "runtimeRecoveryExecutedObserverSha256": "d75b54f4cf644ab92abc0bb68c10ae0a4da116e70d5bf2351ce6619b7666de9a",
+                  "finalObserverSha256": "b87e2a9067733c78958f52b5a1196a928dbc1cc33514d378c69b852233084c67",
+                  "postRuntimeDelta": "Only extra pre-dispatch diagnostic I/O removed, independently reviewed;11 final focused checks. No claim of exact final-source native rerun.",
+                  "evidence": "eva2/evidence/product/p2-openclaw-codemode-identity-correction-20261007.json",
+                  "evidenceSha256": "367940c9ef83cdc679897ea8648646850371e62795c58438015d232610aabb77",
+                  "review": "eva2/reviews/p2-openclaw-codemode-identity-review-20261007.json",
+                  "reviewSha256": "ec0bbcbf4a3d2af1c5b83cf4c1ae70e28461c852b566380a7579d4b458beaefa",
+                  "nextOriginalCaseAdmitted": false
                 }
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
@@ -21785,7 +21803,7 @@
                 "originalCaseRepeated": false,
                 "productChange": false
               },
-              "latestPreparationEvidence": "eva2/evidence/product/p2-original-next-cm04-admission-20261006.json",
+              "latestPreparationEvidence": "eva2/evidence/product/p2-openclaw-codemode-identity-correction-20261007.json",
               "ownerAuthorizationEvidence": "eva2/evidence/product/p2-owner-final-authorization-20261006.json",
               "currentEvaluationEvidence": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
               "nativeAdmissionBlocker": {
@@ -21867,7 +21885,7 @@
               "publicPreparationEvidence": "eva2/evidence/product/p2-openclaw-calendar-correction-20261007.json",
               "nativeToolRuntimeReview": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
               "nativeToolCheckpointPublicationReview": "eva2/reviews/p2-openclaw-calendar-checkpoint-publication-review-20261007.json",
-              "updatedAt": "2026-10-07T18:05:48.238212+00:00"
+              "updatedAt": "2026-10-07T18:49:21.208125+00:00"
             },
             {
               "id": "P2.2",
@@ -22447,7 +22465,7 @@
           "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       },
-      "lastUpdated": "2026-10-07T18:05:48.238212+00:00"
+      "lastUpdated": "2026-10-07T18:13:09.239845+00:00"
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",

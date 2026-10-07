@@ -479,7 +479,17 @@ export class OpenClawAccounting {
     if (row?.status === 'reserved' && !row.dispatched) { row.status = 'cancelled'; this.recordNativeObservation('cancelled', this.nativeIdentity(invocation)); }
   }
   async dynamicTool(call, body) {
-    const row = this.reserveTool(call.callId, call.tool, call.threadId);
+    this.check();
+    // Native Code Mode's pre-hook concatenates namespace and tool without a
+    // separator; direct tools use explicit null. The same callback ID, thread
+    // and turn are admitted together before the body can start.
+    if (this.observeTools && (!Object.hasOwn(call, 'namespace')
+        || !(call.namespace === null || typeof call.namespace === 'string' && call.namespace)
+        || typeof call.threadId !== 'string' || !call.threadId
+        || typeof call.turnId !== 'string' || !call.turnId))
+      throw new Error('exact native dynamic namespace, thread and turn required');
+    const hookName = call.namespace === null ? call.tool : call.namespace + call.tool;
+    const row = this.reserveTool(call.callId, hookName, call.threadId, call.turnId);
     if (row) {
       if (row.dispatched) throw new Error('native dynamic tool executed twice');
       row.status = 'running'; row.dispatched = true;

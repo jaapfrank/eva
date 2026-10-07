@@ -375,5 +375,19 @@
       "receipt": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/dynamic-identity-observation-focused-checks.public.json",
       "receiptSha256": "e7c84779e7e441ef71838ea92c95c2cf13a5117c4b81b5eb6f16904056a76230"
     }
+  },
+  "nativeCodeModeIdentityCorrection": {
+    "evidence": "eva2/evidence/product/p2-openclaw-codemode-identity-correction-20261007.json",
+    "sha256": "367940c9ef83cdc679897ea8648646850371e62795c58438015d232610aabb77",
+    "review": "eva2/reviews/p2-openclaw-codemode-identity-review-20261007.json",
+    "reviewSha256": "ec0bbcbf4a3d2af1c5b83cf4c1ae70e28461c852b566380a7579d4b458beaefa",
+    "publicIdentityMappingProven": true,
+    "sourceCorrected": true,
+    "exactFinalSourceNativeRerunClaim": false,
+    "publicRecoveryNativeGO": true,
+    "originalCM01Through04PreservedUnknown": true,
+    "originalCasesRepeated": false,
+    "nextOriginalSampleAdmitted": false,
+    "actualProviderCalls": 0
   }
 }

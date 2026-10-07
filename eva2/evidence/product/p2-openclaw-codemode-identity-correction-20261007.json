@@ -1,0 +1,319 @@
+{
+  "schema": "OpenClawCodeModeIdentityCorrection/v1",
+  "taskId": "P2.1",
+  "status": "source_and_public_native_binding_independently_reviewed",
+  "closedOriginalCases": [
+    "CM01",
+    "CM02",
+    "CM03",
+    "CM04"
+  ],
+  "closedOriginalCasesRepeated": false,
+  "qualityOfClosedOriginalCases": "UNKNOWN_UNCHANGED",
+  "diagnosticScope": "Public fixture only, same pinned existing native route; no real provider/model call or original evaluation input.",
+  "initialPublicDiagnostics": [
+    {
+      "selected": "memory_search top-level",
+      "outcome": "not offered as top-level, no tool used",
+      "syntheticModelCalls": 3,
+      "seconds": 167.53401439500158
+    },
+    {
+      "selected": "agents_list direct/null namespace",
+      "outcome": "identity observed; one-versus16 unchanged composition assertion failed",
+      "syntheticModelCalls": 4,
+      "seconds": 172.48656825898797
+    }
+  ],
+  "publicCodeModeFailure": {
+    "schema": "OpenClawPublicDynamicIdentityDiagnosis/v1",
+    "outcome": "OBSERVER_REJECTS_EXACT_CODEMODE_IDENTITY_BEFORE_BODY",
+    "ordinaryCompositionPassed": false,
+    "nativeDynamicIdentityProven": true,
+    "normalizationObserved": {
+      "hookName": "openclawmemory_search",
+      "callbackNamespace": "openclaw",
+      "callbackTool": "memory_search",
+      "joinSeparator": "",
+      "hookNameSha256": "12540e189ff5112e1806501c0819c843783d702131ea81cde0f415ec57434ce7",
+      "matchesRetainedCM04PreNameHash": true,
+      "sameToolThreadTurn": true
+    },
+    "publicDynamicIdentity": [
+      {
+        "phase": "pre",
+        "toolName": "openclawmemory_search",
+        "tool_id_sha256": "beeeb430c303afdfaef88b3824d484aeeb9c3d1ac15686344b8054c68d224c2c",
+        "tool_name_sha256": "12540e189ff5112e1806501c0819c843783d702131ea81cde0f415ec57434ce7",
+        "native_thread_id_sha256": "2589208010e525a8edc428c125a924e80528d919b381bad365fe4e8a1b4c277f",
+        "native_turn_id_sha256": "ffe46ac95d6bb073461ecb2f401af76b5e8333c391d1b546adb87ab78c2640b8",
+        "registration_session_id_sha256": "c8c681036449079d831a08c1587df1ed7b851fcfbaaed3546f42970f51fbced4",
+        "relay_id_sha256": "e2055365c39c219dddc829d2e12e519adb69c601b4777f2b5662a77444fdcc66",
+        "relay_generation_sha256": "78cc7e80d9d1210242f497a27661b04b2bd77d71f5accd795668e0f55a4fd201",
+        "registration_signal_aborted": false
+      },
+      {
+        "phase": "handler",
+        "tool": "memory_search",
+        "namespace": "openclaw",
+        "namespacePresent": true,
+        "native_turn_id_sha256": "ffe46ac95d6bb073461ecb2f401af76b5e8333c391d1b546adb87ab78c2640b8",
+        "tool_id_sha256": "beeeb430c303afdfaef88b3824d484aeeb9c3d1ac15686344b8054c68d224c2c",
+        "native_thread_id_sha256": "2589208010e525a8edc428c125a924e80528d919b381bad365fe4e8a1b4c277f",
+        "bodyEntered": false,
+        "returned": false,
+        "error": "native tool identity changed"
+      },
+      {
+        "phase": "completed",
+        "tool": "memory_search",
+        "namespace": "openclaw",
+        "status": "failed",
+        "success": false,
+        "tool_id_sha256": "beeeb430c303afdfaef88b3824d484aeeb9c3d1ac15686344b8054c68d224c2c",
+        "native_thread_id_sha256": "2589208010e525a8edc428c125a924e80528d919b381bad365fe4e8a1b4c277f",
+        "native_turn_id_sha256": "ffe46ac95d6bb073461ecb2f401af76b5e8333c391d1b546adb87ab78c2640b8"
+      }
+    ],
+    "completedNativeTurns": 0,
+    "nativeToolRows": 1,
+    "nativeDispatchedTools": 0,
+    "toolCoverage": false,
+    "nativeCoverageFailure": {
+      "item_type": "dynamicToolCall",
+      "item_id_sha256": "beeeb430c303afdfaef88b3824d484aeeb9c3d1ac15686344b8054c68d224c2c",
+      "thread_id_sha256": "2589208010e525a8edc428c125a924e80528d919b381bad365fe4e8a1b4c277f",
+      "observed_status": "reserved"
+    },
+    "close": {
+      "native_closed": false,
+      "equivalent_native_settled": false,
+      "physical_transports_exited": true,
+      "pending_sdk": 0,
+      "pending_tools": 1,
+      "tool_coverage": false,
+      "cancel_errors": [
+        {
+          "error_class": "Error",
+          "error_code": null,
+          "http_status": null
+        },
+        {
+          "error_class": "Error",
+          "error_code": null,
+          "http_status": null
+        },
+        {
+          "error_class": "Error",
+          "error_code": null,
+          "http_status": null
+        }
+      ]
+    },
+    "executionReceipt": {
+      "fixtureRoot": "/tmp/eva-p2-openclaw-process-scope-20261007-6oj_ovlm",
+      "exitCode": 1,
+      "timedOut": false,
+      "elapsedSeconds": 110.74431057700713,
+      "failureClass": null,
+      "outputSha256": "93cb58bae26dce3743be8d341fa82e7e51fd2f2c0abf69215760b5123450dbca",
+      "externalInferenceCalls": 0,
+      "originalInputs": 0,
+      "namespacePidsAfterScopeStop": [],
+      "scopePopulatedAfterStop": false,
+      "scopeStopExitCode": 5,
+      "operatorArtifactsBefore": {
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/openclaw.json": "ffa94d9d6959d11b0cf35b21cf2a796b70a153ffbb53c76e7171d410d373a87a",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite": "0250fd31e9145480a7a88813d9c3f556cf6db893cf9a0a41cbb7e7f7ee32e5ca",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-wal": "86695711b6831cd66fdac82ffd6e05524b637a48ccd5e6d08740f34b9640bfbb",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-shm": "d5617f5cb2f5f8e152c7ef10ec42e927e25fd313baf4b093735395398cf7418d",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/auth.json": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/models_cache.json": "0806e7fcd87cadfca08f1fd7420121978bf73a550707a68d721fca80b33cb5da"
+      },
+      "operatorArtifactsAfter": {
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/openclaw.json": "ffa94d9d6959d11b0cf35b21cf2a796b70a153ffbb53c76e7171d410d373a87a",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite": "0250fd31e9145480a7a88813d9c3f556cf6db893cf9a0a41cbb7e7f7ee32e5ca",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-wal": "86695711b6831cd66fdac82ffd6e05524b637a48ccd5e6d08740f34b9640bfbb",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-shm": "d5617f5cb2f5f8e152c7ef10ec42e927e25fd313baf4b093735395398cf7418d",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/auth.json": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/models_cache.json": "0806e7fcd87cadfca08f1fd7420121978bf73a550707a68d721fca80b33cb5da"
+      },
+      "scopeReceipts": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-codemode-20261007/scope-0faeb61ff2954a869e15f0bce21b3b1a/scope-001.json",
+          "sha256": "fbf2d6a032b356ea71240b31e4760b66e79fec4fe1c669a279aa23a603836ed2"
+        }
+      ],
+      "scopeErrors": [],
+      "actorBeforeFirstExecInScope": true,
+      "supplementaryGroups": [],
+      "noNewPrivileges": true,
+      "allCapabilitySetsEmpty": true,
+      "singleAbsoluteDeadlineSeconds": 480,
+      "controllerOutsideActorScope": true,
+      "preBoundRootIdentityReceipt": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-codemode-20261007/scope-0faeb61ff2954a869e15f0bce21b3b1a/pre-bound-root.json",
+      "localBrokerUnreachabilityProved": false,
+      "cleanupErrors": []
+    },
+    "technicalReceiptSha256": "a6f1d337835e8d6d033d652916319d9492424f11f5eb387c2890f8bca42e3141",
+    "syntheticModelCalls": 1,
+    "actualModelCalls": 0,
+    "originalInputs": 0,
+    "replayedOriginalCases": false,
+    "candidateCorrection": "Join exact native callback namespace+tool for reserveTool and include its native turnId; no unobserved tool-terminal acceptance."
+  },
+  "publicNativeRecovery": {
+    "schema": "OpenClawPublicCodeModeIdentityRecovery/v1",
+    "nativeFixturePassed": true,
+    "runtimeExecutedObserverSha256": "d75b54f4cf644ab92abc0bb68c10ae0a4da116e70d5bf2351ce6619b7666de9a",
+    "runtimeExecutedFixtureSha256": "c0627dccf28f193161ac5455aee90f1e45d4b3a7f4b732c46f53f5448ee8a95c",
+    "finalObserverSha256": "b87e2a9067733c78958f52b5a1196a928dbc1cc33514d378c69b852233084c67",
+    "finalSourceDelta": "Only extra diagnostic fsync after reserveTool.check removed after independent review; name/turn binding and all native terminal rules unchanged. Final stop/identity checks separate. Native positive proof is not mislabeled as an exact final-source native rerun.",
+    "executionReceipt": {
+      "fixtureRoot": "/tmp/eva-p2-openclaw-process-scope-20261007-qry00yj1",
+      "exitCode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 180.18849312799284,
+      "failureClass": null,
+      "outputSha256": "a78aee99e351ab2d99e8c279d9848998526922e2d444800b6bcf5917bddb6acb",
+      "externalInferenceCalls": 0,
+      "originalInputs": 0,
+      "namespacePidsAfterScopeStop": [],
+      "scopePopulatedAfterStop": false,
+      "scopeStopExitCode": 5,
+      "operatorArtifactsBefore": {
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/openclaw.json": "ffa94d9d6959d11b0cf35b21cf2a796b70a153ffbb53c76e7171d410d373a87a",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite": "0250fd31e9145480a7a88813d9c3f556cf6db893cf9a0a41cbb7e7f7ee32e5ca",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-wal": "86695711b6831cd66fdac82ffd6e05524b637a48ccd5e6d08740f34b9640bfbb",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-shm": "d5617f5cb2f5f8e152c7ef10ec42e927e25fd313baf4b093735395398cf7418d",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/auth.json": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/models_cache.json": "0806e7fcd87cadfca08f1fd7420121978bf73a550707a68d721fca80b33cb5da"
+      },
+      "operatorArtifactsAfter": {
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/openclaw.json": "ffa94d9d6959d11b0cf35b21cf2a796b70a153ffbb53c76e7171d410d373a87a",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite": "0250fd31e9145480a7a88813d9c3f556cf6db893cf9a0a41cbb7e7f7ee32e5ca",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-wal": "86695711b6831cd66fdac82ffd6e05524b637a48ccd5e6d08740f34b9640bfbb",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/state/openclaw.sqlite-shm": "d5617f5cb2f5f8e152c7ef10ec42e927e25fd313baf4b093735395398cf7418d",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/auth.json": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+        "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/models_cache.json": "0806e7fcd87cadfca08f1fd7420121978bf73a550707a68d721fca80b33cb5da"
+      },
+      "scopeReceipts": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/scope-f328b0607d6d47eea6bde14b3f40b5c3/scope-001.json",
+          "sha256": "88957a631661ddfde271366222306d764ddbdfb8f67e94ff11155e95d9d1546f"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/scope-f328b0607d6d47eea6bde14b3f40b5c3/scope-002.json",
+          "sha256": "7d756baf1beb099ea11c9c843ccabe8fc0235d08040a7de4aaeab28bf513fef6"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/scope-f328b0607d6d47eea6bde14b3f40b5c3/scope-003.json",
+          "sha256": "79ba50895a2241bd80b3ba32546b63618bebbd0a6bf03e3b5e8fe8ca078dc218"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/scope-f328b0607d6d47eea6bde14b3f40b5c3/scope-004.json",
+          "sha256": "8c0ac750791ae0ec0dc885b84c74a67ea27bc3634d7e298167c970e88de65d9b"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/scope-f328b0607d6d47eea6bde14b3f40b5c3/scope-005.json",
+          "sha256": "dadfcf4292d4953f8f2ccc17f48830b382c352551c9b8f4fc7df219edaea58eb"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/scope-f328b0607d6d47eea6bde14b3f40b5c3/scope-006.json",
+          "sha256": "49675dba34ef1962769dade5f6ae6becd0216edae7cfd51b0618b26eb038ab30"
+        }
+      ],
+      "scopeErrors": [],
+      "actorBeforeFirstExecInScope": true,
+      "supplementaryGroups": [],
+      "noNewPrivileges": true,
+      "allCapabilitySetsEmpty": true,
+      "singleAbsoluteDeadlineSeconds": 480,
+      "controllerOutsideActorScope": true,
+      "preBoundRootIdentityReceipt": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-dynamic-identity-recovery-20261007/scope-f328b0607d6d47eea6bde14b3f40b5c3/pre-bound-root.json",
+      "localBrokerUnreachabilityProved": false,
+      "cleanupErrors": []
+    },
+    "technicalReceiptSha256": "b0a82cf9ff6f9426ed213fa69d7d4b42cf226c5bb50cb9bc6ff11fbf07974c04",
+    "publicDynamicIdentity": [
+      {
+        "phase": "handler",
+        "tool": "memory_search",
+        "namespace": "openclaw",
+        "namespacePresent": true,
+        "native_turn_id_sha256": "2d59919c33126128d35f25fb0cb139e381d1e83deebad3ccbe1c24156af9ab5f",
+        "tool_id_sha256": "db4ac56dcb4c30beaea96d78f14ce0799327a897dea3e7a0da8d364ca6c6a334",
+        "native_thread_id_sha256": "cedb10b93a8c7cb0fdb9334d9a3087db388a7bd0977a0dba13661a59f6a9a172",
+        "bodyEntered": true,
+        "returned": true
+      },
+      {
+        "phase": "completed",
+        "tool": "memory_search",
+        "namespace": "openclaw",
+        "status": "completed",
+        "success": true,
+        "tool_id_sha256": "db4ac56dcb4c30beaea96d78f14ce0799327a897dea3e7a0da8d364ca6c6a334",
+        "native_thread_id_sha256": "cedb10b93a8c7cb0fdb9334d9a3087db388a7bd0977a0dba13661a59f6a9a172",
+        "native_turn_id_sha256": "2d59919c33126128d35f25fb0cb139e381d1e83deebad3ccbe1c24156af9ab5f"
+      }
+    ],
+    "completedNativeTurns": 3,
+    "nativeToolRows": 16,
+    "nativeDispatchedTools": 16,
+    "toolCoverage": true,
+    "seventeenthSameObserverRefusedBeforeBody": true,
+    "scenarioGenerations": [
+      0,
+      0,
+      1
+    ],
+    "close": {
+      "native_closed": false,
+      "equivalent_native_settled": true,
+      "physical_transports_exited": true,
+      "pending_sdk": 0,
+      "pending_tools": 0,
+      "tool_coverage": true,
+      "cancel_errors": []
+    },
+    "syntheticModelCalls": 4,
+    "syntheticUsagePaidOrRealModelUsage": false,
+    "actualModelCalls": 0,
+    "originalInputs": 0,
+    "originalCasesReplayed": false,
+    "originalCM01Through04Quality": "UNKNOWN_UNCHANGED",
+    "finalCandidateRuntimeImagesChanged": false,
+    "automaticDreamModeImplemented": false,
+    "nextOriginalSampleAdmitted": false
+  },
+  "finalFocusedChecks": {
+    "schema": "OpenClawDynamicIdentityFocusedChecks/v1",
+    "sourceHashes": {
+      "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs": "b87e2a9067733c78958f52b5a1196a928dbc1cc33514d378c69b852233084c67",
+      "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs": "c0627dccf28f193161ac5455aee90f1e45d4b3a7f4b732c46f53f5448ee8a95c"
+    },
+    "selectedChecks": 11,
+    "passed": 11,
+    "failed": 0,
+    "durationMilliseconds": 147.007194,
+    "actualModelCalls": 0,
+    "originalInputs": 0,
+    "terminalRulesChanged": false,
+    "criteriaChanged": false,
+    "newRetainedCallbackIoRemoved": true,
+    "nativeProofExecutedSourceDistinct": true
+  },
+  "independentReview": {
+    "path": "eva2/reviews/p2-openclaw-codemode-identity-review-20261007.json",
+    "sha256": "ec0bbcbf4a3d2af1c5b83cf4c1ae70e28461c852b566380a7579d4b458beaefa",
+    "scope": "Source correction/public positive binding/publication only; no original case admission or quality claim."
+  },
+  "actualModelCalls": 0,
+  "credits": "unknown; synthetic fixture replies are not paid model usage",
+  "newProductFunction": false,
+  "automaticDreamModeImplemented": false,
+  "originalAggregateSha256Unchanged": "a227dd6fde52a51590741bc7b664e850afa66f9b8bf098768dc8a7be58f1d0e8",
+  "nextOriginalSampleAdmitted": false,
+  "reviewedInputSha256": "109d7d0bbd52fa98865f3a66849331930cdfe8a18cbee5facb9caa10a11d44ee"
+}

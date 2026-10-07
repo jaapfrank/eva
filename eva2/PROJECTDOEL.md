@@ -50,11 +50,19 @@ de tweede persoon is het beschermde gegeven niet gevonden; de gehele case blijft
 UNKNOWN, zonder volledige privacy-/antwoordscore of herhaling.
 Zie evidence/product/p2-openclaw-original-cm04-result-20261007.json.
 
-De eerstvolgende handeling is de bestaande native dynamische toolidentiteit met
-publieke gegevens aantonen. Alleen contentvrije naam-/namespacehashes worden
-toegevoegd; toelating, criteria en stopvoorwaarden blijven gelijk. Geen nieuwe
-echte vergelijkingscall vóór een bewezen passende binding; gesloten CM01–CM04
-blijven gesloten. Dit is noodzakelijke proefadapterarbeid, geen nieuwe Eva-functie.
+De publieke Code Mode-proef heeft de oorzaak nu exact aangetoond: de native
+hook gebruikt openclawmemory_search, de callback namespace=openclaw en
+tool=memory_search. Alleen de naamkoppeling en exacte beurtbinding zijn gecorrigeerd.
+De extra diagnostische I/O vóór dispatch is na onafhankelijke review verwijderd.
+De publieke native herstelproef geeft 3 beurten/16 tools, cap17 geweigerd en
+readbacks/afsluiting; 11 gerichte checks op de definitieve bron zijn geslaagd.
+De publiek uitgevoerde bron en de definitieve no-I/O-delta zijn apart bewaard;
+geen claim dat de definitieve bron nogmaals native is uitgevoerd. Nul echte
+modelcalls of oorspronkelijke proefvragen; gesloten CM01–CM04 blijven UNKNOWN.
+Dit is noodzakelijke proefadapterarbeid, geen nieuwe Eva-functie.
+Zie evidence/product/p2-openclaw-codemode-identity-correction-20261007.json en
+reviews/p2-openclaw-codemode-identity-review-20261007.json. Daarna de nog ongebruikte
+oorspronkelijke case voorbereiden; bron/runtime-toelating daarvoor is nog niet gegeven.
 
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 

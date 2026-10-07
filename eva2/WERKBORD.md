@@ -1,4 +1,27 @@
-## Actueel 7 oktober — CM04 behouden; dynamische toolbinding nog open
+## Actueel 7 oktober — geneste toolregistratie gecorrigeerd; vergelijking blijft open
+
+**Technisch afgerond binnen P2.1:** de naamkoppeling van de bestaande native
+Code Mode-route is gericht gecorrigeerd en onafhankelijk GO. De publieke native
+proef maakte 3 beurten/16 tools af, weigerde tool17 vóór uitvoering en bevestigde
+readbacks/fysieke afsluiting. Op de definitieve bron slagen 11 gerichte checks.
+De uitgevoerde bron en de latere minimale verwijdering van extra logging zijn
+apart vastgelegd; geen fictieve native-hertest van de definitieve bron.
+
+**Wat nog resteert:** de volgende ongebruikte oorspronkelijke OpenClaw-case
+voorbereiden en laten toelaten op de gerepareerde route. CM01–CM04 blijven
+gesloten UNKNOWN, zonder herhaling of achteraf verzonnen kwaliteitsscore.
+Geen nieuwe afgeronde productfunctie of bewezen algemene concurrentiewinst.
+
+**Verbruik:** vier gerichte lokale proeven, samen 12 nagebootste antwoorden;
+nul echte Eva/provider-modelcalls of oorspronkelijke proefvragen. Creditkosten
+voor Codex-ontwikkeling zijn onbekend. Spraak blijft geparkeerd; de automatische droomplanner is nog niet gebouwd.
+L3.6–L3.7 en eerdere acceptaties blijven staan.
+
+Bewijs: evidence/product/p2-openclaw-codemode-identity-correction-20261007.json.
+Review: reviews/p2-openclaw-codemode-identity-review-20261007.json.
+Actuele kleine taak: P2.1 in design/product/execution-workboard-v1.json.
+
+## Eerder 7 oktober — CM04 UNKNOWN bewaard
 
 **Afgerond binnen de vergelijking:** de oorspronkelijke OpenClaw-CM04 is eenmaal
 uitgevoerd en onafhankelijk als UNKNOWN gesloten. Eén van drie beurten is compleet;
