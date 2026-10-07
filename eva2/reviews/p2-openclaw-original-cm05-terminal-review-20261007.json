@@ -1,0 +1,57 @@
+{
+  "contract": "Ev003IndependentOriginalTerminalReview/v1",
+  "date": "2026-10-07",
+  "entry": "openclaw:EV003-CM-05:epoch1",
+  "decision": "GO_publication_of_closed_original_result_only",
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json",
+    "sha256": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+  },
+  "private_assessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/terminal-independent-assessment.private.json",
+    "sha256": "a61941f68b798cbdb43a7de2f37b8a5e47e766dcd46e6be580eb8d9c04e650b5"
+  },
+  "reused_source_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm05-source-review-20261007.json",
+    "sha256": "d5adc10bab2274e91768774351a4fd328a23b5d266f1582468e9b982aff689e1"
+  },
+  "reused_readiness_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm05-ready-review-20261007.json",
+    "sha256": "9f40db014b6e6f4d602d8038ab82d25a8b12364d0b9bba8be215508276abe348"
+  },
+  "verified": {
+    "receipt_and_native_result_match_dispatch_hashes": true,
+    "projection_sources_and_own_auth_unchanged": true,
+    "closed_cm01_to_cm04_receipts_exact": true,
+    "prior16_authority_values_and_revisions_exact": true,
+    "all48_model_context_hashes_match": true,
+    "all70_retained_workspace_file_hashes_match": true,
+    "three_answers_match_native_mirrors": true,
+    "four_before_origins_three_after_origins_and_four_SQLite_origins_match_projection": true,
+    "original_clock_sequence_preserved": true,
+    "sdk_usage_complete": true,
+    "tool_rows_all_dispatched_settled": true,
+    "no_coverage_stop": true,
+    "physical_scope_resources_removed": true
+  },
+  "decision_basis": [
+    "Exactly 16 admitted provider requests completed; the original attempt limit refused further dispatch during the fourth turn. Later stopped-ledger refusals do not establish another observer defect.",
+    "Independent retained evidence proves incorrect person-bound recall, overwritten active memory and cross-person private model-context exposure under the original hard condition.",
+    "Official semantic/human ratings remain null. The missing fourth reply and final equivalent/native settlement are not promoted to passes."
+  ],
+  "scope": {
+    "source_change_authorized": false,
+    "replay_authorized": false,
+    "new_original_admission": false,
+    "criteria_changed": false,
+    "quality_or_superiority_claim": false
+  },
+  "reviewer_activity": {
+    "new_model_calls": 0,
+    "new_tests": 0,
+    "native_or_resource_starts": 0,
+    "authority_mutations": 0,
+    "protected_content_disclosed_to_builder": false,
+    "files_written": "Only two assigned public result/review files and one protected assessment receipt."
+  }
+}

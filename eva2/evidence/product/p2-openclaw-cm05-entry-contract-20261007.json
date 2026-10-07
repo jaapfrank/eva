@@ -1,0 +1,163 @@
+{
+  "actor_count": 2,
+  "actor_indices": [
+    0,
+    1,
+    0,
+    1
+  ],
+  "actors_verified_by": "original fixture identity adapter; never name inference",
+  "audience": "private",
+  "audio_assets_count": 0,
+  "authority_sha256_unchanged": "a227dd6fde52a51590741bc7b664e850afa66f9b8bf098768dc8a7be58f1d0e8",
+  "availability": {
+    "closed_cm01_cm02_cm03_cm04_untouched": true,
+    "next_original_unused_openclaw_slot": true,
+    "original_sample_admission": false,
+    "same_original_family_epoch_order": true
+  },
+  "basis_commit": "72e64af3773c423e6d6f5946dbee4a5b2ddc5a36",
+  "browser_pages_count": 0,
+  "calendar_advance_count": 1,
+  "case_id": "EV003-CM-05",
+  "case_sha256": "928a518791001ba235b1e3ee3fa34f0f70058307f3b643530f29dc2b0358ac86",
+  "clock_generations": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "clock_offset_deltas_milliseconds": [
+    0,
+    0,
+    86400000,
+    86400000
+  ],
+  "clock_semantics": "Native offset_delta_milliseconds is measured from the scenario initial offset. The final private session change has no new clock event and retains the prior +86400000ms; it does not reset calendar state.",
+  "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+  "contract": "OpenClawOriginalEntryContract/v1",
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "driver_changes_required": [
+    "Case identifiers/fresh paths and exact-unused-slot/history guards.",
+    "Accept four original user turns and four sessions; actors [0,1,0,1], generations [0,0,1,1], initial-relative clock offsets [0,0,86400000,86400000].",
+    "Reuse current CM04 native recorder/runContext/origin readback for both original principals and all four turns; preserve same actor chat across separate sessions."
+  ],
+  "entry": "openclaw:EV003-CM-05:epoch1",
+  "epoch": 1,
+  "equality": {
+    "criteria_changed": false,
+    "oracle_included": false,
+    "original_actors_canonical_principals_exact": true,
+    "original_audience_and_grants_unchanged": true,
+    "original_clock_initial_timezone_and_event_exact": true,
+    "original_session_controls_exact": true,
+    "original_text_order_exact": true
+  },
+  "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+  "historical_rows_canonical_sha256": "39bee7086d5a37d604ecf5d1ff428341ff14697e93d659a76e930ccf7e6a2d26",
+  "historical_rows_count": 16,
+  "human_ratings": [
+    null,
+    null
+  ],
+  "inference_admitted": false,
+  "initial_files_count": 0,
+  "limits_unchanged": {
+    "attempts": 16,
+    "input_tokens": 1048576,
+    "output_tokens": 19200,
+    "tool_calls": 16,
+    "wall_seconds": 480
+  },
+  "lineage": {
+    "commitment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/dataset-commitment.private.json",
+      "sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d"
+    },
+    "evaluator": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    "original_event_projector": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm04-20261006-e87d5a92/original-event-projector.private.py",
+      "sha256": "7244349fe04e1ce83fd3005bdb880c0ab7050aec83b29cb322efcd1e7a1deb43"
+    },
+    "plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "prior_native_projection": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/cm04-epoch1.native-inputs.private.json",
+      "sha256": "830464b86b5a9504d94ed9eb689b8999f9f068122f7f373586452e2056fbca99"
+    },
+    "prior_technical_contract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/projection-contract-technical.private.json",
+      "sha256": "ea9af3c35e9e57988cf1a49d6e04996c6d501677d854cc393d8e8edd6e6c9a42"
+    }
+  },
+  "missing_native_mechanism": null,
+  "native_mapping": {
+    "native_session_id": "Existing recordInboundSessionMeta before each turn, actual durable entry.sessionId to ordinary agentCliCommand; allow native rollover and validate durable direct origin after each turn.",
+    "policy": "One main agent/profile/workspace/native memory policy, original CLI authority and deliver:false; no person-profile split, dmScope override, prompt annotation or privacy improvement.",
+    "principal": "Exact canonical original principal in provisioning.actors and per-turn SenderId/From/NativeDirectUserId/runContext.senderId.",
+    "private_chat": "Existing UUIDv5 URL recipe ev003:<dataset>:<case>:epoch1:openclaw:private-chat:<principal>; same principal keeps the same chat across sessions.",
+    "session": "Existing UUIDv5 URL recipe ev003:<dataset>:<case>:epoch1:openclaw:session:<index>; key agent:main:<context_id>."
+  },
+  "original_event_advances_milliseconds": [
+    0,
+    0,
+    86400000,
+    0
+  ],
+  "participant": "openclaw",
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/cm05-epoch1.native-inputs.private.json",
+    "sha256": "093e0ce239a728409b42a483a31db8db0781f0cdad5aeefd2869ad428b1f5703"
+  },
+  "provider_calls": 0,
+  "readbacks_required": [
+    "Actual native private origin and session entries before/after all four turns, respecting genuine rollover.",
+    "All actual replies, mirrored history, native workspace/memory snapshots and all outgoing foreground/helper model bytes bound to original actor/session/clock.",
+    "Complete native SDK/tool/background/source-holder accounting, original stop/deadline and equivalent retirement/final physical closure proof.",
+    "Apply only original factual/readback criteria; two human ratings remain null without actual independent raters."
+  ],
+  "reservations_created": 0,
+  "resource_preparation_admitted": false,
+  "resources_started": 0,
+  "reviewer_preparation_note": "One metadata-only read assumed provisioning at packet root rather than participants.openclaw and raised KeyError before any write; corrected path only, no input/resource/registry effect.",
+  "schema": {
+    "provisioning": {
+      "actors": "array of {actor_index:int,actor_id:canonical original principal string}",
+      "audience_kind": "private"
+    },
+    "turns": {
+      "actor_index": "int",
+      "clock": "unchanged original generation/offset object",
+      "context_id": "UUIDv5 by participant/case/epoch/session",
+      "nativeInboundContext": "{SenderId,From,To,NativeDirectUserId,NativeChannelId,ChatType,Surface,AccountId}",
+      "nativeRunContext": "{senderId,chatId,currentChannelId,accountId}",
+      "ordinal": "int",
+      "session_index": "int",
+      "session_key": "agent:main:<context_id>",
+      "text": "unchanged original text"
+    }
+  },
+  "semantic_scores": null,
+  "service_fixture_count": 0,
+  "session_count": 4,
+  "session_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "setup_turn_count": 0,
+  "status": "PROJECTION_READY_SOURCE_AND_ACTUAL_READINESS_REVIEW_REQUIRED",
+  "technical_contract": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/projection-contract-technical.private.json",
+    "sha256": "7575d76a3cc28391546d13248a9ddba78c65dee4ed362dec81e5da00a1667a1c"
+  },
+  "turn_count": 4,
+  "unknown_person_turns": 0
+}

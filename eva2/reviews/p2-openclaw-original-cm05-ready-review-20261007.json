@@ -1,0 +1,110 @@
+{
+  "schema": "OpenClawOriginalActualReadyIndependentReview/v1",
+  "date": "2026-10-07",
+  "taskId": "P2.1",
+  "entry": "openclaw:EV003-CM-05:epoch1",
+  "run_handle": "ev003-openclaw-cm05-native-8adaeb329efc44f783d10fd181a55de5",
+  "decision": "GO_exact_same_waiting_preparation_one_original_input_release",
+  "coordinator_exec_handle": 39323,
+  "bindings": {
+    "source_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm05-source-review-20261007.json",
+      "sha256": "d5adc10bab2274e91768774351a4fd328a23b5d266f1582468e9b982aff689e1"
+    },
+    "source_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/source-admission.private.json",
+      "sha256": "bc97ed9160fab67672e00f2257d77eeebe532b14cd26bb823942bff2c2a1a95c"
+    },
+    "actual_ready": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+      "sha256": "e1d972d7e9212f4a8d006023f4b1f8a00d18a7dfb231ce115a2d06eeeb8c1ef9"
+    },
+    "inspect_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+      "sha256": "d105d3c81089722bfe68b027837bc901d2893f222d0f169228896434e51eb41a"
+    },
+    "private_technical_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/actual-ready-review-technical.private.json",
+      "sha256": "7bd86c634eb012372dd899c9581756ae766bb52670e8c599f624e95a8b503164"
+    },
+    "projection_sha256": "093e0ce239a728409b42a483a31db8db0781f0cdad5aeefd2869ad428b1f5703",
+    "authority_after_reservation_sha256": "6d2e4f7cec9512280b8889f2e95f8b772f888e5abd6071a7f04e0f97c97dfe64"
+  },
+  "verified": {
+    "same_waiting_Inspect_parent_process_chain": true,
+    "exact_labelled_container_network_image_namespace": true,
+    "actual_parent_owned_socket_and_endpoint_only_egress": true,
+    "own_native_auth_unchanged_readable_by_UID1000": true,
+    "root_authority_unreadable_by_UID1000": true,
+    "all_44_frozen_pins_unchanged": true,
+    "all_16_prior_history_values_revisions_exact": true,
+    "only_new_CM05_row_revision0": true,
+    "provider_attempts": 0,
+    "native_input_or_context_started": false,
+    "sample_deadline_or_release_present": false,
+    "owner_stop_present": false,
+    "controller_errors": 0,
+    "ready_network_external_events": 0
+  },
+  "release_boundary": "Root may finalize the reviewed source/readiness provenance and release exactly once to this existing waiting preparation. Preserve current reservation and 16-row history; no new process, reset, replay or replacement slot. One original 480-second deadline starts immediately before native child dispatch after exclusive release, as reviewed.",
+  "unchanged_conditions": {
+    "turns": 4,
+    "actors": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "sessions": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "clock_generations": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "clock_offsets_milliseconds": [
+      0,
+      0,
+      86400000,
+      86400000
+    ],
+    "limits": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "models": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      }
+    }
+  },
+  "findings": [],
+  "limits": [
+    "Readiness is not a native result or privacy/quality pass. Verify actual private origins/readbacks/model contexts/accounting and physical closure after the run.",
+    "CM01–04 remain closed UNKNOWN; human ratings and final semantic scores remain unjudged.",
+    "No blanket OS-broker isolation claim; existing source-holder and equivalent-settlement evidence remains required."
+  ],
+  "reviewer_activity": {
+    "resource_or_native_starts": 0,
+    "provider_or_auth_calls": 0,
+    "tests": 0,
+    "reservations": 0,
+    "release_writes": 0,
+    "held_text_reads": 0
+  }
+}

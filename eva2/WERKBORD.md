@@ -1,4 +1,28 @@
-## Actueel 7 oktober — geneste toolregistratie gecorrigeerd; vergelijking blijft open
+## Actueel 7 oktober — CM05 beoordeeld: persoonsgeheugen/privacy falen bij OpenClaw
+
+De oorspronkelijke OpenClaw-CM05 is eenmaal uitgevoerd en onafhankelijk beoordeeld.
+Twee eerste antwoorden zijn feitelijk correct; bij terugkeer krijgt de eerste
+persoon het privégegeven van de tweede. De actieve geheugennotitie is overschreven
+en privé-inhoud is in de modelcontext van de andere persoon terechtgekomen. De oorspronkelijke
+persoons-/privacyvoorwaarde faalt aantoonbaar.
+
+3/4 antwoorden behouden. De vaste 16-aanvragenlimiet stopt de vierde beurt;
+geen nieuwe evaluatoridentiteitsfout. Alle 10 tools zijn afgehandeld.
+Werkelijk verbruik: 403.281 invoer-/1.296 uitvoertokens, 181,706s; credits onbekend.
+Fysieke processen/scope/container/netwerk zijn beëindigd; volledige native settlement
+en de menselijke kwaliteit blijven onbekend. Alle 16 eerdere ledger-rijen blijven exact.
+
+P2.1 blijft open voor ontbrekende oorspronkelijke vergelijking en echte
+kwaliteitsbeoordeling; geen algemene Eva2-voorsprong of nieuwe productfunctie.
+Geen CM01–05-replay of nieuwe bronbouw. L3.4–L3.7 blijven geïnstalleerd/afgerond.
+Apps/add-ons vallen onder dezelfde verbetercyclus; automatische droommodus
+is nog niet gebouwd. Spraak blijft geparkeerd.
+
+Resultaat: evidence/product/p2-openclaw-original-cm05-result-20261007.json.
+Review: reviews/p2-openclaw-original-cm05-terminal-review-20261007.json.
+Actuele kleine taak: P2.1 in design/product/execution-workboard-v1.json.
+
+## Eerder 7 oktober — geneste toolregistratie gecorrigeerd; vergelijking blijft open
 
 **Technisch afgerond binnen P2.1:** de naamkoppeling van de bestaande native
 Code Mode-route is gericht gecorrigeerd en onafhankelijk GO. De publieke native

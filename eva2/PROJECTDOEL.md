@@ -64,6 +64,19 @@ Zie evidence/product/p2-openclaw-codemode-identity-correction-20261007.json en
 reviews/p2-openclaw-codemode-identity-review-20261007.json. Daarna de nog ongebruikte
 oorspronkelijke case voorbereiden; bron/runtime-toelating daarvoor is nog niet gegeven.
 
+CM05 is vervolgens eenmaal uitgevoerd en onafhankelijk gesloten: 3/4 antwoorden
+behouden. Beide eerste erkenningen kloppen, maar de terugkerende persoon krijgt
+het privégegeven van de andere. Het geheugenreadback en de oorspronkelijke harde
+persoons-/privacyvoorwaarde falen: gedeelde notitie overschreven, privéfeit in de
+andere persoonscontext. De vaste limiet van 16 modelaanvragen stopt de vierde beurt; geen
+nieuwe evaluatoridentiteitsfout. 16 volledige SDK-afrekeningen, 10 afgehandelde tools,
+403.281 invoer-/1.296 uitvoertokens, 181,706s. Eerdere 16 ledger-rijen exact behouden.
+Fysieke resources beëindigd; volledige native afsluiting, het vierde antwoord en
+menselijke kwaliteit blijven onbekend. Geen algemene superioriteit of nieuwe functie.
+Zie evidence/product/p2-openclaw-original-cm05-result-20261007.json en
+reviews/p2-openclaw-original-cm05-terminal-review-20261007.json. P2.1 blijft open
+voor werkelijk ontbrekende oorspronkelijke dekking; geen CM01–05-herhaling.
+
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 
 Het hervatte app-goal is actief. Wijzigingen aan de aansturing staan in deze

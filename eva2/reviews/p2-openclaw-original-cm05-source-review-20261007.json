@@ -1,0 +1,124 @@
+{
+  "schema": "OpenClawOriginalSourceIndependentReview/v1",
+  "date": "2026-10-07",
+  "taskId": "P2.1",
+  "entry": "openclaw:EV003-CM-05:epoch1",
+  "basis_commit": "72e64af3773c423e6d6f5946dbee4a5b2ddc5a36",
+  "decision": "GO_resource_preparation_only",
+  "input_release_admitted": false,
+  "next_gate": "Separate actual-ready review for the exact waiting original CM05 process before one exclusive release.",
+  "bindings": {
+    "draft": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/parent-cm05-preparation-draft.private.json",
+      "sha256": "95c8176fe6e2dc9b6b61dca2835121f67e94a42794442e6a3bcdceba1799197d"
+    },
+    "private_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/source-review-technical.private.json",
+      "sha256": "1c3d426316a25d01cf84ca8dfc6da4133c611ca4465708c7fb5fa386fee6bd42"
+    },
+    "projection_contract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/projection-contract-technical.private.json",
+      "sha256": "7575d76a3cc28391546d13248a9ddba78c65dee4ed362dec81e5da00a1667a1c"
+    },
+    "projection_sha256": "093e0ce239a728409b42a483a31db8db0781f0cdad5aeefd2869ad428b1f5703",
+    "public_entry_contract": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-cm05-entry-contract-20261007.json",
+      "sha256": "eb09276d0f0760f54a135f0134093ced664d51c8caee7bc7b40467942bff39e2"
+    },
+    "mechanical_delta": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/mechanical-source-delta-technical.private.json",
+      "sha256": "31921b4149336045ff781b12ad10a02e169b1f6f56248762b7aa40e6459e2fe7"
+    },
+    "source_hashes": {
+      "launcher_sha256": "5e3dbc855d1e923714ec1c544e2558395a346595f38da985287fe0c5801be5bd",
+      "probe_sha256": "6186d80c5b75643110a13b1fe3918c13d2bf09f92f0c1546b5a716bbce3b5996",
+      "inspect_wrapper_sha256": "23f96dd2114cfebff3ae76f5a7f3f63721a84c20849424742d750ca425a29613"
+    },
+    "observer_sha256": "b87e2a9067733c78958f52b5a1196a928dbc1cc33514d378c69b852233084c67",
+    "prior_CM04_source_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm04-source-review-20261007.json",
+      "sha256": "8432dce0e395e44e5704a3d55b811475e364a2ed3907f78fb1ae3f5d32a447e3"
+    },
+    "code_mode_binding_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-codemode-identity-review-20261007.json",
+      "sha256": "ec0bbcbf4a3d2af1c5b83cf4c1ae70e28461c852b566380a7579d4b458beaefa"
+    }
+  },
+  "verified": {
+    "all_44_file_pins_match": true,
+    "next_original_slot_unused": true,
+    "authority_sha256": "a227dd6fde52a51590741bc7b664e850afa66f9b8bf098768dc8a7be58f1d0e8",
+    "historical_rows": 16,
+    "historical_rows_canonical_sha256": "39bee7086d5a37d604ecf5d1ff428341ff14697e93d659a76e930ccf7e6a2d26",
+    "snapshot_values_and_revisions_exact": true,
+    "closed_CM01_through_CM04_receipt_hashes_intact": true,
+    "projection_and_original_commitment_plan_evaluator_binding_match": true,
+    "four_turn_actor_session_clock_controls_match": true,
+    "same_actor_keeps_original_private_chat_across_distinct_sessions": true,
+    "last_person_change_retains_advanced_calendar": true,
+    "ordinary_recorder_actual_session_id_and_origin_readbacks_preserved": true,
+    "same_main_profile_native_memory_policy_and_no_delivery": true,
+    "same_approved_native_access_auth_hash_UID1000_mode0600": true,
+    "same_contact_helper_models_provider_limits_deadline": true,
+    "sealed_FD_release_accounting_stop_readbacks_and_scope_closure_unchanged": true,
+    "no_execution_started_or_execute_once_present": true
+  },
+  "scope": "Only CM05 identifiers and isolated paths, turn/session count 4, and the closed-CM04 receipt guard differ from reviewed CM04 controllers. Current reviewed b87 observer reused; no original semantics, policy, scoring or clock algorithm changes.",
+  "limits": {
+    "externalActions": 0,
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "speechRequests": 0,
+    "toolDispatches": 16,
+    "wallSeconds": 480
+  },
+  "controls": {
+    "turns": 4,
+    "actor_indices": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "sessions": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "generations": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "initial_relative_offset_milliseconds": [
+      0,
+      0,
+      86400000,
+      86400000
+    ],
+    "setup_turns": 0,
+    "unknown_person_turns": 0,
+    "audience": "private"
+  },
+  "findings": [],
+  "limitations": [
+    "Preparation GO is not actual network/resource readiness, original input release, completed native run or quality approval.",
+    "The public positive Code Mode proof ran retained d75; final b87 only removes the separately reviewed diagnostic I/O. No exact-final-source full rerun claim.",
+    "Current subnet is checked again by the existing launcher before preparation; the later actual-ready review binds real resources and endpoint restrictions.",
+    "Closed CM01–04 remain UNKNOWN and cannot replay; human ratings remain null.",
+    "Native cleanup flag is not rewritten; same independently reviewed equivalent settlement and retained physical scope evidence remain required."
+  ],
+  "preparation_issue_retained": "Initial mechanical copy assertion used the wrong guard indentation and stopped after child write, before parent/Inspect writes or any resource/ledger/model activity. Corrected source is the explicitly reviewed hash set.",
+  "reviewer_activity": {
+    "new_tests": 0,
+    "native_or_resource_starts": 0,
+    "provider_or_auth_calls": 0,
+    "reservations": 0,
+    "held_text_reads": 0,
+    "source_edits": 0,
+    "check_execution": 0
+  }
+}
