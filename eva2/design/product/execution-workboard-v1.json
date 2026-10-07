@@ -1016,8 +1016,19 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T08:43:50.921114+00:00",
+        "checkedAt": "2026-10-07T09:06:12.792440+00:00",
         "deliveries": [
+          {
+            "title": "L3.4 · Verder bouwen aan een eerder verbeteridee",
+            "date": "2026-10-07",
+            "state": "installed",
+            "taskId": "L3.4",
+            "result": "Kern en achtergrondwerker bijgewerkt en gezond. Een kandidaat kan verder worden verbeterd zonder herkomst of oorspronkelijke vergelijking kwijt te raken. Bron- en opleverreview GO.",
+            "remaining": "Volledige AIDE²-cyclus nog niet klaar: varianten kiezen, onafhankelijke eindbeoordeling/toepassing en echte gewone gebruikersroute volgen in L3.5–L3.7.",
+            "source": "eva2/evidence/product/l3-candidate-continuation-installed-20261007.json",
+            "review": "eva2/reviews/l3-candidate-continuation-installed-review-20261007.json",
+            "usage": "0 nieuwe runtime-modelcalls voor deze wijziging; ontwikkelcreditkosten onbekend."
+          },
           {
             "title": "R1.1 · Echte vergelijking afgerond — geen adoptie",
             "date": "2026-10-07",
@@ -4089,23 +4100,23 @@
           }
         ],
         "now": {
-          "title": "L3.4 · Eva laat een eerdere kandidaat verder groeien",
-          "state": "in_progress",
-          "owner": "Codex",
-          "taskId": "L3.4",
-          "detail": "Bestaande codevoorstellen, geïsoleerde vergelijking en toepassing blijven. De ontbrekende stap is voortbouwen op een kandidaat zonder de oorspronkelijke vergelijkingsbasis te verliezen.",
-          "remaining": "Vier duidelijke overgangstaken vormen samen de herbruikbare AIDE²-cyclus. Eerdere contextverbetering blijft geïnstalleerd en geaccepteerd als beperkte toepassing.",
-          "source": "eva2/PROJECTDOEL.md",
-          "reviewedAt": "2026-10-07T08:43:50.921114+00:00",
-          "doneWhen": "Eva kan binnen dezelfde bevoegde taak een eerdere kandidaat als uitgangspunt nemen; herkomst blijft bewaard en vergelijking/toepassing blijven aan de oorspronkelijke geïnstalleerde versie gebonden."
-        },
-        "next": {
-          "title": "L3.5–L3.7 · Kiezen, onafhankelijk beoordelen en werkelijk toepassen",
+          "title": "L3.5 · Volgende stap: betere varianten kiezen",
           "state": "planned",
           "owner": "Codex",
           "taskId": "L3.5",
-          "detail": "Betere gebruikersresultaten en zelfstandigheid bepalen de winst. Geen nieuwe hoofdtaken, spraakbouw of voorgebouwde voorbeeldfuncties.",
-          "remaining": "Concurrentievergelijking en echte gezinsacceptatie blijven apart zichtbaar.",
+          "detail": "L3.4 is geïnstalleerd. Na hervatten kiest Eva varianten op resultaatkwaliteit en zelfstandigheid; geschikte kandidaten kunnen nu verder groeien.",
+          "remaining": "L3.5–L3.7 zijn nog open. Geen proef actief bij dit checkpoint.",
+          "source": "eva2/evidence/product/l3-candidate-continuation-installed-20261007.json",
+          "reviewedAt": "2026-10-07T09:06:12.792440+00:00",
+          "doneWhen": "Eén vooraf vastgelegd verbeterdoel gebruikt meerdere herleidbare kandidaten en dezelfde ontwikkelbeoordeling. Eva kiest op betere taakresultaten, bewaart fouten/verbruik en vervolgt alleen een veelbelovende kandidaat; het gewone taakbudget en stoppen blijven gelden."
+        },
+        "next": {
+          "title": "L3.6–L3.7 · Onafhankelijk beoordelen, toepassen en volledige cyclus aantonen",
+          "state": "planned",
+          "owner": "Codex",
+          "taskId": "L3.6",
+          "detail": "Bestaande evaluatie en installatie hergebruiken. Alleen aantoonbaar beter taakgedrag toepassen.",
+          "remaining": "Daarna resterende bouw binnen de vier huisgenootuitkomsten; vergelijking en gezinsacceptatie blijven apart.",
           "source": "eva2/PROJECTDOEL.md"
         },
         "ownerAction": {
@@ -4127,13 +4138,18 @@
             "codeStorage": "Codes remain in the active chat only; no tokens or login codes in repository.",
             "status": "completed",
             "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json"
+          },
+          "goalResume": {
+            "status": "requested",
+            "action": "Hervat het bestaande bijgewerkte app-goal. Geen nieuwe chat of doeltekst nodig.",
+            "nextTaskId": "L3.5"
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-07T08:43:50.921114+00:00"
+        "reviewedAt": "2026-10-07T09:06:12.792440+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
-      "checkedAt": "2026-10-06T09:49:07.102699+00:00",
+      "checkedAt": "2026-10-07T09:06:12.792440+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -16601,7 +16617,7 @@
           ]
         }
       ],
-      "nextAction": "L3.4: voortbouwen op een eerdere kandidaat via dezelfde draft/evaluate/release-route; daarna L3.5–L3.7 tot de herbruikbare cyclus werkt.",
+      "nextAction": "L3.5: Eva kiest op vaste ontwikkelcriteria betere varianten en vervolgt een veelbelovende kandidaat. Daarna L3.6–L3.7; L3.4 niet herhalen.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -18220,9 +18236,7 @@
             "baseCommit": "bc6116aaae1389792c6de5678abec9c59027b5a4",
             "owner": "/root",
             "stage": "bounded_argument_recovery_implementation",
-            "activeWorkers": [
-              "/root"
-            ],
+            "activeWorkers": [],
             "existing": "General HA API, durable indexed tool receipts and continuation after result.success=false already installed.",
             "gap": "Malformed body_json raises before preparation and aborts the whole work despite prior successful writes. Exact failure fingerprint recorded in I2.2 evidence.",
             "outcome": "Eva corrects malformed new HA-request JSON within the same task, preserving previous successful steps and requiring actual successful readback.",
@@ -18233,7 +18247,9 @@
             ],
             "estimate": "Reuse installed code; focused adapter and durable sequence verification, one installed synthetic recovery if it resolves remaining proof. Actual runtime usage recorded; credits unknown.",
             "endCondition": "Een concrete falende uitvoerstap verklaard en verbeterd; geen ongewijzigde proefherhaling of timeoutverhoging zonder bewijs.",
-            "historicalTimeout": "Cause remains unproven; this correction must not be reported as the historical timeout diagnosis."
+            "historicalTimeout": "Cause remains unproven; this correction must not be reported as the historical timeout diagnosis.",
+            "activeExecution": false,
+            "activityClarification": "Historische opdracht; huidige uitvoering staat bij L3. Actuele afrondingsvoorwaarden en bewijs behouden."
           },
           "completedAt": "2026-10-05T00:50:53.708390+00:00"
         },
@@ -19116,7 +19132,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": "/root",
+          "activeWorker": null,
           "aideExperiment": {
             "state": "closed_unsuccessful",
             "source": "eva2/experiments/aide-20260929/README.md",
@@ -19232,21 +19248,19 @@
             {
               "id": "L3.4",
               "title": "Voortbouwen op een eerdere verbeterkandidaat",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "bouwen",
               "owner": "Codex",
               "doneWhen": "Eva kan binnen dezelfde bevoegde taak een eerdere kandidaat als uitgangspunt nemen; herkomst blijft bewaard en vergelijking/toepassing blijven aan de oorspronkelijke geïnstalleerde versie gebonden.",
               "createdAt": "2026-10-07T08:43:50.921114+00:00",
               "authorizedBy": "Jaap, 7 oktober 2026: ga door met AIDE² voor slimmer gedrag, maak duidelijke taken en maak Eva2 af.",
               "ownerActionRequired": false,
-              "activeExecution": true,
-              "nextAction": "Maak de eerste noodzakelijke overgang af.",
+              "activeExecution": false,
+              "nextAction": "Gebruik deze bestaande overgang in L3.5; niet opnieuw bouwen of opnieuw installeren.",
               "assignment": {
                 "baseCommit": "dd894f46b3c9d462ecbac8dcfaa49a1fd2d28675",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "eva2/src/eva/application/component_improvements.py",
                   "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
@@ -19255,8 +19269,25 @@
                 "gap": "De bestaande draft/evaluate/release-tools werken. Een draft gebruikt altijd de geïnstalleerde bron; een eerdere kandidaat kan geen nieuwe basis zijn.",
                 "estimate": "Gerichte toolovergang plus bestaande compositiecontrole en één gebundelde kern/werkerupdate. Geen geplande runtime-modelcalls; ontwikkelcredits onbekend.",
                 "doneWhen": "Eva kan binnen dezelfde bevoegde taak een eerdere kandidaat als uitgangspunt nemen; herkomst blijft bewaard en vergelijking/toepassing blijven aan de oorspronkelijke geïnstalleerde versie gebonden.",
-                "stage": "implementation"
-              }
+                "stage": "completed_installed_reviewed",
+                "sourceCommit": "dfc03425d08e93f3d044470817922352f6cbd58b",
+                "review": "eva2/reviews/l3-candidate-continuation-installed-review-20261007.json",
+                "measuredUsage": {
+                  "newRuntimeModelCallsForThisDelivery": 0,
+                  "newRuntimeModelTokensForThisDelivery": 0,
+                  "developmentCredits": "unknown",
+                  "reviewModelTokens": "not available in per-task telemetry",
+                  "dependencyInstallations": 0,
+                  "imageOnlyInstallations": 1,
+                  "rollbacks": 0
+                }
+              },
+              "checkedAt": "2026-10-07T09:06:12.792440+00:00",
+              "completedAt": "2026-10-07T09:06:12.792440+00:00",
+              "blocker": null,
+              "latestEvidence": "eva2/evidence/product/l3-candidate-continuation-installed-20261007.json",
+              "remaining": "Geen technisch vervolg voor L3.4; de overige cyclusovergangen staan in L3.5–L3.7.",
+              "result": "Geïnstalleerd in kern en werker: een eerdere kandidaat uit dezelfde taak wordt verder verbeterd, met bewaarde herkomst en dezelfde oorspronkelijke vergelijkingsbasis. Exact hervatten, echte providerschema en pakketbinding gecontroleerd; onafhankelijke bron- en opleverreview GO. Geen autonome kwaliteitswinst geclaimd."
             },
             {
               "id": "L3.5",
@@ -19339,7 +19370,7 @@
               }
             }
           ],
-          "latestEvidence": "eva2/evidence/product/l3-context-installed-20261003.json",
+          "latestEvidence": "eva2/evidence/product/l3-candidate-continuation-installed-20261007.json",
           "responsibilityReview": {
             "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
             "role": "eerstvolgende algemene vaardigheid",
@@ -19353,7 +19384,7 @@
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
           "completionClarification": "A failed AIDE experiment may close that experiment, not the autonomous programming outcome. Preserve L3.1 historical closure. General programming requires a useful Eva-authored change executed, independently checked, installed and verified through her own route; one component microfix is bounded evidence only. De groene L3-status betreft de afgebakende toepassing; geen volledige AIDE²-cyclus of bewezen verbetering in alle vier huisgenootuitkomsten.",
-          "nextAction": "L3.4: voortbouwen op een eerdere kandidaat via dezelfde draft/evaluate/release-route; daarna L3.5–L3.7 tot de herbruikbare cyclus werkt.",
+          "nextAction": "L3.5: Eva kiest op vaste ontwikkelcriteria betere varianten en vervolgt een veelbelovende kandidaat. Daarna L3.6–L3.7; L3.4 niet herhalen.",
           "executorAdmissionCheck": {
             "checkedAt": "2026-10-02T00:35:22.610151+00:00",
             "installedCore": "eva2-managed-b-slot3-core",
@@ -19418,7 +19449,9 @@
               "L3.7"
             ],
             "completionScope": "L3.4–L3.7 leveren één algemene, herbruikbare verbetercyclus. Programmering, gesprek, ondernemen en initiatief zijn toepassingsgebieden, geen vier vooraf gebouwde voorbeeldfuncties of bewezen voordelen.",
-            "ownerContinuationAt": "2026-10-07T08:43:50.921114+00:00"
+            "ownerContinuationAt": "2026-10-07T08:43:50.921114+00:00",
+            "latestContinuationEvidence": "eva2/evidence/product/l3-candidate-continuation-installed-20261007.json",
+            "nextTaskId": "L3.5"
           },
           "aideWorkspaceFollowup": {
             "state": "closed_unsuccessful",
@@ -21674,7 +21707,7 @@
       },
       "autonomousTechnicalGoal20261002": {
         "preparedAt": "2026-10-01T22:46:25.288933+00:00",
-        "state": "owner_resumed_manual_work_updated_goal_file_ready_to_resume",
+        "state": "updated_goal_file_ready_for_owner_resume",
         "goalSource": "C:/Users/jaapf/.codex/attachments/d91353b6-5d5a-4de3-bb46-8f22daaa18ef/goal-objective.md",
         "replacementAppObjective": "Voer het volledige bestaande Eva2-plan uit volgens de nieuwste eigenaarcorrectie in eva2/PROJECTDOEL.md en de actuele kleine taken. Centrale uitkomst: Eva als autonome, warme en vaardige digitale huisgenoot die zelf onderzoekt, programmeert, verbetert en nuttig werk afmaakt. Eerst L3.2/L3.3: ontbrekende algemene programmeer-/uitvoerings-/releaseovergangen aansluiten en Eva een echte verbetering laten opleveren. Spraak is ondersteunend. Behoud alle planeisen, acceptaties en het technische eindpunt; geen brede herbouw of test-/installatielussen. Houd het bestaande dashboard en Git bij; onafhankelijke eindvergelijking en gezinsacceptatie blijven zichtbaar.",
         "reason": "Remove obsolete C1/provider snapshot; prioritize complete installed user outcomes and separate autonomous technical completion from family acceptance.",
@@ -21692,9 +21725,10 @@
         "statusCheckedAt": "2026-10-07T08:43:50.921114+00:00",
         "executionResumedAt": "2026-10-06T06:51:19.992387+00:00",
         "executionResumeEvidence": "eva2/evidence/product/owner-resume-20261006.json",
-        "goalFileUpdatedAt": "2026-10-07T08:43:50.921114+00:00",
-        "goalFileSha256": "c1c27a1e8a685d046017900b0d894467b7b2efe40814f4688991fcc4c1ef54a7",
-        "priorGoalFileArchive": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective-before-aide2-20261007.md"
+        "goalFileUpdatedAt": "2026-10-07T09:06:12.792440+00:00",
+        "goalFileSha256": "39f80bc5b8cd0ce14d5ba3f23dfc8628ce8d0f09a3b78be5dbc95e1213437af1",
+        "priorGoalFileArchive": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective-before-aide2-20261007.md",
+        "nextTaskId": "L3.5"
       },
       "ownerAutonomyPriority20261002": {
         "reviewedAt": "2026-10-02T00:07:41.859993+00:00",
@@ -21838,8 +21872,10 @@
           "L3.7"
         ],
         "existingProductOutcomeCount": 4,
-        "countRule": "De oorspronkelijke44 taken en35 eerdere afrondingen blijven bewaard. Vier nu expliciet gevraagde overgangstaken worden afzonderlijk zichtbaar; geen extra afgeronde huisgenootfunctie of hoofduitkomst.",
-        "finishRule": "De herbruikbare cyclus werkt en één geschikte werkwijzeverbetering is onafhankelijk aangetoond en toegepast; geen eindeloze optimalisatie als eindvoorwaarde."
+        "countRule": "De oorspronkelijke44 taken met35 eerdere afrondingen blijven bewaard. Vier expliciet gevraagde vervolgopdrachten maken het totaal48; L3.4 daarvan is nu afgerond:36/48 kleine taken. Geen extra afgeronde hoofduitkomst.",
+        "finishRule": "De herbruikbare cyclus werkt en één geschikte werkwijzeverbetering is onafhankelijk aangetoond en toegepast; geen eindeloze optimalisatie als eindvoorwaarde.",
+        "latestCompletedTaskId": "L3.4",
+        "nextTaskId": "L3.5"
       }
     },
     "dashboardClarityCorrection20260922": {

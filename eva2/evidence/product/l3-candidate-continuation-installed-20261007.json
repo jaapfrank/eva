@@ -1,0 +1,218 @@
+{
+  "contract": "EvaCandidateContinuationDelivery/v1",
+  "taskId": "L3.4",
+  "checkedAt": "2026-10-07T09:05:17.615765+00:00",
+  "status": "installed_independently_reviewed",
+  "baselineCommit": "dd894f46b3c9d462ecbac8dcfaa49a1fd2d28675",
+  "sourceCommit": "dfc03425d08e93f3d044470817922352f6cbd58b",
+  "existing": "Installed same-task code drafts, isolated baseline comparison and reviewed release/application facilities.",
+  "gap": "A draft could only begin from the installed source; another candidate could not become its parent.",
+  "change": "Optional earlier same-task parent selection with persistent lineage; cumulative patch/evaluation/release remain tied to original installed source. Strict model schema accepts null for the first draft, legacy omission remains compatible.",
+  "verification": {
+    "focusedBehaviorDurabilityReleasePassed": 20,
+    "providerSchemaPassed": 1,
+    "wholeSuitePassClaim": false,
+    "packaged": {
+      "sourceCommit": "dfc03425d08e93f3d044470817922352f6cbd58b",
+      "sourceHashes": {
+        "application/component_improvements.py": "0364db9c7e33e90386f4820c9ce5d37344e3521fefb062240a9db2d6a79356d5",
+        "adapters/postgres/component_improvement_actions.py": "0210fb6ce6b7b10c12b3c7057d8b3de7a76e94517fbc9b900f0383a7675be226"
+      },
+      "providerCalls": 0,
+      "network": "none",
+      "productSourceMounts": 0,
+      "services": {
+        "core": {
+          "image": "sha256:cb0d69f5ca79bb77622a9f79a20eb08ba0577c4c21be7d2c41e62f778be23eff",
+          "exitCode": 0,
+          "seconds": 6.838,
+          "logSha256": "7ec38b0f8d252aa9ad085a4e47f0c7ca10e0ceb144b1b4b186d7ac4f7caf2866",
+          "output": ".......                                                                  [100%]\n7 passed in 3.80s\n"
+        },
+        "delegated-work-worker": {
+          "image": "sha256:053118bbb785632fdc737715f1eef4bc9e8a5df6cbd30ddd026da735b7e10b69",
+          "exitCode": 0,
+          "seconds": 6.058,
+          "logSha256": "bbe88a43cd13d06657e2fffe34fe9bfe5ab14618b6ba1f3c7920a2ae05015805",
+          "output": ".......                                                                  [100%]\n7 passed in 3.33s\n"
+        }
+      }
+    },
+    "installed": {
+      "checkedAt": "2026-10-07T09:03:54.210800+00:00",
+      "sourceCommit": "dfc03425d08e93f3d044470817922352f6cbd58b",
+      "providerCalls": 0,
+      "services": {
+        "core": {
+          "image": "sha256:cb0d69f5ca79bb77622a9f79a20eb08ba0577c4c21be7d2c41e62f778be23eff",
+          "health": "healthy",
+          "user": "65532:65532",
+          "configurationUnchanged": true,
+          "environmentValuesUnchanged": true,
+          "mountsUnchanged": true,
+          "networksUnchanged": true,
+          "sourceHashes": {
+            "application/component_improvements.py": "0364db9c7e33e90386f4820c9ce5d37344e3521fefb062240a9db2d6a79356d5",
+            "adapters/postgres/component_improvement_actions.py": "0210fb6ce6b7b10c12b3c7057d8b3de7a76e94517fbc9b900f0383a7675be226"
+          },
+          "draftToolAvailable": true,
+          "required": [
+            "expected_gain",
+            "new_text",
+            "old_text",
+            "parent_draft_step",
+            "path",
+            "problem",
+            "source_sha256",
+            "verification_plan"
+          ],
+          "parentSchema": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "nullableFirstDraft": true,
+          "strictRequiredFieldsComplete": true
+        },
+        "delegated-work-worker": {
+          "image": "sha256:053118bbb785632fdc737715f1eef4bc9e8a5df6cbd30ddd026da735b7e10b69",
+          "health": "healthy",
+          "user": "65532:65532",
+          "configurationUnchanged": true,
+          "environmentValuesUnchanged": true,
+          "mountsUnchanged": true,
+          "networksUnchanged": true,
+          "sourceHashes": {
+            "application/component_improvements.py": "0364db9c7e33e90386f4820c9ce5d37344e3521fefb062240a9db2d6a79356d5",
+            "adapters/postgres/component_improvement_actions.py": "0210fb6ce6b7b10c12b3c7057d8b3de7a76e94517fbc9b900f0383a7675be226"
+          },
+          "draftToolAvailable": true,
+          "required": [
+            "expected_gain",
+            "new_text",
+            "old_text",
+            "parent_draft_step",
+            "path",
+            "problem",
+            "source_sha256",
+            "verification_plan"
+          ],
+          "parentSchema": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "nullableFirstDraft": true,
+          "strictRequiredFieldsComplete": true
+        }
+      },
+      "ordinaryModelGeneratedImprovementMeasured": false,
+      "retainedReadbackAdjustment": "Compare environment key/value entries independent of Docker ordering; initial order-sensitive assertion failed although values were unchanged. No runtime/source change.",
+      "bothHealthy": true
+    }
+  },
+  "build": {
+    "sourceCommit": "dfc03425d08e93f3d044470817922352f6cbd58b",
+    "sourceHashes": {
+      "application/component_improvements.py": "0364db9c7e33e90386f4820c9ce5d37344e3521fefb062240a9db2d6a79356d5",
+      "adapters/postgres/component_improvement_actions.py": "0210fb6ce6b7b10c12b3c7057d8b3de7a76e94517fbc9b900f0383a7675be226"
+    },
+    "overlayManifestSha256": "e6e218b1525797d7958cfca6f9421b822ecfd1ece3a7544feb6bf06699b2373b",
+    "dependencyOperations": 0,
+    "services": {
+      "core": {
+        "baselineImage": "sha256:83d89945822c79995e73fd3436f7081dcb233935c53a9647368e68f11ebed96f",
+        "candidateImage": "sha256:cb0d69f5ca79bb77622a9f79a20eb08ba0577c4c21be7d2c41e62f778be23eff",
+        "seconds": 7.237,
+        "buildLogSha256": "99c8d8f14340cf9bbf55a305bea0c436b87d1aefd16c546b30dfa3140111e97c"
+      },
+      "delegated-work-worker": {
+        "baselineImage": "sha256:588f122fb1eb8deea776d791e5c61d2b678a0c001a74f7fe3b1733749a8659cf",
+        "candidateImage": "sha256:053118bbb785632fdc737715f1eef4bc9e8a5df6cbd30ddd026da735b7e10b69",
+        "seconds": 5.555,
+        "buildLogSha256": "7b852c4d043cf53b480fb950005bc498f1a18ffebd7f77120d7fafd17a151591"
+      }
+    }
+  },
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "seconds": 59.379,
+    "sourceCommit": "dfc03425d08e93f3d044470817922352f6cbd58b",
+    "images": {
+      "core": "sha256:cb0d69f5ca79bb77622a9f79a20eb08ba0577c4c21be7d2c41e62f778be23eff",
+      "delegated-work-worker": "sha256:053118bbb785632fdc737715f1eef4bc9e8a5df6cbd30ddd026da735b7e10b69"
+    },
+    "retainedMounts": true,
+    "changedOnlyImagePins": true,
+    "providerCalls": 0,
+    "rollback": false
+  },
+  "package": {
+    "verified": true,
+    "manifestSha256": "2e9421af199a36e0911507aa26c0ee14930e103810b0135235bdd4ee450fa5cf",
+    "imageSetSha256": "4c781dec01b02114586764d88984ada8c254fcc80d50360528b0402de573f77d",
+    "verificationReceiptSha256": "cfde35fe629c2d10053e094e25577b1a90449ba97b0a974ada794abc8177e708",
+    "sourceCount": 1225,
+    "changedSourceFiles": [
+      "src/eva/adapters/postgres/component_improvement_actions.py",
+      "src/eva/application/component_improvements.py"
+    ],
+    "otherSourceHashesUnchanged": true,
+    "changedInventoryPins": [
+      "living-core"
+    ],
+    "otherSevenInventoryPinsUnchanged": true,
+    "workerRecordedSeparately": true,
+    "workerImage": "sha256:053118bbb785632fdc737715f1eef4bc9e8a5df6cbd30ddd026da735b7e10b69",
+    "runtimeImageUnchanged": true,
+    "historicalBaseUnchanged": true,
+    "previousPackageSha256": "b0513e5c24acbbdb08deaeb91586ec8e0c3b1bd4456803a119179e84382fbda4",
+    "packageSha256": "0ef15df9a5173e803deb2f64f667e1a00206b06ed7d8f28a007abd3d7c8ba3da",
+    "providerCalls": 0,
+    "retainedPreparationError": "Readonly package check initially lacked access to root-owned metadata; same existing verifier resumed with correct read-only user, no file permission or dependency changes."
+  },
+  "review": {
+    "source": "eva2/reviews/l3-candidate-continuation-source-review-20261007.json",
+    "sourceDecision": "GO",
+    "installed": "eva2/reviews/l3-candidate-continuation-installed-review-20261007.json",
+    "installedDecision": "GO",
+    "installedReceiptSha256": "1272e2619f555aec90ab3ff706ee716aef24ff8f5111ebe40102befc6aad78e6",
+    "checkedAt": "2026-10-07T09:06:12.792440+00:00"
+  },
+  "usage": {
+    "newRuntimeModelCallsForThisDelivery": 0,
+    "newRuntimeModelTokensForThisDelivery": 0,
+    "developmentCredits": "unknown",
+    "reviewModelTokens": "not available in per-task telemetry",
+    "dependencyInstallations": 0,
+    "imageOnlyInstallations": 1,
+    "rollbacks": 0
+  },
+  "retainedPreparationErrors": [
+    "Initial host-only operations test collected in a minimal image; corrected test context, no source/platform addition.",
+    "Initial test launcher omitted image Python entrypoint override; no tests or models ran.",
+    "Initial schema assertion omitted installed mapper visibility keyword; corrected only that test, retained 20 valid passes.",
+    "Readonly package verifier initially lacked access to root-owned metadata; same verifier resumed under correct readonly user.",
+    "Initial installed readback compared Docker environment ordering; values unchanged, normalized ordering without any runtime change."
+  ],
+  "limits": [
+    "No live model-chosen optimization or quality gain was measured in this delivery.",
+    "L3.5 selection/refinement, L3.6 independent final assessment/application and L3.7 actual ordinary recurring cycle remain open.",
+    "Historical AIDE/R1 outcomes, scoring rules and accepted L3.1-L3.3 remain unchanged.",
+    "No claim of general Eva1/competitor superiority; no speech work."
+  ],
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/l3-candidate-continuation-20261007",
+  "privateEvidenceSha256": {
+    "final-focused-tests.json": "25ef8193f8fd5382f347cb1cd0c78e391c09aa6955e224709ae24a081fcf3287",
+    "provider-schema-tests.json": "5823fc4bb733da3a19a8161725231a716acb731068d18efcdd996f8ec56f2bad",
+    "packaged-tests.json": "472741f8f092e14c982ab82f5255b5b5254ec54c503ca7b23eebb385ee963086",
+    "build-receipt.json": "32b671c1eb81b8c18bcd52a443de189be60d9248c4aeb6f0287ac52439c44097",
+    "install-summary.json": "9e8a52e16327da3cf8574d917fe70ed83ebcec53431a66675b31807650145d44",
+    "installed-verification.json": "a704bfb89e9ab9627927c6f7c35a25001111e9f75a80555d568e2fd3ee5fa9b2",
+    "package-alignment.json": "2d855e9c0fc8ba089f4ac11c06f87339cf53db8927618bb357913a24b53e1936"
+  }
+}

@@ -1,3 +1,25 @@
+## 7 oktober — L3.4 geïnstalleerd en onafhankelijk gecontroleerd
+
+De kandidaatvoortzetting is technisch af: Eva kan binnen dezelfde bevoegde taak
+verder bouwen op een eerder voorstel. De oorspronkelijke geïnstalleerde bron
+blijft de vergelijkingsbasis; cumulatieve wijziging en herkomst blijven aan het
+releasepakket gebonden. Kern en achtergrondwerker draaien gezond met exact
+dezelfde nieuwe bron. Configuratie, gegevenskoppelingen en eerdere acceptaties
+blijven behouden. Het bestaande installatiepakket is mee bijgewerkt.
+Onafhankelijke bron- en opleverreview GO; geen nieuwe runtime-modelcalls.
+
+Volgende werk: **L3.5 → L3.6 → L3.7** voor kiezen, onafhankelijk beoordelen/toepassen
+en de echte herbruikbare cyclus. Die uitvoering is bij dit checkpoint nog niet
+gestart. L3.4 is een geleverde algemene overgang, geen volledige AIDE²-cyclus,
+extra afgeronde huisgenootuitkomst of bewezen concurrentievoordeel.
+De oorspronkelijke35/44 afrondingen blijven staan; met vier gevraagde vervolgtaken
+en nu L3.4 afgerond is de afzonderlijke teller36/48. Spraak blijft geparkeerd.
+
+De bestaande app-goaltekst is bijgewerkt en wijst naar L3.5. Jaap kan het
+geblokkeerde goal hervatten; geen nieuwe chat of tekstvervanging nodig.
+Bewijs: eva2/evidence/product/l3-candidate-continuation-installed-20261007.json.
+Review: eva2/reviews/l3-candidate-continuation-installed-review-20261007.json.
+
 ## 7 oktober — L3.4 gebouwd; gebundelde installatie volgt
 
 Jaap heeft vier kleine vervolgtaken gevraagd voor één herbruikbare AIDE²-cyclus.

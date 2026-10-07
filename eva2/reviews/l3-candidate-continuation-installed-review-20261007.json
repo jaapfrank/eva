@@ -1,0 +1,136 @@
+{
+  "contract": "EvaIndependentInstalledDeliveryReview/v1",
+  "recordedDate": "2026-10-07",
+  "task": "L3.4",
+  "decision": "GO",
+  "scope": "Installed parent candidate continuation through the existing draft, evaluator and release route; no claim of measured autonomous AIDE2 quality gain.",
+  "sourceCommit": "dfc03425d08e93f3d044470817922352f6cbd58b",
+  "sourceReview": {
+    "path": "eva2/reviews/l3-candidate-continuation-source-review-20261007.json",
+    "sha256": "43edf744223ccf14ed7a0fedbc4c4dae01cd7069068b549eff100a21b37c4a4d"
+  },
+  "sourceHashes": {
+    "application/component_improvements.py": "0364db9c7e33e90386f4820c9ce5d37344e3521fefb062240a9db2d6a79356d5",
+    "adapters/postgres/component_improvement_actions.py": "0210fb6ce6b7b10c12b3c7057d8b3de7a76e94517fbc9b900f0383a7675be226"
+  },
+  "evidenceBindings": {
+    "build-receipt.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-candidate-continuation-20261007/build-receipt.json",
+      "sha256": "32b671c1eb81b8c18bcd52a443de189be60d9248c4aeb6f0287ac52439c44097"
+    },
+    "packaged-tests.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-candidate-continuation-20261007/packaged-tests.json",
+      "sha256": "472741f8f092e14c982ab82f5255b5b5254ec54c503ca7b23eebb385ee963086"
+    },
+    "installed-verification.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-candidate-continuation-20261007/installed-verification.json",
+      "sha256": "a704bfb89e9ab9627927c6f7c35a25001111e9f75a80555d568e2fd3ee5fa9b2"
+    },
+    "package-alignment.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-candidate-continuation-20261007/package-alignment.json",
+      "sha256": "2d855e9c0fc8ba089f4ac11c06f87339cf53db8927618bb357913a24b53e1936"
+    }
+  },
+  "installedServices": {
+    "core": {
+      "image": "sha256:cb0d69f5ca79bb77622a9f79a20eb08ba0577c4c21be7d2c41e62f778be23eff",
+      "health": "healthy",
+      "user": "65532:65532",
+      "sourceHashes": {
+        "application/component_improvements.py": "0364db9c7e33e90386f4820c9ce5d37344e3521fefb062240a9db2d6a79356d5",
+        "adapters/postgres/component_improvement_actions.py": "0210fb6ce6b7b10c12b3c7057d8b3de7a76e94517fbc9b900f0383a7675be226"
+      },
+      "draftToolAvailable": true,
+      "parentSchema": {
+        "type": [
+          "integer",
+          "null"
+        ],
+        "minimum": 0
+      },
+      "nullableFirstDraft": true,
+      "strictRequiredFieldsComplete": true,
+      "configurationUnchanged": true,
+      "environmentValuesUnchanged": true,
+      "mountsUnchanged": true,
+      "networksUnchanged": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:053118bbb785632fdc737715f1eef4bc9e8a5df6cbd30ddd026da735b7e10b69",
+      "health": "healthy",
+      "user": "65532:65532",
+      "sourceHashes": {
+        "application/component_improvements.py": "0364db9c7e33e90386f4820c9ce5d37344e3521fefb062240a9db2d6a79356d5",
+        "adapters/postgres/component_improvement_actions.py": "0210fb6ce6b7b10c12b3c7057d8b3de7a76e94517fbc9b900f0383a7675be226"
+      },
+      "draftToolAvailable": true,
+      "parentSchema": {
+        "type": [
+          "integer",
+          "null"
+        ],
+        "minimum": 0
+      },
+      "nullableFirstDraft": true,
+      "strictRequiredFieldsComplete": true,
+      "configurationUnchanged": true,
+      "environmentValuesUnchanged": true,
+      "mountsUnchanged": true,
+      "networksUnchanged": true
+    }
+  },
+  "verification": {
+    "packagedChecks": {
+      "core": {
+        "passed": 7,
+        "exitCode": 0,
+        "logSha256": "7ec38b0f8d252aa9ad085a4e47f0c7ca10e0ceb144b1b4b186d7ac4f7caf2866"
+      },
+      "delegated-work-worker": {
+        "passed": 7,
+        "exitCode": 0,
+        "logSha256": "bbe88a43cd13d06657e2fffe34fe9bfe5ab14618b6ba1f3c7920a2ae05015805"
+      }
+    },
+    "productSourceMounts": 0,
+    "network": "none",
+    "providerCalls": 0,
+    "reviewerTestRuns": 0,
+    "dependencyOperations": 0,
+    "retainedReadbackAdjustment": "Docker reordered Env entries. The original order-sensitive assertion is retained; comparison of sorted key/value entries establishes unchanged values without runtime or source changes.",
+    "retainedPackagePreparationError": "Readonly package check initially lacked access to root-owned metadata; same existing verifier resumed with correct read-only user, no file permission or dependency changes.",
+    "reviewReceiptPreparation": "An administrator read of restricted technical metadata was refused before any review write; the same bounded metadata was then read as root and only the sanitized review was written as administrator. No permissions changed."
+  },
+  "packageAlignment": {
+    "verified": true,
+    "sourceCount": 1225,
+    "changedSourceFiles": [
+      "src/eva/adapters/postgres/component_improvement_actions.py",
+      "src/eva/application/component_improvements.py"
+    ],
+    "other1223SourceHashesUnchanged": true,
+    "changedInventoryPins": [
+      "living-core"
+    ],
+    "otherSevenInventoryPinsUnchanged": true,
+    "workerRecordedSeparately": true,
+    "workerImage": "sha256:053118bbb785632fdc737715f1eef4bc9e8a5df6cbd30ddd026da735b7e10b69",
+    "runtimeImageUnchanged": true,
+    "historicalBaseUnchanged": true,
+    "manifestSha256": "2e9421af199a36e0911507aa26c0ee14930e103810b0135235bdd4ee450fa5cf",
+    "imageSetSha256": "4c781dec01b02114586764d88984ada8c254fcc80d50360528b0402de573f77d",
+    "verificationReceiptSha256": "cfde35fe629c2d10053e094e25577b1a90449ba97b0a974ada794abc8177e708",
+    "previousPackageSha256": "b0513e5c24acbbdb08deaeb91586ec8e0c3b1bd4456803a119179e84382fbda4",
+    "packageSha256": "0ef15df9a5173e803deb2f64f667e1a00206b06ed7d8f28a007abd3d7c8ba3da"
+  },
+  "findings": [
+    "Both installed services carry the exact source reviewed at the source checkpoint; the actual draft descriptors require all fields and allow null for the first parent selection.",
+    "Packaged tests import the new image code without product source mounts. Each image passes the seven focused candidate-continuation and schema checks.",
+    "The image refresh preserves runtime user, command, entrypoint, healthcheck, working directory, environment values, mounts and networks according to the retained installed readback.",
+    "The package retains the remaining source hashes, seven other inventory roles and historical runtime/base metadata; the worker stays in the existing separate overlay rather than becoming a new inventory role."
+  ],
+  "materialDefects": [],
+  "ordinaryModelGeneratedImprovementMeasured": false,
+  "measuredAutonomousQualityGain": "UNKNOWN",
+  "privacy": "Only reviewed source and technical installation/package metadata examined; no protected benchmark inputs, answers or oracles read."
+}
