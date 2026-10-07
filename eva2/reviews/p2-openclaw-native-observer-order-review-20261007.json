@@ -1,0 +1,115 @@
+{
+  "contract": "P2OpenClawNativeObserverOrderIndependentReview/v1",
+  "date": "2026-10-07",
+  "decision": "GO_CAUSAL_DIAGNOSIS_SOURCE_AND_ONE_PUBLIC_CONFIRMATION",
+  "originalSampleAdmission": "NO_GO",
+  "nativeClosure": "UNKNOWN",
+  "quality": "UNKNOWN",
+  "findings": [],
+  "diagnosis": {
+    "publicEvidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-native-observer-order-diagnosis-20261007.json",
+      "sha256": "23b34ce929616de0d9edb004490aeb37df00ae84928afd1a5cc774230d2cf888"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/ordinary-execution.public.json",
+      "sha256": "af4af476017f6739249355dc6880f26df80441b237934550aa48d41e984af515"
+    },
+    "independentlyCheckedObservationFiles": 60,
+    "allReferencedHashesMatched": true,
+    "sequence": "Contiguous 1 through 60",
+    "correlatedOrder": {
+      "preEntry": 3,
+      "preObserver": 4,
+      "reserved": 5,
+      "preReturned": 6,
+      "commandCompletedExitZeroWhileReserved": 11,
+      "firstCoverageStop": 12,
+      "postEntry": 57,
+      "postSettled": 58
+    },
+    "identity": "Tool, native thread and native turn digests equal across pre-return/completion/post.",
+    "priorStopOrDeadlineAtFirstCompletion": false,
+    "laterPreHookErrors": 14,
+    "allLaterErrorsAfterStopWithSameLedgerReason": true,
+    "conclusion": "The evaluator incorrectly rejected a genuinely completed admitted command solely because native post observation arrived later. That coverage stop precedes and explains the subsequent recorded ledger-stopped pre-hook errors.",
+    "causalLimits": [
+      "This proves the evaluator ordering defect, not the entire 122.077699-second timeout cause.",
+      "Two delayed post settlements do not prove full native or physical process closure.",
+      "The retained public execution is not an original sample or a quality comparison."
+    ]
+  },
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "57fc34d06e39ec66c1c8f872dce45179b37bde73ee028a4f2117fad970e67b26"
+  },
+  "test": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "633d3f2d7f69fd1d3e4e4e8cfa495f594fb324832ef5e3ce48c510809f74e36a"
+  },
+  "sourceAssessment": [
+    "Admission stores the native turn digest alongside existing tool/name/thread identity. A new terminal-before-post settlement requires commandExecution, an admitted canonical exec, the same nonempty native thread and turn, completed status and a safe-integer exit code. Unknown, cancelled, mismatched or nonterminal command notifications fail closed.",
+    "Dispatch and settlement remain separate from task success: a nonzero command exit code is retained and still proves attempted execution. A pre-permit or item/started alone does not mark dispatch.",
+    "Matching duplicate command terminals retain the first settlement time; changed terminal metadata stops coverage. A mismatched command completion after settlement also stops coverage.",
+    "Post observations reject cancelled rows and name/thread/turn mismatches before any promotion. The loader uses the existing native normalizeNativeHookToolName for post names. A matching late post preserves terminal metadata and the original settlement time.",
+    "Existing native policy, authority, trusted relay construction, admission/retention stop checks, model/calendar binding and original cap remain. Native physical authority and cleanup uncertain are not overridden."
+  ],
+  "resolvedReviewFindings": {
+    "initialCorrelationSourceSha256": "e53ddbd137a92792a1429def9fdceb7bbc40c1b19ce59a2ab9a76188d9bb3d08",
+    "initialTestSha256": "bf78b358f3fa8664196f3e3f70ac79e99bbcd7e60c51e54fe279f0b0b5280a10",
+    "issues": [
+      "Invalid command completion after a valid settlement previously fell through the reserved-only guard.",
+      "Post previously could promote a cancelled or mismatched row."
+    ],
+    "resolution": "Both exact boundaries corrected; no original scorer, case, profile or benchmark condition changed."
+  },
+  "retainedVerification": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/terminal-order-boundaries.public.json",
+      "sha256": "148adff8ecf821d60ac8769f788d871268f4125d8def5384f09d81db73ede1de"
+    },
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/terminal-order-boundaries.public.txt",
+      "sha256": "5a3f72ea2cc7a54dca87bd594eed68d6863f4d01470a6c648bc2736ea18d71be"
+    },
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "elapsedSeconds": 3.0503538670018315,
+    "actorCalls": 0,
+    "modelCalls": 0,
+    "scope": "Typed terminal-before-post including exit 2, nine initial admission failures, four altered settled command terminals, four cancelled/mismatched post callbacks, durable metadata, late stop/deadline refusal and actual native owned planning.",
+    "limitations": "Focused synthetic checks and source review do not establish the whole ordinary loop, all native tool families or physical/native close."
+  },
+  "preservedEarlierVerification": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/terminal-order-focused-corrected-expectation.public.json",
+      "sha256": "a8f68ade972077bf4e5825651783d25eec7656be2965b409caca3f5b9b725ee2"
+    },
+    "meaning": "Earlier five passing checks lacked the two review boundaries; retained, not relabelled as proof for the final source. The previous diagnostic expectation failure remains retained separately by the author."
+  },
+  "nextPublicConfirmation": {
+    "count": 1,
+    "ordinaryTurns": 3,
+    "sessions": 2,
+    "toolCap": 16,
+    "controllerSeconds": 120,
+    "reason": "A concrete retained native event ordering defect is now independently established and corrected at its existing evaluator boundary.",
+    "conditions": [
+      "Use the same existing public synthetic fixture, pinned ordinary native profile/route and mock transport.",
+      "No real provider/auth calls, original inputs/authority operations, criterion changes, framework updates or budget reset.",
+      "Retain all previous failures and observations. Record the new source-specific outcome without replacing them.",
+      "Full native close remains a separate required observation; cleanup uncertain remains UNKNOWN."
+    ],
+    "notGranted": "No original sample admission, product-quality claim, full-runtime GO or automatic further repetition."
+  },
+  "reviewerActivity": {
+    "testsRun": 0,
+    "nativeRuns": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedOriginalContentReads": 0,
+    "agentsSpawned": 0,
+    "onlyWrittenFile": "eva2/reviews/p2-openclaw-native-observer-order-review-20261007.json"
+  }
+}

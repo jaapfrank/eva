@@ -12,6 +12,20 @@ De eenmalige gewijzigde publieke routecontrole bewees twee native uitvoeringen,
 maar volledige accounting/afsluiting en de timeoutoorzaak blijven onbekend.
 Geen echte modelcalls, oorspronkelijke sample of ongewijzigde herhaling.
 Codex vervolgt bij de concrete meetroute; geen productverlies-/voorsprongclaim.
+De publieke uitvoer bevat twee geslaagde commando’s, dertien geweigerde hookroutes
+en één hooktimeout. De oorzaak is nog niet bewezen. Inhoudsvrije duurzame
+callbackregistratie plus controle na opslag zijn gebouwd: 3 gerichte controles
+geslaagd, 0 model-/actorcalls. Eén gewijzigde publieke diagnose volgt pas na
+onafhankelijke bronreview; geen oorspronkelijke proef gestart.
+Die diagnose bevestigde nu de oorzaak: native voltooiing kwam vóór de post-hook;
+onze evaluator stopte ten onrechte terwijl het commando echt was uitgevoerd.
+Exacte tool/thread/turn-correlatie gecorrigeerd, 6 gerichte controles geslaagd.
+Onafhankelijke bron-GO en gewijzigde publieke bevestiging zijn uitgevoerd:
+16/16 native commando’s én nacontroles geregistreerd, zonder coverage-stop of
+pre-hookfout. Eerste beurt eindigde daarna met parent-local HTTP502 en geen
+antwoord; dezelfde sessie registreerde opnieuw. Volledige driebeurtenlus,
+verbruiksregistratie en native afsluiting blijven UNKNOWN. Geen echte modelcalls,
+oorspronkelijke sample, nieuwe runtime-installatie of extra productafronding.
 Apps/add-ons horen bij dezelfde verbetercyclus; droommodus is nog niet gebouwd.
 Bekend achtergrondverbruik vervolgronde117.720tokens (partial/subtotaal);
 antwoordvergelijking apart13.973tokens. Credits en volledig ontwikkeltotaal onbekend.

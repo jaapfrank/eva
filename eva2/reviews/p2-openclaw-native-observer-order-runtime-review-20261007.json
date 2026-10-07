@@ -1,0 +1,151 @@
+{
+  "schema": "EvaIndependentOpenClawOrderRuntimeReview/v1",
+  "at": "2026-10-07T14:17:05.139188+00:00",
+  "decision": "GO_BOUNDED_SOURCE_PUBLIC_CHECKPOINT",
+  "scope": "Read-only independent review of retained public synthetic confirmation; no runtime release or original sample admission.",
+  "sourceSha256": "57fc34d06e39ec66c1c8f872dce45179b37bde73ee028a4f2117fad970e67b26",
+  "testSha256": "633d3f2d7f69fd1d3e4e4e8cfa495f594fb324832ef5e3ce48c510809f74e36a",
+  "bindings": {
+    "publicReport": {
+      "path": "eva2/evidence/product/p2-openclaw-native-observer-order-correction-20261007.json",
+      "sha256": "29dbb9bdbd8e426a13ca21d419f8a7288ef98e8a1469b2d4756947f9b01b0549"
+    },
+    "priorSourceReview": {
+      "path": "eva2/reviews/p2-openclaw-native-observer-order-review-20261007.json",
+      "sha256": "920fa2d68f9c78ab4c6be99b05e7ee315bddf7f3aa435c32ae7639815f7e4ae1"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-order-correction-20261007/ordinary-execution.public.json",
+      "sha256": "29bad071b088b8e3f5488edc55a8b4f3eab216b7adac589c1edb64eab253dabc"
+    },
+    "executionLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-order-correction-20261007/ordinary-composition.public.txt",
+      "sha256": "af991cebd9ee2695907e893d4c2607c9862ef9882440517c22c208886d8acada"
+    },
+    "ownPublicRollout": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/sessions/2026/10/07/rollout-2026-10-07T16-09-13-01a116b2-69a6-7641-9a11-b3b14907e336.jsonl",
+      "sha256": "76dd8a476a6440146dd84e64c322797de4f28c7f5c97cf5722971d80c6009b98"
+    }
+  },
+  "verifiedObservation": {
+    "retainedCallbackFiles": 131,
+    "allListedHashesMatch": true,
+    "contiguousSequences": true,
+    "phaseCounts": {
+      "relay_registered": 2,
+      "item_completed": 17,
+      "pre_hook_entry": 16,
+      "pre_observer_entry": 16,
+      "reserved": 16,
+      "pre_hook_return": 16,
+      "native_terminal_settled": 16,
+      "post_observer_entry": 16,
+      "post_observer_settled": 16
+    },
+    "uniqueAdmittedTools": 16,
+    "correlatedCompletedCommandTerminals": 16,
+    "integerZeroExits": 16,
+    "correlatedPostSettlements": 16,
+    "allReservePreReturnTerminalPostOrdersVerified": true,
+    "allToolThreadTurnBindingsMatch": true,
+    "preHookErrors": 0,
+    "coverageStops": 0,
+    "lastToolRowsSettledAndDispatched": 16,
+    "lastToolCoverage": true,
+    "lastLedgerStopped": false,
+    "lastPendingSdk": 0,
+    "lastPendingSdkIsNotFullAccountingProof": true
+  },
+  "boundedBeforeAfter": {
+    "previousExecutions": 2,
+    "previousPreHookErrors": 14,
+    "previousCoverageStop": true,
+    "currentExecutions": 16,
+    "currentPreHookErrors": 0,
+    "currentCoverageStop": false,
+    "interpretation": "The previously proven terminal-before-post observer stop is corrected in this confirmation. Complete conversation execution and physical cleanup remain unproved."
+  },
+  "remainingTransition": {
+    "nativeTaskStartsInOwnRollout": 1,
+    "nativeTaskCompleteEvents": 1,
+    "nativeTaskCompleteHasError": true,
+    "nativeFinalAssistantMessageIsNull": true,
+    "errorCategory": "other",
+    "httpStatus": 502,
+    "errorMessageClass": "parent_local_inference_transport_failure",
+    "errorCanonicalSha256": "0409869a458700e694cb3884adce7f733b4879d6b098b65c3c1359cedbe9bf16",
+    "errorHashEncoding": "UTF-8 json.dumps(error, sort_keys=True), default separators",
+    "nativeTaskDurationMs": 69719,
+    "nativeTimeToFirstTokenMs": 30052,
+    "taskCompletionIsNotSuccess": true,
+    "laterThreadSettingsAppliedEvents": 1,
+    "relayRegistrations": 2,
+    "sameRegistrationSessionRelayAndGeneration": true,
+    "observedNativeClientCounts": [
+      1,
+      2
+    ],
+    "postSettlementToNextRegistrationSeconds": 39.14076,
+    "retainedOriginalPreCalendarOutgoingBodyTriplets": 1,
+    "secondOrdinaryTurnConfirmed": false,
+    "secondPhysicalDispatchConfirmed": false,
+    "retryInterpretation": "A later same-session registration and second observed client are retained; the error requests a fresh connection. These do not prove a second ordinary turn or a physical retry.",
+    "exactFailedBodyOrTransportBoundary": "UNKNOWN",
+    "timeoutCause": "UNKNOWN"
+  },
+  "execution": {
+    "exitCode": -15,
+    "timedOut": true,
+    "elapsedSeconds": 122.00470202800352,
+    "fixtureDeadlineSeconds": 120,
+    "terminalCompositionReceipt": false,
+    "plannedPerTurnNativeReadbacksRetained": 0,
+    "namespacePidsAtTestExitCount": 3,
+    "targetedTerminationRequested": true,
+    "terminationAcknowledged": null,
+    "nativePhysicalClosure": "UNKNOWN"
+  },
+  "usage": {
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "originalAuthorityReads": 0,
+    "originalAuthorityWrites": 0,
+    "observedSyntheticNativeUsage": {
+      "inputTokens": 17,
+      "outputTokens": 3,
+      "totalTokens": 20
+    },
+    "syntheticUsageIsNotBilling": true,
+    "completeSdkAttemptAndUsageLedger": "UNKNOWN",
+    "developmentCredits": null
+  },
+  "preservation": {
+    "enumeratedOperatorFiles": 6,
+    "enumeratedOperatorHashesEqual": true,
+    "equalityScope": "Only the listed before/after files, not all runtime state.",
+    "nativeFrameworkModified": false,
+    "authCopiedOrModified": false,
+    "priorEvidenceRetained": true,
+    "originalCriteriaAndClosedCasesUnchanged": true
+  },
+  "conclusion": {
+    "sourceReviewGoPreserved": true,
+    "finalPublicReportAccurate": true,
+    "fullThreeTurnComposition": "UNKNOWN",
+    "fullCalendarLifecycle": "UNKNOWN",
+    "originalSampleAdmission": "NO_GO",
+    "originalSampleStarted": false,
+    "qualityOrEfficiencyClaim": false,
+    "productTaskCompletion": false,
+    "furtherTrialAuthorizedByThisReview": false
+  },
+  "reviewerActions": {
+    "testsRun": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "nativeStarts": 0,
+    "originalDataReads": 0,
+    "writes": "Only this review file"
+  },
+  "findings": []
+}

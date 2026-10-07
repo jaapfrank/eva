@@ -1,0 +1,107 @@
+{
+  "contract": "P2OpenClawNativeObserverTraceSourceIndependentReview/v1",
+  "date": "2026-10-07",
+  "baseCommit": "7e8e6bc1",
+  "decision": "GO_SOURCE_AND_ONE_CHANGED_CAUSE_PUBLIC_DIAGNOSTIC",
+  "originalSampleAdmission": "NO_GO",
+  "nativeClosure": "UNKNOWN",
+  "quality": "UNKNOWN",
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "efb9627a5cfa4907d57a70b8afce69536be8571610f96e4211955edcb04583a5"
+  },
+  "test": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "sha256": "3e8cb60432dd94e54b43b000a66b9061307a84aeb4166c709606ae77ee409aeb"
+  },
+  "findings": [],
+  "scope": "Only durable content-free callback observation and the required post-retention admission checks. Existing completion-settlement, native policy and close decisions are not changed.",
+  "resolvedFinding": {
+    "initialSourceSha256": "f4cfeca0559b3c97216bb7459e84fd29f9553ca9cd70399af224be63784863af",
+    "problem": "New synchronous reserved/pre_hook_return retention followed the last evaluator deadline/stop check.",
+    "correction": "reserveTool now checks immediately after reserved retention and cancels/refuses on failure; the pre-hook wrapper checks immediately after pre_hook_return retention before returning. No further I/O lies between these checks and their respective returns.",
+    "coverage": "The focused dynamic-body test forces stop and deadline during actual retention and proves zero body calls/dispatched false/cancelled. The final pre-hook-return placement is source-reviewed; no full native invocation proof is claimed."
+  },
+  "sourceAssessment": [
+    "Reviewed call sites supply only fixed phases, monotonic/deadline/stop metadata, bounded item type/status, numeric exit code, source-module bindings and hashed native tool/thread/turn/registration-session/relay/generation identifiers. Tool arguments, command/result text, messages, raw thread IDs and auth headers are not supplied.",
+    "Existing retainPrivate enforces private ownership, exclusive creation, mode 0600 and fsync. Each sequenced receipt is durable independently of terminal receipt generation; retention failure stops the ledger and throws.",
+    "Registration metadata and pre-entry/return/error, reservation, post-entry/settlement, item completion and first coverage-stop records can distinguish callback ordering without asserting the reserved/completion hypothesis as fact.",
+    "Original native policy, disabled route, owned relay, trusted config, assertActive/executionAdmission/retention and tool cap remain. Existing reserved-completion rejection and cleanup uncertain semantics remain; pre-permit is not newly labelled execution.",
+    "Repeated metadata writes may add diagnostic latency. They are inside the existing deadline and do not grant a new budget or establish native closure."
+  ],
+  "retainedVerification": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/trace-owned-planning-and-stop-resolved.public.json",
+      "sha256": "40cc6dd1570ad4f450fc3b827d6b5713f3854d98417368e14a311f41ef3eb4ba"
+    },
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/trace-owned-planning-and-stop-resolved.public.txt",
+      "sha256": "ef3591ecd819e7ebb04b7f8057464fe6da712d0c6ab376fb1e10bf20ffab4d14"
+    },
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "elapsedSeconds": 3.6121100039890734,
+    "nativeActorStarts": 0,
+    "modelCalls": 0,
+    "scope": "Durable metadata/privacy sequence; stop/deadline refusal after reservation retention; actual installed owned relay planning. No whole ordinary actor run."
+  },
+  "preservedPreparationEvidence": [
+    {
+      "receipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/trace-and-owned-planning.public.json",
+        "sha256": "9baa50b50dbcf9fa506f83b044a47589cd760ac325dc4612c9bdc90ad610bf3c"
+      },
+      "meaning": "Initial metadata/planning checks before the two post-retention checks; two passed."
+    },
+    {
+      "receipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/trace-and-owned-planning-after-stop-check.public.json",
+        "sha256": "d5c2a42d877e86c1cc29af47cbbae3bfc5e14c820c172d183b131d02d1179bad"
+      },
+      "meaning": "Two tests passed, actual owned planning skipped; not complete native planning evidence."
+    },
+    {
+      "receipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/trace-owned-planning-and-stop-with-pins.public.json",
+        "sha256": "9c9d79fc5c195f3fb9be9aad3df87553f5f8345a0e70784ccd0bdf17f4599cb4"
+      },
+      "meaning": "Incorrect plugin root failed before native import; retained as a preparation failure. Replaced only by the separately retained successful exact-root check."
+    }
+  ],
+  "previousRuntime": {
+    "review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
+      "sha256": "690e32c174fb22d7abda90e6289855a83040df351b5da5d03b95358a88fd24ff"
+    },
+    "readOnlyPublicFailureClassification": {
+      "genericUnavailable": 13,
+      "hookTimedOut": 1,
+      "provenCompletedExec": 2
+    },
+    "cause": "UNKNOWN; durable callback order was absent. No closed result is repaired by this source change."
+  },
+  "nextPublicDiagnostic": {
+    "count": 1,
+    "ordinaryTurns": 3,
+    "sessions": 2,
+    "toolCap": 16,
+    "controllerSeconds": 120,
+    "purpose": "Recover the previously missing native callback/first-stop sequence through the same public composition.",
+    "conditions": [
+      "Reuse the existing public synthetic fixture, native profile/route and original diagnostic decision logic.",
+      "No original case/input/authority operations, real provider/auth calls, native framework edit or new budget.",
+      "Keep prior failures and unknowns intact. Native close uncertain remains UNKNOWN regardless of tool receipts.",
+      "No further unchanged repetition or original sample admission follows from this source GO."
+    ]
+  },
+  "reviewerActivity": {
+    "testsRun": 0,
+    "nativeRuns": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedOriginalContentReads": 0,
+    "agentsSpawned": 0,
+    "onlyWrittenFile": "eva2/reviews/p2-openclaw-native-observer-trace-source-review-20261007.json"
+  }
+}

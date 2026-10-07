@@ -1,0 +1,1012 @@
+{
+  "schema": "EvaOpenClawNativeOrderCorrection/v1",
+  "at": "2026-10-07T14:11:28.740510+00:00",
+  "status": "CONFIRMED_16_NATIVE_COMMANDS_ACCOUNTED_FULL_COMPOSITION_UNKNOWN",
+  "sourceSha256": "57fc34d06e39ec66c1c8f872dce45179b37bde73ee028a4f2117fad970e67b26",
+  "testSha256": "633d3f2d7f69fd1d3e4e4e8cfa495f594fb324832ef5e3ce48c510809f74e36a",
+  "sourceReview": "eva2/reviews/p2-openclaw-native-observer-order-review-20261007.json",
+  "sourceReviewSha256": "920fa2d68f9c78ab4c6be99b05e7ee315bddf7f3aa435c32ae7639815f7e4ae1",
+  "diagnosis": "eva2/evidence/product/p2-openclaw-native-observer-order-diagnosis-20261007.json",
+  "fixedTransition": "Completion before post now settles only the exact admitted native tool/thread/turn. Later post confirms idempotently.",
+  "controlledBeforeAfter": {
+    "beforeNativeCommandExecutionsConfirmed": 2,
+    "beforeReservedTools": 2,
+    "beforeFirstCoverageStop": true,
+    "beforePreHookErrors": 14,
+    "afterAdmittedTools": 16,
+    "afterNativeCommandTerminals": 16,
+    "afterNativePostSettlements": 16,
+    "afterPreHookErrors": 0,
+    "afterCoverageStops": 0,
+    "afterLedgerStoppedAtLastObservation": false,
+    "afterToolCoverageAtLastObservation": true,
+    "qualityOrRuntimeEfficiencyClaim": false
+  },
+  "execution": {
+    "exitCode": -15,
+    "timedOut": true,
+    "elapsedSeconds": 122.00470202800352,
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "originalAuthorityReads": 0,
+    "originalAuthorityWrites": 0,
+    "operatorEnumeratedHashesEqual": true,
+    "terminalCompositionReceipt": false,
+    "namespacePidsAtTestExit": [
+      116580,
+      130722,
+      130736
+    ],
+    "targetedTerminationRequested": true,
+    "terminationAcknowledged": null
+  },
+  "observationCount": 131,
+  "phaseCounts": {
+    "relay_registered": 2,
+    "item_completed": 17,
+    "pre_hook_entry": 16,
+    "pre_observer_entry": 16,
+    "reserved": 16,
+    "pre_hook_return": 16,
+    "native_terminal_settled": 16,
+    "post_observer_entry": 16,
+    "post_observer_settled": 16
+  },
+  "terminalMetadata": [
+    {
+      "sequence": 12,
+      "toolIdSha256": "76338c18fd24f1d5c0755cfc8ee2c24935d72897bdb1ed3b41c4e27ee4f22dea",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 14,
+      "toolIdSha256": "7d7cc2c401ca3ce7a7fca7901384efcacea8c57804d631f1b31b0850e3eb3d37",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 32,
+      "toolIdSha256": "38d1cba1b002ec321bf140253eb4fa8b2e8df14c5135ea6f992ce1f2eed6b7e7",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 38,
+      "toolIdSha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 48,
+      "toolIdSha256": "eb2bd118174adef9ce4a77cd40e64f536b4ef7ae1e9d0b6d9543dd9850670198",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 54,
+      "toolIdSha256": "cc3599550871aafbc7adff60feeea4e964d9d83684fe530acf76f9bc36e595a6",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 56,
+      "toolIdSha256": "f7ae0821e5065ee3ac8cd5ea0ece29115e2491e1936293ee78b8ec0c79d1962a",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 62,
+      "toolIdSha256": "abd1ef4f22c6561c77a986281763848a07df4a193e63f5989f58e71b55d2290a",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 64,
+      "toolIdSha256": "5d76d806fb4c5b88b5d0b01f581d60db989fe79d363acaa6a9187d3e2985dbf5",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 70,
+      "toolIdSha256": "ac468be620a1bb97b9f08ac3da55fe8be6595e188bc91e2093b56329ed721410",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 76,
+      "toolIdSha256": "9f42803b971b224f7f1e31988ee1a23c0417919388a2a50e12799747b72778cc",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 82,
+      "toolIdSha256": "c534d685c8a90fafd6123c81e0a39a73bfc55b7087798c17ae2c5276c6d8a7c2",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 88,
+      "toolIdSha256": "79b35dff3b4527da3e923646c14fd9bb7dc371afb2d20dc94faba895d0fd95b5",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 94,
+      "toolIdSha256": "e642cbae94169bace0e6cc38fff922b0e9405d35b7d0f6e102025a004ff738a7",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 96,
+      "toolIdSha256": "716a90cb61ccbf42d424d20c771db5bec4b288f148f09762a700622a492a4ea5",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "sequence": 98,
+      "toolIdSha256": "35695048cb3ec4e41dbd235bfd793db7b24c6a87cc28054591c8f9af97d6b035",
+      "nativeThreadIdSha256": "7c7fe14e82ae3d1b065bed93794717fd26109781b988b0f4b2392e2987ace9a1",
+      "nativeTurnIdSha256": "81e78f74f0fd48e511d9611f4ee85e242988db2837fdca51136f7d9a2dcb903e",
+      "status": "completed",
+      "exitCode": 0
+    }
+  ],
+  "readbacksRetained": [],
+  "remaining": {
+    "threeNativeTurns": "UNKNOWN",
+    "clockAdvanceFullComposition": "UNKNOWN",
+    "sdkAttemptAndUsageLedgerFullComposition": "UNKNOWN",
+    "nativePhysicalCleanup": "UNKNOWN",
+    "originalSample": "NOT_STARTED_NO_GO",
+    "nextAction": "Corrigeerde accounting hergebruiken. Eerste native beurt eindigde na 16 tools met parent-local HTTP502, zonder eindantwoord; dezelfde sessie registreerde opnieuw. Lokaliseer de verborgen voorbereiding/transportexception, zonder nieuwe oorspronkelijke proef, gewijzigde criteria of ongewijzigde herhaling."
+  },
+  "retainedEvidence": {
+    "executionReceipt": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-order-correction-20261007/ordinary-execution.public.json",
+    "executionSha256": "29bad071b088b8e3f5488edc55a8b4f3eab216b7adac589c1edb64eab253dabc",
+    "fixtureRoot": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io",
+    "records": [
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/1-native-observation.json",
+        "sha256": "3771ea40f000f4d7c12ee8e46927a668a63c0da47f57fc23e14c91082c5a0d05",
+        "sequence": 1,
+        "phase": "relay_registered"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/2-native-observation.json",
+        "sha256": "02dba76ee2d384325501498adec70a261bf55108153e1dd051a82bf502e7c11f",
+        "sequence": 2,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/6-native-observation.json",
+        "sha256": "2bb57afbcbc072edd9991c515353c8a32d2a095e2dcf4dc8b2f2481918aa1ba0",
+        "sequence": 3,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/7-native-observation.json",
+        "sha256": "bfe6a8699b11f188d92d125c772cc70d739875d3481f373a1f914478779b77d0",
+        "sequence": 4,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/8-native-observation.json",
+        "sha256": "c5ca81cfd4154d2aeacefa68099a34ea1020a17434d1c6a324a64d056fe32576",
+        "sequence": 5,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/9-native-observation.json",
+        "sha256": "f66f84b7199523a7b40cc179bbcb2fc67c169ea64ef5980dcb76c40a560664d0",
+        "sequence": 6,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/10-native-observation.json",
+        "sha256": "83c97e60d2fbd4907850fa92711e544491475bd0c4e7beb6089eefca7e11a1ff",
+        "sequence": 7,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/11-native-observation.json",
+        "sha256": "44bc249fbb83267688a2b3cb5ebbc4d64eccad18dfeae3dc8a4d6af5af5b4cc8",
+        "sequence": 8,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/12-native-observation.json",
+        "sha256": "c2e899d2914775aea21a39e5747fa0c89c85521413410e4f3fd02a814acbeec6",
+        "sequence": 9,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/13-native-observation.json",
+        "sha256": "54906a57883ed52b7bb47ae99bb7b79a0848244c4b804b073f8ec86f98872aab",
+        "sequence": 10,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/14-native-observation.json",
+        "sha256": "7d2d01f63a969906bdc369add3155cebf27d6921974857a3b2f42bca2e206203",
+        "sequence": 11,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/15-native-observation.json",
+        "sha256": "641d5f3d8a21da0608bc6e8f08222a0cfdf26f7093d03fc5c23dbc1227dfdbc2",
+        "sequence": 12,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/16-native-observation.json",
+        "sha256": "5bf4af34fb8ddc021fa23991805938384e3e8b9ac31a81e211b54fdf5b5a83ef",
+        "sequence": 13,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/17-native-observation.json",
+        "sha256": "d5201a8affa34d7346c5b4f27b7ed9740fefcf0e747b01eb7d1210273f4e2013",
+        "sequence": 14,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/18-native-observation.json",
+        "sha256": "49c6383d67af9b9cd2007704cf2310d97852ff720a92f6196028613add08234c",
+        "sequence": 15,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/19-native-observation.json",
+        "sha256": "178396846083d1ac6c52f9e51b309a7d8aa74c7afcd16b5dba483921678800e5",
+        "sequence": 16,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/20-native-observation.json",
+        "sha256": "2f1130717413e8e57fda429928889f9e7387e39878aae10df1ee1e9c092ea893",
+        "sequence": 17,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/21-native-observation.json",
+        "sha256": "f996d8e9d4974fe6a2fe5a33f597bf9ecd4e80ecbf8a62e6e2a882a6da72d1a4",
+        "sequence": 18,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/22-native-observation.json",
+        "sha256": "99c9e87b56a25d84a367812155b0524460050cd09bbedabb386289e60c5f5781",
+        "sequence": 19,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/23-native-observation.json",
+        "sha256": "21a289b809ed5c326325b1d31acd5d2eddae4166b2da02b476c8112f9441340d",
+        "sequence": 20,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/24-native-observation.json",
+        "sha256": "eae800567b7ff71c911e85bdd43b463319a45bfdecd2815fdc5f6174bf3f17c6",
+        "sequence": 21,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/25-native-observation.json",
+        "sha256": "69627644467cbc7963a6369b821d5d1777676fdb271a44505802c2b13ef3bf61",
+        "sequence": 22,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/26-native-observation.json",
+        "sha256": "e299bd2d1be3882ab4bdda61a98a912fccd2449743a6859119cffb651aa2242a",
+        "sequence": 23,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/27-native-observation.json",
+        "sha256": "592a9d5e7a54a98efa20a018083958a587e9f474831ce9950ae9c5211fa95dbd",
+        "sequence": 24,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/28-native-observation.json",
+        "sha256": "3f2c999067b77fece4d766a8bb4e56aba733991c149bfb3e455ea57bc5138106",
+        "sequence": 25,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/29-native-observation.json",
+        "sha256": "9bf92087be9dff4b25c856efb85911090be3752f48d69e0625f5a7e8a7665c3b",
+        "sequence": 26,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/30-native-observation.json",
+        "sha256": "4115da9bc03a227fe5cf7d81c606d4f65f7bd4c577bed7556203a1a5bffc73c0",
+        "sequence": 27,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/31-native-observation.json",
+        "sha256": "77bbdc063779345d490c0bffacaf52ebe5755dcc89f4cf38a927aae55062def9",
+        "sequence": 28,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/32-native-observation.json",
+        "sha256": "40fb0fe8b55ec0d9ddd47090fb14b61f62ffd406381ae94c24543fb5f6062720",
+        "sequence": 29,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/33-native-observation.json",
+        "sha256": "8849cb21686d57e3e55da931ca31a2ac2260de0e3031d5b58030901bb0080dd3",
+        "sequence": 30,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/34-native-observation.json",
+        "sha256": "363c275b676f8c4cfb1dd8075ca50b64757580f8016f429695bb1fab3e426f64",
+        "sequence": 31,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/35-native-observation.json",
+        "sha256": "0986c31bce7cc19441a2c679c1e3f0404749744fc7e6dedde8c7183a76aa7e07",
+        "sequence": 32,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/36-native-observation.json",
+        "sha256": "4fbc49e1c15b1e45bf58416eafe7c642f0b8dd1b5508819a3b204e420db42db4",
+        "sequence": 33,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/37-native-observation.json",
+        "sha256": "256cefcfcc20fa69bf93ad1cf279632cc42b9b0410f434088c26e14973029cc3",
+        "sequence": 34,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/38-native-observation.json",
+        "sha256": "ed446dac7c5980947b8bb6144b664a07bda21523487c38bd38d2904e19ea5d98",
+        "sequence": 35,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/39-native-observation.json",
+        "sha256": "f25fa49d8b5eb0ea2c93c21c224b6f4ed75ab29f8027f5c683512dbb7408b307",
+        "sequence": 36,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/40-native-observation.json",
+        "sha256": "aa400a9e3f46ae13987d29bcfff678fd86dc124207a4dd6a31f3f3645e1d005e",
+        "sequence": 37,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/41-native-observation.json",
+        "sha256": "18d82ecf5efbe73b553b538d971fd98f4fe7004e2080b1a92c0c6b1fd1d6feb1",
+        "sequence": 38,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/42-native-observation.json",
+        "sha256": "7daf07a1c53790e56ccb2a3a7d781194981be00635debd83860a16f32dfd80af",
+        "sequence": 39,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/43-native-observation.json",
+        "sha256": "20f5edad00a5c553f941b0173668c660983e307aa33482431c9dcc03bcc560d4",
+        "sequence": 40,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/44-native-observation.json",
+        "sha256": "496a891eb6cf6d06b91cd838af11aa0ee3e3672e2337b43b65337995459a8c16",
+        "sequence": 41,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/45-native-observation.json",
+        "sha256": "6c24fbc1c6e5404cad42f9aff1a2a5199d50fd141c8f45110d355249254f86df",
+        "sequence": 42,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/46-native-observation.json",
+        "sha256": "8c29ea05d8b5abada521ff0b341e9757cbb0540f3499bd270184c4a92d58540d",
+        "sequence": 43,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/47-native-observation.json",
+        "sha256": "6df8c9af21a5e49e49fea8e710e0a54d19c89e074706a9a0bed1eeedd9b0009e",
+        "sequence": 44,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/48-native-observation.json",
+        "sha256": "c855b3a1e3d6f253fb519d98c5792337d23827855573ecd429f1895e0ce7fb5e",
+        "sequence": 45,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/49-native-observation.json",
+        "sha256": "cb4f5d5f1b1c1d84183d1f5d6f54c6ab04b4d068d2f4e99a46b5cc28efde42b0",
+        "sequence": 46,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/50-native-observation.json",
+        "sha256": "abf554effe5f94caf5c5d12f017feb73da2ad30b4543584ab574a90ce543c3df",
+        "sequence": 47,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/51-native-observation.json",
+        "sha256": "68a047e47b377d52c52737e697b0037e8a559debcb382090f98af3bbef7a7ee0",
+        "sequence": 48,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/52-native-observation.json",
+        "sha256": "d0eef6c3b8f94a38cdd9e96f2e18a455e5c4cfc34c764492e6b82f9aca003a45",
+        "sequence": 49,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/53-native-observation.json",
+        "sha256": "88c6f48ea17725aa46c3fc13a039efa07dc04cb6f7d376ca0dd34c6180fba396",
+        "sequence": 50,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/54-native-observation.json",
+        "sha256": "4199008785ae138dc63ce209ca9fb70c4686ca7d51ddf31779796e52b378eb54",
+        "sequence": 51,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/55-native-observation.json",
+        "sha256": "d28c22f4b4c95b72120b2277c58ebcff66a60fc9851eec8d9fd313c88a2f0410",
+        "sequence": 52,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/56-native-observation.json",
+        "sha256": "f8fe486698f3a048bfe8cc94fde912a0df10736ed77832a4a74e3915d606e630",
+        "sequence": 53,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/57-native-observation.json",
+        "sha256": "7ae68bb4288f6d1c5a4280c87508030ab6167136a80747428e7c392f22172f2c",
+        "sequence": 54,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/58-native-observation.json",
+        "sha256": "ced01210d180b5e2a4c2218c95a82e1419065f943a401a9ec61856fe51edae4e",
+        "sequence": 55,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/59-native-observation.json",
+        "sha256": "6eebd717c36068523670c7539b405d33d70f063c7e328e5a9e55266659fe1c4e",
+        "sequence": 56,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/60-native-observation.json",
+        "sha256": "50b16e419023c287778acf33179efe933fd3ced4513bc455b5bec1d5b07ca29b",
+        "sequence": 57,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/61-native-observation.json",
+        "sha256": "2b265670da4c56feff539a25e7bea800f3075938168b9a4218499f8bbb76df2f",
+        "sequence": 58,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/62-native-observation.json",
+        "sha256": "53aba54363818ac9c8c59fe72daea8b11124121e2c15edbfea44a63d342fdcf7",
+        "sequence": 59,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/63-native-observation.json",
+        "sha256": "903f1709e78c9b29d603e766f3d909325a843afcd174c1aeef70dcf24a69dbd3",
+        "sequence": 60,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/64-native-observation.json",
+        "sha256": "43df74c1b15a445c1ddcba4a34a7c8b55c614e43de61b43ec7ab46b95bdb90af",
+        "sequence": 61,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/65-native-observation.json",
+        "sha256": "f964109efe58b5f737de8a1af3d7359fd382872c289e67c2218a116391b8d8b5",
+        "sequence": 62,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/66-native-observation.json",
+        "sha256": "0e165132cc0c727607f0709a60c7b9c32f49acdb5e4816df8f0034a9177eb3cf",
+        "sequence": 63,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/67-native-observation.json",
+        "sha256": "df2b1341a764dea1a6834b06e3b4e157123e0d1f9ec61d269bff1af017242c82",
+        "sequence": 64,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/68-native-observation.json",
+        "sha256": "82ae1f41bff2bc0966cec5259d40ff5ae2bfa300f8d3e298a59bd3176c0aef46",
+        "sequence": 65,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/69-native-observation.json",
+        "sha256": "14085daeeb9f34947c49d4483b4cb2deb90ea7b188bfa4ba1ebd7c22b4f0ebe8",
+        "sequence": 66,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/70-native-observation.json",
+        "sha256": "9e4f53bf7cc06aca753fdf258573425ae557a07c55048bd366ad01ddecc9d003",
+        "sequence": 67,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/71-native-observation.json",
+        "sha256": "65d6c0e13b5bb8ea840eb7e9eacb65cfbd1eb99e079105db231067aa859dea1e",
+        "sequence": 68,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/72-native-observation.json",
+        "sha256": "22273c0b399ef94d0c99e20b8089e47dd479d82dbe7fccfc394b0a684dd9a546",
+        "sequence": 69,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/73-native-observation.json",
+        "sha256": "32bcd4b4f777e6b7af4be4bd2215a3c1fb4056b0f78cfdce229182d867ffdc48",
+        "sequence": 70,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/74-native-observation.json",
+        "sha256": "c36acf6ba39b14f7a4c47d83e6e7a717cc91f9e850ffc8fb655ba29aa5a24997",
+        "sequence": 71,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/75-native-observation.json",
+        "sha256": "00678e49e99482fb178d5634e494a07f2d2427cdbc90bfe97d7a49ed6f781ad7",
+        "sequence": 72,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/76-native-observation.json",
+        "sha256": "eaabe132182df601f602513ae9797c6c4084991bbdb1b08b2f21836a88645d25",
+        "sequence": 73,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/77-native-observation.json",
+        "sha256": "a7d10e9c18846cd558234cd46864819f58926a5d2823fafb4187874208e76f79",
+        "sequence": 74,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/78-native-observation.json",
+        "sha256": "07cda4542620be533ccb86fdc075c69da5b3eddd84ee303909180cfd64a101ec",
+        "sequence": 75,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/79-native-observation.json",
+        "sha256": "83029a60b475b2e00f8b210babd2ca7fb77395460c07da0153a0000b28665bf0",
+        "sequence": 76,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/80-native-observation.json",
+        "sha256": "6e77ab401b77032a40b4776ba2b30d6d379ee2c93a27ae8ac8df7667a7c1bb75",
+        "sequence": 77,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/81-native-observation.json",
+        "sha256": "4e3308ab5a4f1d2fa5ac8ef3faedb1cf7e422a8e5d81de6d948b007d371057e1",
+        "sequence": 78,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/82-native-observation.json",
+        "sha256": "8d2dcb5387bf37573e92c1d1f0fc2719c9fbd3b35606746b991cf59a2a86e34b",
+        "sequence": 79,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/83-native-observation.json",
+        "sha256": "baffc39aa28a822aa8793d56bab68b3cd04e01e34cb624863a87e45b41b0037b",
+        "sequence": 80,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/84-native-observation.json",
+        "sha256": "242f86721dd0c14c298527d6560f19e98a2195eef5794140685af869d585ee8a",
+        "sequence": 81,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/85-native-observation.json",
+        "sha256": "bdba0be98a25fe1c749fc6d8c2754a0604a5a27e08b3105e262a14b488c45984",
+        "sequence": 82,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/86-native-observation.json",
+        "sha256": "e76e7282a68e37bc3bda0c5464b47fe38fd555db5917db759c4fcc1c95ffe0a8",
+        "sequence": 83,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/87-native-observation.json",
+        "sha256": "bca7e42212055d38e3e3389f2b8b44d31ff3ef87feea382547f2bb79fa764397",
+        "sequence": 84,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/88-native-observation.json",
+        "sha256": "abaa830eade58e74b768eb4ecb13a0d6b3d1354a093e0365a0166b6c92470d3f",
+        "sequence": 85,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/89-native-observation.json",
+        "sha256": "14953bc65514a228a35047684b9935492390068ec5cef104be2d4a257b525c5f",
+        "sequence": 86,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/90-native-observation.json",
+        "sha256": "7a6ac79362da18f1b65890b146fdabe649204b8d8674e5a1027bad9ff32cf03e",
+        "sequence": 87,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/91-native-observation.json",
+        "sha256": "052820a4e3292393aa2c7629608c23b07f4b07f109e14d4925b81ea552433c2b",
+        "sequence": 88,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/92-native-observation.json",
+        "sha256": "1b6bf35bf0471a6e2fa74c97c66ab9b738a9d03d285bc0ef6b861297895a0ec6",
+        "sequence": 89,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/93-native-observation.json",
+        "sha256": "350880fe682ab14e9e8d89f5ea9fe9337d44de95bc770d13bbb0ffd7b00a7892",
+        "sequence": 90,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/94-native-observation.json",
+        "sha256": "d4c059bd221f314ef534f1cde8bcf8c5d2c09df97f9bf8f01cac300d31beb95b",
+        "sequence": 91,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/95-native-observation.json",
+        "sha256": "b0d4cdf54c9a9991042781be207662bf0c186885e4442d94c85c101decb663dd",
+        "sequence": 92,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/96-native-observation.json",
+        "sha256": "cc3d0ffbc229cd6d5bb4f285f7f55f41a87a68ce4489321d721fab903e2ca9c1",
+        "sequence": 93,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/97-native-observation.json",
+        "sha256": "9c21c682c5f4ce51dbf370c06c57b1dc07dd1827aebbc8a88ed0b07217d6b141",
+        "sequence": 94,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/98-native-observation.json",
+        "sha256": "4866fe7c767470c91049af86c4ee34520216a9b788a88cd64630a7a702bd9af8",
+        "sequence": 95,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/99-native-observation.json",
+        "sha256": "2d8863fe12a8182bc5462232c34d41a83451050c87838c6aa89b4adb2783d06d",
+        "sequence": 96,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/100-native-observation.json",
+        "sha256": "b2ebfc500735c8c0ec0e4d34ec3aaedab7408323ccc7b07fd1bd1afb3cbe5e45",
+        "sequence": 97,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/101-native-observation.json",
+        "sha256": "32b6057804c4cbb90caf64dff1d5dedfd3674ff863b1f8c51d1fb09b2b030854",
+        "sequence": 98,
+        "phase": "native_terminal_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/102-native-observation.json",
+        "sha256": "fbf1caedeba984c68500e86ab8629c33a0a3be20f6dcdec420a74d9ca7a57f9b",
+        "sequence": 99,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/103-native-observation.json",
+        "sha256": "f86e061a94b6613170e133c621600542043256ada7cf9df3e61096c6dbc24a2d",
+        "sequence": 100,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/104-native-observation.json",
+        "sha256": "1515d6c798e3a17275c64247a82a87a4fc0464e2011952921af50841537dfbb8",
+        "sequence": 101,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/105-native-observation.json",
+        "sha256": "1c814a7ec55a1f37790a234ae869cd1847ddac7f48cb576a1a51c20d981136fe",
+        "sequence": 102,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/106-native-observation.json",
+        "sha256": "ef6f664e34ec83de56da722ec5e3e4041f0c7002495f5d5120fee2dff82488d2",
+        "sequence": 103,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/107-native-observation.json",
+        "sha256": "50dcf76e43a9ba9bb330a21bdf584f8106b63748a283c1dfec96ee6e5ceb3325",
+        "sequence": 104,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/108-native-observation.json",
+        "sha256": "ecdfe7a5b474a081e03d8d9a847d97a425333f7b3869e1426cd00c5d1f73ed99",
+        "sequence": 105,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/109-native-observation.json",
+        "sha256": "d32c1829455f5b6dd2bf5a9e657cd4149907f30868ad76fadc7cfcd43badb510",
+        "sequence": 106,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/110-native-observation.json",
+        "sha256": "c2f1d168bc08824bba0d8a96663ff64d09b0b085cf1871c17e89e3263118b7d3",
+        "sequence": 107,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/111-native-observation.json",
+        "sha256": "362950936f2b895d5516ad0d10ee9c5e47a66ed32149fe4add63ba6fe60d6e6f",
+        "sequence": 108,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/112-native-observation.json",
+        "sha256": "ce4aae34088c34828492a64e62cca344404fdd64891e5db3e23d398130f1d8a7",
+        "sequence": 109,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/113-native-observation.json",
+        "sha256": "780746bd909ce7422c6a92e3ba889fe9b124c8c6599087b722a3dc9a65bd59b6",
+        "sequence": 110,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/114-native-observation.json",
+        "sha256": "70ae61cbc002504b9c5a8c2d64700d09d7dc7897d72766a7efe97a4b237fb673",
+        "sequence": 111,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/115-native-observation.json",
+        "sha256": "09a30723a01928cab856141b9fe3c0e1416353a011a2ce56523ddc6de19cacc5",
+        "sequence": 112,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/116-native-observation.json",
+        "sha256": "59aa5dcebc398462e548855586dbc3900564d7d3dbc484e5eec481ac2092c8ab",
+        "sequence": 113,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/117-native-observation.json",
+        "sha256": "9f3ed09dedd775066b2ff73c77e5c49d74ba3e51754490630480fe4c1fbd4076",
+        "sequence": 114,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/118-native-observation.json",
+        "sha256": "0dcd5e61c647ff168588ad54b3f4330ada7b7034385781484137280d579877ab",
+        "sequence": 115,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/119-native-observation.json",
+        "sha256": "d5fcfc06ae0771029d0b23be16c4daebdb64a80742e7c4d095941f3f2d224494",
+        "sequence": 116,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/120-native-observation.json",
+        "sha256": "65ac46d071f7f3a4727df2ef12155760f7ddfc8a20810c48ee3521e0badd221c",
+        "sequence": 117,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/121-native-observation.json",
+        "sha256": "bf9155dac10154bd32e4e8d0e230366afec7cb5fc02c3d2bf6436521f51e6631",
+        "sequence": 118,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/122-native-observation.json",
+        "sha256": "623be0368c915f9a49647123fe4273b5659488027f4ffda5ec6407ed70cf46e5",
+        "sequence": 119,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/123-native-observation.json",
+        "sha256": "c4a3611aff14927bdebfbee8ec64ec4f478252707ab46d909fc6ce2daba9eb17",
+        "sequence": 120,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/124-native-observation.json",
+        "sha256": "c697191fec9cc8d9e70b34028f7570e25b90d0c59ddf969dfd3e4ef446a09a3f",
+        "sequence": 121,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/125-native-observation.json",
+        "sha256": "14439279af70c644501af3c6cbdc56b5a68da638cfbb143939917998da4edd88",
+        "sequence": 122,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/126-native-observation.json",
+        "sha256": "f74cdcba0d27902f69169897ef85cfde4ed684227391cd011dbce2453c40b67d",
+        "sequence": 123,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/127-native-observation.json",
+        "sha256": "ab488ec4c7bf45f38ef500b573458ba93e4f9740e02f75c08702cbb718b8496c",
+        "sequence": 124,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/128-native-observation.json",
+        "sha256": "c04db8ed7a7d595d833c4bebe7b995466e79edb738605ed7743ba43f529ff9e7",
+        "sequence": 125,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/129-native-observation.json",
+        "sha256": "a1f1c113542596782b253f897ee4de6ae9c19def858a2aebadce9ddddd09b2f7",
+        "sequence": 126,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/130-native-observation.json",
+        "sha256": "c06c0ea5a3f28d01b2681a4e6a9ff1cdd57f970741f1ef51c14e6d5bad154156",
+        "sequence": 127,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/131-native-observation.json",
+        "sha256": "765f55aa377f6feb27d9ddfa3dbcd86c45c5a42338eba1a94b9ca6152d9d1241",
+        "sequence": 128,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/132-native-observation.json",
+        "sha256": "e63ebddf74acf4326e786dd3c13c08488e215f5e8b62f1fbdc43ff2d3f777658",
+        "sequence": 129,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/133-native-observation.json",
+        "sha256": "7fa53a31c8056d173acf3c06433266faa731a4fb7a66921641c253a46166d50e",
+        "sequence": 130,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-corrected-order-20261007-stu5r5io/contexts/134-native-observation.json",
+        "sha256": "862a12b28762ad072dbdb2a45461724f4ac067d27fd337c0865c6a7c663050ce",
+        "sequence": 131,
+        "phase": "relay_registered"
+      }
+    ]
+  },
+  "usage": {
+    "realInferenceCalls": 0,
+    "originalSampleCalls": 0,
+    "syntheticUsageNotBilling": true,
+    "syntheticUsageFullComposition": null,
+    "developmentCredits": null
+  },
+  "runtimeCodeChanged": false,
+  "coreOrWorkerReinstalled": false,
+  "productCompletionClaim": false,
+  "retainedFirstNativeTurn": {
+    "rolloutPath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/state/agents/main/agent/codex-home/sessions/2026/10/07/rollout-2026-10-07T16-09-13-01a116b2-69a6-7641-9a11-b3b14907e336.jsonl",
+    "rolloutSha256": "76dd8a476a6440146dd84e64c322797de4f28c7f5c97cf5722971d80c6009b98",
+    "completedRecords": 1,
+    "lastAgentMessagePresent": false,
+    "errorPresent": true,
+    "errorInfoEnum": "other",
+    "httpStatus": 502,
+    "errorCanonicalSha256": "0409869a458700e694cb3884adce7f733b4879d6b098b65c3c1359cedbe9bf16",
+    "durationMs": 69719,
+    "timeToFirstTokenMs": 30052,
+    "knownFailurePhrase": "Codex parent-local inference transport failed; retry on a fresh connection.",
+    "nativeReRegistration": "Same operator session, relay and generation; native client count 1 to 2, not proof of second ordinary turn.",
+    "unprovenBoundary": "Exact continuation/native preparation/HTTP or websocket exception cause absent; no raw failed second body retained."
+  }
+}

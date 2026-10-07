@@ -1,0 +1,596 @@
+{
+  "schema": "EvaOpenClawNativeObserverCausalDiagnostic/v1",
+  "at": "2026-10-07T14:03:58.970493+00:00",
+  "scope": "One changed-cause public native fixture, no original sample, provider responses synthetic",
+  "status": "CONFIRMED_EVALUATOR_ORDER_DEFECT_FULL_COMPOSITION_UNKNOWN",
+  "sourceSha256": "efb9627a5cfa4907d57a70b8afce69536be8571610f96e4211955edcb04583a5",
+  "testSha256": "3e8cb60432dd94e54b43b000a66b9061307a84aeb4166c709606ae77ee409aeb",
+  "sourceReview": "eva2/reviews/p2-openclaw-native-observer-trace-source-review-20261007.json",
+  "sourceReviewSha256": "14d1cc49ba6aa1a72698f07950639ef7bc6c29f0867bd7d5caf59af3060e6ba7",
+  "execution": {
+    "exitCode": -15,
+    "timedOut": true,
+    "elapsedSeconds": 122.07769895900856,
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "originalAuthorityReads": 0,
+    "originalAuthorityWrites": 0,
+    "operatorEnumeratedHashesEqual": true,
+    "terminalCompositionReceipt": false,
+    "namespacePidsAtTestExit": [
+      69664,
+      78383
+    ],
+    "targetedTerminationRequested": true,
+    "terminationAcknowledged": null
+  },
+  "observationCount": 60,
+  "phaseCounts": {
+    "relay_registered": 1,
+    "item_completed": 3,
+    "pre_hook_entry": 16,
+    "pre_observer_entry": 16,
+    "reserved": 2,
+    "pre_hook_return": 2,
+    "first_coverage_stop": 2,
+    "pre_hook_error": 14,
+    "post_observer_entry": 2,
+    "post_observer_settled": 2
+  },
+  "firstStop": {
+    "item_type": "commandExecution",
+    "item_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+    "thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+    "observed_status": "reserved"
+  },
+  "exactCorrelatedOrder": [
+    {
+      "contract": "OpenClawNativeObservation/v1",
+      "sequence": 3,
+      "phase": "pre_hook_entry",
+      "monotonic": 112849.678506163,
+      "deadline_reached": false,
+      "ledger_stopped": false,
+      "ledger_stop_reason": null,
+      "tool_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+      "tool_name_sha256": "6dab788735363efa647f680fc88566430b69973bd9d365bd5bd9ec0907c92135",
+      "native_thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+      "native_turn_id_sha256": "83fec05007db59855f9e637b7e290826d58db682f3bd8f312a81dbb4cb2799a4",
+      "registration_session_id_sha256": "8b4ab64cba7ef8103c1f7c79c6bc553d31dc272fc2237edbc83afcad33349268",
+      "relay_id_sha256": "0a51d8feb9ab85b67e46205216387038fd6b8607a88a60eb88963708c9f8f6db",
+      "relay_generation_sha256": "dc14717115c14354036f8ca1c1051e3c833016e5a5e7e90fcd01831368373a93",
+      "registration_signal_aborted": false,
+      "tool_coverage": true,
+      "first_coverage_failure": null,
+      "pending_sdk": 0,
+      "native_client_count": 1
+    },
+    {
+      "contract": "OpenClawNativeObservation/v1",
+      "sequence": 4,
+      "phase": "pre_observer_entry",
+      "monotonic": 112849.688372881,
+      "deadline_reached": false,
+      "ledger_stopped": false,
+      "ledger_stop_reason": null,
+      "tool_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+      "tool_name_sha256": "37c9a5bba64484ff1971b80862a96916501e4624e59e717e16e7686f6f41be73",
+      "native_thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+      "native_turn_id_sha256": "83fec05007db59855f9e637b7e290826d58db682f3bd8f312a81dbb4cb2799a4",
+      "registration_session_id_sha256": "8b4ab64cba7ef8103c1f7c79c6bc553d31dc272fc2237edbc83afcad33349268",
+      "relay_id_sha256": "0a51d8feb9ab85b67e46205216387038fd6b8607a88a60eb88963708c9f8f6db",
+      "relay_generation_sha256": "dc14717115c14354036f8ca1c1051e3c833016e5a5e7e90fcd01831368373a93",
+      "registration_signal_aborted": false,
+      "tool_coverage": true,
+      "first_coverage_failure": null,
+      "pending_sdk": 0,
+      "native_client_count": 1
+    },
+    {
+      "contract": "OpenClawNativeObservation/v1",
+      "sequence": 5,
+      "phase": "reserved",
+      "monotonic": 112849.692153688,
+      "deadline_reached": false,
+      "ledger_stopped": false,
+      "ledger_stop_reason": null,
+      "tool_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+      "tool_coverage": true,
+      "first_coverage_failure": null,
+      "pending_sdk": 0,
+      "native_client_count": 1
+    },
+    {
+      "contract": "OpenClawNativeObservation/v1",
+      "sequence": 6,
+      "phase": "pre_hook_return",
+      "monotonic": 112849.696115734,
+      "deadline_reached": false,
+      "ledger_stopped": false,
+      "ledger_stop_reason": null,
+      "tool_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+      "tool_name_sha256": "6dab788735363efa647f680fc88566430b69973bd9d365bd5bd9ec0907c92135",
+      "native_thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+      "native_turn_id_sha256": "83fec05007db59855f9e637b7e290826d58db682f3bd8f312a81dbb4cb2799a4",
+      "registration_session_id_sha256": "8b4ab64cba7ef8103c1f7c79c6bc553d31dc272fc2237edbc83afcad33349268",
+      "relay_id_sha256": "0a51d8feb9ab85b67e46205216387038fd6b8607a88a60eb88963708c9f8f6db",
+      "relay_generation_sha256": "dc14717115c14354036f8ca1c1051e3c833016e5a5e7e90fcd01831368373a93",
+      "registration_signal_aborted": false,
+      "tool_coverage": true,
+      "first_coverage_failure": null,
+      "pending_sdk": 0,
+      "native_client_count": 1
+    },
+    {
+      "contract": "OpenClawNativeObservation/v1",
+      "sequence": 11,
+      "phase": "item_completed",
+      "monotonic": 112849.978039135,
+      "deadline_reached": false,
+      "ledger_stopped": false,
+      "ledger_stop_reason": null,
+      "tool_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+      "native_thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+      "native_turn_id_sha256": "83fec05007db59855f9e637b7e290826d58db682f3bd8f312a81dbb4cb2799a4",
+      "item_type": "commandExecution",
+      "item_status": "completed",
+      "exit_code": 0,
+      "tool_coverage": true,
+      "first_coverage_failure": null,
+      "pending_sdk": 0,
+      "native_client_count": 1
+    },
+    {
+      "contract": "OpenClawNativeObservation/v1",
+      "sequence": 12,
+      "phase": "first_coverage_stop",
+      "monotonic": 112849.990139204,
+      "deadline_reached": false,
+      "ledger_stopped": false,
+      "ledger_stop_reason": null,
+      "tool_coverage": false,
+      "first_coverage_failure": {
+        "item_type": "commandExecution",
+        "item_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+        "thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+        "observed_status": "reserved"
+      },
+      "pending_sdk": 0,
+      "native_client_count": 1
+    },
+    {
+      "contract": "OpenClawNativeObservation/v1",
+      "sequence": 57,
+      "phase": "post_observer_entry",
+      "monotonic": 112851.292557875,
+      "deadline_reached": false,
+      "ledger_stopped": true,
+      "ledger_stop_reason": "native tool completion without dispatch observation",
+      "tool_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+      "tool_name_sha256": "6dab788735363efa647f680fc88566430b69973bd9d365bd5bd9ec0907c92135",
+      "native_thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+      "native_turn_id_sha256": "83fec05007db59855f9e637b7e290826d58db682f3bd8f312a81dbb4cb2799a4",
+      "registration_session_id_sha256": "8b4ab64cba7ef8103c1f7c79c6bc553d31dc272fc2237edbc83afcad33349268",
+      "relay_id_sha256": "0a51d8feb9ab85b67e46205216387038fd6b8607a88a60eb88963708c9f8f6db",
+      "relay_generation_sha256": "dc14717115c14354036f8ca1c1051e3c833016e5a5e7e90fcd01831368373a93",
+      "registration_signal_aborted": false,
+      "tool_coverage": false,
+      "first_coverage_failure": {
+        "item_type": "commandExecution",
+        "item_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+        "thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+        "observed_status": "reserved"
+      },
+      "pending_sdk": 0,
+      "native_client_count": 1
+    },
+    {
+      "contract": "OpenClawNativeObservation/v1",
+      "sequence": 58,
+      "phase": "post_observer_settled",
+      "monotonic": 112851.297725112,
+      "deadline_reached": false,
+      "ledger_stopped": true,
+      "ledger_stop_reason": "native tool completion without dispatch observation",
+      "tool_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+      "tool_name_sha256": "6dab788735363efa647f680fc88566430b69973bd9d365bd5bd9ec0907c92135",
+      "native_thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+      "native_turn_id_sha256": "83fec05007db59855f9e637b7e290826d58db682f3bd8f312a81dbb4cb2799a4",
+      "registration_session_id_sha256": "8b4ab64cba7ef8103c1f7c79c6bc553d31dc272fc2237edbc83afcad33349268",
+      "relay_id_sha256": "0a51d8feb9ab85b67e46205216387038fd6b8607a88a60eb88963708c9f8f6db",
+      "relay_generation_sha256": "dc14717115c14354036f8ca1c1051e3c833016e5a5e7e90fcd01831368373a93",
+      "registration_signal_aborted": false,
+      "tool_coverage": false,
+      "first_coverage_failure": {
+        "item_type": "commandExecution",
+        "item_id_sha256": "2451f2534cccde9783def1afd163ac8978165b9ff82f64c7d4f965e2e288e60f",
+        "thread_id_sha256": "2d3b2fcf63c11e253b8b69cd75735833f636f7839105c4c3bdcf8b561377a95c",
+        "observed_status": "reserved"
+      },
+      "pending_sdk": 0,
+      "native_client_count": 1
+    }
+  ],
+  "finding": "Same native tool/thread/turn: admitted pre-hook returned, commandExecution completed exit0 arrived with row reserved, evaluator set toolCoverage false and stopped its ledger before post-hook. Later pre-hooks all recorded the stop; the two post-hooks eventually settled. No prior stop/deadline at the first completion. This confirms a completion/post ordering defect in evaluator, not OpenClaw task quality or unavailable authorization.",
+  "unknowns": [
+    "Whole three-turn composition did not complete",
+    "Native physical cleanup not confirmed",
+    "Exact reason the ordinary actor did not return before public controller deadline",
+    "Original quality comparison not run"
+  ],
+  "proposedSmallCorrection": "For an admitted exec in the exact native thread and turn, accept completed commandExecution with integer exit code as dispatch and settlement evidence before post; retain terminal status/exit; later post is idempotent. Unknown/cancelled/mismatched/nonterminal identities still stop. No native cleanup promotion or admission/profile change.",
+  "retainedEvidence": {
+    "fixtureRoot": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z",
+    "executionReceipt": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/ordinary-execution.public.json",
+    "executionSha256": "af4af476017f6739249355dc6880f26df80441b237934550aa48d41e984af515",
+    "records": [
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/1-native-observation.json",
+        "sha256": "296e7b14faa37cb100f6fbfb8453c308f2ec1410998c4155195012663fc23ffe",
+        "sequence": 1,
+        "phase": "relay_registered"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/2-native-observation.json",
+        "sha256": "9265e16e083e9492fac1ef555517b007f0ae9cb4e5c84c19be9ef75cd30979c1",
+        "sequence": 2,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/6-native-observation.json",
+        "sha256": "f85b853a6158ea3d4cd6d407dfc34dcae81f45b96ebdea72d8ffa6c05ffa19c5",
+        "sequence": 3,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/7-native-observation.json",
+        "sha256": "767b72b5b35831c0250b7a2577497452c053be7f518c2e160d2ad01cf07b4359",
+        "sequence": 4,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/8-native-observation.json",
+        "sha256": "3bb1b20054c3259d95dac60a8d08edca4caabe3d29df74dd0ce65350f08da6ba",
+        "sequence": 5,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/9-native-observation.json",
+        "sha256": "071351d0242f5b76b67dbc7e7520c54fad4f8a9c08f4ca791d8141b2ea002187",
+        "sequence": 6,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/10-native-observation.json",
+        "sha256": "fbb74a1fcb189fdddf7ad0d11d6b739f53c5dbd2f62b9356a8f61a02d829bb07",
+        "sequence": 7,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/11-native-observation.json",
+        "sha256": "f0789cda8383e34708d4510356b45d8fac3e47c92d0e870732136770c584133d",
+        "sequence": 8,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/12-native-observation.json",
+        "sha256": "b4c24933972692dfe12ec9a919cd174a371ed7ea9c98777789746fdec26fd525",
+        "sequence": 9,
+        "phase": "reserved"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/13-native-observation.json",
+        "sha256": "055d1691dbb8f7a686878ea81c4d673b2a15bbcca4b52371c57ba7093d9c0351",
+        "sequence": 10,
+        "phase": "pre_hook_return"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/14-native-observation.json",
+        "sha256": "c8dce6610ebec20c36061aa09ed0fa6f992c5927f4518feece6a2af7fb2f07dc",
+        "sequence": 11,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/15-native-observation.json",
+        "sha256": "00b48ba6b491cd255dfd4e893315f4de35b1a4f0cfc862703750359e7d4fb190",
+        "sequence": 12,
+        "phase": "first_coverage_stop"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/16-native-observation.json",
+        "sha256": "62406a92b32b821fe3c80ff960410da78f9a0fda064412e89a0fb5266edfe390",
+        "sequence": 13,
+        "phase": "item_completed"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/17-native-observation.json",
+        "sha256": "1ef2561b7d80b8f135bcfe9d9522ee248931e728a968d8c5009d507fa61d25dd",
+        "sequence": 14,
+        "phase": "first_coverage_stop"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/18-native-observation.json",
+        "sha256": "65644b21355a9353500c9a6b355ff79a9e2301e0173cc9f9ff72ae398d49b868",
+        "sequence": 15,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/19-native-observation.json",
+        "sha256": "48d344881c7953db2e07b93f3d9ebbd2864136c5fd2d1a13052ddea15695f94f",
+        "sequence": 16,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/20-native-observation.json",
+        "sha256": "e0d09eb89e5bf2d46f74a5ba3c04448df066978808922b99bb0a823db1287cc3",
+        "sequence": 17,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/21-native-observation.json",
+        "sha256": "15169ca53249ea96aa67af3bdadf310734d64e0dc86ac1f261fd12c742d18a06",
+        "sequence": 18,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/22-native-observation.json",
+        "sha256": "f08267a6d519d5cb59c0e7efb4cf3bd75ccbe2d53e88540d55f9b060ae9c5e0a",
+        "sequence": 19,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/23-native-observation.json",
+        "sha256": "9fe763504d79c4b6e17219dfc17cdf95cebf7241a04b85884d0c58be490543a0",
+        "sequence": 20,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/24-native-observation.json",
+        "sha256": "120275ebf2e54788bb6ab65aa5ff0218e378703facae41fe2dc9e44215aa9936",
+        "sequence": 21,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/25-native-observation.json",
+        "sha256": "e3e093ba03a2656c6252fe6925936e90697276a9ae858f4c855d81c37ada6ed9",
+        "sequence": 22,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/26-native-observation.json",
+        "sha256": "56d80d30736f4a9c21280363501b96b4d5a4ab963b739d1efcbc72da198a8ce3",
+        "sequence": 23,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/27-native-observation.json",
+        "sha256": "8a62611a71782e110415fa4a70e1d889eca169bba7f2deeaeb1609ccce0293db",
+        "sequence": 24,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/28-native-observation.json",
+        "sha256": "f173880d12804c94fcf42501603958060586acbb519cae6939e8e8bec4e3ecb4",
+        "sequence": 25,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/29-native-observation.json",
+        "sha256": "20d9eb2b2d15822b0f473921311c99ecf5d3e4e054e372991109e7c6e773668a",
+        "sequence": 26,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/30-native-observation.json",
+        "sha256": "33046d78a583f6468734d236b42ba92d1ef8634ecf673d616bfa23e6661d27c9",
+        "sequence": 27,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/31-native-observation.json",
+        "sha256": "d1e5139a5a9a86c73e77847c97827890846b06a98043b7f82c59573488885311",
+        "sequence": 28,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/32-native-observation.json",
+        "sha256": "636567538ab55fcb5df5d2b03fc4cb972cfdd832143072708e72ba9354f090ba",
+        "sequence": 29,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/33-native-observation.json",
+        "sha256": "07d7e19dac9562a7d90be9e947028177bc2ca144d24237531a69dd9653bf0686",
+        "sequence": 30,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/34-native-observation.json",
+        "sha256": "0659ecce75545323c60672abde1296ecff2c8ad98abef9eb39e135db14738dc3",
+        "sequence": 31,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/35-native-observation.json",
+        "sha256": "9b42507c839c8aa70fc8e453f279d65773a36a5ddafc826fa99201c04781460c",
+        "sequence": 32,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/36-native-observation.json",
+        "sha256": "f3900476db03a19e9ed571d1248fe634102899c6539cfc4c6db179a1e6a74f06",
+        "sequence": 33,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/37-native-observation.json",
+        "sha256": "b7aa3adcfa939f29919f7f6b8d94d7ab96aeaa56e423fe528d7b708dfbd7ee53",
+        "sequence": 34,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/38-native-observation.json",
+        "sha256": "2e1fb7c4daf0a0a97774340065f556c7d35f59a519974f512f9dacc7fb0a1861",
+        "sequence": 35,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/39-native-observation.json",
+        "sha256": "986d29fe2f37002584d52114bcf7951afbdbdc954c534fbcbd00008a60131294",
+        "sequence": 36,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/40-native-observation.json",
+        "sha256": "c214fb0edad8fa8c4f5e838b4252f2bd47b194516b6a7df50d9b49a9470a95db",
+        "sequence": 37,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/41-native-observation.json",
+        "sha256": "bb1be8e90f0060022da249d478242e1590251fd9a77093f5c9aa6e722c14c744",
+        "sequence": 38,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/42-native-observation.json",
+        "sha256": "f7a1af9ea3c55895c2f143fbc8c70839d046222059d7a9875291d90190e639a3",
+        "sequence": 39,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/43-native-observation.json",
+        "sha256": "884e208fe24a9d65980b51b36beb1049db2acebddbc5567eda15f59c87428f5d",
+        "sequence": 40,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/44-native-observation.json",
+        "sha256": "8f190d3672975303e670a014e0d705ef58c2790c29921f18fcaafd7d6436e26e",
+        "sequence": 41,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/45-native-observation.json",
+        "sha256": "415780de925293f1590a06d118c3d5dfbdd758e7cae47ec8b2d7f54b09ad0789",
+        "sequence": 42,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/46-native-observation.json",
+        "sha256": "c6caaa0475154691c8509ab0db78f76fe8998fabe8fca915bc4b03037f4383da",
+        "sequence": 43,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/47-native-observation.json",
+        "sha256": "a7b60732457c0b1dfd2994d0a07cea78d76729e1a244a51c5f7dcb3e7e3f64fc",
+        "sequence": 44,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/48-native-observation.json",
+        "sha256": "27af50297e6b87c0fc4f518898d1023cb443cc27c8e4c7f2207110296ccd0119",
+        "sequence": 45,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/49-native-observation.json",
+        "sha256": "4a9510168ab2d52c6f72dceb7f15f6e4d32625ef5fc7c923653446b3a7a9c9a3",
+        "sequence": 46,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/50-native-observation.json",
+        "sha256": "7e06f9e88598eb211444de45fdcbbdb4befa8c374029d82643610c143537feb7",
+        "sequence": 47,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/51-native-observation.json",
+        "sha256": "ef3cf80e75f6c4097cbbd93b94940c6ea44ef43415d06e2429654c0471de52e1",
+        "sequence": 48,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/52-native-observation.json",
+        "sha256": "211b78c431f773d11b0a0ffb82a06d2f567805ee58b79cc88b05259ece0ef172",
+        "sequence": 49,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/53-native-observation.json",
+        "sha256": "b286c5bf5073e02c1caa60b7df758465e5ce61351319bee33a967a22df37c7ad",
+        "sequence": 50,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/54-native-observation.json",
+        "sha256": "fb4d1f5959e47ac991f5557f8677a7d4099f2026c6da02d5041f0471102a518a",
+        "sequence": 51,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/55-native-observation.json",
+        "sha256": "b3944dc7784bd91b6d1a1f044bf75c30faf4e2655bb5ddcde397adc70f2e3c1b",
+        "sequence": 52,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/56-native-observation.json",
+        "sha256": "6e7b0a7426505c16af1c9b9040ff063c54347ed07b9bf117ee585756f294d2a4",
+        "sequence": 53,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/57-native-observation.json",
+        "sha256": "90440bf390f5b4c4c998aa1e659b23434ee5cabf2708827b3db05f7815268db1",
+        "sequence": 54,
+        "phase": "pre_hook_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/58-native-observation.json",
+        "sha256": "afe169194db8322ff3a4e6016caf10b3586e39494b9f72c2e2867df20a5f4384",
+        "sequence": 55,
+        "phase": "pre_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/59-native-observation.json",
+        "sha256": "0bd06dfa881067993219413ef2dc06c353aba827f743c6997c4969b8db5326b8",
+        "sequence": 56,
+        "phase": "pre_hook_error"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/60-native-observation.json",
+        "sha256": "85fed35a420e76156505d8ee069f14bb0ff39c1deb4ed61936d252ba48ea4367",
+        "sequence": 57,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/61-native-observation.json",
+        "sha256": "23d7531fb5b7db6330f42693f65bb6cd1829989289e2097384e7476968888b70",
+        "sequence": 58,
+        "phase": "post_observer_settled"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/62-native-observation.json",
+        "sha256": "a0cfb03694d610e9633c6e18e5cd5fbef43edeee58e580a9cf9f726b95650569",
+        "sequence": 59,
+        "phase": "post_observer_entry"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-durable-native-20261007-5i1hc63z/contexts/63-native-observation.json",
+        "sha256": "6d4af30bdc117d652b30b000d7578cfaac8cddc915d7fbf411601bd0532a3dc1",
+        "sequence": 60,
+        "phase": "post_observer_settled"
+      }
+    ]
+  },
+  "usage": {
+    "actualInferenceCalls": 0,
+    "originalSampleCalls": 0,
+    "syntheticUsageNotBilling": true,
+    "credits": null
+  },
+  "productCompletionClaim": false
+}

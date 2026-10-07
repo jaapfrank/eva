@@ -144,7 +144,7 @@ export class OpenClawAccounting {
     this.privateModelContextDir = privateModelContextDir; this.observeTools = observeTools;
     this.tools = new Map(); this.clients = new Map(); this.nativeReadbacks = [];
     this.nativeModuleBindings = new Map(); this.nativeQueues = new Map();
-    this.toolCoverage = true; this.nativeCoverageFailure = null; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map();
+    this.toolCoverage = true; this.nativeCoverageFailure = null; this.nativeObservationReceipts = []; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map();
     this.stop = () => { for (const cancel of this.active) cancel(); };
     ledger.stopHandlers?.add(this.stop);
   }
@@ -290,37 +290,78 @@ export class OpenClawAccounting {
     row.native_model_context = this.retainPrivate(bytes, `attempt-${this.calls.length}-${row.transport}`);
     this.save(this.calls.map(({ cleanup, ...row }) => row));
   }
+  /** Durable content-free callback order; a missing terminal receipt cannot erase it. */
+  recordNativeObservation(phase, details = {}) {
+    if (!this.observeTools || !this.privateModelContextDir) return;
+    const knownReasons = ['native tool completion without dispatch observation','native tool was not admitted',
+      'original tool cap','original deadline','native observation unavailable','provider usage unknown or settlement refused'];
+    const snapshot = { contract: 'OpenClawNativeObservation/v1', sequence: this.nativeObservationReceipts.length + 1,
+      phase, monotonic: this.now(), deadline_reached: this.now() >= this.deadline,
+      ledger_stopped: Boolean(this.ledger.stopReason), ledger_stop_reason: knownReasons.includes(this.ledger.stopReason) ? this.ledger.stopReason : this.ledger.stopReason ? 'OTHER' : null,
+      ...details, tool_coverage: this.toolCoverage, first_coverage_failure: this.nativeCoverageFailure,
+      tool_rows: [...this.tools.values()].map(({thread_id,...row}) => ({...row,thread_id_sha256:digest(thread_id ?? null)})),
+      pending_sdk: this.calls.filter(r=>['pending','settling'].includes(r.status)).length,
+      native_client_count: this.clients.size, native_module_bindings: [...this.nativeModuleBindings.values()] };
+    try {
+      this.nativeObservationReceipts.push(this.retainPrivate(Buffer.from(JSON.stringify(snapshot)), 'native-observation'));
+    } catch (error) { this.ledger.stop('native observation unavailable'); throw error; }
+  }
+  nativeErrorMetadata(error) { return nativeFailure(error); }
+  nativeIdentity(invocation = {}, registration = {}) {
+    const threadId = invocation.rawPayload?.child_thread_id ?? invocation.rawPayload?.session_id;
+    return { tool_id_sha256: digest(invocation.toolUseId ?? null), tool_name_sha256: digest(invocation.toolName ?? null),
+      native_thread_id_sha256: digest(threadId ?? null), native_turn_id_sha256: digest(invocation.turnId ?? null),
+      registration_session_id_sha256: digest(registration.sessionId ?? null), relay_id_sha256: digest(registration.relayId ?? null),
+      relay_generation_sha256: digest(registration.generation ?? null), registration_signal_aborted: registration.signal?.aborted ?? null };
+  }
   /** One cap for existing native PreToolUse and unique dynamic callback executions. */
-  reserveTool(id, name, threadId) {
+  reserveTool(id, name, threadId, turnId) {
     this.check();
     if (!this.observeTools) return null;
     if (typeof id !== 'string' || !id || typeof name !== 'string' || !name) throw new Error('exact native tool identity required');
     let row = this.tools.get(id);
     if (row) {
-      if (row.name_sha256 !== digest(name) || (threadId && row.thread_id && row.thread_id !== threadId)) throw new Error('native tool identity changed');
+      if (row.name_sha256 !== digest(name) || (threadId && row.thread_id && row.thread_id !== threadId)
+          || (turnId && row.turn_id_sha256 && row.turn_id_sha256 !== digest(turnId))) throw new Error('native tool identity changed');
       return row;
     }
     if ([...this.tools.values()].filter(row => row.status !== 'cancelled').length >= 16) {
       this.ledger.stop('original tool cap'); throw new Error('original tool cap');
     }
     row = { tool_id_sha256: digest(id), name_sha256: digest(name), thread_id: threadId ?? null,
+      turn_id_sha256: typeof turnId === 'string' && turnId ? digest(turnId) : null,
       status: 'reserved', dispatched: false, reserved_monotonic: this.now() };
-    this.tools.set(id, row); return row;
+    this.tools.set(id, row); this.recordNativeObservation('reserved', {tool_id_sha256:digest(id)});
+    try { this.check(); } catch (error) {
+      row.status = 'cancelled'; this.recordNativeObservation('cancelled_before_dispatch', {tool_id_sha256:digest(id)}); throw error;
+    }
+    return row;
   }
-  nativeToolBefore(invocation) {
+  nativeToolBefore(invocation, registration) {
+    this.recordNativeObservation('pre_observer_entry', this.nativeIdentity(invocation, registration));
     const payload = invocation.rawPayload;
     const threadId = payload?.child_thread_id ?? payload?.session_id;
-    return this.reserveTool(invocation.toolUseId, invocation.toolName, threadId);
+    return this.reserveTool(invocation.toolUseId, invocation.toolName, threadId, invocation.turnId);
   }
-  nativeToolAfter(invocation) {
+  nativeToolAfter(invocation, registration) {
     if (!this.observeTools) return;
+    this.recordNativeObservation('post_observer_entry', this.nativeIdentity(invocation, registration));
     const row = this.tools.get(invocation.toolUseId);
-    if (!row) { this.toolCoverage = false; this.ledger.stop('native tool was not admitted'); throw new Error('native tool was not admitted'); }
-    row.dispatched = true; row.status = 'settled'; row.settled_monotonic = this.now();
+    const threadId = invocation.rawPayload?.child_thread_id ?? invocation.rawPayload?.session_id;
+    if (!row || row.status === 'cancelled' || row.name_sha256 !== digest(invocation.toolName)
+        || (row.thread_id && row.thread_id !== threadId)
+        || (row.turn_id_sha256 && row.turn_id_sha256 !== digest(invocation.turnId ?? null))) {
+      this.toolCoverage = false;
+      this.recordNativeObservation('post_without_matching_admission', this.nativeIdentity(invocation, registration));
+      this.ledger.stop('native post without matching admission');
+      throw new Error('native post without matching admission');
+    }
+    row.dispatched = true; row.status = 'settled'; row.settled_monotonic ??= this.now();
+    this.recordNativeObservation('post_observer_settled', this.nativeIdentity(invocation, registration));
   }
   cancelNativeTool(invocation) {
     const row = this.tools.get(invocation.toolUseId);
-    if (row?.status === 'reserved' && !row.dispatched) row.status = 'cancelled';
+    if (row?.status === 'reserved' && !row.dispatched) { row.status = 'cancelled'; this.recordNativeObservation('cancelled', this.nativeIdentity(invocation)); }
   }
   async dynamicTool(call, body) {
     const row = this.reserveTool(call.callId, call.tool, call.threadId);
@@ -336,13 +377,37 @@ export class OpenClawAccounting {
     const p = notification.params; const threadId = p?.threadId ?? p?.thread?.id;
     if (typeof threadId === 'string') this.clients.get(client)?.add(threadId);
     if (notification.method !== 'item/completed' || !p?.item) return;
+    this.recordNativeObservation('item_completed', {tool_id_sha256:digest(p.item.id ?? null),
+      native_thread_id_sha256:digest(threadId ?? null),native_turn_id_sha256:digest(p.turnId ?? null),
+      item_type:typeof p.item.type==='string' && /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(p.item.type)?p.item.type:'UNKNOWN',
+      item_status:typeof p.item.status==='string' && /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(p.item.status)?p.item.status:null,
+      exit_code:Number.isSafeInteger(p.item.exitCode)?p.item.exitCode:null});
     // All installed non-tool item variants; a new variant cannot silently escape coverage.
     if (['userMessage','agentMessage','plan','reasoning','contextCompaction','enteredReviewMode','exitedReviewMode'].includes(p.item.type)) return;
     const row = this.tools.get(p.item.id);
-    if (!row || ['reserved','cancelled'].includes(row.status)) {
+    // Native command completion can precede its post hook. Count only a terminal
+    // command bound to the admitted tool, native thread and turn; never a reservation.
+    if (row && row.status !== 'cancelled' && p.item.type === 'commandExecution'
+        && row.name_sha256 === digest('exec') && row.thread_id === threadId
+        && typeof threadId === 'string' && threadId
+        && typeof p.turnId === 'string' && p.turnId
+        && row.turn_id_sha256 === digest(p.turnId)
+        && p.item.status === 'completed' && Number.isSafeInteger(p.item.exitCode)) {
+      const terminal = {item_type:p.item.type, status:p.item.status, exit_code:p.item.exitCode};
+      if (row.native_terminal && JSON.stringify(row.native_terminal) !== JSON.stringify(terminal)) {
+        this.toolCoverage = false; this.ledger.stop('native tool terminal changed'); return;
+      }
+      row.dispatched = true; row.status = 'settled';
+      row.settled_monotonic ??= this.now(); row.native_terminal = terminal;
+      this.recordNativeObservation('native_terminal_settled', {tool_id_sha256:digest(p.item.id),
+        native_thread_id_sha256:digest(threadId),native_turn_id_sha256:digest(p.turnId),...terminal});
+      return;
+    }
+    if (p.item.type === 'commandExecution' || !row || ['reserved','cancelled'].includes(row.status)) {
       this.toolCoverage = false;
       this.nativeCoverageFailure ??= { item_type: typeof p.item.type === 'string' && /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(p.item.type) ? p.item.type : 'UNKNOWN',
         item_id_sha256: digest(p.item.id ?? null), thread_id_sha256: digest(threadId ?? null), observed_status: row?.status ?? 'unreserved' };
+      this.recordNativeObservation('first_coverage_stop');
       this.ledger.stop('native tool completion without dispatch observation');
     }
   }
@@ -583,17 +648,17 @@ export function installOpenClawAccounting(accounting, pluginRoot, pins, { hostRo
       source = replaceOnce(source, 'function registerOwnedNativeHookRelay(params) {',
         'function registerOwnedNativeHookRelay(params) { params = {...params, [__evaOwnedToolAccounting]: true};');
       source = replaceOnce(source, '\t\tpartialRegistration = registration;',
-        '\t\tregistration[__evaOwnedToolAccounting] = params[__evaOwnedToolAccounting] === true;\n\t\tpartialRegistration = registration;');
+        '\t\tregistration[__evaOwnedToolAccounting] = params[__evaOwnedToolAccounting] === true;\n\t\tif (registration[__evaOwnedToolAccounting]) __evaAccounting.recordNativeObservation("relay_registered", __evaAccounting.nativeIdentity({}, registration));\n\t\tpartialRegistration = registration;');
       source = replaceOnce(source, 'function nativeHookRelayEventHasLocalWork(registration, event) {',
         'function nativeHookRelayEventHasLocalWork(registration, event) { if (registration[__evaOwnedToolAccounting] && ["pre_tool_use","post_tool_use"].includes(event)) return true;');
       source = replaceOnce(source, 'function nativeHookRelayEventToolMatcher(registration, event) {',
         'function nativeHookRelayEventToolMatcher(registration, event) { if (registration[__evaOwnedToolAccounting] && ["pre_tool_use","post_tool_use"].includes(event)) return undefined;');
       source = replaceOnce(source, 'async function runNativeHookRelayPreToolUse(params) {',
-        'async function runNativeHookRelayPreToolUse(params) { try { return await __evaNativePreToolUse(params); } catch(error) { __evaAccounting.cancelNativeTool(params.invocation); throw error; } }\nasync function __evaNativePreToolUse(params) {');
+        'async function runNativeHookRelayPreToolUse(params) { __evaAccounting.recordNativeObservation("pre_hook_entry", __evaAccounting.nativeIdentity(params.invocation, params.registration)); try { const result = await __evaNativePreToolUse(params); __evaAccounting.recordNativeObservation("pre_hook_return", __evaAccounting.nativeIdentity(params.invocation, params.registration)); __evaAccounting.check(); return result; } catch(error) { __evaAccounting.recordNativeObservation("pre_hook_error", {...__evaAccounting.nativeIdentity(params.invocation, params.registration), ...__evaAccounting.nativeErrorMetadata(error)}); __evaAccounting.cancelNativeTool(params.invocation); throw error; } }\nasync function __evaNativePreToolUse(params) {');
       source = replaceOnce(source, '\ttry {\n\t\tif (params.executionAdmission?.toolNames.includes(toolName)) {',
-        '\t__evaAccounting.nativeToolBefore({ ...params.invocation, toolName });\n\ttry {\n\t\tif (params.executionAdmission?.toolNames.includes(toolName)) {');
+        '\t__evaAccounting.nativeToolBefore({ ...params.invocation, toolName }, params.registration);\n\ttry {\n\t\tif (params.executionAdmission?.toolNames.includes(toolName)) {');
       source = replaceOnce(source, 'async function runNativeHookRelayPostToolUse(params) {',
-        'async function runNativeHookRelayPostToolUse(params) {\n\t__evaAccounting.nativeToolAfter(params.invocation);');
+        'async function runNativeHookRelayPostToolUse(params) {\n\t__evaAccounting.nativeToolAfter({...params.invocation, toolName:normalizeNativeHookToolName(params.invocation.toolName)}, params.registration);');
     } else if (name.startsWith('client')) {
       source = replaceOnce(source, 'request(method, params, optionsInput) {', "request(method, params, optionsInput) {\n\t\tparams = __evaAccounting.turnParams(method, params, this);");
       if (accounting.observeTools) {

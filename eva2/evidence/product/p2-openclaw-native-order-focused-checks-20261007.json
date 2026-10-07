@@ -1,0 +1,14 @@
+{
+  "schema": "EvaFocusedVerification/v1",
+  "status": "PASS",
+  "sourceSha256": "57fc34d06e39ec66c1c8f872dce45179b37bde73ee028a4f2117fad970e67b26",
+  "testSha256": "633d3f2d7f69fd1d3e4e4e8cfa495f594fb324832ef5e3ce48c510809f74e36a",
+  "elapsedSeconds": 3.0503538670018315,
+  "exitCode": 0,
+  "modelCalls": 0,
+  "actorCalls": 0,
+  "outputSha256": "5a3f72ea2cc7a54dca87bd594eed68d6863f4d01470a6c648bc2736ea18d71be",
+  "scope": "Terminal-before-post, nine admission failures, four changed settled terminals/four invalid post callbacks, durable metadata, late stop and actual native planning",
+  "retainedReceipt": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/terminal-order-boundaries.public.json",
+  "retainedReceiptSha256": "148adff8ecf821d60ac8769f788d871268f4125d8def5384f09d81db73ede1de"
+}

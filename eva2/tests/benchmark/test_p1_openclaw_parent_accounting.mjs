@@ -211,6 +211,47 @@ await test('native transport failure class/code/status retained; message/body ex
   assert.deepEqual(other.calls[0].transport_failure,{error_class:'ConnectError',error_code:'ECONNRESET',http_status:502});
   assert.equal(JSON.stringify(other.calls).includes('PRIVATE'),false);
 });
+await test('native callback evidence survives before terminal and excludes raw tool or result contents',()=>{
+  const dir=mkdtempSync(tmpdir()+'/openclaw-observation-');chmodSync(dir,0o700);
+  const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true,privateModelContextDir:dir});
+  const invocation={toolUseId:'public-tool',toolName:'exec',turnId:'public-turn',rawPayload:{session_id:'public-thread',arguments:'PRIVATE_BODY_MUST_NOT_APPEAR'}};
+  const registration={sessionId:'public-registration',relayId:'public-relay',generation:'public-generation',signal:{aborted:false}};
+  try{
+    o.nativeToolBefore(invocation,registration);
+    o.nativeNotification({}, {method:'item/completed',params:{threadId:'public-thread',turnId:'public-turn',item:{id:'public-tool',type:'commandExecution',status:'completed',exitCode:0,aggregatedOutput:'PRIVATE_RESULT_MUST_NOT_APPEAR'}}});
+    assert.equal(ledger.stopReason,null);
+    const records=o.nativeObservationReceipts.map(r=>JSON.parse(readFileSync(r.path)));
+    assert.deepEqual(records.map(r=>r.phase),['pre_observer_entry','reserved','item_completed','native_terminal_settled']);
+    assert.deepEqual(records.map(r=>r.sequence),[1,2,3,4]);
+    assert.equal(records[2].tool_rows[0].status,'reserved');assert.equal(records[2].exit_code,0);
+    assert.equal(records[3].tool_rows[0].status,'settled');assert.equal(records[3].first_coverage_failure,null);
+    assert.equal(JSON.stringify(records).includes('PRIVATE_'),false);
+    assert.equal(JSON.stringify(records).includes('public-thread'),false);
+    assert.equal(o.calls.length,0);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+await test('stop or deadline during durable native reservation refuses the dynamic body',async()=>{
+  for(const cause of ['deadline','stop']){
+    const dir=mkdtempSync(tmpdir()+'/openclaw-reservation-');let now=10;const ledger=new FakeLedger();
+    const o=new OpenClawAccounting(ledger,20,{now:()=>now,observeTools:true,privateModelContextDir:dir});
+    const original=o.retainPrivate.bind(o);let bodies=0;
+    o.retainPrivate=(bytes,label)=>{
+      const retained=original(bytes,label);
+      if(label==='native-observation' && JSON.parse(bytes).phase==='reserved'){
+        if(cause==='deadline')now=21;else ledger.stop('public stop during retention');
+      }
+      return retained;
+    };
+    try{
+      await assert.rejects(o.dynamicTool({callId:'public-denied',tool:'exec',threadId:'public-thread'},async()=>{bodies++;}),/deadline|stopped/);
+      assert.equal(bodies,0);assert.equal(o.tools.get('public-denied').dispatched,false);
+      assert.equal(o.tools.get('public-denied').status,'cancelled');
+      assert.equal(JSON.parse(readFileSync(o.nativeObservationReceipts.at(-1).path)).phase,'cancelled_before_dispatch');
+    }finally{rmSync(dir,{recursive:true,force:true});}
+  }
+});
+
 // Mock only an already pinned native proxy's imports after ordinary registry resolution.
 // Captured plugins can resolve SDK aliases before the test's resolve hook is consulted.
 const mockNativeProxy = (wsSDK, observer) => registerHooks({load(url,context,next){
@@ -276,6 +317,71 @@ await test('actual installed proxy and native client load exact overlay; public 
       }finally{local.terminate();}
     }
   } finally {await proxy?.close();hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;}
+});
+
+await test('correlated native terminal before post settles once and keeps result separate from dispatch', () => {
+  const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+  const invocation={toolUseId:'public-order-tool',toolName:'exec',turnId:'public-order-turn',rawPayload:{session_id:'public-order-thread'}};
+  const row=o.nativeToolBefore(invocation);
+  assert.equal(row.dispatched,false);assert.equal(row.status,'reserved');
+  const notification={method:'item/completed',params:{threadId:'public-order-thread',turnId:'public-order-turn',
+    item:{id:invocation.toolUseId,type:'commandExecution',status:'completed',exitCode:2}}};
+  o.nativeNotification({},notification);
+  assert.equal(row.dispatched,true);assert.equal(row.status,'settled');assert.equal(o.toolCoverage,true);
+  assert.equal(ledger.stopReason,null);assert.equal(row.native_terminal.exit_code,2);
+  const settled=row.settled_monotonic;o.nativeNotification({},notification);
+  o.nativeToolAfter(invocation);
+  assert.equal(o.tools.size,1);assert.equal(row.native_terminal.exit_code,2);
+  assert.equal(row.settled_monotonic,settled);assert.equal(ledger.stopReason,null);
+});
+
+await test('native terminal requires exact admitted command identity and real terminal metadata', () => {
+  for(const changed of ['unreserved','cancelled','thread','turn','name','status','exit','type','missing-turn']) {
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+    const invocation={toolUseId:'public-negative-tool',toolName:'exec',turnId:'public-negative-turn',rawPayload:{session_id:'public-negative-thread'}};
+    if(changed==='name')invocation.toolName='read';
+    if(changed==='missing-turn')delete invocation.turnId;
+    const row=changed==='unreserved'?null:o.nativeToolBefore(invocation);
+    if(changed==='cancelled')o.cancelNativeTool(invocation);
+    const p={threadId:'public-negative-thread',turnId:'public-negative-turn',
+      item:{id:invocation.toolUseId,type:'commandExecution',status:'completed',exitCode:0}};
+    if(changed==='thread')p.threadId='different-thread';
+    if(changed==='turn')p.turnId='different-turn';
+    if(changed==='status')p.item.status='inProgress';
+    if(changed==='exit')delete p.item.exitCode;
+    if(changed==='type')p.item.type='futureNativeOperation';
+    o.nativeNotification({}, {method:'item/completed',params:p});
+    assert.equal(o.toolCoverage,false,changed);assert.ok(ledger.stopReason,changed);
+    assert.equal(row?.dispatched??false,false,changed);
+  }
+});
+
+await test('settled command still rejects altered terminal identity and post cannot promote a cancelled or mismatched row', () => {
+  for(const changed of ['thread','turn','status','exit']) {
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+    const invocation={toolUseId:'public-settled',toolName:'exec',turnId:'public-turn',rawPayload:{session_id:'public-thread'}};
+    o.nativeToolBefore(invocation);
+    const p={threadId:'public-thread',turnId:'public-turn',item:{id:'public-settled',type:'commandExecution',status:'completed',exitCode:0}};
+    o.nativeNotification({}, {method:'item/completed',params:p});
+    if(changed==='thread')p.threadId='other-thread';
+    if(changed==='turn')p.turnId='other-turn';
+    if(changed==='status')p.item.status='inProgress';
+    if(changed==='exit')delete p.item.exitCode;
+    o.nativeNotification({}, {method:'item/completed',params:p});
+    assert.equal(o.toolCoverage,false,changed);assert.ok(ledger.stopReason,changed);
+  }
+  for(const changed of ['cancelled','thread','turn','name']) {
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+    const invocation={toolUseId:'public-post',toolName:'exec',turnId:'public-turn',rawPayload:{session_id:'public-thread'}};
+    const row=o.nativeToolBefore(invocation);
+    if(changed==='cancelled')o.cancelNativeTool(invocation);
+    if(changed==='thread')invocation.rawPayload.session_id='other-thread';
+    if(changed==='turn')invocation.turnId='other-turn';
+    if(changed==='name')invocation.toolName='read';
+    assert.throws(()=>o.nativeToolAfter(invocation),/without matching admission/);
+    assert.equal(row.dispatched,false,changed);assert.equal(o.toolCoverage,false,changed);
+    assert.ok(ledger.stopReason,changed);
+  }
 });
 
 // Actual owned relay planning, with fresh public state; no native actor/model request.

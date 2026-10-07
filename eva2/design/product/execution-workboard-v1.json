@@ -20278,7 +20278,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Gerichte diagnose van de ontbrekende duurzame observerregistratie en native afsluitbevoegdheid vóór een volgende proef. Kalenderbinding en planningbewijs hergebruiken; gewone programmeringsfout blijft Codex-werk, geen handeling voor Jaap. Geen oorspronkelijke vergelijking claimen.",
+              "nextAction": "Gecorrigeerde native accounting behouden (16/16 commando’s en post-hooks). Eerste native beurt faalt daarna met parent-local HTTP502; lokaliseer alleen de ontbrekende voorbereiding/transportexception. Geen ongewijzigde herhaling of oorspronkelijke sample vóór onafhankelijke GO.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20291,9 +20291,9 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T13:43:34.034140+00:00",
+              "checkedAt": "2026-10-07T14:16:09.180786+00:00",
               "assignment": {
-                "baseCommit": "84f7b330",
+                "baseCommit": "7e8e6bc14ea6df8933d18a5a6a095fb33de07c89",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root"
@@ -20307,13 +20307,13 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte bestaande publieke fixture zonder externe modelcalls; pas na onafhankelijke toelating het ongebruikte oorspronkelijke OpenClaw-CM01-slot. Creditkosten onbekend.",
-                "currentAction": "Broncorrectie en echte owned planning gecontroleerd. Eén publieke native routecontrole gestopt zonder terminalreceipt: twee commando-uitvoeringen bewezen; volledige accounting/afsluiting en precieze timeoutoorzaak onbekend. Geen oorspronkelijke sample gestart of ongewijzigde herhaling.",
+                "currentAction": "Native volgorde op echte route gecorrigeerd: 16/16 commando’s en nacontroles, geen coverage-stop/pre-error. Eerste beurt geeft daarna HTTP502 zonder eindantwoord; volledige driebeurtenlus/usage/close UNKNOWN. Geen echte modelcalls, oorspronkelijke input, core-installatie of productafronding.",
                 "previousGoalTurn": {
-                  "classification": "no_progress",
-                  "sourceCommit": "123d27edc4867fbd773e21e31f05f93f5682b292",
-                  "meaning": "Dezelfde oorspronkelijke proefregistratie en ontbrekende beoordelingen; geen onafhankelijk uitvoerbaar vervolg."
+                  "classification": "progress",
+                  "sourceCommit": "7e8e6bc14ea6df8933d18a5a6a095fb33de07c89",
+                  "meaning": "Kalender/owned-relayplanning gecorrigeerd en gecontroleerd; gewijzigde publieke route eindigde UNKNOWN. Broncheckpoint, bewijs en pakketstatus gepubliceerd; geen oorspronkelijke sample gestart."
                 },
-                "stage": "openclaw_native_tool_observer_public_composition_closed_unknown",
+                "stage": "openclaw_native_order_confirmed_parent_local_transport_gap",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -21244,7 +21244,34 @@
                   "meaning": "Exacte algemene geheugencorrectie geïnstalleerd, onafhankelijk gecontroleerd, bestaand pakket en GitHub bijgewerkt. Geen nieuwe producttaak fictief voltooid."
                 },
                 "priorStageBeforeOpenClawContinuation": "blocked_threshold_satisfied",
-                "preparationResult": "De bestaande native metadata identificeert beide kalenderdragers per beurt. Gerichte adaptercorrectie en gewone publieke routecontrole zijn nog Codex-werk; geen oorspronkelijk geval, modelcall of authcall uitgevoerd."
+                "preparationResult": "De bestaande native metadata identificeert beide kalenderdragers per beurt. Gerichte adaptercorrectie en gewone publieke routecontrole zijn nog Codex-werk; geen oorspronkelijk geval, modelcall of authcall uitgevoerd.",
+                "nativeObservationPreparation": {
+                  "sourceSha256": "57fc34d06e39ec66c1c8f872dce45179b37bde73ee028a4f2117fad970e67b26",
+                  "testSha256": "633d3f2d7f69fd1d3e4e4e8cfa495f594fb324832ef5e3ce48c510809f74e36a",
+                  "focusedTestsPassed": 6,
+                  "focusedTestsSkipped": 0,
+                  "modelCalls": 0,
+                  "actorCalls": 0,
+                  "retainedReceipt": "/home/administrator/project/.eva2-artifacts/p2-openclaw-native-observer-trace-20261007/trace-owned-planning-and-stop-resolved.public.json",
+                  "runtimeCompositionStarted": true,
+                  "originalSampleStarted": false,
+                  "reviewSha256": "14d1cc49ba6aa1a72698f07950639ef7bc6c29f0867bd7d5caf59af3060e6ba7",
+                  "runtimeCompositionTerminal": true,
+                  "runtimeCompositionExitCode": -15,
+                  "fullCompositionStatus": "UNKNOWN",
+                  "orderSourceReviewSha256": "920fa2d68f9c78ab4c6be99b05e7ee315bddf7f3aa435c32ae7639815f7e4ae1",
+                  "orderConfirmationStarted": true,
+                  "orderConfirmationTerminal": true,
+                  "orderConfirmationExitCode": -15,
+                  "accountedNativeCommands": 16,
+                  "postSettlements": 16,
+                  "firstTurnFailure": "parent_local_transport_http502",
+                  "orderRuntimeReviewSha256": "abd6e0cbd67868e7123ae3b517185de7782c20c0f950e17e93798fb67faadc1c",
+                  "sourceCheckpointApproved": true
+                },
+                "nativeObserverOrderDiagnosis": "eva2/evidence/product/p2-openclaw-native-observer-order-diagnosis-20261007.json",
+                "nativeObserverOrderCorrection": "eva2/evidence/product/p2-openclaw-native-observer-order-correction-20261007.json",
+                "nativeObserverOrderRuntimeReview": "eva2/reviews/p2-openclaw-native-observer-order-runtime-review-20261007.json"
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
               "latestEvidence": "eva2/evidence/product/p2-openclaw-native-tool-observer-correction-20261007.json",
