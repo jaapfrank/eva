@@ -19338,9 +19338,9 @@
               "authorizedBy": "Jaap, 7 oktober 2026: ga door met AIDE² voor slimmer gedrag, maak duidelijke taken en maak Eva2 af.",
               "ownerActionRequired": false,
               "activeExecution": true,
-              "nextAction": "De hashgebonden, gecontroleerde aansluiting installeren; daarna één door Eva gemaakte winnaar op de vooraf vastgelegde onafhankelijke eindbeoordeling aanbieden. Alleen echt gemeten voordeel toepassen.",
+              "nextAction": "Een door Eva gemaakte kandidaat op de vaste ontwikkelbeoordeling selecteren en via de geïnstalleerde overdracht onafhankelijk beoordelen. Alleen gemeten voordeel toepassen.",
               "assignment": {
-                "baseCommit": "cc65fc93ea4f9bbf1eae30d52495ba0086aef5aa",
+                "baseCommit": "06cf4653c4429cf0d0611c49e22d081821f7fea4",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root",
@@ -19358,13 +19358,14 @@
                 "gap": "Een gekozen pakket werd niet automatisch naar de afzonderlijke eindbeoordeling en bestaande beheerde bronimport/toepassing overgedragen. Die technische aansluiting is gebouwd; echte Eva-kandidaat en eindresultaat blijven vereist.",
                 "estimate": "Bestaande host en review-/pakketbinding hergebruiken; geen reviewmodel dat zijn eigen kandidaat goedkeurt. Eén samengevoegde toepassing; credits onbekend.",
                 "doneWhen": "De gekozen exacte kandidaat doorloopt een gescheiden eindbeoordeling op vooraf vastgelegde afgeschermde taken. Alleen gemeten voordeel kan via de bestaande beheerde route worden toegepast; verlies blijft bewaard. Dit vereist geen handmatig door Codex geschreven kandidaat of nieuw installatiepad.",
-                "stage": "source_verified_install_handoff_then_real_candidate"
+                "stage": "installed_handoff_real_candidate_pending"
               },
-              "checkedAt": "2026-10-07T10:22:59.863798+00:00",
-              "currentResult": "Bron en beide kandidaatimages gecontroleerd: 68 gerichte checks, inclusief vier echte tijdelijke databaseproeven. Echte bronimport en beide Docker-overlays als technische fixture bevestigd; nog geen draaiende toepassing of bewezen slimmere Eva.",
+              "checkedAt": "2026-10-07T10:33:21.667978+00:00",
+              "currentResult": "Technische overdracht geïnstalleerd in gezonde kern, werker en bestaande host. 68 gerichte checks en onafhankelijke bronreview geslaagd. Werkelijke Eva-kandidaat en aparte inhoudelijke eindbeoordeling blijven open.",
               "evidence": [
                 "eva2/evidence/product/l3-final-handoff-technical-20261007.json",
-                "eva2/evidence/product/l3-context-final-preregistration-20261007.json"
+                "eva2/evidence/product/l3-context-final-preregistration-20261007.json",
+                "eva2/evidence/product/l3-final-handoff-installed-20261007.json"
               ]
             },
             {

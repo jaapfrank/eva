@@ -1,0 +1,145 @@
+{
+  "contract": "EvaL3OrdinaryCompletionReview/v1",
+  "task": "L3.6/L3.7",
+  "reviewedAt": "2026-10-07T10:48:57.429481+00:00",
+  "scope": "Bounded retained-data diagnosis of the ordinary task and its completion path; no model replay or protected final assessment.",
+  "workId": "work:eva-chat:2036b147-a24c-5689-b8be-78bd5e5776d6",
+  "evidenceBindings": {
+    "ordinary-task-diagnosis.private.json": "1966a5d1af537d689e47535ffac2bbb6577d2b58177048a41c362dc9682f7faf",
+    "ordinary-source-events.private.json": "f7ca6e688abf85c4f8f34fa4c66619c04791f22ebede5572626007890040e144",
+    "ordinary-model-status.private.json": "aaad11ee9a8010edb34a3f6fbf0a1253d18053bab13a9fb972092114c8044ce0"
+  },
+  "observedCodeBeforeCorrection": {
+    "bootstrap/delegated_digital_runner.py": "007847fc48847bbe4f988de0f2e02648c1222b7501e648c1a4d621156af81899",
+    "bootstrap/delegated_digital_composition.py": "218ae582c67447672539310cbd7856792af6dd2af05d44afc29a4477e5877191",
+    "adapters/postgres/component_improvement_actions.py": "a85e362e586816d33dff73ea03b80ded0c06e8d6c61a9090714b565978f29868",
+    "adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+    "application/schema_validation.py": "ca87d92bfa90ff8846c88cd762feb7e85d21b6bbd0463c5c4bf1dbaaf4921cb9"
+  },
+  "preservedResult": {
+    "draftStep": 4,
+    "evaluationStep": 5,
+    "comparisonStep": 6,
+    "baselineRequiredHits": 5,
+    "baselineRequiredTotal": 5,
+    "candidateRequiredHits": 5,
+    "candidateRequiredTotal": 5,
+    "baselineContextBytes": 5514,
+    "candidateContextBytes": 5514,
+    "baselineAndCandidateComplete": true,
+    "comparisonState": "baseline_retained",
+    "selectedDraftStep": null,
+    "selectedEvaluationStep": null,
+    "installed": false,
+    "semanticImprovementVerified": false
+  },
+  "cause": {
+    "terminalState": "internal_error",
+    "fingerprint": "b150ba3d6b107f312809e618955b31f74f8528ae751c4a8a0f451c4708d65233",
+    "exactFingerprintPreimage": "ConversationConflict:arguments.content text length is invalid",
+    "lengthGateIdentified": true,
+    "preciseRejectedCall": "UNKNOWN",
+    "rejectedContentLength": "UNKNOWN",
+    "emptyContentCause": "NOT_SUPPORTED_BY_INSTALLED_DESCRIPTOR",
+    "installedDescriptorMetadataReportedByCoordinator": {
+      "contentType": "string",
+      "maxLength": 12000,
+      "minLengthPresent": false
+    }
+  },
+  "resolverEvidence": {
+    "admittedStep": 7,
+    "referencedComponentStep": 6,
+    "originalContentNull": true,
+    "materializedContentChars": 2565,
+    "materializedContentBytes": 2565,
+    "contentSha256": "b234389c8e297665ba00499455b1d157c4b0d7d43088e578e2f2ead6bb0ff35a",
+    "equalsExactStoredComparison": true,
+    "expectedProofEqualsContent": true,
+    "withinReportedDescriptorLimit": true,
+    "sourceFilteredAdmissionAloneDoesNotEstablishWriteOutcome": true
+  },
+  "provenCompletionDefect": {
+    "file": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+    "lines": [
+      15,
+      320,
+      321,
+      336,
+      606,
+      607,
+      622
+    ],
+    "finding": "COMPARE is omitted from the latest-component evidence check. Saving the exact comparison at component_step6 would be compared against earlier EVALUATE5 and refused as incomplete_work. This defect does not directly produce the observed internal_error.",
+    "smallestCorrection": "Include COMPARE in the existing completion check and direct baseline_retained to save the exact comparison and close the development attempt; preserve scores, source, criteria and budgets."
+  },
+  "accounting": {
+    "measuredModelResponses": 9,
+    "inputTokens": 177327,
+    "outputTokens": 2054,
+    "allModelOutcomesSucceeded": true,
+    "allLocalStreamsClosed": true,
+    "toolDispatchesReportedByCoordinator": 8,
+    "reviewerModelCalls": 0,
+    "reviewerTests": 0,
+    "credits": null
+  },
+  "decisions": {
+    "retainedDiagnosisPublication": "GO",
+    "ordinaryCompletionRouteBeforeCorrection": "NO_GO",
+    "functionalCorrectionReview": "GO_SOURCE_ONLY",
+    "fullL3_6Complete": false,
+    "fullL3_7Complete": false,
+    "semanticQualityGain": "UNKNOWN",
+    "ordinaryCompletionRouteAfterCorrection": "GO_SOURCE_ONLY_INSTALLATION_PENDING"
+  },
+  "privacy": "No task text, model replies, source body, personal IDs or protected final data are published in this review.",
+  "priorDiagnosisReviewSha256": "d1675f7f63bbd4ef435b4e631c89f0d88459231cf2d9d9195ecab29943e02d62",
+  "functionalCorrection": {
+    "reviewedAt": "2026-10-07T10:50:27.822618+00:00",
+    "decision": "GO",
+    "scope": "Exact source correction for honest completion of a retained development comparison. Installed delivery remains pending.",
+    "evidence": {
+      "path": "eva2/evidence/product/l3-ordinary-improvement-outcome-20261007.json",
+      "sha256": "a7e2ec53cc2794faea16286ee946cb4ff4262bc3b23fac264b40a3f3d1cd92a4"
+    },
+    "sourceAndTestHashes": {
+      "eva2/src/eva/bootstrap/delegated_digital_runner.py": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362",
+      "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "956c63ffefd8ba9de414c4ff71197c978dd3edd17df50ef6837b68aceda3c9d2",
+      "eva2/tests/application/test_component_document_completion.py": "e1fc50e76893369237243c0bb353f21851debf0a5720efa74ca100a9dcb1e15e"
+    },
+    "findings": {
+      "materialBlockers": [],
+      "compareRecognizedAsLatestComponent": true,
+      "requiresVerifiedSelectionContractAndAdmittedState": true,
+      "requiresVerifiedSaveAfterLatestSelection": true,
+      "savedEarlierEvaluationCannotCompleteLaterComparison": true,
+      "failedSaveOrInvalidSelectionRefused": true,
+      "baselineRetainedInstructionSavesOnlyExactComparison": true,
+      "authorityPrivacyCriteriaBudgetsAndProviderRouteUnchanged": true
+    },
+    "verification": {
+      "actualImageSourceFirst": true,
+      "readonlyChangedSourceOverlay": true,
+      "initialRun": "1 failed, 111 passed in 6.34s",
+      "initialFailure": "Existing schema test required jsonschema not present in this image test environment.",
+      "remainingDependencyOnlyTestPassed": true,
+      "readonlyExistingHostDependenciesReused": true,
+      "combinedDistinctPassingChecks": 112,
+      "wholeSingleRunAllPassClaim": false,
+      "reviewerNewTests": 0,
+      "reviewerModelCalls": 0
+    },
+    "limits": {
+      "installed": false,
+      "oldTaskOutcomeReclassified": false,
+      "preciseLengthGateRejectedCallKnown": false,
+      "historicalInternalErrorRecoveryProven": false,
+      "newCandidateOrModelReplay": false,
+      "independentFinalAssessmentPerformed": false,
+      "semanticImprovementVerified": false,
+      "fullL3_6Complete": false,
+      "fullL3_7Complete": false
+    }
+  }
+}

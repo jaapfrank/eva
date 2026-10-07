@@ -1,0 +1,84 @@
+{
+  "contract": "EvaL3FinalHandoffInstalledEvidence/v1",
+  "task": "L3.6",
+  "checkedAt": "2026-10-07T10:29:47.002268+00:00",
+  "state": "technical_handoff_installed_real_candidate_pending",
+  "sourceCommit": "06cf4653c4429cf0d0611c49e22d081821f7fea4",
+  "containers": {
+    "core": {
+      "image": "sha256:be913510da1fa79b26f3d0e7655c7df3c4cf0472dc739d430a676106f56b07e0",
+      "runtime_user": "65532:65532",
+      "health": "healthy",
+      "route": [
+        {
+          "client_readable_as_runtime_user": true,
+          "final_paths": [
+            "adapters/postgres/delegated_work_actions.py"
+          ],
+          "prepare_present": true,
+          "source_hash": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7"
+        },
+        {
+          "host_health": 200
+        },
+        {
+          "new_authenticated_endpoint_rejects_invalid_package": true,
+          "status": 400
+        }
+      ]
+    },
+    "delegated-work-worker": {
+      "image": "sha256:b691d464c68359d24bc40b8719a4fa0c99ea65409d0c4d8c5d636ac4792f50bf",
+      "runtime_user": "65532:65532",
+      "health": "healthy",
+      "route": [
+        {
+          "client_readable_as_runtime_user": true,
+          "final_paths": [
+            "adapters/postgres/delegated_work_actions.py"
+          ],
+          "prepare_present": true,
+          "source_hash": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7"
+        },
+        {
+          "host_health": 200
+        },
+        {
+          "new_authenticated_endpoint_rejects_invalid_package": true,
+          "status": 400
+        }
+      ]
+    }
+  },
+  "sourceHashes": {
+    "application/component_improvements.py": "407f88b3bffb004651e2ae0284c5228316803c2a57803f3d98cb4341b5f04c6e",
+    "adapters/postgres/component_improvement_actions.py": "a85e362e586816d33dff73ea03b80ded0c06e8d6c61a9090714b565978f29868",
+    "adapters/connectors/component_evaluation.py": "f6011fe2e95b59e942c54bc4c23698f7e4b597537dea406e9abf27ccd0a6b8ea",
+    "operations/component_final_assessment.py": "7003bdbc32f4382a46433b9aa93af1dc4d6b6b61038da2b45f6be66fd515c3d8",
+    "operations/component_release_publisher.py": "0d6f2ba22c58150078ef26adb209830a1b71c08034d943234b6a1d8c7af504aa",
+    "operations/component_evaluation_service.py": "15700f7d5aceb5e69e7a498e21d709a64a53be8d16f57d119bee7bc0f9ab452a",
+    "operations/reviewed_component_application.py": "51205d7373984da2829a7083b9178f5cfa8008a7abf4618644e4555eddf4ac07"
+  },
+  "mounts_retained": true,
+  "configuration_retained_except_component_host_and_client_opt_in": true,
+  "updateReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/installation-receipt.private.json",
+    "sha256": "af7ae5626e3323034b8146ea13fa234f3e573bf68d3bcd336240b5459e770175"
+  },
+  "exactHostPreflight": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/exact-host-preflight.private.log",
+    "sha256": "50db7ff069d5273955c7820e90406349a02657e05b1d852a8d57514a0123e233"
+  },
+  "independentSourceReview": {
+    "path": "eva2/reviews/l3-final-handoff-source-review-20261007.json",
+    "sha256": "3b76a009951c9d2cfb982a80005b3d07610577964b958e09c3130de36a308a5a"
+  },
+  "fixed_final_experiment_consumed": false,
+  "candidate_generated_by_Eva": false,
+  "model_calls": 0,
+  "developmentCreditCost": null,
+  "full_L3_6_complete": false,
+  "semantic_improvement_verified": false,
+  "dream_mode_installed": false,
+  "all_apps_addons_covered": false
+}

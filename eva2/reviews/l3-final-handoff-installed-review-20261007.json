@@ -1,0 +1,86 @@
+{
+  "contract": "EvaL3FinalHandoffInstalledReview/v1",
+  "task": "L3.6",
+  "reviewedAt": "2026-10-07T10:35:14.284928+00:00",
+  "decision": "GO",
+  "scope": "Installed technical final-assessment/publication handoff only. A real Eva-generated selected candidate and its independent final assessment remain pending.",
+  "installedEvidence": {
+    "path": "eva2/evidence/product/l3-final-handoff-installed-20261007.json",
+    "sha256": "96d72f595623ff1cb6d69d7eb0e538e61bb807227a25af3c8e3e3fe97305d430"
+  },
+  "sourceReview": {
+    "path": "eva2/reviews/l3-final-handoff-source-review-20261007.json",
+    "sha256": "3b76a009951c9d2cfb982a80005b3d07610577964b958e09c3130de36a308a5a"
+  },
+  "sourceCommit": "06cf4653c4429cf0d0611c49e22d081821f7fea4",
+  "sourceHashes": {
+    "application/component_improvements.py": "407f88b3bffb004651e2ae0284c5228316803c2a57803f3d98cb4341b5f04c6e",
+    "adapters/postgres/component_improvement_actions.py": "a85e362e586816d33dff73ea03b80ded0c06e8d6c61a9090714b565978f29868",
+    "adapters/connectors/component_evaluation.py": "f6011fe2e95b59e942c54bc4c23698f7e4b597537dea406e9abf27ccd0a6b8ea",
+    "operations/component_final_assessment.py": "7003bdbc32f4382a46433b9aa93af1dc4d6b6b61038da2b45f6be66fd515c3d8",
+    "operations/component_release_publisher.py": "0d6f2ba22c58150078ef26adb209830a1b71c08034d943234b6a1d8c7af504aa",
+    "operations/component_evaluation_service.py": "15700f7d5aceb5e69e7a498e21d709a64a53be8d16f57d119bee7bc0f9ab452a",
+    "operations/reviewed_component_application.py": "51205d7373984da2829a7083b9178f5cfa8008a7abf4618644e4555eddf4ac07"
+  },
+  "runtime": {
+    "core": {
+      "container": "9edb7339f4352d589760c3b4856290914c221382cb4db2fabc5697957606d49c",
+      "image": "sha256:be913510da1fa79b26f3d0e7655c7df3c4cf0472dc739d430a676106f56b07e0",
+      "user": "65532:65532",
+      "running": true,
+      "health": "healthy"
+    },
+    "delegated-work-worker": {
+      "container": "8fd022fd4e8ad0c6439ab68e492f0023c53e23f418ceacaa421ba1af96555f02",
+      "image": "sha256:b691d464c68359d24bc40b8719a4fa0c99ea65409d0c4d8c5d636ac4792f50bf",
+      "user": "65532:65532",
+      "running": true,
+      "health": "healthy"
+    },
+    "sevenSourceHashesVerifiedInBothRunningContainers": true,
+    "mountsComparedByDestinationEqualRetainedReceipt": true,
+    "existingInstalledContextSourceSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7"
+  },
+  "hostClientBindings": {
+    "activeHostSourceHashesMatchSourceReview": true,
+    "hostConfigSha256": "8f1c4ade0a5d91767be55b6ee4d84d76cebb9a6b667c9825cc9234ff5c298c62",
+    "assessmentConfigSha256": "29d6b1aecd69f1d3c0a7fa023f3956581e7b84cfdd16dd98788ee44f6467471e",
+    "actualClientSha256": "7bedc5da7621698c2c680ba6af757060cc9161a27149608d0330a35763c4a189",
+    "clientEqualsRetainedAfter": true,
+    "clientChangedKeys": [
+      "final_assessment_scopes"
+    ],
+    "clientScopeEqualsHostScope": true,
+    "hostAssessmentEqualsRetainedConfig": true,
+    "registrationAndScorerFileHashesVerifiedWithoutReadingProtectedContent": true,
+    "assessmentImage": "sha256:57d7bd50104eff33584a9b6157b6449bc12460168b8eb8ba418152cee4a4b21c",
+    "publisherInstalledArtifactSha256": "a1a760f9c948ab23cc833d08d69e632df186060f219c98351f90bb9ff8167e85",
+    "publisherIntegrationCommit": "06cf4653c4429cf0d0611c49e22d081821f7fea4"
+  },
+  "proofBindings": {
+    "installationReceiptSha256": "af7ae5626e3323034b8146ea13fa234f3e573bf68d3bcd336240b5459e770175",
+    "exactHostPreflightSha256": "50db7ff069d5273955c7820e90406349a02657e05b1d852a8d57514a0123e233",
+    "existingInstalledRouteChecks": {
+      "bothRuntimeUsersCanReadClient": true,
+      "prepareAvailable": true,
+      "hostHealthHTTP": 200,
+      "invalidPackageRejectedHTTP": 400
+    },
+    "reviewerNewTests": 0,
+    "reviewerProviderCalls": 0,
+    "protectedFinalDataRead": false
+  },
+  "materialBlockers": [],
+  "claimLimits": {
+    "technicalHandoffInstalled": true,
+    "fixedFinalExperimentConsumed": false,
+    "realEvaCandidateGenerated": false,
+    "fullL3_6Complete": false,
+    "semanticImprovementVerified": false,
+    "autonomousAIDE2QualityGain": "UNKNOWN",
+    "dreamModeInstalled": false,
+    "allAppsAddonsCovered": false,
+    "developmentCreditCost": null
+  },
+  "conclusion": "GO for the exact installed technical handoff. Source/runtime/host/client identities agree with the source review and retained installation evidence. No semantic improvement or completed L3.6 is attested."
+}

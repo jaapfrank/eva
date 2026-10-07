@@ -1,0 +1,31 @@
+{
+  "contract": "EvaInstallerHandoffOverlayProof/v1",
+  "packageSourceFiles": 1237,
+  "changedFiles": {
+    "src/eva/application/component_improvements.py": "407f88b3bffb004651e2ae0284c5228316803c2a57803f3d98cb4341b5f04c6e",
+    "src/eva/adapters/postgres/component_improvement_actions.py": "a85e362e586816d33dff73ea03b80ded0c06e8d6c61a9090714b565978f29868",
+    "src/eva/adapters/connectors/component_evaluation.py": "f6011fe2e95b59e942c54bc4c23698f7e4b597537dea406e9abf27ccd0a6b8ea",
+    "src/eva/operations/component_final_assessment.py": "7003bdbc32f4382a46433b9aa93af1dc4d6b6b61038da2b45f6be66fd515c3d8",
+    "src/eva/operations/component_release_publisher.py": "0d6f2ba22c58150078ef26adb209830a1b71c08034d943234b6a1d8c7af504aa",
+    "src/eva/operations/component_evaluation_service.py": "15700f7d5aceb5e69e7a498e21d709a64a53be8d16f57d119bee7bc0f9ab452a",
+    "src/eva/operations/reviewed_component_application.py": "51205d7373984da2829a7083b9178f5cfa8008a7abf4618644e4555eddf4ac07",
+    "tests/operations/test_component_final_assessment.py": "655c7b141c97b96fa3f2ac491b9223b0411d3725926a128acb794101a88d81e1",
+    "tests/postgres/test_component_document_reference.py": "5d83570668b9d97657025bd2c39ef151d41636679d20e75eef2356fb7d98522a",
+    "PROJECTDOEL.md": "0ff39473e73e18f29a269997141f5aaa0db82fa3c7c2ef26fdc8fd911965db42",
+    "WERKBORD.md": "442d2c1bd28374c8e2a4fa4ef14d035b2a5446d6c486449b3712656cd4933a5f"
+  },
+  "allInventoryHashesMatch": true,
+  "mismatches": [],
+  "images": {
+    "core": "sha256:be913510da1fa79b26f3d0e7655c7df3c4cf0472dc739d430a676106f56b07e0",
+    "worker": "sha256:b691d464c68359d24bc40b8719a4fa0c99ea65409d0c4d8c5d636ac4792f50bf"
+  },
+  "catalogRetainedOtherSlots": 7,
+  "baseRetained": "aca98ba68a262c16a11f495d489cb70e81b8c30b",
+  "publicRelease": false,
+  "metadataSha256": "f78ab648e665297cb47a9d39d21abfbb46a52ec205439d2d1a36a4888b9da003",
+  "existingVerifierPassed": true,
+  "manifestSha256": "ef8ccfa4a762ef8b6ff166b7d5fcaff599b56b6703a3500e8d9fc7b3c4c92022",
+  "imageSetSha256": "388e52167ef23cfa9aed2c7befd72945eda6cea852c3fe706bda2b3cc53a2895",
+  "verificationReceiptSha256": "1be8d9bf75e3001dd55d7597dc7f1d30f776032b29859ee47d1f9efab32eb50c"
+}

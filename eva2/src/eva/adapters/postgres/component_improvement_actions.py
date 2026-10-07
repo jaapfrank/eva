@@ -106,7 +106,10 @@ def component_descriptors():
         "De host meet kwaliteit en harde voorwaarden; jij kunt scores of criteria niet invullen. "
         "Dezelfde bron en suite zijn verplicht. Gebruik alleen bij candidate_selected het gekozen "
         "selected_draft_step als parent_draft_step en dit selection_step bij een vervolgvoorstel. "
-        "Bij gelijkspel/verlies behouden we de bestaande versie. Dit is geen onafhankelijke "
+        "Bij gelijkspel/verlies behouden we de bestaande versie. Bewaar dan uitsluitend dit "
+        "exacte vergelijkingsrapport via save_workspace_document(component_step=selection_step, "
+        "content=null) en sluit de proef eerlijk af. De eerdere componentreceipts blijven bewaard; "
+        "geen extra volledige voorstel- of meetrapportkopie nodig. Dit is geen onafhankelijke "
         "eindbeoordeling, bewezen gezinswinst of installatie.",
         _SCHEMAS[COMPARE], "Meld scores, fouten en werkelijke keuze; promoveer geen onbewezen kandidaat."),)
     return (*evaluation, *comparison, *preparation, *application,

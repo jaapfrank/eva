@@ -1,0 +1,67 @@
+{
+  "contract": "EvaOrdinaryImprovementTrial/v1",
+  "task": "L3.6/L3.7",
+  "route": "Installed ordinary owner chat and delegated digital worker; Eva/Astra medium authored candidate.",
+  "workId": "work:eva-chat:2036b147-a24c-5689-b8be-78bd5e5776d6",
+  "candidateSha256": "a34796ac4d6c50a8514ce4396b5838e15b9ecbb3a1c633b802faa10f987a59b4",
+  "baselineSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "candidateChange": "Actuele bron 2554605 gebruikt al gewogen woordoverlap en substringoverlap. Anders verbogen of licht anders gespelde titeltokens krijgen echter geen overeenkomst; uitsluitend metadata mag de selectie sturen. Kandidaat A voegt conservatieve algemene tekenovereenkomst toe, zonder domeinwoorden of toegang tot inhoud.",
+  "development": {
+    "requiredReferences": {
+      "baseline": 5,
+      "candidate": 5
+    },
+    "contextBytes": {
+      "baseline": 5514,
+      "candidate": 5514
+    },
+    "hardFailures": {
+      "baseline": 0,
+      "candidate": 0
+    },
+    "elapsedMs": 2071,
+    "decision": "baseline_retained"
+  },
+  "terminalState": "ambiguous/internal_error",
+  "verifiedFailure": "ConversationConflict:arguments.content text length is invalid",
+  "failureFingerprint": "b150ba3d6b107f312809e618955b31f74f8528ae751c4a8a0f451c4708d65233",
+  "lastRejectedModelCallArguments": "not durably available; do not guess",
+  "separateProvenCompletionDefect": "COMPARE was excluded as latest component, rejecting a saved final development selection.",
+  "comparisonPreserved": true,
+  "comparisonDocumentMaterializationBytes": 2565,
+  "independentFinalAssessmentPerformed": false,
+  "reasonFinalNotRun": "Development tie retained baseline; no winner selected, no final experiment consumed.",
+  "installedCandidate": false,
+  "semanticImprovementVerified": false,
+  "fullL3_6Completed": false,
+  "runtimeUsage": {
+    "workModelRequests": 9,
+    "workToolDispatches": 8,
+    "workInputTokens": 177327,
+    "workOutputTokens": 2054,
+    "providerUsageRecordsAllMeasured": true,
+    "overallTaskMarkedPartial": true,
+    "contactUsage": "separate foreground journal not yet extracted",
+    "credits": "unknown"
+  },
+  "technicalCorrection": {
+    "files": {
+      "eva2/src/eva/bootstrap/delegated_digital_runner.py": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362",
+      "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "956c63ffefd8ba9de414c4ff71197c978dd3edd17df50ef6837b68aceda3c9d2",
+      "eva2/tests/application/test_component_document_completion.py": "e1fc50e76893369237243c0bb353f21851debf0a5720efa74ca100a9dcb1e15e"
+    },
+    "testResult": {
+      "exit": 0,
+      "actualImageSourceFirst": true,
+      "readonlyChangedSourceOverlay": true,
+      "readonlyHostOnlyShim": true,
+      "summary": "1 failed, 111 passed in 6.34s",
+      "initialPassingTests": 111,
+      "remainingDependencyOnlyTestPassed": true,
+      "combinedPassed": 112,
+      "dependenciesReusedFromInstalledHostVenv": true
+    },
+    "installed": false
+  },
+  "limits": "One measured losing development candidate, no answer quality gain, no entire AIDE2/addon/dream completion. No model reattempt or changed assessment criteria."
+}

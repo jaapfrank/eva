@@ -1,0 +1,36 @@
+{
+  "contract": "EvaImprovementGenerationRegistration/v1",
+  "registeredAt": "2026-10-07",
+  "task": "L3.6/L3.7",
+  "baselineCommit": "06cf4653c4429cf0d0611c49e22d081821f7fea4",
+  "path": "adapters/postgres/delegated_work_actions.py",
+  "baselineSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "problem": "Authorized task metadata is lexically ranked; follow-ups phrased differently can lose the relevant item in bounded context. Improve general selection without exposing task payloads or family data.",
+  "route": "Ordinary installed owner chat -> existing delegated digital task -> component draft/evaluate/compare/prepare -> independent host. No direct model API or builder-authored candidate.",
+  "development": "Existing public context suite and fixed quality-first selection, unchanged. At most two primary candidates and one public-feedback refinement, within the existing digital task grant.",
+  "budget": {
+    "provider": "installed Codex subscription",
+    "contactModel": "gpt-6-sol/none",
+    "workModel": "gpt-6-astra/medium",
+    "taskModelRunsUpperBound": 32,
+    "taskToolsUpperBound": 31,
+    "maximumCandidates": 3,
+    "noAutomaticRetry": true,
+    "creditCost": "unknown",
+    "independentAnswerStage": "at most24 Sol/none answers, only after separate fixed gate and new admission"
+  },
+  "hardConditions": [
+    "Only admitted active_context body",
+    "Preserve authorization and source scope",
+    "No payload/private result inspection",
+    "Preserve output bounds/schema/instructions/stop/own initiatives",
+    "Unchanged fixed evaluator and holdout",
+    "Only independently measured improvement can be applied"
+  ],
+  "assessmentRegistrationSha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+  "outcomes": [
+    "Accept with verified task gain",
+    "Tie/reject preserved without application"
+  ],
+  "status": "registered_before_generation"
+}

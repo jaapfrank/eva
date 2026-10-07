@@ -2,7 +2,7 @@
 
 ## Actueel 7 oktober — L3.6: gekozen winnaar naar onafhankelijke beoordeling
 
-De overdracht is gebouwd en op de te installeren bron gecontroleerd (68 gerichte checks). De bestaande bronimport, core-/worker-imagebouw en beheerde toepassing worden hergebruikt. Installatie van deze aansluiting volgt; daarna moet een echte door Eva gemaakte kandidaat de afzonderlijke eindbeoordeling doorlopen. L3.6 blijft in uitvoering. Een technische fixture, broncheckpoint of pakket is geen slimmere Eva en geen extra afgeronde huisgenootuitkomst.
+De overdracht is geïnstalleerd in de kern, werker en bestaande beoordelingshost, en gecontroleerd (68 gerichte checks plus gezonde echte aansluitingen). De bestaande bronimport, core-/worker-imagebouw en beheerde toepassing worden hergebruikt. Nu moet een echte door Eva gemaakte kandidaat de afzonderlijke eindbeoordeling doorlopen. L3.6 blijft in uitvoering. Een technische fixture, broncheckpoint of pakket is geen slimmere Eva en geen extra afgeronde huisgenootuitkomst.
 
 Uitbreidingen, apps en add-ons vallen eveneens onder de verbetercyclus. De eerste componentaansluiting bewijst hun volledige uitvoering nog niet. Droommodus volgt bestaande initiatief/reflectie bij rust en aantoonbare capaciteit; dat is nog niet geïmplementeerd.
 

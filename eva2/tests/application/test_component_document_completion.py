@@ -56,3 +56,26 @@ def test_real_sdk_strict_schema_can_express_either_document_source():
     jsonschema.validate({"path": "/empty.txt", "content": "", "component_step": None}, schema)
     with pytest.raises(jsonschema.ValidationError):
         jsonschema.validate({"path": "/proposal.json", "content": None, "component_step": "3"}, schema)
+
+
+@pytest.mark.parametrize("state", ["baseline_retained", "candidate_selected"])
+def test_saved_development_selection_is_the_final_component_artifact(state):
+    evaluated = receipt("evaluate_own_component_improvement", {}, {
+        "status": "verified", "component_step": 5, "operation_result": {"measurement": True}})
+    selection = receipt("compare_own_component_improvements", {}, {
+        "status": "verified", "component_step": 6, "operation_result": {
+            "contract": "EvaComponentDevelopmentSelection/v1", "state": state}})
+    saved_selection = receipt("save_workspace_document", {
+        "component_step": 6, "content": None}, {"status": "verified"})
+    assert _has_completed_tool_evidence([evaluated, selection, saved_selection])
+    saved_older = receipt("save_workspace_document", {
+        "component_step": 5, "content": None}, {"status": "verified"})
+    assert not _has_completed_tool_evidence([evaluated, selection, saved_older])
+    assert not _has_completed_tool_evidence([evaluated, saved_selection, selection])
+    failed_save = receipt("save_workspace_document", {
+        "component_step": 6, "content": None}, {"status": "failed"})
+    assert not _has_completed_tool_evidence([evaluated, selection, failed_save])
+    invalid_selection = receipt("compare_own_component_improvements", {}, {
+        "status": "verified", "component_step": 6, "operation_result": {
+            "contract": "EvaComponentDevelopmentSelection/v1", "state": "unknown"}})
+    assert not _has_completed_tool_evidence([evaluated, invalid_selection, saved_selection])

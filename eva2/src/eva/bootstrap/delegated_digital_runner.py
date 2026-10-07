@@ -12,7 +12,7 @@ from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
 from eva.adapters.model.contracts import ConversationModelDeadlineExceeded
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
-from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE
+from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE, COMPARE
 from eva.adapters.postgres.programming_actions import ProgrammingActions, programming_tool_name, LIST as PROGRAMMING_LIST, CALL as PROGRAMMING_CALL, WRITE as PROGRAMMING_WRITE, START as PROGRAMMING_START
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWorkReleaseSelector
@@ -120,6 +120,11 @@ class _TaskModel:
             "Gebruik evaluate_own_component_improvement indien aangeboden voor die component, "
             "met de draft_step uit het voorstel. Beoordeel aan de hand van het echte meetrapport "
             "of dat de vooraf beschreven winst daadwerkelijk bewijst. Een gelijke uitkomst is geen winst. "
+            "Gebruik compare_own_component_improvements voor de vaste ontwikkelkeuze. "
+            "Bij baseline_retained: bewaar uitsluitend dat exacte vergelijkingsrapport met "
+            "save_workspace_document(component_step=selection_step, content=null), sluit je "
+            "uitvoerplan eerlijk af en meld het gelijkspel/verlies. Schrijf geen extra volle "
+            "voorstel- of meetrapportkopie uit; de eerdere componentreceipts blijven bewaard. "
             "Gebruik prepare_own_component_release bij een geslaagde vergelijking om het exacte "
             "voorstel met zijn rapport als installatiekandidaat te bewaren. Gebruik evaluation_step "
             "uit het meetrapport. Bewaar vervolgens alleen het volledige eindpakket met "
@@ -318,11 +323,17 @@ def _recoverable_read_error(receipt):
 def _has_completed_tool_evidence(receipts):
     """Discovery is useful context, but cannot alone prove completed work."""
     component_positions = [index for index, receipt in enumerate(receipts)
-                           if receipt.call.name in {DRAFT, EVALUATE, PREPARE}]
+                           if receipt.call.name in {DRAFT, EVALUATE, PREPARE, COMPARE}]
     if component_positions:
         index = component_positions[-1]
         component = receipts[index]
         expected = component.output.get("operation_result")
+        if component.call.name == COMPARE and (
+                component.output.get("status") != "verified"
+                or not isinstance(expected, dict)
+                or expected.get("contract") != "EvaComponentDevelopmentSelection/v1"
+                or expected.get("state") not in {"candidate_selected", "baseline_retained"}):
+            return False
         saved = False
         for receipt in receipts[index + 1:]:
             if (receipt.call.name != "save_workspace_document"
