@@ -1,4 +1,26 @@
-# AIDE application in Eva — bounded trial closed without a candidate
+# AIDE/AIDE² application in Eva — bounded results and limits
+
+## Current purpose and result — 7 October 2026
+
+The owner defines better Eva behaviour as the primary goal: programming and
+delivering working changes, coherent personal conversation, useful initiative,
+and investigating opportunities followed by usable work. Token reduction is a
+possible benefit, not the objective. Assess result quality and independence
+first, alongside human assistance, errors, latency and total measured usage.
+Resource limits and privacy, authority and stop conditions remain in force.
+This clarification does not amend frozen criteria or reopen closed trials.
+
+One Eva-authored task-context change was independently assessed and installed on
+3 October: two additional questions became directly answerable in the controlled
+comparison, with no measured regressions and slightly more input tokens. This is
+one bounded application, with operator assistance, not the full repeated AIDE²
+agent-improvement cycle or a demonstrated gain across all household outcomes.
+
+[Independent assessment](../../evidence/product/l3-context-independent-20261003.json)
+· [Installed application](../../evidence/product/l3-context-installed-20261003.json)
+· [Current owner goal](../../PROJECTDOEL.md).
+
+The sections below preserve the dated original and follow-up trial records.
 
 Owner priority, 29 September 2026: record this work in the project, then finish the easiest useful deliveries first. This is part of L3, not a new platform or an additional product milestone.
 

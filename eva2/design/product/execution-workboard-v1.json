@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-07T00:37:45.104985+00:00",
+  "lastUpdated": "2026-10-07T08:35:37.531601+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T07:42:22.272287+00:00",
+        "checkedAt": "2026-10-07T08:35:37.531601+00:00",
         "deliveries": [
           {
             "title": "R1.1 · Echte vergelijking afgerond — geen adoptie",
@@ -4089,23 +4089,23 @@
           }
         ],
         "now": {
-          "title": "R1.1 · Afgerond met onafhankelijke uitslag",
-          "state": "completed",
+          "title": "P2.1 · OpenClaw op dezelfde oorspronkelijke proef aansluiten",
+          "state": "in_progress",
           "owner": "Codex",
-          "taskId": "R1.1",
-          "detail": "Zeven ongebruikte posities eenmaal uitgevoerd; drie volledige paren. Beide werkwijzen0 volledige taakpasses binnen oorspronkelijke voorwaarden. De kandidaat gebruikte de voorspeller niet;0 aangetoond voordeel. Onafhankelijke publicatie-GO, kandidaat afgewezen.",
-          "remaining": "Dit voltooit de onderzoeksopdracht, geen extra gezinsfunctie. Brede Eva1/concurrentenvergelijking en aantoonbare AIDE²-/innovatievoorsprong blijven open. Vervolg nog niet gestart.",
-          "source": "eva2/evidence/product/r1-cumulative-comparison-result-20261007.json",
-          "reviewedAt": "2026-10-07T07:42:22.272287+00:00",
-          "doneWhen": "Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik."
+          "taskId": "P2.1",
+          "detail": "Bestaande native route is aangemeld. De meetadapter geeft nog tegenstrijdige datums door; alleen die technische aansluiting en een ongebruikt origineel proefslot worden verklaard. Geen nieuwe brede audit of aanmelding.",
+          "remaining": "Werkelijke OpenClawuitvoering pas na correcte binding/toelating. Overige ontbrekende metingen en twee antwoordbeoordelingen blijven open.",
+          "source": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
+          "reviewedAt": "2026-10-07T07:45:05.817947+00:00",
+          "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar."
         },
         "next": {
-          "title": "P2.1 · Brede vergelijking verder afmaken",
+          "title": "P2.1 · Oorspronkelijk ongebruikt OpenClawgeval vergelijken",
           "state": "planned",
           "owner": "Codex",
           "taskId": "P2.1",
-          "detail": "Gebruik vaste oorspronkelijke taken en bestaande resultaten. Nog open: geldige eigen native uitvoering van deelnemers, ontbrekende metingen en twee echte antwoordbeoordelingen; geen algemene winnaar claimen.",
-          "remaining": "P2.1 blijft afzonderlijk open; gesloten rondes en oorspronkelijke voorwaarden behouden.",
+          "detail": "Zelfde criteria, eigen native route en modelrol. Geen replay van gesloten gevallen of fictieve algemene winnaar.",
+          "remaining": "Alleen uitvoeren bij brongebonden onafhankelijke toelating; menselijke kwaliteit apart.",
           "source": "eva2/evidence/product/p2-current-round-decision-20261007.json"
         },
         "ownerAction": {
@@ -4130,7 +4130,7 @@
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-07T07:42:22.272287+00:00"
+        "reviewedAt": "2026-10-07T07:45:05.817947+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-06T09:49:07.102699+00:00",
@@ -16601,7 +16601,7 @@
           ]
         }
       ],
-      "nextAction": "R1.1 afgerond zonder adoptie; P2.1 is eerstvolgende vergelijking, nog niet gestart. Behoud vier huisgenootuitkomsten en geparkeerde spraak.",
+      "nextAction": "P2.1: gerichte bestaande OpenClaw-klokbinding, daarna toegelaten ongebruikt origineel geval; R1.1 gesloten zonder adoptie.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -19243,7 +19243,7 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "completionClarification": "A failed AIDE experiment may close that experiment, not the autonomous programming outcome. Preserve L3.1 historical closure. General programming requires a useful Eva-authored change executed, independently checked, installed and verified through her own route; one component microfix is bounded evidence only.",
+          "completionClarification": "A failed AIDE experiment may close that experiment, not the autonomous programming outcome. Preserve L3.1 historical closure. General programming requires a useful Eva-authored change executed, independently checked, installed and verified through her own route; one component microfix is bounded evidence only. De groene L3-status betreft de afgebakende toepassing; geen volledige AIDE²-cyclus of bewezen verbetering in alle vier huisgenootuitkomsten.",
           "nextAction": "Support the actual family contribution or owner need when a missing capability requires general programming and effective activation; preserve independent evaluation and measured-gain requirements.",
           "executorAdmissionCheck": {
             "checkedAt": "2026-10-02T00:35:22.610151+00:00",
@@ -19293,11 +19293,15 @@
             "research": "eva2/experiments/aide-20260929/research.md",
             "firstApplication": "Existing task-context selection gap; use recorded workspace follow-up criteria, not a new optimization platform.",
             "distinction": "AIDE searches task programs; AIDE² also searches agent orchestration with fixed underlying models. Our execution tooling is not evidence of AIDE² improvement.",
-            "scope": "Improve the shared agent approach when a measured user deficit justifies it: context selection, planning, tool use or result verification are examples, not separate required builds.",
+            "scope": "Verbeter de gedeelde agentwerkwijze vanuit een echt gebruikstekort in de vier huisgenootuitkomsten. Context, planning, uitvoering en controle zijn mogelijkheden; geen aparte vaste functie of nieuwe taak per voorbeeld.",
             "independentEvaluation": "Freeze baseline/candidate and assessment rules; optimizer cannot modify evaluator or protected final cases; no holdout-directed revision.",
-            "promotion": "Only measured advantage, preserving privacy, authority and stop; record quality, human help, latency and total usage.",
+            "promotion": "Beoordeel eerst resultaatkwaliteit en zelfstandigheid, met benodigde hulp en fouten; registreer ook snelheid en totaal verbruik. Alleen onafhankelijk aangetoonde winst toepassen, met behoud van privacy, bevoegdheden en stoppen. Bestaande vaste proefcriteria blijven ongewijzigd.",
             "evidenceBoundary": "The original failed trial remains closed. This later bounded task-context improvement was Eva-authored, independently evaluated, operator-packaged and Eva-triggered for real application; no repeated autonomous improvement or general AIDE2 superiority claim.",
-            "installedEvidence": "eva2/evidence/product/l3-context-installed-20261003.json"
+            "installedEvidence": "eva2/evidence/product/l3-context-installed-20261003.json",
+            "ownerClarifiedAt": "2026-10-07T08:35:37.531601+00:00",
+            "primaryGoal": "Aantoonbaar slimmer en zelfstandiger Eva-gedrag: beter programmeren en opleveren, natuurlijker en samenhangender praten, relevante kansen onderzoeken en nuttig initiatief afmaken.",
+            "resourceRole": "Tokenbesparing is een mogelijke opbrengst, geen hoofddoel. Verbruik blijft gemeten en begrensd volgens bestaand mandaat en proefbudget; goedkoper maar slechter geldt niet als verbetering.",
+            "ownerGoal": "eva2/PROJECTDOEL.md"
           },
           "aideWorkspaceFollowup": {
             "state": "closed_unsuccessful",
@@ -19308,6 +19312,17 @@
             "measuredImprovement": false
           },
           "aideTypedFollowup": {
+            "state": "independently_assessed_and_installed",
+            "candidateSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+            "evidence": "eva2/evidence/product/l3-context-independent-20261003.json",
+            "candidateCount": 1,
+            "refinements": 0,
+            "measuredImprovement": true,
+            "installed": true,
+            "limitation": "Controlled task-context experiment; no claim of full autonomous recursive self-improvement or general competitor superiority.",
+            "installedEvidence": "eva2/evidence/product/l3-context-installed-20261003.json"
+          },
+          "aideTypedFollowupBeforeApplication": {
             "state": "independent_pass_application_pending",
             "candidateSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
             "evidence": "eva2/evidence/product/l3-context-independent-20261003.json",
@@ -20016,11 +20031,11 @@
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Twee echte afzonderlijke kwaliteitsbeoordelingen ontvangen. R1/P2 alleen hervatten als geldige cumulatieve verbruiksregistratie en onafhankelijke toelating binnen vastgelegde voorwaarden beschikbaar zijn. Geen nieuwe set, reset, herhaling of spraakwerk.",
+              "nextAction": "Maak bestaande native clockbinding correct en controleer onafhankelijke toelating vóór één oorspronkelijk ongebruikt OpenClawgeval. Overige onbekende metingen en menselijke beoordelingen blijven zichtbaar.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20033,26 +20048,26 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T00:58:22.999201+00:00",
+              "checkedAt": "2026-10-07T07:45:05.817947+00:00",
               "assignment": {
-                "baseCommit": "59e0f3365af6efa39fed7322a73ebd3f63eadf37",
+                "baseCommit": "4f9646e135ee78dee57b3359188e527ee50e9680",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
-                  "/root: eva2/src/eva/adapters/projection/hindsight.py, existing projection tests and integration state.",
-                  "Independent reviewer: read-only general source/regression/deployment review; no protected original inputs."
+                  "/root: gerichte generieke OpenClaw-meetadaptercorrectie alleen na concreet brondefect; bestaand board/Git.",
+                  "/root/aide_final_evaluation: beschermde technische provenance/toelating/ongebruikte-slotbeslissing; geen cases/antwoorden/scorer naar root."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
-                "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Derde opeenvolgende controle zonder voortgang: oorspronkelijke verbruiks-/toelatingsblokkade en ontbrekende beoordelingen ongewijzigd. App-goal wordt op geblokkeerd gezet; geen nieuwe proeven of spraakwerk.",
+                "estimate": "Gerichte bestaande bron-/metadatacontrole met0 geplande provider/authcalls; oorspronkelijke P2.1-voorwaarden en deelnemergebruik behouden. Creditkosten onbekend.",
+                "currentAction": "Na afgesloten R1.1: bestaande OpenClaw-tegenstrijdige klokbinding gericht verklaren en kleinste voldoende meetadaptercorrectie voorbereiden. Eigen native aanmelding/route behouden; geen model/authcall of herhaalde/nieuwe cases.",
                 "previousGoalTurn": {
                   "classification": "no_progress",
                   "sourceCommit": "123d27edc4867fbd773e21e31f05f93f5682b292",
                   "meaning": "Dezelfde oorspronkelijke proefregistratie en ontbrekende beoordelingen; geen onafhankelijk uitvoerbaar vervolg."
                 },
-                "stage": "blocked_threshold_satisfied",
+                "stage": "openclaw_original_clock_binding_preparation",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -20981,10 +20996,12 @@
                   ],
                   "sourceCommit": "f8ac4afa7138d7e81dd53a4391274ff10d3c47bd",
                   "meaning": "Exacte algemene geheugencorrectie geïnstalleerd, onafhankelijk gecontroleerd, bestaand pakket en GitHub bijgewerkt. Geen nieuwe producttaak fictief voltooid."
-                }
+                },
+                "priorStageBeforeOpenClawContinuation": "blocked_threshold_satisfied",
+                "preparationResult": "De bestaande native metadata identificeert beide kalenderdragers per beurt. Gerichte adaptercorrectie en gewone publieke routecontrole zijn nog Codex-werk; geen oorspronkelijk geval, modelcall of authcall uitgevoerd."
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
-              "latestEvidence": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",
+              "latestEvidence": "eva2/evidence/product/p2-openclaw-native-composition-20261007.json",
               "executionBlocker": {
                 "owner": "Codex",
                 "kind": "native503_unresolved_sdk_usage",
@@ -20992,7 +21009,6 @@
                 "evidence": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
                 "reason": "Eén aborted contactpoging, SDKusageNULL; bestaande cumulatieve toelatingsguard sluit nieuwe Eva2-sample uit. Ontbrekende gestructureerde upstreamfoutregistratie verklaard; geen concrete upstreamcorrectie bewezen."
               },
-              "blocker": "Oorspronkelijke vergelijking en R1/AIDE² zijn onvolledig afgesloten. Ontbrekend historisch SDK-verbruik en gebruikte onafhankelijke toelating laten geen nieuwe uitvoering binnen de bestaande voorwaarden toe. Twee menselijke kwaliteitsbeoordelingen ontbreken; spraak blijft geparkeerd.",
               "assessmentBlocker": {
                 "type": "automatic_approval_review",
                 "state": "resolved_with_authorized_independent_processing",
@@ -21156,7 +21172,8 @@
                 "finalAuthoritySha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef",
                 "failureCause": "HTTP503 at first native ingress; upstreamcause unavailable after generic API RuntimeError boundary.",
                 "newSampleUsage": "UNKNOWN"
-              }
+              },
+              "priorBlockerBeforeOpenClawContinuation": "Oorspronkelijke vergelijking en R1/AIDE² zijn onvolledig afgesloten. Ontbrekend historisch SDK-verbruik en gebruikte onafhankelijke toelating laten geen nieuwe uitvoering binnen de bestaande voorwaarden toe. Twee menselijke kwaliteitsbeoordelingen ontbreken; spraak blijft geparkeerd."
             },
             {
               "id": "P2.2",
@@ -21457,7 +21474,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": null,
+      "activeSliceId": "P2",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",

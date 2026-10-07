@@ -1,5 +1,35 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaarverduidelijking 7 oktober 2026 — AIDE² maakt Eva beter
+
+Het hoofddoel van AIDE² is dat Eva aantoonbaar slimmer en zelfstandiger handelt:
+beter programmeren en bruikbare wijzigingen opleveren, natuurlijker en samenhangender
+praten, relevante kansen onderzoeken en nuttig eigen initiatief werkelijk afmaken.
+Dit dient de vier bestaande huisgenootuitkomsten: persoonlijkheid, geheugen,
+eigen initiatief en zelfstandig werk. Minder tokens is een mogelijke opbrengst,
+geen hoofddoel en geen vervanging voor een beter gebruikersresultaat.
+
+Kies vanuit een echt gebruikstekort welke algemene werkwijze Eva kan verbeteren.
+Zij onderzoekt varianten van haar aansturing, bijvoorbeeld context, planning,
+uitvoering of controle, met de bestaande programmeer-, vergelijkings- en
+toepassingsroute. Geen voorgebouwde functie per voorbeeld en geen nieuw platform.
+Beoordeel op vooraf vastgelegde taken eerst resultaatkwaliteit en zelfstandigheid;
+registreer ook menselijke hulp, fouten, snelheid en totaal verbruik. Voor praten
+blijven herkenbaarheid, passend gedrag en gezinsbeoordeling afzonderlijk zichtbaar.
+Voor ondernemen tellen onderbouwde kansen en bruikbaar uitgevoerd werk; een voorstel
+of voorspelling bewijst geen werkelijke opbrengst.
+
+Kosten blijven beheersbaar binnen het bestaande mandaat en vastgelegde proefbudget.
+Een goedkopere variant die slechter werkt is geen verbetering. Meer verbruik kan
+verantwoord zijn als de vooraf gekozen beoordeling aantoonbaar betere resultaten
+onderbouwt; het is geen onbegrensd mandaat. Alleen onafhankelijk gemeten voordeel
+toepassen, met behoud van privacy, bevoegdheden en stoppen.
+
+Deze verduidelijking verandert geen afgesloten proef, afgeschermde testgegevens,
+bestaande toetsregels, taak-ID's of acceptaties. De contextverbetering van 3 oktober
+is één beperkte, onafhankelijk beoordeelde toepassing; geen bewijs dat Eva op al
+deze gebieden beter is of dat de volledige herhaalde AIDE²-cyclus klaar is.
+
 ## Eigenaarprioriteit 5 oktober 2026 — eerst Eva afmaken, spraak later
 
 Maak eerst de vier bestaande huisgenootuitkomsten af: persoonlijkheid, geheugen,
