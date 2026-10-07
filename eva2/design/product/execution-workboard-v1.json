@@ -20388,7 +20388,8 @@
                   "resultSha256": "28fd8fbc8c07855eff2b7f4a5a28f486450d1de7b2d8a8f0b86837ca03df7c15",
                   "review": "eva2/reviews/p2-hermes-original-cm04-result-review-20261007.json",
                   "reviewSha256": "39a08991aecd179d3b9bb0d4d01688a2f26050f6a51d57e932c851e8137447cc",
-                  "developmentCredits": "UNKNOWN"
+                  "developmentCredits": "UNKNOWN",
+                  "publishedSourceCommit": "153b44be9476676e1058a226d06c6d5c50fd7839"
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -20784,7 +20785,14 @@
                   "visibleDisclosureObserved": false,
                   "nativeToolEntries": 1,
                   "modelContextsRetained": 7,
-                  "officialQuality": "UNKNOWN"
+                  "officialQuality": "UNKNOWN",
+                  "sourceCheckpoint": {
+                    "commit": "153b44be9476676e1058a226d06c6d5c50fd7839",
+                    "remote": "origin/main",
+                    "published": true,
+                    "runtimeInstalled": false,
+                    "scope": "Reviewed measurement adapter and original CM04 result; no Eva2 product function completed."
+                  }
                 }
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",

@@ -8,7 +8,7 @@ In dezelfde oorspronkelijke case bleef Eva1 niet-uitvoerbaar; de Eva2-poging is 
 
 Gemeten: **7 modelpogingen, 14.294 invoer- en 238 uitvoertokens, 1 geheugenhandeling, 13,220 seconden** native interval inclusief opstart/helpers. Alle zeven modelcontexten, native/parent-afsluiting, kalenderherstel en opruiming zijn gecontroleerd. Twee gerichte native fixtures slagen; geen brede test-/installatieronde of spraakwerk. Drie kleine voorbereidingsfouten vóór modelinvoer zijn expliciet geregistreerd; de oorspronkelijke proef is niet herhaald.
 
-**34/44 blijft gelijk.** De cumulatieve oorspronkelijke registratie bevat 66 pogingen/12 rows; 227.953 invoer- en 7.117 uitvoertokens als ondergrens, drie oude onbekende usage-metingen behouden. Creditkosten onbekend. Geen modelproef of uitvoerder actief; resterende vergelijking is nog niet gestart. Dashboard toont de persoonsfout, eerdere vergeetfout en de onbekende baselines. Bron en beperkte resultaten worden samen op GitHub gepubliceerd.
+**34/44 blijft gelijk.** De cumulatieve oorspronkelijke registratie bevat 66 pogingen/12 rows; 227.953 invoer- en 7.117 uitvoertokens als ondergrens, drie oude onbekende usage-metingen behouden. Creditkosten onbekend. Geen modelproef of uitvoerder actief; resterende vergelijking is nog niet gestart. Dashboard toont de persoonsfout, eerdere vergeetfout en de onbekende baselines. Bron en beperkte resultaten staan samen op GitHub in broncheckpoint 153b44be.
 
 ## 7 oktober — P2.1: eerst de volgende oorspronkelijke meetbinding
 
