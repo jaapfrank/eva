@@ -1,3 +1,17 @@
+## 7 oktober — algemene geheugenfout gerepareerd, installatie loopt
+
+Een bronloze observatie kon een toegelaten herinnering uit de bestaande fallback verdringen. De kleinste correctie behoudt bron-, persoons-, privacy-, tijd- en scoregrenzen. Nieuwe neutrale proef faalde vóór de wijziging; bestaande module78 controles en3 gerichte eindcontroles geslaagd. Onafhankelijke bronreview GO. Geen modelcalls of oorspronkelijke vergelijkingsherhaling. Installatie in bestaande kern/werker en pakket volgt; CM12-oorzaak blijft onbekend en P2.1 open.
+
+## 7 oktober — P2.1: oorspronkelijke meetronde-afsluiting toetsen
+
+De vorige beurt leverde de onafhankelijk vastgestelde Hermes-persoonsfout en broncheckpoint153b44be op; publicatie59e0f336. De volgende oorspronkelijke CM05 vraagt vier beurten en een blijvende dagovergang; onze huidige meetadapter veronderstelt drie beurten en telt stap-offsets niet cumulatief op. Geen nieuwe proef, modelcall of reparatie gestart. Eerst onafhankelijk toetsen of voortzetten bij deze ontbrekende vergelijkbaarheid volgens de reeds vaste afsluitregel nog gerechtvaardigd is. Geen nieuwe quota, criteria, taak-ID of fictieve P2.1-voltooiing; 34/44 behouden.
+
+## 7 oktober — meetronde onvolledig; bestaande uitvoerfout verklaren
+
+De onafhankelijke evaluator sluit deze meetronde volgens het oorspronkelijke protocol af als **onvolledig, zonder winnaar**. Geen extra Hermes-only CM05: dat herstelt het bewezen persoonscontextverlies niet en vult de ontbrekende gezamenlijke vergelijking/menselijke beoordelingen niet aan. **P2.1 blijft open; 34/44 kleine taken blijven afgerond.** Alle oorspronkelijke criteria, ontbrekende dekking en gesloten verliezen blijven staan.
+
+Nu: de bestaande algemene overgang van bronontdekking naar tooluitvoering verklaren. XD02 vond de toolcatalogus, maar een vervolgactie werd afgewezen; beide XD-opdrachten deden nul dienstaanvragen. Alleen bestaande technische records en broncode lezen; geen modelcall, scenarioherhaling of nieuwe voorbeeldfunctie. Bewijs: eva2/evidence/product/p2-current-round-decision-20261007.json.
+
 ## 7 oktober — P2.1: Hermes faalt de oorspronkelijke persoonsgrens
 
 **Eén oorspronkelijke CM04 uitgevoerd en afgesloten:** drie private gesprekken, twee personen in volgorde A/B/A. Onze meetadapter gebruikte eerder één vaste persoon; alleen de bestaande native persoons-/gespreksvelden zijn aangesloten. Drie echte native oorsprong- en antwoordreadbacks bevestigen die binding. Eén native profiel en zijn globale geheugen bleven ongewijzigd; geen toegevoegd isolatiebeleid.

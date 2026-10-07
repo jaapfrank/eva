@@ -15,6 +15,7 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
+import logging
 import math
 import os
 from functools import lru_cache
@@ -96,6 +97,8 @@ def _bounded_recall_query(text: str) -> str:
 
 
 _MAX_RESPONSE_BYTES = 8 * 1024 * 1024
+_LOGGER = logging.getLogger(__name__)
+
 _PROJECTION_VERSION = "hindsight-0.9.1-v1"
 _ANCHOR_TOKEN = re.compile(r"(?u)\b[^\W_][\w-]{5,63}\b")
 _PLANNED_QUERY_MARKER = "Semantische zoekconcepten:"
@@ -1272,7 +1275,15 @@ class HindsightMemoryEngine:
         # first while every score falls below our normal noise floor. Preserve
         # only that best candidate in this case; source, audience and privacy
         # checks below still apply, and the reply model decides whether to use it.
-        best_candidate_id = results[0]["id"] if results else None
+        # An observation without source authority is discarded below. It
+        # cannot occupy the one low-score fallback and suppress an admissible
+        # source fact. All existing scope, time and privacy checks still apply.
+        best_candidate_id = next(
+            (item["id"] for item in results
+             if item.get("type") != "observation"
+             or isinstance(item.get("_eva_source_metadata"), dict)),
+            None,
+        )
 
         selected: list[RecalledFact] = []
         confirmed: list[ConfirmedFact] = []
@@ -1576,6 +1587,35 @@ class HindsightMemoryEngine:
 
         if private_principals != self._private_recall_principals(query):
             return self._empty_presence(query)
+        # Preserve retrieval-versus-selection evidence without copying memory
+        # text, queries, principals, source references or provider diagnostics.
+        try:
+            _LOGGER.info("memory_recall_selection %s", json.dumps({
+                "recall_sha256": canonical_sha256(query.recall_id),
+                "scope_sha256": canonical_sha256({
+                    "tenant": query.tenant_id, "installation": query.installation_id,
+                    "principal": query.principal_id, "audience": query.audience.audience_id,
+                    "scope": query.scope,
+                }),
+                "query_sha256": canonical_sha256(query.query_text),
+                "candidates": [{
+                    "fact_sha256": canonical_sha256("hindsight:" + item["id"]),
+                    "memory_type": (item.get("type") if isinstance(item.get("type"), str) and item.get("type") in
+                                    {"world", "experience", "observation"} else "unknown"),
+                    "final_score": item["scores"]["final"],
+                    "source_metadata_present": isinstance(
+                        item.get("_eva_source_metadata") if item.get("type") == "observation"
+                        else item.get("metadata"), dict),
+                } for item in results],
+                "selected": [canonical_sha256(fact_id) for fact_id in fact_ids],
+                "explicit_exclusions": {
+                    canonical_sha256(fact_id): reason
+                    for fact_id, reason in excluded_reasons.items()
+                },
+            }, separators=(",", ":")))
+        except Exception:
+            # Diagnostics must never change a successful recall or expose errors.
+            pass
         return memory
 
     @staticmethod

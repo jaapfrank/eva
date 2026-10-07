@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-06T20:17:11.137755+00:00",
+  "lastUpdated": "2026-10-07T00:37:45.104985+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T00:22:43.560326+00:00",
+        "checkedAt": "2026-10-07T00:37:45.104985+00:00",
         "deliveries": [
           {
             "title": "P2.1 · Hermes biedt privégeheugen aan de verkeerde persoon aan",
@@ -4069,23 +4069,24 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Hermes-persoonsgrens faalt",
+          "title": "Geheugen · correctie installeren",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "Oorspronkelijke Hermes CM04 afgesloten en onafhankelijk beoordeeld: privégeheugen van A kwam in de modelcontext van B, ondanks juiste persoonsvelden; geen onthulling in het zichtbare antwoord. Verplichte persoonsgrens faalt. Eva1/Eva2 in dezelfde case onbekend; geen winnaar of actieve proef.",
+          "detail": "Bronloze observatie verdringt geen toegelaten herinnering meer. Gerichte controles en review geslaagd; installatie in kern/werker volgt nu.",
           "remaining": "Oorspronkelijke resterende vergelijking en twee menselijke kwaliteitsbeoordelingen; spraak geparkeerd.",
-          "source": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",
+          "source": "eva2/evidence/product/p2-current-execution-diagnosis-20261007.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
           "reviewedAt": "2026-10-07T00:22:43.560326+00:00",
-          "taskId": "P2.1"
+          "taskId": "P2.1",
+          "evidence": "eva2/evidence/product/p2-current-round-decision-20261007.json"
         },
         "next": {
-          "title": "Resterende oorspronkelijke vergelijkingsdekking",
+          "title": "Alleen de aangetoonde selectieoorzaak verbeteren",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Gebruik de aangetoonde Hermes-persoonsgrensfout en eerdere vergeetfout in het bestaande basisbesluit. Alleen resterende werkelijk uitvoerbare oorspronkelijke vergelijking gericht toelaten; geen reparatie/herhaling van gesloten cases, brede matrix of spraakwerk.",
-          "remaining": "Menselijke beoordelingen en nog ontbrekende oorspronkelijke dekking blijven zichtbaar. Eerdere acceptaties en geparkeerde spraak blijven staan.",
-          "source": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json"
+          "detail": "Bestaande geheugenroutes en acceptaties behouden; eerst oorzaak vaststellen, dan de kleinste voldoende correctie met gerichte controle. De vergelijking bewijst nog geen algemene voorsprong.",
+          "remaining": "Oorspronkelijke vergelijkingsdekking en menselijke beoordelingen blijven open; een reparatie bewijst geen vergelijkingswinst.",
+          "source": "eva2/evidence/product/p2-cm12-paired-result-20261005.json"
         },
         "ownerAction": {
           "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
@@ -7031,7 +7032,15 @@
               }
             ]
           }
-        ]
+        ],
+        "roundDisposition": {
+          "recordedAt": "2026-10-07T00:29:13.996624+00:00",
+          "state": "incomplete_no_winner",
+          "fullP2Completed": false,
+          "evidence": "eva2/evidence/product/p2-current-round-decision-20261007.json",
+          "furtherHermesOnlyCM05Started": false,
+          "missingCoverageAndHumanRatingsRemainOpen": true
+        }
       },
       "housemateSummary": {
         "checkedAt": "2026-10-06T09:54:42.358033+00:00",
@@ -19922,7 +19931,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Gebruik de vastgestelde Hermes-vergeetfout en behouden Eva1/Eva2-onbekenden bij het bestaande vergelijkingsbesluit. Alleen een volgende werkelijk uitvoerbare oorspronkelijke vergelijking gericht toelaten; gesloten gevallen niet herhalen en geen brede matrix of spraakwerk.",
+              "nextAction": "Installeer de beoordeelde geheugenselectiecorrectie samen in bestaande kern en werker. Geen herhaling of nieuwe score van gesloten vergelijkingen.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19935,20 +19944,22 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T00:04:10.258006+00:00",
+              "checkedAt": "2026-10-07T00:50:19.879765+00:00",
               "assignment": {
-                "baseCommit": "9293ca0b68ccb76104b250f0891d31a0a4cfd404",
+                "baseCommit": "59e0f3365af6efa39fed7322a73ebd3f63eadf37",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root/p2_eva1_lease_review_20261006"
+                ],
                 "files": [
-                  "/root: private CM03 launcher/admission release, existing dashboard/workboard and Git integration.",
-                  "/root/aide_final_evaluation: protected original projection, independent admission and terminal readback reviews; no production source editing."
+                  "/root: eva2/src/eva/adapters/projection/hindsight.py, existing projection tests and integration state.",
+                  "Independent reviewer: read-only general source/regression/deployment review; no protected original inputs."
                 ],
                 "existing": "CM01–CM12 epoch1 voor Eva1/Eva2 zijn eenmaal uitgevoerd en onafhankelijk beoordeeld waar het bewijs dat toelaat. Verliezen en onbekende uitkomsten blijven behouden; dit voltooit niet de overige deelnemers/epochs/families.",
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Oorspronkelijke Hermes CM04 afgesloten en onafhankelijk beoordeeld: privégeheugen van A kwam in de modelcontext van B, ondanks juiste persoonsvelden; geen onthulling in het zichtbare antwoord. Verplichte persoonsgrens faalt. Eva1/Eva2 in dezelfde case onbekend; geen winnaar of actieve proef.",
+                "currentAction": "Kleine algemene geheugenfout gerepareerd en onafhankelijk beoordeeld: een bronloze observatie verdringt geen toegelaten herinnering meer. Installeer dezelfde correctie in kern/werker en bestaand pakket; oude CM12-oorzaak blijft onbekend.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": [
@@ -19957,7 +19968,7 @@
                   ],
                   "meaning": "Eén oorspronkelijke Hermes-geheugenproef uitgevoerd, onafhankelijk beoordeeld en samen met dashboard gepubliceerd op GitHub commit4d6f9172. Geen productafronding of algemene kwaliteitswinnaar."
                 },
-                "stage": "hermes_cm04_closed_independent_result_available",
+                "stage": "install_memory_selection_correction",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -20378,18 +20389,15 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "classification": "progress",
-                  "startedAt": "2026-10-07T00:07:21.637081+00:00",
+                  "classification": "in_progress",
+                  "startedAt": "2026-10-07T00:26:21.199199+00:00",
                   "previousTurnClassification": "progress",
-                  "previousTurnResult": "eva2/evidence/product/p2-hermes-original-cm03-result-20261007.json",
-                  "previousTurnPublishedCommit": "9293ca0b68ccb76104b250f0891d31a0a4cfd404",
-                  "providerCallsThisTurn": 7,
-                  "result": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",
-                  "resultSha256": "28fd8fbc8c07855eff2b7f4a5a28f486450d1de7b2d8a8f0b86837ca03df7c15",
-                  "review": "eva2/reviews/p2-hermes-original-cm04-result-review-20261007.json",
-                  "reviewSha256": "39a08991aecd179d3b9bb0d4d01688a2f26050f6a51d57e932c851e8137447cc",
+                  "previousTurnResult": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",
+                  "previousTurnPublishedCommit": "59e0f3365af6efa39fed7322a73ebd3f63eadf37",
+                  "providerCallsThisTurn": 0,
                   "developmentCredits": "UNKNOWN",
-                  "publishedSourceCommit": "153b44be9476676e1058a226d06c6d5c50fd7839"
+                  "providerCalls": 0,
+                  "diagnosticToolOperations": 2
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -20793,7 +20801,48 @@
                     "runtimeInstalled": false,
                     "scope": "Reviewed measurement adapter and original CM04 result; no Eva2 product function completed."
                   }
-                }
+                },
+                "nextOriginalNativeEntryMetadata": {
+                  "entry": "hermes:EV003-CM-05:epoch1",
+                  "caseSha256": "928a518791001ba235b1e3ee3fa34f0f70058307f3b643530f29dc2b0358ac86",
+                  "ordinaryTurns": 4,
+                  "actors": [
+                    0,
+                    1,
+                    0,
+                    1
+                  ],
+                  "sessions": [
+                    0,
+                    1,
+                    2,
+                    3
+                  ],
+                  "generations": [
+                    0,
+                    0,
+                    1,
+                    1
+                  ],
+                  "stepOffsetsMilliseconds": [
+                    0,
+                    0,
+                    86400000,
+                    0
+                  ],
+                  "nativeBindingStatus": "unchanged_adapter_no_go",
+                  "existingGaps": [
+                    "three_turn_count_assumption",
+                    "step_clock_offsets_not_accumulated"
+                  ],
+                  "projectionCreated": false,
+                  "reservations": 0,
+                  "resourceStarts": 0,
+                  "providerCalls": 0
+                },
+                "roundDecisionEvidence": "eva2/evidence/product/p2-current-round-decision-20261007.json",
+                "executionDiagnosisEvidence": "eva2/evidence/product/p2-current-execution-diagnosis-20261007.json",
+                "memorySelectionCorrectionEvidence": "eva2/evidence/product/memory-selection-correction-20261007.json"
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
               "latestEvidence": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",

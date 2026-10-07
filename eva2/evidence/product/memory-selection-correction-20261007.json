@@ -1,0 +1,50 @@
+{
+  "contract": "EvaMemorySelectionCorrection/v1",
+  "checkedAt": "2026-10-07T00:50:19.879765+00:00",
+  "status": "reviewed_awaiting_installation",
+  "existingTask": "P2.1",
+  "gap": "An observation without verifiable source metadata occupied the single low-score fallback while being discarded; an admissible lower-scoring source memory was then omitted.",
+  "change": "Ignore only those unverified observations when choosing the existing fallback. Preserve all source, person/audience, privacy, time, score and size gates.",
+  "historicalCm12Cause": "UNKNOWN; original retrieval candidates/filter reasons were not retained. This neutral source regression does not diagnose or rescore CM12.",
+  "bindings": {
+    "source": "eva2/src/eva/adapters/projection/hindsight.py",
+    "sourceSha256": "018f73b771ba0b9cb41a4b0144f8c2b23de12f8d3de62784793d54d2b7e19244",
+    "tests": "eva2/tests/projection/test_hindsight.py",
+    "testsSha256": "80e9792816d204bfd6e7771706e27ec2756aee802b4d8b94b5fc5c44654534ac"
+  },
+  "verification": {
+    "before": "New neutral regression failed: no selected memory instead of admissible source.",
+    "existingModule": {
+      "passed": 78,
+      "seconds": 35.19,
+      "scope": "Selection correction before diagnostic robustness guard"
+    },
+    "finalFocused": {
+      "passed": 3,
+      "seconds": 2.5,
+      "scope": "Neutral fallback regression; trailing invalid type; logger-handler failure"
+    },
+    "diagnostic": {
+      "contentFree": true,
+      "bestEffort": true,
+      "additionalMemoryOrModelCalls": 0
+    }
+  },
+  "review": {
+    "reviewer": "/root/p2_eva1_lease_review_20261006",
+    "source": "GO on exact source/test binding; source-authority/privacy/time/limits unchanged; diagnostic failure cannot discard successful recall.",
+    "plan": "Existing source-only Dockerfile over actual installed core/worker, same UID/GID65532:65532, two compose image changes, same mounts/data/config; existing package source/pin alignment and verifier."
+  },
+  "usage": {
+    "modelCalls": 0,
+    "newOriginalComparisons": 0,
+    "creditCost": null,
+    "developmentCreditCost": null
+  },
+  "limits": [
+    "Not a new completed product task or competitive win.",
+    "No original benchmark replay, fixed criteria or usage guard changed.",
+    "No voice changes."
+  ],
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/memory-selection-fix-20261007"
+}

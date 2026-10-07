@@ -1,0 +1,79 @@
+{
+  "contract": "EvaOriginalComparisonRoundDecision/v1",
+  "recordedAt": "2026-10-07T00:29:13.996624+00:00",
+  "taskId": "P2.1",
+  "decision": "current_round_incomplete_no_winner",
+  "fullTaskCompleted": false,
+  "overallSuperiorityProven": false,
+  "authority": {
+    "protocolLines": [
+      [
+        7,
+        15
+      ],
+      [
+        93,
+        102
+      ]
+    ],
+    "historicalP12Line151AppliedAsFinalRule": false
+  },
+  "independentDecision": {
+    "reviewer": "/root/aide_final_evaluation",
+    "disposition": "GO_CLOSE_CURRENT_ROUND_AS_INCOMPLETE_KEEP_P2_OPEN",
+    "reason": "An additional Hermes-only CM05 cannot provide a matched successful result or absent human assessment, and cannot remove the original CM04 person-context failure."
+  },
+  "participants": {
+    "eva2": "historical_unknown_sdk_usage_blocks_next_admission",
+    "agent_zero": "participant_specific_unknown_usage_guard",
+    "openclaw": "original_clock_binding_no_go",
+    "hermes": "own_usage_complete_original_person_context_gate_failed"
+  },
+  "preserved": {
+    "allOriginalFamiliesCasesEpochs": true,
+    "originalCriteriaAndAcceptances": true,
+    "participantScope": true,
+    "missingCoverage": "UNKNOWN and open",
+    "twoRealHumanRatings": "pending",
+    "originalClosedSamplesRepeated": false,
+    "comparisonSuccessByProductRepair": false
+  },
+  "nextExistingExecutionGap": {
+    "source": "existing XD01/XD02 results",
+    "transition": "discovery to admitted connector tool execution",
+    "known": "Discovery worked; XD02 has a verified then rejected invocation, zero service requests/effects.",
+    "cause": null,
+    "action": "Historical diagnosis closed without replay; current backend verified narrowly. Next explain existing CM12 missing recall selection.",
+    "diagnosisDisposition": "completed_no_new_cause; previous diagnostic preservation repair already installed",
+    "diagnosisEvidence": "eva2/evidence/product/p2-current-execution-diagnosis-20261007.json"
+  },
+  "thisDecisionUsage": {
+    "newModelCalls": 0,
+    "originalInputs": 0,
+    "reservations": 0,
+    "resourcesStarted": 0,
+    "developmentCredits": null
+  },
+  "references": [
+    {
+      "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    {
+      "path": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",
+      "sha256": "28fd8fbc8c07855eff2b7f4a5a28f486450d1de7b2d8a8f0b86837ca03df7c15"
+    },
+    {
+      "path": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
+      "sha256": "3446649b18c30090d6e19759859799893289a265556c93b9522bb1fad84208c0"
+    },
+    {
+      "path": "eva2/evidence/product/p2-xd02-independent-state-20261005.json",
+      "sha256": "1adc87b33ba3d8cdf701f0f7e583354cfbf5ea799084aabf56a7506159b703db"
+    }
+  ]
+}

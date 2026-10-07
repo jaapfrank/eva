@@ -1,0 +1,88 @@
+{
+  "contract": "EvaRetainedExecutionDiagnosis/v1",
+  "recordedAt": "2026-10-07T00:37:45.104985+00:00",
+  "taskId": "P2.1",
+  "historicalXD": {
+    "newCauseEstablished": false,
+    "errorBranch": "gateway result.isError=true; ToolExecutionRejected",
+    "innerCauseRetained": false,
+    "previousDiagnosisReused": true,
+    "previousDiagnosticRepairAlreadyInstalled": true,
+    "originalOutcomesChanged": false
+  },
+  "installedBinding": {
+    "core": "eva2-managed-b-slot3-core",
+    "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+    "adapterSha256": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+    "repositoryAndBothRuntimesMatch": true
+  },
+  "currentBackendCheck": {
+    "privateDirectory": "/home/administrator/project/.eva2-artifacts/current-browser-diagnostic-20261007-437e29d2",
+    "scriptSha256": "2c7545826ef11fbe6b0be124f90768b821131bf846a240c225006116b4539231",
+    "receiptSha256": "33fd52b487e6ec13a50dbeb70366bcf594f6f8d2d6aba943008a962dc454942f",
+    "route": "Installed managed autonomy factory and admitted registry -> existing planner -> execute -> observe",
+    "operations": [
+      {
+        "name": "browser_navigate",
+        "target": "about:blank",
+        "dispatchAccepted": true,
+        "observationVerified": true
+      },
+      {
+        "name": "browser_snapshot",
+        "dispatchAccepted": true,
+        "observationVerified": true
+      }
+    ],
+    "externalStateVerified": false,
+    "ordinaryConversationOrModelRun": false,
+    "privateConversationIngressCreated": false,
+    "originalCaseOrFixtureReused": false,
+    "explicitToolOperations": 2,
+    "allCatalogHTTPReadsCounted": false,
+    "originalSampleOrAuthorityReservation": false
+  },
+  "preparationFailures": [
+    {
+      "phase": "before operations",
+      "errorClass": "AttributeError",
+      "cause": "Operator assumed registration._authority; actual public member is authority.",
+      "pageOperations": 0
+    },
+    {
+      "phase": "before operations",
+      "errorClass": "AssertionError",
+      "cause": "Operator matched generic descriptor name; actual provider_tool_name supplies the native alias.",
+      "pageOperations": 0
+    }
+  ],
+  "independentReview": {
+    "reviewer": "/root/aide_final_evaluation",
+    "disposition": "GO_CURRENT_BACKEND_RECEIPTS_ONLY",
+    "historicRepairOrComparisonWinProven": false
+  },
+  "nextExistingGap": {
+    "source": "eva2/evidence/product/p2-cm12-paired-result-20261005.json",
+    "known": "Required prior context was stored before the later reply, but was not selected/supplied.",
+    "causeEstablished": false,
+    "action": "Read retained technical recall metadata and exact selection source; no hidden-case replay or new function."
+  },
+  "usage": {
+    "newModelCalls": 0,
+    "originalReplays": 0,
+    "productChanges": 0,
+    "developmentCredits": null,
+    "money": null
+  },
+  "references": [
+    {
+      "path": "eva2/evidence/product/p2-xd-rejected-diagnostic-20261005.json",
+      "sha256": "d310f446d648b217a9b7cefd41069da8219d9fcbc56945e9b324cfcc519c85f1"
+    },
+    {
+      "path": "eva2/evidence/product/p2-tool-error-feedback-20261005.json",
+      "sha256": "8702347d2960ec7b3059dd844ca9ec86c98fbedd65337aa5a4cfeda4af2eb00a"
+    }
+  ],
+  "scope": "Diagnostic check of existing installed backend only; no new product completion, actual external service effect, full browser/task success or competitive superiority."
+}

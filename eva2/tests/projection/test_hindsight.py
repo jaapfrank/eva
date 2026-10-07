@@ -1773,3 +1773,76 @@ def test_long_recall_succeeds_with_original_query_and_person_scope_preserved(
     assert {body["query"] for body in requests} == {_bounded_recall_query(v) for v in variants}
     expected_tag = "eva-person-" + hashlib.sha256(PRINCIPAL.encode()).hexdigest()[:32]
     assert all(body["tags"] == [expected_tag] and body["tags_match"] == "all_strict" for body in requests)
+
+
+def test_low_score_fallback_ignores_unproven_observation(hindsight_server, caplog):
+    base_url, state = hindsight_server
+    state.group_recall_response = {"results": [
+        {"id": "unproven-derived", "text": "PRIVATE-DERIVED-CONTENT",
+         "type": "observation", "scores": {"final": 0.9},
+         "mentioned_at": NOW, "source_fact_ids": ["missing-source"]},
+        {"id": "permitted-source", "text": "PRIVATE-TRUSTED-CONTENT",
+         "type": "world", "scores": {"final": 0.001}, "mentioned_at": NOW,
+         "document_id": "trusted-document", "metadata": {
+             "principal_id": PRINCIPAL, "privacy_class": "internal",
+             "trust": "direct_user"}},
+    ]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    with caplog.at_level("INFO", logger="eva.adapters.projection.hindsight"):
+        memory = engine.recall_for_presence_fast(_query())
+    assert [fact.fact_id for fact in memory.confirmed_facts] == [
+        "hindsight:permitted-source"]
+    assert memory.confirmed_facts[0].source_ref == "trusted-document"
+    events = [json.loads(record.message.split(" ", 1)[1])
+              for record in caplog.records
+              if record.message.startswith("memory_recall_selection ")]
+    assert len(events) == 1
+    assert events[0]["selected"] == [canonical_sha256("hindsight:permitted-source")]
+    assert len(events[0]["candidates"]) == 2
+    serialized = json.dumps(events[0])
+    for private_value in ["PRIVATE-DERIVED-CONTENT", "PRIVATE-TRUSTED-CONTENT",
+                          "unproven-derived", "permitted-source",
+                          "trusted-document", PRINCIPAL, _query().query_text]:
+        assert private_value not in serialized
+
+
+def test_recall_diagnostic_handles_trailing_invalid_type(hindsight_server, caplog):
+    base_url, state = hindsight_server
+    state.group_recall_response = {"results": [
+        {"id": "permitted-source", "text": "Trusted memory", "type": "world",
+         "scores": {"final": 0.9}, "mentioned_at": NOW,
+         "document_id": "trusted-document", "metadata": {
+             "principal_id": PRINCIPAL, "privacy_class": "internal",
+             "trust": "direct_user"}},
+        {"id": "trailing-invalid", "text": "Ignored memory", "type": [],
+         "scores": {"final": 0.1}, "mentioned_at": NOW},
+    ]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    query = replace(_query(), maximum_facts=1)
+    with caplog.at_level("INFO", logger="eva.adapters.projection.hindsight"):
+        memory = engine.recall_for_presence_fast(query)
+    assert [fact.fact_id for fact in memory.confirmed_facts] == [
+        "hindsight:permitted-source"]
+    events = [json.loads(record.message.split(" ", 1)[1])
+              for record in caplog.records
+              if record.message.startswith("memory_recall_selection ")]
+    assert events[0]["candidates"][1]["memory_type"] == "unknown"
+
+
+def test_recall_diagnostic_failure_does_not_discard_memory(hindsight_server, monkeypatch, caplog):
+    base_url, state = hindsight_server
+    state.group_recall_response = {"results": [
+        {"id": "permitted-source", "text": "Trusted memory", "type": "world",
+         "scores": {"final": 0.9}, "mentioned_at": NOW,
+         "document_id": "trusted-document", "metadata": {
+             "principal_id": PRINCIPAL, "privacy_class": "internal",
+             "trust": "direct_user"}},
+    ]}
+    def fail_diagnostic(*args, **kwargs):
+        raise RuntimeError("PRIVATE-DIAGNOSTIC-ERROR")
+    monkeypatch.setattr("eva.adapters.projection.hindsight._LOGGER.info", fail_diagnostic)
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    memory = engine.recall_for_presence_fast(_query())
+    assert [fact.fact_id for fact in memory.confirmed_facts] == [
+        "hindsight:permitted-source"]
+    assert "PRIVATE-DIAGNOSTIC-ERROR" not in caplog.text
