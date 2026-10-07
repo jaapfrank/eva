@@ -16612,7 +16612,7 @@
           ]
         }
       ],
-      "nextAction": "P2.1: publieke native OpenClaw-driebeurtenroute onafhankelijk GO (2sessies/dagovergang/16tools/afsluiting,212s), nul echte modelcalls. Nu bestaande oorspronkelijke parent/child-runner aan dezelfde scope+equivalent-afsluiting binden en apart toelaten; originele vragen/budget behouden.",
+      "nextAction": "P2.1: oorspronkelijke runnerkoppeling bouwen. Behoud sealed-FD-invoer, oorspronkelijke ledger/profiel/klok/readbacks; registreer één echte native Node onder dezelfde root-owned scope met de vooraf bekende root-parent. Daarna gerichte nul-modelcontrole en onafhankelijke toelating van uitsluitend ongebruikt CM01-slot.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -20278,7 +20278,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "P2.1: publieke native OpenClaw-driebeurtenroute onafhankelijk GO (2sessies/dagovergang/16tools/afsluiting,212s), nul echte modelcalls. Nu bestaande oorspronkelijke parent/child-runner aan dezelfde scope+equivalent-afsluiting binden en apart toelaten; originele vragen/budget behouden.",
+              "nextAction": "P2.1: oorspronkelijke runnerkoppeling bouwen. Behoud sealed-FD-invoer, oorspronkelijke ledger/profiel/klok/readbacks; registreer één echte native Node onder dezelfde root-owned scope met de vooraf bekende root-parent. Daarna gerichte nul-modelcontrole en onafhankelijke toelating van uitsluitend ongebruikt CM01-slot.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20291,9 +20291,9 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T16:04:43.407535+00:00",
+              "checkedAt": "2026-10-07T16:15:11.064467+00:00",
               "assignment": {
-                "baseCommit": "99e5e120d84224238e90c8f922b1f8123b88c71a",
+                "baseCommit": "864e3ab508f67153c3ab6873e8098169f908cc88",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root"
@@ -20308,13 +20308,13 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte bestaande publieke fixture zonder externe modelcalls; pas na onafhankelijke toelating het ongebruikte oorspronkelijke OpenClaw-CM01-slot. Creditkosten onbekend.",
-                "currentAction": "P2.1: publieke native OpenClaw-driebeurtenroute onafhankelijk GO (2sessies/dagovergang/16tools/afsluiting,212s), nul echte modelcalls. Nu bestaande oorspronkelijke parent/child-runner aan dezelfde scope+equivalent-afsluiting binden en apart toelaten; originele vragen/budget behouden.",
+                "currentAction": "P2.1: oorspronkelijke OpenClaw-CM01 resourcevoorbereiding onafhankelijk toegelaten; Inspect opent vóór native voorbereiding. Invoer nog niet vrijgegeven.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "sourceCommit": "f618e256450ea13298ef4a905641dc623cd02444",
                   "meaning": "Actual calendar correction proved and pushed; private package/status refreshed. Native first reply/16tools/2synthetic SDK rows complete; full original sample not admitted. Confirmed source retirement closes before evaluator readback."
                 },
-                "stage": "openclaw_public_native_scope_independent_go_original_runner_binding_next",
+                "stage": "openclaw_original_resource_preparation_admitted",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -20422,7 +20422,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "P2.1: publieke native OpenClaw-driebeurtenroute onafhankelijk GO (2sessies/dagovergang/16tools/afsluiting,212s), nul echte modelcalls. Nu bestaande oorspronkelijke parent/child-runner aan dezelfde scope+equivalent-afsluiting binden en apart toelaten; originele vragen/budget behouden.",
+                "nextAction": "Bestaande oorspronkelijke resources één keer voorbereiden, daadwerkelijke nul-invoer-readiness afzonderlijk beoordelen en daarna uitsluitend het ongebruikte oorspronkelijke slot starten.",
                 "actualUsage": {
                   "scope": "This CM04 native sample only",
                   "providerAttempts": 7,
@@ -21494,7 +21494,28 @@
                   "nextAction": "Twee echte afzonderlijke kwaliteitsbeoordelingen ontvangen. R1/P2 alleen hervatten als geldige cumulatieve verbruiksregistratie en onafhankelijke toelating binnen vastgelegde voorwaarden beschikbaar zijn. Geen nieuwe set, reset, herhaling of spraakwerk.",
                   "historicalOnly": true,
                   "supersededAt": "2026-10-07T16:02:43.703674+00:00"
-                }
+                },
+                "originalRunnerBindingPlan": {
+                  "existing": "Dormant original root parent/accounting/network tunnel and native child with sealed FDs, immutable input projection, 480s total, shared16attempt/tool/token limits and native session/workspace readbacks. Public3turn route independentlyGO.",
+                  "gap": "Original child lacks native scope; its success/pending/parentACK use sticky literal native_closed. Public test has two Node controllers, original actor has one Node with known root parent.",
+                  "change": "Reuse exact root frozen-census primitive with one pre-bound Node whose parent is the actual root controller; root carrier enters owned scope before native exec and preserves sealed FDs. Child registers before decoding original input. Retain literal native_closed and use equivalent evidence conjunction only with validated scope.",
+                  "files": [
+                    "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+                    "existing private original parent/child preparation",
+                    "existing P2.1 evidence/workboard"
+                  ],
+                  "verification": "One public single-actor kernel/FD/stop probe without native plugin or original input, then original unchanged source/admission readiness. Reuse valid3turn proof; no repeat of entire public conversation.",
+                  "finish": "Existing original parent/child bound to independently reviewed scope and equal ledger, then only separately admitted unused original sample.",
+                  "providerCallsForBinding": 0,
+                  "originalBudgetChanged": false,
+                  "developmentCredits": null
+                },
+                "originalRunnerBindingEvidence": "eva2/evidence/product/p2-openclaw-original-runner-binding-20261007.json",
+                "originalRunnerBindingReview": {
+                  "path": "eva2/reviews/p2-openclaw-original-runner-binding-review-20261007.json",
+                  "sha256": "acb1cfa66464bf025e37a681f8f42ca9b904428dbb01f32d95a7bee162269bce"
+                },
+                "sourcePreparationAdmissionSha256": "918cdd83691a6c7523fa58b6ad7662652f87d0d36306594871ab14f393da9917"
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
               "latestEvidence": "eva2/evidence/product/p2-openclaw-native-tool-observer-correction-20261007.json",

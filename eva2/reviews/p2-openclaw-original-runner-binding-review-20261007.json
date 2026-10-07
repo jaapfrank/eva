@@ -1,0 +1,169 @@
+{
+  "schema": "p2-openclaw-original-runner-binding-review/v1",
+  "date": "2026-10-07",
+  "reviewer": "independent_evaluator",
+  "decision": "GO",
+  "source_decision": "GO",
+  "resource_preparation_decision": "GO",
+  "original_input_release_decision": "NO_GO_PENDING_ACTUAL_READY_REVIEW",
+  "scope": "Exact unused original OpenClaw CM01 epoch1 resource preparation; no execution or final input release.",
+  "entry_id": "openclaw:EV003-CM-01:epoch1",
+  "bindings": {
+    "preparation_directory": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1",
+    "draft": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/parent-cm01-single-actor-admission-draft.private.json",
+      "sha256": "32b81113af3bdd81fb1458d95020924f0d0cd05638339f5b4a45ff1b8ab9de6f",
+      "file_pins": 31,
+      "all_file_pins_verified": true,
+      "admitted": false,
+      "resource_preparation_admitted": false,
+      "readiness_admitted": false
+    },
+    "parent": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/launch-parent-accounted-cm01.private.py",
+      "sha256": "829c53e77b6b65298c4f8e288d6b9092d69105a3e321083e6d0ac9fdfffe76d3"
+    },
+    "child": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/native-openclaw-cm.private.mjs",
+      "sha256": "2b4ab225b52674a03993b24584217ac2e97d8ce81553280535da9211eddbbccb"
+    },
+    "inspect": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/inspect-run-parent-accounted-cm01.private.py",
+      "sha256": "b09b2d09ea7deed7b1ba9443fe7e9358881739f07aeaa4379c8fb0d24e786089"
+    },
+    "process_accounting": {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py",
+      "sha256": "6e07a07ca1b4976ce798a567864e9a139650fe5f2fbbdf892188af7bfa7c26d4"
+    },
+    "native_observer": {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "33286b58e4c05b52d4a239da87319c3aee0e8c6e6b90e1fd56b98f39da6c2284"
+    },
+    "public_report": {
+      "path": "eva2/evidence/product/p2-openclaw-original-runner-binding-20261007.json",
+      "sha256": "e436315f949e4b56f23c3f40a68b5bbd599f299abdb5fa6ae4c31d8192da2a80"
+    },
+    "authority": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+      "sha256": "28ef3624b52851edd152818efdc6d93399b4e0bdb252de9f299ed5f063e57b3c",
+      "historical_rows": 12,
+      "openclaw_rows": 0,
+      "unchanged": true
+    },
+    "projection": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/cm01-epoch1.native-inputs.private.json",
+      "sha256": "2abe017212dfc53c19b91b10eed991172cc55af80a95b3de0ec92cf6d4e4135e",
+      "decoded_during_review": false
+    },
+    "projection_equality": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/projection-contract-technical.private.json",
+      "sha256": "9292921a96eacb7891751e198a4ebac9b832f952ff5a7b83f3011f7263bfdba2"
+    },
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "case_sha256": "8a0dfda44e84e2e4d80fc8aad7856eebad5d96e2b67dc490bedbff06e69b81bd"
+  },
+  "reviewed_controls": {
+    "source_map_exactly_three_release_pins": true,
+    "no_execution_release_or_started_artifact": true,
+    "original_caps": {
+      "provider_attempts": 16,
+      "input_tokens": 1048576,
+      "output_tokens": 19200,
+      "tools": 16,
+      "wall_seconds": 480,
+      "speech": 0,
+      "external_actions": 0
+    },
+    "one_actual_node_bound_before_input_decode": true,
+    "root_parent_identity_outside_scope_bound": true,
+    "sealed_original_three_fds_preserved": true,
+    "uid_gid_1000_clear_groups_nnp_capabilities_zero": true,
+    "scope_nonce_not_actor_environment": true,
+    "scope_generation_and_peer_identity_checked": true,
+    "parent_deadline_and_owner_stop_preserved": true,
+    "native_readbacks_and_cumulative_accounting_preserved": true,
+    "ordinary_cli_and_native_session_memory_route_preserved": true,
+    "literal_native_closed_unchanged": true,
+    "equivalent_settlement_requires_readback_exit_scope_authority_and_global_settlement": true,
+    "successful_parent_result_requires_scope_empty_removed_and_cleanup_errors_empty": true
+  },
+  "resolved_findings": [
+    {
+      "finding": "Bootstrap wait did not observe owner stop.",
+      "resolution": "Final parent checks the same ledger and owner-stop before spawn, throughout bootstrap, and immediately before registration.",
+      "evidence": "single-actor-stop-mismatch-proof/receipt.public.json"
+    },
+    {
+      "finding": "Scope identity mismatch could abort the remaining cleanup.",
+      "resolution": "Final parent retains failure without writes through an unbound scope; its direct owned Popen child is still reaped and independent cleanup continues.",
+      "evidence": "single-actor-stop-mismatch-proof/receipt.public.json"
+    },
+    {
+      "finding": "Initial draft omitted directly used native APIs and executable pins.",
+      "resolution": "Final draft binds 31 verified files, including ordinary CLI/install-root/session/readback APIs, Node, and the existing managed Codex package, launcher and executable."
+    }
+  ],
+  "reused_evidence": [
+    {
+      "path": "eva2/reviews/p2-openclaw-native-scope-bundled-review-20261007.json",
+      "sha256": "ad70af6fb934e371d488d98987b77da4b35145e8ca1582fa6ff2cb83a4dd1e63",
+      "claim": "Previously completed public three-turn native composition; unchanged JS observer reused."
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/single-actor-public-proof/receipt.public.json",
+      "sha256": "67c1bed0e502da27c55355f80f9a6a538079f7e284af9385bfaed39d407aab09",
+      "duration_seconds": 1.4706911210087128,
+      "claim": "Actual single-node identity, sealed FD read/write refusal, positive frozen census, and live-descendant refusal.",
+      "expected_negative_scope_errors": [
+        "ValueError"
+      ],
+      "expected_negative_cleanup_errors": [
+        "ValueError"
+      ],
+      "scope_populated": false,
+      "scope_absent": true
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/single-actor-stop-mismatch-proof/receipt.public.json",
+      "sha256": "c18182df486d51e6dc2a40bbe47e02e4327f10c693a1da035f1148757d5412f0",
+      "bootstrap_stop_seconds": 0.20324481099669356,
+      "claim": "Actual startup owner-stop; mismatched scope untouched, own child reaped, failure retained.",
+      "stop_cleanup_errors": [],
+      "mismatch_cleanup_errors": [
+        "owned_scope_unavailable:AssertionError",
+        "owned_scope_stop_failed:AssertionError",
+        "owned_scope_cleanup_unconfirmed:AssertionError"
+      ]
+    },
+    {
+      "path": "eva2/reviews/p2-openclaw-process-scope-original-condition-review-20261007.json",
+      "sha256": "8479529aa6b2b288e7e4722d0f3f8270f566eb2a425ca9b5f4c342ca46b5d937",
+      "claim": "Original requirement concerns actually started work and holders; no new blanket OS-broker isolation condition."
+    }
+  ],
+  "permitted_next_transition": "Root may finalize only resource-preparation review/admission metadata from the bound draft and start the existing Inspect preparation route. Keep final input admission and execute-once release absent until independent actual-ready review.",
+  "actual_ready_requirements": [
+    "Bind the actual retained process/resources and unchanged source, profile and own auth.",
+    "Verify the one original reservation and exact preservation of prior authority rows.",
+    "Verify zero provider attempts, no input/native context/deadline/release, endpoint restriction and native inability to read authority.",
+    "Bind final admission and release to actual readiness, original projection, exact sources and unchanged caps."
+  ],
+  "limitations": [
+    "No original OpenClaw sample, quality score or provider success is established by this review.",
+    "Single-actor binding evidence is combined with the retained public three-turn proof; no new complete original-runner native execution was performed.",
+    "Native cleanup uncertainty is preserved; equivalent settlement is a separate evidence predicate.",
+    "Broker presence is not a general containment guarantee. Any actually started off-scope work requires its own terminal/source-release evidence.",
+    "Only enumerated source and metadata bindings were reviewed; actual-ready auth freshness and live resource state remain a separate gate."
+  ],
+  "reviewer_activity": {
+    "tests": 0,
+    "actor_starts": 0,
+    "provider_calls": 0,
+    "auth_calls": 0,
+    "original_input_decodes": 0,
+    "authority_mutations": 0,
+    "source_changes": 0
+  },
+  "human_quality": null
+}

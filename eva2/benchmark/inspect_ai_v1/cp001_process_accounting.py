@@ -428,8 +428,9 @@ class RootOwnedNativeProcessScope:
     """Evaluator-owned cgroup census; no inference or workload authority.
 
     The controller lives outside this root-owned, non-delegated cgroup. Actors
-    must enter it before their first exec. Only the two pre-native Node test
-    processes are allowed to survive retirement; every descendant is included.
+    must enter it before their first native exec. Either the two pre-native Node
+    test controllers or one native Node child of this root evaluator is bound;
+    every descendant is included.
     """
 
     def __init__(self, cgroup_path, socket_path, receipt_dir, *, node_sha256,
@@ -452,8 +453,14 @@ class RootOwnedNativeProcessScope:
         self.closed = False
         self._protect_cgroup()
         child = self.allowed.get(self.peer_pid)
-        if len(self.allowed) != 2 or not child or child["parent_pid"] not in self.allowed or any(row["executable_sha256"] != self.node_sha256 for row in self.allowed.values()):
-            raise ValueError("exact root pre-bound Node parent and peer required")
+        self.root_controller = root_binding.get("root_controller")
+        paired = (len(self.allowed) == 2 and self.root_controller is None
+                  and child and child["parent_pid"] in self.allowed)
+        single = (len(self.allowed) == 1 and child
+                  and self.root_controller == self._root_controller_identity()
+                  and child["parent_pid"] == os.getpid())
+        if not (paired or single) or any(row["executable_sha256"] != self.node_sha256 for row in self.allowed.values()):
+            raise ValueError("exact pre-bound Node controllers and root parent required")
         if {pid:self._process_identity(pid) for pid in self.allowed} != self.allowed:
             raise ValueError("root pre-bound native controllers changed")
         if (self.path.parent.stat().st_uid != 0 or
@@ -468,9 +475,20 @@ class RootOwnedNativeProcessScope:
         self.thread = threading.Thread(target=self._serve_scope, daemon=True)
         self.thread.start()
 
+    def _root_controller_identity(self):
+        proc = Path("/proc") / str(os.getpid())
+        raw = (proc / "stat").read_text()
+        fields = raw[raw.rfind(")")+2:].split()
+        if (proc / "cgroup").read_text().strip() == "0::/" + str(self.cgroup.relative_to("/sys/fs/cgroup")):
+            raise ValueError("root controller must remain outside native scope")
+        return {"pid":os.getpid(), "start_ticks":int(fields[19]),
+                "executable_sha256":self.hashlib.sha256((proc / "exe").read_bytes()).hexdigest()}
+
     def _check_deadline(self):
         if self.closed or self.time.monotonic() >= self.deadline:
             raise ValueError("original native scope deadline reached")
+        if self.root_controller is not None and self.root_controller != self._root_controller_identity():
+            raise ValueError("root native controller identity changed")
 
     def _protect_cgroup(self):
         stat = self.cgroup.stat()

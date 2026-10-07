@@ -1,0 +1,83 @@
+{
+  "contract": "EvaP2OriginalRunnerBinding/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "status": "source_review_go_original_resource_preparation_admitted",
+  "priorSourceCheckpoint": "864e3ab508f67153c3ab6873e8098169f908cc88",
+  "preserved": [
+    "original protected CM01 projection unchanged",
+    "Inspect wrapper unchanged",
+    "original persistent authority and unused slot",
+    "original 480 second absolute total deadline",
+    "16 original attempt/tool caps and original token/profile roles",
+    "sealed three descriptors",
+    "same native workspace/session/clock and sticky native_closed predicate"
+  ],
+  "change": "Reuse root frozen census with one pre-bound UID1000 Node child of the exact root controller. Trusted root carrier joins owned cgroup before native exec without replacing inherited FDs. Original child registers before input decode and uses validated equivalent native/state/exit/census settlement.",
+  "publicProof": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/single-actor-public-proof/receipt.public.json",
+    "sha256": "67c1bed0e502da27c55355f80f9a6a538079f7e284af9385bfaed39d407aab09",
+    "elapsedSeconds": 1.4706911210087128,
+    "returncode": 0,
+    "sealedFdRead": true,
+    "sealedFdWriteRefused": true,
+    "singleExactRootParent": true,
+    "frozenPositive": true,
+    "activeDescendantRefused": true,
+    "scopeEmptyRemoved": true,
+    "retainedScopeError": "ValueError: expected negative refusal, not a clean empty-error result"
+  },
+  "sources": {
+    "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/cp001_process_accounting.py": "6e07a07ca1b4976ce798a567864e9a139650fe5f2fbbdf892188af7bfa7c26d4",
+    "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/launch-parent-accounted-cm01.private.py": "829c53e77b6b65298c4f8e288d6b9092d69105a3e321083e6d0ac9fdfffe76d3",
+    "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/native-openclaw-cm.private.mjs": "2b4ab225b52674a03993b24584217ac2e97d8ce81553280535da9211eddbbccb",
+    "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/inspect-run-parent-accounted-cm01.private.py": "b09b2d09ea7deed7b1ba9443fe7e9358881739f07aeaa4379c8fb0d24e786089"
+  },
+  "reusedFullNativeProof": {
+    "evidence": "eva2/evidence/product/p2-openclaw-process-scope-preparation-20261007.json",
+    "review": "eva2/reviews/p2-openclaw-native-scope-bundled-review-20261007.json",
+    "newFullConversation": false
+  },
+  "usage": {
+    "externalInferenceCalls": 0,
+    "protectedInputsDecoded": false,
+    "originalAuthorityOpenedForMutation": false,
+    "developmentCredits": null
+  },
+  "limits": [
+    "No original sample released or executed yet",
+    "Not product function completion or quality win",
+    "Automatic dream scheduler not built"
+  ],
+  "originalAdmissionDraft": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/parent-cm01-single-actor-admission-draft.private.json",
+    "sha256": "32b81113af3bdd81fb1458d95020924f0d0cd05638339f5b4a45ff1b8ab9de6f",
+    "resourcePreparationAdmitted": false,
+    "inputReleaseAdmitted": false
+  },
+  "runtimeImagesChanged": false,
+  "reviewCorrections": {
+    "ownerStop": "Same original stop checked during pre-binding bootstrap; no waiting until 480 second deadline on an owner stop.",
+    "cleanup": "Rejected scope identity recorded; no writing to unbound cgroup, own direct Popen child reaped and independent resource cleanup proceeds.",
+    "nativePins": "29+ explicit ordinary host/readback/Node/Codex source/binary bindings added to original pre-launch and release hash checks.",
+    "targetedProof": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/single-actor-stop-mismatch-proof/receipt.public.json",
+      "sha256": "c18182df486d51e6dc2a40bbe47e02e4327f10c693a1da035f1148757d5412f0",
+      "ownerStopSeconds": 0.20324481099669356,
+      "inferenceCalls": 0,
+      "originalInputsDecoded": false,
+      "mismatchRetained": true
+    }
+  },
+  "review": {
+    "path": "eva2/reviews/p2-openclaw-original-runner-binding-review-20261007.json",
+    "sha256": "acb1cfa66464bf025e37a681f8f42ca9b904428dbb01f32d95a7bee162269bce",
+    "sourceAndResourcePreparationGo": true,
+    "finalInputReleaseGo": false
+  },
+  "originalResourceAdmission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-preparation-20261007-v1/parent-cm01-source-admission.private.json",
+    "sha256": "918cdd83691a6c7523fa58b6ad7662652f87d0d36306594871ab14f393da9917",
+    "inputReleased": false
+  }
+}

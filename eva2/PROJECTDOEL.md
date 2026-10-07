@@ -14,6 +14,15 @@ vergelijking volgt; menselijke beoordelingen blijven afzonderlijk zichtbaar. App
 gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
 
 
+## P2.1 — oorspronkelijke vergelijking aansluiten
+
+De gecontroleerde native OpenClaw-meetroute is aan de oorspronkelijke runner
+gekoppeld. Een gerichte publieke nul-modelproef bevestigt verzegelde invoer,
+de exacte root-parent en detectie/stop van achterblijvende processen. Dit is
+evaluatorkoppeling, geen nieuwe productfunctie of bewezen voorsprong. Afzonderlijke
+onafhankelijke toelating en de oorspronkelijke vergelijkingsproef staan nog open.
+Zie evidence/product/p2-openclaw-original-runner-binding-20261007.json.
+
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 
 Het hervatte app-goal is actief. Wijzigingen aan de aansturing staan in deze

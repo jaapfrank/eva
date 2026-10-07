@@ -15,9 +15,12 @@ De oorspronkelijke cleanup=uncertain blijft staan; de extra native/state-/queue-
 exit-/bevroren-scopebewijzen bevestigen de werkelijk afgeronde uitvoering.
 Dit bewijst de meetroute, geen antwoordkwaliteit of algemene voorsprong.
 
-**Eerstvolgende handeling:** de oorspronkelijke runner en geldige toelating aan
-deze gecontroleerde route binden. De gebundelde onafhankelijke bron-/runtime-/
-publicatiereview is geslaagd. De ongebruikte oorspronkelijke OpenClaw-sample is nog niet gestart.
+**Eerstvolgende handeling:** onafhankelijke toelating van de nu aangesloten
+oorspronkelijke runner. De gerichte nul-modelcontrole bevestigt één native proces
+met dezelfde root-parent, behoud van verzegelde invoerdescriptors en weigering
+van een achterblijvend kindproces. De negatieve weigering blijft als ValueError
+bewaard; de eigen processcope is leeg en verwijderd. De volledige driebeurtenproef
+wordt hergebruikt. De ongebruikte oorspronkelijke OpenClaw-sample is nog niet gestart.
 De eerdere120s-timeout en320s-fout op overgeërfde omgeving blijven bewaard;
 vier gerichte kalendercontroles en de gecorrigeerde native route zijn geslaagd.
 Werkelijke ongeregistreerde externe uitvoering blijft onbekend. Geen nieuwe
