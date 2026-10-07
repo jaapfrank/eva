@@ -1,0 +1,193 @@
+{
+  "contract": "EVA2P2NativeCollectionPreflight/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-07T23:25:29.856509+00:00",
+  "state": "verified_public_native_connection_independent_review_go",
+  "baseCommit": "77700303142ebc0e7929010837282e63d1a3021f",
+  "existing": "Existing ordinary OpenClaw exec_command, pinned native runtime, generic collection fixture, parent accounting and fixed EV003 manifest reused.",
+  "gap": "The parent used the CM16 tool cap for every family; the original XD family requires70. Actual matching Eva2 combinatiework evidence remains missing.",
+  "change": "Bind only an exact SHA256-matched frozen family envelope; branded immutable toolLimit. Default16 retained, native identity deduplication/SDK guard unchanged. Optional public fixture branch only.",
+  "sourceHashes": {
+    "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs": "b2f0ac690d4ab2f91ae19708470367abf6a48b0219e4190141bc0f946e7d6fcc",
+    "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs": "2bc11ddbbe874d3dd922470786f0d10af9d2ae44629d6fe58b77f7040addb6bd",
+    "eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "eva2/benchmark/inspect_ai_v1/cp001_accounting.py": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291"
+  },
+  "focusedVerification": {
+    "passed": 34,
+    "skipped": 4,
+    "failed": 0,
+    "seconds": 0.740237882,
+    "note": "Four optional native cases skipped here; one existing public native composition branch separately executed exactly once."
+  },
+  "nativeFixture": {
+    "decision": "GO_PUBLIC_TECHNICAL_CONNECTION_ONLY",
+    "elapsedSeconds": 183.20515019600862,
+    "physicalFakeCalls": 4,
+    "syntheticUsage": {
+      "input_tokens": 68,
+      "output_tokens": 12,
+      "total_tokens": 80
+    },
+    "syntheticUsageIsRealOrPaid": false,
+    "realProviderOrAuthCalls": 0,
+    "originalInputs": 0,
+    "nativeTurns": 3,
+    "nativeToolDispatches": 16,
+    "ordinaryOfferedTool": "exec_command",
+    "fixtureHttpRequests": 6,
+    "independentlyVerifiedEffects": 1,
+    "listenersClosed": true,
+    "namespacePidsAfterScopeStop": [],
+    "scopePopulatedAfterStop": false,
+    "scopeStopExitCode": 5,
+    "cleanupErrors": [],
+    "native_closed": false,
+    "equivalent_native_settled": true,
+    "physicalTransportExits": 3,
+    "pendingSDK": 0,
+    "pendingTools": 0,
+    "operatorArtifactEntries": 6,
+    "operatorBeforeAfterEqual": true,
+    "originalFamilyLimits": {
+      "family": "cross_domain_actions",
+      "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+      "limits": {
+        "providerAttempts": 72,
+        "providerInputTokens": 4718592,
+        "providerOutputTokens": 86400,
+        "wallSeconds": 840,
+        "toolDispatches": 70,
+        "speechRequests": 0
+      }
+    },
+    "toolLimit": 70,
+    "publicControllerDeadlineSeconds": 480,
+    "publicPerTurnTimeoutSeconds": 120,
+    "live70ToolBoundaryTested": false,
+    "negativeCapEvidence": "separate root-owned focused 70/71 source test; no 17th refusal claimed"
+  },
+  "independentFixtureReadback": {
+    "verified": true,
+    "services": [
+      {
+        "effectCount": 0,
+        "journalSha256": "07decb56c36bdbfbd18eb4d5be0050eb8878291edc4621142d6b70a57f75e77c",
+        "requestCount": 2,
+        "serviceId": "alpha",
+        "snapshotMatchesJournal": true
+      },
+      {
+        "effectCount": 1,
+        "journalSha256": "92208c43ba4b26051727d94f7eb589935ec389bc960d765520a70685f0e47455",
+        "requestCount": 4,
+        "serviceId": "beta",
+        "snapshotMatchesJournal": true
+      }
+    ],
+    "sha256": "2ec721bde98e6fd250e41f581a2d5f99119e996657aed66fc2b9de2d93cdaead"
+  },
+  "receipts": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/terminal-technical.public.json",
+      "sha256": "5e8a33fb1f462544d7245ed2d4273eeb757f0350b15b68c63a11948de07a28c3"
+    },
+    "primary": {
+      "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/ordinary-execution.public.json": "4d31f4e1e605f8a62b0e7151475aab1e60ec603fbacf410b7647fa2c363958d3",
+      "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/retained-native/composition-technical.private.json": "a5a9bde2324586e8905b93ccad4dfcbc2049f362ae36a6188d5f1a74f473c4c7",
+      "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/collection-readback.public.json": "2ec721bde98e6fd250e41f581a2d5f99119e996657aed66fc2b9de2d93cdaead",
+      "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/source-before-execution.public.json": "87b55e8ebccea499e49a9264fb4f5348dac9d106b512cdc8cde91c7d2f43e5b0",
+      "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/actual-network-containment.public.json": "acc86acbe83b06127c88d735f68c57081efc3439cd08bb0e127d7f2d90ea5020"
+    },
+    "sourceFragmentSha256": "39af8bc6bb28552652863018e955624a39b5931f661b83dc911dea6b4bff9c76",
+    "launcherSha256": "507c6dd7250a9fe1dfc79762ba8254fb2f321fe5c99d691129a156676509402f",
+    "nonnativeLogSha256": "2cde319862991afcbbf07c176536003e6bb9023914b9ad920a9a7de4deb5adb5"
+  },
+  "historicalAuthority": {
+    "sha256": "7ac4b5cb16fcde549216ce641a7c310c37977d3edda62f947f8a33a34042ac74",
+    "unchanged": true,
+    "registeredRows": 23,
+    "recordedAttempts": 153,
+    "knownTokenLowerBound": 1762551,
+    "historicalUnknowns": 3,
+    "unknownUsageGuardChanged": false,
+    "originalClosedCaseReplay": false
+  },
+  "comparisonConstraints": {
+    "eva1FixedXdBinding": "Unavailable in the retained pinned participant: no general HTTP/browser/MCP client and private-network execution; availability UNKNOWN, not a product loss. Existing evidence p2-xd01-native-binding-20261005.json retained.",
+    "eva2HistoricalCm04": "Usage cannot be recovered from retained exact SDK evidence; p2-cm04-final-technical-review-20261006.json retained. No estimated zero, ledger reset or automatic renewal.",
+    "additionalActualSampleAdmitted": false,
+    "fullMatrixStarted": false,
+    "fullP2Complete": false,
+    "generalWinner": null
+  },
+  "runtime": {
+    "coreOrWorkerChanged": false,
+    "coreOrWorkerRestarted": false,
+    "newProductFunction": false,
+    "taskStatusesAndAcceptanceUnchanged": true
+  },
+  "usage": {
+    "evaRuntimeModelCalls": 0,
+    "comparatorRealModelCalls": 0,
+    "syntheticRequests": 4,
+    "developmentCredits": null,
+    "realCreditCost": null,
+    "note": "Mock counts/tokens are synthetic plumbing data, not real model consumption or savings. Development credit costs unknown."
+  },
+  "limitations": [
+    "Scripted model choices and a prewritten public client prove tool/network/effect plumbing, not autonomous discovery, code generation, quality or superior Eva.",
+    "Only16 actual native tools dispatched;70/71 rejection is separate focused source evidence, not a70-tool native run.",
+    "Literal native_closed remains false; physical exits, drained queues and root scope show equivalent closure. Nonzero stop acknowledgement5 is retained.",
+    "The existing public480/120 deadlines are plumbing bounds, not XD performance measurements; actual XD manifest wall840 is unchanged.",
+    "No original evaluation inputs, real authentication/provider call, historical authority mutation or new evaluation admission."
+  ],
+  "review": {
+    "path": "eva2/reviews/p2-xd-native-collection-preflight-review-20261008.json",
+    "sha256": "7287d8b044dfdacd006fbe7616cbff211a54b26f0884b1105280933a4c19fba4",
+    "decision": "GO_SOURCE_CHECKPOINT_AND_PUBLIC_TECHNICAL_CONNECTION_ONLY",
+    "reviewedContentBeforeMetadataAppendSha256": "7fe425adf7ab5fc5de5fa237780244399a6e961ed7f9c4b56062deb966b9cad4",
+    "realSampleAdmissionGranted": false
+  },
+  "nextComparisonMetadata": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/next-original-xd-technical.public.json",
+    "sha256": "1d04846b55071aae42232f3865c0e104b37b66c129a77bed0a772dc9f3fdbac6",
+    "decision": "METADATA_ONLY_NOT_ADMITTED",
+    "originalCandidateCase": {
+      "case_id": "EV003-XD-01",
+      "epoch": 1,
+      "family": "cross_domain_actions",
+      "case_sha256": "591ef16c1e1ebd69d25d37bd1c322bf57a819fef02dfb64819c4a6f18b627924",
+      "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+      "current_successor_authority_xd_rows": 0,
+      "eva2_slot_unused": true,
+      "openclaw_slot_unused": true,
+      "same_as_legacy_closed_case": false,
+      "legacy_case_sha256": "739ee2fbb2b8c11a156f32457aeedfe0792c4fbd737c5e412cd50db832cdc658",
+      "new_projection_created": false
+    },
+    "conditionalPartialScope": {
+      "participants": [
+        "eva2",
+        "openclaw"
+      ],
+      "cases": 1,
+      "epochs": 1,
+      "maximum_samples": 2,
+      "per_sample_original_limits": {
+        "providerAttempts": 72,
+        "providerInputTokens": 4718592,
+        "providerOutputTokens": 86400,
+        "wallSeconds": 840,
+        "toolDispatches": 70,
+        "speechRequests": 0
+      },
+      "pair_maximum_provider_attempts": 144,
+      "pair_maximum_tool_dispatches": 140,
+      "automatic_extension": false,
+      "full_EV003_acceptance_or_superiority": false
+    },
+    "newScopeGranted": false,
+    "note": "Evaluator metadata receipt only; no new admission, projection, dataset, original inputs, modelcalls or historical allowance transfer. Appended after the technical source/public-connection review; does not broaden that review."
+  }
+}

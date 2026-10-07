@@ -11,7 +11,7 @@ import { randomUUID, createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { dirname } from 'node:path';
-import { OpenClawProcessLedger, OpenClawAccounting, NATIVE_PINS, installOpenClawAccounting } from '../../benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs';
+import { OpenClawProcessLedger, OpenClawAccounting, NATIVE_PINS, installOpenClawAccounting, bindOriginalFamilyLimits } from '../../benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs';
 
 class FakeLedger {
   constructor(limits=null) {
@@ -91,6 +91,44 @@ await test('public synthetic ledger enforces shared attempts, reserved tokens, u
 const nativeBody = (kind='turn', extra={}) => ({model:'gpt-6-sol',reasoning:{effort:'low'},input:[{role:'user',content:'Public fixture.'}],
   client_metadata:{'x-codex-turn-metadata':JSON.stringify({thread_id:'public-thread',request_kind:kind,...extra})}});
 const observer = ledger => new OpenClawAccounting(ledger, 20, {now:()=>10});
+
+await test('frozen family tool allowance counts both native observations once and stops before the next dispatch', async () => {
+  const plan = new URL('../../benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json', import.meta.url);
+  for (const [family, expected] of [['conversation_memory', 16], ['cross_domain_actions', 70]]) {
+    const binding = bindOriginalFamilyLimits(plan, family);
+    const ledger = new FakeLedger();
+    const o = new OpenClawAccounting(ledger, 20, { now: () => 10, observeTools: true, originalFamilyLimits: binding });
+    let dispatched = 0;
+    for (let i = 0; i < expected; i++) {
+      const call = {callId: 'public-family-' + i, namespace: null, tool: 'exec_command', threadId: 'public-thread', turnId: 'public-turn'};
+      o.nativeToolBefore({toolUseId: call.callId, toolName: call.tool, turnId: call.turnId, rawPayload: {session_id: call.threadId}});
+      await o.dynamicTool(call, async () => { dispatched++; });
+    }
+    assert.equal(o.tools.size, expected);
+    assert.equal(dispatched, expected);
+    assert.throws(() => { o.toolLimit = expected + 1; }, TypeError);
+    assert.throws(() => { binding.limits.toolDispatches = expected + 1; }, TypeError);
+    await assert.rejects(o.dynamicTool({callId: 'public-family-over-cap', namespace: null, tool: 'exec_command', threadId: 'public-thread', turnId: 'public-turn'}, async () => { dispatched++; }), /original tool cap/);
+    assert.equal(dispatched, expected);
+    assert.equal(ledger.stopReason, 'original tool cap');
+  }
+  const legacy = new OpenClawAccounting(new FakeLedger(), 20, { now: () => 10, observeTools: true });
+  assert.equal(legacy.toolLimit, 16);
+});
+
+await test('tool allowance rejects forged or modified original family bindings', () => {
+  const plan = new URL('../../benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json', import.meta.url);
+  assert.throws(() => bindOriginalFamilyLimits(plan, 'public-unadmitted-family'), /original family required/);
+  assert.throws(() => new OpenClawAccounting(new FakeLedger(), 20, {originalFamilyLimits: {family: 'cross_domain_actions', limits: {toolDispatches: 70}}}), /frozen original family binding required/);
+  const directory = mkdtempSync(tmpdir() + '/eva-public-original-family-');
+  const changed = directory + '/plan.json';
+  try {
+    const value = JSON.parse(readFileSync(plan, 'utf8'));
+    value.families.find(row => row.family === 'cross_domain_actions').perSampleLimits.toolDispatches = 71;
+    writeFileSync(changed, JSON.stringify(value));
+    assert.throws(() => bindOriginalFamilyLimits(changed, 'cross_domain_actions'), /original execution plan differs/);
+  } finally { rmSync(directory, {recursive: true, force: true}); }
+});
 
 await test('native operation controls select explicit contact/helper without altering input', () => {
   const o=observer(new FakeLedger());
@@ -848,9 +886,15 @@ await test('public ordinary actor composition binds native calendar, model bodie
   const {a:withPluginInstallRoots,i:resolvePluginInstallRoots}=await import(pathToFileURL(host+'/dist/install-root-context-DEOzYnOP.mjs'));
   assert.equal(process.env.HOME,dirname(operatorState),'native HOME must belong to the existing UID1000 operator');
   return await withPluginInstallRoots(resolvePluginInstallRoots({...process.env,OPENCLAW_STATE_DIR:operatorState}),async()=>{
-  const ledger=new FakeLedger({attempts:16,inputTokens:1048576,outputTokens:19200,pendingUsage:usage});const deadline=process.env.OPENCLAW_ROOT_SCOPE_CONTROL?JSON.parse(process.env.OPENCLAW_ROOT_SCOPE_CONTROL).deadline_monotonic:Number(process.hrtime.bigint())/1e9+120;
+  const collectionFixture=process.env.OPENCLAW_PUBLIC_COLLECTION_FIXTURE==='1';
+  const originalFamilyLimits=collectionFixture?bindOriginalFamilyLimits(new URL('../../benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json',import.meta.url),'cross_domain_actions'):null;
+  const familyCaps=originalFamilyLimits?.limits;
+  const quoteShell=value=>"'"+value.replaceAll("'", "'\"'\"'")+"'";
+  const collectionCommand=[process.execPath,workspace+'/collection-client.public.mjs',
+    workspace+'/collection-client-input.public.json',workspace+'/collection-client-result.public.json'].map(quoteShell).join(' ');
+  const ledger=new FakeLedger({attempts:familyCaps?.providerAttempts??16,inputTokens:familyCaps?.providerInputTokens??1048576,outputTokens:familyCaps?.providerOutputTokens??19200,pendingUsage:usage});const deadline=process.env.OPENCLAW_ROOT_SCOPE_CONTROL?JSON.parse(process.env.OPENCLAW_ROOT_SCOPE_CONTROL).deadline_monotonic:Number(process.hrtime.bigint())/1e9+120;
   const nativeProcessScope=process.env.OPENCLAW_ROOT_SCOPE_CONTROL?await registeredRootScope():null;
-  const o=new OpenClawAccounting(ledger,deadline,{clockFile,privateModelContextDir:contexts,observeTools:true,nativeProcessScope});
+  const o=new OpenClawAccounting(ledger,deadline,{clockFile,privateModelContextDir:contexts,observeTools:true,nativeProcessScope,originalFamilyLimits});
   const publishClock=(generation,offsetMilliseconds)=>{
     const path=clockFile+'.tmp';writeFileSync(path,JSON.stringify({contract:'EvaScenarioCalendar/v1',generation,offsetMilliseconds}),{mode:0o600});renameSync(path,clockFile);
   };
@@ -862,6 +906,7 @@ await test('public ordinary actor composition binds native calendar, model bodie
   const dynamicIdentityCodeMode=['code-mode','code-mode-recovery'].includes(process.env.OPENCLAW_PUBLIC_DYNAMIC_IDENTITY);
   const dynamicIdentityRecovery=process.env.OPENCLAW_PUBLIC_DYNAMIC_IDENTITY==='code-mode-recovery';
   assert.ok(!(failedToolRecovery && dynamicIdentityFixture),'separate public diagnostic hypotheses');
+  assert.ok(!collectionFixture || (!failedToolRecovery && !dynamicIdentityFixture),'separate public collection fixture');
   const publicDynamicIdentity=[];
   if(dynamicIdentityFixture){
     const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -902,7 +947,7 @@ await test('public ordinary actor composition binds native calendar, model bodie
     const output=!toolRequested && tool ? (toolRequested=true,dynamicIdentityCodeMode?
       [{type:'custom_tool_call',id:'public-custom-'+counter,call_id:'public-call-'+counter+'-0',name:tool.name,input:"const t = ALL_TOOLS.find(x => x.name.endsWith('memory_search')); if (!t) throw new Error('public memory search unavailable'); const r = await tools[t.name]({query:'Public absent notebook marker',maxResults:1}); text(r);"},
        ...(dynamicIdentityRecovery?Array.from({length:15},(_,i)=>({type:'function_call',id:'public-command-'+counter+'-'+i,call_id:'public-command-call-'+counter+'-'+i,name:body.tools.find(t=>t.type==='function'&&t.name==='exec_command').name,arguments:JSON.stringify({cmd:'cat MEMORY.md',workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})):[])]:
-      Array.from({length:dynamicIdentityFixture?1:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify(dynamicIdentityFixture?{}:{cmd:failedToolRecovery&&i===15?'exit 127':'cat MEMORY.md',workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})))
+      Array.from({length:dynamicIdentityFixture?1:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify(dynamicIdentityFixture?{}:{cmd:collectionFixture&&i===0?collectionCommand:(failedToolRecovery&&i===15?'exit 127':'cat MEMORY.md'),workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})))
       : [{type:'message',id:'public-message-'+counter,role:'assistant',status:'completed',content:[{type:'output_text',text:'Public fixture reply.',annotations:[]}]}];
     const response={id:responseId,object:'response',created_at:1,status:'completed',model:body.model,output,usage};
     return [{type:'response.created',response:{...response,status:'in_progress',output:[]}},
@@ -952,6 +997,15 @@ await test('public ordinary actor composition binds native calendar, model bodie
     assert.ok(ledger.rows.every(row=>row.status==='completed'));assert.ok(o.calls.every(row=>row.native_model_context));
     assert.ok(toolRequested,'offered native file reader must execute through the ordinary loop');
     assert.equal(o.tools.size,16);assert.equal([...o.tools.values()].filter(row=>row.dispatched).length,16);assert.equal(o.toolCoverage,true);
+    if(collectionFixture){
+      const result=JSON.parse(readFileSync(workspace+'/collection-client-result.public.json','utf8'));
+      const input=JSON.parse(readFileSync(workspace+'/collection-client-input.public.json','utf8'));
+      assert.equal(result.contract,'OpenClawPublicCollectionClient/v1');assert.equal(result.nonce,input.nonce);
+      assert.deepEqual(result.serviceIds,['alpha','beta']);assert.deepEqual(result.statuses,[200,200,200,200,201,200]);
+      assert.equal(result.createdReadbackMatches,true);assert.equal(result.sourceItemsRead,2);assert.equal(o.toolLimit,70);
+      assert.equal(ledger.stopReason,null,'collection execution must preserve ordinary continuation');
+    }
+
     if(failedToolRecovery){
       const failed=[...o.tools.values()].filter(row=>row.native_terminal?.status==='failed');
       assert.equal(failed.length,1);assert.equal(failed[0].native_terminal.exit_code,127);
@@ -971,12 +1025,14 @@ await test('public ordinary actor composition binds native calendar, model bodie
       }
     }
     // The same installed pre-execution observer must reject a 17th identity before a body callback.
+    if(!collectionFixture){
     let deniedBodyCalls=0;assert.throws(()=>{o.nativeToolBefore({toolUseId:'public-cap-denied-17',toolName:'exec_command',rawPayload:{session_id:sessions[1]}});deniedBodyCalls++;},/original tool cap/);
     assert.equal(deniedBodyCalls,0);assert.equal(o.tools.size,16);capRefused=true;
+    }
     close=await o.closeNative(plugin);assert.equal(nativeProcessScope?close.equivalent_native_settled:close.native_closed,true);assert.equal(close.pending_sdk,0);assert.equal(close.pending_tools,0);
   } finally {
     close=await o.closeNative(plugin);hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;
-    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',dynamicIdentityFixture,dynamicIdentityCodeMode,dynamicIdentityRecovery,publicDynamicIdentity,failedToolRecoveryFixture:failedToolRecovery,failedNativeTerminals:[...o.tools.values()].filter(row=>row.native_terminal?.status==='failed').map(row=>row.native_terminal),completedNativeTurns,physicalFakeCalls:physical,syntheticCaps:ledger.limits,syntheticUsagePaidOrRealModelUsage:false,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,equivalent_native_settled:close.equivalent_native_settled,native_process_scope_receipts:close.native_process_scope_receipts,final_native_process_scope_receipt:close.final_native_process_scope_receipt,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
+    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',collectionFixture,originalFamilyLimits,toolLimit:o.toolLimit,dynamicIdentityFixture,dynamicIdentityCodeMode,dynamicIdentityRecovery,publicDynamicIdentity,failedToolRecoveryFixture:failedToolRecovery,failedNativeTerminals:[...o.tools.values()].filter(row=>row.native_terminal?.status==='failed').map(row=>row.native_terminal),completedNativeTurns,physicalFakeCalls:physical,syntheticCaps:ledger.limits,syntheticUsagePaidOrRealModelUsage:false,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:collectionFixture?'70/71 boundary covered by separate existing focused test; no live 17th refusal claimed':'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,equivalent_native_settled:close.equivalent_native_settled,native_process_scope_receipts:close.native_process_scope_receipts,final_native_process_scope_receipt:close.final_native_process_scope_receipt,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
   }
   });
 });

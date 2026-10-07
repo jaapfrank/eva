@@ -12,6 +12,21 @@ import { installScenarioCalendar } from './ev003_node_calendar.mjs';
 const KEY = Symbol.for('eva.cp001.openclaw.accounting');
 const MAX_FRAME = 65536;
 const MAX_NATIVE_BODY = 33554432; // The installed native proxy's existing bound.
+export const ORIGINAL_EXECUTION_PLAN_SHA256 = '6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2';
+const originalFamilyBindings = new WeakSet();
+/** Read only the existing frozen envelope; this grants no native/provider admission. */
+export function bindOriginalFamilyLimits(planPath, family) {
+  const bytes = readFileSync(planPath);
+  if (createHash('sha256').update(bytes).digest('hex') !== ORIGINAL_EXECUTION_PLAN_SHA256) {
+    throw new Error('original execution plan differs');
+  }
+  const matches = JSON.parse(bytes).families.filter(row => row.family === family);
+  if (matches.length !== 1) throw new Error('original family required');
+  const binding = Object.freeze({ family, planSha256: ORIGINAL_EXECUTION_PLAN_SHA256,
+    limits: Object.freeze({ ...matches[0].perSampleLimits }) });
+  originalFamilyBindings.add(binding);
+  return binding;
+}
 export const NATIVE_PINS = Object.freeze({
   'client-Cs08OXVQ.mjs': 'f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da',
   'inference-proxy-b-aJMSxm.mjs': 'eb514a3aba831f47742be8e23db369280ebd020da27b7c52d1e8029066dd9b1d',
@@ -179,8 +194,13 @@ export class OpenClawProcessLedger {
 
 /** Observes original Responses bytes, never transcript/model-catalog/rate-limit summaries. */
 export class OpenClawAccounting {
-  constructor(ledger, deadline, { now = monotonic, save = () => {}, clockFile = null, privateModelContextDir = null, observeTools = false, nativeProcessScope = null } = {}) {
+  constructor(ledger, deadline, { now = monotonic, save = () => {}, clockFile = null, privateModelContextDir = null, observeTools = false, nativeProcessScope = null, originalFamilyLimits = null } = {}) {
     if (!Number.isFinite(deadline)) throw new Error('original absolute deadline required');
+    if (originalFamilyLimits !== null && !originalFamilyBindings.has(originalFamilyLimits)) {
+      throw new Error('frozen original family binding required');
+    }
+    Object.defineProperty(this, 'toolLimit', { value: originalFamilyLimits?.limits.toolDispatches ?? 16, enumerable: true });
+    Object.defineProperty(this, 'originalFamilyLimits', { value: originalFamilyLimits, enumerable: true });
     this.ledger = ledger; this.deadline = deadline; this.now = now; this.save = save;
     this.calls = []; this.active = new Set(); this.wsAttempts = new WeakMap();
     this.clockFile = clockFile; this.scenarioReadbacks = []; this.previousScenario = null; this.nativeCompletedResponses = new Map();
@@ -440,7 +460,7 @@ export class OpenClawAccounting {
           || (turnId && row.turn_id_sha256 && row.turn_id_sha256 !== digest(turnId))) throw new Error('native tool identity changed');
       return row;
     }
-    if ([...this.tools.values()].filter(row => row.status !== 'cancelled').length >= 16) {
+    if ([...this.tools.values()].filter(row => row.status !== 'cancelled').length >= this.toolLimit) {
       this.ledger.stop('original tool cap'); throw new Error('original tool cap');
     }
     row = { tool_id_sha256: digest(id), name_sha256: digest(name), thread_id: threadId ?? null,

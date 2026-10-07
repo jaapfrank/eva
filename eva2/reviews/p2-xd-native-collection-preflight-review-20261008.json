@@ -1,0 +1,202 @@
+{
+  "contract": "P2OpenClawPublicCollectionIndependentReview/v1",
+  "recordedAt": "2026-10-07T23:25:56.778274+00:00",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "decision": "GO_SOURCE_CHECKPOINT_AND_PUBLIC_TECHNICAL_CONNECTION_ONLY",
+  "comparisonBaseCommit": "77700303142ebc0e7929010837282e63d1a3021f",
+  "materialFindings": [],
+  "bindings": {
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "b2f0ac690d4ab2f91ae19708470367abf6a48b0219e4190141bc0f946e7d6fcc"
+    },
+    "test": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "2bc11ddbbe874d3dd922470786f0d10af9d2ae44629d6fe58b77f7040addb6bd"
+    },
+    "originalPlan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "fragmentManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/fragment-manifest.public.json",
+      "sha256": "2af0564d8a538df3266036d8d4293987f852576970d4e256fe9abb0010931b20"
+    },
+    "fragment": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/collection-fixture-test.fragment.patch",
+      "sha256": "39af8bc6bb28552652863018e955624a39b5931f661b83dc911dea6b4bff9c76"
+    },
+    "launcher": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/run-public-collection-composition.private.py",
+      "sha256": "507c6dd7250a9fe1dfc79762ba8254fb2f321fe5c99d691129a156676509402f"
+    },
+    "fixturesHelper": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/public-collection-fixtures.private.py",
+      "sha256": "d5c883e9acf6a4b961a573917f258c528c1878aef90db3841e3f0242394d5f4d"
+    },
+    "collectionTransport": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/ev003_collection_fixture.private.py",
+      "sha256": "863d1356aa1a94f5043e33f6bd250b1219dce58040e8cf30a76847329946d158"
+    },
+    "publicClient": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/collection-client.public.mjs",
+      "sha256": "56066bbc3e9dd8d123e2759d6d54e6e42ba216c3c87141ca1df2d2570a05dbf5"
+    },
+    "sourceBeforeExecution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/source-before-execution.public.json",
+      "sha256": "87b55e8ebccea499e49a9264fb4f5348dac9d106b512cdc8cde91c7d2f43e5b0"
+    },
+    "actualNetworkContainment": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/actual-network-containment.public.json",
+      "sha256": "acc86acbe83b06127c88d735f68c57081efc3439cd08bb0e127d7f2d90ea5020"
+    },
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/terminal-technical.public.json",
+      "sha256": "5e8a33fb1f462544d7245ed2d4273eeb757f0350b15b68c63a11948de07a28c3"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/ordinary-execution.public.json",
+      "sha256": "4d31f4e1e605f8a62b0e7151475aab1e60ec603fbacf410b7647fa2c363958d3"
+    },
+    "nativeComposition": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/retained-native/composition-technical.private.json",
+      "sha256": "a5a9bde2324586e8905b93ccad4dfcbc2049f362ae36a6188d5f1a74f473c4c7"
+    },
+    "collectionReadback": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-collection-fixture-20261008/collection-readback.public.json",
+      "sha256": "2ec721bde98e6fd250e41f581a2d5f99119e996657aed66fc2b9de2d93cdaead"
+    },
+    "focusedChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-xd-admission-preflight-20261008/parent-accounting-with-collection-tests.log",
+      "sha256": "2cde319862991afcbbf07c176536003e6bb9023914b9ad920a9a7de4deb5adb5"
+    },
+    "publicConcept": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-xd-native-collection-preflight-20261008.json",
+      "sha256": "7fe425adf7ab5fc5de5fa237780244399a6e961ed7f9c4b56062deb966b9cad4"
+    }
+  },
+  "sourceReview": {
+    "originalManifestBytesUnchanged": true,
+    "legacyConversationMemoryToolLimit": 16,
+    "crossDomainOriginalLimits": {
+      "providerAttempts": 72,
+      "providerInputTokens": 4718592,
+      "providerOutputTokens": 86400,
+      "wallSeconds": 840,
+      "toolDispatches": 70,
+      "speechRequests": 0
+    },
+    "capBinding": "Only exact SHA256 frozen plan may create a module-owned frozen family binding; binding and observer limit are immutable.",
+    "unchanged": "Physical SDK dispatch/usage/UNKNOWN guards, native tool identity deduplication and pre-execution deadline/stop guards.",
+    "familyBindingIsSampleAdmission": false,
+    "negativeCapScope": "Focused fake checks verify CM16/17 and XD70/71 with no over-cap body entry; live fixture dispatches16 and claims neither live70/71 nor17 refusal."
+  },
+  "focusedVerification": {
+    "passed": 34,
+    "skipped": 4,
+    "failed": 0,
+    "durationMilliseconds": 740.237882,
+    "executedByRoot": true,
+    "reviewerRepeatedTests": false
+  },
+  "actualPublicComposition": {
+    "rootExecutionHandle": 89026,
+    "exitCode": 0,
+    "elapsedSeconds": 183.20515019600862,
+    "timedOut": false,
+    "nativeTurns": 3,
+    "nativeToolDispatches": 16,
+    "toolCoverage": true,
+    "ordinaryRoute": "Installed ordinary agentCliCommand, own native harness/plugin, offered exec_command; no framework replacement.",
+    "effectScope": "A fixed mock Responses tool request selects a fixed public Node HTTP client. This proves transport/tool execution and durable effect readback, not autonomous service discovery or task reasoning.",
+    "services": [
+      {
+        "effectCount": 0,
+        "journalSha256": "07decb56c36bdbfbd18eb4d5be0050eb8878291edc4621142d6b70a57f75e77c",
+        "requestCount": 2,
+        "serviceId": "alpha",
+        "snapshotMatchesJournal": true
+      },
+      {
+        "effectCount": 1,
+        "journalSha256": "92208c43ba4b26051727d94f7eb589935ec389bc960d765520a70685f0e47455",
+        "requestCount": 4,
+        "serviceId": "beta",
+        "snapshotMatchesJournal": true
+      }
+    ],
+    "requests": 6,
+    "verifiedEffects": 1,
+    "journalVerification": "Alpha remains unchanged; beta adds exactly one revision1 note from both public source items; created native client result exactly matches independent replay of authenticated journals.",
+    "physicalFakeResponses": 4,
+    "syntheticUsage": {
+      "input_tokens": 68,
+      "output_tokens": 12,
+      "total_tokens": 80
+    },
+    "realOrPaidModelUsageMeasured": false,
+    "realProviderOrAuthCalls": 0,
+    "originalInputs": 0,
+    "publicControllerDeadlineSeconds": 480,
+    "publicPerTurnTimeoutSeconds": 120,
+    "thesePublicDeadlinesChangeOriginalBenchmarkLimits": false,
+    "networkContainment": "Actual bound Node PID/start-time identities in a network namespace distinct from host, only loopback/no IPv4 routes; actual upstream HTTP/WS intercepted by existing fake hooks."
+  },
+  "closure": {
+    "native_closed": false,
+    "equivalent_native_settled": true,
+    "physicalTransportsExited": 3,
+    "nativeRetirementReceipts": 3,
+    "finalFrozenScopeNoWorkload": true,
+    "actualAliasQueuesFlushed": 6,
+    "pendingSDK": 0,
+    "pendingTools": 0,
+    "fixtureListenersThreadsAndDescriptorsClosed": true,
+    "namespacePidsAfterScopeStop": [],
+    "scopePopulatedAfterStop": false,
+    "scopeStopExitCode": 5,
+    "scopeStopExitCodeRewrittenAsSuccessZero": false,
+    "cleanupErrors": [],
+    "basis": "Independent frozen-scope and final empty-namespace evidence proves physical closure; does not relabel native canonical closed=false or systemctl exit5."
+  },
+  "preservation": {
+    "operatorEnumeratedArtifactEntries": 6,
+    "operatorEnumeratedHashesBeforeAfterEqual": true,
+    "fullOperatorHomeEqualityClaim": false,
+    "sameHistoricalAuthorityPath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sameHistoricalAuthoritySha256": "7ac4b5cb16fcde549216ce641a7c310c37977d3edda62f947f8a33a34042ac74",
+    "authorityMutatedOrReservedByFixture": false,
+    "retainedNativeFilesHashVerified": 177,
+    "protectedOriginalQueriesAnswersOrOracleRead": false
+  },
+  "publicationLimits": {
+    "originalSampleAdmissionGranted": false,
+    "originalBenchmarkExecuted": false,
+    "closedOriginalCasesReplayed": false,
+    "qualitySuperiorityEfficiencyOrProductCompletionClaim": false,
+    "validClaim": "Source guard binding and the public fixed two-service native technical connection with independent effects and closure only.",
+    "mockUsageIsRuntimeComparisonEvidence": false,
+    "futureOriginalAdmission": "Not granted by this preparation receipt; original family/case/accounting/controls remain governed by existing admission route."
+  },
+  "reviewerActions": {
+    "modelCalls": 0,
+    "providerCalls": 0,
+    "nativeRuns": 0,
+    "tests": 0,
+    "sourceEdits": 0,
+    "writtenFiles": 1
+  },
+  "publicConceptReview": {
+    "decision": "GO_PUBLICATION_WITH_STATED_TECHNICAL_LIMITS",
+    "reviewedBeforeRootReviewMetadataAppendSha256": "7fe425adf7ab5fc5de5fa237780244399a6e961ed7f9c4b56062deb966b9cad4",
+    "numericHashClosureAndJournalFieldsMatchRetainedEvidence": true,
+    "mockChoicesAndPrewrittenPublicClientExplicit": true,
+    "originalSampleAdmissionGranted": false,
+    "prospectiveSuccessorXD01AdmissionGranted": false,
+    "legacyClosedXDCaseReopened": false,
+    "existingEva2UnknownGuardPreserved": true,
+    "historicalAvailabilityStatements": "Referenced retained evidence; no new audit or unavailable-participant score inferred.",
+    "canonicalNativeClosedFalseAndStopExit5Preserved": true,
+    "realUsageAutonomyQualitySuperiorityAndProductCompletionNotClaimed": true
+  }
+}

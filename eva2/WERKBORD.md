@@ -1,3 +1,31 @@
+## P2.1 actueel 8 oktober — één native tweedienstaansluiting gecontroleerd
+
+De bestaande OpenClaw-uitvoerder kan via haar gewone aangeboden exec_command
+twee lokale dummy-diensten bereiken, één toegelaten wijziging uitvoeren en die
+onafhankelijk teruglezen. Eén modelvrije proef: 3 native beurten,16 tools,
+6 HTTP-verzoeken,1 journalbewezen effect.34 gerichte controles en gebundelde
+onafhankelijke review GO. Processen/listeners daadwerkelijk gesloten; de letterlijke
+native_closed=false en stopcode5 blijven naast equivalent_native_settled=true bewaard.
+
+Alleen het onjuiste vaste CM16-toolplafond in de benchmarkadapter is gericht
+gecorrigeerd: de bestaande ongewijzigde familielimieten worden exact uit het
+bevroren manifest gebonden. Geen wijziging/herstart van Eva-kern of werker.
+De gescripte modelkeuze en vaste publieke client bewijzen aansluiting, geen
+zelfstandige taakkeuze, antwoordkwaliteit, efficiëntie of Eva2-voorsprong.
+Nul echte model-/authcalls;80 uitsluitend synthetische tokens. Ontwikkelcredits onbekend.
+48 kleine taken/39 afgerond en oorspronkelijke acceptaties blijven onveranderd.
+
+Een ongebruikte oorspronkelijke successor-combinatiecase is beschikbaar voor een
+gedeeltelijk Eva2/OpenClaw-paar. De historische Eva2-CM04-usage is niet te reconstrueren;
+de oude UNKNOWN-guard/ledger wordt niet gewist of opnieuw gebruikt. Voor die ene
+aanvullende proef is afzonderlijke prospectieve toelating nodig: één epoch,
+zelfde criteria/modelrollen en originele per-samplelimieten72 SDK/70 tools.
+Geen brede matrix of herhaling van een gesloten legacycase. De vastgelegde
+Eva1-XD-route is niet passend beschikbaar; dat is UNKNOWN, geen productverlies.
+P2.1/volledige zelfstandigheid, menselijke kwaliteit en gezinsacceptatie blijven open.
+Bewijs: evidence/product/p2-xd-native-collection-preflight-20261008.json.
+Review: reviews/p2-xd-native-collection-preflight-review-20261008.json.
+
 ## Actueel 8 oktober — dezelfde ervaring later terughalen: beide tekort
 
 | Oorspronkelijke CM08 | Ontvangen | Feitelijk correct | Latere ervaring | Modelaanvragen | Tokens |
