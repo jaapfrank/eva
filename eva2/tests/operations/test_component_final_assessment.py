@@ -263,3 +263,24 @@ def test_status_and_stop_available_while_publisher_is_running(tmp_path,package):
         state[0]="cancelled";release.set()
         wait(q,review,"cancelled")
         assert not app.calls
+
+
+def test_transient_readiness_read_does_not_consume_or_repeat_assessment(tmp_path, package):
+    state, invocations = ["unavailable"], []
+    def ready(task):
+        if state[0] == "unavailable":
+            raise RuntimeError("core restarting")
+        return state[0]
+    def assessor(*args):
+        invocations.append(args)
+        return {"decision": "reject", "public": {"decision": "reject"}}
+    with queue(tmp_path, package, ready=ready, assessor=assessor) as (q, app, _):
+        state[0] = "waiting"
+        review = q.request(package, request_id=REQUEST, task_id=TASK, scope_sha256=SCOPE)["review_id"]
+        state[0] = "unavailable"
+        wait(q, review, "waiting")
+        time.sleep(.6)
+        assert not invocations and not app.calls
+        state[0] = "ready"
+        wait(q, review, "rejected")
+        assert len(invocations) == 1 and not app.calls

@@ -1,0 +1,85 @@
+{
+  "contract": "EvaRetainedComponentPackageResumeReview/v1",
+  "reviewedAt": "2026-10-07",
+  "task": "L3.6",
+  "decision": "GO_SOURCE_AND_BOUNDED_RECOVERY_PLAN",
+  "scope": "Bounded read-only review of document schema limit, same-execution readiness and recovery of the same falsely cancelled pre-dispatch final-assessment job. No candidate modification or final assessment.",
+  "source": [
+    {
+      "path": "eva2/tools/provision_workspace_provider.py",
+      "sha256": "8bf8de91a48742bab047faf961a6eb6f798e41ba1c6fcabafe9088729e47e682"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_application_runtime.py",
+      "sha256": "c8dcb964133f5683132e43912f81e7b029116e86732c74b787c54d3ed532f015"
+    }
+  ],
+  "focusedTestBindings": [
+    {
+      "path": "eva2/tests/operations/test_component_resume_readiness.py",
+      "sha256": "31aec8c29a232b39e71bc7c6829c3fccb9b9931fe3382402c5e50cc4dafbbe96"
+    },
+    {
+      "path": "eva2/tests/operations/test_provision_workspace_provider.py",
+      "sha256": "9639c5dd905662362717fae89c8d95f3da2ef4c4308f30d8aabad405e3040b52"
+    }
+  ],
+  "technicalEvidence": {
+    "path": "eva2/evidence/product/l3-retained-package-transition-20261007.json",
+    "sha256": "cfb4a82de47cfc7134e3b13c9996705da2f935d5fc0e1fc9fa912b5dc1dc3bf1",
+    "reportedFocusedTestsPassed": 35,
+    "testLogSha256": "cacf93c8745de01317a204361e1c095bfc2642d511cad491c2034d6c8507de0a",
+    "actualPostgresReadiness": "waiting",
+    "originalAmbiguousTaskPreserved": true,
+    "documentCharacters": 83068,
+    "documentUtf8Bytes": 83098,
+    "oldSchemaRejected": true,
+    "newSchemaAccepted": true,
+    "overLimitRejected": true,
+    "installed": false
+  },
+  "findings": {
+    "materialBlockers": [],
+    "documentLimit": "Only save_workspace_document.content.maxLength changes from 12000 to 1048576 characters. Path scope, required keys, additional-property refusal, execute/observe bindings and independent content readback remain unchanged. This is a character limit, not a guarantee that every escaped request fits all transport byte limits.",
+    "authority": "Readiness follows parent_task_id and generation+1 only when execution_id, source, source_ingress_sha256, grant, owner_principal_id, principal_binding_id, audience and episode_id match the original. Existing durable resume admission separately preserves the original task and grants; no authorization, model or execution criteria are changed.",
+    "statusAndStop": "Failed, ambiguous and needs_help states wait. Only a valid succeeded/verified terminal continuation becomes ready. Explicit stop on the selected chain cancels; cycles and multiple matching successors refuse readiness. Global active leases and advisory locks still defer ready.",
+    "responsePrivacy": "Core readiness emits only state. No task content, source text, provider material or protected assessment data is returned.",
+    "unchangedDelivery": "Existing final-assessment/application queue and release binding remain. Source GO does not attest source installation or authorize a duplicate final assessment/application."
+  },
+  "recovery": {
+    "planPath": "/home/administrator/project/.eva2-artifacts/l3-context-development-diagnostic-20261007/exact-final-recovery-plan.json",
+    "planSha256": "cf23c6a35e8fa5bbafe8c874ab02bf4b392c980566a70726068eb239ce5f5d5a",
+    "cancelledSnapshotPath": "/home/administrator/project/.eva2-artifacts/l3-context-development-diagnostic-20261007/cancelled-final-job-before-recovery.private.json",
+    "cancelledSnapshotSha256": "b2364187898daefa70ae8d4b6e0377699851f02d178f27ea3e806ec8c0ca22f1",
+    "reviewId": "0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a",
+    "requestId": "fe7da6d349c0d8694c748dabde0cbc3c7a0f69df57e88889468069549e667d63",
+    "taskId": "work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b",
+    "scopeSha256": "27fdd828734f6792cacfb658e63dcaa5dbfc590eeb6e2b871bf820294a59dd72",
+    "protocolSha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+    "packageSha256": "8b97f8ab2f024b8f5dc3d385a7bde14d8efc24e433d20af6b552db26208ba9ce",
+    "candidateSha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+    "actualJobDirectoryEntriesAtReview": [
+      "package.json"
+    ],
+    "actualPackageRawSha256": "8b97f8ab2f024b8f5dc3d385a7bde14d8efc24e433d20af6b552db26208ba9ce",
+    "noIsolatedFinalOrAnswerReportPresent": true,
+    "stateBefore": "cancelled",
+    "reasonBefore": "originating_task_stopped",
+    "plannedState": "waiting",
+    "authorizedPlan": "Stop the existing host service, recheck waiting with corrected bound readiness and no explicit stop, then restore only this same pre-dispatch job to waiting while preserving the cancelled snapshot and recovery provenance. Retain exact identifiers, package and protocol. Resume retained PREPARE6 through the existing revise_digital/resume route; no new request, evaluation, task-state rewrite or reset.",
+    "recoveryExecutedByReviewer": false
+  },
+  "limitations": {
+    "reviewerProviderCalls": 0,
+    "reviewerTestsOrCandidateMeasurements": 0,
+    "protectedFinalDataRead": false,
+    "candidateModified": false,
+    "hostFilesChanged": false,
+    "finalQualityApproved": false,
+    "candidateInstalledAttested": false,
+    "fullL36OrL37Completed": false,
+    "semanticGainOrAutonomousAideSquaredAttested": false,
+    "credits": "UNKNOWN"
+  },
+  "conclusion": "GO for the exact source delta and stated same-job pre-dispatch recovery conditions. Failed work remains waiting for a valid authorized continuation; genuine stop and existing application locks remain effective. Final assessment, installed-delivery verification and quality approval remain separate."
+}

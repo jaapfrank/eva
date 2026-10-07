@@ -1,3 +1,34 @@
+## Actueel 7 oktober — volledige documentovergang geïnstalleerd, exact werk hervat
+
+De algemene documentroute en onderliggende providerprojectie laten het echte
+83.068-tekens pakket nu toe. Volledige voorbereiding gecontroleerd op de werkelijk
+geïnstalleerde kern/werker, met dezelfde inhoud voor onafhankelijke teruglezing.
+Kern/werker zijn gezond; de bestaande eindhost bewaart dezelfde aanvraag/pakket/
+criteria en wacht op echte taakafronding. Het onterechte annuleren en een tijdelijke
+readinessfout zijn gecorrigeerd; eerdere staten en verbruik blijven zichtbaar.
+Eva hervat alleen PREPARE6-opslag/afronding. Ontwikkel7/10→10/10 is nog geen finale
+kwaliteitsgoedkeuring; kandidaat B is nog niet geïnstalleerd. L3.6 blijft open.
+
+## Actueel 7 oktober — eigen kwaliteitswinnaar bewaard, opslagovergang herstellen
+
+Eva maakte zelf kandidaat B: 7/10→10/10 relevante taakverwijzingen, 0 harde fouten.
+Onafhankelijke bronreview GO; dit is nog geen eindkwaliteitsgoedkeuring.
+Het voorbereide pakket en alle eerdere stappen bestaan. De documentroute weigert
+het pakket (83.068 tekens) bij haar 12.000-tekenlimiet; de eindhost annuleerde
+daardoor de nog niet uitgevoerde beoordeling. Gerichte correctie is gebouwd en
+gecontroleerd: bestaande algemene documentgrens hergebruiken en getypeerde
+taakhervatting herkennen. Alleen bewaarde opslag/afronding hervatten; geen nieuwe
+kandidaat of proef. L3.6 blijft open tot echte eindbeslissing/toepassing.
+
+## Actueel 7 oktober — echte Eva-kandidaat voor bewezen taakherkenning
+
+Onafhankelijke publieke diagnose: 7/10 benodigde taakverwijzingen, 0 harde fouten.
+De oorspronkelijke gevallen blijven 5/5 en bytegelijk. Originele plus diagnosegevallen
+zijn vooraf bevroren onder dezelfde scorer/criteria; de aparte eindset blijft
+ongewijzigd en ongebruikt. Eva maakt nu zelf één tweede primaire kandidaat via gewone
+chat en bestaande gedelegeerde uitvoering: work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b.
+Er is nog geen gekozen winnaar, kwaliteitsvoordeel of toepassing. L3.6 blijft open.
+
 ## Actueel 7 oktober — kwaliteitstekort vóór volgende kandidaat
 
 De vorige beurt leverde de geïnstalleerde afrondingscorrectie en onafhankelijke GO.

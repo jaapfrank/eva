@@ -1,0 +1,137 @@
+{
+  "contract": "EvaL3ContextCandidateSourceReview/v1",
+  "reviewedAt": "2026-10-07",
+  "task": "L3.6/L3.7",
+  "decision": "GO_SOURCE_ONLY",
+  "scope": "Independent bounded source review of frozen Eva-produced candidate B and retained public development provenance; no optimization feedback, new measurements or final assessment.",
+  "candidate": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-context-development-diagnostic-20261007/candidate-b.py",
+    "sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+    "bytes": 36558,
+    "baselineSourcePath": "eva2/src/eva/adapters/postgres/delegated_work_actions.py",
+    "baselineSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+    "baselineBytes": 35517,
+    "onlyActiveContextAstChanged": true,
+    "newDependency": false
+  },
+  "ordinaryProvenance": {
+    "workId": "work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b",
+    "diagnosisPath": "/home/administrator/project/.eva2-artifacts/l3-context-development-diagnostic-20261007/ordinary-task-diagnosis.private.json",
+    "diagnosisSha256AtReview": "928fe7f34f38f8ab0fb702e0b621bebfdb4e078c38a64ee81bb451c4df4ce4bb",
+    "storedDraftBytesEqualFrozenCandidate": true,
+    "steps": {
+      "draft": 2,
+      "evaluation": 3,
+      "selection": 5
+    },
+    "selection": "candidate_selected",
+    "assessmentSha256": "d94f9634991d243685bb99c25b7f0f93476f3a8b8ebb177d14e38791331c9844",
+    "criteriaSha256": "4f2bbe29c89fb0c2bb8a0d31a7decd432a417827533ae3a0f782755b23e49422",
+    "note": "Diagnosis is bound to its reviewed snapshot. Subsequent PREPARE metadata does not establish final approval or successful ordinary-task completion."
+  },
+  "retainedDevelopmentMeasurement": {
+    "baseline": {
+      "requiredHits": 7,
+      "requiredTotal": 10,
+      "hardFailures": 0,
+      "contextBytes": 12561,
+      "complete": true,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    "candidate": {
+      "requiredHits": 10,
+      "requiredTotal": 10,
+      "hardFailures": 0,
+      "contextBytes": 12566,
+      "complete": true,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    "contextByteIncrease": 5,
+    "image": "sha256:a4d95d1eba6f36fcb8ecca1662352aa4c7188721cb1e9cc4353d86f394b5dd4d",
+    "resolvedImageId": "sha256:a4d95d1eba6f36fcb8ecca1662352aa4c7188721cb1e9cc4353d86f394b5dd4d",
+    "command": [
+      "/usr/local/bin/python",
+      "/public-development/context_suite.py",
+      "/public-development/dev-cases.json"
+    ],
+    "commandSha256": "4d521508ae62727eb6b447bc5255a99972ac602fadc6226d9c51d357d326c914",
+    "reviewerRanNewMeasurement": false,
+    "measuredSemanticAnswerGain": false
+  },
+  "publicDevelopmentBindings": {
+    "expandedCasesPath": "eva2/experiments/aide-20260929/development-expanded-20261007.json",
+    "expandedCasesRawSha256": "fa4871d140ff4efe88502ee6cccabcc156283be8c7c1ba6bd0b185cee8fab701",
+    "expandedCasesCanonicalSha256": "fa4871d140ff4efe88502ee6cccabcc156283be8c7c1ba6bd0b185cee8fab701",
+    "equalsOriginalSixPlusFrozenFive": true,
+    "files": [
+      {
+        "path": "eva2/experiments/aide-20260929/context_suite.py",
+        "sha256": "6d43028ce305a00bc075753332c6c822d1ce96fd27768f9bd0e4d610e787b7cb"
+      },
+      {
+        "path": "eva2/experiments/aide-20260929/dev-cases.json",
+        "sha256": "cfcd399ac0e8792d9162d9c4adfce71fba04f4df284b42fd4a02f9cc15ea7903"
+      },
+      {
+        "path": "eva2/experiments/aide-20260929/dev_score.py",
+        "sha256": "837ced00ce1dd8b72369bce7e4f671b4fa9f063248aaf196b1947052ad5a085f"
+      },
+      {
+        "path": "eva2/experiments/aide-20260929/criteria.json",
+        "sha256": "ca0e25657bb71e12f0bd1ff8dee64e7c85a343050d8a8f28f679ca76d84dc93e"
+      },
+      {
+        "path": "eva2/experiments/aide-20260929/development-diagnosis-20261007.json",
+        "sha256": "05a4109d0af0145abc00b4e554e78c22cb0842b8d8bcb47212c6ac7bfe0f4fb7"
+      }
+    ],
+    "originalFilesByteUnchanged": true,
+    "hostCriteriaUnchangedFromPriorConfiguration": true,
+    "hostScorerPathUnchanged": true,
+    "hostCriteriaCanonicalSha256": "4f2bbe29c89fb0c2bb8a0d31a7decd432a417827533ae3a0f782755b23e49422",
+    "suiteConfigSha256AtReview": "0e7221290e0245da6fa0dfab0b21718dd56f14dcc905f26ca2bbbdfecdf2394f"
+  },
+  "findings": {
+    "materialBlockers": [],
+    "sourceScope": "Only active_context relevance ranking changes. General character fragments of length 4 through 8 replace word/substring ranking; no example dictionary, case IDs or synonym list.",
+    "privacyAndAuthority": "Existing available_for check, authorized metadata retrieval and payload exclusion remain unchanged. Ranking reads only the existing query and authorized work ID/title metadata; no new I/O, logging or model call.",
+    "limitsAndStop": "Stopped-task filtering, active/recent separation, eight active and three recent output limits, title truncation, limited flag, schema and instructions remain unchanged.",
+    "generalBehavior": "Explicit work-ID priority and stable ties remain. Empty-query behavior remains. Features are generated from ordinary title/query text rather than fixed development examples.",
+    "runtimeLimit": "Fragment lengths bound feature generation linearly in each word length. CPU, latency and runtime-cost improvement were not measured."
+  },
+  "representativeness": {
+    "description": "Preserved public cases plus the preregistered diagnosis exercise authorized active/recent selection, denied/stopped exclusions, explicit ID and title controls, and differently phrased follow-ups with distractor titles.",
+    "limit": "Ten scored public development predicates do not prove unseen-task generalization, answer quality or household benefit."
+  },
+  "reusedTechnicalReviews": [
+    {
+      "path": "eva2/reviews/l3-final-handoff-source-review-20261007.json",
+      "sha256": "3b76a009951c9d2cfb982a80005b3d07610577964b958e09c3130de36a308a5a"
+    },
+    {
+      "path": "eva2/reviews/l3-final-handoff-installed-review-20261007.json",
+      "sha256": "dab56d380406c5c2dc349949b2f4eb463cd34e400028787631a4caf8bf9c427a"
+    },
+    {
+      "path": "eva2/reviews/l3-ordinary-completion-review-20261007.json",
+      "sha256": "b8df3e0659a78113a737b36109e6f727319f514a3d64bec5da617c213a5f9be6"
+    }
+  ],
+  "limitations": {
+    "reviewerModelCalls": 0,
+    "newReviewerTestsOrMeasurements": 0,
+    "protectedFinalDataRead": false,
+    "candidateChanged": false,
+    "optimizationFeedbackProvided": false,
+    "candidateInstalledAttested": false,
+    "independentFinalApproval": false,
+    "semanticOrHouseholdGainAttested": false,
+    "newQuotaOrAcceptanceCriteria": false,
+    "fullL36OrL37Completion": false,
+    "autonomousAideSquaredOrDreamOrAddonCompletion": false,
+    "creditCost": "UNKNOWN"
+  },
+  "conclusion": "GO for the exact frozen source candidate and its retained development provenance. Authorized context inclusion improves under unchanged scoring and hard conditions. Independent final approval and installation remain separate."
+}

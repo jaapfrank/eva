@@ -7,7 +7,7 @@ It is not a general JSON Schema validator.
 from __future__ import annotations
 
 from eva.application.conversation import ConversationConflict
-from eva.contracts.base import JsonValue
+from eva.contracts.base import MAX_CONTRACT_BYTES, JsonValue
 
 
 def validate_schema_value(
@@ -88,7 +88,7 @@ def validate_schema_value(
         raise ConversationConflict(f"{path} has the wrong type")
     if isinstance(value, str):
         minimum = schema.get("minLength", 0)
-        maximum = schema.get("maxLength", 65_536)
+        maximum = schema.get("maxLength", MAX_CONTRACT_BYTES if provider_schema else 65_536)
         if (
             not isinstance(minimum, int)
             or not isinstance(maximum, int)

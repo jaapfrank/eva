@@ -2,12 +2,50 @@
 from __future__ import annotations
 
 import json
+import inspect
 import re
 import subprocess
 
+def _execution_completion_state(rows, task_id, scope_sha256, identity_sha256):
+    """A typed same-execution resume may finish retained work; a stop still wins."""
+    by_id = {row["work_id"]: row for row in rows}
+    original = by_id.get(task_id)
+    if original is None:
+        raise ValueError("application task is unavailable")
+    spec = original["spec_payload"]
+    source = spec["source"]
+    identity = {key: source[key] for key in ("tenant_id", "installation_id", "principal_id")}
+    if identity_sha256(identity) != scope_sha256:
+        raise ValueError("application source differs")
+    current, visited = original, set()
+    while True:
+        if current["work_id"] in visited:
+            raise ValueError("application continuation cycle")
+        visited.add(current["work_id"])
+        if current["stop_requested_at"] is not None or current["state"] == "stopped":
+            return "cancelled"
+        children = []
+        for row in rows:
+            child = row["spec_payload"]
+            if child.get("parent_task_id") != current["work_id"]:
+                continue
+            if (child.get("generation") != current["spec_payload"]["generation"] + 1
+                    or any(child.get(key) != spec.get(key) for key in (
+                        "execution_id", "source", "source_ingress_sha256", "grant",
+                        "owner_principal_id", "principal_binding_id", "audience", "episode_id"))):
+                continue
+            children.append(row)
+        if len(children) > 1:
+            raise ValueError("application continuation is ambiguous")
+        if not children:
+            return "ready" if current["state"] in {"succeeded", "verified"} else "waiting"
+        current = children[0]
+
+
 # Executed inside the existing core so database credentials stay there. Only
 # status, stop and lock metadata are read; no conversation content is returned.
-_READINESS = r'''import json,sys,sqlalchemy as sa
+_READINESS = inspect.getsource(_execution_completion_state) + r'''
+import json,sys,sqlalchemy as sa
 from uuid import UUID
 from eva.bootstrap.runtime import RuntimeSettings
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
@@ -20,14 +58,11 @@ try:
  scope=PostgresOperationalTimeline(e,TimelineScope(UUID(str(s.dashboard_tenant_id)),UUID(str(s.dashboard_installation_id))))
  with e.begin() as c:
   scope._scope(c)
-  row=c.execute(sa.select(work.c.state,work.c.stop_requested_at,work.c.spec_payload).where(work.c.work_id==request['task_id'])).mappings().one_or_none()
-  if row is None:raise ValueError('application task is unavailable')
-  source=row['spec_payload']['source']
-  identity={key:source[key] for key in ('tenant_id','installation_id','principal_id')}
-  if canonical_sha256(identity)!=request['scope_sha256']:raise ValueError('application source differs')
-  if row['stop_requested_at'] is not None or row['state'] in {'stopped','failed','ambiguous','needs_help'}:state='cancelled'
-  elif row['state'] not in {'succeeded','verified'}:state='waiting'
-  else:
+  original=c.execute(sa.select(work.c.spec_payload).where(work.c.work_id==request['task_id'])).scalar_one_or_none()
+  if original is None:raise ValueError('application task is unavailable')
+  rows=c.execute(sa.select(work.c.work_id,work.c.state,work.c.stop_requested_at,work.c.spec_payload).where(work.c.spec_payload['execution_id'].astext==original['execution_id'])).mappings().all()
+  state=_execution_completion_state(rows,request['task_id'],request['scope_sha256'],canonical_sha256)
+  if state=='ready':
    leased=c.scalar(sa.select(sa.func.count()).select_from(work).where(work.c.lease_owner.is_not(None),work.c.lease_expires_at>sa.func.now()))
    locks=c.scalar(sa.text("SELECT count(*) FROM pg_locks WHERE locktype='advisory' AND granted AND database=(SELECT oid FROM pg_database WHERE datname=current_database()) AND pid<>pg_backend_pid()"))
    state='waiting' if leased or locks else 'ready'

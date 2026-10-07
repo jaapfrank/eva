@@ -1,0 +1,52 @@
+{
+  "contract": "EvaComponentDocumentProviderProjectionCorrection/v1",
+  "checkedAt": "2026-10-07T11:42:56.572372+00:00",
+  "task": "L3.6",
+  "source": {
+    "path": "src/eva/application/schema_validation.py",
+    "sha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e"
+  },
+  "test": {
+    "path": "tests/application/test_component_document_completion.py",
+    "sha256": "760357cc800a3c9e3211d4bf2f6f63e081eac8efce52ae77e2a7fa38b5251de0"
+  },
+  "tests": {
+    "passed": 117,
+    "failed": 0,
+    "exitCode": 0,
+    "seconds": 17.51,
+    "toolResultChunk": "43cbff",
+    "scope": "component document completion + MCP gateway adapter/provider"
+  },
+  "failure": {
+    "workId": "work:eva-resume:0aa4b9f2-0418-5e10-8b2e-84687dcc5c3a",
+    "fingerprint": "83bd4715f08b90ac9f672879b2b91290004137ada2464080726a2254f3e61fd0",
+    "reproducedMessage": "execute_arguments.content text length is invalid",
+    "providerSchemaDeclaredMaxLength": false
+  },
+  "changedDefault": "Only provider_schema=True with no declared maxLength uses existing MAX_CONTRACT_BYTES=1048576; strict actions retain65536 and explicit provider limits remain authoritative. Canonical byte/transport/result bounds unchanged.",
+  "actualFullPlannerPreparation": {
+    "prepared": true,
+    "request_type": "ConversationToolPreparation",
+    "document_characters": 83068,
+    "expected_readback_equal": true,
+    "provider_string_bound": 1048576,
+    "candidate_sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844"
+  },
+  "preflightSha256": "9dc6d71168026d581c547eb56157bbe058888cd59a8156386f62faa867f86c6c",
+  "preflightEffects": 0,
+  "newProviderCalls": 0,
+  "candidateModified": false,
+  "finalProtocolChanged": false,
+  "installed": false,
+  "priorFailedResumeUsage": {
+    "measurement": "partial",
+    "completedModelResponses": 1,
+    "toolCalls": 0,
+    "inputTokens": 52549,
+    "outputTokens": 63,
+    "totalTokens": 52612,
+    "credits": "UNKNOWN"
+  },
+  "deployment": "Source-only childimages for current core/worker, exact file overlay, retained compose/mounts. Update trusted publisher installed-base artifact to actual corrected image pair, so later B publication preserves this correction. Host paused across startup; no queue reset or candidate regeneration."
+}

@@ -79,3 +79,21 @@ def test_saved_development_selection_is_the_final_component_artifact(state):
         "status": "verified", "component_step": 6, "operation_result": {
             "contract": "EvaComponentDevelopmentSelection/v1", "state": "unknown"}})
     assert not _has_completed_tool_evidence([evaluated, invalid_selection, saved_selection])
+
+
+def test_large_component_package_respects_provider_schema_and_explicit_limits():
+    from eva.application.schema_validation import validate_schema_value
+    from eva.application.conversation import ConversationConflict
+    import pytest
+    content = "x" * 83068
+    provider = {"type": "string"}
+    validate_schema_value(content, provider, "execute_arguments.content", provider_schema=True)
+    validate_schema_value(content, provider, "observe_output.content", provider_schema=True)
+    with pytest.raises(ConversationConflict):
+        validate_schema_value(content, provider, "strict_action")
+    with pytest.raises(ConversationConflict):
+        validate_schema_value(content, {"type": "string", "maxLength": 12000},
+                              "execute_arguments.content", provider_schema=True)
+    with pytest.raises(ConversationConflict):
+        validate_schema_value("x" * 1048577, provider, "execute_arguments.content",
+                              provider_schema=True)

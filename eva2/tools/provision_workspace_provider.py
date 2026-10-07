@@ -53,7 +53,7 @@ def catalog_for(selected: dict[str, dict], *, include_reads: bool = False) -> di
         "completion_guidance": "Bevestig opslaan alleen op grond van de onafhankelijk teruggelezen inhoud. Noem de bestandsnaam en geef het resultaat ook begrijpelijk in het gesprek weer.",
         "input_schema": {"type": "object", "properties": {
             "path": {"type": "string", "pattern": r"^/proof-state/[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$"},
-            "content": {"type": "string", "maxLength": 12000}},
+            "content": {"type": "string", "maxLength": 1048576}},
             "required": ["path", "content"], "additionalProperties": False},
         "execute_catalog_name": write["name"], "execute_tool_name": write["name"],
         "execute_catalog_sha256": canonical_sha256(mcp_gateway_catalog_binding(write, contract="EvaMcpGatewayProvider/v2")),

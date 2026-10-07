@@ -1,0 +1,36 @@
+{
+  "contract": "EvaComponentPreDispatchReadinessCorrection/v1",
+  "checkedAt": "2026-10-07T11:34:49.127285+00:00",
+  "source": [
+    {
+      "path": "src/eva/operations/component_final_assessment.py",
+      "sha256": "e53b0a1bf3b339962a5e13ee71cfe12aec529f8b2976dea74f1171a5f14b3168"
+    },
+    {
+      "path": "tests/operations/test_component_final_assessment.py",
+      "sha256": "cb928bf0948e214fa88af8b41def955e66ac94b77c01ee4aa8b192528a05d4ad"
+    }
+  ],
+  "tests": {
+    "passed": 13,
+    "failed": 0,
+    "exitCode": 0,
+    "seconds": 4.59,
+    "toolResultChunk": "2334d9",
+    "command": "python -m pytest -q tests/operations/test_component_final_assessment.py"
+  },
+  "sameReviewId": "0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a",
+  "preDispatchUnconfirmedSnapshotSha256": "e1ac4c52125f9a239c732363b204e09567310307fa06a8d30809e0da34b52343",
+  "samePackageAndProtocolAsPriorRecoveryPlan": true,
+  "existingJobFiles": [
+    "package.json"
+  ],
+  "noFinalDispatch": true,
+  "cause": "trusted readiness read during existing core configuration startup",
+  "recovery": "Stop host only, verify healthy runtime and typed waiting; retain both prior snapshots, restore same unexecuted job waiting with provenance; copy reviewed host source/start service; no further core restart.",
+  "postDispatchUnconfirmedRemainsTerminal": true,
+  "criteriaChanged": false,
+  "candidateChanged": false,
+  "providerCalls": 0,
+  "installed": false
+}

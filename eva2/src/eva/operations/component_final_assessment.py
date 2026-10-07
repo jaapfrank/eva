@@ -258,8 +258,20 @@ class FinalComponentAssessments:
                     continue
             for job in pending:
                 try:
-                    ready = self.task_state(job["task_id"])
+                    try:
+                        ready = self.task_state(job["task_id"])
+                    except Exception:
+                        # A readiness read has no effects and is safe to retry.
+                        # Preserve answer-stage state so the isolated suite never repeats.
+                        with self.condition:
+                            if self.closed: return
+                            if job["state"] == "queued":
+                                job["state"] = "waiting"
+                            job["readiness_unavailable"] = True
+                            _save(self.root / (job["review_id"] + ".json"), job)
+                        continue
                     with self.condition:
+                        job.pop("readiness_unavailable", None)
                         if self.closed: return
                         if ready == "cancelled": job.update(state="cancelled", reason="originating_task_stopped")
                         elif ready != "ready":

@@ -1,0 +1,32 @@
+{
+  "contract": "EvaRetainedComponentPackageTransition/v1",
+  "checkedAt": "2026-10-07T11:30:44.066196+00:00",
+  "candidateSha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+  "samePreparedPackage": true,
+  "documentCharacters": 83068,
+  "documentUtf8Bytes": 83098,
+  "oldCatalogLimit": 12000,
+  "newExistingDocumentLimit": 1048576,
+  "oldSchemaRejected": true,
+  "newSchemaAccepted": true,
+  "overLimitRejected": true,
+  "originalAmbiguousTaskPreserved": true,
+  "actualRuntimeReadiness": "waiting",
+  "finalReportPresent": false,
+  "tests": {
+    "passed": 35,
+    "logSha256": "cacf93c8745de01317a204361e1c095bfc2642d511cad491c2034d6c8507de0a"
+  },
+  "source": [
+    {
+      "path": "tools/provision_workspace_provider.py",
+      "sha256": "8bf8de91a48742bab047faf961a6eb6f798e41ba1c6fcabafe9088729e47e682"
+    },
+    {
+      "path": "src/eva/operations/component_application_runtime.py",
+      "sha256": "c8dcb964133f5683132e43912f81e7b029116e86732c74b787c54d3ed532f015"
+    }
+  ],
+  "installed": false,
+  "finalQualityApproved": false
+}

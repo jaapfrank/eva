@@ -1,0 +1,37 @@
+{
+  "contract": "EvaDocumentProviderProjectionInstalled/v1",
+  "checkedAt": "2026-10-07T11:45:37.675979+00:00",
+  "reviewSha256": "1df5a934e5f98e725ee0f940e3b6e016bc987f43ffe39946c7bb68bc6fc84f90",
+  "sourceSha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e",
+  "images": {
+    "core": {
+      "base": "sha256:7c97a99b58d2b8f4a1932f35c608df596b4a3d2e1b0c8f0d98b25d4f86077a2a",
+      "candidate": "sha256:779983e23ff81a1b65a32a34dfad5a7c218b2c50a2ec0abee84836d601f47668",
+      "sourceSha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e",
+      "buildLogSha256": "477d52a3240d86dc122ffa526b2394b3771623ba21c9040659a6c6d963f9eb40"
+    },
+    "delegated-work-worker": {
+      "base": "sha256:51d0fbba9f761598b3d3316b5f4b8dd5df84f6d1ca7cb76f57d1e68f4df272fe",
+      "candidate": "sha256:5a6da31ecf918ea256146515104d32c6c6edf158cd1ee51a29ecc3b8a5de1285",
+      "sourceSha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e",
+      "buildLogSha256": "b60dbca79aa8effbcb9acc4986b4a220507ba6820b28107771dd31af5ca193b4"
+    }
+  },
+  "updateReceiptSha256": "755ced3c3db298520273230b2a9de4a57cae56eb3e5aa0a00eec01cac2118eec",
+  "status": "running_with_retained_mounts",
+  "hostPausedDuringStartup": true,
+  "actualPublisherBaseArtifactSha256": "48ad60a0657510ae3da657eda83e9bb6ccdfdfb2ecd3bc092145467a4cc63495",
+  "candidateBInstalled": false,
+  "finalProtocolChanged": false,
+  "sourceCandidateChanged": false,
+  "oldPartialAttemptPreserved": true,
+  "actualInstalledFullPreparation": {
+    "prepared": true,
+    "request_type": "ConversationToolPreparation",
+    "document_characters": 83068,
+    "expected_readback_equal": true,
+    "provider_string_bound": 1048576,
+    "candidate_sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844"
+  },
+  "actualInstalledFullPreparationSha256": "9dc6d71168026d581c547eb56157bbe058888cd59a8156386f62faa867f86c6c"
+}

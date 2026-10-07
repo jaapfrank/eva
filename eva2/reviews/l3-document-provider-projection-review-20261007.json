@@ -1,0 +1,95 @@
+{
+  "contract": "EvaComponentDocumentProviderProjectionReview/v1",
+  "reviewedAt": "2026-10-07",
+  "task": "L3.6",
+  "decision": "GO_SOURCE_AND_BOUNDED_DEPLOYMENT_PLAN",
+  "scope": "Only the missing provider-schema string default and delivery of the same retained package B; no candidate or assessment change.",
+  "source": {
+    "path": "eva2/src/eva/application/schema_validation.py",
+    "sha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e"
+  },
+  "test": {
+    "path": "eva2/tests/application/test_component_document_completion.py",
+    "sha256": "760357cc800a3c9e3211d4bf2f6f63e081eac8efce52ae77e2a7fa38b5251de0"
+  },
+  "evidence": {
+    "path": "eva2/evidence/product/l3-document-provider-projection-20261007.json",
+    "sha256": "a51d697ddae428cc22e19ae10e4af951279a5dbb4d1e9aeb309df45dab850424",
+    "reportedFocusedTests": {
+      "passed": 117,
+      "failed": 0,
+      "exitCode": 0,
+      "seconds": 17.51,
+      "toolResultChunk": "43cbff"
+    },
+    "fullPlannerPreparation": {
+      "prepared": true,
+      "requestType": "ConversationToolPreparation",
+      "documentCharacters": 83068,
+      "expectedReadbackEqual": true,
+      "preflightSha256": "9dc6d71168026d581c547eb56157bbe058888cd59a8156386f62faa867f86c6c",
+      "effects": 0,
+      "newProviderCalls": 0
+    },
+    "installed": false
+  },
+  "defectBinding": {
+    "failedResumeWorkId": "work:eva-resume:0aa4b9f2-0418-5e10-8b2e-84687dcc5c3a",
+    "fingerprint": "83bd4715f08b90ac9f672879b2b91290004137ada2464080726a2254f3e61fd0",
+    "reproducedBoundary": "execute_arguments.content text length is invalid",
+    "upstreamSchemaDeclaredMaxLength": false,
+    "retainedCandidateSha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+    "priorFailedResumeUsage": {
+      "measurement": "partial",
+      "completedModelResponses": 1,
+      "toolCalls": 0,
+      "inputTokens": 52549,
+      "outputTokens": 63,
+      "totalTokens": 52612,
+      "credits": "UNKNOWN"
+    }
+  },
+  "findings": {
+    "materialBlockers": [],
+    "narrowDefault": "Only provider_schema=True without a declared maxLength uses existing MAX_CONTRACT_BYTES=1048576 instead of 65536. The recursive provider flag remains unchanged.",
+    "explicitAndStrictLimits": "Strict action default remains 65536. Declared provider maxLength remains authoritative. Minima, type checks, required fields, sealed values, enum/collection limits and exception semantics remain unchanged.",
+    "privacyAndAuthority": "No new data read, logging, provider route, effect permission, identity or access expansion is introduced. This changes validation of already admitted provider values, not task authorization.",
+    "byteLimits": "String maxLength checks characters. Existing canonical UTF-8 byte, transport and result bounds are untouched; this does not guarantee all one-million-character Unicode or escaped documents fit those byte bounds.",
+    "testCoverage": "New regression accepts the retained-size provider argument/readback, rejects the same value under strict or explicit12000 limits, and rejects provider content beyond1048576. Retained actual full planner preparation separately confirms exact expected readback with zero effects."
+  },
+  "deploymentPlan": {
+    "approvedScope": "Source-only child images over the current core and worker, overlaying only the exact reviewed schema file. Preserve existing dependencies, compose configuration, mounts and data.",
+    "host": "Stop the existing trusted host across startup; start it after corrected runtime readiness is available. Keep the same final job waiting and retain all failure snapshots and provenance.",
+    "publisher": "Update the existing trusted publisher installed-base artifact using its typed path/sha256 binding to the actual corrected image pair, so later package B promotion retains this correction.",
+    "unchanged": "No queue reset, new request, final round, candidate regeneration, model or criterion change.",
+    "installedVerificationPending": true,
+    "exactNewImageDigestsNotYetAttested": true,
+    "reviewerExecutedDeployment": false
+  },
+  "priorReviews": [
+    {
+      "path": "eva2/reviews/l3-context-candidate-b-source-review-20261007.json",
+      "sha256": "4db52075818b18c81160a188ae2c7c3e93cc929c2ae233d1a00d42f36074cf12"
+    },
+    {
+      "path": "eva2/reviews/l3-retained-package-resume-review-20261007.json",
+      "sha256": "7456a83272c3526ce7b15327562ef9a09be8d71c0d048ab642f44805b92dfa30"
+    },
+    {
+      "path": "eva2/reviews/l3-pre-dispatch-readiness-review-20261007.json",
+      "sha256": "26d98f292bb3f3714ec8500b2bc6cfbfacc6d47d19549688ff8e70a948dedbd2"
+    }
+  ],
+  "limits": {
+    "reviewerProviderCalls": 0,
+    "reviewerNewTestsOrMeasurements": 0,
+    "protectedFinalDataRead": false,
+    "candidateModified": false,
+    "finalProtocolChanged": false,
+    "runtimeInstalledGo": false,
+    "finalQualityApproved": false,
+    "functionalBonusOrFullL36Completion": false,
+    "semanticGainAttested": false
+  },
+  "conclusion": "GO for the exact provider validation correction and bounded deployment plan. It closes the retained document projection failure without changing candidate B, acceptance criteria or prior results. Installed binding and independent final assessment remain separate."
+}

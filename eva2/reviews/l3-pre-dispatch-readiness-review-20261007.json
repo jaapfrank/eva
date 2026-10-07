@@ -1,0 +1,71 @@
+{
+  "contract": "EvaComponentPreDispatchReadinessReview/v1",
+  "task": "L3.6",
+  "reviewedAt": "2026-10-07",
+  "decision": "GO_SOURCE_AND_BOUNDED_RECOVERY_PLAN",
+  "scope": "One pre-dispatch trusted readiness-read exception and recovery of the exact retained, unexecuted final-assessment job.",
+  "source": {
+    "path": "eva2/src/eva/operations/component_final_assessment.py",
+    "sha256": "e53b0a1bf3b339962a5e13ee71cfe12aec529f8b2976dea74f1171a5f14b3168"
+  },
+  "test": {
+    "path": "eva2/tests/operations/test_component_final_assessment.py",
+    "sha256": "cb928bf0948e214fa88af8b41def955e66ac94b77c01ee4aa8b192528a05d4ad"
+  },
+  "evidence": {
+    "path": "eva2/evidence/product/l3-pre-dispatch-readiness-correction-20261007.json",
+    "sha256": "7e1720e1bc5bf93a37e5bcbe29eb6b8702427bfff3eeb2220173a01ce9d85b04",
+    "reportedFocusedTests": {
+      "passed": 13,
+      "failed": 0,
+      "exitCode": 0,
+      "seconds": 4.59,
+      "toolResultChunk": "2334d9"
+    },
+    "reviewerRepeatedTests": false
+  },
+  "findings": {
+    "materialBlockers": [],
+    "retryBoundary": "Only the first task_state read before assessment dispatch is caught as transient. A queued job becomes waiting; an existing waiting or awaiting_independent_answer_assessment state is preserved. readiness_unavailable is persisted and removed after a successful readiness read.",
+    "noDuplicateDispatch": "The exception path continues before package execution, assessor, publisher or application calls. Answer-stage preservation prevents rerunning the isolated suite. Existing exceptions after assessment/publication dispatch still become terminal unconfirmed.",
+    "stopAndBinding": "Successful readiness still processes cancelled before assessment; package/protocol checks, task/source scope, registered release and existing application mechanism remain unchanged.",
+    "privacy": "No caught exception message or protected task/assessment content is stored or published by the new handler.",
+    "tests": "The new transient-readiness test checks no assessor/application call while unavailable and one assessment after ready. Existing module checks include retained answer-phase, stop/status, exact bindings and uncertain-dispatch restart behavior."
+  },
+  "sameJobRecovery": {
+    "unconfirmedSnapshotPath": "/home/administrator/project/.eva2-artifacts/l3-context-development-diagnostic-20261007/unconfirmed-pre-dispatch-startup-read.private.json",
+    "unconfirmedSnapshotSha256": "e1ac4c52125f9a239c732363b204e09567310307fa06a8d30809e0da34b52343",
+    "cancelledSnapshotSha256": "b2364187898daefa70ae8d4b6e0377699851f02d178f27ea3e806ec8c0ca22f1",
+    "priorRecoveryPlanSha256": "cf23c6a35e8fa5bbafe8c874ab02bf4b392c980566a70726068eb239ce5f5d5a",
+    "priorReviewSha256": "7456a83272c3526ce7b15327562ef9a09be8d71c0d048ab642f44805b92dfa30",
+    "reviewId": "0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a",
+    "requestId": "fe7da6d349c0d8694c748dabde0cbc3c7a0f69df57e88889468069549e667d63",
+    "taskId": "work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b",
+    "scopeSha256": "27fdd828734f6792cacfb658e63dcaa5dbfc590eeb6e2b871bf820294a59dd72",
+    "protocolSha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+    "packageSha256": "8b97f8ab2f024b8f5dc3d385a7bde14d8efc24e433d20af6b552db26208ba9ce",
+    "actualEntriesAtReview": [
+      "package.json"
+    ],
+    "actualPackageRawSha256": "8b97f8ab2f024b8f5dc3d385a7bde14d8efc24e433d20af6b552db26208ba9ce",
+    "isolatedFinalOrAnswerReportPresent": false,
+    "plan": "Stop only the host service, verify healthy core and corrected typed readiness=waiting with no explicit stop, preserve both failure snapshots, then restore the exact same unexecuted job to waiting with recovery provenance. Copy the exact reviewed host code and start the same service; no further core restart. Retain package, protocol, request, review, task and prior work/results.",
+    "noNewRequestOrFinalRound": true,
+    "noTaskStateRewriteOrBudgetReset": true,
+    "runtimeVerificationPending": true,
+    "reviewerPerformedRecovery": false
+  },
+  "limitations": {
+    "sourceInstalledByThisReview": false,
+    "installedRuntimeGo": false,
+    "finalQualityApproved": false,
+    "candidateChanged": false,
+    "criteriaOrProtocolChanged": false,
+    "reviewerProviderCalls": 0,
+    "reviewerNewTests": 0,
+    "protectedFinalDataRead": false,
+    "fullL36OrL37Completed": false,
+    "semanticGainAttested": false
+  },
+  "conclusion": "GO for the exact source correction and controlled same-job pre-dispatch recovery plan. Runtime/source-copy verification remains separate; no final-quality approval or repeated dispatched assessment is authorized."
+}
