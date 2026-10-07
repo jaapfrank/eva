@@ -30,7 +30,18 @@ een completed fileChange vóór de matching post-hook. Alleen die getypeerde
 apply_patch-overgang is gecorrigeerd (5 checks en onafhankelijke GO).
 CM02 blijft onvolledig/kwaliteit UNKNOWN; geen nieuwe productfunctie of
 vergelijkingswinst. Alle historische resultaten en oorspronkelijke criteria
-blijven behouden. Volgende oorspronkelijke ongebruikte case: CM03.
+blijven behouden.
+
+CM03 is vervolgens eenmaal uitgevoerd: 1/3 beurten behouden, 9 volledig
+afgerekende SDK-aanvragen, 221.764 invoer-/841 uitvoertokens en 129,414s.
+De evaluator blokkeerde native herstel na een failed/127-command vóór post-hook.
+Alleen de getypeerde failure-afrekening is gecorrigeerd (7 checks, onafhankelijke
+GO); failed wordt geen actionsuccess. Ook deze gehele case blijft UNKNOWN,
+zonder herhaling. De gerichte publieke native herstelproef is onafhankelijk GO:
+failed/127 blijft een fout, drie beurten/readbacks afgehandeld, 16 tools en de
+17e-capweigering behouden. Vier nagebootste antwoorden, nul echte providercalls.
+Dit bewijst de gewijzigde uitvoerovergang; geen oorspronkelijke kwaliteitsscore.
+Volgende oorspronkelijke ongebruikte case: CM04, afzonderlijk toelaten.
 
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 

@@ -7,22 +7,29 @@ versie en eerdere ervaring, bewaarde een teruggelezen vervolgnotitie en stopte.
 Dit bewijst die verbetering en vervolgroute; geen algemene voorsprong op alle
 concurrenten. De automatische droomplanner is nog niet gebouwd.
 
-**Nu: P2.1.** OpenClaw-CM02 is eenmaal uitgevoerd en na 77,065s onvolledig
-gestopt. Gemeten: 3 echte SDK-aanvragen, 68.898 invoer- en 375 uitvoertokens.
-De onafhankelijke review bevestigt een fout in de evaluator: een afgeronde
-fileChange kwam vóór de matching post-hook. De command-only observer stopte
-daarop ten onrechte. Alleen de getypeerde apply_patch-correlatie is gecorrigeerd;
-5 gerichte checks geslaagd, onafhankelijke bron-/publicatiereview GO.
-Er is geen bevestigd volledig antwoordresultaat: kwaliteit blijft UNKNOWN.
-Eerdere CM01 en alle 13 historische ledger-rijen blijven behouden; geen herhaling.
-Fysieke clients, scope, container en netwerk zijn beëindigd. Volledige native
-teruglezing/settlement is niet bewezen. Dit voltooit geen gezinsfunctie of vergelijking.
+**Nu: P2.1.** OpenClaw-CM03 is eenmaal uitgevoerd: 1/3 beurten behouden,
+9 volledig afgerekende SDK-aanvragen, 221.764 invoer-/841 uitvoertokens, 129,414s.
+Een echte toolfout (failed/127) kwam vóór de matching post-hook en werd door de
+evaluator ten onrechte als ontbrekende dispatch behandeld. De getypeerde
+failure-afrekening is gecorrigeerd; failed blijft een fout, geen actionsuccess.
+7 gerichte checks en onafhankelijke bron-/publicatiereview GO. De volledige
+oorspronkelijke case blijft UNKNOWN; CM01/CM02 en alle 14 historische ledger-rijen
+blijven behouden. Geen herhaling of nieuwe productfunctie geteld.
+Fysieke clients en rootscope/container/netwerk zijn beëindigd; volledige native
+settlement is niet bewezen.
 
-**Eerstvolgende handeling:** alleen de bestaande runnercompatibiliteit voor de
-volgende oorspronkelijke ongebruikte CM03-case controleren. Geen nieuwe matrix,
-gewijzigde vragen/criteria of installatiecyclus. Zie
-evidence/product/p2-openclaw-original-runner-binding-20261007.json en
-reviews/p2-openclaw-original-cm02-terminal-review-20261007.json.
+**Gerichte herstelbevestiging geslaagd:** de bestaande publieke native proef
+rekende de failed/127-tool als mislukte uitvoering af en maakte daarna alle drie
+beurten/readbacks af. 16 tools afgerekend, 17e vóór uitvoering geweigerd; vier
+nagebootste modelantwoorden en nul echte providercalls. Onafhankelijke native-GO.
+Native_closed blijft false; de afzonderlijk bewezen equivalent_settled is true.
+Dit bewijst deze herstelovergang, geen oorspronkelijke antwoordkwaliteit.
+
+**Eerstvolgende handeling:** alleen de volgende oorspronkelijke ongebruikte
+CM04-case op dezelfde runner binden en afzonderlijk toelaten. Geen herhaling van
+CM01/CM02/CM03 en geen gewijzigde vragen, criteria of providerroute.
+Zie evidence/product/p2-openclaw-original-runner-binding-20261007.json en
+reviews/p2-openclaw-original-cm03-terminal-review-20261007.json.
 
 **Jouw open handeling:** twee afzonderlijke mensen beoordelen de al beschikbare
 anonieme antwoordpakketten bij P2.1. Dat blokkeert Codex’ technische werk niet.

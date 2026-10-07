@@ -1,6 +1,6 @@
 {
   "contract": "EvaP2OriginalRunnerBinding/v1",
-  "date": "2026-10-07T17:01:47.167645+00:00",
+  "date": "2026-10-07T17:27:27.670596+00:00",
   "task": "P2.1",
   "status": "original_cm01_unknown_retained_proxy_delta_independent_go",
   "priorSourceCheckpoint": "864e3ab508f67153c3ab6873e8098169f908cc88",
@@ -211,5 +211,99 @@
     },
     "nativeReadbacksConfirmed": false,
     "replayed": false
+  },
+  "nextOriginalCM03": {
+    "entry": "openclaw:EV003-CM-03:epoch1",
+    "caseId": "EV003-CM-03",
+    "epoch": 1,
+    "status": "original_evaluator_incomplete_retained_failed_terminal_source_go",
+    "originalOrderRetained": true,
+    "originalQuestionsChanged": false,
+    "criteriaChanged": false,
+    "originalReplayed": false,
+    "sourceCheckpoint": "8dd17594876f9e9d58418e6a7b1af606553b4cc4",
+    "projectionContract": "eva2/evidence/product/p2-openclaw-cm03-entry-contract-20261007.json",
+    "sourceReview": "eva2/reviews/p2-openclaw-original-cm03-source-review-20261007.json",
+    "readinessReview": "eva2/reviews/p2-openclaw-original-cm03-readiness-review-20261007.json",
+    "terminalReview": {
+      "path": "eva2/reviews/p2-openclaw-original-cm03-terminal-review-20261007.json",
+      "sha256": "25e2fe5bf741b34702dad1c1452e2b50d82d7798a11841b4d3a5c216fb95425a",
+      "decision": "GO_CORRECT_PUBLICATION_AND_FAILED_TERMINAL_SOURCE_DELTA_NO_REPLAY"
+    },
+    "readySha256": "ca8ee6693a022b8486234c091441bb6fc332bb79e1a3bbb03878fc556ee2aa54",
+    "sourceAdmissionSha256": "3c8bf7a437da0d67de2ca4301abbcf8fc5dc8cb7cc665cef2fde2d46ae728465",
+    "finalAdmissionSha256": "adb012fff1ca59b80b076d2dfde94d622e54af33e002ff28a685dcd41e099e87",
+    "releaseSha256": "7eaa03afffa562a027c0ab0299f1965ab57c3c0c6ff0a9fc1a3a600dfb561d13",
+    "terminalReceiptSha256": "365776cafe8934636e55d5c2163109741dd7d865df66e00a84e27f4bbab3e838",
+    "nativeReportSha256": "a31245a7a528d544d1e0713f3cb5160b3ace4833b39a580fcbbab60c663a4f2b",
+    "elapsedSeconds": 129.41440162000072,
+    "completedTurns": 1,
+    "requiredTurns": 3,
+    "quality": "UNKNOWN",
+    "wallExpired": false,
+    "nativeReturncode": 1,
+    "classification": "evaluator_failed_command_before_post_order_gap",
+    "usage": {
+      "scope": "One terminal original OpenClaw CM03 only; CM01/CM02 retained separately",
+      "providerAttempts": 9,
+      "inputTokens": 221764,
+      "outputTokens": 841,
+      "totalTokens": 222605,
+      "providerUsageComplete": true,
+      "creditCost": null,
+      "developmentCredits": null
+    },
+    "physicalExitsConfirmed": true,
+    "rootScopeContainerNetworkAbsent": true,
+    "finalNativeSettlementConfirmed": false,
+    "historicalRowsRetained": 14,
+    "sourceCorrection": {
+      "sourceSha256": "369b2872b6537cbc9a7febf1d39a5bb1a988ef914a2f11fefb96359e162ec6be",
+      "focusedTestSha256": "b5b1fb5426b06d59929ed4fc54d7740c8557c05a4220b45f780972d36914be41",
+      "checkReceiptSha256": "2109187c27e739dd8fe85068baf8693c687d73fb73e5d69c0350ab5a4e4fec80",
+      "focusedChecksPassed": 7,
+      "providerCalls": 0,
+      "failedToolNotActionSuccess": true,
+      "scope": "Known typed completed/failed command and patch terminals retain exact matching admission/identity/metadata; declined/inProgress remain rejected."
+    }
+  },
+  "failedToolRecoveryNativeProof": {
+    "status": "independent_go_public_native_failed_tool_recovery",
+    "review": {
+      "path": "eva2/reviews/p2-openclaw-failed-tool-recovery-native-review-20261007.json",
+      "sha256": "f5ed4fa1c7abc3bbd408e586ab20deaf10b1e92d47e89156db484efd48c0a60e"
+    },
+    "sourceSha256": "369b2872b6537cbc9a7febf1d39a5bb1a988ef914a2f11fefb96359e162ec6be",
+    "testSha256": "4ad244df77fb88b869c1037a396eb2b5b51e7ae39ec680bc0c6cf9b8cb4db699",
+    "executionSha256": "16e2dfc3dfec639f4e7a62b5909b464f7c9b6748d46135c56567596d2dfbfb0d",
+    "technicalSha256": "defe323c933eac084023e250e0b1e9b8d4f6403527d6d316b4a41597f09c6fe8",
+    "elapsedSeconds": 180.95119165799406,
+    "completedNativeTurns": 3,
+    "nativeTools": 16,
+    "failedNativeTerminals": [
+      {
+        "item_type": "commandExecution",
+        "status": "failed",
+        "exit_code": 127
+      }
+    ],
+    "toolCoverage": true,
+    "seventeenthRejectedBeforeBody": true,
+    "mockedUpstreamResponses": 4,
+    "syntheticInputTokens": 68,
+    "syntheticOutputTokens": 12,
+    "realProviderCalls": 0,
+    "originalInputs": 0,
+    "originalReplays": 0,
+    "nativeClosed": false,
+    "equivalentNativeSettled": true,
+    "physicalExitsAndFrozenReadbacksConfirmed": true,
+    "pendingSDK": 0,
+    "pendingTools": 0,
+    "ownerArtifactHashesUnchanged": true,
+    "scopeStopExitCode": 5,
+    "scopeErrors": [],
+    "cleanupErrors": [],
+    "scope": "Changed failure transition in existing public fixture only; no answer quality, original completion or new admission."
   }
 }

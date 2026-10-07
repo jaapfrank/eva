@@ -593,6 +593,47 @@ await test('native patch terminal before post settles once without requiring com
   assert.equal(o.toolCoverage,false);assert.equal(ledger.stopReason,'native tool terminal changed');
 });
 
+await test('native failed terminal settles the admitted attempt and preserves failure before post', () => {
+  for(const type of ['commandExecution','fileChange']) {
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+    const invocation={toolUseId:'public-failed',toolName:type==='commandExecution'?'exec':'apply_patch',
+      turnId:'public-failed-turn',rawPayload:{session_id:'public-failed-thread'}};
+    const row=o.nativeToolBefore(invocation);
+    const item={id:invocation.toolUseId,type,status:'failed',...(type==='commandExecution'?{exitCode:127}:{changes:[]})};
+    const notification={method:'item/completed',params:{threadId:'public-failed-thread',turnId:'public-failed-turn',item}};
+    o.nativeNotification({},notification);
+    assert.equal(row.dispatched,true);assert.equal(row.status,'settled');
+    assert.equal(row.native_terminal.status,'failed');assert.equal(o.toolCoverage,true);
+    assert.equal(ledger.stopReason,null);
+    if(type==='commandExecution')assert.equal(row.native_terminal.exit_code,127);
+    const settled=row.settled_monotonic;o.nativeNotification({},notification);o.nativeToolAfter(invocation);
+    assert.equal(row.native_terminal.status,'failed');assert.equal(row.settled_monotonic,settled);
+    assert.equal(o.tools.size,1);assert.equal(ledger.stopReason,null);
+    // A failed operation is accounted, so a following independently admitted tool may recover.
+    assert.equal(o.nativeToolBefore({...invocation,toolUseId:'public-recovery'}).status,'reserved');
+  }
+});
+
+await test('native failed terminal cannot bypass identity or required typed metadata', () => {
+  for(const type of ['commandExecution','fileChange'])for(const changed of ['unreserved','thread','turn','name','metadata','status','cancelled']) {
+    const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
+    const invocation={toolUseId:'public-failed-negative',toolName:type==='commandExecution'?'exec':'apply_patch',
+      turnId:'public-turn',rawPayload:{session_id:'public-thread'}};
+    if(changed==='name')invocation.toolName='read';
+    const row=changed==='unreserved'?null:o.nativeToolBefore(invocation);
+    if(changed==='cancelled')o.cancelNativeTool(invocation);
+    const item={id:invocation.toolUseId,type,status:'failed',...(type==='commandExecution'?{exitCode:127}:{changes:[]})};
+    const params={threadId:'public-thread',turnId:'public-turn',item};
+    if(changed==='thread')params.threadId='other';
+    if(changed==='turn')params.turnId='other';
+    if(changed==='metadata')delete item[type==='commandExecution'?'exitCode':'changes'];
+    if(changed==='status')item.status='declined';
+    o.nativeNotification({}, {method:'item/completed',params});
+    assert.equal(o.toolCoverage,false,changed);assert.ok(ledger.stopReason,changed);
+    assert.equal(row?.dispatched??false,false,changed);
+  }
+});
+
 await test('native patch terminal rejects missing or mismatched admission before and after post', () => {
   for(const afterPost of [false,true])for(const changed of ['unreserved','cancelled','thread','turn','name','status','changes','type','missing-turn']) {
     const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true});
@@ -758,10 +799,11 @@ await test('public ordinary actor composition binds native calendar, model bodie
   const target=Date.parse('2020-01-02T12:00:00.000Z');const offset=target-Date.now();publishClock(0,offset);
   writeFileSync(workspace+'/MEMORY.md','Public persistent memory marker: blue notebook.\n',{mode:0o600});
   writeFileSync(workspace+'/USER.md','Public fixture owner.\n',{mode:0o600});
+  const failedToolRecovery=process.env.OPENCLAW_PUBLIC_FAILED_TOOL_RECOVERY==='1';
   const completed=[];let physical=0;let toolRequested=false;let counter=0;
   const fakeTerminal=body=>{
     const responseId='public-response-'+(++counter);const tool=body.tools?.find(t=>t.type==='function' && t.name==='exec_command');
-    const output=!toolRequested && tool ? (toolRequested=true,Array.from({length:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify({cmd:'cat MEMORY.md',workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})))
+    const output=!toolRequested && tool ? (toolRequested=true,Array.from({length:16},(_,i)=>({type:'function_call',id:'public-function-'+counter+'-'+i,call_id:'public-call-'+counter+'-'+i,name:tool.name,arguments:JSON.stringify({cmd:failedToolRecovery&&i===15?'exit 127':'cat MEMORY.md',workdir:workspace,login:false,max_output_tokens:50,yield_time_ms:1000})})))
       : [{type:'message',id:'public-message-'+counter,role:'assistant',status:'completed',content:[{type:'output_text',text:'Public fixture reply.',annotations:[]}]}];
     const response={id:responseId,object:'response',created_at:1,status:'completed',model:body.model,output,usage};
     return [{type:'response.created',response:{...response,status:'in_progress',output:[]}},
@@ -811,6 +853,11 @@ await test('public ordinary actor composition binds native calendar, model bodie
     assert.ok(ledger.rows.every(row=>row.status==='completed'));assert.ok(o.calls.every(row=>row.native_model_context));
     assert.ok(toolRequested,'offered native file reader must execute through the ordinary loop');
     assert.equal(o.tools.size,16);assert.equal([...o.tools.values()].filter(row=>row.dispatched).length,16);assert.equal(o.toolCoverage,true);
+    if(failedToolRecovery){
+      const failed=[...o.tools.values()].filter(row=>row.native_terminal?.status==='failed');
+      assert.equal(failed.length,1);assert.equal(failed[0].native_terminal.exit_code,127);
+      assert.equal(ledger.stopReason,null,'native failure must permit ordinary follow-up and readback');
+    }
     for(const [index,{body}] of completed.entries()){
       const text=JSON.stringify(body);const applicationDates=[...text.matchAll(/Current date(?: and time)?: (\d{4}-\d{2}-\d{2})/g)].map(m=>m[1]);
       const nativeDates=[...text.matchAll(/<current_date>(\d{4}-\d{2}-\d{2})<\/current_date>/g)].map(m=>m[1]);
@@ -830,7 +877,7 @@ await test('public ordinary actor composition binds native calendar, model bodie
     close=await o.closeNative(plugin);assert.equal(nativeProcessScope?close.equivalent_native_settled:close.native_closed,true);assert.equal(close.pending_sdk,0);assert.equal(close.pending_tools,0);
   } finally {
     close=await o.closeNative(plugin);hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;
-    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',completedNativeTurns,physicalFakeCalls:physical,syntheticCaps:ledger.limits,syntheticUsagePaidOrRealModelUsage:false,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,equivalent_native_settled:close.equivalent_native_settled,native_process_scope_receipts:close.native_process_scope_receipts,final_native_process_scope_receipt:close.final_native_process_scope_receipt,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
+    if(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT)writeFileSync(process.env.OPENCLAW_PUBLIC_TECHNICAL_OUTPUT,JSON.stringify({schema:'OpenClawPublicOrdinaryComposition/v1',failedToolRecoveryFixture:failedToolRecovery,failedNativeTerminals:[...o.tools.values()].filter(row=>row.native_terminal?.status==='failed').map(row=>row.native_terminal),completedNativeTurns,physicalFakeCalls:physical,syntheticCaps:ledger.limits,syntheticUsagePaidOrRealModelUsage:false,sdkRows:ledger.rows,scenarioReadbacks:o.scenarioReadbacks,modelBodyCaptures:o.calls.map(row=>row.native_model_context).filter(Boolean),nativeToolRows:o.tools.size,nativeDispatchedTools:[...o.tools.values()].filter(row=>row.dispatched).length,toolCoverage:o.toolCoverage,nativeCoverageFailure:o.nativeCoverageFailure,seventeenthSameObserverRefusedBeforeBody:capRefused,negativeCapScope:'same native pre-execution observer after the three ordinary completed turns; no extra provider request',close:{native_closed:close.native_closed,equivalent_native_settled:close.equivalent_native_settled,native_process_scope_receipts:close.native_process_scope_receipts,final_native_process_scope_receipt:close.final_native_process_scope_receipt,physical_transports_exited:close.physical_transports_exited,physical_transport_exit_receipts:close.physical_transport_exit_receipts,pending_sdk:close.pending_sdk,pending_tools:close.pending_tools,tool_coverage:close.tool_coverage,native_dispatched_tools:close.native_dispatched_tools,cancel_errors:close.cancel_errors,native_unregister_queues:close.native_unregister_queues,native_module_bindings:close.native_module_bindings}},null,2)+'\n',{mode:0o600});
   }
   });
 });

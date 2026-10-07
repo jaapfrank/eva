@@ -1,0 +1,149 @@
+{
+  "contract": "P2OpenClawFailedToolRecoveryNativeReview/v1",
+  "date": "2026-10-07",
+  "decision": {
+    "source_and_public_fixture": "GO",
+    "bounded_native_failure_recovery_confirmed": true,
+    "original_sample_admission": false,
+    "closed_original_replay_authorized": false
+  },
+  "bindings": {
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "369b2872b6537cbc9a7febf1d39a5bb1a988ef914a2f11fefb96359e162ec6be"
+    },
+    "fixture": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "4ad244df77fb88b869c1037a396eb2b5b51e7ae39ec680bc0c6cf9b8cb4db699"
+    },
+    "controller": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-failed-tool-recovery-20261007/run-public-recovery-composition.private.py",
+      "sha256": "73b4d1d34a05ca30ff7814a4da3d313bd83e7291832dd304d9ab5a778a95bfd3"
+    },
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-failed-tool-recovery-20261007/ordinary-execution.public.json",
+      "sha256": "16e2dfc3dfec639f4e7a62b5909b464f7c9b6748d46135c56567596d2dfbfb0d"
+    },
+    "technical": {
+      "path": "/tmp/eva-p2-openclaw-process-scope-20261007-gtbkuzv1/composition-technical.private.json",
+      "sha256": "defe323c933eac084023e250e0b1e9b8d4f6403527d6d316b4a41597f09c6fe8"
+    },
+    "execution_log": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-public-failed-tool-recovery-20261007/ordinary-composition.public.txt",
+      "sha256": "fb2b0c61046122b131557abd557b3fda34c5febf7cf0f5e7608ddfe5ab60b73b"
+    },
+    "original_cm03_terminal_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm03-terminal-review-20261007.json",
+      "sha256": "25e2fe5bf741b34702dad1c1452e2b50d82d7798a11841b4d3a5c216fb95425a"
+    }
+  },
+  "reviewed_delta": {
+    "observer": "Unchanged from the separately reviewed failed-terminal correction.",
+    "fixture": "The opt-in public flag changes only one of sixteen real native exec requests to exit 127. It retains the failed terminal and requires an unstopped ledger and all three existing native readback turns before the unchanged seventeenth-tool cap check. Default command generation remains unchanged.",
+    "controller": "Only artifact directory and public fixture flag differ from the existing controller. One inherited 480-second deadline, native per-turn 120 seconds, namespace isolation, scope and original synthetic caps remain."
+  },
+  "observed": {
+    "exit_code": 0,
+    "timed_out": false,
+    "elapsed_seconds": 180.95119165799406,
+    "elapsed_boundary": "public controller start through child completion; root cleanup separately retained",
+    "native_completed_readback_turns": 3,
+    "native_sessions": 2,
+    "calendar_generations": [
+      0,
+      0,
+      1
+    ],
+    "tool_pre_admissions": 16,
+    "native_terminal_settlements": 16,
+    "post_settlements": 16,
+    "failed_terminals": [
+      {
+        "type": "commandExecution",
+        "status": "failed",
+        "exit_code": 127
+      }
+    ],
+    "tool_coverage": true,
+    "coverage_stops": 0,
+    "pre_hook_errors": 0,
+    "ledger_unstopped_through_all_three_readbacks": true,
+    "seventeenth_tool_refused_before_body": true,
+    "synthetic_sdk_completed_responses": 4,
+    "synthetic_input_tokens": 68,
+    "synthetic_output_tokens": 12,
+    "synthetic_total_tokens": 80,
+    "synthetic_values_are_real_provider_usage": false,
+    "external_inference_calls": 0,
+    "original_inputs": 0,
+    "four_outbound_body_hashes_verified": true,
+    "earlier_local_body_binding_refusals_recovered_by_native_fallback": 3,
+    "causal_evidence": [
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-gtbkuzv1/contexts/101-native-observation.json",
+        "sha256": "c486438d3d008425e3f12d93ee597dcdb2ec12ef9d17aecb70f09eeb49b1c549"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-gtbkuzv1/contexts/102-native-observation.json",
+        "sha256": "0c8c60843b745de831e69ac22b4643e6ace9d235eae4e351513897288124221a"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-gtbkuzv1/contexts/130-native-observation.json",
+        "sha256": "6313d35a31a0c4a372d6b61c19500736d6da4ce0b4c3a4b63b5c2076b0f47e89"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-gtbkuzv1/contexts/146-native-observation.json",
+        "sha256": "6dcaba2d60b545a5e8ff3e5fa161ee621121ff9626f87eda8b8b1dffc9b14e95"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-gtbkuzv1/contexts/161-native-observation.json",
+        "sha256": "5bd5fd4456df2f832c4e792cf7db8dcabafa2aa9269715a6e653aabeb7ad75c3"
+      },
+      {
+        "path": "/tmp/eva-p2-openclaw-process-scope-20261007-gtbkuzv1/contexts/176-native-observation.json",
+        "sha256": "bf1987d0a1f854ab1793ed51e2f02dc9b90a798c2698e947934feae195de21c3"
+      }
+    ],
+    "meaning": "The exact failed native command completed before its post hook, was accounted once without converting failure to success, and the ordinary mocked loop continued through all three readbacks. This is technical continuation proof, not model-selected recovery or task quality."
+  },
+  "closure": {
+    "literal_native_closed": false,
+    "equivalent_native_settled": true,
+    "matching_physical_transport_exits": 3,
+    "frozen_retirement_receipts": 3,
+    "fresh_final_frozen_scope_receipt": true,
+    "pending_sdk": 0,
+    "pending_tools": 0,
+    "native_cancel_errors": [],
+    "native_unregister_queues_flushed": 6,
+    "actual_native_factory_authority_created": [
+      false,
+      false,
+      false
+    ],
+    "root_scope_populated_after_stop": false,
+    "namespace_pids_after_scope_stop": [],
+    "scope_errors": [],
+    "cleanup_errors": [],
+    "scope_stop_exit_code": 5,
+    "scope_stop_note": "Retained as 5, not relabeled successful stop; actual empty scope and namespace observations are separate.",
+    "enumerated_operator_files_byte_equal": 6,
+    "all_operator_state_equality_claimed": false,
+    "all_possible_local_brokers_unreachable_proved": false
+  },
+  "limits": [
+    "Public mocked upstream only; synthetic tokens are not paid usage or evidence of answer quality.",
+    "This public execution tests commandExecution failed/127; fileChange failure remains covered by the separately retained focused event checks, not a new ordinary native patch execution.",
+    "CM01, CM02 and CM03 remain closed with their original outcomes, usage and UNKNOWN quality; no result is replaced and no original slot is admitted by this review.",
+    "Native cleanup remains uncertain. Equivalent settlement is limited to observed native work, queues, matching exits, source-authority observations and the root-owned frozen process scope; it is not general OS broker containment."
+  ],
+  "reviewer_activity": {
+    "retained_source_and_runtime_reads": true,
+    "new_tests": 0,
+    "native_starts": 0,
+    "model_or_auth_calls": 0,
+    "original_replays": 0,
+    "authority_changes": 0,
+    "protected_content_disclosed": false
+  }
+}

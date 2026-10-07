@@ -1,0 +1,130 @@
+{
+  "contract": "Ev003OpenClawOriginalCmReadinessReview/v1",
+  "recorded_at": "2026-10-07T17:09:48.378138+00:00",
+  "task": "P2.1",
+  "entry": "openclaw:EV003-CM-03:epoch1",
+  "decision": "GO_FINAL_ADMISSION_AND_ONE_ATOMIC_RELEASE",
+  "execution_session": 59073,
+  "run_handle": "ev003-openclaw-cm03-native-a430b4df20934d388b81d84c1fcf85ac",
+  "bindings": {
+    "source_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm03-source-review-20261007.json",
+      "sha256": "32fcdd0cef48cf8652070ba937369166c65f90a2631031647efe743313c24ad1"
+    },
+    "source_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm03-preparation-20261007-v1/source-admission.private.json",
+      "sha256": "3c8bf7a437da0d67de2ca4301abbcf8fc5dc8cb7cc665cef2fde2d46ae728465"
+    },
+    "actual_ready": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm03-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+      "sha256": "ca8ee6693a022b8486234c091441bb6fc332bb79e1a3bbb03878fc556ee2aa54"
+    },
+    "inspect_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm03-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+      "sha256": "c44d0c1482908db16f7e6c5fbed310aa3fcd62901f57c7169f3a0e20f6eda4e4"
+    },
+    "projection_sha256": "43a4bc1cbbf10295fcdf90053e1da3f8e02377489897f7f09032bf720b5b9602",
+    "projection_contract_sha256": "56c51f73e98ebf8720680c916aaf00a682a803a5c81307352c1f50088235c8d0"
+  },
+  "verified": {
+    "source_admission_changes_only_preparation_flag_and_review_provenance": true,
+    "all_34_existing_file_pins_match": true,
+    "inspect_case_epoch_dataset_scorer_projection_limits_match": true,
+    "latest_reviewed_observer": "b6b7031a26702070ccdaeac6c44fbaa6603e1c9a5f4a292732c956789c72e486",
+    "native_auth_bytes_uid_mode_unchanged": true,
+    "same_previously_verified_access_expiry_sufficient_for_480s": true
+  },
+  "authority": {
+    "before_sha256": "e8ce5a758ab7a66b6affbbfd19d308cbdd18d39dffd5630781d7c770f154d5ba",
+    "after_one_reservation_sha256": "b08765af5b173c2682bb91b8e5767e9044f234c41f292508cb01c14609118692",
+    "rows": 15,
+    "new_rows": 1,
+    "selected_revision": 0,
+    "selected_attempts": 0,
+    "prior_rows": 14,
+    "prior_canonical_digest": "d66ad0466db5e4884e5096a1a8198b09ee2c33d9d970bb0d4a54abf11cf89b92",
+    "historical_snapshot_sha256": "09df1ea803ca82468f038eb58a2832ddb67c6b6163f1ecd46377c7561be4313c",
+    "all_prior_values_and_revisions_exactly_preserved": true,
+    "closed_cm01_and_cm02_unknown_results_and_stops_preserved": true,
+    "registered_attempts": 69,
+    "historical_unknown_usage_attempts": 3,
+    "known_usage_lower_bound": {
+      "input_tokens": 296851,
+      "output_tokens": 7492,
+      "total_tokens": 304343
+    },
+    "whole_registry_usage_complete": false,
+    "no_reset_donation_or_replacement": true
+  },
+  "actual_waiting_binding": {
+    "inspect_pid": 1326071,
+    "inspect_starttime_ticks": 12391729,
+    "waiting_root_parent_pid": 1326237,
+    "parent_starttime_ticks": 12392061,
+    "parent_direct_child_of_inspect": true,
+    "container_id": "91425cb176c5e72b4a6379d42f6c88d9c2b7b38d2665cf7484b7b7c3d99c6537",
+    "container_pid": 1326415,
+    "container_name": "ev003-openclaw-cm03-parent-v1",
+    "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+    "network_id": "0c2c0d9c656d8fa0451321f3d0fbb998f711166e6500e17d24cbc86475631253",
+    "network_name": "ev003-openclaw-cm03-parent-v1-net",
+    "namespace": "net:[4026534261]",
+    "exact_label": {
+      "eva.p1.openclaw-envelope": "ev003-openclaw-cm03-native-a430b4df20934d388b81d84c1fcf85ac"
+    }
+  },
+  "resource_checks": {
+    "root_parent_live_and_direct_inspect_child": true,
+    "own_container_running_readonly_capdrop_all": true,
+    "same_internal_network_only_owned_carrier": true,
+    "actual_ipv4_output_only_loopback_and_bound_parent_tunnel": true,
+    "actual_ipv6_output_only_loopback": true,
+    "tunnel_and_accounting_listeners_owned_by_waiting_parent": true,
+    "native_uid_gid_1000_authority_unreadable": true,
+    "namespace_carrier_not_native_actor": true
+  },
+  "pre_release_state": {
+    "provider_attempts": 0,
+    "active_async_attempts": 0,
+    "unsettled_events": 0,
+    "controller_errors": [],
+    "ready_network_events": [],
+    "stop_requested": false,
+    "stop": null,
+    "native_worker_seen": false,
+    "input_released": false,
+    "native_context_started": false,
+    "native_profile_exists": false,
+    "sample_output_exists": false,
+    "sample_deadline_exists": false,
+    "execute_once_exists": false,
+    "owner_stop_exists": false
+  },
+  "unchanged_conditions": "Use the bound source review and original projection contract: same original provider/model roles, dataset/scorer, actor/session/calendar, profile/memory, accounting/readbacks and native/scope closure requirements. Caps remain16 provider attempts/16 tools/1048576 input/19200 output/480 seconds, zero speech/external actions.",
+  "permitted_transition": "Root may finalize only the bound final readiness/admitted flags and provenance, then atomically publish exactly one fully written exclusive execute-once file binding this ready hash, final admission hash, run handle and exact source map to the same waiting process. Start one original480s deadline before child launch. No resource restart, duplicate reservation or closed-slot replay; native retries/helpers remain within the same original cumulative caps.",
+  "limitations": [
+    "GO applies only to the same waiting process and original reserved CM03 slot. It is not a quality or runtime-completion claim.",
+    "Closed CM01/CM02 UNKNOWN and three historical usage unknowns remain; actual request/readback/closure evidence is still required. Human ratings remain unknown."
+  ],
+  "review_preparation_note": {
+    "phase": "before review file write",
+    "reason": "Local reviewer assertion initially compared the DB reservation accounting subset with the full manifest including externalActions. Corrected to require the exact unchanged reservation subset and externalActions=0 separately. No source, authority, resource or input changed.",
+    "tool_chunk": "8443f8"
+  },
+  "reviewer_activity": {
+    "tests": 0,
+    "probes": 0,
+    "resource_starts": 0,
+    "actor_starts": 0,
+    "provider_calls": 0,
+    "auth_calls": 0,
+    "input_decodes": 0,
+    "authority_mutations": 0,
+    "admissions_written": 0,
+    "releases_written": 0
+  },
+  "human_ratings": [
+    null,
+    null
+  ]
+}

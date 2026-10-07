@@ -511,7 +511,7 @@ export class OpenClawAccounting {
         && typeof threadId === 'string' && threadId
         && typeof p.turnId === 'string' && p.turnId
         && row.turn_id_sha256 === digest(p.turnId)
-        && p.item.status === 'completed') {
+        && ['completed','failed'].includes(p.item.status)) {
       const terminal = commandTerminal
         ? {item_type:p.item.type, status:p.item.status, exit_code:p.item.exitCode}
         : {item_type:p.item.type, status:p.item.status, changes_sha256:digest(p.item.changes)};
