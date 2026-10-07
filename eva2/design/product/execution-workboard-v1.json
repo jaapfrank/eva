@@ -4078,11 +4078,11 @@
           }
         ],
         "now": {
-          "title": "Vergelijking · concrete blokkades",
+          "title": "Geen uitvoerbaar vervolg binnen huidige proefafspraken",
           "state": "blocked",
           "owner": "Codex",
-          "detail": "Oorspronkelijke vergelijking en R1/AIDE² zijn onvolledig afgesloten. Ontbrekend historisch SDK-verbruik en gebruikte onafhankelijke toelating laten geen nieuwe uitvoering binnen de bestaande voorwaarden toe. Twee menselijke kwaliteitsbeoordelingen ontbreken; spraak blijft geparkeerd.",
-          "remaining": "Twee menselijke beoordelingen; geldige hervatting van R1/P2 ontbreekt. Geen proefproces actief.",
+          "detail": "P2/R1: verloren verbruiksgegevens en afgesloten toelating verhinderen uitvoering binnen oorspronkelijke voorwaarden. Beide menselijke beoordelingen ontbreken. Derde opeenvolgende beurt zonder voortgang; geen proefproces actief.",
+          "remaining": "Een geldig meetvervolg binnen vastgelegde voorwaarden of expliciet gewijzigd meetbesluit; twee echte kwaliteitsbeoordelingen; gezinsacceptatie. Spraak blijft geparkeerd.",
           "source": "eva2/evidence/product/p2-current-round-decision-20261007.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
           "reviewedAt": "2026-10-07T00:58:22.999201+00:00",
@@ -19966,13 +19966,13 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Geen vergelijking of bouwwerk actief. Vorige geheugencorrectie geïnstalleerd; bestaande proefregistraties en ontbrekende beoordelingen nu gecontroleerd.",
+                "currentAction": "Derde opeenvolgende controle zonder voortgang: oorspronkelijke verbruiks-/toelatingsblokkade en ontbrekende beoordelingen ongewijzigd. App-goal wordt op geblokkeerd gezet; geen nieuwe proeven of spraakwerk.",
                 "previousGoalTurn": {
                   "classification": "no_progress",
-                  "sourceCommit": "70a9d7dd177f917540e336f6b261b4bf48dd0955",
-                  "meaning": "Bestaande open voorwaarden opnieuw gecontroleerd en zichtbaar gemaakt; geen nieuwe productfunctie of uitvoerbaar bewijs."
+                  "sourceCommit": "123d27edc4867fbd773e21e31f05f93f5682b292",
+                  "meaning": "Dezelfde oorspronkelijke proefregistratie en ontbrekende beoordelingen; geen onafhankelijk uitvoerbaar vervolg."
                 },
-                "stage": "awaiting_valid_evaluation_conditions",
+                "stage": "blocked_threshold_satisfied",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -20846,9 +20846,9 @@
                 "memorySelectionCorrectionEvidence": "eva2/evidence/product/memory-selection-correction-20261007.json",
                 "currentBlockedAudit": {
                   "condition": "Remaining original evaluation cannot resume with unrecoverable historical usage and spent admissions; remaining independent work is parked speech or human judgement.",
-                  "consecutiveGoalTurns": 2,
+                  "consecutiveGoalTurns": 3,
                   "previousGoalTurnClassification": "no_progress",
-                  "revalidatedAt": "2026-10-07T00:59:35.995082+00:00",
+                  "revalidatedAt": "2026-10-07T01:01:30.888460+00:00",
                   "evidence": [
                     "eva2/evidence/product/p2-current-round-decision-20261007.json",
                     "eva2/reviews/r1-current-readiness-20261006.json",
@@ -20861,7 +20861,6 @@
                     false,
                     false
                   ],
-                  "goalMarkedBlocked": false,
                   "observations": [
                     {
                       "turn": 1,
@@ -20877,8 +20876,22 @@
                         false,
                         false
                       ]
+                    },
+                    {
+                      "turn": 3,
+                      "classification": "no_progress",
+                      "originalAggregateUnchanged": true,
+                      "activeOriginalProcesses": [],
+                      "humanCompletedSheets": [
+                        false,
+                        false
+                      ],
+                      "newOwnerDecisionReceived": false
                     }
-                  ]
+                  ],
+                  "blockedThresholdSatisfied": true,
+                  "requestedAppGoalStatus": "blocked",
+                  "goalMarkedBlockedAtAuditCheck": false
                 },
                 "lastProgressGoalTurn": {
                   "classification": "progress",
