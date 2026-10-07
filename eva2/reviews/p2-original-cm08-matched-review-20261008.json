@@ -1,0 +1,361 @@
+{
+  "contract": "Ev003IndependentMatchedOriginalReview/v1",
+  "date": "2026-10-08",
+  "task": "P2.1",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "decision": "GO_PUBLICATION_OF_CLOSED_MATCHED_RESULT",
+  "reviewed_result": {
+    "path": "eva2/evidence/product/p2-cm08-matched-eva1-openclaw-result-20261008.json",
+    "sha256": "df20c4f9e8a35d4096b839b74a2fecafe751ac894f2968b7e25cc671aa4bb5ca"
+  },
+  "scope": "Exactly closed once EV003-CM-08 epoch1 Eva1/OpenClaw; sequential source/readiness/input review and retained terminal publication. No next sample or new evaluation authorized.",
+  "original_binding": {
+    "case_id": "EV003-CM-08",
+    "epoch": 1,
+    "case_sha256": "ad606124612441d4f0fd84abcfdf3e3930fcf07bec8da3ea20078244abf23dbb",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "shared_packet_sha256": "9cac94fbbfc5553cbfc41d3fc7b6c73996f12c8016d63c821e11c43c0f05c463",
+    "projection_contract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/projection-contract-technical.private.json",
+      "sha256": "89dfc4c7a6a248776ab52a6f2385da4da53f582b43e9dd6453d87073d1448ab6"
+    },
+    "same_original_text_order_identity_audience_clock_and_grants": true,
+    "original_turns": 3,
+    "sessions": [
+      0,
+      0,
+      1
+    ],
+    "private_verified_actors": 1,
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "calendar_advance_days": 10
+  },
+  "source_and_admission_review": {
+    "basis_commit": "eaccf2e5a7daf48758b0d4ad2796216881287a18",
+    "review_index": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/review-index-technical.private.json",
+      "sha256": "89d7795316546769b5edd550f7acbb742cadf5e8c5f32a573e6d6f3910ab3054"
+    },
+    "mechanical_delta": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/mechanical-source-delta-technical.private.json",
+      "sha256": "b84d3fad5d4661273376d4cb74f09a540d6efe757e317ec9bc24cdfda2924839"
+    },
+    "offline_preflight": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/offline-preflight-technical.private.json",
+      "sha256": "d3d86c7c800fbb0be21837c63eabb66e059adffdec4463bd7e213792c9467742"
+    },
+    "verified": "All five actual source deltas equal their retained CM06 diffs; original native code/policy, plan, model roles, criteria and budgets unchanged. Eva1 seventeen source pins and OpenClaw forty-eight initial pins matched; post-Eva1 additional bindings matched.",
+    "eva1": {
+      "source_binding": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/source-binding.private.json",
+        "sha256": "7fb341b80ac752f05dba99441950c0a0a2e5359422254485cd8cf88e98a17d25"
+      },
+      "source_admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/source-admission.private.json",
+        "sha256": "6827cafd05ad27d3647a348fa96a98f6727269ea16ad0af6e509b4aaeec44721"
+      },
+      "ready": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/parent-ready-technical.private.json",
+        "sha256": "594ec0fcb15d8315666be87f3b1d63143a3fa8a3085c83af0921673bda2a5140"
+      },
+      "observation": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/actual-ready-observation-technical.private.json",
+        "sha256": "d9c730ed12e4ac24176c8b97f50f990334e3cc05c9999412e75017a59f4beec1"
+      },
+      "final_admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/final-admission.private.json",
+        "sha256": "7d8d16e95086f0a2a3f618f616b05c892e7ddf55307ea8a8188dc8facbf60886"
+      },
+      "release": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/execute-once.private.json",
+        "sha256": "6037711e07ba58ee5ae13eea6abe93a5ad6ce347fc9a17b6861af92e14aa6223"
+      },
+      "exec_handle": 76710,
+      "same_parent_pid_at_admission": 3179486,
+      "decision": "GO_ONE_ORIGINAL_EVA1_CM08"
+    },
+    "openclaw": {
+      "post_eva1_source_draft": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/parent-cm08-post-eva1-preparation-draft.private.json",
+        "sha256": "3cb3da0f89d976111a5886037c94d8511c99ef7dca52333e3b2f14c1070f4f86"
+      },
+      "resource_admission": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/parent-cm08-resource-admission.private.json",
+        "sha256": "6409fae5233676d31d59a1895abaa72ae6b7c40231498ca0e9e27b80b64b71f7"
+      },
+      "ready": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execution/actual-ready-technical.private.json",
+        "sha256": "900a5a28e8e6dc1bfbf25aad83db4f061d67eb452cf5bce1778442c58c896572"
+      },
+      "observation": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/actual-ready-observation-technical.private.json",
+        "sha256": "47e0fb3b24836a12d0db9663ba1833aec72f58c13692053b01881765d03cd424"
+      },
+      "release": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execute-once.private.json",
+        "sha256": "82d9102071e0fdb7cf7840e4fa89ab519fac361597cb2862bed205abc1c1ca60"
+      },
+      "exec_handle": 21628,
+      "same_wrapper_parent_pids_at_admission": [
+        3192517,
+        3193002
+      ],
+      "decision": "GO_ONE_ORIGINAL_OPENCLAW_CM08"
+    },
+    "release_boundaries": "Both remained zero-input/zero-provider until distinct root-owned one-time releases. Eva1 native source/lease/database/initial-clock checks precede first chat. OpenClaw ordinary actor registers with the original root-owned scope before packet decode; parent, tools and all physical SDK dispatches remain bound.",
+    "same_original_clock_control": "Three turns, sessions[0,0,1], generations[0,0,1], one verified private actor and original ten-day transition after native settlement; real auth and monotonic scope unchanged."
+  },
+  "terminal_bindings": {
+    "technical": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/terminal-accounting-technical.private.json",
+      "sha256": "2a52f0b381b9a20652159070a4d072729dea1fc81646f2fe930a5961d950b7f0"
+    },
+    "declassification": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/assessment-declassification-technical.private.json",
+      "sha256": "d5735c5c0f21f236dfd16fa2b7d30528c6086ba7cff5f52f2b4930a15880340b"
+    },
+    "eva1": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/terminal-technical.private.json",
+      "sha256": "784510fdd73340e192766a43fb14e6f17496b49e6012c95da152a50a3b995986"
+    },
+    "openclaw": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execution/receipt.json",
+      "sha256": "a8be3d7e2544c1189848d0735035115e404c73bf935ca2e6329bd3dfb8197ceb"
+    },
+    "openclaw_native": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execution/sample/native-cm-technical.json",
+      "sha256": "8dceb5b9ab349524aad518458717e2552ef1a6cf9fe9c0c3b9a5e35c23acb1f7"
+    },
+    "protected_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/independent-assessment.private.json",
+      "sha256": "65c879c0595427b27c124008e35f865e807be63ab7f5dad4e8860979a52940eb"
+    }
+  },
+  "verification": {
+    "original_input_binding": "Shared projection/commitment/case hash verified through technical controls and retained loader preflight; reviewer did not read question/oracle packet.",
+    "roles": "Observed six Eva1 and eleven OpenClaw contact Sol/none dispatches; helpers remain bound to original Astra/medium when dispatched, no separate helper budget.",
+    "sdk_and_tools": {
+      "eva1": {
+        "complete_sdk_attempts": 6,
+        "input_tokens": 35582,
+        "output_tokens": 1597,
+        "total_tokens": 37179,
+        "tool_dispatches": 6,
+        "native_turns": 3,
+        "delivery_acks": 3
+      },
+      "openclaw": {
+        "complete_sdk_attempts": 11,
+        "input_tokens": 265298,
+        "output_tokens": 1097,
+        "total_tokens": 266395,
+        "settled_tool_dispatches": 8,
+        "native_turns": 3
+      }
+    },
+    "limits": {
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "deadlines": {
+      "eva1": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/sample-deadlines/eva1-bottie-absolute-deadline.json",
+        "sha256": "3ede2511907c3161fc06ad41f59588950dfbd1de3bdc0945e62d9e65fa675ec9"
+      },
+      "openclaw": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/sample-deadlines/openclaw-absolute-deadline.json",
+        "sha256": "d06c92b45bddc59752d39ab89fafae538e678dbb19560a6fcb8f0ae0ef571cc6"
+      },
+      "both_exact_480_seconds": true,
+      "reset_or_renewal": false,
+      "expired": false
+    },
+    "timing": {
+      "eva1": {
+        "seconds": 28.769126105005853,
+        "boundary": "original monotonic start before worker launch to final readback or failure, measured immediately before stop sequence"
+      },
+      "openclaw": {
+        "seconds": 92.41397680499358,
+        "boundary": "original monotonic start before native launch to native child exit, before parent envelope cleanup"
+      },
+      "direct_speed_comparison_valid": false
+    },
+    "closure": {
+      "eva1_stop_reader_and_physical_exit": true,
+      "original_parent_pids_physically_absent": [
+        3179486,
+        3192517,
+        3193002
+      ],
+      "openclaw_literal_native_closed": false,
+      "openclaw_equivalent_native_settled": true,
+      "openclaw_parent_close_ack": true,
+      "openclaw_pending_sdk_tools_native_work": 0,
+      "openclaw_tools_settled": 8,
+      "openclaw_root_scope_empty_and_removed": true,
+      "openclaw_container_and_network_absent": true,
+      "cleanup_errors": []
+    },
+    "readback_artifact_hashes_independently_verified": 8,
+    "protected_assessment_hash_verified_without_reading_content": true,
+    "raw_inspect_scores_and_closed_results_rewritten": false
+  },
+  "assessment_publication": {
+    "participants": {
+      "eva1-bottie": {
+        "native_responses": 3,
+        "factual_response_predicates": [
+          true,
+          true,
+          false
+        ],
+        "original_condition_observations": [
+          false,
+          true,
+          false
+        ],
+        "required_independent_readbacks": [
+          true,
+          true
+        ],
+        "objective_completion": false,
+        "official_semantic_score": null,
+        "human_ratings": [
+          null,
+          null
+        ],
+        "whole_case_quality": "UNKNOWN"
+      },
+      "openclaw": {
+        "native_responses": 3,
+        "factual_response_predicates": [
+          true,
+          true,
+          false
+        ],
+        "original_condition_observations": [
+          false,
+          true,
+          false
+        ],
+        "required_independent_readbacks": [
+          true,
+          true
+        ],
+        "objective_completion": false,
+        "official_semantic_score": null,
+        "human_ratings": [
+          null,
+          null
+        ],
+        "whole_case_quality": "UNKNOWN"
+      }
+    },
+    "readback_bindings": [
+      {
+        "scope": "readback:0",
+        "evaluator": "independent_memory_readback",
+        "original_spec_sha256": "090b800d594661a7b23a02aef37e6463f5653bf801cab2eda05e0fb5f3bb56e9",
+        "eva1_evidence": [
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/eva1-person-snapshot.private.json",
+            "sha256": "159366f1e330091ab7a0835ebc11b0ad6070ca0fb0157d815a352f17a5851d12"
+          }
+        ],
+        "openclaw_evidence": [
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execution/sample/native-mirrored-history-1.private.json",
+            "sha256": "23ab84b425441ecede9bfb904981c6c4c71347f4b5768383fe5855de2e3aae67"
+          },
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execution/sample/native-session-entry-1.private.json",
+            "sha256": "1bbb75feb742baed7f21ee4377841e4c73d40e445fec85ffaf304226de2b91a6"
+          },
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execution/sample/workspace-readback-2/USER.md",
+            "sha256": "3913644bc38c36fa883962701d569b0a3ed8a2367d4e8f35c842e937c49abc24"
+          }
+        ]
+      },
+      {
+        "scope": "readback:1",
+        "evaluator": "native_trace",
+        "original_spec_sha256": "734e710dbc5cfdb8636a21976954c4ddcbab58d5de72e11d0b69317d4e47d8b4",
+        "eva1_evidence": [
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/terminal-technical.private.json",
+            "sha256": "784510fdd73340e192766a43fb14e6f17496b49e6012c95da152a50a3b995986"
+          },
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/eva1/eva1-stop.private.json",
+            "sha256": "faf421d77ebe73457ee277a28d855bc635add0b41169d578679317673d9e8b58"
+          }
+        ],
+        "openclaw_evidence": [
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execution/receipt.json",
+            "sha256": "a8be3d7e2544c1189848d0735035115e404c73bf935ca2e6329bd3dfb8197ceb"
+          },
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-matched-cm08-preparation-20261008-v1/openclaw/execution/sample/native-cm-technical.json",
+            "sha256": "8dceb5b9ab349524aad518458717e2552ef1a6cf9fe9c0c3b9a5e35c23acb1f7"
+          }
+        ]
+      }
+    ],
+    "interpretation": "Original-person durable attribution and complete native trace pass; both fail required late experience recall. Stored history/readbacks are not a late model-context or recall pass. Independent curator declassification supplies fixed predicate observations; no human judgement is substituted.",
+    "failure_classification": "properly_admitted_native_task_noncompletion; no evaluator coverage failure established"
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "7ac4b5cb16fcde549216ce641a7c310c37977d3edda62f947f8a33a34042ac74",
+    "rows": 23,
+    "original21_value_hashes_and_revisions_exact": true,
+    "eva1_closed_row_preserved_through_openclaw": true,
+    "only_additions": [
+      "eva1-bottie:EV003-CM-08:epoch1",
+      "openclaw:EV003-CM-08:epoch1"
+    ],
+    "known_lower_bounds": {
+      "provider_attempts": 153,
+      "input_tokens": 1745896,
+      "output_tokens": 16655,
+      "total_tokens": 1762551
+    },
+    "historical_unknown_attempts": 3,
+    "usage_complete": false,
+    "money": null,
+    "verified": "Read-only actual SQLite rows at source, post-Eva1, reserved-OpenClaw and final checkpoints; byte hashes unchanged by review reads. No seed/reset/copy/donor budget."
+  },
+  "publication_limits": [
+    "No whole-task quality, speed, efficiency, money or general participant winner follows when both original objective tasks fail.",
+    "Eva1 is not a correctness oracle; Eva2 was not run or scored by imputation, and its historical usage-unknown guard remains.",
+    "Timing endpoints differ; numerical durations and token counts remain observations, not superiority claims.",
+    "Human ratings remain null, official semantic scores unchanged/null and whole-case quality UNKNOWN.",
+    "No original-case replay, next-case admission, matrix, migration advantage or product/P2.1 completion follows."
+  ],
+  "reviewer_activity": {
+    "native_or_provider_calls": 0,
+    "model_or_benchmark_calls": 0,
+    "tests_run": 0,
+    "reservations_created": 0,
+    "source_runtime_authority_changes": 0,
+    "protected_questions_or_answers_read": false,
+    "written_files": [
+      "eva2/reviews/p2-original-cm08-matched-review-20261008.json"
+    ]
+  },
+  "material_defects": []
+}

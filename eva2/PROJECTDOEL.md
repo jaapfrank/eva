@@ -1,5 +1,24 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## P2.1 actueel 8 oktober — gedeelde ervaring blijft niet bruikbaar
+
+De oorspronkelijke CM08 epoch1 is eenmaal bij Eva1/OpenClaw uitgevoerd met dezelfde
+drie berichten, twee sessies en tien dagen gesimuleerde klokverschuiving. Beide
+geven3/3 native antwoorden, waarvan2/3 feitelijk kloppen; beide missen de volledige
+taak. De eerdere ervaring blijft in persoonsgebonden historie maar ontbreekt in
+latere modelcontext/antwoord. Twee vaste readbacks bewijzen historie/trace, geen
+geslaagde herinnering. Een algemene winnaar of migratievoordeel volgt hier niet uit.
+
+Eva1 gebruikt6 complete Sol/none-aanvragen,35.582 invoer-/1.597 uitvoertokens;
+OpenClaw11,265.298/1.097. Tijdgrenzen verschillen. Beide uitvoeringen zijn gesloten,
+oorspronkelijke regels en alle21 oudere registraties exact behouden. Nu23rijen/
+153aanvragen,1.762.551 bekende ondergrenstokens en3 historische verbruiksonbekenden.
+Menselijke kwaliteit/geldkosten blijven onbekend; matching Eva2 is niet uitgevoerd.
+P2.1 blijft open voor resterende oorspronkelijke dekking en echte beoordelingen.
+Geen automatische volgende proef, nieuwe bronbouw of extra afgeronde gezinsfunctie.
+Bewijs: evidence/product/p2-cm08-matched-eva1-openclaw-result-20261008.json.
+Review: reviews/p2-original-cm08-matched-review-20261008.json.
+
 ## Actueel 8 oktober — bestaand droomwerk maakt ruimte voor het gezin
 
 De bestaande automatische reflectie-/initiatiefroute is gericht aangepast en

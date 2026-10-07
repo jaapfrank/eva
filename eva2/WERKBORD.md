@@ -1,3 +1,26 @@
+## Actueel 8 oktober — dezelfde ervaring later terughalen: beide tekort
+
+| Oorspronkelijke CM08 | Ontvangen | Feitelijk correct | Latere ervaring | Modelaanvragen | Tokens |
+| --- | --- | --- | --- | --- | --- |
+| Eva1 | 3/3 | 2/3 | Niet teruggehaald | 6 | 37.179 |
+| OpenClaw | 3/3 | 2/3 | Niet teruggehaald | 11 | 266.395 |
+| Eva2 | Niet uitgevoerd | Onbekend | Onbekend | — | — |
+
+Dezelfde oorspronkelijke taak met twee sessies en een gesimuleerde klokverschuiving
+van tien dagen. Beide bewaren de ervaring in persoonsgebonden historie, maar bieden
+haar later niet aan het model aan. De twee vaste bron-/tracecontroles slagen;
+dat bewijst geen correcte latere herinnering. Beide volledige opdrachten falen.
+Onafhankelijke review GO; beide native uitvoeringen zijn bevestigd afgesloten.
+
+Minder tokens bewijst hier geen efficiëntiewin voor geslaagd werk. Tijdmetingen
+eindigen verschillend; geen snelheidsratio. Menselijke kwaliteit/geldkosten onbekend.
+Alle21 oude registraties exact; nu23 rijen/153 aanvragen,1.762.551 bekende tokens als
+ondergrens en3historische onbekenden. Geen herhaling of volgende proef gestart.
+P2.1 blijft open;48 kleine taken/39 afgerond ongewijzigd. Spraak geparkeerd.
+
+Bewijs: evidence/product/p2-cm08-matched-eva1-openclaw-result-20261008.json.
+Review: reviews/p2-original-cm08-matched-review-20261008.json.
+
 ## Actueel 8 oktober — gesprekken krijgen voorrang op droomwerk
 
 **Geïnstalleerd:** bestaande automatische achtergrondstappen controleren rust,
