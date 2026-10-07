@@ -1,12 +1,18 @@
-## Actueel 7 oktober — gewone Eva-taak af, onafhankelijke antwoordbeoordeling loopt
+## Actueel 7 oktober — L3.6 klaar: Eva’s kwaliteitsverbetering geïnstalleerd
 
-Eva heeft dezelfde kandidaat B exact opgeslagen, teruggelezen en haar gewone
-uitvoering succesvol afgerond. Geen voorstel, vergelijking, voorbereiding of
-opslag herhaald. De geïnstalleerde kern/werker zijn gezond. Dezelfde eindhost
-heeft het bewaarde pakket beoordeeld en vraagt nu de vooraf afgesproken aparte
-antwoordbeoordeling; de onafhankelijke uitvoerder doet die binnen het vaste
-24-callmaximum. Nog geen finale kwaliteitswinst of kandidaatinstallatie geclaimd.
-L3.6 blijft open tot de eindbeslissing en eventuele echte toepassing.
+Eva maakte zelf contextkandidaat B via gewone chat en de bestaande uitvoering.
+De aparte eindbeoordeling accepteerde de exacte kandidaat: één extra vraag
+rechtstreeks beantwoord in drie van drie herhalingen, zonder kwaliteitsregressies
+of harde fouten. Geen aantoonbare tokenbesparing of brede superioriteitsclaim.
+De beheerde route importeerde, bouwde en installeerde dezelfde kandidaat;
+kern en werker zijn gezond en exacte bronhashes zijn teruggelezen.
+
+L3.6 is klaar. L3.7 is nu actief: de volgende toegelaten ronde moet beste versie
+en eerdere ervaring hergebruiken, zonder dubbele toepassing. Apps/add-ons vallen
+onder dezelfde cyclus; de voorgestelde droommodus is nog niet gebouwd.
+Antwoordvergelijking: 24 modelcalls, 13.973 tokens, geen toolcalls/retries.
+Ontwikkelverbruik en eerdere fouten staan apart; creditkosten blijven onbekend.
+Bewijs: evidence/product/l3-context-candidate-b-installed-20261007.json.
 
 ## Actueel 7 oktober — volledige documentovergang geïnstalleerd, exact werk hervat
 

@@ -1,0 +1,172 @@
+{
+  "contract": "EvaL3IndependentContextAnswerResult/v1",
+  "task_id": "L3.6",
+  "review_id": "0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a",
+  "request_id": "fe7da6d349c0d8694c748dabde0cbc3c7a0f69df57e88889468069549e667d63",
+  "decision": "accept",
+  "candidate_sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+  "baseline_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "assessment": {
+    "contract": "EvaIndependentContextFinalAssessment/v1",
+    "binding": {
+      "registration_sha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+      "criteria_sha256": "4d83baddcfd41bf71b44872da7bc0c2dccae23f07cc68cc6401620be53fa13ca",
+      "dataset_sha256": "85a73a4555487724b9236f377da310a1001cb1e958314d5da347220bf3c270f8",
+      "runner_sha256": "6a542d85c0e5ddafc420fce6533826e30b7be6c5e5d61dd1fef8e82d9a722da1",
+      "scorer_sha256": "cad5c8c475b8617ad592e8a3c88b8e9a4f697efc0f4112b16375747d780d6dd5",
+      "baseline_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+      "candidate_sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+      "image_id": "sha256:57d7bd50104eff33584a9b6157b6449bc12460168b8eb8ba418152cee4a4b21c",
+      "isolated_report_sha256": "7448ffa39bd297556beab295316390910a76a36e1c13b38848dcfd55f00a3713"
+    },
+    "decision": "accept",
+    "installed": false,
+    "semantic_improvement_verified": true,
+    "answer_quality_observed": true,
+    "latency_gate_passed": true,
+    "subscription_credits": null,
+    "case_count": 16,
+    "answer_stage_eligible": true,
+    "model_calls_performed_by_scorer": 0,
+    "hard_failures": {
+      "baseline": 0,
+      "candidate": 0
+    },
+    "relevance_regressions": 0,
+    "required_references": 12,
+    "included_references": {
+      "baseline": 10,
+      "candidate": 11
+    },
+    "newly_answerable_questions": 1,
+    "context_bytes": {
+      "baseline": 18402,
+      "candidate": 18407
+    },
+    "reason": "original_promotion_rule_passed",
+    "answer_calls": 24,
+    "correctness_regressions": 0,
+    "new_direct_answer_wins": 1,
+    "input_tokens": {
+      "baseline": 6441,
+      "candidate": 6438
+    },
+    "output_tokens": {
+      "baseline": 561,
+      "candidate": 533
+    },
+    "median_seconds": {
+      "baseline": 4.250311392002914,
+      "candidate": 4.105493601004127
+    },
+    "token_reduction_branch_passed": false,
+    "independent_answer_receipt_sha256": "bdc74160bd84b7308a4a20fe6199a30f6eeb8c5266790fb57a089494fb758990"
+  },
+  "answer_comparison": {
+    "model": "gpt-6-sol",
+    "reasoning": "none",
+    "selected_questions": 4,
+    "repetitions": 3,
+    "calls": 24,
+    "successful_calls": 24,
+    "failed_calls": 0,
+    "automatic_retries": 0,
+    "tools": 0,
+    "judge_model_calls": 0,
+    "legs": {
+      "baseline": {
+        "calls": 12,
+        "correct_answers": 12,
+        "input_tokens": 6441,
+        "output_tokens": 561,
+        "provider_seconds": 55.31182168396481,
+        "median_seconds": 4.250311392002914,
+        "minimum_seconds": 3.3621778819942847,
+        "maximum_seconds": 8.054967421994661
+      },
+      "candidate": {
+        "calls": 12,
+        "correct_answers": 12,
+        "input_tokens": 6438,
+        "output_tokens": 533,
+        "provider_seconds": 49.6399475249782,
+        "median_seconds": 4.105493601004127,
+        "minimum_seconds": 3.1398550839949166,
+        "maximum_seconds": 5.558622509997804
+      }
+    },
+    "correctness_regressions": 0,
+    "new_direct_answer_wins": 1,
+    "correct_direct_answers_on_newly_answerable_question": {
+      "baseline": 0,
+      "candidate": 3,
+      "possible_per_leg": 3
+    },
+    "conditional_additional_detail_lookup_replies_on_new_case": 1,
+    "median_ratio": 0.9659277220790775,
+    "latency_gate_passed": true,
+    "token_reduction_branch_passed": false
+  },
+  "usage": {
+    "logical_answer_calls": 24,
+    "input_tokens": 12879,
+    "output_tokens": 1094,
+    "total_tokens": 13973,
+    "answer_usage_complete": true,
+    "generation_and_host_resume_usage": "Recorded separately in the original task; not included in these answer-only totals",
+    "credits": null,
+    "monetary_cost": null
+  },
+  "closure": {
+    "runner_exit_code": 0,
+    "all_24_native_helper_exit_codes_zero": true,
+    "consumed_guard_retained": true,
+    "new_owned_containers_or_networks": false,
+    "shared_core_not_stopped_or_replaced": true,
+    "candidate_context_reruns": 0
+  },
+  "evidence": {
+    "preregistration": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/l3-context-final-preregistration-20261007.json",
+      "sha256": "77c27be273fddeb5c2085aeac1fd62c4bdae06759c6db7fdff049c68ac0b811d"
+    },
+    "isolated_report": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a/isolated-final.private.json",
+      "sha256": "7448ffa39bd297556beab295316390910a76a36e1c13b38848dcfd55f00a3713"
+    },
+    "answer_plan": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/answer-plan.private.json",
+      "sha256": "0611b1d97d5a6358762bc46f19e744bbee67a646448e193d8d122e08f025649f"
+    },
+    "answer_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/answer-admission.private.json",
+      "sha256": "4b9f09604503914984550206d5f4810ece6d752936fcf659e476348a039ee7b7"
+    },
+    "answer_execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/answer-execution.private.json",
+      "sha256": "84875f334d81fc59a736ddb4cacab54aa989ade80c3efc4ee9105ede3b8f8dc2"
+    },
+    "answer_evidence": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/answer-evidence.private.json",
+      "sha256": "bdc74160bd84b7308a4a20fe6199a30f6eeb8c5266790fb57a089494fb758990"
+    },
+    "final_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-context-final-20261007-v1/answer-final-assessment.private.json",
+      "sha256": "c9f5aa99f8739da007bcdda8991384e9d2493c664b23fa0315f671d94c8d9502"
+    },
+    "started_ledger_sha256": "a3871447101557d866bb5882623daa29d581daad20b06d8b1591df98e0ab2475",
+    "result_ledger_sha256": "2ffa64d3311abdc942f19f54e5ecbf9cb359d950c196fd1abe4d121170f49ef5",
+    "consumed_sha256": "1f96825722a5154c7b65be5ac51742e79611729a2c3c9dd0caf296da103c5193"
+  },
+  "installed": false,
+  "human_family_or_personality_quality": null,
+  "limitations": [
+    "One newly answerable heldout status question plus three fixed controls, each sampled three times; no broad conversation/household/general intelligence superiority claim",
+    "All24 outputs independently assessed without extra judge-model calls; official human/family ratings remain unknown",
+    "One candidate reply offers lookup only for additional unavailable detail; complete removal of follow-up requests is not established",
+    "Latency measures the provider phase within the answer driver; Docker/interpreter/startup and real task completion are excluded; small provider-sensitive sample",
+    "Token-saving promotion branch is not met; acceptance, if returned, uses the original newly-answerable-task branch with no correctness regression and the median latency gate",
+    "Previous Oct3/AIDE/R1 trials and allowances remain closed; no heldout-guided candidate edit or new context execution",
+    "This independently assesses exact B; managed publication/installation requires the existing exact package/import/build/application route"
+  ]
+}

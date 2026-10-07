@@ -1,0 +1,94 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "task": "L3.6",
+  "checkedAt": "2026-10-07T12:32:08.664436+00:00",
+  "status": "installed_and_verified",
+  "candidate_sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+  "baseline_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "ordinary_work_id": "work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b",
+  "successful_resume_work_id": "work:eva-resume:0d4e8277-ed9c-5ba9-9804-e742d536f78d",
+  "authorship": "Eva authored B through ordinary owner chat/delegated work; Codex corrected necessary document/model/host transitions, not candidate B.",
+  "independent_decision": "accept",
+  "quality": {
+    "heldout_cases": 16,
+    "new_direct_answer_wins": 1,
+    "successful_repetitions_for_newly_answerable_question": 3,
+    "possible_repetitions": 3,
+    "correctness_regressions": 0,
+    "relevance_regressions": 0,
+    "hard_failures": 0,
+    "token_reduction_branch_passed": false,
+    "median_provider_seconds": {
+      "baseline": 4.250311392002914,
+      "candidate": 4.105493601004127
+    },
+    "latency_gate_passed": true,
+    "general_superiority_proven": false
+  },
+  "answer_stage_usage": {
+    "model_calls": 24,
+    "tool_calls": 0,
+    "automatic_retries": 0,
+    "input_tokens": 12879,
+    "output_tokens": 1094,
+    "total_tokens": 13973,
+    "complete_for_answer_stage_only": true,
+    "credits": null
+  },
+  "development_usage": "Original and resumed jobs retain partial usage and all failures; answer-only totals exclude generation, corrections and earlier losing variant. Credit cost unknown.",
+  "application": {
+    "state": "completed",
+    "runtime_status": "running_with_retained_mounts",
+    "images": {
+      "core": "sha256:abae98b04e2ece802452cab215fa61ff18042f30759ee36239655ca4565531e1",
+      "delegated-work-worker": "sha256:807f8c7b35537e39b7bd39b537132430eb08d65eccea15425ab2dd98ec0623a5"
+    },
+    "publisher_source_commit": "d34bb6c2f3dcccd2a478e4e86baca26fc65831a5",
+    "integrated_main_commit": "454395cd9407e264c3c1698c08a2c3080b50d9c3",
+    "source_readback_both_images": true,
+    "preserved_model_view_sha256": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+    "preserved_schema_sha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e"
+  },
+  "bindings": {
+    "final_decision": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a/decision-answer.json",
+      "sha256": "ec6b36c7d8d8890d08ff3c0f41ed10adc2f5c6f70fb66668af90e8351b9128f7"
+    },
+    "isolated_final_report": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a/isolated-final.private.json",
+      "sha256": "7448ffa39bd297556beab295316390910a76a36e1c13b38848dcfd55f00a3713"
+    },
+    "review": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a/review.json",
+      "sha256": "b738310738bf6b852c6caea600e5c66ff480fdd92f989420787dac02011401a8"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a/build.json",
+      "sha256": "780b68feb5eb94d41f2bb336e16e3a0dcbffe90d7a41878e36395a5992444297"
+    },
+    "update": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a/update.private.json",
+      "sha256": "15f44cf2aa2eb3f5ab4621f8576084d389fe736f2ca8a6bf28ec61e5b85b4fc1"
+    },
+    "application_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-context-typed-20261003/application/reviewed-host/requests/fe7da6d349c0d8694c748dabde0cbc3c7a0f69df57e88889468069549e667d63.json",
+      "sha256": "a5eeecaab85bf16aac0d0614ee02befc824a93db01a0af7a41c75956fba9b944"
+    }
+  },
+  "handoff_correction": {
+    "cause": "Missing pathlib.Path import killed answer-ready dispatcher before answer assessment; fixed host-only, existing job/report preserved.",
+    "source_sha256": "8aae5cf148b0796ce13e1e8d6303760ee081c5108c9fd60f369b5196d16f11c5",
+    "tests": "13 passed in 4.52s; zero provider calls",
+    "review": "eva2/reviews/l3-answer-readiness-import-review-20261007.json"
+  },
+  "original_aide": "Variant search and measured selection were used.",
+  "aide2_application": "Measured modification of Eva context selection improved one actual heldout answering task. Broader recurring self-improvement remains L3.7.",
+  "apps_addons_dream_mode": {
+    "scope_included": true,
+    "implemented_by_this_trial": false
+  },
+  "remaining": [
+    "L3.7: next admitted round uses actual best version/experience and stop/resume does not repeat application.",
+    "Broader personality, initiative, programming and household quality are not demonstrated by this context trial."
+  ]
+}

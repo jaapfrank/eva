@@ -1,0 +1,125 @@
+{
+  "contract": "EvaL3ContextCandidateInstalledReview/v1",
+  "reviewedAt": "2026-10-07",
+  "task": "L3.6",
+  "decision": "GO_INSTALLED_AND_BOUNDED_PUBLICATION",
+  "scope": "Exact integration, installed source/image/mount readback, retained application provenance and bounded public claims for the same Eva-produced candidate B. No protected-case reassessment.",
+  "evidence": {
+    "path": "eva2/evidence/product/l3-context-candidate-b-installed-20261007.json",
+    "sha256": "0c3170cd5bafab4c633d819e64591b782f1df5a16389788a73fe053a9e258057"
+  },
+  "source": {
+    "candidateSha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+    "baselineSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+    "publisherCommit": "d34bb6c2f3dcccd2a478e4e86baca26fc65831a5",
+    "integrationCommit": "454395cd9407e264c3c1698c08a2c3080b50d9c3",
+    "integrationChangedFiles": [
+      "eva2/src/eva/adapters/postgres/delegated_work_actions.py"
+    ],
+    "integratedFileSha256MatchesCandidate": true
+  },
+  "actualReadback": {
+    "method": "Read-only Docker inspect and source-file SHA256 reads in the two actual running containers; no model, test or effect execution.",
+    "services": [
+      {
+        "name": "core",
+        "image": "sha256:abae98b04e2ece802452cab215fa61ff18042f30759ee36239655ca4565531e1",
+        "running": true,
+        "health": "healthy",
+        "mountsMatchUpdate": true
+      },
+      {
+        "name": "delegated-work-worker",
+        "image": "sha256:807f8c7b35537e39b7bd39b537132430eb08d65eccea15425ab2dd98ec0623a5",
+        "running": true,
+        "health": "healthy",
+        "mountsMatchUpdate": true
+      }
+    ],
+    "hashesMatchedInBoth": {
+      "candidate": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+      "modelView": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+      "schema": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e"
+    }
+  },
+  "retainedBindingsVerified": {
+    "method": "All six referenced artifact file hashes match the public evidence. Protected isolated report was hashed only; no case or answer contents were inspected.",
+    "finalDecision": "ec6b36c7d8d8890d08ff3c0f41ed10adc2f5c6f70fb66668af90e8351b9128f7",
+    "isolatedFinalReport": "7448ffa39bd297556beab295316390910a76a36e1c13b38848dcfd55f00a3713",
+    "review": "b738310738bf6b852c6caea600e5c66ff480fdd92f989420787dac02011401a8",
+    "build": "780b68feb5eb94d41f2bb336e16e3a0dcbffe90d7a41878e36395a5992444297",
+    "update": "15f44cf2aa2eb3f5ab4621f8576084d389fe736f2ca8a6bf28ec61e5b85b4fc1",
+    "applicationReceipt": "a5eeecaab85bf16aac0d0614ee02befc824a93db01a0af7a41c75956fba9b944",
+    "protocolRegistration": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+    "criteria": "4d83baddcfd41bf71b44872da7bc0c2dccae23f07cc68cc6401620be53fa13ca",
+    "dataset": "85a73a4555487724b9236f377da310a1001cb1e958314d5da347220bf3c270f8",
+    "runner": "6a542d85c0e5ddafc420fce6533826e30b7be6c5e5d61dd1fef8e82d9a722da1",
+    "scorer": "cad5c8c475b8617ad592e8a3c88b8e9a4f697efc0f4112b16375747d780d6dd5"
+  },
+  "application": {
+    "requestId": "fe7da6d349c0d8694c748dabde0cbc3c7a0f69df57e88889468069549e667d63",
+    "reviewId": "0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a",
+    "taskId": "work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b",
+    "state": "completed",
+    "runtimeStatus": "running_with_retained_mounts",
+    "acceptedReviewSha256Matches": true,
+    "releaseSha256": "cf4f9759f679f4d8b94e16b95ee54570dbfe356247326609b16e20f07d42f28c",
+    "noReviewerRedispatch": true
+  },
+  "independentPublicDecision": {
+    "decision": "accept",
+    "candidateAndBaselineBindingsMatch": true,
+    "cases": 16,
+    "includedReferences": {
+      "baseline": 10,
+      "candidate": 11
+    },
+    "requiredReferences": 12,
+    "newlyAnswerableQuestions": 1,
+    "newDirectAnswerWins": 1,
+    "correctnessRegressions": 0,
+    "relevanceRegressions": 0,
+    "hardFailures": {
+      "baseline": 0,
+      "candidate": 0
+    },
+    "medianProviderSeconds": {
+      "baseline": 4.250311392002914,
+      "candidate": 4.105493601004127
+    },
+    "latencyGatePassed": true,
+    "tokenReductionBranchPassed": false,
+    "semanticImprovementVerifiedByIndependentDecision": true,
+    "reviewerRescoredAnswers": false
+  },
+  "usage": {
+    "answerStageOnly": {
+      "modelCalls": 24,
+      "toolCalls": 0,
+      "automaticRetries": 0,
+      "inputTokens": 12879,
+      "outputTokens": 1094,
+      "totalTokens": 13973
+    },
+    "inputAndOutputTotalsMatchDecisionPairs": true,
+    "completeOverallDevelopmentUsageClaim": false,
+    "originalGenerationResumesCorrectionsAndFailuresRemainSeparate": true,
+    "credits": "UNKNOWN"
+  },
+  "findings": {
+    "materialBlockers": [],
+    "delivery": "Both current services contain the exact frozen Eva-authored B and retain the reviewed necessary modelview/schema corrections. The main integration changes only the selected component target.",
+    "provenance": "Existing accepted independent decision, review, build, update and completed application receipt remain linked to the same request/review/task and frozen protocol.",
+    "publication": "The report correctly separates the one measured answer advantage from general superiority, identifies answer-stage-only usage, preserves failure/correction provenance and leaves L3.7 and apps/addons/dream scope open."
+  },
+  "limitations": {
+    "reviewerNewTests": 0,
+    "reviewerProviderCalls": 0,
+    "protectedCasesOrAnswersRead": false,
+    "newEvaluatorJudgment": false,
+    "generalSuperiorityProven": false,
+    "fullAideSquaredOrDreamOrAddonOutcomeCompleted": false,
+    "l37Complete": false
+  },
+  "conclusion": "GO for this exact installed candidate and bounded publication. One independently measured context/answer improvement was delivered through the existing application route. Broader quality, recurring self-improvement and household outcomes are not established by this result."
+}

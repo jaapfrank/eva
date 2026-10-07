@@ -1,0 +1,56 @@
+{
+  "contract": "EvaComponentAnswerReadinessImportReview/v1",
+  "reviewedAt": "2026-10-07",
+  "task": "L3.6",
+  "decision": "GO_SOURCE_AND_HOST_RESTART_PLAN",
+  "scope": "Minimal missing pathlib.Path import at existing answer-evidence readiness; resume the retained answer phase only.",
+  "source": {
+    "path": "eva2/src/eva/operations/component_final_assessment.py",
+    "sha256": "8aae5cf148b0796ce13e1e8d6303760ee081c5108c9fd60f369b5196d16f11c5"
+  },
+  "test": {
+    "path": "eva2/tests/operations/test_component_final_assessment.py",
+    "sha256": "1a6e8148e608f4f148821f6000a61a5c02b532f63b2a044efd6e90522438b1ed"
+  },
+  "findings": {
+    "materialBlockers": [],
+    "defect": "HostFinalAssessment.answer_evidence_ready referenced Path without importing it; pending-answer selection occurs before final-answer dispatch.",
+    "change": "Only from pathlib import Path is added to production code. Existing filesystem readiness, scorer, protocol, package validation and dispatch state machine are unchanged.",
+    "regression": "The existing retained-answer regression now inherits HostFinalAssessment and uses the actual absent/present answer file. It asserts one isolated invocation, one answer completion and no application call.",
+    "restart": "Loader retains awaiting_independent_answer_assessment unchanged. After readiness, this state becomes answer_assessing and calls complete, which reads the existing isolated-final.private.json and existing answer evidence. It does not call the isolated assessor again.",
+    "privacy": "No protected evidence, answer text, new logging or model route is introduced or read by this review."
+  },
+  "authorReportedChecks": {
+    "testsPassed": 13,
+    "testsTotal": 13,
+    "seconds": 4.52,
+    "modelCalls": 0,
+    "originalTaskRuntimeReadiness": "ready",
+    "existingJobState": "awaiting_independent_answer_assessment",
+    "answerDecisionArtifactPresentBeforeRestart": false,
+    "answerEvidenceSha256": "bdc74160bd84b7308a4a20fe6199a30f6eeb8c5266790fb57a089494fb758990",
+    "shadowBeforeCorrection": "Matches repository module except for the missing new import.",
+    "reviewerRepeatedTestsOrRuntimeCalls": false
+  },
+  "retainedJob": {
+    "taskId": "work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b",
+    "reviewId": "0d6036d35db7ddcbe911fafc5ce2f76ca6350361d344142141801fd16282791a",
+    "requestId": "fe7da6d349c0d8694c748dabde0cbc3c7a0f69df57e88889468069549e667d63",
+    "packageSha256": "8b97f8ab2f024b8f5dc3d385a7bde14d8efc24e433d20af6b552db26208ba9ce",
+    "protocolSha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+    "retainExactIsolatedReport": true,
+    "newRequestOrQueueReset": false
+  },
+  "approvedPlan": "Copy only the exact corrected module to the existing trusted host shadow and restart the same service. Preserve configuration, existing answer_evidence_file, job, isolated report, package, protocol and prior failure provenance. Continue the existing answer stage; do not rerun isolated candidate inputs or model calls.",
+  "limitations": {
+    "reviewerProviderOrEvaluatorCalls": 0,
+    "reviewerSourceOrHostEdits": 0,
+    "protectedFinalDataRead": false,
+    "postRestartRuntimeInstallationAttested": false,
+    "finalQualityApproved": false,
+    "candidateChanged": false,
+    "acceptanceCriteriaChanged": false,
+    "fullL36Completion": false
+  },
+  "conclusion": "GO for the exact import correction and bounded host-only restart plan. Existing independent answer evidence can be processed against the retained report; this review makes no final quality or candidate-application claim."
+}

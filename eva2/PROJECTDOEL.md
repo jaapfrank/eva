@@ -1,5 +1,17 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Actuele uitvoering 7 oktober — L3.6 geïnstalleerd, L3.7 volgt
+
+De gewone Eva-route maakte contextkandidaat B, liet deze afzonderlijk beoordelen
+en paste de exact geaccepteerde versie via de bestaande beheerde route toe.
+Een extra eindvraag werd 3/3 rechtstreeks beantwoord; geen regressies of harde
+fouten. Dat bewijst één beperkte kwaliteitsverbetering, geen algemene voorsprong
+of tokenbesparing. Zie evidence/product/l3-context-candidate-b-installed-20261007.json.
+L3.7 blijft open voor hergebruik van beste actuele versie/ervaring en toepassing
+zonder herhaling. Apps/add-ons horen bij dezelfde cyclus; droommodus is nog niet
+gebouwd. Originele eindvoorwaarden, gesloten proeven en gezinsbeoordeling blijven staan.
+
+
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 
 Het hervatte app-goal is actief. Wijzigingen aan de aansturing staan in deze

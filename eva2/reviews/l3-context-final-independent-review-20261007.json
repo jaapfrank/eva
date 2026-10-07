@@ -1,0 +1,30 @@
+{
+  "contract": "EvaL3IndependentFinalReview/v1",
+  "task_id": "L3.6",
+  "decision": "accept",
+  "scope": "Exact candidate B independent final answer assessment; no installation claim",
+  "reviewer": "/root/aide_final_evaluation",
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/l3-context-final-independent-result-20261007.json",
+    "sha256": "ea1eaba22374d12e0378233f33b5f3c1f4f71a617dc001cee00170c67c33f92f"
+  },
+  "candidate_sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+  "baseline_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "registration_sha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+  "scorer_sha256": "cad5c8c475b8617ad592e8a3c88b8e9a4f697efc0f4112b16375747d780d6dd5",
+  "answer_evidence_sha256": "bdc74160bd84b7308a4a20fe6199a30f6eeb8c5266790fb57a089494fb758990",
+  "checked": {
+    "fixed_source_and_original_criteria": true,
+    "same_retained_isolated_report": true,
+    "all24_request_and_response_hashes_exact": true,
+    "exact_plan_order_and_profiles": true,
+    "original_independent_factual_rubric_applied": true,
+    "no_context_rerun_or_candidate_edit": true,
+    "no_additional_judge_model": true,
+    "actual_usage_complete": true,
+    "helper_closure_complete": true,
+    "human_quality_not_invented": true
+  },
+  "source_or_dashboard_edits": false,
+  "installed": false
+}

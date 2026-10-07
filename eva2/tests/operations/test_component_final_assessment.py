@@ -10,7 +10,7 @@ import pytest
 
 from eva.application.component_development import compare_development_evaluations
 from eva.application.component_improvements import draft_component, prepare_component_release, bind_selected_release
-from eva.operations.component_final_assessment import FinalComponentAssessments, validate_selected_package
+from eva.operations.component_final_assessment import FinalComponentAssessments, HostFinalAssessment, validate_selected_package
 from eva.operations.component_evaluation_service import EvaluationServer
 from eva.adapters.connectors.component_evaluation import ComponentEvaluationClient
 from eva.contracts.canonical_json import canonical_sha256
@@ -189,12 +189,13 @@ def test_public_projection_never_contains_nested_holdout_text(package):
 
 def test_new_answer_evidence_scores_retained_report_without_repeating_final_inputs(tmp_path, package):
     calls=[]
-    class Assessor:
-        ready=False
+    answer_file = tmp_path / "independent-answer.json"
+    class Assessor(HostFinalAssessment):
+        def __init__(self):
+            self.config = {"answer_evidence_file": str(answer_file)}
         def __call__(self, *args):
             calls.append("isolated")
             return {"decision":"needs_independent_answer_assessment","public":{"answer_assessment_required":True}}
-        def answer_evidence_ready(self): return self.ready
         def complete(self,*args):
             calls.append("answers")
             return {"decision":"reject","public":{"decision":"reject"}}
@@ -202,7 +203,7 @@ def test_new_answer_evidence_scores_retained_report_without_repeating_final_inpu
     with queue(tmp_path,package,assessor=assessor) as (q,app,_):
         review=q.request(package,request_id=REQUEST,task_id=TASK,scope_sha256=SCOPE)["review_id"]
         wait(q,review,"awaiting_independent_answer_assessment")
-        assessor.ready=True
+        answer_file.write_text("{}")
         wait(q,review,"rejected")
         assert calls==["isolated","answers"] and not app.calls
 
