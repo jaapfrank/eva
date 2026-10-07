@@ -1,0 +1,103 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "recordedDate": "2026-10-07",
+  "task": "L3.5",
+  "decision": "GO",
+  "scope": "Fixed public development assessment and same-task candidate selection on the existing component route; installed delivery remains to be verified.",
+  "baseCommit": "1241ba9fa808e2f5093468269d1bb96e8b442d69",
+  "sourceBindings": {
+    "eva2/src/eva/application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+    "eva2/src/eva/application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+    "eva2/src/eva/operations/component_development.py": "8b672db72ab8d5b28baaa69da7e8aa354011af42ebf144349d7ad86643ea4604",
+    "eva2/src/eva/operations/component_evaluation.py": "74f84f5b3e627185d10c077cc0135443bb49054b485b4ce504a64abc99063794",
+    "eva2/src/eva/operations/component_evaluation_service.py": "63d779acc243614f08747b8183a432e30af0a486d783ead8187ce40d6ea5d18d",
+    "eva2/src/eva/adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+    "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+    "eva2/src/eva/contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028",
+    "eva2/tests/application/test_component_development.py": "e2234662035f573a6ff7dd6d45ca06f9fade04328446076722ee748017980f1c",
+    "eva2/tests/application/test_component_improvements.py": "ebad8c5ff3c31d106330196c281b60cf9fbbca432b12596e31ea2ae3c7a63b26",
+    "eva2/tests/operations/test_component_development_host.py": "2bd532eee2d4c8c486f65eeb61df66552129c7d06f4efbbf2c6314046847496d",
+    "eva2/tests/postgres/test_component_document_reference.py": "327b45546db9f765543651e2053362de233928097653990c729d7673d632687f"
+  },
+  "evidenceBindings": {
+    "eva2/evidence/product/l3-development-selection-source-bindings-20261007.json": "9db16ba29401f8b38b5c640105fb5bb1bf7880a680c7ac4566e7805249bcb7a2",
+    "eva2/evidence/product/l3-development-selection-technical-20261007.json": "f44b587320b35821b4c7f5817f141dbf620ff16086c92f52ab7537e14a5ba047",
+    "eva2/evidence/product/l3-development-selection-preregistered-20261007.json": "fef28d4e8525c770e01b7f3f2d195e5afa2e389b9002de8132226fb28c788f63"
+  },
+  "fixedPublicDevelopmentFiles": {
+    "eva2/experiments/aide-20260929/context_suite.py": "6d43028ce305a00bc075753332c6c822d1ce96fd27768f9bd0e4d610e787b7cb",
+    "eva2/experiments/aide-20260929/dev-cases.json": "cfcd399ac0e8792d9162d9c4adfce71fba04f4df284b42fd4a02f9cc15ea7903",
+    "eva2/experiments/aide-20260929/dev_score.py": "837ced00ce1dd8b72369bce7e4f671b4fa9f063248aaf196b1947052ad5a085f",
+    "eva2/src/eva/adapters/postgres/delegated_work_actions.py": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7"
+  },
+  "fixedSuite": {
+    "image_id": "sha256:e137babcc704fa0e73d5df5c56e28da34066244ccc366d5b152c0f574b828242",
+    "command_sha256": "4d521508ae62727eb6b447bc5255a99972ac602fadc6226d9c51d357d326c914",
+    "assessment_sha256": "98489dfd45d87820783f9b69499c801f2a825ec7336d4dbb1a836768d799fa68",
+    "suite_sha256": "e157ac5498aea7a9f1d96aeebdf7069f33d2c921a9fbfb7f3ac39e5042a9bb41",
+    "path": "adapters/postgres/delegated_work_actions.py"
+  },
+  "findings": [
+    "The candidate containers retain existing isolation and output bounds. A configured host scorer derives metrics from candidate outputs outside those containers; cases, scorer bytes and criteria are bound by the assessment hash. The model cannot provide assessment configuration or scores.",
+    "The same /evaluate endpoint selects an operator-configured suite by admitted component path. Client pins bind actual image, command and assessment; the default three-component suite and existing procedure, programming and reviewed release routes remain available.",
+    "Comparison requires identical path, installed baseline, image, command, assessment, criteria and baseline metrics. Finite numeric metrics, complete execution, matching required totals and fixed hard checks are mandatory. Ordered quality metrics precede resource metrics; ties or losses retain the baseline, and invalid/duplicate candidates remain visible.",
+    "Earlier verified evaluation and draft receipts are resolved within the authorized task. An optional selection_step requires its recorded candidate_selected winner to match the exact parent step, candidate hash and original installed baseline. Exact replay and cumulative release bindings remain intact.",
+    "Strict provider schemas require both optional references as nullable properties; internal omission compatibility remains. The 64 KiB draft bound aligns with the existing evaluator and this context-path importer, while original installed source hashes and cumulative patch checks are preserved."
+  ],
+  "verification": {
+    "retainedProof": "eva2/evidence/product/l3-development-selection-technical-20261007.json",
+    "existingFocusedSourceChecks": 44,
+    "actualBuiltImageBehavioralSchemaBoundaryChecks": 28,
+    "actualBuiltImageDurablePostgresChecks": 3,
+    "actualPackagedSchemaUsed": true,
+    "reviewerTestRuns": 0,
+    "runtimeModelCalls": 0,
+    "retainedHarnessErrors": [
+      "Docker default working directory",
+      "duplicate pytest basenames",
+      "fixture newline escaping",
+      "schema fixture used current checkout migrations with historical image; corrected to actual packaged schema"
+    ],
+    "productRollbackCount": 0,
+    "operatorFixtures": {
+      "cheapButWorse": {
+        "baselineHits": 5,
+        "candidateHits": 4,
+        "requiredTotal": 5,
+        "decision": "baseline_retained",
+        "reportSha256": "d31b8148c329be1d030d9192d7d7f6ed1c1808348d6380bf63986df20b359db9"
+      },
+      "equalQualitySmaller": {
+        "baselineHits": 5,
+        "candidateHits": 5,
+        "requiredTotal": 5,
+        "baselineContextBytes": 5514,
+        "candidateContextBytes": 5369,
+        "decision": "candidate_selected",
+        "reportSha256": "5b5b6bbd42d59113b982f096693fa1171d60dbe09426cf46934d7ad41ae4331e"
+      }
+    }
+  },
+  "transportScope": {
+    "currentComponentUtf8Bytes": 35517,
+    "actualSerializedEvaluateRequestBytes": 37191,
+    "existingHttpRequestLimitBytes": 98304,
+    "clientResponseLimitBytes": 160000,
+    "observedReportBytes": [
+      16771,
+      16634
+    ],
+    "contextPathExistingImportSourceLimitBytes": 65536,
+    "existingImportPackageLimitBytes": 2097152,
+    "otherThreeImportPathsLimitBytes": 32768,
+    "limitation": "The concrete source and measured reports fit existing transport limits; this does not establish that every possible 64 KiB source with arbitrary JSON escaping fits. Bounds continue to reject oversized transport."
+  },
+  "materialDefects": [],
+  "installationStatus": "PENDING_BOUND_INSTALLED_VERIFICATION",
+  "semanticImprovementVerified": false,
+  "autonomousAide2OutcomeVerified": false,
+  "independentEndAssessment": "L3.6 remains open",
+  "ordinaryRealImprovementCycle": "L3.7 remains open",
+  "appsAddonsAndDreamWork": "Owner scope remains recorded; this Python development interface does not demonstrate all extension assessment adapters or capacity-gated initiative work.",
+  "privacy": "Only scoped source, public development-file hashes, synthetic tests and technical evidence reviewed. No protected final cases, questions, answers or oracle content read; no closed benchmark reopened."
+}

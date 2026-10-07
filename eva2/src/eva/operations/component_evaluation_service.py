@@ -33,7 +33,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -67,8 +67,9 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None):
         self.evaluator = evaluator
+        self.component_suites = component_suites or {}
         self.procedure_executor = procedure_executor
         self.programming_workspaces = programming_workspaces
         self.reviewed_applications = reviewed_applications
@@ -260,7 +261,7 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                 return
             try:
                 report = (self.server.procedure_executor.execute(**request) if procedure
-                          else self.server.evaluator.evaluate(request))
+                          else self.server.component_suites.get(request.relative_path, self.server.evaluator).evaluate(request))
             except ValueError:
                 self._reply(400, {"error": "candidate_rejected"})
                 return
@@ -293,9 +294,23 @@ def main():
     if "reviewed_component_applications" in config:
         from eva.operations.component_application_runtime import configured_component_applications
         applications = configured_component_applications(config["reviewed_component_applications"])
+    component_suites = {}
+    from eva.operations.component_development import DevelopmentAssessment
+    suites = config.get("component_suites", {})
+    if not isinstance(suites, dict) or set(suites) - allowed_paths:
+        raise ValueError("component development suites must use admitted paths")
+    for path, value in suites.items():
+        if (not isinstance(value, dict) or set(value) != {"evaluation", "assessment"}
+                or not isinstance(value["evaluation"], dict)):
+            raise ValueError("invalid fixed component development suite")
+        evaluation = dict(value["evaluation"])
+        evaluation["command"] = tuple(evaluation["command"])
+        component_suites[path] = ComponentEvaluator(EvaluationConfig(**evaluation),
+            assessment=DevelopmentAssessment(value["assessment"]))
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
                           allowed_paths=allowed_paths, procedure_executor=executor,
-                          programming_workspaces=programming, reviewed_applications=applications) as server:
+                          programming_workspaces=programming, reviewed_applications=applications,
+                          component_suites=component_suites) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)

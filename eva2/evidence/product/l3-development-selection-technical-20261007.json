@@ -1,0 +1,275 @@
+{
+  "fixedSuite": {
+    "image_id": "sha256:e137babcc704fa0e73d5df5c56e28da34066244ccc366d5b152c0f574b828242",
+    "command_sha256": "4d521508ae62727eb6b447bc5255a99972ac602fadc6226d9c51d357d326c914",
+    "assessment_sha256": "98489dfd45d87820783f9b69499c801f2a825ec7336d4dbb1a836768d799fa68",
+    "suite_sha256": "e157ac5498aea7a9f1d96aeebdf7069f33d2c921a9fbfb7f3ac39e5042a9bb41",
+    "path": "adapters/postgres/delegated_work_actions.py"
+  },
+  "actualImageBehavioralTests": {
+    "passed": 28,
+    "durablePassed": 3,
+    "usesActualPackagedSchema": true
+  },
+  "existingSourceFocusedChecks": 44,
+  "additionalCurrentComponentSizeCheck": "passed on actual image",
+  "frozenCriteria": {
+    "id": "l3-public-context-development-v1",
+    "objective": "Relevant authorized task context, measured on the existing public development tasks; no claim about final answer intelligence.",
+    "metrics": [
+      {
+        "name": "requiredHits",
+        "direction": "maximize",
+        "kind": "quality"
+      },
+      {
+        "name": "contextBytes",
+        "direction": "minimize",
+        "kind": "resource"
+      }
+    ],
+    "hard_checks": {
+      "hardFailures": 0
+    },
+    "case_count_metric": "requiredTotal"
+  },
+  "hostChangesOnly": [
+    "allowed_paths",
+    "component_suites"
+  ],
+  "clientChangesOnly": [
+    "allowed_paths",
+    "suite_bindings"
+  ],
+  "fixtureAuthor": "Codex-controlled interface fixtures",
+  "newRuntimeModelCalls": 0,
+  "initialHarnessErrors": [
+    "Docker default working directory",
+    "duplicate pytest basenames",
+    "fixture newline escaping",
+    "schema fixture used current checkout migrations with historical image; corrected to actual packaged schema"
+  ],
+  "productRollbackCount": 0,
+  "cheap_but_worse": {
+    "baseline": {
+      "hardFailures": 0,
+      "requiredHits": 5,
+      "requiredTotal": 5,
+      "contextBytes": 5514,
+      "cases": [
+        {
+          "id": "named_late",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1444
+        },
+        {
+          "id": "ordinary",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1028
+        },
+        {
+          "id": "recent_named",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1152
+        },
+        {
+          "id": "no_match",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "stop",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "denied",
+          "requiredHits": 0,
+          "requiredTotal": 0,
+          "hardFailures": [],
+          "contextBytes": 0
+        }
+      ]
+    },
+    "candidate": {
+      "hardFailures": 0,
+      "requiredHits": 4,
+      "requiredTotal": 5,
+      "contextBytes": 5507,
+      "cases": [
+        {
+          "id": "named_late",
+          "requiredHits": 0,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1437
+        },
+        {
+          "id": "ordinary",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1028
+        },
+        {
+          "id": "recent_named",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1152
+        },
+        {
+          "id": "no_match",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "stop",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "denied",
+          "requiredHits": 0,
+          "requiredTotal": 0,
+          "hardFailures": [],
+          "contextBytes": 0
+        }
+      ]
+    },
+    "elapsedMs": {
+      "baseline": 2121,
+      "candidate": 2121
+    },
+    "reportSha256": "d31b8148c329be1d030d9192d7d7f6ed1c1808348d6380bf63986df20b359db9",
+    "responseBytes": 16771
+  },
+  "same_quality_shorter_metadata_label": {
+    "baseline": {
+      "hardFailures": 0,
+      "requiredHits": 5,
+      "requiredTotal": 5,
+      "contextBytes": 5514,
+      "cases": [
+        {
+          "id": "named_late",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1444
+        },
+        {
+          "id": "ordinary",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1028
+        },
+        {
+          "id": "recent_named",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1152
+        },
+        {
+          "id": "no_match",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "stop",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "denied",
+          "requiredHits": 0,
+          "requiredTotal": 0,
+          "hardFailures": [],
+          "contextBytes": 0
+        }
+      ]
+    },
+    "candidate": {
+      "hardFailures": 0,
+      "requiredHits": 5,
+      "requiredTotal": 5,
+      "contextBytes": 5369,
+      "cases": [
+        {
+          "id": "named_late",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1415
+        },
+        {
+          "id": "ordinary",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 999
+        },
+        {
+          "id": "recent_named",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1123
+        },
+        {
+          "id": "no_match",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 916
+        },
+        {
+          "id": "stop",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 916
+        },
+        {
+          "id": "denied",
+          "requiredHits": 0,
+          "requiredTotal": 0,
+          "hardFailures": [],
+          "contextBytes": 0
+        }
+      ]
+    },
+    "elapsedMs": {
+      "baseline": 2623,
+      "candidate": 2120
+    },
+    "reportSha256": "5b5b6bbd42d59113b982f096693fa1171d60dbe09426cf46934d7ad41ae4331e",
+    "responseBytes": 16634
+  },
+  "currentSourceBytes": 35517,
+  "serializedRequestBytes": 37191,
+  "deploymentImages": {
+    "core": "sha256:7d5cec68cceb98e159bfdb65b6d5d7ed0af3022b376e87503e670323806ff83c",
+    "worker": "sha256:93e746afc78c5f457686bbf723cc2e4910c39ff30da49cf574d2361648cef30f"
+  }
+}

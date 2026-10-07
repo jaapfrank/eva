@@ -99,8 +99,9 @@ def _capture(argv, *, deadline, limit):
 
 
 class ComponentEvaluator:
-    def __init__(self, config: EvaluationConfig):
+    def __init__(self, config: EvaluationConfig, *, assessment=None):
         self.config = config
+        self.assessment = assessment
 
     def _container(self, image_id, command, *, mount=None, output_limit=None):
         cfg = self.config
@@ -159,7 +160,7 @@ class ComponentEvaluator:
             candidate.chmod(0o444)
             measured = self._container(image_id, cfg.command, mount=(str(candidate), target))
         command_json = json.dumps(cfg.command, separators=(",", ":")).encode()
-        return {"contract": "EvaIsolatedComponentEvaluation/v1", "configured_image": cfg.image,
+        report = {"contract": "EvaIsolatedComponentEvaluation/v1", "configured_image": cfg.image,
                 "image_id": image_id, "relative_path": request.relative_path,
                 "baseline_sha256": request.baseline_sha256,
                 "candidate_sha256": hashlib.sha256(candidate_bytes).hexdigest(),
@@ -169,3 +170,6 @@ class ComponentEvaluator:
                            "cpu_millicores": round(cfg.cpus * 1000), "pids": cfg.pids},
                 "baseline": baseline, "candidate": measured,
                 "semantic_improvement_verified": False, "installed": False}
+        if self.assessment is not None:
+            report["development_assessment"] = self.assessment.assess(report)
+        return report

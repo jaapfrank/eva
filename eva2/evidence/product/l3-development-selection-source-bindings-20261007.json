@@ -1,0 +1,17 @@
+{
+  "baseCommit": "1241ba9fa808e2f5093468269d1bb96e8b442d69",
+  "sourceFiles": {
+    "eva2/src/eva/application/component_development.py": "d791d69667973830295e839f1b6391f3ba222786da9efd748fccd1f93f9d184b",
+    "eva2/src/eva/application/component_improvements.py": "bc1b60563243b39b59cb0d1aacb414b6ba0afa274d0e1055c679b4b8948161e9",
+    "eva2/src/eva/operations/component_development.py": "8b672db72ab8d5b28baaa69da7e8aa354011af42ebf144349d7ad86643ea4604",
+    "eva2/src/eva/operations/component_evaluation.py": "74f84f5b3e627185d10c077cc0135443bb49054b485b4ce504a64abc99063794",
+    "eva2/src/eva/operations/component_evaluation_service.py": "63d779acc243614f08747b8183a432e30af0a486d783ead8187ce40d6ea5d18d",
+    "eva2/src/eva/adapters/connectors/component_evaluation.py": "aba0e4c3720869007f963f1fa124f06804e0242bc0a8b7bbcac4624dc6e7da7c",
+    "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "a95ed9f484ca123c24cae9a9beb649542d964a3aa990a304bb3411736efaf163",
+    "eva2/src/eva/contracts/delegated_digital_work.py": "e2b5a64a5c721830b1c3e2327f354252816ad56bb8df69cf98694e51c79e4028",
+    "eva2/tests/application/test_component_development.py": "e2234662035f573a6ff7dd6d45ca06f9fade04328446076722ee748017980f1c",
+    "eva2/tests/application/test_component_improvements.py": "ebad8c5ff3c31d106330196c281b60cf9fbbca432b12596e31ea2ae3c7a63b26",
+    "eva2/tests/operations/test_component_development_host.py": "2bd532eee2d4c8c486f65eeb61df66552129c7d06f4efbbf2c6314046847496d",
+    "eva2/tests/postgres/test_component_document_reference.py": "327b45546db9f765543651e2053362de233928097653990c729d7673d632687f"
+  }
+}

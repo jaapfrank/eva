@@ -1,0 +1,56 @@
+{
+  "contract": "EvaDevelopmentSelectionPrerequisite/v1",
+  "createdAt": "2026-10-07T09:32:06.859949+00:00",
+  "taskId": "L3.5",
+  "goal": "Enable fixed development comparison and selected-candidate continuation on the existing ordinary delegated route.",
+  "baselineSource": "eva2/src/eva/adapters/postgres/delegated_work_actions.py",
+  "fixedPublicDevelopmentFiles": {
+    "eva2/experiments/aide-20260929/context_suite.py": "6d43028ce305a00bc075753332c6c822d1ce96fd27768f9bd0e4d610e787b7cb",
+    "eva2/experiments/aide-20260929/dev-cases.json": "cfcd399ac0e8792d9162d9c4adfce71fba04f4df284b42fd4a02f9cc15ea7903",
+    "eva2/experiments/aide-20260929/dev_score.py": "837ced00ce1dd8b72369bce7e4f671b4fa9f063248aaf196b1947052ad5a085f",
+    "eva2/src/eva/adapters/postgres/delegated_work_actions.py": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7"
+  },
+  "criteria": {
+    "id": "l3-public-context-development-v1",
+    "objective": "Relevant authorized task context, measured on the existing public development tasks; no claim about final answer intelligence.",
+    "metrics": [
+      {
+        "name": "requiredHits",
+        "direction": "maximize",
+        "kind": "quality"
+      },
+      {
+        "name": "contextBytes",
+        "direction": "minimize",
+        "kind": "resource"
+      }
+    ],
+    "hard_checks": {
+      "hardFailures": 0
+    },
+    "case_count_metric": "requiredTotal"
+  },
+  "technicalProof": {
+    "method": "Operator-authored controlled variants and durable task replay; no real candidate applied, no model answers scored.",
+    "includes": [
+      "quality improvement selected over a cheaper inferior variant",
+      "fixed host scoring and binding on actual isolated containers",
+      "same-task selected parent; persisted errors and exact replay",
+      "old evaluator/procedure/programming/review functions retained"
+    ],
+    "notProven": [
+      "autonomous AIDE2 outcome",
+      "family benefit",
+      "all app/addon assessment adapters",
+      "independent end assessment"
+    ]
+  },
+  "budget": {
+    "newRuntimeModelCalls": 0,
+    "newRuntimeModelTokens": 0,
+    "developmentCredits": "unknown",
+    "dependencyInstallations": 0,
+    "experimentReopening": false
+  },
+  "next": "L3.6 connects the independent reusable final assessment; L3.7 demonstrates the ordinary real improvement cycle. Dream-mode capacity gating belongs to the existing initiative route; not delivered by this interface."
+}

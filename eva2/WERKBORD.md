@@ -1,3 +1,18 @@
+## 7 oktober — actief bij L3.5; uitbreidingen vallen ook onder verbetering
+
+Het app-goal is door Jaap hervat. L3.4 blijft geïnstalleerd en afgerond;
+L3.5 is in uitvoering: bewaarde kandidaten met vaste hostcriteria vergelijken
+en de gekozen kandidaat binnen dezelfde taak verder verbeteren. Kwaliteit gaat
+vóór verbruik; ontwikkelkeuze is nog geen onafhankelijke eindbeoordeling.
+De bestaande agentcomponent is groter dan de oude voorstelgrens; de grens wordt
+gelijkgetrokken met de reeds aanwezige geïsoleerde evaluator (64 KiB).
+
+Dezelfde cyclus geldt voor apps, add-ons en andere uitbreidingen. Droomwerk volgt
+de bestaande initiatief-/reflectieroute bij rust en beschikbare capaciteit;
+dit is vastgelegd als doel, nog geen nieuw opgeleverd droommechanisme.
+Spraak blijft geparkeerd. Geen nieuwe hoofdtaak, geen heropening van afgesloten
+AIDE/R1-proeven en geen betaalde modelcalls voor deze technische aansluiting.
+
 ## 7 oktober — L3.4 geïnstalleerd en onafhankelijk gecontroleerd
 
 De kandidaatvoortzetting is technisch af: Eva kan binnen dezelfde bevoegde taak

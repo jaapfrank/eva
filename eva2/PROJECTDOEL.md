@@ -1,5 +1,25 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
+
+Het hervatte app-goal is actief. Wijzigingen aan de aansturing staan in deze
+projectbestanden; de actuele kleine taken blijven de uitvoeringsbron.
+De verbetercyclus geldt ook voor apps, add-ons en andere uitbreidingen die Eva
+toevoegt of aanpast, niet uitsluitend voor varianten van haar eigen kerncode.
+Gebruik per behoefte bestaande middelen en één gedeelde uitvoering; geen vooraf
+gebouwde catalogus van voorbeeldfuncties.
+
+Een droommodus gebruikt de bestaande initiatief-/reflectieroute wanneer het
+rustig is en aantoonbaar voldoende capaciteit beschikbaar is. Zij verwerkt echte
+ervaringen, onderzoekt mogelijkheden en vergelijkt voorstellen binnen dezelfde
+toegang en verbruiksafspraken. Gezinsgebruik en lopend werk krijgen voorrang;
+geen continue modelcalls om aanwezigheid te simuleren. Een gekozen uitbreiding
+moet werkelijk gecontroleerd en bruikbaar worden, met onafhankelijke beoordeling
+voor eigen wijzigingen en behoud van persoonsgrenzen en stoppen. Onderzoeken,
+kiezen, toepassen en aangetoond beter werken blijven afzonderlijke resultaten.
+Dit verduidelijkt L3/I1; geen nieuwe hoofdtaken of wijziging van afgesloten proeven.
+
+
 ## Eigenaaropdracht 7 oktober 2026 — herbruikbare AIDE²-cyclus afmaken
 
 Jaap vraagt de ontbrekende AIDE²-cyclus nu daadwerkelijk te bouwen en de nodige
@@ -12,8 +32,8 @@ beoordeling en toepassing aansluiten, en de volledige gewone gebruikersroute
 met een volgende ronde aantonen. De uitbreiding van L3 is nieuw geautoriseerd
 resterend werk, geen verlies van eerdere acceptatie.
 
-Begin met L3.4 en maak die werkelijke overgang geïnstalleerd bruikbaar voordat je
-verbreedt. Hergebruik de gedeelde uitvoering, het programmeerwerk, de evaluator
+L3.4 is geïnstalleerd en onafhankelijk gecontroleerd. Hervat bij L3.5 en maak
+L3.5–L3.7 achtereenvolgens bruikbaar; herhaal L3.4 niet. Hergebruik de gedeelde uitvoering, het programmeerwerk, de evaluator
 en toepassing; geen tweede agentplatform. Originele proeven/criteria en verbruik
 blijven bewaard; dit heropent geen afgesloten AIDE- of R1-proef. Registreer een
 nieuwe passende toepassing alleen vooraf en binnen de bestaande providerroute

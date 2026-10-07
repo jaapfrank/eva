@@ -53,8 +53,8 @@ def read_component(root, path, start_line=1):
 
 def draft_component(root, arguments, *, parent=None):
     target = component_source(root, arguments["path"])
-    if target.suffix != ".py" or not target.is_file() or target.stat().st_size > 32768:
-        raise ValueError("drafts support Python components up to 32 KiB")
+    if target.suffix != ".py" or not target.is_file() or target.stat().st_size > 65536:
+        raise ValueError("drafts support Python components up to 64 KiB")
     raw = target.read_bytes()
     before = hashlib.sha256(raw).hexdigest()
     installed_source = raw.decode("utf-8")
@@ -70,7 +70,7 @@ def draft_component(root, arguments, *, parent=None):
                 or parent.get("path") != arguments["path"]
                 or parent.get("source_sha256") != before
                 or not isinstance(parent_source, str)
-                or len(parent_source.encode("utf-8")) > 32768
+                or len(parent_source.encode("utf-8")) > 65536
                 or hashlib.sha256(parent_source.encode("utf-8")).hexdigest() != parent.get("candidate_sha256")
                 or not isinstance(ancestors, list)
                 or any(not isinstance(item, str) or not re.fullmatch(r"[0-9a-f]{64}", item) for item in ancestors)):
@@ -84,8 +84,8 @@ def draft_component(root, arguments, *, parent=None):
     if not old or old == new or source.count(old) != 1:
         raise ValueError("component patch requires one exact distinct replacement")
     candidate = source.replace(old, new, 1)
-    if len(candidate.encode()) > 32768:
-        raise ValueError("candidate exceeds 32 KiB")
+    if len(candidate.encode()) > 65536:
+        raise ValueError("candidate exceeds 64 KiB")
     if candidate == installed_source:
         raise ValueError("candidate does not change the installed component")
     # The release diff always includes all changes from the installed reference.

@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T09:06:12.792440+00:00",
+        "checkedAt": "2026-10-07T09:24:38.561963+00:00",
         "deliveries": [
           {
             "title": "L3.4 · Verder bouwen aan een eerder verbeteridee",
@@ -4101,13 +4101,13 @@
         ],
         "now": {
           "title": "L3.5 · Volgende stap: betere varianten kiezen",
-          "state": "planned",
+          "state": "in_progress",
           "owner": "Codex",
           "taskId": "L3.5",
-          "detail": "L3.4 is geïnstalleerd. Na hervatten kiest Eva varianten op resultaatkwaliteit en zelfstandigheid; geschikte kandidaten kunnen nu verder groeien.",
-          "remaining": "L3.5–L3.7 zijn nog open. Geen proef actief bij dit checkpoint.",
+          "detail": "De bestaande evaluator geeft vast procesresultaat, maar geen machineleesbare vaste ontwikkelcriteria of vergelijking van meerdere bewaarde kandidaten.",
+          "remaining": "L3.5 wordt nu aangesloten; L3.6–L3.7 blijven open. Apps en add-ons vallen onder dezelfde cyclus.",
           "source": "eva2/evidence/product/l3-candidate-continuation-installed-20261007.json",
-          "reviewedAt": "2026-10-07T09:06:12.792440+00:00",
+          "reviewedAt": "2026-10-07T09:24:38.561963+00:00",
           "doneWhen": "Eén vooraf vastgelegd verbeterdoel gebruikt meerdere herleidbare kandidaten en dezelfde ontwikkelbeoordeling. Eva kiest op betere taakresultaten, bewaart fouten/verbruik en vervolgt alleen een veelbelovende kandidaat; het gewone taakbudget en stoppen blijven gelden."
         },
         "next": {
@@ -4138,15 +4138,10 @@
             "codeStorage": "Codes remain in the active chat only; no tokens or login codes in repository.",
             "status": "completed",
             "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json"
-          },
-          "goalResume": {
-            "status": "requested",
-            "action": "Hervat het bestaande bijgewerkte app-goal. Geen nieuwe chat of doeltekst nodig.",
-            "nextTaskId": "L3.5"
           }
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-07T09:06:12.792440+00:00"
+        "reviewedAt": "2026-10-07T09:24:38.561963+00:00"
       },
       "reviewedAt": "2026-10-06T09:49:07.102699+00:00",
       "checkedAt": "2026-10-07T09:06:12.792440+00:00",
@@ -19132,7 +19127,7 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root",
           "aideExperiment": {
             "state": "closed_unsuccessful",
             "source": "eva2/experiments/aide-20260929/README.md",
@@ -19292,29 +19287,32 @@
             {
               "id": "L3.5",
               "title": "Varianten op kwaliteit kiezen en verder verbeteren",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "bouwen",
               "owner": "Codex",
               "doneWhen": "Eén vooraf vastgelegd verbeterdoel gebruikt meerdere herleidbare kandidaten en dezelfde ontwikkelbeoordeling. Eva kiest op betere taakresultaten, bewaart fouten/verbruik en vervolgt alleen een veelbelovende kandidaat; het gewone taakbudget en stoppen blijven gelden.",
               "createdAt": "2026-10-07T08:43:50.921114+00:00",
               "authorizedBy": "Jaap, 7 oktober 2026: ga door met AIDE² voor slimmer gedrag, maak duidelijke taken en maak Eva2 af.",
               "ownerActionRequired": false,
-              "activeExecution": false,
-              "nextAction": "Volgt na de werkelijk benodigde voorgaande overgang; geen extra voorbeeldfunctie.",
+              "activeExecution": true,
+              "nextAction": "Bestaande ontwikkelrapporten op vaste kwaliteitcriteria vergelijken; eerdere kandidaat via L3.4 vervolgen.",
               "assignment": {
-                "baseCommit": "dd894f46b3c9d462ecbac8dcfaa49a1fd2d28675",
+                "baseCommit": "1241ba9f",
                 "owner": "/root",
-                "activeWorkers": [],
-                "files": [
-                  "existing delegated task orchestration",
-                  "existing candidate/evaluation tools",
-                  "existing operational timeline"
+                "activeWorkers": [
+                  "/root"
                 ],
-                "gap": "Ontwikkelfeedback, beste kandidaat en vervolgbeslissing vormen nog geen herhaalbare cyclus op de gewone gedeelde uitvoerroute.",
-                "estimate": "Hergebruik bestaande uitvoering en meetvoorziening; gericht registreren vóór een proef. Runtimeverbruik wordt uit de geldende provider-/taaktoelating gemeten; credits onbekend.",
+                "files": [
+                  "existing component evaluation host/client",
+                  "existing component actions and timeline",
+                  "focused development ranking and actual composition checks"
+                ],
+                "gap": "De bestaande evaluator geeft vast procesresultaat, maar geen machineleesbare vaste ontwikkelcriteria of vergelijking van meerdere bewaarde kandidaten.",
+                "estimate": "Eén gerichte score-/keuzeaansluiting, bestaande gedeelde route en gebundelde installatie. Eerst zonder betaalde modelcalls; credits onbekend.",
                 "doneWhen": "Eén vooraf vastgelegd verbeterdoel gebruikt meerdere herleidbare kandidaten en dezelfde ontwikkelbeoordeling. Eva kiest op betere taakresultaten, bewaart fouten/verbruik en vervolgt alleen een veelbelovende kandidaat; het gewone taakbudget en stoppen blijven gelden.",
-                "stage": "planned"
-              }
+                "stage": "prepare_existing_measurement_and_comparison_seam"
+              },
+              "checkedAt": "2026-10-07T09:24:38.561963+00:00"
             },
             {
               "id": "L3.6",
@@ -21707,7 +21705,7 @@
       },
       "autonomousTechnicalGoal20261002": {
         "preparedAt": "2026-10-01T22:46:25.288933+00:00",
-        "state": "updated_goal_file_ready_for_owner_resume",
+        "state": "active_owner_resumed",
         "goalSource": "C:/Users/jaapf/.codex/attachments/d91353b6-5d5a-4de3-bb46-8f22daaa18ef/goal-objective.md",
         "replacementAppObjective": "Voer het volledige bestaande Eva2-plan uit volgens de nieuwste eigenaarcorrectie in eva2/PROJECTDOEL.md en de actuele kleine taken. Centrale uitkomst: Eva als autonome, warme en vaardige digitale huisgenoot die zelf onderzoekt, programmeert, verbetert en nuttig werk afmaakt. Eerst L3.2/L3.3: ontbrekende algemene programmeer-/uitvoerings-/releaseovergangen aansluiten en Eva een echte verbetering laten opleveren. Spraak is ondersteunend. Behoud alle planeisen, acceptaties en het technische eindpunt; geen brede herbouw of test-/installatielussen. Houd het bestaande dashboard en Git bij; onafhankelijke eindvergelijking en gezinsacceptatie blijven zichtbaar.",
         "reason": "Remove obsolete C1/provider snapshot; prioritize complete installed user outcomes and separate autonomous technical completion from family acceptance.",
@@ -21720,9 +21718,9 @@
         "appGoalStatusChecked": "blocked",
         "appObjectiveUpdatedByTool": false,
         "independentReview": "GO /root/open_questions_triage: complete project requirements, innovation/comparison/F2 retained; autonomous technical endpoint separate; product tasks/acceptance unchanged; goal paused and not falsely edited/activated.",
-        "appStatus": "blocked",
+        "appStatus": "active",
         "goalFile": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective.md",
-        "statusCheckedAt": "2026-10-07T08:43:50.921114+00:00",
+        "statusCheckedAt": "2026-10-07T09:24:38.561963+00:00",
         "executionResumedAt": "2026-10-06T06:51:19.992387+00:00",
         "executionResumeEvidence": "eva2/evidence/product/owner-resume-20261006.json",
         "goalFileUpdatedAt": "2026-10-07T09:06:12.792440+00:00",
@@ -21875,7 +21873,8 @@
         "countRule": "De oorspronkelijke44 taken met35 eerdere afrondingen blijven bewaard. Vier expliciet gevraagde vervolgopdrachten maken het totaal48; L3.4 daarvan is nu afgerond:36/48 kleine taken. Geen extra afgeronde hoofduitkomst.",
         "finishRule": "De herbruikbare cyclus werkt en één geschikte werkwijzeverbetering is onafhankelijk aangetoond en toegepast; geen eindeloze optimalisatie als eindvoorwaarde.",
         "latestCompletedTaskId": "L3.4",
-        "nextTaskId": "L3.5"
+        "nextTaskId": "L3.5",
+        "extensionClarification": "Same general cycle includes apps/addons/extensions; idle/capacity-gated dream activity through existing I1, no new main tasks."
       }
     },
     "dashboardClarityCorrection20260922": {

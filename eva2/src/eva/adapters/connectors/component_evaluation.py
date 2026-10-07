@@ -22,6 +22,7 @@ class ComponentEvaluationClient:
     suite_sha256: str
     timeout_seconds: int = 120
     reviewed_releases: tuple[tuple[str, str], ...] = ()
+    suite_bindings: tuple[tuple[str, str], ...] = ()
 
     def _post(self, endpoint, payload, *, limit=160000):
         token = Path(self.token_file).read_text().strip()
@@ -59,9 +60,11 @@ class ComponentEvaluationClient:
                 or report.get("installed") is not False
                 or report.get("semantic_improvement_verified") is not False):
             raise ValueError("component evaluation report binding differs")
-        binding = hashlib.sha256(json.dumps([report.get("image_id"), report.get("command_sha256")],
-                                            separators=(",", ":")).encode()).hexdigest()
-        if binding != self.suite_sha256:
+        basis = [report.get("image_id"), report.get("command_sha256")]
+        if "development_assessment" in report:
+            basis.append(report["development_assessment"].get("assessment_sha256"))
+        binding = hashlib.sha256(json.dumps(basis, separators=(",", ":")).encode()).hexdigest()
+        if binding != dict(self.suite_bindings).get(path, self.suite_sha256):
             raise ValueError("installed evaluation suite changed")
         return report
 
@@ -72,7 +75,7 @@ def configured_component_evaluator():
         return None
     data = json.loads(Path(config_path).read_text())
     required = {"url", "token_file", "allowed_paths", "suite_sha256", "timeout_seconds"}
-    if not required <= set(data) or set(data) - required - {"reviewed_releases"}:
+    if not required <= set(data) or set(data) - required - {"reviewed_releases", "suite_bindings"}:
         raise ValueError("component evaluator configuration fields differ")
     url = urlsplit(data["url"])
     if (url.scheme not in {"http", "https"} or not url.hostname or url.username or url.password
@@ -88,5 +91,11 @@ def configured_component_evaluator():
                    or not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value)
                    for key, value in reviews.items())):
         raise ValueError("invalid reviewed component scopes")
+    suites = data.get("suite_bindings", {})
+    if (not isinstance(suites, dict) or set(suites) - set(data["allowed_paths"])
+            or any(not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value)
+                   for value in suites.values())):
+        raise ValueError("invalid component development suite bindings")
     return ComponentEvaluationClient(**{**data, "allowed_paths": tuple(data["allowed_paths"]),
-                                        "reviewed_releases": tuple(sorted(reviews.items()))})
+                                        "reviewed_releases": tuple(sorted(reviews.items())),
+                                        "suite_bindings": tuple(sorted(suites.items()))})

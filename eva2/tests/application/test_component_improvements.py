@@ -109,3 +109,18 @@ def test_actual_model_serialization_allows_first_draft_without_parent():
     assert set(schema["required"]) == set(schema["properties"])
     assert schema["properties"]["parent_draft_step"]["type"] == ["integer", "null"]
     assert "parent_draft_step" not in _SCHEMAS[DRAFT]["required"]
+    assert schema["properties"]["selection_step"]["type"] == ["integer", "null"]
+    assert "selection_step" not in _SCHEMAS[DRAFT]["required"]
+
+
+
+def test_current_agent_component_size_fits_existing_evaluator_bound(tmp_path):
+    source = "VALUE = 1\n" + "# public padding\n" * 2600
+    assert 32768 < len(source.encode()) < 65536
+    (tmp_path / "example.py").write_text(source)
+    first = draft_component(tmp_path, arguments(source, "VALUE = 1", "VALUE = 2"))
+    child = draft_component(tmp_path, arguments(first["candidate_content"], "VALUE = 2", "VALUE = 3"), parent=first)
+    assert child["source_sha256"] == sha(source)
+    oversized = {**arguments(child["candidate_content"], "VALUE = 3", "VALUE = 4"), "new_text": "x" * 65536}
+    with pytest.raises(ValueError, match="exceeds"):
+        draft_component(tmp_path, oversized, parent=child)

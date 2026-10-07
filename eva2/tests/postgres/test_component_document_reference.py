@@ -133,3 +133,58 @@ def test_candidate_continuation_is_durable_and_cannot_cross_task(database, tmp_p
     assert package["baseline_sha256"] == hashlib.sha256(source.encode()).hexdigest()
     assert package["candidate_sha256"] == evaluated.output["operation_result"]["candidate_sha256"]
     assert package["installed"] is False
+
+
+def test_measured_selection_continuation_and_replay_use_same_task_winner(database, tmp_path):
+    from eva.adapters.postgres.component_improvement_actions import EVALUATE, COMPARE
+    from tests.application.test_component_improvements import arguments
+    from tests.application.test_component_development import entry
+
+    turn = ConversationTurn.private("component-choice-test", "installation", "owner",
+        "conversation", "message", "Improve a component", "2026-09-24T12:00:00Z")
+    PostgresConversationJournal(database, external_timeline_scope(
+        turn.tenant_id, turn.installation_id, "test")).admit(turn)
+    source = "VALUE = 1\n"
+    (tmp_path / "example.py").write_text(source)
+    dispatched = []
+    class Evaluator:
+        def evaluate(self, draft):
+            value = entry(2, hits=3 if "VALUE = 3" in draft["candidate_content"] else 1)["report"]
+            value.update(relative_path=draft["path"], baseline_sha256=draft["source_sha256"],
+                         candidate_sha256=draft["candidate_sha256"])
+            return value
+    def component(execution="selection"):
+        spec = SimpleNamespace(execution_id=execution,
+            source=SimpleNamespace(model_dump=lambda **kw: {"message": turn.message_id}))
+        instance = ComponentImprovementActions(database, spec, turn, lambda value: None,
+            lambda value: dispatched.append(value), lambda: NOW)
+        instance.root, instance.evaluator = tmp_path, Evaluator()
+        instance.action_names = (DRAFT, EVALUATE, COMPARE)
+        return instance
+    first = component().execute(turn, ConversationActionCall("first", DRAFT,
+        arguments(source, "VALUE = 1", "VALUE = 2")), step_index=1)
+    best = component().execute(turn, ConversationActionCall("best", DRAFT,
+        arguments(source, "VALUE = 1", "VALUE = 3")), step_index=2)
+    component().execute(turn, ConversationActionCall("eval1", EVALUATE, {"draft_step": 1}), step_index=3)
+    component().execute(turn, ConversationActionCall("eval2", EVALUATE, {"draft_step": 2}), step_index=4)
+    compare_call = ConversationActionCall("choose", COMPARE, {"evaluation_steps": [3, 4]})
+    chosen = component().execute(turn, compare_call, step_index=5)
+    choice = chosen.output["operation_result"]
+    assert choice["selected_draft_step"] == 2
+    assert choice["selected_candidate_sha256"] == best.output["operation_result"]["candidate_sha256"]
+    assert component().execute(turn, compare_call, step_index=5) == chosen
+    assert len(dispatched) == 5
+    child_call = ConversationActionCall("continue", DRAFT, {
+        **arguments(best.output["operation_result"]["candidate_content"], "VALUE = 3", "VALUE = 4"),
+        "parent_draft_step": 2, "selection_step": 5})
+    child = component().execute(turn, child_call, step_index=6)
+    assert child.output["operation_result"]["candidate_lineage"]["parent_draft_step"] == 2
+    assert component().execute(turn, child_call, step_index=6) == child
+    with pytest.raises(ConversationConflict, match="selected development winner"):
+        component().execute(turn, replace(child_call, arguments={
+            **arguments(first.output["operation_result"]["candidate_content"], "VALUE = 2", "VALUE = 4"),
+            "parent_draft_step": 1, "selection_step": 5}), step_index=7)
+    with pytest.raises(ConversationConflict):
+        component("foreign").execute(turn, child_call, step_index=7)
+    with pytest.raises(ConversationConflict):
+        component().execute(turn, replace(compare_call, arguments={"evaluation_steps": [4, 4]}), step_index=7)
