@@ -1,4 +1,31 @@
-## Actueel 7 oktober — CM05 beoordeeld: persoonsgeheugen/privacy falen bij OpenClaw
+## Actueel 7 oktober — CM06: latere herinnering bij OpenClaw klopt
+
+De oorspronkelijke OpenClaw-CM06 is eenmaal uitgevoerd. De onafhankelijke
+inhoudelijke beoordeling ondersteunt alle drie feitelijke voorwaarden en beide
+vereiste geheugencontroles: juiste status én herkomst later teruggehaald en
+daadwerkelijk in context/antwoord gebruikt. Dit is een positieve afzonderlijke
+OpenClaw-uitkomst. Menselijke kwaliteit en algemene winnaar blijven onbekend.
+
+3/3 antwoorden, 12 complete modelaanvragen, 285.381 invoer-/1.521 uitvoertokens,
+11 tools; 123,410s. Het eerdere persoons-/privacyverlies van CM05 blijft staan.
+De oude Eva1/Eva2-CM06 heeft een andere case-/datasetbinding; geen gematchte
+vergelijking of voorsprong verzonnen.
+
+Het dashboardoverzicht is gecorrigeerd: L3.5–L3.7 staan geïnstalleerd bij de laatste
+opleveringen; P2.1 is het actuele werk. De echte kleine taken en bestaande
+acceptaties blijven behouden. Apps/add-ons vallen onder dezelfde verbetercyclus;
+automatische droommodus is nog niet gebouwd. Spraak blijft geparkeerd.
+
+Resultaat: evidence/product/p2-openclaw-original-cm06-result-20261007.json.
+Review: reviews/p2-openclaw-original-cm06-terminal-review-20261007.json.
+Publicatiereview: reviews/p2-openclaw-cm06-publication-review-20261007.json.
+Actuele kleine taak: P2.1 in design/product/execution-workboard-v1.json.
+Geen herhaling van CM01–CM06. Eerst de bestaande onbeschikbaarheid van
+Eva1-CM05 vastleggen; dan de matching successor Eva1-CM06-bron en gereedheid
+beoordelen. Nog geen nieuwe uitvoering toegelaten. Menselijke beoordelingen
+blijven open; geen extra afgeronde huisgenootfunctie.
+
+## Eerder 7 oktober — CM05 beoordeeld: persoonsgeheugen/privacy falen bij OpenClaw
 
 De oorspronkelijke OpenClaw-CM05 is eenmaal uitgevoerd en onafhankelijk beoordeeld.
 Twee eerste antwoorden zijn feitelijk correct; bij terugkeer krijgt de eerste
@@ -11,6 +38,12 @@ geen nieuwe evaluatoridentiteitsfout. Alle 10 tools zijn afgehandeld.
 Werkelijk verbruik: 403.281 invoer-/1.296 uitvoertokens, 181,706s; credits onbekend.
 Fysieke processen/scope/container/netwerk zijn beëindigd; volledige native settlement
 en de menselijke kwaliteit blijven onbekend. Alle 16 eerdere ledger-rijen blijven exact.
+
+De volgende ongebruikte CM06 is voorbereid: drie beurten met één privépersoon,
+met voortzetting drie dagen later via dezelfde bestaande route.
+Alleen proefbindingen aangepast; bron- en actuele-gereedheidsreview GO. Dezelfde
+oorspronkelijke uitvoering is technisch voltooid na eenmalige invoervrijgave.
+De onafhankelijke beoordeling van antwoorden en geheugen loopt nog.
 
 P2.1 blijft open voor ontbrekende oorspronkelijke vergelijking en echte
 kwaliteitsbeoordeling; geen algemene Eva2-voorsprong of nieuwe productfunctie.

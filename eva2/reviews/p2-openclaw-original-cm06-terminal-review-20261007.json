@@ -1,0 +1,58 @@
+{
+  "contract": "Ev003IndependentOriginalTerminalReview/v1",
+  "date": "2026-10-07",
+  "entry": "openclaw:EV003-CM-06:epoch1",
+  "decision": "GO_publication_of_closed_original_result_only",
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+    "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
+  },
+  "private_assessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/terminal-independent-assessment.private.json",
+    "sha256": "653d220758550df259c2e106014d5a0b1e25c439c51c416af194b42b37e4d70f"
+  },
+  "reused_source_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm06-source-review-20261007.json",
+    "sha256": "eb3cc5429321e9b13726c6f396b6ce3dffe5ec1517633e5a49e46c2fe464b0ff"
+  },
+  "reused_readiness_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm06-ready-review-20261007.json",
+    "sha256": "d8c1d14b4d4ebf6fb950ed3657e136ab046b303b560e14837ffbc05fd56f4e5b"
+  },
+  "verified": {
+    "receipt_and_native_result_match_dispatch_hashes": true,
+    "projection_sources_and_own_auth_unchanged": true,
+    "closed_cm01_to_cm05_receipts_exact": true,
+    "prior17_authority_values_and_revisions_exact": true,
+    "all36_model_context_hashes_match": true,
+    "all73_retained_workspace_file_hashes_match": true,
+    "three_answers_match_native_mirrors": true,
+    "before_after_and_SQLite_private_origins_match_projection": true,
+    "original_clock_sequence_preserved": true,
+    "sdk_usage_complete": true,
+    "tool_rows_all_dispatched_settled": true,
+    "native_equivalent_settlement_proved_without_changing_literal_native_closed": true,
+    "physical_scope_resources_removed": true,
+    "legacy_pair_input_identity_differs": true
+  },
+  "decision_basis": [
+    "All three original factual conditions and both required readbacks are supported by retained native evidence.",
+    "Twelve SDK responses and eleven tools settled within the unchanged original budget, with three real native readbacks and physical exit/scope evidence.",
+    "Human ratings remain null; the legacy pair is not reused as a matching original case and prior failures remain unchanged."
+  ],
+  "scope": {
+    "source_change_authorized": false,
+    "replay_authorized": false,
+    "new_original_admission": false,
+    "criteria_changed": false,
+    "general_quality_or_superiority_claim": false
+  },
+  "reviewer_activity": {
+    "new_model_calls": 0,
+    "new_tests": 0,
+    "native_or_resource_starts": 0,
+    "authority_mutations": 0,
+    "protected_content_disclosed_to_builder": false,
+    "files_written": "Only two assigned public result/review files and one protected assessment receipt."
+  }
+}

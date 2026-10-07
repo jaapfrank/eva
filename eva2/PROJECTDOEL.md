@@ -77,6 +77,21 @@ Zie evidence/product/p2-openclaw-original-cm05-result-20261007.json en
 reviews/p2-openclaw-original-cm05-terminal-review-20261007.json. P2.1 blijft open
 voor werkelijk ontbrekende oorspronkelijke dekking; geen CM01–05-herhaling.
 
+CM06 is daarna eenmaal uitgevoerd en inhoudelijk onafhankelijk gecontroleerd:
+alle drie oorspronkelijke feitelijke voorwaarden en beide verplichte readbacks
+zijn ondersteund. Eén persoon hervat drie dagen later; de juiste status en
+herkomst staan in het native geheugen en worden werkelijk gebruikt in context
+en antwoord. 12 complete SDK-aanvragen, 285.381 invoer-/1.521 uitvoertokens,
+11 tools, 123,410s. Dit is een positieve afzonderlijke OpenClaw-uitkomst,
+geen algemene kwaliteits- of efficiëntiewinnaar. Menselijke ratings blijven open.
+De oude Eva1/Eva2-CM06 heeft een andere case-/datasetbinding en wordt niet
+stilzwijgend als gematcht vergelijkingspaar gebruikt.
+Zie evidence/product/p2-openclaw-original-cm06-result-20261007.json en
+reviews/p2-openclaw-original-cm06-terminal-review-20261007.json.
+Het bestaande dashboardoverzicht verwijst nu naar de geïnstalleerde L3.5–L3.7
+en de huidige vergelijking; verouderde L3.5-/OpenClaw-klokmeldingen worden
+vervangen door de werkelijk bereikte status. Geen nieuwe productfunctie of replay.
+
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 
 Het hervatte app-goal is actief. Wijzigingen aan de aansturing staan in deze

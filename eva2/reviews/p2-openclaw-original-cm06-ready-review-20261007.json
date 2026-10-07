@@ -1,0 +1,83 @@
+{
+  "contract": "Ev003IndependentOriginalReadinessReview/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "entry": "openclaw:EV003-CM-06:epoch1",
+  "decision": "GO_same_waiting_preparation_one_original_release",
+  "root_exec_handle": 77809,
+  "run_handle": "ev003-openclaw-cm06-native-de72be11fcfb4ed28d12a5f470d48c3a",
+  "source_review": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm06-source-review-20261007.json",
+    "sha256": "eb3cc5429321e9b13726c6f396b6ce3dffe5ec1517633e5a49e46c2fe464b0ff"
+  },
+  "source_admission": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/source-admission.private.json",
+    "sha256": "32f5e96920b7ce00cb33165e6a57571b7139e9e453bb19e1b33d0cc4d73d7dde"
+  },
+  "actual_ready": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+    "sha256": "30333da5ba5bdb1ec201419b517f180bdceaca8f26b2e90a408ac082b962e258"
+  },
+  "inspect_binding": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+    "sha256": "d5989fb1d3ac0a25326840c075618e59d971eca72eb06ad794d4e20fc48315a9"
+  },
+  "technical_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/actual-ready-review-technical.private.json",
+    "sha256": "7f4712f6f6bf3518ad57a75486dfd405f400fbfec64dc49279993fa05849ef0d"
+  },
+  "checked": [
+    "The actual root parent is the live child of the retained locked Inspect wrapper; same run labels, pinned image, sole owned internal network member and namespace match readiness.",
+    "Existing accounting socket and restricted gateway tunnel listener belong to that parent; controller reports no errors or external events. No native input/context, owner stop, release or sample deadline exists.",
+    "Current projection and executed source identities match the completed source review; resource admission changes only the reviewed preparation flag/provenance. Existing native source/pin proofs are reused.",
+    "Own native auth bytes and UID1000 access match; the root0600 authority is not actor-readable. All17 historical rows/revisions remain exact; only CM06 row18 revision0 with no attempts/stop was added."
+  ],
+  "authority": {
+    "sha256": "708e6ebe3a46f90090736a0f03a57eb69e2da3a8207e275cc6413ba85d0454a4",
+    "rows": 18,
+    "prior17_exact": true,
+    "prior_canonical_sha256": "47c39b105a58fbd0ab57c5777559b28ce529423bb558d926d06e4141203b591f",
+    "selected_revision": 0,
+    "provider_attempts": 0
+  },
+  "conditions": {
+    "applies_only_to_current_waiting_process": true,
+    "new_preparation_or_replacement_reservation_authorized": false,
+    "limits_unchanged": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "model_roles_unchanged": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      }
+    },
+    "original_projection_unchanged": true,
+    "closed_results_and_unknowns_preserved": true,
+    "release_by_root_once_only": true,
+    "absolute_total_deadline_starts_before_native_child_after_release": true,
+    "full_native_completion_and_semantic_quality_not_yet_observed": true,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "no_full_matrix_or_replay_authorization": true
+  },
+  "reviewer_activity": {
+    "new_tests_probes_provider_or_auth_calls": 0,
+    "resources_started": 0,
+    "authority_mutations": 0,
+    "source_admission_release_or_board_edits": 0,
+    "protected_input_decoded": false
+  }
+}

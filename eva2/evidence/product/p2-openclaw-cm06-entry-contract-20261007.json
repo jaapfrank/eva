@@ -1,0 +1,192 @@
+{
+  "actor_count": 1,
+  "actor_indices": [
+    0,
+    0,
+    0
+  ],
+  "actors_verified_by": "original fixture identity adapter; never name inference",
+  "audience": "private",
+  "audio_assets_count": 0,
+  "authority_sha256_unchanged": "5fb48ec07119dfa71022f85bbf7c0e855a8c05df79e8ead04bb1e1095c956601",
+  "availability": {
+    "closed_cm01_to_cm05_untouched": true,
+    "next_original_unused_openclaw_slot": true,
+    "original_sample_admission": false,
+    "same_original_family_epoch_order": true
+  },
+  "basis_commit": "760951d2bbb7b22ed541ebfa50c9ae47083ac2dc",
+  "browser_pages_count": 0,
+  "calendar_advance_count": 1,
+  "case_id": "EV003-CM-06",
+  "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+  "clock_generations": [
+    0,
+    0,
+    1
+  ],
+  "clock_offset_deltas_milliseconds": [
+    0,
+    0,
+    259200000
+  ],
+  "clock_semantics": "One original calendar advance of three days before the final new private session; the second user input stays in the first session. Execution deadlines remain monotonic and separate.",
+  "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+  "contract": "OpenClawOriginalEntryContract/v1",
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "driver_changes_required": [
+    "CM06 case identifiers/fresh paths, exact-unused-slot and all17 historical value/revision bindings, plus closed CM05 receipt guard.",
+    "Three turns, one actor, two sessions [0,0,1], generations [0,0,1], initial-relative offsets [0,0,259200000].",
+    "Reuse existing per-turn native recorder/runContext and origin readback; first two turns share the same actual native session, third uses the original new session."
+  ],
+  "entry": "openclaw:EV003-CM-06:epoch1",
+  "epoch": 1,
+  "equality": {
+    "criteria_changed": false,
+    "oracle_included": false,
+    "original_actors_canonical_principals_exact": true,
+    "original_audience_and_grants_unchanged": true,
+    "original_clock_initial_timezone_and_event_exact": true,
+    "original_grants_preserved_without_expansion": true,
+    "original_session_controls_exact": true,
+    "original_text_order_exact": true
+  },
+  "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+  "historical_rows_canonical_sha256": "47c39b105a58fbd0ab57c5777559b28ce529423bb558d926d06e4141203b591f",
+  "historical_rows_count": 17,
+  "human_ratings": [
+    null,
+    null
+  ],
+  "inference_admitted": false,
+  "initial_files_count": 0,
+  "limits_unchanged": {
+    "attempts": 16,
+    "input_tokens": 1048576,
+    "output_tokens": 19200,
+    "tool_calls": 16,
+    "wall_seconds": 480
+  },
+  "lineage": {
+    "commitment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm-20261006-d171470a/dataset-commitment.private.json",
+      "sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d"
+    },
+    "current_observer": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "b87e2a9067733c78958f52b5a1196a928dbc1cc33514d378c69b852233084c67"
+    },
+    "evaluator": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_final_dataset.py",
+      "sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+    },
+    "original_event_projector": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm04-20261006-e87d5a92/original-event-projector.private.py",
+      "sha256": "7244349fe04e1ce83fd3005bdb880c0ab7050aec83b29cb322efcd1e7a1deb43"
+    },
+    "plan": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+      "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+    },
+    "prior_native_projection": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/cm05-epoch1.native-inputs.private.json",
+      "sha256": "093e0ce239a728409b42a483a31db8db0781f0cdad5aeefd2869ad428b1f5703"
+    },
+    "prior_technical_contract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm05-preparation-20261007-v1/projection-contract-technical.private.json",
+      "sha256": "7575d76a3cc28391546d13248a9ddba78c65dee4ed362dec81e5da00a1667a1c"
+    },
+    "prior_terminal_result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json",
+      "sha256": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+    }
+  },
+  "missing_native_mechanism": null,
+  "native_mapping": {
+    "native_session_id": "Existing recordInboundSessionMeta before each turn, actual durable entry.sessionId to ordinary agentCliCommand; allow native rollover and validate durable direct origin after each turn.",
+    "policy": "One main agent/profile/workspace/native memory policy, original CLI authority and deliver:false; no person-profile split, dmScope override, prompt annotation or privacy improvement.",
+    "principal": "Exact canonical original principal in provisioning.actors and per-turn SenderId/From/NativeDirectUserId/runContext.senderId.",
+    "private_chat": "Existing UUIDv5 URL recipe ev003:<dataset>:<case>:epoch1:openclaw:private-chat:<principal>; same principal keeps the same chat across sessions.",
+    "session": "Existing UUIDv5 URL recipe ev003:<dataset>:<case>:epoch1:openclaw:session:<index>; key agent:main:<context_id>."
+  },
+  "original_event_advances_milliseconds": [
+    0,
+    0,
+    259200000
+  ],
+  "original_mandate_canonical_sha256": "11a010bfd0837822156e755091f5306cb3cc870f2f4a0ffa232f61fac6f0c415",
+  "original_native_start_canonical_sha256": "01c0bb53d356b2f584d889f7d872600c2bb3d3ddd3b3b354e5e52d281c1943b9",
+  "participant": "openclaw",
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/cm06-epoch1.native-inputs.private.json",
+    "sha256": "212d7e077fb215620c60eca51726d403abc60a444f3cd6ad7af96d947c42e676"
+  },
+  "protection": {
+    "directory_mode": "0700",
+    "file_mode": "0600",
+    "owner_uid": 0
+  },
+  "provider_calls": 0,
+  "readbacks_required": [
+    "Exact native private origin/session before each turn and after every completed turn; preserve first-session continuity and genuine native rollover.",
+    "All native replies, mirrored history, workspace/memory snapshots and exact outgoing contact/helper bodies bound to original actor/session/clock.",
+    "Complete existing SDK/tool/helper/background/source-holder accounting, original stop/deadline and equivalent retirement/final physical closure proof.",
+    "Apply unchanged original factual/readback criteria privately; required two human ratings remain null absent actual independent raters."
+  ],
+  "reservations_created": 0,
+  "resource_preparation_admitted": false,
+  "resources_started": 0,
+  "schema": {
+    "provisioning": {
+      "actors": "array of {actor_index:int,actor_id:canonical original principal string}",
+      "audience_kind": "private"
+    },
+    "turns": {
+      "actor_index": "int",
+      "clock": "unchanged original generation/offset object",
+      "context_id": "UUIDv5 by participant/case/epoch/session",
+      "nativeInboundContext": "{SenderId,From,To,NativeDirectUserId,NativeChannelId,ChatType,Surface,AccountId}",
+      "nativeRunContext": "{senderId,chatId,currentChannelId,accountId}",
+      "ordinal": "int",
+      "session_index": "int",
+      "session_key": "agent:main:<context_id>",
+      "text": "unchanged original text"
+    }
+  },
+  "scope_boundary": {
+    "closed_entry_replay": false,
+    "current_instruction": "Prepare only the next unused original OpenClaw CM06 slot under the existing owner mandate; no original execution authorized by this artifact.",
+    "existing_CM05_privacy_failure_still_blocks_overall_acceptance": true,
+    "formal_full_matrix_ceiling_is_execution_authorization": false,
+    "human_quality_or_superiority_claim": false,
+    "new_dataset_or_criteria": false,
+    "openclaw_registered_unknown_usage_attempts": 0,
+    "other_participant_usage_unknowns_preserved": 3,
+    "owner_authorization": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-owner-authorization-20261005.json",
+      "sha256": "7470627a9ef09ae8f625e420251a19b36bf950bb17689ee369359e3e2f4df8b5"
+    },
+    "remaining_original_admission": [
+      "Exact new source/Inspect/preparation binding reviewed against this packet and unchanged original limits.",
+      "Actual fresh isolated resource/access/accounting/source readiness for the exact unused entry; same cumulative authority/history; zero input before separate final release."
+    ],
+    "unused_budget_redistribution": false
+  },
+  "semantic_scores": null,
+  "service_fixture_count": 0,
+  "session_count": 2,
+  "session_indices": [
+    0,
+    0,
+    1
+  ],
+  "setup_turn_count": 0,
+  "status": "PROJECTION_READY_SOURCE_AND_ACTUAL_READINESS_REVIEW_REQUIRED",
+  "technical_contract": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/projection-contract-technical.private.json",
+    "sha256": "2d51a98be9bf8146cbeb333f259db6b157b28ee31896a09cd67305f3b869d660"
+  },
+  "turn_count": 3,
+  "unknown_person_turns": 0
+}

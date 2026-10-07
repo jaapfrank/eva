@@ -1,0 +1,82 @@
+{
+  "contract": "EvaBoundedPublicationDataReview/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "decision": "GO_publication_data_only",
+  "scope": [
+    "audit.projectDashboard.deliveryOverview",
+    "audit.projectDashboard.comparisonResults current followup, metrics, runtimeTotals and OpenClaw availability",
+    "audit.deliveryPlan.implementationSlices[].remainingTasks[id=P2.1] current fields",
+    "New CM06 paragraphs in eva2/PROJECTDOEL.md and eva2/WERKBORD.md"
+  ],
+  "evidence": [
+    {
+      "path": "eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json",
+      "sha256": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+    },
+    {
+      "path": "eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+      "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
+    },
+    {
+      "path": "eva2/reviews/p2-openclaw-original-cm06-terminal-review-20261007.json",
+      "sha256": "b002094a3c5d0bc57578bf2daf24eae0051b6fee384814a4dd24a0eaf9f96f31"
+    },
+    {
+      "path": "eva2/reviews/l3-development-selection-installed-review-20261007.json",
+      "sha256": "0491ea136be001af9e56cfff7f06856e4e8b1cdcad92cd10dc5668815660154e"
+    },
+    {
+      "path": "eva2/reviews/l3-context-candidate-b-installed-review-20261007.json",
+      "sha256": "c70a2b80b01c757893a1850742d423f5fa842f32700d201fea0d351344c34b2d"
+    },
+    {
+      "path": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json",
+      "sha256": "e6454d56627ffd938cbb11515873338cef1cbee662f4760c2aa91654220f8662"
+    }
+  ],
+  "stable_field_checks": {
+    "task_ids_statuses_and_doneWhen_unchanged": true,
+    "completed_tasks": 39,
+    "total_tasks": 48,
+    "P2_1_status": "in_progress",
+    "P2_1_activeExecution": false,
+    "P2_1_currentEvaluationEvidence": "eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+    "CM05_objective_privacy_failure_preserved": true,
+    "CM06_objective_pass_factual_3_of_3_readbacks_2_of_2": true,
+    "CM06_attempts_12_input_285381_output_1521_tools_11": true,
+    "timing_boundary_and_unknown_human_help_preserved": true,
+    "human_ratings_and_full_quality_not_invented": true,
+    "literal_native_closed_false_equivalent_settled_true_distinct": true,
+    "legacy_case_input_mismatch_explicit_no_matched_winner": true,
+    "L3_5_to_L3_7_installed_and_bounded_claims_supported": true,
+    "no_general_superiority_or_token_saving_claim": true,
+    "original_comparison_conditions_unchanged": true,
+    "old_followup_and_runtime_totals_archived": true,
+    "current_authority_rows": 18,
+    "current_registered_attempts": 113,
+    "known_input_lower_bound": 1366001,
+    "known_output_lower_bound": 11648,
+    "known_total_lower_bound": 1377649,
+    "historical_unknown_usage_attempts": 3,
+    "full_usage_and_costs_remain_unknown": true,
+    "next_step_is_matching_baseline_preparation_not_new_run": true,
+    "protected_questions_answers_or_oracles_not_published": true
+  },
+  "corrected_findings": [
+    "Stale P2.1.activeExecution=true corrected to false.",
+    "Current evaluation reference updated from CM05 to CM06; previous reference retained.",
+    "Current cumulative totals updated from the 12-row Hermes snapshot to the retained 18-row CM06 authority; old snapshot retained."
+  ],
+  "limitations": [
+    "Approval concerns these publication statements and field values, not a new original admission, replay, human quality rating, runtime release or product-task completion.",
+    "Mutable whole-board hash deliberately not bound; referenced immutable result/review hashes and stable statements define this review."
+  ],
+  "reviewer_activity": {
+    "new_tests": 0,
+    "model_calls": 0,
+    "native_or_resource_starts": 0,
+    "source_or_board_edits": 0,
+    "protected_content_reads": 0
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "contract": "Ev003IndependentOriginalOpenClawResult/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "entry": "openclaw:EV003-CM-06:epoch1",
+  "status": "closed_original_native_completed_objective_pass_human_unknown",
+  "objective_completion": true,
+  "official_semantic_score": null,
+  "human_ratings": [
+    null,
+    null
+  ],
+  "whole_case_quality": "UNKNOWN",
+  "binding": {
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+    "scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "protocol_sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479",
+    "projection_sha256": "212d7e077fb215620c60eca51726d403abc60a444f3cd6ad7af96d947c42e676",
+    "projection_contract_sha256": "2d51a98be9bf8146cbeb333f259db6b157b28ee31896a09cd67305f3b869d660",
+    "executed_observer_sha256": "b87e2a9067733c78958f52b5a1196a928dbc1cc33514d378c69b852233084c67",
+    "launcher_sha256": "442bfccf614f2668466d36f707af788b51d32f0a91e294f0ea078aa7dc892af3"
+  },
+  "independent_original_assessment": {
+    "accepted_answers": 3,
+    "required_answers": 3,
+    "factual_response_predicates": [
+      true,
+      true,
+      true
+    ],
+    "original_semantic_conditions": [
+      true,
+      true,
+      true
+    ],
+    "required_readbacks": [
+      true,
+      true
+    ],
+    "required_readbacks_passed": 2,
+    "required_readbacks_failed": 0,
+    "required_readbacks_unknown": 0,
+    "finding": "The original factual status, correction and source distinction survive durable memory and later native recall without an invented confirmed commitment.",
+    "native_private_origins_verified_before_turn": 3,
+    "native_private_origins_verified_after_completed_turn": 3,
+    "actor_order": [
+      0,
+      0,
+      0
+    ],
+    "session_order": [
+      0,
+      0,
+      1
+    ],
+    "calendar_generations": [
+      0,
+      0,
+      1
+    ],
+    "calendar_relative_offsets_ms": [
+      0,
+      0,
+      259200000
+    ],
+    "full_native_trace_and_stop_readback": true,
+    "forbidden_external_effect_observed": false,
+    "human_raters_recorded": 0,
+    "human_raters_required": 2,
+    "ai_human_quality_substitution": false,
+    "official_scorer_or_inspect_score_rewritten": false,
+    "prior_cross_person_failures_reversed": false
+  },
+  "first_fatal_transition": null,
+  "usage": {
+    "provider_attempts": 12,
+    "completed_sdk_responses": 12,
+    "sdk_usage_complete": true,
+    "input_tokens": 285381,
+    "output_tokens": 1521,
+    "total_tokens": 286902,
+    "contact_attempts": 12,
+    "helper_attempts": 0,
+    "model": "gpt-6-sol",
+    "reasoning_effort": "none",
+    "verified_context_artifacts": 36,
+    "tool_dispatches": 11,
+    "tool_settled_rows": 11,
+    "tool_coverage_complete": true,
+    "money": null,
+    "credits": null
+  },
+  "timing": {
+    "elapsed_seconds": 123.41011110899854,
+    "boundary": "Parent monotonic start before child launch through child exit; resource preparation and parent cleanup excluded.",
+    "wall_limit_seconds": 480,
+    "wall_expired": false,
+    "comparative_speed_claim": null
+  },
+  "closure": {
+    "inspect_envelope": "success",
+    "launcher_exit": 0,
+    "native_returncode": 0,
+    "parent_close_ack": true,
+    "pending_sdk": 0,
+    "pending_tool_rows": 0,
+    "physical_clients_exited": 3,
+    "native_cancel_errors": [],
+    "native_unregister_queues_flushed": 6,
+    "literal_native_closed": false,
+    "equivalent_native_settled": true,
+    "native_pending_at_close": {
+      "openclaw_clients": 0,
+      "active_provider_attempts": 0,
+      "native_background_terminals": 0,
+      "pending_tools": 0,
+      "active_turns": 0
+    },
+    "retirement_scope_receipts": 3,
+    "fresh_final_scope_receipt": true,
+    "native_source_authority_observed_not_created": 3,
+    "root_scope_absent": true,
+    "root_scope_populated_after_stop": false,
+    "root_scope_errors": [],
+    "root_cleanup_errors": [],
+    "container_absent": true,
+    "network_absent": true,
+    "parent_controller_errors": [],
+    "relay_connection_reset_events": 1,
+    "host_artifacts_retained": true
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256": "69372d5efe177c1602ccbe924096cb8a6b765f086aba09bacd94e88f0e1678b8",
+    "rows": 18,
+    "selected_revision": 25,
+    "prior17_values_and_revisions_exactly_preserved": true,
+    "prior_canonical_sha256": "47c39b105a58fbd0ab57c5777559b28ce529423bb558d926d06e4141203b591f",
+    "cumulative_registered_attempts": 113,
+    "known_usage_lower_bound": {
+      "input_tokens": 1366001,
+      "output_tokens": 11648,
+      "total_tokens": 1377649
+    },
+    "historical_unknown_usage_attempts": 3,
+    "whole_registry_usage_complete": false,
+    "whole_registry_total_usage": null,
+    "closed_cm01_to_cm04_unknown_and_cm05_failure_preserved": true,
+    "reset_or_replay": false
+  },
+  "limits": {
+    "providerAttempts": 16,
+    "providerInputTokens": 1048576,
+    "providerOutputTokens": 19200,
+    "toolDispatches": 16,
+    "wallSeconds": 480,
+    "externalActions": 0,
+    "speechRequests": 0
+  },
+  "legacy_same_code_comparison": {
+    "report": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm06-paired-result-20261005.json",
+      "sha256": "09b1b2246acb80896d235158029cb35bd78421d14cfb2b34a752a8f2b44a82cf"
+    },
+    "dataset_sha256": "7507620d23815175fc4b70ddfc90f73d4ff608b701c560f6e01d1771058f45d4",
+    "commitment_sha256": "bbdbf8eff011aeb51c41e2ff6532346dd22615a99102166e4005292100dd03bf",
+    "case_sha256": "59183433a985806ee2d3995ba3094442669d80565f866284e15dc1fdeb00e7d8",
+    "same_plan": true,
+    "same_sample_record": false,
+    "same_fixture_record": false,
+    "same_oracle_record": true,
+    "matched_original_task": false,
+    "comparison_winner": null,
+    "interpretation": "The legacy pair and successor case have different committed input/fixture records. Shared case code, plan and oracle do not make them the same task. Preserve separately; no score, speed or cost advantage inferred."
+  },
+  "artifacts": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execution/receipt.json",
+      "sha256": "3b0d7dc5357d453f8b5adde1e6b0ab3d6b62a0c853520c320d1cc015053fc70a"
+    },
+    "native_technical": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execution/sample/native-cm-technical.json",
+      "sha256": "1c890adf920aa9cb5b961e12b4a66dc0ca7e21e3cff948ef9b4bf3fb2487dda3"
+    },
+    "responses": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execution/sample/native-responses.private.json",
+      "sha256": "1e05e1f13a5c532a593f320ad464b4f7f6cb9bbe193560af50a0254e8cd13932"
+    },
+    "readbacks": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execution/sample/native-readbacks.private.json",
+      "sha256": "4bb7a157db30920bdf34d8f254fd88364448736c24940baa79a8c4012ccaa2d0"
+    },
+    "sdk_context_index": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execution/sample/sdk-attempts-technical.json",
+      "sha256": "564887dd74f85318dac8d7d2bf964ef728bc0668374160ddfb36cb7b1ea20108"
+    },
+    "native_database": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execution/native-profile/state/agents/main/agent/openclaw-agent.sqlite",
+      "sha256": "ac64961c0f4127f51fb5c1d57bd0c68fcb90fcd448a4042fcf2ebd46f99041df"
+    },
+    "parent_close": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execution/parent-accounting-after-close.private.json",
+      "sha256": "f4515ae746fd15ff2c032be2fd387e8b2dc2eab47bea1788f8cdc54ff1d7a774"
+    },
+    "final_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/parent-cm06-final-admission.private.json",
+      "sha256": "8477d965c29558ca38bca79b54f366702feb7e69538b0ce92aa683bdbfee72ff"
+    },
+    "release": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/execute-once.private.json",
+      "sha256": "153078cbc365a62c26e1c692b3876749fcdd24241f84c0197fb3e9ed6485bb58"
+    },
+    "inspect_summary": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/inspect-private/inspect-result-summary.json",
+      "sha256": "40d7d1e08536aeac1d61aeb13285c15121c9109710d760043573aa44de27021d"
+    },
+    "history_before": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/historical-rows-before-technical.private.json",
+      "sha256": "9bb4a250a57faaca7db003d0741bd36451bf48fd0d0ac9be435e5a0f39d4224c"
+    }
+  },
+  "private_independent_assessment": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm06-preparation-20261007-v1/terminal-independent-assessment.private.json",
+    "sha256": "653d220758550df259c2e106014d5a0b1e25c439c51c416af194b42b37e4d70f"
+  },
+  "limitations": [
+    "Objective pass concerns this one fixed original case. Two human ratings and overall quality remain unknown.",
+    "Literal native cleanup remains uncertain/native_closed=false; separate native readback, matching physical exits, pending-work checks and root-owned frozen scope support equivalent_native_settled=true.",
+    "The legacy Eva1/Eva2 CM06 pair has different committed inputs and is not a matched comparison.",
+    "No general superiority, cost advantage, reversal of prior privacy losses, full P2.1 completion or new sample admission."
+  ],
+  "new_model_calls_for_assessment": 0,
+  "new_tests_for_assessment": 0,
+  "product_function_completed": false
+}
