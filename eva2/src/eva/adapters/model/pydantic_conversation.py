@@ -708,6 +708,27 @@ class PydanticConversationModel:
     def _receipt_model_view(output: dict[str, Any]) -> dict[str, Any]:
         """Losslessly reference duplicates in model input; keep durable receipts intact."""
         proof = output.get("proof")
+        if (
+            output.get("contract") == "EvaConversationActionReceipt/v1"
+            and output.get("durable") is True
+            and output.get("status") == "verified"
+            and isinstance(proof, dict)
+            and isinstance(proof.get("expected"), dict)
+            and canonical_json_bytes(proof["expected"])
+                == canonical_json_bytes(proof.get("observed"))
+        ):
+            reference = {
+                "model_view_reference": "/proof/expected",
+                "observation_sha256": hashlib.sha256(
+                    canonical_json_bytes(proof["observed"])
+                ).hexdigest(),
+                "durable_proof_sha256": hashlib.sha256(
+                    canonical_json_bytes(proof)
+                ).hexdigest(),
+            }
+            candidate = {**output, "proof": {**proof, "observed": reference}}
+            if len(canonical_json_bytes(candidate)) < len(canonical_json_bytes(output)):
+                return candidate
         evidence = proof.get("evidence") if isinstance(proof, dict) else None
         observation = evidence.get("observation") if isinstance(evidence, dict) else None
         result = output.get("result")
@@ -756,6 +777,159 @@ class PydanticConversationModel:
                 else baseline)
 
     @staticmethod
+    def _receipt_model_views(
+        receipts: tuple[ConversationActionReceipt, ...],
+    ) -> tuple[dict[str, Any], ...]:
+        """Reference exact earlier values in this request, never external context."""
+        call_ids = [receipt.call.call_id for receipt in receipts]
+        local_views = tuple(
+            PydanticConversationModel._receipt_model_view(receipt.output)
+            for receipt in receipts
+        )
+        if len(set(call_ids)) != len(call_ids):
+            return local_views
+        # Index only literal retained values in earlier verified outputs. References
+        # may not point forward, into another person's history, or to another reference.
+        literals: dict[str, tuple[bytes, dict[str, Any]]] = {}
+
+        def compress(value: Any, path: str, anchors: set[str]) -> Any:
+            if any(path == anchor or path.startswith(anchor + "/")
+                   or anchor.startswith(path + "/") for anchor in anchors):
+                return value
+            if isinstance(value, (dict, list, str)):
+                encoded = canonical_json_bytes(value)
+                digest = hashlib.sha256(encoded).hexdigest()
+                found = literals.get(digest)
+                if found is not None and found[0] == encoded:
+                    reference = found[1]
+                    if len(canonical_json_bytes(reference)) < len(encoded):
+                        return reference
+            if isinstance(value, dict):
+                if "model_view_reference" in value:
+                    return value
+                return {key: compress(item, path + "/" + key.replace("~", "~0").replace("/", "~1"), anchors)
+                        for key, item in value.items()}
+            if isinstance(value, list):
+                return [compress(item, f"{path}/{index}", anchors) for index, item in enumerate(value)]
+            return value
+
+        def encoded_string_view(value: Any) -> Any:
+            if isinstance(value, dict):
+                if "model_view_reference" in value or "model_view_encoding" in value:
+                    return value
+                return {key: encoded_string_view(item) for key, item in value.items()}
+            if isinstance(value, list):
+                return [encoded_string_view(item) for item in value]
+            if not isinstance(value, str):
+                return value
+            parts: list[Any] = [value]
+            # Saved JSON text can repeat escaped literal code or observations.
+            # Encode that text with exact earlier strings, preserving every byte.
+            strings = []
+            for encoded, reference in literals.values():
+                literal = json.loads(encoded)
+                if isinstance(literal, str):
+                    escaped = json.dumps(literal, ensure_ascii=False)[1:-1]
+                    strings.append((escaped, reference))
+            for escaped, reference in sorted(strings, key=lambda item: len(item[0]), reverse=True):
+                replacement = {**reference, "model_view_fragment_encoding": "json_escape_content_v1"}
+                if not escaped or len(canonical_json_bytes(replacement)) >= len(escaped.encode("utf-8")):
+                    continue
+                next_parts = []
+                for part in parts:
+                    if not isinstance(part, str) or escaped not in part:
+                        next_parts.append(part)
+                        continue
+                    fragments = part.split(escaped)
+                    for index, fragment in enumerate(fragments):
+                        if index:
+                            next_parts.append(replacement)
+                        if fragment:
+                            next_parts.append(fragment)
+                parts = next_parts
+            if not any(isinstance(part, dict) for part in parts):
+                return value
+            view = {
+                "model_view_encoding": "json_string_fragments_v1",
+                "parts": parts,
+                "string_sha256": hashlib.sha256(value.encode("utf-8")).hexdigest(),
+            }
+            return view if len(canonical_json_bytes(view)) < len(canonical_json_bytes(value)) else value
+
+        def retain(value: Any, path: str, call_id: str, receipt_sha: str) -> bool:
+            if isinstance(value, dict) and "model_view_reference" in value:
+                return False
+            literal = True
+            if isinstance(value, dict):
+                for key, item in value.items():
+                    pointer = key.replace("~", "~0").replace("/", "~1")
+                    literal = retain(item, f"{path}/{pointer}", call_id, receipt_sha) and literal
+            elif isinstance(value, list):
+                for index, item in enumerate(value):
+                    literal = retain(item, f"{path}/{index}", call_id, receipt_sha) and literal
+            if literal and path and isinstance(value, (dict, list, str)):
+                encoded = canonical_json_bytes(value)
+                digest = hashlib.sha256(encoded).hexdigest()
+                reference = {
+                    "model_view_call_id": call_id,
+                    "model_view_reference": path,
+                    "value_sha256": digest,
+                    "source_receipt_sha256": receipt_sha,
+                }
+                if len(canonical_json_bytes(reference)) < len(encoded):
+                    literals.setdefault(digest, (encoded, reference))
+            return literal
+
+        views = []
+        for receipt, local in zip(receipts, local_views, strict=True):
+            if receipt.output.get("status") != "verified":
+                views.append(local)
+                continue
+            proof = local.get("proof")
+            original_proof = receipt.output.get("proof")
+            observation = proof.get("observed") if isinstance(proof, dict) else None
+            if (receipt.output.get("contract") == "EvaConversationActionReceipt/v1"
+                    and isinstance(original_proof, dict)
+                    and isinstance(original_proof.get("expected"), dict)
+                    and canonical_json_bytes(original_proof["expected"])
+                        == canonical_json_bytes(original_proof.get("observed"))
+                    and receipt.output.get("durable") is True
+                    and isinstance(observation, dict)
+                    and observation.get("model_view_reference") == "/proof/expected"):
+                expected_view = encoded_string_view(proof["expected"])
+                if canonical_json_bytes(expected_view) != canonical_json_bytes(proof["expected"]):
+                    local = {**local, "proof": {
+                        **proof, "expected": expected_view,
+                        "observed": {**observation,
+                            "model_view_encoding": "json_string_fragments_v1",
+                            "model_view_sha256": hashlib.sha256(canonical_json_bytes(expected_view)).hexdigest()},
+                    }}
+            # Local proof references and encoding hashes already bind their target
+            # representation. Keep those subtrees literal, including their ancestors.
+            anchors: set[str] = set()
+            def find_anchors(value: Any) -> None:
+                if isinstance(value, dict):
+                    if "model_view_reference" in value and "model_view_call_id" not in value:
+                        pointer = value["model_view_reference"]
+                        if isinstance(pointer, str) and pointer.startswith("/"):
+                            anchors.add(pointer)
+                    else:
+                        for item in value.values():
+                            find_anchors(item)
+                elif isinstance(value, list):
+                    for item in value:
+                        find_anchors(item)
+            find_anchors(local)
+            # Keep every receipt's top-level status, scope and authority visible.
+            viewed = {key: compress(value, "/" + key.replace("~", "~0").replace("/", "~1"), anchors)
+                      for key, value in local.items()}
+            views.append(viewed)
+            retain(viewed, "", receipt.call.call_id, hashlib.sha256(
+                canonical_json_bytes(receipt.output)
+            ).hexdigest())
+        return tuple(views)
+
+    @staticmethod
     def _phase_admission_body(
         *,
         prompt: str,
@@ -769,7 +943,10 @@ class PydanticConversationModel:
         admission_input: list[dict[str, Any]] = [
             {"content": prompt, "role": "user", "type": "message"}
         ]
-        for receipt in prior_actions + (() if completed_action is None else (completed_action,)):
+        receipts = prior_actions + (() if completed_action is None else (completed_action,))
+        for receipt, viewed in zip(
+            receipts, PydanticConversationModel._receipt_model_views(receipts), strict=True
+        ):
             admission_input.extend(
                 (
                     {
@@ -784,7 +961,7 @@ class PydanticConversationModel:
                     },
                     {
                         "call_id": receipt.call.call_id,
-                        "output": canonical_json_bytes(PydanticConversationModel._receipt_model_view(receipt.output))
+                        "output": canonical_json_bytes(viewed)
                         .decode("utf-8")
                         .rstrip("\n"),
                         "type": "function_call_output",
@@ -915,21 +1092,22 @@ class PydanticConversationModel:
             if completed_action is not None:
                 call = completed_action.call
                 message_history = [ModelRequest(parts=[UserPromptPart(prompt)])]
-                for receipt in prior_actions:
+                receipt_views = self._receipt_model_views(prior_actions + (completed_action,))
+                for receipt, viewed in zip(prior_actions, receipt_views[:-1], strict=True):
                     previous = receipt.call
                     message_history.extend([
                         ModelResponse(parts=[ToolCallPart(
                             previous.name, previous.arguments, previous.call_id,
                         )]),
                         ModelRequest(parts=[ToolReturnPart(
-                            previous.name, self._receipt_model_view(receipt.output), previous.call_id,
+                            previous.name, viewed, previous.call_id,
                         )]),
                     ])
                 message_history.append(ModelResponse(
                     parts=[ToolCallPart(call.name, call.arguments, call.call_id)]
                 ))
                 deferred_results = DeferredToolResults(
-                    calls={call.call_id: self._receipt_model_view(completed_action.output)}
+                    calls={call.call_id: receipt_views[-1]}
                 )
                 user_prompt = None
             agent = Agent(model_backend, instructions=instructions, retries=0)

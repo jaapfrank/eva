@@ -2649,8 +2649,11 @@ def test_duplicate_observation_model_view_matches_admission_and_actual_tool_retu
     model._run_pydantic_phase(**args)
     actual = tool_returns(backend.captures[0].messages)
     assert len(actual) == 2
-    for wire, part in zip(admitted["input"][2::2], actual, strict=True):
-        assert json.loads(wire["output"]) == part.content == view
+    expected_views = model._receipt_model_views(receipts)
+    for wire, part, expected in zip(admitted["input"][2::2], actual, expected_views, strict=True):
+        assert json.loads(wire["output"]) == part.content == expected
+    from tests.model.test_catalogue_model_view import expand_receipt_history
+    assert expand_receipt_history(receipts, expected_views) == (original, original)
     assert original == saved and canonical_sha256(original) == original_hash
     different = copy.deepcopy(original)
     different["proof"]["evidence"]["observation"]["content"] += " Extra bewijs."

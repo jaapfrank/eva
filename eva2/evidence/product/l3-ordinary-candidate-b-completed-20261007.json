@@ -1,0 +1,29 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "task": "L3.6",
+  "checkedAt": "2026-10-07T12:17:28.122759+00:00",
+  "status": "ordinary_eva_saved_and_finished",
+  "original_work_id": "work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b",
+  "successful_typed_resume_work_id": "work:eva-resume:0d4e8277-ed9c-5ba9-9804-e742d536f78d",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 2,
+    "tool_calls": 1,
+    "input_tokens": 76198,
+    "output_tokens": 581,
+    "total_tokens": 76779,
+    "cost_usd_micros": null
+  },
+  "credit_costs": "unknown",
+  "candidate_sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+  "prior_steps_reused": true,
+  "save_step_7": "verified durable exact independent readback",
+  "draft_evaluation_prepare_or_save_repeated": false,
+  "independent_final_job_state": "awaiting_independent_answer_assessment",
+  "independent_answer_stage": "separate preregistered bounded stage now active",
+  "candidate_installed": false,
+  "final_quality": "not_yet_confirmed",
+  "earlier_failed_attempts": "retained with partial/unknown costs, not reset"
+}

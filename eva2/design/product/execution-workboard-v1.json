@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-07T09:53:18.773284+00:00",
+  "lastUpdated": "2026-10-07T12:17:28.122759+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -19338,12 +19338,13 @@
               "authorizedBy": "Jaap, 7 oktober 2026: ga door met AIDE² voor slimmer gedrag, maak duidelijke taken en maak Eva2 af.",
               "ownerActionRequired": false,
               "activeExecution": true,
-              "nextAction": "Volg dezelfde bewaarde uitvoering; na echte geverifieerde afronding één ongewijzigde onafhankelijke eindbeoordeling en zo nodig vooraf begrensde antwoordfase. Geen nieuwe kandidaat of meetronde.",
+              "nextAction": "Onafhankelijke antwoordbeoordeling van exact dezelfde kandidaat afmaken. Alleen een accept-beslissing kan dezelfde beheerde toepassing starten; verlies blijft bewaard. Geen nieuwe kandidaat of contextproef.",
               "assignment": {
                 "baseCommit": "e4b96679",
                 "owner": "/root",
                 "activeWorkers": [
-                  "/root"
+                  "/root",
+                  "/root/aide_final_evaluation"
                 ],
                 "files": [
                   "src/eva/application/component_improvements.py",
@@ -19357,10 +19358,10 @@
                 "gap": "Een gekozen pakket werd niet automatisch naar de afzonderlijke eindbeoordeling en bestaande beheerde bronimport/toepassing overgedragen. Die technische aansluiting is gebouwd; echte Eva-kandidaat en eindresultaat blijven vereist.",
                 "estimate": "Bestaande host en review-/pakketbinding hergebruiken; geen reviewmodel dat zijn eigen kandidaat goedkeurt. Eén samengevoegde toepassing; credits onbekend.",
                 "doneWhen": "De gekozen exacte kandidaat doorloopt een gescheiden eindbeoordeling op vooraf vastgelegde afgeschermde taken. Alleen gemeten voordeel kan via de bestaande beheerde route worden toegepast; verlies blijft bewaard. Dit vereist geen handmatig door Codex geschreven kandidaat of nieuw installatiepad.",
-                "stage": "installed_full_document_route_retained_eva_resume"
+                "stage": "ordinary_eva_finished_independent_answer_assessment"
               },
-              "checkedAt": "2026-10-07T11:47:00.638851+00:00",
-              "currentResult": "KandidaatB doorEva: ontwikkel7/10→10/10, hard0/0. Exacte83k-documentopslag én providerprojectie zijn gecorrigeerd/geïnstalleerd; volledige echte voorbereiding en leesbewijsgelijkheid slagen. Kern/werker gezond, dezelfde finale aanvraag wacht zonder eerdere eindproef. Eerdere mislukte hervatting had52549in/63uit(partial), blijft bewaard. Laatste bestaande taak hervat alleenPREPARE6-opslag/plan. Eindkwaliteit/toepassing nog open.",
+              "checkedAt": "2026-10-07T12:17:28.122759+00:00",
+              "currentResult": "Eva heeft dezelfde kandidaat B exact opgeslagen, teruggelezen en haar gewone taak succesvol afgerond; bestaande stappen zijn hergebruikt. De afzonderlijke eindhost heeft de bewaarde proef uitgevoerd en vraagt nu de vooraf afgesproken onafhankelijke antwoordbeoordeling. Die fase loopt, maximaal24calls volgens vast protocol. Geen installatie of finale kwaliteitswinst geclaimd; L3.6 blijft open.",
               "evidence": [
                 "eva2/evidence/product/l3-final-handoff-technical-20261007.json",
                 "eva2/evidence/product/l3-context-final-preregistration-20261007.json",
@@ -19378,9 +19379,13 @@
                 "eva2/evidence/product/l3-retained-package-transition-installed-20261007.json",
                 "eva2/evidence/product/l3-document-provider-projection-20261007.json",
                 "eva2/reviews/l3-document-provider-projection-review-20261007.json",
-                "eva2/evidence/product/l3-document-provider-projection-installed-20261007.json"
+                "eva2/evidence/product/l3-document-provider-projection-installed-20261007.json",
+                "eva2/evidence/product/l3-retained-receipt-model-view-20261007.json",
+                "eva2/reviews/l3-retained-receipt-model-view-review-20261007.json",
+                "eva2/evidence/product/l3-retained-receipt-model-view-installed-20261007.json",
+                "eva2/evidence/product/l3-ordinary-candidate-b-completed-20261007.json"
               ],
-              "latestEvidence": "eva2/evidence/product/l3-ordinary-completion-installed-20261007.json",
+              "latestEvidence": "eva2/evidence/product/l3-ordinary-candidate-b-completed-20261007.json",
               "installedReviewState": "GO_exact_completion_correction_no_candidate_gain",
               "installedReviewSha256": "b8df3e0659a78113a737b36109e6f727319f514a3d64bec5da617c213a5f9be6",
               "activeWorkId": "work:eva-chat:fa21670e-bd54-533d-885f-df1f3795309b"

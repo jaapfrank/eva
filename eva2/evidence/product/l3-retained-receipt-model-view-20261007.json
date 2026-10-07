@@ -1,0 +1,46 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "task": "L3.6",
+  "checkedAt": "2026-10-07T12:12:19.759432+00:00",
+  "change": "Lossless references for exact repeated retained evidence; existing save and independent final handoff unchanged.",
+  "source_sha256": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+  "preflight": {
+    "estimated_tokens": 47098,
+    "cap": 65536,
+    "receipt_count": 8,
+    "tool_dispatches": 0,
+    "model_calls": 0,
+    "lossless_full_history": true,
+    "catalogue_unchanged": true,
+    "source_sha256": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+    "envelope_sha256": "3339ffb43bb2b6f4a45ad955563dcd3dbd7823bd3e7fa0ca670778af51b35e6d",
+    "durable_receipts_sha256": "a196f84851e87c791b73247a38b35f38b6274589fb0b25b36362d6c9dfc7c83f"
+  },
+  "tests": {
+    "passed": 154,
+    "seconds": 4.924,
+    "provider_calls": 0,
+    "known_unchanged_catalog_fixture_mismatch": {
+      "unchanged_catalog_hash": true,
+      "current": "691af67f30c20513938543868c75b726bf48244932f4ed69fbdf356d6512080b",
+      "HEAD": "691af67f30c20513938543868c75b726bf48244932f4ed69fbdf356d6512080b",
+      "fixture": "4b2ed4d6d8b444a917aee8c34ed92c13b08f72f94effed8f3ce1423ebdd9d905"
+    }
+  },
+  "actual_prior_resume": {
+    "input_tokens": 52722,
+    "output_tokens": 63,
+    "tool_calls": 1,
+    "model_responses": 1,
+    "measurement": "partial",
+    "credit_costs": "unknown",
+    "step_7": "verified durable exact document readback"
+  },
+  "candidate": {
+    "sha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+    "changed": false,
+    "final_quality": "pending",
+    "installed": false
+  },
+  "deployment": "prepared_source_only_images"
+}

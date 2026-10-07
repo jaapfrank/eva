@@ -1,3 +1,13 @@
+## Actueel 7 oktober — gewone Eva-taak af, onafhankelijke antwoordbeoordeling loopt
+
+Eva heeft dezelfde kandidaat B exact opgeslagen, teruggelezen en haar gewone
+uitvoering succesvol afgerond. Geen voorstel, vergelijking, voorbereiding of
+opslag herhaald. De geïnstalleerde kern/werker zijn gezond. Dezelfde eindhost
+heeft het bewaarde pakket beoordeeld en vraagt nu de vooraf afgesproken aparte
+antwoordbeoordeling; de onafhankelijke uitvoerder doet die binnen het vaste
+24-callmaximum. Nog geen finale kwaliteitswinst of kandidaatinstallatie geclaimd.
+L3.6 blijft open tot de eindbeslissing en eventuele echte toepassing.
+
 ## Actueel 7 oktober — volledige documentovergang geïnstalleerd, exact werk hervat
 
 De algemene documentroute en onderliggende providerprojectie laten het echte

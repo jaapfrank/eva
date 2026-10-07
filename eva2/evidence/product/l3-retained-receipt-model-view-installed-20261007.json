@@ -1,0 +1,36 @@
+{
+  "contract": "EvaDeliveryEvidence/v1",
+  "task": "L3.6",
+  "checkedAt": "2026-10-07T12:15:21.000552+00:00",
+  "status": "installed_focused_completion_correction",
+  "source_sha256": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+  "images": {
+    "core": {
+      "base": "sha256:779983e23ff81a1b65a32a34dfad5a7c218b2c50a2ec0abee84836d601f47668",
+      "image": "sha256:5da48067439ae42cfccad9e19910eadc9d7d53882247893dc6f696b7fbb24544"
+    },
+    "delegated-work-worker": {
+      "base": "sha256:5a6da31ecf918ea256146515104d32c6c6edf158cd1ee51a29ecc3b8a5de1285",
+      "image": "sha256:2a1788effcdd441c4b15d024bcca58da3a46c1f7da8468a2d271a025f01c771b"
+    }
+  },
+  "retained_mounts": true,
+  "core_and_worker": "healthy",
+  "host": "active",
+  "review_sha256": "e2934aa7346e656440c901a88223f122e4ef7a6078374da12978ae6eea7790d2",
+  "preflight": {
+    "estimated_tokens": 47098,
+    "cap": 65536,
+    "receipt_count": 8,
+    "tool_dispatches": 0,
+    "model_calls": 0,
+    "lossless_full_history": true,
+    "catalogue_unchanged": true,
+    "source_sha256": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+    "envelope_sha256": "3339ffb43bb2b6f4a45ad955563dcd3dbd7823bd3e7fa0ca670778af51b35e6d",
+    "durable_receipts_sha256": "a196f84851e87c791b73247a38b35f38b6274589fb0b25b36362d6c9dfc7c83f"
+  },
+  "save_step_7": "verified durable exact independent readback, not replayed",
+  "candidate_B": "unchanged; independent final quality and application pending",
+  "credit_costs": "unknown"
+}

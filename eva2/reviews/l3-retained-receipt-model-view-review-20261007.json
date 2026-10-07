@@ -1,0 +1,87 @@
+{
+  "contract": "EvaRetainedReceiptModelViewReview/v1",
+  "reviewedAt": "2026-10-07",
+  "task": "L3.6",
+  "decision": "GO_SOURCE_AND_BOUNDED_DEPLOYMENT_PLAN",
+  "scope": "Request-local lossless model views of retained receipts for the same package B; no candidate change, final assessment, provider dispatch or budget increase.",
+  "source": {
+    "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+    "sha256": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978"
+  },
+  "test": {
+    "path": "eva2/tests/model/test_catalogue_model_view.py",
+    "sha256": "34cae74c8bdfb3cba5e9533b61cddea85b30a0a89b80e8261e2849d6d14b4d1d"
+  },
+  "authorReportedChecks": {
+    "relevantModelTestsPassed": 154,
+    "seconds": 4.924,
+    "fullSuiteAllPassClaim": false,
+    "retainedException": "One unmodified legacy catalogue-hash fixture mismatch was reported independently reproduced on HEAD; the fixture and acceptance rules were not changed.",
+    "existingParityCheck": "Existing SDK/history-versus-admission regression was updated to use the same history-aware view and independent expansion.",
+    "reviewerRepeatedTests": false
+  },
+  "realOfflineEnvelope": {
+    "path": "/home/administrator/project/.eva2-artifacts/l3-context-development-diagnostic-20261007/complete-retained-envelope-preflight-final.private.json",
+    "fileSha256": "e3f21c3b21440ac63eefdc1478c269bbd9a7ae13533ddeeb4ce16ae731723734",
+    "actualEnvelopeCanonicalSha256": "3339ffb43bb2b6f4a45ad955563dcd3dbd7823bd3e7fa0ca670778af51b35e6d",
+    "originalDurableReceiptsSha256": "a196f84851e87c791b73247a38b35f38b6274589fb0b25b36362d6c9dfc7c83f",
+    "sourceSha256": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+    "receiptCount": 8,
+    "estimatedInputTokens": 47098,
+    "fixedInputCap": 65536,
+    "fits": true,
+    "toolDispatches": 0,
+    "modelCalls": 0,
+    "fullHistoryLossless": true,
+    "catalogueUnchanged": true,
+    "earlierVariantEstimatedTokens": 70818,
+    "earlierVariantFit": false,
+    "reviewerReadOnlyTechnicalSummaryAndBodyHash": true,
+    "providerMeasuredTokenReduction": false
+  },
+  "findings": {
+    "materialBlockers": [],
+    "exactEffectView": "Only verified, durable EvaConversationActionReceipt/v1 effects with dictionary expected and exact canonical expected/observed equality gain the local observed reference. Original observation and proof hashes remain bound to the complete retained receipt.",
+    "requestBoundary": "The index is created inside each helper invocation. Only earlier verified literal view values are indexed. Failed/ambiguous/unconfirmed outputs neither supply nor consume cross-receipt references. Duplicate call IDs disable cross-receipt compression.",
+    "referenceTargets": "References carry call ID, escaped JSON pointer, exact value SHA and original source receipt SHA. Digest matches also require exact encoded bytes. No forward or external-history target is introduced. Subtrees containing references are not indexed as targets.",
+    "anchorsAndHashes": "Existing local reference targets and their ancestors remain unchanged by cross-receipt compression. This preserves catalogue encoding hashes and prevents replacing local proof anchors with another cross-call reference.",
+    "jsonTextEncoding": "For the original equal effect proof only, json_string_fragments_v1 substitutes exact earlier literal strings using explicit json_escape_content_v1. Remaining text fragments preserve order and text; string SHA binds original UTF-8 text. The observed reference retains original proof/observation hashes and adds the actual expected-view hash/encoding.",
+    "untrustedMetadata": "String-pointer checks prevent invalid provider marker values from becoming anchors. Reserved reference/encoding dictionaries remain literal during fragment conversion. An original provider marker alone cannot activate effect encoding.",
+    "originalEvidence": "Complete durable receipts, action arguments, backend completion/readback validation, model roles/routes, retries and limits are unchanged. The view is model input only; no original receipt or candidate is rewritten.",
+    "admissionAndSdk": "The admission body and actual SDK message/deferred-tool history invoke the same deterministic history-view helper on the same receipts. This establishes representation parity; the offline fit remains an estimate under the existing admission rule.",
+    "privacy": "No external lookup, persisted cross-request index, new logging or public private-content output is added. Values already admitted into this request are referenced locally; privacy/authority selection remains in the existing backend.",
+    "performanceLimit": "Canonicalization, indexing and fragment matching scale with retained history and value sizes and can repeat work for nested values. The concrete eight-receipt envelope is covered; no general CPU, latency or provider-usage improvement is claimed."
+  },
+  "resolvedReviewFindings": [
+    "Local reference anchors could become cross-call references.",
+    "Catalogue view hashes could become stale after cross-receipt compression.",
+    "Non-string provider reference values could break anchor collection.",
+    "Provider-supplied effect markers could activate encoding without original equal-proof validation."
+  ],
+  "retainedOutcome": {
+    "candidateSha256": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+    "candidateChanged": false,
+    "savedStep7VerifiedReported": true,
+    "newEvaluationOrFinalApproval": false
+  },
+  "deploymentPlan": {
+    "approvedScope": "Exact source-only child images for current core779983e2 and worker5a6da31e, preserving mounts, configuration, data and existing dependencies.",
+    "publisher": "Retain/update the existing trusted installed-base artifact to the actual corrected image pair so subsequent package B promotion preserves this correction.",
+    "resume": "Resume only the existing retained task after exact installed source binding and the complete real offline envelope fits the unchanged cap. Keep the existing waiting final job, request, package, protocol and failure provenance.",
+    "newRuntimeImageDigestsPendingInstalledVerification": true,
+    "installedRuntimeGo": false,
+    "reviewerExecutedDeployment": false
+  },
+  "limitations": {
+    "reviewerModelOrToolDispatches": 0,
+    "reviewerNewTestsOrMeasurements": 0,
+    "protectedFinalQuestionsRead": false,
+    "finalQualityApproved": false,
+    "semanticGainAttested": false,
+    "fullL36OrL37Completion": false,
+    "budgetIncrease": false,
+    "newCandidate": false,
+    "creditCost": "UNKNOWN"
+  },
+  "conclusion": "GO for the exact corrected source and bounded deployment plan. The retained real continuation now fits the original admission cap without removing evidence, altering package B or changing criteria. Installed delivery and independent final quality remain separate."
+}
