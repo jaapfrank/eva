@@ -17,6 +17,11 @@ zelfstandige taakkeuze, antwoordkwaliteit, efficiëntie of Eva2-voorsprong.
 Nul echte model-/authcalls;80 uitsluitend synthetische tokens. Ontwikkelcredits onbekend.
 48 kleine taken/39 afgerond en oorspronkelijke acceptaties blijven onveranderd.
 
+**Actuele uitvoering:** de technische voorbereiding is gesloten. Er loopt geen
+modelproef of onafhankelijke review. P2.1 wacht op het eerder gevraagde
+afzonderlijke besluit over één aanvullende Eva2/OpenClaw-vergelijking.
+Deze statuscorrectie levert geen nieuwe productfunctie op.
+
 Een ongebruikte oorspronkelijke successor-combinatiecase is beschikbaar voor een
 gedeeltelijk Eva2/OpenClaw-paar. De historische Eva2-CM04-usage is niet te reconstrueren;
 de oude UNKNOWN-guard/ledger wordt niet gewist of opnieuw gebruikt. Voor die ene
