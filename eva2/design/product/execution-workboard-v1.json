@@ -16612,7 +16612,7 @@
           ]
         }
       ],
-      "nextAction": "L3.6: geïnstalleerde onafhankelijke overdracht behouden; gewone ontwikkelproef eindigde in gelijkspel en wordt niet herhaald. De afrondingscorrectie is geïnstalleerd. Een werkelijk veelbelovende kandidaat blijft nodig voor de aparte eindbeoordeling; daarna L3.7.",
+      "nextAction": "L3.6: onafhankelijk publiek ontwikkelbewijs voor het nog ontbrekende taakgedrag, vóór een volgende kandidaat. Geen herhaling om een al maximale score groen te krijgen; geen wijziging van eindcriteria of afgeschermde eindtaken.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -19338,12 +19338,13 @@
               "authorizedBy": "Jaap, 7 oktober 2026: ga door met AIDE² voor slimmer gedrag, maak duidelijke taken en maak Eva2 af.",
               "ownerActionRequired": false,
               "activeExecution": true,
-              "nextAction": "Bewaar deze afgesloten ontwikkelmeting; geen ongewijzigde herhaling of tweede kandidaat uitsluitend om een verzadigde ontwikkelscore te halen. Voor de resterende onafhankelijke eindbeoordeling is een werkelijk veelbelovende kandidaat op een aangetoond gebruikstekort nodig. Gebruik bestaande criteria, route en de nog niet verbruikte aparte beoordeling.",
+              "nextAction": "De bestaande ontwikkelset is verzadigd (5/5). Onafhankelijk onderzoeken of gewone anders geformuleerde vervolgvragen een echte selectiezwakte tonen, met publieke diagnostische gevallen en ongewijzigde scorer/acceptatieregels. Alleen bij aangetoond tekort volgt een nieuwe gerichte kandidaat; afgeschermde eindset blijft ongebruikt en onveranderd.",
               "assignment": {
-                "baseCommit": "f6b81de0f1195319a75d331a4b13804a5a3d08f0",
+                "baseCommit": "b5c84380",
                 "owner": "/root",
                 "activeWorkers": [
-                  "/root"
+                  "/root",
+                  "/root/p2_eva1_lease_review_20261006"
                 ],
                 "files": [
                   "src/eva/application/component_improvements.py",
@@ -19357,9 +19358,9 @@
                 "gap": "Een gekozen pakket werd niet automatisch naar de afzonderlijke eindbeoordeling en bestaande beheerde bronimport/toepassing overgedragen. Die technische aansluiting is gebouwd; echte Eva-kandidaat en eindresultaat blijven vereist.",
                 "estimate": "Bestaande host en review-/pakketbinding hergebruiken; geen reviewmodel dat zijn eigen kandidaat goedkeurt. Eén samengevoegde toepassing; credits onbekend.",
                 "doneWhen": "De gekozen exacte kandidaat doorloopt een gescheiden eindbeoordeling op vooraf vastgelegde afgeschermde taken. Alleen gemeten voordeel kan via de bestaande beheerde route worden toegepast; verlies blijft bewaard. Dit vereist geen handmatig door Codex geschreven kandidaat of nieuw installatiepad.",
-                "stage": "installed_handoff_development_tie_retained"
+                "stage": "independent_public_development_gap_diagnosis"
               },
-              "checkedAt": "2026-10-07T11:01:47.264270+00:00",
+              "checkedAt": "2026-10-07T11:06:04.806369+00:00",
               "currentResult": "Beoordelings- en toepassingsoverdracht geïnstalleerd. Eva maakte via gewone chat zelf een kandidaat: 5/5 verwijzingen en 5514 contextbytes bij beide versies, dus basis behouden. Daarna trad een documentlengtefout op. Het afzonderlijk aangetoonde afrondingsdefect voor vergelijkingsresultaten is nu gecorrigeerd, geïnstalleerd en met de echte behouden bewijsreceipts gecontroleerd. Geen inhoudelijke winst of extra afgeronde huisgenootuitkomst.",
               "evidence": [
                 "eva2/evidence/product/l3-final-handoff-technical-20261007.json",

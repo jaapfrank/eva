@@ -1,3 +1,14 @@
+## Actueel 7 oktober — kwaliteitstekort vóór volgende kandidaat
+
+De vorige beurt leverde de geïnstalleerde afrondingscorrectie en onafhankelijke GO.
+De echte kandidaat gaf geen voordeel. De oude publieke ontwikkelset haalt al 5/5;
+alleen die herhalen kan geen betere taakherkenning aantonen. Een onafhankelijke
+uitvoerder controleert daarom eerst de algemene selectiezwakte met publieke
+ontwikkelgevallen. De oorspronkelijke set, scorer, harde voorwaarden en aparte
+eindbeoordeling blijven behouden. Geen nieuwe modelaanvragen tijdens deze diagnose.
+Alleen bewezen ontbrekend taakgedrag rechtvaardigt een volgende kandidaat binnen
+L3.6/L3.7. Geen extra hoofdtaken of afgeronde gezinsuitkomst.
+
 ## Actueel 7 oktober — geïnstalleerde cyclusaansluiting, ontwikkelproef gelijkspel
 
 De technische overdracht van een gekozen kandidaat naar onafhankelijke beoordeling,

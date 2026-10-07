@@ -1,0 +1,411 @@
+{
+  "contract": "EvaL3ContextDevelopmentDiagnosis/v1",
+  "task": "L3.6/L3.7",
+  "recordedAt": "2026-10-07",
+  "decision": "PROVEN_DEVELOPMENT_SELECTION_WEAKNESS",
+  "scope": "Additional public development diagnosis after the existing development set saturated. Selection inclusion is measured; no final assessment or model-answer quality is evaluated.",
+  "source": {
+    "path": "eva2/src/eva/adapters/postgres/delegated_work_actions.py",
+    "sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+    "method": "PostgresDelegatedWorkActions.active_context"
+  },
+  "diagnosisCases": {
+    "path": "eva2/experiments/aide-20260929/development-diagnosis-20261007.json",
+    "sha256": "05a4109d0af0145abc00b4e554e78c22cb0842b8d8bcb47212c6ac7bfe0f4fb7",
+    "count": 5,
+    "requiredReferences": 5,
+    "frozenBeforeBaselineMeasurement": true,
+    "derivedOnlyFromCurrentBaselineAndOrdinaryFollowupQuestions": true,
+    "candidateAOrPatchRead": false
+  },
+  "originalPublicFiles": {
+    "context_suite.py": "6d43028ce305a00bc075753332c6c822d1ce96fd27768f9bd0e4d610e787b7cb",
+    "dev-cases.json": "cfcd399ac0e8792d9162d9c4adfce71fba04f4df284b42fd4a02f9cc15ea7903",
+    "dev_score.py": "837ced00ce1dd8b72369bce7e4f671b4fa9f063248aaf196b1947052ad5a085f",
+    "criteria.json": "ca0e25657bb71e12f0bd1ff8dee64e7c85a343050d8a8f28f679ca76d84dc93e"
+  },
+  "originalFilesByteIdenticalBeforeAndAfter": true,
+  "combinedDevelopmentBinding": {
+    "ordering": "Original dev-cases.json list followed by development-diagnosis-20261007.json list.",
+    "caseCount": 11,
+    "requiredReferences": 10,
+    "canonicalJson": "UTF-8 JSON with ensure_ascii=false, sort_keys=true, separators=(',', ':'), allow_nan=false; no trailing newline.",
+    "canonicalSha256": "fa4871d140ff4efe88502ee6cccabcc156283be8c7c1ba6bd0b185cee8fab701"
+  },
+  "rationale": [
+    {
+      "caseId": "active_inflection_distractors",
+      "requiredIds": [
+        "work:dev-08"
+      ],
+      "basis": "A question about comparing solar-panel offers names inflected/split title concepts. Unrelated titles repeat generic comparison wording; the current exact-token/substring rule omits the relevant authorized active task at the existing eight-task bound."
+    },
+    {
+      "caseId": "active_compound_distractors",
+      "requiredIds": [
+        "work:dev-08"
+      ],
+      "basis": "A printer-repair followup expresses the compound title as noun and verb. Competing repair titles match generic words while the relevant compound does not receive the existing substring score."
+    },
+    {
+      "caseId": "recent_paraphrase_distractors",
+      "requiredIds": [
+        "work:dev-03"
+      ],
+      "basis": "A question about investigating another health policy paraphrases the insurance-comparison title. Unrelated recent research titles share generic query words and fill the existing three-outcome bound."
+    },
+    {
+      "caseId": "explicit_id_control",
+      "requiredIds": [
+        "work:dev-08"
+      ],
+      "basis": "The same active listing is identifiable when the question names its actual work_id. This control separates language ranking from scope and metadata availability."
+    },
+    {
+      "caseId": "exact_title_control",
+      "requiredIds": [
+        "work:dev-03"
+      ],
+      "basis": "The same recent listing is identifiable when the question uses the exact title. This control separates paraphrase ranking from recent-result eligibility."
+    }
+  ],
+  "baselineMeasurement": {
+    "image": "sha256:7c97a99b58d2b8f4a1932f35c608df596b4a3d2e1b0c8f0d98b25d4f86077a2a",
+    "sourceSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+    "containerExit": 0,
+    "elapsedSeconds": 2.16073241099366,
+    "originalScore": {
+      "hardFailures": 0,
+      "requiredHits": 5,
+      "requiredTotal": 5,
+      "contextBytes": 5514,
+      "cases": [
+        {
+          "id": "named_late",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1444
+        },
+        {
+          "id": "ordinary",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1028
+        },
+        {
+          "id": "recent_named",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1152
+        },
+        {
+          "id": "no_match",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "stop",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "denied",
+          "requiredHits": 0,
+          "requiredTotal": 0,
+          "hardFailures": [],
+          "contextBytes": 0
+        }
+      ]
+    },
+    "diagnosisScore": {
+      "hardFailures": 0,
+      "requiredHits": 2,
+      "requiredTotal": 5,
+      "contextBytes": 7047,
+      "cases": [
+        {
+          "id": "active_inflection_distractors",
+          "requiredHits": 0,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1583
+        },
+        {
+          "id": "active_compound_distractors",
+          "requiredHits": 0,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1530
+        },
+        {
+          "id": "recent_paraphrase_distractors",
+          "requiredHits": 0,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1169
+        },
+        {
+          "id": "explicit_id_control",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1586
+        },
+        {
+          "id": "exact_title_control",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1179
+        }
+      ]
+    },
+    "combinedScore": {
+      "hardFailures": 0,
+      "requiredHits": 7,
+      "requiredTotal": 10,
+      "contextBytes": 12561,
+      "cases": [
+        {
+          "id": "named_late",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1444
+        },
+        {
+          "id": "ordinary",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1028
+        },
+        {
+          "id": "recent_named",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1152
+        },
+        {
+          "id": "no_match",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "stop",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 945
+        },
+        {
+          "id": "denied",
+          "requiredHits": 0,
+          "requiredTotal": 0,
+          "hardFailures": [],
+          "contextBytes": 0
+        },
+        {
+          "id": "active_inflection_distractors",
+          "requiredHits": 0,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1583
+        },
+        {
+          "id": "active_compound_distractors",
+          "requiredHits": 0,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1530
+        },
+        {
+          "id": "recent_paraphrase_distractors",
+          "requiredHits": 0,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1169
+        },
+        {
+          "id": "explicit_id_control",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1586
+        },
+        {
+          "id": "exact_title_control",
+          "requiredHits": 1,
+          "requiredTotal": 1,
+          "hardFailures": [],
+          "contextBytes": 1179
+        }
+      ]
+    },
+    "diagnosisSelection": [
+      {
+        "caseId": "active_inflection_distractors",
+        "requiredIds": [
+          "work:dev-08"
+        ],
+        "selectedIds": [
+          "work:dev-00",
+          "work:dev-01",
+          "work:dev-02",
+          "work:dev-03",
+          "work:dev-04",
+          "work:dev-05",
+          "work:dev-07",
+          "work:dev-06"
+        ],
+        "missingRequiredIds": [
+          "work:dev-08"
+        ],
+        "serviceReads": 1,
+        "activeCount": 8,
+        "recentCount": 0,
+        "limited": true
+      },
+      {
+        "caseId": "active_compound_distractors",
+        "requiredIds": [
+          "work:dev-08"
+        ],
+        "selectedIds": [
+          "work:dev-00",
+          "work:dev-01",
+          "work:dev-02",
+          "work:dev-03",
+          "work:dev-04",
+          "work:dev-05",
+          "work:dev-06",
+          "work:dev-07"
+        ],
+        "missingRequiredIds": [
+          "work:dev-08"
+        ],
+        "serviceReads": 1,
+        "activeCount": 8,
+        "recentCount": 0,
+        "limited": true
+      },
+      {
+        "caseId": "recent_paraphrase_distractors",
+        "requiredIds": [
+          "work:dev-03"
+        ],
+        "selectedIds": [
+          "work:dev-00",
+          "work:dev-01",
+          "work:dev-02"
+        ],
+        "missingRequiredIds": [
+          "work:dev-03"
+        ],
+        "serviceReads": 1,
+        "activeCount": 0,
+        "recentCount": 3,
+        "limited": true
+      },
+      {
+        "caseId": "explicit_id_control",
+        "requiredIds": [
+          "work:dev-08"
+        ],
+        "selectedIds": [
+          "work:dev-08",
+          "work:dev-00",
+          "work:dev-01",
+          "work:dev-02",
+          "work:dev-03",
+          "work:dev-04",
+          "work:dev-05",
+          "work:dev-06"
+        ],
+        "missingRequiredIds": [],
+        "serviceReads": 1,
+        "activeCount": 8,
+        "recentCount": 0,
+        "limited": true
+      },
+      {
+        "caseId": "exact_title_control",
+        "requiredIds": [
+          "work:dev-03"
+        ],
+        "selectedIds": [
+          "work:dev-03",
+          "work:dev-00",
+          "work:dev-01"
+        ],
+        "missingRequiredIds": [],
+        "serviceReads": 1,
+        "activeCount": 0,
+        "recentCount": 3,
+        "limited": true
+      }
+    ],
+    "stdoutSha256": "ce43b67b8d5c3e196d5f8de464968e0a7f4a24a9627343650c9586949e4e6bf7",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "originalFiles": {
+      "context_suite.py": "6d43028ce305a00bc075753332c6c822d1ce96fd27768f9bd0e4d610e787b7cb",
+      "dev-cases.json": "cfcd399ac0e8792d9162d9c4adfce71fba04f4df284b42fd4a02f9cc15ea7903",
+      "dev_score.py": "837ced00ce1dd8b72369bce7e4f671b4fa9f063248aaf196b1947052ad5a085f",
+      "criteria.json": "ca0e25657bb71e12f0bd1ff8dee64e7c85a343050d8a8f28f679ca76d84dc93e"
+    },
+    "diagnosisSha256": "05a4109d0af0145abc00b4e554e78c22cb0842b8d8bcb47212c6ac7bfe0f4fb7"
+  },
+  "execution": {
+    "existingContextSuiteUnchanged": true,
+    "existingScorerFunction": "dev_score.score",
+    "existingScorerAndCriteriaUnchanged": true,
+    "actualInstalledImage": "sha256:7c97a99b58d2b8f4a1932f35c608df596b4a3d2e1b0c8f0d98b25d4f86077a2a",
+    "actualImportedSourceHashVerified": true,
+    "productSourceOverlay": false,
+    "network": "none",
+    "readOnlyContainer": true,
+    "uid": "65532:65532",
+    "containerCount": 1,
+    "originalResourceEnvelope": {
+      "deadlineSeconds": 60,
+      "memoryMb": 256,
+      "cpu": 1,
+      "pids": 64
+    },
+    "newModelCalls": 0,
+    "candidateSourcesEvaluated": 0,
+    "providerCalls": 0,
+    "authorityDatabaseAccess": false
+  },
+  "conclusion": "The original cases remain 5/5 with zero hard failures. The additional diagnosis is 2/5 with zero hard failures: three required authorized task IDs are absent for ordinary paraphrased questions amid competing titles, while explicit-ID/exact-title controls pass. Combined baseline is 7/10. This establishes a bounded development selection weakness, not an answer-quality or household result.",
+  "nextStepLimits": {
+    "candidateAdmissionGranted": false,
+    "finalAssessmentGranted": false,
+    "originalDevelopmentSetReplaced": false,
+    "originalAcceptanceCriteriaChanged": false,
+    "independentFinalDataRead": false,
+    "independentFinalProtocolChanged": false,
+    "closedFinalTrialReopened": false,
+    "quotaReset": false,
+    "newMainTaskCreated": false,
+    "guaranteedWinner": false,
+    "noCaseSpecificRegexOrSynonymList": true,
+    "newCandidateMustUseFrozenCombinedDevelopmentBinding": true,
+    "technicalOriginalTaskCompletionErrorReclassified": false,
+    "semanticImprovementVerified": false,
+    "fullL3_6Complete": false,
+    "fullL3_7Complete": false,
+    "credits": "unknown",
+    "offlineElapsedTimeIsNotRuntimeAnswerLatency": true
+  }
+}

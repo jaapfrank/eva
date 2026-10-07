@@ -1,0 +1,522 @@
+[
+  {
+    "id": "active_inflection_distractors",
+    "text": "Hoe staat het met de vergelijking van zonnepanelen?",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-00",
+          "title": "Vergelijking van fietslampen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:00:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-01",
+          "title": "Vergelijking van wandelrugzakken",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Vergelijking van koffiemolens",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:02:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-03",
+          "title": "Vergelijking van printertoners",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:03:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-04",
+          "title": "Vergelijking van regenjassen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:04:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-05",
+          "title": "Vergelijking van kookpannen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:05:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-06",
+          "title": "Vergelijking van boordcamera’s",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:06:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-07",
+          "title": "Vergelijking van slaapzakken",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:07:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-08",
+          "title": "Zonnepaneeloffertes vergelijken",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:08:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-08"
+    ]
+  },
+  {
+    "id": "active_compound_distractors",
+    "text": "Hoe staat het met het repareren van de printer?",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-00",
+          "title": "Repareren van fietsrem",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:00:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-01",
+          "title": "Repareren van deurbel",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Repareren van koffiezetter",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:02:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-03",
+          "title": "Repareren van regenjas",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:03:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-04",
+          "title": "Repareren van bureaulamp",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:04:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-05",
+          "title": "Repareren van tuinhek",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:05:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-06",
+          "title": "Repareren van keukenkraan",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:06:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-07",
+          "title": "Repareren van rugzak",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:07:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-08",
+          "title": "Printerreparatie",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:08:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-08"
+    ]
+  },
+  {
+    "id": "recent_paraphrase_distractors",
+    "text": "Heb je het onderzoek naar een andere zorgpolis al afgerond?",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-00",
+          "title": "Onderzoek koffiemolen",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:20:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-01",
+          "title": "Onderzoek fietslamp",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:19:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Onderzoek printer",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:18:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-03",
+          "title": "Zorgverzekering vergelijken",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:17:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-03"
+    ]
+  },
+  {
+    "id": "explicit_id_control",
+    "text": "Hoe staat het met work:dev-08?",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-00",
+          "title": "Vergelijking van fietslampen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:00:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-01",
+          "title": "Vergelijking van wandelrugzakken",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:01:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Vergelijking van koffiemolens",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:02:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-03",
+          "title": "Vergelijking van printertoners",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:03:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-04",
+          "title": "Vergelijking van regenjassen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:04:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-05",
+          "title": "Vergelijking van kookpannen",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:05:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-06",
+          "title": "Vergelijking van boordcamera’s",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:06:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-07",
+          "title": "Vergelijking van slaapzakken",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:07:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-08",
+          "title": "Zonnepaneeloffertes vergelijken",
+          "state": "call_started",
+          "stop_requested": false,
+          "recent_outcome": false,
+          "result_available": false,
+          "updated_at": "2026-09-29T08:08:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-08"
+    ]
+  },
+  {
+    "id": "exact_title_control",
+    "text": "Is Zorgverzekering vergelijken afgerond?",
+    "allowed": true,
+    "listing": {
+      "jobs": [
+        {
+          "work_id": "work:dev-00",
+          "title": "Onderzoek koffiemolen",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:20:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-01",
+          "title": "Onderzoek fietslamp",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:19:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-02",
+          "title": "Onderzoek printer",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:18:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        },
+        {
+          "work_id": "work:dev-03",
+          "title": "Zorgverzekering vergelijken",
+          "state": "succeeded",
+          "stop_requested": false,
+          "recent_outcome": true,
+          "result_available": true,
+          "updated_at": "2026-09-29T08:17:00+00:00",
+          "private_secret": "NEVER_SEND_SECRET",
+          "result": "NEVER_SEND_RESULT",
+          "task": "NEVER_SEND_TASK",
+          "question": "NEVER_SEND_QUESTION"
+        }
+      ],
+      "truncated": false
+    },
+    "required_ids": [
+      "work:dev-03"
+    ]
+  }
+]

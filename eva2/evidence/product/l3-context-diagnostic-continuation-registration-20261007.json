@@ -1,0 +1,58 @@
+{
+  "contract": "EvaContextDevelopmentDiagnosticContinuation/v1",
+  "registeredAt": "2026-10-07T11:12:41.929681+00:00",
+  "task": "L3.6/L3.7",
+  "state": "registered_before_second_primary_candidate_generation",
+  "baselineSha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+  "previousTrial": "l3-ordinary-improvement-outcome-20261007.json",
+  "changedCause": "Original public development set was saturated; independent public diagnosis proves three missing task references on ordinary paraphrases. No protected feedback.",
+  "diagnosisSha256": "392f471dabaf1ab6f81b077a7e90793244959b2070dd8a19e68ebaed4ec5bb5e",
+  "originalPublicCasesPreservedSha256": "cfcd399ac0e8792d9162d9c4adfce71fba04f4df284b42fd4a02f9cc15ea7903",
+  "combinedPublicCasesSha256": "fa4871d140ff4efe88502ee6cccabcc156283be8c7c1ba6bd0b185cee8fab701",
+  "baseline": {
+    "requiredHits": 7,
+    "requiredTotal": 10,
+    "hardFailures": 0,
+    "contextBytes": 12561
+  },
+  "development": {
+    "image": "sha256:a4d95d1eba6f36fcb8ecca1662352aa4c7188721cb1e9cc4353d86f394b5dd4d",
+    "assessmentSha256": "d94f9634991d243685bb99c25b7f0f93476f3a8b8ebb177d14e38791331c9844",
+    "binding": "1ab5b1ad3a0cfe755d85808603da1b884281ab13f0c59c4052a71ac48c00bfdd",
+    "previousBinding": "e157ac5498aea7a9f1d96aeebdf7069f33d2c921a9fbfb7f3ac39e5042a9bb41",
+    "scorerUnchanged": true,
+    "criteriaUnchanged": true,
+    "qualityBeforeResources": true
+  },
+  "budget": {
+    "existingMaximumInitialCandidates": 2,
+    "existingMaximumPublicRefinements": 1,
+    "primaryCandidatesAlreadyGenerated": 1,
+    "thisContinuationPrimaryCandidates": 1,
+    "workModel": "gpt-6-astra/medium",
+    "contactModel": "gpt-6-sol/none",
+    "taskModelRunsUpperBound": 32,
+    "taskToolsUpperBound": 31,
+    "provider": "installed Codex subscription",
+    "automaticRetry": false,
+    "knownPreviousWorkModelRequests": 9,
+    "knownPreviousInputTokens": 177327,
+    "knownPreviousOutputTokens": 2054,
+    "previousTerminalAccounting": "partial_after_post_model_failure",
+    "credits": null
+  },
+  "independentFinal": {
+    "registrationSha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+    "configurationUnchanged": true,
+    "configurationSha256": "7b773e24f6cc86a10df9081f62973110f1f09882c14d3fe6f7aa5735adffa5d7",
+    "notConsumed": true,
+    "rawInputsNotUsed": true
+  },
+  "candidateSha256": null,
+  "candidateAuthorship": "ordinary installed Eva chat/delegated route; no builder-written candidate",
+  "initialLocalBuildFailure": {
+    "cause": "legacy Docker builder rejects BuildKit-only COPY --chmod option",
+    "correction": "COPY existing mode0444 file; no new dependency installation",
+    "modelCalls": 0
+  }
+}
