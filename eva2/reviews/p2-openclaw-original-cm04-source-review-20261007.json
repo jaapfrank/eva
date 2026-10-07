@@ -1,0 +1,141 @@
+{
+  "contract": "P2OpenClawOriginalSourcePreparationReview/v1",
+  "date": "2026-10-07",
+  "entry": "openclaw:EV003-CM-04:epoch1",
+  "decision": "GO_resource_preparation_only",
+  "input_release_admitted": false,
+  "original_execution_started": false,
+  "bindings": {
+    "draft": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/parent-cm04-preparation-draft.private.json",
+      "sha256": "d75bf0775be669874b5ed47bc4ae7f799002515e86c0922b9c9d7fec2644c4a1"
+    },
+    "sources": {
+      "launch-parent-accounted-cm04.private.py": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/launch-parent-accounted-cm04.private.py",
+        "sha256": "81b2a4e86634e12e20fce1818e467242875e1e0fe99ee1b71b23d8a7d87371b3"
+      },
+      "native-openclaw-cm.private.mjs": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/native-openclaw-cm.private.mjs",
+        "sha256": "ced63101c946e8bca396635e3b0cc219754380a7d51d9deb9bf79d586f854d89"
+      },
+      "inspect-run-parent-accounted-cm04.private.py": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/inspect-run-parent-accounted-cm04.private.py",
+        "sha256": "39d90f615e05e2785bd3c76d5658f60e7fd080bdd311adf1734ac1b29e11a062"
+      }
+    },
+    "projection_contract": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/projection-contract-technical.private.json",
+      "sha256": "ea9af3c35e9e57988cf1a49d6e04996c6d501677d854cc393d8e8edd6e6c9a42"
+    },
+    "projection_sha256": "830464b86b5a9504d94ed9eb689b8999f9f068122f7f373586452e2056fbca99",
+    "structural_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm04-structural-review-20261007.json",
+      "sha256": "3b41074d49950c1b9663afc5a92c5981466a784f67c6c6b33c9a1df84cf4c41f"
+    },
+    "public_native_person_metadata_proof": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/public-native-person-recorder-check.public.json",
+      "sha256": "bf21199f448524fd46aa4b6d8b6f742b528a0019d104fd969b5fdc14fea593f2"
+    },
+    "reused_native_failure_recovery_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-failed-tool-recovery-native-review-20261007.json",
+      "sha256": "f5ed4fa1c7abc3bbd408e586ab20deaf10b1e92d47e89156db484efd48c0a60e"
+    },
+    "previous_runner_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm03-source-review-20261007.json",
+      "sha256": "32fcdd0cef48cf8652070ba937369166c65f90a2631031647efe743313c24ad1"
+    }
+  },
+  "source_checks": {
+    "all_bound_file_hashes_match": true,
+    "bound_files": 42,
+    "release_source_map_exact_three_files": true,
+    "parent_delta": "CM04 identifiers/isolated paths plus exact closed-CM03 receipt preservation; original authority path, ledger, sealed descriptors, total deadline, scope, network, model and cleanup requirements unchanged.",
+    "child_delta": "Three private sessions; existing pinned native recordInboundSessionMeta before each turn, followed by durable entry read. Ordinary agentCliCommand uses that actual sessionId and projected nativeRunContext. Before/after direct-origin equality is required, actual native session rotation retained, and person-binding snapshots are durable.",
+    "identity": "Projected original principals A/B/A are unchanged. SenderId and nativeDirectUserId bind principal; chatId/To/currentChannelId/nativeChannelId bind stable per-person chat UUID. Explicit session keys remain three separate original contexts. No identity is inferred from session count.",
+    "preserved_policy": "One main agent, profile, workspace and ordinary native memory behavior; no dmScope change, person profile split, extra system prompt or senderIsOwner override. Native CLI operator authority is distinct from per-turn sender identity.",
+    "inspect": "Only original CM04 selectors and exact source/projection bindings changed; same sealed dataset/scorer, no invented semantic or human scores.",
+    "accounting_and_closure": "Reviewed observer369b2872 is pinned; exact model-body retention, SDK/tool accounting, parent stop/deadline, native readbacks, physical exit and frozen-scope equivalent settlement remain required. Native cleanup uncertain is not rewritten."
+  },
+  "fixed_controls": {
+    "turns": 3,
+    "setup_turns": 0,
+    "actors": [
+      0,
+      1,
+      0
+    ],
+    "sessions": [
+      0,
+      1,
+      2
+    ],
+    "private_persons": 2,
+    "clock_generations": [
+      0,
+      0,
+      0
+    ],
+    "offset_deltas_ms": [
+      0,
+      0,
+      0
+    ],
+    "unknown_person_turns": 0,
+    "service_fixtures": 0,
+    "caps": {
+      "externalActions": 0,
+      "providerAttempts": 16,
+      "providerInputTokens": 1048576,
+      "providerOutputTokens": 19200,
+      "speechRequests": 0,
+      "toolDispatches": 16,
+      "wallSeconds": 480
+    },
+    "model_roles": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      }
+    }
+  },
+  "history": {
+    "authority_path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "authority_sha256": "b7680853c1bad04ae1f336ba17654aa90d6577510212e17524a489ec4d1d5494",
+    "existing_rows": 15,
+    "canonical_digest": "f02a01958e8f714a9ccab18b1938a84d2374457698a634520509cca8b910981a",
+    "all_rows_and_revisions_match_snapshot": true,
+    "cm04_openclaw_entry_absent": true,
+    "closed_cm01_cm02_cm03_receipt_hashes_match": true,
+    "closed_unknown_results_preserved": true,
+    "reset_or_replacement": false
+  },
+  "evidence_limits": [
+    "The existing public native recorder check proves three durable dummy direct-origin records and runContext forwarding with real pinned native helpers. Its script/raw output hashes match; it performs no complete CLI or privacy-quality evaluation and uses public dummy transport values.",
+    "Source checks establish equality for the actual protected projected fields. Their integration with the ordinary CLI is guarded before and after each eventual turn; no original outcome or person-memory separation is claimed in advance.",
+    "Full prior native loop/scope proofs and focused failure-path proofs are reused; no duplicate actor or test run was requested or performed.",
+    "Native delivery.kind external is retained metadata. deliver:false and the existing zero-external-action/network restrictions remain; no real channel delivery is authorized.",
+    "Resource preparation only: actual waiting process, reservation/history preservation, access freshness, network/accounting and absence of input/deadline/release require a separate readiness review before final release."
+  ],
+  "allowed_next_step": "Root may finalize only resource-preparation flags/provenance and run the existing Inspect preparation for this exact unused slot. Final admission and exclusive input release remain forbidden until independent actual-readiness GO.",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "semantic_scores": null,
+  "reviewer_activity": {
+    "source_and_retained_metadata_reads": true,
+    "tests": 0,
+    "model_or_auth_calls": 0,
+    "native_starts": 0,
+    "resource_starts": 0,
+    "input_release": false,
+    "authority_changes": 0,
+    "source_edits": 0,
+    "protected_content_disclosed": false
+  }
+}

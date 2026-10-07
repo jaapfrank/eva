@@ -1,0 +1,205 @@
+{
+  "contract": "Ev003IndependentOriginalReadinessReview/v1",
+  "reviewed_at": "2026-10-07T17:46:11.825880+00:00",
+  "decision": "GO_final_admission_and_single_release_to_existing_waiting_process",
+  "scope": {
+    "participant": "openclaw",
+    "case": "EV003-CM-04",
+    "epoch": 1,
+    "entry": "openclaw:EV003-CM-04:epoch1",
+    "exec_session": 88041,
+    "run_handle": "ev003-openclaw-cm04-native-30bf78b2c2714c9e9c9207f187f87e51",
+    "resource_preparation_only_already_admitted": true,
+    "reviewer_released_input": false
+  },
+  "evidence": {
+    "source_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm04-source-review-20261007.json",
+      "sha256": "8432dce0e395e44e5704a3d55b811475e364a2ed3907f78fb1ae3f5d32a447e3"
+    },
+    "source_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/source-admission.private.json",
+      "sha256": "32c58a00e9b0e22cde144a98812264051b6a53d2e79795d6013bc58fc4b3d5b3"
+    },
+    "actual_ready": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/execution/actual-ready-technical.private.json",
+      "sha256": "91fe54e4752a7deb4d4d650db9d6a23468c6f582a1bd1fcde214f3e7cea7297b"
+    },
+    "inspect_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/inspect-private/inspect-run-binding.json",
+      "sha256": "7337d9aed2ca188d2d8e6fc2315102c9ba37a1c67647c24291c470f016a64463"
+    },
+    "historical_rows_before": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/historical-rows-before-technical.private.json",
+      "sha256": "330dabc1f010a29893adf5f47081f9c33d43d2fffbce449334e884dae00665ca"
+    }
+  },
+  "binding_checks": {
+    "source_review_reused": true,
+    "all_42_file_pins_match": true,
+    "source_admission_delta_only_resource_preparation_flag_status_and_review_provenance": true,
+    "admitted_and_readiness_admitted_still_false": true,
+    "inspect_entry_plan_commitment_dataset_case_epoch_sources_projection_limits_authority_match": true,
+    "projection_sha256": "830464b86b5a9504d94ed9eb689b8999f9f068122f7f373586452e2056fbca99",
+    "projection_contract_sha256": "ea9af3c35e9e57988cf1a49d6e04996c6d501677d854cc393d8e8edd6e6c9a42",
+    "original_controls": {
+      "user_turns": 3,
+      "setup_turns": 0,
+      "verified_private_persons": 2,
+      "actor_indices": [
+        0,
+        1,
+        0
+      ],
+      "session_indices": [
+        0,
+        1,
+        2
+      ],
+      "clock_generations": [
+        0,
+        0,
+        0
+      ],
+      "clock_offsets_ms": [
+        0,
+        0,
+        0
+      ]
+    },
+    "unchanged_limits": {
+      "provider_attempts": 16,
+      "input_tokens": 1048576,
+      "output_tokens": 19200,
+      "tool_calls": 16,
+      "speech_seconds": 0,
+      "external_actions": 0,
+      "total_wall_seconds": 480
+    },
+    "sample_deadline_starts_after_single_input_release": true,
+    "one_shared_deadline_for_all_turns_helpers_tools_readbacks_and_stop": true,
+    "model_roles_unchanged": {
+      "contact": "Sol/none",
+      "helper": "Astra/medium"
+    }
+  },
+  "authority": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+    "sha256_after_reservation": "84ed9a9da10a6ea6295d8db9dcca460233bd6e15870c41184d3f6b27bacf15ee",
+    "sha256_before_reservation": "b7680853c1bad04ae1f336ba17654aa90d6577510212e17524a489ec4d1d5494",
+    "rows": 16,
+    "prior_rows": 15,
+    "prior_values_and_revisions_exactly_equal_retained_snapshot": true,
+    "prior_canonical_sha256": "f02a01958e8f714a9ccab18b1938a84d2374457698a634520509cca8b910981a",
+    "new_entry_revision": 0,
+    "new_entry_kind": "active",
+    "new_entry_attempts": 0,
+    "new_entry_stop": null,
+    "new_entry_usage_unknown": false,
+    "new_entry_envelope_exceeded": false,
+    "closed_cm01_cm02_cm03_unknowns_preserved": true,
+    "reset_or_replacement": false
+  },
+  "actual_waiting_resources": {
+    "container": {
+      "id": "9070be7b9b8d2480594cd57235bcf46f6967d5b61a500289d3831185762ffddd",
+      "name": "ev003-openclaw-cm04-parent-v1",
+      "running": true,
+      "carrier_pid": 1595965,
+      "image": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+      "own_run_label_matches": true,
+      "carrier_user": "10001:10001",
+      "readonly_rootfs": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "mount_count": 0
+    },
+    "network": {
+      "id": "4ea5606db78e7d366534a23687079f159c175bfa352cb5606d306eed29cded89",
+      "name": "ev003-openclaw-cm04-parent-v1-net",
+      "internal": true,
+      "own_run_label_matches": true,
+      "only_expected_container": true,
+      "namespace": "net:[4026534259]",
+      "actual_ipv4_output_only_loopback_and_exact_parent_tunnel_then_reject": true,
+      "actual_ipv6_output_only_loopback_then_reject": true
+    },
+    "processes": {
+      "inspect": {
+        "pid": 1591683,
+        "ppid": 1591675,
+        "start_ticks": 12606470
+      },
+      "parent": {
+        "pid": 1594597,
+        "ppid": 1591683,
+        "start_ticks": 12606859,
+        "prepare_argv_and_source_admission_match": true
+      }
+    },
+    "parent_owns_exact_tunnel_listener_and_accounting_socket": true,
+    "native_uid_gid": [
+      1000,
+      1000
+    ],
+    "native_uid_cannot_read_authority": true,
+    "accounting": {
+      "provider_attempts": 0,
+      "pending_async": 0,
+      "attempts": 0,
+      "stop": null,
+      "stop_requested": false,
+      "controller_errors": [],
+      "network_external_events": [],
+      "worker_connected": false,
+      "worker_seen": false,
+      "unsettled_events": 0
+    },
+    "input_released": false,
+    "native_context_started": false,
+    "sample_deadline_created": false,
+    "execute_once_exists": false
+  },
+  "access": {
+    "auth_sha256": "b099dbc54c0a77b6bf492afaf23cc27ef610b9f86f77cf4b12d7909f5201c611",
+    "auth_uid_gid": [
+      1000,
+      1000
+    ],
+    "auth_mode": "0600",
+    "unchanged": true,
+    "offline_expiry_fresh_through_480_seconds": true,
+    "auth_renewal_or_request": false,
+    "inference_or_entitlement_success_inferred": false
+  },
+  "release_conditions": [
+    "Root may finalize only admitted/readiness flags and independent review provenance, then atomically create one exclusive release bound to this ready receipt, original packet and exact source admission.",
+    "Use the same waiting exec 88041 and reservation; no process replacement, deadline reset, closed-case replay or additional allowance.",
+    "Actual native A/B/A direct-origin checks, context captures, readbacks, tool/provider accounting and native/process closure remain mandatory execution observations."
+  ],
+  "limits_of_decision": {
+    "source_and_readiness_only": true,
+    "native_person_binding_actual_three_turn_runtime_not_yet_observed": true,
+    "objective_quality": null,
+    "human_ratings": null,
+    "native_completion": null,
+    "literal_native_cleanup_uncertain_not_relabelled": true,
+    "general_os_broker_inaccessibility_not_claimed": true,
+    "existing_equivalent_settlement_evidence_and_guards_reused": true
+  },
+  "reviewer_activity": {
+    "read_only_metadata_hash_process_network_and_authority_checks": true,
+    "protected_packet_decoded": false,
+    "tests": 0,
+    "native_starts": 0,
+    "provider_calls": 0,
+    "auth_calls": 0,
+    "resource_starts": 0,
+    "authority_mutations": 0,
+    "input_releases": 0,
+    "files_written": [
+      "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm04-readiness-review-20261007.json"
+    ]
+  }
+}

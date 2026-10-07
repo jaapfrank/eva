@@ -1,0 +1,81 @@
+{
+  "contract": "Ev003IndependentBoundedSourceReview/v1",
+  "date": "2026-10-07",
+  "task": "P2.1",
+  "decision": "GO_source_checkpoint_and_publication_only",
+  "scope": "Content-free dynamic terminal identity observation; no acceptance or settlement correction.",
+  "sources": {
+    "observer": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "b2191639031eb25ec892fff28fdb25b35d3a6e8481225c58b883e5770a993042"
+    },
+    "tests": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "0613b1558bb935ff270328493d889573d4361a8cbeeb4ac24b58c0c49f32cbbd"
+    },
+    "retained_executed_cm04_observer": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/execution/executed-instrumentation-source.private.mjs",
+      "sha256": "369b2872b6537cbc9a7febf1d39a5bb1a988ef914a2f11fefb96359e162ec6be"
+    }
+  },
+  "reviewed_delta": {
+    "observer_lines": "495-505",
+    "fields_added": [
+      "native_tool_name_sha256",
+      "native_tool_namespace_sha256",
+      "native_tool_namespace_is_null"
+    ],
+    "behavior": "String tool/namespace values use existing SHA256(JSON.stringify(value)); raw values are not emitted. Missing/non-string values give null hashes; namespace_is_null preserves explicit null distinction.",
+    "existing_id_thread_turn_status_and_source_provenance_preserved": true,
+    "admission_dispatch_settlement_stop_caps_deadline_or_policy_changed": false,
+    "extra_dispatch_or_transport_path": false,
+    "durable_private_retention_mechanism_changed": false,
+    "native_framework_files_changed": false
+  },
+  "retained_test_evidence": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/dynamic-identity-observation-focused-checks.public.json",
+      "sha256": "e7c84779e7e441ef71838ea92c95c2cf13a5117c4b81b5eb6f16904056a76230"
+    },
+    "provenance": "Recorded completed exec chunk5096fe; reused without rerunning.",
+    "passed": 8,
+    "failed": 0,
+    "duration_ms": 113.04969,
+    "provider_calls": 0,
+    "original_inputs_used": false,
+    "original_cases_replayed": false,
+    "new_negative_check": "Same admitted ID/thread/turn with failed dynamicToolCall still stops coverage, leaves row reserved/dispatched false and grants no native_terminal; persisted observations contain expected hashes and no raw tool/namespace values.",
+    "existing_checks": "Command/patch completed/failed terminal, identity/cancellation/duplicate and recovery checks retained."
+  },
+  "limitations": [
+    "This adds diagnosis only: installed namespace/tool-to-pre-hook mapping remains unproven. No dynamic terminal acceptance or body-execution claim is approved.",
+    "Hashes of technical identifiers are deterministic commitments, not a claim of cryptographic anonymity; only technical metadata is retained.",
+    "Original CM04 remains closed UNKNOWN, with one complete turn, one pending tool registration and no native/equivalent quiescence pass.",
+    "A subsequent bounded public alias observation requires its own concrete plan; this review does not launch it or admit another original input."
+  ],
+  "unchanged_original_artifacts": {
+    "result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm04-result-20261007.json",
+      "sha256": "d6d833efb1915e6ef1972602dfb63c6ba7e733f6719bc79cf83f68fb9d82ff32"
+    },
+    "terminal_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-original-cm04-terminal-review-20261007.json",
+      "sha256": "24f0563a2ffd8278172341b3669c7593f1a4c23a025bfcf2ffad5c9534d0b679"
+    }
+  },
+  "permissions": {
+    "source_publication": true,
+    "runtime_feature_release": false,
+    "new_original_input_admission": false,
+    "closed_case_replay": false
+  },
+  "reviewer_activity": {
+    "read_only_source_diff_and_existing_receipt_review": true,
+    "tests": 0,
+    "native_runs": 0,
+    "model_calls": 0,
+    "auth_calls": 0,
+    "source_edits": 0,
+    "authority_changes": 0
+  }
+}

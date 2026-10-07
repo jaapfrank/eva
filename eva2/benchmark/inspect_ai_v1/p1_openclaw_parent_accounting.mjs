@@ -496,7 +496,10 @@ export class OpenClawAccounting {
       native_thread_id_sha256:digest(threadId ?? null),native_turn_id_sha256:digest(p.turnId ?? null),
       item_type:typeof p.item.type==='string' && /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(p.item.type)?p.item.type:'UNKNOWN',
       item_status:typeof p.item.status==='string' && /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(p.item.status)?p.item.status:null,
-      exit_code:Number.isSafeInteger(p.item.exitCode)?p.item.exitCode:null});
+      exit_code:Number.isSafeInteger(p.item.exitCode)?p.item.exitCode:null,
+      native_tool_name_sha256:typeof p.item.tool==='string'?digest(p.item.tool):null,
+      native_tool_namespace_sha256:typeof p.item.namespace==='string'?digest(p.item.namespace):null,
+      native_tool_namespace_is_null:p.item.namespace===null});
     // All installed non-tool item variants; a new variant cannot silently escape coverage.
     if (['userMessage','agentMessage','plan','reasoning','contextCompaction','enteredReviewMode','exitedReviewMode'].includes(p.item.type)) return;
     const row = this.tools.get(p.item.id);

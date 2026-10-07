@@ -1,0 +1,64 @@
+{
+  "activity": {
+    "auth_calls": 0,
+    "models": 0,
+    "native_starts": 0,
+    "projection_created": true,
+    "reservations": 0,
+    "source_edits": 0,
+    "tests": 0
+  },
+  "authority_sha256": "b7680853c1bad04ae1f336ba17654aa90d6577510212e17524a489ec4d1d5494",
+  "case_sha256": "a9d08889d8115e68ce68d2851d5ed73bd34f73e655620b096409babaeef292a5",
+  "contract": "P2OpenClawCm04StructuralProjectionReview/v1",
+  "current_unchanged_runner_admitted": false,
+  "date": "2026-10-07",
+  "decision": "projection_ready_existing_native_origin_binding_required_before_admission",
+  "entry": "openclaw:EV003-CM-04:epoch1",
+  "historical_rows_canonical_sha256": "f02a01958e8f714a9ccab18b1938a84d2374457698a634520509cca8b910981a",
+  "human_ratings": [
+    null,
+    null
+  ],
+  "projection": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/cm04-epoch1.native-inputs.private.json",
+    "sha256": "830464b86b5a9504d94ed9eb689b8999f9f068122f7f373586452e2056fbca99"
+  },
+  "quality_claim": null,
+  "retained_originals": "CM01/CM02/CM03 remain closed UNKNOWN; no replay or outcome replacement.",
+  "shape": {
+    "actor_count": 2,
+    "actor_indices": [
+      0,
+      1,
+      0
+    ],
+    "audience": "private",
+    "calendar_advance_count": 0,
+    "clock_generations": [
+      0,
+      0,
+      0
+    ],
+    "clock_offset_deltas_milliseconds": [
+      0,
+      0,
+      0
+    ],
+    "service_fixture_count": 0,
+    "session_count": 3,
+    "session_indices": [
+      0,
+      1,
+      2
+    ],
+    "setup_turn_count": 0,
+    "turn_count": 3,
+    "unknown_person_turns": 0
+  },
+  "smallest_binding": "Existing native recordInboundSessionMeta plus actual durable sessionId and per-turn runContext on the same ordinary agentCliCommand/main/profile; preserve native defaults and memory policy. Session count alone is not person separation.",
+  "technical_contract": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1/projection-contract-technical.private.json",
+    "sha256": "ea9af3c35e9e57988cf1a49d6e04996c6d501677d854cc393d8e8edd6e6c9a42"
+  }
+}

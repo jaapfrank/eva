@@ -1,4 +1,38 @@
-## Actueel 7 oktober — eigen verbetering geïnstalleerd; eindvergelijking open
+## Actueel 7 oktober — CM04 behouden; dynamische toolbinding nog open
+
+**Afgerond binnen de vergelijking:** de oorspronkelijke OpenClaw-CM04 is eenmaal
+uitgevoerd en onafhankelijk als UNKNOWN gesloten. Eén van drie beurten is compleet;
+twee verschillende geverifieerde privéorigins zijn werkelijk teruggelezen.
+De twee verstuurde contexten van de tweede persoon bevatten het beschermde gegeven
+niet. Dit is geen volledige privacy-, herinnerings- of antwoordkwaliteitspass.
+
+**Werkelijk verbruik:** 7 volledig afgerekende SDK-aanvragen, 158.724 invoer- en
+498 uitvoertokens, samen 159.222 tokens; 107,408s. Dit is ontwikkelverbruik voor
+de vergelijking; credits zijn onbekend. Alle 15 eerdere ledger-rijen/revisies zijn
+exact behouden. CM01–CM04 worden niet herhaald.
+
+**Resterende fout:** de evaluator stopte bij een gereserveerde dynamicToolCall
+met status failed. De native namespace/naam was niet exact aan de eerder
+toegelaten hooknaam gekoppeld. Toolbodyuitvoering is onbekend; vier andere tools
+zijn afgehandeld. Drie fysieke clients, scope, container en netwerk zijn beëindigd;
+volledige native settlement is niet bewezen.
+
+**Nu:** alleen hashes van native toolnaam/namespace bewaren zodat die koppeling
+met publieke gegevens kan worden aangetoond. Dit verruimt geen tooltoelating,
+voltooit geen productfunctie en geeft geen toestemming voor een nieuwe echte proef.
+Daarna pas de kleinste bewezen correctie en een oorspronkelijke ongebruikte case.
+
+L3.6–L3.7 blijven geïnstalleerd en onafhankelijk afgerond. Apps/add-ons vallen onder
+dezelfde verbetercyclus; de automatische droomplanner is nog niet gebouwd.
+Spraak blijft geparkeerd. De twee anonieme menselijke antwoordbeoordelingen en
+gezinsacceptatie blijven apart, zonder Codex’ technische werk te blokkeren.
+
+Resultaat: evidence/product/p2-openclaw-original-cm04-result-20261007.json.
+Onafhankelijke beoordeling:
+reviews/p2-openclaw-original-cm04-terminal-review-20261007.json.
+Actuele kleine taak: P2.1 in design/product/execution-workboard-v1.json.
+
+## Eerder 7 oktober — eigen verbetering geïnstalleerd; CM03 gesloten
 
 **Afgerond: L3.6–L3.7.** Eva’s eigen contextverbetering is onafhankelijk
 geaccepteerd, geïnstalleerd en teruggelezen. Een extra vraag werd 3/3 rechtstreeks

@@ -7,7 +7,7 @@ import { EventEmitter } from 'node:events';
 import { registerHooks } from 'node:module';
 import { spawn } from 'node:child_process';
 import { mkdtempSync, rmSync, readFileSync, writeFileSync, chmodSync, renameSync } from 'node:fs';
-import { randomUUID } from 'node:crypto';
+import { randomUUID, createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { dirname } from 'node:path';
@@ -553,6 +553,28 @@ await test('actual installed proxy and native client load exact overlay; public 
       }finally{local.terminate();}
     }
   } finally {await proxy?.close();hook.close();fake.deregister();delete globalThis.__openclawPublicFakeFetch;delete globalThis.__openclawPublicFakeWebSocket;}
+});
+
+await test('native dynamic identity is recorded privately without granting unbound terminal coverage', () => {
+  const directory=mkdtempSync(tmpdir()+'/openclaw-dynamic-identity-');chmodSync(directory,0o700);
+  const ledger=new FakeLedger();const o=new OpenClawAccounting(ledger,20,{now:()=>10,observeTools:true,privateModelContextDir:directory});
+  const invocation={toolUseId:'public-dynamic-call',toolName:'mcp__public_namespace__public_lookup',
+    turnId:'public-dynamic-turn',rawPayload:{session_id:'public-dynamic-thread'}};
+  try {
+    const row=o.nativeToolBefore(invocation);
+    o.nativeNotification({}, {method:'item/completed',params:{threadId:'public-dynamic-thread',turnId:'public-dynamic-turn',
+      item:{id:invocation.toolUseId,type:'dynamicToolCall',status:'failed',tool:'public_lookup',namespace:'public_namespace',success:false}}});
+    assert.equal(o.toolCoverage,false);assert.ok(ledger.stopReason);
+    assert.equal(row.dispatched,false);assert.equal(row.status,'reserved');assert.equal(row.native_terminal,undefined);
+    const receipts=o.nativeObservationReceipts.map(r=>readFileSync(r.path,'utf8'));
+    const terminal=receipts.map(x=>JSON.parse(x)).find(x=>x.phase==='item_completed');
+    const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
+    assert.equal(terminal.native_tool_name_sha256,hash('public_lookup'));
+    assert.equal(terminal.native_tool_namespace_sha256,hash('public_namespace'));
+    assert.equal(terminal.native_tool_namespace_is_null,false);
+    assert.equal(receipts.join('').includes('public_lookup'),false);
+    assert.equal(receipts.join('').includes('public_namespace'),false);
+  } finally { rmSync(directory,{recursive:true,force:true}); }
 });
 
 await test('correlated native terminal before post settles once and keeps result separate from dispatch', () => {

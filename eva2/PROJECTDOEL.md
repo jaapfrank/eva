@@ -41,7 +41,20 @@ zonder herhaling. De gerichte publieke native herstelproef is onafhankelijk GO:
 failed/127 blijft een fout, drie beurten/readbacks afgehandeld, 16 tools en de
 17e-capweigering behouden. Vier nagebootste antwoorden, nul echte providercalls.
 Dit bewijst de gewijzigde uitvoerovergang; geen oorspronkelijke kwaliteitsscore.
-Volgende oorspronkelijke ongebruikte case: CM04, afzonderlijk toelaten.
+CM04 volgde eenmaal met twee verschillende geverifieerde privéorigins en
+ongewijzigd native geheugenbeleid: 1/3 beurt compleet, 7 volledig afgerekende
+SDK-aanvragen, 158.724 invoer-/498 uitvoertokens en 107,408s. De evaluator stopte
+bij een dynamicToolCall failed zonder exacte namespace/naamkoppeling aan de
+toegelaten hook. Toolbodyuitvoering is onbekend. In twee verstuurde contexten van
+de tweede persoon is het beschermde gegeven niet gevonden; de gehele case blijft
+UNKNOWN, zonder volledige privacy-/antwoordscore of herhaling.
+Zie evidence/product/p2-openclaw-original-cm04-result-20261007.json.
+
+De eerstvolgende handeling is de bestaande native dynamische toolidentiteit met
+publieke gegevens aantonen. Alleen contentvrije naam-/namespacehashes worden
+toegevoegd; toelating, criteria en stopvoorwaarden blijven gelijk. Geen nieuwe
+echte vergelijkingscall vóór een bewezen passende binding; gesloten CM01–CM04
+blijven gesloten. Dit is noodzakelijke proefadapterarbeid, geen nieuwe Eva-functie.
 
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 
