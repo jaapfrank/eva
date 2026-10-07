@@ -140,7 +140,7 @@ export class OpenClawAccounting {
     if (!Number.isFinite(deadline)) throw new Error('original absolute deadline required');
     this.ledger = ledger; this.deadline = deadline; this.now = now; this.save = save;
     this.calls = []; this.active = new Set(); this.wsAttempts = new WeakMap();
-    this.clockFile = clockFile; this.scenarioReadbacks = []; this.previousScenario = null;
+    this.clockFile = clockFile; this.scenarioReadbacks = []; this.previousScenario = null; this.nativeCompletedResponses = new Map();
     this.privateModelContextDir = privateModelContextDir; this.observeTools = observeTools;
     this.tools = new Map(); this.clients = new Map(); this.nativeReadbacks = [];
     this.nativeModuleBindings = new Map(); this.nativeQueues = new Map();
@@ -207,6 +207,12 @@ export class OpenClawAccounting {
       const metadata = message.internal_chat_message_metadata_passthrough;
       if (metadata?.turn_id !== turnId) continue;
       const kinds = metadata.content_item_kinds;
+      if (message.type && message.type !== 'message') {
+        if (Array.isArray(kinds) && kinds.some(kind => ['environments.environment_context','additional_content.openclaw_temporal_context'].includes(kind))) {
+          throw new Error('typed native item cannot carry calendar context');
+        }
+        continue;
+      }
       if (!Array.isArray(kinds) || !Array.isArray(message.content)
           || kinds.length !== message.content.length || !Number.isFinite(metadata.create_time)) {
         throw new Error('native content metadata differs');
@@ -223,6 +229,23 @@ export class OpenClawAccounting {
     }
     const environment = carriers.get('environments.environment_context');
     const application = carriers.get('additional_content.openclaw_temporal_context');
+    if (!environment && !application && typeof body.previous_response_id === 'string' && body.previous_response_id) {
+      const inherited = this.nativeCompletedResponses.get(digest(body.previous_response_id));
+      if (!inherited || typeof native.thread_id !== 'string' || !native.thread_id || inherited.turn_id !== turnId
+          || inherited.native_thread_id_sha256 !== digest(native.thread_id ?? null)
+          || inherited.generation !== state.generation
+          || inherited.canonical_clock_state_sha256 !== readback.canonical_clock_state_sha256
+          || inherited.native_temporal_context_sha256 !== readback.native_temporal_context_sha256
+          || !Array.isArray(body.input) || !body.input.length
+          || body.input.some(item => item.type !== 'function_call_output'
+             || (Object.hasOwn(item.internal_chat_message_metadata_passthrough ?? {}, 'turn_id')
+               && item.internal_chat_message_metadata_passthrough.turn_id !== turnId))) {
+        throw new Error('incremental native calendar reference unknown or differs');
+      }
+      return {body, calendarBinding:{...inherited,changed_field:null,native_date_changed:false,
+        previous_response_id_sha256:digest(body.previous_response_id)},
+        nativeOriginalBodyBytes:originalBytes,nativeCalendarPrebindingBodyBytes:Buffer.from(JSON.stringify(body))};
+    }
     const temporal = application?.text.match(/^<openclaw_temporal_context>([\s\S]*)<\/openclaw_temporal_context>$/);
     const date = temporal?.[1].match(/^Current date: (\d{4}-\d{2}-\d{2})$/m)?.[1];
     const zone = temporal?.[1].match(/^Time zone: ([^\r\n]+)$/m)?.[1];
@@ -245,7 +268,7 @@ export class OpenClawAccounting {
       throw new Error('scenario calendar changed during binding');
     }
     return { body:{...body,input}, calendarBinding:{
-      turn_id:turnId,generation:state.generation,canonical_clock_state_sha256:digest(state),
+      turn_id:turnId,native_thread_id_sha256:digest(native.thread_id ?? null),generation:state.generation,canonical_clock_state_sha256:digest(state),
       native_temporal_context_sha256:readback.native_temporal_context_sha256,
       changed_field:'/input/'+environment.i+'/content/'+environment.j+'/text/current_date',
       native_date_changed:nativeDates[0][1] !== date
@@ -305,6 +328,14 @@ export class OpenClawAccounting {
     try {
       this.nativeObservationReceipts.push(this.retainPrivate(Buffer.from(JSON.stringify(snapshot)), 'native-observation'));
     } catch (error) { this.ledger.stop('native observation unavailable'); throw error; }
+  }
+  nativePreparationFailure(stage, error, bytes) {
+    if (!this.observeTools || !this.privateModelContextDir) return;
+    if (!['native_context_prepare','evaluator_body_bind'].includes(stage)) throw new Error('fixed native preparation stage required');
+    const body = Buffer.isBuffer(bytes) ? this.retainPrivate(bytes, 'native-preparation-failed') : null;
+    this.recordNativeObservation('native_preparation_failure', {
+      stage, ...nativeFailure(error), error_message_sha256:digest(error?.message ?? null),
+      failed_native_body:body });
   }
   nativeErrorMetadata(error) { return nativeFailure(error); }
   nativeIdentity(invocation = {}, registration = {}) {
@@ -491,8 +522,29 @@ export class OpenClawAccounting {
   }
   async event(row, value) {
     if (!terminal(value)) return;
-    const extra = { native_terminal_type: value.type };
-    await this.finish(row, safeUsage(value), extra);
+    const identity = { native_terminal_type:value.type,
+      native_terminal_response_id_sha256:digest(value.response?.id ?? null) };
+    if (row.native_terminal_type) {
+      if (row.native_terminal_type !== identity.native_terminal_type
+          || row.native_terminal_response_id_sha256 !== identity.native_terminal_response_id_sha256) {
+        this.ledger.stop('native terminal identity changed');throw new Error('native terminal identity changed');
+      }
+      return;
+    }
+    if (row.status !== 'pending') return;
+    Object.assign(row,identity); // Bind the first terminal before asynchronous parent settlement.
+    await this.finish(row, safeUsage(value));
+    if (row.status === 'completed' && value.type === 'response.completed'
+        && value.response?.status === 'completed' && typeof value.response.id === 'string'
+        && value.response.id && row.calendar_binding) {
+      const {turn_id,native_thread_id_sha256,generation,canonical_clock_state_sha256,native_temporal_context_sha256} = row.calendar_binding;
+      const binding = {turn_id,native_thread_id_sha256,generation,canonical_clock_state_sha256,native_temporal_context_sha256};
+      const key = digest(value.response.id);const previous = this.nativeCompletedResponses.get(key);
+      if (previous && digest(previous) !== digest(binding)) {
+        this.ledger.stop('native response calendar identity changed');throw new Error('native response calendar identity changed');
+      }
+      this.nativeCompletedResponses.set(key,binding);
+    }
   }
   async fetch(original, params, binding) {
     if (!binding || params.auditContext !== 'codex-parent-local-inference' || !new URL(params.url).pathname.endsWith('/responses')) {
@@ -666,7 +718,9 @@ export function installOpenClawAccounting(accounting, pluginRoot, pins, { hostRo
         source = replaceOnce(source, 'async closeAndWait(options) {', 'async closeAndWait(options) {\n\t\tlet readbackError; try { await __evaAccounting.beforeNativeClose(this); } catch(error) { readbackError = error; }\n\t\tconst result = await this.__evaCloseAndWait(options); __evaAccounting.nativeClosed.set(this, result); if (readbackError) throw readbackError; return result;\n\t}\n\tasync __evaCloseAndWait(options) {');
       }
     } else {
-      source = replaceOnce(source, 'const rewritten = Buffer.from(JSON.stringify(prepared.body));', 'const normalized = __evaAccounting.prepareBody(prepared.body, bytes);\n\t\tconst rewritten = Buffer.from(JSON.stringify(normalized.body));\n\t\tnormalized.accounting.nativeBodyBytes = rewritten;');
+      source = replaceOnce(source, 'const prepared = context.prepare(value);',
+        'let prepared; try { prepared = context.prepare(value); } catch(error) { __evaAccounting.nativePreparationFailure("native_context_prepare", error, bytes); throw error; }');
+      source = replaceOnce(source, 'const rewritten = Buffer.from(JSON.stringify(prepared.body));', 'let normalized; try { normalized = __evaAccounting.prepareBody(prepared.body, bytes); } catch(error) { __evaAccounting.nativePreparationFailure("evaluator_body_bind", error, bytes); throw error; }\n\t\tconst rewritten = Buffer.from(JSON.stringify(normalized.body));\n\t\tnormalized.accounting.nativeBodyBytes = rewritten;');
       source = replaceOnce(source, 'bytes: rewritten,', 'bytes: rewritten,\n\t\t\taccounting: normalized.accounting,');
       source = replaceOnce(source, '...createUploadBody(body, requestSignal, release),', '...createUploadBody(body, requestSignal, release),\n\t\t\taccounting: prepared.accounting,');
       source = replaceOnce(source, 'guarded = await fetchWithSsrFGuard({', 'guarded = await __evaAccounting.fetch(fetchWithSsrFGuard, {');

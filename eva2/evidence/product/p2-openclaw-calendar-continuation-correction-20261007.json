@@ -1,0 +1,128 @@
+{
+  "contract": "EvaComparisonPreparationCorrection/v1",
+  "recordedAt": "2026-10-07T14:37:43.401117+00:00",
+  "taskId": "P2.1",
+  "decision": "CORRECTION_CONFIRMED_FULL_COMPOSITION_NO_GO",
+  "sourceSha256": "f995183085bbfc1c36b028243af1b7878f9fe87c93d0b67f4661b594ae1087e5",
+  "testSha256": "051df0cc72c8d302016da6613cea648727a1d168b62a8767f298e612c56c2ca0",
+  "priorDiagnosis": "eva2/evidence/product/p2-openclaw-preparation-failure-diagnosis-20261007.json",
+  "provenCause": "Current-turn typed function_call/output are native tool history, not message content arrays. Incremental output-only requests inherit the calendar through the exact settled previous_response_id.",
+  "change": {
+    "fullHistory": "Preserve typed tool items; retain strict checks for genuine calendar messages.",
+    "incremental": "Permit unchanged output-only input after exact response/thread/turn/calendar was parent-settled; unknown, stale, mismatched or replayed terminals refused.",
+    "nativeFrameworkBytesChanged": false,
+    "ownerCriteriaChanged": false,
+    "calendarOsAuthOrMonotonicClockChanged": false
+  },
+  "focusedVerification": {
+    "pass": 4,
+    "fail": 0,
+    "skipped": 0,
+    "actorLaunches": 0,
+    "providerCalls": 0,
+    "retainedFailedDeltaAndFullHistoryPass": true,
+    "firstFixtureAssertionCorrection": "Expected existing model policy none rather than low; first failed verification retained, rules unchanged."
+  },
+  "ordinaryPublicConfirmation": {
+    "freshRoot": "/tmp/eva-p2-openclaw-calendar-continuation-20261007-e935aqko",
+    "exitCode": 1,
+    "timedOut": false,
+    "elapsedSeconds": 88.27345627099567,
+    "publicCliReturns": 1,
+    "verifiedCompleteReadbackTurns": 0,
+    "modelRequests": 2,
+    "sdkUsage": {
+      "synthetic": true,
+      "attempts": 2,
+      "completed": 2,
+      "inputTokens": 34,
+      "outputTokens": 6,
+      "totalTokens": 40
+    },
+    "toolReservations": 16,
+    "nativeDispatchedTools": 16,
+    "toolTerminals": 16,
+    "toolPostChecks": 16,
+    "toolCoverage": true,
+    "coverageFailure": null,
+    "preparationFailures": 0,
+    "scenarioReadbackGenerations": [
+      0
+    ],
+    "plannedOrdinaryTurns": 3,
+    "plannedSessionPattern": [
+      0,
+      0,
+      1
+    ],
+    "plannedGenerations": [
+      0,
+      0,
+      1
+    ],
+    "seventeenthToolCheckReached": false,
+    "nativeClosed": false,
+    "pendingSdk": 0,
+    "pendingTools": 0,
+    "cancelErrors": [],
+    "unregisterQueuesFlushed": true,
+    "namespacePidsAtTestExit": [],
+    "namespaceTeardownNotNativeCleanupProof": true
+  },
+  "remainingFailure": {
+    "boundary": "nativeSettlement on the closed native client",
+    "fixedOwnError": "native close/readback was not confirmed",
+    "nativeSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/client-Cs08OXVQ.mjs",
+      "sha256": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da",
+      "line": 4003,
+      "meaning": "Native closeAndWait explicitly returns cleanup uncertain whenever nativeExecutionObserved. This is not overwritten or relabelled by evaluator."
+    },
+    "noUnchangedRepeat": true,
+    "originalSampleDecision": "NOT_STARTED_NO_GO",
+    "fullAccountingPhysicalCleanupAndThreeTurns": "NOT_ESTABLISHED"
+  },
+  "preservation": {
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "originalAuthorityReads": 0,
+    "originalAuthorityWrites": 0,
+    "enumeratedSixOperatorArtifactsUnchanged": true,
+    "authCopiedOrModified": false,
+    "coreOrWorkerImageChanged": false,
+    "closedTrialsRepeated": false,
+    "productCompletionAdded": false
+  },
+  "developmentCost": {
+    "newRuntimeProviderCalls": 0,
+    "publicFixtureSdkUsageIsSynthetic": true,
+    "developmentCredits": "UNKNOWN"
+  },
+  "receipts": {
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/ordinary-execution.public.json",
+      "sha256": "bb9a7133817dedd2b301265e81ed64b8c31a80b852510f1fb08796362c787680"
+    },
+    "technical": {
+      "path": "/tmp/eva-p2-openclaw-calendar-continuation-20261007-e935aqko/composition-technical.private.json",
+      "sha256": "fe5f895f64ace0778fc4b45d1a010094cb81d98b649689e3d01772415ec81614"
+    },
+    "lastDurableObservation": {
+      "path": "/tmp/eva-p2-openclaw-calendar-continuation-20261007-e935aqko/contexts/138-native-observation.json",
+      "sha256": "95d8b63993271c64a3b4261a86c805d7388a86d59d311fa46cb15caebce9ea4d"
+    },
+    "focused": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/calendar-focused.public.json",
+      "sha256": "b452a95f377a2517113c982faa8745ea1f63217abf7cb9a844d6e8f35520313d"
+    },
+    "retainedBody": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/retained-body-verification.public.json",
+      "sha256": "f436a9b8de0e5f3de035dfe3854be1e8266facde9354c1f959a00a875dda0263"
+    },
+    "sourceReview": {
+      "path": "eva2/reviews/p2-openclaw-calendar-continuation-review-20261007.json",
+      "sha256": "4eae7e88edaeeac39d9ffe4e2b228eef80b05e863b9d4da5d938bc385a253ae2"
+    }
+  },
+  "nextAction": "Use native readback/physical-exit/source-authority contract to resolve closure before remaining turns or original unused slot; do not rewrite native cleanup flag or launch unchanged public fixtures."
+}

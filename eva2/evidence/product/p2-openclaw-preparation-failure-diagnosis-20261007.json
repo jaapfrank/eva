@@ -1,0 +1,159 @@
+{
+  "schema": "EvaOpenClawPreparationFailureDiagnosis/v1",
+  "at": "2026-10-07T14:26:05.083009+00:00",
+  "status": "CONFIRMED_EVALUATOR_TYPED_ITEM_AND_INCREMENTAL_CALENDAR_GAP",
+  "sourceSha256": "30213a2a7a6283d87d346dd64fc43c9b3fc4b227b92b953df9674588748c684d",
+  "testSha256": "20c50d50839b663ee04f5a5dbc85212d064dce5367d7bb76a7e4ae91307f868d",
+  "sourceReview": "eva2/reviews/p2-openclaw-preparation-failure-source-review-20261007.json",
+  "sourceReviewSha256": "301d8aea56a8782053871ebc37ad5ebd523a5770ed5e1b5e927206956d12199c",
+  "failureCount": 36,
+  "firstFailure": {
+    "sequence": 131,
+    "phase": "evaluator_body_bind",
+    "messageHash": "5efda6865dc4b18b51d5df3d5dd6b2387e4e34084a2095b1adb5ccd202ff494d",
+    "matchingFixedSourceError": "native content metadata differs",
+    "beforeDeadline": true,
+    "ledgerStopped": false,
+    "pendingSdk": 0
+  },
+  "actualFailedBodyShape": {
+    "bytes": 78632,
+    "sha256": "5469fe77977ded2573d768273f75e8d5d2e7f69caa9e1c2f4065e702672d9471",
+    "nativeMetadataTurnMatches": true,
+    "hasPreviousResponse": true,
+    "inputCount": 16,
+    "inputShapes": [
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      },
+      {
+        "itemType": "function_call_output",
+        "sameTurn": true,
+        "contentArray": false,
+        "kindArray": false
+      }
+    ]
+  },
+  "actualFallbackBodyShape": {
+    "sha256": "7684002bb7eadfb1b09f16769ebba30ef7768d5fc42d04286d34313a4c0f94fc",
+    "hasPreviousResponse": false,
+    "itemTypes": {
+      "message": 6,
+      "function_call": 16,
+      "function_call_output": 16
+    }
+  },
+  "finding": "scenarioBody validates every same-turn item as a content message before testing whether it is a calendar carrier. Native function_call/function_call_output are typed items without content/kinds arrays; continuation and full fallback are refused before SDK admission. The first continuation also uses previous_response_id rather than repeating calendar carriers; require a successfully settled exact prior native thread/turn/generation binding, never fabricate context.",
+  "proposedSmallCorrection": "Validate calendar carriers in message items; typed tool items cannot carry calendar metadata. For an incremental function-output continuation accept only a terminal SDK response ID already settled with exactly matching native thread/turn/calendar generation/state. Keep original serialized delta; new/unknown/stale references remain refused.",
+  "execution": {
+    "elapsedSeconds": 122.00654861501243,
+    "exitCode": -15,
+    "timedOut": true,
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "operatorEnumeratedHashesEqual": true,
+    "terminalCompositionReceipt": false
+  },
+  "retained": {
+    "execution": "/home/administrator/project/.eva2-artifacts/p2-openclaw-preparation-failure-20261007/ordinary-execution.public.json",
+    "executionSha256": "bd3821a9b8393d2439af7532cbc3417dad2fae8f22830494eba7d8f2aa656ba0",
+    "firstFailureRecord": "/tmp/eva-p2-openclaw-preparation-error-20261007-b8qf4x5_/contexts/135-native-observation.json",
+    "firstFailureRecordSha256": "05eb8e4642bafb31840d122735047a55e90cb630a8e6237854872fc079b086dd",
+    "firstFailedBody": "/tmp/eva-p2-openclaw-preparation-error-20261007-b8qf4x5_/contexts/134-native-preparation-failed.json",
+    "fallbackFailedBody": "/tmp/eva-p2-openclaw-preparation-error-20261007-b8qf4x5_/contexts/136-native-preparation-failed.json"
+  },
+  "fullComparison": "UNKNOWN",
+  "originalSample": "NOT_STARTED_NO_GO",
+  "usage": {
+    "realInferenceCalls": 0,
+    "credits": null
+  },
+  "productCompletionClaim": false
+}

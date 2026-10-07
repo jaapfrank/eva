@@ -1,0 +1,197 @@
+{
+  "schema": "EvaIndependentOpenClawContinuationRuntimeReview/v1",
+  "at": "2026-10-07T14:40:39.878251+00:00",
+  "decision": "GO_SOURCE_PUBLIC_CHECKPOINT_FULL_COMPOSITION_NOT_ADMITTED",
+  "publicReport": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-calendar-continuation-correction-20261007.json",
+    "sha256": "897310de98c093f7e27eed66447e8cace68f50b0215aa5ee44589ba61ab85c83"
+  },
+  "sourceSha256": "f995183085bbfc1c36b028243af1b7878f9fe87c93d0b67f4661b594ae1087e5",
+  "testSha256": "051df0cc72c8d302016da6613cea648727a1d168b62a8767f298e612c56c2ca0",
+  "bindings": {
+    "execution": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/ordinary-execution.public.json",
+      "sha256": "bb9a7133817dedd2b301265e81ed64b8c31a80b852510f1fb08796362c787680"
+    },
+    "technical": {
+      "path": "/tmp/eva-p2-openclaw-calendar-continuation-20261007-e935aqko/composition-technical.private.json",
+      "sha256": "fe5f895f64ace0778fc4b45d1a010094cb81d98b649689e3d01772415ec81614"
+    },
+    "lastDurableObservation": {
+      "path": "/tmp/eva-p2-openclaw-calendar-continuation-20261007-e935aqko/contexts/138-native-observation.json",
+      "sha256": "95d8b63993271c64a3b4261a86c805d7388a86d59d311fa46cb15caebce9ea4d"
+    },
+    "focused": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/calendar-focused.public.json",
+      "sha256": "b452a95f377a2517113c982faa8745ea1f63217abf7cb9a844d6e8f35520313d"
+    },
+    "retainedBody": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/retained-body-verification.public.json",
+      "sha256": "f436a9b8de0e5f3de035dfe3854be1e8266facde9354c1f959a00a875dda0263"
+    },
+    "sourceReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-calendar-continuation-review-20261007.json",
+      "sha256": "4eae7e88edaeeac39d9ffe4e2b228eef80b05e863b9d4da5d938bc385a253ae2"
+    },
+    "terminalAccountingRegressions": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/terminal-accounting-regressions.public.json",
+      "sha256": "d83f899be603a7305f6fe1c4325808284a00d562e2088cb88f8d0b9c57d636bc"
+    },
+    "terminalAccountingRegressionLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/terminal-accounting-regressions.public.txt",
+      "sha256": "5105528412fdce76c28074489e667097caf8d116d179882d39888cb82b177d24"
+    },
+    "ordinaryLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/ordinary-composition.public.txt",
+      "sha256": "0c84c72eaffb5593f97c5f20559cbfab8373a52d27e2b0a09d2c390dd4bd2888"
+    }
+  },
+  "confirmedRuntime": {
+    "exitCode": 1,
+    "timedOut": false,
+    "elapsedSeconds": 88.27345627099567,
+    "ordinaryCliReturns": 1,
+    "verifiedNativeReadbackTurns": 0,
+    "plannedTurns": 3,
+    "plannedSessions": 2,
+    "observedCalendarGenerations": [
+      0
+    ],
+    "physicalMockRequests": 2,
+    "completedSyntheticSdkRows": 2,
+    "syntheticInputTokens": 34,
+    "syntheticOutputTokens": 6,
+    "syntheticTotalTokens": 40,
+    "syntheticUsageIsNotBilling": true,
+    "firstWireShape": {
+      "message": 6
+    },
+    "secondWireShape": {
+      "function_call_output": 16
+    },
+    "secondWireHasPreviousResponse": true,
+    "bothModelCaptureHashesMatch": true,
+    "durableObservationCount": 132,
+    "phaseCounts": {
+      "relay_registered": 1,
+      "item_completed": 18,
+      "pre_hook_entry": 16,
+      "pre_observer_entry": 16,
+      "reserved": 16,
+      "pre_hook_return": 16,
+      "native_terminal_settled": 16,
+      "post_observer_entry": 16,
+      "post_observer_settled": 16,
+      "public_cli_returned": 1
+    },
+    "uniqueCorrelatedReservePreTerminalPostChains": 16,
+    "toolCoverage": true,
+    "coverageFailure": null,
+    "preparationFailures": 0,
+    "seventeenthToolCheckReached": false,
+    "nativeClosed": false,
+    "pendingSdk": 0,
+    "pendingTools": 0,
+    "cancelErrors": [],
+    "actualUnregisterQueuesFlushed": 2,
+    "namespacePidsAtTestExit": []
+  },
+  "remainingFailure": {
+    "boundary": "nativeSettlement after ordinary CLI return on a closed client",
+    "fixedEvaluatorError": "native close/readback was not confirmed",
+    "nativeOneShotCleanupWarningRetained": true,
+    "plannedNativeThreadReadbackFiles": 0,
+    "noInferenceFromEmptyCountersOrNamespace": true,
+    "fullThreeTurnCalendarAndAccounting": "NOT_ESTABLISHED",
+    "nativePhysicalClosure": "UNKNOWN",
+    "rawPerClientCloseOutcomeNotInFinalProjectedReceipt": true
+  },
+  "boundedSourceDiagnosis": {
+    "modules": {
+      "client-Cs08OXVQ.mjs": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/client-Cs08OXVQ.mjs",
+        "sha256": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da"
+      },
+      "shared-client-DA4VR4Eb.mjs": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/shared-client-DA4VR4Eb.mjs",
+        "sha256": "079bf068c24205f3ff6dd359f5edde2a14359bcef80608f32e68706ff47a334d"
+      },
+      "run-attempt-BHu11r7h.mjs": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/run-attempt-BHu11r7h.mjs",
+        "sha256": "1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376"
+      },
+      "dynamic-tools-BDXl-8Cw.mjs": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/dynamic-tools-BDXl-8Cw.mjs",
+        "sha256": "0f01116c4505f4e8e6c0958f23d998402f9ae79cf8f65b2684a74f221fe38e4a"
+      }
+    },
+    "preCloseReadbackGap": {
+      "anchors": [
+        "run-attempt-BHu11r7h.mjs:5622-5639",
+        "shared-client-DA4VR4Eb.mjs:3179-3208",
+        "p1_openclaw_parent_accounting.mjs:460-475"
+      ],
+      "finding": "Ordinary one-shot retirement calls clearSharedCodexAppServerClientIfCurrentAndUnclaimed, which synchronously calls client.close before closeAndWait. The evaluator beforeNativeClose returns early for an already closed client. Therefore the closeAndWait-only observation seam can be too late to retain live thread/background readbacks. This source path and absent retained readback are established; no unrecorded callback invocation is invented."
+    },
+    "nativeUncertainty": {
+      "anchors": [
+        "client-Cs08OXVQ.mjs:3984-4006"
+      ],
+      "finding": "closeAndWait waits transport/catalog shutdown but expressly returns cleanup uncertain after native execution. Preserve that return value. A physical app-server exit callback alone does not prove descendant/background source settlement."
+    }
+  },
+  "smallestRemainingBinding": {
+    "readback": "Await the existing readNativeClient/thread-read/background-list checks at the existing asynchronous owned one-shot retirement boundary, before release/clear can synchronously close the actual client. Keep ordinary retirement and its errors unchanged.",
+    "transportExit": "Observe the actual owned client through existing addTransportExitHandler/transportExited and retain its process identity/exit receipt separately from the native cleanup verdict.",
+    "sourceAuthority": "If the existing selected native route has a real process/source authority, retain its admitted-command and releaseIfSettled evidence. It is created only for sandbox.enabled + backend + retainSourceAuthority (run-attempt:5909); dynamic-tools:1241-1277 binds admitted turn and releases source only when holds and commands are zero. Do not fabricate that authority or silently change the native profile to obtain a pass.",
+    "admissionBoundary": "Absent demonstrated native background/source settlement, keep physical cleanup UNKNOWN and original sample NO_GO. Do not flip nativeExecutionObserved, relabel uncertain, or use namespace teardown as the native cleanup receipt.",
+    "newRunAuthorized": false
+  },
+  "reusedFocusedEvidence": {
+    "calendarChecks": {
+      "pass": 4,
+      "fail": 0,
+      "skip": 0,
+      "precedeFixtureOnlySupplement": true
+    },
+    "terminalAccountingRegressions": {
+      "pass": 4,
+      "fail": 0,
+      "skip": 0,
+      "elapsedSeconds": 0.20034963398938999,
+      "covered": [
+        "HTTP retry admission and split terminal usage",
+        "Missing usage stops before retry",
+        "Websocket terminal/pending-close accounting",
+        "Raw usage survives parent settlement rejection"
+      ],
+      "actorLaunches": 0,
+      "providerAttempts": 0
+    }
+  },
+  "preservation": {
+    "externalInferenceCalls": 0,
+    "originalInputs": 0,
+    "originalAuthorityReads": 0,
+    "originalAuthorityWrites": 0,
+    "sixEnumeratedOperatorArtifactsEqual": true,
+    "equalityDoesNotCoverAllRuntimeState": true,
+    "nativeFrameworkChanged": false,
+    "authCopiedOrModified": false,
+    "originalRulesOrClosedCasesChanged": false
+  },
+  "originalSampleAdmission": "NO_GO",
+  "productCompletionClaim": false,
+  "qualityOrEfficiencyClaim": false,
+  "developmentCredits": null,
+  "findings": [],
+  "reviewerActions": {
+    "testsRun": 0,
+    "actorLaunches": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "originalDataReads": 0,
+    "sourceChanges": 0,
+    "writes": "Only this review file"
+  }
+}

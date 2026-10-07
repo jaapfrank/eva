@@ -26,6 +26,22 @@ pre-hookfout. Eerste beurt eindigde daarna met parent-local HTTP502 en geen
 antwoord; dezelfde sessie registreerde opnieuw. Volledige driebeurtenlus,
 verbruiksregistratie en native afsluiting blijven UNKNOWN. Geen echte modelcalls,
 oorspronkelijke sample, nieuwe runtime-installatie of extra productafronding.
+De verborgen voorbereidingsfout is nu bewezen uit36 private foutregistraties:
+de kalendercontrole verwachtte tekstmetadata op getypeerde toolresultaten. Ook
+geldige incrementele vervolgberichten werden daardoor geweigerd. Die concrete
+oorzaak is gecorrigeerd: volledige toolhistorie blijft ongewijzigd; incrementele
+context vereist een werkelijk settled antwoord van dezelfde thread/beurt/klok.
+Vier gerichte controles en exact bewaarde mislukte vervolgberichten geslaagd.
+Onafhankelijke bronreview GO; één gewijzigde publieke routebevestiging is klaar.
+De kalendercorrectie werkt werkelijk:16 tools,2 settled synthetische SDK-aanvragen,
+eerste CLI-antwoord en0 voorbereidingsfouten. Daarna weigert nativeSettlement de
+door OpenClaw als uncertain gemelde sluiting. Driebeurtenreadback en geldige
+afsluiting blijven onbewezen; de oorspronkelijke vergelijking is nog niet gestart.
+Onafhankelijke runtime-GO voor het broncheckpoint. De native retire-overgang sluit
+de verbinding vóór onze teruglezing. Volgende gerichte correctie: vóór retirement
+teruglezen; fysieke exit en bronbeëindiging afzonderlijk bewijzen. Native uncertain
+blijft intact. Geen ongewijzigde proefherhaling.
+P2.1 blijft open; deze evaluatorcorrectie telt niet als extra gezinsfunctie.
 Apps/add-ons horen bij dezelfde verbetercyclus; droommodus is nog niet gebouwd.
 Bekend achtergrondverbruik vervolgronde117.720tokens (partial/subtotaal);
 antwoordvergelijking apart13.973tokens. Credits en volledig ontwikkeltotaal onbekend.

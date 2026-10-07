@@ -1,0 +1,109 @@
+{
+  "schema": "EvaIndependentOpenClawPreparationFailureSourceReview/v1",
+  "at": "2026-10-07T14:22:31.360443+00:00",
+  "decision": "GO_SOURCE_AND_ONE_CHANGED_CAUSE_PUBLIC_DIAGNOSTIC",
+  "scope": "Only failure evidence around native context preparation and evaluator body binding. No original sample admission.",
+  "bindings": {
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "30213a2a7a6283d87d346dd64fc43c9b3fc4b227b92b953df9674588748c684d"
+    },
+    "test": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+      "sha256": "20c50d50839b663ee04f5a5dbc85212d064dce5367d7bb76a7e4ae91307f868d"
+    },
+    "nativeProxy": {
+      "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-home/.openclaw/npm/projects/openclaw-codex-8902d781d4/node_modules/@openclaw/codex/dist/.setup/inference-proxy-b-aJMSxm.mjs",
+      "sha256": "eb514a3aba831f47742be8e23db369280ebd020da27b7c52d1e8029066dd9b1d"
+    },
+    "focusedReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-preparation-failure-20261007/preparation-failure-focused.public.json",
+      "sha256": "47bf9cd414862587314bfa082226ff142b6a8015c61f99976978d4839c65beb8"
+    },
+    "focusedLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-preparation-failure-20261007/preparation-failure-focused.public.txt",
+      "sha256": "24fcd6299ffda38dcb5cb4defa07cbe6b2c639baedcafc8cdb3ebe1513cffb8e"
+    },
+    "priorRuntimeReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-native-observer-order-runtime-review-20261007.json",
+      "sha256": "abd6e0cbd67868e7123ae3b517185de7782c20c0f950e17e93798fb67faadc1c"
+    }
+  },
+  "checks": {
+    "fixedStages": [
+      "native_context_prepare",
+      "evaluator_body_bind"
+    ],
+    "exactIncomingDecodedBytesRetained": true,
+    "rawBodyOnlyInExistingPrivateDirectory": true,
+    "directoryRequiresSameUidMode0700NoSymlink": true,
+    "fileOExclusiveNoFollowMode0600": true,
+    "fileAndDirectoryFsync": true,
+    "errorMessageOnlyHashed": true,
+    "boundedErrorClassCodeAndHttpStatus": true,
+    "noRequestHeadersAdded": true,
+    "originalErrorRethrownAfterSuccessfulRetention": true,
+    "retentionFailureStillThrowsBeforeDispatch": true,
+    "successfulPrepareReturnUnchanged": true,
+    "sharedNativePrepareBoundaryCoversHttpAndWebsocket": true,
+    "helperAndForegroundExistingBindingUnchanged": true,
+    "permitModelCalendarToolPolicyUnchanged": true,
+    "existingFinalStopDeadlineChecksUnchanged": true,
+    "diagnosticIoOnlyOnAlreadyFailingPath": true,
+    "nativeFilesNotModified": true
+  },
+  "sourceAnchors": {
+    "boundedErrorMetadata": "p1_openclaw_parent_accounting.mjs:35-42",
+    "privateRetention": "p1_openclaw_parent_accounting.mjs:266-278",
+    "durableFailureMetadata": "p1_openclaw_parent_accounting.mjs:293-316",
+    "pinnedProxyOverlay": "p1_openclaw_parent_accounting.mjs:677-685",
+    "nativeSharedPreparation": "inference-proxy-b-aJMSxm.mjs:208-232"
+  },
+  "reusedVerification": {
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "controllerElapsedSeconds": 2.813107501991908,
+    "runnerReportedDurationMs": 2742.115067,
+    "actorCalls": 0,
+    "modelCalls": 0,
+    "coverage": [
+      "Direct exact-byte private failure-retention and error-text exclusion",
+      "Actual pinned HTTP and websocket proxy overlay load and successful mock dispatch"
+    ],
+    "limitation": "The focused test invokes the failure recorder directly; it does not force each injected native catch branch to fail. Actual failing ordinary composition remains the diagnostic purpose."
+  },
+  "limitations": [
+    "Only these two synchronous preparation failures are captured. Decode, current-binding assertion, serialization, upload and later transport failures outside the catches remain separate unknowns.",
+    "The retained failed body is the original decoded input bytes passed to the shared preparation function, not a claim that native or calendar rewriting completed.",
+    "If evidence I/O fails, the local retention exception can replace the original error and metadata may be incomplete; the request remains rejected.",
+    "The prior HTTP502 cause is not established by this source change.",
+    "Tool observer correction remains independently proved for 16 tools; complete three-turn execution, SDK ledger and native physical closure remain UNKNOWN."
+  ],
+  "permittedNextDiagnostic": {
+    "publicSyntheticOnly": true,
+    "maximumRuns": 1,
+    "turns": 3,
+    "sessions": 2,
+    "toolCap": 16,
+    "cumulativeControllerSeconds": 120,
+    "sameExistingProfileAndMockTransport": true,
+    "noExternalInference": true,
+    "noOriginalInputsOrAuthority": true,
+    "changedCause": "Durable private body plus fixed-stage error metadata at the previously unobserved preparation boundaries."
+  },
+  "originalSampleAdmission": "NO_GO",
+  "nativePhysicalClosure": "UNKNOWN",
+  "runtimeRelease": false,
+  "productTaskCompletion": false,
+  "findings": [],
+  "reviewerActions": {
+    "testsRun": 0,
+    "nativeStarts": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "protectedOriginalDataReads": 0,
+    "sourceChanges": 0,
+    "writes": "Only this review file"
+  }
+}

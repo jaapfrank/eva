@@ -1,0 +1,160 @@
+{
+  "schema": "EvaIndependentOpenClawCalendarContinuationReview/v1",
+  "at": "2026-10-07T14:33:10.456219+00:00",
+  "decision": "GO_SOURCE_AND_ONE_CHANGED_CAUSE_PUBLIC_CONFIRMATION",
+  "sourceSha256": "f995183085bbfc1c36b028243af1b7878f9fe87c93d0b67f4661b594ae1087e5",
+  "testSha256": "051df0cc72c8d302016da6613cea648727a1d168b62a8767f298e612c56c2ca0",
+  "bindings": {
+    "diagnosis": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-preparation-failure-diagnosis-20261007.json",
+      "sha256": "10ff9a33e0322d600e3340b181c0e132087a0813b4d0a2b17352312ed89de927"
+    },
+    "firstDurableFailure": {
+      "path": "/tmp/eva-p2-openclaw-preparation-error-20261007-b8qf4x5_/contexts/135-native-observation.json",
+      "sha256": "05eb8e4642bafb31840d122735047a55e90cb630a8e6237854872fc079b086dd"
+    },
+    "retentionSourceReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/p2-openclaw-preparation-failure-source-review-20261007.json",
+      "sha256": "301d8aea56a8782053871ebc37ad5ebd523a5770ed5e1b5e927206956d12199c"
+    },
+    "focusedReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/calendar-focused.public.json",
+      "sha256": "b452a95f377a2517113c982faa8745ea1f63217abf7cb9a844d6e8f35520313d"
+    },
+    "focusedLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/calendar-focused.public.txt",
+      "sha256": "1c06bd92c54473f1a30454f2d181e78e3f446b27eae065cad9e6a34a14194ddd"
+    },
+    "retainedBodyVerification": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/retained-body-verification.public.json",
+      "sha256": "f436a9b8de0e5f3de035dfe3854be1e8266facde9354c1f959a00a875dda0263"
+    },
+    "retainedBodyVerificationScript": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-openclaw-calendar-continuation-20261007/retained-body-verification.private.mjs",
+      "sha256": "31f76ac7fbb1af50e2b6945d65b5ad96659ea4a682629671be68118b8e7db755"
+    }
+  },
+  "independentDiagnosis": {
+    "failureRecords": 36,
+    "allStage": "evaluator_body_bind",
+    "allErrorMessageSha256": "5efda6865dc4b18b51d5df3d5dd6b2387e4e34084a2095b1adb5ccd202ff494d",
+    "matchedFixedSourceError": "native content metadata differs",
+    "firstFailureBeforeDeadline": true,
+    "firstFailureLedgerStopped": false,
+    "incrementalInputTypes": {
+      "function_call_output": 16
+    },
+    "incrementalHasPreviousResponse": true,
+    "typedItemsMatchNativeTurn": true,
+    "typedItemsLackMessageContentAndKindArrays": true,
+    "fullFallbackInputTypes": {
+      "message": 6,
+      "function_call": 16,
+      "function_call_output": 16
+    },
+    "cause": "The evaluator validated typed current-turn tool items as content messages. Both native incremental and full fallback bodies were refused before the next SDK admission."
+  },
+  "sourceChecks": {
+    "calendarCarriersRestrictedToMessages": true,
+    "typedItemsCannotAdvertiseCalendarCarrier": true,
+    "fullBodyOnlySelectedEnvironmentDateChanged": true,
+    "nativeToolItemsNotRewritten": true,
+    "incrementalRequiresKnownSuccessfullySettledResponse": true,
+    "firstTerminalTypeAndResponseIdBoundBeforeAsyncSettlement": true,
+    "differentLaterTerminalRefused": true,
+    "duplicateSameTerminalIdempotent": true,
+    "previouslyCompletedOutsideEventDoesNotSeed": true,
+    "rejectedOrIncompleteTerminalDoesNotSeed": true,
+    "sameNativeThreadTurnCalendarGenerationStateAndTemporalHashRequired": true,
+    "onlyNonemptyFunctionCallOutputDeltaAdmitted": true,
+    "explicitMismatchedItemTurnRefused": true,
+    "unknownOrStaleReferenceRefused": true,
+    "existingModelEffortSelectionUnchanged": true,
+    "successfulSettlementRequiredBeforeCacheInsert": true,
+    "sameHttpWebsocketAccountingEventPath": true,
+    "existingStopAndDeadlineChecksUnchanged": true,
+    "osAuthTlsAndMonotonicClocksUnchanged": true,
+    "nativePolicyToolCapAndPhysicalCloseUnchanged": true
+  },
+  "resolvedReviewFindings": [
+    "Terminal response cache can no longer acquire a different response ID from replay on an already settled row.",
+    "Explicitly different per-item turn metadata is refused on incremental tool-output continuation."
+  ],
+  "reusedEvidence": {
+    "focusedTestsPassed": 4,
+    "focusedTestsFailed": 0,
+    "focusedTestsSkipped": 0,
+    "controllerElapsedSeconds": 0.18116821699368302,
+    "runnerDurationMs": 142.513579,
+    "actualFailedDeltaAndFallbackReused": true,
+    "actualDeltaPreserved": true,
+    "actualFallbackTypedToolItemsPreserved": true,
+    "actualFallbackOnlyEnvironmentDateMayChange": true,
+    "retainedNegativeCases": 3,
+    "syntheticLedgerAttempts": 1,
+    "actorLaunches": 0,
+    "providerAttempts": 0,
+    "earlierProfileAssertionFailureRetained": true,
+    "earlierFailureCause": "Fixture assertion expected a different effort from the unchanged explicit none policy; production policy and original criteria were not changed."
+  },
+  "limits": [
+    "The retained-body check seeds a synthetic settled terminal for the previously captured native response reference. It is source/shape evidence, not a new native completion.",
+    "Incremental calendar binding is inherited through the exact settled response reference; it does not fabricate or repeat calendar messages.",
+    "Prepared input values are preserved; serialization and the pre-existing explicit model/effort normalization remain the established transport behavior.",
+    "No full three-turn composition, complete provider ledger, durable per-turn native readbacks or physical native closure is established by these checks."
+  ],
+  "permittedPublicConfirmation": {
+    "maximumRuns": 1,
+    "turns": 3,
+    "sessions": 2,
+    "toolCap": 16,
+    "existingControllerSeconds": 120,
+    "publicSyntheticOnly": true,
+    "noExternalInference": true,
+    "noOriginalInputsOrAuthority": true,
+    "sameNativeProfileAndMockRoute": true,
+    "changedCause": "Typed message calendar selection and exact settled-response continuation binding."
+  },
+  "originalSampleAdmission": "NO_GO",
+  "fullNativeComposition": "UNKNOWN",
+  "nativePhysicalClosure": "UNKNOWN",
+  "productCompletionClaim": false,
+  "reviewerActions": {
+    "testsRun": 0,
+    "modelCalls": 0,
+    "authCalls": 0,
+    "nativeStarts": 0,
+    "originalDataReads": 0,
+    "sourceChanges": 0,
+    "writes": "Only this review file"
+  },
+  "findings": [],
+  "fixtureOnlySupplement": {
+    "at": "2026-10-07T14:34:13.466686+00:00",
+    "decision": "GO_SAME_SINGLE_PUBLIC_CONFIRMATION",
+    "previousReviewSha256": "dd1831decb7727226a6b589062b678ead7a10b1c282cbf017ed91e68626198d2",
+    "previousTestSha256": "06e9eef793fe04f567494fc7d3b3adc5a0e51872b4881672653cba1ccae16a3c",
+    "currentTestSha256": "051df0cc72c8d302016da6613cea648727a1d168b62a8767f298e612c56c2ca0",
+    "sourceUnchanged": true,
+    "exactPriorTestReconstructedByReversingOnlyThisDelta": true,
+    "changes": [
+      "Incremental previous_response_id tool-output bodies require retained inherited calendar binding, changed_field null, native_date_changed false and no serialized native date.",
+      "Full bodies retain the existing application/native date assertions.",
+      "Two content-free durable phases record ordinary CLI return and successful nativeSettlement; only ordinal, generation, accounting status/usage/terminal-type and completion count are added."
+    ],
+    "unchanged": [
+      "Original input and scoring rules",
+      "Three-turn/two-session public fixture",
+      "16-tool cap and refusal of the 17th tool",
+      "120-second cumulative fixture controller",
+      "Actual native settlement and physical-close assertions",
+      "Model/effort, provider accounting and stop rules"
+    ],
+    "verificationReuse": "Four focused calendar checks and retained-body checks precede this fixture-only edit; their code and evaluator source are unchanged. No claim those checks were rerun on this file hash.",
+    "executionStartedByReviewer": false,
+    "additionalRunQuota": false,
+    "originalSampleAdmission": "NO_GO",
+    "fullRuntimeAndPhysicalClose": "UNKNOWN",
+    "findings": []
+  }
+}

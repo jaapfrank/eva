@@ -20278,7 +20278,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Gecorrigeerde native accounting behouden (16/16 commando’s en post-hooks). Eerste native beurt faalt daarna met parent-local HTTP502; lokaliseer alleen de ontbrekende voorbereiding/transportexception. Geen ongewijzigde herhaling of oorspronkelijke sample vóór onafhankelijke GO.",
+              "nextAction": "Eerste antwoord/16tools/SDK-accounting bevestigd. Onze teruglezing komt na native client.close(); verplaats die vóór gewone retirement en bewijs fysieke exit/bronbeëindiging apart. Native cleanup uncertain blijft intact; geen oorspronkelijke sample of ongewijzigde herhaling.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -20291,9 +20291,9 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T14:16:09.180786+00:00",
+              "checkedAt": "2026-10-07T14:41:56.455923+00:00",
               "assignment": {
-                "baseCommit": "7e8e6bc14ea6df8933d18a5a6a095fb33de07c89",
+                "baseCommit": "e888ba64fd5cfc8b280f688deccea711fde109c6",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root"
@@ -20307,13 +20307,13 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte bestaande publieke fixture zonder externe modelcalls; pas na onafhankelijke toelating het ongebruikte oorspronkelijke OpenClaw-CM01-slot. Creditkosten onbekend.",
-                "currentAction": "Native volgorde op echte route gecorrigeerd: 16/16 commando’s en nacontroles, geen coverage-stop/pre-error. Eerste beurt geeft daarna HTTP502 zonder eindantwoord; volledige driebeurtenlus/usage/close UNKNOWN. Geen echte modelcalls, oorspronkelijke input, core-installatie of productafronding.",
+                "currentAction": "Eerste antwoord/16tools/SDK-accounting bevestigd. Onze teruglezing komt na native client.close(); verplaats die vóór gewone retirement en bewijs fysieke exit/bronbeëindiging apart. Native cleanup uncertain blijft intact; geen oorspronkelijke sample of ongewijzigde herhaling.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "sourceCommit": "7e8e6bc14ea6df8933d18a5a6a095fb33de07c89",
-                  "meaning": "Kalender/owned-relayplanning gecorrigeerd en gecontroleerd; gewijzigde publieke route eindigde UNKNOWN. Broncheckpoint, bewijs en pakketstatus gepubliceerd; geen oorspronkelijke sample gestart."
+                  "sourceCommit": "source_checkpoint_pending",
+                  "meaning": "Hidden calendar-preparation defect proved and corrected; exact retained failures and8 focused calendar/accounting checks passed; actual public native loop returns first answer with16 settled tools and2 synthetic settled SDK rows. No original sample; next defect is readback after native retirement plus separate physical/source cleanup."
                 },
-                "stage": "openclaw_native_order_confirmed_parent_local_transport_gap",
+                "stage": "openclaw_calendar_confirmed_retirement_readback_gap",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -21271,7 +21271,45 @@
                 },
                 "nativeObserverOrderDiagnosis": "eva2/evidence/product/p2-openclaw-native-observer-order-diagnosis-20261007.json",
                 "nativeObserverOrderCorrection": "eva2/evidence/product/p2-openclaw-native-observer-order-correction-20261007.json",
-                "nativeObserverOrderRuntimeReview": "eva2/reviews/p2-openclaw-native-observer-order-runtime-review-20261007.json"
+                "nativeObserverOrderRuntimeReview": "eva2/reviews/p2-openclaw-native-observer-order-runtime-review-20261007.json",
+                "preparationFailureDiagnostic": {
+                  "status": "completed_cause_proven",
+                  "evidence": "eva2/evidence/product/p2-openclaw-preparation-failure-diagnosis-20261007.json",
+                  "fixedCause": "scenarioBody interpreted current-turn function_call/output as text messages; incremental body has inherited rather than repeated calendar carriers",
+                  "runtimeDiagnosticStarted": true,
+                  "runtimeDiagnosticTerminal": true,
+                  "actorExitCode": -15,
+                  "originalSampleStarted": false,
+                  "externalInferenceCalls": 0
+                },
+                "calendarContinuationCorrection": {
+                  "status": "CORRECTION_CONFIRMED_FULL_COMPOSITION_NO_GO",
+                  "sourceSha256": "f995183085bbfc1c36b028243af1b7878f9fe87c93d0b67f4661b594ae1087e5",
+                  "focusedChecks": 4,
+                  "retainedIncrementalItems": 16,
+                  "retainedFullTypedItems": 32,
+                  "nonCalendarContentChanged": false,
+                  "settledExactThreadTurnGenerationRequired": true,
+                  "terminalReplayRejected": true,
+                  "providerAttempts": 0,
+                  "actorLaunches": 0,
+                  "sourceReviewPending": false,
+                  "originalSampleStarted": false,
+                  "sourceReview": "eva2/reviews/p2-openclaw-calendar-continuation-review-20261007.json",
+                  "sourceReviewSha256": "4eae7e88edaeeac39d9ffe4e2b228eef80b05e863b9d4da5d938bc385a253ae2",
+                  "publicConfirmationStarted": true,
+                  "publicConfirmationTerminal": true,
+                  "evidence": "eva2/evidence/product/p2-openclaw-calendar-continuation-correction-20261007.json",
+                  "publicCliReturns": 1,
+                  "syntheticSdkRequests": 2,
+                  "nativeTools": 16,
+                  "preparationFailures": 0,
+                  "nativeClosed": false,
+                  "threeTurnReadbackUnknown": true,
+                  "runtimeReview": "eva2/reviews/p2-openclaw-calendar-continuation-runtime-review-20261007.json",
+                  "runtimeReviewSha256": "3c04f2eb19fb8d76e99822c08d6fb3d442d07ef845a14f17485ecb00c20d4279",
+                  "sourceCheckpointApproved": true
+                }
               },
               "remaining": "Hermes CM03 faalt bij vergeten; CM04 faalt bij persoonscontext ondanks juiste native origins. Baseline CM04 en menselijke kwaliteit onbekend; oorspronkelijke resterende vergelijkingsdekking open. Geen algemene voorsprong.",
               "latestEvidence": "eva2/evidence/product/p2-openclaw-native-tool-observer-correction-20261007.json",

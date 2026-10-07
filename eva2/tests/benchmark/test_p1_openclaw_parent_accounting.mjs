@@ -84,6 +84,71 @@ await test('calendar refuses mismatched turn/zone, duplicate carrier, stale gene
     assert.equal(ledger.rows.length,0);
   }finally{rmSync(dir,{recursive:true,force:true});}
 });
+await test('calendar supports native typed tool history and only settled same-thread-turn incremental responses',async()=>{
+  const dir=mkdtempSync(tmpdir()+'/openclaw-calendar-continuation-');const clock=dir+'/clock.json';
+  const state={contract:'EvaScenarioCalendar/v1',generation:0,offsetMilliseconds:Date.parse('2020-01-02T12:00:00Z')-Date.now()};
+  writeFileSync(clock,JSON.stringify(state),{mode:0o600});const ledger=new FakeLedger();
+  const o=new OpenClawAccounting(ledger,20,{now:()=>10,clockFile:clock});
+  const {body,temporal}=publicCalendarBody();
+  const native={turn_id:'public-turn',thread_id:'public-thread',request_kind:'turn'};
+  body.client_metadata['x-codex-turn-metadata']=JSON.stringify(native);
+  const output={type:'function_call_output',call_id:'public-tool',output:'Public result',
+    internal_chat_message_metadata_passthrough:{turn_id:'public-turn',create_time:43.5}};
+  body.input.push({type:'function_call',call_id:'public-tool',name:'exec_command',arguments:'{}',
+    internal_chat_message_metadata_passthrough:{turn_id:'public-turn'}},output);
+  const delta={...nativeBody(),client_metadata:body.client_metadata,previous_response_id:'public-settled-response',input:[output]};
+  try{
+    o.temporalContext(()=>({openclaw_temporal_context:{kind:'application',value:temporal}}));
+    const full=o.prepareBody(body,Buffer.from(JSON.stringify(body)));
+    assert.deepEqual(full.body.input.slice(-2),body.input.slice(-2));
+    assert.throws(()=>o.prepareBody(delta,Buffer.from(JSON.stringify(delta))),/reference unknown/);
+    const id=await ledger.begin('contact','gpt-6-sol','none');
+    const row={attempt_id:id,status:'pending',calendar_binding:full.accounting.calendarBinding};
+    await o.event(row,{type:'response.completed',response:{id:delta.previous_response_id,status:'completed',usage}});
+    const inherited=o.prepareBody(delta,Buffer.from(JSON.stringify(delta)));
+    assert.deepEqual(inherited.body,{...delta,reasoning:{effort:'none'}});assert.equal(inherited.accounting.calendarBinding.changed_field,null);
+    assert.equal(inherited.accounting.calendarBinding.native_date_changed,false);
+    for(const changed of ['unknown','thread','turn','item-turn','missing-thread','non-output','typed-carrier']){
+      const request=structuredClone(delta);const metadata=JSON.parse(request.client_metadata['x-codex-turn-metadata']);
+      if(changed==='unknown')request.previous_response_id='not-observed';
+      if(changed==='thread')metadata.thread_id='other-thread';
+      if(changed==='turn'){metadata.turn_id='other-turn';request.client_metadata.turn_id='other-turn';}
+      if(changed==='item-turn')request.input[0].internal_chat_message_metadata_passthrough.turn_id='other-turn';
+      if(changed==='missing-thread')delete metadata.thread_id;
+      if(changed==='non-output')request.input.push({type:'message',role:'user',content:'New input'});
+      if(changed==='typed-carrier')request.input[0].internal_chat_message_metadata_passthrough.content_item_kinds=['environments.environment_context'];
+      request.client_metadata['x-codex-turn-metadata']=JSON.stringify(metadata);
+      assert.throws(()=>o.prepareBody(request,Buffer.from(JSON.stringify(request))),undefined,changed);
+    }
+    writeFileSync(clock,JSON.stringify({...state,generation:1}));assert.throws(()=>o.prepareBody(delta,Buffer.from(JSON.stringify(delta))));
+    assert.equal(ledger.rows.length,1);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+
+await test('calendar reference cannot be seeded by replayed or rejected terminal settlement',async()=>{
+  const binding={turn_id:'public-turn',native_thread_id_sha256:'public-thread-hash',generation:0,
+    canonical_clock_state_sha256:'public-clock-hash',native_temporal_context_sha256:'public-temporal-hash'};
+  for(const reason of ['replayed','settled-without-terminal','rejected','incomplete']){
+    const ledger=new FakeLedger();const o=observer(ledger);
+    const id=await ledger.begin('contact','gpt-6-sol','none');const row={attempt_id:id,status:'pending',calendar_binding:binding};
+    const completed={type:'response.completed',response:{id:'public-original-response',status:'completed',usage}};
+    if(reason==='settled-without-terminal')await o.finish(row,usage);
+    if(reason==='rejected')ledger.settle=async()=>false;
+    if(reason==='incomplete')await o.event(row,{type:'response.incomplete',response:{id:'public-original-response',status:'incomplete',usage}});
+    if(reason==='replayed'){
+      await o.event(row,completed);await o.event(row,completed);
+      assert.equal(o.nativeCompletedResponses.size,1);
+      await assert.rejects(o.event(row,{...completed,response:{...completed.response,id:'public-other-response'}}),/terminal identity changed/);
+      assert.equal(o.nativeCompletedResponses.size,1);assert.equal(ledger.stopReason,'native terminal identity changed');
+    }else{
+      if(reason==='incomplete')await assert.rejects(o.event(row,completed),/terminal identity changed/);
+      else await o.event(row,completed);
+      assert.equal(o.nativeCompletedResponses.size,0,reason);
+    }
+  }
+});
+
 await test('foreground native turn/start overrides both actual carriers without catalog edits', () => {
   const o=observer(new FakeLedger());const original={model:'gpt-6-sol',effort:null,collaborationMode:{mode:'default',settings:{model:'gpt-6-sol',reasoning_effort:null}}};
   const result=o.turnParams('turn/start',original);
@@ -228,6 +293,20 @@ await test('native callback evidence survives before terminal and excludes raw t
     assert.equal(JSON.stringify(records).includes('PRIVATE_'),false);
     assert.equal(JSON.stringify(records).includes('public-thread'),false);
     assert.equal(o.calls.length,0);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+await test('native preparation failure retains exact private bytes and only hashes the error text',()=>{
+  const dir=mkdtempSync(tmpdir()+'/openclaw-preparation-error-');chmodSync(dir,0o700);
+  const o=new OpenClawAccounting(new FakeLedger(),20,{now:()=>10,observeTools:true,privateModelContextDir:dir});
+  const body=Buffer.from(JSON.stringify({input:'PRIVATE_NATIVE_INPUT'}));
+  try{
+    o.nativePreparationFailure('evaluator_body_bind',new Error('PRIVATE_ERROR_DETAIL'),body);
+    const record=JSON.parse(readFileSync(o.nativeObservationReceipts[0].path));
+    assert.equal(record.phase,'native_preparation_failure');assert.equal(record.stage,'evaluator_body_bind');
+    assert.deepEqual(readFileSync(record.failed_native_body.path),body);
+    assert.equal(JSON.stringify(record).includes('PRIVATE_'),false);
+    assert.equal(o.calls.length,0);assert.equal(o.ledger.stopReason,null);
   }finally{rmSync(dir,{recursive:true,force:true});}
 });
 
@@ -476,7 +555,10 @@ await test('public ordinary actor composition binds native calendar, model bodie
       const sessionId=sessions[ordinal===2?1:0];
       const result=await agentCliCommand({local:true,json:true,agent:'main',message:'Public fixture conversation.',sessionId,
         sessionKey:'agent:main:public-fixture:'+sessionId,runId:'public-fixture-turn-'+ordinal,timeout:120,deliver:false},runtime);
-      assert.ok(result);await o.nativeSettlement();completedNativeTurns++;
+      assert.ok(result);o.recordNativeObservation('public_cli_returned',{ordinal,scenario_generation:o.scenarioReadbacks.at(-1)?.generation,
+        sdk_rows:o.calls.map(row=>({status:row.status,usage:row.usage,native_terminal_type:row.native_terminal_type}))});
+      await o.nativeSettlement();completedNativeTurns++;
+      o.recordNativeObservation('public_turn_readback_settled',{ordinal,completed_native_turns:completedNativeTurns});
     }
     assert.deepEqual(o.scenarioReadbacks.map(row=>row.generation),[0,0,1]);
     assert.ok(physical>=3);assert.equal(ledger.rows.length,physical);
@@ -485,9 +567,16 @@ await test('public ordinary actor composition binds native calendar, model bodie
     assert.equal(o.tools.size,16);assert.equal([...o.tools.values()].filter(row=>row.dispatched).length,16);assert.equal(o.toolCoverage,true);
     for(const [index,{body}] of completed.entries()){
       const text=JSON.stringify(body);const applicationDates=[...text.matchAll(/Current date(?: and time)?: (\d{4}-\d{2}-\d{2})/g)].map(m=>m[1]);
-      assert.ok(applicationDates.length,'serialized ordinary temporal context missing');
       const nativeDates=[...text.matchAll(/<current_date>(\d{4}-\d{2}-\d{2})<\/current_date>/g)].map(m=>m[1]);
-      assert.ok(nativeDates.every(date=>applicationDates.includes(date)),'second contradictory native model-visible calendar');
+      const binding=o.calls[index].calendar_binding;
+      if(body.previous_response_id && !applicationDates.length){
+        assert.ok(binding.previous_response_id_sha256,'incremental calendar must inherit the exact settled response');
+        assert.equal(binding.changed_field,null);assert.equal(binding.native_date_changed,false);
+        assert.equal(nativeDates.length,0);assert.ok(body.input.every(item=>item.type==='function_call_output'));
+      }else{
+        assert.ok(applicationDates.length,'serialized ordinary temporal context missing');
+        assert.ok(nativeDates.every(date=>applicationDates.includes(date)),'second contradictory native model-visible calendar');
+      }
     }
     // The same installed pre-execution observer must reject a 17th identity before a body callback.
     let deniedBodyCalls=0;assert.throws(()=>{o.nativeToolBefore({toolUseId:'public-cap-denied-17',toolName:'exec_command',rawPayload:{session_id:sessions[1]}});deniedBodyCalls++;},/original tool cap/);
