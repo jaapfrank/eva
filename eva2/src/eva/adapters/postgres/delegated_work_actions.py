@@ -201,26 +201,43 @@ class PostgresDelegatedWorkActions:
                     and not job.get("stop_requested", False))
                 or job.get("recent_outcome", False)]
         title_tokens = [tokens(job.get("title", "")) for job in rows]
+
+        def fragments(word):
+            # Bounded character features support inflections and compounds,
+            # without a language dictionary or semantic/payload lookup.
+            return {word} | {word[start:start + size]
+                             for size in range(4, min(8, len(word)) + 1)
+                             for start in range(len(word) - size + 1)}
+
+        title_features = {}
         frequency = {}
-        for words in title_tokens:
-            for word in words:
-                frequency[word] = frequency.get(word, 0) + 1
+        for job, words in zip(rows, title_tokens):
+            features = set().union(*(fragments(word) for word in words))
+            title_features[job["work_id"]] = features
+            for feature in features:
+                frequency[feature] = frequency.get(feature, 0) + 1
+        # Count presence per authorized title, not occurrences within a word.
+        # Shared generic stems are consequently downweighted too.
+        query_features = [(term, fragments(term)) for term in query_tokens]
 
         def relevance(job):
             identity = normalize(job["work_id"])
             explicit_id = bool(identity and re.search(
                 r"(?<![\w:.-])" + re.escape(identity) + r"(?![\w:.-])", query))
             words = tokens(job.get("title", ""))
+            features = title_features.get(job["work_id"], set())
             score = 0.0
-            for word in words:
-                weight = math.log(1 + (len(rows) + 1) / (frequency[word] + 1))
-                if word in query_tokens:
-                    score += weight
-                elif len(word) >= 5 and any(
-                        len(term) >= 5 and (word in term or term in word)
-                        and min(len(word), len(term)) / max(len(word), len(term)) >= 0.6
-                        for term in query_tokens):
-                    score += 0.5 * weight
+            for term, candidates in query_features:
+                best = 0.0
+                for feature in candidates & features:
+                    specificity = math.log(1 + len(rows) / frequency[feature])
+                    coverage = math.sqrt(len(feature) / max(1, len(term)))
+                    # Short whole-word matches remain possible, but should
+                    # not outweigh a substantive fragment of a compound.
+                    strength = min(1.0, len(feature) / 4)
+                    best = max(best, specificity * specificity * coverage * strength)
+                # Overlapping fragments of one query word count only once.
+                score += best
             # Stable ties retain the service ordering (recency for outcomes).
             return (explicit_id, score / math.sqrt(max(1, len(words))))
 
