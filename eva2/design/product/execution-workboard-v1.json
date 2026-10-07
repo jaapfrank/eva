@@ -1016,8 +1016,17 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-07T00:37:45.104985+00:00",
+        "checkedAt": "2026-10-07T00:54:44.175669+00:00",
         "deliveries": [
+          {
+            "title": "Geheugen · toegelaten herinnering wordt niet verdrongen",
+            "date": "2026-10-07",
+            "state": "installed",
+            "result": "Kleine algemene selectiecorrectie geïnstalleerd in kern en werker. Beide gezond, exacte bronhash bevestigd. Bestaande module78 controles plus3 gerichte eindcontroles; dezelfde3 slagen op de echte nieuwe image. Onafhankelijke GO.0 nieuwe modelcalls.",
+            "remaining": "Oude CM12-oorzaak blijft onbekend; geen herhaling/herscoring of extra productafronding. Volledige vergelijking blijft open;34/44 behouden.",
+            "source": "eva2/evidence/product/memory-selection-correction-20261007.json",
+            "review": "eva2/reviews/memory-selection-installed-review-20261007.json"
+          },
           {
             "title": "P2.1 · Hermes biedt privégeheugen aan de verkeerde persoon aan",
             "date": "2026-10-07",
@@ -4069,22 +4078,22 @@
           }
         ],
         "now": {
-          "title": "Geheugen · correctie installeren",
+          "title": "Geheugen · selectiecorrectie opgeleverd",
           "state": "in_progress",
           "owner": "Codex",
-          "detail": "Bronloze observatie verdringt geen toegelaten herinnering meer. Gerichte controles en review geslaagd; installatie in kern/werker volgt nu.",
+          "detail": "Toegelaten herinneringen worden niet meer verdrongen door een observatie zonder verifieerbare bron. Geïnstalleerd in kern/werker, beide gezond; bestaande pakketbron bijgewerkt en onafhankelijk beoordeeld.",
           "remaining": "Oorspronkelijke resterende vergelijking en twee menselijke kwaliteitsbeoordelingen; spraak geparkeerd.",
-          "source": "eva2/evidence/product/p2-current-execution-diagnosis-20261007.json",
+          "source": "eva2/evidence/product/memory-selection-correction-20261007.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
           "reviewedAt": "2026-10-07T00:22:43.560326+00:00",
           "taskId": "P2.1",
           "evidence": "eva2/evidence/product/p2-current-round-decision-20261007.json"
         },
         "next": {
-          "title": "Alleen de aangetoonde selectieoorzaak verbeteren",
+          "title": "Open eindvoorwaarden blijven zichtbaar",
           "state": "planned",
           "owner": "Codex",
-          "detail": "Bestaande geheugenroutes en acceptaties behouden; eerst oorzaak vaststellen, dan de kleinste voldoende correctie met gerichte controle. De vergelijking bewijst nog geen algemene voorsprong.",
+          "detail": "Volledige vergelijking en echte gezins-/kwaliteitsbeoordeling zijn nog open. Deze correctie voltooit geen extra hoofdonderdeel en bewijst geen algemene voorsprong.",
           "remaining": "Oorspronkelijke vergelijkingsdekking en menselijke beoordelingen blijven open; een reparatie bewijst geen vergelijkingswinst.",
           "source": "eva2/evidence/product/p2-cm12-paired-result-20261005.json"
         },
@@ -19931,7 +19940,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Installeer de beoordeelde geheugenselectiecorrectie samen in bestaande kern en werker. Geen herhaling of nieuwe score van gesloten vergelijkingen.",
+              "nextAction": "Gebruik het afgesloten onvolledige vergelijkingsbesluit en bestaande open eindvoorwaarden. Twee onafhankelijke menselijke kwaliteitsbeoordelingen ontbreken; gesloten meetsets niet herhalen, oorspronkelijke toelating/verbruiksgrenzen niet resetten.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -19944,13 +19953,11 @@
                 "expected": "Twee echte afzonderlijke beoordelingen van de drie oorspronkelijke antwoordvoorwaarden en eigen voorkeur. Geen modelscore, Eva1 als waarheid of automatisch oordeel.",
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T00:50:19.879765+00:00",
+              "checkedAt": "2026-10-07T00:54:44.175669+00:00",
               "assignment": {
                 "baseCommit": "59e0f3365af6efa39fed7322a73ebd3f63eadf37",
                 "owner": "/root",
-                "activeWorkers": [
-                  "/root/p2_eva1_lease_review_20261006"
-                ],
+                "activeWorkers": [],
                 "files": [
                   "/root: eva2/src/eva/adapters/projection/hindsight.py, existing projection tests and integration state.",
                   "Independent reviewer: read-only general source/regression/deployment review; no protected original inputs."
@@ -19959,7 +19966,7 @@
                 "gap": "The planned final comparison remains incomplete; run admitted original cases and retain unknowns for genuinely missing access or required human assessments.",
                 "finish": "Execute original fixed tasks with equal conditions; preserve unavailable cases visibly.",
                 "estimate": "Gerichte voorbereiding0provider-/samplecalls. Eerst originele ongebruiktheid en werkelijk bruikbare oorspronkelijke toelating vaststellen; uitvoeringsraming pas uit het bestaande plan en de concrete binding. Geen nieuwe quota, gratis teller, set of brede matrix; credits onbekend.",
-                "currentAction": "Kleine algemene geheugenfout gerepareerd en onafhankelijk beoordeeld: een bronloze observatie verdringt geen toegelaten herinnering meer. Installeer dezelfde correctie in kern/werker en bestaand pakket; oude CM12-oorzaak blijft onbekend.",
+                "currentAction": "Algemene geheugenselectiecorrectie geïnstalleerd en onafhankelijk beoordeeld: een bronloze observatie verdringt geen toegelaten herinnering meer. Kern/werker gezond; bestaand pakket gelijkgetrokken. P2.1 en volledige vergelijking blijven open.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "evidence": [
@@ -19968,7 +19975,7 @@
                   ],
                   "meaning": "Eén oorspronkelijke Hermes-geheugenproef uitgevoerd, onafhankelijk beoordeeld en samen met dashboard gepubliceerd op GitHub commit4d6f9172. Geen productafronding of algemene kwaliteitswinnaar."
                 },
-                "stage": "install_memory_selection_correction",
+                "stage": "memory_selection_correction_installed",
                 "currentNativePreparation": {
                   "caseId": "EV003-CM-04",
                   "participant": "hermes",
@@ -20076,7 +20083,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Gebruik de aangetoonde Hermes-persoonsgrensfout en eerdere vergeetfout in het bestaande basisbesluit. Alleen resterende werkelijk uitvoerbare oorspronkelijke vergelijking gericht toelaten; geen reparatie/herhaling van gesloten cases, brede matrix of spraakwerk.",
+                "nextAction": "Gebruik het afgesloten onvolledige vergelijkingsbesluit en bestaande open eindvoorwaarden. Twee onafhankelijke menselijke kwaliteitsbeoordelingen ontbreken; gesloten meetsets niet herhalen, oorspronkelijke toelating/verbruiksgrenzen niet resetten.",
                 "actualUsage": {
                   "scope": "This CM04 native sample only",
                   "providerAttempts": 7,
@@ -20088,9 +20095,9 @@
                   "developmentCredits": null
                 },
                 "review": {
-                  "path": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
-                  "sha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841",
-                  "conclusion": "GO honest UNKNOWN publication only; no completed native response, SDKusage or quality win."
+                  "path": "eva2/reviews/memory-selection-installed-review-20261007.json",
+                  "sha256": "88b5ba4973b70cdf9002372577acf1043a081c01c7123f91c4834319f5aeea05",
+                  "conclusion": "GO exact installed correction/package metadata only; no original comparison rerun or quality win."
                 },
                 "sourcePreparationEvidence": "eva2/evidence/product/p2-xd01-native-binding-20261005.json",
                 "resourcePreparationEvidence": "eva2/evidence/product/p2-xd01-browser-resources-20261005.json",
@@ -20389,15 +20396,14 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "classification": "in_progress",
-                  "startedAt": "2026-10-07T00:26:21.199199+00:00",
-                  "previousTurnClassification": "progress",
-                  "previousTurnResult": "eva2/evidence/product/p2-hermes-original-cm04-result-20261007.json",
-                  "previousTurnPublishedCommit": "59e0f3365af6efa39fed7322a73ebd3f63eadf37",
-                  "providerCallsThisTurn": 0,
-                  "developmentCredits": "UNKNOWN",
-                  "providerCalls": 0,
-                  "diagnosticToolOperations": 2
+                  "classification": "progress",
+                  "modelCalls": 0,
+                  "originalCasesRepeated": 0,
+                  "diagnosticToolOperations": 2,
+                  "installedMemoryCorrection": true,
+                  "productTasksCompleted": 0,
+                  "creditCost": null,
+                  "developmentCredits": null
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",

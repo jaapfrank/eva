@@ -1,3 +1,9 @@
+## 7 oktober — geheugenselectiecorrectie geïnstalleerd
+
+De algemene fout is afgemaakt: een observatie zonder verifieerbare bron verdringt geen toegelaten herinnering meer. Kern en werker importeren exact dezelfde correctie, zijn gezond en behouden configuratie/gegevens. Het bestaande pakket is mee bijgewerkt; overige1224 bronhashes en zeven inventorypins behouden.3 gerichte controles slagen op de nieuwe image zonder productbron-mount; onafhankelijke installatie-/pakketreview GO.0 nieuwe modelcalls, geen rollback of spraakwerk.
+
+Bewijs: eva2/evidence/product/memory-selection-correction-20261007.json; review: eva2/reviews/memory-selection-installed-review-20261007.json. Diagnostiek is INFO-opt-in, geen bewezen duurzame audit. Oude CM12-oorzaak blijft onbekend; oorspronkelijke uitslagen en34/44 kleine afrondingen blijven behouden. De huidige meetronde is onvolledig zonder algemene winnaar; P2.1 blijft open.
+
 ## 7 oktober — algemene geheugenfout gerepareerd, installatie loopt
 
 Een bronloze observatie kon een toegelaten herinnering uit de bestaande fallback verdringen. De kleinste correctie behoudt bron-, persoons-, privacy-, tijd- en scoregrenzen. Nieuwe neutrale proef faalde vóór de wijziging; bestaande module78 controles en3 gerichte eindcontroles geslaagd. Onafhankelijke bronreview GO. Geen modelcalls of oorspronkelijke vergelijkingsherhaling. Installatie in bestaande kern/werker en pakket volgt; CM12-oorzaak blijft onbekend en P2.1 open.

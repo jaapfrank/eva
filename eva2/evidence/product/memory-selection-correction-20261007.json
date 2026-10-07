@@ -1,7 +1,7 @@
 {
   "contract": "EvaMemorySelectionCorrection/v1",
-  "checkedAt": "2026-10-07T00:50:19.879765+00:00",
-  "status": "reviewed_awaiting_installation",
+  "checkedAt": "2026-10-07T00:54:44.175669+00:00",
+  "status": "installed_independently_reviewed",
   "existingTask": "P2.1",
   "gap": "An observation without verifiable source metadata occupied the single low-score fallback while being discarded; an admissible lower-scoring source memory was then omitted.",
   "change": "Ignore only those unverified observations when choosing the existing fallback. Preserve all source, person/audience, privacy, time, score and size gates.",
@@ -27,13 +27,23 @@
     "diagnostic": {
       "contentFree": true,
       "bestEffort": true,
-      "additionalMemoryOrModelCalls": 0
+      "additionalMemoryOrModelCalls": 0,
+      "level": "INFO; emission requires configured log level. Persistence in default runtime not proven; no durable audit claim."
+    },
+    "installedImageFocused": {
+      "passed": 3,
+      "seconds": 1.7,
+      "actualPackagedModuleImported": true,
+      "productSourceMounted": false
     }
   },
   "review": {
     "reviewer": "/root/p2_eva1_lease_review_20261006",
     "source": "GO on exact source/test binding; source-authority/privacy/time/limits unchanged; diagnostic failure cannot discard successful recall.",
-    "plan": "Existing source-only Dockerfile over actual installed core/worker, same UID/GID65532:65532, two compose image changes, same mounts/data/config; existing package source/pin alignment and verifier."
+    "plan": "Existing source-only Dockerfile over actual installed core/worker, same UID/GID65532:65532, two compose image changes, same mounts/data/config; existing package source/pin alignment and verifier.",
+    "installedConclusion": "GO on exact five installation/package metadata receipts; no independent runtime calls.",
+    "path": "eva2/reviews/memory-selection-installed-review-20261007.json",
+    "sha256": "88b5ba4973b70cdf9002372577acf1043a081c01c7123f91c4834319f5aeea05"
   },
   "usage": {
     "modelCalls": 0,
@@ -46,5 +56,90 @@
     "No original benchmark replay, fixed criteria or usage guard changed.",
     "No voice changes."
   ],
-  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/memory-selection-fix-20261007"
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/memory-selection-fix-20261007",
+  "installation": {
+    "installedAt": "2026-10-07T00:52:27.194197+00:00",
+    "composeExitCode": 0,
+    "elapsedSeconds": 35.845238068999606,
+    "sourceCommit": "74d52cc555d373ecd7e5f505859eb53a93581c75",
+    "sourceSha256": "018f73b771ba0b9cb41a4b0144f8c2b23de12f8d3de62784793d54d2b7e19244",
+    "images": {
+      "core": "sha256:83d89945822c79995e73fd3436f7081dcb233935c53a9647368e68f11ebed96f",
+      "worker": "sha256:588f122fb1eb8deea776d791e5c61d2b678a0c001a74f7fe3b1733749a8659cf"
+    },
+    "composeChangedOnlyTwoImagePins": true,
+    "previousComposeSha256": "bacd1c41125ffe27836e183ab7c1401b949b58981b7d6a411f5f6e8c94acd0e9",
+    "composeSha256": "07b5c5814c526fd9209d195db903e644aff88a2e1832e820aa9c01ca49c6320e",
+    "schemaMigrations": 0,
+    "speechChanges": 0,
+    "rollbacks": 0,
+    "modelCalls": 0,
+    "bothHealthy": true,
+    "actualModuleBindings": {
+      "core": {
+        "containerId": "e447ab1676fb5b963677b0feb7f6f526c9fe2c5378b8ba404af743f18ca341a6",
+        "image": "sha256:83d89945822c79995e73fd3436f7081dcb233935c53a9647368e68f11ebed96f",
+        "status": "running",
+        "health": "healthy",
+        "restartCount": 0,
+        "user": "65532:65532",
+        "sameMountsConfigCmd": true,
+        "module": "/opt/eva/src/eva/adapters/projection/hindsight.py",
+        "sha256": "018f73b771ba0b9cb41a4b0144f8c2b23de12f8d3de62784793d54d2b7e19244",
+        "imported": true
+      },
+      "worker": {
+        "containerId": "20ea82c3803b17dfb8e6e05c65f243c3d1a1e5cb828795ab66e043d5de3831ba",
+        "image": "sha256:588f122fb1eb8deea776d791e5c61d2b678a0c001a74f7fe3b1733749a8659cf",
+        "status": "running",
+        "health": "healthy",
+        "restartCount": 0,
+        "user": "65532:65532",
+        "sameMountsConfigCmd": true,
+        "module": "/opt/eva/src/eva/adapters/projection/hindsight.py",
+        "sha256": "018f73b771ba0b9cb41a4b0144f8c2b23de12f8d3de62784793d54d2b7e19244",
+        "imported": true
+      }
+    },
+    "sameUserEntrypointCommandAndMounts": true
+  },
+  "package": {
+    "checkedAt": "2026-10-07T00:51:41.043590+00:00",
+    "verified": true,
+    "sourceCount": 1225,
+    "imagesInspected": 8,
+    "changedSourceFiles": [
+      "src/eva/adapters/projection/hindsight.py"
+    ],
+    "otherSourceHashesUnchanged": true,
+    "changedInventoryPins": [
+      "living-core"
+    ],
+    "otherSevenInventoryPinsUnchanged": true,
+    "workerRecordedSeparately": true,
+    "workerImage": "sha256:588f122fb1eb8deea776d791e5c61d2b678a0c001a74f7fe3b1733749a8659cf",
+    "runtimeImageUnchanged": true,
+    "historicalBaseUnchanged": true,
+    "previousPackageSha256": "7a905b26f0bc4a88c6475ab15bdff997a33a7b9074f1b7a3b80c035be41361ef",
+    "packageSha256": "b0513e5c24acbbdb08deaeb91586ec8e0c3b1bd4456803a119179e84382fbda4",
+    "manifestSha256": "a031746d6c8f5d5526a40e9510902e5f4fbf1065bd89cc9e4b4f11b98105985e",
+    "imageSetSha256": "17eed327c632b62d5f797dfd34a952aa6e76a37e75de48592834fec13981d297",
+    "verificationReceiptSha256": "c531de8784c4aaf99f0e860eae1bda461d84253781883b6f55738f228fa5103c",
+    "preparationError": "Default root Python lacks Pydantic; package changes retained; resumed existing verifier with installed Python3.12 and existing administrator dependencies. No dependency installation."
+  },
+  "preparationErrors": [
+    "New fault-isolation test initially assumed model_copy on a dataclass; replaced with existing dataclasses.replace before final test.",
+    "Existing package verifier initially used root default Python without Pydantic; resumed with existing Python3.12 and administrator dependencies, no installation or restaging.",
+    "Initial runtime mount assertion compared Docker list order; exact destination-keyed maps match. No config modification or reinstall."
+  ],
+  "privateEvidenceSha256": {
+    "build-receipt.json": "55923ae0934e65d5b3d6d9b324639a4195da0c51a7ef29eaceb0e733b32c192d",
+    "install-start.json": "c1038041d4a336a240287eec11483e682dd07ba7b3ee957f01020d5069db2b0d",
+    "installed-verification.json": "f94b57d6b91464f73e889715f0d7fc1a9f047d18f7d147ae22e706daa45401dd",
+    "installed-image-focused.json": "79028f2a0e9d9bbf86e765b9a72e8953f0ac50ad133d84bcecf74bb33f5f4a0d",
+    "package-alignment.json": "677f97ce08ea06c94c348b9b1730a6c7deae5d9314dcbe439df78e0de941e61f",
+    "focused-result.json": "947760aee4498f81b34738a2c8f7c06e6a701049f76e71229f77928c654db578",
+    "test-result.json": "6ed704ad5b8fe9cbf1757ad9b126f808debc5ce38643c3da12ce3d34a1abfb07",
+    "prechange-deficit.stdout.txt": "cb3428e94b7852397211415094757136c2889b3ded11f72ef7599aa4ddd43476"
+  }
 }

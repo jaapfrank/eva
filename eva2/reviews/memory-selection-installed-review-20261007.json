@@ -1,0 +1,28 @@
+{
+  "contract": "EvaMemorySelectionInstalledReview/v1",
+  "checkedAt": "2026-10-07T00:54:44.175669+00:00",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "conclusion": "GO for exact source correction and installed/package metadata only",
+  "sourceSha256": "018f73b771ba0b9cb41a4b0144f8c2b23de12f8d3de62784793d54d2b7e19244",
+  "testsSha256": "80e9792816d204bfd6e7771706e27ec2756aee802b4d8b94b5fc5c44654534ac",
+  "sourceCommit": "74d52cc555d373ecd7e5f505859eb53a93581c75",
+  "independentlyReadEvidenceSha256": {
+    "build-receipt.json": "55923ae0934e65d5b3d6d9b324639a4195da0c51a7ef29eaceb0e733b32c192d",
+    "install-start.json": "c1038041d4a336a240287eec11483e682dd07ba7b3ee957f01020d5069db2b0d",
+    "installed-verification.json": "f94b57d6b91464f73e889715f0d7fc1a9f047d18f7d147ae22e706daa45401dd",
+    "installed-image-focused.json": "79028f2a0e9d9bbf86e765b9a72e8953f0ac50ad133d84bcecf74bb33f5f4a0d",
+    "package-alignment.json": "677f97ce08ea06c94c348b9b1730a6c7deae5d9314dcbe439df78e0de941e61f"
+  },
+  "reviewScope": "Read-only source and neutral regressions; actual installation/package metadata. No original protected test inputs, independent runtime/model calls or quality rescoring.",
+  "findings": [
+    "Fallback excludes only observations already discarded by existing absent-source check. Existing authority/privacy/time/score/size boundaries retained.",
+    "Best-effort diagnostic protects successful recall against invalid trailing type and logger failures; hashes/type/finite scores/fixed exclusion carry no raw memory/query/source/person content.",
+    "Both actual core and worker bind exact updated module and preserve UID65532:65532, commands/entrypoints/mounts; healthy/restart0.",
+    "Actual installed core image3 focused tests pass without product source mount.",
+    "Existing package1225sources/eight image roles verified; one source and living-core pin changed;1224other sources/seven pins retained; worker separateoverlay."
+  ],
+  "limits": [
+    "INFO opt-in logging; ordinary default-runtime persistence not demonstrated. No durable-audit claim.",
+    "Not a recovered CM12 cause, benchmark quality gain, new product-task completion or full comparison."
+  ]
+}
