@@ -205,6 +205,7 @@ class PostgresMcpConnectorRegistry:
         if configured is not None:
             result.append({"connector_id": configured["connector_id"],
                            "endpoint": configured["endpoint"],
+                           "endpoint_role": "mcp_transport",
                            "connection_status": "configured_catalog",
                            "tool_names": [spec.execute_catalog_name for spec in self._configured_catalog.specs],
                            "next_action": "discover_connector_tools"})
@@ -215,6 +216,7 @@ class PostgresMcpConnectorRegistry:
             result.append({
                 "connector_id": connector_id,
                 "endpoint": record["endpoint"],
+                "endpoint_role": "mcp_transport",
                 "connection_status": "registered",
                 "tool_names": [spec.execute_catalog_name for spec in self._specs(record["catalog"])],
                 "next_action": "discover_connector_tools",
@@ -422,6 +424,7 @@ class PostgresMcpConnectorRegistry:
         return {
             "connector_id": record["connector_id"],
             "endpoint": record["endpoint"],
+            "endpoint_role": "mcp_transport",
             "gateway_id": record["gateway_id"],
             "registration_sha256": record["registration_sha256"],
             "state": "revoked" if record["revoked"] else "active",

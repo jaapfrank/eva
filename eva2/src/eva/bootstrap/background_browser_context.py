@@ -45,8 +45,11 @@ class BackgroundBrowserContext:
                 "Gebruik voor gewone browseropdrachten standaard Eva’s eigen beheerde browser "
                 "via de bestaande MCP-connector en zijn ontdekte tools. Persoonlijke Chrome-tabdeling "
                 "is alleen een extra mogelijkheid als de eigenaar juist zijn eigen tabblad bedoelt. "
-                + ("De eigen browser is de connector op " + os.environ["EVA_BROWSER_MCP_ENDPOINT"]
-                   + ". Bij stopped wordt deze browser bij werkelijk toolgebruik zelfstandig gestart; "
+                + ("Het MCP-transportendpoint voor de browsertools is " + os.environ["EVA_BROWSER_MCP_ENDPOINT"]
+                   + ". Gebruik dit voor toolverbinding/ontdekking, niet als webpagina om naar te navigeren. "
+                   "Leid geen taakbestemming af door het transportpad weg te laten; gebruik echte "
+                   "bronadressen uit de opdracht, toegestane context, tools of dienstdocumentatie. "
+                   "Bij stopped wordt deze browser bij werkelijk toolgebruik zelfstandig gestart; "
                    "vraag daarvoor geen dashboardhandeling of tabdeling. "
                    if os.environ.get("EVA_BROWSER_MCP_ENDPOINT") else "") +
                 "Als owner_control waar is, heeft de eigenaar de bediening; probeer die "

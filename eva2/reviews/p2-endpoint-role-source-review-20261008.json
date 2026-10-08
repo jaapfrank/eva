@@ -1,0 +1,123 @@
+{
+  "actual_packaged_images": {
+    "core": "sha256:e4de9d36540c3a6f576303b9215c952b7d1e9836b897c7d58a212448e10177dc",
+    "delegated-work-worker": "sha256:d818823f15d3b15aa66d3002826b0e4ce5b3bbbc8227a2e104482e61eb227a98"
+  },
+  "assessment": {
+    "browser_takeover_stop_recovery_fresh_observation_and_effect_readback_boundaries_unchanged": true,
+    "configured_registered_and_summary_roles_are_additive_constant_mcp_transport": true,
+    "executor_network_can_continue_failure_scoring_and_completion_rules_unchanged": true,
+    "guidance_distinguishes_transport_from_task_urls_without_case_specific_rules": true,
+    "material_performance_risk_found": false,
+    "no_new_endpoint_origin_schema_secret_or_other_person_context_exposed": true,
+    "only_three_product_modules_changed_against_baseline": true,
+    "performance_boundary": "Fixed labels and guidance add no network/DB operations, executor loops or dependencies.",
+    "registration_hashes_generations_refresh_revoke_owner_scope_gateway_and_grant_checks_unchanged": true,
+    "role_is_read_projection_not_stored_registration_identity": true,
+    "unchanged_composition_sha256": "218ae582c67447672539310cbd7856792af6dd2af05d44afc29a4477e5877191",
+    "unchanged_runner_sha256": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362",
+    "verified_documentation_request_context_and_discovered_tools_remain_resource_sources": true
+  },
+  "baseline_commit": "731625119b32a849fb1922b691beb477aece4429",
+  "behavioral_superiority_or_measured_task_improvement_proven": false,
+  "bounded_patch": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-endpoint-role-correction-20261008/source-change.patch",
+    "sha256": "b8e2b676ec853269c0dd139889dd93f9e8fcdb8cb3eaab23c5c7346c3efd7f68"
+  },
+  "build_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-endpoint-role-correction-20261008/build.json",
+    "sha256": "732e89db364f506b8c12267b3472f7fbb5b16e12e8f882260459c65197f4b684"
+  },
+  "closed_results_unknowns_and_original_rules_unchanged": true,
+  "completed_small_tasks": 39,
+  "contract": "IndependentP2EndpointRoleSourceAndDeploymentPlanReview/v1",
+  "decision": "GO_SOURCE_PACKAGES_AND_ONE_IMAGE_ONLY_UPDATE",
+  "deployment_plan": {
+    "both_live_healthy_and_exact_local_base_tag_ids_independently_confirmed": true,
+    "copy_target": "/opt/eva/src/eva/",
+    "core_dockerfile": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-endpoint-role-correction-20261008/core/Dockerfile",
+      "sha256": "59fe4ba9ca93d8599f15693d74aab5e493fe50e7eaab8eadd1212cb2a3abf3a6"
+    },
+    "core_parent_image": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+    "dependency_downloads_required": false,
+    "each_overlay_contains_exact_three_reviewed_modules_only": true,
+    "managed_runtime_py_and_all_other_source_preserved_by_exact_parent_and_no_other_overlay": true,
+    "next_step": "Bind actual built image IDs and packaged hashes with the managed runtime.py/all other source preserved, use the existing image-only updater once preserving mounts/data/env, then verify actual images/hashes/context/health.",
+    "prebuild_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-endpoint-role-correction-20261008/prebuild-binding.json",
+      "sha256": "4c10cd6655db12fb1cadada5502cb79851105ee729d5a395dd36bc999de3ef59"
+    },
+    "worker_dockerfile": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-endpoint-role-correction-20261008/delegated-work-worker/Dockerfile",
+      "sha256": "d6bfd698bd203452dcd3c13c19d00c59e56bc249fb9274346dd791bc64f54388"
+    },
+    "worker_parent_image": "sha256:6ec3e9291a28feded8bcd0225dd55c81af6f0bbaf2c551b7a3e89007a366539a"
+  },
+  "development_credit_cost": null,
+  "diagnosis": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-general-work-route-diagnosis-20261008-v1/declassified-diagnosis.private.json",
+    "sha256": "2bf9df11383ed97fc9b3d971dd01ec026e44e279c662df739c3fe16159302a43"
+  },
+  "focused_test_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-endpoint-role-correction-20261008/focused-tests.json",
+    "sha256": "b37eda2cd4cae99fe400fd66b016700b032bb359a5d7697e29bceed824a29fda"
+  },
+  "human_ratings": null,
+  "independent_image_metadata_checks": {
+    "core": {
+      "all_nonlabel_runtime_image_config_equal": true,
+      "all_parent_labels_preserved": true,
+      "exact_expected3_hashes_match_source": true,
+      "exact_parent_layer_prefix": true,
+      "only_intended_new_labels": true,
+      "only_one_overlay_layer": true
+    },
+    "delegated-work-worker": {
+      "all_nonlabel_runtime_image_config_equal": true,
+      "all_parent_labels_preserved": true,
+      "exact_expected3_hashes_match_source": true,
+      "exact_parent_layer_prefix": true,
+      "only_intended_new_labels": true,
+      "only_one_overlay_layer": true
+    }
+  },
+  "material_findings": [],
+  "new_case_replay_matrix_or_model_admission": false,
+  "p2_1_complete": false,
+  "package_readback": {
+    "managed_runtime_py_preserved": true,
+    "no_new_dependencies_models_or_native_trials": true,
+    "other_python_source_files_retained_each": 332,
+    "three_changed_modules_equal_reviewed_hashes_in_both": true
+  },
+  "package_verification_receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-endpoint-role-correction-20261008/package-verification.json",
+    "sha256": "3b1064a784196114c6dfd7cc6141d74cb3bd6bc44cf1018e99dcd751538aa6e0"
+  },
+  "pre_package_source_plan_review_sha256": "3a77ee181aaeb99282eef7776a0a57062ab1e0f8525159971e32a3230084e5aa",
+  "preparation_limits": [
+    "Root-mode Git could not resolve the linked worktree; administrator-mode WSL Git verified the exact baseline without config changes.",
+    "Image-ID FROM parsing was corrected using local tags independently bound to the same exact current images; this is packaging only."
+  ],
+  "reviewed_at": "2026-10-08T20:44:25.079188+00:00",
+  "reviewer_owns_only_this_review_file": true,
+  "runtime_binding_status": "PENDING_POST_INSTALL_READBACK",
+  "source_hashes": {
+    "adapters/postgres/mcp_connector_registry.py": "f70c007717ce3fae21c0df12792f45cf08cb3ed629b4a63e21b0aca6ef3768d1",
+    "bootstrap/background_browser_context.py": "3c841b8902f3d2127b0940fda3199fb44b0ba652ea3da11b3442e439053be7e6",
+    "providers/mcp_registration.py": "fde75e8d2b9ac567d9004af4c30811eb944de6d70bba366b12bdb0df27edba19"
+  },
+  "test_assertion": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/connectors/test_mcp_registration_tools.py",
+    "sha256": "25099c037ebd9b951a715ff95f7893e1daf7ff72c3ac28d59cba9fc4bb19ae34"
+  },
+  "total_small_tasks": 48,
+  "verification": {
+    "all_five_receipt_test_hashes_equal_current": true,
+    "exit_code": 0,
+    "retained_seconds": "7.43",
+    "retained_tests_passed": 88,
+    "reviewer_tests_or_model_native_trials": 0
+  }
+}

@@ -295,6 +295,7 @@ def test_inventory_rejects_other_owner_paused_mandate_and_gateway_drift(monkeypa
         "documents": record, "revoked": {**record, "revoked": True}}))
     assert registry.inventory(TURN) == [{
         "connector_id": "documents", "endpoint": "https://documents.example/mcp",
+        "endpoint_role": "mcp_transport",
         "connection_status": "registered", "tool_names": ["fixture_read", "fixture_save"],
         "next_action": "discover_connector_tools"}]
     with pytest.raises(ConversationConflict, match="owner or installation"):

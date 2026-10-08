@@ -258,12 +258,20 @@ class McpRegistrationToolAdapter:
                 result = {**result, "connectors": connectors,
                           "configured_endpoints": [
                               {"endpoint": endpoint,
+                               "endpoint_role": "mcp_transport",
                                "connection_status": "registration_not_recorded",
                                "next_action": "connect_service",
                                "guidance": "Use verified service documentation for registration; configuration alone does not prove a usable connection."}
                               for endpoint in self.authority.managed_endpoints(turn)
                               if endpoint not in known_endpoints],
                           "inventory_scope": "owner_admitted_registry_and_managed_endpoints",
+                          "endpoint_guidance": (
+                              "These endpoints are MCP transport/registration addresses for "
+                              "connect_service and tool discovery, not browser destinations. "
+                              "Do not derive a service web page by removing their transport path. "
+                              "Find task resource URLs from the request, authorized context, "
+                              "discovered tools or verified service documentation. A rejected "
+                              "destination does not prove that all permitted resources are unavailable."),
                           "reachability_verified": False}
             expected = _management_proof(command.arguments["action"])
             observed = {key: result[key] for key in expected}
