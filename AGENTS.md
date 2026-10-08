@@ -1,5 +1,19 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Uitvoeringsstatus 8 oktober — matching Eva2-besluit nog niet ontvangen
+
+De oorspronkelijke CM04-usage is niet reconcilieerbaar met bewaard bewijs.
+Volledige reservation blijft afgeschreven; de oorspronkelijke participantbrede
+UNKNOWN-stop verhindert desondanks een nieuwe sample. Het ene concrete vervolg
+voor huidige Eva2-XD02 staat in
+`eva2/evidence/product/p2-eva2-xd02-followup-decision-20261008.json`.
+Dit is een voorstel, geen eigenaarbesluit of verruimde uitvoeringstoelating.
+Geen oude UNKNOWN/reset, comparatorherhaling, nieuwe matrix of modelcall.
+Bij een expliciet besluit eerst modelvrije volledige native factory/lifespan,
+daarna alleen de exact gebonden uitvoering met oorspronkelijke criteria/rollen/grenzen.
+Oude launcher/ledger/deadline niet opnieuw activeren. Spraak blijft geparkeerd.
+
+
 ## Uitvoering 8 oktober — oorspronkelijke XD02-ronde afgerond
 
 De ene OpenClaw/Hermes-XD02 is uitgevoerd, fysiek gesloten en onafhankelijk

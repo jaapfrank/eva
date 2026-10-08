@@ -1,3 +1,28 @@
+
+## P2.1 vervolg — één matching Eva2-uitvoering vraagt een besluit
+
+De ontbrekende vergelijking is concreet afgebakend: alleen huidige Eva2 op dezelfde
+beschermde XD02-opdracht als het al gesloten OpenClaw/Hermes-resultaat. Geen andere
+deelnemer opnieuw, geen brede matrix of nieuw criterium. De oorspronkelijke
+72 modelpogingen, 70 toolacties, 840 seconden en tokenplafonds inclusief helpers
+blijven gelden; dit zijn grenzen, geen voorspelde kosten of bewezen providerlimiet.
+
+De oorspronkelijke proefregel weigert iedere volgende Eva2-uitvoering door één
+oude modelaanvraag met onbekend verbruik (CM04). Bestaand bewijs kan dat verbruik
+niet reconstrueren; de volledige oorspronkelijke reservering is al afgeschreven.
+Een nieuwe uitvoering vraagt daarom een expliciet besluit over deze ene uitzondering.
+Oude UNKNOWN, ruwe registraties, reserveringen, beoordelingen en gesloten proeven
+blijven behouden. De regel en toelating zijn niet stilzwijgend aangepast.
+
+Bij akkoord eerst de volledige gecorrigeerde factory/lifespan modelvrij controleren
+in een lege synthetische scope, zonder oude proef/deadline opnieuw te activeren.
+Daarna één vooraf gebonden native uitvoering, gebundelde onafhankelijke beoordeling,
+afsluiting en publicatie, ook bij mislukking. Menselijke kwaliteit blijft apart.
+Nu: 0 nieuwe proefmodelcalls, geen actieve proefresources, geen extra productfunctie.
+Spraak geparkeerd; L3.4–L3.7 en 39/48 bestaande taakafrondingen behouden.
+
+Concreet voorstel: `eva2/evidence/product/p2-eva2-xd02-followup-decision-20261008.json`.
+
 ## P2.1 nu — één echte vergelijking afgerond
 
 | Dezelfde oorspronkelijke XD02 | OpenClaw | Hermes |

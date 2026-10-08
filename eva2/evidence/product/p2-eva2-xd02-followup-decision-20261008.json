@@ -1,0 +1,104 @@
+{
+  "contract": "EvaP2MatchingEva2FollowupDecision/v1",
+  "recordedAt": "2026-10-08T11:42:49.237886+00:00",
+  "taskId": "P2.1",
+  "baseCommit": "2e2471ce3e91cb8ed5e0843a102b5f7d8f46415e",
+  "status": "NO_GO_UNDER_ORIGINAL_AUTHORITY; proposed_owner_exception_only",
+  "purpose": "Measure current Eva2 actual task quality and independence against already retained original XD02 OpenClaw/Hermes results; no benchmark or product-win claim before execution.",
+  "existingEvidence": {
+    "completedPair": "eva2/evidence/product/p2-xd02-openclaw-hermes-result-20261008.json",
+    "completedPairSha256": "f31b9af11c215b064fda4e05931858a7fe242859b7ee12524c4a64ddf36f86bd",
+    "completedPairReview": "eva2/reviews/p2-xd02-openclaw-hermes-final-review-20261008.json",
+    "historicalEva2CM04Review": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
+    "historicalEva2CM04ReviewSha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841"
+  },
+  "establishedBlocker": {
+    "kind": "original_participant_wide_unknown_usage_stop",
+    "source": "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+    "sourceSha256": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291",
+    "admissionLines": [
+      217,
+      228
+    ],
+    "attemptSaveLines": [
+      294,
+      299
+    ],
+    "reason": "CM04 started one provider dispatch, aborted with usage=null. Generic ingress503 and physical closure do not attest zero usage. Original full envelope is already permanently debited; retaining it does not remove the independent unresolved-usage stop.",
+    "recoverableFromExistingAttestation": false,
+    "oldUnknownPreserved": true,
+    "oldReservationPreserved": true,
+    "originalGuardChanged": false
+  },
+  "proposedExecution": {
+    "caseId": "EV003-XD-02",
+    "epoch": 1,
+    "caseSha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+    "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "planSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "participant": "eva2",
+    "nativeExecutions": 1,
+    "openclawOrHermesReplay": false,
+    "sameOriginalCriteriaAndProtectedInput": true,
+    "providerRoute": "existing subscription route; no new paid provider",
+    "roles": {
+      "contact": "gpt-6-sol/none",
+      "allHelpers": "gpt-6-astra/medium"
+    },
+    "perParticipantLimitsIncludingHelpersRetries": {
+      "providerAttempts": 72,
+      "toolDispatches": 70,
+      "wallSeconds": 840,
+      "providerInputTokens": 4718592,
+      "providerOutputTokens": 86400,
+      "speechRequests": 0
+    },
+    "newHumanQualityJudgeCalls": 0,
+    "creditCost": null,
+    "limitsAreCeilingsNotPredictedUsage": true,
+    "providerSideHardEnvelopeNotProven": true,
+    "deadlineStartsAtNativeExecutionNotPreparation": true
+  },
+  "installedTargetImages": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+      "user": "65532:65532",
+      "running": true,
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:6ec3e9291a28feded8bcd0225dd55c81af6f0bbaf2c551b7a3e89007a366539a",
+      "user": "65532:65532",
+      "running": true,
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-hindsight-1": {
+      "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "user": "1000:1000",
+      "running": true,
+      "health": "healthy"
+    }
+  },
+  "prerequisitesAfterOwnerDecision": [
+    "Before original input release, verify the same installed core factory and real lifespan/health/close in an isolated empty synthetic scope, with provider and action dispatch blocked; do not start the old launcher or rearm any old ledger/deadline/release.",
+    "Bind exact current installed images, source, native role/profile, valid existing authentication, synthetic identity/resources and parent admission; independent bundled readiness review before task release.",
+    "Only an explicit new owner exception to the historical participant-wide stop may admit this exact sample; retain immutable history, complete reserved ceilings and cumulative accounting. No implicit general exception."
+  ],
+  "completionRule": "One native run recorded, objective results independently assessed under original rules, actual attempts/tools/tokens/time/help/errors retained, own resources closed, published even on failure/UNKNOWN; no retry for a better score. Human quality remains separate.",
+  "requiresOwnerDecision": {
+    "scope": "One new separately bound Eva2 XD02 sample despite preserved historical usage UNKNOWN. No permission request for routine source/readiness/review work.",
+    "approvalReceived": false,
+    "executionAdmitted": false,
+    "exceptionAutomaticallyExtendsOtherCases": false
+  },
+  "technicalActivityThisDecision": {
+    "newProviderCalls": 0,
+    "newNativeSamples": 0,
+    "newResourcesStarted": 0,
+    "protectedTaskInputsAnswersOrOraclesReadByBuilder": false,
+    "ledgerMutations": 0,
+    "productSourceChanges": false,
+    "newProductFunction": false,
+    "developmentCreditCost": null
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "contract": "EvaP2Eva2Xd02FollowupDecisionReview/v1",
+  "review_date": "2026-10-08",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "decision": "GO_PROPOSAL_AND_PUBLICATION_ONLY",
+  "execution_decision": "NO_GO_PENDING_EXACT_OWNER_EXCEPTION_AND_INDEPENDENT_READY_ADMISSION",
+  "reviewed_proposal": {
+    "path": "eva2/evidence/product/p2-eva2-xd02-followup-decision-20261008.json",
+    "sha256": "e5a1255e7ab48ea69f3d378f416ef27c896b07a9ad7bceb458fedd90fdd8811a",
+    "base_commit": "2e2471ce3e91cb8ed5e0843a102b5f7d8f46415e"
+  },
+  "bindings": {
+    "guard_source_sha256": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291",
+    "cm04_review_sha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841",
+    "closed_xd01_review_sha256": "55c040dec5d3b65756feaded09b3418f36432809fc7db4261fb25b48862b0e7e",
+    "identity_loader_proof_sha256": "e31266523b60acd09692acd541b3f14f78e4053ba397bcbf4f225ab21a329425",
+    "retained_openclaw_hermes_result_sha256": "f31b9af11c215b064fda4e05931858a7fe242859b7ee12524c4a64ddf36f86bd",
+    "retained_openclaw_hermes_review_sha256": "8b731c05a003f70385bc34197d339d7a2215bbdc71823c957ec3af812bb1d09c"
+  },
+  "scope": {
+    "participant": "eva2",
+    "case_id": "EV003-XD-02",
+    "epoch": 1,
+    "case_sha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "proposed_native_executions": 1,
+    "comparator_replay": false,
+    "broad_matrix": false,
+    "scorer_or_criteria_change": false
+  },
+  "confirmed": [
+    "Current participant-wide _admit and attempt-save guards reject unresolved historical Eva2 usage across families.",
+    "CM04 had one dispatched aborted attempt with unknown SDK usage; closure and generic HTTP503 do not establish zero consumption.",
+    "The proposal preserves historical UNKNOWN and complete original reservations; it expressly requests one narrowly bound exception instead of claiming current admission.",
+    "The existing identity proof establishes only installed native identity read/signature verification. Full factory/lifespan/task startup remains unproven.",
+    "The proposal forbids starting the old launcher or rearming an old sample/deadline/release as a preflight.",
+    "Recorded comparator evidence is reused without OpenClaw/Hermes replay, score imputation or a general quality claim."
+  ],
+  "unchanged_proposed_limits_including_helpers_and_retries": {
+    "provider_attempts": 72,
+    "native_tool_dispatches": 70,
+    "wall_seconds": 840,
+    "input_tokens": 4718592,
+    "output_tokens": 86400,
+    "speech_requests": 0
+  },
+  "roles": {
+    "contact": "gpt-6-sol/none",
+    "all_helpers": "gpt-6-astra/medium"
+  },
+  "remaining_execution_conditions": [
+    "Explicit owner decision for exactly this Eva2 XD02 sample despite the retained historical participant-wide unknown-usage stop; no automatic extension.",
+    "A separately reviewable current source/resource/accounting binding preserving immutable history and every full reservation.",
+    "Blocked-dispatch isolated startup/lifespan/health/close verification, then independent actual readiness before original input release; this review approves no launcher or resource start."
+  ],
+  "limits": {
+    "provider_side_hard_envelope_proven": false,
+    "development_credit_cost": null,
+    "future_runtime_usage_predicted": false,
+    "human_quality_proven": false,
+    "p2_1_complete": false,
+    "new_product_function": false,
+    "owner_approval_recorded": false
+  },
+  "material_findings": [],
+  "review_activity": {
+    "read_only_public_metadata_and_guard": true,
+    "new_models_providers_tests_resources_or_samples": 0,
+    "private_questions_answers_or_oracles_read": false,
+    "canonical_source_board_or_registry_changes": false
+  },
+  "presentation_delta": {
+    "source_path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx",
+    "source_sha256": "efb6dd11a10eebcf673336be189c39a4abc33d9aee8077e462ee37876b1f8e9c",
+    "source_decision": "GO_TWO_PRESENTATION_ROWS_ONLY",
+    "owner_label_uses_explicit_blocksIndependentWork_boolean": true,
+    "task_count_uses_existing_smallTasks_length": true,
+    "task_status_or_doneWhen_changed_by_these_rows": false,
+    "new_product_task_function_or_criterion": false,
+    "decision": "GO_BOUNDED_PRESENTATION_PUBLICATION",
+    "root_build_and_served_readback": {
+      "path": "eva2/evidence/product/p2-eva2-xd02-followup-presentation-readback-20261008.json",
+      "sha256": "fb0d76055f7bf466233685da70cd4a7a58de8accc869b9edbaca2cc19e849e96",
+      "build": "existing Vite project build; pass",
+      "served_asset": "/assets/index-BzeMw3z0.js",
+      "served_asset_sha256": "dad07da35002dd6febd8ad32a26b00c879d0d38dced7907bf7d048fed8e07d86",
+      "task_count": 48,
+      "completed_count": 39,
+      "counts_unchanged": true,
+      "pending_owner_decision": true,
+      "no_active_model_run": true,
+      "core_restart": false
+    },
+    "reviewer_runtime_or_test_calls": 0
+  }
+}

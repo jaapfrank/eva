@@ -1,0 +1,19 @@
+{
+  "contract": "P2MatchingEva2FollowupPresentationReadback/v1",
+  "recordedAt": "2026-10-08T11:44:58.220653+00:00",
+  "projectRoute": "http://127.0.0.1:44712",
+  "liveAsset": "/assets/index-BzeMw3z0.js",
+  "liveAssetSha256": "dad07da35002dd6febd8ad32a26b00c879d0d38dced7907bf7d048fed8e07d86",
+  "sourceSha256": "efb6dd11a10eebcf673336be189c39a4abc33d9aee8077e462ee37876b1f8e9c",
+  "build": "existing Vite8.2.2 --mode project; pass",
+  "currentTaskCount": 48,
+  "completedTaskCount": 39,
+  "completedCountsUnchanged": true,
+  "latestClosedXD02ResultInDeliveryHistory": true,
+  "waitingOwnerDecisionAndNoActiveModelRun": true,
+  "conditionalWaitingLabelServed": true,
+  "taskCountUsesActualWorkboard": true,
+  "coreRestart": false,
+  "newProductFunction": false,
+  "newProbeModelCalls": 0
+}
