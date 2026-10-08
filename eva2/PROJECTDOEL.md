@@ -1,6 +1,46 @@
 # Eva — digitale huisgenoot die leert en handelt
 
-## Actueel 8 oktober — één geheugenvoordeel bewezen; volledige Eva blijft open
+## Actueel 8 oktober — twee beperkte geheugenvoordelen; uitvoeringstekorten blijven
+
+CM05 is één keer uitgevoerd en onafhankelijk beoordeeld: Eva2 bewaart de
+privéherinneringen van twee geverifieerde personen apart en haalt beide later
+correct terug. Vier antwoorden feitelijk ondersteund, drie vaste voorwaarden
+geslaagd, twee controles geslaagd. Alle dertien modelcontexten en de antwoorden
+bevatten geen privéfeit van de andere persoon. Dit bewijst deze oorspronkelijke
+privéproef; geen algemene privacygarantie of herkenning via speakers.
+
+De exacte behouden Hermes haalt één van drie voorwaarden en vermengt privégegevens.
+OpenClaw faalt twee gemeten voorwaarden; de derde is onbekend. Ook daar worden
+privégegevens vermengd. Eva1 heeft geen toegelaten persoonswisselroute voor deze
+variant: UNKNOWN, geen productverlies. Legacy CM05 heeft een andere casehash en
+blijft apart. Geen comparator opnieuw uitgevoerd.
+
+Eva2: 13 complete modelaanvragen (4Sol/none,9Astra/medium),45.615tokens,3tools,
+187,18s vóór stoppen inclusief drie-workeropstart. Eén extra gedelegeerde opdracht
+mislukt met incomplete_work; verbruik inbegrepen. Menselijke/volledige kwaliteit
+UNKNOWN; modelrollen/meetgrenzen verschillen, geen snelheids- of efficiëntiewinst.
+Drie uitlees-/export-shapefouten hadden geen invloed op oorspronkelijke uitvoering
+of score. Alle eigen werkers/verzoeken/resources afgesloten;32oude registraties
+exact behouden. Nu33rijen/223aanvragen; bekende ondergrens2.750.790tokens,drie
+oude verbruiksonbekende pogingen blijven onbekend. Geld/ontwikkelcredits onbekend.
+
+Bewijs: eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json.
+Review: eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json.
+Registratie: eva2/evidence/product/p2-authority-coverage-20261008.json.
+Registratierijen zijn geen bewezen taakdekking; oude tweecasesnapshot blijft bewaard.
+
+CM08 blijft een tweede beperkt geheugenvoordeel: latere ervaring3/3 versus1/3
+bij de drie referenties. XD02 blijft een productverlies: OpenClaw3/3,Eva2/Hermes1/3.
+Geheugenwinst bewijst geen zelfstandig combinatiewerk. P2.1 blijft open voor
+CM06/overige oorspronkelijke dekking en twee echte menselijke beoordelingen.
+Geen volgende proef geselecteerd; concreet vervolg vooraf binden binnen bestaand
+mandaat. Geen nieuwe brede matrix, herhaling of nieuwe taak-ID.
+
+Vier huisgenootuitkomsten,39/48kleine afrondingen en L3.4-L3.7 blijven behouden.
+AIDE² uitsluitend voor Eva2 en haar uitbreidingen. Spraak geparkeerd; ongebruikte
+Docker Desktop ongemoeid. Dit is vergelijkingsbewijs, geen nieuwe productfunctie.
+
+## Historische momentopname vóór CM05 — CM08 bevestigd
 
 Huidige Eva2 is één keer op dezelfde oorspronkelijke CM08-geheugentaak uitgevoerd
 als de behouden Eva1/OpenClaw/Hermes. Eva2 gebruikt de eerdere ervaring en voorkeur
@@ -38,6 +78,20 @@ toegelaten gematchte gedeelde-audienceroute. Ongebruikte slots zijn niet voltooi
 of bewezen onuitvoerbaar. Geen volgende uitvoering geselecteerd of toegelaten
 door deze publicatie; bind een concreet vervolg vooraf aan oorspronkelijke
 criteria en bestaand mandaat. Geen comparatorherhaling, brede matrix of nieuwe taak-ID.
+
+Nu afzonderlijk geselecteerd en onafhankelijk toegelaten voor bronvoorbereiding:
+één ongebruikte huidige Eva2-CM05 met vier privébeurten, twee geverifieerde personen,
+vier sessies en één gesimuleerde dag. Exacte behouden referenties zijn OpenClaw/Hermes;
+Eva1 blijft UNKNOWN wegens de niet-aangetoonde actorwisselroute. De oude Eva2/Eva1-CM05
+heeft een andere casehash en blijft gesloten; niet herhalen of als matching hernoemen.
+Bestaande gate/reader/drie werkers hergebruiken; alleen invoerbinding en audit-readback
+voor beide toegelaten personen aansluiten. Originele 16SDK/16tools/480s en rollen blijven.
+Selectiereview: 0eca3bf42900069a2644750f4145e858069bd2507e236180731436ddc4941e10.
+Alle 32 historische rijen, CM04-UNKNOWN en volledige reserveringen blijven staan.
+Eén goedgekeurde authoritycopy en resourcevoorbereiding zijn geslaagd.
+Definitieve invoerpolicy is bij onafhankelijke review; nog geen parent, klok, invoer
+of modelaanvragen gestart. Geen comparatorherhaling of nieuwe brede matrix.
+Deze technische voorbereiding levert geen nieuwe productfunctie op.
 
 Vier huisgenootuitkomsten, 39/48 kleine afrondingen en L3.4–L3.7 blijven behouden.
 Dit is vergelijkingsbewijs van bestaande Eva2, geen nieuwe afgeronde productfunctie.

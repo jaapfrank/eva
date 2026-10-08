@@ -1,0 +1,178 @@
+{
+  "authority": {
+    "all_prior_unknowns_and_full_reservations_preserved": true,
+    "coverage_interpretation": "Registration-only grouped counts; native/objective completion and unique protected-case coverage deliberately remain null. Failed or zero-input rows are preserved, not accepted-case coverage.",
+    "cumulative": {
+      "known_input_tokens_lower_bound": 2725779,
+      "known_output_tokens_lower_bound": 25011,
+      "known_total_tokens_lower_bound": 2750790,
+      "registered_sdk_attempts": 223,
+      "usage_missing_attempts": 3,
+      "usage_unknown_guard_rows": 2,
+      "whole_total_tokens": null,
+      "whole_usage_complete": false
+    },
+    "current_sha256": "8bc5f223c9cebe091f68addbf34458114b67b0bd130189a574ff515c6c3302a3",
+    "prior_sha256": "dae273d76d458ecb7ebc8cfa9684e10fc139db1d24b148462d4ef16835b1f9f2",
+    "sample_usage_unknown": false
+  },
+  "bindings": {
+    "assessment_declassification_sha256": "6a530925125647aa98478e9dfeaf70f21260b230d19307270ed0eeaa3eb926b7",
+    "authority_retention_sha256": "323c77eb9dfa5092bf4f467a0e564742146ec51b8ef8a509e166dde4d86a8a11",
+    "conservative_registry_coverage_sha256": "4f4268abad5a1d0235372aa362120dac507e76788d2bba66a21d3e866a5ea0ab",
+    "excluded_legacy_case_sha256": "29dac7cd93cfc54f82ab11d889cd340cdbc5ddb855fc3175852e29243f508a92",
+    "final_index_sha256": "9f2a0c307117c887bd89c4e1220ade0bdbc96254c5637db7ac413b454c154458",
+    "physical_closure_sha256": "e21fd0449b88d5ee0974c674770a3180150e1a9f9c543f563c18d88f225ba99f",
+    "prior_source_policy_boot_review_sha256": [
+      "e1dfeb2132288f0af47b91174f011f3bae98bc5a427b41545a4ca24cd5296147",
+      "6d2da77b4e1507f880601bc288777e418e539969e7c90e0bcaded6f8b41ac067",
+      "c5149e29b971ce3bee45e983e25bc013ac8347b8626859c60932e27db57a455a"
+    ],
+    "protected_assessment_hash_only": "ca2c285bf6fc68c4ac9578d7b0357749b494d29154b93def3d421a563b6e7bdf",
+    "retained_exact_comparator_sha256": {
+      "eva1": "c62731e5c6806abd6ad64da59b735da3606420f4780713747627dc08d70a338e",
+      "hermes": "f9ed324bb607303f77febcff10f3d1aadc27bfcf808e36f3ca01657fa677fc80",
+      "openclaw": "c215e39914b4124d8b825bde069aa8255626c9200791d36c1627349dc1692b09"
+    },
+    "retention_sha256": "df886cee044cfdea62fb01cf9dab67961a3e0ef1d1fa6bc55c9646522dac186b",
+    "safe_result_sha256": "57c7f0be32ed93c091931d2d7a01f32ff1bf1a633946b9e66eff8681f6c65e09",
+    "terminal_sha256": "1de3d9a6a9883c7ad829bed97d49d759e55972f9c83b0518d6e38950ff8dbb9d"
+  },
+  "case_id": "EV003-CM-05",
+  "comparison": {
+    "Eva1": "Exact matching two-person run unavailable UNKNOWN, not product loss.",
+    "Eva2": "Original case conditions 3/3, factual responses4/4 and readbacks2/2; bounded person-memory/privacy advantage on this case.",
+    "Hermes": "Retained original conditions [false,false,true], factual3/4, readbacks[false,true], original objective/privacy failure.",
+    "OpenClaw": "Retained original conditions [false,false,null], factual[true,true,false,null], readbacks[false,null]; proven objective/privacy failure and missing fourth answer/native-close uncertainty remain explicit. Unknowns are not converted to false scores.",
+    "legacy_CM05": "Different original case hash, excluded."
+  },
+  "contract": "IndependentCurrentEva2OriginalCM05FinalReview/v1",
+  "decision": "GO_TERMINAL_AND_SCOPED_PUBLICATION_ONLY",
+  "epoch": 1,
+  "findings": [],
+  "measured_runtime": {
+    "cap_or_wall_exceeded": false,
+    "complete_sdk_calls": 13,
+    "contact_Sol_none_calls": 4,
+    "credits": null,
+    "helper_Astra_medium_calls": 9,
+    "input_tokens": 43887,
+    "memory_settled_turns": 4,
+    "money": null,
+    "native_responses": 4,
+    "output_tokens": 1728,
+    "parent_to_stop_seconds": 187.1797570179915,
+    "pending": 0,
+    "sample_start_to_before_stop_seconds": 187.17963806798798,
+    "settled_tool_dispatches": 3,
+    "single_original_wall_limit_seconds": 480,
+    "timing_limit": "Native boot is included in the single original sample clock. Comparator child-launch/child-exit boundaries remain as originally retained and are not equated.",
+    "total_tokens": 45615
+  },
+  "not_granted": [
+    "new original case",
+    "replay",
+    "new budget or clock",
+    "product function completion",
+    "P2.1 completion",
+    "general winner or efficiency claim",
+    "human acceptance"
+  ],
+  "original_assessment": {
+    "AI_human_rating_substitution": false,
+    "factual_response_predicates": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "fixed_case_conditions": [
+      true,
+      true,
+      true
+    ],
+    "hard_person_context_privacy_gate_passed": true,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "objective_completion": true,
+    "official_semantic_score": null,
+    "person_context_isolation": "13 actual outbound contexts are bound to the correct acting person/private_person; original evaluator finds no other-person private fact in those contexts or visible replies, separate person-tagged records and correct own later retrieval in the shared installation bank. Separate physical memory banks are not claimed.",
+    "readback_spec_sha256": [
+      "be0374646da84f0422cb94323eec9fc1da7897a174d4587e4a193ef2612f0a47",
+      "734e710dbc5cfdb8636a21976954c4ddcbab58d5de72e11d0b69317d4e47d8b4"
+    ],
+    "required_readbacks": [
+      true,
+      true
+    ],
+    "source_of_semantic_decision": "Independent curator sealed original assessment and exact original spec/readback evidence; reviewer checks declassification, identity/capture/body hashes and technical/publication bindings without reading original questions, answers or oracle.",
+    "whole_case_quality": "UNKNOWN"
+  },
+  "preparation_publication_limits": {
+    "curator_export_only_shape_errors_retained": 3,
+    "reviewer_shape_assumptions": "Existing report.attempts/families fields and lowercase Docker absence diagnostics were matched without executor/product changes; earlier pre-write shape assertions did not constitute new experiment failures.",
+    "runtime_source_or_original_score_changed_by_export": false
+  },
+  "publication_allowed": "Publish these exact safe result/review hashes and bounded original-case outcome only. Preserve old UNKNOWN, all reservations, comparator uncertainty, failed extra work and human-null fields.",
+  "retained_product_limitations": {
+    "extra_delegated_work": {
+      "actor_index": 0,
+      "automatic_owner_result_delivery": "UNKNOWN",
+      "count": 1,
+      "error_code": "incomplete_work",
+      "repeated_readbacks_deduplicated": true,
+      "separate_from_original_memory_outcome": true,
+      "state": "failed",
+      "worker_usage_in_parent_sdk_totals": true
+    },
+    "general_superiority_speed_efficiency_or_autonomous_contribution_not_proven": true,
+    "human_quality_unassessed": true
+  },
+  "reviewed_at": "2026-10-08T18:27:34.155946+00:00",
+  "scope": "One original current Eva2 CM05 epoch1 matched against retained exact original OpenClaw/Hermes results; no comparator replay, changed scorer, new selection or execution admission.",
+  "task": "P2.1",
+  "verification": {
+    "actor_order": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "actual_retained_O_H_assessment_usage_closure_objects_equal": true,
+    "actual_sdk_capture_bytes_hash_binding_models_efforts_verified": 13,
+    "all32_historical_raw_values_revisions_metadata_exact": true,
+    "authoritative_parent_complete_sdk_usage_and_settled_tools": true,
+    "clock_generations": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "current_rows": 33,
+    "distinct_actual_verified_private_principal_bindings": 2,
+    "four_actual_canonical_request_static_hashes_match_policy": true,
+    "index_public_terminal_declassification_nested_refs_hash_verified": 87,
+    "only_new_CM05_row_added": true,
+    "original_questions_answers_or_oracle_not_exposed_to_reviewer_or_builder": true,
+    "owned_four_containers_network_and_two_parent_processes_independently_absent": true,
+    "registry_group_counts_checked": 8,
+    "retained_refs_hash_verified": 222,
+    "reviewer_new_models_tools_tests_resources": 0,
+    "same_sample_revision": 28,
+    "scenario_offsets_ms": [
+      0,
+      0,
+      86400000,
+      86400000
+    ],
+    "sessions": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "three_real_native_workers_local_settled_close_ACK_errors_empty": true
+  }
+}
