@@ -1,0 +1,58 @@
+{
+  "contract": "Eva2XD02OwnerExceptionAuthorization/v1",
+  "recordedAt": "2026-10-08T12:18:20.605350+00:00",
+  "source": {
+    "kind": "direct_owner_async_question_reply",
+    "questionItemId": "[\"request_user_input_async\",\"call_b0f747bce9db4095994d1fc1c3bb75cf\",0]",
+    "question": "Mag ik één nieuwe, gerichte Eva2-uitvoering doen op dezelfde XD02-opdracht die OpenClaw al afrondde? De vastgelegde proefregel stopt nu bij onbekend oud verbruik; daarvoor is één expliciete uitzondering nodig. Het oude verbruik blijft onbekend en bewaard. Alleen Eva2 draait opnieuw, met de oorspronkelijke criteria en grenzen (maximaal 72 modelpogingen inclusief helpers, 70 tools); geen nieuwe vergelijkingsmatrix. Creditkosten zijn onbekend.",
+    "answer": "ja alle proeven die nodig zijn."
+  },
+  "decision": "AUTHORIZED_EXACT_MATCHING_EVA2_XD02_EXCEPTION",
+  "scope": {
+    "participant": "eva2",
+    "caseId": "EV003-XD-02",
+    "epoch": 1,
+    "freshProspectiveExecution": true,
+    "proposal": "eva2/evidence/product/p2-eva2-xd02-followup-decision-20261008.json",
+    "proposalSha256": "e5a1255e7ab48ea69f3d378f416ef27c896b07a9ad7bceb458fedd90fdd8811a",
+    "originalCaseSha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+    "limitsIncludingHelpers": {
+      "sdkAttempts": 72,
+      "toolCalls": 70,
+      "deadlineSeconds": 840,
+      "inputTokens": 4718592,
+      "outputTokens": 86400,
+      "speechAttempts": 0
+    },
+    "contactModel": "gpt-6-sol",
+    "contactReasoning": "none",
+    "workModel": "gpt-6-astra",
+    "workReasoning": "medium"
+  },
+  "preservation": {
+    "historicalUnknownUsageRetained": true,
+    "historicalFullReservationRetained": true,
+    "closedSamplesRetained": true,
+    "oldDeadlinesNotReset": true,
+    "originalCriteriaAndProtectedInputsUnchanged": true,
+    "originalGuardSourceNotChanged": true,
+    "openclawHermesNotReplayed": true,
+    "newBroadMatrixAuthorizedByThisReceipt": false
+  },
+  "releaseConditions": [
+    "Bind current actual Eva2 source, resources, lease and complete per-attempt accounting before protected input release.",
+    "Obtain independent readiness review for the separate prospective exception authority.",
+    "Reuse the completed model-free startup proof without repeating it.",
+    "Close physical execution and publish independent result, including failure or UNKNOWN."
+  ],
+  "cost": {
+    "developmentCredits": null,
+    "providerMoneyCost": null,
+    "budgetsAreCeilingsNotPredictions": true
+  },
+  "notClaims": [
+    "Not a technical readiness or protected-input release receipt.",
+    "Not a product completion or general Eva2 superiority judgment.",
+    "No implicit authorization to replay closed comparator samples or alter fixed criteria."
+  ]
+}

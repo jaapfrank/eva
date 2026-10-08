@@ -1,0 +1,191 @@
+{
+  "candidate": {
+    "core_image": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+    "installed_sources": {
+      "/opt/eva/src/eva/adapters/connectors/mcp_gateway.py": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+      "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+      "/opt/eva/src/eva/adapters/postgres/delegated_work.py": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3",
+      "/opt/eva/src/eva/adapters/postgres/delegated_work_actions.py": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+      "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+      "/opt/eva/src/eva/adapters/postgres/runtime_resource_usage.py": "82c20f995283d78c3f8a7602d061bf1d86c6145872aa5db8834c64460c1c7312",
+      "/opt/eva/src/eva/application/memory_background.py": "7cad97c796af9002fff780cbd36ac5dde66da3f621e60589f86e863788d9d1be",
+      "/opt/eva/src/eva/application/orchestration.py": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+      "/opt/eva/src/eva/bootstrap/idle_capacity.py": "16b5ff43e033b8b55029f0c8ddb4733439f4cfbb96a5323fc73871fefcd86c14",
+      "/opt/eva/src/eva/bootstrap/runtime.py": "45af7c238bc6b623f0eb5036812649fed7b0e5991fab1640568f4988285a9252"
+    },
+    "managed_runtime_variant": "Existing installed seven-line restore-activation variant preserved; canonical repository guard unchanged.",
+    "native_gid": 65532,
+    "native_uid": 1000,
+    "readonly_identity_mounts": {
+      "/run/eva/identity/current.json": true,
+      "/run/eva/identity/trust.json": true
+    }
+  },
+  "contract": "Eva2ModelFreeStartupResult/v1",
+  "decision": "PASS_MODEL_FREE_FACTORY_LIFESPAN_HEALTH_CLOSE_ONLY",
+  "dispatch_guards": {
+    "action_seams": [
+      "PostgresConversationActions.execute",
+      "PostgresConversationActions.execute_step",
+      "PostgresExternalConversationTools.execute",
+      "PostgresDelegatedWorkActions.execute"
+    ],
+    "http_clients": [
+      "httpx2"
+    ],
+    "model_auth_mounted": false,
+    "native_socket_access": "Only the retained synthetic PostgreSQL address on5432; other connections denied before factory.",
+    "original_input": false
+  },
+  "limits": [
+    "Empty synthetic conversation/work/connector scope with ordinary autonomy/discovery, delegated and digital work, background scheduling enabled; no original task.",
+    "No static catalog, browser, two service fixtures or real Hindsight service; their future case access is not proved.",
+    "Health is the real in-process ASGI handler; no HTTP socket listener or serving-duration claim.",
+    "Docker terminal Health.Status remains unhealthy with empty Health.Log; not used as an ASGI application-health result.",
+    "No model credentials, registry reservation, original sample, deadline, release, rearm, restore operation or schema/product source change.",
+    "Existing closed samples, historical UNKNOWN and original aggregate ledgers remain untouched.",
+    "This is startup evidence only, not product autonomy/quality gain or paid-input admission. Separate owner exception remains pending."
+  ],
+  "measurement": {
+    "boundary": "Docker core State.StartedAt to State.FinishedAt, not full preparation duration",
+    "development_credit_cost": null,
+    "model_quality_tested": false,
+    "native_container_start_to_exit_seconds": 4.269807,
+    "runtime_model_calls": 0
+  },
+  "retained_preparation_failures": [
+    {
+      "cause": "Docker automatic address pools exhausted before any resource was created",
+      "corrected": "Explicit nonoverlapping internal subnet; same empty directories retained.",
+      "receipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/execution/execution-receipt.private.json",
+        "sha256": "1cad2f1ef9770313c3c7782582015c2729dc5cb438ce9231a260f1ff411a2fb0"
+      }
+    },
+    {
+      "cause": "Probe imported absent optional httpx before factory; image provides httpx2",
+      "corrected": "Required httpx2 guarded; httpx guarded only when installed. Same initialized synthetic database reused.",
+      "native": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/execution-network-corrected/native-startup-technical.private.json",
+        "sha256": "2ed9ea96fbc9faa775684e3c67db6fb14fb26003a4ac54bbc42b33fc687178b8"
+      },
+      "receipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/execution-network-corrected/execution-receipt.private.json",
+        "sha256": "100477324d0f1f76a6ab80936172e40432330c7e9c89507fd5f49c0560306be0"
+      }
+    },
+    {
+      "cause": "Probe configuration omitted required portable restore authority path for synthetic owner",
+      "corrected": "Existing empty generation0/archives[] authority format bound only to synthetic installation; readonly path supplied.",
+      "native": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/execution-probe-continuation/native-startup-technical.private.json",
+        "sha256": "cb303b4868681855ad096d3f279949a7c60dbafcea47d1730bc74ecef3365433"
+      },
+      "receipt": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/execution-probe-continuation/execution-receipt.private.json",
+        "sha256": "e8888eba4ec4ee41ceffd765e2e9845d7031ee9ed94dbc54e90e9976c3bc297d"
+      }
+    }
+  ],
+  "retention": {
+    "host_source": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/run-authority-corrected.private.py",
+      "sha256": "c4948de055b8be9d8a98de6ce01bd5d453e2cad4de2bc6837f73e981694ecafa"
+    },
+    "installed_symbol_readback": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/installed-probe-symbols.private.json",
+      "sha256": "5341a750c0aca0700fd5c1e67eddc7f18e0f5c156a7203f09972ff5fe6e1302c"
+    },
+    "latest_source_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/authority-correction-review.private.json",
+      "sha256": "da9e78c75a4b8018df9c36c612a8b90d3f957596b0fb386d078ab7540decd545"
+    },
+    "native_probe": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/probe-http-client-corrected.private.py",
+      "sha256": "9e10c843874c4b11ec5913f1cc04ca0da04e6f0d027f23563de1c01d5e3e94d5"
+    },
+    "native_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/execution-authority-corrected/native-startup-technical.private.json",
+      "sha256": "9aeff68c79331409ad7bde9498a252952de5f4f49d1cdca1a213e4539f409ee2"
+    },
+    "physical_execution_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/execution-authority-corrected/execution-receipt.private.json",
+      "sha256": "1cc05fa4d96a52f217f07b1fdb57ee759b498d0a5d064d29b49d40a91304b25e"
+    },
+    "plan": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/source-resource-plan-authority-corrected.private.json",
+      "sha256": "d7acb0840be448e4af42581eb8e8657d59550a16562f198020d19f74902d836a"
+    },
+    "resource_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/resource-admission-authority-corrected.private.json",
+      "sha256": "ac55bc3041e98892bd42883165860723a426f5482c2ae369eeb59ee5c5ed006f"
+    },
+    "source_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/source-review.private.json",
+      "sha256": "1d9d7b38c0aa297fa91f29afa7fe2d07bc318d14c83ef7c21d55e31967ca7737"
+    },
+    "synthetic_empty_authority": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-model-free-startup-20261008-v1/empty-restore-authority.private.json",
+      "sha256": "f0672a468b02265c98ad7acf78233057c4c8fc55d7ec5b7f2cfe67f6b3fd22d1"
+    }
+  },
+  "verified": {
+    "actual_lifespan_closed": true,
+    "actual_lifespan_entered": true,
+    "background_after_close": {
+      "last_error": null,
+      "service_thread_alive": false,
+      "thread_alive": false
+    },
+    "background_during_lifespan": {
+      "service_thread_alive": true,
+      "thread_alive": true
+    },
+    "core_exit_code": 0,
+    "health": {
+      "method": "GET",
+      "path": "/healthz",
+      "status": 200,
+      "transport": "actual_ASGI_handler_in_process_no_socket_listener"
+    },
+    "model_roles_configured_not_called": {
+      "contact": [
+        "gpt-6-sol",
+        "none"
+      ],
+      "work": [
+        "gpt-6-astra",
+        "medium"
+      ]
+    },
+    "native_cleanup_errors": [],
+    "network_remove_code": 0,
+    "ordinary_factory_returned": true,
+    "physical_all_own_resources_absent": true,
+    "physical_cleanup": [
+      {
+        "exit_code": 0,
+        "id": "89cbd95ab04c19cbb7a00f43a3363599fc8ed964326180a16fd523c477177c84",
+        "name": "eva2-startup-f997805e7248-core",
+        "remove_code": 0,
+        "running": false
+      },
+      {
+        "exit_code": 0,
+        "id": "fec737bb758f56fd09a44553ede21b503ceb2ac995af10213ac37967f7861303",
+        "name": "eva2-startup-f997805e7248-db",
+        "remove_code": 0,
+        "running": false
+      }
+    ],
+    "retained_runtime_files_unchanged": true,
+    "same_synthetic_database_reinitialized": false
+  },
+  "zero_dispatch": {
+    "action_attempts": 0,
+    "blocked_network_attempts": 0,
+    "other_http_attempts": 0,
+    "provider_http_attempts": 0,
+    "subprocess_attempts": 0
+  }
+}

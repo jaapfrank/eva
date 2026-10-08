@@ -1,0 +1,105 @@
+{
+  "bindings": {
+    "authority_delta_review_sha256": "da9e78c75a4b8018df9c36c612a8b90d3f957596b0fb386d078ab7540decd545",
+    "core_image": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+    "historical_identity_loader_only_sha256": "e31266523b60acd09692acd541b3f14f78e4053ba397bcbf4f225ab21a329425",
+    "host_source_sha256": "c4948de055b8be9d8a98de6ce01bd5d453e2cad4de2bc6837f73e981694ecafa",
+    "installed_source_hashes": {
+      "/opt/eva/src/eva/adapters/connectors/mcp_gateway.py": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+      "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "e4506ed44dd14ec5dd9786253894774519780a80b573f857cc8b4aa5831ac978",
+      "/opt/eva/src/eva/adapters/postgres/delegated_work.py": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3",
+      "/opt/eva/src/eva/adapters/postgres/delegated_work_actions.py": "5683c02cee1590ed81fb430b5cf8db47dd0a3fb9c6972fef350021a9413ef844",
+      "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "18056cc357af1418eebb6545813d1ef6111d64c99af154f818b4202e6622a5c3",
+      "/opt/eva/src/eva/adapters/postgres/runtime_resource_usage.py": "82c20f995283d78c3f8a7602d061bf1d86c6145872aa5db8834c64460c1c7312",
+      "/opt/eva/src/eva/application/memory_background.py": "7cad97c796af9002fff780cbd36ac5dde66da3f621e60589f86e863788d9d1be",
+      "/opt/eva/src/eva/application/orchestration.py": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+      "/opt/eva/src/eva/bootstrap/idle_capacity.py": "16b5ff43e033b8b55029f0c8ddb4733439f4cfbb96a5323fc73871fefcd86c14",
+      "/opt/eva/src/eva/bootstrap/runtime.py": "45af7c238bc6b623f0eb5036812649fed7b0e5991fab1640568f4988285a9252"
+    },
+    "native_terminal_sha256": "9aeff68c79331409ad7bde9498a252952de5f4f49d1cdca1a213e4539f409ee2",
+    "physical_execution_sha256": "1cc05fa4d96a52f217f07b1fdb57ee759b498d0a5d064d29b49d40a91304b25e",
+    "probe_source_sha256": "9e10c843874c4b11ec5913f1cc04ca0da04e6f0d027f23563de1c01d5e3e94d5",
+    "public_result_sha256": "a6ff23a3e8cba412fafc07f7f6d941c94a23e6aec27119d51ba19a220b3e6aeb",
+    "resource_admission_sha256": "ac55bc3041e98892bd42883165860723a426f5482c2ae369eeb59ee5c5ed006f",
+    "source_plan_sha256": "d7acb0840be448e4af42581eb8e8657d59550a16562f198020d19f74902d836a",
+    "source_review_sha256": "1d9d7b38c0aa297fa91f29afa7fe2d07bc318d14c83ef7c21d55e31967ca7737"
+  },
+  "confirmed": {
+    "actual_create_runtime_app_returned": true,
+    "actual_lifespan_entered_and_closed": true,
+    "all_own_physical_resources_absent": true,
+    "asgi_health_scope": "Real in-process GET /healthz handler; no socket listener.",
+    "asgi_health_status": 200,
+    "background_last_error": null,
+    "background_threads_alive_during_lifespan": true,
+    "background_threads_stopped_after_close": true,
+    "configured_contact": [
+      "gpt-6-sol",
+      "none"
+    ],
+    "configured_work": [
+      "gpt-6-astra",
+      "medium"
+    ],
+    "container_remove_codes": [
+      0,
+      0
+    ],
+    "core_and_database_exit_codes": [
+      0,
+      0
+    ],
+    "dispatch_counts": {
+      "action_attempts": 0,
+      "blocked_network_attempts": 0,
+      "other_http_attempts": 0,
+      "provider_http_attempts": 0,
+      "subprocess_attempts": 0
+    },
+    "identity_bytes_preserved_readonly": true,
+    "native_cleanup_errors": [],
+    "native_gid": 65532,
+    "native_uid": 1000,
+    "network_remove_code": 0,
+    "original_input_registry_and_deadline_touched": false,
+    "outer_budget_scope_ids_bound_to_same_synthetic_scope": true,
+    "provider_auth_mounted": false,
+    "retained_runtime_files_unchanged": true,
+    "same_synthetic_database_reinitialized": false
+  },
+  "contract": "Eva2IndependentModelFreeStartupReview/v1",
+  "decision": "GO_TECHNICAL_STARTUP_AND_PUBLICATION_ONLY",
+  "development_credit_cost": null,
+  "execution_admission": "NOT_GRANTED",
+  "findings": [],
+  "limits": [
+    "Evidence covers the installed guarded factory/lifespan/health/close composition with empty synthetic task and connector scope. Delegated/digital/background composition remained enabled.",
+    "Catalog, browser, real Hindsight and the two XD services were not exercised; no ordinary model answer, task completion or provider entitlement is proved.",
+    "Terminal Docker Health.Status was unhealthy with an empty Health.Log. Only the actual ASGI handler result and explicit lifecycle/physical closure are approved.",
+    "The existing installed managed runtime variant was preserved; no repository guard or product source was changed.",
+    "The empty generation-zero restore authority belongs only to the synthetic installation; no restore/archive/erase operation or original aggregate authority was used.",
+    "Historical identity-loader evidence, closed samples and UNKNOWN remain preserved. This review grants no paid XD02 exception, sample reservation, input release or replay.",
+    "Separate exact owner decision and current case-specific accounting/resource/input binding remain required before a paid original sample. P2.1 and human acceptance remain open."
+  ],
+  "new_model_or_original_input_admitted": false,
+  "product_quality_gain_claimed": false,
+  "retained_preparation_failures": [
+    {
+      "cause": "automatic_network_pool_exhausted_before_resources",
+      "correction_review_sha256": "3660b2f956129ac23f7b3a485d05810046279aa0e438c19b4bc75b82e410610b",
+      "receipt_sha256": "1cad2f1ef9770313c3c7782582015c2729dc5cb438ce9231a260f1ff411a2fb0"
+    },
+    {
+      "cause": "optional_httpx_import_missing_before_factory",
+      "correction_review_sha256": "47c01b4e679326e0f1a0486d3744e4391926d8b2cb2a4befc65427d6f1564396",
+      "receipt_sha256": "100477324d0f1f76a6ab80936172e40432330c7e9c89507fd5f49c0560306be0"
+    },
+    {
+      "cause": "required_synthetic_restore_authority_path_missing",
+      "correction_review_sha256": "da9e78c75a4b8018df9c36c612a8b90d3f957596b0fb386d078ab7540decd545",
+      "receipt_sha256": "e8888eba4ec4ee41ceffd765e2e9845d7031ee9ed94dbc54e90e9976c3bc297d"
+    }
+  ],
+  "review_basis": "Read-only source-delta and retained terminal-artifact review; no reviewer execution, model call or protected case access.",
+  "reviewed_at": "2026-10-08"
+}

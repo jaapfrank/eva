@@ -1,6 +1,29 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Uitvoeringsstatus 8 oktober — matching Eva2-besluit nog niet ontvangen
+## Actueel 8 oktober — matching Eva2-XD02 toegestaan, opstart bewezen
+
+Jaap heeft de gerichte vraag beantwoord met: “ja alle proeven die nodig zijn.”
+De concrete vervolgstap blijft één huidige Eva2-uitvoering op dezelfde oorspronkelijke
+XD02 als het behouden OpenClaw/Hermes-resultaat. Geen nieuwe matrix of comparatorherhaling.
+De oorspronkelijke criteria, modelrollen en grenzen inclusief helpers blijven gelden;
+oude UNKNOWN, volledige reserveringen, gesloten proeven en deadlines blijven bewaard.
+Zie `eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json`.
+
+De volledige normale Eva2-factory/lifespan is inmiddels in een lege synthetische
+scope daadwerkelijk gestart en afgesloten: ASGI-health200, twee draaiende en
+netjes gestopte achtergrondthreads, nul model-/actieaanroepen. Onafhankelijke
+technische publicatie-GO; geen bewijs van XD02-diensten, antwoordkwaliteit of een
+nieuwe gezinsfunctie. Drie voorbereidingsfouten blijven zichtbaar. De succesvolle
+opstart wordt niet herhaald. Bewijs: `eva2/evidence/product/p2-eva2-model-free-startup-20261008.json`;
+review: `eva2/reviews/p2-eva2-model-free-startup-review-20261008.json`.
+
+Nu de exacte actuele bron-, resource-, lease- en accountingbinding afronden en
+één toegestane native Eva2-XD02 uitvoeren, onafhankelijk beoordelen, sluiten en
+publiceren. Geen nieuwe eigenaarvraag binnen dit concrete mandaat. P2.1 blijft
+open tot het echte resultaat; menselijke beoordeling blijft apart. L3.4–L3.7,
+39/48 bestaande taakafrondingen en geparkeerde spraak blijven behouden.
+
+## Historische momentopname vóór akkoord — matching Eva2-besluit nog niet ontvangen
 
 De oorspronkelijke CM04-usage is niet reconcilieerbaar met bewaard bewijs.
 Volledige reservation blijft afgeschreven; de oorspronkelijke participantbrede
