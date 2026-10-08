@@ -1,0 +1,66 @@
+{
+  "contract": "Eva2XD02OwnerNecessaryFollowupAuthorization/v1",
+  "recordedAt": "2026-10-08T13:31:50.383224+00:00",
+  "source": {
+    "kind": "direct_owner_async_question_reply",
+    "questionItemId": "[\"request_user_input_async\",\"call_b0f747bce9db4095994d1fc1c3bb75cf\",0]",
+    "question": "Mag ik één nieuwe, gerichte Eva2-uitvoering doen op dezelfde XD02-opdracht die OpenClaw al afrondde? De vastgelegde proefregel stopt nu bij onbekend oud verbruik; daarvoor is één expliciete uitzondering nodig. Het oude verbruik blijft onbekend en bewaard. Alleen Eva2 draait opnieuw, met de oorspronkelijke criteria en grenzen (maximaal 72 modelpogingen inclusief helpers, 70 tools); geen nieuwe vergelijkingsmatrix. Creditkosten zijn onbekend.",
+    "answer": "ja alle proeven die nodig zijn."
+  },
+  "decision": "AUTHORIZED_ONE_NECESSARY_FRESH_MATCHING_EVA2_XD02_FOLLOWUP",
+  "scope": {
+    "participant": "eva2",
+    "caseId": "EV003-XD-02",
+    "epoch": 1,
+    "freshProspectiveExecution": true,
+    "proposal": "eva2/evidence/product/p2-eva2-xd02-followup-decision-20261008.json",
+    "proposalSha256": "e5a1255e7ab48ea69f3d378f416ef27c896b07a9ad7bceb458fedd90fdd8811a",
+    "originalCaseSha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+    "limitsIncludingHelpers": {
+      "sdkAttempts": 72,
+      "toolCalls": 70,
+      "deadlineSeconds": 840,
+      "inputTokens": 4718592,
+      "outputTokens": 86400,
+      "speechAttempts": 0
+    },
+    "contactModel": "gpt-6-sol",
+    "contactReasoning": "none",
+    "workModel": "gpt-6-astra",
+    "workReasoning": "medium",
+    "sampleId": "eva2:EV003-XD-02:epoch1:owner-followup2",
+    "episodeId": "eva2:EV003-XD-02:epoch1:owner-followup2",
+    "maximumNewSamples": 1,
+    "priorEpisodeClosed": true,
+    "reason": "Earlier matching episode ended before original input because of evaluator mount failures; actual three-worker startup now independently passed. This is one necessary new matching execution under the same owner answer, not a rearm or comparator replay.",
+    "nativeStartupEvidence": "eva2/evidence/product/p2-eva2-native-workers-model-free-20261008.json",
+    "nativeStartupEvidenceSha256": "73e56d937dc74e55d630e1188a978d4882529857140bfa92dc5f8bb086991fb9",
+    "nativeStartupReviewSha256": "6edb6d729fac48daad1ff3a28d88613f3296c8dfea14e36c77ca0c8666658816"
+  },
+  "preservation": {
+    "historicalUnknownUsageRetained": true,
+    "historicalFullReservationRetained": true,
+    "closedSamplesRetained": true,
+    "oldDeadlinesNotReset": true,
+    "originalCriteriaAndProtectedInputsUnchanged": true,
+    "originalGuardSourceNotChanged": true,
+    "openclawHermesNotReplayed": true,
+    "newBroadMatrixAuthorizedByThisReceipt": false
+  },
+  "releaseConditions": [
+    "Bind the separate fresh episode, copied complete historical ledger, current source/resources/lease and same original case/roles/ceilings independently before boot.",
+    "The original840-second clock starts before native boot, continues through actual three-worker readiness and protected-input gate, and is never reset.",
+    "Physical provider tunnel, parent SDK begin and action admission remain blocked until the independently bound original-input release.",
+    "Close execution and retain/publish all actual results, usage, failures, UNKNOWN and earlier evidence."
+  ],
+  "cost": {
+    "developmentCredits": null,
+    "providerMoneyCost": null,
+    "budgetsAreCeilingsNotPredictions": true
+  },
+  "notClaims": [
+    "Not a technical readiness or protected-input release receipt.",
+    "Not a product completion or general Eva2 superiority judgment.",
+    "No implicit authorization to replay closed comparator samples or alter fixed criteria."
+  ]
+}

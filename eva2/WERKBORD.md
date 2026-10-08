@@ -1,29 +1,33 @@
-## Actueel vervolg 8 oktober — echte native opstart, daarna geldige Eva2-uitkomst
+## Actueel vervolg 8 oktober — native aansluiting bewezen, één matching Eva2-uitkomst
 
-De gerichte matching Eva2-XD02 is gesloten zonder oorspronkelijke invoer of
-modelantwoord: evaluator-mounts van capturecode en frozen benchmarkmodules
-weigerden nativeUID1000. Uitkomst UNKNOWN, geen productverlies of kwaliteitsscore.
-De eerdere leestoegangscontrole bond ten onrechte de canonical bronmap; die
-bewijsgrens is expliciet gecorrigeerd. De normale lege factoryproef blijft geldig
-voor haar beperkte scope. Oude klok, reserveringen, gegevens en UNKNOWN blijven;
-geen verdere uitvoering van deze gesloten episode.
+De drie daadwerkelijke nativewerkers zijn modelvrij geslaagd: kern/geheugen/
+taakwerker antwoorden HTTP200; echte UID1000:65532 en gebruikte mounts zijn
+teruggelezen; foutenlijsten leeg, verzoeken/IPC/achtergrondthreads afgesloten.
+Nul provider-/actie-dispatch; vier eigen containers en netwerk weg. De onafhankelijke
+GO geldt uitsluitend deze technische gereedheid met lege synthetische scope.
+Drie eigen voorbereidingsfouten blijven bewaard: bytecode-cachetoegang,
+namespace/afsluitvolgorde en selectie van de reeds bestaande databaserol.
+Geen oorspronkelijke XD02-opdracht, nieuwe functie of kwaliteitsoordeel bewezen.
 
-Bewijs: `eva2/evidence/product/p2-eva2-xd02-owner-exception-result-20261008.json`.
-Review: `eva2/reviews/p2-eva2-xd02-owner-exception-final-review-20261008.json`.
-Nul geregistreerde SDK-pogingen/tools; compleet eindverbruik ontbreekt, tokens
-NULL. Ontwikkelcredits onbekend. Geen extra gezinsfunctie of taakafronding.
+Bewijs: `eva2/evidence/product/p2-eva2-native-workers-model-free-20261008.json`.
+Review: `eva2/reviews/p2-eva2-native-workers-model-free-final-review-20261008.json`.
+Het eerdere matching UNKNOWN blijft gesloten met onvolledig/NULL eindverbruik;
+oude registraties, reserveringen en deadline worden niet gewijzigd. Ontwikkelcredits
+blijven onbekend. Geen legefactory- of drie-workerproef opnieuw uitvoeren.
 
-Ga binnen Jaaps antwoord “ja alle proeven die nodig zijn” door met de concrete
-technische afhankelijkheid: dezelfde drie daadwerkelijke nativewerkers modelvrij
-starten, health/control en afsluiting aantonen met de exact gebruikte frozen
-mounts en geblokkeerde fysieke provider-/actie-dispatch. Geen oorspronkelijke
-invoer of oude ledger/deadline gebruiken; geen tweede platform of legefactoryproef
-herhalen. Verifieer daadwerkelijke mountpaden onder de echte UID, niet een andere
-bronmap. Daarna één afzonderlijk concreet gebonden matching Eva2-vervolg voorbereiden
-met oorspronkelijke criteria/rollen/grenzen en gescheiden onafhankelijke beoordeling;
-geen oude timer/reset, comparatorherhaling of nieuwe matrix. Eerst werkelijke
-nativegereedheid aantonen, dan pas betaalde taakinput. P2.1 blijft open, Codex
-herstelt eigen programmeerfouten. Geen handeling van Jaap nodig voor deze correctie.
+Ga binnen Jaaps directe antwoord “ja alle proeven die nodig zijn” verder met één
+noodzakelijke, afzonderlijk gebonden matching Eva2-XD02-episode. Toestemmingsbinding:
+`eva2/evidence/product/p2-eva2-xd02-necessary-followup-authorization-20261008.json`.
+Hergebruik dezelfde beschermde opdracht/criteria/rollen en oorspronkelijke grenzen
+inclusief helpers:72SDK/70tools/840seconden. Bytecopy van alle28 oude registraties;
+nieuw episode-ID, geen oude rij heropenen of timer resetten. Geen OpenClaw/Hermes-
+herhaling of brede matrix. Bron/resource/admission vooraf onafhankelijk binden.
+De oorspronkelijke klok begint vóór nativeboot en loopt tijdens gereedheid door;
+alle drie werkers plus exacte tweedienstscope/mounts vóór oorspronkelijke invoer
+controleren. Fysiek modeltransport, parentSDK en acties blijven tot de aparte
+invoertoelating geblokkeerd. Lever daarna echte uitkomst inclusief verliezen,
+verbruik en UNKNOWN eerlijk op. P2.1 blijft open; geen eigenaarhandeling voor
+eigen programmeerfouten. L3.4–L3.7 blijven afgerond; spraak blijft geparkeerd.
 
 ## Historische momentopname vóór nativeproef — matching Eva2-XD02 toegestaan, legeopstart bewezen
 
