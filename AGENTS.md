@@ -19,15 +19,23 @@ of rearm van het vervolg; alle eigen resources/wachtende parent afgesloten.
 Bewijs: `eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json`.
 Review: `eva2/reviews/p2-eva2-xd02-necessary-followup-final-review-20261008.json`.
 
-Maak nu alleen deze noodzakelijke P2.1-afhankelijkheid af: een werkelijk uitgevoerde
-modelvrije before/result/close-readercontrole op publieke synthetische scope, en
-dezelfde bestaande native-ready/inputgate vooraf onafhankelijk toetsen/binden.
-Geen provider-/actieaanroep, afgeschermde proefdata of nieuwe betaalde episode in
-deze technische reparatie. Gebruik bewezen startup/afsluiting; geen legefactory-
-of drie-workerherhaling. Reviewvoorwaarden vóór een eventuele toekomstige originele
-klok afhandelen; criteria, rollen, grenzen en eenmalige vrijgave behouden.
-Daarna één noodzakelijk matching vervolg afzonderlijk concreet aan bestaand mandaat
-binden; geen oude episode/timer resetten, OpenClaw/Hermes herhalen of brede matrix.
+De noodzakelijke technische afhankelijkheid is nu uitgevoerd en onafhankelijk
+gecontroleerd:27 canonical readercontroles en21 vrijgavecontroles slagen. Werkelijke
+before/result/close, bestaande rol/scope/READ ONLY, positieve en onvolledige resultaten,
+gegevensgelijkheid en dispose gecontroleerd;116 SQLstatements, nul model-/actiecalls.
+Twee voorbereidingsfouten behouden; eigen resources gesloten, oude authority bytegelijk.
+Bewijs: `eva2/evidence/product/p2-eva2-complete-reader-proof-20261008.json`.
+Review: `eva2/reviews/p2-eva2-complete-reader-final-review-20261008.json`.
+
+Hergebruik dit bewijs; geen legefactory-/native3-/readerherhaling. Het parenttemplate
+met baseline vóór vrijgave, exact behouden body/clock-ACK en gecontroleerde worker-
+instanties is als bron beoordeeld. Bind nu één noodzakelijk nieuw matching Eva2-XD02-
+vervolg vooraf concreet aan bestaand mandaat: dezelfde oorspronkelijke criteria,
+rollen/grenzen inclusief72SDK/70tools/840seconden, alle29oude authorityrijen en
+fullreserves behouden. Bron/resource/policyreview vóór de originele klok; dezelfde
+vooraf beoordeelde eenmalige gate controleert actuele gereedheid zonder chatwachttijd.
+Geen gesloten episode/timer resetten, comparatorherhaling of brede matrix. Deze
+technische GO is nog geen uitvoer-/kwaliteitsoordeel over de oorspronkelijke taak.
 P2.1 blijft open. 39/48 taakafrondingen, menselijke beoordeling en geparkeerde spraak
 blijven onveranderd; technische reparatie is geen extra huisgenootfunctie.
 

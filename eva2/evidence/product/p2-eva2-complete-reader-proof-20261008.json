@@ -1,0 +1,110 @@
+{
+  "contract": "CompleteEvaluatorReaderAndProgrammedGatePublicProof/v1",
+  "decision": "PASS_PUBLIC_SYNTHETIC_READER_AND_GATE_CHECKS_ONLY",
+  "scope": {
+    "canonical_before_result_closure_reader": true,
+    "same_installed_core_image": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+    "uid": 1000,
+    "gid": 65532,
+    "synthetic_data_only": true,
+    "canonical_reader_unchanged": true,
+    "native_three_worker_startup_repeated": false,
+    "original_task_input_used": false,
+    "original_sample_or_clock_created": false,
+    "future_paid_input_admitted": false
+  },
+  "evidence": {
+    "execution_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-complete-reader-proof-20261008-v1/execution-path-corrected-receipt.private.json",
+      "sha256": "2f53952550f8c6ba70151a60c3c0fd49c260040978b9cd2bcdc5464119a6b76f"
+    },
+    "reader_result": {
+      "path": "/tmp/eva2-public-reader-proof-20261008-v1/output-path-corrected/reader-result.json",
+      "sha256": "fa06c27743baf9ab17864f03ba4fd47dd19b3db3ba29383b98484a407d03a92a"
+    },
+    "gate_checks": {
+      "path": "/tmp/eva2-public-reader-proof-20261008-v1/output-import-corrected/gate-checks.json",
+      "sha256": "83fa8a9cbe08858990ce08e368ddf68745acc0d24208e5f103f6d14af94d94ed"
+    },
+    "retention": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-eva2-complete-reader-proof-20261008-v1/retention.private.json",
+      "sha256": "7655e47e79459f752250793f0093a671a4ef7aa5631f2bce5b422673c948fd57"
+    }
+  },
+  "reader": {
+    "checks_passed": 27,
+    "checks_failed": 0,
+    "ordinary_role": "eva_runtime",
+    "tenant_installation_guc_verified": true,
+    "read_only_and_pool_rollback_verified": true,
+    "positive_reply_document_fact_operation_binding": true,
+    "incomplete_failed_other_person_wrong_scope_rejected": true,
+    "read_queries_preserved_data": true,
+    "closure_after_dispose_reopen_identical": true,
+    "reader_engines_disposed": true,
+    "reader_statement_count": 116,
+    "actual_imports": {
+      "eva.adapters.postgres.operational_timeline": {
+        "path": "/opt/eva/src/eva/adapters/postgres/operational_timeline.py",
+        "sha256": "192a91439d861824bcae40c5b1c6ecb1a77a52154e0240d10fd79111b4e5473c"
+      },
+      "cp001_native": {
+        "path": "/fixture/eva2/benchmark/inspect_ai_v1/cp001_native.py",
+        "sha256": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78"
+      },
+      "evaluator_reader": {
+        "path": "/proof/evaluator_reader.py",
+        "sha256": "9073a1f965826e3c88a0234afef149842d69557373e2c0a1f898cc98a8a297d1"
+      }
+    }
+  },
+  "programmed_gate": {
+    "checks_passed": 21,
+    "checks_failed": 0,
+    "checks_reused_without_repeat": true,
+    "actual_original_release": false,
+    "exact_instance_pid_starttime_namespace_mount_binding": true,
+    "false_missing_stale_incomplete_dispatch_clock_and_history_refusal_checked": true,
+    "immutable_static_input_envelope_excludes_only_occurred_at": true,
+    "actual_full_body_and_clock_ack_remain_separately_bound_by_parent": true,
+    "future_concrete_parent_policy_review_required": true,
+    "source_sha256": "8cea792b043e5d6c1097a40c488137735d4ae0d015a1e1dcea30a7b0493ecce3"
+  },
+  "observed_dispatches": {
+    "provider_http": 0,
+    "provider_sdk": 0,
+    "actions": 0,
+    "external_socket": 0
+  },
+  "physical_closure": {
+    "reader_exit": 0,
+    "reader_and_database_containers_absent": true,
+    "own_internal_network_absent": true,
+    "errors": []
+  },
+  "historical_authority": {
+    "before_sha256": "8037c232285ca25325cd42d0e3d888444b34c6c12a8b4b877c1de0e6f1433ed3",
+    "after_sha256": "8037c232285ca25325cd42d0e3d888444b34c6c12a8b4b877c1de0e6f1433ed3",
+    "unchanged": true
+  },
+  "retained_preparation_failures": [
+    {
+      "receipt_sha256": "fd3702c15d31842f11b6ec2a6e14cf2069079d19ede2333402169f6678d4a53d",
+      "cause": "Host-only SQLite import was initially evaluated inside minimal core image before gate checks or reader SQL; import moved into host authority function.",
+      "all_own_resources_closed": true
+    },
+    {
+      "receipt_sha256": "10514a0f237b86e5180d792a157403a30a6a7714e8e1af43a0e28cbe4166bfc0",
+      "cause": "Proof initially used a shallower module mount than canonical ROOT expects; restored exact ordinary /fixture/eva2/benchmark/inspect_ai_v1 path before reader SQL.",
+      "gate_checks_passed_and_retained": 21,
+      "all_own_resources_closed": true
+    }
+  ],
+  "limits": [
+    "Synthetic reader fixture rows prove evaluator read logic, not native memory formation or model task quality.",
+    "This evidence does not authorize a fresh original comparison, alter a closed episode, or reset its deadline.",
+    "The parent template and exact future immutable policy require independent source binding before any new original boot."
+  ],
+  "development_credit_cost": null,
+  "model_test_budget": 0
+}

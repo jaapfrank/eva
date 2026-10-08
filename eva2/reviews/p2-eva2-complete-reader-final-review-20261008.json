@@ -1,0 +1,62 @@
+{
+  "contract": "IndependentCompleteEva2EvaluatorReaderAndGateReview/v1",
+  "decision": "GO_TECHNICAL_READER_REPAIR_GATE_SOURCE_AND_SANITIZED_PUBLICATION",
+  "executionReceiptSha256": "2f53952550f8c6ba70151a60c3c0fd49c260040978b9cd2bcdc5464119a6b76f",
+  "gateChecksSha256": "83fa8a9cbe08858990ce08e368ddf68745acc0d24208e5f103f6d14af94d94ed",
+  "newSampleClockAuthorityOrCriteriaChange": false,
+  "originalOrPaidExecutionAdmitted": false,
+  "readerResultSha256": "fa06c27743baf9ab17864f03ba4fd47dd19b3db3ba29383b98484a407d03a92a",
+  "retainedPreparationFailures": [
+    "Host-only SQLite import inside minimal core proof image; corrected without installing dependencies.",
+    "Shallow proof module mount; restored ordinary canonical mount before SQL."
+  ],
+  "retentionReferencesVerified": 31,
+  "retentionSha256": "7655e47e79459f752250793f0093a671a4ef7aa5631f2bce5b422673c948fd57",
+  "reviewedPublicExportSha256": "d3374924e76d4b2dfba6eed39d5b770bce2faef9a8c3c7aff594fff0ebc2cde1",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "scopeLimits": [
+    "This is repair of the P2.1 evaluator route, not an AIDE test or product intelligence gain.",
+    "Canonical reader proof uses synthetic inserted rows and does not prove native model or memory formation.",
+    "Programmed gate checks are synthetic; no original input release or three-worker startup was repeated.",
+    "Parent template is source reviewed only and retains closed-v2 constants; it must not run in that closed episode.",
+    "A future concrete episode needs its own exact immutable source/resource/owner/history/caps/policy binding before the original840 clock starts; this review approves no paid case or input.",
+    "Historical UNKNOWN, expired clocks and full reservations remain unchanged."
+  ],
+  "sourceBindings": {
+    "canonicalReaderSha256": "57a1996e868887b53af445870616538d51c0b92bdf2ce20dacdbfb5d3db7fc78",
+    "gateSha256": "8cea792b043e5d6c1097a40c488137735d4ae0d015a1e1dcea30a7b0493ecce3",
+    "nativeReadcheckSha256": "dc243efaaceb75ce335994f28878b256a78ef4797a020319c21165de2a8b2cfe",
+    "parentProposalSha256": "8e90c102f2a7a440c31f444f3d84f98d97e6a014e1de90256af8f9e2a285e16b",
+    "parentTemplateSha256": "417c0a9d1eef7a2e78d15227b560a0f1315dfdefc5862f133afaf646db1adc5c",
+    "readerWrapperSha256": "9073a1f965826e3c88a0234afef149842d69557373e2c0a1f898cc98a8a297d1"
+  },
+  "sourceReview": {
+    "baselineReadBeforeInputEvent": true,
+    "exactLiveContainerPIDStartNamespaceAndMountDigest": true,
+    "finiteClockAndStrictZeroCounters": true,
+    "fullBodyAndClockACKRetainedBeforeGate": true,
+    "originalClosedParentUnchanged": true,
+    "originalOneTimeReleaseConsumptionPreserved": true,
+    "readcheckSameProcessBeforeExec": true,
+    "sameFullBodyHashAssertedImmediatelyBeforeHTTP": true,
+    "staticEnvelopeExcludesOnlyTopLevelOccurredAt": true,
+    "templateExecuted": false,
+    "workerInstanceFindingClosed": true
+  },
+  "terminalIndexSha256": "a15ac6519df66f7349eed70989cdd49134052abbb8b2c65572767b75af10e9ea",
+  "verifiedProof": {
+    "closedAuthorityByteUnchanged": true,
+    "gateSyntheticChecks": 21,
+    "installedCoreImage": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+    "nativeGID": 65532,
+    "nativeUID": 1000,
+    "ordinaryRoleAndTenantInstallationScope": true,
+    "ownedReaderDatabaseAndNetworkClosed": true,
+    "positiveBeforeResultClosure": true,
+    "providerSDKHTTPActionsExternalSocket": 0,
+    "publicSyntheticOnly": true,
+    "readOnlyPoolRollbackDataEqualityAndDispose": true,
+    "readerChecks": 27,
+    "readerStatements": 116
+  }
+}
