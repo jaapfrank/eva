@@ -1,0 +1,110 @@
+{
+  "contract": "IndependentOriginalXd02SourceResourceReviewPublic/v1",
+  "date": "2026-10-08",
+  "decision": "GO_RESOURCE_PREPARATION_ONLY",
+  "scope": {
+    "case_id": "EV003-XD-02",
+    "epoch": 1,
+    "participants": [
+      "openclaw",
+      "hermes"
+    ],
+    "concurrency": 1,
+    "execution_order": [
+      "openclaw",
+      "hermes"
+    ]
+  },
+  "reviewed_index_sha256": "e27167667100c11d1665089b530d335c0eb4373f760f5b05e52794e6807b4f56",
+  "independent_private_review_sha256": "aa97c0bac8ae4cc976549d8e9c62fcd943f1dae2d710fac361b029ba7724e214",
+  "sources": {
+    "openclaw_observer": "bbd000673722bfcfe2aad9a9ce7435350d36724ab773efa999674adbf659c89b",
+    "openclaw_launcher": "358a0675a5c3350fcbb3755999b59941985fb2b7ccb3c128a44d02327710fc46",
+    "openclaw_native_child": "d6ca5fc7aff51732d2913591b30e13039234c1f19505501f706c0201410e6b2c",
+    "openclaw_inspect_wrapper": "6c93944f72ec9902c5b59216575e169bececf8192b793696198cd29ee4f2047d",
+    "hermes_launcher": "7c98b551a90684adfc0b8964cf93ded13229b1e66a315713e40d3d1f12379de8",
+    "hermes_native_child": "ed54f03fb3b64f7a097f6668b1e506145244909f208943bcabad52b4946e3865",
+    "hermes_tool_accounting": "5cac15dc4845082308d748ec7698aa0636926ea99ec7e610c403f873307cb647",
+    "hermes_native_scope": "332a9f23f921fbe499deedffca61b21ee5193bd556e40f898c1c1e42c39fbe76",
+    "hermes_inspect_wrapper": "425ebc9066c94e9b38e750cdf21b259a6fa2076d1cbc6f7c8307b5a7c99c75e1",
+    "cumulative_accounting_helper": "e89d02bbc8c5dd97540ef6b9844b5e2956cab321f01ba8bf4cba6e6931849ebc",
+    "shared_aggregate_accounting": "7841f6c450e1bc031662b190685ec15a4e5112b7ed3cf9183117c19197a49291"
+  },
+  "tests": {
+    "openclaw_terminal_test": "b3c3a6995afc01d1d2829d01ddea0c13baf9d8e815349084502d20811c8a53fb",
+    "openclaw_existing_parent_test": "becdac1afcaa72a19bf517ffb48cd84cbba91bebf2250e0b96def948d14e2126",
+    "openclaw_focused": {
+      "passed": 40,
+      "skipped_optional_native": 4,
+      "failed": 0
+    },
+    "openclaw_actual_pinned_relay_and_notification_entry": {
+      "passed": 1,
+      "sdk_calls": 0,
+      "rust_actor_executed": false
+    },
+    "hermes_final_delta_guard_script": "b5992c50aca7733606fa46e2b7ac8dbab75c83d04fdfa80fdb9c8dde707823ae",
+    "hermes_final_delta_guards": {
+      "passed": 8,
+      "failed": 0,
+      "native_calls": 0,
+      "provider_calls": 0
+    }
+  },
+  "proof_sha256": {
+    "openclaw_typed_native_entry": "0dfba5e694de612b09b25530ba18551647413ab72dedb9af36b890738d0c73e9",
+    "hermes_model_free_index": "a6154a8b4d7b61b921fe62d9db2f2bf67785a943dd046e8d2a3ff22a2979e51e",
+    "hermes_native_public_execution": "71fb7e23f8011c0313424da540695d03103e17459342d96009efb6469bfcf368",
+    "hermes_independent_collection_readback": "153ddcdb27f79e0db8fde5a5648c1e78624f04d129fb5898dfc41fdb157f6234",
+    "hermes_final_delta_guards": "3b289512102db4c59a02ba7468ee255748e3d58e26adf68d23d848804befd94f",
+    "openclaw_source_check": "ea34b25b60c8a87bb762176790f4c82191ae7e78b9fe852662b9e00e8bf07510",
+    "hermes_source_check": "88ac0b18aaf3425d6c8bd05c7cb02fc6c9b61aa0f9b9835dffc548228205cb94"
+  },
+  "original_limits": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "toolDispatches": 70,
+    "wallSeconds": 840,
+    "speechRequests": 0
+  },
+  "authority_preservation": {
+    "original_authority_sha256": "7ac4b5cb16fcde549216ce641a7c310c37977d3edda62f947f8a33a34042ac74",
+    "original_rows": 23,
+    "historical_unknown_attempts": 3,
+    "operation": "Byte-preserving original metadata/row copy followed by existing seed_history for independently complete closed OpenClaw XD01 usage.",
+    "closed_openclaw_xd01": {
+      "provider_attempts": 6,
+      "input_tokens": 192031,
+      "output_tokens": 388,
+      "full_original_sample_envelope_retained": true,
+      "original_quality": "UNKNOWN"
+    },
+    "reset": false,
+    "donation": false,
+    "new_guard_exception": false,
+    "extra_participants": false
+  },
+  "findings_closed": [
+    "Hermes dedup applies only to the same active call, exact IDs and pinned native aliases; copied settled context and changed names remain guarded.",
+    "Hermes original plan key and native boolean settlement reporting match the actual resource and tool contracts.",
+    "OpenClaw MCP completion requires typed raw JSON arguments and immutable started/pre/completed call, thread, turn, server and tool correlation; completion alone never grants dispatch.",
+    "Genuine model-free Hermes terminal/deferred process management reached both public fixtures, with six HTTP requests, one journal-verified effect and physical closure."
+  ],
+  "limitations": [
+    "Hermes positive native proof executed staged ffd61dc26ba641ea59b320e2f0c63b5727fcdbaeb1ca9978b06164a3e3d73ee5; final 5cac active/identity/alias delta has separate focused guard evidence.",
+    "No original input, deadline, model/provider dispatch or quality admission is granted here. Actual retained-parent readiness and separate input review follow.",
+    "Hermes input follows OpenClaw terminal physical closure with current cumulative authority binding.",
+    "No historical MCP argument-equality, full Rust actor execution, model superiority or human rating is inferred from public fixture proof."
+  ],
+  "reviewer": {
+    "read_only": true,
+    "tests_run": 0,
+    "native_runs": 0,
+    "provider_calls": 0,
+    "sealed_input_decoding": false
+  },
+  "original_input_admitted": false,
+  "quality_decision": "NOT_ASSESSED",
+  "material_open_findings": []
+}

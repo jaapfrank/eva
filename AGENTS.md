@@ -1,5 +1,18 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Uitvoering 8 oktober — oorspronkelijke XD02-ronde afgerond
+
+De ene OpenClaw/Hermes-XD02 is uitgevoerd, fysiek gesloten en onafhankelijk
+gecontroleerd. Vaste voorwaarden3/3 en readbacks2/2 bij OpenClaw;1/3 en1/2 bij
+Hermes. Geldige gewone Hermes-brontoegang/context bevestigd.24complete aanvragen,
+632.235tokens. Menselijke kwaliteit/algemenevoorsprong onbekend; minder verbruik
+bij Hermes-niet-afronding is geen efficiëntiewinst. Zie
+`eva2/evidence/product/p2-xd02-openclaw-hermes-result-20261008.json` en de finale review.
+P2.1 blijft open; matching Eva2 en echte menselijke beoordelingen ontbreken.
+Historische UNKNOWN en gesloten proeven blijven; geen volgende modelrun automatisch
+toegelaten. L3.4–L3.7 en acceptaties behouden; spraak geparkeerd. Dit is een
+vergelijkingsresultaat, geen extra afgeronde huisgenootfunctie.
+
 ## Eigenaarvoortzetting 8 oktober 2026 — hervat de concrete resterende uitkomst
 
 De eigenaar vraagt waar nodig het goal/projectbestanden bij te werken en vooral

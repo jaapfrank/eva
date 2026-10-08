@@ -38,13 +38,20 @@ export const NATIVE_LOOP_PINS = Object.freeze({
   'run-attempt-BHu11r7h.mjs': '1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376',
   'native-hook-relay-Bfyv8cuh.mjs': 'e58fa02170a4d63f7c2e98de8c7514ac46906fae19538b131fd6e2f2b1fedb6a',
 });
-// Exact rendering observed in the pinned native client/relay. No general dot
-// encoding rule is established by their JS source; other MCP names fail closed.
-const OBSERVED_NATIVE_MCP_RENDERINGS = Object.freeze([
-  Object.freeze({server:'codex_apps', tool:'plugin_management.search_plugins',
-    hookName:'mcp__codex_apps__plugin_management__search_plugins'}),
-]);
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+// Compare raw native JSON values without converting scalar/array inputs to objects.
+const nativeJsonDigest = value => {
+  const canonical = v => {
+    if (v === null || typeof v === 'string' || typeof v === 'boolean') return v;
+    if (typeof v === 'number' && Number.isFinite(v)) return v;
+    if (Array.isArray(v)) return v.map(canonical);
+    if (v && typeof v === 'object' && [Object.prototype, null].includes(Object.getPrototypeOf(v))) {
+      return Object.fromEntries(Object.keys(v).sort().map(key => [key, canonical(v[key])]));
+    }
+    throw new Error('raw native JSON value required');
+  };
+  return digest(canonical(value));
+};
 const monotonic = () => Number(process.hrtime.bigint()) / 1e9;
 const safeUsage = (value) => {
   const u = value?.response?.usage ?? value?.usage;
@@ -212,7 +219,7 @@ export class OpenClawAccounting {
     this.clockFile = clockFile; this.scenarioReadbacks = []; this.previousScenario = null; this.nativeCompletedResponses = new Map();
     this.privateModelContextDir = privateModelContextDir; this.observeTools = observeTools;
     this.tools = new Map(); this.clients = new Map(); this.nativeReadbacks = [];
-    this.nativeHookToolNormalizer = null;
+    this.nativeHookToolNormalizer = null; this.nativeMcpStarts = new Map();
     this.nativeModuleBindings = new Map(); this.nativeQueues = new Map();
     this.toolCoverage = true; this.nativeCoverageFailure = null; this.nativeObservationReceipts = []; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map(); this.nativeTransportExits = new Map(); this.nativeSourceAuthorities = new Map(); this.nativeScopeReceipts = new Map(); this.nativeProcessScope = nativeProcessScope;
     this.stop = () => { for (const cancel of this.active) cancel(); };
@@ -490,7 +497,30 @@ export class OpenClawAccounting {
     this.recordNativeObservation('pre_observer_entry', this.nativeIdentity(invocation, registration));
     const payload = invocation.rawPayload;
     const threadId = payload?.child_thread_id ?? payload?.session_id;
-    return this.reserveTool(invocation.toolUseId, invocation.toolName, threadId, invocation.turnId);
+    const row = this.reserveTool(invocation.toolUseId, invocation.toolName, threadId, invocation.turnId);
+    if (row) {
+      const inputHash = payload && Object.hasOwn(payload, 'tool_input') ? nativeJsonDigest(payload.tool_input) : null;
+      if (row.native_pre_observed && row.native_pre_input_sha256 !== inputHash) {
+        this.failNativeMcpCarrier('native pre input changed'); throw new Error('native pre input changed');
+      }
+      row.native_pre_observed = true; row.native_pre_input_sha256 = inputHash;
+      const started = this.nativeMcpStarts.get(invocation.toolUseId);
+      if (started && !this.matchesNativeMcpPre(row, started)) {
+        this.failNativeMcpCarrier('native MCP started/pre identity differs');
+        throw new Error('native MCP started/pre identity differs');
+      }
+    }
+    return row;
+  }
+  failNativeMcpCarrier(reason) {
+    this.toolCoverage = false;
+    this.nativeCoverageFailure ??= {item_type:'mcpToolCall', reason};
+    this.recordNativeObservation('first_coverage_stop'); this.ledger.stop(reason);
+  }
+  matchesNativeMcpPre(row, started) {
+    return !!row && row.status !== 'cancelled' && row.native_pre_observed === true
+      && row.thread_id === started.thread_id && row.turn_id_sha256 === started.turn_id_sha256
+      && row.native_pre_input_sha256 === started.arguments_sha256;
   }
   nativeToolAfter(invocation, registration) {
     if (!this.observeTools) return;
@@ -504,6 +534,11 @@ export class OpenClawAccounting {
       this.recordNativeObservation('post_without_matching_admission', this.nativeIdentity(invocation, registration));
       this.ledger.stop('native post without matching admission');
       throw new Error('native post without matching admission');
+    }
+    const started = this.nativeMcpStarts.get(invocation.toolUseId);
+    if (started && !this.matchesNativeMcpPre(row, started)) {
+      this.failNativeMcpCarrier('native MCP post/pre identity differs');
+      throw new Error('native MCP post/pre identity differs');
     }
     row.dispatched = true; row.status = 'settled'; row.settled_monotonic ??= this.now();
     this.recordNativeObservation('post_observer_settled', this.nativeIdentity(invocation, registration));
@@ -535,6 +570,28 @@ export class OpenClawAccounting {
     if (!this.observeTools) return;
     const p = notification.params; const threadId = p?.threadId ?? p?.thread?.id;
     if (typeof threadId === 'string') this.clients.get(client)?.add(threadId);
+    if (notification.method === 'item/started' && p?.item?.type === 'mcpToolCall') {
+      const item = p.item;
+      if (![item.id, item.server, item.tool, threadId, p.turnId].every(v => typeof v === 'string' && v)
+          || !Object.hasOwn(item, 'arguments')) {
+        this.failNativeMcpCarrier('native MCP started identity missing'); return;
+      }
+      let inputHash;
+      try { inputHash = nativeJsonDigest(item.arguments); }
+      catch { this.failNativeMcpCarrier('native MCP started arguments invalid'); return; }
+      const started = {thread_id:threadId, turn_id_sha256:digest(p.turnId),
+        server_sha256:digest(item.server), tool_sha256:digest(item.tool), arguments_sha256:inputHash};
+      const previous = this.nativeMcpStarts.get(item.id);
+      if (previous && digest(previous) !== digest(started)) {
+        this.failNativeMcpCarrier('native MCP started identity changed'); return;
+      }
+      this.nativeMcpStarts.set(item.id, started);
+      this.recordNativeObservation('native_mcp_started', {tool_id_sha256:digest(item.id),
+        native_thread_id_sha256:digest(threadId), ...Object.fromEntries(Object.entries(started).filter(([key]) => key !== 'thread_id'))});
+      const row = this.tools.get(item.id);
+      if (row && !this.matchesNativeMcpPre(row, started)) this.failNativeMcpCarrier('native MCP started/pre identity differs');
+      return;
+    }
     if (notification.method !== 'item/completed' || !p?.item) return;
     this.recordNativeObservation('item_completed', {tool_id_sha256:digest(p.item.id ?? null),
       native_thread_id_sha256:digest(threadId ?? null),native_turn_id_sha256:digest(p.turnId ?? null),
@@ -553,10 +610,16 @@ export class OpenClawAccounting {
       && row?.name_sha256 === digest('exec') && Number.isSafeInteger(p.item.exitCode);
     const patchTerminal = p.item.type === 'fileChange'
       && row?.name_sha256 === digest('apply_patch') && Array.isArray(p.item.changes);
-    const mcpRendering = p.item.type === 'mcpToolCall' && OBSERVED_NATIVE_MCP_RENDERINGS.find(
-      binding => binding.server === p.item.server && binding.tool === p.item.tool);
-    const mcpTerminal = mcpRendering && Object.hasOwn(p.item, 'arguments') && this.nativeHookToolNormalizer
-      && row?.name_sha256 === digest(this.nativeHookToolNormalizer(mcpRendering.hookName));
+    const mcpStarted = this.nativeMcpStarts.get(p.item.id);
+    let mcpTerminal = false;
+    if (p.item.type === 'mcpToolCall' && mcpStarted && this.matchesNativeMcpPre(row, mcpStarted)
+        && Object.hasOwn(p.item, 'arguments')) {
+      try {
+        mcpTerminal = mcpStarted.server_sha256 === digest(p.item.server)
+          && mcpStarted.tool_sha256 === digest(p.item.tool)
+          && mcpStarted.arguments_sha256 === nativeJsonDigest(p.item.arguments);
+      } catch { /* Invalid native carrier stays uncovered. */ }
+    }
     if (row && row.status !== 'cancelled' && (commandTerminal || patchTerminal || mcpTerminal)
         && row.thread_id === threadId
         && typeof threadId === 'string' && threadId
@@ -568,7 +631,7 @@ export class OpenClawAccounting {
         : patchTerminal
           ? {item_type:p.item.type, status:p.item.status, changes_sha256:digest(p.item.changes)}
           : {item_type:p.item.type, status:p.item.status, server_sha256:digest(p.item.server),
-              tool_sha256:digest(p.item.tool), arguments_sha256:digest(p.item.arguments),
+              tool_sha256:digest(p.item.tool), arguments_sha256:nativeJsonDigest(p.item.arguments),
               result_sha256:digest(p.item.result ?? null), error_sha256:digest(p.item.error ?? null)};
       if (row.native_terminal && JSON.stringify(row.native_terminal) !== JSON.stringify(terminal)) {
         this.toolCoverage = false; this.ledger.stop('native tool terminal changed'); return;

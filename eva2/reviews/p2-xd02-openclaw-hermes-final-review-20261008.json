@@ -1,0 +1,188 @@
+{
+  "contract": "OriginalXd02IndependentFinalReview/v1",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "decision": "GO_SCOPED_TECHNICAL_AND_PUBLICATION",
+  "scope": {
+    "case_id": "EV003-XD-02",
+    "epoch": 1,
+    "participants": [
+      "openclaw",
+      "hermes"
+    ],
+    "execution_order": [
+      "openclaw",
+      "hermes"
+    ],
+    "concurrency": 1,
+    "no_additional_input_admission": true
+  },
+  "reviewed_bindings": {
+    "result_sha256": "f31b9af11c215b064fda4e05931858a7fe242859b7ee12524c4a64ddf36f86bd",
+    "terminal_technical_sha256": "9e30f632fff6fc19684e0b82629da90eddc3befe301815b724144125a99a28e6",
+    "retention_manifest_sha256": "1f43ccda2485d4255f1a78f1fd04e585eeef7166fb7f7560e6ef4cd113715266",
+    "protected_assessment_sha256": "a1b70b2b058477016e2aa4aca27b2104922b2425f605656f1c74c49b65f05c3f",
+    "source_resource_review_sha256": "aa97c0bac8ae4cc976549d8e9c62fcd943f1dae2d710fac361b029ba7724e214",
+    "openclaw_actual_input_review_sha256": "038d470bd8c8824cff07e4b536587a476111a6359f560a3c39b3660b41705b6a",
+    "hermes_actual_input_review_sha256": "f86857e2c7d4c8d69d2fe099ff582e54308e38c05719260f0ff73f3150619aa5",
+    "hermes_resource_eligibility_sha256": "4577ea68424f08acbc80ad807fcc93aae80a288464ac381ece0b3348ecb0cb43",
+    "original_authority_sha256": "7ac4b5cb16fcde549216ce641a7c310c37977d3edda62f947f8a33a34042ac74",
+    "continued_authority_sha256": "c40dbcacfb9a67db186e30ffbbfd6b09c8b8d4c178415ba86c759a34ec838bc2",
+    "original_plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "original_dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "original_case_sha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+    "fixed_evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "readback_spec_sha256": [
+      "b6c6eae2afb65aae742494b45dd8a19768499648be3ccb395ce27b8f86010677",
+      "734e710dbc5cfdb8636a21976954c4ddcbab58d5de72e11d0b69317d4e47d8b4"
+    ]
+  },
+  "verification": {
+    "retained_files": 392,
+    "technical_and_retention_refs_checked": 474,
+    "hash_mismatches": 0,
+    "original23_rows_and_revisions_exact": true,
+    "prior25_rows_and_revisions_exact_after_hermes": true,
+    "original_metadata_exact": true,
+    "historical_xd01_full_72_sdk_70_tool_840_second_reservation_preserved": true,
+    "old_authority_unchanged": true,
+    "new_budget_or_guard_exception": false,
+    "reviewer_provider_calls": 0,
+    "reviewer_native_or_test_runs": 0,
+    "protected_values_disclosed": false
+  },
+  "original_caps_per_participant": {
+    "provider_attempts": 72,
+    "tool_dispatches": 70,
+    "wall_seconds": 840,
+    "input_tokens": 4718592,
+    "output_tokens": 86400,
+    "speech_requests": 0
+  },
+  "participants": {
+    "openclaw": {
+      "native_turns": 1,
+      "sdk_attempts": 15,
+      "all_sdk_usage_complete": true,
+      "input_tokens": 529585,
+      "output_tokens": 1623,
+      "total_tokens": 531208,
+      "native_tools_dispatched": 10,
+      "native_tools_settled": 10,
+      "objective_predicates": [
+        true,
+        true,
+        true
+      ],
+      "required_readbacks": [
+        true,
+        true
+      ],
+      "verified_fixture_effects": 2,
+      "privacy_predicate": true,
+      "human_help_requested": 0,
+      "human_help_provided": 0,
+      "literal_native_closed": false,
+      "equivalent_native_settled": true,
+      "actual_case_mcp_started_pre_completed_correlations": 0,
+      "mcp_generic_entry_proof_scope": "Separate model-free pinned entry proof; no actual-case MCP coverage claim."
+    },
+    "hermes": {
+      "native_turns": 1,
+      "sdk_attempts": 9,
+      "all_sdk_usage_complete": true,
+      "input_tokens": 99955,
+      "output_tokens": 1072,
+      "total_tokens": 101027,
+      "native_tools_dispatched": 7,
+      "native_tools_settled": 7,
+      "objective_predicates": [
+        false,
+        false,
+        true
+      ],
+      "required_readbacks": [
+        false,
+        true
+      ],
+      "verified_fixture_effects": 0,
+      "privacy_predicate": true,
+      "human_help_requested": 1,
+      "human_help_provided": 0,
+      "classification": "admitted_product_noncompletion",
+      "contact_contexts_with_exact_offered_resource_bytes": 8,
+      "contact_contexts_total": 8,
+      "authenticated_fixture_404_responses": 52,
+      "schema_requests": 0
+    }
+  },
+  "accounting": {
+    "pair_attempts": 24,
+    "pair_input_tokens": 629540,
+    "pair_output_tokens": 2695,
+    "pair_total_tokens": 632235,
+    "pair_tools": 17,
+    "pair_usage_complete": true,
+    "cumulative_registered_rows": 26,
+    "cumulative_attempts": 183,
+    "cumulative_input_tokens_lower_bound": 2567467,
+    "cumulative_output_tokens_lower_bound": 19738,
+    "cumulative_total_tokens_lower_bound": 2587205,
+    "historical_missing_usage_attempts": 3,
+    "historical_usage_unknown_rows": 2,
+    "cumulative_usage_complete": false,
+    "monetary_cost": null
+  },
+  "closure": {
+    "both_parent_close_ack": true,
+    "both_pending_zero": true,
+    "both_original_deadlines_not_expired": true,
+    "both_root_scopes_retired_and_physically_closed": true,
+    "former_parent_processes_absent": true,
+    "both_containers_and_networks_absent": true,
+    "fixture_listeners_exited": true,
+    "cleanup_errors": [],
+    "timing_boundary": "Each original parent monotonic start before native launch through child exit; resource-preparation waiting excluded."
+  },
+  "assessment_limits": {
+    "fixed_objective_comparison_valid": true,
+    "openclaw_objective_score": [
+      3,
+      3
+    ],
+    "hermes_objective_score": [
+      1,
+      3
+    ],
+    "human_ratings": {
+      "openclaw": [
+        null,
+        null
+      ],
+      "hermes": [
+        null,
+        null
+      ]
+    },
+    "whole_quality": null,
+    "general_winner": null,
+    "hermes_lower_resource_use_is_efficiency_advantage": false,
+    "eva2_or_agentzero_score_imputed": false,
+    "original_inspect_null_scores_preserved": true,
+    "p2_1_or_full_ev003_completion": false,
+    "family_acceptance_proven": false
+  },
+  "presentation": {
+    "decision": "GO_TWO_NEUTRAL_LABELS_ONLY",
+    "readback_sha256": "79a61de1033fb728c26db5c359f6793008d8f4b5f0ccb23ab66cdb233bf23f51",
+    "source_sha256": "d959f61c45cdd0585a4e5bcd75236bec1cfea0e2d55ec82ac8b5f7309fa43745",
+    "served_asset_sha256": "b09ab3ef0bd29477862a0f90efc42c823108c238a1e33079c78a3614bff2f015",
+    "labels": [
+      "Nieuwste aparte vergelijking",
+      "Beoordeling"
+    ],
+    "no_schema_criterion_or_core_runtime_change": true,
+    "root_build_and_served_asset_readback_bound": true
+  },
+  "material_findings": [],
+  "publication_limit": "Publish only this fixed objective/readback comparison and measured resources. Preserve missing human quality, closed UNKNOWN, exact closure distinctions and retained history. This review admits no further sample or replay."
+}

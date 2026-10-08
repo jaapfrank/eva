@@ -1,4 +1,39 @@
-## P2.1 actueel 8 oktober — gesloten vergelijking, geen winnaar
+## P2.1 nu — één echte vergelijking afgerond
+
+| Dezelfde oorspronkelijke XD02 | OpenClaw | Hermes |
+| --- | --- | --- |
+| Vaste inhoudelijke voorwaarden | 3/3 | 1/3 |
+| Onafhankelijke teruglezingen | 2/2 | 1/2 |
+| Werkelijk gevraagde wijzigingen | Beide uitgevoerd | Geen |
+| Extra hulp gevraagd / gegeven | 0/0 | 1/0 |
+| Tijd tot native afloop | 110,55 s | 48,45 s |
+| Modelaanvragen / tokens | 15 / 531.208 | 9 / 101.027 |
+| Menselijke eindkwaliteit | Onbekend | Onbekend |
+
+Beide gewone native uitvoeringen zijn eenmaal gedaan en fysiek gesloten. Hermes
+had dezelfde geldige diensttoegang en de broninformatie in alle acht gewone
+contactcontexts. Het lagere verbruik ging samen met niet afgerond werk; geen
+efficiëntiewin. OpenClaw voldoet aan de vaste regels van deze ene taak. Dit is geen
+algemene winnaar, menselijk kwaliteitsoordeel of bewezen Eva2-voorsprong.
+
+Onafhankelijke review: GO voor deze beperkte technische publicatie. Eerdere
+registraties, volledige OpenClaw-XD01-reservering en drie historische onbekende
+usage-pogingen in twee rows blijven staan. Deze ronde: 24 complete modelaanvragen,
+632.235 tokens en 17 toolacties. Ontwikkelcredits en geldkosten blijven onbekend.
+OpenClaws echte XD02 gebruikte tien commandtools en geen MCP-tool; de generieke
+MCP-waarneming blijft afzonderlijk modelvrij bewezen. Geen herhaling/nieuwe matrix.
+
+P2.1 als geheel blijft open: matching Eva2 ontbreekt door de oude verbruiksonbekende;
+de bestaande onafhankelijke menselijke beoordeling ontbreekt eveneens. Ongebruikte
+protocolposities zijn geen automatisch toegelaten nieuwe modelproeven. Geen nieuwe
+Eva-functie of veranderde taakacceptatie: 39/48 kleine taken blijven afgerond,
+L3.4–L3.7 blijven geïnstalleerd; spraak geparkeerd. Het dashboard toont deze nieuwste
+uitkomst, het resterende oordeel en de oorspronkelijke winsten/verliezen afzonderlijk.
+
+Bewijs: evidence/product/p2-xd02-openclaw-hermes-result-20261008.json.
+Review: reviews/p2-xd02-openclaw-hermes-final-review-20261008.json.
+
+## Gesloten P2.1-proef 8 oktober — geen winnaar
 
 | Eva2/OpenClaw-paar | Eva2 | OpenClaw |
 | --- | --- | --- |

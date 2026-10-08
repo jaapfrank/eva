@@ -810,7 +810,7 @@ await test('actual owned relay activates synchronous pre and post planning witho
   const o=new OpenClawAccounting(new FakeLedger(),20,{now:()=>10,observeTools:true});
   const overlay=installOpenClawAccounting(o,plugin,NATIVE_PINS,{hostRoot:host});const relays=[];
   try{
-    const {i:owned,r:ordinary}=await import(pathToFileURL(host+'/dist/native-hook-relay-Bfyv8cuh.mjs'));
+    const {i:owned,r:ordinary,n:invoke}=await import(pathToFileURL(host+'/dist/native-hook-relay-Bfyv8cuh.mjs'));
     assert.equal(typeof o.nativeHookToolNormalizer,'function');
     assert.equal(o.nativeHookToolNormalizer('mcp__PUBLIC_SERVER__PUBLIC_LOOKUP'),'mcp__public_server__public_lookup');
     const params={provider:'codex',sessionId:randomUUID(),allowedEvents:['pre_tool_use','post_tool_use'],preToolUseLoopDetection:false};
@@ -824,6 +824,27 @@ await test('actual owned relay activates synchronous pre and post planning witho
     assert.equal(unchanged.shouldRelayEvent('pre_tool_use'),false);
     assert.equal(unchanged.shouldRelayEvent('post_tool_use'),false);
     assert.equal(o.tools.size,0);assert.equal(o.calls.length,0);
+    // Public typed carriers pass through the actual pinned relay and client
+    // observer entries. This is not a Rust/native-actor or paid model run.
+    const {t:Client}=await import(pathToFileURL(plugin+'/dist/.setup/client-Cs08OXVQ.mjs'));
+    const client=Object.create(Client.prototype);client.notificationHandlers=new Set();
+    client.pendingStartupWarnings=[];
+    for(const [index,input] of [null,'public',[1,{a:2}],{b:2,a:3}].entries()) {
+      const id='public-native-mcp-'+index,threadId='public-native-thread',turnId='public-native-turn';
+      const args={provider:'codex',relayId:observed.relayId,event:'pre_tool_use',rawPayload:{session_id:threadId,
+        turn_id:turnId,tool_use_id:id,tool_name:'mcp__public_server__public_tool',tool_input:input}};
+      const started={method:'item/started',params:{threadId,turnId,item:{id,type:'mcpToolCall',status:'inProgress',
+        server:'public_server',tool:'public_tool',arguments:input}}};
+      if(index%2===0)client.handleNotification(started);
+      await invoke(args);
+      if(index%2!==0)client.handleNotification(started);
+      client.handleNotification({method:'item/completed',params:{threadId,turnId,item:{...started.params.item,
+        status:index%2===0?'completed':'failed',result:null,error:null}}});
+      await invoke({...args,event:'post_tool_use'});
+      assert.equal(o.tools.get(id).status,'settled');assert.equal(o.tools.get(id).native_pre_observed,true);
+      assert.equal(o.toolCoverage,true);assert.equal(o.ledger.stopReason,null);
+    }
+    assert.equal(o.tools.size,4);assert.equal(o.calls.length,0);
   }finally{
     for(const relay of relays)relay.unregister();
     for(const relay of relays)await relay.drain();

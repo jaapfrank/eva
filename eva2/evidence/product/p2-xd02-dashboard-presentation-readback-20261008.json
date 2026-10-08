@@ -1,0 +1,11 @@
+{
+  "contract": "P2ComparisonPresentationReadback/v1",
+  "change": "Two neutral labels: newest comparison; assessment. No new schema, criterion, task or feature.",
+  "source_sha256": "d959f61c45cdd0585a4e5bcd75236bec1cfea0e2d55ec82ac8b5f7309fa43745",
+  "project_build": "vite8.2.2 build --mode project; pass",
+  "live_asset": "/assets/index-DNVsZ4O5.js",
+  "live_asset_sha256": "b09ab3ef0bd29477862a0f90efc42c823108c238a1e33079c78a3614bff2f015",
+  "heading_verified_from_served_asset": true,
+  "core_restart_or_image_change": false,
+  "new_product_function": false
+}

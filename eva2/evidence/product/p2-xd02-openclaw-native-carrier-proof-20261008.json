@@ -1,0 +1,45 @@
+{
+  "schema": "OpenClawTypedNativeMcpCarrierProof/v1",
+  "source_sha256": {
+    "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs": "bbd000673722bfcfe2aad9a9ce7435350d36724ab773efa999674adbf659c89b",
+    "eva2/tests/benchmark/test_p1_openclaw_mcp_terminal.mjs": "b3c3a6995afc01d1d2829d01ddea0c13baf9d8e815349084502d20811c8a53fb",
+    "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs": "becdac1afcaa72a19bf517ffb48cd84cbba91bebf2250e0b96def948d14e2126"
+  },
+  "focused_regressions": {
+    "tests": 44,
+    "passed": 40,
+    "failed": 0,
+    "skipped_optional_native": 4,
+    "test_files": [
+      "eva2/tests/benchmark/test_p1_openclaw_mcp_terminal.mjs",
+      "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs"
+    ]
+  },
+  "actual_pinned_entry_proof": {
+    "test_file": "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs",
+    "test_name": "actual owned relay activates synchronous pre and post planning without changing ordinary public relay policy",
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "duration_ms": 6039.684947,
+    "relay_sha256": "e58fa02170a4d63f7c2e98de8c7514ac46906fae19538b131fd6e2f2b1fedb6a",
+    "client_sha256": "f661febe01d4708bdafd2c0f49be288b6466c07cbedd74b79c887cbe0deb77da",
+    "actual_registered_owned_pre_post_entry": true,
+    "actual_client_notification_entry": true,
+    "public_typed_inputs": [
+      "null",
+      "string",
+      "array",
+      "object"
+    ],
+    "both_event_orders": true,
+    "completed_and_failed_status_retained": true,
+    "tool_rows": 4,
+    "sdk_calls": 0,
+    "rust_native_actor_run": false
+  },
+  "sealed_inputs_read": false,
+  "provider_calls": 0,
+  "historical_started_pre_arg_equality_proven": false,
+  "new_product_function": false
+}
