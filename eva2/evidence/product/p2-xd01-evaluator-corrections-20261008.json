@@ -1,0 +1,94 @@
+{
+  "contract": "ScopedEvaluatorCorrectionEvidence/v1",
+  "task_id": "P2.1",
+  "created_at": "2026-10-08T02:03:53.191922+00:00",
+  "product_function_completed": false,
+  "product_source_changed": false,
+  "installed_product_changed": false,
+  "closed_original_result": "eva2/evidence/product/p2-xd01-prospective-pair-result-20261008.json",
+  "closed_result_sha256": "e62ecddc54b31c2283343ad7adcf0cee5d1e655254a3ca05cfe892c3efb931e1",
+  "changes": [
+    {
+      "component": "existing OpenClaw accounting observer",
+      "deficit": "Native MCP terminal arrived before PostToolUse and was rejected while the exactly admitted tool row was reserved.",
+      "correction": "Bind the actual pinned native relay normalizer after module initialization; validate admitted id/thread/turn and retain hashes for exact completed/failed terminal status without allocating another tool or rewriting success.",
+      "supported_mcp_rendering": {
+        "server": "codex_apps",
+        "tool": "plugin_management.search_plugins",
+        "native_hook_name": "mcp__codex_apps__plugin_management__search_plugins"
+      },
+      "other_mcp_renderings": "UNKNOWN; rejected until actual native correspondence is established",
+      "original_executed_source_preserved": true,
+      "original_result_rescored": false
+    },
+    {
+      "component": "isolated Eva2 launcher",
+      "deficit": "Tenant/install fields were read from the inner budget object rather than the retained outer scope.",
+      "correction": "Use retained outer tenant/install identity and original bound inner budget; same ledger row and absolute deadline.",
+      "source_sha256": "2b0ee2dc275df4a247e70e78cb8171a28a477dd93e41f4ec8abdb99afbd3c7f1",
+      "native_continuation_reached_factory": true,
+      "original_input_reached": false
+    },
+    {
+      "component": "isolated Eva2 identity mounts",
+      "deficit": "Benchmark UID1000 could not read the unchanged identity trust source.",
+      "correction": "Readonly staged mounts contain byte-identical installed identity and trust documents; normal Ed25519 verification retained.",
+      "source_sha256": "99f1a08cad66a0d1f584e32a3a896157ff9511d6f82428a9e278f7dd84ade08a",
+      "actual_installed_loader_proof": "eva2/evidence/product/p2-xd01-identity-startup-transition-20261008.json",
+      "proof_sha256": "e31266523b60acd09692acd541b3f14f78e4053ba397bcbf4f225ab21a329425",
+      "full_factory_lifespan_verified": false
+    }
+  ],
+  "source_hashes": {
+    "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs": "284e82ee6567421a6fc30c6075f19c461ea08868818219e7dba85fc5682b99e2",
+    "eva2/tests/benchmark/test_p1_openclaw_parent_accounting.mjs": "54ace848260e30a386227f511ccbd15f75166161169c0e28c7144318a7c5dee7",
+    "eva2/tests/benchmark/test_p1_openclaw_mcp_terminal.mjs": "f558c9b40b2711fbef2374c155c3708e11a055c2e57d0377dc7ba04da96823f5"
+  },
+  "verification": {
+    "focused_node_tests": {
+      "total": 43,
+      "passed": 39,
+      "failed": 0,
+      "skipped_native_optional": 4,
+      "log_sha256": "1f83b4d50d98efd44a0f811d553366bbe47251d127ec74fbd086dda53f0e9286"
+    },
+    "actual_pinned_relay_isolated_load": {
+      "passed": 1,
+      "failed": 0,
+      "provider_calls": 0,
+      "log_sha256": "680b313230c7236d83c7104d2d1b034a1610a28baaa4758d1051c80cc542f5d3"
+    },
+    "identity_loader_on_installed_core": {
+      "passed": true,
+      "uid": "1000:65532",
+      "network": "none",
+      "readonly": true,
+      "provider_calls": 0,
+      "tools": 0,
+      "elapsed_seconds": 3.8068895719770808,
+      "container_removed": true
+    },
+    "development_failures_retained": [
+      "Combined native test process reused the unmodified cached relay; isolated process used instead.",
+      "First isolated relay injection ran before its accounting object initialization and raised a temporal-dead-zone error; binder moved after initialization.",
+      "One test result save failed on private directory permissions; missing result saved by a focused rerun."
+    ],
+    "evaluation_rules_changed": false,
+    "original_tasks_replayed": false,
+    "new_native_comparison_started": false
+  },
+  "limits": [
+    "Limited observer compatibility; not evidence of Eva intelligence or general MCP family support.",
+    "Full native Eva2 factory/lifespan and original task still unverified after the identity correction.",
+    "Both closed quality outcomes remain UNKNOWN; no product loss, winner or speed/efficiency comparison inferred.",
+    "Historical usage unknowns and original limits remain unchanged.",
+    "Development credits and monetary costs remain UNKNOWN."
+  ],
+  "runtime_usage_for_correction_checks": {
+    "provider_calls": 0,
+    "tools": 0
+  },
+  "next_action": "Publish closed UNKNOWN result and bundled correction review. Further native comparison requires a separately concrete authorized admission; no implicit replay.",
+  "independent_review": "eva2/reviews/p2-xd01-prospective-pair-final-review-20261008.json",
+  "independent_review_sha256": "55c040dec5d3b65756feaded09b3418f36432809fc7db4261fb25b48862b0e7e"
+}

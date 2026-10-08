@@ -10,6 +10,13 @@ Historische UNKNOWN en gesloten proeven blijven staan; geen nieuwe brede matrix.
 L3.4–L3.7 blijven afgerond. Spraak blijft geparkeerd. Technische binding/review
 wordt door de uitvoerders afgehandeld, geen herhaalde eigenaarvraag binnen dit mandaat.
 
+Actuele uitkomst: het ene paar is gesloten met UNKNOWN door fouten in de
+proefroute; geen geldige winnaar of productverlies. De beperkte broncorrecties
+zijn gebundeld beoordeeld. De oorspronkelijke deadline is verlopen; geen impliciete
+herhaling of nieuwe proefruimte. P2.1 blijft open. Een vervolg wordt afzonderlijk
+concreet aan oorspronkelijke criteria en het bestaande mandaat gebonden, zonder
+oude UNKNOWN te wissen. Zie eva2/evidence/product/p2-xd01-prospective-pair-result-20261008.json.
+
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 
 Het hervatte app-goal is actief. Wijzigingen aan de aansturing staan in deze

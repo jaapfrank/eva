@@ -1,38 +1,39 @@
 # Eva — digitale huisgenoot die leert en handelt
 
-## P2.1 actueel 8 oktober — één native tweedienstaansluiting gecontroleerd
+## P2.1 actueel 8 oktober — vergelijking gesloten zonder geldig kwaliteitsoordeel
 
-De bestaande OpenClaw-uitvoerder kan via haar gewone aangeboden exec_command
-twee lokale dummy-diensten bereiken, één toegelaten wijziging uitvoeren en die
-onafhankelijk teruglezen. Eén modelvrije proef: 3 native beurten,16 tools,
-6 HTTP-verzoeken,1 journalbewezen effect.34 gerichte controles en gebundelde
-onafhankelijke review GO. Processen/listeners daadwerkelijk gesloten; de letterlijke
-native_closed=false en stopcode5 blijven naast equivalent_native_settled=true bewaard.
+Het ene prospectieve Eva2/OpenClaw-paar is uitgevoerd en gesloten. Eva2 bereikte
+de oorspronkelijke opdracht niet: de proeflauncher verloor eerst de buitenste
+budgetidentiteit en daarna kon de benchmarkgebruiker het identiteitstrustbestand
+niet lezen. OpenClaw deed 6 complete modelaanvragen, maar de proefwaarnemer
+stopte bij een MCP-resultaat dat vóór de naverwerking binnenkwam. Beide inhoudelijke
+uitslagen blijven UNKNOWN; dit bewijst geen verlies, winnaar of productvoorsprong.
 
-Alleen het onjuiste vaste CM16-toolplafond in de benchmarkadapter is gericht
-gecorrigeerd: de bestaande ongewijzigde familielimieten worden exact uit het
-bevroren manifest gebonden. Geen wijziging/herstart van Eva-kern of werker.
-De gescripte modelkeuze en vaste publieke client bewijzen aansluiting, geen
-zelfstandige taakkeuze, antwoordkwaliteit, efficiëntie of Eva2-voorsprong.
-Nul echte model-/authcalls;80 uitsluitend synthetische tokens. Ontwikkelcredits onbekend.
-48 kleine taken/39 afgerond en oorspronkelijke acceptaties blijven onveranderd.
+De drie oorzaken zijn gericht gecorrigeerd in de bestaande proefroute. De exacte
+OpenClaw-toolnaam is gebonden aan de werkelijk gebruikte native relay; andere
+onbewezen MCP-naamvormen blijven geweigerd. 39 gerichte controles slagen, 4 optionele
+native controles zijn overgeslagen; de echte pinned relay slaagt afzonderlijk.
+De geïnstalleerde Eva-kern leest en verifieert de bytegelijke identitymounts onder
+de echte benchmark-UID. De volledige factory/lifespan en oorspronkelijke opdracht
+zijn na die correctie niet uitgevoerd. Onafhankelijke review: publicatie GO,
+correcties uitsluitend bron-GO. Geen kerninstallatie, productwijziging of herscoring.
 
-**Actuele uitvoering:** Jaap heeft op 8 oktober gevraagd door te gaan. De ene
-eerder beschreven aanvullende Eva2/OpenClaw-vergelijking wordt nu voorbereid
-met een evaluator en onafhankelijke reviewer. Nog geen modelproef gestart.
-Historische UNKNOWN, oorspronkelijke criteria en 72 SDK/70 tools per deelnemer
-blijven behouden; geen nieuwe matrix of herhaling van afgesloten proeven.
+OpenClaw: 192.031 invoer- en 388 uitvoertokens. Eva2: 0 geregistreerde SDK-aanvragen,
+geen oorspronkelijke invoer, onvolledig eindverbruiksrapport. Dit is geen claim
+van nul totale kosten. Ontwikkelcredits en geldkosten blijven onbekend. Alle eigen
+proefresources zijn gesloten; de oorspronkelijke deadline is verlopen. Er loopt
+geen modelproef. Geen herhaling, reset, automatische volgende case of brede matrix.
+Een verdere native vergelijking vereist een afzonderlijk concreet gebonden
+gebruik van de bestaande toestemming en oorspronkelijke criteria.
 
-Een ongebruikte oorspronkelijke successor-combinatiecase is beschikbaar voor een
-gedeeltelijk Eva2/OpenClaw-paar. De historische Eva2-CM04-usage is niet te reconstrueren;
-de oude UNKNOWN-guard/ledger wordt niet gewist of opnieuw gebruikt. De voortzetting van die ene
-aanvullende proef is nu geautoriseerd; technische toelating wordt apart gebonden: één epoch,
-zelfde criteria/modelrollen en originele per-samplelimieten72 SDK/70 tools.
-Geen brede matrix of herhaling van een gesloten legacycase. De vastgelegde
-Eva1-XD-route is niet passend beschikbaar; dat is UNKNOWN, geen productverlies.
-P2.1/volledige zelfstandigheid, menselijke kwaliteit en gezinsacceptatie blijven open.
-Bewijs: evidence/product/p2-xd-native-collection-preflight-20261008.json.
-Review: reviews/p2-xd-native-collection-preflight-review-20261008.json.
+L3.4–L3.7, alle eerdere acceptaties en 39 van 48 kleine taken blijven behouden.
+P2.1, algemene zelfstandigheid/voorsprong en de menselijke gezinsbeoordelingen
+blijven open; spraak blijft geparkeerd. De eerdere modelvrije tweedienstcontrole
+blijft aansluitbewijs, geen intelligentiebewijs.
+
+Bewijs: evidence/product/p2-xd01-prospective-pair-result-20261008.json.
+Correcties: evidence/product/p2-xd01-evaluator-corrections-20261008.json.
+Review: reviews/p2-xd01-prospective-pair-final-review-20261008.json.
 
 ## P2.1 actueel 8 oktober — gedeelde ervaring blijft niet bruikbaar
 

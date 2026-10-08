@@ -1,0 +1,180 @@
+{
+  "contract": "ProspectiveXD01PartialPairResult/v1",
+  "decision": "UNKNOWN_EVALUATOR_FAILURE_NO_WINNER",
+  "scope": "One separately authorized partial Eva2/OpenClaw successor XD01 epoch1 pair; original criteria preserved. No replay or new admission.",
+  "case_sha256": "591ef16c1e1ebd69d25d37bd1c322bf57a819fef02dfb64819c4a6f18b627924",
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "original_scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+  "limits_per_participant": {
+    "sdk_attempts": 72,
+    "tool_dispatches": 70,
+    "wall_seconds": 840,
+    "input_tokens": 4718592,
+    "output_tokens": 86400
+  },
+  "eva2": {
+    "objective_completion": null,
+    "quality": "UNKNOWN",
+    "human_ratings": [
+      null,
+      null
+    ],
+    "original_input_sent": false,
+    "completed_turns": 0,
+    "tracked_sdk_attempts": 0,
+    "tracked_tool_dispatches": 0,
+    "tracked_known_usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    },
+    "parent_report_complete": false,
+    "parent_report_total_usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null
+    },
+    "first_failure": "Evaluator launcher lost outer tenant/install budget scope before native startup (KeyError).",
+    "preinput_continuation_failure": "Current native UID could not read unchanged installed identity trust mount; core factory raised PermissionError then ValueError before original input/SDK.",
+    "same_row_preinput_continuation": true,
+    "remaining_time_not_reset": true,
+    "parent_start_to_continuation_stop_seconds": 644.2264552540146,
+    "absolute_deadline_expired_before_second_continuation": true,
+    "second_continuation_started": false,
+    "physical_resources_closed": true,
+    "native_settlement_complete": false,
+    "source_corrections": {
+      "outer_budget_scope": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/eva2/launch-budget-scope-corrected.private.py",
+        "sha256": "2b0ee2dc275df4a247e70e78cb8171a28a477dd93e41f4ec8abdb99afbd3c7f1"
+      },
+      "identity_readonly_byte_equal_staging": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/eva2/launch-budget-and-identity-corrected.private.py",
+        "sha256": "99f1a08cad66a0d1f584e32a3a896157ff9511d6f82428a9e278f7dd84ade08a"
+      },
+      "identity_UID_readproof": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/eva2/identity-access-correction-check.private.json",
+        "sha256": "61efd331c2a7ec61a363bc7e2c52385e3dfce935405058f53bc205fb0d9a296c"
+      }
+    },
+    "correction_scope": "Model-free AST/actual read-hash checks only; no successful native factory or task claimed."
+  },
+  "openclaw": {
+    "objective_completion": null,
+    "quality": "UNKNOWN",
+    "human_ratings": [
+      null,
+      null
+    ],
+    "original_input_sent": true,
+    "completed_turns": 0,
+    "sdk_attempts": 6,
+    "provider_usage_complete": true,
+    "usage": {
+      "input_tokens": 192031,
+      "output_tokens": 388,
+      "total_tokens": 192419
+    },
+    "roles": {
+      "contact_sol_none": 6,
+      "work_or_memory_astra_medium": 0
+    },
+    "recorded_dispatched_settled_tools": 2,
+    "tool_coverage": false,
+    "parent_start_to_child_exit_seconds": 76.85322037900914,
+    "wall_expired": false,
+    "first_failure": "Admitted MCP terminal completed before PostToolUse; evaluator supported command/patch terminals but rejected mcpToolCall while row reserved. The matching post later settled the row.",
+    "native_closed": false,
+    "equivalent_native_settled": false,
+    "physical_transports_exited": true,
+    "pending_sdk": 0,
+    "pending_tools": 0,
+    "native_cancel_error_count": 3,
+    "native_queues_flushed": true,
+    "scope_container_network_and_listeners_closed": true,
+    "verified_sdk_context_triplets": 6,
+    "independent_fixture_effects": 0,
+    "fixture_state_matches_original_journals": true,
+    "identity_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/openclaw/retained-mcp-terminal-identity-corrected.public.json",
+      "sha256": "bc8a51ed96c60e641405552ecae6ff0788523ab26264af5e1d1020887238c449"
+    }
+  },
+  "comparison_limits": [
+    "Neither original task completed under a valid evaluator path; no participant loss, quality/speed/efficiency winner, or superior autonomy conclusion.",
+    "E release/deadline preceded O; E zero-input continuation ran only after O physical closure, within the same original deadline and registry row. This is not an uninterrupted E-to-O native dispatch sequence.",
+    "Historical raw Mounts digest mismatch remains unexplained; fresh complete destination-map binding retained separately.",
+    "Development effort and monetary credits are UNKNOWN; zero tracked Eva2 requests is not a zero-development-cost claim.",
+    "P2.1, full EV003 coverage, human quality and family acceptance remain open; no automatic next case or matrix authorized."
+  ],
+  "preparation_issues_retained": [
+    "Partial fixture owner authority needed two existing typed evidence/binding rows; normal runtime validators passed after scoped provisioning.",
+    "Retained dependency import precedence/self-pin/GUC role and missing Hindsight URL were corrected before first input.",
+    "Fixture Docker healthcheck lacked /bin/sh; actual same-PID/API readiness bound separately, no image restart fix.",
+    "First Eva2 budget scope error and later identity-read error retained; second resource restoration closed after original deadline.",
+    "One diagnostic digest computation used raw bytes instead of existing JSON-string hash; retained and superseded without execution."
+  ],
+  "authority": {
+    "historical": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
+      "sha256": "7ac4b5cb16fcde549216ce641a7c310c37977d3edda62f947f8a33a34042ac74"
+    },
+    "historical_rows": 23,
+    "historical_attempts": 153,
+    "historical_token_lower_bound": 1762551,
+    "historical_unknowns": 3,
+    "historical_unchanged": true,
+    "prospective": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/prospective-aggregate.db",
+      "sha256": "b857b3fb4e9c67307f0d7cb85fb19721988c4fd196a54b4fe19b67b004ddb5f0"
+    },
+    "prospective_rows": [
+      {
+        "participant": "eva2",
+        "sample_id": "eva2:EV003-XD-01:epoch1",
+        "revision": 6,
+        "raw_value_sha256": "cd4631cfa1559b4cb76736cddc4a760db5cbacb502f41ee5686808f41c9d1da3",
+        "kind": "active",
+        "usage_unknown": false,
+        "envelope_exceeded": false,
+        "report_provider_attempts": null,
+        "report_complete": null,
+        "report_stop": "child closed without tracked HTTP settlement",
+        "report_total_usage": null,
+        "report_known_partial_usage": null,
+        "reservation_sha256": "1eb787b1b268af176546c2e8c338fdabadae2c7ef18114f0888fdf683ef3ab00"
+      },
+      {
+        "participant": "openclaw",
+        "sample_id": "openclaw:EV003-XD-01:epoch1",
+        "revision": 14,
+        "raw_value_sha256": "8fa1430f8908c9bf8de34ef9e2ddc39ff8a0a0bdcb6d21fd5c3bd5ffa35566d8",
+        "kind": "active",
+        "usage_unknown": false,
+        "envelope_exceeded": false,
+        "report_provider_attempts": null,
+        "report_complete": null,
+        "report_stop": "child closed without tracked HTTP settlement",
+        "report_total_usage": null,
+        "report_known_partial_usage": null,
+        "reservation_sha256": "1eb787b1b268af176546c2e8c338fdabadae2c7ef18114f0888fdf683ef3ab00"
+      }
+    ],
+    "new_registered_rows": 2,
+    "new_known_provider_attempts": 6,
+    "new_known_token_lower_bound": 192419,
+    "combined_known_token_lower_bound_arithmetic_only": 1954970,
+    "combined_attempts_arithmetic_only": 159,
+    "no_historical_reset_or_new_usage_settlement": true
+  },
+  "technical_evidence": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/terminal-technical.private.json",
+    "sha256": "be17a5b834a762877b9c3017e94d7a62f36b5f99fdd4cd261efb828954ad871e"
+  },
+  "final_physical_closure": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/eva2/restored-resource-v2-final-closure.private.json",
+    "sha256": "8ae4eba220354e4114a967c0fb4f669803ae882ed03bec4bdc1d4e93f8a42360"
+  },
+  "next_action": "Finish the narrowly proven evaluator source corrections and publish this closed UNKNOWN result. Any further native comparison requires a separately concrete authorized admission; no remaining time or implicit replay."
+}

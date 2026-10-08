@@ -1,0 +1,40 @@
+{
+  "contract": "NativeIdentityStartupTransitionExecution/v1",
+  "returncode": 0,
+  "elapsed_seconds": 3.8068895719770808,
+  "container": {
+    "id": "f5edfc36af95683ccbc4de7d45aaaeaa381577190739f9504a7e47b2f4981cd2",
+    "image": "sha256:c391b82c511415a37a5682bfd78793a06fdda0aae4eba07c04d38a221372cf86",
+    "exit_code": 0,
+    "running": false,
+    "user": "1000:65532",
+    "network_mode": "none",
+    "readonly_rootfs": true,
+    "mounts": [
+      {
+        "Source": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/eva2/native-identity-resources/current.json",
+        "Destination": "/run/eva/identity/current.json",
+        "RW": false
+      },
+      {
+        "Source": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/eva2/identity-startup-transition-proof/check.private.py",
+        "Destination": "/check.py",
+        "RW": false
+      },
+      {
+        "Source": "/home/administrator/project/.eva2-artifacts/ev003-prospective-xd01-pair-20261008-v1/eva2/native-identity-resources/trust.json",
+        "Destination": "/run/eva/identity/trust.json",
+        "RW": false
+      }
+    ]
+  },
+  "container_removed": true,
+  "script_sha256": "29c4a8e5a5140570801cb26e659819567efa052c4bd5c2af215f958f9336472b",
+  "stdout_sha256": "1a40ced56140c8ff0b37b20f298d0bda725175c10cadc13f1176a1665b3dc489",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "argv_sha256": "85bac20ac0e5a57b9e16cd8d0294e0ca27e5b9cbad30cdb30b3b887adc21b715",
+  "startup_scope": "Exact installed core factory identity loader only; full app factory/lifespan requires retained database/service composition and was not rerun.",
+  "original_ledger_slot_deadline_or_input_touched": false,
+  "provider_auth_calls": 0,
+  "product_source_changes": false
+}

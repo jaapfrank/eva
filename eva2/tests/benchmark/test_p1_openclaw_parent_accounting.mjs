@@ -811,6 +811,8 @@ await test('actual owned relay activates synchronous pre and post planning witho
   const overlay=installOpenClawAccounting(o,plugin,NATIVE_PINS,{hostRoot:host});const relays=[];
   try{
     const {i:owned,r:ordinary}=await import(pathToFileURL(host+'/dist/native-hook-relay-Bfyv8cuh.mjs'));
+    assert.equal(typeof o.nativeHookToolNormalizer,'function');
+    assert.equal(o.nativeHookToolNormalizer('mcp__PUBLIC_SERVER__PUBLIC_LOOKUP'),'mcp__public_server__public_lookup');
     const params={provider:'codex',sessionId:randomUUID(),allowedEvents:['pre_tool_use','post_tool_use'],preToolUseLoopDetection:false};
     const observed=owned(params);relays.push(observed);await observed.ready;
     assert.equal(observed.shouldRelayEvent('pre_tool_use'),true);

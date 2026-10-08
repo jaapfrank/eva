@@ -1,36 +1,29 @@
-## P2.1 actueel 8 oktober — één native tweedienstaansluiting gecontroleerd
+## P2.1 actueel 8 oktober — gesloten vergelijking, geen winnaar
 
-De bestaande OpenClaw-uitvoerder kan via haar gewone aangeboden exec_command
-twee lokale dummy-diensten bereiken, één toegelaten wijziging uitvoeren en die
-onafhankelijk teruglezen. Eén modelvrije proef: 3 native beurten,16 tools,
-6 HTTP-verzoeken,1 journalbewezen effect.34 gerichte controles en gebundelde
-onafhankelijke review GO. Processen/listeners daadwerkelijk gesloten; de letterlijke
-native_closed=false en stopcode5 blijven naast equivalent_native_settled=true bewaard.
+| Eva2/OpenClaw-paar | Eva2 | OpenClaw |
+| --- | --- | --- |
+| Oorspronkelijke opdracht bereikt | Nee | Ja |
+| Geldig kwaliteitsoordeel | Onbekend | Onbekend |
+| Geregistreerde modelaanvragen | 0; eindrapport onvolledig | 6 complete |
+| Bekende tokens | Geen volledig eindverbruik | 192.419 |
+| Stopoorzaak | Twee fouten in proeflauncher | Toolwaarnemer stopte te vroeg |
 
-Alleen het onjuiste vaste CM16-toolplafond in de benchmarkadapter is gericht
-gecorrigeerd: de bestaande ongewijzigde familielimieten worden exact uit het
-bevroren manifest gebonden. Geen wijziging/herstart van Eva-kern of werker.
-De gescripte modelkeuze en vaste publieke client bewijzen aansluiting, geen
-zelfstandige taakkeuze, antwoordkwaliteit, efficiëntie of Eva2-voorsprong.
-Nul echte model-/authcalls;80 uitsluitend synthetische tokens. Ontwikkelcredits onbekend.
-48 kleine taken/39 afgerond en oorspronkelijke acceptaties blijven onveranderd.
+**Afgerond:** de beperkte proefcorrecties zijn onafhankelijk beoordeeld. 39 gerichte
+controles en één echte pinned-relaycontrole slagen; 4 optionele native controles
+zijn overgeslagen. De normale identity-loader uit de geïnstalleerde kern leest en
+verifieert bytegelijke documenten onder de echte benchmarkgebruiker. Alleen deze
+opstartovergang is bewezen; volledige factory/lifespan en originele taak niet.
 
-**Actuele uitvoering:** Jaap heeft op 8 oktober gevraagd door te gaan. De ene
-eerder beschreven aanvullende Eva2/OpenClaw-vergelijking wordt nu voorbereid
-met een evaluator en onafhankelijke reviewer. Nog geen modelproef gestart.
-Historische UNKNOWN, oorspronkelijke criteria en 72 SDK/70 tools per deelnemer
-blijven behouden; geen nieuwe matrix of herhaling van afgesloten proeven.
+**Nog open:** P2.1 en echte kwaliteit/zelfstandigheid. De oorspronkelijke proef is
+gesloten, eigen containers/netwerk weg en deadline verlopen. Geen modeluitvoering
+actief, herhaling of automatisch volgend proefpaar. Vervolg alleen afzonderlijk
+concreet binden binnen oorspronkelijke criteria en bestaand mandaat. Geen extra
+Eva-functie afgerond; 39/48, eerdere acceptaties en geparkeerde spraak ongewijzigd.
+Ontwikkelcredits en geldkosten onbekend. Oude verbruiksUNKNOWN blijft behouden.
 
-Een ongebruikte oorspronkelijke successor-combinatiecase is beschikbaar voor een
-gedeeltelijk Eva2/OpenClaw-paar. De historische Eva2-CM04-usage is niet te reconstrueren;
-de oude UNKNOWN-guard/ledger wordt niet gewist of opnieuw gebruikt. De voortzetting van die ene
-aanvullende proef is nu geautoriseerd; technische toelating wordt apart gebonden: één epoch,
-zelfde criteria/modelrollen en originele per-samplelimieten72 SDK/70 tools.
-Geen brede matrix of herhaling van een gesloten legacycase. De vastgelegde
-Eva1-XD-route is niet passend beschikbaar; dat is UNKNOWN, geen productverlies.
-P2.1/volledige zelfstandigheid, menselijke kwaliteit en gezinsacceptatie blijven open.
-Bewijs: evidence/product/p2-xd-native-collection-preflight-20261008.json.
-Review: reviews/p2-xd-native-collection-preflight-review-20261008.json.
+Bewijs: evidence/product/p2-xd01-prospective-pair-result-20261008.json.
+Correcties: evidence/product/p2-xd01-evaluator-corrections-20261008.json.
+Review: reviews/p2-xd01-prospective-pair-final-review-20261008.json.
 
 ## Actueel 8 oktober — dezelfde ervaring later terughalen: beide tekort
 

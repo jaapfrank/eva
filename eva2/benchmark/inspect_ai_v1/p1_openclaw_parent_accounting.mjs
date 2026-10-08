@@ -38,6 +38,12 @@ export const NATIVE_LOOP_PINS = Object.freeze({
   'run-attempt-BHu11r7h.mjs': '1232e529e6309af58f13f5f4ec88673231507304ce698d4c50f1021c1c8de376',
   'native-hook-relay-Bfyv8cuh.mjs': 'e58fa02170a4d63f7c2e98de8c7514ac46906fae19538b131fd6e2f2b1fedb6a',
 });
+// Exact rendering observed in the pinned native client/relay. No general dot
+// encoding rule is established by their JS source; other MCP names fail closed.
+const OBSERVED_NATIVE_MCP_RENDERINGS = Object.freeze([
+  Object.freeze({server:'codex_apps', tool:'plugin_management.search_plugins',
+    hookName:'mcp__codex_apps__plugin_management__search_plugins'}),
+]);
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const monotonic = () => Number(process.hrtime.bigint()) / 1e9;
 const safeUsage = (value) => {
@@ -206,6 +212,7 @@ export class OpenClawAccounting {
     this.clockFile = clockFile; this.scenarioReadbacks = []; this.previousScenario = null; this.nativeCompletedResponses = new Map();
     this.privateModelContextDir = privateModelContextDir; this.observeTools = observeTools;
     this.tools = new Map(); this.clients = new Map(); this.nativeReadbacks = [];
+    this.nativeHookToolNormalizer = null;
     this.nativeModuleBindings = new Map(); this.nativeQueues = new Map();
     this.toolCoverage = true; this.nativeCoverageFailure = null; this.nativeObservationReceipts = []; this.privateSequence = 0; this.nativeCloseReads = new Map(); this.nativeClosed = new Map(); this.nativeTransportExits = new Map(); this.nativeSourceAuthorities = new Map(); this.nativeScopeReceipts = new Map(); this.nativeProcessScope = nativeProcessScope;
     this.stop = () => { for (const cancel of this.active) cancel(); };
@@ -472,6 +479,13 @@ export class OpenClawAccounting {
     }
     return row;
   }
+  /** Bind the normalizer from the already pinned native relay, not a name guess. */
+  bindNativeHookToolNormalizer(normalize) {
+    if (typeof normalize !== 'function' || (this.nativeHookToolNormalizer && this.nativeHookToolNormalizer !== normalize)) {
+      throw new Error('native hook tool normalizer changed');
+    }
+    this.nativeHookToolNormalizer = normalize;
+  }
   nativeToolBefore(invocation, registration) {
     this.recordNativeObservation('pre_observer_entry', this.nativeIdentity(invocation, registration));
     const payload = invocation.rawPayload;
@@ -533,13 +547,17 @@ export class OpenClawAccounting {
     // All installed non-tool item variants; a new variant cannot silently escape coverage.
     if (['userMessage','agentMessage','plan','reasoning','contextCompaction','enteredReviewMode','exitedReviewMode'].includes(p.item.type)) return;
     const row = this.tools.get(p.item.id);
-    // Native command/patch completion can precede its post hook. Each supported
-    // terminal still requires the admitted tool, native thread and turn.
+    // A native terminal can precede its post hook. Bind its complete identity
+    // to the admitted tool, native thread and turn; settlement is not task success.
     const commandTerminal = p.item.type === 'commandExecution'
       && row?.name_sha256 === digest('exec') && Number.isSafeInteger(p.item.exitCode);
     const patchTerminal = p.item.type === 'fileChange'
       && row?.name_sha256 === digest('apply_patch') && Array.isArray(p.item.changes);
-    if (row && row.status !== 'cancelled' && (commandTerminal || patchTerminal)
+    const mcpRendering = p.item.type === 'mcpToolCall' && OBSERVED_NATIVE_MCP_RENDERINGS.find(
+      binding => binding.server === p.item.server && binding.tool === p.item.tool);
+    const mcpTerminal = mcpRendering && Object.hasOwn(p.item, 'arguments') && this.nativeHookToolNormalizer
+      && row?.name_sha256 === digest(this.nativeHookToolNormalizer(mcpRendering.hookName));
+    if (row && row.status !== 'cancelled' && (commandTerminal || patchTerminal || mcpTerminal)
         && row.thread_id === threadId
         && typeof threadId === 'string' && threadId
         && typeof p.turnId === 'string' && p.turnId
@@ -547,7 +565,11 @@ export class OpenClawAccounting {
         && ['completed','failed'].includes(p.item.status)) {
       const terminal = commandTerminal
         ? {item_type:p.item.type, status:p.item.status, exit_code:p.item.exitCode}
-        : {item_type:p.item.type, status:p.item.status, changes_sha256:digest(p.item.changes)};
+        : patchTerminal
+          ? {item_type:p.item.type, status:p.item.status, changes_sha256:digest(p.item.changes)}
+          : {item_type:p.item.type, status:p.item.status, server_sha256:digest(p.item.server),
+              tool_sha256:digest(p.item.tool), arguments_sha256:digest(p.item.arguments),
+              result_sha256:digest(p.item.result ?? null), error_sha256:digest(p.item.error ?? null)};
       if (row.native_terminal && JSON.stringify(row.native_terminal) !== JSON.stringify(terminal)) {
         this.toolCoverage = false; this.ledger.stop('native tool terminal changed'); return;
       }
@@ -557,7 +579,7 @@ export class OpenClawAccounting {
         native_thread_id_sha256:digest(threadId),native_turn_id_sha256:digest(p.turnId),...terminal});
       return;
     }
-    if (['commandExecution','fileChange'].includes(p.item.type) || !row || ['reserved','cancelled'].includes(row.status)) {
+    if (['commandExecution','fileChange','mcpToolCall'].includes(p.item.type) || !row || ['reserved','cancelled'].includes(row.status)) {
       this.toolCoverage = false;
       this.nativeCoverageFailure ??= { item_type: typeof p.item.type === 'string' && /^[A-Za-z][A-Za-z0-9]{0,63}$/.test(p.item.type) ? p.item.type : 'UNKNOWN',
         item_id_sha256: digest(p.item.id ?? null), thread_id_sha256: digest(threadId ?? null), observed_status: row?.status ?? 'unreserved' };
@@ -889,7 +911,8 @@ export function installOpenClawAccounting(accounting, pluginRoot, pins, { hostRo
       source = replaceOnce(source, '\t\t\t\t\t});\n\t\t\t\t\trecordCodexDynamicToolResult(projector, call, response, toCodexDynamicToolProtocolResponse(response));',
         '\t\t\t\t\t}));\n\t\t\t\t\trecordCodexDynamicToolResult(projector, call, response, toCodexDynamicToolProtocolResponse(response));');
     } else if (nativeHookModule) {
-      source = "const __evaOwnedToolAccounting = Symbol('evaluator-owned native tool accounting');\n" + source;
+      source = "const __evaOwnedToolAccounting = Symbol('evaluator-owned native tool accounting');\n" + source
+        + "\n__evaAccounting.bindNativeHookToolNormalizer(normalizeNativeHookToolName);\n";
       // Mark only the existing owned relay. Its ordinary synchronous hook builder then
       // enables all-tool observation while native policy, lifetime and admission remain.
       source = replaceOnce(source, 'function registerOwnedNativeHookRelay(params) {',

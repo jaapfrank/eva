@@ -1,0 +1,135 @@
+{
+  "contract": "ProspectiveXD01PublicIndependentEndReview/v1",
+  "reviewer": "independent technical reviewer",
+  "review_date": "2026-10-08",
+  "scope": "Exact separately authorized Eva2/OpenClaw original successor XD01 epoch1 partial pair and its proven evaluator corrections; no further execution.",
+  "decisions": {
+    "publication": "GO_CLOSED_UNKNOWN_RESULT",
+    "narrow_evaluator_source_corrections": "GO_SOURCE_ONLY",
+    "valid_completed_comparison": "NO",
+    "further_original_input_or_continuation": "NO_GO_EXPIRED",
+    "quality_winner": "UNKNOWN"
+  },
+  "bindings": {
+    "reviewed_public_result_sha256": "e62ecddc54b31c2283343ad7adcf0cee5d1e655254a3ca05cfe892c3efb931e1",
+    "terminal_technical_sha256": "be17a5b834a762877b9c3017e94d7a62f36b5f99fdd4cd261efb828954ad871e",
+    "final_physical_closure_sha256": "8ae4eba220354e4114a967c0fb4f669803ae882ed03bec4bdc1d4e93f8a42360",
+    "case_sha256": "591ef16c1e1ebd69d25d37bd1c322bf57a819fef02dfb64819c4a6f18b627924",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "owner_mandate_sha256": "c3592c55faf67bd079c2995157b954673778ca85f07690121119b573ebe99a66",
+    "original_authority_sha256": "7ac4b5cb16fcde549216ce641a7c310c37977d3edda62f947f8a33a34042ac74",
+    "prospective_authority_sha256": "b857b3fb4e9c67307f0d7cb85fb19721988c4fd196a54b4fe19b67b004ddb5f0",
+    "original_eva2_deadline_sha256": "e752070d1150cc0ce4b15da3dd4559e115ab48a3b6c483bcd0493658b92fd86b",
+    "executed_openclaw_observer_sha256": "b2f0ac690d4ab2f91ae19708470367abf6a48b0219e4190141bc0f946e7d6fcc",
+    "independent_private_review_sha256": "7331741fc300edbb6e91508c6b136efb88afd75a3a3ae88eb108d93b1c9fa42f"
+  },
+  "public_evidence": {
+    "result": {
+      "path": "eva2/evidence/product/p2-xd01-prospective-pair-result-20261008.json",
+      "sha256": "e62ecddc54b31c2283343ad7adcf0cee5d1e655254a3ca05cfe892c3efb931e1"
+    },
+    "identity_transition": {
+      "path": "eva2/evidence/product/p2-xd01-identity-startup-transition-20261008.json",
+      "sha256": "e31266523b60acd09692acd541b3f14f78e4053ba397bcbf4f225ab21a329425"
+    }
+  },
+  "terminal_findings": {
+    "eva2": {
+      "original_input_sent": false,
+      "tracked_sdk_attempts": 0,
+      "tracked_tools": 0,
+      "raw_parent_complete": false,
+      "raw_total_usage": "UNKNOWN/null; observed registered lower bound 0 retained separately",
+      "failures": "Outer budget-scope KeyError, then native UID identity-read PermissionError/ValueError; evaluator preparation faults before task input.",
+      "same_row_preinput_continuation": true,
+      "row_revision": 6,
+      "deadline_reset": false,
+      "second_continuation_started": false
+    },
+    "openclaw": {
+      "original_input_sent": true,
+      "completed_turns": 0,
+      "sdk_attempts": 6,
+      "sdk_all_completed": true,
+      "roles": "Six contact Sol/none; no helper dispatch recorded",
+      "input_tokens": 192031,
+      "output_tokens": 388,
+      "total_tokens": 192419,
+      "recorded_settled_tools": 2,
+      "tool_coverage": false,
+      "native_closed": false,
+      "equivalent_native_settled": false,
+      "physical_cleanup": true,
+      "pending_sdk": 0,
+      "pending_tools": 0,
+      "failure": "Evaluator rejected a reserved MCP terminal preceding its matching post hook; no task completion or participant loss inferred."
+    },
+    "historical_authority_unchanged": true,
+    "historical_unknown_rows": 3,
+    "prospective_exact_two_rows_revisions": [
+      6,
+      14
+    ],
+    "original_deadline_expired": true,
+    "physical_scope_cleanup_verified": true,
+    "objective_completion": "UNKNOWN",
+    "human_ratings": [
+      null,
+      null
+    ],
+    "quality_winner": "UNKNOWN"
+  },
+  "source_corrections": {
+    "openclaw": {
+      "source_sha256": "284e82ee6567421a6fc30c6075f19c461ea08868818219e7dba85fc5682b99e2",
+      "existing_test_sha256": "54ace848260e30a386227f511ccbd15f75166161169c0e28c7144318a7c5dee7",
+      "new_order_identity_test_sha256": "f558c9b40b2711fbef2374c155c3708e11a055c2e57d0377dc7ba04da96823f5",
+      "empirical_identity_binding_sha256": "bc8a51ed96c60e641405552ecae6ff0788523ab26264af5e1d1020887238c449",
+      "scope": "Only exact observed codex_apps/plugin_management.search_plugins rendering through the pinned native normalizer. Matching admitted item/thread/turn/status terminal may settle before post; task success is not inferred. Unknown mappings/mismatches/changed terminals remain rejected; counters, caps, SDK guards and native lifetime checks unchanged.",
+      "focused_tests": {
+        "passed": 39,
+        "skipped": 4,
+        "total": 43,
+        "log_sha256": "1f83b4d50d98efd44a0f811d553366bbe47251d127ec74fbd086dda53f0e9286"
+      },
+      "isolated_actual_pinned_relay_load": {
+        "passed": 1,
+        "model_calls": 0,
+        "log_sha256": "680b313230c7236d83c7104d2d1b034a1610a28baaa4758d1051c80cc542f5d3"
+      },
+      "earlier_cache_TDZ_and_digest_diagnosis_issues_retained": true,
+      "no_whole_native_suite_or_MCP_family_claim": true
+    },
+    "eva2": {
+      "outer_scope_source_sha256": "2b0ee2dc275df4a247e70e78cb8171a28a477dd93e41f4ec8abdb99afbd3c7f1",
+      "readonly_identity_mount_source_sha256": "99f1a08cad66a0d1f584e32a3a896157ff9511d6f82428a9e278f7dd84ade08a",
+      "native_uid_read_check_sha256": "61efd331c2a7ec61a363bc7e2c52385e3dfce935405058f53bc205fb0d9a296c",
+      "installed_native_identity_transition_proof_sha256": "e31266523b60acd09692acd541b3f14f78e4053ba397bcbf4f225ab21a329425",
+      "scope": "Retain original outer tenant/install IDs and mount only byte-identical staged trust/current files read-only. Exact installed core identity loader under UID1000:65532 verifies the unchanged pack; no policy, key, model or product-source change.",
+      "full_factory_lifespan_or_original_task_proven": false,
+      "new_input_sdk_or_ledger_rearm_in_transition_check": false
+    }
+  },
+  "publication_limits": [
+    "No product loss, quality/speed/efficiency/autonomy winner, completed P2.1, or general superiority.",
+    "E original release preceded O; zero-input E continuation followed O closure using the same original row/deadline. Do not describe uninterrupted E-to-O native dispatch.",
+    "Fixture readiness evidence was actual PID + LISTEN80 + ready file; no reviewer HTTP/auth probe.",
+    "Historical raw Mounts mismatch remains unexplained; only separately verified current destination-map binding is claimed.",
+    "New correction source is not retrospectively attributed to executed results and does not admit another sample.",
+    "Development effort/monetary credits and human quality remain UNKNOWN."
+  ],
+  "review_activity": {
+    "new_provider_calls": 0,
+    "new_native_runs": 0,
+    "new_tests": 0,
+    "protected_questions_answers_or_oracles_read": false,
+    "canonical_source_or_registry_mutation": false
+  },
+  "privacy": {
+    "content_free": true,
+    "protected_questions_answers_or_oracles": false,
+    "credentials_or_request_bodies": false
+  }
+}
