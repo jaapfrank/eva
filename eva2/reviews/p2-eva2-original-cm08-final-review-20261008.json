@@ -1,0 +1,138 @@
+{
+  "bindings": {
+    "assessment_declassification_sha256": "686a44c817f8322da34c72e547eb9eb29a486ea81cf998335643f6f34f2a3c05",
+    "final_index_sha256": "6d995de72872f7379de20d39bbcc882560c3b8b2c7d955814ed7b33407768927",
+    "original_case_sha256": "ad606124612441d4f0fd84abcfdf3e3930fcf07bec8da3ea20078244abf23dbb",
+    "original_plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "original_scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "physical_closure_sha256": "6a034fd39a5aa19476585a31d065a0427f67e36069dfa8bd8b39542eb575f5b6",
+    "projection_equality_sha256": "a304cb7151ffe96cf7e731ba1dd2b4aa6a91bee4f337e0996e6e0747df80ef25",
+    "public_result_sha256": "955c8a4485ab25faeb955efecc602c141d253dc8d9c8ace4685def325ff67055",
+    "retained_eva1_openclaw_result_sha256": "df20c4f9e8a35d4096b839b74a2fecafe751ac894f2968b7e25cc671aa4bb5ca",
+    "retained_hermes_result_sha256": "873e57207c60e2cdd91d2557f3651eab0070cd63b030e6315e9f40e167431ddb",
+    "retention_sha256": "d3ef5dbfe2845a3272fb02b20779044dca45a3759206f342f8d5a494f86d7dc3",
+    "terminal_technical_sha256": "c0de50bbaf1a9e606395093d850309b0b4d87d9c9fe739c04f727e82ee039465"
+  },
+  "contract": "IndependentCurrentEva2OriginalCM08TerminalPublicationReview/v1",
+  "decision": "GO_TERMINAL_AND_SCOPED_PUBLICATION_ONLY",
+  "entry": "eva2:EV003-CM-08:epoch1",
+  "findings": [],
+  "independent_technical_checks": {
+    "actual_model_effort_counts": {
+      "contact_gpt6sol_none": 4,
+      "helper_gpt6astra_medium": 8
+    },
+    "actual_native_audience_private_person": 12,
+    "actual_readonly_absence_of_four_owned_containers_network_parent_inspect": true,
+    "all12_captured_body_hashes_attempt_turn_correlations_exact": true,
+    "all12_private_principal_scope_conversation_bindings_equal_corresponding_turn": true,
+    "all31_prior_raw_rows_revisions_metadata_exact": true,
+    "all3_actual_canonical_static_body_hashes_equal_pre_reviewed_policy": true,
+    "all3_worker_local_settled_close_ack_no_errors": true,
+    "authoritative_parent_complete_no_pending": true,
+    "cleanup_errors": [],
+    "current_rows": 32,
+    "only_new_original_CM08_row": true,
+    "public_index_references_all_exact": true,
+    "public_index_unique_reference_hashes_checked": 28,
+    "retained_comparator_objects_identical": true,
+    "retained_references_all_exact": true,
+    "retained_references_checked": 203
+  },
+  "limitations": [
+    "The fixed original CM08 predicates support a bounded advantage for current Eva2 on this one late-recall case; not general superiority, household acceptance, whole quality or full P2.1 completion.",
+    "Technical durable readback and actual late use are separate evidence. All retained comparators also pass both technical readbacks.",
+    "One extra delegated work item remains failed with incomplete_work; its three SDK calls and two tools are already counted once in the twelve/three totals. Automatic failure delivery is UNKNOWN. No claim that all delegated work succeeded.",
+    "A native memory chronology ambiguity remains; passing fixed predicates does not prove flawless temporal precision.",
+    "Post-close child mirror accounting-unknown strings are preserved separately from the complete authoritative parent usage/ACK evidence; no new missing provider usage is inferred.",
+    "The export-only private-to-private_person assertion correction is confirmed by all twelve actual capture bindings; original execution/evidence/scorer remain unchanged.",
+    "Different elapsed boundaries and failed retained comparator tasks forbid a common speed/efficiency-win ratio. Money/development credits and human quality remain unknown.",
+    "No new product function, comparison matrix, criteria change, next sample selection, admission or execution is granted."
+  ],
+  "observed_sample_resources": {
+    "deadline_exhausted": false,
+    "input_tokens": 41128,
+    "memory_settled_turns": 3,
+    "native_responses": 3,
+    "new_missing_usage": false,
+    "original_deadline_seconds": 480,
+    "output_tokens": 1834,
+    "sdk_attempts": 12,
+    "sdk_complete": true,
+    "seconds": 175.6429816359887,
+    "timing_boundary": "Original monotonic start before three native workers boot to final readback immediately before stop; other retained timings use explicitly different boundaries.",
+    "tools": 3,
+    "total_tokens": 42962
+  },
+  "original_assessment": {
+    "declassified_late_experience_and_preference_used": true,
+    "eva2_factual_response_predicates": [
+      true,
+      true,
+      true
+    ],
+    "eva2_fixed_conditions": [
+      true,
+      true,
+      true
+    ],
+    "eva2_objective_completion": true,
+    "eva2_required_readbacks": [
+      true,
+      true
+    ],
+    "fixed_conditions_are_casewide_not_new_turn_scores": true,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "official_semantic_score": null,
+    "original_readback_spec_sha256": [
+      "090b800d594661a7b23a02aef37e6463f5653bf801cab2eda05e0fb5f3bb56e9",
+      "734e710dbc5cfdb8636a21976954c4ddcbab58d5de72e11d0b69317d4e47d8b4"
+    ],
+    "protected_original_questions_or_reply_or_oracle_text_read_by_reviewer": false,
+    "retained_comparator_factual_response_predicates": [
+      true,
+      true,
+      false
+    ],
+    "retained_comparator_fixed_conditions": [
+      false,
+      true,
+      false
+    ],
+    "retained_comparator_objective_completion": false,
+    "retained_comparator_required_readbacks": [
+      true,
+      true
+    ],
+    "whole_case_quality": "UNKNOWN"
+  },
+  "preserved_cumulative_accounting": {
+    "complete_total_tokens": null,
+    "historical_full_reservations_and_unknown_unchanged": true,
+    "historical_usage_missing_attempts": 3,
+    "historical_usage_unknown_rows": 2,
+    "known_input_tokens_lower_bound": 2681892,
+    "known_output_tokens_lower_bound": 23283,
+    "known_total_tokens_lower_bound": 2705175,
+    "new_sample_envelope_exceeded": false,
+    "provider_attempts": 210,
+    "rows": 32
+  },
+  "prior_reviews_reused": {
+    "actual_boot": "7485ca67e39a255c777f62cd053c2d35e447ed758b5fe9e2b217a5c0ac81d1d7",
+    "conditional_program": "81611053581bd0170e34b18119beca5dc843f24d16e9d5800312051ccea89ddc",
+    "resource_continuation": "be10596af6a212ec65faf9644bcae06e129073f836afbc5fb833917b121b8b1e",
+    "source_resource": "00182ba1cbe79673d9e9747c8e146ccac3f81e492372e3a78fb9ebe201a98e29"
+  },
+  "publication_claims_allowed": [
+    "All three fixed original CM08 conditions and both required readbacks passed for this current Eva2 execution.",
+    "Exact retained Eva1/OpenClaw/Hermes CM08 results remain unchanged and fail the whole fixed objective.",
+    "Complete source-bound accounting and native/process/resource closure; historic UNKNOWN/full reservations retained."
+  ],
+  "reviewed_at": "2026-10-08T17:30:18.979367+00:00",
+  "reviewer_model_tool_or_resource_execution_calls": 0,
+  "scope": "One current Eva2 original CM08 epoch1 matched to unchanged retained Eva1/OpenClaw/Hermes CM08 results; no comparator replay, new admission or next case."
+}

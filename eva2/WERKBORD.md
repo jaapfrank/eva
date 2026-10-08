@@ -1,38 +1,46 @@
-## Actueel 8 oktober — CM08 en XD02 gesloten; geen algemene voorsprong bewezen
+## Actueel 8 oktober — één geheugenvoordeel bewezen; volledige Eva blijft open
 
-Hermes is één keer op de oorspronkelijke CM08-geheugentaak uitgevoerd en onafhankelijk
-beoordeeld naast behouden Eva1/OpenClaw. Alle drie bewaren de ervaring in historie,
-maar gebruiken haar niet bij de vraag na tien gesimuleerde dagen. Alle drie: 3/3
-antwoorden, 2/3 feitelijk, 1/3 vaste voorwaarden en 2/2 bron-/tracecontroles. De
-volledige taak faalt; opgeslagen informatie bewijst geen latere herinnering. Eva2
-is op deze taak nog niet gematcht. Menselijke/volledige kwaliteit blijft UNKNOWN.
+Huidige Eva2 is één keer op dezelfde oorspronkelijke CM08-geheugentaak uitgevoerd
+als de behouden Eva1/OpenClaw/Hermes. Eva2 gebruikt de eerdere ervaring en voorkeur
+na tien gesimuleerde dagen in een nieuwe sessie: 3/3 feitelijk, 3/3 vaste voorwaarden
+en 2/2 bron-/tracecontroles. De drie referenties: 2/3 feitelijk, 1/3 vaste voorwaarden
+en 2/2 controles; zij halen de ervaring later niet terug. Alleen dit beperkte
+geheugenvoordeel is bewezen. Menselijke/volledige kwaliteit blijft UNKNOWN.
 
-Hermes: 7 volledige modelaanvragen (5 Sol/none, 2 Astra/medium), 18.001 tokens,
-2 tools en 21,43 seconden. Eva1: 6 aanvragen/37.179 tokens/28,77s; OpenClaw:
-11/266.395/92,41s. Meetgrenzen en modelrollen verschillen; goedkoper niet-afronden
-bewijst geen efficiëntiewinst. Credits/geld onbekend. Eigen proefresources gesloten;
-alle 30 oude rijen/revisions/metadata exact behouden. Nu 31 rijen/198 aanvragen,
-bekende ondergrens 2.662.213 tokens; drie oude verbruiksonbekende pogingen blijven staan.
+Eva2: 12 volledige modelpogingen (4 Sol/none-contact, 8 Astra/medium-helpers),
+42.962 tokens, 3 tools, 175,64s vanaf vóór drie-workeropstart tot laatste teruglezing
+vóór stoppen. Eva1: 6/37.179/28,77s; OpenClaw: 11/266.395/92,41s; Hermes:
+7/18.001/21,43s. Modelrollen en meetgrenzen verschillen; geen causale architectuur-,
+snelheids- of efficiëntiewinst bij identieke rollen bewezen. Credits/geld onbekend.
 
-Bewijs: `eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json`.
-Review: `eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json`.
+Eén extra gedelegeerde geheugenopdracht mislukte met incomplete_work; het
+verbruik is inbegrepen. Een geheugenrecord bevat tijdsambiguïteit. Geen foutloos
+geheugen of afgerond extra werk. Alle eigen proefprocessen/containers/netwerk
+zijn afgesloten. Alle 31 oude rawwaarden/revisies/metadata en volledige reserveringen
+blijven exact; nu 32 rijen/210 aanvragen, bekende ondergrens 2.705.175 tokens.
+Drie oude verbruiksonbekende pogingen in twee rijen blijven onbekend.
 
-De vorige matching XD02 blijft geldig: OpenClaw maakt de vaste opdracht af (3/3,
-beide wijzigingen teruggelezen); Eva2 en Hermes halen 1/3, geen bedoelde wijziging.
-Eva2 onderzocht beschikbare gewone toegang onvoldoende. Gerichte broncontrole
-vindt geen bewezen ontbrekende toolaansluiting; geen speculatieve productwijziging.
-Bewijs: `eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json`.
+Bewijs: eva2/evidence/product/p2-eva2-original-cm08-result-20261008.json.
+Review: eva2/reviews/p2-eva2-original-cm08-final-review-20261008.json.
+
+De eerdere Hermes/Eva1/OpenClaw-CM08-resultaten en matching XD02 blijven geldig.
+XD02: OpenClaw 3/3 met beide wijzigingen teruggelezen; Eva2/Hermes 1/3 zonder
+bedoelde wijziging. Geen bewezen ontbrekende toolaansluiting; geen speculatieve
+productedit of herhaalde proef.
+Historisch CM08-bewijs: eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json.
+XD02-bewijs: eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json.
 
 P2.1 blijft open voor oorspronkelijke resterende dekking en twee echte menselijke
-beoordelingen. CM07 mist een toegelaten gematchte gedeelde-audienceroute; matching
-Eva2-CM05/06/08 en latere families/epochs ontbreken. Ongebruikte slots zijn niet
-voltooid of bewezen onuitvoerbaar. Bind een volgend concreet vervolg vooraf aan
-originele criteria en bestaand mandaat; geen gesloten proef opnieuw, brede matrix,
-nieuwe taak-ID of voorbeeldspecifieke kernregel. Geen volgende uitvoering geselecteerd.
+beoordelingen. Eva2-CM05/06 en latere families/epochs ontbreken; CM07 mist een
+toegelaten gematchte gedeelde-audienceroute. Ongebruikte slots zijn niet voltooid
+of bewezen onuitvoerbaar. Geen volgende uitvoering geselecteerd of toegelaten
+door deze publicatie; bind een concreet vervolg vooraf aan oorspronkelijke
+criteria en bestaand mandaat. Geen comparatorherhaling, brede matrix of nieuwe taak-ID.
 
 Vier huisgenootuitkomsten, 39/48 kleine afrondingen en L3.4–L3.7 blijven behouden.
-AIDE² uitsluitend voor Eva2 en haar uitbreidingen; spraak geparkeerd. Eva gebruikt
-zelfstandige WSL-Docker, geen Docker Desktop; geen Desktopherstel uitvoeren.
+Dit is vergelijkingsbewijs van bestaande Eva2, geen nieuwe afgeronde productfunctie.
+AIDE² uitsluitend voor Eva2 en haar uitbreidingen; spraak blijft geparkeerd.
+Eva gebruikt zelfstandige WSL-Docker, geen Docker Desktop; geen Desktopherstel.
 
 ## Historische momentopname vóór het matching vervolg — native aansluiting bewezen
 
