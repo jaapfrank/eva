@@ -1,0 +1,102 @@
+{
+  "contract": "EvaEndpointRoleInstalledIndependentReview/v1",
+  "recordedAt": "2026-10-08T20:53:38.191592+00:00",
+  "reviewer": "independent_source_and_runtime_reviewer",
+  "task": "P2.1",
+  "decision": "GO_INSTALLED_METADATA_CORRECTION_AND_BOUNDED_PUBLICATION",
+  "scope": "Exact three-module endpoint-role/context correction in the existing core and delegated worker; one image-only updater outcome. No model or comparison trial.",
+  "frozenSourceReview": {
+    "path": "eva2/reviews/p2-endpoint-role-source-review-20261008.json",
+    "sha256": "784fe9d1c43317b61b6acb2bcab62ce1c4f93baba5552fca83bcc3b11807cea6",
+    "commit": "5891a0f98a7a472fe1d964af72a848a6b6424d13",
+    "committedAndWorkingBytesEqual": true,
+    "unchangedByThisReview": true
+  },
+  "evidence": {
+    "prebuild-binding.json": "4c10cd6655db12fb1cadada5502cb79851105ee729d5a395dd36bc999de3ef59",
+    "build.json": "732e89db364f506b8c12267b3472f7fbb5b16e12e8f882260459c65197f4b684",
+    "package-verification.json": "3b1064a784196114c6dfd7cc6141d74cb3bd6bc44cf1018e99dcd751538aa6e0",
+    "focused-tests.json": "b37eda2cd4cae99fe400fd66b016700b032bb359a5d7697e29bceed824a29fda",
+    "installed-compose.private.json": "1b669914460a8385552b9ddc605ffc3e5ac30606f349380fe5e5c91d539d2d74",
+    "candidate-compose.private.json": "41d34c188336de729f59fbec1a5372f55c9ccb64fbd512d8309c8ef8be7ad46f",
+    "update.private.json": "c7e9d59117fe1b794be01bc21235558cc672d05b5da393d6136ea2f921615b2a",
+    "installed-readback.json": "14447c93e2955885433a5d16086411af5a7358dfc1e25c1f38dcb0200d0ccf6a"
+  },
+  "approvedPublicReport": {
+    "path": "eva2/evidence/product/p2-endpoint-role-installed-20261008.json",
+    "reviewedPendingVersionSha256": "e7c108a40d3dd7dfdc8701ab015ee1f3ee7e101edfdfa42351ba9b507d034a0e",
+    "claimsBoundedAndSanitized": true,
+    "finalization": "May change pending status and add this review reference/hash; retain the reviewed outcome, usage qualifications and limits."
+  },
+  "installedSourceHashes": {
+    "adapters/postgres/mcp_connector_registry.py": "f70c007717ce3fae21c0df12792f45cf08cb3ed629b4a63e21b0aca6ef3768d1",
+    "providers/mcp_registration.py": "fde75e8d2b9ac567d9004af4c30811eb944de6d70bba366b12bdb0df27edba19",
+    "bootstrap/background_browser_context.py": "3c841b8902f3d2127b0940fda3199fb44b0ba652ea3da11b3442e439053be7e6"
+  },
+  "managedRuntimeModuleSha256": "45af7c238bc6b623f0eb5036812649fed7b0e5991fab1640568f4988285a9252",
+  "installedServices": {
+    "core": {
+      "containerId": "f1eb568a6517384807d755895b904120006b0530aacd7e4c6a784a49ea3a53bf",
+      "image": "sha256:e4de9d36540c3a6f576303b9215c952b7d1e9836b897c7d58a212448e10177dc",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "actualModuleHashesMatchReviewedPackages": true,
+      "retainedBrowserConfigured": true,
+      "retainedAvailabilityUnavailable": false,
+      "retainedTransportGuidancePresent": true,
+      "retainedOwnerControlGuidancePreserved": true
+    },
+    "delegated-work-worker": {
+      "containerId": "750b89944426cd822b00e05fc5cbd9d4a27ae8941ccdc3233a8d00206a94d46a",
+      "image": "sha256:d818823f15d3b15aa66d3002826b0e4ce5b3bbbc8227a2e104482e61eb227a98",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "actualModuleHashesMatchReviewedPackages": true,
+      "retainedBrowserConfigured": true,
+      "retainedAvailabilityUnavailable": false,
+      "retainedTransportGuidancePresent": true,
+      "retainedOwnerControlGuidancePreserved": true
+    }
+  },
+  "independentRuntimeBinding": {
+    "currentContainerIdsAndImageIdsMatchUpdatePackageAndReadback": true,
+    "composeDifferenceOnlyTwoServiceImageFields": true,
+    "allOtherComposeValuesEqual": true,
+    "entireEnvironmentMapsMatchImageDefaultsPlusRetainedCompose": true,
+    "commandEntrypointUserReadonlyCapabilitiesSecurityLabelsAndNetworksPreserved": true,
+    "mountDestinationMapsIncludingEveryOriginalMountFieldEqual": true,
+    "rawMountArraysEqual": false,
+    "rawMountDifferenceProvenOnlyArrayOrder": true,
+    "mountsMatchRetainedComposeAndSameDataSources": true,
+    "actualInstalledModuleAndManagedRuntimeBytesReadWithoutImportOrDispatch": true,
+    "packageProofReused": "Both exact parent-image overlays contain only the three reviewed changes; 332 other Python source files per image and the managed runtime variant remain preserved.",
+    "browserContextReadback": "Retained actual configured_browser_client/BackgroundBrowserContext readback in both installed containers reports configured/reachable browser and the reviewed transport/owner-control guidance; reviewer did not repeat that application readback."
+  },
+  "validation": {
+    "focusedExistingTestsReused": 88,
+    "seconds": 7.43,
+    "exitCode": 0,
+    "reviewerNewTests": 0,
+    "newNativeTrials": 0,
+    "newComparisonCalls": 0,
+    "manualRuntimeModelCalls": 0,
+    "reviewerModelCalls": 0,
+    "runtimeAutonomousUsage": "not_measured_by_this_delivery",
+    "developmentCredits": null,
+    "updateStatus": "running_with_retained_mounts",
+    "completedImageOnlyUpdaterDispatches": 1,
+    "dependencyDownloads": 0,
+    "rollbacks": 0
+  },
+  "findings": [],
+  "limits": [
+    "GO covers source/package/runtime availability and publication of this metadata/context correction. Better destination choices or successful independent end-to-end work have not been newly measured.",
+    "Retained per-service modelCalls=0 describes the manual readback, not total autonomous runtime usage.",
+    "Configuration and data mount sources are retained; this review does not claim all mutable data bytes stayed static during normal runtime.",
+    "Original closed losses, UNKNOWNs, criteria, reservations and comparison results remain unchanged. No replay, new sample or broader matrix is authorized here.",
+    "P2.1 remains open. This technical review does not complete a product task, change the 39/48 count, or prove human quality or general superiority.",
+    "Private environment values, mount paths and access material were compared without publishing them. No original task input, answer or oracle was read."
+  ]
+}

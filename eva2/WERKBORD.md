@@ -1,3 +1,22 @@
+## Actueel 8 oktober — adresduiding in zelfstandige uitvoering geïnstalleerd
+
+De behouden XD02/XD03-traces tonen beschikbare uitvoering en browserontdekking,
+maar daarna navigatie naar een MCP-transportorigin. De bestaande connectorinformatie
+maakt transport-/registratieadressen nu expliciet anders dan taakbestemmingen.
+Drie bestaande modules aangepast; geen nieuw platform, netwerkverruiming of voorbeeldfunctie.
+
+De correctie is in kern en werker geïnstalleerd en onafhankelijk gecontroleerd:
+88 gerichte bestaande tests, exacte modulehashes, beide diensten gezond,
+332 andere Python-bronbestanden per image plus configuratie/mounts/gegevens behouden.
+Geen nieuwe handmatige Eva-modelaanvragen of vergelijking. Beter modelgedrag is
+hiermee nog niet aangetoond; oude verliezen/UNKNOWN en 39/48 afrondingen blijven staan.
+P2.1 blijft open. Bind een volgend werkelijk resterend oorspronkelijk vervolg
+concreet aan criteria en bestaand mandaat; geen gesloten proef herhalen of brede matrix.
+Spraak blijft geparkeerd; ongebruikte Docker Desktop blijft ongemoeid.
+
+Bewijs: eva2/evidence/product/p2-endpoint-role-installed-20261008.json.
+Review: eva2/reviews/p2-endpoint-role-installed-review-20261008.json.
+
 ## Actueel 8 oktober — twee beperkte geheugenvoordelen; uitvoeringstekorten blijven
 
 ## Afgesloten XD03-pair 8 oktober — zelfstandig werk en proefconfiguratie
