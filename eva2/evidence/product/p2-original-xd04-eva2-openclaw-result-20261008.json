@@ -1,0 +1,248 @@
+{
+  "ai_judge_used": false,
+  "case_id": "EV003-XD-04",
+  "case_sha256": "eb4ed3d82abaa5d72ccc1d2a668edcc8e19593813bac83fb1a217debf0c4de7d",
+  "closure": {
+    "both_networks_and_parents_absent": true,
+    "eva2_native_containers_absent": 10,
+    "openclaw_fixture_listeners_exited": 3,
+    "openclaw_native_container_absent": 1
+  },
+  "comparison": {
+    "clarification_adequacy_not_assessed_by_fixed_effect_predicates": true,
+    "different_observed_resource_discovery_outcomes": true,
+    "efficiency_advantage_claimed": false,
+    "fixed_effect_conditions_equal": true,
+    "general_superiority_claimed": false,
+    "model_role_compliance_is_separate_from_original_date_conflict": true,
+    "neither_participant_completed_fixed_effect_task": true,
+    "original_fixture_time_conflict_preserved": true,
+    "role_matched_pair_eligible": false,
+    "valid_pair_ranking": false,
+    "winner": null,
+    "work_model_protocol_mismatch": "OpenClaw performed task work in its main Sol/none contact loop; the original work/helper role is Astra/medium. Native contact labeling does not make those work steps simple contact."
+  },
+  "contract": "P2OriginalXD04SequentialPairResult/v1",
+  "cumulative_usage": {
+    "known_input_tokens_lower_bound": 4158191,
+    "known_output_tokens_lower_bound": 30987,
+    "known_total_tokens_lower_bound": 4189178,
+    "recorded_sdk_attempts": 273,
+    "total_tokens": null,
+    "usage_complete": false
+  },
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "development_credit_cost": null,
+  "epoch": 1,
+  "evidence": {
+    "coverage": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/p2-authority-coverage-xd04-20261008.json",
+      "sha256": "635d7a0f1124802798c1d776f152a1a525439afaf2306b3b4086e31ead7d6a07"
+    },
+    "eva2_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/eva2/original-assessment.private.json",
+      "sha256": "4d6a9fea2b1d24c9bafb64987cd3cac2a190db3aba2729ae37bfc71f49047a60"
+    },
+    "eva2_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/eva2/terminal-technical.private.json",
+      "sha256": "39e8169f3bfe982117d95989509b7f3d33600df2edfaaf60dd50f8f1c7a72fd1"
+    },
+    "eva2_tool_chain": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/eva2/tool-chain-declassified.private.json",
+      "sha256": "b61dfe10c961042d3b76bc057e879d89d32ccba6a8463607cb14b2daa89b47df"
+    },
+    "model_role_qualification": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/model-role-eligibility-qualification.private.json",
+      "sha256": "29a7e87ac27264620ed5f8c0e42a954bbf470f3a1d65dd1de59e2bbd0469dd0e"
+    },
+    "openclaw_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/openclaw/original-assessment.private.json",
+      "sha256": "eec24adb57e42d19584944966e31cb7212b6c72669bdc86607a833848a55a4e2"
+    },
+    "openclaw_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/openclaw/terminal-technical.private.json",
+      "sha256": "e1ed61ca343669d62408541d3b3db7261b78ca1a01b62b17188bc0464ed41fa3"
+    },
+    "original_unqualified_export_preserved": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/pair-result.public.json",
+      "sha256": "ade3c8d0fd116074db6747b2a3edbb7bc577d332912a85db1397109a3158af59"
+    },
+    "root_prelaunch_correction": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd04-eva2-openclaw-20261008-v1/root-openclaw-prelaunch-check-correction.private.json",
+      "sha256": "94217762e98502dbff47351a155f60419284fbd82a6219ab920b61699bbbd872"
+    }
+  },
+  "family": "cross_domain_actions",
+  "future_execution_admitted": false,
+  "historical_retention": {
+    "all_original_full_reservations_preserved": true,
+    "all_prior_raw_values_revisions_metadata_preserved": true,
+    "final_registered_rows": 38,
+    "old_missing_usage_attempts": 3,
+    "old_usage_unknown_rows": 2,
+    "prior_original_rows": 36,
+    "prior_rows_before_openclaw": 37,
+    "reset_or_rearm_or_replay": false
+  },
+  "human_ratings": {
+    "eva2": [
+      null,
+      null
+    ],
+    "openclaw": [
+      null,
+      null
+    ]
+  },
+  "limits_per_participant": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "speechRequests": 0,
+    "toolDispatches": 70,
+    "wallSeconds": 840
+  },
+  "model_roles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "model_roles_describe_original_manifest_mapping_only": true,
+  "new_task_or_product_function_claimed": false,
+  "original_criteria_unchanged": true,
+  "original_input_texts_unchanged": true,
+  "p2_1_complete": false,
+  "pair_runtime_usage": {
+    "complete": true,
+    "input_tokens": 1376578,
+    "output_tokens": 4676,
+    "sdk_attempts": 42,
+    "tool_dispatches": 32,
+    "total_tokens": 1381254
+  },
+  "participants": {
+    "eva2": {
+      "all_three_fixture_states_unchanged": true,
+      "classification": "valid_bounded_product_noncompletion",
+      "fixed_conditions_passed": 1,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        false,
+        false,
+        true
+      ],
+      "fixture_effects": 0,
+      "fixture_requests": 0,
+      "human_help_provided": 0,
+      "independent_readbacks": [
+        false,
+        true
+      ],
+      "native_turns_completed": 1,
+      "objective_conditions_met": false,
+      "original_input_delivered": true,
+      "physical_closure_complete": true,
+      "resource_offer": "Available through ordinary discovery and admitted browser context. Actual navigation selected the internal tool transport endpoint rather than the original fixture services; navigation was rejected.",
+      "timing": {
+        "first_content_seconds": null,
+        "foreground_seconds": 8.430901504994836,
+        "parent_to_stop_seconds": 138.32336560002295,
+        "sample_seconds": 138.32332817302085,
+        "scope": "Original absolute clock before native boot through parent stop request; physical close separately retained",
+        "settled_seconds": 59.284743397001876
+      },
+      "usage": {
+        "actual_roles": {
+          "contact/gpt-6-sol/none": 1,
+          "helper/gpt-6-astra/medium": 8
+        },
+        "capture_count": 9,
+        "captures_complete": true,
+        "complete": true,
+        "input_tokens": 70545,
+        "output_tokens": 1495,
+        "sdk_attempts": 9,
+        "source_bound_tool_cap": 70,
+        "speech_requests": 0,
+        "tool_dispatches": 6,
+        "total_tokens": 72040
+      },
+      "work_error_code": "incomplete_work",
+      "work_outcome": "failed"
+    },
+    "openclaw": {
+      "all_three_fixture_states_unchanged": true,
+      "classification": "observed_fixed_noncompletion_with_work_model_protocol_mismatch_and_source_ambiguity",
+      "fixed_conditions_passed": 1,
+      "fixed_conditions_required": 3,
+      "fixed_outcomes_are_observations_not_eligible_matched_quality_scores": true,
+      "fixed_predicates": [
+        false,
+        false,
+        true
+      ],
+      "fixture_effects": 0,
+      "fixture_requests": 115,
+      "fixture_status_counts": {
+        "200": 10,
+        "401": 3,
+        "404": 102
+      },
+      "human_help_provided": 0,
+      "human_help_requested": true,
+      "independent_readbacks": [
+        false,
+        true
+      ],
+      "native_turns_completed": 1,
+      "noncompletion_does_not_establish_wrong_action": true,
+      "objective_conditions_met": false,
+      "observed_behavior": "Reached all three service schemas and records, identified an original request/source date conflict, asked for clarification and performed no effects.",
+      "original_input_delivered": true,
+      "original_work_model_protocol_compliant": false,
+      "physical_closure_complete": true,
+      "role_matched_comparator_eligible": false,
+      "timing": {
+        "elapsed_seconds": 154.1022581710131,
+        "scope": "Original parent clock before native child launch through child process return; physical cleanup separately retained",
+        "wall_expired": false
+      },
+      "usage": {
+        "actual_roles": {
+          "contact/gpt-6-sol/none": 33
+        },
+        "complete": true,
+        "input_tokens": 1306033,
+        "native_tool_dispatches": 26,
+        "output_tokens": 3181,
+        "physical_context_count": 33,
+        "sdk_attempts": 33,
+        "speech_requests": 0,
+        "total_tokens": 1309214
+      }
+    }
+  },
+  "participants_order": [
+    "eva2",
+    "openclaw"
+  ],
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "preparation_and_review_limitations": [
+    "OpenClaw normal resource-admission finalization missed the Inspect-active flag; refusal occurred before native resources, slot, input or clock. Earlier review missed the metadata binding.",
+    "A copied historical-authority constant referenced an older authority; refusal occurred before native resources, slot, input or clock. Source review missed the literal-to-current-binding mismatch.",
+    "Both errors and reviews remain immutable. Narrow corrected copies passed the complete existing source/admission and Inspect startup conditions before the one real native execution.",
+    "Curator export-only assertions were corrected for Docker diagnostic letter case and nested parent total_usage; no runtime or original result was repeated.",
+    "Original request/source temporal inconsistency remains unchanged; fixed effect noncompletion does not score the appropriateness of requesting clarification.",
+    "Earlier source/input review accepted structural contact/helper labels without enforcing the original semantic work-model rule for the OpenClaw main loop; this role eligibility miss is retained.",
+    "Root corrected a prelaunch admission-field assertion before starting a process; this caused no native calls or resource/clock mutation."
+  ],
+  "purpose": "Original useful action across three admitted services with scoped recipients and privacy.",
+  "runtime_cost_currency": null,
+  "status": "closed_observations_with_openclaw_work_model_protocol_mismatch_and_fixture_ambiguity",
+  "whole_quality": null
+}

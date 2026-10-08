@@ -1,0 +1,206 @@
+{
+  "approved_sha256": {
+    "coverage": "635d7a0f1124802798c1d776f152a1a525439afaf2306b3b4086e31ead7d6a07",
+    "declassification": "4c113fd73b7e1909aed9812b7ac0e72cfffc63649069e1fa050eb0c4462fcfa6",
+    "index": "019da51ae22983af5877785918ac7c67b2a0e3defb3603f27a3bcc6562ae16dd",
+    "result": "56cf49653fb52cc3387c9029e30310a7e783028510b47f9798bd0b1737d95c38",
+    "retention": "d25a00a41d475ec252a04fdb94bca13bb642766a9ae3ec6000f5ac54aa2e2dcf",
+    "role_qualification": "29a7e87ac27264620ed5f8c0e42a954bbf470f3a1d65dd1de59e2bbd0469dd0e"
+  },
+  "case_id": "EV003-XD-04",
+  "contract": "IndependentOriginalXD04RoleQualifiedPublicationReview/v1",
+  "decision": "GO_BOUNDED_ROLE_QUALIFIED_PUBLICATION",
+  "epoch": 1,
+  "evidence": {
+    "eva2_closure_sha256": "1acf19a372530cb79efb711c8df14cdff0b156d607e3baaaa8c04de69a578249",
+    "eva2_terminal_sha256": "39e8169f3bfe982117d95989509b7f3d33600df2edfaaf60dd50f8f1c7a72fd1",
+    "old_bytes_preserved": true,
+    "old_index_sha256": "a54363042ba0b79eb65b48f507d5e3b131d55a08c1411f1eeaa3aefb011be9b6",
+    "old_result_sha256": "ade3c8d0fd116074db6747b2a3edbb7bc577d332912a85db1397109a3158af59",
+    "openclaw_closure_sha256": "d8bdfca732a1319a19daada6a0edca68ec100ef64bb5f85111a55a76bee87774",
+    "openclaw_terminal_sha256": "e1ed61ca343669d62408541d3b3db7261b78ca1a01b62b17188bc0464ed41fa3",
+    "qualified_index_reference_hashes_verified": true,
+    "retained_reference_count": 807,
+    "retained_reference_hashes_verified": true
+  },
+  "limitations_preserved": [
+    "Two OpenClaw preparation failures before resource/slot/clock/input: missing Inspect-active flag and wrong historical-authority path. Earlier technical reviews missed these interfaces.",
+    "Root prelaunch schema assertion correction retained separately; it preceded dispatch.",
+    "Source/input review missed the substantive work-model mismatch; additive qualification preserves original observations, scores, usage and authority.",
+    "Original date conflict limits task-quality interpretation independently of model-role eligibility.",
+    "Native canonical closed marker remains false; equivalent settlement, parent acknowledgement and physical closure are evidenced separately."
+  ],
+  "original_contract": {
+    "case_sha256": "eb4ed3d82abaa5d72ccc1d2a668edcc8e19593813bac83fb1a217debf0c4de7d",
+    "criteria_unchanged": true,
+    "per_participant_caps": {
+      "includes_helpers_setup_retries": true,
+      "input_tokens": 4718592,
+      "output_tokens": 86400,
+      "sdk_attempts": 72,
+      "tool_dispatches": 70,
+      "wall_seconds": 840
+    },
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b"
+  },
+  "privacy": {
+    "only_sanitized_counts_boolean_outcomes_source_pins_and_technical_causes": true,
+    "protected_payload_read_for_this_review": false,
+    "questions_answers_oracles_credentials_hosts_configuration_values_exported": false
+  },
+  "project_claims": {
+    "eligible_matched_comparison_proven": false,
+    "new_execution_authorized": false,
+    "new_product_function": false,
+    "p2_1_complete": false
+  },
+  "retained_outcomes": {
+    "clarification_adequacy_not_judged": true,
+    "efficiency_advantage_claimed": false,
+    "eva2": {
+      "classification": "valid_bounded_product_noncompletion",
+      "fixed_conditions": [
+        false,
+        false,
+        true
+      ],
+      "fixture_effects": 0,
+      "input_tokens": 70545,
+      "output_tokens": 1495,
+      "required_readbacks": [
+        false,
+        true
+      ],
+      "returned_tools": 6,
+      "sdk_complete": 9,
+      "total_tokens": 72040
+    },
+    "general_superiority_claimed": false,
+    "human_ratings": null,
+    "official_semantic_score": null,
+    "openclaw": {
+      "actual_sources_reached": true,
+      "clarification_requested": true,
+      "classification": "observations_with_work_model_protocol_mismatch",
+      "counted_tools": 26,
+      "fixed_conditions": [
+        false,
+        false,
+        true
+      ],
+      "fixture_effects": 0,
+      "input_tokens": 1306033,
+      "outcomes_not_eligible_matched_quality_scores": true,
+      "output_tokens": 3181,
+      "required_readbacks": [
+        false,
+        true
+      ],
+      "sdk_complete": 33,
+      "total_tokens": 1309214
+    },
+    "original_temporal_conflict_unchanged": true,
+    "pair_usage": {
+      "input_tokens": 1376578,
+      "output_tokens": 4676,
+      "sdk_complete": 42,
+      "tools": 32,
+      "total_tokens": 1381254
+    },
+    "temporal_conflict_not_asserted_as_eva2_failure_cause": true,
+    "timing": {
+      "boundaries_not_equivalent": true,
+      "cleanup_separate": true,
+      "eva2_boundary": "absolute clock before native boot to parent stop",
+      "eva2_seconds": 138.32332817302085,
+      "openclaw_boundary": "absolute clock before child launch to child return",
+      "openclaw_seconds": 154.1022581710131
+    },
+    "whole_quality": null,
+    "winner": null
+  },
+  "reviewed_at_utc": "2026-10-08T22:08:36.226456+00:00",
+  "role_eligibility": {
+    "actual_roles": {
+      "eva2": {
+        "contact/gpt-6-sol/none": 1,
+        "helper/gpt-6-astra/medium": 8
+      },
+      "openclaw": {
+        "contact/gpt-6-sol/none": 33
+      }
+    },
+    "cause": "OpenClaw performed substantive source research and task work in its main contact loop. The adapter maps helper roles only from native subagent metadata; transport contact labeling does not satisfy the semantic work-model rule.",
+    "no_hidden_role_fix_or_replay": true,
+    "openclaw_work_model_protocol_compliant": false,
+    "original_protocol": {
+      "file": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+      "lines": [
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78
+      ],
+      "sha256": "f12758d9156f4b23321ee5f0a7062a5d6fa47d067a5cd6a8d595a652f1bb7479"
+    },
+    "primary_owner_rule": {
+      "file": "eva2/PROJECTDOEL.md",
+      "lines": [
+        975,
+        976,
+        977,
+        978,
+        979
+      ],
+      "meaning": "Sol/none is limited to simple fast responses and short contact. Research and making use Astra at least medium; contact may accept and hand off but may not substitute for the work layer.",
+      "sha256": "ab364253644bf3fe13a2a2a488b289026182b7a1793dd75fd5b958758515fbb0"
+    },
+    "prior_source_and_input_review_miss_acknowledged": true,
+    "role_matched_pair_eligible": false,
+    "source_binding": {
+      "driver_lines": [
+        44,
+        124
+      ],
+      "driver_sha256": "afcb2f4fd3b34ef9b6410c745f7275786f5e4eafe74e4c1103296f1aab26a5f6",
+      "role_mapper_lines": [
+        398,
+        399,
+        400,
+        401,
+        402
+      ],
+      "role_mapper_sha256": "bbd000673722bfcfe2aad9a9ce7435350d36724ab773efa999674adbf659c89b"
+    },
+    "valid_pair_ranking": false
+  },
+  "scope": "Publish the exact role-qualified closed XD04 observations and conservative authority coverage only. No execution, admission, replay, source installation or new case is authorized.",
+  "terminal_and_history": {
+    "all_owned_containers_networks_listeners_and_parents_absent": true,
+    "authority_sha256": "38e08768febf45f9bc0542949e649d430f6227f0593b5279e2efb39c4cb37bcf",
+    "both_native_pending_zero_and_parent_acknowledged": true,
+    "both_parent_authoritative_new_usage_complete": true,
+    "cumulative_known_input_tokens": 4158191,
+    "cumulative_known_output_tokens": 30987,
+    "cumulative_known_total_lower_bound": 4189178,
+    "cumulative_sdk_attempts": 273,
+    "cumulative_total_tokens": null,
+    "current_rows": 38,
+    "full_reservations_and_historical_unknown_preserved": true,
+    "historical_missing_usage_attempts": 3,
+    "historical_usage_unknown_rows": 2,
+    "openclaw_canonical_native_closed_marker": false,
+    "openclaw_equivalent_native_settled": true,
+    "openclaw_physical_transports_exited": true,
+    "openclaw_prior_37_rows_raw_revisions_metadata_preserved": true,
+    "original_36_rows_raw_revisions_metadata_preserved": true,
+    "overall_usage_complete": false,
+    "parent_complete_usage_not_invalidated_by_postclose_child_mirror_unknown": true
+  }
+}
