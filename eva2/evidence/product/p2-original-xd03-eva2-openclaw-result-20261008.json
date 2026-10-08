@@ -1,0 +1,210 @@
+{
+  "ai_judge_used": false,
+  "case_id": "EV003-XD-03",
+  "case_sha256": "b2255938ad5348fd02ad895a42526690e9ce3e913bd1223bb088ebe683a15343",
+  "closure": {
+    "both_networks_and_parents_absent": true,
+    "eva2_native_containers_absent": 10,
+    "openclaw_fixture_listeners_exited": 3,
+    "openclaw_native_container_absent": 1
+  },
+  "comparison": {
+    "bounded_eva2_noncompletion_preserved": true,
+    "efficiency_advantage_claimed": false,
+    "general_superiority_claimed": false,
+    "openclaw_product_performance_unknown": true,
+    "valid_pair_ranking": false,
+    "winner": null
+  },
+  "contract": "P2OriginalXD03SequentialPairResult/v1",
+  "cumulative_usage": {
+    "known_input_tokens_lower_bound": 2781613,
+    "known_output_tokens_lower_bound": 26311,
+    "known_total_tokens_lower_bound": 2807924,
+    "recorded_sdk_attempts": 231,
+    "total_tokens": null,
+    "usage_complete": false
+  },
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "development_credit_cost": null,
+  "epoch": 1,
+  "evidence": {
+    "coverage": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd03-eva2-openclaw-20261008-v1/p2-authority-coverage-xd03-20261008.json",
+      "sha256": "e06f1da95c06882ffda05d9d0143a723dc0e037e373c4ef478ca976f620bb7c9"
+    },
+    "eva2_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd03-eva2-openclaw-20261008-v1/eva2/original-assessment.private.json",
+      "sha256": "6f5a6b1a3421daaad76c70bb78d9085c55cd9652e17b18e774e6629632568941"
+    },
+    "eva2_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd03-eva2-openclaw-20261008-v1/eva2/terminal-technical.private.json",
+      "sha256": "833de81593f36609f3848868b1d5e58641d92ad1c3a35efd2eb629c951645fd1"
+    },
+    "future_source_only_correction": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd03-eva2-openclaw-20261008-v1/openclaw/projection-session-key-failure-and-source-correction.private.json",
+      "sha256": "bc99f85029f73a641341904d262e078f20c8e7ae9ae0951d1e2353b8c628cc62"
+    },
+    "openclaw_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd03-eva2-openclaw-20261008-v1/openclaw/original-assessment.private.json",
+      "sha256": "923a251c122a6b73207d58ed5b9004fb867350af3c5fb648755d08f63350366c"
+    },
+    "openclaw_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd03-eva2-openclaw-20261008-v1/openclaw/terminal-technical.private.json",
+      "sha256": "f8db58fef3270457894387f1f7a4253eb997a78a1ab846cf83003eb32a0f0048"
+    }
+  },
+  "family": "cross_domain_actions",
+  "future_execution_admitted": false,
+  "future_source_correction": {
+    "admitted_or_executed": false,
+    "corrected_existing_guard_passed": true,
+    "evidence_sha256": "bc99f85029f73a641341904d262e078f20c8e7ae9ae0951d1e2353b8c628cc62",
+    "old_existing_guard_passed": false,
+    "product_improvement_claimed": false,
+    "scope": "Only one technical OpenClaw session_key; all other projected values unchanged."
+  },
+  "historical_retention": {
+    "all_original_full_reservations_preserved": true,
+    "all_prior_raw_values_revisions_metadata_preserved": true,
+    "final_registered_rows": 36,
+    "old_missing_usage_attempts": 3,
+    "old_usage_unknown_rows": 2,
+    "prior_original_rows": 34,
+    "prior_rows_before_openclaw": 35,
+    "reset_or_rearm_or_replay": false
+  },
+  "human_ratings": {
+    "eva2": [
+      null,
+      null
+    ],
+    "openclaw": [
+      null,
+      null
+    ]
+  },
+  "limits_per_participant": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "speechRequests": 0,
+    "toolDispatches": 70,
+    "wallSeconds": 840
+  },
+  "model_roles": {
+    "contact": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none"
+    },
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium"
+    }
+  },
+  "new_task_or_product_function_claimed": false,
+  "original_criteria_unchanged": true,
+  "original_input_texts_unchanged": true,
+  "p2_1_complete": false,
+  "participants": {
+    "eva2": {
+      "all_three_fixture_states_unchanged": true,
+      "classification": "valid_bounded_product_noncompletion",
+      "fixed_conditions_passed": 1,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        false,
+        false,
+        true
+      ],
+      "fixture_effects": 0,
+      "human_help_provided": 0,
+      "independent_readbacks": [
+        false,
+        true
+      ],
+      "native_turns_completed": 1,
+      "objective_conditions_met": false,
+      "original_input_delivered": true,
+      "physical_closure_complete": true,
+      "resource_offer": "Available through ordinary service discovery and the admitted browser context; availability was not converted into the requested service actions.",
+      "timing": {
+        "first_content_seconds": null,
+        "foreground_seconds": 9.09515561698936,
+        "parent_to_stop_seconds": 127.55535792300361,
+        "sample_seconds": 127.55531656800304,
+        "scope": "Original absolute clock before nativeboot through parent stop request; physical close separately retained",
+        "settled_seconds": 59.445158457994694
+      },
+      "usage": {
+        "capture_count": 8,
+        "captures_complete": true,
+        "complete": true,
+        "input_tokens": 55834,
+        "output_tokens": 1300,
+        "sdk_attempts": 8,
+        "source_bound_tool_cap": 70,
+        "speech_requests": 0,
+        "tool_dispatches": 5,
+        "total_tokens": 57134
+      },
+      "work_error_code": "incomplete_work",
+      "work_outcome": "failed"
+    },
+    "openclaw": {
+      "all_three_fixture_states_unchanged": true,
+      "classification": "UNKNOWN_EVALUATOR_PRE_NATIVE_SESSION_BINDING",
+      "failure": "Curator projection session_key did not equal the existing driver prefix plus context_id; the unchanged driver refused before the native agent call.",
+      "fixed_conditions_passed": null,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        null,
+        null,
+        null
+      ],
+      "fixture_effects": 0,
+      "independent_readbacks": [
+        null,
+        null
+      ],
+      "input_release_written": true,
+      "native_turns_completed": 0,
+      "objective_conditions_met": null,
+      "original_input_delivered": false,
+      "physical_closure_complete": true,
+      "product_loss": false,
+      "timing": {
+        "elapsed_seconds": 3.086392822006019,
+        "scope": "Original parent clock before failed native child through child process return; not task latency",
+        "wall_expired": false
+      },
+      "usage": {
+        "complete": false,
+        "input_tokens": null,
+        "known_partial_input_tokens": 0,
+        "known_partial_output_tokens": 0,
+        "known_partial_total_tokens": 0,
+        "native_tool_dispatches": 0,
+        "output_tokens": null,
+        "physical_model_http_requests": 0,
+        "sdk_attempts": 0,
+        "speech_requests": 0,
+        "total_tokens": null
+      }
+    }
+  },
+  "participants_order": [
+    "eva2",
+    "openclaw"
+  ],
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "preparation_and_review_limitations": [
+    "Pure source metadata preparation corrected constructor timestamp/envelope shape and retained original failed metadata before resource admission.",
+    "Final-policy metadata assembler needed the already existing runtime dependency paths; no dependency installation or extra native run.",
+    "Source/input review missed the pre-existing OpenClaw session-key/context interface. Both the curator error and independent review miss remain explicit."
+  ],
+  "purpose": "Original independent useful action across three admitted services, with arithmetic and verified effects.",
+  "runtime_cost_currency": null,
+  "status": "closed_partial_comparison",
+  "whole_quality": null
+}

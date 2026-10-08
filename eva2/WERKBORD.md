@@ -1,25 +1,33 @@
 ## Actueel 8 oktober — twee beperkte geheugenvoordelen; uitvoeringstekorten blijven
 
-## Lopend XD03-vervolg 8 oktober — zelfstandig combinatiewerk
+## Afgesloten XD03-pair 8 oktober — zelfstandig werk en proefconfiguratie
 
-Eén oorspronkelijke XD03, epoch1, is gekozen: huidige Eva2 en OpenClaw op
-dezelfde taak over drie algemene diensten, met rekencontrole. Beide slots zijn
-ongebruikt; geen eerdere XD03-referentie beschikbaar. Alleen deze gerichte
-prospectieve vergelijking, geen nieuwe brede matrix of herhaling van XD02/CM06.
-De vaste drie eindvoorwaarden en twee onafhankelijke readbacks blijven behouden.
-Per deelnemer: oorspronkelijke72 SDK,70tools,840seconden; alle hulpwerk en retries
-inbegrepen. Sol/none-contact en Astra/medium-helpers via bestaande providerroute.
+De ene oorspronkelijke XD03-pair is gesloten en onafhankelijk beoordeeld.
+Eva2 kreeg de echte taak over drie diensten, maar maakte het werk niet af:
+1/3 vaste voorwaarden, readbacks[false,true], geen bedoelde acties.
+8 complete SDK-aanroepen,55.834 invoer-/1.300 uitvoertokens,57.134 totaal,
+5tools,127,555seconden van nativebootklok tot stop. Dit is een geldig tekort.
 
-Onafhankelijke selectie-GO7f301cf3 staat uitsluitend bronvoorbereiding toe.
-Hergebruik bestaande native routes en algemene fixtures; kleine delta twee naar
-drie diensten. Controleer de werkelijke policyhistorie tegen raw_sha256 van de
-ongewijzigde gate, niet alleen bronhashes. Elke deelnemer krijgt eigen lege data.
-OpenClaw bindt de actuele historie na Eva2's fysieke afsluiting, zonder reset.
-Alle34oude rijen/reserveringen en UNKNOWN blijven staan. Verse casegebonden
-CM04-guarduitzondering en volledige bron/resource/invoerbinding nog vereist.
-Geen authoritycopy, resources, klok, native invoer of modelaanvragen toegelaten.
-Dit is vergelijkingswerk, geen nieuwe producttaak of afronding.
+OpenClaw kreeg geen native taakinput: de proefprojectie volgde de bestaande
+session_key/context_id-interface niet. Curator én bron/invoerreview misten dit.
+0SDK/HTTP/tools; bekende gedeeltelijke tokens0, onvolledige SDKtotalen blijven null.
+UNKNOWN voor OpenClaw, geen productverlies of geldige pairwinnaar.
+De afzonderlijke technische éénveldcorrectie is modelvrij gecontroleerd;
+geen toepassing, herarm, herhaling of nieuwe proef toegelaten.
 
+Alle eigen containers, netwerken, luisterprocessen en parents zijn gesloten.
+Alle35oude raw/revisies/meta/full reserves exact behouden;36registraties/231SDK.
+Bekende historische tokenondergrens2.807.924;3oude ontbrekende pogingen in2rijen
+blijven onbekend. Registraties zijn geen bewezen dekking; credits/geld onbekend.
+Oorspronkelijke72SDK/70tools/840s per deelnemer, rollen/vragen/criteria behouden.
+P2.1 blijft open; geen nieuwe uitvoering geselecteerd. CM05/CM08-geheugenvoordelen,
+XD02-verlies, oude UNKNOWN, acceptaties en39/48afrondingen blijven staan.
+Spraak blijft geparkeerd; ongebruikte DockerDesktop blijft ongemoeid.
+
+Resultaat:eva2/evidence/product/p2-original-xd03-eva2-openclaw-result-20261008.json.
+Review:eva2/reviews/p2-original-xd03-eva2-openclaw-final-review-20261008.json.
+Coverage:eva2/evidence/product/p2-authority-coverage-xd03-20261008.json.
+Oude coverage33/34bestanden blijven byteexact behouden.
 
 ## Afgesloten CM06 8 oktober — proefconfiguratie faalde vóór Eva
 
