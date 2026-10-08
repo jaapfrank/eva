@@ -1,0 +1,65 @@
+{
+  "classification": "evaluator_native_startup_failure_before_original_input",
+  "contract": "IndependentEva2OwnerExceptionXD02FinalReview/v1",
+  "decision": "GO_SANITIZED_TERMINAL_PUBLICATION_AND_SOURCE_ONLY_CORRECTION",
+  "entry": "eva2:EV003-XD-02:epoch1",
+  "execution_decision": "NO_GO_CLOSED_EPISODE_EXPIRED_DEADLINE",
+  "observations": {
+    "absolute_deadline_expired": true,
+    "all27_other_raw_values_and_revisions_unchanged": true,
+    "all_owned_physical_resources_closed": true,
+    "cumulative_known_tokens_lower_bound": 2587205,
+    "cumulative_registered_attempts": 183,
+    "final_entry_revision": 5,
+    "full_native_settlement_or_required_readbacks_complete": false,
+    "historical_full_reservations_retained": true,
+    "historical_unknown_attempts": 3,
+    "native_turns": 0,
+    "new_deadline_or_reservation": false,
+    "original_input_delivered": false,
+    "provider_usage_complete": false,
+    "registered_sdk_attempts": 0,
+    "total_usage": null,
+    "tracked_tools": 0
+  },
+  "original_case_sha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+  "original_criteria_and_roles_unchanged": true,
+  "outcome": "UNKNOWN",
+  "owner_authorization_sha256": "137096ad29b42d76677b042eda5e262447b6d50dbc494913062d8ff51cf5ef2d",
+  "physical_closure_sha256": "6aa1a2f24fcad477080b7a19154354faa72e69184d5058693a9f1bb126d3c5d5",
+  "privacy": "Only technical identifiers, hashes, counters and limitations; no original questions, answers, source contents, capabilities, auth bytes or oracle values.",
+  "proof_correction": {
+    "all10_original_module_bytes_equal_and_staged_readonly": true,
+    "earlier_review_sha256": [
+      "b7bbaeced96e463376bfff467a9fef173dd58db18b976ac1c15a34801c10b818",
+      "59943959ce1ab2405d0942e32603f072075a43f701732ae8cf2c74755c29d6c1"
+    ],
+    "exact_corrected_mount_readability_sha256": "bd4a6716292bcfb699dc6e84cb78d137aa6d52983c7532b2589c9b80709c8339",
+    "insufficient_mount_proof_sha256": "aa35de8eb451ee86b42a37ea61fc75f0d0ebe732539bf198bbda702296740382",
+    "proof_scope": "Native UID1000 exact corrected module reads only; no complete worker import, factory, lifespan or task run after this final correction.",
+    "reason": "Readability covered the canonical repository benchmark directory, not the actual frozen benchmark mount. The reviewer accepted that evidence too broadly in earlier source/input GO; those immutable receipts are retained and their full mounted-source-readability implication is superseded.",
+    "source_correction_sha256": "2360eb56bea3afb1d4accb7d5753c5096eb0737b918ee3b52ecd2c71f0a2809c",
+    "unexecuted_launcher_sha256": "9926b1304558caa7941b3c92640e110d80755e730878a2804f28f1f6ad190572"
+  },
+  "publication_limits": {
+    "cost_and_development_credits": null,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "new_execution_authorized_by_this_review": false,
+    "p2_1_completed": false,
+    "product_loss_or_general_winner_established": false,
+    "quality_and_fixed_predicates": null,
+    "ranking_against_retained_openclaw_hermes_valid": false,
+    "timing_or_efficiency_comparison_valid": false
+  },
+  "retention_manifest_sha256": "4bf7b18ac7bd8d451b7804b6b5175dba1f02dc41413e1e974a2f0f45a66dc7d0",
+  "reviewed_result_sha256": "8d7fa28b04a8c224a5e47404090c3d3605407cf624e0149afd407a8cbe889a26",
+  "reviewer_execution": {
+    "model_calls": 0,
+    "runtime_or_fixture_runs": 0,
+    "tests": 0
+  },
+  "terminal_technical_sha256": "d5b997cb86d3f0d4ca53d9b8dabe52e4aea61457b702a074b391b3b69cadaa8a"
+}

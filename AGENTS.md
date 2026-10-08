@@ -1,6 +1,33 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 8 oktober — matching Eva2-XD02 toegestaan, opstart bewezen
+## Actueel vervolg 8 oktober — echte native opstart, daarna geldige Eva2-uitkomst
+
+De gerichte matching Eva2-XD02 is gesloten zonder oorspronkelijke invoer of
+modelantwoord: evaluator-mounts van capturecode en frozen benchmarkmodules
+weigerden nativeUID1000. Uitkomst UNKNOWN, geen productverlies of kwaliteitsscore.
+De eerdere leestoegangscontrole bond ten onrechte de canonical bronmap; die
+bewijsgrens is expliciet gecorrigeerd. De normale lege factoryproef blijft geldig
+voor haar beperkte scope. Oude klok, reserveringen, gegevens en UNKNOWN blijven;
+geen verdere uitvoering van deze gesloten episode.
+
+Bewijs: `eva2/evidence/product/p2-eva2-xd02-owner-exception-result-20261008.json`.
+Review: `eva2/reviews/p2-eva2-xd02-owner-exception-final-review-20261008.json`.
+Nul geregistreerde SDK-pogingen/tools; compleet eindverbruik ontbreekt, tokens
+NULL. Ontwikkelcredits onbekend. Geen extra gezinsfunctie of taakafronding.
+
+Ga binnen Jaaps antwoord “ja alle proeven die nodig zijn” door met de concrete
+technische afhankelijkheid: dezelfde drie daadwerkelijke nativewerkers modelvrij
+starten, health/control en afsluiting aantonen met de exact gebruikte frozen
+mounts en geblokkeerde fysieke provider-/actie-dispatch. Geen oorspronkelijke
+invoer of oude ledger/deadline gebruiken; geen tweede platform of legefactoryproef
+herhalen. Verifieer daadwerkelijke mountpaden onder de echte UID, niet een andere
+bronmap. Daarna één afzonderlijk concreet gebonden matching Eva2-vervolg voorbereiden
+met oorspronkelijke criteria/rollen/grenzen en gescheiden onafhankelijke beoordeling;
+geen oude timer/reset, comparatorherhaling of nieuwe matrix. Eerst werkelijke
+nativegereedheid aantonen, dan pas betaalde taakinput. P2.1 blijft open, Codex
+herstelt eigen programmeerfouten. Geen handeling van Jaap nodig voor deze correctie.
+
+## Historische momentopname vóór nativeproef — matching Eva2-XD02 toegestaan, legeopstart bewezen
 
 Jaap heeft de gerichte vraag beantwoord met: “ja alle proeven die nodig zijn.”
 De concrete vervolgstap blijft één huidige Eva2-uitvoering op dezelfde oorspronkelijke

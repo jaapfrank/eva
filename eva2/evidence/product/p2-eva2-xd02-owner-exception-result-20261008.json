@@ -1,0 +1,155 @@
+{
+  "contract": "Eva2OwnerExceptionMatchingXD02Result/v1",
+  "scope": {
+    "participant": "eva2",
+    "case_id": "EV003-XD-02",
+    "epoch": 1,
+    "case_sha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "commitment_sha256": "a10aa68622f99487cf9f3aa8c38202ec9b66d7163bf579bcd0734ae7180e784d",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "evaluator_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "original_caps": {
+      "providerAttempts": 72,
+      "providerInputTokens": 4718592,
+      "providerOutputTokens": 86400,
+      "speechRequests": 0,
+      "toolDispatches": 70,
+      "wallSeconds": 840
+    },
+    "owner_authorization_sha256": "137096ad29b42d76677b042eda5e262447b6d50dbc494913062d8ff51cf5ef2d",
+    "contact": {
+      "model": "gpt-6-sol",
+      "effort": "none"
+    },
+    "helper": {
+      "model": "gpt-6-astra",
+      "effort": "medium"
+    }
+  },
+  "outcome": "UNKNOWN",
+  "classification": "evaluator_native_startup_failure_before_original_input",
+  "native_original_turns": 0,
+  "native_original_input_delivered": false,
+  "fixed_objective_predicates": [
+    null,
+    null,
+    null
+  ],
+  "required_independent_readbacks": [
+    null,
+    null
+  ],
+  "objective_conditions_met": null,
+  "human_ratings": [
+    null,
+    null
+  ],
+  "whole_quality": null,
+  "general_winner": null,
+  "provider_accounting": {
+    "registered_attempts": 0,
+    "tracked_tools": 0,
+    "native_workers_connected": 0,
+    "usage_complete": false,
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null,
+    "known_partial_input_tokens": 0,
+    "known_partial_output_tokens": 0,
+    "cost_money": null
+  },
+  "execution": {
+    "first_inspect_envelope": "success",
+    "continuation_inspect_envelope": "success",
+    "native_outcomes": [
+      "technical_failure",
+      "technical_failure"
+    ],
+    "one_original_absolute_deadline_seconds": 840,
+    "deadline_expired": true,
+    "no_new_timer_or_reservation": true,
+    "same_entry_cleanup_only_rearm_revision_2_to_3": true,
+    "final_revision": 5,
+    "parent_to_stop_original_clock_observations_seconds": [
+      9.131506197009003,
+      720.2266700449982
+    ],
+    "time_comparison_valid": false,
+    "all_owned_containers_and_network_absent": true,
+    "pending_tracked_tools": 0,
+    "full_native_settlement_or_final_database_readback": false
+  },
+  "evaluator_preparation_failures": [
+    {
+      "transition": "waiting parent receipt load",
+      "cause": "fixture receipt path pointed to PostgreSQL data root",
+      "corrected_before_first_release": true
+    },
+    {
+      "transition": "native memory Python entry",
+      "cause": "root-only capture.py readonly mount refused UID1000; corrected with byte-identical readonly staging"
+    },
+    {
+      "transition": "native memory benchmark-module import",
+      "cause": "actual frozen benchmark modules root-only; previous proof checked canonical path; corrected source-only with exact10module readonly staging"
+    }
+  ],
+  "proof_precision": {
+    "previous_aa35_mount_proof_insufficient_for_frozen_modules": true,
+    "exact_corrected_frozen_mount_reads_pass": true,
+    "full_memory_worker_import_or_lifespan_after_final_fix_proven": false,
+    "closed_sample_not_replayed_after_expiry": true,
+    "ordinary_evaluator_errors_not_external_owner_blocker": true
+  },
+  "preservation": {
+    "all27_preexisting_rows_raw_values_and_revisions_unchanged": true,
+    "historical_unknowns_unchanged": true,
+    "full_old_and_current_reservations_retained": true,
+    "private_authority_sha256": "8c45b3d9c191d4a6461a217ba8235cb8b7e9f1b67f65db9bfad633c7706eb05c",
+    "registered_rows": 28,
+    "closed_openclaw_hermes_not_replayed": true
+  },
+  "cumulative_original_accounting": {
+    "cost_money": null,
+    "historical_accounting_unknowns_preserved": 3,
+    "known_input_tokens_lower_bound": 2567467,
+    "known_output_tokens_lower_bound": 19738,
+    "known_total_tokens_lower_bound": 2587205,
+    "provider_attempts": 183,
+    "registered_rows": 28,
+    "usage_complete": false,
+    "basis": "Bound prior26-row complete cumulative report plus two zero-attempt retained Eva2 entries; historical summarized rows are retained without expanding or zero-filling unknowns.",
+    "known_usage_delta_this_sample": 0
+  },
+  "matching_retained_references": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd02-openclaw-hermes-20261008-v1/original-xd02-pair-result.public.json",
+    "sha256": "f31b9af11c215b064fda4e05931858a7fe242859b7ee12524c4a64ddf36f86bd",
+    "openclaw_fixed_predicates_passed": 3,
+    "hermes_fixed_predicates_passed": 1,
+    "human_ratings_unknown": true,
+    "no_ranking_against_eva2_unknown": true
+  },
+  "evidence": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-exception-eva2-xd02-20261008-v1/terminal-technical.private.json",
+      "sha256": "d5b997cb86d3f0d4ca53d9b8dabe52e4aea61457b702a074b391b3b69cadaa8a"
+    },
+    "physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-exception-eva2-xd02-20261008-v1/final-physical-closure.private.json",
+      "sha256": "6aa1a2f24fcad477080b7a19154354faa72e69184d5058693a9f1bb126d3c5d5"
+    },
+    "source_only_correction": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-exception-eva2-xd02-20261008-v1/eva2/native-frozen-access-correction.private.json",
+      "sha256": "2360eb56bea3afb1d4accb7d5753c5096eb0737b918ee3b52ecd2c71f0a2809c"
+    },
+    "exact_mount_readability": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-exception-eva2-xd02-20261008-v1/eva2/native-frozen-actual-readability.private.json",
+      "sha256": "bd4a6716292bcfb699dc6e84cb78d137aa6d52983c7532b2589c9b80709c8339"
+    }
+  },
+  "development_credit_cost": null,
+  "p2_1_completed_by_this_result": false,
+  "further_execution_admitted": false,
+  "publication_decision": "AWAITING_INDEPENDENT_FINAL_REVIEW"
+}
