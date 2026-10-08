@@ -15,15 +15,16 @@ zelfstandige taakkeuze, antwoordkwaliteit, efficiëntie of Eva2-voorsprong.
 Nul echte model-/authcalls;80 uitsluitend synthetische tokens. Ontwikkelcredits onbekend.
 48 kleine taken/39 afgerond en oorspronkelijke acceptaties blijven onveranderd.
 
-**Actuele uitvoering:** de technische voorbereiding is gesloten. Er loopt geen
-modelproef of onafhankelijke review. P2.1 wacht op het eerder gevraagde
-afzonderlijke besluit over één aanvullende Eva2/OpenClaw-vergelijking.
-Deze statuscorrectie levert geen nieuwe productfunctie op.
+**Actuele uitvoering:** Jaap heeft op 8 oktober gevraagd door te gaan. De ene
+eerder beschreven aanvullende Eva2/OpenClaw-vergelijking wordt nu voorbereid
+met een evaluator en onafhankelijke reviewer. Nog geen modelproef gestart.
+Historische UNKNOWN, oorspronkelijke criteria en 72 SDK/70 tools per deelnemer
+blijven behouden; geen nieuwe matrix of herhaling van afgesloten proeven.
 
 Een ongebruikte oorspronkelijke successor-combinatiecase is beschikbaar voor een
 gedeeltelijk Eva2/OpenClaw-paar. De historische Eva2-CM04-usage is niet te reconstrueren;
-de oude UNKNOWN-guard/ledger wordt niet gewist of opnieuw gebruikt. Voor die ene
-aanvullende proef is afzonderlijke prospectieve toelating nodig: één epoch,
+de oude UNKNOWN-guard/ledger wordt niet gewist of opnieuw gebruikt. De voortzetting van die ene
+aanvullende proef is nu geautoriseerd; technische toelating wordt apart gebonden: één epoch,
 zelfde criteria/modelrollen en originele per-samplelimieten72 SDK/70 tools.
 Geen brede matrix of herhaling van een gesloten legacycase. De vastgelegde
 Eva1-XD-route is niet passend beschikbaar; dat is UNKNOWN, geen productverlies.

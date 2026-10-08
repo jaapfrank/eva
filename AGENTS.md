@@ -1,5 +1,15 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Eigenaarvoortzetting 8 oktober 2026 — hervat de concrete resterende uitkomst
+
+De eigenaar vraagt waar nodig het goal/projectbestanden bij te werken en vooral
+door te gaan, na de melding dat één aanvullende Eva2/OpenClaw-vergelijking op
+akkoord wachtte. Hervat die ene reeds concrete prospectieve pair binnen P2.1,
+met oorspronkelijke criteria/modelrollen/72 SDK en 70 tools per deelnemer.
+Historische UNKNOWN en gesloten proeven blijven staan; geen nieuwe brede matrix.
+L3.4–L3.7 blijven afgerond. Spraak blijft geparkeerd. Technische binding/review
+wordt door de uitvoerders afgehandeld, geen herhaalde eigenaarvraag binnen dit mandaat.
+
 ## Eigenaarverduidelijking 7 oktober 2026 — uitbreidingen en droommodus
 
 Het hervatte app-goal is actief. Wijzigingen aan de aansturing staan in deze

@@ -1,0 +1,32 @@
+{
+  "contract": "eva2.owner-p2-prospective-continuation.v1",
+  "recordedAt": "2026-10-08T00:56:51.685744+00:00",
+  "taskId": "P2.1",
+  "ownerMessage": "waar nodig pas het goal of de bestanden aan maar ga vooral door.",
+  "precedingContext": "The immediately preceding response identified the sole execution blocker as the earlier requested approval for one additional comparison; no experiment was running.",
+  "interpretation": "Proceed with that already concrete one prospective partial Eva2/OpenClaw pair, and update stale goal/project instructions as needed. This is continuation authorization, not permission to reset historical usage or expand the matrix.",
+  "scope": {
+    "participants": [
+      "eva2",
+      "openclaw"
+    ],
+    "caseId": "EV003-XD-01",
+    "epoch": 1,
+    "caseSha256": "591ef16c1e1ebd69d25d37bd1c322bf57a819fef02dfb64819c4a6f18b627924",
+    "datasetSha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "maximumSdkRequestsPerParticipant": 72,
+    "maximumToolsPerParticipant": 70,
+    "helpersIncluded": true,
+    "originalCriteriaUnchanged": true,
+    "actualSourceResourceInputAdmission": "pending_independent_technical_review"
+  },
+  "preserved": {
+    "historicalAuthoritySha256": "7ac4b5cb16fcde549216ce641a7c310c37977d3edda62f947f8a33a34042ac74",
+    "historicalUnknownUsage": "preserved_not_zero_or_reset",
+    "closedTrials": "not_reopened",
+    "productTasksAndAcceptances": "unchanged"
+  },
+  "newProviderRoute": false,
+  "credits": null,
+  "newProductFunction": false
+}

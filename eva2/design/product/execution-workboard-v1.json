@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-07T23:44:41.815959+00:00",
+  "lastUpdated": "2026-10-08T00:56:51.685744+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -4166,37 +4166,37 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Wacht op afzonderlijk vergelijkingsbesluit",
-          "state": "blocked",
-          "owner": "Jaap / Codex",
+          "title": "P2.1 · Eén gerichte vergelijking voorbereiden",
+          "state": "in_progress",
+          "owner": "Evaluator + onafhankelijke reviewer",
           "taskId": "P2.1",
-          "detail": "De technische aansluiting is gecontroleerd en de voorbereiding gesloten. Er loopt geen modelproef of onafhankelijke review.",
-          "remaining": "Eén aanvullende Eva2/OpenClaw-vergelijking wacht op het eerder gevraagde akkoord. Historisch onbekend verbruik blijft zichtbaar; algemene zelfstandigheid en voorsprong zijn niet aangetoond.",
-          "source": "eva2/evidence/product/p2-xd-native-collection-preflight-20261008.json",
+          "detail": "Huidige Eva2 en bestaande OpenClaw worden aan één ongebruikte oorspronkelijke combinatieopdracht gebonden. Technische review loopt; nog geen modelproef gestart.",
+          "remaining": "Daarna dezelfde taak eenmaal per systeem uitvoeren en kwaliteit, zelfstandigheid, fouten, snelheid en werkelijk verbruik publiceren. Historisch onbekend verbruik blijft staan.",
+          "source": "eva2/evidence/product/p2-owner-continuation-20261008.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar."
         },
         "next": {
-          "title": "P2.1 · Afzonderlijk besluit over één aanvullende vergelijking",
+          "title": "P2.1 · Resultaatkwaliteit en uitvoeringsverliezen",
           "state": "planned",
-          "owner": "Jaap / Codex",
+          "owner": "Evaluator / Codex",
           "taskId": "P2.1",
-          "detail": "Concreet voorstel: één ongebruikte oorspronkelijke combinatiecase, één epoch, huidige Eva2 en bestaande OpenClaw, met dezelfde vastgelegde criteria/modelrollen en oorspronkelijke XD-limieten. Geen gesloten case herhalen, brede matrix of automatische volgende proef.",
-          "remaining": "De eerdere Eva2-CM04 heeft onherstelbaar onbekend verbruik. Nieuwe prospectieve toelating nodig; oude ledger/UNKNOWN blijft behouden. Vastgelegde Eva1-XD-toolroute is niet passend beschikbaar, geen productverlies.",
-          "source": "eva2/design/product/comparable-agent-benchmarks-v1.md"
+          "detail": "Publiceer de afzonderlijk beoordeelde oorspronkelijke pair. Gebruik een concreet aangetoond tekort om de kleinste noodzakelijke verbetering te kiezen.",
+          "remaining": "Geen algemene superioriteit of productafronding op basis van alleen aansluiting.",
+          "source": "eva2/evidence/product/p2-prebuild-decision-20261005.json"
         },
         "ownerAction": {
-          "title": "Eén apart vergelijkingsbesluit",
+          "title": "Geen handeling voor deze vergelijking",
+          "owner": "Codex",
           "taskId": "P2.1",
-          "owner": "Jaap",
-          "detail": "De native aansluiting is nu concreet gecontroleerd. Alleen afzonderlijk akkoord voor één nieuwe prospectieve partiële Eva2/OpenClaw-vergelijking ontbreekt. Originele per-samplelimieten:72 SDK-aanvragen en70 tools; samen maximaal144/140. Dit is een bovengrens, geen verbruiksdoel; euro-/creditkosten onbekend. Oude registraties/UNKNOWN blijven staan.",
-          "how": "Beantwoord de aparte vraag over deze ene aanvullende vergelijking. Geen aanmelding of speakerhandeling nodig. Twee bestaande menselijke antwoordbeoordelingen en I1.2/F2 blijven afzonderlijk open.",
-          "source": "eva2/evidence/product/p2-xd-native-collection-preflight-20261008.json"
+          "detail": "Je opdracht om door te gaan is geregistreerd voor de ene eerder beschreven aanvullende vergelijking. Menselijke antwoordbeoordeling, I1.2 en F2 blijven apart.",
+          "how": "Geen aanmelding, speakerproef of nieuwe bevestiging nodig.",
+          "source": "eva2/evidence/product/p2-owner-continuation-20261008.json"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-07T23:44:41.815959+00:00"
+        "reviewedAt": "2026-10-08T00:56:51.685744+00:00"
       },
-      "reviewedAt": "2026-10-07T23:44:41.815959+00:00",
-      "checkedAt": "2026-10-07T23:44:41.815959+00:00",
+      "reviewedAt": "2026-10-08T00:56:51.685744+00:00",
+      "checkedAt": "2026-10-08T00:56:51.685744+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -21154,32 +21154,40 @@
             "basis": "Existing source/dated evidence synthesis; no new runtime trial",
             "replacementJustified": false
           },
-          "activeWorker": null,
+          "activeWorker": "/root/aide_final_evaluation",
           "dashboardComponent": "project-wide",
           "remainingTasks": [
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "blocked",
+              "status": "in_progress",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Beantwoord het afzonderlijke vergelijkingsbesluit; na akkoord volgt onafhankelijke toelating voor één ongebruikte oorspronkelijke Eva2/OpenClaw-combinatiecase. Geen brede matrix, oude sampleherhaling of reset van UNKNOWN.",
-              "ownerActionRequired": true,
+              "nextAction": "Eén afzonderlijk geautoriseerde huidige Eva2/OpenClaw-combinatiecase uitvoeren na onafhankelijke technische binding; daarna kwaliteit en concrete uitvoeringsverliezen publiceren. Geen nieuwe matrix of replay.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": true,
-                "steps": [
-                  "Beantwoord de reeds gestelde vraag over één aanvullende Eva2/OpenClaw-vergelijking."
-                ],
-                "expected": "Een expliciet besluit over die ene prospectieve proef. Geen nieuwe aanmelding of speakerhandeling.",
-                "blocksIndependentWork": true,
-                "remainingHumanAssessmentsPreserved": true
+                "steps": [],
+                "expected": "Geen nieuwe toestemming/login/speakerhandeling nodig voor deze ene proef. Bestaande echte menselijke beoordelingen blijven afzonderlijk open.",
+                "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-07T23:44:41.815959+00:00",
+              "checkedAt": "2026-10-08T00:56:51.685744+00:00",
               "assignment": {
-                "baseCommit": "77700303142ebc0e7929010837282e63d1a3021f",
+                "baseCommit": "7f4e7315ac38ff81f662adb97e1a0e2a0663c8c0",
                 "owner": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  {
+                    "name": "/root/aide_final_evaluation",
+                    "responsibility": "Private prospective pair binding/execution and sealed final assessment",
+                    "state": "preparing_exact_candidate_no_model_started"
+                  },
+                  {
+                    "name": "/root/p2_eva1_lease_review_20261006",
+                    "responsibility": "Independent bundled source/resource/input and terminal review",
+                    "state": "reviewing_no_model_calls"
+                  }
+                ],
                 "files": [
                   "Coördinator: p1_openclaw_parent_accounting.mjs, canonieke optionele publieke test, bestaand P2.1-bewijs/status en documentatie",
                   "Evaluator: apart publiek fragment en één modelvrije native tweedienstproef; geen canonieke edits of afgeschermde invoer",
@@ -21189,7 +21197,7 @@
                 "gap": "Matching Eva2-combinatiewerk ontbreekt. De historische toelatingsguard blijft intact; aanvullende proef vraagt afzonderlijke toelating en aantoonbare bestaande native tweedienstaansluiting.",
                 "finish": "Eén publieke aansluitingscontrole afgerond; dit voltooit P2.1 of zelfstandig werk niet. Oorspronkelijke voorwaarden, gesloten proeven en UNKNOWN-verbruik behouden.",
                 "estimate": "34 gerichte controles; één modelvrije native proef met publieke dummygegevens. Echte provider-/modelcalls0; ontwikkelcredits onbekend.",
-                "currentAction": "Technische voorbereiding gesloten; geen modelproef of onafhankelijke review actief. Wacht op het reeds gevraagde afzonderlijke vergelijkingsbesluit.",
+                "currentAction": "Exacte huidige kandidaat/resources binden voor één oorspronkelijke Eva2/OpenClaw-pair; onafhankelijke review loopt. Nog geen echte modelproef gestart.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "previousTurnClassification": "progress",
@@ -22178,21 +22186,14 @@
                 "executionDiagnosisEvidence": "eva2/evidence/product/p2-current-execution-diagnosis-20261007.json",
                 "memorySelectionCorrectionEvidence": "eva2/evidence/product/memory-selection-correction-20261007.json",
                 "currentBlockedAudit": {
-                  "condition": "Availability decision recorded; remaining coverage requires a decision-relevant eligible matched route. Original participant usage guards and human ratings remain open.",
+                  "condition": "Owner continued the exact proposed one-pair work; prior authorization blocker resolved. Source/resource/input binding still requires independent technical GO.",
                   "consecutiveGoalTurns": 0,
-                  "previousGoalTurnClassification": "progress",
-                  "classification": "progress",
-                  "revalidatedAt": "2026-10-07T22:01:39.684721+00:00",
+                  "classification": "resumed_with_changed_authorization",
+                  "revalidatedAt": "2026-10-08T00:56:51.685744+00:00",
                   "blockedThresholdSatisfied": false,
                   "requestedAppGoalStatus": null,
-                  "activeOriginalProcesses": [],
-                  "humanCompletedSheets": [
-                    false,
-                    false
-                  ],
                   "evidence": [
-                    "eva2/evidence/product/p2-hermes-cm07-availability-20261007.json",
-                    "eva2/reviews/p2-hermes-cm07-availability-review-20261007.json"
+                    "eva2/evidence/product/p2-owner-continuation-20261008.json"
                   ]
                 },
                 "lastProgressGoalTurn": {
@@ -23231,7 +23232,7 @@
                   "equivalent_native_settled": true,
                   "scopeStopExitCode": 5
                 },
-                "concreteNextAction": "Vraag afzonderlijke prospectieve verbruikstoelating voor één ongebruikte oorspronkelijke successor-XD-case: Eva2 en OpenClaw, één epoch, originele criteria/modelrollen/per-samplelimieten. Eva1-XD-beschikbaarheid blijft UNKNOWN. Geen oude authorityreset of automatische volledige matrix.",
+                "concreteNextAction": "Eén afzonderlijk geautoriseerde huidige Eva2/OpenClaw-combinatiecase uitvoeren na onafhankelijke technische binding; daarna kwaliteit en concrete uitvoeringsverliezen publiceren. Geen nieuwe matrix of replay.",
                 "currentGoalTurnOutcome": {
                   "classification": "technical_comparison_dependency_progress",
                   "newProductFunction": false,
@@ -23264,7 +23265,8 @@
                     "status": "completed",
                     "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json"
                   }
-                }
+                },
+                "ownerContinuationEvidence": "eva2/evidence/product/p2-owner-continuation-20261008.json"
               },
               "remaining": "Oorspronkelijke overige dekking en twee echte antwoordbeoordelingen blijven open. Dit CM08-paar is gesloten: beide missen de latere ervaring. Eva2 behoudt de bestaande onbekende SDK-verbruikspost; geen ongewijzigde proefherhaling.",
               "latestEvidence": "eva2/evidence/product/p2-cm08-matched-eva1-openclaw-result-20261008.json",
@@ -23454,7 +23456,7 @@
               "publicPreparationEvidence": "eva2/evidence/product/p2-openclaw-calendar-correction-20261007.json",
               "nativeToolRuntimeReview": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
               "nativeToolCheckpointPublicationReview": "eva2/reviews/p2-openclaw-calendar-checkpoint-publication-review-20261007.json",
-              "updatedAt": "2026-10-07T23:44:41.815959+00:00",
+              "updatedAt": "2026-10-08T00:56:51.685744+00:00",
               "review": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
               "reviewSha256": "705f9cb56283e5e0de60a46e90fa44e9ea91f1edb8bb6383c766ca9257a5ae19",
               "previousEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
@@ -23520,8 +23522,8 @@
             ],
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
-          "reviewer": "/root/p2_independent_final_20261006",
-          "blocker": "P2.1 wacht op afzonderlijk prospectief vergelijkingsbesluit; geen actieve proef. Oorspronkelijke eindvoorwaarden en menselijke beoordelingen blijven staan."
+          "reviewer": "/root/p2_eva1_lease_review_20261006",
+          "blocker": "Geen eigenaarbesluit meer nodig voor deze ene pair; technische uitvoering wordt gericht voorbereid. Oorspronkelijke historische UNKNOWN en menselijke beoordelingen behouden."
         },
         {
           "id": "F1",
@@ -24041,8 +24043,8 @@
           "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       },
-      "lastUpdated": "2026-10-07T23:44:41.815959+00:00",
-      "updatedAt": "2026-10-07T23:44:41.815959+00:00"
+      "lastUpdated": "2026-10-08T00:56:51.685744+00:00",
+      "updatedAt": "2026-10-08T00:56:51.685744+00:00"
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
