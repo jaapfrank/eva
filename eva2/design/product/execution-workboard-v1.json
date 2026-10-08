@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-08T18:29:23.807790+00:00",
+  "lastUpdated": "2026-10-08T18:39:56.792645+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1016,8 +1016,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-08T18:29:23.807790+00:00",
+        "checkedAt": "2026-10-08T18:39:56.792645+00:00",
         "deliveries": [
+          {
+            "title": "Geheugenproef gesloten zonder Eva-antwoord",
+            "date": "2026-10-08",
+            "state": "investigated",
+            "taskId": "P2.1",
+            "productFunctionCompleted": false,
+            "result": "CM06 onbekend door proefconfiguratie vóór Eva: nul modelaanvragen. Historische gegevens en eerdere geheugenvoordelen blijven behouden; geen nieuwe productfunctie of vergelijkingswinst.",
+            "remaining": "P2.1 blijft open: deze CM06 heeft geen Eva2-antwoordbewijs, overige oorspronkelijke families/epochs, CM07-toegang en echte menselijke beoordelingen blijven open. Geen gesloten proef herhalen of nieuwe brede matrix.",
+            "source": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+            "review": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json",
+            "usage": "0fysieke modelaanvragen/0tools; bekende gedeeltelijke tokens0, onvolledige rapporttotalen blijven onbekend. Codex-ontwikkelcredits en geld onbekend."
+          },
           {
             "title": "Persoonsgeheugenwinst: privéherinneringen gescheiden",
             "date": "2026-10-08",
@@ -4302,13 +4314,14 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Persoonsgeheugenproef afgerond",
-          "detail": "Eva2 houdt twee privéherinneringen gescheiden en haalt beide later terug:4/4 feitelijk,3/3 voorwaarden. OpenClaw/Hermes vermengen ze;Eva1exactUNKNOWN. Onafhankelijk bevestigd. Eén extra achtergrondtaak mislukt; geen algemene winnaar.",
+          "title": "P2.1 · Geheugenproef onbekend door proefconfiguratie",
+          "detail": "CM06 onbekend door proefconfiguratie vóór Eva: nul modelaanvragen. Historische gegevens en eerdere geheugenvoordelen blijven behouden; geen nieuwe productfunctie of vergelijkingswinst. P2.1 blijft open: deze CM06 heeft geen Eva2-antwoordbewijs, overige oorspronkelijke families/epochs, CM07-toegang en echte menselijke beoordelingen blijven open. Geen gesloten proef herhalen of nieuwe brede matrix.",
           "taskId": "P2.1",
           "state": "in_progress",
           "activeExecution": false,
-          "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
-          "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar."
+          "source": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+          "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
+          "review": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json"
         },
         "next": {
           "title": "Nog open · resterende vergelijking en gezinsbeoordeling",
@@ -4395,19 +4408,40 @@
       "comparisonResults": {
         "contract": "EvaPublishedComparisonResults/v1",
         "taskId": "P2.2",
-        "publishedAt": "2026-10-08T18:29:23.807790+00:00",
+        "publishedAt": "2026-10-08T19:14:57.301183+00:00",
         "originalDoneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
         "status": "current_eva2_cm05_closed_bounded_person_memory_advantage",
         "fullComparisonCompleted": false,
         "overallSuperiorityProven": false,
         "overallWinner": null,
-        "headline": "CM05 · Eva2 houdt twee privéherinneringen gescheiden; OpenClaw en Hermes niet.",
+        "headline": "CM06 onbekend door proefconfiguratie vóór Eva: nul modelaanvragen. Historische gegevens en eerdere geheugenvoordelen blijven behouden; geen nieuwe productfunctie of vergelijkingswinst.",
         "scope": "Huidige Eva2 één keer op de oorspronkelijke tweepersoonsgeheugentaak, naast exacte behouden OpenClaw/Hermes. Eva1 op deze variant UNKNOWN; oudere CM05 heeft andere casehash. Geen brede winnaar.",
         "candidateBinding": {
           "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
           "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3"
         },
         "latestRows": [
+          {
+            "case": "CM06 · correctie en brononderscheid na drie dagen",
+            "eva2": {
+              "state": "unknown",
+              "label": "Proeffout vóór Eva · geen vragen verstuurd"
+            },
+            "eva1": {
+              "state": "failed",
+              "label": "Latere status niet teruggehaald · 1/3 feitelijk, 2/3 voorwaarden"
+            },
+            "openclaw": {
+              "state": "observed",
+              "label": "3/3 feitelijk en voorwaarden · 2/2 controles"
+            },
+            "hermes": {
+              "state": "failed",
+              "label": "Correctienuance ontbreekt · 3/3 feitelijk, 2/3 voorwaarden"
+            },
+            "meaning": "Onze proefconfiguratie gebruikte value_sha256 waar de vaste controle raw_sha256 vereist. Eva2 kreeg geen oorspronkelijke vraag; haar voorwaarden en antwoorden blijven onbekend. Geen productverlies of nieuw voordeel. Referenties ongewijzigd.",
+            "source": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json"
+          },
           {
             "case": "CM05 · twee privépersonen",
             "eva1": {
@@ -4902,6 +4936,367 @@
             "sdkUsageComplete": true,
             "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
             "scope": "One original CM05; quality and privacy measured, human/full quality UNKNOWN."
+          },
+          {
+            "case": "CM06 · actuele oorspronkelijke proef · vóór invoer gestopt",
+            "creditCost": null,
+            "source": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+            "providerAttempts": {
+              "eva2": 0,
+              "eva1": 7,
+              "openclaw": 12,
+              "hermes": 6
+            },
+            "inputTokens": {
+              "eva2": null,
+              "eva1": 43408,
+              "openclaw": 285381,
+              "hermes": 13999
+            },
+            "outputTokens": {
+              "eva2": null,
+              "eva1": 1674,
+              "openclaw": 1521,
+              "hermes": 215
+            },
+            "firstContentSeconds": {
+              "eva2": null,
+              "eva1": null,
+              "openclaw": null,
+              "hermes": null
+            },
+            "sampleSecondsIncludingMemory": {
+              "eva2": null,
+              "eva1": 44.57372733799275,
+              "openclaw": 123.41011110899854,
+              "hermes": 15.726007043005666
+            },
+            "unplannedHumanHelp": {
+              "eva2": null,
+              "eva1": null,
+              "openclaw": null,
+              "hermes": null
+            },
+            "humanMinutes": {
+              "eva2": null,
+              "eva1": null,
+              "openclaw": null,
+              "hermes": null
+            },
+            "toolDispatches": {
+              "eva2": 0,
+              "eva1": 6,
+              "openclaw": 11,
+              "hermes": 1
+            },
+            "semanticScore": {
+              "eva2": null,
+              "eva1": null,
+              "openclaw": null,
+              "hermes": null
+            },
+            "limits": "Geen Eva2-taakinvoer/0fysieke aanvragen; knownpartialtokens0, onvolledige SDKtotalen null. Geen vergelijkbare snelheid of efficiëntie; precieze referentietijden en grensverschillen in retainedComparatorAccounting.",
+            "retainedComparatorAccounting": {
+              "eva1": {
+                "closure": {
+                  "active_provider_attempts": 0,
+                  "actual_native_acks": 3,
+                  "calendar_generations": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "calendar_relative_offsets_ms": [
+                    0,
+                    0,
+                    259200000
+                  ],
+                  "cancel_errors": [],
+                  "native_completed_turns": 3,
+                  "native_eof": true,
+                  "native_process_absent": true,
+                  "native_returncode": 0,
+                  "parent_process_absent": true,
+                  "pending_provider_controls": 0,
+                  "private_artifacts_retained": true,
+                  "provider_close_failures": 0,
+                  "quiescent": true,
+                  "reader_stopped": true
+                },
+                "human_ratings": [
+                  null,
+                  null
+                ],
+                "independent_original_assessment": {
+                  "accepted_answers": 1,
+                  "classification": "admitted_native_memory_recall_failure",
+                  "factual_response_predicates": [
+                    false,
+                    true,
+                    false
+                  ],
+                  "finding": "The intermediate source/correction distinction is correct, but the required later status is not recalled. Earlier messages persist in the same-person history; dedicated memory and relevant later model context are empty, and the native search returns no results.",
+                  "forbidden_external_effect_observed": false,
+                  "human_raters_recorded": 0,
+                  "human_raters_required": 2,
+                  "native_trace_readback": true,
+                  "official_inspect_score_rewritten": false,
+                  "original_semantic_conditions": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "original_semantic_conditions_passed": 2,
+                  "original_semantic_conditions_required": 3,
+                  "required_answers": 3,
+                  "required_readbacks": [
+                    false,
+                    true
+                  ],
+                  "required_readbacks_passed": 1,
+                  "required_readbacks_required": 2
+                },
+                "objective_completion": false,
+                "official_semantic_score": null,
+                "replayed": false,
+                "result": {
+                  "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
+                  "sha256": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d"
+                },
+                "status": "closed_original_native_completed_objective_failure_human_unknown",
+                "timing": {
+                  "boundary": "Original monotonic deadline start before native worker launch through three completed exchanges/ACKs and memory readback, before worker stop.",
+                  "comparative_speed_claim": null,
+                  "elapsed_seconds": 44.57372733799275,
+                  "wall_expired": false,
+                  "wall_limit_seconds": 480
+                },
+                "usage": {
+                  "completed_sdk_responses": 7,
+                  "contact_attempts": 7,
+                  "credits": null,
+                  "dispatch_is_not_automatic_action_success": true,
+                  "helper_attempts": 0,
+                  "input_tokens": 43408,
+                  "model": "gpt-6-sol",
+                  "money": null,
+                  "ordinary_tool_dispatches": 1,
+                  "ordinary_tool_names": [
+                    "zoek_gesprek"
+                  ],
+                  "output_tokens": 1674,
+                  "physical_model_context_bodies_verified": 7,
+                  "protocol_tool_dispatches": 5,
+                  "provider_attempts": 7,
+                  "reasoning_effort": "none",
+                  "sdk_usage_complete": true,
+                  "tool_dispatches": 6,
+                  "total_tokens": 45082
+                },
+                "whole_case_quality": "UNKNOWN"
+              },
+              "hermes": {
+                "closure": {
+                  "close_errors": [],
+                  "container_absent": true,
+                  "native_background_reviews_pending": 0,
+                  "native_child_exited": true,
+                  "native_idle_queue_pending": 0,
+                  "network_absent": true,
+                  "parent_and_wrapper_pids_absent": true,
+                  "parent_close_acknowledged": true,
+                  "parent_controller_errors": [],
+                  "relay_closed": true,
+                  "scenario_clock_restored": true,
+                  "scope": "Tracked native tasks, HTTP, durable readbacks and own physical processes/resources; no general OS containment claim.",
+                  "sdk_pending": 0,
+                  "tracked_http_settled": true
+                },
+                "independent_original_assessment": {
+                  "classification": "admitted_native_partial_memory_continuity_failure",
+                  "expected_answers": 3,
+                  "factual_response_predicates": [
+                    true,
+                    true,
+                    true
+                  ],
+                  "factual_supported_count": 3,
+                  "finding": "The broad tentative status survives durable memory and later recall. A required qualification from the correction is absent from the later active memory, dispatched context and answer, so one complete original semantic condition fails. The narrower memory readback passes.",
+                  "forbidden_external_effect_observed": false,
+                  "human_ratings": [
+                    null,
+                    null
+                  ],
+                  "native_answers_received": 3,
+                  "objective_pass": false,
+                  "official_semantic_score": null,
+                  "original_semantic_conditions": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "original_semantic_conditions_passed": 2,
+                  "prior_privacy_failures_reversed": false,
+                  "required_readbacks": [
+                    true,
+                    true
+                  ],
+                  "required_readbacks_passed": 2,
+                  "whole_quality": "UNKNOWN"
+                },
+                "replayed": false,
+                "result": {
+                  "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+                  "sha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059"
+                },
+                "status": "closed_original_native_completed_objective_failure_human_unknown",
+                "usage": {
+                  "completed_sdk_responses": 6,
+                  "contact_attempts": 4,
+                  "credits": null,
+                  "elapsed_seconds": 15.726007043005666,
+                  "error_interpretation": "Post-settlement helper/relay events are retained. All six raw usages are complete; the child local mirror disconnect after acknowledged parent close is not an authoritative missing-usage finding.",
+                  "exact_outbound_contexts_verified": 6,
+                  "external_actions": 0,
+                  "helper_attempts": 2,
+                  "input_tokens": 13999,
+                  "money": null,
+                  "output_tokens": 215,
+                  "post_settlement_GeneratorExit_rows": 2,
+                  "provider_attempts": 6,
+                  "provider_usage_complete": true,
+                  "relay_ConnectionResetError_events": 1,
+                  "speech_requests": 0,
+                  "time_boundary": "Parent monotonic start immediately before native child launch through child exit; preparation and subsequent parent cleanup excluded.",
+                  "tool_dispatches": 1,
+                  "total_tokens": 14214,
+                  "wall_expired": false
+                }
+              },
+              "openclaw": {
+                "closure": {
+                  "container_absent": true,
+                  "equivalent_native_settled": true,
+                  "fresh_final_scope_receipt": true,
+                  "host_artifacts_retained": true,
+                  "inspect_envelope": "success",
+                  "launcher_exit": 0,
+                  "literal_native_closed": false,
+                  "native_cancel_errors": [],
+                  "native_pending_at_close": {
+                    "active_provider_attempts": 0,
+                    "active_turns": 0,
+                    "native_background_terminals": 0,
+                    "openclaw_clients": 0,
+                    "pending_tools": 0
+                  },
+                  "native_returncode": 0,
+                  "native_source_authority_observed_not_created": 3,
+                  "native_unregister_queues_flushed": 6,
+                  "network_absent": true,
+                  "parent_close_ack": true,
+                  "parent_controller_errors": [],
+                  "pending_sdk": 0,
+                  "pending_tool_rows": 0,
+                  "physical_clients_exited": 3,
+                  "relay_connection_reset_events": 1,
+                  "retirement_scope_receipts": 3,
+                  "root_cleanup_errors": [],
+                  "root_scope_absent": true,
+                  "root_scope_errors": [],
+                  "root_scope_populated_after_stop": false
+                },
+                "human_ratings": [
+                  null,
+                  null
+                ],
+                "independent_original_assessment": {
+                  "accepted_answers": 3,
+                  "actor_order": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "ai_human_quality_substitution": false,
+                  "calendar_generations": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "calendar_relative_offsets_ms": [
+                    0,
+                    0,
+                    259200000
+                  ],
+                  "factual_response_predicates": [
+                    true,
+                    true,
+                    true
+                  ],
+                  "finding": "The original factual status, correction and source distinction survive durable memory and later native recall without an invented confirmed commitment.",
+                  "forbidden_external_effect_observed": false,
+                  "full_native_trace_and_stop_readback": true,
+                  "human_raters_recorded": 0,
+                  "human_raters_required": 2,
+                  "native_private_origins_verified_after_completed_turn": 3,
+                  "native_private_origins_verified_before_turn": 3,
+                  "official_scorer_or_inspect_score_rewritten": false,
+                  "original_semantic_conditions": [
+                    true,
+                    true,
+                    true
+                  ],
+                  "prior_cross_person_failures_reversed": false,
+                  "required_answers": 3,
+                  "required_readbacks": [
+                    true,
+                    true
+                  ],
+                  "required_readbacks_failed": 0,
+                  "required_readbacks_passed": 2,
+                  "required_readbacks_unknown": 0,
+                  "session_order": [
+                    0,
+                    0,
+                    1
+                  ]
+                },
+                "objective_completion": true,
+                "official_semantic_score": null,
+                "replayed": false,
+                "result": {
+                  "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+                  "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
+                },
+                "status": "closed_original_native_completed_objective_pass_human_unknown",
+                "timing": {
+                  "boundary": "Parent monotonic start before child launch through child exit; resource preparation and parent cleanup excluded.",
+                  "comparative_speed_claim": null,
+                  "elapsed_seconds": 123.41011110899854,
+                  "wall_expired": false,
+                  "wall_limit_seconds": 480
+                },
+                "usage": {
+                  "completed_sdk_responses": 12,
+                  "contact_attempts": 12,
+                  "credits": null,
+                  "helper_attempts": 0,
+                  "input_tokens": 285381,
+                  "model": "gpt-6-sol",
+                  "money": null,
+                  "output_tokens": 1521,
+                  "provider_attempts": 12,
+                  "reasoning_effort": "none",
+                  "sdk_usage_complete": true,
+                  "tool_coverage_complete": true,
+                  "tool_dispatches": 11,
+                  "tool_settled_rows": 11,
+                  "total_tokens": 286902,
+                  "verified_context_artifacts": 36
+                },
+                "whole_case_quality": "UNKNOWN"
+              }
+            }
           }
         ],
         "runtimeTotals": {
@@ -4914,7 +5309,7 @@
           "usageComplete": false,
           "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": false,
           "actualNativeAttempts": null,
-          "registeredSampleRows": 33,
+          "registeredSampleRows": 34,
           "nativeToolDispatches": null,
           "creditCost": null,
           "codexDevelopmentCredits": null,
@@ -4922,9 +5317,9 @@
             "contactSolNone": null,
             "helperAstraMedium": null
           },
-          "scope": "Retained authority through current Eva2CM05;32oldraw/revisions/meta/reservations exact. Known lower bounds; historical unknowns remain.",
-          "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
-          "authoritySha256": "8bc5f223c9cebe091f68addbf34458114b67b0bd130189a574ff515c6c3302a3",
+          "scope": "34registraties;33oude raw/revisies/meta/reserveringen exact. CM06nul fysieke aanvragen vóór invoer. Historische verbruiksonbekenden blijven onbekend; registratie is geen native dekking.",
+          "source": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+          "authoritySha256": "252fcb1a159a4a0390962988a6ed7f28b50dd3c72cd58bd9f2053e4eec6a99cb",
           "knownTotalTokensLowerBound": 2750790
         },
         "housemateOutcomes": [
@@ -4957,7 +5352,7 @@
             "registeredRows": {
               "agent_zero": 1,
               "eva1-bottie": 5,
-              "eva2": 6,
+              "eva2": 7,
               "hermes": 7,
               "openclaw": 7
             },
@@ -4978,6 +5373,7 @@
                 "EV003-CM-03:epoch1",
                 "EV003-CM-04:epoch1",
                 "EV003-CM-05:epoch1",
+                "EV003-CM-06:epoch1",
                 "EV003-CM-08:epoch1"
               ],
               "hermes": [
@@ -5002,7 +5398,7 @@
             "nativeAttempts": null,
             "objectiveCompletedCountFromRegistry": null,
             "uniqueOriginalPayloadCoverageFromRegistry": null,
-            "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+            "source": "eva2/evidence/product/p2-authority-coverage-cm06-20261008.json",
             "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
           },
           {
@@ -5030,7 +5426,7 @@
             "nativeAttempts": null,
             "objectiveCompletedCountFromRegistry": null,
             "uniqueOriginalPayloadCoverageFromRegistry": null,
-            "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+            "source": "eva2/evidence/product/p2-authority-coverage-cm06-20261008.json",
             "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
           },
           {
@@ -5042,7 +5438,7 @@
             "nativeAttempts": null,
             "objectiveCompletedCountFromRegistry": null,
             "uniqueOriginalPayloadCoverageFromRegistry": null,
-            "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+            "source": "eva2/evidence/product/p2-authority-coverage-cm06-20261008.json",
             "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
           },
           {
@@ -5054,7 +5450,7 @@
             "nativeAttempts": null,
             "objectiveCompletedCountFromRegistry": null,
             "uniqueOriginalPayloadCoverageFromRegistry": null,
-            "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+            "source": "eva2/evidence/product/p2-authority-coverage-cm06-20261008.json",
             "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
           },
           {
@@ -5066,7 +5462,7 @@
             "nativeAttempts": null,
             "objectiveCompletedCountFromRegistry": null,
             "uniqueOriginalPayloadCoverageFromRegistry": null,
-            "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+            "source": "eva2/evidence/product/p2-authority-coverage-cm06-20261008.json",
             "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
           },
           {
@@ -5078,7 +5474,7 @@
             "nativeAttempts": null,
             "objectiveCompletedCountFromRegistry": null,
             "uniqueOriginalPayloadCoverageFromRegistry": null,
-            "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+            "source": "eva2/evidence/product/p2-authority-coverage-cm06-20261008.json",
             "remainingBasis": "Spraak door eigenaar geparkeerd; geen spraakbouw of fysieke proef. Geen nieuwe registratie in deze behouden authority.",
             "status": "parked_by_owner"
           }
@@ -7423,100 +7819,31 @@
             "review": "eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json",
             "reviewSha256": "20a52b35d0c8ab327a3e3e72370494a9f2406cacf9b1bc434acd89ad17e3ccb7",
             "classification": "valid_bounded_original_person_memory_advantage"
+          },
+          {
+            "path": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+            "sha256": "0f311bf6cc0eb9aebbae88b8e091e2c974d6e02702a73a3b4f6f0d4aa7062a99"
+          },
+          {
+            "path": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json",
+            "sha256": "ac6255a712bd60ac793e1b2654f4be1b824bcd5b14bfff7f22922964d7f68a20"
+          },
+          {
+            "path": "eva2/evidence/product/p2-authority-coverage-cm06-20261008.json",
+            "sha256": "396e61a00333d48b6c159e6f17726365d63f07d0f42547c556711fa1ef30c8ba"
           }
         ],
         "controlledProviderCallsForPublication": 0,
         "codexDevelopmentCredits": null,
         "followup": {
-          "headline": "CM05 · Eva2 houdt twee privéherinneringen gescheiden; OpenClaw en Hermes niet.",
-          "scope": "Huidige Eva2 één keer op de oorspronkelijke tweepersoonsgeheugentaak, naast exacte behouden OpenClaw/Hermes. Eva1 op deze variant UNKNOWN; oudere CM05 heeft andere casehash. Geen brede winnaar.",
-          "rows": [
-            {
-              "name": "Eva2 · CM05",
-              "quality": {
-                "state": "observed",
-                "label": "Twee personen gescheiden · vaste voorwaarden 3/3"
-              },
-              "nativeReplies": "4 / 4",
-              "acceptedAnswers": null,
-              "execution": "Vier juiste antwoorden; beide herinneringen per geverifieerde persoon opgeslagen en later teruggehaald. Geen ander-persoonsfeit in 13 modelcontexten of antwoorden. Controles2/2. Eén extra gedelegeerde taak mislukt.",
-              "transportMs": [],
-              "providerAttemptsRegistered": 13,
-              "observedToolDispatches": 3,
-              "completeInputTokens": 43887,
-              "completeOutputTokens": 1728,
-              "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json"
-            },
-            {
-              "name": "OpenClaw · CM05",
-              "quality": {
-                "state": "failed",
-                "label": "Privégegevens vermengd · 0 voorwaarden gehaald, 1 onbekend"
-              },
-              "nativeReplies": "3 / 4",
-              "acceptedAnswers": null,
-              "execution": "Twee voorwaarden gemeten en gefaald; derde onbekend. Twee feitelijk ondersteunde antwoorden, één onjuist, één onbekend. Privégegevens tussen personen gedeeld. Eén broncontrole faalt, andere onbekend; definitieve native afsluiting onbewezen.",
-              "transportMs": [],
-              "providerAttemptsRegistered": 16,
-              "observedToolDispatches": 10,
-              "completeInputTokens": 403281,
-              "completeOutputTokens": 1296,
-              "source": "eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json"
-            },
-            {
-              "name": "Hermes · CM05",
-              "quality": {
-                "state": "failed",
-                "label": "Privégegevens vermengd · vaste voorwaarden 1/3"
-              },
-              "nativeReplies": "4 / 4",
-              "acceptedAnswers": null,
-              "execution": "Drie van vier antwoorden feitelijk ondersteund; feiten vervangen elkaar in één profiel en worden aan de andere persoon aangeboden. Controles1/2; harde privacyvoorwaarde faalt.",
-              "transportMs": [],
-              "providerAttemptsRegistered": 10,
-              "observedToolDispatches": 2,
-              "completeInputTokens": 21608,
-              "completeOutputTokens": 424,
-              "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json"
-            },
-            {
-              "name": "Eva1 · exacte CM05",
-              "quality": {
-                "state": "unknown",
-                "label": "Onbekend · geen toegelaten persoonswisselroute"
-              },
-              "nativeReplies": "Onbekend",
-              "acceptedAnswers": null,
-              "execution": "Geen matching uitvoering voor deze tweepersoonsvariant. Oudere CM05 heeft een andere casehash en is niet als matching hergebruikt.",
-              "transportMs": [],
-              "providerAttemptsRegistered": null,
-              "observedToolDispatches": null,
-              "completeInputTokens": null,
-              "completeOutputTokens": null,
-              "source": "eva2/evidence/product/p2-eva1-successor-cm05-availability-20261007.json"
-            }
-          ],
-          "usage": "Eva2:13 volledige modelaanvragen/45.615 tokens/3tools. OpenClaw:16/404.577/10; Hermes:10/22.032/2. Credits/geld onbekend. Minder verbruik bij mislukte privacy is geen efficiëntiewinst.",
-          "humanHelpNote": "Geen ongeplande eigenaarhulp tijdens de uitvoering. Twee echte menselijke gesprekbeoordelingen blijven apart; volledige kwaliteit UNKNOWN.",
-          "nextAction": "Bind de volgende werkelijk resterende oorspronkelijke uitkomst vooraf aan vaste criteria en bestaand mandaat. Hergebruik CM05/CM08/XD02; geen gesloten proef herhalen. Menselijke beoordeling blijft apart.",
-          "remaining": "CM05 en CM08 zijn nu met de beschikbare exacte referenties gesloten; XD02 blijft een gemeten verlies. Eva2-CM06, overige oorspronkelijke families/epochs, CM07-toegang en twee echte menselijke beoordelingen blijven open. Geen nieuwe proef geselecteerd of automatische brede matrix.",
-          "timingNote": "Eva2187,18s vanaf vóór drie-workeropstart tot vóór stoppen. OpenClaw181,71s/Hermes21,93s tot nativechildexit; verschillende meetgrenzen/modelrollen. Geen snelheids- of efficiëntievoorsprong bewezen.",
-          "configurationNotes": [
-            "The bounded original person-memory and privacy conditions pass for Eva2; retained OpenClaw/Hermes fail their original objective/privacy conditions. This establishes one-case advantage only.",
-            "Eva1 has no admitted matching two-person execution; UNKNOWN is not a product loss.",
-            "Legacy CM05 has a different case hash and is excluded from this matching comparison.",
-            "No general superiority, speed or efficiency claim. Lower usage with an incomplete or privacy-failing result is not an efficiency advantage.",
-            "One installation memory bank uses separate verified person tags; distinct physical banks are not claimed.",
-            "Failed extra delegated work remains visible and is not counted as a successful autonomous contribution.",
-            "Eva2:4Sol/none-contact en9Astra/medium-helpers; Hermes6Sol/none+4Astra/medium,OpenClaw16Sol/none. Geen causale architectuurclaim bij identieke modellen.",
-            "Eén extra incomplete_work-taak; verbruik inbegrepen. De oorspronkelijke vier gesprekken/geheugenafhandelingen wel voltooid.",
-            "Drie waarnemer/export-shapefouten alleen tijdens uitlezing; geen invloed op oorspronkelijke uitvoering of scores."
-          ],
-          "resources": "Alle eigen nativewerkers/HTTP/SDK/tools afgewikkeld en containers/netwerk/parent weg.32oude rijen/revisies/meta/full reservations exact;33rijen/223aanvragen.3oude verbruiksonbekende pogingen blijven onbekend.",
-          "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
-          "review": "eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json",
+          "status": "closed_evaluator_preinput_policy_schema_failure_unknown",
+          "source": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+          "review": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json",
+          "result": "CM06 onbekend door proefconfiguratie vóór Eva: nul modelaanvragen. Historische gegevens en eerdere geheugenvoordelen blijven behouden; geen nieuwe productfunctie of vergelijkingswinst.",
+          "remaining": "P2.1 blijft open: deze CM06 heeft geen Eva2-antwoordbewijs, overige oorspronkelijke families/epochs, CM07-toegang en echte menselijke beoordelingen blijven open. Geen gesloten proef herhalen of nieuwe brede matrix.",
           "productFunctionCompleted": false,
-          "registeredCoverageSource": "eva2/evidence/product/p2-authority-coverage-20261008.json"
+          "sameEpisodeRearmed": false,
+          "comparatorsReplayed": false
         },
         "competitorAccessRestoration": {
           "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
@@ -8994,11 +9321,11 @@
           "known_output_tokens_lower_bound": 25011,
           "known_total_tokens_lower_bound": 2750790,
           "provider_attempts": 223,
-          "registered_rows": 33,
+          "registered_rows": 34,
           "usage_complete": false,
-          "basis": "Independent33-row retained authority;32oldraw/revisions/meta/full reservations exact.3historical missing attempts not zero-filled.",
-          "known_usage_delta_this_sample": 45615,
-          "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json"
+          "basis": "Onafhankelijke34-rowregistratie;33oude waarden/revisies/meta/reserveringen exact. CM06geen oorspronkelijkeinvoer/0modelaanvragen;3historische ontbrekende pogingen blijven onbekend.",
+          "known_usage_delta_this_sample": 0,
+          "source": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json"
         },
         "historicalCumulativeAccountingBeforeMatchingXd02": {
           "cost_money": null,
@@ -9013,72 +9340,93 @@
           "known_usage_delta_this_sample": 0
         },
         "nextOriginalComparisonPreparation": {
-          "entry": "eva2:EV003-CM-05:epoch1",
-          "stage": "cm05_original_closed_independently_reviewed",
-          "admitted": true,
+          "entry": "eva2:EV003-CM-06:epoch1",
+          "stage": "closed_cm06_evaluator_preinput_failure_unknown",
+          "admitted": false,
+          "admissionScope": "closed attempt; no rearm or original input; no product loss",
           "activeExecution": false,
-          "providerCalls": 13,
-          "criteriaChanged": false,
-          "comparatorsReplayed": false,
-          "scope": "One approved authority copy and isolated resource preparation completed. Old32rows/reservations retained. No original input, clock or models; same-case existing comparators retained.",
-          "checkedAt": "2026-10-08T18:29:23.807790+00:00",
-          "admissionScope": "resource preparation GO only; final input policy and actual parent BOOT binding pending",
-          "privateSourceBase": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1",
-          "selection": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm05-selection-20261008-v1/selection.private.json",
-          "selectionSha256": "e3f03244950ba0fe10367980bb240ace7d3d61c26dbe41b1991413dda1471d9e",
-          "review": "eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json",
-          "reviewSha256": "20a52b35d0c8ab327a3e3e72370494a9f2406cacf9b1bc434acd89ad17e3ccb7",
-          "originalTurns": 4,
-          "verifiedPrivateActors": 2,
-          "actorOrder": [
-            0,
-            1,
-            0,
-            1
-          ],
-          "privateSessions": 4,
-          "calendarAdvanceDays": 1,
-          "originalSdkLimit": 16,
-          "originalToolLimit": 16,
-          "originalWallSeconds": 480,
+          "providerCalls": 0,
+          "originalInputReleased": false,
+          "clockStarted": true,
+          "resourcesCreated": true,
+          "nativeWorkersStarted": true,
+          "checkedAt": "2026-10-08T19:06:15.121331+00:00",
+          "caseSha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
           "matchingComparators": [
+            "Eva1",
             "OpenClaw",
             "Hermes"
           ],
-          "eva1": "unavailable UNKNOWN for exact actor-switch case; legacy differenthash preserved",
-          "priorAuthoritySha256": "dae273d76d458ecb7ebc8cfa9684e10fc139db1d24b148462d4ef16835b1f9f2",
-          "retainedHistoricalRows": 32,
-          "resourcesCreated": true,
-          "nativeWorkersStarted": false,
-          "originalInputReleased": true,
-          "deadlineStarted": true,
-          "authorityCopyCreated": true,
-          "sourceReview": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1/source-resource-review.private.json",
-          "sourceReviewSha256": "e1dfeb2132288f0af47b91174f011f3bae98bc5a427b41545a4ca24cd5296147",
-          "resourcePreparationExit": 0,
-          "finalPolicySha256": "b7d28945963f3d8ddb345ce79f678a3c9bd559edc72d1c471553b51af19df042",
-          "finalPolicyReviewIndexSha256": "8cdb8d1dec85c76ad8fb6e8cb8f0a3a24407838796a892808dbec9725590f427",
-          "waitingInspectPid": 1834506,
-          "executionSessionId": 41013,
-          "conditionalInputReviewSha256": "6d2da77b4e1507f880601bc288777e418e539969e7c90e0bcaded6f8b41ac067",
-          "clockStarted": true,
-          "actualParentPid": 1834658,
-          "actualParentStartTicks": 21379482,
-          "actualBootReviewSha256": "c5149e29b971ce3bee45e983e25bc013ac8347b8626859c60932e27db57a455a",
-          "bootReleasedAt": "2026-10-08T18:07:34.570253+00:00",
-          "completedOriginalResponses": 4,
-          "nativeMemorySettlements": 4,
-          "terminalExitCode": 0,
-          "originalExecutionEndedAt": "2026-10-08T18:10:53.800194+00:00",
-          "usageComplete": true,
-          "allOwnResourcesClosed": true,
-          "result": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
-          "resultSha256": "57c7f0be32ed93c091931d2d7a01f32ff1bf1a633946b9e66eff8681f6c65e09",
-          "objectiveCompletion": true,
-          "wholeQuality": "UNKNOWN",
-          "nextCaseSelected": false
+          "priorAuthoritySha256": "8bc5f223c9cebe091f68addbf34458114b67b0bd130189a574ff515c6c3302a3",
+          "retainedHistoricalRows": 33,
+          "originalSdkLimit": 16,
+          "originalToolLimit": 16,
+          "originalWallSeconds": 480,
+          "criteriaChanged": false,
+          "comparatorsReplayed": false,
+          "scope": "One unused current successor CM06 technical selection; slot/history/mandate/source binding under independent review. Legacydifferenthashclosed. No fresh runtime or source optimization.",
+          "originalTurns": 3,
+          "verifiedPrivateActors": 1,
+          "actorOrder": [
+            0,
+            0,
+            0
+          ],
+          "sessionOrder": [
+            0,
+            0,
+            1
+          ],
+          "calendarAdvanceDays": 3,
+          "semanticLabel": "corrected tentative status and source distinction retained after3days; not legacy forgetting",
+          "selection": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm06-selection-20261008-v1/selection.private.json",
+          "selectionSha256": "4965409bdce4378ae5690933532c7c90d46c66e2678f6a6f7e42cd7cc8c74dde",
+          "selectionReview": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm06-selection-20261008-v1/selection-mandate-review.private.json",
+          "selectionReviewSha256": "3266d4c632d06fbe8e01147c35bb748544e2e1271de6db5cb10f04b6a80d5d8b",
+          "privateSourceBase": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1",
+          "sourceBindingCorrection": {
+            "cause": "Private comparison parent subnet differed from resource preparation subnet; caught before runtime.",
+            "action": "Align parent constant and derivative binding hashes only; reuse other source checks.",
+            "productCodeChanged": false,
+            "resourcesCreated": false,
+            "providerCalls": 0
+          },
+          "resourcePreparationStarted": true,
+          "sourceReviewSha256": "94ee2c6b1624efbc41a15619a02fad089762c9382cf573af095a3c2fa99deacf",
+          "sourceIndexSha256": "a3a0ca608eabccfe047e8684d75019c950abbbb1c5015cf5fcc316ca5c3fbd7b",
+          "resourcePreparationExitCode": 0,
+          "authorityCopyExitCode": 0,
+          "finalPolicyIndexSha256": "6c272d05261de93a35d5db7dc59f4fb31413bd074e649d9f742bba9ac1c5b154",
+          "actualResourcesSha256": "89385387610377ed3ae3f58317c9c765b13e4bdc56fc429036750629cc7fd00d",
+          "parentStarted": true,
+          "parentPid": 2055440,
+          "conditionalPolicyReviewSha256": "fe36ddcffe87c76b518ac112ba6ba563d19a510efe99b2f660677481a4d7db33",
+          "inspectPid": 2055142,
+          "actualBootReviewSha256": "4e051ed8e87a45440685ad7c80878adc3bca85a05b22abc9228b54b5c3df8e29",
+          "bootTriggerAuthorized": true,
+          "deadlineSha256": "b7e7c93c63d99ee9d38f3bcaefed91f476682663dd3306c5498ab906024ea0bb",
+          "absoluteOriginalSeconds": 480,
+          "bootReleasedAt": "2026-10-08T19:02:31.995083Z",
+          "executionProcessExitCode": 0,
+          "paidRuntimeCalls": 0,
+          "outcome": "UNKNOWN evaluator policy field mismatch before input",
+          "productLoss": false,
+          "technicalCause": "Policy history hash key value_sha256 mismatched unchanged gate raw_sha256; 33 actual history rows preserved.",
+          "rearmed": false,
+          "replayed": false,
+          "resourcesClosed": true,
+          "originalInputResponses": 0,
+          "usageTotals": null,
+          "knownPartialTokens": 0,
+          "closed": true,
+          "resultEvidence": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+          "resultSha256": "0f311bf6cc0eb9aebbae88b8e091e2c974d6e02702a73a3b4f6f0d4aa7062a99",
+          "review": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json",
+          "reviewSha256": "ac6255a712bd60ac793e1b2654f4be1b824bcd5b14bfff7f22922964d7f68a20",
+          "finalAuthoritySha256": "252fcb1a159a4a0390962988a6ed7f28b50dd3c72cd58bd9f2053e4eec6a99cb",
+          "sameEpisodeRearmed": false
         },
-        "checkedAt": "2026-10-08T18:29:23.807790+00:00",
+        "checkedAt": "2026-10-08T19:14:57.301183+00:00",
         "historicalCumulativeAccountingBeforeCurrentEva2CM08": {
           "cost_money": null,
           "historical_accounting_unknowns_preserved": 3,
@@ -9189,116 +9537,652 @@
           }
         ],
         "registeredAuthorityCoverage": {
-          "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
-          "sha256": "4f4268abad5a1d0235372aa362120dac507e76788d2bba66a21d3e866a5ea0ab",
-          "registeredRows": 33,
-          "groups": [
-            {
-              "family": "conversation_memory",
-              "participant": "agent_zero",
-              "registered_rows": 1,
-              "zero_sdk_rows": 0,
-              "usage_unknown_guard_rows": 1,
-              "case_epoch_codes_in_ids": [
-                "EV003-CM-01:epoch1"
-              ]
+          "source": "eva2/evidence/product/p2-authority-coverage-cm06-20261008.json",
+          "sha256": "396e61a00333d48b6c159e6f17726365d63f07d0f42547c556711fa1ef30c8ba",
+          "rows": 34,
+          "groups": 8,
+          "nativeCompletionFromRegistry": null,
+          "objectiveCompletionFromRegistry": null
+        },
+        "historicalBeforeCurrentEva2CM06": {
+          "followup": {
+            "headline": "CM05 · Eva2 houdt twee privéherinneringen gescheiden; OpenClaw en Hermes niet.",
+            "scope": "Huidige Eva2 één keer op de oorspronkelijke tweepersoonsgeheugentaak, naast exacte behouden OpenClaw/Hermes. Eva1 op deze variant UNKNOWN; oudere CM05 heeft andere casehash. Geen brede winnaar.",
+            "rows": [
+              {
+                "name": "Eva2 · CM05",
+                "quality": {
+                  "state": "observed",
+                  "label": "Twee personen gescheiden · vaste voorwaarden 3/3"
+                },
+                "nativeReplies": "4 / 4",
+                "acceptedAnswers": null,
+                "execution": "Vier juiste antwoorden; beide herinneringen per geverifieerde persoon opgeslagen en later teruggehaald. Geen ander-persoonsfeit in 13 modelcontexten of antwoorden. Controles2/2. Eén extra gedelegeerde taak mislukt.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 13,
+                "observedToolDispatches": 3,
+                "completeInputTokens": 43887,
+                "completeOutputTokens": 1728,
+                "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json"
+              },
+              {
+                "name": "OpenClaw · CM05",
+                "quality": {
+                  "state": "failed",
+                  "label": "Privégegevens vermengd · 0 voorwaarden gehaald, 1 onbekend"
+                },
+                "nativeReplies": "3 / 4",
+                "acceptedAnswers": null,
+                "execution": "Twee voorwaarden gemeten en gefaald; derde onbekend. Twee feitelijk ondersteunde antwoorden, één onjuist, één onbekend. Privégegevens tussen personen gedeeld. Eén broncontrole faalt, andere onbekend; definitieve native afsluiting onbewezen.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 16,
+                "observedToolDispatches": 10,
+                "completeInputTokens": 403281,
+                "completeOutputTokens": 1296,
+                "source": "eva2/evidence/product/p2-openclaw-original-cm05-result-20261007.json"
+              },
+              {
+                "name": "Hermes · CM05",
+                "quality": {
+                  "state": "failed",
+                  "label": "Privégegevens vermengd · vaste voorwaarden 1/3"
+                },
+                "nativeReplies": "4 / 4",
+                "acceptedAnswers": null,
+                "execution": "Drie van vier antwoorden feitelijk ondersteund; feiten vervangen elkaar in één profiel en worden aan de andere persoon aangeboden. Controles1/2; harde privacyvoorwaarde faalt.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 10,
+                "observedToolDispatches": 2,
+                "completeInputTokens": 21608,
+                "completeOutputTokens": 424,
+                "source": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json"
+              },
+              {
+                "name": "Eva1 · exacte CM05",
+                "quality": {
+                  "state": "unknown",
+                  "label": "Onbekend · geen toegelaten persoonswisselroute"
+                },
+                "nativeReplies": "Onbekend",
+                "acceptedAnswers": null,
+                "execution": "Geen matching uitvoering voor deze tweepersoonsvariant. Oudere CM05 heeft een andere casehash en is niet als matching hergebruikt.",
+                "transportMs": [],
+                "providerAttemptsRegistered": null,
+                "observedToolDispatches": null,
+                "completeInputTokens": null,
+                "completeOutputTokens": null,
+                "source": "eva2/evidence/product/p2-eva1-successor-cm05-availability-20261007.json"
+              }
+            ],
+            "usage": "Eva2:13 volledige modelaanvragen/45.615 tokens/3tools. OpenClaw:16/404.577/10; Hermes:10/22.032/2. Credits/geld onbekend. Minder verbruik bij mislukte privacy is geen efficiëntiewinst.",
+            "humanHelpNote": "Geen ongeplande eigenaarhulp tijdens de uitvoering. Twee echte menselijke gesprekbeoordelingen blijven apart; volledige kwaliteit UNKNOWN.",
+            "nextAction": "Bind de volgende werkelijk resterende oorspronkelijke uitkomst vooraf aan vaste criteria en bestaand mandaat. Hergebruik CM05/CM08/XD02; geen gesloten proef herhalen. Menselijke beoordeling blijft apart.",
+            "remaining": "CM05 en CM08 zijn nu met de beschikbare exacte referenties gesloten; XD02 blijft een gemeten verlies. Eva2-CM06, overige oorspronkelijke families/epochs, CM07-toegang en twee echte menselijke beoordelingen blijven open. Geen nieuwe proef geselecteerd of automatische brede matrix.",
+            "timingNote": "Eva2187,18s vanaf vóór drie-workeropstart tot vóór stoppen. OpenClaw181,71s/Hermes21,93s tot nativechildexit; verschillende meetgrenzen/modelrollen. Geen snelheids- of efficiëntievoorsprong bewezen.",
+            "configurationNotes": [
+              "The bounded original person-memory and privacy conditions pass for Eva2; retained OpenClaw/Hermes fail their original objective/privacy conditions. This establishes one-case advantage only.",
+              "Eva1 has no admitted matching two-person execution; UNKNOWN is not a product loss.",
+              "Legacy CM05 has a different case hash and is excluded from this matching comparison.",
+              "No general superiority, speed or efficiency claim. Lower usage with an incomplete or privacy-failing result is not an efficiency advantage.",
+              "One installation memory bank uses separate verified person tags; distinct physical banks are not claimed.",
+              "Failed extra delegated work remains visible and is not counted as a successful autonomous contribution.",
+              "Eva2:4Sol/none-contact en9Astra/medium-helpers; Hermes6Sol/none+4Astra/medium,OpenClaw16Sol/none. Geen causale architectuurclaim bij identieke modellen.",
+              "Eén extra incomplete_work-taak; verbruik inbegrepen. De oorspronkelijke vier gesprekken/geheugenafhandelingen wel voltooid.",
+              "Drie waarnemer/export-shapefouten alleen tijdens uitlezing; geen invloed op oorspronkelijke uitvoering of scores."
+            ],
+            "resources": "Alle eigen nativewerkers/HTTP/SDK/tools afgewikkeld en containers/netwerk/parent weg.32oude rijen/revisies/meta/full reservations exact;33rijen/223aanvragen.3oude verbruiksonbekende pogingen blijven onbekend.",
+            "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
+            "review": "eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json",
+            "productFunctionCompleted": false,
+            "registeredCoverageSource": "eva2/evidence/product/p2-authority-coverage-20261008.json"
+          },
+          "runtimeTotals": {
+            "providerAttempts": 223,
+            "inputTokens": null,
+            "outputTokens": null,
+            "knownInputTokensLowerBound": 2725779,
+            "knownOutputTokensLowerBound": 25011,
+            "registeredUnknownUsageAttempts": 3,
+            "usageComplete": false,
+            "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": false,
+            "actualNativeAttempts": null,
+            "registeredSampleRows": 33,
+            "nativeToolDispatches": null,
+            "creditCost": null,
+            "codexDevelopmentCredits": null,
+            "providerRoleCounts": {
+              "contactSolNone": null,
+              "helperAstraMedium": null
             },
+            "scope": "Retained authority through current Eva2CM05;32oldraw/revisions/meta/reservations exact. Known lower bounds; historical unknowns remain.",
+            "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
+            "authoritySha256": "8bc5f223c9cebe091f68addbf34458114b67b0bd130189a574ff515c6c3302a3",
+            "knownTotalTokensLowerBound": 2750790
+          },
+          "cumulativeOriginalAccounting": {
+            "cost_money": null,
+            "historical_accounting_unknowns_preserved": 3,
+            "known_input_tokens_lower_bound": 2725779,
+            "known_output_tokens_lower_bound": 25011,
+            "known_total_tokens_lower_bound": 2750790,
+            "provider_attempts": 223,
+            "registered_rows": 33,
+            "usage_complete": false,
+            "basis": "Independent33-row retained authority;32oldraw/revisions/meta/full reservations exact.3historical missing attempts not zero-filled.",
+            "known_usage_delta_this_sample": 45615,
+            "source": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json"
+          },
+          "familyCoverage": [
             {
               "family": "conversation_memory",
-              "participant": "eva1-bottie",
-              "registered_rows": 5,
-              "zero_sdk_rows": 1,
-              "usage_unknown_guard_rows": 0,
-              "case_epoch_codes_in_ids": [
-                "EV003-CM-01:epoch1",
-                "EV003-CM-02:epoch1",
-                "EV003-CM-03:epoch1",
-                "EV003-CM-06:epoch1",
-                "EV003-CM-08:epoch1"
-              ]
-            },
-            {
-              "family": "conversation_memory",
-              "participant": "eva2",
-              "registered_rows": 6,
-              "zero_sdk_rows": 0,
-              "usage_unknown_guard_rows": 1,
-              "case_epoch_codes_in_ids": [
-                "EV003-CM-01:epoch1",
-                "EV003-CM-02:epoch1",
-                "EV003-CM-03:epoch1",
-                "EV003-CM-04:epoch1",
-                "EV003-CM-05:epoch1",
-                "EV003-CM-08:epoch1"
-              ]
-            },
-            {
-              "family": "conversation_memory",
-              "participant": "hermes",
-              "registered_rows": 7,
-              "zero_sdk_rows": 0,
-              "usage_unknown_guard_rows": 0,
-              "case_epoch_codes_in_ids": [
-                "EV003-CM-01:epoch1",
-                "EV003-CM-02:epoch1",
-                "EV003-CM-03:epoch1",
-                "EV003-CM-04:epoch1",
-                "EV003-CM-05:epoch1",
-                "EV003-CM-06:epoch1",
-                "EV003-CM-08:epoch1"
-              ]
-            },
-            {
-              "family": "conversation_memory",
-              "participant": "openclaw",
-              "registered_rows": 7,
-              "zero_sdk_rows": 1,
-              "usage_unknown_guard_rows": 0,
-              "case_epoch_codes_in_ids": [
-                "EV003-CM-01:epoch1",
-                "EV003-CM-02:epoch1",
-                "EV003-CM-03:epoch1",
-                "EV003-CM-04:epoch1",
-                "EV003-CM-05:epoch1",
-                "EV003-CM-06:epoch1",
-                "EV003-CM-08:epoch1"
-              ]
+              "originalCases": 12,
+              "epochs": 3,
+              "registeredRows": {
+                "agent_zero": 1,
+                "eva1-bottie": 5,
+                "eva2": 6,
+                "hermes": 7,
+                "openclaw": 7
+              },
+              "registeredCaseEpochCodes": {
+                "agent_zero": [
+                  "EV003-CM-01:epoch1"
+                ],
+                "eva1-bottie": [
+                  "EV003-CM-01:epoch1",
+                  "EV003-CM-02:epoch1",
+                  "EV003-CM-03:epoch1",
+                  "EV003-CM-06:epoch1",
+                  "EV003-CM-08:epoch1"
+                ],
+                "eva2": [
+                  "EV003-CM-01:epoch1",
+                  "EV003-CM-02:epoch1",
+                  "EV003-CM-03:epoch1",
+                  "EV003-CM-04:epoch1",
+                  "EV003-CM-05:epoch1",
+                  "EV003-CM-08:epoch1"
+                ],
+                "hermes": [
+                  "EV003-CM-01:epoch1",
+                  "EV003-CM-02:epoch1",
+                  "EV003-CM-03:epoch1",
+                  "EV003-CM-04:epoch1",
+                  "EV003-CM-05:epoch1",
+                  "EV003-CM-06:epoch1",
+                  "EV003-CM-08:epoch1"
+                ],
+                "openclaw": [
+                  "EV003-CM-01:epoch1",
+                  "EV003-CM-02:epoch1",
+                  "EV003-CM-03:epoch1",
+                  "EV003-CM-04:epoch1",
+                  "EV003-CM-05:epoch1",
+                  "EV003-CM-06:epoch1",
+                  "EV003-CM-08:epoch1"
+                ]
+              },
+              "nativeAttempts": null,
+              "objectiveCompletedCountFromRegistry": null,
+              "uniqueOriginalPayloadCoverageFromRegistry": null,
+              "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+              "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
             },
             {
               "family": "cross_domain_actions",
-              "participant": "eva2",
-              "registered_rows": 4,
-              "zero_sdk_rows": 3,
-              "usage_unknown_guard_rows": 0,
-              "case_epoch_codes_in_ids": [
-                "EV003-XD-01:epoch1",
-                "EV003-XD-02:epoch1"
-              ]
+              "originalCases": 12,
+              "epochs": 3,
+              "registeredRows": {
+                "eva2": 4,
+                "hermes": 1,
+                "openclaw": 2
+              },
+              "registeredCaseEpochCodes": {
+                "eva2": [
+                  "EV003-XD-01:epoch1",
+                  "EV003-XD-02:epoch1"
+                ],
+                "hermes": [
+                  "EV003-XD-02:epoch1"
+                ],
+                "openclaw": [
+                  "EV003-XD-01:epoch1",
+                  "EV003-XD-02:epoch1"
+                ]
+              },
+              "nativeAttempts": null,
+              "objectiveCompletedCountFromRegistry": null,
+              "uniqueOriginalPayloadCoverageFromRegistry": null,
+              "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+              "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
             },
             {
-              "family": "cross_domain_actions",
-              "participant": "hermes",
-              "registered_rows": 1,
-              "zero_sdk_rows": 0,
-              "usage_unknown_guard_rows": 0,
-              "case_epoch_codes_in_ids": [
-                "EV003-XD-02:epoch1"
-              ]
+              "family": "initiative",
+              "originalCases": 12,
+              "epochs": 3,
+              "registeredRows": {},
+              "registeredCaseEpochCodes": {},
+              "nativeAttempts": null,
+              "objectiveCompletedCountFromRegistry": null,
+              "uniqueOriginalPayloadCoverageFromRegistry": null,
+              "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+              "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
             },
             {
-              "family": "cross_domain_actions",
-              "participant": "openclaw",
-              "registered_rows": 2,
-              "zero_sdk_rows": 0,
-              "usage_unknown_guard_rows": 0,
-              "case_epoch_codes_in_ids": [
-                "EV003-XD-01:epoch1",
-                "EV003-XD-02:epoch1"
-              ]
+              "family": "browser_computer",
+              "originalCases": 12,
+              "epochs": 3,
+              "registeredRows": {},
+              "registeredCaseEpochCodes": {},
+              "nativeAttempts": null,
+              "objectiveCompletedCountFromRegistry": null,
+              "uniqueOriginalPayloadCoverageFromRegistry": null,
+              "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+              "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
+            },
+            {
+              "family": "learning_projects",
+              "originalCases": 12,
+              "epochs": 3,
+              "registeredRows": {},
+              "registeredCaseEpochCodes": {},
+              "nativeAttempts": null,
+              "objectiveCompletedCountFromRegistry": null,
+              "uniqueOriginalPayloadCoverageFromRegistry": null,
+              "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+              "remainingBasis": "Actuele geregistreerde rijen, geen succesvolle-taakdekking. De registratie bewijst geen native voltooiing, matching casehash of oorspronkelijke antwoordkwaliteit. Concrete resultaten staan afzonderlijk; geen voltooiingspercentage."
+            },
+            {
+              "family": "voice_presence",
+              "originalCases": 12,
+              "epochs": 3,
+              "registeredRows": {},
+              "registeredCaseEpochCodes": {},
+              "nativeAttempts": null,
+              "objectiveCompletedCountFromRegistry": null,
+              "uniqueOriginalPayloadCoverageFromRegistry": null,
+              "source": "eva2/evidence/product/p2-authority-coverage-20261008.json",
+              "remainingBasis": "Spraak door eigenaar geparkeerd; geen spraakbouw of fysieke proef. Geen nieuwe registratie in deze behouden authority.",
+              "status": "parked_by_owner"
             }
-          ],
-          "nativeObjectiveCoverageKnownFromRegistry": false,
-          "notProductCompletion": true
+          ]
+        },
+        "latestClosedCM06": {
+          "source": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+          "review": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json",
+          "retainedComparison": {
+            "eva1": {
+              "closure": {
+                "active_provider_attempts": 0,
+                "actual_native_acks": 3,
+                "calendar_generations": [
+                  0,
+                  0,
+                  1
+                ],
+                "calendar_relative_offsets_ms": [
+                  0,
+                  0,
+                  259200000
+                ],
+                "cancel_errors": [],
+                "native_completed_turns": 3,
+                "native_eof": true,
+                "native_process_absent": true,
+                "native_returncode": 0,
+                "parent_process_absent": true,
+                "pending_provider_controls": 0,
+                "private_artifacts_retained": true,
+                "provider_close_failures": 0,
+                "quiescent": true,
+                "reader_stopped": true
+              },
+              "human_ratings": [
+                null,
+                null
+              ],
+              "independent_original_assessment": {
+                "accepted_answers": 1,
+                "classification": "admitted_native_memory_recall_failure",
+                "factual_response_predicates": [
+                  false,
+                  true,
+                  false
+                ],
+                "finding": "The intermediate source/correction distinction is correct, but the required later status is not recalled. Earlier messages persist in the same-person history; dedicated memory and relevant later model context are empty, and the native search returns no results.",
+                "forbidden_external_effect_observed": false,
+                "human_raters_recorded": 0,
+                "human_raters_required": 2,
+                "native_trace_readback": true,
+                "official_inspect_score_rewritten": false,
+                "original_semantic_conditions": [
+                  false,
+                  true,
+                  true
+                ],
+                "original_semantic_conditions_passed": 2,
+                "original_semantic_conditions_required": 3,
+                "required_answers": 3,
+                "required_readbacks": [
+                  false,
+                  true
+                ],
+                "required_readbacks_passed": 1,
+                "required_readbacks_required": 2
+              },
+              "objective_completion": false,
+              "official_semantic_score": null,
+              "replayed": false,
+              "result": {
+                "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
+                "sha256": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d"
+              },
+              "status": "closed_original_native_completed_objective_failure_human_unknown",
+              "timing": {
+                "boundary": "Original monotonic deadline start before native worker launch through three completed exchanges/ACKs and memory readback, before worker stop.",
+                "comparative_speed_claim": null,
+                "elapsed_seconds": 44.57372733799275,
+                "wall_expired": false,
+                "wall_limit_seconds": 480
+              },
+              "usage": {
+                "completed_sdk_responses": 7,
+                "contact_attempts": 7,
+                "credits": null,
+                "dispatch_is_not_automatic_action_success": true,
+                "helper_attempts": 0,
+                "input_tokens": 43408,
+                "model": "gpt-6-sol",
+                "money": null,
+                "ordinary_tool_dispatches": 1,
+                "ordinary_tool_names": [
+                  "zoek_gesprek"
+                ],
+                "output_tokens": 1674,
+                "physical_model_context_bodies_verified": 7,
+                "protocol_tool_dispatches": 5,
+                "provider_attempts": 7,
+                "reasoning_effort": "none",
+                "sdk_usage_complete": true,
+                "tool_dispatches": 6,
+                "total_tokens": 45082
+              },
+              "whole_case_quality": "UNKNOWN"
+            },
+            "hermes": {
+              "closure": {
+                "close_errors": [],
+                "container_absent": true,
+                "native_background_reviews_pending": 0,
+                "native_child_exited": true,
+                "native_idle_queue_pending": 0,
+                "network_absent": true,
+                "parent_and_wrapper_pids_absent": true,
+                "parent_close_acknowledged": true,
+                "parent_controller_errors": [],
+                "relay_closed": true,
+                "scenario_clock_restored": true,
+                "scope": "Tracked native tasks, HTTP, durable readbacks and own physical processes/resources; no general OS containment claim.",
+                "sdk_pending": 0,
+                "tracked_http_settled": true
+              },
+              "independent_original_assessment": {
+                "classification": "admitted_native_partial_memory_continuity_failure",
+                "expected_answers": 3,
+                "factual_response_predicates": [
+                  true,
+                  true,
+                  true
+                ],
+                "factual_supported_count": 3,
+                "finding": "The broad tentative status survives durable memory and later recall. A required qualification from the correction is absent from the later active memory, dispatched context and answer, so one complete original semantic condition fails. The narrower memory readback passes.",
+                "forbidden_external_effect_observed": false,
+                "human_ratings": [
+                  null,
+                  null
+                ],
+                "native_answers_received": 3,
+                "objective_pass": false,
+                "official_semantic_score": null,
+                "original_semantic_conditions": [
+                  false,
+                  true,
+                  true
+                ],
+                "original_semantic_conditions_passed": 2,
+                "prior_privacy_failures_reversed": false,
+                "required_readbacks": [
+                  true,
+                  true
+                ],
+                "required_readbacks_passed": 2,
+                "whole_quality": "UNKNOWN"
+              },
+              "replayed": false,
+              "result": {
+                "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+                "sha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059"
+              },
+              "status": "closed_original_native_completed_objective_failure_human_unknown",
+              "usage": {
+                "completed_sdk_responses": 6,
+                "contact_attempts": 4,
+                "credits": null,
+                "elapsed_seconds": 15.726007043005666,
+                "error_interpretation": "Post-settlement helper/relay events are retained. All six raw usages are complete; the child local mirror disconnect after acknowledged parent close is not an authoritative missing-usage finding.",
+                "exact_outbound_contexts_verified": 6,
+                "external_actions": 0,
+                "helper_attempts": 2,
+                "input_tokens": 13999,
+                "money": null,
+                "output_tokens": 215,
+                "post_settlement_GeneratorExit_rows": 2,
+                "provider_attempts": 6,
+                "provider_usage_complete": true,
+                "relay_ConnectionResetError_events": 1,
+                "speech_requests": 0,
+                "time_boundary": "Parent monotonic start immediately before native child launch through child exit; preparation and subsequent parent cleanup excluded.",
+                "tool_dispatches": 1,
+                "total_tokens": 14214,
+                "wall_expired": false
+              }
+            },
+            "openclaw": {
+              "closure": {
+                "container_absent": true,
+                "equivalent_native_settled": true,
+                "fresh_final_scope_receipt": true,
+                "host_artifacts_retained": true,
+                "inspect_envelope": "success",
+                "launcher_exit": 0,
+                "literal_native_closed": false,
+                "native_cancel_errors": [],
+                "native_pending_at_close": {
+                  "active_provider_attempts": 0,
+                  "active_turns": 0,
+                  "native_background_terminals": 0,
+                  "openclaw_clients": 0,
+                  "pending_tools": 0
+                },
+                "native_returncode": 0,
+                "native_source_authority_observed_not_created": 3,
+                "native_unregister_queues_flushed": 6,
+                "network_absent": true,
+                "parent_close_ack": true,
+                "parent_controller_errors": [],
+                "pending_sdk": 0,
+                "pending_tool_rows": 0,
+                "physical_clients_exited": 3,
+                "relay_connection_reset_events": 1,
+                "retirement_scope_receipts": 3,
+                "root_cleanup_errors": [],
+                "root_scope_absent": true,
+                "root_scope_errors": [],
+                "root_scope_populated_after_stop": false
+              },
+              "human_ratings": [
+                null,
+                null
+              ],
+              "independent_original_assessment": {
+                "accepted_answers": 3,
+                "actor_order": [
+                  0,
+                  0,
+                  0
+                ],
+                "ai_human_quality_substitution": false,
+                "calendar_generations": [
+                  0,
+                  0,
+                  1
+                ],
+                "calendar_relative_offsets_ms": [
+                  0,
+                  0,
+                  259200000
+                ],
+                "factual_response_predicates": [
+                  true,
+                  true,
+                  true
+                ],
+                "finding": "The original factual status, correction and source distinction survive durable memory and later native recall without an invented confirmed commitment.",
+                "forbidden_external_effect_observed": false,
+                "full_native_trace_and_stop_readback": true,
+                "human_raters_recorded": 0,
+                "human_raters_required": 2,
+                "native_private_origins_verified_after_completed_turn": 3,
+                "native_private_origins_verified_before_turn": 3,
+                "official_scorer_or_inspect_score_rewritten": false,
+                "original_semantic_conditions": [
+                  true,
+                  true,
+                  true
+                ],
+                "prior_cross_person_failures_reversed": false,
+                "required_answers": 3,
+                "required_readbacks": [
+                  true,
+                  true
+                ],
+                "required_readbacks_failed": 0,
+                "required_readbacks_passed": 2,
+                "required_readbacks_unknown": 0,
+                "session_order": [
+                  0,
+                  0,
+                  1
+                ]
+              },
+              "objective_completion": true,
+              "official_semantic_score": null,
+              "replayed": false,
+              "result": {
+                "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+                "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
+              },
+              "status": "closed_original_native_completed_objective_pass_human_unknown",
+              "timing": {
+                "boundary": "Parent monotonic start before child launch through child exit; resource preparation and parent cleanup excluded.",
+                "comparative_speed_claim": null,
+                "elapsed_seconds": 123.41011110899854,
+                "wall_expired": false,
+                "wall_limit_seconds": 480
+              },
+              "usage": {
+                "completed_sdk_responses": 12,
+                "contact_attempts": 12,
+                "credits": null,
+                "helper_attempts": 0,
+                "input_tokens": 285381,
+                "model": "gpt-6-sol",
+                "money": null,
+                "output_tokens": 1521,
+                "provider_attempts": 12,
+                "reasoning_effort": "none",
+                "sdk_usage_complete": true,
+                "tool_coverage_complete": true,
+                "tool_dispatches": 11,
+                "tool_settled_rows": 11,
+                "total_tokens": 286902,
+                "verified_context_artifacts": 36
+              },
+              "whole_case_quality": "UNKNOWN"
+            }
+          },
+          "eva2": {
+            "closure": {
+              "all_owned_containers_network_and_parent_pids_absent": true,
+              "all_workers_settled_and_close_ack": true,
+              "cleanup_errors": [],
+              "parent_errors": [],
+              "pending_sdk_tools": 0,
+              "tracked_http_settled": true,
+              "worker_errors": []
+            },
+            "factual_response_predicates": [
+              null,
+              null,
+              null
+            ],
+            "fixed_conditions_observed": [
+              null,
+              null,
+              null
+            ],
+            "human_ratings": [
+              null,
+              null
+            ],
+            "memory_settled_turns": 0,
+            "model_roles": {
+              "contact": {
+                "model": "gpt-6-sol",
+                "reasoning_effort": "none"
+              },
+              "helper": {
+                "model": "gpt-6-astra",
+                "reasoning_effort": "medium"
+              },
+              "observed_provider_calls": 0
+            },
+            "native_responses": 0,
+            "objective_completion": null,
+            "official_semantic_score": null,
+            "original_input_sent": false,
+            "required_readbacks": [
+              null,
+              null
+            ],
+            "timing": {
+              "boundary": "Original monotonic clock before native startup to parent stop; no task input. Waiting preparation excluded; comparator timing boundaries are retained and not equated.",
+              "comparative_speed_claim": null,
+              "parent_to_stop_seconds": 66.45733155499329,
+              "sample_start_to_before_stop_seconds": null,
+              "wall_expired_at_stop": false,
+              "wall_limit_seconds": 480
+            },
+            "usage": {
+              "completed_sdk_responses": 0,
+              "contact_attempts": 0,
+              "credits": null,
+              "helper_attempts": 0,
+              "input_tokens": null,
+              "known_partial_input_tokens": 0,
+              "known_partial_output_tokens": 0,
+              "known_partial_total_tokens": 0,
+              "money": null,
+              "output_tokens": null,
+              "physical_model_requests": 0,
+              "provider_attempts": 0,
+              "sdk_usage_complete": false,
+              "tool_coverage_complete": true,
+              "tool_dispatches": 0,
+              "total_tokens": null
+            },
+            "whole_case_quality": "UNKNOWN"
+          }
         }
       },
       "housemateSummary": {
@@ -22544,9 +23428,9 @@
                 "blocksIndependentWork": false,
                 "source": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json"
               },
-              "checkedAt": "2026-10-08T18:29:23.807790+00:00",
+              "checkedAt": "2026-10-08T18:39:56.792645+00:00",
               "assignment": {
-                "baseCommit": "a53af9f76f626a82ed2b1ee4cb5448ec98e2c03c",
+                "baseCommit": "4dc91638764da2220f11e0eb22669b64a7211d22",
                 "owner": "/root",
                 "activeWorkers": [
                   "/root/aide_final_evaluation",
@@ -22559,9 +23443,9 @@
                 ],
                 "existing": "Huidige Eva2-CM08:3/3 feitelijk,3/3 vaste voorwaarden en2/2 bron-/tracecontroles; eigen resources gesloten. AIDE² L3.4–L3.7 geïnstalleerd en behouden.",
                 "gap": "Oorspronkelijke resterende matching/dekking en twee menselijke beoordelingen blijven open. XD02-uitvoeringstekort, één extra incomplete_work-taak en tijdsambiguïteit blijven zichtbaar.",
-                "finish": "Eén oorspronkelijke huidige Eva2-CM05 tegen behouden OpenClaw/Hermes;Eva1 op deze variant onbekend. Persoonsgrenzen,voortzetting,resultaatkwaliteit,gebruik en echte afsluiting onafhankelijk beoordelen.",
-                "estimate": "Oorspronkelijke16SDK/16tools/480s inclusief helpers en vaste tokenplafonds. Geen kostenraming;credits/geld onbekend.",
-                "currentAction": "CM05 volledig uitgevoerd, onafhankelijk beoordeeld en gepubliceerd. Alleen beperkt persoonsgeheugenvoordeel; extra incomplete_work zichtbaar.",
+                "finish": "Eén huidige oorspronkelijke Eva2-CM06 naast behouden matching referenties, met bron-/invoerbinding, uitvoering, vaste beoordeling, afsluiting en eerlijke publicatie.",
+                "estimate": "Oorspronkelijke16SDK/16tools/480s inclusief helpers,rollen en tokenplafonds behouden;credit-/geldkosten onbekend.",
+                "currentAction": "CM06 onbekend door proefconfiguratie vóór Eva: nul modelaanvragen. Historische gegevens en eerdere geheugenvoordelen blijven behouden; geen nieuwe productfunctie of vergelijkingswinst.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "previousTurnClassification": "progress",
@@ -22623,72 +23507,93 @@
                     "generalWinner": null
                   }
                 },
-                "stage": "cm05_original_closed_independently_reviewed",
+                "stage": "closed_cm06_evaluator_preinput_failure_unknown",
                 "currentNativePreparation": {
-                  "entry": "eva2:EV003-CM-05:epoch1",
-                  "stage": "cm05_original_closed_independently_reviewed",
-                  "admitted": true,
+                  "entry": "eva2:EV003-CM-06:epoch1",
+                  "stage": "closed_cm06_evaluator_preinput_failure_unknown",
+                  "admitted": false,
+                  "admissionScope": "closed attempt; no rearm or original input; no product loss",
                   "activeExecution": false,
-                  "providerCalls": 13,
-                  "criteriaChanged": false,
-                  "comparatorsReplayed": false,
-                  "scope": "One approved authority copy and isolated resource preparation completed. Old32rows/reservations retained. No original input, clock or models; same-case existing comparators retained.",
-                  "checkedAt": "2026-10-08T18:29:23.807790+00:00",
-                  "admissionScope": "resource preparation GO only; final input policy and actual parent BOOT binding pending",
-                  "privateSourceBase": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1",
-                  "selection": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm05-selection-20261008-v1/selection.private.json",
-                  "selectionSha256": "e3f03244950ba0fe10367980bb240ace7d3d61c26dbe41b1991413dda1471d9e",
-                  "review": "eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json",
-                  "reviewSha256": "20a52b35d0c8ab327a3e3e72370494a9f2406cacf9b1bc434acd89ad17e3ccb7",
-                  "originalTurns": 4,
-                  "verifiedPrivateActors": 2,
-                  "actorOrder": [
-                    0,
-                    1,
-                    0,
-                    1
-                  ],
-                  "privateSessions": 4,
-                  "calendarAdvanceDays": 1,
-                  "originalSdkLimit": 16,
-                  "originalToolLimit": 16,
-                  "originalWallSeconds": 480,
+                  "providerCalls": 0,
+                  "originalInputReleased": false,
+                  "clockStarted": true,
+                  "resourcesCreated": true,
+                  "nativeWorkersStarted": true,
+                  "checkedAt": "2026-10-08T19:06:15.121331+00:00",
+                  "caseSha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
                   "matchingComparators": [
+                    "Eva1",
                     "OpenClaw",
                     "Hermes"
                   ],
-                  "eva1": "unavailable UNKNOWN for exact actor-switch case; legacy differenthash preserved",
-                  "priorAuthoritySha256": "dae273d76d458ecb7ebc8cfa9684e10fc139db1d24b148462d4ef16835b1f9f2",
-                  "retainedHistoricalRows": 32,
-                  "resourcesCreated": true,
-                  "nativeWorkersStarted": false,
-                  "originalInputReleased": true,
-                  "deadlineStarted": true,
-                  "authorityCopyCreated": true,
-                  "sourceReview": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1/source-resource-review.private.json",
-                  "sourceReviewSha256": "e1dfeb2132288f0af47b91174f011f3bae98bc5a427b41545a4ca24cd5296147",
-                  "resourcePreparationExit": 0,
-                  "finalPolicySha256": "b7d28945963f3d8ddb345ce79f678a3c9bd559edc72d1c471553b51af19df042",
-                  "finalPolicyReviewIndexSha256": "8cdb8d1dec85c76ad8fb6e8cb8f0a3a24407838796a892808dbec9725590f427",
-                  "waitingInspectPid": 1834506,
-                  "executionSessionId": 41013,
-                  "conditionalInputReviewSha256": "6d2da77b4e1507f880601bc288777e418e539969e7c90e0bcaded6f8b41ac067",
-                  "clockStarted": true,
-                  "actualParentPid": 1834658,
-                  "actualParentStartTicks": 21379482,
-                  "actualBootReviewSha256": "c5149e29b971ce3bee45e983e25bc013ac8347b8626859c60932e27db57a455a",
-                  "bootReleasedAt": "2026-10-08T18:07:34.570253+00:00",
-                  "completedOriginalResponses": 4,
-                  "nativeMemorySettlements": 4,
-                  "terminalExitCode": 0,
-                  "originalExecutionEndedAt": "2026-10-08T18:10:53.800194+00:00",
-                  "usageComplete": true,
-                  "allOwnResourcesClosed": true,
-                  "result": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
-                  "resultSha256": "57c7f0be32ed93c091931d2d7a01f32ff1bf1a633946b9e66eff8681f6c65e09",
-                  "objectiveCompletion": true,
-                  "wholeQuality": "UNKNOWN",
-                  "nextCaseSelected": false
+                  "priorAuthoritySha256": "8bc5f223c9cebe091f68addbf34458114b67b0bd130189a574ff515c6c3302a3",
+                  "retainedHistoricalRows": 33,
+                  "originalSdkLimit": 16,
+                  "originalToolLimit": 16,
+                  "originalWallSeconds": 480,
+                  "criteriaChanged": false,
+                  "comparatorsReplayed": false,
+                  "scope": "One unused current successor CM06 technical selection; slot/history/mandate/source binding under independent review. Legacydifferenthashclosed. No fresh runtime or source optimization.",
+                  "originalTurns": 3,
+                  "verifiedPrivateActors": 1,
+                  "actorOrder": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "sessionOrder": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "calendarAdvanceDays": 3,
+                  "semanticLabel": "corrected tentative status and source distinction retained after3days; not legacy forgetting",
+                  "selection": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm06-selection-20261008-v1/selection.private.json",
+                  "selectionSha256": "4965409bdce4378ae5690933532c7c90d46c66e2678f6a6f7e42cd7cc8c74dde",
+                  "selectionReview": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm06-selection-20261008-v1/selection-mandate-review.private.json",
+                  "selectionReviewSha256": "3266d4c632d06fbe8e01147c35bb748544e2e1271de6db5cb10f04b6a80d5d8b",
+                  "privateSourceBase": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1",
+                  "sourceBindingCorrection": {
+                    "cause": "Private comparison parent subnet differed from resource preparation subnet; caught before runtime.",
+                    "action": "Align parent constant and derivative binding hashes only; reuse other source checks.",
+                    "productCodeChanged": false,
+                    "resourcesCreated": false,
+                    "providerCalls": 0
+                  },
+                  "resourcePreparationStarted": true,
+                  "sourceReviewSha256": "94ee2c6b1624efbc41a15619a02fad089762c9382cf573af095a3c2fa99deacf",
+                  "sourceIndexSha256": "a3a0ca608eabccfe047e8684d75019c950abbbb1c5015cf5fcc316ca5c3fbd7b",
+                  "resourcePreparationExitCode": 0,
+                  "authorityCopyExitCode": 0,
+                  "finalPolicyIndexSha256": "6c272d05261de93a35d5db7dc59f4fb31413bd074e649d9f742bba9ac1c5b154",
+                  "actualResourcesSha256": "89385387610377ed3ae3f58317c9c765b13e4bdc56fc429036750629cc7fd00d",
+                  "parentStarted": true,
+                  "parentPid": 2055440,
+                  "conditionalPolicyReviewSha256": "fe36ddcffe87c76b518ac112ba6ba563d19a510efe99b2f660677481a4d7db33",
+                  "inspectPid": 2055142,
+                  "actualBootReviewSha256": "4e051ed8e87a45440685ad7c80878adc3bca85a05b22abc9228b54b5c3df8e29",
+                  "bootTriggerAuthorized": true,
+                  "deadlineSha256": "b7e7c93c63d99ee9d38f3bcaefed91f476682663dd3306c5498ab906024ea0bb",
+                  "absoluteOriginalSeconds": 480,
+                  "bootReleasedAt": "2026-10-08T19:02:31.995083Z",
+                  "executionProcessExitCode": 0,
+                  "paidRuntimeCalls": 0,
+                  "outcome": "UNKNOWN evaluator policy field mismatch before input",
+                  "productLoss": false,
+                  "technicalCause": "Policy history hash key value_sha256 mismatched unchanged gate raw_sha256; 33 actual history rows preserved.",
+                  "rearmed": false,
+                  "replayed": false,
+                  "resourcesClosed": true,
+                  "originalInputResponses": 0,
+                  "usageTotals": null,
+                  "knownPartialTokens": 0,
+                  "closed": true,
+                  "resultEvidence": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+                  "resultSha256": "0f311bf6cc0eb9aebbae88b8e091e2c974d6e02702a73a3b4f6f0d4aa7062a99",
+                  "review": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json",
+                  "reviewSha256": "ac6255a712bd60ac793e1b2654f4be1b824bcd5b14bfff7f22922964d7f68a20",
+                  "finalAuthoritySha256": "252fcb1a159a4a0390962988a6ed7f28b50dd3c72cd58bd9f2053e4eec6a99cb",
+                  "sameEpisodeRearmed": false
                 },
                 "evaluatorCorrection": {
                   "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
@@ -22785,7 +23690,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Bind de volgende werkelijk resterende oorspronkelijke uitkomst vooraf aan vaste criteria en bestaand mandaat. Hergebruik CM05/CM08/XD02; geen gesloten proef herhalen. Menselijke beoordeling blijft apart.",
+                "nextAction": "Gebruik de bewezen policyserialisatiecorrectie vóór een afzonderlijk gebonden passend oorspronkelijk vervolg. Bewaar CM06UNKNOWN; geen herarm/herhaling, nieuwe matrix of eigenaarvraag binnen het bestaande mandaat.",
                 "actualUsage": {
                   "scope": "One original current Eva2 CM05 development comparison, not household runtime",
                   "providerAttempts": 13,
@@ -23845,93 +24750,70 @@
                 },
                 "sourcePreparationAdmissionSha256": "918cdd83691a6c7523fa58b6ad7662652f87d0d36306594871ab14f393da9917",
                 "previousNativePreparation": {
-                  "entry": "eva2:EV003-CM-08:epoch1",
-                  "stage": "closed_original_cm08_valid_bounded_advantage",
+                  "entry": "eva2:EV003-CM-05:epoch1",
+                  "stage": "cm05_original_closed_independently_reviewed",
+                  "admitted": true,
                   "activeExecution": false,
-                  "providerCalls": 12,
-                  "nativeResourcesCreated": true,
-                  "originalInputReleased": true,
-                  "closedComparatorsReplayed": false,
-                  "priorAuthoritySha256": "5f92c010cc514c88f0dc36779e038581669ef40e778d1981bd8ba0442f08dced",
-                  "retainedHistoricalRows": 31,
+                  "providerCalls": 13,
+                  "criteriaChanged": false,
+                  "comparatorsReplayed": false,
+                  "scope": "One approved authority copy and isolated resource preparation completed. Old32rows/reservations retained. No original input, clock or models; same-case existing comparators retained.",
+                  "checkedAt": "2026-10-08T18:29:23.807790+00:00",
+                  "admissionScope": "resource preparation GO only; final input policy and actual parent BOOT binding pending",
+                  "privateSourceBase": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1",
+                  "selection": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm05-selection-20261008-v1/selection.private.json",
+                  "selectionSha256": "e3f03244950ba0fe10367980bb240ace7d3d61c26dbe41b1991413dda1471d9e",
+                  "review": "eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json",
+                  "reviewSha256": "20a52b35d0c8ab327a3e3e72370494a9f2406cacf9b1bc434acd89ad17e3ccb7",
+                  "originalTurns": 4,
+                  "verifiedPrivateActors": 2,
+                  "actorOrder": [
+                    0,
+                    1,
+                    0,
+                    1
+                  ],
+                  "privateSessions": 4,
+                  "calendarAdvanceDays": 1,
                   "originalSdkLimit": 16,
                   "originalToolLimit": 16,
                   "originalWallSeconds": 480,
-                  "criteriaAndRolesUnchanged": true,
-                  "scope": "One original Eva2-CM08 closed with bounded late-recall advantage; all31history exact/no comparator replay. One extra incomplete_work/temporal ambiguity retained. No P2completion or next execution admitted.",
-                  "checkedAt": "2026-10-08T17:34:50.518299+00:00",
-                  "selectionReview": {
-                    "path": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm08-selection-review-20261008-v1/selection-mandate-review.private.json",
-                    "sha256": "a36ec9bdbcc7888279102a449100910099046fbc485245b082baba10974b157e",
-                    "scope": "one unused current Eva2 CM08 source/admission preparation only; no resource/clock/input authorization"
-                  },
-                  "privateSourceBase": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm08-preparation-20261008-v1",
-                  "sourceReviewIndex": {
-                    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm08-preparation-20261008-v1/source-review-index.private.json",
-                    "sha256": "8504cea1496ad6f96d1ef9f330bbad32b430cb22b903b2ac23f8dfdea3c6879f"
-                  },
-                  "staticPins": 112,
-                  "earlyPrerequisiteReviewSha256": "12c5a15433ca2422c622610e98bb93128bb376230f875a30b1a630191923918b",
-                  "threeTurnSourceAssembled": true,
-                  "sourceResourceReviewSha256": "00182ba1cbe79673d9e9747c8e146ccac3f81e492372e3a78fb9ebe201a98e29",
-                  "authorityCopySha256": "3a9b191f320a64e4a9f509394ad9beea6dafb62e5a0027250c06704c965066ad",
-                  "resourcesCreated": true,
-                  "nativeWorkersStarted": true,
-                  "deadlineStarted": true,
-                  "resourcePrepareSession": 67842,
-                  "resourcePrepareTerminal": true,
-                  "resourcePrepareExit": 1,
-                  "databaseAndNetworkRetained": true,
-                  "preparationIssue": {
-                    "cause": "PostgreSQL pg_isready saw temporary initdb Unix-socket server; first CREATE DATABASE hit starting-up state.",
-                    "missingStep": "First target database creation; authenticated TCP readiness then same resource continuation.",
-                    "owner": "Codex",
-                    "externalBlocker": false,
-                    "fullRestartRequired": false,
-                    "scope": "No original input/clock/provider attempts.",
-                    "resolved": true,
-                    "resolution": "Authenticated TCP readiness and unchanged first-CREATE tail completed on same retained resources; no native/input/modelcalls.",
-                    "resolvedAt": "2026-10-08T17:06:34.579520+00:00"
-                  },
-                  "resourceContinuationExit": 0,
-                  "resourceContinuationTerminal": true,
-                  "resourceContinuationSession": 96655,
-                  "resourceContinuationRecordSha256": "30bf762ba3a587b9c45ad47129ad8a4f253d31bf334b4745000155656e413490",
-                  "resourceContinuationReviewSha256": "be10596af6a212ec65faf9644bcae06e129073f836afbc5fb833917b121b8b1e",
-                  "resourceContinuationAdmissionSha256": "63882d63c9ceb0b395ac7b8beb8f8131a8138d519afecc203a50edcde92fda57",
-                  "parentPid": 1599167,
-                  "parentSession": 91852,
-                  "parentLaunchRecordSha256": "0b9aa9f3f7663a1ff9639a24303ec9195d18dd5ea6f516e7a19226922cf3ef18",
-                  "inputPolicySha256": "3b845a6be665ba52960cb65e9de8baca6cb30334f573a0d639e6565da9fbee4e",
-                  "inputPolicyReviewSha256": "81611053581bd0170e34b18119beca5dc843f24d16e9d5800312051ccea89ddc",
-                  "bootReleasedAt": "2026-10-08T17:13:19.780845Z",
-                  "bootReviewSha256": "7485ca67e39a255c777f62cd053c2d35e447ed758b5fe9e2b217a5c0ac81d1d7",
-                  "bootAdmissionSha256": "d6c442b95f02360bb87a1eabe72b1ebbad74a97c3d38cc6e1863a0b144eca403",
-                  "executeOnceSha256": "cdecf94cbedf1cad347b0c61cc98365c067bc29a3587590fcb8711d9c2f21858",
-                  "completedProviderAttempts": 12,
-                  "pendingProviderAttempts": 0,
-                  "usageObservationAt": "2026-10-08T17:15:36.087372+00:00",
-                  "originalClockSha256": "ec8886b0f2b4ca74152ed451d462caee1ba59d1c38c26903b7a2e8a58e19902f",
-                  "parentTerminal": true,
-                  "parentExit": 0,
-                  "parentTerminalRecordSha256": "c3dadbeee0d02884d3b8ee39ea668b2e0f5a21b565a5919d666217a761632b86",
-                  "usageUnknown": false,
-                  "originalTurnsReplied": 3,
-                  "originalTurnsPlanned": 3,
-                  "memorySettlement": [
-                    true,
-                    true,
-                    true
+                  "matchingComparators": [
+                    "OpenClaw",
+                    "Hermes"
                   ],
-                  "nativeResourcesClosed": true,
-                  "resourcesPhysicallyAbsent": true,
+                  "eva1": "unavailable UNKNOWN for exact actor-switch case; legacy differenthash preserved",
+                  "priorAuthoritySha256": "dae273d76d458ecb7ebc8cfa9684e10fc139db1d24b148462d4ef16835b1f9f2",
+                  "retainedHistoricalRows": 32,
+                  "resourcesCreated": true,
+                  "nativeWorkersStarted": false,
+                  "originalInputReleased": true,
+                  "deadlineStarted": true,
+                  "authorityCopyCreated": true,
+                  "sourceReview": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1/source-resource-review.private.json",
+                  "sourceReviewSha256": "e1dfeb2132288f0af47b91174f011f3bae98bc5a427b41545a4ca24cd5296147",
+                  "resourcePreparationExit": 0,
+                  "finalPolicySha256": "b7d28945963f3d8ddb345ce79f678a3c9bd559edc72d1c471553b51af19df042",
+                  "finalPolicyReviewIndexSha256": "8cdb8d1dec85c76ad8fb6e8cb8f0a3a24407838796a892808dbec9725590f427",
+                  "waitingInspectPid": 1834506,
+                  "executionSessionId": 41013,
+                  "conditionalInputReviewSha256": "6d2da77b4e1507f880601bc288777e418e539969e7c90e0bcaded6f8b41ac067",
+                  "clockStarted": true,
+                  "actualParentPid": 1834658,
+                  "actualParentStartTicks": 21379482,
+                  "actualBootReviewSha256": "c5149e29b971ce3bee45e983e25bc013ac8347b8626859c60932e27db57a455a",
+                  "bootReleasedAt": "2026-10-08T18:07:34.570253+00:00",
+                  "completedOriginalResponses": 4,
+                  "nativeMemorySettlements": 4,
+                  "terminalExitCode": 0,
+                  "originalExecutionEndedAt": "2026-10-08T18:10:53.800194+00:00",
+                  "usageComplete": true,
+                  "allOwnResourcesClosed": true,
+                  "result": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
+                  "resultSha256": "57c7f0be32ed93c091931d2d7a01f32ff1bf1a633946b9e66eff8681f6c65e09",
                   "objectiveCompletion": true,
                   "wholeQuality": "UNKNOWN",
-                  "nextCaseSelected": false,
-                  "publicResult": "eva2/evidence/product/p2-eva2-original-cm08-result-20261008.json",
-                  "publicResultSha256": "955c8a4485ab25faeb955efecc602c141d253dc8d9c8ace4685def325ff67055",
-                  "publicReview": "eva2/reviews/p2-eva2-original-cm08-final-review-20261008.json",
-                  "publicReviewSha256": "80122458055b7ec32f6a7198e47c10157b495962df3491939e4d484242444728"
+                  "nextCaseSelected": false
                 },
                 "nextNativePreparation": {
                   "participant": "openclaw",
@@ -24036,7 +24918,7 @@
                   "nativeTools": 16,
                   "elapsedSeconds": 180.95119165799406
                 },
-                "checkedAt": "2026-10-08T18:29:23.807790+00:00",
+                "checkedAt": "2026-10-08T18:34:37.423513+00:00",
                 "cm04Preparation": {
                   "entry": "openclaw:EV003-CM-04:epoch1",
                   "directory": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1",
@@ -24661,17 +25543,7 @@
                   "review": "eva2/reviews/p2-eva2-xd02-owner-exception-final-review-20261008.json"
                 },
                 "concreteNextAction": "Bind de volgende werkelijk resterende oorspronkelijke uitkomst vooraf aan vaste criteria en bestaand mandaat. Hergebruik CM05/CM08/XD02; geen gesloten proef herhalen. Menselijke beoordeling blijft apart.",
-                "currentGoalTurnOutcome": {
-                  "classification": "progress",
-                  "stage": "cm05_original_closed_independently_reviewed",
-                  "oneOriginalExecuted": true,
-                  "newProductFunction": false,
-                  "result": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
-                  "review": "eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json",
-                  "sdkAttempts": 13,
-                  "totalTokens": 45615,
-                  "allOldRowsPreserved": true
-                },
+                "currentGoalTurnOutcome": "No new product outcome or comparison advantage. Zero-input evaluator failure closed with exact history and pure future schema correction evidence.",
                 "retainedPreviousOwnerAction": {
                   "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
                   "state": "requested",
@@ -24816,7 +25688,7 @@
                 },
                 "pendingSelection": null,
                 "previousGoalTurnClassification": "progress",
-                "previousGoalTurnEvidence": "eva2/evidence/product/p2-eva2-original-cm08-result-20261008.json",
+                "previousGoalTurnEvidence": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
                 "historicalCurrentFieldsBeforeCurrentEva2CM05": {
                   "actualUsage": {
                     "scope": "One matching Eva2 XD02 development comparison, not household runtime",
@@ -24854,7 +25726,16 @@
                     "creditCost": null,
                     "pendingExecutionHandle": false
                   }
-                }
+                },
+                "initialLabelCorrection": {
+                  "previous": "vergeten-proef",
+                  "actual": "correctie/voorbehoud/brononderscheid na3dagen",
+                  "source": "eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+                  "originalInputOrCriteriaChanged": false,
+                  "newProviderCalls": 0
+                },
+                "currentResultEvidence": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+                "currentResultReview": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json"
               },
               "remaining": "CM05 en CM08 zijn nu met de beschikbare exacte referenties gesloten; XD02 blijft een gemeten verlies. Eva2-CM06, overige oorspronkelijke families/epochs, CM07-toegang en twee echte menselijke beoordelingen blijven open. Geen nieuwe proef geselecteerd of automatische brede matrix.",
               "latestEvidence": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
@@ -25172,70 +26053,91 @@
                 "eva1CurrentCm05": "UNKNOWN_unavailable"
               },
               "nextOriginalComparisonPreparation": {
-                "entry": "eva2:EV003-CM-05:epoch1",
-                "stage": "cm05_original_closed_independently_reviewed",
-                "admitted": true,
+                "entry": "eva2:EV003-CM-06:epoch1",
+                "stage": "closed_cm06_evaluator_preinput_failure_unknown",
+                "admitted": false,
+                "admissionScope": "closed attempt; no rearm or original input; no product loss",
                 "activeExecution": false,
-                "providerCalls": 13,
-                "criteriaChanged": false,
-                "comparatorsReplayed": false,
-                "scope": "One approved authority copy and isolated resource preparation completed. Old32rows/reservations retained. No original input, clock or models; same-case existing comparators retained.",
-                "checkedAt": "2026-10-08T18:29:23.807790+00:00",
-                "admissionScope": "resource preparation GO only; final input policy and actual parent BOOT binding pending",
-                "privateSourceBase": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1",
-                "selection": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm05-selection-20261008-v1/selection.private.json",
-                "selectionSha256": "e3f03244950ba0fe10367980bb240ace7d3d61c26dbe41b1991413dda1471d9e",
-                "review": "eva2/reviews/p2-eva2-original-cm05-final-review-20261008.json",
-                "reviewSha256": "20a52b35d0c8ab327a3e3e72370494a9f2406cacf9b1bc434acd89ad17e3ccb7",
-                "originalTurns": 4,
-                "verifiedPrivateActors": 2,
-                "actorOrder": [
-                  0,
-                  1,
-                  0,
-                  1
-                ],
-                "privateSessions": 4,
-                "calendarAdvanceDays": 1,
-                "originalSdkLimit": 16,
-                "originalToolLimit": 16,
-                "originalWallSeconds": 480,
+                "providerCalls": 0,
+                "originalInputReleased": false,
+                "clockStarted": true,
+                "resourcesCreated": true,
+                "nativeWorkersStarted": true,
+                "checkedAt": "2026-10-08T19:06:15.121331+00:00",
+                "caseSha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
                 "matchingComparators": [
+                  "Eva1",
                   "OpenClaw",
                   "Hermes"
                 ],
-                "eva1": "unavailable UNKNOWN for exact actor-switch case; legacy differenthash preserved",
-                "priorAuthoritySha256": "dae273d76d458ecb7ebc8cfa9684e10fc139db1d24b148462d4ef16835b1f9f2",
-                "retainedHistoricalRows": 32,
-                "resourcesCreated": true,
-                "nativeWorkersStarted": false,
-                "originalInputReleased": true,
-                "deadlineStarted": true,
-                "authorityCopyCreated": true,
-                "sourceReview": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1/source-resource-review.private.json",
-                "sourceReviewSha256": "e1dfeb2132288f0af47b91174f011f3bae98bc5a427b41545a4ca24cd5296147",
-                "resourcePreparationExit": 0,
-                "finalPolicySha256": "b7d28945963f3d8ddb345ce79f678a3c9bd559edc72d1c471553b51af19df042",
-                "finalPolicyReviewIndexSha256": "8cdb8d1dec85c76ad8fb6e8cb8f0a3a24407838796a892808dbec9725590f427",
-                "waitingInspectPid": 1834506,
-                "executionSessionId": 41013,
-                "conditionalInputReviewSha256": "6d2da77b4e1507f880601bc288777e418e539969e7c90e0bcaded6f8b41ac067",
-                "clockStarted": true,
-                "actualParentPid": 1834658,
-                "actualParentStartTicks": 21379482,
-                "actualBootReviewSha256": "c5149e29b971ce3bee45e983e25bc013ac8347b8626859c60932e27db57a455a",
-                "bootReleasedAt": "2026-10-08T18:07:34.570253+00:00",
-                "completedOriginalResponses": 4,
-                "nativeMemorySettlements": 4,
-                "terminalExitCode": 0,
-                "originalExecutionEndedAt": "2026-10-08T18:10:53.800194+00:00",
-                "usageComplete": true,
-                "allOwnResourcesClosed": true,
-                "result": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
-                "resultSha256": "57c7f0be32ed93c091931d2d7a01f32ff1bf1a633946b9e66eff8681f6c65e09",
-                "objectiveCompletion": true,
-                "wholeQuality": "UNKNOWN",
-                "nextCaseSelected": false
+                "priorAuthoritySha256": "8bc5f223c9cebe091f68addbf34458114b67b0bd130189a574ff515c6c3302a3",
+                "retainedHistoricalRows": 33,
+                "originalSdkLimit": 16,
+                "originalToolLimit": 16,
+                "originalWallSeconds": 480,
+                "criteriaChanged": false,
+                "comparatorsReplayed": false,
+                "scope": "One unused current successor CM06 technical selection; slot/history/mandate/source binding under independent review. Legacydifferenthashclosed. No fresh runtime or source optimization.",
+                "originalTurns": 3,
+                "verifiedPrivateActors": 1,
+                "actorOrder": [
+                  0,
+                  0,
+                  0
+                ],
+                "sessionOrder": [
+                  0,
+                  0,
+                  1
+                ],
+                "calendarAdvanceDays": 3,
+                "semanticLabel": "corrected tentative status and source distinction retained after3days; not legacy forgetting",
+                "selection": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm06-selection-20261008-v1/selection.private.json",
+                "selectionSha256": "4965409bdce4378ae5690933532c7c90d46c66e2678f6a6f7e42cd7cc8c74dde",
+                "selectionReview": "/home/administrator/project/.eva2-artifacts/p2-current-eva2-cm06-selection-20261008-v1/selection-mandate-review.private.json",
+                "selectionReviewSha256": "3266d4c632d06fbe8e01147c35bb748544e2e1271de6db5cb10f04b6a80d5d8b",
+                "privateSourceBase": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1",
+                "sourceBindingCorrection": {
+                  "cause": "Private comparison parent subnet differed from resource preparation subnet; caught before runtime.",
+                  "action": "Align parent constant and derivative binding hashes only; reuse other source checks.",
+                  "productCodeChanged": false,
+                  "resourcesCreated": false,
+                  "providerCalls": 0
+                },
+                "resourcePreparationStarted": true,
+                "sourceReviewSha256": "94ee2c6b1624efbc41a15619a02fad089762c9382cf573af095a3c2fa99deacf",
+                "sourceIndexSha256": "a3a0ca608eabccfe047e8684d75019c950abbbb1c5015cf5fcc316ca5c3fbd7b",
+                "resourcePreparationExitCode": 0,
+                "authorityCopyExitCode": 0,
+                "finalPolicyIndexSha256": "6c272d05261de93a35d5db7dc59f4fb31413bd074e649d9f742bba9ac1c5b154",
+                "actualResourcesSha256": "89385387610377ed3ae3f58317c9c765b13e4bdc56fc429036750629cc7fd00d",
+                "parentStarted": true,
+                "parentPid": 2055440,
+                "conditionalPolicyReviewSha256": "fe36ddcffe87c76b518ac112ba6ba563d19a510efe99b2f660677481a4d7db33",
+                "inspectPid": 2055142,
+                "actualBootReviewSha256": "4e051ed8e87a45440685ad7c80878adc3bca85a05b22abc9228b54b5c3df8e29",
+                "bootTriggerAuthorized": true,
+                "deadlineSha256": "b7e7c93c63d99ee9d38f3bcaefed91f476682663dd3306c5498ab906024ea0bb",
+                "absoluteOriginalSeconds": 480,
+                "bootReleasedAt": "2026-10-08T19:02:31.995083Z",
+                "executionProcessExitCode": 0,
+                "paidRuntimeCalls": 0,
+                "outcome": "UNKNOWN evaluator policy field mismatch before input",
+                "productLoss": false,
+                "technicalCause": "Policy history hash key value_sha256 mismatched unchanged gate raw_sha256; 33 actual history rows preserved.",
+                "rearmed": false,
+                "replayed": false,
+                "resourcesClosed": true,
+                "originalInputResponses": 0,
+                "usageTotals": null,
+                "knownPartialTokens": 0,
+                "closed": true,
+                "resultEvidence": "eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json",
+                "resultSha256": "0f311bf6cc0eb9aebbae88b8e091e2c974d6e02702a73a3b4f6f0d4aa7062a99",
+                "review": "eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json",
+                "reviewSha256": "ac6255a712bd60ac793e1b2654f4be1b824bcd5b14bfff7f22922964d7f68a20",
+                "finalAuthoritySha256": "252fcb1a159a4a0390962988a6ed7f28b50dd3c72cd58bd9f2053e4eec6a99cb",
+                "sameEpisodeRearmed": false
               },
               "latestWorkLimitations": [
                 {

@@ -1,0 +1,154 @@
+{
+  "approved_registry_coverage_sha256": "396e61a00333d48b6c159e6f17726365d63f07d0f42547c556711fa1ef30c8ba",
+  "approved_result_sha256": "0f311bf6cc0eb9aebbae88b8e091e2c974d6e02702a73a3b4f6f0d4aa7062a99",
+  "classification": "UNKNOWN_EVALUATOR_FAILURE_NOT_PRODUCT_LOSS",
+  "contract": "IndependentCurrentEva2OriginalCm06TerminalPublicationReview/v1",
+  "decision": "GO_PUBLICATION_CLOSED_UNKNOWN_ONLY",
+  "development_credit_cost": null,
+  "entry": "eva2:EV003-CM-06:epoch1",
+  "evidence_hashes": {
+    "authority_retention": "5c5334b109d954f8894cc52190101db364c1a69a4d739e4b3a9cb66c550fa5c8",
+    "declassification": "053a2c525e9d08ff42bac24e8466e7447d2da2c53ab1b12a3d8179afbc76fda8",
+    "original_policy": "f772fbf23c1f72a010345d8302fd00f3c9765dd02be8cf6946d623eeafb72670",
+    "physical_closure": "984558ad6a6bb4f33bd3518fdc04ffc349ee4876b5dc673cf767eba570e8d987",
+    "pure_future_serializer_proof": "bba50ab1f86921d6d1f142438fa4e7fb913d7f2f7aa0e4358068ed333deac976",
+    "pure_future_serializer_source": "510dec71d53f7a403a2f40401961ca55cbb5a157716825edda153c8e8d1527cb",
+    "result": "b7f7c919e318f4887b4762c0681428b081c7642b0b34da6e1e31e06d49b4cbf6",
+    "retention_manifest": "740f31941cebf9107b812436269340dc49659a14edbb460a1aa50f2d9454eeb4",
+    "technical_terminal": "1a11bf9a44981f9da0aaccb0133f9bc6816a4f249c1e3792b88d3c2a6209d7d8",
+    "unchanged_gate": "453f95a7a309e7add930b7baf125e7a1dc52b96136fe5d0d9a6d19fc0f886497"
+  },
+  "final_review_index_sha256": "8394a8f3c618481a3507a31afb199ebc843f65f1671c0f9f780f9662f1a2859a",
+  "history": {
+    "all_prior_raw_values_revisions_metadata_exact": true,
+    "cumulative": {
+      "known_input_tokens_lower_bound": 2725779,
+      "known_output_tokens_lower_bound": 25011,
+      "known_total_tokens_lower_bound": 2750790,
+      "registered_sdk_attempts": 223,
+      "usage_missing_attempts": 3,
+      "usage_unknown_guard_rows": 2,
+      "whole_total_tokens": null,
+      "whole_usage_complete": false
+    },
+    "current_authority_sha256": "252fcb1a159a4a0390962988a6ed7f28b50dd3c72cd58bd9f2053e4eec6a99cb",
+    "current_rows": 34,
+    "historical_unknowns_and_reservations_retained": true,
+    "new_coverage_only_registry_counts_not_original_native_or_objective_completions": true,
+    "new_row_attempts": 0,
+    "new_row_full_original_reservation_retained": true,
+    "new_row_revision": 2,
+    "new_row_usage_unknown_flag": false,
+    "prior_coverage33_sha256": "4f4268abad5a1d0235372aa362120dac507e76788d2bba66a21d3e866a5ea0ab",
+    "prior_rows": 33
+  },
+  "material_failure": {
+    "cause": "Policy serializer used value_sha256 where the unchanged gate requires raw_sha256. The underlying33 raw hashes and revisions are correct; key-shape mismatch deterministically refused original input.",
+    "failure_before_original_input": true,
+    "location": "native_ready_gate.private.py:92-93 versus policy.historical_rows",
+    "product_failure_not_established": true
+  },
+  "next_case_selected": false,
+  "no_rearm_replay_or_timer_reset": true,
+  "publication_limits": [
+    "No Eva2 product loss, superiority, comparative speed, efficiency or whole-task score can be inferred from this zero-input failure.",
+    "Preserve actual null original predicates/readbacks/human ratings and incomplete parent SDK totals; separately report tracked physical zero requests and known partial zero.",
+    "Do not use Eva1 as truth, impute a missing Eva2 score, replay comparators or erase historical UNKNOWN/full reservations.",
+    "Registry coverage leaves native/objective completed case totals unknown and preserves the earlier33-row snapshot.",
+    "P2.1 remains open; this review and serializer source proof add no product function or new execution permission."
+  ],
+  "retention": {
+    "additional_nested_references_checked": 36,
+    "file_references_checked": 223,
+    "hash_mismatches": 0,
+    "legacy_different_case_excluded": "59183433a985806ee2d3995ba3094442669d80565f866284e15dc1fdeb00e7d8",
+    "original_raw_outputs_sources_policy_failure_and_nulls_retained": true,
+    "retained_comparator_assessment_usage_closure_timing_null_objects_equal": true,
+    "retained_comparator_result_hashes": {
+      "eva1": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d",
+      "hermes": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059",
+      "openclaw": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
+    }
+  },
+  "review_miss": {
+    "accountability": "My reviews checked actual raw-history preservation and hash bindings but failed to check the policy item field schema against gate92-93. Their conditional admission did not prove that the actual assembled policy could pass the input gate.",
+    "prior_boot_review_sha256": "4e051ed8e87a45440685ad7c80878adc3bca85a05b22abc9228b54b5c3df8e29",
+    "prior_bytes_retained_not_rewritten": true,
+    "prior_conditional_review_sha256": "fe36ddcffe87c76b518ac112ba6ba563d19a510efe99b2f660677481a4d7db33",
+    "prior_reviews_not_reusable_as_proof_of_successful_original_input_admission": true,
+    "prior_source_review_sha256": "94ee2c6b1624efbc41a15619a02fad089762c9382cf573af095a3c2fa99deacf",
+    "source_and_conditional_review_missed_policy_to_gate_schema_binding": true
+  },
+  "reviewed_at": "2026-10-08T19:13:42.943117+00:00",
+  "reviewer_operations": {
+    "authority_or_resource_mutations": 0,
+    "model_or_tool_or_native_trial_calls": 0,
+    "new_tests": 0,
+    "protected_original_questions_answers_or_oracles_opened": false,
+    "review_writes_only": true
+  },
+  "source_only_future_correction": {
+    "closed_episode_correction_applied": false,
+    "decision": "GO_PURE_SERIALIZER_CORRECTION_ONLY_NOT_EXECUTION",
+    "full_future_case_or_startup_proof": false,
+    "historical_rows": 33,
+    "new_case_or_clock_or_input_admission": false,
+    "retained_pure_checks": {
+      "changed_hash_refused": true,
+      "changed_revision_refused": true,
+      "only_receipt_value_sha256_to_gate_raw_sha256_same_values_order_revisions_passes": true,
+      "original_wrong_key_refused": true
+    },
+    "scope": "Map existing receipt value_sha256 to required gate raw_sha256, preserving every value, revision, participant, sample, family and list order. No authority, executed policy or gate mutation."
+  },
+  "terminal": {
+    "actual_four_owned_containers_network_inspect_and_parent_absent": true,
+    "all_three_workers_errors_empty_local_settled_close_ack": true,
+    "captures": 0,
+    "case_conditions": [
+      null,
+      null,
+      null
+    ],
+    "cleanup_errors": [],
+    "clock_exhausted_at_stop": false,
+    "core_threads_stopped_last_error_null_and_delegated_return_zero": true,
+    "factual_response_predicates": [
+      null,
+      null,
+      null
+    ],
+    "human_ratings": [
+      null,
+      null
+    ],
+    "known_partial_usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    },
+    "local_postclose_mirror_accounting_unknown_retained": "Local mirror strings remain in raw worker receipts; they neither replace authoritative parent null totals nor create a new missing provider attempt.",
+    "memory_settled_original_turns": 0,
+    "objective_completion": null,
+    "original_input_sent": false,
+    "original_responses": 0,
+    "parent_errors_empty_pending_zero": true,
+    "parent_to_stop_seconds": 66.45733155499329,
+    "physical_model_requests": 0,
+    "required_readbacks": [
+      null,
+      null
+    ],
+    "same_session": 33027,
+    "sdk_usage_complete": false,
+    "timing_boundary": "Original monotonic clock before native startup to parent stop; no task input. Waiting preparation excluded; comparator timing boundaries are retained and not equated.",
+    "tool_dispatches": 0,
+    "total_usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null
+    },
+    "tracked_sdk_attempts": 0,
+    "whole_case_quality": "UNKNOWN"
+  }
+}

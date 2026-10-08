@@ -1,5 +1,30 @@
 ## Actueel 8 oktober — twee beperkte geheugenvoordelen; uitvoeringstekorten blijven
 
+## Afgesloten CM06 8 oktober — proefconfiguratie faalde vóór Eva
+
+Eén actuele oorspronkelijke CM06-poging is gesloten met UNKNOWN. Mijn proefconfiguratie
+gebruikte value_sha256 waar de ongewijzigde controle raw_sha256 vereist.
+Bron- en invoerreview misten deze interfacefout. Geen oorspronkelijke vraag verstuurd,
+0 fysieke modelaanvragen/0 tools; bekende gedeeltelijke tokens 0, onvolledige
+rapporttotalen blijven null. Geen productverlies, geheugenvoordeel of nieuwe functie.
+Codex-ontwikkelcredits en geld onbekend.
+
+Alle eigen workers/resources gesloten; alle33 eerdere rawwaarden/revisies/meta en
+volledige reserveringen exact. Nu34registraties/223SDK; bekende ondergrens2.750.790tokens
+onveranderd,3historische verbruiksonbekende pogingen blijven UNKNOWN. Registratie is
+geen taakdekking. Eerdere coverage33 byteexact behouden; coverage34 apart opgeslagen.
+De zuivere toekomstige policy-keycorrectie is bewezen zonder product-/gatewijziging
+of herhaling van deze gesloten poging. De drie referentie-uitslagen blijven exact.
+CM05/CM08-voordelen en XD02-verlies blijven staan. P2.1 en39/48afrondingen ongewijzigd.
+Spraak geparkeerd; ongebruikte Docker Desktop blijft ongemoeid.
+
+Bewijs: eva2/evidence/product/p2-eva2-original-cm06-result-20261008.json.
+Review: eva2/reviews/p2-eva2-original-cm06-final-review-20261008.json.
+Registratie: eva2/evidence/product/p2-authority-coverage-cm06-20261008.json.
+Vervolg uitsluitend afzonderlijk concreet binden aan oorspronkelijke criteria en
+bestaand mandaat; geen gesloten proef herhalen of nieuwe brede matrix.
+
+
 CM05 is één keer uitgevoerd en onafhankelijk beoordeeld: Eva2 bewaart de
 privéherinneringen van twee geverifieerde personen apart en haalt beide later
 correct terug. Vier antwoorden feitelijk ondersteund, drie vaste voorwaarden

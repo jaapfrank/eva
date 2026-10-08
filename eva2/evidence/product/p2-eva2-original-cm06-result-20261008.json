@@ -1,0 +1,573 @@
+{
+  "actual_boot_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/actual-boot-review.private.json",
+    "sha256": "4e051ed8e87a45440685ad7c80878adc3bca85a05b22abc9228b54b5c3df8e29"
+  },
+  "authority": {
+    "added_raw_value_sha256": "602d8cfca625d2ea5aaa94ce5aeb5a53f92317249e6735ec4da2488a761870b2",
+    "added_revision": 2,
+    "after": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/aggregate.db",
+      "sha256": "252fcb1a159a4a0390962988a6ed7f28b50dd3c72cd58bd9f2053e4eec6a99cb"
+    },
+    "all_prior_raw_values_revisions_metadata_exact": true,
+    "before": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1/aggregate.db",
+      "sha256": "8bc5f223c9cebe091f68addbf34458114b67b0bd130189a574ff515c6c3302a3"
+    },
+    "cumulative": {
+      "known_input_tokens_lower_bound": 2725779,
+      "known_output_tokens_lower_bound": 25011,
+      "known_total_tokens_lower_bound": 2750790,
+      "registered_sdk_attempts": 223,
+      "usage_missing_attempts": 3,
+      "usage_unknown_guard_rows": 2,
+      "whole_total_tokens": null,
+      "whole_usage_complete": false
+    },
+    "current_canonical_rows_sha256": "8b56b7c112b11b81e2ee6578a6eeae0f6db4c63f5c264aeaed0b1af68b67ac23",
+    "current_rows": 34,
+    "metadata_sha256": "6790b66d258e8d9cf4f529c6d41fbaf8069a4be61ea603f906ad74c940afe65b",
+    "old_canonical_rows_sha256": "16245e1e290f984837393e209e23fa7ec965134028034642fcf6ab4c3f1a7322",
+    "only_added_sample": "eva2:EV003-CM-06:epoch1",
+    "original_full_reservations_preserved": true,
+    "prior_rows": 33,
+    "sample_envelope_exceeded": false,
+    "sample_usage_unknown": false
+  },
+  "comparison_limits": [
+    "No Eva2 product loss, advantage, ranking or efficiency claim follows from zero original input.",
+    "SDK report remains incomplete with null totals; zero physical requests and zero known partial usage are separately established.",
+    "All historical UNKNOWN and full reservations remain.",
+    "Exact retained comparator predicates, nulls, closure and timing distinctions are unchanged.",
+    "Human quality remains unassessed; P2.1 remains open."
+  ],
+  "conditional_input_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/eva2/original-input-policy-review.private.json",
+    "sha256": "fe36ddcffe87c76b518ac112ba6ba563d19a510efe99b2f660677481a4d7db33"
+  },
+  "contract": "CurrentEva2OriginalCM06Result/v1",
+  "current_projection_equality": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/projection-equality-technical.private.json",
+    "sha256": "388c8fce9eaac55355db17a7e9a078c36d7898c90d88c3044b47b3db7e5fd549"
+  },
+  "date": "2026-10-08",
+  "eva2": {
+    "closure": {
+      "all_owned_containers_network_and_parent_pids_absent": true,
+      "all_workers_settled_and_close_ack": true,
+      "cleanup_errors": [],
+      "parent_errors": [],
+      "pending_sdk_tools": 0,
+      "tracked_http_settled": true,
+      "worker_errors": []
+    },
+    "factual_response_predicates": [
+      null,
+      null,
+      null
+    ],
+    "fixed_conditions_observed": [
+      null,
+      null,
+      null
+    ],
+    "human_ratings": [
+      null,
+      null
+    ],
+    "memory_settled_turns": 0,
+    "model_roles": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning_effort": "none"
+      },
+      "helper": {
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium"
+      },
+      "observed_provider_calls": 0
+    },
+    "native_responses": 0,
+    "objective_completion": null,
+    "official_semantic_score": null,
+    "original_input_sent": false,
+    "required_readbacks": [
+      null,
+      null
+    ],
+    "timing": {
+      "boundary": "Original monotonic clock before native startup to parent stop; no task input. Waiting preparation excluded; comparator timing boundaries are retained and not equated.",
+      "comparative_speed_claim": null,
+      "parent_to_stop_seconds": 66.45733155499329,
+      "sample_start_to_before_stop_seconds": null,
+      "wall_expired_at_stop": false,
+      "wall_limit_seconds": 480
+    },
+    "usage": {
+      "completed_sdk_responses": 0,
+      "contact_attempts": 0,
+      "credits": null,
+      "helper_attempts": 0,
+      "input_tokens": null,
+      "known_partial_input_tokens": 0,
+      "known_partial_output_tokens": 0,
+      "known_partial_total_tokens": 0,
+      "money": null,
+      "output_tokens": null,
+      "physical_model_requests": 0,
+      "provider_attempts": 0,
+      "sdk_usage_complete": false,
+      "tool_coverage_complete": true,
+      "tool_dispatches": 0,
+      "total_tokens": null
+    },
+    "whole_case_quality": "UNKNOWN"
+  },
+  "excluded_legacy_case": {
+    "case_sha256": "59183433a985806ee2d3995ba3094442669d80565f866284e15dc1fdeb00e7d8",
+    "matching": false,
+    "result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-cm06-paired-result-20261005.json",
+      "sha256": "09b1b2246acb80896d235158029cb35bd78421d14cfb2b34a752a8f2b44a82cf"
+    }
+  },
+  "independent_original_assessment": {
+    "assessment_model_calls": 0,
+    "classification": "UNKNOWN_EVALUATOR_FAILURE_NOT_PRODUCT_LOSS",
+    "declassification": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/assessment-declassification-technical.private.json",
+      "sha256": "053a2c525e9d08ff42bac24e8466e7447d2da2c53ab1b12a3d8179afbc76fda8"
+    },
+    "no_new_criteria_or_scorer_changes": true,
+    "protected_assessment_sha256": "9c8763d8b23f9881fa672eaa95da2eff60243ab506dd54b8d0d7ececbe17c8f6",
+    "readback_bindings": [
+      {
+        "evaluator": "independent_memory_readback",
+        "evidence": [
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/terminal-technical.private.json",
+            "sha256": "1a11bf9a44981f9da0aaccb0133f9bc6816a4f249c1e3792b88d3c2a6209d7d8"
+          },
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/eva2/execution/p1_core.sql",
+            "sha256": "4a345c383c90dc7057a314fa44e7baf9e6ce3d0b906147feaff236b4dfc9a227"
+          },
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/eva2/execution/p1_memory.sql",
+            "sha256": "ad1279b11607155c6ff93e1edb4414efc8ae32a0e224ecc706cc74c5a1d76c3b"
+          }
+        ],
+        "observed": null,
+        "original_spec_sha256": "9acc9473b930e7861beed1fc4f5ce5ae57669152b44c87ce0bd035ef224981cc",
+        "scope": "readback:0"
+      },
+      {
+        "evaluator": "native_trace",
+        "evidence": [
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/terminal-technical.private.json",
+            "sha256": "1a11bf9a44981f9da0aaccb0133f9bc6816a4f249c1e3792b88d3c2a6209d7d8"
+          },
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/eva2/execution/p1_core.sql",
+            "sha256": "4a345c383c90dc7057a314fa44e7baf9e6ce3d0b906147feaff236b4dfc9a227"
+          },
+          {
+            "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/eva2/execution/p1_memory.sql",
+            "sha256": "ad1279b11607155c6ff93e1edb4414efc8ae32a0e224ecc706cc74c5a1d76c3b"
+          }
+        ],
+        "observed": null,
+        "original_spec_sha256": "734e710dbc5cfdb8636a21976954c4ddcbab58d5de72e11d0b69317d4e47d8b4",
+        "scope": "readback:1"
+      }
+    ]
+  },
+  "limits_per_sample": {
+    "includes_helpers_background_and_retries": true,
+    "input_tokens": 1048576,
+    "output_tokens": 19200,
+    "provider_requests": 16,
+    "tool_dispatches": 16,
+    "wall_seconds": 480
+  },
+  "new_product_function": false,
+  "next_case_selected": false,
+  "no_rearm_or_replay": true,
+  "original_binding": {
+    "actor_order": [
+      0,
+      0,
+      0
+    ],
+    "audience_kind": "private_person",
+    "case_id": "EV003-CM-06",
+    "case_sha256": "816239cd58f313bab792ead97af5a9cfaa8af45a28525c7f3482e484a13c2f26",
+    "clock_generations": [
+      0,
+      0,
+      1
+    ],
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "entry": "eva2:EV003-CM-06:epoch1",
+    "epoch": 1,
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "scenario_advance_days": 3,
+    "sessions": [
+      0,
+      0,
+      1
+    ],
+    "turns": 3,
+    "verified_actors": 1
+  },
+  "p2_1_completed": false,
+  "physical_closure": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/physical-closure.private.json",
+    "sha256": "984558ad6a6bb4f33bd3518fdc04ffc349ee4876b5dc673cf767eba570e8d987"
+  },
+  "preparation_issues": {
+    "correction_applied_to_closed_episode": false,
+    "development_credits": null,
+    "earlier_source_metadata_corrections": [
+      "Typed audience serialization before source admission.",
+      "Parent subnet aligned with resource plan before resource admission.",
+      "Root prelaunch decision literal before resources.",
+      "Projection metadata nesting before final resource binding.",
+      "Docker absence stderr recognized case-insensitively in final evidence; actual resources were absent."
+    ],
+    "evaluator_error": "Policy history field value_sha256 differs from unchanged gate-required raw_sha256 despite equal hashes/revisions.",
+    "old_incorrect_policy_retained": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/eva2/original-input-policy.private.json",
+      "sha256": "f772fbf23c1f72a010345d8302fd00f3c9765dd02be8cf6946d623eeafb72670"
+    },
+    "resource_preparation_repeated": false,
+    "small_source_only_correction": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/policy-history-correction-proof.private.json",
+      "sha256": "bba50ab1f86921d6d1f142438fa4e7fb913d7f2f7aa0e4358068ed333deac976"
+    },
+    "source_and_conditional_review_missed_interface": true
+  },
+  "registered_coverage": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/p2-authority-coverage-cm06-20261008.public.json",
+    "sha256": "396e61a00333d48b6c159e6f17726365d63f07d0f42547c556711fa1ef30c8ba"
+  },
+  "retained_comparison": {
+    "eva1": {
+      "closure": {
+        "active_provider_attempts": 0,
+        "actual_native_acks": 3,
+        "calendar_generations": [
+          0,
+          0,
+          1
+        ],
+        "calendar_relative_offsets_ms": [
+          0,
+          0,
+          259200000
+        ],
+        "cancel_errors": [],
+        "native_completed_turns": 3,
+        "native_eof": true,
+        "native_process_absent": true,
+        "native_returncode": 0,
+        "parent_process_absent": true,
+        "pending_provider_controls": 0,
+        "private_artifacts_retained": true,
+        "provider_close_failures": 0,
+        "quiescent": true,
+        "reader_stopped": true
+      },
+      "human_ratings": [
+        null,
+        null
+      ],
+      "independent_original_assessment": {
+        "accepted_answers": 1,
+        "classification": "admitted_native_memory_recall_failure",
+        "factual_response_predicates": [
+          false,
+          true,
+          false
+        ],
+        "finding": "The intermediate source/correction distinction is correct, but the required later status is not recalled. Earlier messages persist in the same-person history; dedicated memory and relevant later model context are empty, and the native search returns no results.",
+        "forbidden_external_effect_observed": false,
+        "human_raters_recorded": 0,
+        "human_raters_required": 2,
+        "native_trace_readback": true,
+        "official_inspect_score_rewritten": false,
+        "original_semantic_conditions": [
+          false,
+          true,
+          true
+        ],
+        "original_semantic_conditions_passed": 2,
+        "original_semantic_conditions_required": 3,
+        "required_answers": 3,
+        "required_readbacks": [
+          false,
+          true
+        ],
+        "required_readbacks_passed": 1,
+        "required_readbacks_required": 2
+      },
+      "objective_completion": false,
+      "official_semantic_score": null,
+      "replayed": false,
+      "result": {
+        "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-eva1-successor-cm06-result-20261007.json",
+        "sha256": "cf0693af879ec0d524dcf29231ae16012485ff49683fd894e88e09b40fa3a94d"
+      },
+      "status": "closed_original_native_completed_objective_failure_human_unknown",
+      "timing": {
+        "boundary": "Original monotonic deadline start before native worker launch through three completed exchanges/ACKs and memory readback, before worker stop.",
+        "comparative_speed_claim": null,
+        "elapsed_seconds": 44.57372733799275,
+        "wall_expired": false,
+        "wall_limit_seconds": 480
+      },
+      "usage": {
+        "completed_sdk_responses": 7,
+        "contact_attempts": 7,
+        "credits": null,
+        "dispatch_is_not_automatic_action_success": true,
+        "helper_attempts": 0,
+        "input_tokens": 43408,
+        "model": "gpt-6-sol",
+        "money": null,
+        "ordinary_tool_dispatches": 1,
+        "ordinary_tool_names": [
+          "zoek_gesprek"
+        ],
+        "output_tokens": 1674,
+        "physical_model_context_bodies_verified": 7,
+        "protocol_tool_dispatches": 5,
+        "provider_attempts": 7,
+        "reasoning_effort": "none",
+        "sdk_usage_complete": true,
+        "tool_dispatches": 6,
+        "total_tokens": 45082
+      },
+      "whole_case_quality": "UNKNOWN"
+    },
+    "hermes": {
+      "closure": {
+        "close_errors": [],
+        "container_absent": true,
+        "native_background_reviews_pending": 0,
+        "native_child_exited": true,
+        "native_idle_queue_pending": 0,
+        "network_absent": true,
+        "parent_and_wrapper_pids_absent": true,
+        "parent_close_acknowledged": true,
+        "parent_controller_errors": [],
+        "relay_closed": true,
+        "scenario_clock_restored": true,
+        "scope": "Tracked native tasks, HTTP, durable readbacks and own physical processes/resources; no general OS containment claim.",
+        "sdk_pending": 0,
+        "tracked_http_settled": true
+      },
+      "independent_original_assessment": {
+        "classification": "admitted_native_partial_memory_continuity_failure",
+        "expected_answers": 3,
+        "factual_response_predicates": [
+          true,
+          true,
+          true
+        ],
+        "factual_supported_count": 3,
+        "finding": "The broad tentative status survives durable memory and later recall. A required qualification from the correction is absent from the later active memory, dispatched context and answer, so one complete original semantic condition fails. The narrower memory readback passes.",
+        "forbidden_external_effect_observed": false,
+        "human_ratings": [
+          null,
+          null
+        ],
+        "native_answers_received": 3,
+        "objective_pass": false,
+        "official_semantic_score": null,
+        "original_semantic_conditions": [
+          false,
+          true,
+          true
+        ],
+        "original_semantic_conditions_passed": 2,
+        "prior_privacy_failures_reversed": false,
+        "required_readbacks": [
+          true,
+          true
+        ],
+        "required_readbacks_passed": 2,
+        "whole_quality": "UNKNOWN"
+      },
+      "replayed": false,
+      "result": {
+        "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
+        "sha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059"
+      },
+      "status": "closed_original_native_completed_objective_failure_human_unknown",
+      "usage": {
+        "completed_sdk_responses": 6,
+        "contact_attempts": 4,
+        "credits": null,
+        "elapsed_seconds": 15.726007043005666,
+        "error_interpretation": "Post-settlement helper/relay events are retained. All six raw usages are complete; the child local mirror disconnect after acknowledged parent close is not an authoritative missing-usage finding.",
+        "exact_outbound_contexts_verified": 6,
+        "external_actions": 0,
+        "helper_attempts": 2,
+        "input_tokens": 13999,
+        "money": null,
+        "output_tokens": 215,
+        "post_settlement_GeneratorExit_rows": 2,
+        "provider_attempts": 6,
+        "provider_usage_complete": true,
+        "relay_ConnectionResetError_events": 1,
+        "speech_requests": 0,
+        "time_boundary": "Parent monotonic start immediately before native child launch through child exit; preparation and subsequent parent cleanup excluded.",
+        "tool_dispatches": 1,
+        "total_tokens": 14214,
+        "wall_expired": false
+      }
+    },
+    "openclaw": {
+      "closure": {
+        "container_absent": true,
+        "equivalent_native_settled": true,
+        "fresh_final_scope_receipt": true,
+        "host_artifacts_retained": true,
+        "inspect_envelope": "success",
+        "launcher_exit": 0,
+        "literal_native_closed": false,
+        "native_cancel_errors": [],
+        "native_pending_at_close": {
+          "active_provider_attempts": 0,
+          "active_turns": 0,
+          "native_background_terminals": 0,
+          "openclaw_clients": 0,
+          "pending_tools": 0
+        },
+        "native_returncode": 0,
+        "native_source_authority_observed_not_created": 3,
+        "native_unregister_queues_flushed": 6,
+        "network_absent": true,
+        "parent_close_ack": true,
+        "parent_controller_errors": [],
+        "pending_sdk": 0,
+        "pending_tool_rows": 0,
+        "physical_clients_exited": 3,
+        "relay_connection_reset_events": 1,
+        "retirement_scope_receipts": 3,
+        "root_cleanup_errors": [],
+        "root_scope_absent": true,
+        "root_scope_errors": [],
+        "root_scope_populated_after_stop": false
+      },
+      "human_ratings": [
+        null,
+        null
+      ],
+      "independent_original_assessment": {
+        "accepted_answers": 3,
+        "actor_order": [
+          0,
+          0,
+          0
+        ],
+        "ai_human_quality_substitution": false,
+        "calendar_generations": [
+          0,
+          0,
+          1
+        ],
+        "calendar_relative_offsets_ms": [
+          0,
+          0,
+          259200000
+        ],
+        "factual_response_predicates": [
+          true,
+          true,
+          true
+        ],
+        "finding": "The original factual status, correction and source distinction survive durable memory and later native recall without an invented confirmed commitment.",
+        "forbidden_external_effect_observed": false,
+        "full_native_trace_and_stop_readback": true,
+        "human_raters_recorded": 0,
+        "human_raters_required": 2,
+        "native_private_origins_verified_after_completed_turn": 3,
+        "native_private_origins_verified_before_turn": 3,
+        "official_scorer_or_inspect_score_rewritten": false,
+        "original_semantic_conditions": [
+          true,
+          true,
+          true
+        ],
+        "prior_cross_person_failures_reversed": false,
+        "required_answers": 3,
+        "required_readbacks": [
+          true,
+          true
+        ],
+        "required_readbacks_failed": 0,
+        "required_readbacks_passed": 2,
+        "required_readbacks_unknown": 0,
+        "session_order": [
+          0,
+          0,
+          1
+        ]
+      },
+      "objective_completion": true,
+      "official_semantic_score": null,
+      "replayed": false,
+      "result": {
+        "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-openclaw-original-cm06-result-20261007.json",
+        "sha256": "07b096f12c7ac465e70d9c6c40c74b11d4d45e79ebb33264125af648ba9063c3"
+      },
+      "status": "closed_original_native_completed_objective_pass_human_unknown",
+      "timing": {
+        "boundary": "Parent monotonic start before child launch through child exit; resource preparation and parent cleanup excluded.",
+        "comparative_speed_claim": null,
+        "elapsed_seconds": 123.41011110899854,
+        "wall_expired": false,
+        "wall_limit_seconds": 480
+      },
+      "usage": {
+        "completed_sdk_responses": 12,
+        "contact_attempts": 12,
+        "credits": null,
+        "helper_attempts": 0,
+        "input_tokens": 285381,
+        "model": "gpt-6-sol",
+        "money": null,
+        "output_tokens": 1521,
+        "provider_attempts": 12,
+        "reasoning_effort": "none",
+        "sdk_usage_complete": true,
+        "tool_coverage_complete": true,
+        "tool_dispatches": 11,
+        "tool_settled_rows": 11,
+        "total_tokens": 286902,
+        "verified_context_artifacts": 36
+      },
+      "whole_case_quality": "UNKNOWN"
+    }
+  },
+  "retention": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/terminal-retention.private.json",
+    "sha256": "740f31941cebf9107b812436269340dc49659a14edbb460a1aa50f2d9454eeb4"
+  },
+  "runtime_source_modified_by_this_sample": false,
+  "scope": "One current Eva2 original CM06 epoch1 attempt; original input was never dispatched. Exact retained Eva1/OpenClaw/Hermes outcomes remain unchanged, with no replay.",
+  "source_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/source-resource-review.private.json",
+    "sha256": "94ee2c6b1624efbc41a15619a02fad089762c9382cf573af095a3c2fa99deacf"
+  },
+  "status": "closed_evaluator_preinput_policy_schema_failure_unknown",
+  "task": "P2.1",
+  "technical_terminal_evidence": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm06-preparation-20261008-v1/terminal-technical.private.json",
+    "sha256": "1a11bf9a44981f9da0aaccb0133f9bc6816a4f249c1e3792b88d3c2a6209d7d8"
+  }
+}
