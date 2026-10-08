@@ -1,5 +1,26 @@
 ## Actueel 8 oktober — twee beperkte geheugenvoordelen; uitvoeringstekorten blijven
 
+## Lopend XD03-vervolg 8 oktober — zelfstandig combinatiewerk
+
+Eén oorspronkelijke XD03, epoch1, is gekozen: huidige Eva2 en OpenClaw op
+dezelfde taak over drie algemene diensten, met rekencontrole. Beide slots zijn
+ongebruikt; geen eerdere XD03-referentie beschikbaar. Alleen deze gerichte
+prospectieve vergelijking, geen nieuwe brede matrix of herhaling van XD02/CM06.
+De vaste drie eindvoorwaarden en twee onafhankelijke readbacks blijven behouden.
+Per deelnemer: oorspronkelijke72 SDK,70tools,840seconden; alle hulpwerk en retries
+inbegrepen. Sol/none-contact en Astra/medium-helpers via bestaande providerroute.
+
+Onafhankelijke selectie-GO7f301cf3 staat uitsluitend bronvoorbereiding toe.
+Hergebruik bestaande native routes en algemene fixtures; kleine delta twee naar
+drie diensten. Controleer de werkelijke policyhistorie tegen raw_sha256 van de
+ongewijzigde gate, niet alleen bronhashes. Elke deelnemer krijgt eigen lege data.
+OpenClaw bindt de actuele historie na Eva2's fysieke afsluiting, zonder reset.
+Alle34oude rijen/reserveringen en UNKNOWN blijven staan. Verse casegebonden
+CM04-guarduitzondering en volledige bron/resource/invoerbinding nog vereist.
+Geen authoritycopy, resources, klok, native invoer of modelaanvragen toegelaten.
+Dit is vergelijkingswerk, geen nieuwe producttaak of afronding.
+
+
 ## Afgesloten CM06 8 oktober — proefconfiguratie faalde vóór Eva
 
 Eén actuele oorspronkelijke CM06-poging is gesloten met UNKNOWN. Mijn proefconfiguratie
