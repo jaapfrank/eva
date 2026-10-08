@@ -1,43 +1,40 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 8 oktober — AIDE² voor Eva2; vergelijkingsroute gericht herstellen
+## Actueel 8 oktober — matching XD02 afgesloten; producttekort zichtbaar
 
-AIDE² hoort uitsluitend bij Eva2. Zij leert uit echte ervaringen, onderzoekt betere
-werkwijzen en past onafhankelijk aangetoonde verbeteringen toe, ook voor haar apps
-of uitbreidingen. Eva1 en concurrenten zijn referenties, geen doelwit voor onze
-AIDE²-bouw of optimalisatie. De oude agentnamen duiden nu uitvoerder en reviewer
-van de P2.1-proefroute aan. L3.4–L3.7 blijven geïnstalleerd en afgerond; geen herhaling.
-Blijvend beter worden is het productdoel, algemene blijvende superioriteit is geen
-bewezen resultaat van de beperkte bestaande contexttoepassing.
+De matching Eva2-uitvoering is uitgevoerd en onafhankelijk beoordeeld. Op dezelfde
+oorspronkelijke XD02-opdracht voldoet OpenClaw aan 3/3 vaste voorwaarden en voert
+beide bedoelde wijzigingen uit; Eva2 en Hermes halen 1/3 en voeren geen bedoelde
+wijziging uit. Eva2 onderzocht de beschikbare gewone toegang onvoldoende en vroeg
+om toegangshulp. Dit is een geldig beperkt productverlies, geen UNKNOWN door onze
+proefroute. Menselijke antwoordkwaliteit en algemene superioriteit zijn niet bewezen.
 
-Het noodzakelijke matching XD02-vervolg is gesloten UNKNOWN: drie echte nativewerkers
-waren gezond, maar onze evaluator-reader selecteerde de bestaande databaserol niet
-vóór de oorspronkelijke input. Geen taakinput, antwoord of geregistreerde model-/
-toolpoging. Eindverbruik onvolledig/NULL. De readercorrectie is als bron beoordeeld,
-maar niet uitgevoerd vóór de oorspronkelijke deadline verliep. Geen bootrelease
-of rearm van het vervolg; alle eigen resources/wachtende parent afgesloten.
-Bewijs: `eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json`.
-Review: `eva2/reviews/p2-eva2-xd02-necessary-followup-final-review-20261008.json`.
+Eva2 gebruikte 8 volledige modelaanvragen (1 Sol/none, 7 Astra/medium), 57.007 tokens
+en 5 afgehandelde tools. Nativeboot tot waarnemingsstop: 176,30 seconden; eerste
+ontvangst is geen taakafronding. Meetgrenzen/modelrollen/contextaanbieding verschillen
+tussen deelnemers. Lagere tokens bij niet-afronden bewijzen geen efficiëntiewinst.
+Geld- en ontwikkelcreditkosten blijven onbekend. Alle eigen proefresources zijn
+gesloten; alle 29 oude registraties/revisions/metadata blijven exact behouden.
+De drie oude verbruiksonbekende pogingen blijven onbekend.
 
-De noodzakelijke technische afhankelijkheid is nu uitgevoerd en onafhankelijk
-gecontroleerd:27 canonical readercontroles en21 vrijgavecontroles slagen. Werkelijke
-before/result/close, bestaande rol/scope/READ ONLY, positieve en onvolledige resultaten,
-gegevensgelijkheid en dispose gecontroleerd;116 SQLstatements, nul model-/actiecalls.
-Twee voorbereidingsfouten behouden; eigen resources gesloten, oude authority bytegelijk.
-Bewijs: `eva2/evidence/product/p2-eva2-complete-reader-proof-20261008.json`.
-Review: `eva2/reviews/p2-eva2-complete-reader-final-review-20261008.json`.
+Bewijs: `eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json`.
+Review: `eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json`.
+De eerdere gesloten UNKNOWN en de afzonderlijk geslaagde reader/nativeproeven
+blijven historisch bewijs; niet opnieuw uitvoeren of als productfunctie tellen.
 
-Hergebruik dit bewijs; geen legefactory-/native3-/readerherhaling. Het parenttemplate
-met baseline vóór vrijgave, exact behouden body/clock-ACK en gecontroleerde worker-
-instanties is als bron beoordeeld. Bind nu één noodzakelijk nieuw matching Eva2-XD02-
-vervolg vooraf concreet aan bestaand mandaat: dezelfde oorspronkelijke criteria,
-rollen/grenzen inclusief72SDK/70tools/840seconden, alle29oude authorityrijen en
-fullreserves behouden. Bron/resource/policyreview vóór de originele klok; dezelfde
-vooraf beoordeelde eenmalige gate controleert actuele gereedheid zonder chatwachttijd.
-Geen gesloten episode/timer resetten, comparatorherhaling of brede matrix. Deze
-technische GO is nog geen uitvoer-/kwaliteitsoordeel over de oorspronkelijke taak.
-P2.1 blijft open. 39/48 taakafrondingen, menselijke beoordeling en geparkeerde spraak
-blijven onveranderd; technische reparatie is geen extra huisgenootfunctie.
+De gekozen matching XD02-uitkomst is klaar; winnen is geen P2.1-eindvoorwaarde.
+Volledige P2.1-dekking blijft open: CM07 heeft geen toegelaten gematchte gedeelde
+audienceroute; matching Eva2-CM05/06/08 en latere oorspronkelijke families/epochs
+ontbreken, evenals twee echte onafhankelijke CM02/gespreksbeoordelingen. Ongebruikte
+slots zijn niet voltooid of bewezen onuitvoerbaar. Dit rapport geeft geen volgende
+uitvoering of brede matrix vrij. Een volgend concreet vervolg wordt vooraf aan de
+oorspronkelijke criteria en het bestaande mandaat gebonden; geen gesloten proef
+heropenen, nieuwe taak-ID of voorbeeldspecifieke kernregel.
+
+AIDE² hoort uitsluitend bij Eva2, ook voor haar apps/uitbreidingen. L3.4–L3.7 blijven
+geïnstalleerd en afgerond. De vier huisgenootuitkomsten en 39/48 kleine afrondingen
+blijven onveranderd; spraak blijft geparkeerd. Docker Desktop wordt niet door Eva
+gebruikt; de bestaande zelfstandige WSL-Dockerroute is leidend, geen Desktopherstel.
 
 ## Historische momentopname vóór het matching vervolg — native aansluiting bewezen
 
