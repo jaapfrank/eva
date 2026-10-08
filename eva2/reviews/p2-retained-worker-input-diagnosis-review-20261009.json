@@ -1,0 +1,152 @@
+{
+  "classification": {
+    "causal_product_fault": "UNKNOWN_FROM_RETAINED_EVIDENCE",
+    "direct_resource_advertisement": "ASYMMETRIC_BETWEEN_NATIVE_ADAPTERS",
+    "mere_model_behavior_as_complete_cause_proven": false,
+    "missing_service_access_or_impossible_discovery_proven": false,
+    "original_question_transfer": "INTACT",
+    "product_truncation_proven": false
+  },
+  "contract": "IndependentRetainedXD04QuestionResourceDiagnosisReview/v1",
+  "decision": "GO_BOUNDED_DIAGNOSIS_PUBLICATION_ONLY",
+  "development_credit_cost": null,
+  "diagnosis_sha256": "c69dd7d311cc6b7cf306154a50a6cc33f422a492ab08455c4b99306395726fbf",
+  "new_calls": {
+    "browser_tool": 0,
+    "fixture": 0,
+    "model": 0,
+    "native_task": 0
+  },
+  "observed_boundary": {
+    "failure_causation_from_missing_advertisement_proven": false,
+    "inventory_transport_field": "$.input[2].output<json>.result.configured_endpoints[0].endpoint",
+    "model_reused_transport_endpoint_for_navigation": true,
+    "navigation_field": "$.input[9].arguments<json>.arguments_json<json>.url",
+    "origins_remained_in_admitted_host_side_configuration": true,
+    "question_transfer_loss": false,
+    "task_resource_origins_not_projected_as_model_visible_destinations_in_eva2_inventory_or_context": true
+  },
+  "preservation": {
+    "closed_authority_sha256": "38e08768febf45f9bc0542949e649d430f6227f0593b5279e2efb39c4cb37bcf",
+    "closed_result_sha256": "56cf49653fb52cc3387c9029e30310a7e783028510b47f9798bd0b1737d95c38",
+    "closed_review_sha256": "8dff986d1e51c159b2b29aebe4e8de6518541c31cc16e98c7ce85b59b2524462",
+    "no_rearm_replay_new_case_or_clock": true,
+    "openclaw_work_model_protocol_mismatch_still_applies": true,
+    "p2_completion_or_improvement_proven": false,
+    "scores_eligibility_usage_history_and_reviews_unchanged": true
+  },
+  "privacy": {
+    "only_field_paths_presence_counts_categories_and_hashes": true,
+    "question_answers_oracle_urls_hostnames_cookie_credentials_or_fixture_contents_exported": false
+  },
+  "protected_request_payloads_parsed_by_reviewer": false,
+  "referenced_files_hash_verified": 57,
+  "request_carriage": {
+    "delegated_task_field": "$.instructions",
+    "digital_worker_requests_reviewed": 6,
+    "foreground_requests_reviewed": 1,
+    "full_original_question_present_in_all_reviewed_requests": true,
+    "grant_context_refs_count": 0,
+    "original_question_field": "$.input[0].content",
+    "projection_field": "participants.eva2.turns[0].body.text",
+    "question_sha256": "e4a90b2e219bb1612078ddf33d6b3fa5c69f5db42142d1933dbb8aeb829813af",
+    "runtime_field": "turns[0].request.text",
+    "source_field": "original-sample.input",
+    "summary_or_title_only_handoff": false,
+    "task_separate_from_original_question": true
+  },
+  "resource_carriers": {
+    "eva2": {
+      "actual_start_tab_category": "about:blank",
+      "admitted_host_allowed_origins_count": 3,
+      "admitted_host_allowed_origins_field": "network.allowedOrigins",
+      "code_tool_descriptor_field": "$.input[4].output<json>.result.tools[8]",
+      "cookie_api_explicitly_named_in_descriptor": false,
+      "cookie_discovery_performed": false,
+      "cookie_domain_field": "browser.contextOptions.storageState.cookies[].domain",
+      "cookie_fields_do_not_supply_scheme_or_port": true,
+      "endpoint_role": "mcp_transport",
+      "full_origins_reconstructible_from_cookies_alone_proven": false,
+      "generic_tool_count": 24,
+      "generic_tools_field": "$.input[4].output<json>.result.tools",
+      "host_configuration_sha256": "f800c2ecf45caa1ea2c09a3968655b18b002f3d876be18894c9d72538c8e01f7",
+      "inventory_field": "$.input[2].output<json>.result",
+      "inventory_task_destination_count": 0,
+      "matching_cookie_domains": 3,
+      "ordinary_native_browser_code_tool_offered": true,
+      "origin_or_hostname_literals_in_reviewed_requests": 0,
+      "storage_state_origin_entries": 0
+    },
+    "new_direct_text_eligibility_requirement_added": false,
+    "openclaw": {
+      "first_request_receiving_resource_origins_one_based": 19,
+      "ordinary_file_read_call_field": "$.input[47].input",
+      "ordinary_resource_file": "TOOLS.md",
+      "origin_set_equal_to_eva2_admitted_host_configuration": true,
+      "physical_requests": 33,
+      "requests_receiving_all_origins": 15,
+      "resource_file_sha256": "00be21b549da5a559ccd890000ca3bd6693af3454f657db0f7be7b443f441f33",
+      "resource_output_field": "$.input[48].output[1].text",
+      "same_origins_explicitly_advertised": 3
+    },
+    "ordinary_cookie_capability_is_not_actual_full_origin_discovery": true,
+    "original_contract_prescribes_direct_origin_prompt_text": false,
+    "original_resource_contract_requires_service_binding_before_admission": true
+  },
+  "reviewed_at_utc": "2026-10-08T22:26:00.893090+00:00",
+  "scope": "Read-only review of retained request carriage and resource-advertisement metadata. No task reassessment, product patch, execution, resource creation, model or tool probe.",
+  "smallest_defensible_next_action": {
+    "description": "If further repair is pursued, bind the existing ordinary resource-advertisement interfaces to a public synthetic admitted scope and check whether permitted non-secret complete origins reach a discoverable native carrier. Check scheme/host/port completeness and person/mandate filtering before considering a change. Reuse existing browser/connector interfaces; do not infer destinations from transport endpoints or cookie-domain fields alone.",
+    "new_tool_layer_or_longer_prompt_justified": false,
+    "production_patch_justified_by_this_diagnosis": false,
+    "relaxed_action_failure_or_privacy_guards_justified": false,
+    "runtime_or_original_trial_authorized": false,
+    "type": "SOURCE_PREPARATION_ONLY_WITH_SEPARATE_REVIEW"
+  },
+  "source_cause_exclusions": {
+    "current_source_sha256": {
+      "bootstrap/background_browser_context.py": "3c841b8902f3d2127b0940fda3199fb44b0ba652ea3da11b3442e439053be7e6",
+      "bootstrap/delegated_digital_composition.py": "218ae582c67447672539310cbd7856792af6dd2af05d44afc29a4477e5877191",
+      "bootstrap/delegated_digital_runner.py": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362",
+      "providers/mcp_owner_authority.py": "03c04e816f9f1c31b7b1bbf5cd1e6d7ece7aabcc806916973c86eed6671e64a3",
+      "providers/mcp_registration.py": "fde75e8d2b9ac567d9004af4c30811eb944de6d70bba366b12bdb0df27edba19"
+    },
+    "normal_person_memory_identity_source_loader_preserved": {
+      "file": "bootstrap/delegated_digital_composition.py",
+      "lines": [
+        207,
+        208,
+        209,
+        216,
+        217,
+        228,
+        229,
+        230
+      ]
+    },
+    "same_source_used_by_conversation": {
+      "file": "bootstrap/delegated_digital_runner.py",
+      "lines": [
+        536,
+        545,
+        555
+      ]
+    },
+    "source_ingress_reloaded_and_hash_checked": {
+      "file": "bootstrap/delegated_digital_runner.py",
+      "lines": [
+        511,
+        512,
+        513
+      ]
+    },
+    "task_added_without_replacing_generate_arguments": {
+      "file": "bootstrap/delegated_digital_runner.py",
+      "lines": [
+        75,
+        85,
+        86
+      ]
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "bindings": {
+    "accounting_delta_sha256": "245853e28f8e415ce2090a253776a347d35fd8408a7108bcd77b7243af837fa6",
+    "accounting_source_sha256": "2048fdee6e6b23c189d02f5946ee189a9dcb1134a044b785a0576dd96d909d26",
+    "candidate_sha256": "9f3760c516871a5a6b6f13e02e229b45e0113284a242cd014365a5fbac02f5da",
+    "diagnosis_review_sha256": "1a3dfaa78c3961327669d0650404472e5ad4a88f1b3648c6ca16c503beb4aaee",
+    "diagnosis_sha256": "c69dd7d311cc6b7cf306154a50a6cc33f422a492ab08455c4b99306395726fbf",
+    "init_page_source_sha256": "3e221b6d7a1c292d10d406f6e1a562278e6f70a375921f75b5b336ac31e0aa87",
+    "public_candidate_sha256": "d62f9b7a9ed5a4bce2a84ca6ed2641cf7c98f8309c9ad3e1ebf6dd2bc6567163",
+    "publication_index_sha256": "cd85012a3c4728582e739312225fd31666a9c27472733377a1bced3487617dd8",
+    "pure_check_sha256": "b34056d8173e2fd01159e294f58c1305d3284b1f2804eee0b5a82bd6217d3fb2",
+    "source_index_sha256": "b4bf6bfa195badf57cd5f5b83b6ffa74bc998cd13711b68a6844a46c256b9187",
+    "unapplied_driver_patch_sha256": "29dc4d4af445e5f46686b26201fa70c68aa53ac4892397ed10622b4be5d355fd"
+  },
+  "closed_preservation": {
+    "authority_sha256": "38e08768febf45f9bc0542949e649d430f6227f0593b5279e2efb39c4cb37bcf",
+    "diagnosed_causation_remains_unknown": true,
+    "result_sha256": "56cf49653fb52cc3387c9029e30310a7e783028510b47f9798bd0b1737d95c38",
+    "review_sha256": "8dff986d1e51c159b2b29aebe4e8de6518541c31cc16e98c7ce85b59b2524462",
+    "unchanged": true
+  },
+  "contract": "IndependentFutureResourceOfferWorkRoleSourceReview/v1",
+  "decision": "GO_SOURCE_PREPARATION",
+  "development_credit_cost": null,
+  "outcome_limits": {
+    "behavioral_improvement_proven": false,
+    "future_execution_admitted": false,
+    "new_case_selected": false,
+    "new_product_function": false,
+    "p2_complete": false,
+    "production_source_changed": false,
+    "protocol_compliant_runtime_behavior_proven": false,
+    "resource_or_model_run_go": false
+  },
+  "privacy": {
+    "concrete_origin_hostname_credentials_or_resource_contents_exported": false,
+    "only_technical_interfaces_hashes_counts_and_claim_limits": true,
+    "protected_prompt_answer_oracle_read_by_reviewer": false
+  },
+  "publication_decision": "GO_BOUNDED_SOURCE_CANDIDATE_PUBLICATION",
+  "resource_offer": {
+    "catalog_does_not_include_credentials": true,
+    "catalog_field_names": [
+      "contract",
+      "resource_origins"
+    ],
+    "complete_canonical_http_https_origins_required": true,
+    "html_escaped": true,
+    "local_sibling_catalog_only": true,
+    "native_interface": "browser.initPage -> CommonJS require(module).default({page})",
+    "native_interface_lines": [
+      64717,
+      64719,
+      64720,
+      72313,
+      72315,
+      73537
+    ],
+    "native_interface_source_sha256": "7aa0bf8b6b69d32065912e3d8f7e3c18c62de4d668f770a8e039811d3cf9c6a0",
+    "no_external_server_or_new_fixture": true,
+    "no_task_answers_or_oracle_hints": true,
+    "nonblank_page_preserved": true,
+    "only_about_blank_populated": true,
+    "same_catalog_bytes_for_both_participants_required_at_future_binding": true,
+    "synthetic_catalog_sha256": "b2d007fdb32d70c80f6f0a4d619433d00c3e2d361d76c1c4376ae077c210dfbb",
+    "userinfo_resource_paths_queries_fragments_duplicates_extra_fields_refused": true
+  },
+  "review_evidence": {
+    "actual_accounting_diff_equals_bound_delta": true,
+    "actual_native_functionality_proven": false,
+    "native_ledger_network_model_dispatches": 0,
+    "pure_checks_retained_failed": 0,
+    "pure_checks_retained_passed": 20,
+    "referenced_file_hashes_verified": 24,
+    "reviewer_reran_tests": false,
+    "synthetic_catalog_and_fake_page_only": true
+  },
+  "reviewed_at_utc": "2026-10-08T22:35:10.803986+00:00",
+  "scope": "Only the two frozen uninstalled evaluator source candidates and unapplied driver integration patch. No product code installation, native proof, case selection, authority copy, resources, model/input release or clock is granted.",
+  "still_required_in_one_future_concrete_source_binding": [
+    "Apply and pin the driver integration to a separately selected fresh context: exact work profile, candidate accounting import, mainRequestRole=work and unchanged parent helper grant. The patch is currently unapplied.",
+    "Produce one canonical non-secret catalog solely from resources admitted to that actor/mandate; exclude credentials, prompts, record contents and answer hints. Bind identical bytes to both ordinary adapters.",
+    "Bind the actual read-only module and catalog mounts to the existing E MCP container and browser.initPage configuration; bind the same catalog to the ordinary O workspace. These bindings are not currently applied.",
+    "Verify actual native UID/path readability, ordinary page/file visibility, full origin equality and real model-role capture on the future route. Fakepage and role-preparation checks do not establish those facts.",
+    "Preserve the original sole preboot deadline, counters, stop and history gates; no warmup or task input outside the admitted original envelope. A future exact policy/input admission remains separate."
+  ],
+  "unchanged_boundaries": {
+    "all_helpers_setup_retries_included": true,
+    "input_token_cap": 4718592,
+    "no_closed_role_eligibility_or_scores_rewrite": true,
+    "no_protocol_or_scorer_change": true,
+    "original_family_binding_and_stop_settlement_security_unchanged": true,
+    "original_native_pins_and_calendar_dependency_unchanged": true,
+    "original_plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "output_token_cap": 86400,
+    "provider_attempt_cap": 72,
+    "tool_dispatch_cap": 70,
+    "wall_seconds": 840
+  },
+  "work_role": {
+    "authentic_frozen_cross_domain_family_required": true,
+    "collaboration_mode_same_model_effort": true,
+    "contact_default_preserved": true,
+    "existing_accounting_bucket": "helper",
+    "existing_parent_grant_source_sha256": "41a923708b4935e94678d5de131ef43a97e684399f596adbfead2adcd23f95b0",
+    "immutable_parent_bound_role": true,
+    "mainRequestRole": "work",
+    "main_thread_identity_preserved": true,
+    "native_turn_start_effort": "medium",
+    "native_turn_start_model": "gpt-6-astra",
+    "no_fake_subagent_metadata": true,
+    "no_new_ledger_role_or_budget": true,
+    "parent_granted_roles": [
+      "contact",
+      "helper"
+    ],
+    "physical_responses_same_model_effort": true,
+    "unknown_or_unbound_semantic_role_refused": true,
+    "work_profile_effort": "medium",
+    "work_profile_fallbacks": [],
+    "work_profile_model": "openai/gpt-6-astra",
+    "work_profile_sha256": "77c3dfb2a122acf5e1908406d9600791c9645d526e39d03795c49470542f64e8"
+  }
+}

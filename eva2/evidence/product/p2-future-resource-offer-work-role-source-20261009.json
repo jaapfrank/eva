@@ -1,0 +1,103 @@
+{
+  "candidate_source_count": 2,
+  "contract": "P2FutureResourceOfferWorkRoleSourcePreparation/v1",
+  "development_credit_cost": null,
+  "future_execution_admitted": false,
+  "limitations": [
+    "No future case, original input, owner exception, authority copy, resource, clock or admission is created.",
+    "Common catalog contents, equal bytes and read-only mounts/workspace copy still require a future concrete source binding.",
+    "The native-driver patch is not applied; future source/policy pins must explicitly choose the work profile and semantic role.",
+    "Actual native browser visibility, model-role execution and protocol-compliant task behavior are not proven by pure checks.",
+    "No production Eva change compensates for the observed evaluator advertisement asymmetry."
+  ],
+  "new_case_selected": false,
+  "new_native_browser_or_provider_or_fixture_calls": 0,
+  "new_runtime_model_calls": 0,
+  "original_model_plan": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json",
+    "sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2"
+  },
+  "private_source_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1/source-candidate-review-index.private.json",
+    "sha256": "b4bf6bfa195badf57cd5f5b83b6ffa74bc998cd13711b68a6844a46c256b9187"
+  },
+  "product_function_completed": false,
+  "product_source_or_closed_experiment_changed": false,
+  "source_changes": {
+    "openclaw_work_role": {
+      "actual_native_model_roles_proven": false,
+      "candidate": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1/p1_openclaw_parent_accounting.mjs",
+        "sha256": "2048fdee6e6b23c189d02f5946ee189a9dcb1134a044b785a0576dd96d909d26"
+      },
+      "delta": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1/accounting-source-delta.patch",
+        "sha256": "245853e28f8e415ce2090a253776a347d35fd8408a7108bcd77b7243af837fa6"
+      },
+      "existing_work_profile": {
+        "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/openclaw-host-config-v1/work.json",
+        "sha256": "77c3dfb2a122acf5e1908406d9600791c9645d526e39d03795c49470542f64e8"
+      },
+      "native_driver_patch": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1/future-native-driver-integration.patch",
+        "sha256": "29dc4d4af445e5f46686b26201fa70c68aa53ac4892397ed10622b4be5d355fd"
+      },
+      "native_driver_patch_applied": false,
+      "original_source": {
+        "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+        "sha256": "bbd000673722bfcfe2aad9a9ce7435350d36724ab773efa999674adbf659c89b"
+      },
+      "summary": "Explicit immutable main-work role selects the existing Astra/medium profile and enforces it both at native turn start and physical model request preparation. Main-thread identity is preserved; the existing helper/work accounting bucket, parent grant, budgets and stop handling remain."
+    },
+    "ordinary_resource_catalog": {
+      "actual_catalog_mount_or_workspace_binding_applied": false,
+      "candidate": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1/resource-catalog.init-page.cjs",
+        "sha256": "3e221b6d7a1c292d10d406f6e1a562278e6f70a375921f75b5b336ac31e0aa87"
+      },
+      "existing_interface": "browser.initPage -> module default({page}) -> page.setContent",
+      "native_browser_readability_proven": false,
+      "native_source": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-followup-eva2-xd02-20261008-v3/mcp-image-source/7aa0bf8b6b69d32065912e3d8f7e3c18c62de4d668f770a8e039811d3cf9c6a0-coreBundle.js",
+        "sha256": "7aa0bf8b6b69d32065912e3d8f7e3c18c62de4d668f770a8e039811d3cf9c6a0"
+      },
+      "new_server_or_fixture_type": false,
+      "original_question_or_oracle_used": false,
+      "source_lines": [
+        64717,
+        64719,
+        64720,
+        72313,
+        72315,
+        73537
+      ],
+      "summary": "A small local init-page candidate displays a non-secret catalog on an initially blank ordinary page and preserves an existing nonblank page. The same catalog file is intended for the OpenClaw ordinary workspace."
+    }
+  },
+  "status": "source_candidate_pure_checked_not_applied",
+  "unchanged_dependency": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1/ev003_node_calendar.mjs",
+    "sha256": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602"
+  },
+  "verification": {
+    "check_source": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1/check-pure-source.private.mjs",
+      "sha256": "3d0e9b89f34885b31d2d6f2cbaa862c91d169df99f1e98d16ea146decb6da249"
+    },
+    "failed": 0,
+    "full_native_readiness_proven": false,
+    "passed": 20,
+    "pure_source_check": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1/pure-source-check.private.json",
+      "sha256": "b34056d8173e2fd01159e294f58c1305d3284b1f2804eee0b5a82bd6217d3fb2"
+    },
+    "runtime_or_ledger_dispatches": 0,
+    "scope": [
+      "Both OpenClaw model-selection seams and existing work profile agree on Astra/medium.",
+      "Default contact behavior and existing original family bounds remain.",
+      "Unknown or unbound role/operation inputs are refused.",
+      "The documented callback renders full synthetic origins into a fake page, preserves nonblank pages, and rejects credential/query/extra-field catalog input."
+    ],
+    "synthetic_catalog_and_fake_page_only": true
+  }
+}

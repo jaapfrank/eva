@@ -1,0 +1,101 @@
+{
+  "contract": "Eva2RetainedWorkerInputDiagnosis/v1",
+  "checkedAt": "2026-10-08T22:27:45.507223+00:00",
+  "taskId": "P2.1",
+  "status": "closed_question_handoff_intact_resource_advertisement_asymmetric_cause_unknown",
+  "sourceBaseCommit": "fed7bc05c7eff45cc9c25f0d02179cd9b888b0d6",
+  "retainedCaseId": "EV003-XD-04",
+  "scope": "Read-only retained technical trace and public source; no new trial or runtime execution.",
+  "detailedReceiptSha256": "c69dd7d311cc6b7cf306154a50a6cc33f422a492ab08455c4b99306395726fbf",
+  "review": "eva2/reviews/p2-retained-worker-input-diagnosis-review-20261009.json",
+  "reviewSha256": "1a3dfaa78c3961327669d0650404472e5ad4a88f1b3648c6ca16c503beb4aaee",
+  "questionHandoff": {
+    "originalQuestionSha256": "e4a90b2e219bb1612078ddf33d6b3fa5c69f5db42142d1933dbb8aeb829813af",
+    "reviewedForegroundRequests": 1,
+    "reviewedDigitalWorkerRequests": 6,
+    "originalField": "$.input[0].content",
+    "completeOriginalInEveryReviewedRequest": true,
+    "separateAcceptedTaskField": "$.instructions",
+    "summaryOnly": false,
+    "titleOnly": false
+  },
+  "resourceAdvertisement": {
+    "eva2": {
+      "allowedOrigins": 3,
+      "literalTaskOriginsInReviewedRequests": 0,
+      "nativeBrowserToolCount": 24,
+      "actualStartTab": "about:blank",
+      "ordinaryRunCodeOffered": true,
+      "ordinaryContextCookieApiSourceBound": true,
+      "cookieDiscoveryActuallyPerformed": false,
+      "cookieFieldsProvideCompleteOrigin": false,
+      "hostConfigurationProvidesCompleteOrigins": true
+    },
+    "openclaw": {
+      "sameAllowedOriginSet": true,
+      "ordinaryCarrier": "workspace/TOOLS.md",
+      "advertisedOrigins": 3,
+      "firstModelRequestWithOrigins": 19,
+      "modelRequestsWithOrigins": 15
+    },
+    "directAdvertisementAsymmetric": true,
+    "ordinaryDiscoveryImpossibleProven": false,
+    "originalEligibilityOrScoresChanged": false
+  },
+  "findings": {
+    "causal_claim_limit": "Capture shows absence and carrier differences, not that missing literal origin advertisement caused failure, that discovery was impossible, or that a source change would improve behavior.",
+    "causal_product_fault_classification": "UNKNOWN_FROM_RETAINED_CAPTURE",
+    "closed_scores_eligibility_and_reviews_reassessed": false,
+    "complete_non_secret_task_origin_discovery_from_cookie_domains_alone_proven": false,
+    "complete_question_arrival_proven": true,
+    "direct_resource_advertisement_asymmetric": true,
+    "foreground_to_worker_original_question_loss_proven": false,
+    "new_product_or_adapter_correction_recommended": false,
+    "ordinary_discovery_access_not_shown_impossible": true,
+    "original_direct_origin_text_requirement_added": false,
+    "precise_boundary": "Task origin values existed in the browser allowedOrigins/cookie/hosts carrier but were not represented in the captured model inventory or task context; the foreground-to-digital handoff retained the complete original question. OpenClaw separately discovered an explicit ordinary workspace resource file.",
+    "resource_carriers_differed_between_adapters": true,
+    "task_origin_literals_were_not_in_eva2_foreground_or_digital_request_context": true,
+    "task_origins_preserved_in_admitted_host_browser_configuration": true
+  },
+  "publicSourceReadback": [
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "46be2ec7e7093852746b8eb649d2dd9c18e35b56e8b866c72ba8def1ebc0f362"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+      "sha256": "218ae582c67447672539310cbd7856792af6dd2af05d44afc29a4477e5877191"
+    },
+    {
+      "path": "eva2/src/eva/providers/mcp_owner_authority.py",
+      "sha256": "03c04e816f9f1c31b7b1bbf5cd1e6d7ece7aabcc806916973c86eed6671e64a3"
+    },
+    {
+      "path": "eva2/src/eva/providers/mcp_registration.py",
+      "sha256": "fde75e8d2b9ac567d9004af4c30811eb944de6d70bba366b12bdb0df27edba19"
+    }
+  ],
+  "newRuntimeModelCalls": 0,
+  "newRuntimeToolOrFixtureCalls": 0,
+  "productionSourceChanged": false,
+  "runtimeInstalledOrReplaced": false,
+  "dockerDesktopTouched": false,
+  "newProductFunction": false,
+  "developmentCredits": null,
+  "preservedClosedArtifacts": [
+    {
+      "sha256": "38e08768febf45f9bc0542949e649d430f6227f0593b5279e2efb39c4cb37bcf"
+    },
+    {
+      "sha256": "56cf49653fb52cc3387c9029e30310a7e783028510b47f9798bd0b1737d95c38"
+    },
+    {
+      "sha256": "8dff986d1e51c159b2b29aebe4e8de6518541c31cc16e98c7ce85b59b2524462"
+    },
+    {
+      "sha256": "ade3c8d0fd116074db6747b2a3edbb7bc577d332912a85db1397109a3158af59"
+    }
+  ],
+  "nextAction": "Separately bind only a model-free future ordinary resource carrier and actual OpenClaw Astra/medium work profile. Do not rewrite eligibility, repeat XD04, or patch production Eva on an unproven handoff diagnosis."
+}

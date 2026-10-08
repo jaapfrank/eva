@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-08T22:12:09.736703+00:00",
+        "checkedAt": "2026-10-08T22:37:30.392230+00:00",
         "deliveries": [
           {
             "title": "XD04 uitgevoerd; modelrolafwijking en datumstrijd expliciet",
@@ -4339,19 +4339,19 @@
         ],
         "now": {
           "taskId": "P2.1",
-          "title": "P2.1 · XD04 gesloten; geen geldige eindvergelijking",
-          "detail": "Eva2 maakte geen bedoelde actie af. OpenClaw vond een oorspronkelijke datumstrijd, maar werkte via Sol/none waar Astra/medium vereist is. Resultaten/verbruik behouden; geen winnaar of nieuwe functie.",
+          "title": "P2.1 · Voorbereidingsbron beoordeeld",
+          "detail": "De volledige vraag bereikt de werker. Eén kandidaat voor echte Astra/medium-werkrollen en een gewone gedeelde bronlijst is onafhankelijk beoordeeld;20broncontroles geslaagd. Niet toegepast,0nieuwe Eva-modelaanvragen,geen extra afgeronde functie.",
           "state": "in_progress",
           "activeExecution": false,
-          "source": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json",
+          "source": "eva2/evidence/product/p2-future-resource-offer-work-role-source-20261009.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "review": "eva2/reviews/p2-original-xd04-eva2-openclaw-final-review-20261008.json"
+          "review": "eva2/reviews/p2-future-resource-offer-work-role-source-review-20261009.json"
         },
         "next": {
-          "title": "Concrete werker-/bronbinding herstellen",
-          "detail": "Controleer gericht of de volledige werkvraag en toegestane taakbestemmingen bij de werker komen; transportadressen mogen die niet vervangen. Vóór een volgende vergelijking moet de bestaande OpenClaw-werkmodelbinding aan Astra/medium voldoen. Geen nieuwe proef of gesloten herhaling door deze publicatie.",
+          "title": "P2.1 · De beoordeelde voorbereiding aansluiten",
+          "detail": "Hergebruik de beoordeelde twee bronbestanden; bind catalogus met identieke niet-geheime bytes aan readonly Eva-initPage en gewone OpenClaw-workspace, en pas de beoordeelde werkprofiel/rol-driverovergang toe in één afzonderlijk concrete toekomstige P2-voorbereiding. Bind actor/toegang/UID/sourcepolicy vóór originele input. Geen XD04-herhaling of automatisch nieuwe proef door deze source-GO.",
           "taskId": "P2.1",
-          "source": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json",
+          "source": "eva2/evidence/product/p2-future-resource-offer-work-role-source-20261009.json",
           "state": "Gedeeltelijk onderzocht; geen nieuwe uitvoering geselecteerd"
         },
         "ownerAction": {
@@ -4364,7 +4364,7 @@
           "expected": "Behoud de menselijke oordelen apart; deze vaste taak is eerlijk vergeleken."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-08T22:12:09.736703+00:00"
+        "reviewedAt": "2026-10-08T22:37:30.392230+00:00"
       },
       "reviewedAt": "2026-10-08T16:20:15.285018+00:00",
       "checkedAt": "2026-10-08T17:01:13.650791+00:00",
@@ -23830,7 +23830,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Controleer gericht of de volledige werkvraag en toegestane taakbestemmingen bij de werker komen; transportadressen mogen die niet vervangen. Vóór een volgende vergelijking moet de bestaande OpenClaw-werkmodelbinding aan Astra/medium voldoen. Geen nieuwe proef of gesloten herhaling door deze publicatie.",
+              "nextAction": "Hergebruik de beoordeelde twee bronbestanden; bind catalogus met identieke niet-geheime bytes aan readonly Eva-initPage en gewone OpenClaw-workspace, en pas de beoordeelde werkprofiel/rol-driverovergang toe in één afzonderlijk concrete toekomstige P2-voorbereiding. Bind actor/toegang/UID/sourcepolicy vóór originele input. Geen XD04-herhaling of automatisch nieuwe proef door deze source-GO.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -23839,7 +23839,7 @@
                 "blocksIndependentWork": false,
                 "source": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json"
               },
-              "checkedAt": "2026-10-08T22:12:09.736703+00:00",
+              "checkedAt": "2026-10-08T22:37:30.392230+00:00",
               "assignment": {
                 "baseCommit": "6d0d0c305743b48b2b6e8c0383845fdab8300cfc",
                 "owner": "/root",
@@ -23853,7 +23853,7 @@
                 "gap": "Eva2 voltooide geen bedoelde actie en bezocht geen oorspronkelijke dienst. OpenClaw las bronnen maar gebruikte Sol/none voor inhoudelijk werk; oorspronkelijke datumstrijd belemmert effectscoreduiding.",
                 "finish": "Eén oorspronkelijke XD04-opdracht via Eva2 en OpenClaw uitvoeren, onafhankelijk beoordelen, fysiek sluiten en eerlijk publiceren. P2.1 als geheel blijft open.",
                 "estimate": "Werkelijk42completeSDK/1.381.254tokens/32tools. Eva2 9/72.040; OpenClaw33/1.309.214. Ontwikkelcredits en geld onbekend.",
-                "currentAction": "XD04 gesloten en onafhankelijk gekwalificeerd gepubliceerd; geen rolconform gematcht paar en geen nieuwe productfunctie.",
+                "currentAction": "Vraagoverdracht-diagnose en één toekomstige bronkandidaat onafhankelijk afgerond: werkmodelrol en gewone broncatalogus.20purechecks;0runtimecalls. Kandidaat niet toegepast; geen productpatch, nieuwe invoer of nieuwe afgeronde functie.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "previousTurnClassification": "progress",
@@ -24025,7 +24025,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Controleer gericht of de volledige werkvraag en toegestane taakbestemmingen bij de werker komen; transportadressen mogen die niet vervangen. Vóór een volgende vergelijking moet de bestaande OpenClaw-werkmodelbinding aan Astra/medium voldoen. Geen nieuwe proef of gesloten herhaling door deze publicatie.",
+                "nextAction": "Hergebruik de beoordeelde twee bronbestanden; bind catalogus met identieke niet-geheime bytes aan readonly Eva-initPage en gewone OpenClaw-workspace, en pas de beoordeelde werkprofiel/rol-driverovergang toe in één afzonderlijk concrete toekomstige P2-voorbereiding. Bind actor/toegang/UID/sourcepolicy vóór originele input. Geen XD04-herhaling of automatisch nieuwe proef door deze source-GO.",
                 "actualUsage": {
                   "scope": "One original current Eva2 CM05 development comparison, not household runtime",
                   "providerAttempts": 13,
@@ -24094,7 +24094,7 @@
                   "developmentCredits": null,
                   "originalCasesRepeated": false
                 },
-                "diagnosisEvidence": "eva2/evidence/product/p2-xd-rejected-diagnostic-20261005.json",
+                "diagnosisEvidence": "eva2/evidence/product/p2-retained-worker-input-diagnosis-20261009.json",
                 "changeDesign": {
                   "preserve": "Bestaande MCP-uitvoering, actor-/mandaatgrenzen, status rejected en geen automatische herhaling van onbekende effecten.",
                   "gap": "Teruggekomen toolfouttekst verdwijnt vóór duurzame gebeurtenis en modelreceipt.",
@@ -24333,14 +24333,16 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "outcome": "installed_metadata_correction_not_new_product_or_comparison_completion",
-                  "source": "eva2/evidence/product/p2-endpoint-role-installed-20261008.json",
-                  "review": "eva2/reviews/p2-endpoint-role-installed-review-20261008.json",
-                  "manualRuntimeModelCalls": 0,
-                  "newComparisonCalls": 0,
-                  "developmentCredits": null,
-                  "behavioralImprovementProven": false,
-                  "checkedAt": "2026-10-08T20:54:57.097242+00:00"
+                  "stage": "diagnosis_and_future_source_preparation_closed",
+                  "startedAt": "2026-10-08T22:19:39.659596+00:00",
+                  "baseCommit": "fed7bc05c7eff45cc9c25f0d02179cd9b888b0d6",
+                  "newTrialAdmitted": false,
+                  "providerCallsStarted": 0,
+                  "diagnosisEvidence": "eva2/evidence/product/p2-retained-worker-input-diagnosis-20261009.json",
+                  "diagnosisReview": "eva2/reviews/p2-retained-worker-input-diagnosis-review-20261009.json",
+                  "productionSourceChanged": false,
+                  "endedAt": "2026-10-08T22:37:30.392230+00:00",
+                  "pendingExecutionHandle": false
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -24462,7 +24464,7 @@
                   },
                   "nativeInferenceDuringLogin": 0
                 },
-                "currentStageBaseCommit": "45896f3f",
+                "currentStageBaseCommit": "fed7bc05c7eff45cc9c25f0d02179cd9b888b0d6",
                 "nativeRouteMetadata": [
                   {
                     "participant": "openclaw",
@@ -25457,7 +25459,7 @@
                   "sourceObserverChanged": false
                 },
                 "activeExecution": false,
-                "updatedAt": "2026-10-08T16:24:55.334007+00:00",
+                "updatedAt": "2026-10-08T22:37:30.392230+00:00",
                 "nextComparisonDecision": "Resterende oorspronkelijke dekking behouden; eerst een beslisrelevant vergelijkingspaar op bestaande routes, plus echte blinde antwoordbeoordelingen.",
                 "previousNativePreparationAtCM06Eva1": {
                   "caseId": "EV003-CM-01",
@@ -25832,75 +25834,35 @@
                 },
                 "outcome": "closed_observations_with_openclaw_work_model_protocol_mismatch_and_fixture_ambiguity",
                 "currentTechnicalPreparation": {
-                  "stage": "closed_unknown_before_input; separate_model_free_three_worker_preparing",
-                  "resourceExecutionHandle": 95056,
-                  "owner": "/root/aide_final_evaluation",
-                  "sourceReviewSha256": "a9c755685f4666052f4469bfe02a4fff90b13f02c07b2b1861c8cc8292bc3ba9",
-                  "sourceIndexSha256": "1898fe2df9c8d4f21788bcabf47c4b7412820c57b77554ac1fb4703817dcdcd7",
-                  "retainedHistoryRows": 27,
-                  "old26RowsExact": true,
-                  "closedEva2XD01RawRetained": true,
-                  "newSampleReservation": true,
-                  "originalInputReleased": false,
-                  "sampleDeadlineStarted": true,
-                  "providerCalls": 0,
-                  "startupReusedNotRepeated": true,
-                  "resourcePreparationExitCode": 0,
-                  "preparedResourcesRetained": true,
-                  "firstParentExitCode": 1,
-                  "firstParentSeconds": 5.385632,
-                  "preparationIssue": {
-                    "cause": "Root launcher confused fixture receipt root with PostgreSQL/runtime data root.",
-                    "correction": "Use D/resource-environment and separate corrected parent/output paths; retain existing prepared services/database/authority.",
-                    "correctedLauncherSha256": "2e7604f6b76e69c658effec54b39d264a863013cb6b83e618e50f8589d0e7a5f",
-                    "correctedInspectSha256": "55c796482c8c1ccbdf5a65d3db5a8e111f306a33f88000e900b4086a2cf04d99",
-                    "provenanceSha256": "68b301066cc0d2ea5f986031c7424278c650649361bbc3019a0dbc78299a5fe4",
-                    "schemaResourcesReinitialized": false,
-                    "oldFailedOutputsPreserved": true
-                  },
-                  "parentExecutionHandle": 30503,
-                  "parentPID": 573586,
-                  "parentStarttime": "19412008",
-                  "actualReadySha256": "7d0058d3f5a9edc4e9770ee9362ed7595bb158ab2749159d6f7a13c2a782530f",
-                  "correctionReviewSha256": "627fe67ea352811072cabbac778bfdb66eb617c3028c3f1b0b6dd555e2a55d7d",
-                  "accessOnlyLeasesCover840Seconds": true,
-                  "actualNativeUIDMountReadable": true,
-                  "inputReviewSha256": "117d38b6a80c4b50be7b500ce9fd47f40040d22f1a6d5efbe9926e99319087db",
-                  "finalAdmissionSha256": "754542ada06e7450501a2d4713c889ccfe7416f7f24866e29d23b3c0ffb19a0b",
-                  "exclusiveReleaseSha256": "77e27aaee3255fff80c32ce2750f11ad56cda61e68d27bfa32156de75356933c",
-                  "releaseObservedAt": "2026-10-08T12:40:49.197708+00:00",
-                  "originalInputAdmitted": true,
-                  "firstReleasedParentTerminal": true,
-                  "toolCalls": 0,
-                  "historicalUnknownReset": false,
-                  "sameOriginalDeadlineRequired": true,
-                  "readaccessIssue": "The root-owned600 capture code file was unreadable to nativeUID1000. Byte-identical readable staging and exact mounted-path readability are being corrected.",
-                  "preparedDataRetained": true,
-                  "ownContainersClosed": true,
-                  "sourceContinuationReviewSha256": "b7bbaeced96e463376bfff467a9fef173dd58db18b976ac1c15a34801c10b818",
-                  "inputContinuationReviewSha256": "59943959ce1ab2405d0942e32603f072075a43f701732ae8cf2c74755c29d6c1",
-                  "restoredResourceBindingSha256": "d8525bd9456ac9478c91c6d0dde5632340c80f163bc9333c06e5145ef1bae953",
-                  "finalContinuationAdmissionSha256": "7e9760395c904bf1640642609f2b336782f4b1ed3010e57485b2f4d1128ffd99",
-                  "exclusiveContinuationReleaseSha256": "1916d3f64a1885341c4bf736ce142907ee7e795acb62691ea23b4f948e14f4cd",
-                  "originalDeadlineUnchanged": true,
-                  "oldFailedOutputsPreserved": true,
-                  "originalDeadlineExpired": true,
-                  "sourceOnlyFrozenMountCorrection": true,
-                  "previousCanonicalMountProofInsufficient": true,
-                  "fullThreeWorkerStartNotYetProven": true,
-                  "result": "eva2/evidence/product/p2-eva2-xd02-owner-exception-result-20261008.json",
-                  "review": "eva2/reviews/p2-eva2-xd02-owner-exception-final-review-20261008.json"
+                  "status": "source_candidate_reviewed_not_applied",
+                  "evidence": "eva2/evidence/product/p2-future-resource-offer-work-role-source-20261009.json",
+                  "review": "eva2/reviews/p2-future-resource-offer-work-role-source-review-20261009.json",
+                  "publicCandidateSha256": "d62f9b7a9ed5a4bce2a84ca6ed2641cf7c98f8309c9ad3e1ebf6dd2bc6567163",
+                  "reviewSha256": "f18101c48432c315ac04afff4fae6ad4e6d4d2104aec1af9918ab2addf6ff9ee",
+                  "sourceIndexSha256": "b4bf6bfa195badf57cd5f5b83b6ffa74bc998cd13711b68a6844a46c256b9187",
+                  "privateStage": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1",
+                  "ordinaryResourceMountOrWorkspaceApplied": false,
+                  "nativeDriverPatchApplied": false,
+                  "futureExecutionAdmitted": false,
+                  "newCaseSelected": false,
+                  "sourceChecksPassed": 20,
+                  "runtimeProviderCalls": 0,
+                  "newProductFunction": false
                 },
                 "concreteNextAction": "Controleer gericht of de volledige werkvraag en toegestane taakbestemmingen bij de werker komen; transportadressen mogen die niet vervangen. Vóór een volgende vergelijking moet de bestaande OpenClaw-werkmodelbinding aan Astra/medium voldoen. Geen nieuwe proef of gesloten herhaling door deze publicatie.",
                 "currentGoalTurnOutcome": {
                   "classification": "progress",
-                  "evidence": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json",
-                  "review": "eva2/reviews/p2-original-xd04-eva2-openclaw-final-review-20261008.json",
-                  "actualProviderCalls": 42,
-                  "totalTokens": 1381254,
-                  "toolDispatches": 32,
+                  "evidence": "eva2/evidence/product/p2-retained-worker-input-diagnosis-20261009.json",
+                  "review": "eva2/reviews/p2-retained-worker-input-diagnosis-review-20261009.json",
+                  "sourcePreparationEvidence": "eva2/evidence/product/p2-future-resource-offer-work-role-source-20261009.json",
+                  "sourcePreparationReview": "eva2/reviews/p2-future-resource-offer-work-role-source-review-20261009.json",
+                  "actualProviderCalls": 0,
+                  "runtimeToolCalls": 0,
+                  "pureSourceChecksPassed": 20,
                   "newProductFunction": false,
-                  "roleMatchedPairEligible": false,
+                  "productionSourceChanged": false,
+                  "nativeInstalled": false,
+                  "newTrialAdmitted": false,
                   "pendingExecutionHandle": false,
                   "creditCost": null
                 },
@@ -25926,7 +25888,7 @@
                   }
                 },
                 "ownerContinuationEvidence": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json",
-                "currentSourcePreparationReview": "/home/administrator/project/.eva2-artifacts/ev003-eva2-original-cm05-preparation-20261008-v1/source-resource-review.private.json",
+                "currentSourcePreparationReview": "eva2/reviews/p2-future-resource-offer-work-role-source-review-20261009.json",
                 "currentProspectivePreparationIssue": {
                   "state": "closed_evaluator_failures_scoped_corrections_reviewed",
                   "description": "Getypeerde ownerbinding gerepareerd; daadwerkelijke oorspronkelijke Eva2-invoer is niet bereikt. Launcher-budgetbinding en identitymounts faalden vooraf. De identity-loader is nadien werkelijk modelvrij gecontroleerd; volledige factory/lifespan nog onbeproefd.",
@@ -26084,7 +26046,7 @@
                   "retainedHistoryRows": 34
                 },
                 "previousGoalTurnClassification": "progress",
-                "previousGoalTurnEvidence": "eva2/evidence/product/p2-endpoint-role-installed-20261008.json",
+                "previousGoalTurnEvidence": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json",
                 "historicalCurrentFieldsBeforeCurrentEva2CM05": {
                   "actualUsage": {
                     "scope": "One matching Eva2 XD02 development comparison, not household runtime",
@@ -26135,7 +26097,7 @@
                 "historicalBaseCommitBeforeXD03": "4dc91638764da2220f11e0eb22669b64a7211d22",
                 "reviewSha256": "8dff986d1e51c159b2b29aebe4e8de6518541c31cc16e98c7ce85b59b2524462"
               },
-              "remaining": "P2.1 blijft open: Eva2-XD03 is geldige niet-afronding; OpenClaw-XD03 heeft geen native antwoordbewijs door de sessiekoppelfout. Overige oorspronkelijke dekking, CM07-toegang en twee menselijke beoordelingen blijven zichtbaar. Geen algemene winnaar of impliciete herhaling.",
+              "remaining": "P2.1 open: gericht uitvoeringstekort onderzoeken; XD04 gesloten met OpenClaw-modelrolafwijking en oorspronkelijke bronambiguïteit. Overige oorspronkelijke dekking, CM07-toegang en twee menselijke beoordelingen blijven open.",
               "latestEvidence": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json",
               "executionBlocker": null,
               "assessmentBlocker": "Twee echte onafhankelijke CM02/gespreksbeoordelingen en gezinsacceptatie blijven open.",
