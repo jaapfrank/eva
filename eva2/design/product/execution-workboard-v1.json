@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-08T15:45:53.176708+00:00",
+  "lastUpdated": "2026-10-08T16:24:55.334007+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -140,7 +140,7 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "39/48 bestaande kleine taken afgerond. L3.4–L3.7 geïnstalleerd. Matching XD02 nu werkelijk vergeleken: OpenClaw maakt de taak af; Eva2/Hermes niet. Resterende oorspronkelijke vergelijking en menselijke eindbeoordeling open; spraak geparkeerd.",
+      "summary": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. CM08: Hermes/Eva1/OpenClaw missen latere ervaring. XD02: OpenClaw maakt de taak af; Eva2/Hermes niet. Geen algemene Eva2-voorsprong bewezen. Resterende vergelijking/menselijk oordeel open; spraak geparkeerd.",
       "nextOutcomes": [
         {
           "title": "Opgeleverd · Taken afmaken en terugmelden",
@@ -1016,8 +1016,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-08T15:45:53.176708+00:00",
+        "checkedAt": "2026-10-08T16:24:55.334007+00:00",
         "deliveries": [
+          {
+            "title": "P2.1 · Hermes met Eva1/OpenClaw op latere herinnering vergeleken",
+            "date": "2026-10-08",
+            "state": "investigated",
+            "taskId": "P2.1",
+            "productFunctionCompleted": false,
+            "result": "Alle drie:latere ervaring niet teruggehaald;2/3 feitelijk,1/3 vaste voorwaarden,2/2 bron-/tracecontroles. Geen geheugenwinnaar. Eva2 niet gematcht in deze taak.",
+            "remaining": "Hermes-CM08 en matching XD02 zijn gesloten. Overige oorspronkelijke matching/dekking en twee echte menselijke beoordelingen blijven open. Geen nieuwe uitvoering geselecteerd; geen herhaling of brede matrix.",
+            "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+            "review": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+            "usage": "Hermes:7modelaanvragen/18.001tokens/2tools/21,43s. Eigen resources gesloten,30oude rijen behouden. Credits/geld onbekend; geen efficiëntieclaim."
+          },
           {
             "title": "P2.1 · Werkelijke Eva2/OpenClaw/Hermes-vergelijking afgerond voor één taak",
             "date": "2026-10-08",
@@ -4266,19 +4278,19 @@
           }
         ],
         "now": {
-          "title": "P2.1 · Vergelijking afgesloten: Eva2 maakt deze taak niet af",
-          "detail": "OpenClaw voldoet aan3/3vaste voorwaarden en voert beide wijzigingen uit. Eva2 en Hermes1/3, geen beoogde wijzigingen. Eva2 onderzocht beschikbare toegang onvoldoende. Onafhankelijk beoordeeld; algemene/menselijke kwaliteit niet bewezen.",
+          "title": "P2.1 · Hermes-geheugenvergelijking gesloten",
+          "detail": "Alle drie:latere ervaring niet teruggehaald;2/3 feitelijk,1/3 vaste voorwaarden,2/2 bron-/tracecontroles. Geen geheugenwinnaar. Eva2 niet gematcht in deze taak.",
           "taskId": "P2.1",
           "state": "investigated",
           "activeExecution": false,
-          "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
-          "doneWhen": "Deze matching XD02-uitvoering met vaste criteria, volledige uitlezing en verbruik is gesloten. Dit voltooit niet alle oorspronkelijke P2.1-dekking."
+          "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+          "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar."
         },
         "next": {
-          "title": "Nog open · oorspronkelijke vergelijkingsdekking en menselijk oordeel",
-          "detail": "Matching XD02 is klaar; geen automatische herhaling. CM07, matching Eva2-CM05/06/08 en latere oorspronkelijke taken hebben ontbrekende dekking. Twee onafhankelijke CM02/gespreksbeoordelingen ontbreken. Een volgende concrete uitvoering wordt vooraf gebonden; geen nieuwe brede matrix.",
+          "title": "Nog open · oorspronkelijke dekking en echt menselijk oordeel",
+          "detail": "Hermes-CM08 en matching XD02 zijn gesloten. Overige oorspronkelijke matching/dekking en twee echte menselijke beoordelingen blijven open. Geen nieuwe uitvoering geselecteerd; geen herhaling of brede matrix.",
           "taskId": "P2.1",
-          "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
+          "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
           "state": "Vergelijking gedeeltelijk afgerond"
         },
         "ownerAction": {
@@ -4291,10 +4303,10 @@
           "expected": "Behoud de menselijke oordelen apart; deze vaste taak is eerlijk vergeleken."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-08T15:45:53.176708+00:00"
+        "reviewedAt": "2026-10-08T16:20:15.285018+00:00"
       },
-      "reviewedAt": "2026-10-08T15:45:53.176708+00:00",
-      "checkedAt": "2026-10-08T15:45:53.176708+00:00",
+      "reviewedAt": "2026-10-08T16:20:15.285018+00:00",
+      "checkedAt": "2026-10-08T16:24:55.334007+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -4359,14 +4371,14 @@
       "comparisonResults": {
         "contract": "EvaPublishedComparisonResults/v1",
         "taskId": "P2.2",
-        "publishedAt": "2026-10-08T15:45:53.176708+00:00",
+        "publishedAt": "2026-10-08T16:24:55.334007+00:00",
         "originalDoneWhen": "Resultaten op kwaliteit, snelheid, zelfstandigheid en verbruik samen tonen; geen onbewezen algemene voorsprong.",
-        "status": "matched_xd02_closed_valid_eva2_product_noncompletion",
+        "status": "original_cm08_three_participants_closed_noncompletion",
         "fullComparisonCompleted": false,
         "overallSuperiorityProven": false,
         "overallWinner": null,
-        "headline": "XD02 afgesloten: OpenClaw maakt de vaste opdracht af; Eva2 en Hermes niet.",
-        "scope": "Dezelfde oorspronkelijke XD02-taak, dataset en vaste criteria; verschillende native modelrollen, contextaanbieding en meetgrenzen expliciet. Eén matching Eva2-uitvoering naast behouden comparators, geen herhaling.",
+        "headline": "CM08 afgesloten: Hermes, Eva1 en OpenClaw halen de eerdere ervaring later niet terug.",
+        "scope": "Eén oorspronkelijke privégeheugentaak met dezelfde invoer en criteria. Nieuwe Hermes-uitvoering naast behouden Eva1/OpenClaw; geen herhaling. Eva2 niet gematcht in deze taak.",
         "candidateBinding": {
           "path": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_postrestart_20261006.json",
           "sha256": "1ea836919ba4c245f3d5d85e94332c39edfdd84e6fba214abb5f44ab89cbcae3"
@@ -4386,8 +4398,12 @@
               "state": "failed",
               "label": "Latere ervaring niet teruggehaald · 2/3 feitelijk"
             },
-            "meaning": "Eva1 en OpenClaw bewaren de ervaring in de historie, maar geven die niet mee in de latere modelcontext. Beide missen de volledige opdracht. De twee bron-/tracecontroles slagen; dat bewijst geen correcte herinnering.",
-            "source": "eva2/evidence/product/p2-cm08-matched-eva1-openclaw-result-20261008.json"
+            "meaning": "Eva1, OpenClaw en Hermes bewaren de ervaring in historie, maar halen die later niet terug. Alle drie missen de volledige opdracht. Bron-/tracecontroles slagen; dat bewijst geen herinnering. Eva2 is in deze taak nog niet gematcht.",
+            "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+            "hermes": {
+              "state": "failed",
+              "label": "Latere ervaring niet teruggehaald · 2/3 feitelijk"
+            }
           },
           {
             "case": "CM01 · correctie later terughalen",
@@ -4761,19 +4777,36 @@
             "sdkUsageComplete": true,
             "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
             "scope": "One matching original XD02; valid bounded product noncompletion, human quality unknown."
+          },
+          {
+            "case": "hermes:EV003-CM-08:epoch1",
+            "providerAttempts": 7,
+            "inputTokens": 17554,
+            "outputTokens": 447,
+            "totalTokens": 18001,
+            "firstContentSeconds": null,
+            "sampleSecondsIncludingMemory": 21.432074265991105,
+            "timingBoundary": "original parent monotonic start before native child launch to native child exit, before parent envelope cleanup",
+            "unplannedHumanHelp": 0,
+            "humanMinutes": 0,
+            "toolDispatches": 2,
+            "semanticScore": null,
+            "creditCost": null,
+            "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+            "scope": "One original matching CM08; full objective failed; human quality unknown."
           }
         ],
         "runtimeTotals": {
-          "providerAttempts": 191,
+          "providerAttempts": 198,
           "inputTokens": null,
           "outputTokens": null,
-          "knownInputTokensLowerBound": 2623210,
-          "knownOutputTokensLowerBound": 21002,
+          "knownInputTokensLowerBound": 2640764,
+          "knownOutputTokensLowerBound": 21449,
           "registeredUnknownUsageAttempts": 3,
           "usageComplete": false,
           "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": false,
           "actualNativeAttempts": null,
-          "registeredSampleRows": 30,
+          "registeredSampleRows": 31,
           "nativeToolDispatches": null,
           "creditCost": null,
           "codexDevelopmentCredits": null,
@@ -4781,10 +4814,10 @@
             "contactSolNone": null,
             "helperAstraMedium": null
           },
-          "scope": "Current retained cumulative authority through matching Eva2 XD02. All29historical rows unchanged;3old missing-usage attempts remain. Lower bounds, no complete monetary/Codex-credit estimate.",
-          "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
-          "authoritySha256": "dea798be74e25336469697961042e5a46331ed509585a503ac2a4270f47c7f52",
-          "knownTotalTokensLowerBound": 2644212
+          "scope": "Current retained authority through HermesCM08. All30historical rows/revisions/meta exact;3old usageUNKNOWN remain. Lower bounds, no complete monetary/Codex-credit estimate.",
+          "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+          "authoritySha256": "5f92c010cc514c88f0dc36779e038581669ef40e778d1981bd8ba0442f08dced",
+          "knownTotalTokensLowerBound": 2662213
         },
         "housemateOutcomes": [
           {
@@ -7180,208 +7213,91 @@
             "review": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
             "reviewSha256": "91bf9417bbbfc2e95518fef528e84245d1879f25b6fa8e946bbb18d9060fe399",
             "scope": "Closed eligible matching Eva2 XD02; bounded product loss, not whole P2.1 completion."
+          },
+          {
+            "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+            "sha256": "873e57207c60e2cdd91d2557f3651eab0070cd63b030e6315e9f40e167431ddb",
+            "review": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+            "reviewSha256": "7fa7dfe1de276f0d86e1ea456cb9b92c66b259bc94f55e340c659c169ac195ca",
+            "classification": "valid_bounded_original_task_noncompletion"
           }
         ],
         "controlledProviderCallsForPublication": 0,
         "codexDevelopmentCredits": null,
         "followup": {
-          "headline": "XD02 afgesloten: OpenClaw maakt de vaste opdracht af; Eva2 en Hermes niet.",
-          "scope": "Dezelfde oorspronkelijke XD02-taak, dataset en vaste criteria; verschillende native modelrollen, contextaanbieding en meetgrenzen expliciet. Eén matching Eva2-uitvoering naast behouden comparators, geen herhaling.",
+          "headline": "CM08 afgesloten: Hermes, Eva1 en OpenClaw halen de eerdere ervaring later niet terug.",
+          "scope": "Eén oorspronkelijke privégeheugentaak met dezelfde invoer en criteria. Nieuwe Hermes-uitvoering naast behouden Eva1/OpenClaw; geen herhaling. Eva2 niet gematcht in deze taak.",
           "rows": [
             {
-              "name": "OpenClaw · XD02",
-              "quality": {
-                "state": "observed",
-                "label": "Vaste voorwaarden 3/3 · menselijk onbekend"
-              },
-              "nativeReplies": "1 / 1",
-              "acceptedAnswers": null,
-              "execution": "Beide toegelaten wijzigingen uitgevoerd en teruggelezen; privacy behouden. Onafhankelijke readbacks 2/2.",
-              "transportMs": [],
-              "providerAttemptsRegistered": 15,
-              "observedToolDispatches": 10,
-              "completeInputTokens": 529585,
-              "completeOutputTokens": 1623
-            },
-            {
-              "name": "Hermes · XD02",
+              "name": "Eva1 · CM08",
               "quality": {
                 "state": "failed",
-                "label": "Vaste voorwaarden 1/3 · menselijk onbekend"
+                "label": "Latere ervaring ontbreekt · vaste voorwaarden 1/3 · menselijk onbekend"
               },
-              "nativeReplies": "1 / 1",
+              "nativeReplies": "3 / 3",
               "acceptedAnswers": null,
-              "execution": "Beide diensten ongewijzigd; extra hulp gevraagd ondanks geldige toegang en aangeboden broninformatie. Onafhankelijke readbacks 1/2.",
+              "execution": "Ervaring bewaard in historie, maar niet gebruikt bij de vraag na tien gesimuleerde dagen. Bron-/tracecontroles2/2; volledige taak niet afgerond.",
               "transportMs": [],
-              "providerAttemptsRegistered": 9,
-              "observedToolDispatches": 7,
-              "completeInputTokens": 99955,
-              "completeOutputTokens": 1072
+              "providerAttemptsRegistered": 6,
+              "observedToolDispatches": 6,
+              "completeInputTokens": 35582,
+              "completeOutputTokens": 1597,
+              "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json"
             },
             {
-              "name": "Eva2 · matching XD02",
+              "name": "OpenClaw · CM08",
               "quality": {
                 "state": "failed",
-                "label": "Vaste voorwaarden 1/3 · menselijk onbekend"
+                "label": "Latere ervaring ontbreekt · vaste voorwaarden 1/3 · menselijk onbekend"
               },
-              "nativeReplies": "1 / 1",
+              "nativeReplies": "3 / 3",
               "acceptedAnswers": null,
-              "execution": "Beschikbare gewone toegang onvoldoende onderzocht; beide diensten ongewijzigd. Toegangshulp gevraagd, geen hulp gegeven. Onafhankelijke readbacks1/2; privacy behouden. Geldig productverlies, geen fout in de proefroute.",
+              "execution": "Ervaring bewaard in historie, maar niet gebruikt bij de vraag na tien gesimuleerde dagen. Bron-/tracecontroles2/2; volledige taak niet afgerond.",
               "transportMs": [],
-              "providerAttemptsRegistered": 8,
-              "observedToolDispatches": 5,
-              "completeInputTokens": 55743,
-              "completeOutputTokens": 1264,
-              "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json"
+              "providerAttemptsRegistered": 11,
+              "observedToolDispatches": 8,
+              "completeInputTokens": 265298,
+              "completeOutputTokens": 1097,
+              "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json"
             },
             {
-              "name": "Eva2 · eerdere gesloten XD02",
+              "name": "Hermes · CM08",
               "quality": {
-                "state": "unknown",
-                "label": "Geen antwoord · fout in onze proefroute"
+                "state": "failed",
+                "label": "Latere ervaring ontbreekt · vaste voorwaarden 1/3 · menselijk onbekend"
               },
-              "nativeReplies": "0 / 1",
-              "execution": "Eerdere proef sloot vóór oorspronkelijke taakinput door onze mountfouten; UNKNOWN en verlopen deadline behouden. Drie-workeropstart is daarna afzonderlijk modelvrij geslaagd; dat verandert deze oude uitslag niet.",
-              "transportMs": [],
-              "providerAttemptsRegistered": 0,
-              "observedToolDispatches": 0,
-              "completeInputTokens": null,
-              "completeOutputTokens": null,
-              "source": "eva2/evidence/product/p2-eva2-xd02-owner-exception-result-20261008.json"
-            },
-            {
-              "name": "Eva2 · gesloten matching vervolg",
-              "quality": {
-                "state": "unknown",
-                "label": "Geen taakantwoord · fout in onze resultaatlezer"
-              },
-              "nativeReplies": "0 / 1",
+              "nativeReplies": "3 / 3",
               "acceptedAnswers": null,
-              "execution": "Onze onafhankelijke reader stopte door ontbrekende selectie van de bestaande databaserol vóór de oorspronkelijke opdracht werd verstuurd. Broncorrectie beoordeeld, maar niet uitgevoerd vóór afloop; resources gesloten. Geen productverlies.",
-              "providerAttemptsRegistered": 0,
-              "observedToolDispatches": 0,
-              "completeInputTokens": null,
-              "completeOutputTokens": null,
+              "execution": "Ervaring bewaard in historie, maar niet gebruikt bij de vraag na tien gesimuleerde dagen. Bron-/tracecontroles2/2; volledige taak niet afgerond.",
               "transportMs": [],
-              "source": "eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json"
+              "providerAttemptsRegistered": 7,
+              "observedToolDispatches": 2,
+              "completeInputTokens": 17554,
+              "completeOutputTokens": 447,
+              "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json"
             }
           ],
-          "usage": "Eva2:8 complete modelaanvragen/57.007tokens/5tools. OpenClaw:15/531.208/10; Hermes:9/101.027/7. Voor deze drie uitvoeringen:32aanvragen/689.242tokens/22tools. Geld- en ontwikkelcreditkosten onbekend; lagere tokens bij onafgemaakt werk zijn geen efficiëntiewinst.",
-          "humanHelpNote": "OpenClaw vroeg geen extra hulp. Hermes vroeg eenmaal om extra toegang/route; niemand gaf die extra hulp. De gewone toegang en benodigde broninformatie waren aantoonbaar beschikbaar. Twee echte menselijke beoordelingen ontbreken.",
-          "nextAction": "Hergebruik het gesloten resultaat. Maak resterende oorspronkelijke dekking en de menselijke beoordeling zichtbaar; een volgende concrete uitvoering vooraf aan de oorspronkelijke criteria en bestaand mandaat binden. Geen herhaling van XD02/startup/reader of nieuwe brede matrix.",
-          "remaining": "Deze vaste drie-deelnemersvergelijking is klaar. Volledige P2.1-dekking en twee echte onafhankelijke kwaliteitsbeoordelingen blijven open; geen volgende uitvoering door dit rapport toegelaten.",
-          "timingNote": "Eva2:176,30s vanaf nativeboot tot waarnemingsstop; eerste ontvangst9,31s, geen taakafronding. OpenClaw110,55s en Hermes48,45s vanaf vóór nativechild tot child-exit. Grenzen verschillen; geen algemene snelheidsclaim, geen winst voor niet afgerond werk.",
+          "usage": "Hermes:7 modelaanvragen/18.001 tokens/2 tools. Eva1:6/37.179/6; OpenClaw:11/266.395/8. Geld- en ontwikkelcreditkosten onbekend.",
+          "humanHelpNote": "Geen ongeplande menselijke hulp; Hermes vraagt eerder gegeven informatie opnieuw. Menselijke antwoordkwaliteit onbekend.",
+          "nextAction": "Bind de volgende werkelijk resterende oorspronkelijke vergelijking vooraf aan bestaande criteria en geldig mandaat. Hergebruik CM08/XD02; start geen gesloten proef opnieuw. Menselijke beoordeling blijft apart.",
+          "remaining": "Hermes-CM08 en matching XD02 zijn gesloten. Overige oorspronkelijke matching/dekking en twee echte menselijke beoordelingen blijven open. Geen nieuwe uitvoering geselecteerd; geen herhaling of brede matrix.",
+          "timingNote": "Hermes21,43s en OpenClaw92,41s: vóór nativechild tot exit, vóór envelopafsluiting. Eva1 28,77s: vóór workerlaunch tot laatste teruglezing vóór stoppen. Meetgrenzen verschillen; minder tokens bij niet-afronden is geen efficiëntiewinst.",
           "configurationNotes": [
-            "Contact: gpt-6-sol/none. OpenClaw: 15 contactaanvragen; Hermes: 8 contactaanvragen en 1 gpt-6-astra/medium-helper.",
-            "OpenClaw vaste voorwaarden 3/3, onafhankelijke teruglezingen 2/2; Hermes 1/3 en 1/2. Beide privacy/gegevensminimalisatie behouden.",
-            "Hermes had de exacte gewone broninformatie in 8/8 contactcontexts; beide diensten reageerden geauthenticeerd. Geen aantoonbare ontbrekende adaptertoegang.",
-            "OpenClaw echte native: 10 commandtools; 0 MCP-correlaties in deze case. Generieke typedMCP-waarneming is afzonderlijk modelvrij via pinned relay/client-ingangen gecontroleerd."
+            "Hermes:5 Sol/none-contactcalls en2 Astra/medium-helpers. Eva1/OpenClaw: alleen Sol/none-contactcalls.",
+            "Alle drie:3/3 antwoorden,2/3 feitelijk,1/3 vaste voorwaarden,2/2 trace-/broncontroles. Opgeslagen historie bewijst geen latere herinnering.",
+            "Alle drie missen de oorspronkelijke volledige taak. Geen winnaar of algemene superioriteit; menselijke/volledige kwaliteitsbeoordeling UNKNOWN."
           ],
-          "resources": "Deze Eva2-uitvoering volledig gesloten: drie nativewerkers afgehandeld, negen eigen containers/netwerk en parent/Inspect weg. Alle29oude rawrows/revisions/metadata exact behouden. Nu30rows/191modelpogingen; bekende ondergrens2.644.212tokens, drie oude onbekende pogingen in twee rows behouden. Volledig cumulatief verbruik onbekend.",
-          "automaticReviewNote": "Onafhankelijke GO voor beperkte terminalpublicatie en broncorrectie van de reader; NO_GO voor verdere uitvoering van de verlopen episode. Het ongewijzigde resultaat vermeldt de eerdere publicatiefase, de aparte finale review autoriseert publicatie.",
+          "resources": "Hermes-nativewerk/parent afgehandeld, eigen processen/container/net afwezig. Alle30oude rijen/revisions/metadata exact behouden; nu31rijen/198SDK. Drie oude onbekende verbruikspogingen blijven onbekend.",
+          "automaticReviewNote": "Onafhankelijke GO voor beperkte publicatie; geen volgende uitvoering toegelaten door deze review.",
           "evidenceBindings": [
             {
-              "path": "eva2/evidence/product/p2-xd02-openclaw-hermes-result-20261008.json",
-              "sha256": "f31b9af11c215b064fda4e05931858a7fe242859b7ee12524c4a64ddf36f86bd"
-            },
-            {
-              "path": "eva2/reviews/p2-xd02-openclaw-hermes-final-review-20261008.json",
-              "sha256": "8b731c05a003f70385bc34197d339d7a2215bbdc71823c957ec3af812bb1d09c"
-            },
-            {
-              "path": "eva2/reviews/p2-xd02-openclaw-hermes-source-review-20261008.json",
-              "sha256": "c4c25339f9faf4a14ec499616bfc3372d09ad1378d4a12dc179447790befbe80"
-            },
-            {
-              "path": "eva2/evidence/product/p2-xd02-openclaw-native-carrier-proof-20261008.json",
-              "sha256": "0dfba5e694de612b09b25530ba18551647413ab72dedb9af36b890738d0c73e9"
-            },
-            {
-              "path": "eva2/evidence/product/p2-xd02-dashboard-presentation-readback-20261008.json",
-              "sha256": "79a61de1033fb728c26db5c359f6793008d8f4b5f0ccb23ab66cdb233bf23f51"
-            },
-            {
-              "path": "eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json",
-              "sha256": "9e2c0a49f282b07eb4c1219ce58f7043e561d5a01c8129c973f4009524aedecc"
-            },
-            {
-              "path": "eva2/reviews/p2-eva2-xd02-necessary-followup-final-review-20261008.json",
-              "sha256": "c95b18d115d3a8df2e40dcb79a0a4626e1838c4d0426830cc76a43f7e708f9b0"
-            },
-            {
-              "path": "eva2/evidence/product/p2-eva2-complete-reader-proof-20261008.json",
-              "sha256": "d3374924e76d4b2dfba6eed39d5b770bce2faef9a8c3c7aff594fff0ebc2cde1"
-            },
-            {
-              "path": "eva2/reviews/p2-eva2-complete-reader-final-review-20261008.json",
-              "sha256": "3939206b7a8b80515adf65e8f138776786f4b28c7425f7a36817b11684f8e2d0"
-            },
-            {
-              "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
-              "sha256": "b86ae6d897045cd65e8c21f6377549c67d67df31f90b1dcd0577c849eb1b7a0f",
-              "review": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
-              "reviewSha256": "91bf9417bbbfc2e95518fef528e84245d1879f25b6fa8e946bbb18d9060fe399",
-              "scope": "Closed eligible matching Eva2 XD02; bounded product loss, not whole P2.1 completion."
+              "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+              "sha256": "873e57207c60e2cdd91d2557f3651eab0070cd63b030e6315e9f40e167431ddb",
+              "review": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+              "reviewSha256": "7fa7dfe1de276f0d86e1ea456cb9b92c66b259bc94f55e340c659c169ac195ca",
+              "classification": "valid_bounded_original_task_noncompletion"
             }
           ],
-          "historicalBeforeOwnerException20261008": {
-            "scope": "Eén oorspronkelijke XD02 epoch1, dezelfde twee diensten, invoer, toegang, vaste regels en modelrollen. Vaste controles verschillen; menselijke eindkwaliteit blijft onbekend. Eva2 deed niet mee.",
-            "nextAction": "Behouden geldige antwoorden door de bestaande onafhankelijke menselijke beoordelaars laten beoordelen. Geen volgende modelproef automatisch starten. Matching Eva2 blijft ontbreken door bewaarde oude onbekende usage.",
-            "remaining": "Deze geselecteerde ronde is afgerond en onafhankelijk gecontroleerd. P2.1 als geheel, algemene Eva2-voorsprong en gezinsacceptatie blijven open; potentiële ongebruikte protocolposities zijn geen automatische matrixopdracht."
-          },
-          "nativeStartupEvidence": "eva2/evidence/product/p2-eva2-native-workers-model-free-20261008.json",
-          "nativeStartupReview": "eva2/reviews/p2-eva2-native-workers-model-free-final-review-20261008.json",
-          "necessaryFollowupAuthorizationEvidence": "eva2/evidence/product/p2-eva2-xd02-necessary-followup-authorization-20261008.json",
-          "closedMatchingFollowupEvidence": "eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json",
-          "closedMatchingFollowupReview": "eva2/reviews/p2-eva2-xd02-necessary-followup-final-review-20261008.json",
-          "technicalReaderEvidence": "eva2/evidence/product/p2-eva2-complete-reader-proof-20261008.json",
-          "technicalReaderReview": "eva2/reviews/p2-eva2-complete-reader-final-review-20261008.json",
-          "currentResourcePreparation": {
-            "stage": "completed_bound_and_reviewed",
-            "active": false,
-            "nativeWorkersStarted": false,
-            "originalInputSent": false,
-            "providerCalls": 0,
-            "oldAuthorityCopyPreserved": true,
-            "networkPreserved": true,
-            "error": "Unchanged fixture token path lacked the corresponding readonly mount",
-            "credits": null,
-            "checkedAt": "2026-10-08T15:09:41.466765+00:00",
-            "resourcesReady": true,
-            "preparationFailuresRetained": true
-          },
-          "activeMatchingRun": {
-            "entry": "eva2:EV003-XD-02:epoch1:owner-followup3",
-            "stage": "closed_independently_reviewed_product_noncompletion",
-            "active": false,
-            "bootReleasedAt": "2026-10-08T15:17:35.360589Z",
-            "originalInputSent": true,
-            "oldResultsPreserved": true,
-            "counterpartRerun": false,
-            "sdkAttempts": 8,
-            "totalTokens": 57007,
-            "credits": null,
-            "checkedAt": "2026-10-08T15:28:49.272704+00:00",
-            "completedSdkAttempts": 8,
-            "inspectExit": 0,
-            "completeInputTokens": 55743,
-            "completeOutputTokens": 1264,
-            "settledToolDispatches": 5,
-            "wallSeconds": 176.304308,
-            "requestedEffectsAchieved": false,
-            "qualityJudgment": null,
-            "eligibility": "eligible",
-            "objectivePassed": 1,
-            "objectiveTotal": 3,
-            "directContextMissingIsNotExclusion": true,
-            "comparisonWinner": "OpenClaw on this fixed task completion only",
-            "resultPath": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
-            "resultSha256": "b86ae6d897045cd65e8c21f6377549c67d67df31f90b1dcd0577c849eb1b7a0f",
-            "reviewPath": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
-            "reviewSha256": "91bf9417bbbfc2e95518fef528e84245d1879f25b6fa8e946bbb18d9060fe399",
-            "publicationGo": true,
-            "newExecutionAdmitted": false
-          },
           "remainingOriginalCoverage": {
             "matchedXd02Closed": true,
             "newCaseOrReplayAdmitted": false,
@@ -7394,10 +7310,10 @@
             "humanReview": "Twee echte onafhankelijke CM02/gespreksbeoordelingen ontbreken; niet door AI invullen.",
             "historicalUnknowns": "Gesloten evaluatorfouten en drie historische verbruiksonbekende pogingen blijven staan.",
             "rule": "Ongebruikte slots zijn geen afgerond of bewezen onuitvoerbaar werk. Geen automatische brede matrix.",
-            "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json"
-          },
-          "closedMatchingResultEvidence": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
-          "closedMatchingResultReview": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json"
+            "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+            "matchedCm08HermesEva1OpenclawClosed": true,
+            "currentEva2Cm08Matched": false
+          }
         },
         "competitorAccessRestoration": {
           "source": "eva2/evidence/product/p2-competitor-device-login-20261006.json",
@@ -8231,6 +8147,221 @@
                 "sha256": "ca9a4596deb47fe14b808622bde178855e9ea3a46c07f4cc62300e5dc306e440"
               }
             ]
+          },
+          {
+            "headline": "XD02 afgesloten: OpenClaw maakt de vaste opdracht af; Eva2 en Hermes niet.",
+            "scope": "Dezelfde oorspronkelijke XD02-taak, dataset en vaste criteria; verschillende native modelrollen, contextaanbieding en meetgrenzen expliciet. Eén matching Eva2-uitvoering naast behouden comparators, geen herhaling.",
+            "rows": [
+              {
+                "name": "OpenClaw · XD02",
+                "quality": {
+                  "state": "observed",
+                  "label": "Vaste voorwaarden 3/3 · menselijk onbekend"
+                },
+                "nativeReplies": "1 / 1",
+                "acceptedAnswers": null,
+                "execution": "Beide toegelaten wijzigingen uitgevoerd en teruggelezen; privacy behouden. Onafhankelijke readbacks 2/2.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 15,
+                "observedToolDispatches": 10,
+                "completeInputTokens": 529585,
+                "completeOutputTokens": 1623
+              },
+              {
+                "name": "Hermes · XD02",
+                "quality": {
+                  "state": "failed",
+                  "label": "Vaste voorwaarden 1/3 · menselijk onbekend"
+                },
+                "nativeReplies": "1 / 1",
+                "acceptedAnswers": null,
+                "execution": "Beide diensten ongewijzigd; extra hulp gevraagd ondanks geldige toegang en aangeboden broninformatie. Onafhankelijke readbacks 1/2.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 9,
+                "observedToolDispatches": 7,
+                "completeInputTokens": 99955,
+                "completeOutputTokens": 1072
+              },
+              {
+                "name": "Eva2 · matching XD02",
+                "quality": {
+                  "state": "failed",
+                  "label": "Vaste voorwaarden 1/3 · menselijk onbekend"
+                },
+                "nativeReplies": "1 / 1",
+                "acceptedAnswers": null,
+                "execution": "Beschikbare gewone toegang onvoldoende onderzocht; beide diensten ongewijzigd. Toegangshulp gevraagd, geen hulp gegeven. Onafhankelijke readbacks1/2; privacy behouden. Geldig productverlies, geen fout in de proefroute.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 8,
+                "observedToolDispatches": 5,
+                "completeInputTokens": 55743,
+                "completeOutputTokens": 1264,
+                "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json"
+              },
+              {
+                "name": "Eva2 · eerdere gesloten XD02",
+                "quality": {
+                  "state": "unknown",
+                  "label": "Geen antwoord · fout in onze proefroute"
+                },
+                "nativeReplies": "0 / 1",
+                "execution": "Eerdere proef sloot vóór oorspronkelijke taakinput door onze mountfouten; UNKNOWN en verlopen deadline behouden. Drie-workeropstart is daarna afzonderlijk modelvrij geslaagd; dat verandert deze oude uitslag niet.",
+                "transportMs": [],
+                "providerAttemptsRegistered": 0,
+                "observedToolDispatches": 0,
+                "completeInputTokens": null,
+                "completeOutputTokens": null,
+                "source": "eva2/evidence/product/p2-eva2-xd02-owner-exception-result-20261008.json"
+              },
+              {
+                "name": "Eva2 · gesloten matching vervolg",
+                "quality": {
+                  "state": "unknown",
+                  "label": "Geen taakantwoord · fout in onze resultaatlezer"
+                },
+                "nativeReplies": "0 / 1",
+                "acceptedAnswers": null,
+                "execution": "Onze onafhankelijke reader stopte door ontbrekende selectie van de bestaande databaserol vóór de oorspronkelijke opdracht werd verstuurd. Broncorrectie beoordeeld, maar niet uitgevoerd vóór afloop; resources gesloten. Geen productverlies.",
+                "providerAttemptsRegistered": 0,
+                "observedToolDispatches": 0,
+                "completeInputTokens": null,
+                "completeOutputTokens": null,
+                "transportMs": [],
+                "source": "eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json"
+              }
+            ],
+            "usage": "Eva2:8 complete modelaanvragen/57.007tokens/5tools. OpenClaw:15/531.208/10; Hermes:9/101.027/7. Voor deze drie uitvoeringen:32aanvragen/689.242tokens/22tools. Geld- en ontwikkelcreditkosten onbekend; lagere tokens bij onafgemaakt werk zijn geen efficiëntiewinst.",
+            "humanHelpNote": "OpenClaw vroeg geen extra hulp. Hermes vroeg eenmaal om extra toegang/route; niemand gaf die extra hulp. De gewone toegang en benodigde broninformatie waren aantoonbaar beschikbaar. Twee echte menselijke beoordelingen ontbreken.",
+            "nextAction": "Hergebruik het gesloten resultaat. Maak resterende oorspronkelijke dekking en de menselijke beoordeling zichtbaar; een volgende concrete uitvoering vooraf aan de oorspronkelijke criteria en bestaand mandaat binden. Geen herhaling van XD02/startup/reader of nieuwe brede matrix.",
+            "remaining": "Deze vaste drie-deelnemersvergelijking is klaar. Volledige P2.1-dekking en twee echte onafhankelijke kwaliteitsbeoordelingen blijven open; geen volgende uitvoering door dit rapport toegelaten.",
+            "timingNote": "Eva2:176,30s vanaf nativeboot tot waarnemingsstop; eerste ontvangst9,31s, geen taakafronding. OpenClaw110,55s en Hermes48,45s vanaf vóór nativechild tot child-exit. Grenzen verschillen; geen algemene snelheidsclaim, geen winst voor niet afgerond werk.",
+            "configurationNotes": [
+              "Contact: gpt-6-sol/none. OpenClaw: 15 contactaanvragen; Hermes: 8 contactaanvragen en 1 gpt-6-astra/medium-helper.",
+              "OpenClaw vaste voorwaarden 3/3, onafhankelijke teruglezingen 2/2; Hermes 1/3 en 1/2. Beide privacy/gegevensminimalisatie behouden.",
+              "Hermes had de exacte gewone broninformatie in 8/8 contactcontexts; beide diensten reageerden geauthenticeerd. Geen aantoonbare ontbrekende adaptertoegang.",
+              "OpenClaw echte native: 10 commandtools; 0 MCP-correlaties in deze case. Generieke typedMCP-waarneming is afzonderlijk modelvrij via pinned relay/client-ingangen gecontroleerd."
+            ],
+            "resources": "Deze Eva2-uitvoering volledig gesloten: drie nativewerkers afgehandeld, negen eigen containers/netwerk en parent/Inspect weg. Alle29oude rawrows/revisions/metadata exact behouden. Nu30rows/191modelpogingen; bekende ondergrens2.644.212tokens, drie oude onbekende pogingen in twee rows behouden. Volledig cumulatief verbruik onbekend.",
+            "automaticReviewNote": "Onafhankelijke GO voor beperkte terminalpublicatie en broncorrectie van de reader; NO_GO voor verdere uitvoering van de verlopen episode. Het ongewijzigde resultaat vermeldt de eerdere publicatiefase, de aparte finale review autoriseert publicatie.",
+            "evidenceBindings": [
+              {
+                "path": "eva2/evidence/product/p2-xd02-openclaw-hermes-result-20261008.json",
+                "sha256": "f31b9af11c215b064fda4e05931858a7fe242859b7ee12524c4a64ddf36f86bd"
+              },
+              {
+                "path": "eva2/reviews/p2-xd02-openclaw-hermes-final-review-20261008.json",
+                "sha256": "8b731c05a003f70385bc34197d339d7a2215bbdc71823c957ec3af812bb1d09c"
+              },
+              {
+                "path": "eva2/reviews/p2-xd02-openclaw-hermes-source-review-20261008.json",
+                "sha256": "c4c25339f9faf4a14ec499616bfc3372d09ad1378d4a12dc179447790befbe80"
+              },
+              {
+                "path": "eva2/evidence/product/p2-xd02-openclaw-native-carrier-proof-20261008.json",
+                "sha256": "0dfba5e694de612b09b25530ba18551647413ab72dedb9af36b890738d0c73e9"
+              },
+              {
+                "path": "eva2/evidence/product/p2-xd02-dashboard-presentation-readback-20261008.json",
+                "sha256": "79a61de1033fb728c26db5c359f6793008d8f4b5f0ccb23ab66cdb233bf23f51"
+              },
+              {
+                "path": "eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json",
+                "sha256": "9e2c0a49f282b07eb4c1219ce58f7043e561d5a01c8129c973f4009524aedecc"
+              },
+              {
+                "path": "eva2/reviews/p2-eva2-xd02-necessary-followup-final-review-20261008.json",
+                "sha256": "c95b18d115d3a8df2e40dcb79a0a4626e1838c4d0426830cc76a43f7e708f9b0"
+              },
+              {
+                "path": "eva2/evidence/product/p2-eva2-complete-reader-proof-20261008.json",
+                "sha256": "d3374924e76d4b2dfba6eed39d5b770bce2faef9a8c3c7aff594fff0ebc2cde1"
+              },
+              {
+                "path": "eva2/reviews/p2-eva2-complete-reader-final-review-20261008.json",
+                "sha256": "3939206b7a8b80515adf65e8f138776786f4b28c7425f7a36817b11684f8e2d0"
+              },
+              {
+                "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
+                "sha256": "b86ae6d897045cd65e8c21f6377549c67d67df31f90b1dcd0577c849eb1b7a0f",
+                "review": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
+                "reviewSha256": "91bf9417bbbfc2e95518fef528e84245d1879f25b6fa8e946bbb18d9060fe399",
+                "scope": "Closed eligible matching Eva2 XD02; bounded product loss, not whole P2.1 completion."
+              }
+            ],
+            "historicalBeforeOwnerException20261008": {
+              "scope": "Eén oorspronkelijke XD02 epoch1, dezelfde twee diensten, invoer, toegang, vaste regels en modelrollen. Vaste controles verschillen; menselijke eindkwaliteit blijft onbekend. Eva2 deed niet mee.",
+              "nextAction": "Behouden geldige antwoorden door de bestaande onafhankelijke menselijke beoordelaars laten beoordelen. Geen volgende modelproef automatisch starten. Matching Eva2 blijft ontbreken door bewaarde oude onbekende usage.",
+              "remaining": "Deze geselecteerde ronde is afgerond en onafhankelijk gecontroleerd. P2.1 als geheel, algemene Eva2-voorsprong en gezinsacceptatie blijven open; potentiële ongebruikte protocolposities zijn geen automatische matrixopdracht."
+            },
+            "nativeStartupEvidence": "eva2/evidence/product/p2-eva2-native-workers-model-free-20261008.json",
+            "nativeStartupReview": "eva2/reviews/p2-eva2-native-workers-model-free-final-review-20261008.json",
+            "necessaryFollowupAuthorizationEvidence": "eva2/evidence/product/p2-eva2-xd02-necessary-followup-authorization-20261008.json",
+            "closedMatchingFollowupEvidence": "eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json",
+            "closedMatchingFollowupReview": "eva2/reviews/p2-eva2-xd02-necessary-followup-final-review-20261008.json",
+            "technicalReaderEvidence": "eva2/evidence/product/p2-eva2-complete-reader-proof-20261008.json",
+            "technicalReaderReview": "eva2/reviews/p2-eva2-complete-reader-final-review-20261008.json",
+            "currentResourcePreparation": {
+              "stage": "completed_bound_and_reviewed",
+              "active": false,
+              "nativeWorkersStarted": false,
+              "originalInputSent": false,
+              "providerCalls": 0,
+              "oldAuthorityCopyPreserved": true,
+              "networkPreserved": true,
+              "error": "Unchanged fixture token path lacked the corresponding readonly mount",
+              "credits": null,
+              "checkedAt": "2026-10-08T15:09:41.466765+00:00",
+              "resourcesReady": true,
+              "preparationFailuresRetained": true
+            },
+            "activeMatchingRun": {
+              "entry": "eva2:EV003-XD-02:epoch1:owner-followup3",
+              "stage": "closed_independently_reviewed_product_noncompletion",
+              "active": false,
+              "bootReleasedAt": "2026-10-08T15:17:35.360589Z",
+              "originalInputSent": true,
+              "oldResultsPreserved": true,
+              "counterpartRerun": false,
+              "sdkAttempts": 8,
+              "totalTokens": 57007,
+              "credits": null,
+              "checkedAt": "2026-10-08T15:28:49.272704+00:00",
+              "completedSdkAttempts": 8,
+              "inspectExit": 0,
+              "completeInputTokens": 55743,
+              "completeOutputTokens": 1264,
+              "settledToolDispatches": 5,
+              "wallSeconds": 176.304308,
+              "requestedEffectsAchieved": false,
+              "qualityJudgment": null,
+              "eligibility": "eligible",
+              "objectivePassed": 1,
+              "objectiveTotal": 3,
+              "directContextMissingIsNotExclusion": true,
+              "comparisonWinner": "OpenClaw on this fixed task completion only",
+              "resultPath": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
+              "resultSha256": "b86ae6d897045cd65e8c21f6377549c67d67df31f90b1dcd0577c849eb1b7a0f",
+              "reviewPath": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
+              "reviewSha256": "91bf9417bbbfc2e95518fef528e84245d1879f25b6fa8e946bbb18d9060fe399",
+              "publicationGo": true,
+              "newExecutionAdmitted": false
+            },
+            "remainingOriginalCoverage": {
+              "matchedXd02Closed": true,
+              "newCaseOrReplayAdmitted": false,
+              "fullP21Completed": false,
+              "unexecutedOrUnmatched": [
+                "CM07: geen toegelaten gematchte gedeelde-audienceroute",
+                "Eva2 CM05/CM06/CM08: matching ontbreekt, bestaande usageguard behouden",
+                "CM09–CM12 en latere families/epochs: niet uitgevoerd in deze opvolger"
+              ],
+              "humanReview": "Twee echte onafhankelijke CM02/gespreksbeoordelingen ontbreken; niet door AI invullen.",
+              "historicalUnknowns": "Gesloten evaluatorfouten en drie historische verbruiksonbekende pogingen blijven staan.",
+              "rule": "Ongebruikte slots zijn geen afgerond of bewezen onuitvoerbaar werk. Geen automatische brede matrix.",
+              "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json"
+            },
+            "closedMatchingResultEvidence": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
+            "closedMatchingResultReview": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json"
           }
         ],
         "roundDisposition": {
@@ -8378,6 +8509,29 @@
               "authoritySha256": "dea798be74e25336469697961042e5a46331ed509585a503ac2a4270f47c7f52",
               "knownTotalTokensLowerBound": 2644212
             }
+          },
+          {
+            "providerAttempts": 191,
+            "inputTokens": null,
+            "outputTokens": null,
+            "knownInputTokensLowerBound": 2623210,
+            "knownOutputTokensLowerBound": 21002,
+            "registeredUnknownUsageAttempts": 3,
+            "usageComplete": false,
+            "allFailedAdapterAndInconclusiveNativeAttemptsIncluded": false,
+            "actualNativeAttempts": null,
+            "registeredSampleRows": 30,
+            "nativeToolDispatches": null,
+            "creditCost": null,
+            "codexDevelopmentCredits": null,
+            "providerRoleCounts": {
+              "contactSolNone": null,
+              "helperAstraMedium": null
+            },
+            "scope": "Current retained cumulative authority through matching Eva2 XD02. All29historical rows unchanged;3old missing-usage attempts remain. Lower bounds, no complete monetary/Codex-credit estimate.",
+            "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
+            "authoritySha256": "dea798be74e25336469697961042e5a46331ed509585a503ac2a4270f47c7f52",
+            "knownTotalTokensLowerBound": 2644212
           }
         ],
         "historicalScopeBeforeMatchedHermesCM05": "Oorspronkelijke vergelijkingsdekking met afzonderlijke gesloten resultaten; huidige gematchte successor CM06 voor Eva1/OpenClaw. Oudere andere inputsets blijven apart.",
@@ -8410,15 +8564,15 @@
         "cumulativeOriginalAccounting": {
           "cost_money": null,
           "historical_accounting_unknowns_preserved": 3,
-          "known_input_tokens_lower_bound": 2623210,
-          "known_output_tokens_lower_bound": 21002,
-          "known_total_tokens_lower_bound": 2644212,
-          "provider_attempts": 191,
-          "registered_rows": 30,
+          "known_input_tokens_lower_bound": 2640764,
+          "known_output_tokens_lower_bound": 21449,
+          "known_total_tokens_lower_bound": 2662213,
+          "provider_attempts": 198,
+          "registered_rows": 31,
           "usage_complete": false,
-          "basis": "Exact independent retained30-row authority;29historical values/revisions/meta and fullreservations unchanged. Three historical missing-usage attempts not zero-filled.",
-          "known_usage_delta_this_sample": 57007,
-          "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json"
+          "basis": "Independent retained31-row authority;30historical rows/revisions/meta and full reservations unchanged;3old missing usage not zero-filled.",
+          "known_usage_delta_this_sample": 18001,
+          "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json"
         },
         "historicalCumulativeAccountingBeforeMatchingXd02": {
           "cost_money": null,
@@ -8431,6 +8585,84 @@
           "usage_complete": false,
           "basis": "Bound prior26-row complete cumulative report plus two zero-attempt retained Eva2 entries; historical summarized rows are retained without expanding or zero-filling unknowns.",
           "known_usage_delta_this_sample": 0
+        },
+        "nextOriginalComparisonPreparation": {
+          "entry": "hermes:EV003-CM-08:epoch1",
+          "caseId": "EV003-CM-08",
+          "stage": "closed_independently_reviewed_original_noncompletion",
+          "activeExecution": false,
+          "originalInputs": 3,
+          "providerCalls": 7,
+          "newResources": true,
+          "sourceIndexSha256": "b148fca9ad48578e0b5cb8c78f5229ec34ce5b90a2608e7d4099117ad9f096e8",
+          "sourceProposalSha256": "c690767531602e5b736db077a7658dbb0bf2ec17fb4c72e4d9c64f226dc7bf9b",
+          "projectionSha256": "cee5888b871bdf40e8def07cab6ca05d00e98bef2863d2a242b5a89cd08baab1",
+          "projectionEqualitySha256": "a33045a3cc71c5d936a91a97a9237fd7e88a5cecda6a192832b915a469379202",
+          "authorityBeforeSha256": "dea798be74e25336469697961042e5a46331ed509585a503ac2a4270f47c7f52",
+          "retainedHistoricalRows": 30,
+          "originalExpectedTurns": 3,
+          "originalSessions": [
+            0,
+            0,
+            1
+          ],
+          "originalClockDeltasMs": [
+            0,
+            0,
+            864000000
+          ],
+          "limits": {
+            "providerAttempts": 16,
+            "toolDispatches": 16,
+            "wallSeconds": 480,
+            "providerInputTokens": 1048576,
+            "providerOutputTokens": 19200
+          },
+          "ordinaryParticipantGuard": true,
+          "sourceNoInputCheckPassed": true,
+          "profileConfigurationOnly": true,
+          "ownerActionRequired": false,
+          "humanQuality": null,
+          "originalClockCreated": true,
+          "originalInputReleased": true,
+          "execSessionId": 48966,
+          "actualInspectPid": 1333267,
+          "actualParentPid": 1333383,
+          "actualReadySha256": "110ea0cd80502f92878ed000c3d1fc8cb7ce57552a54f794cc06be4553c5e598",
+          "resourceAdmissionSha256": "00f8599d6a424581cba78b2be679158542852c4867ab10533328e96884a64e1f",
+          "sourceReviewSha256": "e1d6bd547f3d5d6bf91f5aab27536d1bc7317cb444770c29aa2631e13a794db8",
+          "inputTokens": 17554,
+          "outputTokens": 447,
+          "totalTokens": 18001,
+          "elapsedSeconds": 21.432074265991105,
+          "nativeCompletion": true,
+          "objectiveCompletion": false,
+          "requiredReadbacksPassed": 2,
+          "nativeContainerAndNetworkAbsent": true,
+          "parentAndInspectAbsent": true,
+          "allWorkersSettled": true,
+          "receiptSha256": "a121b0505fef591d2b2b1b45dbc81efcf6739e4a84e2fdb99107e761ed19f278",
+          "readyInputReviewSha256": "86c141ce980fa86dc4a3c8ef5b09d98d895a4c19a09c5473b191d5a8797977e6",
+          "finalAdmissionSha256": "28bbbf0c4eb182b11b6a1fe905b190dedff0fd3ca6505d8870120f321dafbfe2",
+          "inputReleaseSha256": "37f3ded82b2e1bd78557d058501c5edd85342a9d72e62e478c458a2c959c546b",
+          "physicalClosureSha256": "83551b31fbe26399b4fba7670e6c9d351760782c52921125e2552e2ce02700ef",
+          "execSessionTerminal": true,
+          "requiredReadbacksTotal": 2,
+          "factuallySupportedResponses": 2,
+          "requiredResponses": 3,
+          "originalConditionObservations": [
+            false,
+            true,
+            false
+          ],
+          "wholeCaseQuality": "UNKNOWN",
+          "publicationGo": true,
+          "resultPath": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+          "reviewPath": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+          "reviewSha256": "7fa7dfe1de276f0d86e1ea456cb9b92c66b259bc94f55e340c659c169ac195ca",
+          "resultSha256": "873e57207c60e2cdd91d2557f3651eab0070cd63b030e6315e9f40e167431ddb",
+          "nextCaseSelected": false,
+          "checkedAt": "2026-10-08T16:24:55.334007+00:00"
         }
       },
       "housemateSummary": {
@@ -17974,7 +18206,7 @@
           ]
         }
       ],
-      "nextAction": "P2.1: één matchingEva2-XD02-besluit concreet klaar; geen modeluitvoering actief. Bij akkoord eerst modelvrije volledige native opstart, daarna exact één uitvoering.",
+      "nextAction": "Bind de volgende werkelijk resterende oorspronkelijke vergelijking vooraf aan bestaande criteria en geldig mandaat. Hergebruik CM08/XD02; start geen gesloten proef opnieuw. Menselijke beoordeling blijft apart.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -21663,7 +21895,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Hergebruik het gesloten resultaat. Maak resterende oorspronkelijke dekking en de menselijke beoordeling zichtbaar; een volgende concrete uitvoering vooraf aan de oorspronkelijke criteria en bestaand mandaat binden. Geen herhaling van XD02/startup/reader of nieuwe brede matrix.",
+              "nextAction": "Bind de volgende werkelijk resterende oorspronkelijke vergelijking vooraf aan bestaande criteria en geldig mandaat. Hergebruik CM08/XD02; start geen gesloten proef opnieuw. Menselijke beoordeling blijft apart.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -21672,9 +21904,9 @@
                 "blocksIndependentWork": false,
                 "source": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json"
               },
-              "checkedAt": "2026-10-08T15:45:53.176708+00:00",
+              "checkedAt": "2026-10-08T16:24:55.334007+00:00",
               "assignment": {
-                "baseCommit": "871bd574e2a75642c4c783e8a2abfdc49f1ed1f6",
+                "baseCommit": "9744471898407406a2cd80887fa45c619781bd85",
                 "owner": "/root",
                 "activeWorkers": [],
                 "files": [
@@ -21686,7 +21918,7 @@
                 "gap": "Matching XD02 ontbreekt niet meer. Volledige oorspronkelijke dekking en twee menselijke beoordelingen blijven open; beschikbare diensten ontdekken en werkelijk uitvoeren is een aangetoond producttekort.",
                 "finish": "Eén matching huidige Eva2-XD02 met oorspronkelijke taak/criteria/modelrollen, zelfstandig resultaat, onafhankelijke readbacks, snelheid en volledig verbruik; behouden vergelijking/UNKNOWN niet opnieuw uitvoeren.",
                 "estimate": "Oorspronkelijk maximaal72SDK/70tools/840s incl.helpers en tokenplafonds. Dit zijn grenzen, geen kostenraming; credits/geldkosten onbekend.",
-                "currentAction": "Gesloten matching XD02 en onafhankelijke publicatie-GO verwerkt. OpenClaw3/3; Eva2/Hermes1/3. Geen nieuwe uitvoering of productfunctie.",
+                "currentAction": "Hermes-CM08 één keer uitgevoerd en onafhankelijk gesloten: late ervaring niet teruggehaald, zoals behouden Eva1/OpenClaw. Publiceer de vaste uitkomst; geen productwijziging of winnaar.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "previousTurnClassification": "progress",
@@ -21748,59 +21980,84 @@
                     "generalWinner": null
                   }
                 },
-                "stage": "matching_xd02_terminal_result_published",
+                "stage": "closed_independently_reviewed_original_noncompletion",
                 "currentNativePreparation": {
-                  "entry": "hermes:EV003-CM-06:epoch1",
-                  "caseId": "EV003-CM-06",
-                  "participant": "hermes",
-                  "epoch": 1,
-                  "currentStage": "closed_original_independently_assessed",
-                  "resourcePreparationActive": false,
-                  "nativeExecutionActive": false,
-                  "providerAttempts": 6,
-                  "inputReleased": true,
-                  "nativeContextStarted": true,
-                  "newProductFunction": false,
-                  "sourceBindingSha256": "f7ca6402c69a01450c5ecc4688b77944f488fa7fd519fb2f8657d99f8a4ce0e5",
-                  "proposedConfigSha256": "31ef5aee83b8d16ef62de700f0a3b8af95f4e7753a52d091df98ec4472e8febe",
-                  "projectionSha256": "2b43442e552b723e5aa37e6979bf2db989e2976a9c0a4a84c0c01f65bdd1292a",
-                  "expectedTurns": 3,
-                  "filePins": 55,
-                  "nativeProbeChanged": false,
-                  "ownNativeAuthFresh": true,
-                  "execSessionId": 65202,
-                  "actualInspectWrapperPID": 2871430,
-                  "actualParentPID": 2871618,
-                  "resourceAdmissionSha256": "a27f4a932c1a28687b367bd114667e89e51425851cfdb4dbb20ac76ae142f391",
-                  "actualReadySha256": "d25ad166f5db8b7488c299ab08f55c6cda1a634962957ce454c8bc1af59a0d8c",
-                  "authorityAfterReservationSha256": "6d5b46f5310500f11d793bec829e975e0714898e40eb39bb7bf82196384a1eee",
-                  "sourceReviewSha256": "809949e3edb88e70ab90da97ef6e5600310504b534c9ba4b9f6219016ef62cff",
-                  "nativeContextActive": false,
-                  "absoluteSampleDeadlineCreated": true,
-                  "readinessReview": "eva2/reviews/p2-hermes-cm06-ready-review-20261007.json",
-                  "readinessReviewSha256": "b7f302008e0f08ac18fa46e6f3f1aa610729bbaa772ad19b9b5aed3d6a97998c",
-                  "finalAdmissionSha256": "0259478f1ca72aa3a9b5d460b2f79733555a1f08fa29b713558e5a6dbf1665f9",
-                  "releaseSha256": "a45aeaa59eaebca173b0a7dfbea72800a702e1c49565e905f67624d72b715a6f",
-                  "releasedAt": "2026-10-07T21:43:52.585710+00:00",
-                  "inputTokens": 13999,
-                  "outputTokens": 215,
-                  "totalTokens": 14214,
-                  "elapsedSeconds": 15.726007043005666,
+                  "entry": "hermes:EV003-CM-08:epoch1",
+                  "caseId": "EV003-CM-08",
+                  "stage": "closed_independently_reviewed_original_noncompletion",
+                  "activeExecution": false,
+                  "originalInputs": 3,
+                  "providerCalls": 7,
+                  "newResources": true,
+                  "sourceIndexSha256": "b148fca9ad48578e0b5cb8c78f5229ec34ce5b90a2608e7d4099117ad9f096e8",
+                  "sourceProposalSha256": "c690767531602e5b736db077a7658dbb0bf2ec17fb4c72e4d9c64f226dc7bf9b",
+                  "projectionSha256": "cee5888b871bdf40e8def07cab6ca05d00e98bef2863d2a242b5a89cd08baab1",
+                  "projectionEqualitySha256": "a33045a3cc71c5d936a91a97a9237fd7e88a5cecda6a192832b915a469379202",
+                  "authorityBeforeSha256": "dea798be74e25336469697961042e5a46331ed509585a503ac2a4270f47c7f52",
+                  "retainedHistoricalRows": 30,
+                  "originalExpectedTurns": 3,
+                  "originalSessions": [
+                    0,
+                    0,
+                    1
+                  ],
+                  "originalClockDeltasMs": [
+                    0,
+                    0,
+                    864000000
+                  ],
+                  "limits": {
+                    "providerAttempts": 16,
+                    "toolDispatches": 16,
+                    "wallSeconds": 480,
+                    "providerInputTokens": 1048576,
+                    "providerOutputTokens": 19200
+                  },
+                  "ordinaryParticipantGuard": true,
+                  "sourceNoInputCheckPassed": true,
+                  "profileConfigurationOnly": true,
+                  "ownerActionRequired": false,
+                  "humanQuality": null,
+                  "originalClockCreated": true,
+                  "originalInputReleased": true,
+                  "execSessionId": 48966,
+                  "actualInspectPid": 1333267,
+                  "actualParentPid": 1333383,
+                  "actualReadySha256": "110ea0cd80502f92878ed000c3d1fc8cb7ce57552a54f794cc06be4553c5e598",
+                  "resourceAdmissionSha256": "00f8599d6a424581cba78b2be679158542852c4867ab10533328e96884a64e1f",
+                  "sourceReviewSha256": "e1d6bd547f3d5d6bf91f5aab27536d1bc7317cb444770c29aa2631e13a794db8",
+                  "inputTokens": 17554,
+                  "outputTokens": 447,
+                  "totalTokens": 18001,
+                  "elapsedSeconds": 21.432074265991105,
                   "nativeCompletion": true,
                   "objectiveCompletion": false,
-                  "receivedTurns": 3,
-                  "nativeResponses": 3,
-                  "providerUsageComplete": true,
-                  "parentExitCode": 0,
-                  "nativeStopVerified": true,
-                  "containerAbsent": true,
-                  "networkAbsent": true,
-                  "nativeReceiptSha256": "ea361c23da678eb0cde6cd941039ac18a2d128569bdc5a70cbe5d328cd4644e9",
-                  "nativeReportSha256": "cc3e6cfdd8f6b7e577bbabe2e72f202786cbea9528e00e764679a4c0656048ca",
-                  "authorityAfterSha256": "3463998e855a2448fa98877df30121ae57681ff37c2cd1439b4e46d298dd568a",
-                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
-                  "resultSha256": "bd6c971120845ad16a2e75e0ab0e7489234fa88cadbf9e0b0b7b66d7566c1059",
-                  "independentReviewSha256": "705f9cb56283e5e0de60a46e90fa44e9ea91f1edb8bb6383c766ca9257a5ae19"
+                  "requiredReadbacksPassed": 2,
+                  "nativeContainerAndNetworkAbsent": true,
+                  "parentAndInspectAbsent": true,
+                  "allWorkersSettled": true,
+                  "receiptSha256": "a121b0505fef591d2b2b1b45dbc81efcf6739e4a84e2fdb99107e761ed19f278",
+                  "readyInputReviewSha256": "86c141ce980fa86dc4a3c8ef5b09d98d895a4c19a09c5473b191d5a8797977e6",
+                  "finalAdmissionSha256": "28bbbf0c4eb182b11b6a1fe905b190dedff0fd3ca6505d8870120f321dafbfe2",
+                  "inputReleaseSha256": "37f3ded82b2e1bd78557d058501c5edd85342a9d72e62e478c458a2c959c546b",
+                  "physicalClosureSha256": "83551b31fbe26399b4fba7670e6c9d351760782c52921125e2552e2ce02700ef",
+                  "execSessionTerminal": true,
+                  "requiredReadbacksTotal": 2,
+                  "factuallySupportedResponses": 2,
+                  "requiredResponses": 3,
+                  "originalConditionObservations": [
+                    false,
+                    true,
+                    false
+                  ],
+                  "wholeCaseQuality": "UNKNOWN",
+                  "publicationGo": true,
+                  "resultPath": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+                  "reviewPath": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+                  "reviewSha256": "7fa7dfe1de276f0d86e1ea456cb9b92c66b259bc94f55e340c659c169ac195ca",
+                  "resultSha256": "873e57207c60e2cdd91d2557f3651eab0070cd63b030e6315e9f40e167431ddb",
+                  "nextCaseSelected": false,
+                  "checkedAt": "2026-10-08T16:24:55.334007+00:00"
                 },
                 "evaluatorCorrection": {
                   "source": "eva2/evidence/product/p2-original-next-cm-result-20261006.json",
@@ -21897,7 +22154,7 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "Hergebruik het gesloten resultaat. Maak resterende oorspronkelijke dekking en de menselijke beoordeling zichtbaar; een volgende concrete uitvoering vooraf aan de oorspronkelijke criteria en bestaand mandaat binden. Geen herhaling van XD02/startup/reader of nieuwe brede matrix.",
+                "nextAction": "Bind de volgende werkelijk resterende oorspronkelijke vergelijking vooraf aan bestaande criteria en geldig mandaat. Hergebruik CM08/XD02; start geen gesloten proef opnieuw. Menselijke beoordeling blijft apart.",
                 "actualUsage": {
                   "scope": "One matching Eva2 XD02 development comparison, not household runtime",
                   "providerAttempts": 8,
@@ -21912,11 +22169,11 @@
                   "credits": null,
                   "householdRuntimeUsage": false
                 },
-                "review": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
+                "review": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
                 "sourcePreparationEvidence": "eva2/evidence/product/p2-xd01-native-binding-20261005.json",
                 "resourcePreparationEvidence": "eva2/evidence/product/p2-xd01-browser-resources-20261005.json",
                 "preparationStateEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
-                "independentResultEvidence": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
+                "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
                 "currentPreparationUsage": {
                   "providerCalls": 0,
                   "originalInputs": 0,
@@ -22105,7 +22362,7 @@
                 "scopeInitializationReview": "eva2/reviews/p2-native-scope-initializer-review-20261006.json",
                 "finalDatasetCommitment": "eva2/benchmark/inspect_ai_v1/ev003_provider_history_dataset_commitment_20261006.json",
                 "nativeDriverReview": "eva2/reviews/p2-provider-history-native-driver-review-20261006.json",
-                "currentEvaluationEvidence": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
+                "currentEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
                 "currentIngressDiagnosis": "eva2/evidence/product/p2-provider-history-ingress-diagnosis-20261006.json",
                 "currentIngressCorrection": "eva2/evidence/product/p2-native-ingress-diagnostics-20261006.json",
                 "currentIngressCorrectionReview": "eva2/reviews/p2-native-ingress-diagnostics-review-20261006.json",
@@ -23113,7 +23370,7 @@
                   "nativeTools": 16,
                   "elapsedSeconds": 180.95119165799406
                 },
-                "checkedAt": "2026-10-08T15:45:53.176708+00:00",
+                "checkedAt": "2026-10-08T16:24:55.334007+00:00",
                 "cm04Preparation": {
                   "entry": "openclaw:EV003-CM-04:epoch1",
                   "directory": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1",
@@ -23303,7 +23560,7 @@
                   "sourceObserverChanged": false
                 },
                 "activeExecution": false,
-                "updatedAt": "2026-10-08T15:45:53.176708+00:00",
+                "updatedAt": "2026-10-08T16:24:55.334007+00:00",
                 "nextComparisonDecision": "Resterende oorspronkelijke dekking behouden; eerst een beslisrelevant vergelijkingspaar op bestaande routes, plus echte blinde antwoordbeoordelingen.",
                 "previousNativePreparationAtCM06Eva1": {
                   "caseId": "EV003-CM-01",
@@ -23740,14 +23997,11 @@
                 "concreteNextAction": "Hergebruik het gesloten resultaat. Maak resterende oorspronkelijke dekking en de menselijke beoordeling zichtbaar; een volgende concrete uitvoering vooraf aan de oorspronkelijke criteria en bestaand mandaat binden. Geen herhaling van XD02/startup/reader of nieuwe brede matrix.",
                 "currentGoalTurnOutcome": {
                   "classification": "progress",
-                  "selectedOutcomeClosed": true,
-                  "originalInputSent": true,
-                  "objectiveCompletion": false,
+                  "nativeExecutionCompleted": true,
+                  "independentAssessmentCompleted": true,
                   "newProductFunction": false,
-                  "fullP21Completed": false,
-                  "result": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
-                  "review": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
-                  "newExecutionAdmitted": false
+                  "nextCaseSelected": false,
+                  "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json"
                 },
                 "retainedPreviousOwnerAction": {
                   "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
@@ -23876,10 +24130,24 @@
                     "credits": null,
                     "review": "eva2/reviews/p2-eva2-xd02-followup-decision-review-20261008.json"
                   }
+                },
+                "independentSourceFinding": {
+                  "reviewer": "/root/p2_eva1_lease_review_20261006",
+                  "basisCommit": "9744471898407406a2cd80887fa45c619781bd85",
+                  "finding": "Geen bewezen ontbrekende tool-/resourcewiring. Bestaande inventaris/discovery/schemauitlezing zijn aangesloten; verduidelijking van transportendpoint/ontdekking is een onbewezen prompthypothese. Geen speculatieve productedit.",
+                  "sourceFiles": [
+                    "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+                    "eva2/src/eva/bootstrap/background_browser_context.py",
+                    "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+                    "eva2/src/eva/providers/mcp_registration.py",
+                    "eva2/src/eva/adapters/postgres/mcp_connector_registry.py"
+                  ],
+                  "modelCalls": 0,
+                  "runtimeChanged": false
                 }
               },
-              "remaining": "Deze vaste drie-deelnemersvergelijking is klaar. Volledige P2.1-dekking en twee echte onafhankelijke kwaliteitsbeoordelingen blijven open; geen volgende uitvoering door dit rapport toegelaten.",
-              "latestEvidence": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json",
+              "remaining": "Hermes-CM08 en matching XD02 zijn gesloten. Overige oorspronkelijke matching/dekking en twee echte menselijke beoordelingen blijven open. Geen nieuwe uitvoering geselecteerd; geen herhaling of brede matrix.",
+              "latestEvidence": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
               "executionBlocker": "Geen technische blokkade voor de afgesloten matching XD02: uitvoering en onafhankelijke beoordeling voltooid. Overige oorspronkelijke dekking niet door deze episode toegelaten.",
               "assessmentBlocker": "Twee echte onafhankelijke CM02/gespreksbeoordelingen en gezinsacceptatie blijven open.",
               "nativeAccessBlocker": {
@@ -23977,13 +24245,13 @@
               "nativeAdmissionBlocker": "Verlopen matching episode is gesloten; er is nu geen betaald inputmandaat voor die episode. Technische reader/gate-afhankelijkheid wordt binnen P2.1 afgehandeld.",
               "candidateFreeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
               "candidateFreezeSha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
-              "publicationReview": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
-              "publicationReviewSha256": "91bf9417bbbfc2e95518fef528e84245d1879f25b6fa8e946bbb18d9060fe399",
+              "publicationReview": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+              "publicationReviewSha256": "7fa7dfe1de276f0d86e1ea456cb9b92c66b259bc94f55e340c659c169ac195ca",
               "blockerDetails": {
                 "type": "original_comparison_incomplete",
                 "owner": "Codex / onafhankelijke beoordelaars",
-                "reason": "XD02 is nu een geldig beperkt productverlies, geen UNKNOWN. Overige oorspronkelijke matching/dekking en twee menselijke beoordelingen ontbreken. Geen modelrun actief.",
-                "evidence": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json"
+                "reason": "Hermes-CM08 en matching XD02 zijn gesloten. Overige oorspronkelijke matching/dekking en twee echte menselijke beoordelingen blijven open. Geen nieuwe uitvoering geselecteerd; geen herhaling of brede matrix.",
+                "evidence": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json"
               },
               "activeExecution": false,
               "currentReadbackAssessmentEvidence": "eva2/evidence/product/p2-original-next-cm02-result-20261006.json",
@@ -24048,14 +24316,14 @@
               "publicPreparationEvidence": "eva2/evidence/product/p2-openclaw-calendar-correction-20261007.json",
               "nativeToolRuntimeReview": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
               "nativeToolCheckpointPublicationReview": "eva2/reviews/p2-openclaw-calendar-checkpoint-publication-review-20261007.json",
-              "updatedAt": "2026-10-08T15:45:53.176708+00:00",
-              "review": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
-              "reviewSha256": "91bf9417bbbfc2e95518fef528e84245d1879f25b6fa8e946bbb18d9060fe399",
+              "updatedAt": "2026-10-08T16:24:55.334007+00:00",
+              "review": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+              "reviewSha256": "7fa7dfe1de276f0d86e1ea456cb9b92c66b259bc94f55e340c659c169ac195ca",
               "previousEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
               "historicalPublicationReviewBeforeMatchedEva1CM06": "eva2/reviews/p2-openclaw-cm06-publication-review-20261007.json",
               "historicalPublicationReviewBeforeMatchedHermesCM05": "eva2/reviews/p2-eva1-successor-cm06-publication-review-20261007.json",
               "historicalPublicationReviewBeforeMatchedHermesCM06": "eva2/reviews/p2-hermes-cm05-publication-review-20261007.json",
-              "latestReview": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
+              "latestReview": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
               "followupDecisionEvidence": "eva2/evidence/product/p2-eva2-xd02-followup-decision-20261008.json",
               "followupDecisionReview": "eva2/reviews/p2-eva2-xd02-followup-decision-review-20261008.json",
               "followupDecisionReviewSha256": "2ef29d9a78fc8c8b0ae315774b1e497c40a83330d3180d24b58b4142e6431bbb",
@@ -24147,6 +24415,13 @@
                   "review": "eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json",
                   "reviewSha256": "91bf9417bbbfc2e95518fef528e84245d1879f25b6fa8e946bbb18d9060fe399",
                   "classification": "valid_bounded_product_noncompletion"
+                },
+                {
+                  "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+                  "sha256": "873e57207c60e2cdd91d2557f3651eab0070cd63b030e6315e9f40e167431ddb",
+                  "review": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+                  "reviewSha256": "7fa7dfe1de276f0d86e1ea456cb9b92c66b259bc94f55e340c659c169ac195ca",
+                  "classification": "valid_bounded_original_task_noncompletion"
                 }
               ],
               "currentOriginalCoverage": {
@@ -24161,7 +24436,87 @@
                 "humanReview": "Twee echte onafhankelijke CM02/gespreksbeoordelingen ontbreken; niet door AI invullen.",
                 "historicalUnknowns": "Gesloten evaluatorfouten en drie historische verbruiksonbekende pogingen blijven staan.",
                 "rule": "Ongebruikte slots zijn geen afgerond of bewezen onuitvoerbaar werk. Geen automatische brede matrix.",
-                "source": "eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json"
+                "source": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+                "matchedCm08HermesEva1OpenclawClosed": true,
+                "currentEva2Cm08Matched": false
+              },
+              "nextOriginalComparisonPreparation": {
+                "entry": "hermes:EV003-CM-08:epoch1",
+                "caseId": "EV003-CM-08",
+                "stage": "closed_independently_reviewed_original_noncompletion",
+                "activeExecution": false,
+                "originalInputs": 3,
+                "providerCalls": 7,
+                "newResources": true,
+                "sourceIndexSha256": "b148fca9ad48578e0b5cb8c78f5229ec34ce5b90a2608e7d4099117ad9f096e8",
+                "sourceProposalSha256": "c690767531602e5b736db077a7658dbb0bf2ec17fb4c72e4d9c64f226dc7bf9b",
+                "projectionSha256": "cee5888b871bdf40e8def07cab6ca05d00e98bef2863d2a242b5a89cd08baab1",
+                "projectionEqualitySha256": "a33045a3cc71c5d936a91a97a9237fd7e88a5cecda6a192832b915a469379202",
+                "authorityBeforeSha256": "dea798be74e25336469697961042e5a46331ed509585a503ac2a4270f47c7f52",
+                "retainedHistoricalRows": 30,
+                "originalExpectedTurns": 3,
+                "originalSessions": [
+                  0,
+                  0,
+                  1
+                ],
+                "originalClockDeltasMs": [
+                  0,
+                  0,
+                  864000000
+                ],
+                "limits": {
+                  "providerAttempts": 16,
+                  "toolDispatches": 16,
+                  "wallSeconds": 480,
+                  "providerInputTokens": 1048576,
+                  "providerOutputTokens": 19200
+                },
+                "ordinaryParticipantGuard": true,
+                "sourceNoInputCheckPassed": true,
+                "profileConfigurationOnly": true,
+                "ownerActionRequired": false,
+                "humanQuality": null,
+                "originalClockCreated": true,
+                "originalInputReleased": true,
+                "execSessionId": 48966,
+                "actualInspectPid": 1333267,
+                "actualParentPid": 1333383,
+                "actualReadySha256": "110ea0cd80502f92878ed000c3d1fc8cb7ce57552a54f794cc06be4553c5e598",
+                "resourceAdmissionSha256": "00f8599d6a424581cba78b2be679158542852c4867ab10533328e96884a64e1f",
+                "sourceReviewSha256": "e1d6bd547f3d5d6bf91f5aab27536d1bc7317cb444770c29aa2631e13a794db8",
+                "inputTokens": 17554,
+                "outputTokens": 447,
+                "totalTokens": 18001,
+                "elapsedSeconds": 21.432074265991105,
+                "nativeCompletion": true,
+                "objectiveCompletion": false,
+                "requiredReadbacksPassed": 2,
+                "nativeContainerAndNetworkAbsent": true,
+                "parentAndInspectAbsent": true,
+                "allWorkersSettled": true,
+                "receiptSha256": "a121b0505fef591d2b2b1b45dbc81efcf6739e4a84e2fdb99107e761ed19f278",
+                "readyInputReviewSha256": "86c141ce980fa86dc4a3c8ef5b09d98d895a4c19a09c5473b191d5a8797977e6",
+                "finalAdmissionSha256": "28bbbf0c4eb182b11b6a1fe905b190dedff0fd3ca6505d8870120f321dafbfe2",
+                "inputReleaseSha256": "37f3ded82b2e1bd78557d058501c5edd85342a9d72e62e478c458a2c959c546b",
+                "physicalClosureSha256": "83551b31fbe26399b4fba7670e6c9d351760782c52921125e2552e2ce02700ef",
+                "execSessionTerminal": true,
+                "requiredReadbacksTotal": 2,
+                "factuallySupportedResponses": 2,
+                "requiredResponses": 3,
+                "originalConditionObservations": [
+                  false,
+                  true,
+                  false
+                ],
+                "wholeCaseQuality": "UNKNOWN",
+                "publicationGo": true,
+                "resultPath": "eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json",
+                "reviewPath": "eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json",
+                "reviewSha256": "7fa7dfe1de276f0d86e1ea456cb9b92c66b259bc94f55e340c659c169ac195ca",
+                "resultSha256": "873e57207c60e2cdd91d2557f3651eab0070cd63b030e6315e9f40e167431ddb",
+                "nextCaseSelected": false,
+                "checkedAt": "2026-10-08T16:24:55.334007+00:00"
               }
             },
             {
@@ -24742,8 +25097,8 @@
           "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       },
-      "lastUpdated": "2026-10-08T15:45:53.176708+00:00",
-      "updatedAt": "2026-10-08T15:45:53.176708+00:00"
+      "lastUpdated": "2026-10-08T16:24:55.334007+00:00",
+      "updatedAt": "2026-10-08T16:24:55.334007+00:00"
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",

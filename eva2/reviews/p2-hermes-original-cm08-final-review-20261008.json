@@ -1,0 +1,171 @@
+{
+  "contract": "P2IndependentHermesOriginalCm08TerminalPublicationReview/v1",
+  "reviewed_at": "2026-10-08T16:20:15.285018+00:00",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "decision": "GO_TERMINAL_AND_SCOPED_PUBLICATION",
+  "scope": {
+    "task": "P2.1",
+    "participant": "hermes",
+    "case_id": "EV003-CM-08",
+    "epoch": 1,
+    "one_original_execution": true,
+    "matched_retained_participants": [
+      "eva1-bottie",
+      "openclaw"
+    ],
+    "comparator_replay": false,
+    "current_eva2_matching_sample": false
+  },
+  "bindings": {
+    "result": {
+      "file": "p2-hermes-original-cm08-result-20261008.public.json",
+      "sha256": "873e57207c60e2cdd91d2557f3651eab0070cd63b030e6315e9f40e167431ddb"
+    },
+    "index": {
+      "file": "final-review-index.private.json",
+      "sha256": "23170f17eabeaf1b661872268e2690825af269b97dac9cd27d1a93b109ca37a8"
+    },
+    "terminal": {
+      "file": "terminal-technical.private.json",
+      "sha256": "04790415d89b5fc5d440b7313cb2adfaa5b3d2b9f8843aa52807e7eeb5c234bc"
+    },
+    "declassified_assessment": {
+      "file": "assessment-declassification-technical.private.json",
+      "sha256": "f66fefc59c41d47aac9e940266bac271e57fd10164e9dca19c29c554439446bf"
+    },
+    "retention": {
+      "file": "retention.private.json",
+      "sha256": "51e854243ace24f0b40a564508877654f321f040b9951d0fc216b1357018092c"
+    },
+    "physical_closure": {
+      "file": "physical-closure.private.json",
+      "sha256": "83551b31fbe26399b4fba7670e6c9d351760782c52921125e2552e2ce02700ef"
+    }
+  },
+  "original_binding": {
+    "case_sha256": "ad606124612441d4f0fd84abcfdf3e3930fcf07bec8da3ea20078244abf23dbb",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "scorer_sha256": "eabe18c7e4cc48a8d1487be7ae0f74d4491b260ae41292c9eacd298b87e6126b",
+    "projection_sha256": "cee5888b871bdf40e8def07cab6ca05d00e98bef2863d2a242b5a89cd08baab1",
+    "projection_equality_sha256": "a33045a3cc71c5d936a91a97a9237fd7e88a5cecda6a192832b915a469379202",
+    "source_review_sha256": "e1d6bd547f3d5d6bf91f5aab27536d1bc7317cb444770c29aa2631e13a794db8",
+    "input_review_sha256": "86c141ce980fa86dc4a3c8ef5b09d98d895a4c19a09c5473b191d5a8797977e6",
+    "input_release_sha256": "37f3ded82b2e1bd78557d058501c5edd85342a9d72e62e478c458a2c959c546b",
+    "final_admission_sha256": "28bbbf0c4eb182b11b6a1fe905b190dedff0fd3ca6505d8870120f321dafbfe2",
+    "criteria_roles_caps_and_same_original_interpretation_unchanged": true
+  },
+  "technical_result": {
+    "native_responses": 3,
+    "required_responses": 3,
+    "session_indexes": [
+      0,
+      0,
+      1
+    ],
+    "calendar_generations": [
+      0,
+      0,
+      1
+    ],
+    "late_clock_offset_days": 10,
+    "calendar_restored": true,
+    "sdk_attempts": 7,
+    "complete_sdk_attempts": 7,
+    "input_tokens": 17554,
+    "output_tokens": 447,
+    "total_tokens": 18001,
+    "role_counts": {
+      "contact:gpt-6-sol:none": 5,
+      "helper:gpt-6-astra:medium": 2
+    },
+    "tool_dispatches": 2,
+    "tool_evidence": "Two entered native tool rows; final settlement is supported separately by zero native pending counters and parent ACK.",
+    "physical_context_captures": 7,
+    "independently_verified_capture_bytes_and_hashes": 7,
+    "wall_seconds_limit": 480,
+    "deadline_not_reset": true,
+    "deadline_exhausted": false,
+    "timing_seconds": 21.432074265991105,
+    "timing_boundary": "Parent monotonic start before native child launch to native child exit, before envelope cleanup.",
+    "inference_outside_admitted_sdk_attempts": 0,
+    "speech_requests": 0,
+    "external_actions": 0
+  },
+  "bounded_original_assessment": {
+    "factual_response_predicates": [
+      true,
+      true,
+      false
+    ],
+    "original_condition_observations": [
+      false,
+      true,
+      false
+    ],
+    "required_independent_readbacks": [
+      true,
+      true
+    ],
+    "readback_spec_sha256": [
+      "090b800d594661a7b23a02aef37e6463f5653bf801cab2eda05e0fb5f3bb56e9",
+      "734e710dbc5cfdb8636a21976954c4ddcbab58d5de72e11d0b69317d4e47d8b4"
+    ],
+    "objective_completion": false,
+    "classification": "properly_admitted_native_task_noncompletion",
+    "interpretation": "Original-person attribution persists in retained native history, but required late use of the earlier experience fails. Storage/history readback is not a late-recall pass.",
+    "protected_derivation_attested_by_independent_curator": true,
+    "reviewer_read_protected_task_or_answer_payloads": false,
+    "official_semantic_score": null,
+    "human_ratings": [
+      null,
+      null
+    ],
+    "whole_case_quality": "UNKNOWN",
+    "ai_human_judge_used": false
+  },
+  "closure_and_history": {
+    "native_parent_ack": true,
+    "tracked_http_settled": true,
+    "native_pending_at_close": 0,
+    "controller_and_close_errors": [],
+    "independently_observed_parent_and_inspect_absent": true,
+    "independently_observed_exact_container_and_network_absent": true,
+    "authority_sha256": "5f92c010cc514c88f0dc36779e038581669ef40e778d1981bd8ba0442f08dced",
+    "rows": 31,
+    "prior_raw_rows_revisions_and_metadata_independently_equal": 30,
+    "only_added_entry": "hermes:EV003-CM-08:epoch1",
+    "new_revision": 15,
+    "historical_unknown_attempts_retained": 3,
+    "historical_rows_with_missing_usage_retained": 2,
+    "full_original_reservations_and_ordinary_guard_preserved": true,
+    "total_retained_attempts": 198,
+    "known_token_lower_bound": 2662213
+  },
+  "retention_checks": {
+    "retained_file_references": 71,
+    "all_retention_reference_hashes_independently_exact": true,
+    "public_result_references": 23,
+    "all_public_reference_hashes_independently_exact": true,
+    "retained_comparator_objects_byte_equivalent_as_json_values": true,
+    "retained_comparator_result_sha256": "df20c4f9e8a35d4096b839b74a2fecafe751ac894f2968b7e25cc671aa4bb5ca",
+    "protected_payloads_remain_private": true
+  },
+  "retained_anomalies": {
+    "helper_post_settlement_generator_exit_events": 2,
+    "affected_attempt_ids": [
+      1,
+      4
+    ],
+    "complete_authoritative_parent_usage_retained": true,
+    "child_post_disconnect_mirror_not_authoritative": true
+  },
+  "publication_limits": [
+    "All three matched participants fail the full original CM08 objective; no overall winner or quality superiority follows.",
+    "Timing boundaries differ and remain explicit. Lower tokens or shorter elapsed time on noncompletion does not establish an efficiency advantage.",
+    "Human/whole-case quality, money and development credits remain unknown. No current Eva2 result is imputed.",
+    "Canonical OpenClaw native_closed=false and equivalent settlement=true remain distinct in the retained result.",
+    "No new product function, runtime change, P2.1 completion, next-case selection or further input admission is established."
+  ],
+  "findings": [],
+  "new_execution_or_input_authorized": false
+}

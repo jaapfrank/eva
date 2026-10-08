@@ -1,38 +1,38 @@
-## Actueel 8 oktober — matching XD02 afgesloten; producttekort zichtbaar
+## Actueel 8 oktober — CM08 en XD02 gesloten; geen algemene voorsprong bewezen
 
-De matching Eva2-uitvoering is uitgevoerd en onafhankelijk beoordeeld. Op dezelfde
-oorspronkelijke XD02-opdracht voldoet OpenClaw aan 3/3 vaste voorwaarden en voert
-beide bedoelde wijzigingen uit; Eva2 en Hermes halen 1/3 en voeren geen bedoelde
-wijziging uit. Eva2 onderzocht de beschikbare gewone toegang onvoldoende en vroeg
-om toegangshulp. Dit is een geldig beperkt productverlies, geen UNKNOWN door onze
-proefroute. Menselijke antwoordkwaliteit en algemene superioriteit zijn niet bewezen.
+Hermes is één keer op de oorspronkelijke CM08-geheugentaak uitgevoerd en onafhankelijk
+beoordeeld naast behouden Eva1/OpenClaw. Alle drie bewaren de ervaring in historie,
+maar gebruiken haar niet bij de vraag na tien gesimuleerde dagen. Alle drie: 3/3
+antwoorden, 2/3 feitelijk, 1/3 vaste voorwaarden en 2/2 bron-/tracecontroles. De
+volledige taak faalt; opgeslagen informatie bewijst geen latere herinnering. Eva2
+is op deze taak nog niet gematcht. Menselijke/volledige kwaliteit blijft UNKNOWN.
 
-Eva2 gebruikte 8 volledige modelaanvragen (1 Sol/none, 7 Astra/medium), 57.007 tokens
-en 5 afgehandelde tools. Nativeboot tot waarnemingsstop: 176,30 seconden; eerste
-ontvangst is geen taakafronding. Meetgrenzen/modelrollen/contextaanbieding verschillen
-tussen deelnemers. Lagere tokens bij niet-afronden bewijzen geen efficiëntiewinst.
-Geld- en ontwikkelcreditkosten blijven onbekend. Alle eigen proefresources zijn
-gesloten; alle 29 oude registraties/revisions/metadata blijven exact behouden.
-De drie oude verbruiksonbekende pogingen blijven onbekend.
+Hermes: 7 volledige modelaanvragen (5 Sol/none, 2 Astra/medium), 18.001 tokens,
+2 tools en 21,43 seconden. Eva1: 6 aanvragen/37.179 tokens/28,77s; OpenClaw:
+11/266.395/92,41s. Meetgrenzen en modelrollen verschillen; goedkoper niet-afronden
+bewijst geen efficiëntiewinst. Credits/geld onbekend. Eigen proefresources gesloten;
+alle 30 oude rijen/revisions/metadata exact behouden. Nu 31 rijen/198 aanvragen,
+bekende ondergrens 2.662.213 tokens; drie oude verbruiksonbekende pogingen blijven staan.
 
+Bewijs: `eva2/evidence/product/p2-hermes-original-cm08-result-20261008.json`.
+Review: `eva2/reviews/p2-hermes-original-cm08-final-review-20261008.json`.
+
+De vorige matching XD02 blijft geldig: OpenClaw maakt de vaste opdracht af (3/3,
+beide wijzigingen teruggelezen); Eva2 en Hermes halen 1/3, geen bedoelde wijziging.
+Eva2 onderzocht beschikbare gewone toegang onvoldoende. Gerichte broncontrole
+vindt geen bewezen ontbrekende toolaansluiting; geen speculatieve productwijziging.
 Bewijs: `eva2/evidence/product/p2-eva2-xd02-reader-followup-result-20261008.json`.
-Review: `eva2/reviews/p2-eva2-xd02-reader-followup-final-review-20261008.json`.
-De eerdere gesloten UNKNOWN en de afzonderlijk geslaagde reader/nativeproeven
-blijven historisch bewijs; niet opnieuw uitvoeren of als productfunctie tellen.
 
-De gekozen matching XD02-uitkomst is klaar; winnen is geen P2.1-eindvoorwaarde.
-Volledige P2.1-dekking blijft open: CM07 heeft geen toegelaten gematchte gedeelde
-audienceroute; matching Eva2-CM05/06/08 en latere oorspronkelijke families/epochs
-ontbreken, evenals twee echte onafhankelijke CM02/gespreksbeoordelingen. Ongebruikte
-slots zijn niet voltooid of bewezen onuitvoerbaar. Dit rapport geeft geen volgende
-uitvoering of brede matrix vrij. Een volgend concreet vervolg wordt vooraf aan de
-oorspronkelijke criteria en het bestaande mandaat gebonden; geen gesloten proef
-heropenen, nieuwe taak-ID of voorbeeldspecifieke kernregel.
+P2.1 blijft open voor oorspronkelijke resterende dekking en twee echte menselijke
+beoordelingen. CM07 mist een toegelaten gematchte gedeelde-audienceroute; matching
+Eva2-CM05/06/08 en latere families/epochs ontbreken. Ongebruikte slots zijn niet
+voltooid of bewezen onuitvoerbaar. Bind een volgend concreet vervolg vooraf aan
+originele criteria en bestaand mandaat; geen gesloten proef opnieuw, brede matrix,
+nieuwe taak-ID of voorbeeldspecifieke kernregel. Geen volgende uitvoering geselecteerd.
 
-AIDE² hoort uitsluitend bij Eva2, ook voor haar apps/uitbreidingen. L3.4–L3.7 blijven
-geïnstalleerd en afgerond. De vier huisgenootuitkomsten en 39/48 kleine afrondingen
-blijven onveranderd; spraak blijft geparkeerd. Docker Desktop wordt niet door Eva
-gebruikt; de bestaande zelfstandige WSL-Dockerroute is leidend, geen Desktopherstel.
+Vier huisgenootuitkomsten, 39/48 kleine afrondingen en L3.4–L3.7 blijven behouden.
+AIDE² uitsluitend voor Eva2 en haar uitbreidingen; spraak geparkeerd. Eva gebruikt
+zelfstandige WSL-Docker, geen Docker Desktop; geen Desktopherstel uitvoeren.
 
 ## Historische momentopname vóór het matching vervolg — native aansluiting bewezen
 
