@@ -1,0 +1,68 @@
+{
+  "caseId": "EV003-XD-02",
+  "classification": "UNKNOWN",
+  "contract": "IndependentMatchingEva2XD02ClosedFollowupReview/v1",
+  "decision": "GO_SANITIZED_TERMINAL_PUBLICATION_AND_SOURCE_ONLY_READER_CORRECTION",
+  "episodeId": "eva2:EV003-XD-02:epoch1:owner-followup2",
+  "epoch": 1,
+  "executionDecision": "NO_GO_EXPIRED_EPISODE",
+  "limitations": [
+    "The initial input gate was consumed, but original input was never dispatched.",
+    "Healthy native workers and clean shutdown do not establish task completion.",
+    "Reader correction is source reviewed; corrected reader execution remains unproven.",
+    "No renewed episode, timer, reservation, comparator replay or further paid input is admitted here.",
+    "P2.1 and human/family acceptance remain open."
+  ],
+  "originalCaseSha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+  "originalPlanSha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "participant": "eva2",
+  "physicalClosureSha256": "484a51729b85e0eba8653b20ac2851b6819e3d0e29d23a8010d1dcbb7ad076b7",
+  "quality": {
+    "humanRatings": [
+      null,
+      null
+    ],
+    "objectiveCompletion": null,
+    "productLoss": null,
+    "semanticScore": null,
+    "winner": null
+  },
+  "readerCorrection": {
+    "bootReviewSha256": "f0cf0a959042363e6ff0baabedf98b4c6402bcca8d8d6f644b489bfe221d88b8",
+    "executedAfterCorrection": false,
+    "scope": "Existing eva_runtime reader role and normal tenant/installation scope; separate carrier preserves original deadline bytes.",
+    "sourceReviewSha256": "5b5d16e985b7dff1e6bcbd672bee819c1cb3abf11ed513cfc04f26741e144eeb",
+    "sourceSha256": "f3fdf2a4599648ab7f5b7eded4b0bd2386766de29d82494a8bb5a5e1eb7c2bf7"
+  },
+  "responsibility": "Evaluator baseline readback failed before original task dispatch.",
+  "retentionSha256": "204ee9df5698d2b5b9b5168b44b6e77d1b4a1035b9d53f4ed69d547073adab78",
+  "reviewedResultSha256": "9e2c0a49f282b07eb4c1219ce58f7043e561d5a01c8129c973f4009524aedecc",
+  "reviewer": "/root/p2_eva1_lease_review_20261006",
+  "sourceReviewSha256": "0defeba4b82e744d50a502d3e4f7ef2ff459bea1fbbe93a77f6abe5b502fb160",
+  "terminalIndexSha256": "6568db4b0bdb334de7af822d4dcc527b130bb0578b9b1cc3d0a47b377b6438cb",
+  "terminalSha256": "eea9d1c5e58bb37aba08566e08fdee620cdfea1d7e176b0adcdf89d183a70b48",
+  "usage": {
+    "complete": false,
+    "historicalUnknownAttempts": 3,
+    "knownCumulativeTotalLowerBound": 2587205,
+    "totalTokens": null
+  },
+  "verified": {
+    "continuationBootReleaseWritten": false,
+    "continuationRearmPerformed": false,
+    "currentRows": 29,
+    "fixtureJournalsEmptyAndStatesUnchanged": 2,
+    "fullOriginalReservationRetained": true,
+    "historicalUNKNOWNPreserved": true,
+    "nativeWorkersHealthyBeforeFailure": 3,
+    "nativeWorkersSettledAndACK": 3,
+    "newEpisodeRevision": 2,
+    "originalAbsoluteDeadlineExpired": true,
+    "originalTaskInputsDispatched": 0,
+    "physicalOwnedResourcesAndParentsAbsent": true,
+    "retainedAnswers": 0,
+    "retainedHistoricalRowsExact": 28,
+    "trackedSDKAttempts": 0,
+    "trackedTools": 0
+  }
+}

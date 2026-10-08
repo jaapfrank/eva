@@ -1,4 +1,35 @@
-## Actueel vervolg 8 oktober — native aansluiting bewezen, één matching Eva2-uitkomst
+## Actueel 8 oktober — AIDE² voor Eva2; vergelijkingsroute gericht herstellen
+
+AIDE² hoort uitsluitend bij Eva2. Zij leert uit echte ervaringen, onderzoekt betere
+werkwijzen en past onafhankelijk aangetoonde verbeteringen toe, ook voor haar apps
+of uitbreidingen. Eva1 en concurrenten zijn referenties, geen doelwit voor onze
+AIDE²-bouw of optimalisatie. De oude agentnamen duiden nu uitvoerder en reviewer
+van de P2.1-proefroute aan. L3.4–L3.7 blijven geïnstalleerd en afgerond; geen herhaling.
+Blijvend beter worden is het productdoel, algemene blijvende superioriteit is geen
+bewezen resultaat van de beperkte bestaande contexttoepassing.
+
+Het noodzakelijke matching XD02-vervolg is gesloten UNKNOWN: drie echte nativewerkers
+waren gezond, maar onze evaluator-reader selecteerde de bestaande databaserol niet
+vóór de oorspronkelijke input. Geen taakinput, antwoord of geregistreerde model-/
+toolpoging. Eindverbruik onvolledig/NULL. De readercorrectie is als bron beoordeeld,
+maar niet uitgevoerd vóór de oorspronkelijke deadline verliep. Geen bootrelease
+of rearm van het vervolg; alle eigen resources/wachtende parent afgesloten.
+Bewijs: `eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json`.
+Review: `eva2/reviews/p2-eva2-xd02-necessary-followup-final-review-20261008.json`.
+
+Maak nu alleen deze noodzakelijke P2.1-afhankelijkheid af: een werkelijk uitgevoerde
+modelvrije before/result/close-readercontrole op publieke synthetische scope, en
+dezelfde bestaande native-ready/inputgate vooraf onafhankelijk toetsen/binden.
+Geen provider-/actieaanroep, afgeschermde proefdata of nieuwe betaalde episode in
+deze technische reparatie. Gebruik bewezen startup/afsluiting; geen legefactory-
+of drie-workerherhaling. Reviewvoorwaarden vóór een eventuele toekomstige originele
+klok afhandelen; criteria, rollen, grenzen en eenmalige vrijgave behouden.
+Daarna één noodzakelijk matching vervolg afzonderlijk concreet aan bestaand mandaat
+binden; geen oude episode/timer resetten, OpenClaw/Hermes herhalen of brede matrix.
+P2.1 blijft open. 39/48 taakafrondingen, menselijke beoordeling en geparkeerde spraak
+blijven onveranderd; technische reparatie is geen extra huisgenootfunctie.
+
+## Historische momentopname vóór het matching vervolg — native aansluiting bewezen
 
 De drie daadwerkelijke nativewerkers zijn modelvrij geslaagd: kern/geheugen/
 taakwerker antwoorden HTTP200; echte UID1000:65532 en gebruikte mounts zijn

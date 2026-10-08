@@ -1,0 +1,112 @@
+{
+  "contract": "OriginalMatchingEva2XD02Result/v1",
+  "participant": "eva2",
+  "case_id": "EV003-XD-02",
+  "epoch": 1,
+  "episode_id": "eva2:EV003-XD-02:epoch1:owner-followup2",
+  "classification": "UNKNOWN",
+  "responsibility": "evaluator pre-input failure",
+  "objective_completion": null,
+  "semantic_score": null,
+  "human_ratings": [
+    null,
+    null
+  ],
+  "original_binding": {
+    "case_sha256": "3f7716c3ba82b7d97f375c10dd0ae60217f7480ef6f96ba8b5a7b8e038d1754c",
+    "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+    "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+    "projection_sha256": "adb43edf34954d022d7963cc4417f649c0d13a9734c61564b1b30165ca0846c3",
+    "owner_followup": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-followup-eva2-xd02-20261008-v2/owner-followup-authorization.private.json",
+      "sha256": "f20df2adf17d67a356f7fd7f94e110046d37d74f474faa32452e8210c8b5a977"
+    }
+  },
+  "actual_execution": {
+    "native_workers_healthy": 3,
+    "input_release_gate_consumed": true,
+    "original_turns_dispatched": 0,
+    "observed_provider_attempts": 0,
+    "observed_tool_dispatches": 0,
+    "retained_answers": 0,
+    "usage_complete": false,
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null,
+    "runtime_cost": null,
+    "development_credits": null,
+    "boot_to_stop_seconds": 230.4796705589979,
+    "duration_scope": "initial native boot through evaluator stop; not task performance"
+  },
+  "technical_cause": {
+    "transition": "baseline evaluator native_read before original request dispatch",
+    "exception_class": "InsufficientPrivilege",
+    "message": "permission denied for schema eva_core",
+    "correction": "reader-only existing eva_runtime role plus normal tenant/installation startup settings; source reviewed, not executed before expiry"
+  },
+  "continuation": {
+    "same_sample_and_absolute_deadline": true,
+    "waiting_parent_created": true,
+    "boot_release_written": false,
+    "rearm_performed": false,
+    "no_original_input_go_after_expiry": true,
+    "outcome": "original deadline expired; waiting parent terminated and restored resources removed"
+  },
+  "closure": {
+    "all_three_native_workers_settled_and_control_acknowledged": true,
+    "initial_parent_errors": [],
+    "initial_cleanup_errors": [],
+    "initial_native_resources_removed": true,
+    "restored_six_resources_and_network_absent": true,
+    "continuation_parent_absent": true
+  },
+  "accounting_history": {
+    "old28_raw_rows_revisions_and_metadata_unchanged": true,
+    "current_rows": 29,
+    "new_episode_revision": 2,
+    "full_original_reservation_retained": true,
+    "prior_unknowns_retained": true,
+    "cumulative_provider_attempts": 183,
+    "known_input_lower_bound": 2567467,
+    "known_output_lower_bound": 19738,
+    "known_total_lower_bound": 2587205,
+    "historical_usage_unknown_attempts": 3,
+    "historical_usage_unknown_rows": 2,
+    "usage_complete": false
+  },
+  "limitations": [
+    "No product loss, winner, semantic score or efficiency advantage can be inferred.",
+    "Three-worker health and clean closure do not prove an original task result.",
+    "The source-only reader correction is not an executed readback proof.",
+    "Closed OpenClaw/Hermes results and all earlier Eva2 UNKNOWN episodes remain unchanged.",
+    "P2.1 and human/family acceptance are not completed by this episode."
+  ],
+  "evidence": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-followup-eva2-xd02-20261008-v2/terminal-technical.private.json",
+      "sha256": "eea9d1c5e58bb37aba08566e08fdee620cdfea1d7e176b0adcdf89d183a70b48"
+    },
+    "physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-followup-eva2-xd02-20261008-v2/final-physical-closure.private.json",
+      "sha256": "484a51729b85e0eba8653b20ac2851b6819e3d0e29d23a8010d1dcbb7ad076b7"
+    },
+    "retention": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-followup-eva2-xd02-20261008-v2/retained-evidence-manifest.private.json",
+      "sha256": "204ee9df5698d2b5b9b5168b44b6e77d1b4a1035b9d53f4ed69d547073adab78"
+    },
+    "native_ready": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-followup-eva2-xd02-20261008-v2/eva2/execution/native-ready-technical.private.json",
+      "sha256": "cf1a5b79eb60440b231e765ce239490647b91dddf53e12c2ace460e0ae4a5fb6"
+    },
+    "reader_source_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-followup-eva2-xd02-20261008-v2/reader-continuation-source-review.private.json",
+      "sha256": "5b5d16e985b7dff1e6bcbd672bee819c1cb3abf11ed513cfc04f26741e144eeb"
+    },
+    "reader_boot_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-owner-followup-eva2-xd02-20261008-v2/reader-continuation-boot-review.private.json",
+      "sha256": "f0cf0a959042363e6ff0baabedf98b4c6402bcca8d8d6f644b489bfe221d88b8"
+    }
+  },
+  "publication_decision": "PENDING_INDEPENDENT_REVIEW",
+  "further_original_execution_admitted": false
+}
