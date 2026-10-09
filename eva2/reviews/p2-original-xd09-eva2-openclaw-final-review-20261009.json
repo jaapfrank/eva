@@ -1,0 +1,100 @@
+{
+  "P2_1_complete": false,
+  "allowed_publication": "Only exact approved result and conservative registry coverage bytes under their canonical filenames with this bounded independent review. Existing IDs, criteria, statuses and closed evidence remain.",
+  "approved_coverage": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd09-eva2-openclaw-20261009-v1/p2-authority-coverage-xd09-20261009.json",
+    "sha256": "aaa6d31eaf817dbc4b5cbf8b8acd8308d93179ba5ef03dbd09a1bf01038b0efb"
+  },
+  "approved_result": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd09-eva2-openclaw-20261009-v1/pair-result.public.json",
+    "sha256": "712f3d363ab6a3424505bcebe08bc7bd4078d474b8ee8633f9a01bb8c615b9ae"
+  },
+  "canonical_filenames": {
+    "coverage": "p2-authority-coverage-xd09-20261009.json",
+    "result": "p2-original-xd09-eva2-openclaw-result-20261009.json"
+  },
+  "checked": {
+    "Eva2_previous_assessment_three_ACK_local_settlement_reused": true,
+    "OpenClaw_native_closed_false_separate_from_ACK_equivalent_settlement": true,
+    "OpenClaw_nine_physical_requests_original_text_private_origin_and_Astra_medium_completed": true,
+    "all47_prior_raw_revisions_metadata_exact": true,
+    "both_original_fixed_conditions": [
+      true,
+      true,
+      true
+    ],
+    "both_original_independent_readbacks": [
+      true,
+      true
+    ],
+    "both_physical_closures_and_actual_terminal_refs_bound": true,
+    "cumulative_known_tokens_lower_bound": 6249122,
+    "cumulative_recorded_SDK": 352,
+    "current_authority_sha256": "8831d43d4e212f07aaf431c5f3b528c467af7a0f4955b0a2860c4da1f2274027",
+    "current_rows": 48,
+    "fixture_effects_per_participant": 3,
+    "global_complete_token_total": null,
+    "index_refs_hash_exact": 19,
+    "old_UNKNOWN_full_reserves_preserved": true,
+    "old_missing_usage_attempts": 5,
+    "old_usage_unknown_rows": 3,
+    "original_case_sha256": "11846fec1178835b2996d78efcafa7c4d0df816391f8fca4dce49bf3099db8a1",
+    "original_retained_state_predicates_independently_recomputed": true,
+    "retained_file_hashes_exact": 566,
+    "safe_declassification_counts_booleans_hashes_only": true,
+    "same_original_initial_state_and_scoring_reference": true
+  },
+  "contract": "IndependentOriginalXD09PairFinalPublicationReview/v1",
+  "decision": "GO_PUBLICATION_BOUNDED_ORIGINAL_PAIR",
+  "development_credit_cost": null,
+  "findings": [],
+  "future_execution_admitted": false,
+  "human_quality": null,
+  "limits": [
+    "Both original bounded objectives completed; human whole quality remains null. No pair winner, general superiority, efficiency advantage, new function or P2.1 completion follows.",
+    "Parent timing boundaries differ. Native_closed=false remains separate from parent ACK, equivalent settlement and physical closure.",
+    "Both source-attestor/scalar corrections, old drafts, root precheck lookup failure and export-envelope correction remain retained; no runtime replay or criterion change.",
+    "Next XD10 is metadata only. This review grants no selection, resources, admission, clock, provider call, replay or future execution."
+  ],
+  "observed_usage": {
+    "eva2": {
+      "SDK": 12,
+      "actual_roles": {
+        "contact/gpt-6-sol/none": 1,
+        "helper/gpt-6-astra/medium": 11
+      },
+      "input_tokens": 121599,
+      "output_tokens": 2079,
+      "parent_to_requested_stop_seconds": 143.2594148479984,
+      "returned_tools": 9,
+      "total_tokens": 123678
+    },
+    "openclaw": {
+      "SDK": 9,
+      "actual_roles": {
+        "helper/gpt-6-astra/medium": 9
+      },
+      "input_tokens": 357450,
+      "output_tokens": 1236,
+      "parent_before_child_launch_through_child_return_seconds": 99.95359708598698,
+      "settled_tools": 6,
+      "total_tokens": 358686
+    },
+    "pair": {
+      "complete": true,
+      "input_tokens": 479049,
+      "output_tokens": 3315,
+      "sdk_attempts": 21,
+      "tool_dispatches": 15,
+      "total_tokens": 482364
+    }
+  },
+  "reviewed_at": "2026-10-09T06:51:27.247929+00:00",
+  "reviewed_final_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd09-eva2-openclaw-20261009-v1/final-review-index.private.json",
+    "sha256": "f8e1e1b60039284616b053ea74202c4d31e9685dd5130e3bc057d0e1f99e0ead"
+  },
+  "reviewer": "independent P2 evaluator",
+  "reviewer_provider_native_resource_calls": 0,
+  "runtime_cost_currency": null
+}

@@ -1,0 +1,112 @@
+{
+  "as_of": "2026-10-09T06:43:20.425998+00:00",
+  "closed_zero_input_or_unknown_is_not_completed_coverage": true,
+  "contract": "P2ConservativeRegisteredAuthorityCoverage/v1",
+  "groups": [
+    {
+      "active_kind_rows": 1,
+      "family": "conversation_memory",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "agent_zero",
+      "registered_rows": 1,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 1
+    },
+    {
+      "active_kind_rows": 3,
+      "family": "conversation_memory",
+      "historical_import_rows": 2,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "eva1-bottie",
+      "registered_rows": 5,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    },
+    {
+      "active_kind_rows": 5,
+      "family": "conversation_memory",
+      "historical_import_rows": 2,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "eva2",
+      "registered_rows": 7,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 1
+    },
+    {
+      "active_kind_rows": 7,
+      "family": "conversation_memory",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "hermes",
+      "registered_rows": 7,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    },
+    {
+      "active_kind_rows": 7,
+      "family": "conversation_memory",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "openclaw",
+      "registered_rows": 7,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    },
+    {
+      "active_kind_rows": 11,
+      "family": "cross_domain_actions",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "eva2",
+      "registered_rows": 11,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 1
+    },
+    {
+      "active_kind_rows": 1,
+      "family": "cross_domain_actions",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "hermes",
+      "registered_rows": 1,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    },
+    {
+      "active_kind_rows": 8,
+      "family": "cross_domain_actions",
+      "historical_import_rows": 1,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "openclaw",
+      "registered_rows": 9,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    }
+  ],
+  "historical_coverage_exports_unchanged": true,
+  "known_input_tokens_lower_bound": 6206513,
+  "known_output_tokens_lower_bound": 42609,
+  "known_total_tokens_lower_bound": 6249122,
+  "legacy_case_hashes_not_folded_into_current_matching_cases": true,
+  "missing_usage_attempts": 5,
+  "native_completion_and_objective_coverage_not_inferred_from_registry": true,
+  "new_pair_completed_objective_tasks": 2,
+  "new_pair_original_inputs_delivered": 2,
+  "new_pair_registered_rows": 2,
+  "overall_token_total": null,
+  "overall_usage_complete": false,
+  "recorded_sdk_attempts_including_historical_observed": 352,
+  "registered_identity_count": 48,
+  "registered_rows": 48,
+  "source_authority_sha256": "8831d43d4e212f07aaf431c5f3b528c467af7a0f4955b0a2860c4da1f2274027",
+  "usage_unknown_flagged_rows": 3
+}

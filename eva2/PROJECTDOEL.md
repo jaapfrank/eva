@@ -1,5 +1,39 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Actueel 9 oktober — XD09: beide deelnemers halen dezelfde taak
+
+Eva2 en OpenClaw halen de drie oorspronkelijke eindvoorwaarden en twee
+onafhankelijke terugleescontroles. Ieder voerde drie bevestigde wijzigingen uit.
+Dit is een geldige beperkte vergelijking van deze ene taak, geen algemene winnaar.
+
+Gemeten: Eva2 12 SDK-aanvragen, 123.678 tokens en 9 tools; OpenClaw 9 SDK-aanvragen,
+358.686 tokens en 6 tools. Alle 21 aanvragen hebben volledig gemeten usage.
+De geregistreerde tijden zijn circa 143 en 100 seconden, maar de klokgrenzen
+verschillen: Eva2 bevat opruimen, OpenClaw bewaart opruimen apart. Geen bewezen
+snelheids-, algemeen efficiëntie- of kwaliteitsvoordeel uit die tijden.
+Eigenaar-/gezinskwaliteit is niet ingevuld door de evaluator.
+
+Beide proefomgevingen zijn fysiek gesloten. OpenClaw native_closed=false blijft
+afzonderlijk van ACK, equivalente settlement en fysieke afsluiting geregistreerd.
+Alle 48 registraties en eerdere UNKNOWN blijven bewaard; 352 SDK-aanvragen,
+bekende tokenondergrens 6.249.122, vijf historische aanvragen zonder usage in drie
+rijen. Het volledige totaal en creditkosten blijven onbekend.
+
+P2.1 blijft open: volledige oorspronkelijke case-/epochdekking en de twee menselijke
+beoordelingen zijn niet aangetoond. 39/48 kleine afrondingen en L3.4–L3.7 blijven
+behouden; geen nieuwe productfunctie of gewijzigde eindvoorwaarde door deze proef.
+Spraak blijft geparkeerd. Ongebruikte Docker Desktop blijft ongemoeid; Eva gebruikt
+WSL-Docker. Geen automatische herhaling van XD09 of andere gesloten proeven.
+
+Vervolg uitsluitend het concrete resterende P2.1 binnen oorspronkelijke criteria,
+modelrollen, toegang en mandaat. Een volgende ongebruikte oorspronkelijke ingang
+wordt afzonderlijk vooraf gebonden; geen nieuwe brede matrix of nieuwe taak-ID.
+Het afmaken van deze rapportage verruimt geen proefruimte.
+
+Resultaat: eva2/evidence/product/p2-original-xd09-eva2-openclaw-result-20261009.json.
+Dekking: eva2/evidence/product/p2-authority-coverage-xd09-20261009.json.
+Review: eva2/reviews/p2-original-xd09-eva2-openclaw-final-review-20261009.json.
+
 ## Actueel 9 oktober — beperkte evaluatorcorrectie samengevoegd
 
 De bewezen antwoordherkomstfout bij herstart is in de bestaande vergelijkingsroute
