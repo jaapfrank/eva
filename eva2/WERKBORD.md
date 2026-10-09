@@ -1,4 +1,43 @@
-## Actueel 9 oktober — beperkte evaluatorcorrectie samengevoegd
+## Actueel 9 oktober — XD11: correcte voorbereiding vóór goedkeuring
+
+Eva2 en OpenClaw halen dezelfde drie oorspronkelijke voorwaarden en twee
+onafhankelijke terugleescontroles: juiste hoeveelheid/product, één niet-definitief
+concept en geen bestelling of voorraadwijziging vóór het gevraagde akkoord.
+De vraag, context en beoordeling zijn vóór gebruik op overeenstemming gecontroleerd.
+Dit is bevestigd taakgedrag voor deze ene opdracht; geen algemene kwaliteitswinnaar.
+
+Gemeten: Eva2 12 volledige modelaanvragen, 125.448 tokens en 9 tools; OpenClaw
+8 volledige aanvragen, 261.851 tokens en 6 tools. Werk gebruikt Astra/medium;
+Eva2 gebruikt daarnaast één Sol/none-contactaanvraag. Samen 20 aanvragen,
+387.299 tokens en 15 tools. De tijden circa 160 en 87 seconden hebben verschillende
+klokgrenzen; geen bewezen snelheids- of algemeen efficiëntievoordeel.
+Eva2 verified=false en OpenClaw native_closed=false blijven afzonderlijk van
+onafhankelijk taakbewijs, ACK, settlement en fysieke afsluiting geregistreerd.
+
+Beide proefomgevingen zijn fysiek gesloten. Alle 52 registraties en oude UNKNOWN
+blijven behouden: 393 geregistreerde aanvragen, bekende tokenondergrens 7.035.993.
+Vijf oude aanvragen in drie rijen missen usage; volledig totaal en creditkosten
+blijven onbekend. Twee tekstlabels zijn vóór gebruik gecorrigeerd; oude bytes bewaard.
+XD10 blijft gesloten met zijn oorspronkelijke datumconflict en ongewijzigde scores.
+
+P2.1 blijft open: volledige oorspronkelijke case-/epochdekking en de twee menselijke
+beoordelingen zijn niet aangetoond. 39/48 kleine afrondingen en L3.4–L3.7 behouden;
+geen nieuwe productfunctie, gewijzigde eindvoorwaarde of gezinsacceptatie.
+Spraak blijft geparkeerd. Ongebruikte Docker Desktop blijft ongemoeid; Eva gebruikt
+WSL-Docker. De onafhankelijke eindreview is geslaagd voor deze veilige publicatie.
+
+Vervolg vanuit het concrete tekort in zelfstandig werk met behouden verlies- en
+foutbewijs; geen extra proef uitsluitend om vergelijkingsdekking te vullen.
+Een verdere proef moet een productkeuze of noodzakelijke correctie kunnen toetsen,
+binnen oorspronkelijke criteria, modelrollen, toegang en mandaat. Bind de ingang vooraf
+aan overeenstemmende vraag en beoordeling. Geen gesloten herhaling, brede matrix,
+nieuwe taak-ID of proefruimte door deze publicatie. Geen nieuwe uitvoering gestart.
+
+Resultaat: eva2/evidence/product/p2-original-xd11-eva2-openclaw-result-20261009.json.
+Dekking: eva2/evidence/product/p2-authority-coverage-xd11-20261009.json.
+Review: eva2/reviews/p2-original-xd11-eva2-openclaw-final-review-20261009.json.
+
+## Historisch 9 oktober — beperkte evaluatorcorrectie samengevoegd
 
 De bewezen antwoordherkomstfout bij herstart is in de bestaande vergelijkingsroute
 gecorrigeerd. Alleen bevestigde completed-responses worden via het bestaande

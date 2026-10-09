@@ -229,13 +229,29 @@ function ComparisonResults({ results }) {
   </section>;
 }
 
+const deliveryResultLabels = {
+  investigated: 'Onderzocht',
+  comparison_passed: 'Proef geslaagd',
+  comparison_failed: 'Taak niet afgemaakt',
+  comparison_inconclusive: 'Proef onbeslist',
+  source_corrected: 'Proefroute hersteld',
+};
+
+function formatDeliveryDate(value) {
+  if (!value) return 'Datum niet vastgelegd';
+  if (!/^\d{4}-\d{2}-\d{2}T/.test(value) || !Number.isFinite(Date.parse(value))) return value;
+  return new Date(value).toLocaleString('nl-NL', {
+    timeZone: 'Europe/Amsterdam', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit',
+  });
+}
+
 function DeliveryRecord({ item, technical = false }) {
   const grouped = Array.isArray(item.children) && item.children.length > 0;
-  const label = grouped ? 'Onvoltooid · uitgesteld' : technical
+  const label = deliveryResultLabels[item.state] || (grouped ? 'Onvoltooid · uitgesteld' : technical
     ? ({ installed: 'Geïnstalleerde deelstap', tested: 'Deelproef geslaagd', built: 'Deelstap gebouwd', accepted: 'Geaccepteerd' })[item.state]
-    : ({ installed: 'Geïnstalleerd', tested: 'Getest · niet geïnstalleerd', built: 'Gebouwd · niet geïnstalleerd', accepted: 'Geaccepteerd' })[item.state];
+    : ({ installed: 'Geïnstalleerd', tested: 'Getest · niet geïnstalleerd', built: 'Gebouwd · niet geïnstalleerd', accepted: 'Geaccepteerd' })[item.state]);
   return <details>
-    <summary><span className={`overview-badge ${item.state}`}>{label || 'Onbekend'}</span> {item.title} · {item.date}</summary>
+    <summary><span className={`overview-badge ${item.state}`}>{label || 'Status ontbreekt'}</span> {item.title} · {formatDeliveryDate(item.date)}</summary>
     <p>{item.result}</p><p><b>Nog open:</b> {item.remaining}</p>
     {grouped && <section aria-label="Technische tussenstappen"><h3>{item.children.length} technische tussenstappen — geen afzonderlijke opleveringen</h3>
       {item.children.map((child, index) => <DeliveryRecord key={`${child.source}-${index}`} item={child} technical />)}
@@ -245,7 +261,7 @@ function DeliveryRecord({ item, technical = false }) {
 }
 
 function DeliveryHistory({ project }) {
-  return <section className="delivery-history"><h2>Opleveringen en onvoltooid werk</h2>{project.deliveryOverview?.deliveries.map((item, index) => <DeliveryRecord key={`${item.source}-${index}`} item={item} />)}</section>;
+  return <section className="delivery-history"><h2>Opleveringen en onvoltooid werk</h2><p>Proeven en reparaties tellen niet als extra afgeronde Eva-functies.</p>{project.deliveryOverview?.deliveries.map((item, index) => <DeliveryRecord key={`${item.source}-${index}`} item={item} />)}</section>;
 }
 
 export default function ProjectDashboard() {
