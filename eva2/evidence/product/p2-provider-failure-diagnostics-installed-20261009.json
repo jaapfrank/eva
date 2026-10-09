@@ -1,0 +1,200 @@
+{
+  "contract": "EvaProviderFailureDiagnosticDelivery/v1",
+  "task": "P2.1",
+  "recordedAt": "2026-10-09T02:06:00.667559+00:00",
+  "state": "installed_independently_checked",
+  "sourceCommit": "7659b69aeaa8368de5941a11a5f9a543ccd699a1",
+  "existing": "Shared provider, namespace/tool search and safe conversation failure logging already exist.",
+  "gap": "Explicit failure/incomplete SSE became generic protocol; the first comparison accounting observer stopped before forwarding the failed chunk and did not persist its event cause.",
+  "change": {
+    "productModules": [
+      "adapters/model/openai_codex_provider.py",
+      "adapters/model/pydantic_conversation.py"
+    ],
+    "failureFields": [
+      "event_kind",
+      "error_code",
+      "error_code_sha256",
+      "incomplete_reason",
+      "incomplete_reason_sha256"
+    ],
+    "safeLabels": "Fixed known codes/reasons; unknown strings fingerprinted only; no upstream body/message/tool arguments/auth retained.",
+    "existingAccountingSource": "eva2/benchmark/inspect_ai_v1/cp001_http_accounting.py",
+    "accountingAppliedOnlyToFutureSource": true,
+    "categoryRetryUsageStopAuthorityAndToolsUnchanged": true
+  },
+  "verification": {
+    "sharedSdkConversationNamespaceTests": 138,
+    "focusedSeconds": 9.32,
+    "accountingSyntheticCases": 13,
+    "unchangedHindsightAstLoaderPassed": true,
+    "sourceReview": "eva2/reviews/p2-provider-failure-diagnostics-source-review-20261009.json",
+    "packaging": {
+      "core": {
+        "onlyChangedModules": [
+          "adapters/model/openai_codex_provider.py",
+          "adapters/model/pydantic_conversation.py"
+        ],
+        "unchangedPythonFiles": 333,
+        "candidateImage": "sha256:3ba78bb662aadf81bf196d754d1acb9b0859f73f6a38923ebcd3242dc6825b46",
+        "safeFailure": {
+          "event_kind": "response.failed",
+          "error_code": "server_error",
+          "error_code_sha256": null,
+          "incomplete_reason": null,
+          "incomplete_reason_sha256": null
+        },
+        "modelCalls": 0
+      },
+      "delegated-work-worker": {
+        "onlyChangedModules": [
+          "adapters/model/openai_codex_provider.py",
+          "adapters/model/pydantic_conversation.py"
+        ],
+        "unchangedPythonFiles": 333,
+        "candidateImage": "sha256:05cb5a4d54daeebce61f003491df0c78188f55f7f47fcd5ff1218d03b7ddf806",
+        "safeFailure": {
+          "event_kind": "response.failed",
+          "error_code": "server_error",
+          "error_code_sha256": null,
+          "incomplete_reason": null,
+          "incomplete_reason_sha256": null
+        },
+        "modelCalls": 0
+      }
+    },
+    "privateTechnicalReceipts": {
+      "source-review.private.json": "bc7346cee14ebe7ca3bdb45ece8e515356d17fb3bbd88b5b4ece115bfb531676",
+      "prebuild-binding.json": "cbafd9b530d97176a781eb5ea6ffc55ba251d93c7fc5a9c18550246de3cefcf7",
+      "build.json": "d12fd99f00d297f9a605767f05493daca50b2a82e43280986de00e7d4d6f1fa2",
+      "package-verification.json": "2b73caea60c3b6ef07519383032053d41c5e310c047fbf9f9590278ec2ea5861",
+      "focused-tests-final.private.json": "85b2a17e8772703e5a7a2120c21063ae6d3502cc6e34f98e218aa480d0b20a9e",
+      "preexisting-worker-authority-diagnosis.json": "344baadd669dba95f433c3c88d1f297a59b44a9e77411b4d505b5923fb11c09e",
+      "policy-refresh-preparation.private.json": "a25f5d58b8cc939b55a7fab5b32ce2751e512c4528ba066b8f912c9652d4b5e6",
+      "installation-binding-review.private.json": "c3f8c93edfa621642d92834b1976ad2a8fec30f9ee4dfe49ceb0fd4302802070",
+      "policy-refresh-applied.private.json": "b5008de3b203f8e817f3f77ce15dabf93781944fc7cd729865a8c5c3b90a5732",
+      "child-authority-dependency-review.private.json": "d75a75cf4766fa550b08f8a20b91323154b61a2f386e67f6bb86871b25ff86db",
+      "research-policy-refresh-preparation.private.json": "23647e0164931e10f2c33165822fe237046a0663dbdeac441e6018d4b48b6414",
+      "research-authority-validation.private.json": "007b242bbcc4e4a6f0d9d34b7eff774681b76f66c54dd4569d9fe0aa5e035ce8",
+      "research-authority-validation-corrected.private.json": "3341a968251511cd31c34646c4992b9a545c7d0ba85401e3d664ab4309dd675c",
+      "research-authority-validation-owner-matched.private.json": "abdd242a3727880d749b278dff4fb404860177cbb2654b721172a8c02c6ee811",
+      "research-policy-refresh-applied.private.json": "f1ed65ec52dc3d81d89936c19976aa3b8aa444f3c101affec14846692ac49781",
+      "update-import-failure.private.json": "8184b69decd42ec08eb0f94f275374f2274103f51f9bd412dc531d55db1d3326",
+      "update.private.json": "c75b2eccb1c2bc580ad39fdb7cf8bed0abf9eb2b3f7bfd383b4f49b581be7be2",
+      "update-process.private.json": "cccc7222c13318b609c03f5eb2509c5d74d917e79a1bc8ab53a2ba239746f059",
+      "core-existing-container-remount.private.json": "6c69e084a0a4594eed2d2d534ae02a59fd925808cab699d2717e4be9e47a7e62",
+      "already-created-worker-start.private.json": "3311281a3760287d81e10c4c01eb97cdfb6ccbc82c8329fde0d06ec61d84c420",
+      "installed-readback.public.json": "bdbca17997e6056fa71effdad56867edc43d9d57c7153ed4d9c2dfb86ad91b83"
+    },
+    "installedReadback": {
+      "checkedAt": "2026-10-09T02:04:57.538523+00:00",
+      "components": {
+        "core": {
+          "containerId": "f67f91dc21ecb6bdc0ae9ce3fc5a378383841324c710aa67fa689ea64bb74337",
+          "image": "sha256:3ba78bb662aadf81bf196d754d1acb9b0859f73f6a38923ebcd3242dc6825b46",
+          "status": "running",
+          "health": "healthy",
+          "exactNewModuleHashes": {
+            "adapters/model/openai_codex_provider.py": "7a7404ada7e0366edbb4f6f70f757d89db75b600b94460c4cecb739bee044d4d",
+            "adapters/model/pydantic_conversation.py": "27e62ca484c6a30f4fe14d8b6fca6eb009dead9ab476a78e9285dc76d92ba8b1"
+          },
+          "loadedResearchPolicySha256": "58de8fefa3c00b4f6b8f5339fb00a82f3b2e3aa0c8570e570cc78ed3edaf013f",
+          "environmentRetained": true,
+          "mountsRetained": true,
+          "entrypointRetained": true,
+          "commandRetained": true,
+          "runtimeUserRetained": true,
+          "healthcheckRetained": true,
+          "sameInstalledContainerAfterCorrection": true,
+          "environmentOrderRetained": false,
+          "changedEnvironmentNames": []
+        },
+        "delegated-work-worker": {
+          "containerId": "0173e535268c6e9c7f6072b8142575638347151d56184a1d2223172908fbeae6",
+          "image": "sha256:05cb5a4d54daeebce61f003491df0c78188f55f7f47fcd5ff1218d03b7ddf806",
+          "status": "running",
+          "health": "healthy",
+          "exactNewModuleHashes": {
+            "adapters/model/openai_codex_provider.py": "7a7404ada7e0366edbb4f6f70f757d89db75b600b94460c4cecb739bee044d4d",
+            "adapters/model/pydantic_conversation.py": "27e62ca484c6a30f4fe14d8b6fca6eb009dead9ab476a78e9285dc76d92ba8b1"
+          },
+          "loadedResearchPolicySha256": "58de8fefa3c00b4f6b8f5339fb00a82f3b2e3aa0c8570e570cc78ed3edaf013f",
+          "environmentRetained": true,
+          "mountsRetained": true,
+          "entrypointRetained": true,
+          "commandRetained": true,
+          "runtimeUserRetained": true,
+          "healthcheckRetained": true,
+          "sameInstalledContainerAfterCorrection": true,
+          "environmentOrderRetained": false,
+          "changedEnvironmentNames": []
+        }
+      },
+      "newModelRequestsFromChecks": 0,
+      "originalUpdaterReceiptRetained": true,
+      "updateRedispatched": false,
+      "liveAuthorityValidation": {
+        "exitCode": 0,
+        "passed": true,
+        "stdout": "normal_live_authority_valid\n",
+        "stderr": null
+      }
+    }
+  },
+  "preexistingRuntimeIssue": {
+    "workerUnhealthyBeforeChange": true,
+    "cause": "Same existing30-day household policy expired at2026-10-08T23:37:17Z; identity/token bindings remain current.",
+    "preparedRefresh": "Only effective_at/expires_at, same30days and exact mandate/devices/operation/identity/token/limits.",
+    "oldPolicySha256": "bce83d1366b0466ac097f16a2a0f79eb03d295dcbbf2d96ffcfeff7a3e55665e",
+    "newPolicySha256": "d47b691ebfdaeecc43bcc51977beb4c76daf02dfe1987f724024e331dc1f2332",
+    "refreshApplied": true,
+    "childDependency": {
+      "changedFields": [
+        "household_policy_sha256",
+        "effective_at",
+        "expires_at"
+      ],
+      "oldSha256": "7718732182798b18d5dba2a8d362fd6f54af2a3f96abe11b99d0a48a124c0b9c",
+      "newSha256": "58de8fefa3c00b4f6b8f5339fb00a82f3b2e3aa0c8570e570cc78ed3edaf013f",
+      "allOtherFieldsExact": true,
+      "normalOfflineAndLiveAuthorityValidationPassed": true,
+      "metadataRetained": true,
+      "authorityScopeAndBudgetsUnchanged": true
+    }
+  },
+  "usage": {
+    "manualRuntimeModelCalls": 0,
+    "newComparisonModelCalls": 0,
+    "syntheticNetworkRequests": 0,
+    "developmentCredits": null,
+    "runtimeAutonomousUsage": "not_measured_by_this_delivery"
+  },
+  "preparationErrors": [
+    "Initial providerSDK mock omitted required instructions, so it failed before transport; testfixture fixed. Fourteen existing tests lacked tiktoken in the old testenv; existing pinned0.14 library appended, no download/productcodechange.",
+    "New safe label hash initially did not cover escaped lone surrogate and classannotations broke existing AST-only loader; review findings fixed before source freeze.",
+    "One root-owned gitread stopped on ownership check before overlays; all subsequent Git commands ran as administrator.",
+    "Initial baseline-image probe incorrectly required new diagnostic interface on old source; zero-network container removed. Corrected baseline hashes plus candidate-specific failure probe passed.",
+    "Policy preparation initially expected direct file mount; stopped before change. Resolved same actual directorymount before frozen old/new preparation.",
+    "First updater import failed before dispatch because tools was absent from PYTHONPATH; corrected existing import path once. Actual update then reported incomplete due missed child-parent hash/period dependency. That incomplete receipt is retained.",
+    "First offline child validation had a duplicate bind mount and stopped before container execution. Candidate file then required existing runtime owner65532/mode0600; both failed receipts retained. Exact corrected normal authority validation passed with no network/model requests."
+  ],
+  "limits": [
+    "HistoricalXD06 cause and usage remainUNKNOWN; no retrospective winner or scoring/criteria change.",
+    "Safe future failure evidence is proven synthetically; live workmodel compatibility, recovery and better result quality are not proven by this delivery.",
+    "P2.1 remainsopen;39/48small taskcompletions unchanged. No new productfunction or speechwork.",
+    "Future accounting source is not an execution admission; no closed trial replay or new matrix."
+  ],
+  "userUse": "Ordinary Telegram /eva2 or installed chat work route; no new setup step. Failed work can now retain a safe diagnostic cause for targeted repair.",
+  "newProductFunction": false,
+  "p21Completed": false,
+  "futureComparisonAdmitted": false,
+  "installation": {
+    "updaterDispatches": 1,
+    "originalUpdaterResult": "incomplete_inspect_retained_installation",
+    "originalReceiptPreserved": true,
+    "missedDependency": "Refreshed parent policy changes its canonical hash and period; original child hash/period was not refreshed in preparation/review, so the new core failed startup.",
+    "targetedCompletion": "Rebind exact existing child hash/period, remount the same installed core, start the already-created worker. Both same installed containers healthy; no rollback/rebuild/updater replay.",
+    "independentFinalReview": "eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json",
+    "independentFinalReviewSha256": "59ff6abd126627adcddf383992f8612508bf27d3425d12db70d39e9976cf93bf"
+  }
+}

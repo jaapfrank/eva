@@ -1016,8 +1016,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-09T00:19:59.189413+00:00",
+        "checkedAt": "2026-10-09T02:08:28.370182+00:00",
         "deliveries": [
+          {
+            "taskId": "P2.1",
+            "title": "Foutdiagnostiek geïnstalleerd; onderzoekswerker weer gezond",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "result": "Afgebroken modelstreams bewaren nu veilige foutcodes/redenen. Kern en werker gezond; dezelfde huishoudtoelating en afhankelijke onderzoeksconfiguratie vernieuwd. De eerste onvolledige update blijft als foutbewijs bewaard.",
+            "remaining": "P2.1 open; oorspronkelijke vergelijking en gebruikerskwaliteit nog niet afgerond. Oude XD06-oorzaak en ontbrekend verbruik blijven UNKNOWN. 39/48 taken onveranderd.",
+            "source": "eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json",
+            "review": "eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json",
+            "usage": "0 nieuwe handmatige Eva-modelaanvragen/vergelijkingen. Autonoom runtimeverbruik ongemeten; Codex-ontwikkelcredits en geld onbekend.",
+            "date": "2026-10-09T02:08:28.370182+00:00"
+          },
           {
             "taskId": "P2.1",
             "title": "XD06 vergeleken: geen afgeronde werkopdracht",
@@ -4363,19 +4375,19 @@
         ],
         "now": {
           "taskId": "P2.1",
-          "title": "P2.1 · XD06 gesloten; beide opdrachten niet af",
-          "detail": "Eva2 kreeg de taak maar stopte op een fout/onvolledige modelstream: UNKNOWN, twee usage-metingen ontbreken. OpenClaw 1/3, nul effecten. Beide omgevingen gesloten. Eerst foutmetadata/compatibiliteit verduidelijken vóór nieuwe betaalde proeven.",
-          "state": "in_progress",
+          "title": "P2.1 · foutdiagnostiek geïnstalleerd",
+          "detail": "Kern en onderzoekswerker gezond. Veilige foutcode/redenvlag blijft nu bewaard. Deze gerichte afhankelijkheid is afgerond; vergelijking en beter taakresultaat blijven open.",
+          "state": "installed",
           "activeExecution": false,
-          "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+          "source": "eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json"
+          "review": "eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json"
         },
         "next": {
-          "title": "P2.1 · Resterende oorspronkelijke vergelijking",
-          "detail": "De resterende oorspronkelijke vergelijkingsdekking blijft open. Kies alleen afzonderlijk concreet gebonden resterend werk vanuit het bestaande bewijs en mandaat. XD05 is gesloten; geen herhaling, nieuwe brede matrix of nieuwe producttaak door deze uitkomst.",
+          "title": "P2.1 · resterende oorspronkelijke uitvoering",
+          "detail": "Bind de volgende werkelijk resterende oorspronkelijke uitvoeringsopdracht concreet aan de bestaande criteria/rollen en beschikbare toelating. Gebruik de geïnstalleerde foutdiagnostiek bij een nieuw falend verzoek; de historische oorzaak is niet terug te halen. Geen gesloten proef herhalen of brede matrix. Toolcompatibiliteit en beter werkresultaat blijven onbewezen.",
           "taskId": "P2.1",
-          "source": "eva2/evidence/product/p2-authority-coverage-xd05-20261009.json",
+          "source": "eva2/evidence/product/p2-authority-coverage-xd06-20261009.json",
           "state": "planned"
         },
         "ownerAction": {
@@ -23854,7 +23866,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Los eerst gericht de ontbrekende provider-foutmetadata en werktoolcompatibiliteit uit met bestaande code en behouden verzoekmetadata; de oorzaak is nog niet bewezen. Geen volgende betaalde proef vóór die concrete afhankelijkheid is opgehelderd. Geen gesloten taak herhalen of brede matrix starten.",
+              "nextAction": "Bind de volgende werkelijk resterende oorspronkelijke uitvoeringsopdracht concreet aan de bestaande criteria/rollen en beschikbare toelating. Gebruik de geïnstalleerde foutdiagnostiek bij een nieuw falend verzoek; de historische oorzaak is niet terug te halen. Geen gesloten proef herhalen of brede matrix. Toolcompatibiliteit en beter werkresultaat blijven onbewezen.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -23863,34 +23875,21 @@
                 "blocksIndependentWork": false,
                 "source": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json"
               },
-              "checkedAt": "2026-10-09T01:30:05.473672+00:00",
+              "checkedAt": "2026-10-09T02:08:28.370182+00:00",
               "assignment": {
-                "baseCommit": "0148ff48836ca852d6d0b24682c67a771555fb31",
+                "baseCommit": "4895d535e09251154118fec8b624fbf41bef0cb8",
                 "owner": "/root",
-                "activeWorkers": [
-                  {
-                    "name": "Codex",
-                    "responsibility": "Coördinatie/canonieke bestanden/native handles."
-                  },
-                  {
-                    "name": "aide_final_evaluation",
-                    "responsibility": "Afgeschermde XD05-source/resourcebinding met bestaande bestands-/programmeerroute."
-                  },
-                  {
-                    "name": "p2_eva1_lease_review_20261006",
-                    "responsibility": "Onafhankelijke gebundelde source-/actor-/datagrensreview; geen writes aan uitvoering."
-                  }
-                ],
+                "activeWorkers": [],
                 "files": [
-                  "Coördinator: actuele private parent-/Inspect-/resourcewiring, bestaande werkbord/projectpublicatie",
-                  "Uitvoerder: oorspronkelijke protected input/accounting en immutable bron/resource/policybinding",
-                  "Reviewer: onafhankelijke eindbeoordeling; geen uitvoercode of criteria wijzigen"
+                  "Root: shared provider, existing conversation failure logging, their focused tests, canonical board/documentation and bundled installation",
+                  "Curator: read-only retained safe provider/request metadata; no original input/output/auth disclosure or runtime",
+                  "Reviewer: independent review of concrete source/package/runtime result; no code or criteria changes"
                 ],
-                "existing": "CM05/CM08-geheugenvoordelen en eerdere acceptaties behouden. De geïnstalleerde endpoint-rolecorrectie was aanwezig maar verhielp Eva2's verkeerde bestemmingkeuze in XD04 niet.",
-                "gap": "De opdracht bereikte Eva2, maar de werkmodelstream stopte met onbekende foutcode en onvolledige usage. OpenClaw rondde de taak evenmin af. Gerichte foutmetadata/compatibiliteit eerst; verzoekverschillen bewijzen geen oorzaak.",
-                "finish": "Eén oorspronkelijke XD06-opdracht via de bestaande Eva2- en OpenClaw-routes uitvoeren, onafhankelijk beoordelen en fysiek sluiten; oorspronkelijke criteria behouden. P2.1 als geheel blijft open.",
-                "estimate": "Huidige voorbereiding0runtime/providercalls. Oorspronkelijk per deelnemer72SDK/70tools/840s inclusief hulpmiddelen en voorbereiding; credits/geld onbekend.",
-                "currentAction": "XD06 gesloten en onafhankelijk gecontroleerd: Eva2 UNKNOWN na modelstreamstop; OpenClaw 1/3 en geen uitgevoerde effecten. Alle resources gesloten; geen nieuwe uitvoering actief.",
+                "existing": "Transport, hosted tool search/namespaces and generic failure logging exist; the fixed SSE failure branch drops its event kind/code/reason.",
+                "gap": "A failed/incomplete work stream becomes generic protocol without usable cause; that prevents targeted diagnosis.",
+                "finish": "Existing shared failure route preserves safe event/code/reason through provider observation and conversation logging, installed in core/worker and independently checked; old XD06 remains UNKNOWN and no new benchmark admitted.",
+                "estimate": "No new paid model calls or benchmark input. Focused SDK/mock checks and one bundled source overlay installation; development credits unknown.",
+                "currentAction": "Bind de volgende werkelijk resterende oorspronkelijke uitvoeringsopdracht concreet aan de bestaande criteria/rollen en beschikbare toelating. Gebruik de geïnstalleerde foutdiagnostiek bij een nieuw falend verzoek; de historische oorzaak is niet terug te halen. Geen gesloten proef herhalen of brede matrix. Toolcompatibiliteit en beter werkresultaat blijven onbewezen.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "basis": "Published independently assessed original XD05 result, review and authority40; no feature completion inferred.",
@@ -23934,7 +23933,7 @@
                     "review": "eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json"
                   }
                 },
-                "stage": "xd06_pair_closed_publication",
+                "stage": "provider_failure_metadata_installed",
                 "currentNativePreparation": {
                   "case": "EV003-XD-04",
                   "epoch": 1,
@@ -24389,31 +24388,18 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "stage": "xd06_closed_published",
-                  "startedAt": "2026-10-09T00:27:58.005899+00:00",
-                  "baseCommit": "0148ff48836ca852d6d0b24682c67a771555fb31",
-                  "proposedCase": "EV003-XD-06",
-                  "newTrialAdmitted": true,
-                  "originalInputAdmitted": true,
-                  "nativeClockStarted": true,
+                  "stage": "provider_failure_metadata_installed_independently_checked",
+                  "startedAt": "2026-10-09T01:39:21.710293+00:00",
+                  "classificationOfPreviousTurn": "no_progress",
+                  "reason": "The previous user turn acknowledged unused Docker Desktop only; no product state changed.",
                   "providerCallsStarted": 0,
-                  "resourcesStarted": true,
-                  "authorityCopied": true,
-                  "scopeSelectionReviewed": true,
-                  "earlyContractAssumptionCaught": true,
-                  "originalInputDelivered": true,
-                  "actualProviderAttempts": 3,
-                  "knownCompletedSdk": 1,
-                  "usageComplete": false,
-                  "eva2PhysicallyClosed": true,
-                  "classification": "progress",
-                  "activeExecution": false,
-                  "openclawOriginalInputDelivered": true,
-                  "allResourcesPhysicallyClosed": true,
-                  "futureExecutionAdmitted": false,
-                  "productFunctionCompleted": false,
-                  "result": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
-                  "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json"
+                  "closedTrialReplay": false,
+                  "newTrialAdmitted": false,
+                  "completedAt": "2026-10-09T02:08:28.370182+00:00",
+                  "outcomeClassification": "progress",
+                  "source": "eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json",
+                  "review": "eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json",
+                  "productFunctionCompleted": false
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -25922,19 +25908,12 @@
                 },
                 "concreteNextAction": "Los eerst gericht de ontbrekende provider-foutmetadata en werktoolcompatibiliteit uit met bestaande code en behouden verzoekmetadata; de oorzaak is nog niet bewezen. Geen volgende betaalde proef vóór die concrete afhankelijkheid is opgehelderd. Geen gesloten taak herhalen of brede matrix starten.",
                 "currentGoalTurnOutcome": {
-                  "case": "EV003-XD-06",
                   "classification": "progress",
-                  "status": "closed_eva2_unknown_openclaw_observed_no_pair_ranking",
-                  "eva2": "UNKNOWN_AFTER_ORIGINAL_INPUT",
-                  "openclawConditionsPassed": 1,
-                  "openclawConditionsRequired": 3,
-                  "sdkAttemptsObserved": 13,
-                  "knownLowerBoundTokens": 358832,
-                  "totalPairTokens": null,
+                  "result": "Installed shared diagnostic cause retention; fixed exact parent/child validity dependency and restored worker health.",
+                  "source": "eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json",
+                  "review": "eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json",
                   "productFunctionCompleted": false,
-                  "futureExecutionAdmitted": false,
-                  "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
-                  "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json"
+                  "p21Completed": false
                 },
                 "retainedPreviousOwnerAction": {
                   "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
@@ -26326,10 +26305,38 @@
                   "timingBoundary": "Single monotonic clock before native boot through before-stop, with parent-to-stop recorded separately; preparation excluded. Comparator timing boundaries are retained unchanged and not equated.",
                   "credits": null,
                   "householdRuntimeUsage": false
-                }
+                },
+                "previousGoalTurnBeforeProviderDiagnostics": {
+                  "stage": "xd06_closed_published",
+                  "startedAt": "2026-10-09T00:27:58.005899+00:00",
+                  "baseCommit": "0148ff48836ca852d6d0b24682c67a771555fb31",
+                  "proposedCase": "EV003-XD-06",
+                  "newTrialAdmitted": true,
+                  "originalInputAdmitted": true,
+                  "nativeClockStarted": true,
+                  "providerCallsStarted": 0,
+                  "resourcesStarted": true,
+                  "authorityCopied": true,
+                  "scopeSelectionReviewed": true,
+                  "earlyContractAssumptionCaught": true,
+                  "originalInputDelivered": true,
+                  "actualProviderAttempts": 3,
+                  "knownCompletedSdk": 1,
+                  "usageComplete": false,
+                  "eva2PhysicallyClosed": true,
+                  "classification": "progress",
+                  "activeExecution": false,
+                  "openclawOriginalInputDelivered": true,
+                  "allResourcesPhysicallyClosed": true,
+                  "futureExecutionAdmitted": false,
+                  "productFunctionCompleted": false,
+                  "result": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+                  "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json"
+                },
+                "finishResult": "eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json"
               },
               "remaining": "XD06 gesloten: Eva2 UNKNOWN na oorspronkelijke invoer/modelstreamstop; OpenClaw 1/3 en geen werkresultaat. P2.1 open: resterende oorspronkelijke dekking, CM07-toegang en twee echte menselijke beoordelingen. Geen geldige pairwinnaar.",
-              "latestEvidence": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+              "latestEvidence": "eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json",
               "executionBlocker": null,
               "assessmentBlocker": "Twee echte onafhankelijke CM02/gespreksbeoordelingen en gezinsacceptatie blijven open.",
               "nativeAccessBlocker": {
@@ -26433,10 +26440,10 @@
               "publicationReview": "eva2/reviews/p2-original-xd03-eva2-openclaw-final-review-20261008.json",
               "publicationReviewSha256": "c529d2bc0524bc4b78fe00562806126dd85cd647eace18caccf77de5b9f0dc07",
               "blockerDetails": {
-                "codex": "Een expliciet fout/onvolledigheidsbericht stopte de Responses-stream. Foutcode/type is niet behouden; twee SDK-usagerecords ontbreken. Eerst gerichte diagnose vóór een volgende betaalde proef.",
+                "codex": "Foutmetadata nu geïnstalleerd en beide diensten gezond. Historische foutoorzaak ontbreekt blijvend; live werktoolcompatibiliteit en beter taakresultaat nog niet aangetoond.",
                 "product": "Geen bevestigd Eva2-werkresultaat; OpenClaw 1/3 vaste voorwaarden en geen effect. Geen geldige pairwinnaar.",
                 "owner": "Geen nieuwe technische eigenaarhandeling; oorspronkelijke menselijke beoordelingen en gezinsacceptatie apart open.",
-                "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json"
+                "source": "eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json"
               },
               "activeExecution": false,
               "currentReadbackAssessmentEvidence": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json",
@@ -26490,14 +26497,14 @@
               "publicPreparationEvidence": "eva2/evidence/product/p2-openclaw-calendar-correction-20261007.json",
               "nativeToolRuntimeReview": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
               "nativeToolCheckpointPublicationReview": "eva2/reviews/p2-openclaw-calendar-checkpoint-publication-review-20261007.json",
-              "updatedAt": "2026-10-09T01:30:05.473672+00:00",
+              "updatedAt": "2026-10-09T02:08:28.370182+00:00",
               "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json",
               "reviewSha256": "2274aaae9337d4f1b3b466ea46c886d84b9ad17e7ce1f8c2264d31252cab5466",
               "previousEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
               "historicalPublicationReviewBeforeMatchedEva1CM06": "eva2/reviews/p2-openclaw-cm06-publication-review-20261007.json",
               "historicalPublicationReviewBeforeMatchedHermesCM05": "eva2/reviews/p2-eva1-successor-cm06-publication-review-20261007.json",
               "historicalPublicationReviewBeforeMatchedHermesCM06": "eva2/reviews/p2-hermes-cm05-publication-review-20261007.json",
-              "latestReview": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json",
+              "latestReview": "eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json",
               "followupDecisionEvidence": "eva2/evidence/product/p2-eva2-xd02-followup-decision-20261008.json",
               "followupDecisionReview": "eva2/reviews/p2-eva2-xd02-followup-decision-review-20261008.json",
               "followupDecisionReviewSha256": "2ef29d9a78fc8c8b0ae315774b1e497c40a83330d3180d24b58b4142e6431bbb",
@@ -26559,30 +26566,25 @@
               },
               "currentTechnicalDependency": {
                 "stage": "installed_independently_reviewed",
-                "cause": "The retained XD02/XD03 workers navigated to a connector transport origin rather than a task destination. Existing worker/discovery/browser functioned.",
-                "scope": "Clarify MCP transport roles in existing inventory and browser context. No executor, authority, network, scoring or failure-policy change.",
+                "complete": true,
+                "cause": "Shared provider and first accounting observer dropped terminal event cause before generic protocol stop.",
                 "sourceModules": [
-                  "adapters/postgres/mcp_connector_registry.py",
-                  "providers/mcp_registration.py",
-                  "bootstrap/background_browser_context.py"
+                  "adapters/model/openai_codex_provider.py",
+                  "adapters/model/pydantic_conversation.py"
                 ],
-                "verification": "Focused existing registration/discovery tests, packaged source/context binding and independent bundled review. Behavioral improvement remains unproven without a new separately bound execution.",
-                "installation": "One image-only core/worker update using the current WSL Docker images and existing updater; retain runtime configuration, data and prior managed runtime variant.",
-                "closedTrialsReplayed": false,
-                "providerCallsPlanned": 0,
-                "developmentCredits": null,
-                "newProductFunction": false,
-                "installationEvidence": "eva2/evidence/product/p2-endpoint-role-installed-20261008.json",
-                "sourceCommit": "5891a0f98a7a472fe1d964af72a848a6b6424d13",
-                "focusedTestsPassed": 88,
+                "installationEvidence": "eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json",
+                "review": "eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json",
+                "reviewSha256": "59ff6abd126627adcddf383992f8612508bf27d3425d12db70d39e9976cf93bf",
+                "sourceCommit": "7659b69aeaa8368de5941a11a5f9a543ccd699a1",
+                "focusedTestsPassed": 138,
+                "accountingSyntheticCases": 13,
                 "bothServicesHealthy": true,
-                "packagedUnchangedPythonFilesPerImage": 332,
+                "providerCallsFromChecks": 0,
+                "newProductFunction": false,
                 "modelBehaviorProven": false,
-                "providerCalls": 0,
-                "review": "eva2/reviews/p2-endpoint-role-installed-review-20261008.json",
-                "reviewSha256": "324a4be377179af20e98d77ad515cba8583803a0bb70884c1641db8b4cf928b5",
-                "checkedAt": "2026-10-08T20:54:57.097242+00:00",
-                "complete": true
+                "updateDispatches": 1,
+                "originalUpdateIncompleteRetained": true,
+                "targetedChildPolicyCorrection": true
               },
               "closedFollowupResults": [
                 "eva2/evidence/product/p2-eva2-xd02-necessary-followup-result-20261008.json",
@@ -26881,6 +26883,33 @@
                 "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
                 "newTaskId": false,
                 "closedTrialReplay": false
+              },
+              "previousTechnicalDependencyBeforeProviderDiagnostics": {
+                "stage": "installed_independently_reviewed",
+                "cause": "The retained XD02/XD03 workers navigated to a connector transport origin rather than a task destination. Existing worker/discovery/browser functioned.",
+                "scope": "Clarify MCP transport roles in existing inventory and browser context. No executor, authority, network, scoring or failure-policy change.",
+                "sourceModules": [
+                  "adapters/postgres/mcp_connector_registry.py",
+                  "providers/mcp_registration.py",
+                  "bootstrap/background_browser_context.py"
+                ],
+                "verification": "Focused existing registration/discovery tests, packaged source/context binding and independent bundled review. Behavioral improvement remains unproven without a new separately bound execution.",
+                "installation": "One image-only core/worker update using the current WSL Docker images and existing updater; retain runtime configuration, data and prior managed runtime variant.",
+                "closedTrialsReplayed": false,
+                "providerCallsPlanned": 0,
+                "developmentCredits": null,
+                "newProductFunction": false,
+                "installationEvidence": "eva2/evidence/product/p2-endpoint-role-installed-20261008.json",
+                "sourceCommit": "5891a0f98a7a472fe1d964af72a848a6b6424d13",
+                "focusedTestsPassed": 88,
+                "bothServicesHealthy": true,
+                "packagedUnchangedPythonFilesPerImage": 332,
+                "modelBehaviorProven": false,
+                "providerCalls": 0,
+                "review": "eva2/reviews/p2-endpoint-role-installed-review-20261008.json",
+                "reviewSha256": "324a4be377179af20e98d77ad515cba8583803a0bb70884c1641db8b4cf928b5",
+                "checkedAt": "2026-10-08T20:54:57.097242+00:00",
+                "complete": true
               }
             },
             {

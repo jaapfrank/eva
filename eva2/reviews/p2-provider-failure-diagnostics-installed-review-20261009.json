@@ -1,0 +1,91 @@
+{
+  "contract": "IndependentProviderFailureDiagnosticsInstalledReview/v1",
+  "decision": "GO_INSTALLED_DIAGNOSTIC_BINDING_AND_BOUNDED_PUBLICATION",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "reviewedAt": "2026-10-09T02:07:22.150019+00:00",
+  "sourceCommit": "7659b69aeaa8368de5941a11a5f9a543ccd699a1",
+  "sourceSha256": {
+    "adapters/model/openai_codex_provider.py": "7a7404ada7e0366edbb4f6f70f757d89db75b600b94460c4cecb739bee044d4d",
+    "adapters/model/pydantic_conversation.py": "27e62ca484c6a30f4fe14d8b6fca6eb009dead9ab476a78e9285dc76d92ba8b1"
+  },
+  "sourceReviewSha256": "bc7346cee14ebe7ca3bdb45ece8e515356d17fb3bbd88b5b4ece115bfb531676",
+  "installationBindingReviewSha256": "c3f8c93edfa621642d92834b1976ad2a8fec30f9ee4dfe49ceb0fd4302802070",
+  "childDependencyReviewSha256": "d75a75cf4766fa550b08f8a20b91323154b61a2f386e67f6bb86871b25ff86db",
+  "installedReadbackSha256": "bdbca17997e6056fa71effdad56867edc43d9d57c7153ed4d9c2dfb86ad91b83",
+  "deliveryDraftSha256": "16028bdb27e1eac99cde95f97e50b7f3c1ec33f9331fa5c2700683285b8026ec",
+  "checks": {
+    "focusedExistingTests": 138,
+    "focusedSeconds": 9.32,
+    "accountingSyntheticCases": 13,
+    "actualUnchangedHindsightAstLoaderPassed": true,
+    "onlyTwoImageModuleFilesChanged": true,
+    "otherPythonFilesUnchangedEach": 333,
+    "runningImagesMatchExactReviewedPackages": true,
+    "bothContainersRunningAndHealthy": true,
+    "actualEnvironmentValuesEqualAndKeysUnique": true,
+    "environmentOrderChangedOnly": true,
+    "actualMountSourceDestinationReadWriteBindingsRetained": true,
+    "entrypointCommandUserHealthcheckRetained": true,
+    "exactChildPolicyLoadedBothContainers": true,
+    "offlineAndLiveNormalAuthorityValidationPassed": true,
+    "allDeclaredPrivateTechnicalReceiptHashesChecked": true,
+    "closedXD06AuthorityResultReviewHashesUnchanged": true,
+    "reviewerCreatedContainersOrRuntimeProbes": 0
+  },
+  "installedImages": {
+    "core": "sha256:3ba78bb662aadf81bf196d754d1acb9b0859f73f6a38923ebcd3242dc6825b46",
+    "delegated-work-worker": "sha256:05cb5a4d54daeebce61f003491df0c78188f55f7f47fcd5ff1218d03b7ddf806"
+  },
+  "authorityMaintenance": {
+    "parentChangedFields": [
+      "effective_at",
+      "expires_at"
+    ],
+    "parentLifetimeDaysRetained": 30,
+    "childChangedFields": [
+      "household_policy_sha256",
+      "effective_at",
+      "expires_at"
+    ],
+    "childAllOtherAuthorityScopeCapabilityProfileBudgetAndRetainedReferenceFieldsExact": true,
+    "originalFileOwnerAndPermissionsPreserved": true,
+    "newScopeOrBudgetGranted": false
+  },
+  "preservedInstallationFailure": {
+    "updaterDispatches": 1,
+    "originalUpdaterStatus": "incomplete_inspect_retained_installation",
+    "originalReceiptSha256": "c75b2eccb1c2bc580ad39fdb7cf8bed0abf9eb2b3f7bfd383b4f49b581be7be2",
+    "missedByImplementationAndIndependentInstallReview": "Existing research child policy pins parent canonical hash and validity period; initial time-only parent maintenance omitted this dependency.",
+    "targetedCompletion": "Exact child rebind, same installed core remount, start already-created worker; no second updater/rebuild/rollback.",
+    "allEarlierPreparationAndValidationErrorsRetained": true
+  },
+  "futureAccounting": {
+    "sourceCandidateSha256": "0ca0d1537b7a9a59018380e68a6392233ac0fa77aa20a48cb3657eb2462a9425",
+    "appliedToFutureCanonicalSourceOnly": true,
+    "firstObserverFixedDiagnosticAndCountersBeforeOriginalSampleStopped": true,
+    "stopCloseUsageRetryAndCategorySemanticsRetained": true,
+    "loggingFailurePreservesOriginalStop": true,
+    "notAnExecutionAdmission": true
+  },
+  "publicSafety": {
+    "fixedFailureKindsKnownLabelsAndUnknownLabelFingerprintsOnly": true,
+    "noOriginalTaskContentAnswerOriginCredentialToolArgumentOrUpstreamBodyPublished": true,
+    "technicalSafeDeliveryDraftApproved": true,
+    "allowedDraftFinalization": "Change only state to installed_independently_checked and bind this exact review path/hash; retain all observations, initial incomplete update, review miss, preparation errors, usage unknowns and claim limits.",
+    "canonicalReviewPath": "eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json"
+  },
+  "findings": [],
+  "limits": {
+    "manualRuntimeModelCalls": 0,
+    "newComparisonModelCalls": 0,
+    "developmentCredits": null,
+    "runtimeAutonomousUsage": "not_measured_by_this_delivery",
+    "historicalXD06FailureKindCauseAndIncompleteUsageRemainUnknown": true,
+    "liveWorkModelCompatibilityRecoveryOrBetterTaskResultsProven": false,
+    "P2_1Completed": false,
+    "smallTaskCompletionCountUnchanged": "39/48",
+    "newProductFunction": false,
+    "speechBuildOrProbe": false,
+    "newTrialOrReplayAdmitted": false
+  }
+}

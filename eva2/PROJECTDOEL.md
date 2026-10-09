@@ -1,5 +1,29 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Actueel 9 oktober — foutdiagnostiek geïnstalleerd; kern en werker gezond
+
+De gedeelde provider bewaart bij een afgebroken modelstream nu het fouttype en
+veilige foutcode/redenvlag; de bestaande gesprekslog en vergelijkingswaarnemer
+geven die door. Alleen vaste labels en fingerprints, geen berichten of geheimen.
+138 gerichte SDK-/gesprek-/tooltests en 13 synthetische accountingcontroles geslaagd.
+Kern en werker bevatten de exacte twee gewijzigde modules; 333 andere Python-
+bestanden per image, omgeving, mounts en gegevens behouden. Beide diensten gezond.
+
+De bestaande huishoudtoelating was verlopen. Haar geldigheid is vernieuwd binnen
+hetzelfde mandaat; de afhankelijke onderzoekshash/periode is gelijkgetrokken.
+Die afhankelijkheid was in voorbereiding/review gemist, waardoor de eerste update
+onvolledig eindigde. Dat foutbewijs blijft staan. Gericht in dezelfde installatie
+hersteld; geen tweede updater, rollback, nieuwe proeftoelating of spraakwerk.
+
+Geen nieuwe handmatige Eva-modelaanvragen of vergelijking. Oude XD06-foutoorzaak
+blijft UNKNOWN; toekomstige foutregistratie bewijst geen betere taakuitvoering.
+P2.1 blijft open en 39/48 kleine afrondingen blijven behouden. Het vervolg gebruikt
+uitsluitend werkelijk resterende oorspronkelijke dekking en bestaande criteria;
+geen gesloten herhaling of brede matrix. Ongebruikte Docker Desktop blijft ongemoeid.
+
+Bewijs: eva2/evidence/product/p2-provider-failure-diagnostics-installed-20261009.json.
+Review: eva2/reviews/p2-provider-failure-diagnostics-installed-review-20261009.json.
+
 ## Actueel 9 oktober — XD06 gesloten; beide werkopdrachten niet af
 
 De oorspronkelijke XD06-opdracht bereikte beide systemen. Eva2 leverde geen
