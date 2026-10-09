@@ -1,0 +1,44 @@
+{
+  "contract": "IndependentNativeCalendarContinuityIntegrationReview/v1",
+  "decision": "GO_BOUNDED_SOURCE_INTEGRATION_PUBLICATION",
+  "integration_report": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json",
+    "sha256": "13b134e6cc73391a6db0ab9c5b06c32ef9227e8b961fe13fbfaca7b2a0cd024e"
+  },
+  "source_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/source-review.public.json",
+    "sha256": "d0a0453a8e5e3364800c11e635abc9c41bceab67781d2380bc6652bab1a8cea1"
+  },
+  "repository_assembler_receipt": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-native-calendar-continuity-repository-usage-20261009.json",
+    "sha256": "f7f98ec646f7b8bfd3c3bbedb99fb653007f8172af3350b3dcc916d4c23fa8e2"
+  },
+  "repository_tests_receipt": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/p2-native-calendar-continuity-repository-tests-20261009.json",
+    "sha256": "e6de9fbc6839050eb030546baf2699e54b906f657191b477672010d15bd001e4"
+  },
+  "verified": [
+    "Four repository source/test files match the exact approved revision-2 exports.",
+    "Actual repository assembler output hashes match; both parent deltas relative to the approved staged outputs are solely the source-bound helper repository path.",
+    "Retained test stdout confirms 51 tests, 47 passed, zero failed and four explicit environment-gated native skips; no native restart is inferred.",
+    "All eight report evidence/closed-result references and source assembly/test bindings match their hashes. Closed XD08 remains UNKNOWN and unchanged.",
+    "Public integration report contains no original question, answer, origin, authentication or oracle content; claim scope remains source integration and model-free checking."
+  ],
+  "findings_remaining": [],
+  "permissions": {
+    "bounded_publication": true,
+    "resources": false,
+    "native": false,
+    "original_input": false,
+    "provider": false,
+    "closed_replay_or_rearm": false
+  },
+  "limits": [
+    "Source integration and synthetic regression tests do not demonstrate native recovery, behavioral advantage, product completion or P2.1 completion.",
+    "A future execution still requires its exact original source/resource/policy/readiness admission; this receipt provides no trial GO."
+  ],
+  "reviewer_provider_calls": 0,
+  "reviewer_container_calls": 0,
+  "new_tests_run_by_reviewer": 0,
+  "development_credits": null
+}

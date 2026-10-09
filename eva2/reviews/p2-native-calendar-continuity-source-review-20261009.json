@@ -1,0 +1,106 @@
+{
+  "contract": "IndependentFutureNativeCalendarContinuitySourceReview/v1",
+  "decision": "GO_SOURCE_PREPARATION_AND_BOUNDED_METADATA_PUBLICATION",
+  "scope": "Exact future evaluator calendar-reference continuity and existing private-root preconditions; no native/runtime/input admission.",
+  "source_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/source-review-index-v2.private.json",
+    "sha256": "0dc1cde7e225f6d95a25859672d8bc3ebcf268e07f3b6cbe61c50f05217a423e"
+  },
+  "retained_previous_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/source-review-index.private.json",
+    "sha256": "796606ab92f26f6b64c9480634aac0d9bdfa31a42aed956c6492c28de0f16432"
+  },
+  "candidate": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/candidate.public.json",
+    "sha256": "e3e5564a30c1e73cbb310286236f5db44196fe7f4672a142b09984abdee80b4a"
+  },
+  "approved_repository_exports": [
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/public/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+        "sha256": "fb0d13224baaf08ac207795a111135318aaeb17b97feca1187b0a06de46b4c6f"
+      },
+      "repository_target": "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs"
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/public/eva2/benchmark/inspect_ai_v1/ev003_openclaw_calendar_continuity.py",
+        "sha256": "f752cf7f4e14e30010355e7b3a510549a6eb81a3a5cf2f41722b138163a57206"
+      },
+      "repository_target": "eva2/benchmark/inspect_ai_v1/ev003_openclaw_calendar_continuity.py"
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/public/eva2/benchmark/inspect_ai_v1/ev003_bind_calendar_continuity.py",
+        "sha256": "1a6973fddbc43cb1e0d708b4f57dd5aaf0742132422b0167a6e583cdf754fb48"
+      },
+      "repository_target": "eva2/benchmark/inspect_ai_v1/ev003_bind_calendar_continuity.py"
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/public/eva2/tests/benchmark/test_ev003_calendar_continuity.mjs",
+        "sha256": "b5b1b36479459f95010a8a7425d25824c1e407cc3564a8b18fef7b907c5cca19"
+      },
+      "repository_target": "eva2/tests/benchmark/test_ev003_calendar_continuity.mjs"
+    }
+  ],
+  "verified_boundaries": [
+    "event() writes completed_calendar_reference only after finish() accepts completed parent settlement, a completed terminal with response identity, and a valid original calendar binding; the existing synchronous SDK saver is reused.",
+    "The parent requires every old SDK row to match its own complete, unstopped ledger, exact role/model/effort/usage and completed marker, with no duplicate or missing attempt/response; legacy terminal fields cannot backfill eligibility.",
+    "Scope binds exact deadline bytes, unchanged absolute monotonic deadline, sample entry, actual runtime accounting module hash, verified direct private actor, durable native session/session key, and immutable main work/contact role.",
+    "The actual parent runtime module is used: shared-source is copied into RUNTIME before child use. Revision 2 corrects the absent HERE-sibling reference and preserves all revision-1 bytes.",
+    "After physical old process closure, the existing sealed restart-control FD carries the validated metadata snapshot. New native phase checks its actual private origin/session before one-use restore and agentCliCommand.",
+    "Restore validates the entire snapshot before any reference becomes eligible; wrong scope, unknown/pending/foreign references, role substitution, duplicate records, stop or expired deadline remain refused.",
+    "The original scenarioBody source is byte-identical. No original body, action/usage limit, retry/stop/ACK/settlement rule, prior tool reservation, deadline or criterion is changed.",
+    "Both parent source transforms require a real resolved UID0 mode0700 private root before waiting-ready/checked and again immediately before the sole original clock. Native-readable source directories are a separate existing binding.",
+    "The future assembler pins actual repository bytes and uses the existing openclaw/eva2/shared-source layout; it creates source files only in a fresh source stage and cannot release input."
+  ],
+  "validation": {
+    "method": "Independent read-only source/diff/interface inspection and SHA256 checks; retained focused checks reused without runtime replay.",
+    "retained_v1_references_checked": 38,
+    "revision_2_references_checked": 23,
+    "digest_mismatches": [],
+    "actual_guard_tests_passed": 7,
+    "source_and_private_root_checks_passed": 14,
+    "staged_future_assembler_passed": true,
+    "check_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/model-free-check.public.json",
+      "sha256": "9349236163c5b771ce9118a78d84ea39f1725fd6c852601281301177e733fa39"
+    },
+    "future_usage_binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/future-usage-binding.public.json",
+      "sha256": "7f05111dec3768f40c75cc472a7b50bee22a5003e6b86f108f7cebec3df1f3a4"
+    },
+    "reviewer_provider_calls": 0,
+    "reviewer_container_calls": 0,
+    "reviewer_original_input_dispatches": 0,
+    "initial_synthetic_test_isolation_failure_and_preuse_path_correction_retained": true
+  },
+  "findings_remaining": [],
+  "allowed_next_transition": "Root may integrate only the four exact repository source/test export bytes and publish the safe revision-2 source candidate and this review. Identical copies retain this decision.",
+  "permissions": {
+    "source_integration": true,
+    "bounded_metadata_publication": true,
+    "resource_admission": false,
+    "native_admission": false,
+    "original_input_admission": false,
+    "provider_dispatch": false,
+    "closed_replay_or_rearm": false
+  },
+  "limits": [
+    "Seven tests exercise real accounting guards using public synthetic input and a fake parent ledger; source/mode checks and staged assembly do not demonstrate a native task restart, full recovery or improved product behavior.",
+    "A future concrete execution still needs its exact assembled source/proposal/policy/readiness binding through the existing admission route; this review is no execution permission.",
+    "Closed XD08 remains UNKNOWN with its original result, accounting, 46-row authority and review byte-preserved. Its eight completed old records lack the new marker and are intentionally ineligible for retrospective restoration.",
+    "No general superiority, efficiency, quality, new function or P2.1 completion is established; unknown developer credits remain null."
+  ],
+  "closed_result": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/pair-result.public.json",
+    "sha256": "89840da3b913629c95e006bfc0fa08ce63a67188cafbcf30bb15976ae3314e80"
+  },
+  "closed_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/final-review.public.json",
+    "sha256": "fc0196ee09dbfdb0a228e6aac35e2b9f8380cffac0ed9562ee4a56ec3fbdda43"
+  },
+  "protected_content_declassified": false,
+  "development_credits": null
+}

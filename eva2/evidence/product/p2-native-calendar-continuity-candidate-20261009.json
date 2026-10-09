@@ -1,0 +1,91 @@
+{
+  "contract": "P2FutureNativeCalendarContinuityCandidate/v1",
+  "status": "source_prepared_model_free_checked_not_admitted",
+  "repository_base": "5a94b6e24568dfdbc78b30dfea5e07800b4a0210",
+  "problem": "A completed response reference remained process-local. A second native process had no eligible reference for its retained environment, despite a completed parent SDK ledger.",
+  "change": [
+    "Persist a metadata-only eligibility marker after the existing accepted completed-terminal path; existing atomic SDK snapshot saver unchanged.",
+    "After physical closure validate markers against every authoritative completed parent attempt and the verified private actor/session scope. Carry only hashes, original scope and reference metadata in the existing sealed restart-control FD.",
+    "Bind or restore once before actual agentCliCommand, after ordinary actual private-origin/session validation. Existing scenarioBody guard remains byte-identical.",
+    "Require the private root to be a real UID0 directory with mode0700 before waiting-ready/checked and again immediately before either original clock."
+  ],
+  "preserved": [
+    "Original absolute deadline and accounting ledger",
+    "Original request bytes and input/oracle/criteria",
+    "Contact Sol/none and substantive work/helper Astra/medium",
+    "Unknown/pending/foreign references refused; no backfill from historical terminal fields",
+    "No overwrite/rearm of closed sources or result/authority",
+    "No role/privacy/usage/stop/ACK/settlement relaxation"
+  ],
+  "exports": [
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/public/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+        "sha256": "fb0d13224baaf08ac207795a111135318aaeb17b97feca1187b0a06de46b4c6f"
+      },
+      "repository_target": "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs"
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/public/eva2/benchmark/inspect_ai_v1/ev003_openclaw_calendar_continuity.py",
+        "sha256": "f752cf7f4e14e30010355e7b3a510549a6eb81a3a5cf2f41722b138163a57206"
+      },
+      "repository_target": "eva2/benchmark/inspect_ai_v1/ev003_openclaw_calendar_continuity.py"
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/public/eva2/benchmark/inspect_ai_v1/ev003_bind_calendar_continuity.py",
+        "sha256": "1a6973fddbc43cb1e0d708b4f57dd5aaf0742132422b0167a6e583cdf754fb48"
+      },
+      "repository_target": "eva2/benchmark/inspect_ai_v1/ev003_bind_calendar_continuity.py"
+    },
+    {
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/public/eva2/tests/benchmark/test_ev003_calendar_continuity.mjs",
+        "sha256": "b5b1b36479459f95010a8a7425d25824c1e407cc3564a8b18fef7b907c5cca19"
+      },
+      "repository_target": "eva2/tests/benchmark/test_ev003_calendar_continuity.mjs"
+    }
+  ],
+  "actual_accounting_base": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/shared-source/p1_openclaw_parent_accounting.mjs",
+    "sha256": "96ebf1528a84eca31cb5036b9f99889badf45d090786a57a85eee935cf02b209"
+  },
+  "tracked_accounting_base": {
+    "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+    "sha256": "bbd000673722bfcfe2aad9a9ce7435350d36724ab773efa999674adbf659c89b"
+  },
+  "tracked_delta_note": "The actual retained baseline also includes previously reviewed semantic work-role and prior-tool-reservation bindings absent from the older tracked module. Both actual-base and tracked-base diffs are retained; those existing guards are preserved.",
+  "checks": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/model-free-check.public.json",
+    "sha256": "9349236163c5b771ce9118a78d84ea39f1725fd6c852601281301177e733fa39"
+  },
+  "future_usage": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/future-usage-binding.public.json",
+    "sha256": "7f05111dec3768f40c75cc472a7b50bee22a5003e6b86f108f7cebec3df1f3a4"
+  },
+  "limits": [
+    "No native process restart or provider request executed. Synthetic two-instance guard checks do not prove a future full native task outcome.",
+    "Root repository integration and fresh separately admitted source/policy/actual readiness remain required; this is not runtime or input permission.",
+    "Closed XD08 remains UNKNOWN; its old records intentionally have no new marker and cannot be retroactively restored."
+  ],
+  "runtime_model_calls": 0,
+  "runtime_dispatches": 0,
+  "development_credits": null,
+  "closed_result": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/pair-result.public.json",
+    "sha256": "89840da3b913629c95e006bfc0fa08ce63a67188cafbcf30bb15976ae3314e80"
+  },
+  "closed_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/final-review.public.json",
+    "sha256": "fc0196ee09dbfdb0a228e6aac35e2b9f8380cffac0ed9562ee4a56ec3fbdda43"
+  },
+  "prepublication_wiring_correction": {
+    "previous_candidate": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/candidate.public.json",
+      "sha256": "3fc10b614b7f5b559df6ee1da4c2067922aab966c150ac615519c6df3b4b2495"
+    },
+    "reason": "Actual module is copied from shared-source to RUNTIME, not a HERE sibling. Only future source path/layout corrected before any use.",
+    "old_bytes_preserved": true
+  }
+}

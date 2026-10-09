@@ -1,0 +1,29 @@
+{
+  "contract": "FutureNativeCalendarContinuityModelFreeCheck/v1",
+  "node_tests_passed": 7,
+  "node_tests_failed": 0,
+  "source_and_private_root_checks_passed": 14,
+  "native_driver_syntax_exit_code": 0,
+  "initial_synthetic_harness_failure": "expired-deadline test intentionally stopped shared fake ledger; next negative test created observer before resetting synthetic stop; corrected test isolation only",
+  "original_scenarioBody_byte_exact": true,
+  "closed_technical_shape": {
+    "completed_attempt_count": 8,
+    "calendar_binding_complete_field_count": 8,
+    "new_durable_marker_present_count": 0,
+    "legacy_rows_will_not_be_backfilled": true
+  },
+  "runtime_model_calls": 0,
+  "container_calls": 0,
+  "original_input_releases": 0,
+  "development_credits": null,
+  "stdout": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/checks/node-final.stdout.txt",
+    "sha256": "12c51b2c9e86bd5ecd517be26a64797d80ae3f061f779333c6778ff4f5c5d704"
+  },
+  "wiring_stdout": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/checks/wiring-v2.stdout.txt",
+    "sha256": "64795f1dc9f69677d0bd7bdf8a9746f70434d9ddd4a57a53b19523bd5775b1dc"
+  },
+  "retained_guard_test_reuse": "Accounting, metadata helper and public guard test bytes unchanged; seven guard tests reused.",
+  "caught_before_use": "Future parent helper path corrected from absent HERE sibling to actual RUNTIME accounting copy; future assembly now uses existing openclaw/eva2/shared-source layout."
+}

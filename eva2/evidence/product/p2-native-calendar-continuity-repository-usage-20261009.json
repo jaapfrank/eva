@@ -1,0 +1,96 @@
+{
+  "contract": "FutureNativeCalendarRepositoryUsage/v1",
+  "status": "source_assembly_only_pass",
+  "review": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/source-review.public.json",
+    "sha256": "d0a0453a8e5e3364800c11e635abc9c41bceab67781d2380bc6652bab1a8cea1"
+  },
+  "reviewed_assembler": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/revision-2/future-source-usage.private.py",
+    "sha256": "86f29c9d50a065ae5460e5679c21c03876c854c8f133e7ac12a0cedd54c83d2f"
+  },
+  "source_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/source-review-index-v2.private.json",
+    "sha256": "0dc1cde7e225f6d95a25859672d8bc3ebcf268e07f3b6cbe61c50f05217a423e"
+  },
+  "repository_root": "/home/administrator/project/Eva2",
+  "actual_repository_sources": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_node_calendar.mjs",
+      "sha256": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "fb0d13224baaf08ac207795a111135318aaeb17b97feca1187b0a06de46b4c6f"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_openclaw_calendar_continuity.py",
+      "sha256": "f752cf7f4e14e30010355e7b3a510549a6eb81a3a5cf2f41722b138163a57206"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_bind_calendar_continuity.py",
+      "sha256": "1a6973fddbc43cb1e0d708b4f57dd5aaf0742132422b0167a6e583cdf754fb48"
+    }
+  ],
+  "retained_source_inputs": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/openclaw/native-openclaw-xd.private.mjs",
+      "sha256": "91676e1e31930b3bf778a8e3c2684d8bd5aecfc44ab6bbc90a7148847c144e36"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/openclaw/launch-parent-accounted-xd08.private.py",
+      "sha256": "30166728eb1534566b0af9e2e81dba645611294f22d945435666977ac568bc32"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/eva2/launch.py",
+      "sha256": "64e27d8dcac4c12c26072eb220e6a5e079ab250dc3c6105e290b4ca3d840b8d8"
+    }
+  ],
+  "fresh_source_stage": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/actual-repository-source-stage",
+  "output_files": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/actual-repository-source-stage/eva2/launch.py",
+      "sha256": "30da3199fdd409ad6c8bb36be6c56175acf56581244127891b33b12ccd7f9d0c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/actual-repository-source-stage/openclaw/launch-parent.private.py",
+      "sha256": "cf5d61aaede1ec7382cd72456566384f22036a8b4c642bdb90a849e7918c100f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/actual-repository-source-stage/openclaw/native-openclaw-xd.private.mjs",
+      "sha256": "bbe2a264496e69154bcb61dafe38e12fade4a51ed0a63a65783b77457e3100e6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/actual-repository-source-stage/shared-source/ev003_node_calendar.mjs",
+      "sha256": "c1b0c30fa97c511b3b8adde7778442fc82e04cb98a98a9e80169a2fef963c602"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/actual-repository-source-stage/shared-source/p1_openclaw_parent_accounting.mjs",
+      "sha256": "fb0d13224baaf08ac207795a111135318aaeb17b97feca1187b0a06de46b4c6f"
+    }
+  ],
+  "source_parse_only_pass": true,
+  "runtime_model_calls": 0,
+  "native_processes_started": 0,
+  "resources_created": 0,
+  "original_input_released": false,
+  "admission_created": false,
+  "closed_sources_modified": false,
+  "limitations": [
+    "Only the existing reviewed source-transform functions ran.",
+    "Generated sources are not an admitted episode and were not launched.",
+    "Native recovery remains unproven."
+  ],
+  "node": {
+    "path": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/runtime/node-v24.16.0-linux-x64/bin/node",
+    "sha256": "b2959781cc5a74c357ffa02367efa8a0330cbb1c9cb347732fdfaaaca381cbcd"
+  },
+  "repo_guard_test_argv": [
+    "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/runtime/node-v24.16.0-linux-x64/bin/node",
+    "--test",
+    "/home/administrator/project/Eva2/eva2/tests/benchmark/test_ev003_calendar_continuity.mjs"
+  ],
+  "repo_guard_test_env": {
+    "EVA_ORIGINAL_PLAN": "/home/administrator/project/Eva2/eva2/benchmark/inspect_ai_v1/ev003_execution_plan_20261004.json"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-09T05:16:21.716918+00:00",
+  "lastUpdated": "2026-10-09T05:27:49.318888+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1016,8 +1016,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-09T05:16:21.716918+00:00",
+        "checkedAt": "2026-10-09T05:42:09.959204+00:00",
         "deliveries": [
+          {
+            "taskId": "P2.1",
+            "title": "Antwoordherkomst bij proefherstart gecorrigeerd",
+            "state": "investigated",
+            "productFunctionCompleted": false,
+            "result": "Beperkte broncorrectie samengevoegd en onafhankelijk beoordeeld. 47 tests slagen; 4 bestaande native-checks niet ingeschakeld. De toekomstige assembler gebruikt aantoonbaar de echte repositorybron.",
+            "remaining": "Native herstel en beter Eva-gedrag nog onbewezen; P2.1 open. Geen nieuwe productfunctie of extra groene teller.",
+            "source": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json",
+            "review": "eva2/reviews/p2-native-calendar-continuity-integration-review-20261009.json",
+            "usage": "0 nieuwe Eva-modelaanvragen/0 native proeven. Ontwikkelcredits onbekend.",
+            "date": "2026-10-09T05:40:34.211904+00:00"
+          },
           {
             "taskId": "P2.1",
             "title": "XD08 afgesloten: vergelijking onbeslist",
@@ -4411,20 +4423,20 @@
         ],
         "now": {
           "taskId": "P2.1",
-          "title": "P2.1 · bewezen proefroutefout corrigeren",
-          "detail": "De vergelijking is afgesloten zonder geldige winnaar. De volgende stap is uitsluitend modelvrij herstel van de evaluatorbinding bij herstart; originele resultaten en criteria blijven staan. Er draait geen vergelijkingsproef.",
+          "title": "P2.1 · vervolgvergelijking voorbereiden",
+          "detail": "Bronherkomst bij herstart gecorrigeerd en onafhankelijk samengevoegd;47tests slagen,4native-checks niet ingeschakeld. Geen native herstel/nieuwe functie bewezen. Volgende oorspronkelijke ingang concreet binden; er draait nu geen proef.",
           "state": "in_progress",
           "activeExecution": false,
-          "source": "eva2/evidence/product/p2-original-xd08-eva2-openclaw-result-20261009.json",
+          "source": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "review": "eva2/reviews/p2-original-xd08-eva2-openclaw-final-review-20261009.json"
+          "review": "eva2/reviews/p2-native-calendar-continuity-integration-review-20261009.json"
         },
         "next": {
           "taskId": "P2.1",
-          "title": "Correctie beoordelen vóór eventuele uitvoering",
-          "detail": "Alleen de bewezen responsebinding herstellen en gericht controleren. Nieuwe betaalde uitvoering is hiermee niet toegelaten; vereist afzonderlijke concrete binding binnen bestaand mandaat.",
+          "title": "Vervolgvergelijking concreet binden",
+          "detail": "Alleen een ongebruikte oorspronkelijke ingang met bestaande criteria/modelrollen/toelating voorbereiden. De broncorrectie is geen runtime-/invoertoelating; geen gesloten herhaling of brede matrix.",
           "state": "planned",
-          "source": "eva2/evidence/product/p2-original-xd08-eva2-openclaw-result-20261009.json"
+          "source": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json"
         },
         "ownerAction": {
           "required": false,
@@ -4436,7 +4448,7 @@
           "expected": "Behoud de menselijke oordelen apart; deze vaste taak is eerlijk vergeleken."
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-09T05:16:21.716918+00:00"
+        "reviewedAt": "2026-10-09T05:42:09.959204+00:00"
       },
       "reviewedAt": "2026-10-09T04:35:11.778342+00:00",
       "checkedAt": "2026-10-09T04:35:11.778342+00:00",
@@ -23964,7 +23976,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "De filepublicatie-race in de oorspronkelijke onderbrekings-/herstartseam atomisch herstellen vóór freeze. Daarna gehele2-eventbron samen beoordelen; nog geen resources of modelcalls.",
+              "nextAction": "Eén ongebruikte oorspronkelijke vergelijking afzonderlijk concreet binden binnen bestaand mandaat, criteria/modelrollen/72SDK70tools. Broncorrectie en publicatie gereed; geen gesloten herhaling of brede matrix.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -23973,7 +23985,7 @@
                 "blocksIndependentWork": false,
                 "source": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json"
               },
-              "checkedAt": "2026-10-09T04:35:11.778342+00:00",
+              "checkedAt": "2026-10-09T05:42:09.959204+00:00",
               "assignment": {
                 "baseCommit": "89edf2b7c9dfcfe196c2b069579323fb450aed01",
                 "owner": "/root",
@@ -23996,7 +24008,7 @@
                 "gap": "Eén oorspronkelijke controlovergang is nog niet uitvoerbaar: fysieke onderbreking na duurzame fixturemutatie, daarna dezelfde sample/state/accounting bewaren en één nativeherstart. Geen productverlies uit deze voorbereidingsfout.",
                 "finish": "Deze ene oorspronkelijke pair is volledig uitgevoerd, fysiek afgesloten en onafhankelijk beoordeeld; geen productfunctie of volledige P2-afronding.",
                 "estimate": "Voorbereiding met bestaande bronnen:0modelaanvragen; eventuele uitvoering alleen binnen oorspronkelijk72SDK/70tools per deelnemer. Credits/geld onbekend.",
-                "currentAction": "XD08 afgesloten en onafhankelijk beoordeeld voor veilige publicatie. Herstel nu uitsluitend modelvrij de bewezen evaluatorresponsebinding bij herstart; geen betaalde proef/rearm uit dit resultaat.",
+                "currentAction": "Eén ongebruikte oorspronkelijke vergelijking afzonderlijk concreet binden binnen bestaand mandaat, criteria/modelrollen/72SDK70tools. Broncorrectie en publicatie gereed; geen gesloten herhaling of brede matrix.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "basis": "Published independently assessed original XD05 result, review and authority40; no feature completion inferred.",
@@ -24502,18 +24514,13 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "stage": "xd08_closed_result_reviewed_published_metadata",
-                  "startedAt": "2026-10-09T04:08:46.055738+00:00",
-                  "classificationOfPreviousTurn": "progress",
-                  "previousEvidence": "eva2/evidence/product/p2-source-discovery-carrier-integrated-20261009.json",
-                  "currentCase": "EV003-XD-08",
+                  "startedAt": "2026-10-09T05:20:40.171948+00:00",
+                  "stage": "source_correction_complete_no_new_execution_admitted",
+                  "integrationBaseCommit": "5a94b6e24568dfdbc78b30dfea5e07800b4a0210",
                   "newTrialAdmitted": false,
-                  "providerCallsStarted": 0,
-                  "closedTrialReplay": false,
-                  "progressEvidence": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/source-assembly-stage.private.json",
-                  "providerAttempts": 8,
+                  "providerAttempts": 0,
                   "productFunctionCompleted": false,
-                  "endedAt": "2026-10-09T05:16:21.716918+00:00"
+                  "completedSourceCorrection": true
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -25440,7 +25447,7 @@
                   "nativeTools": 16,
                   "elapsedSeconds": 180.95119165799406
                 },
-                "checkedAt": "2026-10-09T05:16:21.716918+00:00",
+                "checkedAt": "2026-10-09T05:42:09.959204+00:00",
                 "cm04Preparation": {
                   "entry": "openclaw:EV003-CM-04:epoch1",
                   "directory": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1",
@@ -25630,7 +25637,7 @@
                   "sourceObserverChanged": false
                 },
                 "activeExecution": false,
-                "updatedAt": "2026-10-09T05:16:21.716918+00:00",
+                "updatedAt": "2026-10-09T05:27:49.318888+00:00",
                 "nextComparisonDecision": "Resterende oorspronkelijke dekking behouden; eerst een beslisrelevant vergelijkingspaar op bestaande routes, plus echte blinde antwoordbeoordelingen.",
                 "previousNativePreparationAtCM06Eva1": {
                   "caseId": "EV003-CM-01",
@@ -26170,7 +26177,11 @@
                   "selectionProposalSha256": "5879ecf77cab1c71da6d91b3bd09a91dc49f0cc43a9d93f34275bdfcb3a0c2f3"
                 },
                 "previousGoalTurnClassification": "progress",
-                "previousGoalTurnEvidence": "eva2/evidence/product/p2-source-discovery-carrier-integrated-20261009.json",
+                "previousGoalTurnEvidence": {
+                  "path": "eva2/evidence/product/p2-original-xd08-eva2-openclaw-result-20261009.json",
+                  "sha256": "89840da3b913629c95e006bfc0fa08ce63a67188cafbcf30bb15976ae3314e80",
+                  "whatChanged": "Original source/event binding and retained partial native execution localized two evaluator faults; directory mode corrected. Published immutable review/coverage. No product completion/ranking."
+                },
                 "historicalCurrentFieldsBeforeCurrentEva2CM05": {
                   "actualUsage": {
                     "scope": "One matching Eva2 XD02 development comparison, not household runtime",
@@ -26669,10 +26680,68 @@
                     "state": "closed_exit_0"
                   },
                   "resourcePreparationCompleted": true
-                }
+                },
+                "calendarBindingCorrection": {
+                  "state": "completed_source_correction_not_native_proven",
+                  "baselineCommit": "5a94b6e24568dfdbc78b30dfea5e07800b4a0210",
+                  "scope": "Smallest existing evaluator-guard response-provenance transfer across two native phases; no scoring/input changes or paid execution.",
+                  "existing": "Known completed provider requests retained; original native profile/session/workspace preserved.",
+                  "gap": "New evaluator instance did not retain process-local nativeCompletedResponses binding.",
+                  "finish": "Actual changed guard accepts original same-actor/session known completed response ancestry after restart and still rejects foreign/unknown/pending references. Source-bound model-free evidence and independent review.",
+                  "fileResponsibility": {
+                    "coordinator": "repository, board, docs, Git",
+                    "curator": "isolated future source correction and technical private evidence only",
+                    "reviewer": "independent frozen-result review only"
+                  },
+                  "newProviderCalls": 0,
+                  "developmentCreditCost": null,
+                  "candidatePath": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1",
+                  "changeDesign": {
+                    "existingBoundary": "nativeCompletedResponses Map is populated after valid completed-settlement but lost on the second native process.",
+                    "minimalChange": "Carry only proven completed-response binding via existing durable SDK snapshot and sealed restart control; reuse existing actor/session/role/calendar guards.",
+                    "earlyPreflight": "Actual policy.private_base owner/mode checked before clock/input.",
+                    "historicalSourcesChanged": false,
+                    "newProviderCalls": 0
+                  },
+                  "sourceProgress": {
+                    "state": "complete_source_checks",
+                    "changes": [
+                      "Durable completed-reference marker in existing accounting module.",
+                      "Parent-ledger equality before existing sealed restart-control accepts the marker.",
+                      "Restore before the second agentCliCommand after unchanged actor/session guard."
+                    ],
+                    "unchangedCalendarGuard": true,
+                    "verifiedScopeSoFar": "Vier exacte v2-bronexports geïntegreerd;47/51tests geslaagd,4 bestaande native-checks niet ingeschakeld.7guardtests/14source-modechecks en werkelijke toekomstige repositoryimport slagen; onafhankelijke bronreview GO.",
+                    "providerCalls": 0,
+                    "containerStarts": 0,
+                    "nativeTrialRuns": 0
+                  },
+                  "sourceReview": {
+                    "path": "eva2/reviews/p2-native-calendar-continuity-source-review-20261009.json",
+                    "sha256": "d0a0453a8e5e3364800c11e635abc9c41bceab67781d2380bc6652bab1a8cea1",
+                    "decision": "GO_SOURCE_PREPARATION_AND_BOUNDED_METADATA_PUBLICATION",
+                    "runtimeAdmitted": false
+                  },
+                  "preUseCorrection": "Alleen de toekomstige modulelocatie vóór gebruik gecorrigeerd van HERE naar bestaande RUNTIME-kopie. V1-bronnen en mislukking blijven bewaard.",
+                  "evidence": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json",
+                  "completedAt": "2026-10-09T05:40:34.211904+00:00",
+                  "repositoryTests": {
+                    "tests": 51,
+                    "passed": 47,
+                    "failed": 0,
+                    "skipped": 4
+                  },
+                  "actualRepositoryUsage": "eva2/evidence/product/p2-native-calendar-continuity-repository-usage-20261009.json",
+                  "integrationReview": {
+                    "path": "eva2/reviews/p2-native-calendar-continuity-integration-review-20261009.json",
+                    "sha256": "af515c1ea10998cc8c51a4edb3ac1fc9120397683e458cffce6a24945f3ad333",
+                    "decision": "GO_BOUNDED_SOURCE_INTEGRATION_PUBLICATION"
+                  }
+                },
+                "latestPreparedEvidence": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json"
               },
-              "remaining": "P2.1 blijft open. Bronverlies in de proefroute gericht hersteld en modelvrij beoordeeld; beter native taakgedrag nog niet aangetoond. Overige oorspronkelijke dekking, externe toegang en menselijke beoordelingen blijven zichtbaar.",
-              "latestEvidence": "eva2/evidence/product/p2-original-xd08-eva2-openclaw-result-20261009.json",
+              "remaining": "P2.1 blijft open. Bewezen evaluatorbinding modelvrij gecorrigeerd en exacte echte repositoryimport bevestigd; native herstel en beter gebruikersresultaat nog niet aangetoond. Bestaande ontbrekende dekking/toegang en menselijke beoordeling blijven zichtbaar.",
+              "latestEvidence": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json",
               "executionBlocker": null,
               "assessmentBlocker": "Twee echte onafhankelijke CM02/gespreksbeoordelingen en gezinsacceptatie blijven open.",
               "nativeAccessBlocker": {

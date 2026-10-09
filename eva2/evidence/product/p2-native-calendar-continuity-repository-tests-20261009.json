@@ -1,0 +1,32 @@
+{
+  "contract": "P2NativeCalendarContinuityRepositoryTests/v1",
+  "checkedAt": "2026-10-09T05:39:04.590981+00:00",
+  "nodePath": "/home/administrator/project/.eva2-artifacts/p1-participants-20260929/runtime/node-v24.16.0-linux-x64/bin/node",
+  "nodeSha256": "b2959781cc5a74c357ffa02367efa8a0330cbb1c9cb347732fdfaaaca381cbcd",
+  "tests": [
+    "test_p1_openclaw_parent_accounting.mjs",
+    "test_p1_openclaw_mcp_terminal.mjs",
+    "test_ev003_calendar_continuity.mjs"
+  ],
+  "exitCode": 0,
+  "summary": [
+    "\u2139 tests 51",
+    "\u2139 suites 0",
+    "\u2139 pass 47",
+    "\u2139 fail 0",
+    "\u2139 cancelled 0",
+    "\u2139 skipped 4",
+    "\u2139 duration_ms 2356.708908"
+  ],
+  "stdout": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/actual-repository-tests.stdout.txt",
+    "sha256": "08adc1fa24a0e3cef4d909b9d8bd051d6375ceacb16c05a2f371d193d379519e"
+  },
+  "stderr": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-native-calendar-continuity-20261009-v1/actual-repository-tests.stderr.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "providerCalls": 0,
+  "nativeTrialRuns": 0,
+  "developmentCredits": null
+}

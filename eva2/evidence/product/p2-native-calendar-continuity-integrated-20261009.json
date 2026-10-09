@@ -1,0 +1,98 @@
+{
+  "contract": "P2NativeCalendarContinuityIntegrated/v1",
+  "checkedAt": "2026-10-09T05:40:34.211904+00:00",
+  "status": "reviewed_source_integrated_model_free_checked",
+  "task": "P2.1",
+  "repositoryBase": "5a94b6e24568dfdbc78b30dfea5e07800b4a0210",
+  "concreteDeficit": "A new evaluator instance lost provenance for already completed native responses after the original interruption/restart. A separate private-root mode mismatch had prevented Eva2 input.",
+  "changes": [
+    "Eligible completed-response metadata is carried through the existing SDK snapshot and sealed restart control, validated against the authoritative parent ledger and original actor/session/role/clock/source before restore.",
+    "The original scenarioBody guard remains byte-identical. Pending, unknown, foreign and historical unmarked responses remain ineligible.",
+    "Private-root owner/mode0700 checks now occur before both original clocks. The real shared-source to RUNTIME copy path is bound."
+  ],
+  "exports": [
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/p1_openclaw_parent_accounting.mjs",
+      "sha256": "fb0d13224baaf08ac207795a111135318aaeb17b97feca1187b0a06de46b4c6f"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_openclaw_calendar_continuity.py",
+      "sha256": "f752cf7f4e14e30010355e7b3a510549a6eb81a3a5cf2f41722b138163a57206"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_bind_calendar_continuity.py",
+      "sha256": "1a6973fddbc43cb1e0d708b4f57dd5aaf0742132422b0167a6e583cdf754fb48"
+    },
+    {
+      "path": "eva2/tests/benchmark/test_ev003_calendar_continuity.mjs",
+      "sha256": "b5b1b36479459f95010a8a7425d25824c1e407cc3564a8b18fef7b907c5cca19"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "eva2/evidence/product/p2-native-calendar-continuity-candidate-20261009.json",
+      "sha256": "e3e5564a30c1e73cbb310286236f5db44196fe7f4672a142b09984abdee80b4a"
+    },
+    {
+      "path": "eva2/evidence/product/p2-native-calendar-continuity-source-check-20261009.json",
+      "sha256": "9349236163c5b771ce9118a78d84ea39f1725fd6c852601281301177e733fa39"
+    },
+    {
+      "path": "eva2/evidence/product/p2-native-calendar-continuity-repository-usage-20261009.json",
+      "sha256": "f7f98ec646f7b8bfd3c3bbedb99fb653007f8172af3350b3dcc916d4c23fa8e2"
+    },
+    {
+      "path": "eva2/evidence/product/p2-native-calendar-continuity-repository-tests-20261009.json",
+      "sha256": "e6de9fbc6839050eb030546baf2699e54b906f657191b477672010d15bd001e4"
+    },
+    {
+      "path": "eva2/reviews/p2-native-calendar-continuity-source-review-20261009.json",
+      "sha256": "d0a0453a8e5e3364800c11e635abc9c41bceab67781d2380bc6652bab1a8cea1"
+    }
+  ],
+  "verification": {
+    "actualRepositorySourceAssembler": true,
+    "nodeTests": 51,
+    "passed": 47,
+    "failed": 0,
+    "skipped": 4,
+    "skipReason": "Existing environment-gated native/owned-composition checks were not enabled; no native restart claimed.",
+    "focusedGuardTests": 7,
+    "sourceModeChecks": 14,
+    "originalScenarioBodyUnchanged": true
+  },
+  "preUseFailuresRetained": [
+    "Initial synthetic negative-test isolation corrected without production source change.",
+    "V1 future source used a missing HERE-sibling module path. V2 corrects to the actual RUNTIME copy before any native use. Both bundles remain retained."
+  ],
+  "usage": {
+    "newProviderCalls": 0,
+    "nativeTrialRuns": 0,
+    "containersStarted": 0,
+    "developmentCredits": null
+  },
+  "boundaries": {
+    "productFunctionCompleted": false,
+    "P2_1Completed": false,
+    "runtimeAdmitted": false,
+    "originalInputReleased": false,
+    "closedReplayAdmitted": false,
+    "speechParked": true,
+    "unusedDockerDesktopUntouched": true
+  },
+  "closedEvidencePreserved": [
+    {
+      "path": "eva2/evidence/product/p2-original-xd08-eva2-openclaw-result-20261009.json",
+      "sha256": "89840da3b913629c95e006bfc0fa08ce63a67188cafbcf30bb15976ae3314e80"
+    },
+    {
+      "path": "eva2/evidence/product/p2-authority-coverage-xd08-20261009.json",
+      "sha256": "45670616e1825fead90dd1d8c72df6908b062ad18864e7a6146af37b96b06693"
+    },
+    {
+      "path": "eva2/reviews/p2-original-xd08-eva2-openclaw-final-review-20261009.json",
+      "sha256": "fc0196ee09dbfdb0a228e6aac35e2b9f8380cffac0ed9562ee4a56ec3fbdda43"
+    }
+  ],
+  "next": "P2.1 remains open. A next original unused execution must be separately concretely bound to the existing criteria, roles, resources and mandate; no closed replay or new broad matrix. Source checks do not prove native recovery or superior Eva behavior."
+}

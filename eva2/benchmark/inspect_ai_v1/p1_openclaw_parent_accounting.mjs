@@ -206,13 +206,48 @@ export class OpenClawProcessLedger {
 }
 
 /** Observes original Responses bytes, never transcript/model-catalog/rate-limit summaries. */
+// Metadata only. The parent transports this through its existing sealed control FD.
+const CALENDAR_SCOPE_KEYS = ['entry','deadline_sha256','monotonic_deadline','accounting_source_sha256','actor_sha256','session_sha256','session_key_sha256','main_request_role'];
+const CALENDAR_BINDING_KEYS = ['turn_id','native_thread_id_sha256','generation','canonical_clock_state_sha256','native_temporal_context_sha256','environment_turn_id','native_environment_original_message_sha256'];
+const strictKeys = (value, keys) => value && typeof value === 'object' && !Array.isArray(value)
+  && Object.keys(value).sort().join('|') === [...keys].sort().join('|');
+const shaValue = value => typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
+const validCalendarBinding = binding => strictKeys(binding,CALENDAR_BINDING_KEYS)
+  && typeof binding.turn_id==='string' && binding.turn_id.length>0
+  && typeof binding.environment_turn_id==='string' && binding.environment_turn_id.length>0
+  && Number.isSafeInteger(binding.generation) && binding.generation>=0
+  && CALENDAR_BINDING_KEYS.filter(k=>k.endsWith('_sha256')).every(k=>shaValue(binding[k]));
+const canonicalEqual = (a,b,keys) => keys.every(k=>a[k]===b[k]);
+const accountingSourceSha256 = () => createHash('sha256').update(readFileSync(fileURLToPath(import.meta.url))).digest('hex');
+export function nativeCalendarScope(entry, deadlineBytes, nativeEntry, sessionKey, mainRequestRole) {
+  const origin=nativeEntry?.delivery?.origin;
+  const actorFields=['nativeDirectUserId','from','to','nativeChannelId','accountId','surface','chatType'];
+  if(typeof entry!=='string'||!entry||!Buffer.isBuffer(deadlineBytes)||nativeEntry?.chatType!=='direct'
+    ||origin?.chatType!=='direct'||!actorFields.every(k=>typeof origin[k]==='string'&&origin[k])
+    ||typeof nativeEntry.sessionId!=='string'||!nativeEntry.sessionId||typeof sessionKey!=='string'||!sessionKey
+    ||!['contact','work'].includes(mainRequestRole))throw new Error('native calendar scope invalid');
+  const deadline=JSON.parse(deadlineBytes);
+  if(!Number.isFinite(deadline.monotonic_deadline))throw new Error('native calendar deadline invalid');
+  return {entry,deadline_sha256:createHash('sha256').update(deadlineBytes).digest('hex'),
+    monotonic_deadline:deadline.monotonic_deadline,accounting_source_sha256:accountingSourceSha256(),
+    actor_sha256:digest(actorFields.map(k=>origin[k])),session_sha256:digest(nativeEntry.sessionId),
+    session_key_sha256:digest(sessionKey),main_request_role:mainRequestRole};
+}
+
 export class OpenClawAccounting {
-  constructor(ledger, deadline, { now = monotonic, save = () => {}, clockFile = null, privateModelContextDir = null, observeTools = false, nativeProcessScope = null, originalFamilyLimits = null } = {}) {
+  constructor(ledger, deadline, { now = monotonic, save = () => {}, clockFile = null, privateModelContextDir = null, observeTools = false, nativeProcessScope = null, originalFamilyLimits = null, mainRequestRole = 'contact', priorToolReservations = 0 } = {}) {
     if (!Number.isFinite(deadline)) throw new Error('original absolute deadline required');
     if (originalFamilyLimits !== null && !originalFamilyBindings.has(originalFamilyLimits)) {
       throw new Error('frozen original family binding required');
     }
+    if (!['contact', 'work'].includes(mainRequestRole)) throw new Error('original semantic main role required');
+    if (mainRequestRole === 'work' && originalFamilyLimits?.family !== 'cross_domain_actions') {
+      throw new Error('work main role requires the frozen original work-family binding');
+    }
+    Object.defineProperty(this, 'mainRequestRole', { value: mainRequestRole, enumerable: true });
     Object.defineProperty(this, 'toolLimit', { value: originalFamilyLimits?.limits.toolDispatches ?? 16, enumerable: true });
+    if (!Number.isSafeInteger(priorToolReservations) || priorToolReservations < 0 || priorToolReservations > this.toolLimit) throw new Error('retained original tool reservations invalid');
+    Object.defineProperty(this, 'priorToolReservations', { value: priorToolReservations, enumerable: true });
     Object.defineProperty(this, 'originalFamilyLimits', { value: originalFamilyLimits, enumerable: true });
     this.ledger = ledger; this.deadline = deadline; this.now = now; this.save = save;
     this.calls = []; this.active = new Set(); this.wsAttempts = new WeakMap();
@@ -226,6 +261,36 @@ export class OpenClawAccounting {
     ledger.stopHandlers?.add(this.stop);
   }
   check() { this.ledger.check(); if (this.now() >= this.deadline) { this.ledger.stop('original deadline'); throw new Error('original deadline'); } }
+  bindNativeCalendarScope(scope) {
+    this.check();
+    if(this.nativeCalendarScope || this.calls.length || this.active.size || this.tools.size || this.nativeCompletedResponses.size
+      ||!strictKeys(scope,CALENDAR_SCOPE_KEYS)||scope.entry!==this.ledger.control?.request_id
+      ||scope.monotonic_deadline!==this.deadline||scope.main_request_role!==this.mainRequestRole
+      ||scope.accounting_source_sha256!==accountingSourceSha256()
+      ||!CALENDAR_SCOPE_KEYS.filter(k=>k.endsWith('_sha256')).every(k=>shaValue(scope[k]))) {
+      throw new Error('native calendar scope differs or work already started');
+    }
+    this.nativeCalendarScope=Object.freeze({...scope});
+  }
+  restoreNativeCompletedResponses(snapshot, scope) {
+    this.bindNativeCalendarScope(scope);
+    if(!strictKeys(snapshot,['contract','scope','records'])||snapshot.contract!=='OpenClawCompletedCalendar/v1'
+      ||!strictKeys(snapshot.scope,CALENDAR_SCOPE_KEYS)||!canonicalEqual(snapshot.scope,scope,CALENDAR_SCOPE_KEYS)
+      ||!Array.isArray(snapshot.records)||!snapshot.records.length)throw new Error('native completed calendar scope differs');
+    const entries=new Map(),ids=new Set();
+    for(const record of snapshot.records){
+      if(!strictKeys(record,['attempt_id','role','model','reasoning_effort','response_id_sha256','binding'])
+        ||!Number.isSafeInteger(record.attempt_id)||record.attempt_id<0||ids.has(record.attempt_id)
+        ||!shaValue(record.response_id_sha256)||entries.has(record.response_id_sha256)||!validCalendarBinding(record.binding)
+        ||!((record.role==='helper'&&record.model==='gpt-6-astra'&&record.reasoning_effort==='medium')
+          ||(scope.main_request_role==='contact'&&record.role==='contact'&&record.model==='gpt-6-sol'&&record.reasoning_effort==='none'))) {
+        throw new Error('native completed calendar record invalid');
+      }
+      ids.add(record.attempt_id);entries.set(record.response_id_sha256,Object.freeze({...record.binding}));
+    }
+    // Validate the entire sealed snapshot before making a single reference eligible.
+    this.nativeCompletedResponses=entries;
+  }
   /** Native temporal formatter only: auth/TLS/Rust clocks and monotonic time stay actual. */
   temporalContext(build) {
     if (!this.clockFile) return build();
@@ -269,10 +334,12 @@ export class OpenClawAccounting {
         || digest(params.additionalContext.openclaw_temporal_context) !== this.scenarioReadbacks.at(-1)?.native_temporal_context_sha256)) {
       throw new Error('native scenario temporal context not bound');
     }
-    // Normal foreground turn; native child/compaction/memory operation roles are bound at transport.
-    return { ...params, model: 'gpt-6-sol', effort: 'none', ...(params.collaborationMode ? {
+    // The parent-bound task role applies to the main turn as well as physical transport.
+    const model = this.mainRequestRole === 'work' ? 'gpt-6-astra' : 'gpt-6-sol';
+    const effort = this.mainRequestRole === 'work' ? 'medium' : 'none';
+    return { ...params, model, effort, ...(params.collaborationMode ? {
       collaborationMode: { ...params.collaborationMode, settings: { ...params.collaborationMode.settings,
-        model: 'gpt-6-sol', reasoning_effort: 'none' } } } : {}) };
+        model, reasoning_effort: effort } } } : {}) };
   }
   /** Bind only the native environment date belonging to this ordinary turn. */
   scenarioBody(body, native, originalBytes) {
@@ -398,8 +465,10 @@ export class OpenClawAccounting {
     const helper = Boolean(native.parent_thread_id || native.subagent_kind || metadata?.['x-openai-subagent'] || metadata?.['x-codex-parent-thread-id'])
       || ['compaction','memory'].includes(native.request_kind);
     if (!helper && !['turn','prewarm'].includes(native.request_kind)) throw new Error('unbound native operation');
-    const role = helper ? 'helper' : 'contact';
-    const model = helper ? 'gpt-6-astra' : 'gpt-6-sol'; const effort = helper ? 'medium' : 'none';
+    // 'helper' is the existing ledger bucket for all research/work/memory execution.
+    // Native main-thread identity remains unchanged; it need not impersonate a subagent.
+    const role = helper || this.mainRequestRole === 'work' ? 'helper' : 'contact';
+    const model = role === 'helper' ? 'gpt-6-astra' : 'gpt-6-sol'; const effort = role === 'helper' ? 'medium' : 'none';
     const selected = { ...body, model, reasoning: { ...(body.reasoning ?? {}), effort } };
     const {body:bound,...calendar} = this.scenarioBody(selected,native,originalBytes);
     return { body:bound, accounting:{role,model,effort,...calendar} };
@@ -437,7 +506,7 @@ export class OpenClawAccounting {
     const knownReasons = ['native tool completion without dispatch observation','native tool was not admitted',
       'original tool cap','original deadline','native observation unavailable','provider usage unknown or settlement refused'];
     const snapshot = { contract: 'OpenClawNativeObservation/v1', sequence: this.nativeObservationReceipts.length + 1,
-      phase, monotonic: this.now(), deadline_reached: this.now() >= this.deadline,
+      phase, prior_tool_reservations: this.priorToolReservations, monotonic: this.now(), deadline_reached: this.now() >= this.deadline,
       ledger_stopped: Boolean(this.ledger.stopReason), ledger_stop_reason: knownReasons.includes(this.ledger.stopReason) ? this.ledger.stopReason : this.ledger.stopReason ? 'OTHER' : null,
       ...details, tool_coverage: this.toolCoverage, first_coverage_failure: this.nativeCoverageFailure,
       tool_rows: [...this.tools.values()].map(({thread_id,...row}) => ({...row,thread_id_sha256:digest(thread_id ?? null)})),
@@ -474,7 +543,7 @@ export class OpenClawAccounting {
           || (turnId && row.turn_id_sha256 && row.turn_id_sha256 !== digest(turnId))) throw new Error('native tool identity changed');
       return row;
     }
-    if ([...this.tools.values()].filter(row => row.status !== 'cancelled').length >= this.toolLimit) {
+    if (this.priorToolReservations + [...this.tools.values()].filter(row => row.status !== 'cancelled').length >= this.toolLimit) {
       this.ledger.stop('original tool cap'); throw new Error('original tool cap');
     }
     row = { tool_id_sha256: digest(id), name_sha256: digest(name), thread_id: threadId ?? null,
@@ -818,6 +887,12 @@ export class OpenClawAccounting {
         this.ledger.stop('native response calendar identity changed');throw new Error('native response calendar identity changed');
       }
       this.nativeCompletedResponses.set(key,binding);
+      if(this.nativeCalendarScope){
+        if(!validCalendarBinding(binding))throw new Error('native completed calendar binding invalid');
+        row.completed_calendar_reference={scope:{...this.nativeCalendarScope},response_id_sha256:key,binding:{...binding}};
+        // The existing driver saves atomically/fsyncs before the terminal callback returns.
+        this.save(this.calls.map(({cleanup,...savedRow})=>savedRow));
+      }
     }
   }
   async fetch(original, params, binding) {

@@ -1,5 +1,29 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Actueel 9 oktober — beperkte evaluatorcorrectie samengevoegd
+
+De bewezen antwoordherkomstfout bij herstart is in de bestaande vergelijkingsroute
+gecorrigeerd. Alleen bevestigde completed-responses worden via het bestaande
+SDK-snapshot en afgesloten restartcontrol meegenomen, met dezelfde actor, sessie,
+modelrol, bron en klok. Onbekende/onderbroken/verkeerde verwijzingen blijven geweigerd.
+De private-rootmode wordt vóór beide klokken gecontroleerd; het echte runtimekopiepad
+is vóór gebruik gecorrigeerd. Geen tweede platform of wijziging van proefcriteria.
+
+Vier exacte bronexports onafhankelijk beoordeeld en geïntegreerd. 47 tests slagen;
+4 bestaande native-checks zijn niet ingeschakeld. 7 gerichte guardtests,
+14 bron-/modechecks en de werkelijke toekomstige repositoryimport slagen.
+Nul nieuwe modelaanvragen/native proeven. Ontwikkelcredits onbekend.
+Dit is bronherstel, geen bewezen native herstel of nieuwe Eva-productfunctie.
+XD08/resultaten/46 registraties/UNKNOWN blijven behouden; P2.1 blijft open,
+39/48 kleine afrondingen onveranderd. Spraak geparkeerd; Docker Desktop ongemoeid.
+
+Vervolg alleen een afzonderlijk concreet gebonden ongebruikte oorspronkelijke
+vergelijking binnen bestaande criteria/modelrollen/toegang/mandaat. Geen gesloten
+herhaling, nieuwe brede matrix of nieuwe taak-ID door deze publicatie.
+
+Bewijs: eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json.
+Review: eva2/reviews/p2-native-calendar-continuity-source-review-20261009.json.
+
 ## Actueel 9 oktober — XD08 gesloten door fouten in proefroute
 
 De oorspronkelijke Eva2/OpenClaw-uitvoering is gesloten. Eva2 kreeg geen
