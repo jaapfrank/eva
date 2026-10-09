@@ -1,41 +1,33 @@
 # Eva — digitale huisgenoot die leert en handelt
 
-## Actueel 9 oktober — vraagoverdracht intact; gerichte proefvoorbereiding
+## Actueel 9 oktober — XD05 gesloten; OpenClaw voert uit, Eva2 onbekend
 
-De behouden XD04-trace is onafhankelijk nagekeken zonder nieuwe modelaanvragen.
-De volledige oorspronkelijke vraag staat in de voorgrond en alle zes directe
-werkeraanvragen; de aangenomen werkopdracht staat daarnaast apart. Er is geen
-bewezen vraagverlies bij overdracht en geen grond voor een productiepatch of
-langere prompt op die aanname.
+De oorspronkelijke XD05-opdracht is afgesloten. OpenClaw voldoet aan alle drie
+vaste voorwaarden en drie onafhankelijke terugleescontroles: twee bedoelde
+registraties, geen dubbele actie, beide oorspronkelijke bestanden ongewijzigd.
+13 echte Astra/medium-aanvragen, 12 tools, 405.529 tokens; 197,459 seconden vanaf
+de oorspronkelijke parentklok. Dit bewijst één geslaagde opdracht, geen algemene voorsprong.
 
-De directe bronadvertentie verschilde: Eva had een leeg starttabblad en drie
-bronadressen alleen in browserconfiguratie/cookiedomeinen; OpenClaw las dezelfde
-adressen uit een gewoon werkbestand. Een cookiedomein bewijst geen volledig
-bronadres met protocol/poort. Gewone ontdekking was aangeboden; onmogelijke
-toegang of de precieze oorzaak van Eva's adreskeuze is hiermee niet bewezen.
-Zie eva2/evidence/product/p2-retained-worker-input-diagnosis-20261009.json en
-review eva2/reviews/p2-retained-worker-input-diagnosis-review-20261009.json.
+Eva2 ontving geen taakinput: onze proefworker kon zijn bronmap met modus0700
+niet lezen als UID1000. Nul modelaanvragen/tools; totale verbruiksregistratie
+onvolledig en dus onbekend. Deze UNKNOWN is geen productverlies. Bron-/invoerreview
+misten de maprechten. De rechten zijn uitsluitend voor toekomstig proefgebruik
+gecorrigeerd; de gesloten poging is niet herhaald. Productie-Eva blijft ongewijzigd.
 
-XD04 blijft gesloten: vaste waarnemingen1/3/readbacks[false,true]; OpenClaw's
-33Sol/none-werkaanvragen voldoen niet aan de oorspronkelijke Astra/medium-rol.
-Geen geldige winnaar, nieuwe productfunctie of terugwerkende scorewijziging.
-38registraties/273SDK/knownLB4.189.178tokens blijven behouden; historisch onbekend
-verbruik blijft onbekend. Zie het gekwalificeerde XD04-resultaat van8oktober.
+Geen geldige pairwinnaar of efficiëntieclaim. Native closed=false, parent-ACK,
+verbruiksafsluiting en fysieke sluiting blijven afzonderlijk vastgelegd. Alle eigen
+resources zijn gesloten; alle 39 eerdere registraties exact behouden. Nu40registraties,
+286 SDK-pogingen en bekende ondergrens4.594.707tokens; historisch onbekend verbruik
+blijft onbekend. Registraties zijn geen afgeronde vergelijkingstaken of functies.
 
-Eén toekomstige bronkandidaat is onafhankelijk beoordeeld: OpenClaw's twee echte
-modelovergangen kiezen de bestaande Astra/medium-werkrol; de gedocumenteerde
-browser-initPagecallback kan dezelfde gewone niet-geheime broncatalogus tonen.
-20purebroncontroles geslaagd,0runtimeaanvragen; niet toegepast of native bewezen.
-Zie eva2/evidence/product/p2-future-resource-offer-work-role-source-20261009.json
-met bijbehorende source-review van9oktober. Herhaal die broncontroles niet.
+P2.1 blijft open; de beperkte XD05-uitkomst is onafhankelijk gecontroleerd.
+39/48 kleine taken en L3.4-L3.7 blijven behouden. Geen nieuwe taak, gesloten proef
+herhalen of brede matrix starten. Spraak blijft geparkeerd. Eva gebruikt WSL-Docker;
+ongebruikte Docker Desktop blijft ongemoeid.
 
-Hergebruik de twee beoordeelde bestanden. Bind de identieke catalogus aan de
-readonly Eva-initPage en gewone OpenClaw-workspace, plus werkprofiel/rol-driver,
-actor/toegang/UID en toekomstige sourcepolicy, voordat een nieuwe oorspronkelijke
-invoer wordt toegelaten. Deze source-GO is geen runtime-GO of nieuwe proefruimte;
-geen XD04-herhaling/brede matrix, productiepatch of langere prompt op een vermoeden.
-Productie-Eva blijft staan;39/48taken en L3.4-L3.7 blijven behouden.
-Spraak blijft geparkeerd; ongebruikte DockerDesktop blijft ongemoeid.
+Bewijs: eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json.
+Dekking: eva2/evidence/product/p2-authority-coverage-xd05-20261009.json.
+Review: eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json.
 
 ## Actueel 8 oktober — adresduiding in zelfstandige uitvoering geïnstalleerd
 

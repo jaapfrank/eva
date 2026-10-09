@@ -1,0 +1,112 @@
+{
+  "allowed_next_transition": {
+    "action": "Publish the exact bound safe result and conservative coverage with this review.",
+    "closed_deadlines_inputs_scores_and_authority_unchanged": true,
+    "new_execution_or_rearm_admitted": false
+  },
+  "blocking_findings": [],
+  "bound_sha256": {
+    "final_index": "7a4137ede90f436eee38eafbed441cf20988bd042cd96203b7c1bb9c8902a674",
+    "openclaw_assessment": "85b518919b8d6fd39cfc3f6105a770c2653af22fd5d82d1618491fca342edbbb",
+    "openclaw_physical_closure": "8bd8b11d550ac1b3d832fdf09c51011bb759ed5223f9f1054b3b22d3900e58f3",
+    "openclaw_terminal": "247da1612f90464c2d577d0fd71406255639384ab79624565853a927765326fd",
+    "public_coverage": "072512275ada3829b1943fd02fe4e6d37d28384030bf30f9bef898e632a61454",
+    "public_result": "9d6e22bcb3f0ace39f86ce7a4c82e2ce8ec8b157bba94da6c9d53363934c5414",
+    "retention": "dbae073dc6929f569f85ecd81a3157fecfbe1fcbf4b547ba9d8ac09cbe325648",
+    "root_openclaw_terminal": "b6567f015d11c3deb7a540c2d7f6ce910f3bb793753adc28930842d9718b9774"
+  },
+  "claim_limits": {
+    "P2_completion": false,
+    "efficiency_advantage": false,
+    "eligible_pair_ranking": false,
+    "general_superiority": false,
+    "human_or_official_semantic_rating": null,
+    "new_product_function": false,
+    "pair_winner": null
+  },
+  "contract": "IndependentP2OriginalXD05FinalPublicationReview/v1",
+  "decision": "GO_PUBLICATION_ONLY",
+  "eva2": {
+    "classification": "UNKNOWN_EVALUATOR_PRE_INPUT_NATIVE_MOUNT_ACCESS_FAILURE",
+    "known_partial_tokens": 0,
+    "native_worker_ACK_and_typed_settlement": false,
+    "original_input_delivered": false,
+    "physical_closure": true,
+    "product_loss_or_win": null,
+    "sdk_attempts": 0,
+    "tools": 0,
+    "total_tokens": null,
+    "usage_complete": false
+  },
+  "history_and_retention": {
+    "all_39_prior_raw_values_revisions_and_metadata_preserved": true,
+    "coverage_recomputed_from_readonly_authority": true,
+    "current_rows": 40,
+    "initial_38_preserved_through_eva2_closure": true,
+    "known_input_tokens_lower_bound": 4561195,
+    "known_output_tokens_lower_bound": 33512,
+    "known_total_tokens_lower_bound": 4594707,
+    "old_UNKNOWN_and_full_reservations_preserved": true,
+    "old_missing_usage_attempts": 3,
+    "overall_token_total": null,
+    "overall_usage_complete": false,
+    "recorded_sdk_attempts": 286,
+    "registry_counts_do_not_prove_completed_case_coverage": true,
+    "retained_file_hashes_verified": 600,
+    "usage_unknown_flagged_rows": 2
+  },
+  "openclaw": {
+    "actual_roles": {
+      "helper/gpt-6-astra/medium": 13
+    },
+    "all_physical_capture_hashes_and_original_input_bindings_verified": true,
+    "elapsed_seconds": 197.45893124700524,
+    "equivalent_native_settled": true,
+    "input_tokens": 403004,
+    "native_closed": false,
+    "original_native_turns": 1,
+    "output_tokens": 2525,
+    "parent_ACK": true,
+    "physical_closure": true,
+    "sdk_attempts_complete": 13,
+    "settled_tools": 12,
+    "timing_scope": "Original parent clock before native child/profile/workspace/input launch through child return; cleanup retained separately.",
+    "total_tokens": 405529
+  },
+  "original_assessment": {
+    "allowed_fixture_effects": 2,
+    "criteria_and_readback_contract_unchanged": true,
+    "human_and_whole_quality": null,
+    "human_rating_substituted": false,
+    "independent_retained_data_derivation_verified": true,
+    "objective_completed": true,
+    "openclaw_fixed_predicates": [
+      true,
+      true,
+      true
+    ],
+    "openclaw_required_readbacks": [
+      true,
+      true,
+      true
+    ],
+    "original_files_byte_identical": 2,
+    "private_actor_binding_verified": true,
+    "single_linked_records_and_original_provenance_verified": true
+  },
+  "retained_review_limitations": [
+    "The stale nested Inspect check-copy was missed during source/conditional review; its failure and correction remain retained.",
+    "The native mounted benchmark directory denied UID1000 traversal before Eva2 input; the source/actual-UID review miss remains explicit.",
+    "The subsequent directory-mode/readability correction proves only future source access, not Eva2 native task execution.",
+    "OpenClaw native_closed=false remains separate from authoritative settlement and physical closure."
+  ],
+  "review_activity": {
+    "new_provider_or_native_calls": 0,
+    "new_trial_or_resources": 0,
+    "protected_content_declassified": false,
+    "retained_evidence_readonly": true
+  },
+  "reviewed_at": "2026-10-09T00:18:53.627276+00:00",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "scope": "The single closed original EV003-XD-05 epoch1 outcome and its conservative authority coverage. No execution admission."
+}

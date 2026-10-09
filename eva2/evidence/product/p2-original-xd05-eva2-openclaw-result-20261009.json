@@ -1,0 +1,248 @@
+{
+  "ai_judge_used": false,
+  "case_id": "EV003-XD-05",
+  "case_sha256": "743a11861fb7ede9333963020b25b6c1d2afe08b925e706c4b3a937aeb316b16",
+  "closure": {
+    "both_networks_and_parents_absent": true,
+    "eva2_missing_native_receipts_and_ack_preserved": true,
+    "eva2_physical_containers_network_and_programming_service_absent": true,
+    "openclaw_fixture_listeners_exited": 2,
+    "openclaw_native_closed_false_not_promoted_to_true": true,
+    "openclaw_native_container_absent": 1
+  },
+  "comparison": {
+    "efficiency_advantage_claimed": false,
+    "eva2_product_loss_inferred": false,
+    "general_superiority_claimed": false,
+    "reason": "Eva2 never received original input because the evaluator native mount failed; OpenClaw completion is one bounded original-case observation.",
+    "role_mismatch_observed_openclaw": false,
+    "valid_pair_ranking": false,
+    "winner": null
+  },
+  "contract": "P2OriginalXD05SequentialPairResult/v1",
+  "cumulative_usage": {
+    "known_input_tokens_lower_bound": 4561195,
+    "known_output_tokens_lower_bound": 33512,
+    "known_total_tokens_lower_bound": 4594707,
+    "recorded_sdk_attempts": 286,
+    "total_tokens": null,
+    "usage_complete": false
+  },
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "development_credit_cost": null,
+  "epoch": 1,
+  "evidence": {
+    "coverage": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/p2-authority-coverage-xd05-20261009.json",
+      "sha256": "072512275ada3829b1943fd02fe4e6d37d28384030bf30f9bef898e632a61454"
+    },
+    "eva2_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/eva2/original-assessment.private.json",
+      "sha256": "d6e731c1e1a38ca70d8df359819c6816898bba9059b42888c8c943491672ac53"
+    },
+    "eva2_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/eva2/physical-closure.private.json",
+      "sha256": "6a4f7dec1d3a35a4463c79ab1d00c877395bd142afd59e8055181f9797158166"
+    },
+    "eva2_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/eva2/terminal-technical.private.json",
+      "sha256": "d81b9450e6448bf694c5308a0f0a0e5b89340be5c6f2a0da7af6f1aca7213144"
+    },
+    "future_mode_only_correction": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/future-native-directory-mode-correction.private.json",
+      "sha256": "62d1a44db481becb9cc0469ef7c45af5c4cdb2c0f1602a0647fe8fa8eed94515"
+    },
+    "openclaw_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/openclaw/original-assessment.private.json",
+      "sha256": "85b518919b8d6fd39cfc3f6105a770c2653af22fd5d82d1618491fca342edbbb"
+    },
+    "openclaw_eligibility": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/openclaw/resource-eligibility-retained.private.json",
+      "sha256": "71edc2c4b87128708fe1ac0b2ddd2eca481aad42fd66479b525e1e4537d61ab8"
+    },
+    "openclaw_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/openclaw/physical-closure.private.json",
+      "sha256": "8bd8b11d550ac1b3d832fdf09c51011bb759ed5223f9f1054b3b22d3900e58f3"
+    },
+    "openclaw_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/openclaw/terminal-technical.private.json",
+      "sha256": "247da1612f90464c2d577d0fd71406255639384ab79624565853a927765326fd"
+    }
+  },
+  "family": "cross_domain_actions",
+  "future_execution_admitted": false,
+  "historical_retention": {
+    "all_original_full_reservations_preserved": true,
+    "all_prior_raw_values_revisions_metadata_preserved": true,
+    "final_registered_rows": 40,
+    "old_missing_usage_attempts": 3,
+    "old_usage_unknown_rows": 2,
+    "prior_original_rows": 38,
+    "prior_rows_before_openclaw": 39,
+    "reset_or_rearm_or_replay": false
+  },
+  "human_ratings": {
+    "eva2": [
+      null,
+      null
+    ],
+    "openclaw": [
+      null,
+      null
+    ]
+  },
+  "limits_per_participant": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "speechRequests": 0,
+    "toolDispatches": 70,
+    "wallSeconds": 840
+  },
+  "model_roles": {
+    "contact_role_not_substituted_for_work": true,
+    "helpers": {
+      "model": "gpt-6-astra",
+      "reasoning": "medium"
+    },
+    "main_substantive_work": {
+      "accounting_role": "helper",
+      "model": "gpt-6-astra",
+      "reasoning": "medium"
+    }
+  },
+  "new_task_or_product_function_claimed": false,
+  "original_criteria_unchanged": true,
+  "original_input_texts_unchanged": true,
+  "p2_1_complete": false,
+  "pair_usage": {
+    "complete": false,
+    "known_input_tokens_lower_bound": 403004,
+    "known_output_tokens_lower_bound": 2525,
+    "known_total_tokens_lower_bound": 405529,
+    "reason": "OpenClaw complete; Eva2 native/accounting closure incomplete with zero recorded dispatches.",
+    "sdk_attempts": 13,
+    "tool_dispatches": 12,
+    "total_tokens": null
+  },
+  "participants": {
+    "eva2": {
+      "cause": "Evaluator-mounted source directory denied native UID1000 traversal before worker entry and original input.",
+      "classification": "UNKNOWN_EVALUATOR_PRE_INPUT_NATIVE_MOUNT_ACCESS_FAILURE",
+      "fixed_conditions_passed": null,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        null,
+        null,
+        null
+      ],
+      "fixture_effects": 0,
+      "fixture_requests": 0,
+      "independent_readbacks": [
+        null,
+        null,
+        null
+      ],
+      "native_turns_completed": 0,
+      "native_worker_ack_complete": false,
+      "native_worker_receipts_complete": false,
+      "objective_conditions_met": null,
+      "original_files_materialized_to_task_workspace": false,
+      "original_input_delivered": false,
+      "physical_closure_complete": true,
+      "product_loss_or_win": null,
+      "timing": {
+        "parent_to_stop_seconds": 21.648226932011312,
+        "scope": "Original absolute clock before failed native boot through stop; no task or model latency measured."
+      },
+      "usage": {
+        "capture_count": 0,
+        "captures_complete": true,
+        "complete": false,
+        "input_tokens": null,
+        "known_partial_usage": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0
+        },
+        "output_tokens": null,
+        "physical_tunnel_events": 0,
+        "sdk_attempts": 0,
+        "speech_requests": 0,
+        "tool_dispatches": 0,
+        "total_tokens": null
+      }
+    },
+    "openclaw": {
+      "actual_work_role_protocol_conformant": true,
+      "classification": "ORIGINAL_FIXED_OBJECTIVE_COMPLETED",
+      "equivalent_native_settled": true,
+      "fixed_conditions_passed": 3,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        true,
+        true,
+        true
+      ],
+      "fixture_effects": 2,
+      "fixture_requests": 68,
+      "fixture_status_counts": {
+        "200": 6,
+        "201": 2,
+        "404": 60
+      },
+      "forbidden_effects_observed": 0,
+      "human_help_provided": 0,
+      "human_help_requested": false,
+      "independent_readbacks": [
+        true,
+        true,
+        true
+      ],
+      "native_closed": false,
+      "native_turns_completed": 1,
+      "objective_conditions_met": true,
+      "observed_behavior": "Completed the fixed reconciliation and linked records while preserving original file bytes and avoiding duplicate effects.",
+      "original_files_unchanged": 2,
+      "original_input_delivered": true,
+      "original_source_provenance_preserved": true,
+      "parent_close_ack": true,
+      "physical_closure_complete": true,
+      "timing": {
+        "elapsed_seconds": 197.45893124700524,
+        "scope": "Original parent clock before native child/profile/workspace/input launch through child return; physical cleanup separately retained.",
+        "wall_expired": false
+      },
+      "usage": {
+        "actual_roles": {
+          "helper/gpt-6-astra/medium": 13
+        },
+        "complete": true,
+        "input_tokens": 403004,
+        "output_tokens": 2525,
+        "physical_context_count": 13,
+        "sdk_attempts": 13,
+        "speech_requests": 0,
+        "tool_dispatches": 12,
+        "total_tokens": 405529
+      }
+    }
+  },
+  "participants_order": [
+    "eva2",
+    "openclaw"
+  ],
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "preparation_and_review_limitations": [
+    "Derived service-count and current native-worker source-table mismatches were corrected before resource admission; previous draft bytes remain retained.",
+    "The first Eva2 Inspect launch refused a stale nested frozen-check copy before reservation/clock/native input. The corrected copy matched the reviewed current worker; original failure and review miss remain retained.",
+    "Eva2 then failed before original input because the actual native source directory was0700. Source/actual-readiness reviews missed directory traversal permissions. The original episode closed UNKNOWN without rearm.",
+    "A future-only directory-mode correction retained all11 module bytes and demonstrated mount-relative UID1000 reads; it is not an executed Eva2 task or worker-start proof.",
+    "OpenClaw completed within its original native work role and envelope. Native closed=false remains separate from equivalent settlement, ACK and verified physical closure.",
+    "Complete human/whole-quality acceptance and a valid matched pair result are not established."
+  ],
+  "purpose": "Original useful work across admitted files and two services with preservation, deduplication and linked records.",
+  "runtime_cost_currency": null,
+  "status": "closed_eva2_unknown_openclaw_objective_completed_no_pair_ranking",
+  "whole_quality": null
+}
