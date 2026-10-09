@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-09T11:44:18.581459+00:00",
+        "checkedAt": "2026-10-09T12:31:56.201223+00:00",
         "deliveries": [
           {
             "taskId": "P2.1",
@@ -4468,8 +4468,8 @@
         "now": {
           "taskId": "P2.1",
           "title": "P2.1 · Vergelijking uitgevoerd; dashboardstatus hersteld",
-          "detail": "De vergelijking voor deze oorspronkelijke opdracht is uitgevoerd, fysiek afgesloten en onafhankelijk goedgekeurd. Beide 3/3 voorwaarden en 2/2 terugleescontroles; geen nieuwe complete Eva-functie of algemene kwaliteitswinnaar. Geen proefuitvoering actief.",
-          "state": "in_progress",
+          "detail": "Geen proef- of productuitvoering actief; het app-goal staat gepauzeerd. De laatste vergelijking is afgesloten. Oude tegenstrijdige volgende-acties en historische proefproblemen zijn als geschiedenis bewaard en uit de actuele aansturing gehaald. Geen nieuw hoofdonderdeel afgerond.",
+          "state": "paused",
           "activeExecution": false,
           "source": "eva2/evidence/product/p2-original-xd11-eva2-openclaw-result-20261009.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
@@ -4495,7 +4495,7 @@
         "reviewedAt": "2026-10-09T11:44:18.581459+00:00"
       },
       "reviewedAt": "2026-10-09T04:35:11.778342+00:00",
-      "checkedAt": "2026-10-09T04:35:11.778342+00:00",
+      "checkedAt": "2026-10-09T12:31:56.201223+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -10844,7 +10844,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-09T08:55:04.405380+00:00",
+      "lastUpdatedAt": "2026-10-09T12:31:56.201223+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -25651,7 +25651,7 @@
                 },
                 "activeExecution": false,
                 "updatedAt": "2026-10-09T08:21:19.188633+00:00",
-                "nextComparisonDecision": "Resterende oorspronkelijke dekking behouden; eerst een beslisrelevant vergelijkingspaar op bestaande routes, plus echte blinde antwoordbeoordelingen.",
+                "nextComparisonDecision": "Geen nieuwe proef uitsluitend voor dekking. Gebruik behouden verlies- en foutbewijs voor een concrete productverbetering; een latere vergelijking moet een vooraf benoemde productkeuze of noodzakelijke correctie toetsen binnen oorspronkelijke criteria en mandaat.",
                 "previousNativePreparationAtCM06Eva1": {
                   "caseId": "EV003-CM-01",
                   "epoch": 1,
@@ -26072,7 +26072,7 @@
                   "resourcesPhysicallyClosed": true,
                   "finalReviewSha256": "bf6bca208b13a3d25ec91f775961698cfb12308dc3c2b087df505dcfdad5a8a7"
                 },
-                "concreteNextAction": "Bind only genuinely remaining original P2 coverage within unchanged criteria and available mandate. Original XD10 epoch1 is metadata-only unused; no selection, admission or execution is implied by publication.",
+                "concreteNextAction": "Gebruik bestaand verlies- en foutbewijs om het concrete tekort in zelfstandig werk te lokaliseren; geen extra vergelijkingsrun uitsluitend om meer rijen te vullen.",
                 "currentGoalTurnOutcome": "Both actual original XD09 objectives completed and physically closed; exact safe result and final independent review ready for publication. P2.1 and human overall quality remain open.",
                 "retainedPreviousOwnerAction": {
                   "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
@@ -26614,22 +26614,24 @@
                 "latestReview": "eva2/reviews/p2-original-xd10-eva2-openclaw-final-review-20261009.json",
                 "currentTurnClassification": "progress",
                 "futureExecutionAdmitted": false,
-                "currentOutcome": "closed_original_pair_original_request_scorer_date_conflict",
-                "remainingComparisonTechnicalDependency": "Eén verse oorspronkelijke bron-/rol-/uitvoerbinding met de gecorrigeerde gewone catalogus; native montage en gebruiksresultaat nog niet aangetoond.",
+                "currentOutcome": "closed_original_pair_both_scoped_objectives_completed",
+                "remainingComparisonTechnicalDependency": "Geen technische blokkade voor de gesloten XD11-proef. Het totale P2.1-oordeel blijft open; dit is geen reden voor automatische nieuwe proefuitvoering.",
                 "currentAuthorityAfterPair": {
                   "count": 50,
                   "old49RawRevisionMetadataUnchanged": true,
                   "sha256": "0129aa77788fb8c059f30ec567aa7a04025c3c138691a2635b2b38aa1c595507"
                 },
                 "currentTechnicalFinding": {
-                  "stage": "eva2_original_input_gate",
-                  "failure": "private_base_mode_0755_required_0700",
-                  "preparationReviewMiss": true,
-                  "correctedBeforeUnusedOpenclaw": true,
-                  "closedEva2Unchanged": true,
-                  "productLossProven": false,
-                  "openclawPostRestartFailure": "nativeCompletedResponses_state_not_transferred_evaluator_body_bind",
-                  "openclawNativeEndedBeforeOwnerStop": true
+                  "scope": "closed_original_EV003-XD-11_epoch1_pair",
+                  "eva2ConditionsPassed": 3,
+                  "openclawConditionsPassed": 3,
+                  "eva2IndependentReadbacksPassed": 2,
+                  "openclawIndependentReadbacksPassed": 2,
+                  "resourcesPhysicallyClosed": true,
+                  "currentTrialRouteFailure": false,
+                  "newProductFunctionDelivered": false,
+                  "qualityWinner": null,
+                  "source": "eva2/evidence/product/p2-original-xd11-eva2-openclaw-result-20261009.json"
                 },
                 "currentSelectionPreparation": {
                   "caseId": "EV003-XD-08",
@@ -27553,7 +27555,32 @@
                 },
                 "historicalTrialGoalObjectiveSha256BeforeXD11": "4d83be8c714a5bd1f6379102baf3b96a9109c662f4284c656bf6388dcb05e465",
                 "openclawCurrentAdmissionSha256": "2c592c89588e54d99a818263e4dd2d47a23ee21d84fa4dd18cc35f12956fb58a",
-                "historicalPreparationIssueBeforeXD11": "Review vond vóór resources/input een partial-readrace in nieuw barrier/resume-bestand. Gericht atomisch publiceren; oorspronkelijke events/budget blijven gelijk."
+                "historicalPreparationIssueBeforeXD11": "Review vond vóór resources/input een partial-readrace in nieuw barrier/resume-bestand. Gericht atomisch publiceren; oorspronkelijke events/budget blijven gelijk.",
+                "historicalSteeringFieldsBeforeConsistencyCorrection20261009": {
+                  "currentOutcome": "closed_original_pair_original_request_scorer_date_conflict",
+                  "concreteNextAction": "Bind only genuinely remaining original P2 coverage within unchanged criteria and available mandate. Original XD10 epoch1 is metadata-only unused; no selection, admission or execution is implied by publication.",
+                  "nextComparisonDecision": "Resterende oorspronkelijke dekking behouden; eerst een beslisrelevant vergelijkingspaar op bestaande routes, plus echte blinde antwoordbeoordelingen.",
+                  "currentTechnicalFinding": {
+                    "stage": "eva2_original_input_gate",
+                    "failure": "private_base_mode_0755_required_0700",
+                    "preparationReviewMiss": true,
+                    "correctedBeforeUnusedOpenclaw": true,
+                    "closedEva2Unchanged": true,
+                    "productLossProven": false,
+                    "openclawPostRestartFailure": "nativeCompletedResponses_state_not_transferred_evaluator_body_bind",
+                    "openclawNativeEndedBeforeOwnerStop": true
+                  },
+                  "remainingComparisonTechnicalDependency": "Eén verse oorspronkelijke bron-/rol-/uitvoerbinding met de gecorrigeerde gewone catalogus; native montage en gebruiksresultaat nog niet aangetoond."
+                },
+                "steeringConsistencyCorrection": {
+                  "checkedAt": "2026-10-09T12:31:56.201223+00:00",
+                  "reason": "Actuele velden bevatten nog oude instructies voor een volgende proef en historische proefproblemen; die conflicteerden met nextAction en het gepubliceerde XD11-resultaat.",
+                  "historicalFieldsRetained": true,
+                  "taskStatusAndFinishConditionsChanged": false,
+                  "newEvaModelCalls": 0,
+                  "newTrialStarted": false,
+                  "appGoalObservedStatus": "paused"
+                }
               },
               "remaining": "P2.1 blijft open: oorspronkelijke vergelijkingsdekking en de reeds vereiste menselijke beoordelingen. XD10 is gesloten met conflicterende datumankers in de oorspronkelijke vraag en scorer. Beide volgen de gevraagde dag; ruwe scores bewijzen geen productverlies of winnaar. Geen herhaling van gesloten proeven.",
               "latestEvidence": "eva2/evidence/product/p2-original-xd10-eva2-openclaw-result-20261009.json",
