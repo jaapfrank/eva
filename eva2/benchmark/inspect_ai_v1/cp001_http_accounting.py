@@ -8,6 +8,7 @@ must dedicate the instance to one sample and bind every provider client.
 import asyncio
 from dataclasses import asdict
 import json
+import logging
 
 try:
     import httpx
@@ -30,6 +31,37 @@ class _ObservedBytes:
         self.close_error = None
         self.invalid = False
         self.settled = False
+        self.failure_observation = None
+
+    def _record_failure(self, error):
+        # The observer sees the decoded event before the native provider does.
+        # Retain only provider-sanitized fields and fixed counters, never bytes,
+        # exception text, upstream labels, credentials, or tool arguments.
+        if self.failure_observation is not None:
+            return
+        failure = getattr(self.attestor, "failure", None)
+        if failure is None:
+            failure = getattr(error, "diagnostic", None)
+        counts = getattr(self.attestor, "event_counts", {})
+        observation = {
+            "attempt_id": self.attempt if type(self.attempt) is int else None,
+            "provider_failure": failure,
+            "event_counts": {
+                key: counts.get(key) if type(counts.get(key)) is int
+                and counts[key] >= 0 else None
+                for key in ("sse_events", "text_deltas", "tool_argument_deltas",
+                            "reasoning_deltas", "completed_events")
+            },
+        }
+        self.failure_observation = observation
+        try:
+            logging.getLogger(__name__).warning(
+                "native_provider_failure %s",
+                json.dumps(observation, separators=(",", ":")),
+            )
+        except Exception:
+            # Diagnostic logging must never replace the original stop/close.
+            pass
 
     def __aiter__(self):
         return self
@@ -43,6 +75,7 @@ class _ObservedBytes:
                 self.attestor.finish()
             except Exception as error:
                 self.invalid = True
+                self._record_failure(error)
                 await self.aclose()
                 raise SampleStopped("native HTTP response has no complete raw usage") from error
             await self.aclose()
@@ -54,6 +87,7 @@ class _ObservedBytes:
             self._observe_decoded(self.decoder.decode(chunk))
         except Exception as error:
             self.invalid = True
+            self._record_failure(error)
             raise SampleStopped("native HTTP response usage is invalid") from error
         return chunk
 
@@ -90,6 +124,7 @@ class _ObservedBytes:
                 usage = self.attestor.finish()
             except Exception as error:
                 self.invalid = True
+                self._record_failure(error)
                 raise SampleStopped("native HTTP terminal usage is invalid") from error
             self.ledger.finish(self.attempt, asdict(usage))
             self.settled = True

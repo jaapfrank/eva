@@ -46,10 +46,53 @@ FailureCategory = Literal[
 class CodexProviderError(RuntimeError):
     """A provider failure whose message is safe to expose to product code."""
 
-    def __init__(self, category: FailureCategory) -> None:
+    def __init__(self, category: FailureCategory, *, provider_event: dict[str, object] | None = None) -> None:
         self.category = category
+        self._diagnostic = self._safe_provider_failure(provider_event)
         super().__init__(f"Codex provider {category.replace('_', ' ')}")
 
+    @property
+    def diagnostic(self) -> dict[str, str | None] | None:
+        """Fixed terminal labels only; never the upstream message or body."""
+        return dict(self._diagnostic) if self._diagnostic is not None else None
+
+
+    _FAILURE_EVENTS = frozenset({"error", "response.failed", "response.incomplete", "response.cancelled"})
+    _ERROR_CODES = frozenset({
+        "server_error", "rate_limit_exceeded", "invalid_prompt", "invalid_request_error",
+        "subscription_sharing_usage_limit_exceeded", "subscription_sharing_usage_unavailable",
+    })
+    _INCOMPLETE_REASONS = frozenset({"max_output_tokens", "content_filter", "steered"})
+
+
+    @staticmethod
+    def _safe_provider_failure(event: dict[str, object] | None) -> dict[str, str | None] | None:
+        """Extract allowlisted labels; unknown labels are fingerprinted, not logged."""
+        import hashlib
+
+        if (not isinstance(event, dict) or not isinstance(event.get("type"), str)
+                or event["type"] not in CodexProviderError._FAILURE_EVENTS):
+            return None
+        response = event.get("response")
+        response = response if isinstance(response, dict) else {}
+        error = event.get("error") if event["type"] == "error" else response.get("error")
+        error = error if isinstance(error, dict) else event if event["type"] == "error" else {}
+        details = response.get("incomplete_details")
+        details = details if isinstance(details, dict) else {}
+
+        def label(value: object, known: frozenset[str]) -> tuple[str | None, str | None]:
+            if value is None:
+                return None, None
+            if isinstance(value, str) and value in known:
+                return value, None
+            # Codes can contain arbitrary provider text. Do not retain unknown values.
+            return "unrecognized", hashlib.sha256(value.encode(errors="surrogatepass")).hexdigest() if isinstance(value, str) else None
+
+        code, code_sha256 = label(error.get("code"), CodexProviderError._ERROR_CODES)
+        reason, reason_sha256 = label(details.get("reason"), CodexProviderError._INCOMPLETE_REASONS)
+        return {"event_kind": event["type"], "error_code": code,
+                "error_code_sha256": code_sha256, "incomplete_reason": reason,
+                "incomplete_reason_sha256": reason_sha256}
 
 @dataclass(frozen=True, slots=True)
 class RawUsageAttestation:
@@ -102,6 +145,7 @@ class _RawSseUsageAttestor:
         self._pending = bytearray()
         self._terminal: RawUsageAttestation | None = None
         self._completed = False
+        self.failure: dict[str, str | None] | None = None
         self.event_counts = dict.fromkeys(("sse_events", "text_deltas", "tool_argument_deltas", "reasoning_deltas", "completed_events"), 0)
 
     def feed(self, chunk: bytes) -> None:
@@ -155,12 +199,10 @@ class _RawSseUsageAttestor:
         }.get(kind) if isinstance(kind, str) else None
         if counter is not None:
             self.event_counts[counter] += 1
-        if kind == "error" or kind in {
-            "response.cancelled",
-            "response.failed",
-            "response.incomplete",
-        }:
-            raise CodexProviderError("protocol")
+        if isinstance(kind, str) and kind in CodexProviderError._FAILURE_EVENTS:
+            error = CodexProviderError("protocol", provider_event=event)
+            self.failure = error.diagnostic
+            raise error
         if kind != "response.completed":
             return
         if self._terminal is not None:
@@ -300,8 +342,10 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
                                 for body in self._streams)) else None
 
     @property
-    def observation(self) -> dict[str, int | None]:
+    def observation(self) -> dict[str, Any]:
         """Expose bounded transport metadata without content or credentials."""
+        failure = next((body._attestor.failure for body in self._streams
+                        if body._attestor is not None and body._attestor.failure is not None), None)
         return {
             "network_started_ms": self._network_started_ms,
             "headers_received_ms": self._headers_received_ms,
@@ -311,7 +355,8 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
             **{key: sum(body._attestor.event_counts[key] for body in self._streams
                         if body._attestor is not None)
                for key in ("sse_events", "text_deltas", "tool_argument_deltas",
-                           "reasoning_deltas", "completed_events")},
+                            "reasoning_deltas", "completed_events")},
+            **({"provider_failure": dict(failure)} if failure is not None else {}),
         }
 
     @property
@@ -635,7 +680,7 @@ class OpenAICodexSession:
     _used_access_token: _UsedAccessToken
 
     @property
-    def observation(self) -> dict[str, int | None]:
+    def observation(self) -> dict[str, Any]:
         return self._transport.observation
 
     @property

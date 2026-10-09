@@ -1402,6 +1402,25 @@ def test_failure_diagnostic_bounds_cyclic_chains_and_unknown_category(caplog):
     assert "private-provider-text" not in caplog.text
 
 
+def test_provider_terminal_failure_is_logged_on_the_existing_conversation_route(tmp_path, caplog):
+    failure = CodexProviderError("protocol", provider_event={
+        "type": "response.incomplete", "response": {
+            "incomplete_details": {"reason": "content_filter"}, "output": ["private-body"],
+        }, "message": "private-error-text",
+    })
+    scripted = ScriptedPydanticConversation((ScriptedPhase.failure(failure), ScriptedPhase.text("no retry")))
+    with pytest.raises(ConversationModelError):
+        _generate(_adapter(tmp_path, scripted), completed_action=RECEIPT)
+    records = [r.message for r in caplog.records if r.message.startswith("conversation_model_failure ")]
+    assert len(records) == len(scripted.captures) == 1
+    detail = json.loads(records[0].split(" ", 1)[1])
+    assert detail["provider_failure"] == failure.diagnostic
+    assert detail["provider_category"] == "protocol"
+    assert scripted.remaining_phases == 1
+    assert "private-body" not in records[0]
+    assert "private-error-text" not in records[0]
+
+
 class _TaskOutputUsageModel(WrapperModel):
     """Supply observed-size accounting through the real streamed model boundary."""
     def __init__(self, model, outputs, *, input_tokens=19_333):

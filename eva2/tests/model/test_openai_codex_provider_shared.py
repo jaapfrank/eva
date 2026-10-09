@@ -722,3 +722,78 @@ def test_partial_sse_progress_counts_do_not_retain_content_or_accept_completion(
 
 def test_rate_limit_is_not_a_transient_retryable_failure():
     assert _sanitized(_StatusFailure(429)).category == "rate_limited"
+
+
+@pytest.mark.parametrize("event,code,reason", [
+    ({"type": "error", "code": "invalid_request_error"}, "invalid_request_error", None),
+    ({"type": "error", "error": {"code": "subscription_sharing_usage_limit_exceeded"}},
+     "subscription_sharing_usage_limit_exceeded", None),
+    ({"type": "response.failed", "response": {"error": {"code": "server_error"}}},
+     "server_error", None),
+    ({"type": "response.incomplete", "response": {"incomplete_details": {"reason": "max_output_tokens"}}},
+     None, "max_output_tokens"),
+    ({"type": "response.cancelled"}, None, None),
+])
+def test_terminal_failure_keeps_safe_cause_without_attesting_success(event, code, reason):
+    from eva.adapters.model.openai_codex_provider import _RawSseUsageAttestor
+
+    event["private"] = "secret-body"
+    event["message"] = "secret-provider-message"
+    attestor = _RawSseUsageAttestor()
+    wire = b"data: " + json.dumps(event).encode() + b"\n\n"
+    with pytest.raises(CodexProviderError) as raised:
+        for offset in range(0, len(wire), 7):
+            attestor.feed(wire[offset:offset + 7])
+    error = raised.value
+    assert error.category == "protocol"  # No new retry/recovery policy.
+    assert error.diagnostic == attestor.failure == {
+        "event_kind": event["type"], "error_code": code, "error_code_sha256": None,
+        "incomplete_reason": reason, "incomplete_reason_sha256": None,
+    }
+    assert _sanitized(error) is error
+    assert "secret" not in str(error) + json.dumps(error.diagnostic)
+    assert attestor.terminal is None
+    assert attestor.event_counts["sse_events"] == 1
+    assert attestor.event_counts["completed_events"] == 0
+    with pytest.raises(CodexProviderError):
+        attestor.finish()
+
+
+@pytest.mark.parametrize("value", ["secret-person-or-access-code", "\ud800", ["secret"], {"secret": "body"}])
+def test_unknown_provider_labels_never_escape_into_diagnostics(value):
+    error = CodexProviderError("protocol", provider_event={
+        "type": "response.failed", "response": {"error": {"code": value, "message": "secret"},
+        "incomplete_details": {"reason": value}, "output": ["secret"]},
+    })
+    detail = error.diagnostic
+    assert detail["error_code"] == detail["incomplete_reason"] == "unrecognized"
+    expected = hashlib.sha256(value.encode(errors="surrogatepass")).hexdigest() if isinstance(value, str) else None
+    assert detail["error_code_sha256"] == detail["incomplete_reason_sha256"] == expected
+    assert "secret" not in json.dumps(detail)
+    detail["error_code"] = "secret-mutated"
+    assert error.diagnostic["error_code"] == "unrecognized"
+    assert CodexProviderError("protocol", provider_event={"type": value}).diagnostic is None
+
+
+def test_failure_cause_survives_actual_sdk_transport_and_stream_cleanup():
+    async def run():
+        async def respond(request):
+            return httpx2.Response(200, request=request, headers={"content-type": "text/event-stream"},
+                stream=_Chunks([b'data: {"type":"response.failed","response":{"error":'
+                                b'{"code":"server_error","message":"secret-upstream"}}}\n\n']))
+        provider = OpenAICodexProvider(_settings(), credential_loader=lambda: ("secret-token", "secret-account"),
+                                     network_transport=httpx2.MockTransport(respond))
+        async with provider as session:
+            with pytest.raises(CodexProviderError) as raised:
+                await Agent(session.model, retries=0).run("secret-prompt", instructions="private instructions")
+            assert raised.value.diagnostic["error_code"] == "server_error"
+            assert session.observation["provider_failure"] == raised.value.diagnostic
+            assert session.observation["sse_events"] == 1
+            assert session.observation["completed_events"] == 0
+            assert session.model_requests == 1
+            assert "secret" not in json.dumps(session.observation)
+            with pytest.raises(CodexProviderError):
+                session.consume_raw_usage()
+        assert session.local_stream_closed is True
+        assert session.observation["provider_failure"]["event_kind"] == "response.failed"
+    asyncio.run(run())

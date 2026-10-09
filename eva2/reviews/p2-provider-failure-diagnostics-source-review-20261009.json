@@ -1,0 +1,58 @@
+{
+  "contract": "IndependentProviderFailureDiagnosticSourceReview/v1",
+  "decision": "GO_SOURCE_PREPARATION",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "baseline_commit": "4895d535e09251154118fec8b624fbf41bef0cb8",
+  "reviewed_at": "2026-10-09T01:49:56.005967+00:00",
+  "source_sha256": {
+    "eva2/src/eva/adapters/model/openai_codex_provider.py": "7a7404ada7e0366edbb4f6f70f757d89db75b600b94460c4cecb739bee044d4d",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "27e62ca484c6a30f4fe14d8b6fca6eb009dead9ab476a78e9285dc76d92ba8b1",
+    "eva2/tests/model/test_openai_codex_provider_shared.py": "29fa96aad7e4e2194d131bce8bc6a3e5964ebc63f1112b701be17ee85b472b57",
+    "eva2/tests/model/test_pydantic_conversation_model.py": "dad46cb95987565c10d57fff3fd591164d7df18043c093a7cfebd135f4acccfb"
+  },
+  "focused_tests": {
+    "sha256": "85b2a17e8772703e5a7a2120c21063ae6d3502cc6e34f98e218aa480d0b20a9e",
+    "passed": 138,
+    "seconds": 9.32,
+    "initial_failure_retained": true
+  },
+  "resolved_findings": [
+    "Unknown string labels use surrogatepass before SHA256, preserving original protocol errors for lone surrogates.",
+    "Selected provider ClassDefs use builtin object annotations and classlocal constants/local hashlib; unchanged Hindsight AST-loader globals suffice."
+  ],
+  "future_observer_candidate": {
+    "index_sha256": "5127e80816b69371877e65f93b43911d39ab1ff2ec7377b215edd285baaa626b",
+    "candidate_sha256": "0ca0d1537b7a9a59018380e68a6392233ac0fa77aa20a48cb3657eb2462a9425",
+    "check_receipt_sha256": "228883f04954477933f3565e8a2d0842d07f1488b1bb16e7a034566489560a2e",
+    "all_referenced_hashes_checked": 14,
+    "synthetic_cases": 13,
+    "unchanged_actual_ast_loader_passed": true,
+    "installed": false,
+    "original_execution_admission": false
+  },
+  "findings": [],
+  "privacy_and_semantics": {
+    "fixed_failure_kinds_and_allowlisted_labels_only": true,
+    "unknown_string_labels_fingerprint_only": true,
+    "no_upstream_message_body_prompt_tool_argument_or_credentials_logged": true,
+    "fixed_event_counters_only": true,
+    "original_protocol_categories_retries_stops_usage_and_action_authority_unchanged": true,
+    "observer_logging_exception_preserves_original_stop": true,
+    "closed_XD06_authority_result_review_unchanged": true
+  },
+  "allowed_next_transition": "Bind exactly the two production module overlays to the exact current core/worker images, preserving unrelated source/configuration/data/mounts. Future observer remains source-only until separately bound to any future execution.",
+  "existing_household_policy_maintenance": {
+    "appropriateness": "Same continuing household authorization may retain the existing 30-day lifetime by changing only effective_at/expires_at, preserving exact mandate/devices/operations/identity/token/limits and old bytes.",
+    "concrete_old_new_hash_and_field_delta_binding_pending": true,
+    "prechange_worker_health_failure_not_attributed_to_diagnostics": true,
+    "new_authority_or_scope_granted": false
+  },
+  "limits": {
+    "installation_verified": false,
+    "real_provider_failure_kind_or_cause_recovered": false,
+    "behavioral_improvement_proven": false,
+    "P2_1_completed": false,
+    "new_trial_or_replay_admitted": false,
+    "reviewer_model_native_resource_test_calls": 0
+  }
+}

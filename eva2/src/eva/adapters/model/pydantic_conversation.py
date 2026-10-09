@@ -108,18 +108,21 @@ _MODEL_LEASE_OWNER_UID = 1000
 
 
 def _log_model_failure(error: BaseException, request_id: str | None,
-                       transport: dict[str, int | None] | None = None) -> None:
+                       transport: dict[str, Any] | None = None) -> None:
     """Retain causal categories without prompts, response bodies or exception text."""
     chain = []
     seen = set()
     current = error
     provider_category = None
+    provider_failure = None
     limit = None
     while current is not None and id(current) not in seen and len(chain) < 8:
         seen.add(id(current))
         name = type(current).__name__
         chain.append(name if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,79}", name) else "UnknownError")
         if isinstance(current, CodexProviderError):
+            if current.diagnostic is not None:
+                provider_failure = current.diagnostic
             category = current.category
             provider_category = category if category in {
                 "unavailable", "rate_limited", "deadline", "credentials_rejected", "configuration",
@@ -137,6 +140,7 @@ def _log_model_failure(error: BaseException, request_id: str | None,
         "exception_chain": chain,
         "provider_category": provider_category,
         "usage_limit": limit,
+        **({"provider_failure": provider_failure} if provider_failure is not None else {}),
         **({"transport": transport} if transport is not None else {}),
     }, separators=(",", ":")))
 
