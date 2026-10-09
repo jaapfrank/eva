@@ -1,0 +1,108 @@
+{
+  "allowed_transition": {
+    "native_or_model_dispatch": false,
+    "private_future_adapter_source_preparation_only": {
+      "assembler": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/private-adapter-candidates/assemble_source.private.py",
+        "sha256": "bfa48d39ec001697f1d8ed591f8de3d25de887a486099cb67f1e468e10ee9710"
+      },
+      "openclaw_carrier": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/private-adapter-candidates/fixture_access.py",
+        "sha256": "27676214c58e3367584ec18eb62202e6fa8c26f6451cbe58f05b945c11cb1532"
+      }
+    },
+    "repository_tracking_by_root": [
+      {
+        "repository_target": "eva2/benchmark/inspect_ai_v1/ev003_resource_catalog.py",
+        "source": {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/benchmark/ev003_resource_catalog.py",
+          "sha256": "0642a282a0e858a5be9ccadc133248d8a7b98197afe44bee9d784ed61315f132"
+        }
+      },
+      {
+        "repository_target": "eva2/benchmark/inspect_ai_v1/ev003_resource_catalog.init-page.cjs",
+        "source": {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/benchmark/ev003_resource_catalog.init-page.cjs",
+          "sha256": "7c1d1a197d6b484c7d935ced4d8e26a97c80d62b9d2fa839953ebe93498f1d2e"
+        }
+      },
+      {
+        "repository_target": "eva2/tests/benchmark/test_ev003_resource_catalog.py",
+        "source": {
+          "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/tests/benchmark/test_ev003_resource_catalog.py",
+          "sha256": "b9876b2e4dfa044ffce381f672b3ba82462b6c1aac82901e4c82d2cbdc0dd618"
+        }
+      }
+    ],
+    "resource_or_original_input_admission": false
+  },
+  "approved_bounded_diagnosis": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-xd07-source-discovery-diagnosis-20261009-v1/source-discovery-diagnosis.public.json",
+    "sha256": "7091b93f827d19a59eae719bf9c69dd47ffaeb6bcc6aba5376043acdf3dcf6be"
+  },
+  "approved_public_candidate": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/source-candidate.public.json",
+    "sha256": "f3c3bb5ae477ea4b538d0a8e5cfc55baa2a537d7e51b45107cade10a73a6b565"
+  },
+  "checked": {
+    "actual_O_candidate_imports_hash_bound_module_and_calls_render_service_access": true,
+    "actual_assembler_imports_and_hash_binds_repository_module_and_renderer": true,
+    "all_reference_hashes_match": true,
+    "assembler_and_openclaw_carrier_diff_match_actual_candidates": true,
+    "exact_file_references": 25,
+    "generic_source_ast_valid": true,
+    "hardcoded_discovery_endpoint_or_task_plan_added": false,
+    "old_twenty_checks_not_repeated": true,
+    "one_prior_pytest_unavailable_failure_retained": true,
+    "one_public_synthetic_check_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/pure-check-direct.private.json",
+      "sha256": "8e59f858f0516e79ca6e9b5bb14e552b6f73ba1975f46f15a5306b68c755939e"
+    },
+    "original_nonsecret_field_preserved": "services[*].contract.discovery",
+    "product_descriptor_fields_preserved": [
+      "description",
+      "input_schema",
+      "completion_guidance"
+    ],
+    "projected_fields": [
+      "origin",
+      "discovery"
+    ],
+    "records_auth_task_or_answer_fields_projected": false,
+    "renderer_escapes_descriptor_and_origin": true,
+    "renderer_preserves_nonblank_page": true,
+    "reviewer_executed_model_browser_fixture_or_network_calls": 0,
+    "root_product_source_hashes_match_current_files": true,
+    "same_catalog_and_exact_expected_origins_bound_for_O_rendering": true,
+    "v1_origin_only_validator_return_shape_preserved": true
+  },
+  "contract": "IndependentFutureDiscoveryCarrierSourceReview/v1",
+  "decision": "GO_SOURCE_PREPARATION_AND_BOUNDED_METADATA_PUBLICATION",
+  "development_credits": null,
+  "diagnosis": {
+    "closed_task_scores_eligibility_or_usage_revised": false,
+    "product_descriptor_truncation_proven": false,
+    "proven_metadata_loss": "Origin-only evaluator catalog omitted the original non-secret discovery descriptor from both ordinary carriers.",
+    "sole_or_sufficient_cause_of_closed_task_noncompletion": null
+  },
+  "findings": [],
+  "limits": [
+    "Source preparation and safe diagnosis/candidate publication only; no new case selection, authority copy, resource preparation, clock, admission, release, model call or runtime installation is authorized by this receipt.",
+    "The direct check exercised public synthetic catalog values and a fake page; it does not prove a native browser, fixture service or task result.",
+    "Future concrete preparation must bind these exact repository bytes, ordinary readonly mounts/workspace/catalog readback, unchanged roles and existing source/resource/input boundaries before dispatch.",
+    "Closed XD07 noncompletion and causal uncertainty remain intact. No behavioral superiority, new product function, P2 completion, winner or efficiency conclusion follows."
+  ],
+  "preserved_closed_evidence": {
+    "authority_sha256": "8ac75763721f2a8f2f7af96554d82b451da887f309768d8a964e2bc6672f8155",
+    "result_sha256": "975642440c5dc397cfca426d00e7f89fed76bad9e54e3aa82a487fe9225be4df",
+    "review_sha256": "365aefb04f9be3d2c2b38660fa813af7b5b047bc413f8cd69f2ab7bf2c409d47",
+    "rows": 44,
+    "unknowns_full_reservations_and_closed_results_unchanged": true
+  },
+  "reviewed_at": "2026-10-09T03:58:09.091448+00:00",
+  "reviewer": "independent P2 evaluator",
+  "source_review_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/source-review-index.private.json",
+    "sha256": "76055f267203c7199c3b8bd58fce68cf1e6a69db468e8fe0abfd5846c31864fc"
+  }
+}

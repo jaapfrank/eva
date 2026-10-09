@@ -1,0 +1,90 @@
+{
+  "change": "Project only original origin+contract.discovery into v2 catalog; existing init-page and O workspace access text preserve that same descriptor. No invented endpoint, API behavior, task plan or product change.",
+  "closed_authority_sha256": "8ac75763721f2a8f2f7af96554d82b451da887f309768d8a964e2bc6672f8155",
+  "closed_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/final-review.public.json",
+    "sha256": "365aefb04f9be3d2c2b38660fa813af7b5b047bc413f8cd69f2ab7bf2c409d47"
+  },
+  "concrete_future_binding": {
+    "O_prepare_import": "ev003_resource_catalog.render_service_access",
+    "O_private_carrier": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/private-adapter-candidates/fixture_access.py",
+      "sha256": "27676214c58e3367584ec18eb62202e6fa8c26f6451cbe58f05b945c11cb1532"
+    },
+    "generator_delta_matches_actual_O_candidate": true,
+    "generic_module_import": "ev003_resource_catalog.project_resource_catalog",
+    "generic_module_path": "eva2/benchmark/inspect_ai_v1/ev003_resource_catalog.py",
+    "module_sha256": "0642a282a0e858a5be9ccadc133248d8a7b98197afe44bee9d784ed61315f132",
+    "private_assembler": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/private-adapter-candidates/assemble_source.private.py",
+      "sha256": "bfa48d39ec001697f1d8ed591f8de3d25de887a486099cb67f1e468e10ee9710"
+    },
+    "renderer_copy_source": "eva2/benchmark/inspect_ai_v1/ev003_resource_catalog.init-page.cjs",
+    "renderer_copy_target": "shared-source/resource-catalog.init-page.cjs",
+    "renderer_sha256": "7c1d1a197d6b484c7d935ced4d8e26a97c80d62b9d2fa839953ebe93498f1d2e",
+    "repository_integration_by_root_pending": true,
+    "source_hash_asserts_in_actual_assembler_and_O_module": true
+  },
+  "contract": "FutureOrdinaryResourceDiscoverySourceCandidate/v1",
+  "development_credits": null,
+  "diagnosis": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-xd07-source-discovery-diagnosis-20261009-v1/source-discovery-diagnosis.public.json",
+    "sha256": "7091b93f827d19a59eae719bf9c69dd47ffaeb6bcc6aba5376043acdf3dcf6be"
+  },
+  "future_runtime_or_input_admitted": false,
+  "limits": [
+    "Source-only future candidate; no original case, role, budget, admission, sourcepolicy or release is changed.",
+    "No native browser, fixture server, authority copy, paid model request or original task was run.",
+    "Future fresh preparation must import/hash-bind these repository bytes and bind ordinary readonly mount/workspace/catalog readback before its existing input gate.",
+    "Current closed XD07 scores, causation UNKNOWN,44history/fullreserves and physicalclosure remain unchanged."
+  ],
+  "problem": "Original non-secret service contract.discovery was omitted by the origin-only catalog projection and both ordinary resource carriers. This source finding does not revise closed outcomes or establish the sole cause of task failure.",
+  "product_function_completed": false,
+  "protected_task_or_answer_or_origins_in_export": false,
+  "pure_check": {
+    "arbitrary_different_discovery_paths": 2,
+    "existing_page_preserved": true,
+    "html_escaped": true,
+    "model_browser_network_fixture_calls": 0,
+    "no_new_dependencies_installed": true,
+    "only_nonsecret_allowlisted_fields_projected": true,
+    "origin_binding_mismatch_refused": true,
+    "prior_runner_failure": "Existing evaluator interpreter lacked pytest; no test executed then. The exact same test ran directly with existing Python/Node.",
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/pure-check-direct.private.json",
+      "sha256": "8e59f858f0516e79ca6e9b5bb14e552b6f73ba1975f46f15a5306b68c755939e"
+    },
+    "same_catalog_reaches_actual_O_render_assignment_and_E_fake_page": true,
+    "synthetic_services": 2,
+    "test_cases": 1,
+    "v1_origin_only_backward_compatible": true
+  },
+  "root_product_route_evidence": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-xd07-source-discovery-diagnosis-20261009-v1/root-product-route-check.private.json",
+    "sha256": "45fb2ea73197b1d03e4863c5538e704acd7a63459e86fc55734670ddcb9c5bb3"
+  },
+  "source_exports": [
+    {
+      "repository_target": "eva2/benchmark/inspect_ai_v1/ev003_resource_catalog.py",
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/benchmark/ev003_resource_catalog.py",
+        "sha256": "0642a282a0e858a5be9ccadc133248d8a7b98197afe44bee9d784ed61315f132"
+      }
+    },
+    {
+      "repository_target": "eva2/benchmark/inspect_ai_v1/ev003_resource_catalog.init-page.cjs",
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/benchmark/ev003_resource_catalog.init-page.cjs",
+        "sha256": "7c1d1a197d6b484c7d935ced4d8e26a97c80d62b9d2fa839953ebe93498f1d2e"
+      }
+    },
+    {
+      "repository_target": "eva2/tests/benchmark/test_ev003_resource_catalog.py",
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/tests/benchmark/test_ev003_resource_catalog.py",
+        "sha256": "b9876b2e4dfa044ffce381f672b3ba82462b6c1aac82901e4c82d2cbdc0dd618"
+      }
+    }
+  ],
+  "status": "source_prepared_one_public_synthetic_check_passed"
+}

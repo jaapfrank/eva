@@ -1,3 +1,19 @@
+## Actueel 9 oktober — schema-informatie in vergelijkingsroute hersteld
+
+De gedeelde proefadapter liet bestaande discovery-informatie weg voor Eva2 én
+OpenClaw. Die informatie blijft nu behouden via dezelfde catalogus en beide
+gewone routes. Exacte bronbestanden zijn opgenomen en gebonden aan de toekomstige
+assembler; één modelvrije controle en onafhankelijke review geslaagd.
+Geen Eva-modelaanvragen, runtimevervanging of nieuwe productafronding.
+De native gedragswinst en volledige oorzaak van eerdere mislukking zijn niet bewezen;
+oude 44 registraties, scores en UNKNOWN blijven behouden. P2.1 blijft open.
+Hervat bij één concreet gebonden ongebruikte oorspronkelijke XD08-ingang, met
+bestaande criteria/modelrollen/proefruimte; geen gesloten herhaling of brede matrix.
+39/48 kleine afrondingen behouden. Spraak geparkeerd; Docker Desktop ongemoeid.
+
+Bewijs: eva2/evidence/product/p2-source-discovery-carrier-integrated-20261009.json.
+Review: eva2/reviews/p2-source-discovery-carrier-review-20261009.json.
+
 ## Actueel 9 oktober — XD07 gesloten; beide opdrachten niet uitgevoerd
 
 De ene oorspronkelijke Eva2/OpenClaw-pair is uitgevoerd met dezelfde criteria en

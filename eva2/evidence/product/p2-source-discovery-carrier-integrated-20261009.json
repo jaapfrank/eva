@@ -1,0 +1,103 @@
+{
+  "contract": "P2SourceDiscoveryCarrierRepositoryResult/v1",
+  "at": "2026-10-09T04:02:48.382391+00:00",
+  "status": "source_correction_integrated_reviewed_not_native_evaluated",
+  "problem": "The shared evaluator projection dropped existing services[*].contract.discovery from both ordinary participants.",
+  "change": "Preserve the original non-secret descriptor per origin in the shared catalog, escaped E browser page and O workspace service access text.",
+  "product_function_completed": false,
+  "p2_completed": false,
+  "runtime_changed": false,
+  "native_behavior_improvement_proven": false,
+  "closed_trial_failure_sole_cause_proven": false,
+  "new_trial_admitted": false,
+  "original_trial_replayed": false,
+  "sources": [
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_resource_catalog.py",
+      "sha256": "0642a282a0e858a5be9ccadc133248d8a7b98197afe44bee9d784ed61315f132"
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/ev003_resource_catalog.init-page.cjs",
+      "sha256": "7c1d1a197d6b484c7d935ced4d8e26a97c80d62b9d2fa839953ebe93498f1d2e"
+    },
+    {
+      "path": "eva2/tests/benchmark/test_ev003_resource_catalog.py",
+      "sha256": "b9876b2e4dfa044ffce381f672b3ba82462b6c1aac82901e4c82d2cbdc0dd618"
+    }
+  ],
+  "diagnosis": {
+    "path": "eva2/evidence/product/p2-source-discovery-diagnosis-20261009.json",
+    "sha256": "7091b93f827d19a59eae719bf9c69dd47ffaeb6bcc6aba5376043acdf3dcf6be"
+  },
+  "prepared_candidate": {
+    "path": "eva2/evidence/product/p2-source-discovery-carrier-candidate-20261009.json",
+    "sha256": "f3c3bb5ae477ea4b538d0a8e5cfc55baa2a537d7e51b45107cade10a73a6b565",
+    "repository_integration_pending_flag_is_historical_pre_copy_snapshot": true
+  },
+  "independent_review": {
+    "path": "eva2/reviews/p2-source-discovery-carrier-review-20261009.json",
+    "sha256": "60c8b3aed63705b49cd0ceb94dcf24458a4f78c4466f660edaee07f85d90c0fd",
+    "decision": "GO_SOURCE_PREPARATION_AND_BOUNDED_METADATA_PUBLICATION",
+    "findings": []
+  },
+  "repository_binding": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/repository-usage-binding.private.json",
+    "sha256": "11fbe73a1bf8f05f9999876f1bbe63c63c5a7ba6077f7ae9b18a284b9d9e89ec",
+    "future_assembler_imports_hash_asserted_repository_helper": true,
+    "future_E_carrier_copies_hash_asserted_repository_renderer": true,
+    "future_O_prepare_calls_same_imported_render_service_access": true,
+    "future_native_mount_and_input_binding_required": true
+  },
+  "check": {
+    "arbitrary_different_discovery_paths": 2,
+    "existing_page_preserved": true,
+    "html_escaped": true,
+    "model_browser_network_fixture_calls": 0,
+    "no_new_dependencies_installed": true,
+    "only_nonsecret_allowlisted_fields_projected": true,
+    "origin_binding_mismatch_refused": true,
+    "prior_runner_failure": "Existing evaluator interpreter lacked pytest; no test executed then. The exact same test ran directly with existing Python/Node.",
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/p2-future-source-discovery-carrier-20261009-v1/pure-check-direct.private.json",
+      "sha256": "8e59f858f0516e79ca6e9b5bb14e552b6f73ba1975f46f15a5306b68c755939e"
+    },
+    "same_catalog_reaches_actual_O_render_assignment_and_E_fake_page": true,
+    "synthetic_services": 2,
+    "test_cases": 1,
+    "v1_origin_only_backward_compatible": true
+  },
+  "product_readback": {
+    "three_discovery_modules_match_installed_core_and_worker": true,
+    "sha256": "45fb2ea73197b1d03e4863c5538e704acd7a63459e86fc55734670ddcb9c5bb3",
+    "path": "/home/administrator/project/.eva2-artifacts/p2-xd07-source-discovery-diagnosis-20261009-v1/root-product-route-check.private.json"
+  },
+  "closed_evidence_preserved": {
+    "rows": 44,
+    "authority_sha256": "8ac75763721f2a8f2f7af96554d82b451da887f309768d8a964e2bc6672f8155",
+    "xd07_result_sha256": "975642440c5dc397cfca426d00e7f89fed76bad9e54e3aa82a487fe9225be4df",
+    "xd07_review_sha256": "365aefb04f9be3d2c2b38660fa813af7b5b047bc413f8cd69f2ab7bf2c409d47",
+    "scores_unknowns_and_missing_usage_unchanged": true
+  },
+  "usage": {
+    "runtime_model_calls": 0,
+    "new_resources": 0,
+    "development_credits": null,
+    "money_cost": null
+  },
+  "next_original_metadata": {
+    "case_id": "EV003-XD-08",
+    "epoch": 1,
+    "case_sha256": "062057d49bc782e7228566a9fa975d8ff3677bd4814af00e763b86478667aab3",
+    "unused_in_current_authority": true,
+    "services": 2,
+    "conditions": 3,
+    "readbacks": 2,
+    "selected_or_admitted": false
+  },
+  "limits": [
+    "One synthetic model-free check used a fake page, not a native browser or executed original task.",
+    "Existing evaluator Python lacked pytest; exact same sole test passed directly using existing Python and Node.",
+    "Original scores, criteria, roles, budgets and historical unknowns are unchanged.",
+    "No Eva source/image replacement, new product function, pair winner or superiority claim."
+  ]
+}

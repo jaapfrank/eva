@@ -1,0 +1,146 @@
+{
+  "authority_sha256_unchanged": "8ac75763721f2a8f2f7af96554d82b451da887f309768d8a964e2bc6672f8155",
+  "case_id": "EV003-XD-07",
+  "closed_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/final-review.public.json",
+    "sha256": "365aefb04f9be3d2c2b38660fa813af7b5b047bc413f8cd69f2ab7bf2c409d47"
+  },
+  "contract": "P2OriginalSourceDiscoveryDiagnosis/v1",
+  "development_credits": null,
+  "evidence": {
+    "path": "/home/administrator/project/.eva2-artifacts/p2-xd07-source-discovery-diagnosis-20261009-v1/source-discovery-evidence.private.json",
+    "sha256": "7aa887e5c030a428a0e3711d07d5679bc8df1d507b7c7c831ae62a1efefd23fe"
+  },
+  "fixture_behavior": {
+    "function": "CollectionFixture.request",
+    "model_free_source_read_does_not_claim_new_live_schema_success": true,
+    "root404_response_advertises_discovery_link": false,
+    "schema_handler_lines": [
+      235,
+      236,
+      237,
+      238,
+      239
+    ],
+    "schema_requires_existing_valid_capability": true,
+    "schema_returns_granted_collection_operations_and_generic_contract": true,
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/shared-source/collection_fixture.py",
+      "sha256": "282b17a0f8a5980cf460b2619bb9e718c1373a5954d147829e865b6d4e35869b"
+    },
+    "unknown_or_root_path_refusal_lines": [
+      240,
+      241
+    ]
+  },
+  "new_resources": 0,
+  "new_trial_admission": false,
+  "observed_outcome_limits": {
+    "both_original_objectives_uncompleted": true,
+    "causal_sufficiency_of_missing_descriptor_for_noncompletion": null,
+    "closed_scores_eligibility_and_history_revised": false,
+    "effects": 0,
+    "eva2_authenticated_get404": 1,
+    "openclaw_authenticated_get404": 27,
+    "product_capability_or_permission_failure_proven": false,
+    "schema_or_collection_requests": 0
+  },
+  "ordinary_carriers": {
+    "eva2": {
+      "accepted_fields": [
+        "contract",
+        "resource_origins"
+      ],
+      "discovery_descriptor_in_catalog_or_renderer": false,
+      "functions": [
+        "validateCatalog",
+        "initPage"
+      ],
+      "gateway_binding": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/attach_browser_gateway.py",
+        "sha256": "b6be6ec87d273ad12057115c1e31a4afdc873c22573aaca26be524660780a4e1"
+      },
+      "readonly_mount_and_init_page_config_bound": true,
+      "rendered_content": "ordinary links to complete service origins only",
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/shared-source/resource-catalog.init-page.cjs",
+        "sha256": "3e221b6d7a1c292d10d406f6e1a562278e6f70a375921f75b5b336ac31e0aa87"
+      }
+    },
+    "openclaw": {
+      "discovery_descriptor_in_tools_or_catalog": false,
+      "function": "prepare",
+      "lines": [
+        36,
+        37,
+        38
+      ],
+      "native_carrier": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/native-openclaw-xd.private.mjs",
+        "sha256": "b9c17967376da9e7411665f23bb7170909d56c288f0533b4a4f95953201c24ec"
+      },
+      "rendered_content": "origins and bearer-access description in ordinary TOOLS.md; identical catalog in ordinary workspace",
+      "source": {
+        "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/fixture_access.py",
+        "sha256": "1e9f9a03d91573f7b23e4390ca752f187d1b104163f95ddaeba0a3e1f3e25c03"
+      },
+      "tools_sha256": "6e46b839bfa8e8b8a1867430876c8e303818fd4420c894b80a4f53e63eea4c01",
+      "workspace_catalog_sha256": "2f88c48a9e1ddcae1543cc06363c38d20422c018fe2944cc78c6c17d97eeba5b"
+    }
+  },
+  "original_contract": {
+    "contains_no_record_values_or_expected_answer": true,
+    "field": "services[*].contract.discovery",
+    "generic_method": "GET",
+    "generic_relative_path": "/schema",
+    "present_in_both_original_services": true,
+    "services": 2
+  },
+  "protected_values_or_origins_in_export": false,
+  "proven_loss_transition": {
+    "input_fields": [
+      "services[*].origin",
+      "services[*].contract.discovery"
+    ],
+    "line": 49,
+    "omitted_field": "services[*].contract.discovery",
+    "same_catalog_bytes_for_both_participants": true,
+    "selected_output_field": "resource_origins[*]",
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/curator/assemble_source.private.py",
+      "sha256": "b2684abf179945754eb7b20454cc6d80b15f076c4fc1c49365d41894e617e292"
+    }
+  },
+  "registered_rows_unchanged": 44,
+  "retained_capture_presence": {
+    "eva2": {
+      "remote_previous_response_context_not_in_capture": 0,
+      "requests_containing_generic_schema_path_literal": 0,
+      "retained_physical_request_count": 11
+    },
+    "openclaw": {
+      "remote_previous_response_context_not_in_capture": 1,
+      "requests_containing_generic_schema_path_literal": 0,
+      "retained_physical_request_count": 13
+    }
+  },
+  "runtime_model_calls": 0,
+  "scope": "Read-only retained source, ordinary resource artifacts and physical capture literal presence. No new original input, model request, fixture call or code patch.",
+  "smallest_future_adapter_correction": {
+    "future_review_requires_exact_generic_field_preservation_and_actual_carrier_readback": true,
+    "must_not_include": [
+      "record contents",
+      "actor credentials",
+      "task questions",
+      "answers",
+      "oracle",
+      "task-specific plan"
+    ],
+    "no_new_server_or_product_discovery_hardcode": true,
+    "project_existing_original_field": "services[*].contract.discovery",
+    "reuse": "Existing catalog producer, escaped init-page rendering, and ordinary OpenClaw workspace/TOOLS catalog reference.",
+    "same_nonsecret_descriptor_for_both": true,
+    "status": "proposal_only_no_patch"
+  },
+  "status": "proven_generic_discovery_descriptor_omitted_from_ordinary_carriers"
+}
