@@ -1016,7 +1016,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-09T05:42:09.959204+00:00",
+        "checkedAt": "2026-10-09T05:44:42.544450+00:00",
         "deliveries": [
           {
             "taskId": "P2.1",
@@ -4423,8 +4423,8 @@
         ],
         "now": {
           "taskId": "P2.1",
-          "title": "P2.1 · vervolgvergelijking voorbereiden",
-          "detail": "Bronherkomst bij herstart gecorrigeerd en onafhankelijk samengevoegd;47tests slagen,4native-checks niet ingeschakeld. Geen native herstel/nieuwe functie bewezen. Volgende oorspronkelijke ingang concreet binden; er draait nu geen proef.",
+          "title": "P2.1 · volgende oorspronkelijke opdracht aansluiten",
+          "detail": "De eerstvolgende ongebruikte opdracht en originele events worden vastgesteld. Daarna bron, eigen proefmiddelen, actor/sessie, klok en verbruik samen beoordelen vóór uitvoering. Er draait nog geen modelproef.",
           "state": "in_progress",
           "activeExecution": false,
           "source": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json",
@@ -4433,8 +4433,8 @@
         },
         "next": {
           "taskId": "P2.1",
-          "title": "Vervolgvergelijking concreet binden",
-          "detail": "Alleen een ongebruikte oorspronkelijke ingang met bestaande criteria/modelrollen/toelating voorbereiden. De broncorrectie is geen runtime-/invoertoelating; geen gesloten herhaling of brede matrix.",
+          "title": "Gewone Eva2/OpenClaw-route op dezelfde opdracht",
+          "detail": "Alleen na exacte technische toelating, met originele kwaliteitseisen en één gedeeld budget per deelnemer. Afgesloten mislukte vergelijkingen blijven zichtbaar; geen brede matrix.",
           "state": "planned",
           "source": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json"
         },
@@ -23976,7 +23976,7 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Eén ongebruikte oorspronkelijke vergelijking afzonderlijk concreet binden binnen bestaand mandaat, criteria/modelrollen/72SDK70tools. Broncorrectie en publicatie gereed; geen gesloten herhaling of brede matrix.",
+              "nextAction": "Eerstvolgende ongebruikte oorspronkelijke ingang inhoudvrij vaststellen en gewone pairbron/resource/klokbinding voorbereiden; geen inputrelease vóór exacte technische review.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -23985,7 +23985,7 @@
                 "blocksIndependentWork": false,
                 "source": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json"
               },
-              "checkedAt": "2026-10-09T05:42:09.959204+00:00",
+              "checkedAt": "2026-10-09T05:44:42.544450+00:00",
               "assignment": {
                 "baseCommit": "89edf2b7c9dfcfe196c2b069579323fb450aed01",
                 "owner": "/root",
@@ -24008,7 +24008,7 @@
                 "gap": "Eén oorspronkelijke controlovergang is nog niet uitvoerbaar: fysieke onderbreking na duurzame fixturemutatie, daarna dezelfde sample/state/accounting bewaren en één nativeherstart. Geen productverlies uit deze voorbereidingsfout.",
                 "finish": "Deze ene oorspronkelijke pair is volledig uitgevoerd, fysiek afgesloten en onafhankelijk beoordeeld; geen productfunctie of volledige P2-afronding.",
                 "estimate": "Voorbereiding met bestaande bronnen:0modelaanvragen; eventuele uitvoering alleen binnen oorspronkelijk72SDK/70tools per deelnemer. Credits/geld onbekend.",
-                "currentAction": "Eén ongebruikte oorspronkelijke vergelijking afzonderlijk concreet binden binnen bestaand mandaat, criteria/modelrollen/72SDK70tools. Broncorrectie en publicatie gereed; geen gesloten herhaling of brede matrix.",
+                "currentAction": "Eerstvolgende ongebruikte oorspronkelijke ingang inhoudvrij vaststellen en gewone pairbron/resource/klokbinding voorbereiden; geen inputrelease vóór exacte technische review.",
                 "previousGoalTurn": {
                   "classification": "progress",
                   "basis": "Published independently assessed original XD05 result, review and authority40; no feature completion inferred.",
@@ -24514,13 +24514,12 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "startedAt": "2026-10-09T05:20:40.171948+00:00",
-                  "stage": "source_correction_complete_no_new_execution_admitted",
-                  "integrationBaseCommit": "5a94b6e24568dfdbc78b30dfea5e07800b4a0210",
+                  "startedAt": "2026-10-09T05:44:42.544450+00:00",
+                  "stage": "next_original_unused_pair_concrete_binding",
+                  "integrationBaseCommit": "f27767f0e08f92314c9cfe373d305b6483eca20a",
                   "newTrialAdmitted": false,
                   "providerAttempts": 0,
-                  "productFunctionCompleted": false,
-                  "completedSourceCorrection": true
+                  "productFunctionCompleted": false
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -25447,7 +25446,7 @@
                   "nativeTools": 16,
                   "elapsedSeconds": 180.95119165799406
                 },
-                "checkedAt": "2026-10-09T05:42:09.959204+00:00",
+                "checkedAt": "2026-10-09T05:44:42.544450+00:00",
                 "cm04Preparation": {
                   "entry": "openclaw:EV003-CM-04:epoch1",
                   "directory": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1",
@@ -26012,20 +26011,26 @@
                 },
                 "outcome": "closed_observations_with_openclaw_work_model_protocol_mismatch_and_fixture_ambiguity",
                 "currentTechnicalPreparation": {
-                  "status": "source_candidate_reviewed_not_applied",
-                  "evidence": "eva2/evidence/product/p2-future-resource-offer-work-role-source-20261009.json",
-                  "review": "eva2/reviews/p2-future-resource-offer-work-role-source-review-20261009.json",
-                  "publicCandidateSha256": "d62f9b7a9ed5a4bce2a84ca6ed2641cf7c98f8309c9ad3e1ebf6dd2bc6567163",
-                  "reviewSha256": "f18101c48432c315ac04afff4fae6ad4e6d4d2104aec1af9918ab2addf6ff9ee",
-                  "sourceIndexSha256": "b4bf6bfa195badf57cd5f5b83b6ffa74bc998cd13711b68a6844a46c256b9187",
-                  "privateStage": "/home/administrator/project/.eva2-artifacts/p2-future-resource-offer-work-role-source-20261009-v1",
-                  "ordinaryResourceMountOrWorkspaceApplied": false,
-                  "nativeDriverPatchApplied": false,
-                  "futureExecutionAdmitted": false,
-                  "newCaseSelected": false,
-                  "sourceChecksPassed": 20,
-                  "runtimeProviderCalls": 0,
-                  "newProductFunction": false
+                  "state": "in_progress",
+                  "coordinator": "/root",
+                  "curator": "/root/aide_final_evaluation",
+                  "reviewer": "/root/p2_eva1_lease_review_20261006",
+                  "baseCommit": "f27767f0e08f92314c9cfe373d305b6483eca20a",
+                  "scope": "One next unused original cross_domain_actions entry only; preserve original bodies/events/criteria/privacy/deadlines/accounting. No broad matrix.",
+                  "finish": "Exact ordinary route/source/resource/actor/session/clock/ledger binding reviewed before any input; closed authority unchanged.",
+                  "estimate": {
+                    "preparationProviderCalls": 0,
+                    "executionProviderCalls": "not started; original maximum72SDK per participant only after exact admission",
+                    "developmentCredits": null
+                  },
+                  "ownership": {
+                    "coordinator": "repository/docs/board/Git",
+                    "curator": "private preparation/source/resource bindings only",
+                    "reviewer": "independent frozen-source/readiness review only"
+                  },
+                  "inputAdmitted": false,
+                  "resourcesAdmitted": false,
+                  "nativeAdmitted": false
                 },
                 "concreteNextAction": "Los eerst gericht de ontbrekende provider-foutmetadata en werktoolcompatibiliteit uit met bestaande code en behouden verzoekmetadata; de oorzaak is nog niet bewezen. Geen volgende betaalde proef vóór die concrete afhankelijkheid is opgehelderd. Geen gesloten taak herhalen of brede matrix starten.",
                 "currentGoalTurnOutcome": {
@@ -26178,9 +26183,12 @@
                 },
                 "previousGoalTurnClassification": "progress",
                 "previousGoalTurnEvidence": {
-                  "path": "eva2/evidence/product/p2-original-xd08-eva2-openclaw-result-20261009.json",
-                  "sha256": "89840da3b913629c95e006bfc0fa08ce63a67188cafbcf30bb15976ae3314e80",
-                  "whatChanged": "Original source/event binding and retained partial native execution localized two evaluator faults; directory mode corrected. Published immutable review/coverage. No product completion/ranking."
+                  "source": "eva2/evidence/product/p2-native-calendar-continuity-integrated-20261009.json",
+                  "review": "eva2/reviews/p2-native-calendar-continuity-integration-review-20261009.json",
+                  "publishedCommit": "f27767f0e08f92314c9cfe373d305b6483eca20a",
+                  "changedAuthoritativeState": true,
+                  "newProviderCalls": 0,
+                  "productFunctionCompleted": false
                 },
                 "historicalCurrentFieldsBeforeCurrentEva2CM05": {
                   "actualUsage": {
