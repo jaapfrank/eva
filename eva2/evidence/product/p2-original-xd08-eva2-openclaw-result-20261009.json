@@ -1,0 +1,291 @@
+{
+  "ai_judge_used": false,
+  "case_id": "EV003-XD-08",
+  "case_sha256": "062057d49bc782e7228566a9fa975d8ff3677bd4814af00e763b86478667aab3",
+  "closure": {
+    "ack_usage_complete_and_physicalclosure_do_not_imply_localsettlement": true,
+    "both_networks_and_parents_absent": true,
+    "eva2_containers_absent": 9,
+    "eva2_network_and_parent_pids_absent": true,
+    "eva2_three_worker_acks_and_local_settlement": true,
+    "openclaw_equivalent_native_settled": false,
+    "openclaw_fixture_listeners_exited": 2,
+    "openclaw_native_closed": false,
+    "openclaw_native_container_absent": 1,
+    "openclaw_parent_close_ack": true
+  },
+  "comparison": {
+    "causal_evaluator_boundaries_proven": true,
+    "causal_product_fault": null,
+    "efficiency_advantage_claimed": false,
+    "general_superiority_claimed": false,
+    "reason": "Eva2 stopped before original input at an evaluator permission guard. OpenClaw performed one retained effect, then evaluator calendar-cache loss blocked the original continuation. Both are evaluator/source UNKNOWN, not product loss or a valid matched quality comparison.",
+    "role_mismatch_observed_openclaw": false,
+    "valid_pair_ranking": false,
+    "winner": null
+  },
+  "contract": "P2OriginalXD08SequentialPairResult/v1",
+  "cumulative_usage": {
+    "known_input_tokens_lower_bound": 5727464,
+    "known_output_tokens_lower_bound": 39294,
+    "known_total_tokens_lower_bound": 5766758,
+    "missing_usage_attempts": 5,
+    "recorded_sdk_attempts": 331,
+    "total_tokens": null,
+    "usage_complete": false,
+    "usage_unknown_rows": 3
+  },
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "development_credit_cost": null,
+  "epoch": 1,
+  "evidence": {
+    "coverage": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/p2-authority-coverage-xd08-20261009.json",
+      "sha256": "45670616e1825fead90dd1d8c72df6908b062ad18864e7a6146af37b96b06693"
+    },
+    "eva2_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/eva2/original-assessment.private.json",
+      "sha256": "3d41430106ade1fdb9d4f5eff4a87ba444c24093d8366d083bacf2e7f97846d2"
+    },
+    "eva2_gate_failure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/eva2/preinput-gate-failure.private.json",
+      "sha256": "808368a02da25c3def8afaeeb9998764eddb95a0cc614caedeea554b5e43e2d6"
+    },
+    "eva2_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/eva2/physical-closure.private.json",
+      "sha256": "a6df341ab92aefc81ccf7daf0b525ce4e7612e5d12159703f77949ed2c414df5"
+    },
+    "eva2_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/eva2/terminal-technical.private.json",
+      "sha256": "558ce56153853ba416862d2c13e534eac4e33d4c1d702d88b55c31e0a83beadb"
+    },
+    "openclaw_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/openclaw/original-assessment.private.json",
+      "sha256": "2f02fcdf1f7cc08c991a23b81a08eb5e4a31afc0dac704ca4a1e570d5eb677bc"
+    },
+    "openclaw_failure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/openclaw/restart-evaluator-failure.private.json",
+      "sha256": "4a2b469e727b23bcb0cf12d92990700edad5c5646f3dcafb00ad7249d6ecb8e4"
+    },
+    "openclaw_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/openclaw/physical-closure.private.json",
+      "sha256": "b64175ad59039ad132a0eeccaf4ac2bc8b082eefc5257a681fc33c69a262aeb4"
+    },
+    "openclaw_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/openclaw/terminal-technical.private.json",
+      "sha256": "a3e858f55dea7c677c0ca00e53785c23df2df112de2adda162bd1ba2827dbba7"
+    },
+    "private_directory_mode_correction": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/private-directory-mode-correction.private.json",
+      "sha256": "9653214a06b768995bf63e569964c6e8cea589ff2dc502c5dbe6ef000278cd6f"
+    }
+  },
+  "family": "cross_domain_actions",
+  "future_execution_admitted": false,
+  "historical_retention": {
+    "all_original_full_reservations_preserved": true,
+    "all_prior_raw_values_revisions_metadata_preserved": true,
+    "final_registered_rows": 46,
+    "old_missing_usage_attempts": 5,
+    "old_usage_unknown_rows": 3,
+    "prior_original_rows": 44,
+    "prior_rows_before_openclaw": 45,
+    "reset_or_rearm_or_replay": false
+  },
+  "human_ratings": {
+    "eva2": [
+      null,
+      null
+    ],
+    "openclaw": [
+      null,
+      null
+    ]
+  },
+  "limits_per_participant": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "speechRequests": 0,
+    "toolDispatches": 70,
+    "wallSeconds": 840
+  },
+  "model_roles": {
+    "eva2": {
+      "contact": "gpt-6-sol/none",
+      "substantive_work_and_memory": "gpt-6-astra/medium"
+    },
+    "openclaw": {
+      "contact_role_not_substituted_for_work": true,
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning": "medium"
+      },
+      "main_substantive_work": {
+        "accounting_role": "helper",
+        "model": "gpt-6-astra",
+        "reasoning": "medium"
+      }
+    }
+  },
+  "new_task_or_product_function_claimed": false,
+  "next_action": "Only a separately reviewed, model-free correction of the proven evaluator calendar-binding transfer may follow; no new trial or closed replay is admitted by this result.",
+  "original_criteria_unchanged": true,
+  "original_input_texts_unchanged": true,
+  "p2_1_complete": false,
+  "pair_usage": {
+    "complete": false,
+    "input_tokens": null,
+    "known_partial_usage": {
+      "input_tokens": 259993,
+      "output_tokens": 836,
+      "total_tokens": 260829
+    },
+    "output_tokens": null,
+    "sdk_attempts": 8,
+    "tool_dispatches": 6,
+    "total_tokens": null,
+    "zero_eva2_dispatch_proven_but_ledger_total_remains_null": true
+  },
+  "participants": {
+    "eva2": {
+      "classification": "UNKNOWN",
+      "failure_transition": "Before original input, fixed evaluator gate rejected private_base UID0/mode0755; required mode0700. Source/conditional review missed this binding.",
+      "fixed_predicates": [
+        null,
+        null,
+        null
+      ],
+      "fixture_effects": 0,
+      "independent_readbacks": [
+        null,
+        null
+      ],
+      "objective_conditions_met": null,
+      "original_input_delivered": false,
+      "physical_closure_complete": true,
+      "product_loss_inferred": false,
+      "timing": {
+        "elapsed_seconds": 69.18342701002257,
+        "scope": "parent original clock including native boot through requested cleanup; no original input"
+      },
+      "usage": {
+        "actual_roles": {},
+        "attempts_aborted": 0,
+        "attempts_completed": 0,
+        "complete": false,
+        "input_tokens": null,
+        "known_partial_usage": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0
+        },
+        "output_tokens": null,
+        "physical_context_count": 0,
+        "sdk_attempts": 0,
+        "tool_dispatches": 0,
+        "total_tokens": null
+      },
+      "worker_settlement": {
+        "core": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        },
+        "delegated": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        },
+        "memory": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        }
+      }
+    },
+    "openclaw": {
+      "actual_work_role_protocol_conformant": true,
+      "classification": "UNKNOWN",
+      "confirmed_work_completion": false,
+      "equivalent_native_settled": false,
+      "failure_transition": "After planned interruption, new evaluator accounting instance lacked process-local nativeCompletedResponses calendar bindings. Resumed native requests were rejected at evaluator_body_bind before any further provider dispatch.",
+      "fixed_predicates": [
+        false,
+        null,
+        true
+      ],
+      "fixture_effects": 1,
+      "independent_readbacks": [
+        false,
+        false
+      ],
+      "native_closed": false,
+      "native_failure_class": "FailoverError",
+      "objective_conditions_met": null,
+      "observed_both_required_end_states_reached": false,
+      "observed_no_duplicate_records": true,
+      "observed_preserved_status_and_count": true,
+      "old_interrupted_tool_not_marked_completed": true,
+      "old_phase_ACK_not_inferred": true,
+      "original_first_input_delivered_to_provider": true,
+      "original_followup_delivered_to_native_actor": true,
+      "original_followup_delivered_to_provider": false,
+      "original_interruption_executed": true,
+      "owner_stop_marker_was_after_native_terminal": true,
+      "parent_close_ack": true,
+      "partial_effect_is_not_task_success": true,
+      "physical_closure_complete": true,
+      "product_loss_inferred": false,
+      "same_absolute_deadline_and_ledger": true,
+      "timing": {
+        "elapsed_seconds": 228.94577044300968,
+        "scope": "Same original parent clock before first native child through restarted child return, including interruption/recovery. Physical cleanup separately retained.",
+        "wall_expired": false
+      },
+      "usage": {
+        "actual_roles": {
+          "helper/gpt-6-astra/medium": 8
+        },
+        "complete": true,
+        "input_tokens": 259993,
+        "known_partial_usage": {
+          "input_tokens": 259993,
+          "output_tokens": 836,
+          "total_tokens": 260829
+        },
+        "output_tokens": 836,
+        "phase1_tools": 0,
+        "physical_context_count": 8,
+        "prior_tools": {
+          "interrupted_without_terminal": 1,
+          "reserved": 6,
+          "settled": 5
+        },
+        "sdk_attempts": 8,
+        "speech_requests": 0,
+        "tool_dispatches": 6,
+        "total_tokens": 260829
+      }
+    }
+  },
+  "participants_order": [
+    "eva2",
+    "openclaw"
+  ],
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "preparation_and_review_limitations": [
+    "Original two-event shape was corrected before source freeze; initial metadata mismatch retained.",
+    "Barrier/resume publication race was corrected atomically before execution; synthetic checks did not prove recovery.",
+    "Evaluator source and conditional review missed private_base mode0755. Closed Eva2 input remained absent; only directory mode changed to0700 before unused OpenClaw preparation, without modifying closed source/result/history.",
+    "Evaluator source review missed process-local calendar completed-response cache across the original OpenClaw process restart. New native process preserved profile/session/workspace but lacked this evaluator binding; no calendar guard relaxation or replay occurred.",
+    "One original fixture effect and interruption were retained; follow-up reached native actor setup but no provider request. Task completion and recovery quality are unassessed.",
+    "OpenClaw terminal was already recorded before the requested explicit stop marker; stop did not cause that earlier closure.",
+    "OpenClaw eight provider attempts have complete usage; interrupted tool has no terminal result, and restarted native local settlement failed. These are separate facts.",
+    "Human whole-quality and general superiority remain unestablished."
+  ],
+  "purpose": "Complete the original cross-service task across the originally specified interruption and follow-up while preserving durable work and avoiding duplicates.",
+  "runtime_cost_currency": null,
+  "status": "closed_evaluator_unknown_both_participants",
+  "whole_quality": null
+}

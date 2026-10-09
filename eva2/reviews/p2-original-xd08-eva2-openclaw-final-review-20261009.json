@@ -1,0 +1,137 @@
+{
+  "contract": "IndependentOriginalXD08BoundedFinalPublicationReview/v1",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "reviewed_at": "2026-10-09T05:13:54.473541+00:00",
+  "decision": "GO_PUBLICATION_BOUNDED_ORIGINAL_PAIR",
+  "reviewed_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/final-review-index.private.json",
+    "sha256": "132bf448004abb6e26d65e6204afbe023d4f82d9ffeb1bc3d1917bdd828f686a"
+  },
+  "approved_public_result": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/pair-result.public.json",
+    "sha256": "89840da3b913629c95e006bfc0fa08ce63a67188cafbcf30bb15976ae3314e80"
+  },
+  "approved_public_coverage": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/p2-authority-coverage-xd08-20261009.json",
+    "sha256": "45670616e1825fead90dd1d8c72df6908b062ad18864e7a6146af37b96b06693"
+  },
+  "canonical_filenames": {
+    "coverage": "p2-authority-coverage-xd08-20261009.json",
+    "result": "p2-original-xd08-eva2-openclaw-result-20261009.json"
+  },
+  "retention": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/retention.private.json",
+    "sha256": "2d70df424570e1e25c087b3527d4a085d5532b94fd8830e017a38765080eb56f"
+  },
+  "declassification": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd08-eva2-openclaw-20261009-v1/declassification.private.json",
+    "sha256": "a3c325256e7bd5e0a63f7e3d6f8a8da73da91a7ee8442ce0bfed797382bf95e0"
+  },
+  "findings": [],
+  "verified": {
+    "final_index_references_hash_exact": true,
+    "retained_file_references_all_hash_exact": 975,
+    "current_authority_sha256": "a1becf1279622b8a0afed7e5c12414fd8191a3298ae9cd2164cc109fa9b50dea",
+    "current_registered_rows": 46,
+    "all45_prior_raw_values_revisions_metadata_exact": true,
+    "all44_pre_pair_rows_and_old_UNKNOWN_full_reservations_preserved": true,
+    "original_case_criteria_required_whole_state_and_native_trace_readbacks_unchanged": true,
+    "original_state_journal_actor_audience_effect_barrier_deadline_and_no_duplicate_derivation_checked": true,
+    "eight_physical_capture_body_hashes_actual_original_first_text_Astra_medium_and_complete_usage_match": true,
+    "retained_postrestart_evaluator_failure_bodies": 148,
+    "retained_failure_bodies_containing_original_followup": 144,
+    "postrestart_provider_calls": 0,
+    "old_six_tool_reservations_five_settled_one_interrupted_no_refund": true,
+    "same_one_absolute_deadline_same_state_profile_session_and_parentledger": true,
+    "both_participants_actual_resources_processes_networks_and_O_scopes_closed": true,
+    "ACK_provider_usage_native_local_settlement_and_physical_closure_kept_separate": true,
+    "native_terminal_precedes_later_requested_stop_no_causal_stop_claim": true,
+    "public_original_turn_text_origins_auth_or_oracle_content_absent": true,
+    "conservative_registry_coverage_counts_independently_recomputed": {
+      "sdk_attempts": 331,
+      "known_input_tokens": 5727464,
+      "known_output_tokens": 39294,
+      "known_total_tokens_lower_bound": 5766758,
+      "missing_usage_attempts": 5,
+      "usage_unknown_rows": 3
+    }
+  },
+  "eva2_result": {
+    "classification": "UNKNOWN",
+    "original_input_delivered": false,
+    "sdk_attempts": 0,
+    "tool_dispatches": 0,
+    "complete_usage": false,
+    "total_tokens": null,
+    "known_partial_total_tokens": 0,
+    "fixed_predicates": [
+      null,
+      null,
+      null
+    ],
+    "independent_readbacks": [
+      null,
+      null
+    ],
+    "objective_conditions_met": null,
+    "failure": "Unchanged evaluator gate rejected private_base UID0/mode0755 before input; directory required0700.",
+    "source_and_conditional_review_missed_mode_binding": true,
+    "closed_policy_source_result_and_history_not_rearmed_or_rewritten": true
+  },
+  "openclaw_result": {
+    "classification": "UNKNOWN",
+    "sdk_attempts": 8,
+    "actual_roles": {
+      "helper/gpt-6-astra/medium": 8
+    },
+    "complete_usage": true,
+    "input_tokens": 259993,
+    "output_tokens": 836,
+    "total_tokens": 260829,
+    "tool_dispatches": 6,
+    "settled_tools": 5,
+    "interrupted_tool_without_terminal": 1,
+    "durable_effects": 1,
+    "original_interruption_executed": true,
+    "original_followup_native_actor_delivery": true,
+    "original_followup_provider_delivery": false,
+    "fixed_predicates": [
+      false,
+      null,
+      true
+    ],
+    "independent_readbacks": [
+      false,
+      false
+    ],
+    "objective_conditions_met": null,
+    "partial_effect_not_task_success": true,
+    "parent_close_ACK": true,
+    "native_closed": false,
+    "equivalent_native_settled": false,
+    "physical_closure": true,
+    "failure": "A fresh evaluator accounting instance rebuilt an empty process-local completed-response calendar map; retained native environment references were refused before provider dispatch.",
+    "source_review_missed_calendar_binding_transfer": true,
+    "actual_elapsed_seconds": 228.94577044300968,
+    "timing_includes_original_child_setup_interruption_restart_and_child_return": true
+  },
+  "publication_limits": {
+    "human_quality_and_whole_quality_remain_null": true,
+    "valid_pair_ranking": false,
+    "winner": null,
+    "product_loss_inferred": false,
+    "causal_product_fault": null,
+    "quality_efficiency_superiority_or_new_function_claim": false,
+    "P2_1_complete": false,
+    "future_trial_input_rearm_or_paid_execution_authorized": false,
+    "original_UNKNOWNs_closed_results_and_reservations_unchanged": true,
+    "future_model_free_calendar_binding_source_correction_requires_its_own_concrete_review": true
+  },
+  "allowed_next_transition": "Publish only the exact approved result/coverage and this safe review to the existing canonical evidence/dashboard/docs; preserve task IDs/status/finish conditions and closed evidence. No new execution, replay, clock, admission or product completion follows from this GO.",
+  "reviewer_activity": {
+    "only_new_review_file_written": true,
+    "provider_native_resource_calls": 0,
+    "original_trial_repeated": false,
+    "development_credits": null
+  }
+}

@@ -1,3 +1,35 @@
+## Actueel 9 oktober — XD08 gesloten door fouten in proefroute
+
+De oorspronkelijke Eva2/OpenClaw-uitvoering is gesloten. Eva2 kreeg geen
+originele input: de proefroot had mode0755 waar0700 vereist was; bron- en
+resourcecontrole misten die aansluiting. Alleen de mapmode is gecorrigeerd vóór
+de nog ongebruikte OpenClaw-ingang; gesloten Eva2-bronnen/resultaten blijven staan.
+
+OpenClaw gebruikte 8 Astra/medium-aanvragen, 260.829 tokens en 6 tools
+(5 afgehandeld, 1 onderbroken). Eén wijziging en de oorspronkelijke onderbreking/
+herstart zijn aangetoond. De nieuwe evaluatorinstantie verloor echter haar
+completed-response-binding; de vervolgvraag bereikte geen model. Het native
+resultaat was al afgesloten vóór de later aangevraagde stopmarker.
+Beide beoordelingen zijn UNKNOWN door evaluatorfouten; geen productverlies,
+winnaar, efficiëntievoordeel of nieuwe productafronding. Providerusage, ACK,
+native settlement en fysieke afsluiting blijven afzonderlijke feiten.
+
+46 registraties/331 SDK en bekende ondergrens5.766.758 tokens zijn geen afgeronde
+dekking. Vijf oude pogingen in drie rijen missen usage; totale tokens en credits
+blijven onbekend. Oude resultaten/UNKNOWN/criteria, L3.4–L3.7 en39/48kleine
+afrondingen behouden; P2.1 blijft open. Spraak geparkeerd, Docker Desktop ongemoeid.
+Onafhankelijke eindreview geslaagd voor exact deze veilige publicatie.
+
+Vervolg uitsluitend de kleinste modelvrije correctie van de bewezen
+evaluatorbinding bij herstart. Behoud echte response-herkomst, originele
+actor/sessie/criteria, privacy en failclosed bij onbekend verbruik. Controleer
+de private-rootmode vóór klok/invoer. Geen nieuwe betaalde proef, gesloten
+herhaling of nieuwe taak-ID door dit resultaat.
+
+Bewijs: eva2/evidence/product/p2-original-xd08-eva2-openclaw-result-20261009.json.
+Dekking: eva2/evidence/product/p2-authority-coverage-xd08-20261009.json.
+Review: eva2/reviews/p2-original-xd08-eva2-openclaw-final-review-20261009.json.
+
 ## Actueel 9 oktober — schema-informatie in vergelijkingsroute hersteld
 
 De gedeelde proefadapter liet bestaande discovery-informatie weg voor Eva2 én
