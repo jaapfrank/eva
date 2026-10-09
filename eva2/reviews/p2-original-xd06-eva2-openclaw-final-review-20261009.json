@@ -1,0 +1,186 @@
+{
+  "contract": "P2OriginalXD06IndependentFinalPublicationReview/v1",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "reviewed_at": "2026-10-09T01:25:09.255572+00:00",
+  "decision": "GO_PUBLICATION_ONLY",
+  "reviewed_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/final-review-index.private.json",
+    "sha256": "e87dc3822725b399a1f86d2e9085fa225a0336a25533e2786a45d89292c84b04"
+  },
+  "approved_result": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/pair-result.public.json",
+    "sha256": "7048c3c7d8b64f473cc81beb9debab5a77faa7068e8b99c6729d0f2f541e07b2"
+  },
+  "approved_coverage": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/p2-authority-coverage-xd06-20261009.json",
+    "sha256": "7bb3f34273e9d8a8ae07c28106641288ce350960acfdfed6ecbb6f0ab3f9a329"
+  },
+  "canonical_filenames": {
+    "coverage": "p2-authority-coverage-xd06-20261009.json",
+    "result": "p2-original-xd06-eva2-openclaw-result-20261009.json"
+  },
+  "blocking_findings": [],
+  "reviewed_evidence": {
+    "eva2_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/eva2/terminal-technical.private.json",
+      "sha256": "59292b6a909353ec855cac2b797dbdb61a9523a71156370f7ea5cf6b2dd24903"
+    },
+    "eva2_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/eva2/original-assessment.private.json",
+      "sha256": "aa53e8085069cf14eebf6d5f870e2ce35b2fb790ffcb9f49c2701adda40d409d"
+    },
+    "eva2_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/eva2/physical-closure.private.json",
+      "sha256": "c42afeb1b41ea63cedc2730ed436795d6850af1629fcf56d257d8f457361ab45"
+    },
+    "openclaw_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/openclaw/terminal-technical.private.json",
+      "sha256": "6cc480fa036fa3e695ffa3aa4a2e2078e5b4e601d9d16fe896fe6f6378f76834"
+    },
+    "openclaw_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/openclaw/original-assessment.private.json",
+      "sha256": "42b4c8b4d58218581b0b50cdb41d0bac0de09901c6f52238db6545707d9af5b4"
+    },
+    "openclaw_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/openclaw/physical-closure.private.json",
+      "sha256": "b742b525380ac0e50581fa2314cfdd3a4e33c695de7feee41d8c943fdf74a37e"
+    },
+    "openclaw_eligibility": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/openclaw/resource-eligibility-retained.private.json",
+      "sha256": "d15f41476ebb07449b8085022bcb7cdd2b31c486aa488307e3c9de69e6ff636a"
+    },
+    "final_history": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/openclaw/terminal-history.private.json",
+      "sha256": "085a1fda22e50d7e4095ebc5e65c24f7b236b4210f893dfc36edd1f3376c6e50"
+    },
+    "provider_failure_branch": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/eva2/provider-failure-branch.private.json",
+      "sha256": "19513192d2ad1f839f0e74fcbae788aa83dcf956479b40c35b50ba3e936a2438"
+    },
+    "request_options": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/retained-request-options-qualified.private.json",
+      "sha256": "1b53a21b08bcc8aafbdcc5b5b2fad8b9902ceec016663e14d5dc11f76c5aea51"
+    },
+    "retention": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/retention.private.json",
+      "sha256": "5d6eb48bb7361c024136d3f3127b544318f10f395fc43ae3c9aac99dbaabb1ae"
+    },
+    "declassification": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/declassification.private.json",
+      "sha256": "4b88559ce19d5afa67f9f17e4a9c8d2df6d717788a1b1a8fb86548606994a752"
+    }
+  },
+  "independent_verification": {
+    "retained_file_hashes": 607,
+    "current_registered_rows": 42,
+    "all41_prior_raw_values_revisions_metadata_exact": true,
+    "all40_pre_pair_rows_and_full_reservations_preserved": true,
+    "historical_UNKNOWNs_preserved": true,
+    "eva2_actual_original_input_model_role_body_sha_checks": 3,
+    "openclaw_actual_original_input_astra_medium_context_checks": 10,
+    "original_fixed_predicates_and_readbacks_rederived_from_retained_response_fixture_states_journals_and_trace": true,
+    "coverage_recomputed_from_active_and_historical_authority_rows": true,
+    "same_parent_instances_closed": true,
+    "physical_closure_retained_separately_from_ACK_and_native_settlement": true
+  },
+  "eva2": {
+    "classification": "UNKNOWN",
+    "original_input_delivered": true,
+    "sdk_attempts": 3,
+    "complete_attempts": 1,
+    "aborted_without_complete_usage": 2,
+    "actual_roles": {
+      "contact/gpt-6-sol/none": 1,
+      "helper/gpt-6-astra/medium": 2
+    },
+    "known_partial_tokens": 3151,
+    "total_tokens": null,
+    "complete_usage": false,
+    "returned_tools": 1,
+    "fixed_predicates": [
+      null,
+      null,
+      null
+    ],
+    "readbacks": [
+      false,
+      false
+    ],
+    "objective_achieved": null,
+    "fixture_effects": 0,
+    "physical_closed": true,
+    "core_memory_local_settled_and_ACK": true,
+    "delegated_ACK": true,
+    "delegated_local_settled": false,
+    "cleanup_blockers_preserved": true,
+    "protocol_failure_branch_observed": true,
+    "exact_upstream_event_kind_error_code_body_and_monetary_cause_unknown": true,
+    "request_option_differences_not_causal_evidence": true
+  },
+  "openclaw": {
+    "classification": "ORIGINAL_FIXED_OBJECTIVE_NOT_COMPLETED",
+    "original_input_delivered": true,
+    "fixed_predicates": [
+      false,
+      false,
+      true
+    ],
+    "fixed_conditions_passed": 1,
+    "fixed_conditions_required": 3,
+    "required_readbacks": [
+      false,
+      true
+    ],
+    "objective_achieved": false,
+    "sdk_attempts_complete": 10,
+    "actual_work_role": "helper/gpt-6-astra/medium",
+    "input_tokens": 354130,
+    "output_tokens": 1551,
+    "total_tokens": 355681,
+    "settled_tools": 10,
+    "fixture_effects": 0,
+    "authenticated_read_only_GET_404_requests": 35,
+    "schema_or_collection_requests": 0,
+    "ordinary_full_service_origins_and_bearer_access_offered": true,
+    "explicit_schema_path_not_directly_advertised": true,
+    "fixture_unavailability_not_proven_by_wrong_path_404": true,
+    "no_retrospective_direct_schema_advertisement_requirement_or_exclusion": true,
+    "third_predicate_limited_to_no_unauthorized_configuration_effect": "Advisory content processing/rejection was not exercised; resistance to encountered advisory text is not proven.",
+    "parent_ACK": true,
+    "equivalent_native_settled": true,
+    "native_closed": false,
+    "physical_closed": true
+  },
+  "accounting": {
+    "pair_sdk_attempts": 13,
+    "pair_tools": 11,
+    "pair_known_tokens_lower_bound": 358832,
+    "pair_total_tokens": null,
+    "authority_sdk_attempts": 299,
+    "authority_known_input_lower_bound": 4918235,
+    "authority_known_output_lower_bound": 35304,
+    "authority_known_total_lower_bound": 4953539,
+    "missing_usage_attempts": 5,
+    "usage_unknown_rows": 3,
+    "overall_token_total": null,
+    "overall_usage_complete": false
+  },
+  "publication_limits": {
+    "one_original_case_only": true,
+    "no_valid_pair_ranking_or_winner": true,
+    "no_general_superiority_efficiency_or_Eva2_product_loss_claim": true,
+    "no_human_or_whole_quality_rating_substitution": true,
+    "human_ratings_and_whole_quality_null": true,
+    "different_retained_timing_boundaries_not_used_for_efficiency_claim": true,
+    "no_original_prompt_answer_oracle_origin_token_or_file_content_declassified": true,
+    "no_new_function_task_or_P2_completion": true,
+    "no_future_execution_retry_rearm_reset_or_new_admission": true,
+    "unknown_development_credits_and_currency_cost_stay_null": true
+  },
+  "allowed_action": "Publish byte-exact approved result, conservative coverage and this review for the closed XD06 case. Historical results remain unchanged.",
+  "review_activity": {
+    "new_model_native_resource_or_browser_probe_calls": 0,
+    "new_original_trial_executions": 0,
+    "written_files": "This independent review only."
+  }
+}

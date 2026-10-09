@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-09T00:19:59.189413+00:00",
+  "lastUpdated": "2026-10-09T00:39:14.873961+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1018,6 +1018,19 @@
       "deliveryOverview": {
         "checkedAt": "2026-10-09T00:19:59.189413+00:00",
         "deliveries": [
+          {
+            "taskId": "P2.1",
+            "title": "XD06 vergeleken: geen afgeronde werkopdracht",
+            "date": "2026-10-09T01:30:05.473672+00:00",
+            "state": "investigated",
+            "summary": "Eva2 ontving de opdracht maar leverde geen bevestigd werkresultaat; UNKNOWN door expliciete fout/onvolledige providerstream en twee ontbrekende SDK-usages. OpenClaw 1/3 voorwaarden, geen wijziging.",
+            "delivered": "Eén oorspronkelijk Eva2/OpenClaw-paar uitgevoerd, onafhankelijk beoordeeld en fysiek gesloten; eerdere gegevens behouden.",
+            "technicalProof": "Oorspronkelijke taak/criteria behouden. OpenClaw 10 Astra/medium-SDK, 355.681 tokens; pair13SDK/11tools, bekende ondergrens358.832, totaal onbekend.",
+            "remaining": "P2.1 open; ontbrekende foutmetadata vóór verdere betaalde proeven. Geen winnaar, nieuwe functie of gesloten herhaling.",
+            "productFunctionCompleted": false,
+            "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+            "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json"
+          },
           {
             "title": "XD05 gesloten: OpenClaw 3/3; Eva2 onbekend door proefroute",
             "date": "2026-10-09",
@@ -4351,13 +4364,13 @@
         ],
         "now": {
           "taskId": "P2.1",
-          "title": "P2.1 · XD05 afgesloten; vergelijking blijft open",
-          "detail": "Onafhankelijk bevestigd: OpenClaw 3/3 voorwaarden en drie terugleescontroles; 13 Astra/medium-aanvragen, 405.529 tokens. Eva2 kreeg geen taakinput door onze proefroute en blijft UNKNOWN. Geen pairwinnaar of nieuwe productfunctie.",
+          "title": "P2.1 · XD06 gesloten; beide opdrachten niet af",
+          "detail": "Eva2 kreeg de taak maar stopte op een fout/onvolledige modelstream: UNKNOWN, twee usage-metingen ontbreken. OpenClaw 1/3, nul effecten. Beide omgevingen gesloten. Eerst foutmetadata/compatibiliteit verduidelijken vóór nieuwe betaalde proeven.",
           "state": "in_progress",
           "activeExecution": false,
-          "source": "eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json",
+          "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
           "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
-          "review": "eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json"
+          "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json"
         },
         "next": {
           "title": "P2.1 · Resterende oorspronkelijke vergelijking",
@@ -23842,18 +23855,18 @@
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "De resterende oorspronkelijke vergelijkingsdekking blijft open. Kies alleen afzonderlijk concreet gebonden resterend werk vanuit het bestaande bewijs en mandaat. XD05 is gesloten; geen herhaling, nieuwe brede matrix of nieuwe producttaak door deze uitkomst.",
+              "nextAction": "Los eerst gericht de ontbrekende provider-foutmetadata en werktoolcompatibiliteit uit met bestaande code en behouden verzoekmetadata; de oorzaak is nog niet bewezen. Geen volgende betaalde proef vóór die concrete afhankelijkheid is opgehelderd. Geen gesloten taak herhalen of brede matrix starten.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "steps": [],
-                "expected": "Geen handeling voor de technische Eva2-XD02-uitvoering; expliciet akkoord ontvangen. Echt menselijk kwaliteitsoordeel blijft afzonderlijk open.",
+                "expected": "Geen technische eigenaarhandeling voor deze afgesloten proef; echte menselijke beoordelingen blijven apart open.",
                 "blocksIndependentWork": false,
                 "source": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json"
               },
-              "checkedAt": "2026-10-09T00:19:59.189413+00:00",
+              "checkedAt": "2026-10-09T01:30:05.473672+00:00",
               "assignment": {
-                "baseCommit": "6d0d0c305743b48b2b6e8c0383845fdab8300cfc",
+                "baseCommit": "0148ff48836ca852d6d0b24682c67a771555fb31",
                 "owner": "/root",
                 "activeWorkers": [
                   {
@@ -23875,72 +23888,54 @@
                   "Reviewer: onafhankelijke eindbeoordeling; geen uitvoercode of criteria wijzigen"
                 ],
                 "existing": "CM05/CM08-geheugenvoordelen en eerdere acceptaties behouden. De geïnstalleerde endpoint-rolecorrectie was aanwezig maar verhielp Eva2's verkeerde bestemmingkeuze in XD04 niet.",
-                "gap": "De oorspronkelijke XD05-opdracht gebruikt lokale bestanden. De bestaande Eva-programmeerroute had in de proef geen client/service en exacte taakwerkruimte; de private aansluiting plus dezelfde broncatalogus/modelrollen zijn nu geschreven en bevroren, nog niet native bewezen.",
-                "finish": "Eén oorspronkelijke XD05-opdracht via de bestaande Eva2- en OpenClaw-routes uitvoeren, onafhankelijk beoordelen en fysiek sluiten; oorspronkelijke criteria behouden. P2.1 als geheel blijft open.",
+                "gap": "De opdracht bereikte Eva2, maar de werkmodelstream stopte met onbekende foutcode en onvolledige usage. OpenClaw rondde de taak evenmin af. Gerichte foutmetadata/compatibiliteit eerst; verzoekverschillen bewijzen geen oorzaak.",
+                "finish": "Eén oorspronkelijke XD06-opdracht via de bestaande Eva2- en OpenClaw-routes uitvoeren, onafhankelijk beoordelen en fysiek sluiten; oorspronkelijke criteria behouden. P2.1 als geheel blijft open.",
                 "estimate": "Huidige voorbereiding0runtime/providercalls. Oorspronkelijk per deelnemer72SDK/70tools/840s inclusief hulpmiddelen en voorbereiding; credits/geld onbekend.",
-                "currentAction": "XD05 is gesloten en onafhankelijk gecontroleerd: OpenClaw 3/3 en drie terugleescontroles; Eva2 UNKNOWN vóór invoer. Geen geldige pairwinnaar of nieuwe productfunctie.",
+                "currentAction": "XD06 gesloten en onafhankelijk gecontroleerd: Eva2 UNKNOWN na modelstreamstop; OpenClaw 1/3 en geen uitgevoerde effecten. Alle resources gesloten; geen nieuwe uitvoering actief.",
                 "previousGoalTurn": {
                   "classification": "progress",
-                  "previousTurnClassification": "progress",
-                  "previousAuthoritativeOutcome": "Closed original Hermes/OpenClaw CM05 independently published and pushed38c24435; status/harness package1352files8unchangedimages verified. No replay.",
-                  "stage": "hermes_cm06_result_published",
-                  "actualProviderCalls": 6,
-                  "originalInputsReleased": true,
-                  "resourcesStarted": true,
-                  "pendingExecutionHandle": false,
-                  "newProductFunction": false,
-                  "credits": null,
-                  "authorityMutations": null,
-                  "concreteNextAction": "Original CM07 Hermes group-origin/audience availability only; no new original selection or execution yet.",
-                  "concretePreparation": "Exact protected3turn CM06 projection; unchanged native probe, bound actual runtime config/SOUL and no-native/pinnedInspect preflight passed. Old administrative backup retained; no memory/credential copy.",
-                  "sourceReview": "eva2/reviews/p2-hermes-cm06-source-review-20261007.json",
-                  "preparationIssue": {
-                    "cause": "Preparation used the old configuration backup basename and lost its backups/config subdirectories; exact old backup remains retained.",
-                    "correction": "Bind the actual current runtime config.yaml/SOUL.md only; administrative native backups are not imported as configuration inputs.",
-                    "effect": "No reservation, original input release or modelcall; no old backup deleted or original run repeated."
+                  "basis": "Published independently assessed original XD05 result, review and authority40; no feature completion inferred.",
+                  "commit": "0148ff48836ca852d6d0b24682c67a771555fb31",
+                  "turn": {
+                    "stage": "xd05_closed_independently_reviewed",
+                    "startedAt": "2026-10-08T22:40:14.471707+00:00",
+                    "baseCommit": "03aeae8da23a340968d919761ab2f612451edb0a",
+                    "newTrialAdmitted": true,
+                    "providerCallsStarted": 13,
+                    "proposedCase": "EV003-XD-05",
+                    "fileCarrierRequired": true,
+                    "authorityCopied": true,
+                    "resourcePreparationInProgress": false,
+                    "resourcePreparationHandle": {
+                      "execSessionId": 61213,
+                      "pid": 3133622,
+                      "startedAt": "2026-10-08T23:18:55.379392+00:00",
+                      "closed": true,
+                      "exitCode": 0
+                    },
+                    "resourcePreparationFinished": true,
+                    "pendingExecutionHandle": false,
+                    "authorityRowsIncludingActiveAttempt": 40,
+                    "originalInputAdmitted": true,
+                    "nativeOriginalTaskStarted": true,
+                    "futureExecutionAdmitted": false
                   },
-                  "tests": "Reuse previous public3/4-turn boundary proof; current Python AST/no-native binding and pinnedInspect import checks only.",
-                  "originalNativeInputsPlanned": 3,
-                  "modelCalls": 6,
-                  "nativeOriginalExecutions": 1,
-                  "inputTokens": 13999,
-                  "outputTokens": 215,
-                  "totalTokens": 14214,
-                  "elapsedSeconds": 15.726007043005666,
-                  "nativeCompletion": true,
-                  "objectiveCompletion": false,
-                  "wholeQuality": "UNKNOWN",
-                  "humanRatings": [
-                    null,
-                    null
-                  ],
-                  "originalNativeInputs": 3,
-                  "registeredSampleRowsAdded": 1,
-                  "originalInputs": 3,
-                  "independentResultEvidence": "eva2/evidence/product/p2-hermes-original-cm06-result-20261007.json",
-                  "independentTerminalReview": "eva2/reviews/p2-hermes-original-cm06-result-review-20261007.json",
-                  "publicationModelCalls": 0,
-                  "comparisonOutcome": {
-                    "hermes": {
-                      "nativeResponses": "3/3",
-                      "coreFacts": "3/3",
-                      "semanticConditions": "2/3",
-                      "objectivePass": false
-                    },
-                    "eva1": {
-                      "coreFacts": "1/3",
-                      "semanticConditions": "2/3",
-                      "objectivePass": false
-                    },
-                    "openclaw": {
-                      "coreFacts": "3/3",
-                      "semanticConditions": "3/3",
-                      "objectivePass": true
-                    },
-                    "generalWinner": null
+                  "outcome": {
+                    "case": "EV003-XD-05",
+                    "status": "closed_no_pair_ranking",
+                    "eva2": "UNKNOWN_PRE_INPUT_EVALUATOR_FAILURE",
+                    "openclawConditionsPassed": 3,
+                    "openclawConditionsRequired": 3,
+                    "sdkAttemptsObserved": 13,
+                    "tokensKnownLowerBound": 405529,
+                    "totalPairTokens": null,
+                    "productFunctionCompleted": false,
+                    "futureExecutionAdmitted": false,
+                    "source": "eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json",
+                    "review": "eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json"
                   }
                 },
-                "stage": "xd04_pair_closed_role_qualified_publication",
+                "stage": "xd06_pair_closed_publication",
                 "currentNativePreparation": {
                   "case": "EV003-XD-04",
                   "epoch": 1,
@@ -24050,26 +24045,65 @@
                 },
                 "projectionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
                 "admissionEvidence": "eva2/evidence/product/p2-cm12-projection-review-20261005.json",
-                "nextAction": "De resterende oorspronkelijke vergelijkingsdekking blijft open. Kies alleen afzonderlijk concreet gebonden resterend werk vanuit het bestaande bewijs en mandaat. XD05 is gesloten; geen herhaling, nieuwe brede matrix of nieuwe producttaak door deze uitkomst.",
+                "nextAction": "Los eerst gericht de ontbrekende provider-foutmetadata en werktoolcompatibiliteit uit met bestaande code en behouden verzoekmetadata; de oorzaak is nog niet bewezen. Geen volgende betaalde proef vóór die concrete afhankelijkheid is opgehelderd. Geen gesloten taak herhalen of brede matrix starten.",
                 "actualUsage": {
-                  "scope": "One original current Eva2 CM05 development comparison, not household runtime",
+                  "scope": "One bounded original XD06 development comparison; not household runtime",
                   "providerAttempts": 13,
-                  "contactAttempts": 4,
-                  "helperAttempts": 9,
-                  "inputTokens": 43887,
-                  "outputTokens": 1728,
-                  "totalTokens": 45615,
-                  "toolDispatches": 3,
-                  "elapsedSeconds": 187.17963806798798,
-                  "timingBoundary": "Single monotonic clock before native boot through before-stop, with parent-to-stop recorded separately; preparation excluded. Comparator timing boundaries are retained unchanged and not equated.",
+                  "contactAttempts": 1,
+                  "helperAttempts": 12,
+                  "totalTokens": null,
+                  "knownLowerBoundTokens": 358832,
+                  "usageComplete": false,
+                  "missingUsageAttempts": 2,
+                  "toolDispatches": 11,
+                  "eva2": {
+                    "actual_roles": {
+                      "contact/gpt-6-sol/none": 1,
+                      "helper/gpt-6-astra/medium": 2
+                    },
+                    "attempts_aborted": 2,
+                    "attempts_completed": 1,
+                    "complete": false,
+                    "input_tokens": null,
+                    "known_partial_usage": {
+                      "input_tokens": 2910,
+                      "output_tokens": 241,
+                      "total_tokens": 3151
+                    },
+                    "output_tokens": null,
+                    "physical_context_count": 3,
+                    "sdk_attempts": 3,
+                    "tool_dispatches": 1,
+                    "total_tokens": null
+                  },
+                  "openclaw": {
+                    "actual_roles": {
+                      "helper/gpt-6-astra/medium": 10
+                    },
+                    "complete": true,
+                    "input_tokens": 354130,
+                    "known_partial_usage": {
+                      "input_tokens": 354130,
+                      "output_tokens": 1551,
+                      "total_tokens": 355681
+                    },
+                    "output_tokens": 1551,
+                    "physical_context_count": 10,
+                    "sdk_attempts": 10,
+                    "speech_requests": 0,
+                    "tool_dispatches": 10,
+                    "total_tokens": 355681
+                  },
+                  "eva2ElapsedSeconds": 83.12018078300753,
+                  "openclawElapsedSeconds": 134.62777963702683,
                   "credits": null,
                   "householdRuntimeUsage": false
                 },
-                "review": "eva2/reviews/p2-original-xd04-eva2-openclaw-final-review-20261008.json",
+                "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json",
                 "sourcePreparationEvidence": "eva2/evidence/product/p2-xd01-native-binding-20261005.json",
                 "resourcePreparationEvidence": {
-                  "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/root-resources-terminal.private.json",
-                  "sha256": "7ec94cfed1bd6d59a4294367fb855ed5a81ac2c596849ff1ebc9c81822bd18e4"
+                  "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/root-eva2_resource_prepare-terminal.private.json",
+                  "sha256": "7aea7e9978916113c8e7fe322ed15168c62118414734894e8aec0ffa291d1fce"
                 },
                 "preparationStateEvidence": "eva2/evidence/product/p2-xd01-independent-state-20261005.json",
                 "independentResultEvidence": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json",
@@ -24242,26 +24276,21 @@
                 "support": "Independent binding GO /root/xd01_runtime_review; no live executor",
                 "candidateFreezeEvidence": "eva2/evidence/product/p2-current-candidate-freeze-20261006.json",
                 "currentEvaluationUsage": {
-                  "scope": "One original Hermes CM06; development comparison, not household runtime",
-                  "providerAttempts": 6,
-                  "contactAttempts": 4,
-                  "helperAttempts": 2,
-                  "inputTokens": 13999,
-                  "outputTokens": 215,
-                  "totalTokens": 14214,
-                  "elapsedSeconds": 15.726007043005666,
-                  "timingBoundary": "Parent monotonic start immediately before native child launch through child exit; preparation and subsequent parent cleanup excluded.",
-                  "credits": null,
-                  "householdRuntimeUsage": false,
-                  "knownRegistryLowerBoundTokens": 1458977,
-                  "historicalUnknowns": 3
+                  "complete": false,
+                  "known_input_tokens_lower_bound": 357040,
+                  "known_output_tokens_lower_bound": 1792,
+                  "known_total_tokens_lower_bound": 358832,
+                  "reason": "Two Eva2 dispatched attempts have unknown usage; known partial totals remain lower bounds.",
+                  "sdk_attempts": 13,
+                  "tool_dispatches": 11,
+                  "total_tokens": null
                 },
                 "historicalBaseCommit": "d76c7fb09149156838aab392cdce5bd067241c77",
                 "sourceAdmissionReview": "eva2/reviews/p2-native-admission-contract-review-20261006.json",
                 "scopeInitializationReview": "eva2/reviews/p2-native-scope-initializer-review-20261006.json",
                 "finalDatasetCommitment": "eva2/benchmark/inspect_ai_v1/ev003_provider_history_dataset_commitment_20261006.json",
                 "nativeDriverReview": "eva2/reviews/p2-provider-history-native-driver-review-20261006.json",
-                "currentEvaluationEvidence": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
+                "currentEvaluationEvidence": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
                 "currentIngressDiagnosis": "eva2/evidence/product/p2-provider-history-ingress-diagnosis-20261006.json",
                 "currentIngressCorrection": "eva2/evidence/product/p2-native-ingress-diagnostics-20261006.json",
                 "currentIngressCorrectionReview": "eva2/reviews/p2-native-ingress-diagnostics-review-20261006.json",
@@ -24361,28 +24390,31 @@
                   "controlledProviderInferenceRequests": 0
                 },
                 "currentGoalTurn": {
-                  "stage": "xd05_closed_independently_reviewed",
-                  "startedAt": "2026-10-08T22:40:14.471707+00:00",
-                  "baseCommit": "03aeae8da23a340968d919761ab2f612451edb0a",
+                  "stage": "xd06_closed_published",
+                  "startedAt": "2026-10-09T00:27:58.005899+00:00",
+                  "baseCommit": "0148ff48836ca852d6d0b24682c67a771555fb31",
+                  "proposedCase": "EV003-XD-06",
                   "newTrialAdmitted": true,
-                  "providerCallsStarted": 13,
-                  "proposedCase": "EV003-XD-05",
-                  "fileCarrierRequired": true,
-                  "authorityCopied": true,
-                  "resourcePreparationInProgress": false,
-                  "resourcePreparationHandle": {
-                    "execSessionId": 61213,
-                    "pid": 3133622,
-                    "startedAt": "2026-10-08T23:18:55.379392+00:00",
-                    "closed": true,
-                    "exitCode": 0
-                  },
-                  "resourcePreparationFinished": true,
-                  "pendingExecutionHandle": false,
-                  "authorityRowsIncludingActiveAttempt": 40,
                   "originalInputAdmitted": true,
-                  "nativeOriginalTaskStarted": true,
-                  "futureExecutionAdmitted": false
+                  "nativeClockStarted": true,
+                  "providerCallsStarted": 0,
+                  "resourcesStarted": true,
+                  "authorityCopied": true,
+                  "scopeSelectionReviewed": true,
+                  "earlyContractAssumptionCaught": true,
+                  "originalInputDelivered": true,
+                  "actualProviderAttempts": 3,
+                  "knownCompletedSdk": 1,
+                  "usageComplete": false,
+                  "eva2PhysicallyClosed": true,
+                  "classification": "progress",
+                  "activeExecution": false,
+                  "openclawOriginalInputDelivered": true,
+                  "allResourcesPhysicallyClosed": true,
+                  "futureExecutionAdmitted": false,
+                  "productFunctionCompleted": false,
+                  "result": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+                  "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json"
                 },
                 "agentzeroReadiness": {
                   "stage": "verified",
@@ -25309,7 +25341,7 @@
                   "nativeTools": 16,
                   "elapsedSeconds": 180.95119165799406
                 },
-                "checkedAt": "2026-10-08T22:12:09.736703+00:00",
+                "checkedAt": "2026-10-09T01:30:05.473672+00:00",
                 "cm04Preparation": {
                   "entry": "openclaw:EV003-CM-04:epoch1",
                   "directory": "/home/administrator/project/.eva2-artifacts/ev003-openclaw-owned-route-cm04-preparation-20261007-v1",
@@ -25499,7 +25531,7 @@
                   "sourceObserverChanged": false
                 },
                 "activeExecution": false,
-                "updatedAt": "2026-10-08T23:52:15.363216+00:00",
+                "updatedAt": "2026-10-09T01:30:05.473672+00:00",
                 "nextComparisonDecision": "Resterende oorspronkelijke dekking behouden; eerst een beslisrelevant vergelijkingspaar op bestaande routes, plus echte blinde antwoordbeoordelingen.",
                 "previousNativePreparationAtCM06Eva1": {
                   "caseId": "EV003-CM-01",
@@ -25617,8 +25649,8 @@
                   "independentReviewSha256": "cd6ca846d6ff32a9540db3fd8a3a3fdb1864003d9e6a58b59293a419ad6a30e1",
                   "nativeContextActive": false
                 },
-                "remaining": "Deze vaste drie-deelnemersvergelijking is klaar. Volledige P2.1-dekking en twee echte onafhankelijke kwaliteitsbeoordelingen blijven open; geen volgende uitvoering door dit rapport toegelaten.",
-                "nextExistingStep": "Controleer gericht of de volledige werkvraag en toegestane taakbestemmingen bij de werker komen; transportadressen mogen die niet vervangen. Vóór een volgende vergelijking moet de bestaande OpenClaw-werkmodelbinding aan Astra/medium voldoen. Geen nieuwe proef of gesloten herhaling door deze publicatie.",
+                "remaining": "XD06 gesloten: Eva2 UNKNOWN na oorspronkelijke invoer/modelstreamstop; OpenClaw 1/3 en geen werkresultaat. P2.1 open: resterende oorspronkelijke dekking, CM07-toegang en twee echte menselijke beoordelingen. Geen geldige pairwinnaar.",
+                "nextExistingStep": "Los eerst gericht de ontbrekende provider-foutmetadata en werktoolcompatibiliteit uit met bestaande code en behouden verzoekmetadata; de oorzaak is nog niet bewezen. Geen volgende betaalde proef vóór die concrete afhankelijkheid is opgehelderd. Geen gesloten taak herhalen of brede matrix starten.",
                 "historicalAssignmentBeforeHermesCM05Publication": {
                   "finding": "Gematchte oorspronkelijke CM06: Eva1 voltooit native3/3, maar1/3 antwoorden bruikbaar en1/2vereiste readbacks; opdracht faalt. OpenClaw3/3antwoorden en2/2readbacks; opdracht slaagt. Geen algemene winnaar of nieuwe Eva-functie.",
                   "nextAction": "Beschikbaarheid van de volgende oorspronkelijke gedeelde-publieksproef vastleggen op de bestaande routes; geen nieuwe uitvoering zonder geldige binding. Ontbrekende menselijke beoordelingen blijven apart.",
@@ -25889,20 +25921,21 @@
                   "runtimeProviderCalls": 0,
                   "newProductFunction": false
                 },
-                "concreteNextAction": "De resterende oorspronkelijke vergelijkingsdekking blijft open. Kies alleen afzonderlijk concreet gebonden resterend werk vanuit het bestaande bewijs en mandaat. XD05 is gesloten; geen herhaling, nieuwe brede matrix of nieuwe producttaak door deze uitkomst.",
+                "concreteNextAction": "Los eerst gericht de ontbrekende provider-foutmetadata en werktoolcompatibiliteit uit met bestaande code en behouden verzoekmetadata; de oorzaak is nog niet bewezen. Geen volgende betaalde proef vóór die concrete afhankelijkheid is opgehelderd. Geen gesloten taak herhalen of brede matrix starten.",
                 "currentGoalTurnOutcome": {
-                  "case": "EV003-XD-05",
-                  "status": "closed_no_pair_ranking",
-                  "eva2": "UNKNOWN_PRE_INPUT_EVALUATOR_FAILURE",
-                  "openclawConditionsPassed": 3,
+                  "case": "EV003-XD-06",
+                  "classification": "progress",
+                  "status": "closed_eva2_unknown_openclaw_observed_no_pair_ranking",
+                  "eva2": "UNKNOWN_AFTER_ORIGINAL_INPUT",
+                  "openclawConditionsPassed": 1,
                   "openclawConditionsRequired": 3,
                   "sdkAttemptsObserved": 13,
-                  "tokensKnownLowerBound": 405529,
+                  "knownLowerBoundTokens": 358832,
                   "totalPairTokens": null,
                   "productFunctionCompleted": false,
                   "futureExecutionAdmitted": false,
-                  "source": "eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json",
-                  "review": "eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json"
+                  "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+                  "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json"
                 },
                 "retainedPreviousOwnerAction": {
                   "title": "Aanmeldingen voltooid · antwoordbeoordeling apart",
@@ -25926,7 +25959,11 @@
                   }
                 },
                 "ownerContinuationEvidence": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json",
-                "currentSourcePreparationReview": "eva2/reviews/p2-future-resource-offer-work-role-source-review-20261009.json",
+                "currentSourcePreparationReview": {
+                  "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/source-review.private.json",
+                  "sha256": "f11f51099c43821c4101c47c885a875cb517ca5608415a32ef053fc45344a37b",
+                  "decision": "GO_SOURCE_RESOURCE_PREPARATION_ONLY"
+                },
                 "currentProspectivePreparationIssue": {
                   "state": "closed_evaluator_failures_scoped_corrections_reviewed",
                   "description": "Getypeerde ownerbinding gerepareerd; daadwerkelijke oorspronkelijke Eva2-invoer is niet bereikt. Launcher-budgetbinding en identitymounts faalden vooraf. De identity-loader is nadien werkelijk modelvrij gecontroleerd; volledige factory/lifespan nog onbeproefd.",
@@ -25935,41 +25972,11 @@
                   "modelCalls": 0
                 },
                 "currentProspectiveInputAdmission": {
-                  "state": "closed_unknown_evaluator_failure_no_winner",
-                  "reviewSha256": "ff1b7aae38b35154e6fec93d35c9f6dfb688ee6d7d4ea33eb8aa4cdc18281b35",
-                  "scope": "original_successor_XD01_epoch1_Eva2_OpenClaw_pair",
-                  "executionOrder": [
-                    "Eva2",
-                    "OpenClaw"
-                  ],
-                  "criteriaChanged": false,
-                  "historicalUnknownPreserved": true,
-                  "originalPerParticipantMaxSdk": 72,
-                  "originalPerParticipantMaxTools": 70,
-                  "actualModelUsage": {
-                    "Eva2": {
-                      "sdkRequests": 0,
-                      "tools": 0
-                    },
-                    "OpenClaw": {
-                      "sdkRequests": 6,
-                      "inputTokens": 192031,
-                      "outputTokens": 388,
-                      "totalTokens": 192419,
-                      "settledTools": 2
-                    }
-                  },
-                  "eva2Quality": "UNKNOWN_evaluator_failure_before_native_input",
-                  "openclawQuality": "UNKNOWN_evaluator_tool_observer_coverage_failure",
-                  "continuationReviewSha256": "b22093cc5635fd0a1c12204317579d173d1b78228cde210bf19ecc50acda693b",
-                  "newSampleOrDeadline": false,
-                  "originalEva2InputSent": false,
-                  "originalOpenClawInputSent": true,
-                  "resultEvidence": "eva2/evidence/product/p2-xd01-prospective-pair-result-20261008.json",
-                  "absoluteDeadlineExpired": true,
-                  "secondContinuationStarted": false,
-                  "finalReview": "eva2/reviews/p2-xd01-prospective-pair-final-review-20261008.json",
-                  "finalReviewSha256": "55c040dec5d3b65756feaded09b3418f36432809fc7db4261fb25b48862b0e7e"
+                  "scope": "same-parent BOOT; original input only by approved programmed gate",
+                  "review": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/actual-boot-review.private.json",
+                  "reviewSha256": "7f9f7a67249dec1756b2ef8cfdee8338cf5c1c54a48835a38c99310f18f607b8",
+                  "finalAdmissionSha256": "4914675f9aa3f01e43cc19cfd1b54bf291447142d61c9ddb2e12198175d87cf8",
+                  "executeOnceSha256": "5c14c419e27b065d45aa0f28294a4dd05f68110f9b689e2219e2209bcda0e03d"
                 },
                 "historicalGoalTurnBeforeMatchingEva2Decision": {
                   "classification": "progress",
@@ -26130,10 +26137,10 @@
                   "originalInputOrCriteriaChanged": false,
                   "newProviderCalls": 0
                 },
-                "currentResultEvidence": "eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json",
-                "currentResultReview": "eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json",
+                "currentResultEvidence": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+                "currentResultReview": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json",
                 "historicalBaseCommitBeforeXD03": "4dc91638764da2220f11e0eb22669b64a7211d22",
-                "reviewSha256": "28177cb0f6ab7aab355043671f70c8f08d37d6be361c4f0e2263377b41058b56",
+                "reviewSha256": "2274aaae9337d4f1b3b466ea46c886d84b9ad17e7ce1f8c2264d31252cab5466",
                 "previousXD04OutcomeAssignment": {
                   "baseCommit": "6d0d0c305743b48b2b6e8c0383845fdab8300cfc",
                   "gap": "Eva2 voltooide geen bedoelde actie en bezocht geen oorspronkelijke dienst. OpenClaw las bronnen maar gebruikte Sol/none voor inhoudelijk werk; oorspronkelijke datumstrijd belemmert effectscoreduiding.",
@@ -26141,13 +26148,8 @@
                   "estimate": "Werkelijk42completeSDK/1.381.254tokens/32tools. Eva2 9/72.040; OpenClaw33/1.309.214. Ontwikkelcredits en geld onbekend."
                 },
                 "sourcePreparationIndex": {
-                  "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/source-review-index.private.json",
-                  "sha256": "8508df71924d05a8890c4f1ea68ea035a857675c5990d360f350e650cb8faaa7",
-                  "sourceReviewPending": false,
-                  "reviewSha256": "7c23c7cfe1c207c9df53407d3c45a5fc408d19871d2acfb6378b03156ae6b319",
-                  "sourceResourcePreparationGO": true,
-                  "newTrialAdmitted": false,
-                  "providerCallsStarted": 0
+                  "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/source-review-index.private.json",
+                  "sha256": "e0b146fcf0b30a4db3c71d7b34279c36b26f0b8c91d23063bb72e1695022a9c4"
                 },
                 "previousSourcePreparationIndex": {
                   "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/source-review-index.private.json",
@@ -26157,10 +26159,8 @@
                   "providerCallsStarted": 0
                 },
                 "finalPolicyReviewIndex": {
-                  "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/final-policy-review-index.private.json",
-                  "sha256": "ff288b114be4c45ae7674070cfa60319d09ebf0a1c648b92dce01a3d5d841fca",
-                  "reviewPending": false,
-                  "conditionalReviewSha256": "8650d20ef73eb556575b4852109314f1f12bfa3379b2bfc54655f55238444c7f"
+                  "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/final-policy-review-index.private.json",
+                  "sha256": "f00a90979c48841a485eb49afd3f657eb7bee1d4adb8cccc2f3a0bfc664759c6"
                 },
                 "inspectPreparationFailure": {
                   "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/inspect-frozen-source-failure.private.json",
@@ -26176,20 +26176,21 @@
                   "resourcesRetained": true
                 },
                 "currentExecutionHandle": {
-                  "execSessionId": 63874,
-                  "inspectPid": 3208993,
-                  "inspectStartTicks": "23371969",
-                  "parentPid": 3209169,
-                  "parentStartTicks": "23372289",
-                  "releasedAt": "2026-10-08T23:39:19.351565+00:00",
-                  "sameParent": true,
-                  "finalAdmissionSha256": "305ddf72cac7c0c93a020a1db629e027fce471522e2f0f7b7270081f28a39ceb",
-                  "monotonicStart": 233894.468766807,
-                  "monotonicDeadline": 234734.468766807,
-                  "originalWallSeconds": 840,
+                  "sessionId": 1920,
+                  "inspectPid": 3510320,
+                  "inspectStartTicks": "23862013",
+                  "startReceipt": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/root-eva2-parent-start.private.json",
+                  "startReceiptSha256": "97a63d5d00822f82de0c72b0875bb5474a2eae73ae792b07ff6ef7f609b42295",
+                  "originalInputAdmitted": true,
+                  "nativeClockStarted": true,
+                  "parentPid": 3510547,
+                  "parentStartTicks": "23862345",
+                  "exclusiveReleaseWritten": true,
+                  "exitCode": 0,
                   "closed": true,
-                  "processExitCode": 0,
-                  "runtimeOutcome": "technical_failure_before_original_input"
+                  "terminalReceipt": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/root-eva2-parent-terminal.private.json",
+                  "terminalReceiptSha256": "5ec6ad2761ffed35e2278714e0b5340eab8ae8d3b905e968ebd3b35737c71c77",
+                  "originalInputDelivered": true
                 },
                 "currentNativeFailure": {
                   "cause": "native-benchmark-source root0700 unreadable under actual UID1000",
@@ -26204,21 +26205,24 @@
                   "independentFinalReviewPending": true
                 },
                 "openclawCurrentExecutionHandle": {
-                  "execSessionId": 99014,
-                  "inspectPid": 3257727,
-                  "inspectStartTicks": "23452611",
-                  "parentPid": 3257835,
-                  "parentStartTicks": "23452912",
-                  "startedAt": "2026-10-08T23:49:50.840738+00:00",
-                  "sameParent": true,
+                  "sessionId": 65503,
+                  "inspectPid": 3555424,
+                  "inspectStartTicks": "23927895",
+                  "parentPid": 3555705,
+                  "parentStartTicks": "23928296",
+                  "startReceipt": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/root-openclaw-parent-start.private.json",
+                  "startReceiptSha256": "a475a6e0c3c8a5a456c98d5b382575be8ad707f559ec400e835f2b4bddfcd62b",
+                  "prelaunchCheckExitCode": 0,
+                  "originalInputAdmitted": true,
                   "nativeClockStarted": true,
-                  "inputAdmitted": true,
-                  "checkExitCode": 0,
+                  "exclusiveReleaseWritten": true,
+                  "admissionSha256": "88e6b07d3a633376e02216853358260910de53e6d8c88c45ccdaf5168d355f35",
+                  "releaseSha256": "68127384b8f759def7021a82f434bdb99b9e8ae29c3fed7cae695623ca7ad4db",
                   "closed": true,
-                  "nativeOriginalTaskStarted": true,
                   "exitCode": 0,
-                  "terminalChunkId": "fc1ed0",
-                  "toolTerminalReceiptSha256": "b6567f015d11c3deb7a540c2d7f6ce910f3bb793753adc28930842d9718b9774"
+                  "originalInputDelivered": true,
+                  "terminalReceipt": "/home/administrator/project/.eva2-artifacts/ev003-original-xd06-eva2-openclaw-20261009-v2/root-openclaw-parent-terminal.private.json",
+                  "terminalReceiptSha256": "d29b4ec23745d288604a8202eb59c696bb64a289d2387140b094fd805c4770be"
                 },
                 "openclawActualInputReviewIndex": {
                   "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd05-eva2-openclaw-20261009-v1/openclaw/actual-readiness-review-index.private.json",
@@ -26249,10 +26253,84 @@
                   "totalTokens": 405529,
                   "nativeParentSeconds": 197.458931,
                   "publicationReviewPending": false
+                },
+                "nextOriginalScopeBinding": {
+                  "case": "EV003-XD-06",
+                  "epoch": 1,
+                  "caseSha256": "ebd13eaa16fd8549acd424a7c08769cf599d91c690bf2851dec7ffb3daad4c01",
+                  "proposalSha256": "bf33da9130993fbd74374fc61c0658c9a21cf0edc83c1e78a0995d8f826e876c",
+                  "reviewSha256": "35515ad10da44398a0892ecf068374fba1304506b330d87e95aa627fb75a6736",
+                  "decision": "SOURCE_PREPARATION_ONLY",
+                  "participantOrder": [
+                    "eva2",
+                    "openclaw"
+                  ],
+                  "originalTurns": 1,
+                  "originalActors": 1,
+                  "services": 2,
+                  "files": 0,
+                  "fixedCriteria": 3,
+                  "readbacks": 2,
+                  "capsPerParticipant": {
+                    "sdk": 72,
+                    "tools": 70,
+                    "wallSeconds": 840
+                  },
+                  "pairCeilings": {
+                    "sdk": 144,
+                    "tools": 140
+                  },
+                  "estimatedCredits": null,
+                  "resourcesAdmitted": false,
+                  "inputAdmitted": false,
+                  "closed": true,
+                  "result": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+                  "futureExecutionAdmitted": false
+                },
+                "xd06EarlyPreparationFinding": {
+                  "phase": "pure_source_assembly_before_resources",
+                  "cause": "Reused fixture configuration expected one collection per service; original XD06 contract defines three and one.",
+                  "correction": "Generic declarative collection loop from original CRUD descriptions.",
+                  "failurePreserved": true,
+                  "sourceQuestionOrCriteriaChanged": false,
+                  "authorityCopied": false,
+                  "originalInputAdmitted": false,
+                  "sdkAttempts": 0,
+                  "productChange": false,
+                  "checkedAt": "2026-10-09T00:39:14.873961+00:00"
+                },
+                "xd06Eva2ObservedStop": {
+                  "originalTaskDelivered": true,
+                  "confirmedWorkResult": false,
+                  "providerAttempts": 3,
+                  "completedAttempts": 1,
+                  "abortedUnknownUsageAttempts": 2,
+                  "knownPartialInputTokens": 2910,
+                  "knownPartialOutputTokens": 241,
+                  "totalTokens": null,
+                  "underlyingProviderReasonConfirmed": false,
+                  "observedTransition": "Responses stream accounting/parser CodexProviderError protocol; SampleStopped on incomplete usage",
+                  "delegateAcknowledged": true,
+                  "delegateLocallySettled": false,
+                  "parentExitCode": 0
+                },
+                "historicalUsageBeforeXD06Closure": {
+                  "scope": "One original current Eva2 CM05 development comparison, not household runtime",
+                  "providerAttempts": 13,
+                  "contactAttempts": 4,
+                  "helperAttempts": 9,
+                  "inputTokens": 43887,
+                  "outputTokens": 1728,
+                  "totalTokens": 45615,
+                  "toolDispatches": 3,
+                  "elapsedSeconds": 187.17963806798798,
+                  "timingBoundary": "Single monotonic clock before native boot through before-stop, with parent-to-stop recorded separately; preparation excluded. Comparator timing boundaries are retained unchanged and not equated.",
+                  "credits": null,
+                  "householdRuntimeUsage": false
                 }
               },
-              "remaining": "P2.1 open: gericht uitvoeringstekort onderzoeken; XD04 gesloten met OpenClaw-modelrolafwijking en oorspronkelijke bronambiguïteit. Overige oorspronkelijke dekking, CM07-toegang en twee menselijke beoordelingen blijven open.",
-              "latestEvidence": "eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json",
+              "remaining": "XD06 gesloten: Eva2 UNKNOWN na oorspronkelijke invoer/modelstreamstop; OpenClaw 1/3 en geen werkresultaat. P2.1 open: resterende oorspronkelijke dekking, CM07-toegang en twee echte menselijke beoordelingen. Geen geldige pairwinnaar.",
+              "latestEvidence": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
               "executionBlocker": null,
               "assessmentBlocker": "Twee echte onafhankelijke CM02/gespreksbeoordelingen en gezinsacceptatie blijven open.",
               "nativeAccessBlocker": {
@@ -26290,14 +26368,16 @@
               "independentStoredAssessment": "eva2/evidence/product/p2-cm02-independent-review-20261005.json",
               "bindingReview": "eva2/evidence/product/p2-cm-binding-review-20261005.json",
               "latestExecutionIssue": {
-                "case": "EV003-CM-12",
-                "state": "native_complete_both_original_task_outcomes_failed",
-                "eva1Objective": false,
-                "eva2Objective": false,
-                "nativeCompleteBoth": true,
-                "usageCompleteBoth": true,
-                "finding": "CM12 onafhankelijk beoordeeld: beide onvoldoende. Eva1 haalt 1/3 inhoudelijke voorwaarden en 1/2 geheugencontroles; Eva2 2/3 en 2/2. Bij Eva2 is relevante informatie opgeslagen maar niet geselecteerd voor het latere antwoord. Die ontbrekende context is aangetoond; de precieze selectieoorzaak of een reparatie niet.",
-                "evidence": "eva2/evidence/product/p2-cm12-paired-result-20261005.json",
+                "case": "EV003-XD-06",
+                "state": "closed_eva2_unknown_openclaw_not_completed",
+                "eva2OriginalInputDelivered": true,
+                "eva2ConfirmedWorkCompletion": false,
+                "eva2TotalUsage": null,
+                "openclawConditionsPassed": 1,
+                "openclawConditionsRequired": 3,
+                "openclawFixtureEffects": 0,
+                "validPairRanking": false,
+                "evidence": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
                 "originalCaseRepeated": false,
                 "productChange": false
               },
@@ -26346,38 +26426,27 @@
               },
               "latestPreparationEvidence": "eva2/evidence/product/p2-eva2-complete-reader-proof-20261008.json",
               "ownerAuthorizationEvidence": "eva2/evidence/product/p2-eva2-xd02-owner-authorization-20261008.json",
-              "currentEvaluationEvidence": "eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json",
+              "currentEvaluationEvidence": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
               "nativeAdmissionBlocker": null,
               "candidateFreeze": "eva2/benchmark/inspect_ai_v1/ev003_candidate_binding_provider_history_20261006.json",
               "candidateFreezeSha256": "10d8621b2000cd0380254f6e1274620bebaafe0aa420f577fee6731987322d7e",
               "publicationReview": "eva2/reviews/p2-original-xd03-eva2-openclaw-final-review-20261008.json",
               "publicationReviewSha256": "c529d2bc0524bc4b78fe00562806126dd85cd647eace18caccf77de5b9f0dc07",
               "blockerDetails": {
-                "codex": "Eigen proefconfiguratie en bron/input-review misten de bestaande session_key/context_id-interface. Modelvrije toekomstige correctie is beoordeeld; gesloten OpenClaw-episode blijft UNKNOWN. Geen externe eigenaarblokkade.",
-                "product": "Eva2’s1/3voorwaarden en ontbrekende bedoelde acties blijven een geldig uitvoeringstekort.",
-                "owner": "Geen nieuwe technische eigenaarhandeling nodig; oorspronkelijke menselijke gesprekbeoordelingen en gezinsacceptatie blijven afzonderlijk open.",
-                "source": "eva2/evidence/product/p2-original-xd03-eva2-openclaw-result-20261008.json"
+                "codex": "Een expliciet fout/onvolledigheidsbericht stopte de Responses-stream. Foutcode/type is niet behouden; twee SDK-usagerecords ontbreken. Eerst gerichte diagnose vóór een volgende betaalde proef.",
+                "product": "Geen bevestigd Eva2-werkresultaat; OpenClaw 1/3 vaste voorwaarden en geen effect. Geen geldige pairwinnaar.",
+                "owner": "Geen nieuwe technische eigenaarhandeling; oorspronkelijke menselijke beoordelingen en gezinsacceptatie apart open.",
+                "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json"
               },
               "activeExecution": false,
               "currentReadbackAssessmentEvidence": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json",
               "humanReviewPreparationEvidence": "eva2/evidence/product/p2-cm02-human-review-preparation-20261006.json",
               "humanReviewPreparationReview": "eva2/reviews/p2-cm02-human-review-preparation-review-20261006.json",
               "currentBoundPreparation": {
-                "runHandle": "ev003-successor-native-cm04-20261006-e87d5a92",
-                "sessionId": 54196,
-                "caseId": "EV003-CM-04",
-                "epoch": 1,
-                "state": "closed_execution_unknown",
-                "source": "original successor dataset and immutable admitted native resources",
-                "admissionPath": "eva2/evidence/product/p2-original-next-cm04-admission-20261006.json",
-                "admissionSha256": "ac8428b1823f55f8d0f0eacfebdef9306ce26047131283e000d083a669e7b26d",
-                "releaseSha256": "051979ae263997ae33befc711f76ccea63e96666a5dcd62333b0f9fb44ebeff5",
-                "resultPath": "eva2/evidence/product/p2-original-next-cm04-result-20261006.json",
-                "resultSha256": "05ce75636961143997b1bdc5566c9af7bf39c623b211bc5bcd7f8b97de2e82b8",
-                "finalReviewPath": "eva2/reviews/p2-cm04-final-technical-review-20261006.json",
-                "finalReviewSha256": "8fa1af2e3c296f051732329afcac2d23937c0c092453609e7b79d75b240c3841",
-                "authoritativeAggregatePath": "/home/administrator/project/.eva2-artifacts/ev003-successor-native-cm03-20261006-17ce05e0/aggregate.db",
-                "authoritativeAggregateSha256": "df393c77dc4ed0a92da335ed8d29189132460f59db6f6fd470f31b8a805c6aef"
+                "state": "closed",
+                "case": "EV003-XD-06",
+                "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+                "futureExecutionAdmitted": false
               },
               "currentPreparationFinding": {
                 "caseId": "EV003-CM-04",
@@ -26421,14 +26490,14 @@
               "publicPreparationEvidence": "eva2/evidence/product/p2-openclaw-calendar-correction-20261007.json",
               "nativeToolRuntimeReview": "eva2/reviews/p2-openclaw-native-tool-observer-runtime-review-20261007.json",
               "nativeToolCheckpointPublicationReview": "eva2/reviews/p2-openclaw-calendar-checkpoint-publication-review-20261007.json",
-              "updatedAt": "2026-10-09T00:19:59.189413+00:00",
-              "review": "eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json",
-              "reviewSha256": "28177cb0f6ab7aab355043671f70c8f08d37d6be361c4f0e2263377b41058b56",
+              "updatedAt": "2026-10-09T01:30:05.473672+00:00",
+              "review": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json",
+              "reviewSha256": "2274aaae9337d4f1b3b466ea46c886d84b9ad17e7ce1f8c2264d31252cab5466",
               "previousEvaluationEvidence": "eva2/evidence/product/p2-hermes-original-cm05-result-20261007.json",
               "historicalPublicationReviewBeforeMatchedEva1CM06": "eva2/reviews/p2-openclaw-cm06-publication-review-20261007.json",
               "historicalPublicationReviewBeforeMatchedHermesCM05": "eva2/reviews/p2-eva1-successor-cm06-publication-review-20261007.json",
               "historicalPublicationReviewBeforeMatchedHermesCM06": "eva2/reviews/p2-hermes-cm05-publication-review-20261007.json",
-              "latestReview": "eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json",
+              "latestReview": "eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json",
               "followupDecisionEvidence": "eva2/evidence/product/p2-eva2-xd02-followup-decision-20261008.json",
               "followupDecisionReview": "eva2/reviews/p2-eva2-xd02-followup-decision-review-20261008.json",
               "followupDecisionReviewSha256": "2ef29d9a78fc8c8b0ae315774b1e497c40a83330d3180d24b58b4142e6431bbb",
@@ -26549,7 +26618,7 @@
                   "classification": "valid_bounded_original_person_memory_advantage"
                 }
               ],
-              "currentOriginalCoverage": "eva2/evidence/product/p2-authority-coverage-xd05-20261009.json",
+              "currentOriginalCoverage": "eva2/evidence/product/p2-authority-coverage-xd06-20261009.json",
               "nextOriginalComparisonPreparation": {
                 "status": "closed",
                 "stage": "closed_role_qualified_publication",
@@ -26671,11 +26740,11 @@
                 "closedTrialsReplayed": false
               },
               "latestWorkLimitations": [
-                "Eva2 ontving de oorspronkelijke XD05-invoer niet door onze proefmaprechten; UNKNOWN blijft behouden.",
-                "OpenClaw rondde één oorspronkelijke opdracht af met Astra/medium; geen geldige pairwinnaar of algemene voorsprong.",
-                "Totale pair-/historische tokens blijven onbekend; alleen de bekende ondergrens is gerapporteerd.",
-                "Resterende oorspronkelijke dekking, echte menselijke CM02/gespreksbeoordelingen en gezinsacceptatie blijven open.",
-                "Geen nieuwe uitvoertoelating of productfunctie; spraak blijft geparkeerd."
+                "Eva2 kreeg de taak; expliciete fout/onvolledige providerstream stopte het werk. Foutcode en twee usage-metingen ontbreken.",
+                "OpenClaw 1/3; 35 geauthenticeerde GET-verzoeken met 404 en nul effecten. Verkeerde paden bewijzen geen fixtureonbeschikbaarheid.",
+                "Requestopties verschillen; dit bewijst geen oorzaak. Geen pairwinnaar, efficiëntie- of superioriteitsclaim.",
+                "Pair-/historisch totaalverbruik onbekend; bekende ondergrens behouden.",
+                "Resterende oorspronkelijke dekking, CM07-toegang, twee menselijke beoordelingen en gezinsacceptatie open. Spraak geparkeerd."
               ],
               "historicalVisibleFieldsBeforeCM06ClosureAlignment": {
                 "latestEvidence": "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
@@ -26771,6 +26840,47 @@
                 "review": "eva2/reviews/p2-original-xd04-eva2-openclaw-final-review-20261008.json",
                 "reviewSha256": "8dff986d1e51c159b2b29aebe4e8de6518541c31cc16e98c7ce85b59b2524462",
                 "currentEvaluationEvidence": "eva2/evidence/product/p2-original-xd04-eva2-openclaw-result-20261008.json"
+              },
+              "historicalVisibleFieldsBeforeXD06Closure": {
+                "nextAction": "De resterende oorspronkelijke vergelijkingsdekking blijft open. Kies alleen afzonderlijk concreet gebonden resterend werk vanuit het bestaande bewijs en mandaat. XD05 is gesloten; geen herhaling, nieuwe brede matrix of nieuwe producttaak door deze uitkomst.",
+                "remaining": "P2.1 open: XD05 gesloten met OpenClaw 3/3 en Eva2 UNKNOWN vóór invoer. XD06 is de volgende ongebruikte oorspronkelijke taak. Overige oorspronkelijke dekking, CM07-toegang en twee menselijke beoordelingen blijven zichtbaar.",
+                "currentOriginalCoverage": "eva2/evidence/product/p2-authority-coverage-xd05-20261009.json",
+                "currentEvaluationEvidence": "eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json",
+                "latestExecutionIssue": {
+                  "case": "EV003-CM-12",
+                  "state": "native_complete_both_original_task_outcomes_failed",
+                  "eva1Objective": false,
+                  "eva2Objective": false,
+                  "nativeCompleteBoth": true,
+                  "usageCompleteBoth": true,
+                  "finding": "CM12 onafhankelijk beoordeeld: beide onvoldoende. Eva1 haalt 1/3 inhoudelijke voorwaarden en 1/2 geheugencontroles; Eva2 2/3 en 2/2. Bij Eva2 is relevante informatie opgeslagen maar niet geselecteerd voor het latere antwoord. Die ontbrekende context is aangetoond; de precieze selectieoorzaak of een reparatie niet.",
+                  "evidence": "eva2/evidence/product/p2-cm12-paired-result-20261005.json",
+                  "originalCaseRepeated": false,
+                  "productChange": false
+                },
+                "blockerDetails": {
+                  "codex": "Eigen proefconfiguratie en bron/input-review misten de bestaande session_key/context_id-interface. Modelvrije toekomstige correctie is beoordeeld; gesloten OpenClaw-episode blijft UNKNOWN. Geen externe eigenaarblokkade.",
+                  "product": "Eva2’s1/3voorwaarden en ontbrekende bedoelde acties blijven een geldig uitvoeringstekort.",
+                  "owner": "Geen nieuwe technische eigenaarhandeling nodig; oorspronkelijke menselijke gesprekbeoordelingen en gezinsacceptatie blijven afzonderlijk open.",
+                  "source": "eva2/evidence/product/p2-original-xd03-eva2-openclaw-result-20261008.json"
+                },
+                "latestWorkLimitations": [
+                  "Eva2 ontving de oorspronkelijke XD05-invoer niet door onze proefmaprechten; UNKNOWN blijft behouden.",
+                  "OpenClaw rondde één oorspronkelijke opdracht af met Astra/medium; geen geldige pairwinnaar of algemene voorsprong.",
+                  "Totale pair-/historische tokens blijven onbekend; alleen de bekende ondergrens is gerapporteerd.",
+                  "Resterende oorspronkelijke dekking, echte menselijke CM02/gespreksbeoordelingen en gezinsacceptatie blijven open.",
+                  "Geen nieuwe uitvoertoelating of productfunctie; spraak blijft geparkeerd."
+                ]
+              },
+              "remainingComparisonTechnicalDependency": {
+                "state": "diagnosis_required_before_new_paid_trial",
+                "failureBranch": "Explicit provider error/incomplete-class SSE at fixed parser line163",
+                "actualEventKind": null,
+                "actualErrorCode": null,
+                "safeRequestOptionDifference": "Failed Eva2 work used namespaces/tool_search; first completed OpenClaw request had no tools. Not a proven cause.",
+                "source": "eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json",
+                "newTaskId": false,
+                "closedTrialReplay": false
               }
             },
             {
@@ -27351,7 +27461,7 @@
           "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       },
-      "lastUpdated": "2026-10-09T00:19:59.189413+00:00",
+      "lastUpdated": "2026-10-09T00:27:58.005899+00:00",
       "updatedAt": "2026-10-08T18:29:23.807790+00:00",
       "checkedAt": "2026-10-08T18:00:59.037358+00:00"
     },

@@ -1,33 +1,35 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 9 oktober — XD05 gesloten; OpenClaw voert uit, Eva2 onbekend
+## Actueel 9 oktober — XD06 gesloten; beide werkopdrachten niet af
 
-De oorspronkelijke XD05-opdracht is afgesloten. OpenClaw voldoet aan alle drie
-vaste voorwaarden en drie onafhankelijke terugleescontroles: twee bedoelde
-registraties, geen dubbele actie, beide oorspronkelijke bestanden ongewijzigd.
-13 echte Astra/medium-aanvragen, 12 tools, 405.529 tokens; 197,459 seconden vanaf
-de oorspronkelijke parentklok. Dit bewijst één geslaagde opdracht, geen algemene voorsprong.
+De oorspronkelijke XD06-opdracht bereikte beide systemen. Eva2 leverde geen
+bevestigd werkresultaat: een expliciet fout/onvolledigheidsbericht stopte de
+Responses-stream. De precieze foutcode is niet behouden. Drie SDK-pogingen,
+één compleet en twee afgebroken; bekende gedeeltelijke usage 3.151 tokens,
+totaal onbekend. UNKNOWN blijft; geen productverlies of pairwinnaar afleiden.
 
-Eva2 ontving geen taakinput: onze proefworker kon zijn bronmap met modus0700
-niet lezen als UID1000. Nul modelaanvragen/tools; totale verbruiksregistratie
-onvolledig en dus onbekend. Deze UNKNOWN is geen productverlies. Bron-/invoerreview
-misten de maprechten. De rechten zijn uitsluitend voor toekomstig proefgebruik
-gecorrigeerd; de gesloten poging is niet herhaald. Productie-Eva blijft ongewijzigd.
+OpenClaw: 1/3 vaste voorwaarden, terugleescontroles [false,true], nul effecten.
+35 geauthenticeerde GET-verzoeken gaven 404; daarna werd extra toegang gevraagd.
+Verkeerde paden bewijzen geen fixtureonbeschikbaarheid. Tien echte Astra/medium-
+aanvragen, 10 tools, 355.681 tokens en 134,628 seconden vanaf de vaste parentklok.
+Geen afgeronde werkopdracht, efficiëntievoordeel of algemene voorsprong.
 
-Geen geldige pairwinnaar of efficiëntieclaim. Native closed=false, parent-ACK,
-verbruiksafsluiting en fysieke sluiting blijven afzonderlijk vastgelegd. Alle eigen
-resources zijn gesloten; alle 39 eerdere registraties exact behouden. Nu40registraties,
-286 SDK-pogingen en bekende ondergrens4.594.707tokens; historisch onbekend verbruik
-blijft onbekend. Registraties zijn geen afgeronde vergelijkingstaken of functies.
+Beide proefomgevingen fysiek gesloten. Worker-ACK, lokale afwikkeling en
+native_closed staan afzonderlijk in het bewijs. Alle 41 eerdere registraties
+exact behouden; nu 42 registraties/299 SDK en bekende ondergrens 4.953.539 tokens.
+Vijf pogingen in drie rijen missen usage; totaal en creditkosten onbekend.
+Oorspronkelijke taak, criteria en acceptaties blijven staan; geen herhaling.
 
-P2.1 blijft open; de beperkte XD05-uitkomst is onafhankelijk gecontroleerd.
-39/48 kleine taken en L3.4-L3.7 blijven behouden. Geen nieuwe taak, gesloten proef
-herhalen of brede matrix starten. Spraak blijft geparkeerd. Eva gebruikt WSL-Docker;
-ongebruikte Docker Desktop blijft ongemoeid.
+P2.1 blijft open. Eerst gerichte foutmetadata en werktoolcompatibiliteit uitzoeken
+vóór verdere betaalde proeven. Behouden verzoekopties verschillen; dat bewijst de
+oorzaak niet. Geen volgende testcase gekozen of brede matrix. 39/48 kleine taken
+en L3.4-L3.7 blijven behouden; deze proef is geen nieuwe productfunctie.
+Spraak geparkeerd. Eva gebruikt WSL-Docker; ongebruikte Docker Desktop blijft
+ongemoeid. Productiecode en bestaande installatie zijn niet gewijzigd.
 
-Bewijs: eva2/evidence/product/p2-original-xd05-eva2-openclaw-result-20261009.json.
-Dekking: eva2/evidence/product/p2-authority-coverage-xd05-20261009.json.
-Review: eva2/reviews/p2-original-xd05-eva2-openclaw-final-review-20261009.json.
+Bewijs: eva2/evidence/product/p2-original-xd06-eva2-openclaw-result-20261009.json.
+Dekking: eva2/evidence/product/p2-authority-coverage-xd06-20261009.json.
+Review: eva2/reviews/p2-original-xd06-eva2-openclaw-final-review-20261009.json.
 
 ## Actueel 8 oktober — adresduiding in zelfstandige uitvoering geïnstalleerd
 
