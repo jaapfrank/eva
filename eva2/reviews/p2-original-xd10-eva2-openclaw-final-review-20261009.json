@@ -1,0 +1,134 @@
+{
+  "E_terminal_sequence_review_reused": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/openclaw-sequence-review.private.json",
+    "sha256": "f262ebabf1fab1ac69bf4e76a54a968abe56f5a536a2973b6ff7c906470d1e15"
+  },
+  "O_actual_input_review_reused": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/openclaw/actual-input-review.private.json",
+    "sha256": "8d04f6043eeb359f74361ae85532eb85a1d5ce58ab5c2e4ffab74e4a8ebcad54"
+  },
+  "allowed_next_transition": {
+    "publish_only_exact_qualified_result_coverage_and_this_safe_review": true,
+    "retain_all_original_unqualified_reports_scores_source_and_closed_records": true,
+    "root_updates_existing_board_docs_Git_without_new_task_status_or_criteria_completion": true
+  },
+  "approved_coverage": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/p2-authority-coverage-xd10-qualified-20261009.json",
+    "sha256": "91ebd35a13c9a19e759fa115b2a43ab54a2f72348fc657fd343ffe856972ed73"
+  },
+  "approved_result": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/pair-result-qualified.public.json",
+    "sha256": "d447670dc633b1bc00bdeb76fa2915d7a30e3c64a800d76cbf7a940dede63f59"
+  },
+  "canonical_filenames": {
+    "coverage": "p2-authority-coverage-xd10-20261009.json",
+    "result": "p2-original-xd10-eva2-openclaw-result-20261009.json"
+  },
+  "closed_observations": {
+    "P21_completion_claim": false,
+    "effects_each": 2,
+    "eva2_seconds": 153.61212268500822,
+    "human_whole_quality": null,
+    "new_product_function_claim": false,
+    "openclaw_seconds": 86.1231443019933,
+    "quality_speed_cost_efficiency_superiority_claim": false,
+    "timing_boundaries_differ_no_common_confirmed_result_latency": true,
+    "winner": null
+  },
+  "contract": "IndependentOriginalXD10QualifiedFinalPublicationReview/v1",
+  "decision": "GO_PUBLICATION_QUALIFIED_ORIGINAL_PAIR",
+  "development_credit_cost": null,
+  "findings": [],
+  "independently_verified": {
+    "E13_completed_SDK_usage141270_and10_tools_reused": true,
+    "O6_tools_settled": true,
+    "O8_actual_physical_request_body_hashes_original_text_private_actor_session_and_Astra_medium_exact": true,
+    "O_all8_SDK_usage_completed_independently_summed": true,
+    "O_native_scope_and_relay_closed_no_pending_work": true,
+    "O_original_retained_predicate_AST_recomputed_readonly": true,
+    "O_parent_ACK_true_equivalent_settled_true_native_closed_false_distinct": true,
+    "O_same_original_initial_state_as_E": true,
+    "O_usage": {
+      "input_tokens": 257416,
+      "output_tokens": 886,
+      "total_tokens": 258302
+    },
+    "actual50_registry_rows_and_all49_prior_raw_revisions_metadata_exact": true,
+    "both_physical_resource_network_parent_listener_closure_bound": true,
+    "conservative_group_counts_equal_actual_registry_no_completion_inference": true,
+    "cumulative_known_tokens_lower_bound": 6648694,
+    "cumulative_sdk_attempts_independently_counted": 373,
+    "cumulative_total_tokens_remains_null": true,
+    "historical_missing_usage_attempts": 5,
+    "historical_unknown_rows": 3,
+    "old_UNKNOWN_full_reservations_and_prior48_retained": true,
+    "old_export_local_name_error_and_root_precheck_issue_retained": true,
+    "pair_usage_exact": {
+      "complete": true,
+      "input_tokens": 396789,
+      "output_tokens": 2783,
+      "sdk_attempts": 21,
+      "tool_dispatches": 16,
+      "total_tokens": 399572
+    },
+    "previous576_retention_hashes_verified_reused": true,
+    "public_safe_scope_no_original_question_answer_origin_auth_record_values_or_dates": true,
+    "qualified7_added_refs_hashes_verified": true,
+    "retention_refs": 583
+  },
+  "not_admitted": {
+    "new_case_selection_resource_or_input": true,
+    "new_provider_native_calls": true,
+    "original_trial_replay_or_rearm": true,
+    "score_or_criterion_mutation": true
+  },
+  "only_this_review_written": true,
+  "original_date_anchor_qualification": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/original-date-anchor-qualification.private.json",
+    "sha256": "cc296757c6f4a7e199bab85e21ca249072fd46b03d485474c7aa2e9bf80747e7"
+  },
+  "original_request_scorer_conflict": {
+    "both_actual_outputs_match_explicit_original_request_on_both_services": true,
+    "both_original_expected_dates_match_original_scorer_and_initial_records": true,
+    "earlier_sequence_review_missed_request_versus_scorer_conflict": true,
+    "independently_checked_original_sample_input_projection_scoring_and_both_retained_state_readbacks": true,
+    "no_new_criterion_or_rescore": true,
+    "observed_local_hours_resource_duration_and_DSToffset_preserved": true,
+    "original_objective_comparison_valid": false,
+    "original_scoring_semantic_conditions0_has_different_explicit_month_day": true,
+    "qualified_user_completion_and_failure_indeterminate": true,
+    "raw_fixed_predicates_both": [
+      false,
+      true,
+      true
+    ],
+    "raw_original_scores_not_changed": true,
+    "raw_readbacks_both": [
+      false,
+      true
+    ],
+    "sample_input_has_explicit_month_day": true
+  },
+  "preserved_prequalification_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/final-review-index.private.json",
+    "sha256": "e684d1e081f5d3fb5a16652dc33f63f36ac647b138cb26c48b2045579b0dbbbd"
+  },
+  "qualified_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/final-review-index-qualified.private.json",
+    "sha256": "6dcb2def41c4bf25bc0ff392567266c83918cc317470fd17475e63a038a5a939"
+  },
+  "resolved_findings": [
+    {
+      "cause": "Original explicit request date conflicts with original scorer date. Unqualified date-failure and user-task noncompletion claims were unsupported.",
+      "field": "comparison.original_objective_comparison_valid and participants.*.objective_conditions_met",
+      "resolution": "Additive qualified exports preserve all raw predicates and earlier bytes, set user-task completion/ranking indeterminate and expose the original contract conflict."
+    }
+  ],
+  "reviewed_at": "2026-10-09T08:18:41.941331+00:00",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "reviewer_provider_native_resource_calls": 0,
+  "source_review_reused": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/source-review.private.json",
+    "sha256": "6746d5ec0a5a32b79f56180053de799f1e80af1d7c0d8231a1973ebda0e82602"
+  }
+}

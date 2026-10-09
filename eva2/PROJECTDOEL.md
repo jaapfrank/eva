@@ -1,6 +1,40 @@
 # Eva — digitale huisgenoot die leert en handelt
 
-## Actueel 9 oktober — XD09: beide deelnemers halen dezelfde taak
+## Actueel 9 oktober — XD10 gesloten; datumconflict in de proef
+
+Eva2 en OpenClaw hebben op beide diensten de expliciet gevraagde kalenderdag
+opgeslagen. De oorspronkelijke vraag en de oorspronkelijke scorer noemen echter
+verschillende dagen. De ruwe scores blijven letterlijk 2/3 voorwaarden en 1/2
+terugleescontroles; zij bewijzen daardoor geen gebruikersfout, volledig taaksucces
+of winnaar. De eerdere ongekwalificeerde taakverliesclaim is ingetrokken.
+De oorspronkelijke criteria, bronvragen, registraties en oude rapportbytes blijven
+bewaard; er is geen herhaling of scoreherdefinitie uitgevoerd.
+
+Gemeten: Eva2 13 volledige SDK-aanvragen, 141.270 tokens en 10 tools; OpenClaw
+8 volledige Astra/medium-aanvragen, 258.302 tokens en 6 tools. Samen 21 aanvragen,
+399.572 tokens en 16 tools. De tijden circa 154 en 86 seconden hebben verschillende
+parentgrenzen; geen bewezen snelheids- of algemeen efficiëntievoordeel.
+Beide omgevingen zijn fysiek gesloten. OpenClaw native_closed=false blijft apart
+van ACK, equivalente settlement en fysieke afsluiting geregistreerd.
+
+Alle 50 registraties en eerdere UNKNOWN blijven behouden: 373 SDK-aanvragen,
+bekende tokenondergrens 6.648.694, vijf historische aanvragen zonder usage in drie
+rijen. Volledig totaal en creditkosten blijven onbekend. Twee fouten vóór modelgebruik
+of tijdens rapportexport en de gemiste datumtegenstrijdigheid zijn eerlijk vastgelegd.
+
+P2.1 blijft open. 39/48 kleine afrondingen en L3.4–L3.7 blijven behouden; deze
+vergelijking levert geen nieuwe productfunctie of gezinsacceptatie. Spraak blijft
+geparkeerd. Ongebruikte Docker Desktop blijft ongemoeid; Eva gebruikt WSL-Docker.
+Hervat bij concreet resterend P2.1 binnen oorspronkelijke criteria, modelrollen,
+toegang en mandaat. Controleer de aansluiting tussen vraag en beoordeling vóór
+volgende modelinvoer. Geen gesloten herhaling, brede matrix of nieuwe taak-ID.
+Deze publicatie geeft geen nieuwe invoertoelating.
+
+Resultaat: eva2/evidence/product/p2-original-xd10-eva2-openclaw-result-20261009.json.
+Dekking: eva2/evidence/product/p2-authority-coverage-xd10-20261009.json.
+Review: eva2/reviews/p2-original-xd10-eva2-openclaw-final-review-20261009.json.
+
+## Historisch 9 oktober — XD09: beide deelnemers halen dezelfde taak
 
 Eva2 en OpenClaw halen de drie oorspronkelijke eindvoorwaarden en twee
 onafhankelijke terugleescontroles. Ieder voerde drie bevestigde wijzigingen uit.

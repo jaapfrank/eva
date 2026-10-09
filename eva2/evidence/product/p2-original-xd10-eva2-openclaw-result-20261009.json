@@ -1,0 +1,345 @@
+{
+  "ai_judge_used": false,
+  "case_id": "EV003-XD-10",
+  "case_sha256": "1dcd06d8f71c72b0958be0508c83a84972f35519819eea75ab5cdc2f705d87f2",
+  "closure": {
+    "both_networks_and_parents_absent": true,
+    "eva2_containers_absent": 9,
+    "eva2_network_and_parent_pids_absent": true,
+    "eva2_three_worker_acks_and_local_settlement": true,
+    "openclaw_fixture_listeners_exited": 2,
+    "openclaw_native_closed_separate_from_ack_and_physical_close": true,
+    "openclaw_native_container_absent": 1
+  },
+  "comparison": {
+    "comparable_input_to_confirmed_result_seconds": null,
+    "efficiency_advantage_claimed": false,
+    "general_superiority_claimed": false,
+    "original_objective_comparison_valid": false,
+    "original_objective_difference": null,
+    "reason": "The original request and original scoring contract specify different calendar days. Both participants followed the explicit requested day and retain the same raw scorer predicates [false,true,true] and readbacks [false,true]. Those unchanged raw scores cannot establish user-task failure, a scoped quality winner or a valid matched objective comparison under the contradictory original condition.",
+    "role_mismatch_observed_openclaw": false,
+    "timing_scopes_are_different_parent_boundaries": true,
+    "usage_and_timing_observed_separately": true,
+    "valid_pair_ranking": false,
+    "winner": null
+  },
+  "contract": "P2OriginalXD10SequentialPairResult/v1",
+  "cumulative_usage": {
+    "known_input_tokens_lower_bound": 6603302,
+    "known_output_tokens_lower_bound": 45392,
+    "known_total_tokens_lower_bound": 6648694,
+    "missing_usage_attempts": 5,
+    "recorded_sdk_attempts": 373,
+    "total_tokens": null,
+    "usage_complete": false,
+    "usage_unknown_rows": 3
+  },
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "development_credit_cost": null,
+  "epoch": 1,
+  "evidence": {
+    "assessment_export_name_correction": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/assessment-export-name-correction.private.json",
+      "sha256": "c68b4bf0a5e7a484bd6722a6c1915564f84ab946a7aa16290cdd4c067e55535e"
+    },
+    "coverage": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/p2-authority-coverage-xd10-qualified-20261009.json",
+      "sha256": "91ebd35a13c9a19e759fa115b2a43ab54a2f72348fc657fd343ffe856972ed73"
+    },
+    "eva2_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/eva2/original-assessment.private.json",
+      "sha256": "a1475905d5bd34ea5392718d560fbb5df8f236cdd6522ef373934491e024ed10"
+    },
+    "eva2_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/eva2/physical-closure.private.json",
+      "sha256": "2ec89abcd7c2c7a98878366b38d64753a53ea01e67770fb72948c390a6c97be1"
+    },
+    "eva2_predicate_derivation": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/eva2/original-predicate-derivation.private.json",
+      "sha256": "623f4a9b8d4d088f2b7ecaa01b6ccebdb45e78c2229403a9cb6613f1260d79e3"
+    },
+    "eva2_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/eva2/terminal-technical.private.json",
+      "sha256": "f21d0cdcd6425fd905c59beefacd435a407358d90d7ee57a251eda3aca5af807"
+    },
+    "openclaw_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/openclaw/original-assessment.private.json",
+      "sha256": "8e4051ac43dfcbf256d7502386ec57c89297e53b3f031e0c56aaa8b98e5e090c"
+    },
+    "openclaw_eligibility": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/openclaw/resource-eligibility-retained.private.json",
+      "sha256": "ba8ae682eb62c064fad08a1b4699088976ddea092784431b1669d68df08aef1c"
+    },
+    "openclaw_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/openclaw/physical-closure.private.json",
+      "sha256": "d2d2a8ac45f19553a1e99ef16bc5468964c85b74d8352ac7dbaf8afbded604ac"
+    },
+    "openclaw_predicate_derivation": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/openclaw/original-predicate-derivation.private.json",
+      "sha256": "6d231e4bb1e584d0283e4fd9b44d2f20555de5d0f7b6b52e08c569c379bb23ab"
+    },
+    "openclaw_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/openclaw/terminal-technical.private.json",
+      "sha256": "e72edc929c121f94843f5ff1264516ecc90d973397d4a455efb5b825024f7484"
+    },
+    "original_date_anchor_qualification": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/original-date-anchor-qualification.private.json",
+      "sha256": "cc296757c6f4a7e199bab85e21ca249072fd46b03d485474c7aa2e9bf80747e7"
+    },
+    "preserved_prequalification_result": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/pair-result.public.json",
+      "sha256": "a1a33c363ba0dc484f1706f6bf98d0b542403b80160f42e9f676aee09ed83979"
+    },
+    "root_preuse_field_issue": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/root-openclaw-finalization-precheck-error.private.json",
+      "sha256": "67b57075412eb7a2cd6fcc7f53ca15388c994ffc19b7c00391961df2f650dcf3"
+    }
+  },
+  "family": "cross_domain_actions",
+  "future_execution_admitted": false,
+  "historical_retention": {
+    "all_original_full_reservations_preserved": true,
+    "all_prior_raw_values_revisions_metadata_preserved": true,
+    "final_registered_rows": 50,
+    "old_missing_usage_attempts": 5,
+    "old_usage_unknown_rows": 3,
+    "prior_original_rows": 48,
+    "prior_rows_before_openclaw": 49,
+    "reset_or_rearm_or_replay": false
+  },
+  "human_ratings": {
+    "eva2": [
+      null,
+      null
+    ],
+    "openclaw": [
+      null,
+      null
+    ]
+  },
+  "limits_per_participant": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "speechRequests": 0,
+    "toolDispatches": 70,
+    "wallSeconds": 840
+  },
+  "model_roles": {
+    "eva2": {
+      "contact": "gpt-6-sol/none",
+      "substantive_work_and_memory": "gpt-6-astra/medium"
+    },
+    "openclaw": {
+      "contact_role_not_substituted_for_work": true,
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning": "medium"
+      },
+      "main_substantive_work": {
+        "accounting_role": "helper",
+        "model": "gpt-6-astra",
+        "reasoning": "medium"
+      }
+    }
+  },
+  "new_task_or_product_function_claimed": false,
+  "original_criteria_unchanged": true,
+  "original_date_anchor_qualification": {
+    "both_outputs_match_explicit_requested_month_day": true,
+    "both_outputs_preserve_observed_local_hours_duration_resource_and_daylight_saving_offset": true,
+    "classification": "ORIGINAL_REQUEST_SCORER_CONFLICT",
+    "curator_expected_date_was_bound_to_original_scorer": true,
+    "evidence": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/original-date-anchor-qualification.private.json",
+      "sha256": "cc296757c6f4a7e199bab85e21ca249072fd46b03d485474c7aa2e9bf80747e7"
+    },
+    "new_criteria_or_rescore_or_replay": false,
+    "original_request_differs_from_original_scorer_date": true,
+    "raw_original_scores_retained": true,
+    "request_projection_byte_equal_original": true,
+    "user_task_noncompletion_not_established_by_conflicting_date_predicate": true
+  },
+  "original_input_texts_unchanged": true,
+  "p2_1_complete": false,
+  "pair_usage": {
+    "complete": true,
+    "input_tokens": 396789,
+    "output_tokens": 2783,
+    "sdk_attempts": 21,
+    "tool_dispatches": 16,
+    "total_tokens": 399572
+  },
+  "participants": {
+    "eva2": {
+      "classification": "ORIGINAL_REQUEST_SCORER_CONFLICT",
+      "confirmed_work_completion": null,
+      "fixed_conditions_passed": 2,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        false,
+        true,
+        true
+      ],
+      "fixed_predicates_scope": "Unchanged original scorer; its date contradicts the explicit original request.",
+      "fixture_effects": 2,
+      "fixture_requests": 8,
+      "human_whole_quality": null,
+      "independent_readbacks": [
+        false,
+        true
+      ],
+      "independent_readbacks_scope": "Unchanged original scorer-state conjunction plus original technical trace condition; not an unconditional user-task failure.",
+      "native_turns_observed": 1,
+      "objective_conditions_met": null,
+      "original_input_delivered": true,
+      "original_raw_fixed_outcome_classification": "BOUNDED_NONCOMPLETION",
+      "original_scorer_conditions_met": false,
+      "physical_closure_complete": true,
+      "requested_month_day_matches_both_records": true,
+      "timing": {
+        "elapsed_seconds": 153.61212268500822,
+        "scope": "parent original clock including native boot through requested cleanup"
+      },
+      "usage": {
+        "actual_roles": {
+          "contact/gpt-6-sol/none": 1,
+          "helper/gpt-6-astra/medium": 12
+        },
+        "attempts_aborted": 0,
+        "attempts_completed": 13,
+        "complete": true,
+        "input_tokens": 139373,
+        "known_partial_usage": {
+          "input_tokens": 139373,
+          "output_tokens": 1897,
+          "total_tokens": 141270
+        },
+        "output_tokens": 1897,
+        "physical_context_count": 13,
+        "sdk_attempts": 13,
+        "tool_dispatches": 10,
+        "total_tokens": 141270
+      },
+      "worker_settlement": {
+        "core": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        },
+        "delegated": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        },
+        "memory": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        }
+      }
+    },
+    "openclaw": {
+      "actual_work_role_protocol_conformant": true,
+      "capture_scope": {
+        "continuation_remote_context_not_independently_recaptured": false,
+        "original_text_present_directly": 8,
+        "physical_requests_verified": 8,
+        "previous_response_id_continuation_without_direct_original_text": 0
+      },
+      "classification": "ORIGINAL_REQUEST_SCORER_CONFLICT",
+      "confirmed_work_completion": null,
+      "equivalent_native_settled": true,
+      "fixed_conditions_passed": 2,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        false,
+        true,
+        true
+      ],
+      "fixed_predicates_scope": "Unchanged original scorer; its date contradicts the explicit original request.",
+      "fixture_effects": 2,
+      "fixture_requests": 10,
+      "fixture_status_counts": {
+        "200": 10
+      },
+      "forbidden_effects_observed": false,
+      "human_help_provided": 0,
+      "human_help_requested": null,
+      "human_whole_quality": null,
+      "independent_readbacks": [
+        false,
+        true
+      ],
+      "independent_readbacks_scope": "Unchanged original scorer-state conjunction plus original technical trace condition; not an unconditional user-task failure.",
+      "native_closed": false,
+      "native_turns_completed": 1,
+      "objective_conditions_met": null,
+      "original_file_count": 0,
+      "original_input_delivered": true,
+      "original_raw_fixed_outcome_classification": "BOUNDED_NONCOMPLETION",
+      "original_scorer_conditions_met": false,
+      "parent_close_ack": true,
+      "physical_closure_complete": true,
+      "requested_month_day_matches_both_records": true,
+      "timing": {
+        "elapsed_seconds": 86.1231443019933,
+        "scope": "Original parent clock before native child/profile/workspace/input launch through child return; physical cleanup separately retained.",
+        "wall_expired": false
+      },
+      "usage": {
+        "actual_roles": {
+          "helper/gpt-6-astra/medium": 8
+        },
+        "complete": true,
+        "input_tokens": 257416,
+        "known_partial_usage": {
+          "input_tokens": 257416,
+          "output_tokens": 886,
+          "total_tokens": 258302
+        },
+        "output_tokens": 886,
+        "physical_context_count": 8,
+        "sdk_attempts": 8,
+        "speech_requests": 0,
+        "tool_dispatches": 6,
+        "total_tokens": 258302
+      }
+    }
+  },
+  "participants_order": [
+    "eva2",
+    "openclaw"
+  ],
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "preparation_and_review_limitations": [
+    "Final independent review caught the original request/scorer date contradiction. The curator derivation and earlier sequence review had matched the original scorer without detecting that conflict. Original source, raw scores, first report/index and all retained records remain unchanged; this qualification adds no replacement criterion or score.",
+    "Previously reviewed source, UID, ACL, canonical reader and gate interfaces were reused with the new original case binding; criteria and provider route were not changed.",
+    "A root assertion used the Eva2 input-flag name on the OpenClaw proposal before any check, parent, resource, input or provider action; the already finalized sequence admission was retained and actual check and parent each ran once.",
+    "A post-run assessment export used a local collection-list name that shadowed the formatting module. Original predicate results were already derived; only the local export name was corrected, with prior source and derivation retained and no runtime or criterion change.",
+    "Both participants used actual Astra/medium work; Eva2 also used its original Sol/none contact role. Both received the same source-bound ordinary discovery metadata.",
+    "OpenClaw native_closed=false remains separate from parent ACK, equivalent native settlement and independently observed physical closure.",
+    "Parent timing boundaries differ; a common input-to-confirmed-result latency has not been established. Observed SDK/tool/token counts do not establish an efficiency or quality winner.",
+    "Human whole-quality and the full original P2 comparison remain unestablished; closed UNKNOWN and missing historical usage remain unchanged."
+  ],
+  "purpose": "Evaluate the original cross-service temporal consistency, timezone and daylight-saving conditions with the same resource and duration.",
+  "remaining_original_scope": {
+    "closed_case_not_rearmed": true,
+    "closed_unknowns_not_replayed": true,
+    "done_when": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
+    "full_original_case_epoch_coverage_not_established_by_this_pair": true,
+    "new_execution_or_input_admission": false,
+    "next_unused_original_metadata": null,
+    "original_6_families_12_cases_3_epochs_and_two_human_raters_unchanged": true,
+    "original_request_scorer_conflict_prevents_unqualified_completion_or_failure_claim": true,
+    "raw_original_scorer_conditions_remaining": 1,
+    "required_two_human_raters_not_supplied_by_this_pair": true,
+    "this_case_objective_completed": null,
+    "this_pair_does_not_complete_p21": true,
+    "winner_not_added_as_completion_criterion": true
+  },
+  "runtime_cost_currency": null,
+  "status": "closed_original_pair_original_request_scorer_date_conflict",
+  "whole_quality": null
+}

@@ -1,0 +1,118 @@
+{
+  "as_of": "2026-10-09T08:08:26.569683+00:00",
+  "closed_zero_input_or_unknown_is_not_completed_coverage": true,
+  "contract": "P2ConservativeRegisteredAuthorityCoverage/v1",
+  "groups": [
+    {
+      "active_kind_rows": 1,
+      "family": "conversation_memory",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "agent_zero",
+      "registered_rows": 1,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 1
+    },
+    {
+      "active_kind_rows": 3,
+      "family": "conversation_memory",
+      "historical_import_rows": 2,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "eva1-bottie",
+      "registered_rows": 5,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    },
+    {
+      "active_kind_rows": 5,
+      "family": "conversation_memory",
+      "historical_import_rows": 2,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "eva2",
+      "registered_rows": 7,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 1
+    },
+    {
+      "active_kind_rows": 7,
+      "family": "conversation_memory",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "hermes",
+      "registered_rows": 7,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    },
+    {
+      "active_kind_rows": 7,
+      "family": "conversation_memory",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "openclaw",
+      "registered_rows": 7,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    },
+    {
+      "active_kind_rows": 12,
+      "family": "cross_domain_actions",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "eva2",
+      "registered_rows": 12,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 1
+    },
+    {
+      "active_kind_rows": 1,
+      "family": "cross_domain_actions",
+      "historical_import_rows": 0,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "hermes",
+      "registered_rows": 1,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    },
+    {
+      "active_kind_rows": 9,
+      "family": "cross_domain_actions",
+      "historical_import_rows": 1,
+      "native_completed_cases": null,
+      "objective_completed_cases": null,
+      "participant": "openclaw",
+      "registered_rows": 10,
+      "unique_original_case_epoch_count": null,
+      "usage_unknown_flagged_rows": 0
+    }
+  ],
+  "historical_coverage_exports_unchanged": true,
+  "known_input_tokens_lower_bound": 6603302,
+  "known_output_tokens_lower_bound": 45392,
+  "known_total_tokens_lower_bound": 6648694,
+  "legacy_case_hashes_not_folded_into_current_matching_cases": true,
+  "missing_usage_attempts": 5,
+  "native_completion_and_objective_coverage_not_inferred_from_registry": true,
+  "new_pair_completed_objective_tasks": null,
+  "new_pair_original_inputs_delivered": 2,
+  "new_pair_original_scorer_passes": 0,
+  "new_pair_registered_rows": 2,
+  "new_pair_user_task_completion_indeterminate_due_to_original_contract_conflict": true,
+  "overall_token_total": null,
+  "overall_usage_complete": false,
+  "preserved_prequalification_coverage": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd10-eva2-openclaw-20261009-v1/p2-authority-coverage-xd10-20261009.json",
+    "sha256": "2f62e04e4d222c8e28ce38105181129a7c2e7c256c438143dd15531b6c4a32ef"
+  },
+  "recorded_sdk_attempts_including_historical_observed": 373,
+  "registered_identity_count": 50,
+  "registered_rows": 50,
+  "source_authority_sha256": "0129aa77788fb8c059f30ec567aa7a04025c3c138691a2635b2b38aa1c595507",
+  "usage_unknown_flagged_rows": 3
+}
