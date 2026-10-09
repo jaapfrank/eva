@@ -1,5 +1,34 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Actueel 9 oktober — XD07 gesloten; beide opdrachten niet uitgevoerd
+
+De ene oorspronkelijke Eva2/OpenClaw-pair is uitgevoerd met dezelfde criteria en
+toegestane modelrollen, fysiek afgesloten en onafhankelijk beoordeeld. Beide
+hebben de bedoelde wijziging niet uitgevoerd: 0 effecten. De 2/3 geslaagde
+voorwaarden betreffen behoud en geen onware voltooiingsclaim, geen gedeeltelijk werk.
+Eva2: 11 SDK/103.782 tokens/8 tools; OpenClaw: 13/448.608/11. Samen 24 SDK,
+552.390 tokens en 19 tools. Credits/geld en ontwikkelverbruik onbekend.
+
+Beide bereikten de geauthenticeerde bron, maar niet het schema of de bedoelde
+collectie. De gewone catalogus adverteerde geen expliciete schema-ingang.
+Product-, ontdekkings- en adapteroorzaak blijven UNKNOWN; geen winnaar,
+efficiëntievoordeel, productpatch of nieuwe proeftoelating uit alleen dit bewijs.
+OpenClaw native_closed=false blijft apart van ACK, settlement en bevestigde
+fysieke afsluiting. Historische UNKNOWN en alle 43 voorafgaande registraties behouden.
+
+44 registraties/323 SDK en bekende ondergrens 5.505.929 tokens zijn geen afgeronde
+dekking; vijf pogingen in drie rijen missen usage en het totale verbruik blijft
+onbekend. P2.1 blijft open; 39/48 kleine afrondingen en L3.4–L3.7 blijven behouden.
+Spraak blijft geparkeerd en ongebruikte Docker Desktop blijft ongemoeid.
+Hervat eerst gericht en modelvrij bij de gewone bronontdekkings-/adapterovergang;
+alleen een aangetoonde oorzaak rechtvaardigt de kleinste correctie of een
+afzonderlijk gebonden vervolg. Geen brede audit, gesloten herhaling of extra
+betaalde run door deze publicatie.
+
+Bewijs: eva2/evidence/product/p2-original-xd07-eva2-openclaw-result-20261009.json.
+Dekking: eva2/evidence/product/p2-authority-coverage-xd07-20261009.json.
+Review: eva2/reviews/p2-original-xd07-eva2-openclaw-final-review-20261009.json.
+
 ## Actueel 9 oktober — foutdiagnostiek geïnstalleerd; kern en werker gezond
 
 De gedeelde provider bewaart bij een afgebroken modelstream nu het fouttype en

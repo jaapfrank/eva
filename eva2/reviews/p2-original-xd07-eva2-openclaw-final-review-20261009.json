@@ -1,0 +1,166 @@
+{
+  "contract": "IndependentOriginalXD07PairPublicationReview/v1",
+  "reviewer": "p2_eva1_lease_review_20261006",
+  "reviewed_at": "2026-10-09T03:39:18.842275+00:00",
+  "decision": "GO_PUBLICATION_BOUNDED_ORIGINAL_PAIR",
+  "reviewed_index": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/final-review-index.private.json",
+    "sha256": "f08ccc5ba66decad2e7b8ac9c4d52a72e0fa2770f3f39e4a48620290f7f529fa"
+  },
+  "approved_result": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/pair-result.public.json",
+    "sha256": "975642440c5dc397cfca426d00e7f89fed76bad9e54e3aa82a487fe9225be4df"
+  },
+  "approved_coverage": {
+    "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/p2-authority-coverage-xd07-20261009.json",
+    "sha256": "012032d8bd68fe7d242d898bce29fdd9ad4e4ebb1eaf290c292397d23ab33d2c"
+  },
+  "canonical_filenames": {
+    "coverage": "p2-authority-coverage-xd07-20261009.json",
+    "result": "p2-original-xd07-eva2-openclaw-result-20261009.json"
+  },
+  "findings": [],
+  "verified": {
+    "original_case_and_criteria_unchanged": true,
+    "both_original_inputs_delivered_once": true,
+    "fixed_predicates_both": [
+      false,
+      true,
+      true
+    ],
+    "required_readbacks_both": [
+      false,
+      true
+    ],
+    "objective_completed_both": false,
+    "negative_constraints_not_partial_task_completion": true,
+    "conditional_success_confirmation_not_exercised": true,
+    "original_state_snapshots_unchanged_zero_effects": true,
+    "original_actor_private_audience_journal_binding": true,
+    "work_role_protocol_conformant": true,
+    "eva2_actual_roles": {
+      "contact/gpt-6-sol/none": 1,
+      "helper/gpt-6-astra/medium": 10
+    },
+    "openclaw_actual_roles": {
+      "helper/gpt-6-astra/medium": 13
+    },
+    "eva2_complete_usage": {
+      "sdk": 11,
+      "input_tokens": 102190,
+      "output_tokens": 1592,
+      "total_tokens": 103782,
+      "tools": 8
+    },
+    "openclaw_complete_usage": {
+      "sdk": 13,
+      "input_tokens": 447046,
+      "output_tokens": 1562,
+      "total_tokens": 448608,
+      "tools": 11
+    },
+    "pair_usage": {
+      "complete": true,
+      "input_tokens": 549236,
+      "output_tokens": 3154,
+      "sdk_attempts": 24,
+      "tool_dispatches": 19,
+      "total_tokens": 552390
+    },
+    "openclaw_original_text_direct12_previous_response_continuation1": true,
+    "remote_continuation_context_not_independently_recaptured": true,
+    "eva2_three_worker_ack_local_settled_error_empty": true,
+    "openclaw_parent_ack_and_equivalent_settlement": true,
+    "openclaw_native_closed": false,
+    "physical_closure_separate_confirmed": true,
+    "eva2_nine_containers_network_parent_instances_absent": true,
+    "openclaw_container_network_scope_two_listeners_parent_instances_absent": true,
+    "all43_prior_raw_revisions_metadata_preserved": true,
+    "original42_and_all_unknown_full_reservations_preserved": true,
+    "authority_rows": 44,
+    "authority_sha256": "8ac75763721f2a8f2f7af96554d82b451da887f309768d8a964e2bc6672f8155",
+    "cumulative_recorded_sdk": 323,
+    "known_token_lower_bound": 5505929,
+    "cumulative_missing_usage_attempts": 5,
+    "cumulative_unknown_rows": 3,
+    "cumulative_total_null_incomplete": true,
+    "retained_refs_hash_verified": 657,
+    "public_result_coverage_safe_counts_hashes_only": true,
+    "human_whole_quality_null_no_AI_judge": true,
+    "prepared_failures_and_reviews_retained_no_replay": true
+  },
+  "shared_discovery_boundary": {
+    "fixture_source_sha256": "282b17a0f8a5980cf460b2619bb9e718c1373a5954d147829e865b6d4e35869b",
+    "ordinary_catalog_sha256": "2f88c48a9e1ddcae1543cc06363c38d20422c018fe2944cc78c6c17d97eeba5b",
+    "observed": "Both made authenticated requests to unsupported paths; neither requested the existing generic schema or collection routes. The admitted ordinary carriers provided full origins and access, but no explicit schema entry.",
+    "original_bounded_noncompletion_observed": true,
+    "causal_product_fault": null,
+    "causal_adapter_or_discovery_fault": null,
+    "source_contract_route_presence_not_runtime_proof_of_task_effect": true,
+    "no_posthoc_schema_requirement_or_resource_exclusion": true,
+    "no_proven_adapter_unavailability_authority_or_transport_refusal": true,
+    "no_product_patch_or_new_dispatch_follows_from404_alone": true
+  },
+  "timing_limits": {
+    "eva2_seconds": 141.62081591700553,
+    "eva2_scope": "parent original clock including native boot through requested cleanup",
+    "openclaw_seconds": 101.56698767398484,
+    "openclaw_scope": "Original parent clock before native child/profile/workspace/input launch through child return; physical cleanup separately retained.",
+    "efficiency_comparison_not_claimed": true
+  },
+  "evidence": {
+    "eva2_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/original-assessment.private.json",
+      "sha256": "37b2a4aa5ebffbcf52f67fac6fe57e8b2c01c07b48dfac9b86f85db96f0ccce7"
+    },
+    "openclaw_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/original-assessment.private.json",
+      "sha256": "a106e2c4db15c5a757f0b688b67e93b91b160b073a67da734e845548b3ebbb67"
+    },
+    "eva2_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/terminal-technical.private.json",
+      "sha256": "9c417e5acf3281e841457abb52c69d8edb3243126a40e85cf8cf8bc71fb62b6d"
+    },
+    "openclaw_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/terminal-technical.private.json",
+      "sha256": "cb72fd364cdb278d879344d430ff2978d0bcb2c622dc5c9f204c9990c8c64067"
+    },
+    "eva2_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/physical-closure.private.json",
+      "sha256": "db3d7027540b7557ddf6a478425424898e787fe906b0771ee95e1de39ab2dd2b"
+    },
+    "openclaw_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/physical-closure.private.json",
+      "sha256": "602f9a1f77a4feecfc26a2c1cafdaa700f91d258ab6b4ba74156fe392fad53a0"
+    },
+    "final_history": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/terminal-history.private.json",
+      "sha256": "63dc5ab17bce4c0819fac506c0cf4e6799311947cf189bed65ec8b909a5c09a8"
+    },
+    "retention": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/retention.private.json",
+      "sha256": "1b82386c0ea9484c5a884ace8c2e4076d1924a7b2915744d3165667d084cae23"
+    },
+    "declassification": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/declassification.private.json",
+      "sha256": "da08aff01a5fff5f9af1aaa29ca242cc64b85d387630e99c0232353bac23edd4"
+    },
+    "eva2_work_transition": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/work-transition.safe.private.json",
+      "sha256": "c40a032ec966fb76b2901cb29a1f6f65c267d44b7989a5a015504104c9513ec6"
+    },
+    "openclaw_eligibility": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/resource-eligibility-retained.private.json",
+      "sha256": "f087cb83d6d5a9d1208cc7cffe44dd71fff280bd7957c5943201fa3a349c2cac"
+    }
+  },
+  "allowed_next_transition": "Publish only the exact approved result and conservative registry-coverage bytes under the stated canonical filenames, with this review. Preserve all closed results, UNKNOWN rows, original criteria, reservations and task statuses. This is no execution, rearm, new-case admission, product patch, ranking or P2.1 completion GO.",
+  "claims": {
+    "winner": null,
+    "general_superiority": false,
+    "efficiency_advantage": false,
+    "new_product_function": false,
+    "p2_1_complete": false,
+    "new_execution_by_reviewer": false
+  }
+}

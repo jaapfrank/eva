@@ -1,0 +1,290 @@
+{
+  "ai_judge_used": false,
+  "case_id": "EV003-XD-07",
+  "case_sha256": "8c3f6278385925d1b71d989426447a94f22f2d80fa0c4529095756ca69ccdd45",
+  "closure": {
+    "both_networks_and_parents_absent": true,
+    "eva2_containers_absent": 9,
+    "eva2_network_and_parent_pids_absent": true,
+    "eva2_three_worker_acks_and_local_settlement": true,
+    "openclaw_fixture_listeners_exited": 2,
+    "openclaw_native_closed_separate_from_ack_and_physical_close": true,
+    "openclaw_native_container_absent": 1
+  },
+  "comparison": {
+    "causal_adapter_fault": null,
+    "causal_product_fault": null,
+    "efficiency_advantage_claimed": false,
+    "general_superiority_claimed": false,
+    "original_objective_difference": false,
+    "reason": "Neither participant completed the original task. Passing two preservation/confirmation constraints is not partial task completion. Shared root404/discovery behavior does not by itself determine product versus adapter causation.",
+    "role_mismatch_observed_openclaw": false,
+    "valid_pair_ranking": false,
+    "winner": null
+  },
+  "contract": "P2OriginalXD07SequentialPairResult/v1",
+  "cumulative_usage": {
+    "known_input_tokens_lower_bound": 5467471,
+    "known_output_tokens_lower_bound": 38458,
+    "known_total_tokens_lower_bound": 5505929,
+    "missing_usage_attempts": 5,
+    "recorded_sdk_attempts": 323,
+    "total_tokens": null,
+    "usage_complete": false,
+    "usage_unknown_rows": 3
+  },
+  "dataset_sha256": "6c840783c58f528caedd557ddbfef8b8eb7907de6e0cbb0dd162456ca8c8c6ca",
+  "development_credit_cost": null,
+  "epoch": 1,
+  "evidence": {
+    "coverage": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/p2-authority-coverage-xd07-20261009.json",
+      "sha256": "012032d8bd68fe7d242d898bce29fdd9ad4e4ebb1eaf290c292397d23ab33d2c"
+    },
+    "eva2_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/original-assessment.private.json",
+      "sha256": "37b2a4aa5ebffbcf52f67fac6fe57e8b2c01c07b48dfac9b86f85db96f0ccce7"
+    },
+    "eva2_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/physical-closure.private.json",
+      "sha256": "db3d7027540b7557ddf6a478425424898e787fe906b0771ee95e1de39ab2dd2b"
+    },
+    "eva2_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/terminal-technical.private.json",
+      "sha256": "9c417e5acf3281e841457abb52c69d8edb3243126a40e85cf8cf8bc71fb62b6d"
+    },
+    "eva2_work_transition": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/eva2/work-transition.safe.private.json",
+      "sha256": "c40a032ec966fb76b2901cb29a1f6f65c267d44b7989a5a015504104c9513ec6"
+    },
+    "openclaw_assessment": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/original-assessment.private.json",
+      "sha256": "a106e2c4db15c5a757f0b688b67e93b91b160b073a67da734e845548b3ebbb67"
+    },
+    "openclaw_eligibility": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/resource-eligibility-retained.private.json",
+      "sha256": "f087cb83d6d5a9d1208cc7cffe44dd71fff280bd7957c5943201fa3a349c2cac"
+    },
+    "openclaw_physical_closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/physical-closure.private.json",
+      "sha256": "602f9a1f77a4feecfc26a2c1cafdaa700f91d258ab6b4ba74156fe392fad53a0"
+    },
+    "openclaw_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/ev003-original-xd07-eva2-openclaw-20261009-v1/openclaw/terminal-technical.private.json",
+      "sha256": "cb72fd364cdb278d879344d430ff2978d0bcb2c622dc5c9f204c9990c8c64067"
+    }
+  },
+  "family": "cross_domain_actions",
+  "future_execution_admitted": false,
+  "historical_retention": {
+    "all_original_full_reservations_preserved": true,
+    "all_prior_raw_values_revisions_metadata_preserved": true,
+    "final_registered_rows": 44,
+    "old_missing_usage_attempts": 5,
+    "old_usage_unknown_rows": 3,
+    "prior_original_rows": 42,
+    "prior_rows_before_openclaw": 43,
+    "reset_or_rearm_or_replay": false
+  },
+  "human_ratings": {
+    "eva2": [
+      null,
+      null
+    ],
+    "openclaw": [
+      null,
+      null
+    ]
+  },
+  "limits_per_participant": {
+    "providerAttempts": 72,
+    "providerInputTokens": 4718592,
+    "providerOutputTokens": 86400,
+    "speechRequests": 0,
+    "toolDispatches": 70,
+    "wallSeconds": 840
+  },
+  "model_roles": {
+    "eva2": {
+      "contact": "gpt-6-sol/none",
+      "substantive_work_and_memory": "gpt-6-astra/medium"
+    },
+    "openclaw": {
+      "contact_role_not_substituted_for_work": true,
+      "helpers": {
+        "model": "gpt-6-astra",
+        "reasoning": "medium"
+      },
+      "main_substantive_work": {
+        "accounting_role": "helper",
+        "model": "gpt-6-astra",
+        "reasoning": "medium"
+      }
+    }
+  },
+  "new_task_or_product_function_claimed": false,
+  "original_criteria_unchanged": true,
+  "original_input_texts_unchanged": true,
+  "p2_1_complete": false,
+  "pair_usage": {
+    "complete": true,
+    "input_tokens": 549236,
+    "output_tokens": 3154,
+    "sdk_attempts": 24,
+    "tool_dispatches": 19,
+    "total_tokens": 552390
+  },
+  "participants": {
+    "eva2": {
+      "classification": "BOUNDED_NONCOMPLETION",
+      "conditional_success_confirmation_not_exercised": true,
+      "confirmed_work_completion": false,
+      "failure_transition": {
+        "actual_provider_responses_completed": 11,
+        "no_inference_of_missing_permission_or_provider_capability": true,
+        "primary_observed": "ordinary delegated work ended incomplete_work; one authenticated fixture GET returned404, no admitted effect",
+        "provider_failure_observed": false
+      },
+      "fixed_conditions_passed": 2,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        false,
+        true,
+        true
+      ],
+      "fixture_effects": 0,
+      "fixture_requests": 1,
+      "independent_readbacks": [
+        false,
+        true
+      ],
+      "native_turns_observed": 1,
+      "negative_constraints_are_not_partial_task_success": true,
+      "objective_conditions_met": false,
+      "original_input_delivered": true,
+      "physical_closure_complete": true,
+      "timing": {
+        "elapsed_seconds": 141.62081591700553,
+        "scope": "parent original clock including native boot through requested cleanup"
+      },
+      "usage": {
+        "actual_roles": {
+          "contact/gpt-6-sol/none": 1,
+          "helper/gpt-6-astra/medium": 10
+        },
+        "attempts_aborted": 0,
+        "attempts_completed": 11,
+        "complete": true,
+        "input_tokens": 102190,
+        "known_partial_usage": {
+          "input_tokens": 102190,
+          "output_tokens": 1592,
+          "total_tokens": 103782
+        },
+        "output_tokens": 1592,
+        "physical_context_count": 11,
+        "sdk_attempts": 11,
+        "tool_dispatches": 8,
+        "total_tokens": 103782
+      },
+      "worker_settlement": {
+        "core": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        },
+        "delegated": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        },
+        "memory": {
+          "control_close_acknowledged": true,
+          "error_types": [],
+          "local_settled": true
+        }
+      }
+    },
+    "openclaw": {
+      "actual_work_role_protocol_conformant": true,
+      "capture_scope": {
+        "continuation_remote_context_not_independently_recaptured": true,
+        "original_text_present_directly": 12,
+        "physical_requests_verified": 13,
+        "previous_response_id_continuation_without_direct_original_text": 1
+      },
+      "classification": "ORIGINAL_FIXED_OBJECTIVE_NOT_COMPLETED",
+      "conditional_success_confirmation_not_exercised": true,
+      "equivalent_native_settled": true,
+      "fixed_conditions_passed": 2,
+      "fixed_conditions_required": 3,
+      "fixed_predicates": [
+        false,
+        true,
+        true
+      ],
+      "fixture_effects": 0,
+      "fixture_requests": 27,
+      "fixture_status_counts": {
+        "404": 27
+      },
+      "forbidden_effects_observed": 0,
+      "human_help_provided": 0,
+      "human_help_requested": true,
+      "independent_readbacks": [
+        false,
+        true
+      ],
+      "native_closed": false,
+      "native_turns_completed": 1,
+      "negative_constraints_are_not_partial_task_success": true,
+      "objective_conditions_met": false,
+      "observed_behavior": "No required durable task effect; authenticated requests reached unsupported paths. Reported noncompletion and requested access information. Other-person and retained records were unchanged.",
+      "original_file_count": 0,
+      "original_input_delivered": true,
+      "parent_close_ack": true,
+      "physical_closure_complete": true,
+      "timing": {
+        "elapsed_seconds": 101.56698767398484,
+        "scope": "Original parent clock before native child/profile/workspace/input launch through child return; physical cleanup separately retained.",
+        "wall_expired": false
+      },
+      "usage": {
+        "actual_roles": {
+          "helper/gpt-6-astra/medium": 13
+        },
+        "complete": true,
+        "input_tokens": 447046,
+        "known_partial_usage": {
+          "input_tokens": 447046,
+          "output_tokens": 1562,
+          "total_tokens": 448608
+        },
+        "output_tokens": 1562,
+        "physical_context_count": 13,
+        "sdk_attempts": 13,
+        "speech_requests": 0,
+        "tool_dispatches": 11,
+        "total_tokens": 448608
+      }
+    }
+  },
+  "participants_order": [
+    "eva2",
+    "openclaw"
+  ],
+  "plan_sha256": "6012762d1f6fa745a0cdb6321fe0df1a19c40f1cd3a836c2ee3fbf9928079dd2",
+  "preparation_and_review_limitations": [
+    "One shared evaluator record-ACL overlay bound the original privacy contract identically for E/O; pure checks are not native task performance.",
+    "Stale provider-attestor source literal corrected before resource GO; old drafts/review finding preserved.",
+    "Preparation stopped on a passive fixture identity declaration before principal provisioning; the exact two original verification forms were supported in a narrow projector.",
+    "Retained Docker Mounts comparison then stopped before writes due to array order; full-object Destination equivalence was proved before the same retained continuation completed. No repeated authority/schema/container/fixture initialization.",
+    "Both participants reached authenticated fixture origins but made no schema/collection request or durable effect. Direct generic-schema advertisement was absent from ordinary catalogs; no new retrospective requirement or causal product/adapter verdict is inferred.",
+    "One OpenClaw request used previous_response_id; original input directly present in12of13 retained requests, first delivery verified. Remote continuation context not independently recaptured.",
+    "Human whole-quality and general superiority remain unestablished."
+  ],
+  "purpose": "Complete the original authorized cross-service task while preserving other-person and retained records; independently verify durable effects.",
+  "runtime_cost_currency": null,
+  "status": "closed_original_pair_both_objectives_not_completed",
+  "whole_quality": null
+}
