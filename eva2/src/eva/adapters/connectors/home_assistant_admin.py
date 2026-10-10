@@ -4,6 +4,9 @@ from __future__ import annotations
 
 import asyncio
 from contextlib import contextmanager
+from collections import OrderedDict
+from copy import deepcopy
+from threading import Lock
 from datetime import UTC, datetime
 import json
 import hashlib
@@ -32,6 +35,10 @@ from eva.adapters.connectors.home_assistant_advanced_tasks import (
 )
 
 
+class HomeAssistantInventorySnapshotUnavailable(RuntimeError):
+    """A read cursor cannot be resolved to the original observation."""
+
+
 class HomeAssistantAdminAdapter:
     def __init__(self, *, base_url: str, token: str) -> None:
         parsed = urlsplit(base_url)
@@ -49,6 +56,8 @@ class HomeAssistantAdminAdapter:
             )
         )
         self._token = token
+        self._household_snapshots = OrderedDict()
+        self._household_snapshot_lock = Lock()
         self._automation_reader = HomeAssistantAutomationAdapter(HomeAssistantAutomationConfig(base_url, token))
 
     async def inventory(
@@ -215,9 +224,37 @@ class HomeAssistantAdminAdapter:
         snapshot_sha256: str = "", domain: str = "",
     ) -> dict[str, Any]:
         return self._household_page(
-            await self.household_inventory(), section=section, area_id=area_id,
+            await self._inventory_for_snapshot(snapshot_sha256), section=section, area_id=area_id,
             offset=offset, snapshot_sha256=snapshot_sha256, domain=domain,
         )
+
+    async def _inventory_for_snapshot(self, digest: str) -> dict[str, Any]:
+        # A cursor describes one observation, not a promise that a live house
+        # will stop changing. Empty cursors always obtain a fresh observation.
+        if digest:
+            with self._household_snapshot_lock:
+                retained = self._household_snapshots.get(digest)
+                if retained is not None:
+                    self._household_snapshots.move_to_end(digest)
+                    return deepcopy(retained)
+        inventory = await self.household_inventory()
+        actual = self._snapshot_digest(inventory)
+        if digest and digest != actual:
+            raise HomeAssistantInventorySnapshotUnavailable(
+                "Home Assistant inventory snapshot is unavailable; restart pagination with offset=0 and snapshot_sha256=''")
+        with self._household_snapshot_lock:
+            self._household_snapshots[actual] = deepcopy(inventory)
+            self._household_snapshots.move_to_end(actual)
+            # Bound host memory; a lost cursor is a recoverable read error.
+            while len(self._household_snapshots) > 8:
+                self._household_snapshots.popitem(last=False)
+        return inventory
+
+    @staticmethod
+    def _snapshot_digest(inventory: dict[str, Any]) -> str:
+        stable = {key: value for key, value in inventory.items() if key != "captured_at"}
+        return hashlib.sha256(json.dumps(stable, ensure_ascii=False, sort_keys=True,
+            separators=(",", ":"), allow_nan=False).encode()).hexdigest()
 
     @staticmethod
     def _household_page(
@@ -236,10 +273,9 @@ class HomeAssistantAdminAdapter:
             raise ValueError("Home Assistant overview cannot have a page or area filter")
         # The provider snapshot can exceed contract array limits. Only the
         # selected bounded page crosses the conversation boundary.
-        stable = {key: value for key, value in inventory.items() if key != "captured_at"}
-        digest = hashlib.sha256(json.dumps(stable, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+        digest = HomeAssistantAdminAdapter._snapshot_digest(inventory)
         if snapshot_sha256 and snapshot_sha256 != digest:
-            raise RuntimeError("Home Assistant inventory changed; restart pagination from the overview")
+            raise HomeAssistantInventorySnapshotUnavailable("Home Assistant inventory changed; restart pagination from the overview")
         if area_id and not any(row["area_id"] == area_id for row in inventory["areas"]):
             raise ValueError("Home Assistant inventory area is unknown")
         result = {
@@ -270,7 +306,7 @@ class HomeAssistantAdminAdapter:
     async def automation_details_many(self, automation_ids: list[str], *, area_id: str = "", snapshot_sha256: str = "", full: bool = False) -> dict[str, Any]:
         if not 1 <= len(automation_ids) <= 8 or any(not isinstance(value, str) or not value for value in automation_ids) or len(set(automation_ids)) != len(automation_ids):
             raise ValueError("Home Assistant automation selection is invalid")
-        inventory = await self.household_inventory()
+        inventory = await self._inventory_for_snapshot(snapshot_sha256)
         self._household_page(inventory, section="automations", area_id=area_id, snapshot_sha256=snapshot_sha256)
         admitted = {row["automation_id"] for row in inventory["automations"] if not area_id or row["area_id"] == area_id}
         if not set(automation_ids).issubset(admitted):
@@ -518,7 +554,7 @@ class HomeAssistantHouseholdTool:
             "area_id": {"type": "string", "description": "Leeg voor alle ruimtes; anders een eerder gelezen area_id."},
             "domain": {"type": "string", "description": "Bij entities: filter op de gevraagde HA-apparaatsoort, bijvoorbeeld camera, light, climate of sensor. Leeg voor alle soorten of andere secties. Filter gebeurt vóór paginering."},
             "offset": {"type": "integer", "minimum": 0, "description": "Begin bij 0; gebruik daarna next_offset."},
-            "snapshot_sha256": {"type": "string", "description": "Leeg voor een nieuwe opname; gebruik de teruggegeven hash voor vervolgpagina's."},
+            "snapshot_sha256": {"type": "string", "description": "Leeg voor een nieuwe actuele opname; gebruik de teruggegeven hash voor pagina's uit diezelfde opname. Bij snapshot_unavailable: begin opnieuw met offset=0 en lege hash."},
             "automation_ids": {"type": "array", "items": {"type": "string"}, "maxItems": 8, "description": "Voor automation_details of automation_configurations: maximaal acht automation_id-waarden uit de index; anders []."},
         }
         return (ConversationToolDescriptor(
@@ -569,14 +605,21 @@ class HomeAssistantHouseholdTool:
             raise ConversationConflict("household inventory command binding differs")
         self._validate(command.arguments)
         args = command.arguments
-        if args["section"] in {"automation_details", "automation_configurations"}:
-            result = await self._reader.automation_details_many(args["automation_ids"], area_id=args["area_id"], snapshot_sha256=args["snapshot_sha256"],
-                **({"full": True} if args["section"] == "automation_configurations" else {}))
-        else:
-            result = await self._reader.household_page(
-                section=args["section"], area_id=args["area_id"], offset=args["offset"], snapshot_sha256=args["snapshot_sha256"],
-                **({"domain": args["domain"]} if args.get("domain") else {}),
-            )
+        try:
+            if args["section"] in {"automation_details", "automation_configurations"}:
+                result = await self._reader.automation_details_many(args["automation_ids"], area_id=args["area_id"], snapshot_sha256=args["snapshot_sha256"],
+                    **({"full": True} if args["section"] == "automation_configurations" else {}))
+            else:
+                result = await self._reader.household_page(
+                    section=args["section"], area_id=args["area_id"], offset=args["offset"], snapshot_sha256=args["snapshot_sha256"],
+                    **({"domain": args["domain"]} if args.get("domain") else {}),
+                )
+        except HomeAssistantInventorySnapshotUnavailable:
+            error = {"code": "snapshot_unavailable",
+                     "message": "Restart this read with offset=0 and snapshot_sha256=''. Earlier pages are historical observations; do not combine them with a different snapshot.",
+                     "restart": {"offset": 0, "snapshot_sha256": ""}}
+            return ToolDispatchResult(True, canonical_sha256(error),
+                {"read_error": error, "selection": args})
         return ToolDispatchResult(True, canonical_sha256(result), {"observation": result, "selection": args})
 
     async def observe(self, command, dispatch):
@@ -587,6 +630,12 @@ class HomeAssistantHouseholdTool:
             dispatch = await self.execute(command)
         if not dispatch.accepted or dispatch.details.get("selection") != command.expected_proof:
             raise RuntimeError("Home Assistant inventory observation scope differs")
+        error = dispatch.details.get("read_error")
+        if (isinstance(error, dict) and error.get("code") == "snapshot_unavailable"
+                and canonical_sha256(error) == dispatch.provider_ref):
+            return ToolProofObservation("conflict", {}, {
+                "source": "home_assistant_inventory_read_error", "operation_kind": "read",
+                "error": error})
         observation = dispatch.details.get("observation")
         if not isinstance(observation, dict) or canonical_sha256(observation) != dispatch.provider_ref:
             raise RuntimeError("Home Assistant inventory observation differs")

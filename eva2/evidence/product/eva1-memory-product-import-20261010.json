@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "record_type": "Eva1MemoryProductImport",
+  "date": "2026-10-10",
+  "objective": "Existing Eva1 memory available in ordinary Eva2 recall with historical provenance and private person boundaries",
+  "status": "imported_and_scoped_recall_confirmed",
+  "source": {
+    "kind": "Eva1SQLiteReadOnlyBackup",
+    "source_id": "0dafc23f-ab57-5246-a973-b1ab44eceab1",
+    "snapshot_sha256": "16c816f0aecf5a7748f54730218f5c4ccbb9d7eb9b1b3ab88122ad2c09427423",
+    "source_rows": 3187,
+    "source_modified_by_import": false,
+    "snapshot_private": true
+  },
+  "selection": {
+    "imported_rows": 1115,
+    "original_label_counts": {
+      "Jaap": 340,
+      "Eva": 122,
+      "unattributed": 653
+    },
+    "excluded_counts": {
+      "archived": 1975,
+      "test_material": 1,
+      "unmapped_person": 96,
+      "withdrawn_markers": 0,
+      "secret_matches": 0
+    },
+    "named_unmapped_people_are_not_owner_aliases": true,
+    "unattributed_and_Eva_are_historical_documents_not_new_owner_assertions": true
+  },
+  "destination": {
+    "existing_runtime_scope": true,
+    "canonical_authority_scope_separate_from_runtime_namespace": true,
+    "audience": "private_person",
+    "private_runtime_owner_sha256": "547262a5e00deb3ed2a6b3c5818fa2a4c0192af8c32575ac322cb995be82eeb5",
+    "current_private_owner_Telegram_bridge_alias_count": 2,
+    "privacy_class": "confidential",
+    "trust": "legacy_unverified",
+    "retention": "source had no expiry; no artificial trial lifespan added"
+  },
+  "import": {
+    "native_batch_posts": 1,
+    "retained_documents": 45,
+    "stable_row_bucket_size": 250,
+    "native_completion": {
+      "parent_status": "completed",
+      "items_count": 45,
+      "sub_batch_count": 11,
+      "child_status_counts": {
+        "completed": 11
+      },
+      "source_tokenization_count": 90552,
+      "source_tokenization_is_provider_usage": false,
+      "retry_count": 0
+    },
+    "existing_Eva2_documents_deleted": 0,
+    "legacy_trial_route_unchanged": true,
+    "import_run_started_at": "2026-10-10T11:41:29Z",
+    "import_run_completed_at": "2026-10-10T11:45:54Z"
+  },
+  "ordinary_recall": {
+    "verified": true,
+    "recalled_fact_count": 16,
+    "legacy_source_fact_count": 15,
+    "legacy_recalled_trust_count": 15,
+    "same_private_principal": true,
+    "query_sha256": "93e40c8d0274cfe47fbebbd21160c9fcc42f7d1f8d78306389c703aaa3942437",
+    "answer_model_requests": 0,
+    "raw_query_or_memory_content_in_public_evidence": false
+  },
+  "idempotence": {
+    "same_source_plan_config": true,
+    "preflight": {
+      "delete_documents": 0,
+      "replace_documents": 0,
+      "retain_documents": 0,
+      "unchanged_documents": 45
+    },
+    "native_requests": 0,
+    "native_writes": 0,
+    "unchanged_documents": 45,
+    "ordinary_recall_verification_preserved": true
+  },
+  "accounting": {
+    "installed_Hindsight_model": "gpt-6-astra",
+    "installed_Hindsight_reasoning_effort": "medium",
+    "native_successful_LLM_counter_values_at_retain_completion": {
+      "retain_extract_facts:true": 113.0,
+      "consolidation:true": 8.0
+    },
+    "counter_values_are_not_complete_physical_provider_request_totals": true,
+    "physical_provider_request_total": null,
+    "actual_provider_tokens": null,
+    "credits": null,
+    "Codex_native_token_estimates_are_not_measurements": true,
+    "dedup_model_requests": 0
+  },
+  "tests": {
+    "regression_suite": {
+      "passed": 107,
+      "seconds": 38.02,
+      "local_missing_tokenizer_resolved_from_existing_live_runtime_modules": true
+    },
+    "final_importer_tests_after_derivative_erasure_and_noop_preservation": {
+      "passed": 7
+    },
+    "original_legacy_trial_tests_preserved": true,
+    "resumable_erasure_regression_suite": {
+      "passed": 112,
+      "seconds": 38.39,
+      "native_model_requests": 0,
+      "before_final_recall_invalidation_assertions": true
+    },
+    "final_importer_tests_after_durable_pending_and_recall_invalidation": {
+      "passed": 12,
+      "seconds": 1.59,
+      "native_model_requests": 0
+    }
+  },
+  "source_sha256": {
+    "eva2/src/eva/application/memory.py": "07fedf412eb4463d788b669fbd6269286425acd603dc91b0bbd4c2a9e68fc2fb",
+    "eva2/src/eva/adapters/projection/hindsight.py": "4e41417bf19a0fe73fb1477453b07f60454fc8f9637664378cc19a0fe049c33c",
+    "eva2/tools/import_eva1_memory.py": "fea2b26458a76bb567ca6edadb8e735561743ceb1b885a6df8325f26578b10d4",
+    "eva2/tests/tools/test_import_eva1_memory.py": "551f35c9b3956a662321d46aabdedae80b9a9003ff8e1097323b38a82aa6a277",
+    "eva2/tests/projection/test_hindsight.py": "caa4d29a457165d0b789e66e94fc0d142db53e1ee29e4c9be4731386705280e7"
+  },
+  "private_evidence_refs": {
+    "artifact_root": "/home/administrator/project/.eva2-artifacts/eva1-memory-product-import-20261010",
+    "receipt": "receipt.json",
+    "plan": "plan.json",
+    "config": "config.private.json",
+    "source_at_initial_import": "source-at-import-start.private.json",
+    "execution": "execution-state.private.json",
+    "native_completion": "native-completion-readback.private.json",
+    "ordinary_recall": "ordinary-recall.private.json",
+    "idempotence": "idempotence.private.json",
+    "native_metrics_before": "before-metrics.private.json",
+    "native_metrics_after": "after-retain-metrics.private.json",
+    "source_after_durability_correction": "source-after-durability-correction.private.json"
+  },
+  "qualification": {
+    "one_product_import_not_comparison": true,
+    "general_person_identity_detection_not_proven": true,
+    "unknown_named_people_not_imported": true,
+    "Eva1_replacement_acceptance_not_claimed": true,
+    "historical_comparisons_acceptances_and_task_counts_unchanged": true,
+    "speech_remains_parked": true
+  },
+  "source_sha256_role": "Current reviewed source; actual initial execution binding preserved in source_at_initial_import private evidence",
+  "resumability_correction": {
+    "durable_pending_revision_and_snapshot_before_delete_or_retain": true,
+    "retain_pending_never_deletes_again": true,
+    "different_or_reverted_plan_rejected_while_pending": true,
+    "generation_tombstone_prevents_replayed_completed_operation_after_erasure": true,
+    "changed_source_invalidates_prior_recall_verification_before_native_action": true,
+    "fault_cases": [
+      "completed native batch before local receipt save",
+      "remote erasure before local phase save",
+      "failed retain with reverted plan",
+      "identical old snapshot after source erasure",
+      "saved batch before final result"
+    ],
+    "validation": "model_free_fault_tests",
+    "actual_native_imports_after_correction": 0,
+    "initial_45_generation_zero_documents_unchanged": true
+  }
+}

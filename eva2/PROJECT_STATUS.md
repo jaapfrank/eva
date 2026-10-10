@@ -1,5 +1,56 @@
 # Eva 2 — voortgang en historische vergelijking
 
+## Opgeleverd — 10 oktober 2026
+
+De drie nieuwste eigenaarvragen zijn samen uitgevoerd. De algemene uitvoerroute
+is geïnstalleerd in kern en taakwerker. Een gewone opdracht vond zelf huisgegevens
+via Home Assistant, schreef precies één duurzaam document en las dat apart terug.
+Ook de echte notitie op het opslagvolume is onafhankelijk gecontroleerd.
+De twee eerdere mislukte generaties blijven behouden; native verified=false
+staat los van de geslaagde onafhankelijke opslag-/terugleescontrole.
+
+Eva2 heeft nu 1.115 actieve historische Eva1-geheugenregels in 45 privédocumenten.
+Gewone privéteruglezing is bevestigd; dezelfde import doet nul nieuwe writes.
+96 regels van niet gekoppelde andere personen en het archief zijn apart bewaard,
+niet aan Jaap toegewezen. Historische informatie is geen nieuwe toestemming.
+
+Nog geen volledige Eva1-vervanging: gewone Telegramberichten gebruiken Eva1;
+/eva2 gebruikt Eva2. De volgende gebruikersuitkomst is één gekozen dagelijkse
+privé-ingang met Eva1 als passieve reserve. Daarna wordt bruikbaarheid in normaal
+gezinsgebruik beoordeeld. Bestaande acceptaties blijven staan; nieuwe acceptatie
+wordt niet verzonnen. Spraak blijft geparkeerd; geen nieuwe vergelijkingsserie.
+
+Het geslaagde werk gebruikte 15 afgeronde modelresponses, 14 tools, 478.284
+bekende tokens en 150 seconden. Inclusief de twee mislukte generaties zijn
+540.522 achtergrondtokens geregistreerd; de meting is gedeeltelijk. Contact- en
+geheugenverbruik zijn niet volledig gereconcilieerd. Totale tokens en credits
+blijven onbekend. Dit bewijst een werkende route, geen algemene efficiëntie-,
+snelheids- of kwaliteitsvoorsprong.
+
+Resultaat: eva2/evidence/product/general-multi-service-execution-installed-20261010.json.
+Geheugen: eva2/evidence/product/eva1-memory-product-import-20261010.json.
+Review: eva2/reviews/product-general-execution-memory-final-review-20261010.json.
+Onafhankelijke eindbeoordeling: GO. Geen vervolguitvoering gestart.
+
+## Actieve eigenaaropdracht — 10 oktober 2026
+
+Maak de bestaande algemene uitvoering over meerdere diensten werkend en geïnstalleerd.
+Voeg daarnaast Eva1-geheugen met herkomst en persoonsgrenzen toe aan Eva2 en maak
+zichtbaar wanneer Eva2 Eva1 werkelijk kan vervangen. De drie nieuwste verzoeken
+vormen één opdracht. Geen nieuwe vergelijkingsserie; spraak blijft geparkeerd.
+
+Uitvoerroute: gewone vraag → ontdekking van beschikbare diensten → concrete acties
+→ afzonderlijke teruglezing → resultaat op de oorspronkelijke ingang. Gebruik de
+bestaande uitvoerder, providerroute en installatie; geen voorgeprogrammeerde functie
+per voorbeeld. Geheugenoverdracht behoudt de bron, sluit geheimen/testmateriaal uit
+en voorkomt dubbele import of vermenging van personen.
+
+Huidige opdracht staat in het Codex goal-objective.md; uitvoering en resterende
+voorwaarden staan in het bestaande werkbord. Historische proefteksten hieronder
+blijven bewijs/geschiedenis en starten geen nieuwe runs. Oude resultaten, acceptaties
+en oorspronkelijke taakvoorwaarden blijven behouden. Vervanging van Eva1 volgt uit
+dagelijkse bruikbaarheid en gecontroleerde geheugentoegang, niet uit een taakteller.
+
 **[Open het actuele dashboard](http://127.0.0.1:44712/).**
 Het dashboard en [WERKBORD.md](WERKBORD.md) worden gevoed door
 [dezelfde uitvoerbron](design/product/execution-workboard-v1.json).

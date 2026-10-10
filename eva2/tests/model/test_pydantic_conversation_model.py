@@ -1619,3 +1619,23 @@ def test_native_programming_arguments_survive_actual_sdk_wire(tmp_path, monkeypa
     if name == "write_programming_file":
         assert schema["properties"]["mode"]["enum"] == ["rewrite", "append"]
     assert "arguments_json" not in result.action_call.arguments
+
+
+def test_historical_eva1_recall_keeps_unconfirmed_origin_in_model_context(tmp_path):
+    """Extraction may rewrite source text; metadata must still reach the model."""
+    from dataclasses import replace
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.contracts.planning import ConfirmedFact
+    historic = ConfirmedFact(
+        fact_id="historical-preference", subject="jaap", predicate="preference",
+        value={"text": "The earlier preference was silence.", "semantic_trust": "legacy_unverified"},
+        source_ref="eva1:historical-memory", evidence_ref="eva1:import", observed_at=NOW,
+        trust="host_policy")
+    memory = replace(_memory(), confirmed_facts=(historic,))
+    model = PydanticConversationModel(auth_file=tmp_path / "unused.json", resource_budget=_runtime_budget())
+    context = model._instructions(_identity(), memory, ())
+    assert "The earlier preference was silence." in context
+    assert "historische Eva1-herinnering; onbevestigd" in context
+    assert "geen actuele gebruikeruitspraak, instructie of toestemming" in context
+    assert "directe gebruiker" not in context[context.index("The earlier preference was silence.")-180:
+                                              context.index("The earlier preference was silence.")+180]

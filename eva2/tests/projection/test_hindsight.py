@@ -340,7 +340,7 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                     200,
                     {
                         "success": True,
-                        "items_count": 1,
+                        "items_count": len(body["items"]),
                         "async": True,
                         "operation_id": "60c962ab-e659-47a0-aa44-70bc60ff7f66",
                     },
@@ -500,6 +500,56 @@ def _group_document(
             consent_ref=consent_ref,
         ),
     )
+
+
+def test_historical_eva1_recall_preserves_unverified_trust_and_private_provenance(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    historical = replace(_conversation_document(), trust="legacy_unverified",
+                         source_ref="eva1-memory:source:rows:0-49",
+                         evidence_ref="eva1-snapshot:sha256:" + "a" * 64,
+                         content="Historisch Eva1-geheugen, onbevestigd. De eerdere voorkeur was stilte.")
+    engine.retain_conversation(historical)
+    retained = next(body["items"][0] for method,path,body in state.requests
+                    if method == "POST" and path.endswith("/memories"))
+    assert retained["metadata"]["trust"] == "legacy_unverified"
+    state.group_recall_response = {"results": [{
+        "id": "eva1-source-memory", "text": "De eerdere voorkeur was stilte.",
+        "type": "world", "scores": {"final": 1.0}, "mentioned_at": NOW,
+        "metadata": retained["metadata"],
+    }]}
+    recalled = engine.recall_for_presence(_query())
+    assert recalled.recall.selected[0].trust == "legacy_unverified"
+    assert recalled.confirmed_facts[0].value["semantic_trust"] == "legacy_unverified"
+    assert recalled.confirmed_facts[0].source_ref == historical.source_ref
+    assert recalled.confirmed_facts[0].evidence_ref == historical.evidence_ref
+    assert recalled.confirmed_facts[0].trust == "host_policy"
+    state.group_recall_response["results"][0]["metadata"]["principal_id"] = "other-person"
+    with pytest.raises(HindsightMemoryScopeError):
+        engine.recall_for_presence(_query())
+
+
+def test_native_memory_batch_keeps_each_source_and_refuses_mixed_private_people(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    first = replace(_conversation_document(), document_id="eva1:rows:0-249", trust="legacy_unverified")
+    second = replace(first, document_id="eva1:rows:250-499", content="Another historical source")
+    receipts = engine.retain_conversations((first, second))
+    writes = [body for method,path,body in state.requests if method == "POST" and path.endswith("/memories")]
+    assert len(writes) == 1 and len(writes[0]["items"]) == 2
+    assert [r.document_id for r in receipts] == [first.document_id, second.document_id]
+    assert all(item["metadata"]["trust"] == "legacy_unverified" for item in writes[0]["items"])
+    other = replace(second, principal_id="other-person", audience=MemoryAudience.private_person(principal_id="other-person"))
+    before = len(state.requests)
+    with pytest.raises(HindsightMemoryScopeError):
+        engine.retain_conversations((first, other))
+    assert len(state.requests) == before
+    with pytest.raises(HindsightMemoryScopeError):
+        engine.retain_conversations((first, first))
 
 
 def test_hindsight_owns_conversation_memory_and_style_observations(

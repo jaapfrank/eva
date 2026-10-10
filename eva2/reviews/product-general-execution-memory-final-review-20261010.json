@@ -1,0 +1,129 @@
+{
+  "contract": "EvaProductIndependentFinalReview/v1",
+  "recordedAt": "2026-10-10T12:06:04.271655+00:00",
+  "reviewer": "independent product_execution_memory_review agent",
+  "decision": "GO",
+  "scope": "Concrete installed two-service execution and private Eva1 memory import; source review plus targeted corrections and result verification.",
+  "productEvidence": {
+    "path": "eva2/evidence/product/general-multi-service-execution-installed-20261010.json",
+    "sha256": "c4ac249d5b1456a141f7823da818b8512ea7b89d0ecea8c68b392c53fc857976"
+  },
+  "memoryEvidence": {
+    "path": "eva2/evidence/product/eva1-memory-product-import-20261010.json",
+    "sha256": "f7219c7b9ad258cda4fee02d4b0c82f5d5689fe35b038e7eb130aa0b16403aa7"
+  },
+  "reviewedRuntimeSourceSha256": {
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "0fd8f1b48cffd7d8d7e2f6e96916166e69186a39d88cbb745393b05bb015714f",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "64a5f9696b1105c2960df2f67281b58018e51a7a59a7ae684ab47dd2a2003fd0",
+    "eva2/src/eva/bootstrap/delegated_digital_runner.py": "2f1a6777c7e41555e6bc11092e62ea8a84875998fc7854ff1d1bd3f63eb7184f",
+    "eva2/src/eva/application/memory.py": "07fedf412eb4463d788b669fbd6269286425acd603dc91b0bbd4c2a9e68fc2fb",
+    "eva2/src/eva/adapters/projection/hindsight.py": "4e41417bf19a0fe73fb1477453b07f60454fc8f9637664378cc19a0fe049c33c",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "c406411f3091ec1dd68c8febe2ff1bb8544cef828f2ecc9982b7f5ad7a709c6c"
+  },
+  "reviewedImporterSourceSha256": {
+    "eva2/tools/import_eva1_memory.py": "fea2b26458a76bb567ca6edadb8e735561743ceb1b885a6df8325f26578b10d4",
+    "eva2/tests/tools/test_import_eva1_memory.py": "551f35c9b3956a662321d46aabdedae80b9a9003ff8e1097323b38a82aa6a277"
+  },
+  "blockingFindings": [],
+  "resolvedFindings": [
+    {
+      "issue": "Legacy unverified trust was absent from the final model-context qualifier.",
+      "resolution": "Actual model context now explicitly marks historical Eva1 memory as unconfirmed and excludes instructions/permission.",
+      "independentCheck": "Targeted context test passed: 1 test."
+    },
+    {
+      "issue": "A replacement retry after completed native retain but before local receipt save could delete the new source and replay an already completed operation.",
+      "resolution": "Durable exact-plan pending phases prevent repeat deletion; monotone erasure generations prevent old operation replay; changed sources invalidate previous recall verification before native dispatch.",
+      "independentCheck": "11 importer tests passed; both affected final crash/status tests passed after final correction."
+    }
+  ],
+  "verification": {
+    "installation": {
+      "core": "healthy; live image and six source hashes equal repository and recorded candidate",
+      "delegatedWorkWorker": "healthy; live image and six source hashes equal repository and recorded candidate",
+      "sourceModulesPerImage": 335,
+      "unchangedOutsideSixModulesPerImage": 329,
+      "recordedMountsEqualLiveMounts": true,
+      "mountCounts": {
+        "core": 25,
+        "delegatedWorkWorker": 21
+      }
+    },
+    "ordinaryRequest": {
+      "workerTaskUnchangedAcrossThreeGenerations": true,
+      "originalQuestionConditionsPreserved": true,
+      "originalMessageBindingVerified": true,
+      "parentChainVerified": true,
+      "priorGenerationStates": [
+        "failed",
+        "failed"
+      ],
+      "finalGeneration": 3,
+      "finalState": "succeeded",
+      "nativeVerified": false,
+      "websiteResultAvailable": true,
+      "deliveryClaim": false
+    },
+    "result": {
+      "oneSaveAdmission": true,
+      "saveArgumentAndObservedContentEqualNote": true,
+      "separateMcpReadEqualsSavedContent": true,
+      "independentHostVolumeBytesEqualNote": true,
+      "noteSha256": "488116c851fbfa6d77c84edbe329f314bcd04a0247ad787f17076c0289435c83",
+      "noteBytes": 1440,
+      "fullEvidenceAdmissionCount": 17,
+      "fullEvidenceStateObservationCount": 16,
+      "homeAssistantEffectCalls": 0,
+      "observedTemplateRenderErrorsRetained": 3,
+      "requestedTemperatureLightsUnitsAndUncertaintySupported": true
+    },
+    "memory": {
+      "snapshotHashAndIdentityBindingVerified": true,
+      "sourceRows": 3187,
+      "selectedRows": 1115,
+      "privateStableDocuments": 45,
+      "exactPrincipalCount": 1,
+      "trust": "legacy_unverified",
+      "planAndReceiptDocumentRevisionsEqual": true,
+      "nativeBatchOperationBoundToExact45Items": true,
+      "nativeParentCompleted": true,
+      "nativeChildrenCompleted": 11,
+      "ordinaryRecallFacts": 16,
+      "legacyRecallFacts": 15,
+      "unchangedReimportDocuments": 45,
+      "reimportNativeRequests": 0,
+      "reimportNativeWrites": 0,
+      "finalReceiptPendingCount": 0,
+      "initial45SourceDocumentsUnchangedByDurabilityCorrection": true
+    }
+  },
+  "qualifications": [
+    "GO applies to this concrete installed delivery and honest publication; one successful task does not prove arbitrary services or universal autonomy.",
+    "Native verified=false is retained separately from independent content, storage and readback verification.",
+    "The two prior failed generations, three template rendering errors, and packaging failure remain retained evidence.",
+    "Background usage is partial: 20 completed responses, 17 tools and 540522 known tokens; full physical requests, total provider tokens and credit costs remain unknown.",
+    "The successful generation has 15 completed responses, 14 tools, 478284 known tokens and a 150-second generation duration; no efficiency advantage is established.",
+    "The website result is available; no Telegram delivery, speaker delivery, complete Eva1 replacement or family acceptance is inferred.",
+    "Default Telegram remains Eva1; original P2.1, comparator losses/UNKNOWN and prior acceptances remain unchanged; speech remains parked."
+  ],
+  "privateEvidenceHashes": {
+    "ordinary-house-overview-request.private.json": "da942590de307727dfb1d25e27f34ea9441c0caf7dc303fa39b5b47efd8a77c4",
+    "ordinary-house-overview-admission.private.json": "dd8cf002220545f6da13c85f0eedcd5ecdb9ac85d6858f15e482c1db59327a5c",
+    "ordinary-house-overview-state.private.json": "31cbd81f9db8aea8fb0249f66414446c8a2ea5ab94f2fda99f4535171a3fc350",
+    "ordinary-house-overview-resume-state.private.json": "82c2bbffa01ccf5d37b81b7fc86610717da82c1e56941638c0aff5a41ef9b0f4",
+    "ordinary-house-overview-resume-v2-state.private.json": "a2b501770cb312d91c837b5455e529390c6c2ffe683b23ae8f9ff79db66dad0e",
+    "ordinary-final-action-observations-full.private.jsonl": "a45044a36c7900eb1d94c8ab34f262652324e745f01cc24b31b83d12e73e51f7",
+    "ordinary-house-overview-file-readback.private.json": "ac1db1a25a3ee742203ecb65483f9d5a662bdb764da5afed890df29ae338eb6a",
+    "ordinary-house-overview-file-content.private.txt": "488116c851fbfa6d77c84edbe329f314bcd04a0247ad787f17076c0289435c83",
+    "installation-v2-receipt.private.json": "e6495f90f2cf5d9e3e809354ed912a4f7f15d76c62432d025c4d69d6bb2a39c3",
+    "installed-source-readback.private.json": "2f280a9370810a57a6c32ca50b540a8cd7293f5ac120ccbe2b80640fac20d5e0",
+    "build-v2.private.json": "2e2b246c595709e73b4b9722e3fb19249301d20f128a59164e0f516ffa3f0e14"
+  },
+  "reviewActions": {
+    "newModelRequests": 0,
+    "newComparisonRuns": 0,
+    "runtimeMutations": 0,
+    "sourceMutations": 0,
+    "artifactWritten": "eva2/reviews/product-general-execution-memory-final-review-20261010.json"
+  }
+}

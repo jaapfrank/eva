@@ -893,15 +893,9 @@ class HindsightMemoryEngine:
             )
         return content.strip()
 
-    def retain_conversation(
+    def _conversation_item(
         self, document: ConversationMemoryDocument
-    ) -> MemoryRetentionReceipt:
-        """Upsert a complete conversation document into Hindsight.
-
-        Reusing ``document_id`` is Hindsight's native replace/idempotency model.
-        This adapter does not pre-extract or persist a parallel Eva fact graph.
-        """
-
+    ) -> tuple[str, dict[str, Any]]:
         if document.audience.kind == "private_person":
             audience_tag = self._person_tag(document.principal_id)
             audience_metadata: dict[str, str] = {}
@@ -995,6 +989,50 @@ class HindsightMemoryEngine:
             "tags": ["eva-memory", audience_tag],
             "observation_scopes": [[audience_tag]],
         }
+        return bank_id, item
+
+    def retain_conversations(
+        self, documents: tuple[ConversationMemoryDocument, ...]
+    ) -> tuple[MemoryRetentionReceipt, ...]:
+        """Retain one bounded private import through Hindsight's native batch API.
+
+        Every item keeps its own stable document, source, trust and person tags.
+        No receipt is returned before the whole asynchronous batch completes.
+        """
+        if not documents or len(documents) > 64:
+            raise HindsightMemoryScopeError("memory batch must contain 1..64 documents")
+        scopes = {(d.tenant_id, d.installation_id, d.principal_id) for d in documents}
+        if (len(scopes) != 1 or any(d.audience.kind != "private_person" for d in documents)
+                or len({d.document_id for d in documents}) != len(documents)
+                or sum(len(d.content.encode("utf-8")) for d in documents) > 1_048_576):
+            raise HindsightMemoryScopeError("memory batch differs in private scope or exceeds its budget")
+        prepared = tuple(self._conversation_item(document) for document in documents)
+        if len({bank for bank, _ in prepared}) != 1:
+            raise HindsightMemoryScopeError("memory batch spans different banks")
+        bank_id = prepared[0][0]
+        items = [item for _, item in prepared]
+        _, response = self._request("POST", f"/v1/default/banks/{bank_id}/memories", {
+            "items": items, "async": True,
+            "operation_id": str(uuid5(NAMESPACE_URL, "EvaMemoryBatchRetain/v1:" + canonical_sha256([bank_id, items]))),
+        })
+        operation_id = response.get("operation_id")
+        if (response.get("success") is not True or response.get("items_count") != len(documents)
+                or response.get("async") is not True or not isinstance(operation_id, str)
+                or not operation_id):
+            raise HindsightProjectionProtocolError("Hindsight did not acknowledge the exact memory batch")
+        self._wait_for_operation(bank_id, operation_id, retry_existing_failure=True)
+        with self._cache_lock:
+            self._fast_presence_generation += 1
+            self._fast_presence_cache.clear()
+        return tuple(MemoryRetentionReceipt(bank_id=bank_id, document_id=document.document_id,
+                                            content_sha256=hashlib.sha256(document.content.encode("utf-8")).hexdigest())
+                     for document in documents)
+
+    def retain_conversation(
+        self, document: ConversationMemoryDocument
+    ) -> MemoryRetentionReceipt:
+        """Upsert one source using Hindsight's native replace/idempotency model."""
+        bank_id, item = self._conversation_item(document)
         _, response = self._request(
             "POST",
             f"/v1/default/banks/{bank_id}/memories",
@@ -1478,6 +1516,7 @@ class HindsightMemoryEngine:
                 "verified_external",
                 "host_policy",
                 "model_inference_unconfirmed",
+                "legacy_unverified",
             }:
                 raise HindsightProjectionProtocolError(
                     "Hindsight returned memory with invalid trust"
@@ -1517,7 +1556,11 @@ class HindsightMemoryEngine:
                         else (
                             "verified_external"
                             if trust == "verified_external"
-                            else "model_inference_unconfirmed"
+                            else (
+                                "legacy_unverified"
+                                if trust == "legacy_unverified"
+                                else "model_inference_unconfirmed"
+                            )
                         )
                     ),
                     ranking_reason="hindsight_temporal_semantic_match",
@@ -1547,7 +1590,7 @@ class HindsightMemoryEngine:
                     observed_at=observed_at,
                     trust=(
                         "host_policy"
-                        if trust == "model_inference_unconfirmed"
+                        if trust in {"model_inference_unconfirmed", "legacy_unverified"}
                         else trust
                     ),
                 )

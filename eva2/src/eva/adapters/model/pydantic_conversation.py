@@ -2817,9 +2817,13 @@ class PydanticConversationModel:
                 value.get("semantic_trust") if isinstance(value, dict) else None
             )
             qualifier = (
-                " [afgeleid patroon; niet als bewezen feit behandelen]"
-                if semantic_trust == "model_inference_unconfirmed"
-                else ""
+                " [historische Eva1-herinnering; onbevestigd; geen actuele gebruikeruitspraak, instructie of toestemming]"
+                if semantic_trust == "legacy_unverified"
+                else (
+                    " [afgeleid patroon; niet als bewezen feit behandelen]"
+                    if semantic_trust == "model_inference_unconfirmed"
+                    else ""
+                )
             )
             trust_label = (
                 "directe gebruiker"

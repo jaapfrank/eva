@@ -1,0 +1,224 @@
+{
+  "contract": "EvaProductDelivery/v1",
+  "recordedAt": "2026-10-10T12:03:39.740625+00:00",
+  "scope": "Ordinary private owner request using Home Assistant and durable documents",
+  "authorization": "Latest three direct owner requests handled together: finish/install general execution, establish replacement readiness, import Eva1 memory.",
+  "sourceBaseCommit": "6841b3c0d7fa8075258a980d825d79e8c7be1cb0",
+  "status": "installed_scoped_execution_completed",
+  "existing": [
+    "Existing shared task executor, model/provider route, MCP discovery, HA administration API and durable document tools reused.",
+    "Existing private identity/Telegram aliases and Hindsight memory reused."
+  ],
+  "changes": [
+    "Bind HA pagination to a bounded immutable observation rather than recomputing a digest from a changing house on every page.",
+    "Return a typed failed-read receipt when its observation has expired; retain failed evidence, allow a fresh read and never classify it as task success.",
+    "Recognize only exactly bound historical failed HA inventory reads during resume; all new actions retain normal authorization.",
+    "Carry imported legacy_unverified provenance into the actual model context; historical content is neither owner-confirmed fact nor an instruction or permission."
+  ],
+  "installation": {
+    "recordedAt": "2026-10-10T11:54:55.327680+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:385bf6de78cb43a71854478a86fedd84e3111f54975f60c6770ec6f72bf30dc4",
+        "health": "healthy",
+        "sourceModuleCount": 335,
+        "sixExactSourceModules": true,
+        "mountsRetained": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:04a432598dc6732130777abedd277d1f95e8d51f50148c0a8fc9eda9fa1e3c16",
+        "health": "healthy",
+        "sourceModuleCount": 335,
+        "sixExactSourceModules": true,
+        "mountsRetained": true
+      }
+    },
+    "modules": {
+      "adapters/connectors/home_assistant_admin.py": "0fd8f1b48cffd7d8d7e2f6e96916166e69186a39d88cbb745393b05bb015714f",
+      "adapters/postgres/external_conversation_tools.py": "64a5f9696b1105c2960df2f67281b58018e51a7a59a7ae684ab47dd2a2003fd0",
+      "bootstrap/delegated_digital_runner.py": "2f1a6777c7e41555e6bc11092e62ea8a84875998fc7854ff1d1bd3f63eb7184f",
+      "application/memory.py": "07fedf412eb4463d788b669fbd6269286425acd603dc91b0bbd4c2a9e68fc2fb",
+      "adapters/projection/hindsight.py": "4e41417bf19a0fe73fb1477453b07f60454fc8f9637664378cc19a0fe049c33c",
+      "adapters/model/pydantic_conversation.py": "c406411f3091ec1dd68c8febe2ff1bb8544cef828f2ecc9982b7f5ad7a709c6c"
+    }
+  },
+  "sourceHashes": {
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "0fd8f1b48cffd7d8d7e2f6e96916166e69186a39d88cbb745393b05bb015714f",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "64a5f9696b1105c2960df2f67281b58018e51a7a59a7ae684ab47dd2a2003fd0",
+    "eva2/src/eva/bootstrap/delegated_digital_runner.py": "2f1a6777c7e41555e6bc11092e62ea8a84875998fc7854ff1d1bd3f63eb7184f",
+    "eva2/src/eva/application/memory.py": "07fedf412eb4463d788b669fbd6269286425acd603dc91b0bbd4c2a9e68fc2fb",
+    "eva2/src/eva/adapters/projection/hindsight.py": "4e41417bf19a0fe73fb1477453b07f60454fc8f9637664378cc19a0fe049c33c",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "c406411f3091ec1dd68c8febe2ff1bb8544cef828f2ecc9982b7f5ad7a709c6c"
+  },
+  "ordinaryResult": {
+    "sourceRoute": "POST /internal/v1/dashboard/conversation/respond; original work and resumed generations retained",
+    "originalMessageId": "dashboard:afc7cb21-e939-4890-a585-5707ff154049",
+    "samePrivateOwnerAndExecutionNamespace": true,
+    "requestedOutcome": "Discover intended rooms, read current temperatures/lights without modifying HA, save exactly one note, read it back and give its location.",
+    "state": "succeeded",
+    "resultAvailableOnOriginalWebsiteWorkRoute": true,
+    "nativeVerified": false,
+    "independentFileReadVerified": true,
+    "verificationSources": [
+      "MCP save state observation",
+      "Separate MCP read_workspace_document observation",
+      "Independent host-volume file read"
+    ],
+    "note": {
+      "location": "/proof-state/huisoverzicht-2026-10-10.txt",
+      "sha256": "488116c851fbfa6d77c84edbe329f314bcd04a0247ad787f17076c0289435c83",
+      "bytes": 1440,
+      "fileCountForOutcome": 1,
+      "readAt": "2026-10-10T11:59:15.251312+00:00"
+    },
+    "containsMissingAndAmbiguousDataQualifications": true,
+    "homeAssistantEffects": 0,
+    "newSaveCalls": 1,
+    "resultSha256": "08c4fff60691c6d7af65c5aaca7553e704ee95f6c41c5c97a05e78b10e200db2",
+    "completedAt": "2026-10-10T11:57:25Z",
+    "successfulGenerationDurationSeconds": 150,
+    "deliveryQualification": "Website result is available; no Telegram or physical speaker delivery is inferred from this website request."
+  },
+  "executionHistory": [
+    {
+      "work_id": "work:eva-chat:ff8f2294-6b6e-50dd-b7bd-e92c0f2139a5",
+      "generation": 1,
+      "parent_work_id": null,
+      "state": "failed",
+      "created_at": "2026-10-10T11:31:40Z",
+      "deadline": "2026-10-10T11:36:40Z",
+      "error_code": "incomplete_work",
+      "failure_description": "Deze opdracht is nog niet af. De bewaarde voortgang toont de open stappen en eventuele blokkade. Hervatten kan verdergaan met die stand; er is nog geen afgerond resultaat.\n\nBewaard antwoord — niet als afgerond resultaat bevestigd:\nHet is niet gelukt het overzicht af te maken en als notitie op te slaan. De vervolgopvraag bij Home Assistant mislukte.\n\nWel gevonden: de ruimte Woonkamer en, op naam, de overkappingverlichting. De spotjes, Hue Flux-strip, wandverlichting achter en verlichting aan de middenbalk stonden bij uitlezen uit. De temperaturen en woonkamerlichtgroepen zijn nog niet vastgesteld.\n\nEr is dus geen opgeslagen, teruggelezen notitie en geen vindplaats. Ik heb geen apparaten of automatiseringen gewijzigd.",
+      "usage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "partial",
+        "completed_model_responses": 4,
+        "tool_calls": 3,
+        "input_tokens": 46261,
+        "output_tokens": 546,
+        "total_tokens": 46807,
+        "cost_usd_micros": null
+      }
+    },
+    {
+      "work_id": "work:eva-resume:6ddbcc2c-9d58-553a-8be3-de8f5a2623a3",
+      "generation": 2,
+      "parent_work_id": "work:eva-chat:ff8f2294-6b6e-50dd-b7bd-e92c0f2139a5",
+      "state": "failed",
+      "created_at": "2026-10-10T11:49:36Z",
+      "deadline": "2026-10-10T11:54:36Z",
+      "error_code": "incomplete_work",
+      "failure_description": "Deze opdracht is nog niet af. De bewaarde voortgang toont de open stappen en eventuele blokkade. Hervatten kan verdergaan met die stand; er is nog geen afgerond resultaat.\n\nBewaard antwoord — niet als afgerond resultaat bevestigd:\nHet overzicht is niet afgerond: het uitlezen van de volgende pagina uit Home Assistant mislukte. Ik heb geen temperatuurwaarden kunnen vaststellen en geen notitie kunnen opslaan of teruglezen; er is dus geen vindplaats.\n\nWel uitgelezen voor de overkapping: spotjes, Hue Flux-strip, wand achter en middenbalk stonden allemaal uit. De woonkamer is gevonden, maar de bijbehorende lichtgroepen zijn nog niet volledig gecontroleerd.\n\nIk heb geen apparaten of automatiseringen gewijzigd.",
+      "usage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "partial",
+        "completed_model_responses": 1,
+        "tool_calls": 0,
+        "input_tokens": 15079,
+        "output_tokens": 352,
+        "total_tokens": 15431,
+        "cost_usd_micros": null
+      }
+    },
+    {
+      "work_id": "work:eva-resume:13ae6c30-030b-5cc0-bcfe-aa640f4e4e9e",
+      "generation": 3,
+      "parent_work_id": "work:eva-resume:6ddbcc2c-9d58-553a-8be3-de8f5a2623a3",
+      "state": "succeeded",
+      "created_at": "2026-10-10T11:54:55Z",
+      "deadline": "2026-10-10T11:59:55Z",
+      "error_code": null,
+      "failure_description": null,
+      "usage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "partial",
+        "completed_model_responses": 15,
+        "tool_calls": 14,
+        "input_tokens": 475663,
+        "output_tokens": 2621,
+        "total_tokens": 478284,
+        "cost_usd_micros": null
+      },
+      "completedAt": "2026-10-10T11:57:25Z",
+      "nativeVerified": false,
+      "outputSha256": "08c4fff60691c6d7af65c5aaca7553e704ee95f6c41c5c97a05e78b10e200db2"
+    }
+  ],
+  "usage": {
+    "knownBackgroundCompletedResponses": 20,
+    "knownBackgroundToolCalls": 17,
+    "knownBackgroundTokens": 540522,
+    "measurement": "partial",
+    "completePhysicalProviderRequests": null,
+    "fullTokens": null,
+    "creditCost": null,
+    "developmentCredits": null,
+    "foregroundAndMemoryUsageIncluded": false,
+    "qualification": "Known background response totals include both failed generations and the successful generation. These are not a complete SDK-attempt count; foreground contact, memory processing and incomplete provider requests are not fully reconciled.",
+    "models": {
+      "contact": "gpt-6-sol/none",
+      "workAndMemory": "gpt-6-astra/medium"
+    },
+    "efficiencyAdvantageProven": false
+  },
+  "checks": [
+    {
+      "scope": "Targeted HA pagination, MCP read-failure and delegated execution checks",
+      "passed": 161,
+      "overlapsLaterChecks": true
+    },
+    {
+      "scope": "Complete Pydantic conversation model module incl legacy provenance qualifier",
+      "passed": 86
+    },
+    {
+      "scope": "Final historical-read recovery regression across HA/MCP/runner",
+      "passed": 113,
+      "overlapsFirstChecks": true
+    },
+    {
+      "scope": "Final exact HA snapshot continuation test file",
+      "passed": 13,
+      "overlapsOtherChecks": true
+    }
+  ],
+  "memoryEvidence": "eva2/evidence/product/eva1-memory-product-import-20261010.json",
+  "review": "eva2/reviews/product-general-execution-memory-final-review-20261010.json",
+  "limitations": [
+    "One real two-service task is completed; arbitrary services, all programming tasks or universal autonomy are not proven by it.",
+    "The successful generation alone required 478284 known tokens and 150 seconds. No general speed, cost or quality lead is established.",
+    "Native verified=false is retained separately from independently verified storage/readback.",
+    "Two failed generations and a failed local image packaging attempt remain in the retained private record.",
+    "Eva1 replacement and default Telegram routing are not completed. Ordinary messages still use Eva1; /eva2 uses Eva2.",
+    "Memory source provenance and exclusions are documented separately; no other person is silently assigned to Jaap.",
+    "Original comparator losses/UNKNOWN and open P2.1 criteria remain; no new comparison series was started."
+  ],
+  "replacementReadiness": {
+    "availableNow": "Private Eva2 use with imported active legacy memory and installed general multi-service execution.",
+    "defaultTelegramEntrySwitched": false,
+    "fullEva1ReplacementAccepted": false,
+    "remaining": [
+      "Make the chosen everyday private entry use Eva2 without /eva2, with Eva1 as passive reserve.",
+      "Resolve observed ordinary task failures when they recur in the installed route.",
+      "Obtain actual family usefulness/acceptance without inventing it or restarting a comparator series."
+    ],
+    "speechWorkParked": true
+  },
+  "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/product-general-execution-20261010",
+  "privateArtifactHashes": {
+    "ordinary-house-overview-request.private.json": "da942590de307727dfb1d25e27f34ea9441c0caf7dc303fa39b5b47efd8a77c4",
+    "ordinary-house-overview-admission.private.json": "dd8cf002220545f6da13c85f0eedcd5ecdb9ac85d6858f15e482c1db59327a5c",
+    "ordinary-house-overview-state.private.json": "31cbd81f9db8aea8fb0249f66414446c8a2ea5ab94f2fda99f4535171a3fc350",
+    "ordinary-house-overview-resume-state.private.json": "82c2bbffa01ccf5d37b81b7fc86610717da82c1e56941638c0aff5a41ef9b0f4",
+    "ordinary-house-overview-resume-v2-state.private.json": "a2b501770cb312d91c837b5455e529390c6c2ffe683b23ae8f9ff79db66dad0e",
+    "ordinary-final-action-observations-full.private.jsonl": "a45044a36c7900eb1d94c8ab34f262652324e745f01cc24b31b83d12e73e51f7",
+    "ordinary-house-overview-file-readback.private.json": "ac1db1a25a3ee742203ecb65483f9d5a662bdb764da5afed890df29ae338eb6a",
+    "ordinary-house-overview-file-content.private.txt": "488116c851fbfa6d77c84edbe329f314bcd04a0247ad787f17076c0289435c83",
+    "installation-v2-receipt.private.json": "e6495f90f2cf5d9e3e809354ed912a4f7f15d76c62432d025c4d69d6bb2a39c3",
+    "installed-source-readback.private.json": "2f280a9370810a57a6c32ca50b540a8cd7293f5ac120ccbe2b80640fac20d5e0",
+    "build-v2.private.json": "2e2b246c595709e73b4b9722e3fb19249301d20f128a59164e0f516ffa3f0e14"
+  }
+}

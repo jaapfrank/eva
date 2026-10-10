@@ -150,6 +150,7 @@ class ConversationMemoryDocument:
         "verified_external",
         "host_policy",
         "model_inference_unconfirmed",
+        "legacy_unverified",
     ]
     audience: MemoryAudience
     project_id: str | None = None
@@ -197,6 +198,7 @@ class ConversationMemoryDocument:
             "verified_external",
             "host_policy",
             "model_inference_unconfirmed",
+            "legacy_unverified",
         }:
             raise ValueError("memory document trust is invalid")
         try:

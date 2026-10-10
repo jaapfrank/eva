@@ -316,7 +316,7 @@ def _recoverable_read_error(receipt):
     return (receipt.output.get("status") == "failed"
             and receipt.output.get("recoverable_read_error") is True
             and isinstance(evidence, dict)
-            and evidence.get("source") == "mcp_gateway_read_error"
+            and evidence.get("source") in {"mcp_gateway_read_error", "home_assistant_inventory_read_error"}
             and evidence.get("operation_kind") == "read")
 
 
