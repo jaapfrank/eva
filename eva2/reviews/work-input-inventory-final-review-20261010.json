@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "contract": "EvaIndependentProductReview/v1",
+  "recordedAt": "2026-10-10T17:01:30.639540+00:00",
+  "reviewer": "/root/product_execution_memory_review",
+  "decision": "GO",
+  "blockers": [],
+  "scope": "Exact inventory receipt projection delta, retained offline SDK input evidence, installation readback and bounded publication.",
+  "binding": {
+    "publicEvidence": "eva2/evidence/product/work-input-inventory-installed-20261010.json",
+    "publicEvidenceSha256": "759205e84301a18cb971a39a7a07076af54ea920fc2e91d87d5c683c830ea97a",
+    "source": {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "beforeSha256": "c406411f3091ec1dd68c8febe2ff1bb8544cef828f2ecc9982b7f5ad7a709c6c",
+      "afterSha256": "4896c8265846aae2be9e05278cea2327033ed9614c3d8954b1f2a5f6dc94ca0b"
+    },
+    "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/work-context-selection-20261010",
+    "privateArtifactSha256": {
+      "projection-result.private.json": "db085442c690ffef97b631eaba80145eba35296cbd08ee7c14816a48aaebb390",
+      "owned-sdk-bodies.private.json": "8a3019cb8a0fad6f973731ecf09b107f0ad28a1a28def81300d202a4d2d88f1f",
+      "project-retained-input.private.py": "cd3b9b960259cd17c29ffa08f17ddeece0407ace77fdbd43871954e1e269e340",
+      "retained-context.private.json": "8d1f08c18140cf9b0e3fda775525dd94bf208dd79ef43df3598e14857ef5431c",
+      "pydantic_conversation.py.before.private.py": "c406411f3091ec1dd68c8febe2ff1bb8544cef828f2ecc9982b7f5ad7a709c6c",
+      "build-result.private.json": "eec7a257bfec9029826bc379acb064599226718019372199529c0ed3ed31f7ad",
+      "core-before.private.json": "fe6a30fb70089d6071fd7419476bee48ed84c4c94d3e1ddeaadc9e8b98e49818",
+      "core-after.private.json": "5b0ccfa2c292d13173b759bc327acdb26e885c7baccc3e368d879b7844f040ac",
+      "delegated-work-worker-before.private.json": "3d2486d91d3280bedb8e5c90a42475990639a989f85e501c63e45d29cc4624cd",
+      "delegated-work-worker-after.private.json": "22703fb2909be01b44db769f88d73e3a188e244ad60abd56c281e0c4ed636e80",
+      "installed-readback.private.json": "b0cbf7cca30722ecc8f7f0164df0335db23df1ff1e4c2075344af2ac695b7de7",
+      "installation-receipt.private.json": "13e3112c2e5281b84ab05491e334350bbcbf0ebe427745bd89a8a1ea0b3d551f"
+    },
+    "publicationTextSha256": {
+      "eva2/PROJECTDOEL.md": "39a9f74adadf03ffae043b7a2eb864a8f6489fb42baa580149cc74df8a39a174",
+      "eva2/design/product/execution-workboard-v1.json": "b33dec9b6b7e2e90d8abec55beeca4cf2955964833a018cdd3abec7c61bb4e1b"
+    },
+    "previousEvidenceUnchanged": {
+      "eva2/evidence/product/general-multi-service-execution-installed-20261010.json": "c4ac249d5b1456a141f7823da818b8512ea7b89d0ecea8c68b392c53fc857976",
+      "eva2/evidence/product/eva1-memory-product-import-20261010.json": "f7219c7b9ad258cda4fee02d4b0c82f5d5689fe35b038e7eb130aa0b16403aa7",
+      "eva2/reviews/product-general-execution-memory-final-review-20261010.json": "c9c438c6bf668dabbbfdfa323db985a0058b5d1ba43a5129588f597a21a73e38"
+    }
+  },
+  "independentChecks": {
+    "source": {
+      "onlyProductModuleChanged": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "exactCanonicalEqualityRequired": true,
+      "verifiedDurableContractGuardsRetained": true,
+      "originalReceiptAndProofHashesPreserved": true,
+      "failedMismatchedAndNonDurableReceiptsRemainLiteral": true,
+      "smallInventoryReferenceRejectedWhenLarger": true,
+      "catalogWiringChangesWithdrawn": true
+    },
+    "offlineProjection": {
+      "ownedSDKWithMockTransport": true,
+      "framesIndependentlyChecked": 15,
+      "receiptCount": 17,
+      "retainedAdmissionsNamesAndArgumentsMatched": 17,
+      "retainedVerifiedProofsMatched": 16,
+      "sameNonInputBodyFieldsIncludingModelToolsInstructions": true,
+      "sameCallIdsArgumentsAndResultIds": true,
+      "beforeAfterExpandedEquivalent": true,
+      "inventoryReceiptInstancesExpandedAcrossFrames": 69,
+      "inventoryExpansionMatchesOriginalCompleteReceipt": true,
+      "failedReceiptUnchanged": true,
+      "allBodyHashesAndByteCountsMatched": true,
+      "everyPrefixSmaller": true,
+      "preparedBytesBefore": 1878308,
+      "preparedBytesAfter": 1367007,
+      "preparedByteReduction": 511301,
+      "preparedByteReductionPercent": 27.221360926961925
+    },
+    "installation": {
+      "method": "Independent live Docker inspection plus source/dependency manifest readback; comparison to retained baseline and installation receipt.",
+      "core": {
+        "image": "sha256:30acae1a6c58d9fe8f1fe4ae18ab793c68ea74017954887ba8a7dc84a359793a",
+        "health": "healthy",
+        "sourceModules": 335,
+        "changedModules": [
+          "adapters/model/pydantic_conversation.py"
+        ],
+        "unchangedModules": 334,
+        "dependencies": 45,
+        "dependenciesUnchanged": true,
+        "mounts": 25,
+        "mountsUnchanged": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a",
+        "health": "healthy",
+        "sourceModules": 335,
+        "changedModules": [
+          "adapters/model/pydantic_conversation.py"
+        ],
+        "unchangedModules": 334,
+        "dependencies": 45,
+        "dependenciesUnchanged": true,
+        "mounts": 21,
+        "mountsUnchanged": true
+      },
+      "ordinaryNote": {
+        "bytes": 1440,
+        "sha256": "488116c851fbfa6d77c84edbe329f314bcd04a0247ad787f17076c0289435c83",
+        "liveReadbackUnchanged": true
+      },
+      "updaterReceiptBound": true,
+      "oneUpdateDispatchReportedByInstallationReadback": true,
+      "preDispatchInvocationErrorsPreserved": true
+    },
+    "publication": {
+      "matchesExactPrivateProjectionBuildAndInstallationRecords": true,
+      "offlineByteReductionOnly": true,
+      "fixedMemoryAndIdentityExplicit": true,
+      "notHistoricalRequestReconstructionExplicit": true,
+      "previous478284TokensAndUnknownAccountingPreserved": true,
+      "noNewProductFunctionCompletion": true,
+      "noNewModelBehaviorTokenCreditSpeedOrCallCountClaim": true,
+      "plannedNextStepNotStarted": true,
+      "previousProductAndMemoryEvidenceByteIdentical": true
+    }
+  },
+  "validationAlreadyCompleted": {
+    "independentReceiptViewTestsPassed": 36,
+    "authorOtherChecksPassedBeforeTestOnlyRepair": 145,
+    "authorTupleAssertionFailurePreserved": true,
+    "receiptViewChecksPassedAfterTestOnlyRepair": 36,
+    "newTestsDuringInstallationPublicationReview": 0
+  },
+  "limits": [
+    "The 27.22% reduction concerns prepared local request-body bytes using retained task/tool history and fixed memory/identity; it is not measured provider usage or an exact historical request reconstruction.",
+    "No new live model behavior, provider token usage, credit cost, speed or call-count improvement is established.",
+    "This correction does not establish full Eva1 replacement or complete broader execution efficiency."
+  ],
+  "reviewActivity": {
+    "newModelCalls": 0,
+    "runtimeMutations": 0,
+    "newTestsDuringThisFinalCheck": 0,
+    "filesWritten": [
+      "eva2/reviews/work-input-inventory-final-review-20261010.json"
+    ]
+  }
+}

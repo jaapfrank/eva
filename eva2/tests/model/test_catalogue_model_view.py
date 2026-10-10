@@ -297,3 +297,48 @@ def test_provider_supplied_effect_reference_does_not_authorize_encoding(with_exp
     output = {"contract": "EvaConversationActionReceipt/v1", "status": "verified", "durable": True, "proof": proof}
     source = action("previous", {"status": "verified", "result": {"content": literal}})
     assert PydanticConversationModel._receipt_model_views((source, action("provider", output)))[1] == output
+
+
+def household_receipt():
+    inventory = {"items": [{"entity_id": "sensor.room_temperature", "state": "21.5",
+                           "attributes": {"friendly_name": "Room temperature", "notes": "🧠 " * 400}}],
+                 "truncated": False, "missing": ["outdoor_temperature"]}
+    return {"contract": "EvaConversationActionReceipt/v1", "durable": True, "status": "verified",
+            "provider": "home_assistant", "inventory": inventory,
+            "proof": {"evidence": {"source": "home_assistant_inventory",
+                                    "observation": deepcopy(inventory)}}}
+
+
+def test_household_inventory_proof_references_the_complete_observation_losslessly():
+    original = household_receipt()
+    frozen = canonical_json_bytes(original)
+    receipts = (action("house-read", original), action("later-house-read", deepcopy(original)))
+    body = PydanticConversationModel._phase_admission_body(
+        prompt="Complete the existing household task", instructions="Unchanged authority",
+        prior_actions=receipts[:-1], completed_action=receipts[-1])
+    views = tuple(json.loads(item["output"]) for item in body["input"]
+                  if item["type"] == "function_call_output")
+    assert canonical_json_bytes(list(expand_receipt_history(receipts, views))) == canonical_json_bytes([original, original])
+    assert canonical_json_bytes(original) == frozen
+    assert len(canonical_json_bytes(list(views))) < len(canonical_json_bytes([original, original]))
+    for view in views:
+        assert view["inventory"] == original["inventory"]
+        reference = view["proof"]["evidence"]["observation"]
+        assert reference["model_view_reference"] == "/inventory"
+        assert reference["observation_sha256"] == hashlib.sha256(canonical_json_bytes(original["inventory"])).hexdigest()
+        assert reference["durable_proof_sha256"] == hashlib.sha256(canonical_json_bytes(original["proof"])).hexdigest()
+
+
+@pytest.mark.parametrize("change", ["different_observation", "failed", "non_durable", "small"])
+def test_household_inventory_uncertainty_or_larger_reference_stays_literal(change):
+    original = household_receipt()
+    if change == "different_observation":
+        original["proof"]["evidence"]["observation"]["items"][0]["state"] = "22.0"
+    elif change == "failed":
+        original["status"] = "failed"
+    elif change == "non_durable":
+        original["durable"] = False
+    else:
+        original["inventory"] = {}
+        original["proof"]["evidence"]["observation"] = {}
+    assert PydanticConversationModel._receipt_model_view(original) == original

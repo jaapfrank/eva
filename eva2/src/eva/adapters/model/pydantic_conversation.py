@@ -735,7 +735,11 @@ class PydanticConversationModel:
                 return candidate
         evidence = proof.get("evidence") if isinstance(proof, dict) else None
         observation = evidence.get("observation") if isinstance(evidence, dict) else None
-        result = output.get("result")
+        # Household reads put their observation in inventory; connector reads
+        # use result. Both retain the same observation again inside the proof.
+        # Reference only exact equality, never summarize an observation.
+        result_key = "result" if isinstance(output.get("result"), dict) else "inventory"
+        result = output.get(result_key)
         if (
             output.get("contract") != "EvaConversationActionReceipt/v1"
             or output.get("durable") is not True
@@ -746,7 +750,7 @@ class PydanticConversationModel:
         ):
             return output
         reference = {
-            "model_view_reference": "/result",
+            "model_view_reference": "/" + result_key,
             "observation_sha256": hashlib.sha256(
                 canonical_json_bytes(observation)
             ).hexdigest(),
@@ -756,7 +760,7 @@ class PydanticConversationModel:
         }
         view = (
             PydanticConversationModel._catalogue_model_view(result)
-            if evidence.get("source") == "registered_mcp_catalog"
+            if result_key == "result" and evidence.get("source") == "registered_mcp_catalog"
             else result
         )
         baseline = {
@@ -764,6 +768,8 @@ class PydanticConversationModel:
             "proof": {**proof, "evidence": {**evidence, "observation": reference}},
         }
         if view is result:
+            if result_key == "inventory" and len(canonical_json_bytes(baseline)) >= len(canonical_json_bytes(output)):
+                return output
             return baseline
         # The hashes still attest the retained original proof/observation.
         # Explicitly identify the lossless representation at the reference.
@@ -774,7 +780,7 @@ class PydanticConversationModel:
         }
         candidate = {
             **output,
-            "result": view,
+            result_key: view,
             "proof": {**proof, "evidence": {**evidence, "observation": encoded_reference}},
         }
         return (candidate if len(canonical_json_bytes(candidate)) < len(canonical_json_bytes(baseline))

@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-10T12:07:39.771438+00:00",
+  "lastUpdated": "2026-10-10T16:42:37.864882+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1027,8 +1027,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-10T12:07:39.771438+00:00",
+        "checkedAt": "2026-10-10T16:59:17.422389+00:00",
         "deliveries": [
+          {
+            "title": "Dubbele huisgegevens uit modelaanvraag verwijderd",
+            "date": "2026-10-10T16:59:17.422389+00:00",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "result": "Geïnstalleerd in bestaande kern en taakwerker. Dezelfde huisinventaris staat eenmaal volledig in de modelinvoer; de identieke bewijskopie verwijst daarnaar. Vijftien lokale SDK-aanvraagprojecties samen 27,22% kleiner; alle gegevens exact terug te reconstrueren.",
+            "remaining": "Geen nieuw bewezen verschil in modeltokens, creditkosten, slimheid of aantal stappen. Oude 478.284 tokens blijven staan; dit lost één concrete verspilling op.",
+            "source": "eva2/evidence/product/work-input-inventory-installed-20261010.json",
+            "review": "eva2/reviews/work-input-inventory-final-review-20261010.json",
+            "usage": "0 nieuwe betaalde Eva-modelaanvragen; 15 before/after contextprojecties met lokale SDK MockTransport. Ontwikkelcredits onbekend.",
+            "independentReview": "GO"
+          },
           {
             "title": "Algemene uitvoering: huisgegevens gevonden, notitie opgeslagen en teruggelezen",
             "date": "2026-10-10T11:57:25Z",
@@ -4503,21 +4515,21 @@
           }
         ],
         "now": {
-          "title": "Opgeleverd: algemene uitvoering en Eva1-geheugen",
-          "detail": "Werkend en geïnstalleerd: Eva vond zelf huisgegevens via Home Assistant, bewaarde één notitie en las die apart terug. 1.115 actieve Eva1-geheugenregels beschikbaar in 45 privédocumenten; privéterughalen en herimport zonder dubbele writes bevestigd. Onafhankelijke eindbeoordeling geslaagd. Vervolg nog niet gestart.",
-          "state": "completed",
+          "title": "Invoercorrectie geïnstalleerd; kern en taakwerker gezond",
+          "detail": "Eén concrete verspilling opgelost: dubbele huisinventaris vóór de modelaanvraag verwijderd zonder informatieverlies. Offline SDK-aanvraagdata 27,22% kleiner. Geen nieuwe betaalde Eva-modelcalls of vergelijkingsserie. Vervolg hieronder nog niet gestart.",
+          "state": "installed",
           "activeExecution": false,
           "owner": "/root",
-          "source": "eva2/evidence/product/general-multi-service-execution-installed-20261010.json",
-          "doneWhen": "Deze concrete oplevering is uitgevoerd, geïnstalleerd en onafhankelijk gecontroleerd; volledige Eva1-vervanging blijft afzonderlijk open.",
-          "review": "eva2/reviews/product-general-execution-memory-final-review-20261010.json"
+          "source": "eva2/evidence/product/work-input-inventory-installed-20261010.json",
+          "review": "eva2/reviews/work-input-inventory-final-review-20261010.json",
+          "doneWhen": "Exacte bron geïnstalleerd, beide diensten gezond, 334 overige modules/dependencies/mounts en bewaarde notitie behouden."
         },
         "next": {
           "title": "Eén dagelijkse privé-ingang voor Eva2",
-          "detail": "Nog niet omgeschakeld: gewone Telegramberichten gaan naar Eva1; /eva2 naar Eva2. Volgende gebruikersuitkomst is Eva2 als gekozen standaardingang, met Eva1 als passieve reserve. Geen nieuwe vergelijkingsserie; het hoge werkverbruik blijft een concreet verbeterpunt.",
+          "detail": "Geplande volgende gebruikersuitkomst, nog niet gestart. Gewone Telegramberichten gebruiken nog Eva1; /eva2 gebruikt Eva2. Geen nieuwe vergelijkingsserie of spraakwerk.",
           "state": "planned",
-          "source": "eva2/PROJECTDOEL.md",
-          "activeExecution": false
+          "activeExecution": false,
+          "source": "eva2/PROJECTDOEL.md"
         },
         "ownerAction": {
           "required": false,
@@ -4531,7 +4543,7 @@
           "source": "eva2/evidence/product/general-multi-service-execution-installed-20261010.json"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-10T12:07:39.771438+00:00",
+        "reviewedAt": "2026-10-10T16:59:17.422389+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4561,8 +4573,8 @@
           }
         }
       },
-      "reviewedAt": "2026-10-10T12:07:39.771438+00:00",
-      "checkedAt": "2026-10-10T12:07:39.771438+00:00",
+      "reviewedAt": "2026-10-10T16:59:17.422389+00:00",
+      "checkedAt": "2026-10-10T16:59:17.422389+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -10913,7 +10925,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-10T12:07:39.771438+00:00",
+      "lastUpdatedAt": "2026-10-10T16:59:17.422389+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",

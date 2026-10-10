@@ -1,5 +1,21 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Gerichte invoercorrectie — 10 oktober 2026
+
+De bestaande modelinvoer bevatte dezelfde huisinventaris als inhoud én als bewijs.
+De bestaande verliesvrije verwijzing omvat nu ook inventory: één volledige kopie,
+de bewijsreferentie met oorspronkelijke hashes. Alleen deze modelmodule is gewijzigd
+en geïnstalleerd in kern en werker; 334 andere modules en gegevens blijven behouden.
+Vijftien lokale SDK-aanvraagprojecties op bestaande taakgegevens zijn samen 27,22%
+kleiner in bytes en volledig terug te reconstrueren. Geen nieuwe betaalde Eva-modelcalls.
+Dit is geen gemeten token-/creditbesparing, slimmere besluitvorming of nieuwe
+hoofdafronding. De oude 478.284 tokens en alle eerdere fouten blijven zichtbaar.
+De catalogushypothese leverde op de echte taakwerker geen verbetering op en is verworpen.
+
+Bewijs: eva2/evidence/product/work-input-inventory-installed-20261010.json.
+Review: eva2/reviews/work-input-inventory-final-review-20261010.json.
+Volgende geplande gebruikersuitkomst blijft de dagelijkse privé-ingang; niet gestart.
+
 ## Opgeleverd — 10 oktober 2026
 
 De drie nieuwste eigenaarvragen zijn samen uitgevoerd. De algemene uitvoerroute

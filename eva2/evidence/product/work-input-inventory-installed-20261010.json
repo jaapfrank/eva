@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "contract": "EvaWorkInputCorrection/v1",
+  "recordedAt": "2026-10-10T16:58:48.415488+00:00",
+  "status": "installed",
+  "scope": "Existing model receipt projection, no new optimizer or comparison series",
+  "problem": "Verified household inventory was repeated verbatim in proof.evidence.observation; only result duplicates were referenced previously.",
+  "change": "The existing exact-equality local proof reference now also handles inventory. Full stored receipts, statuses, errors, call identities, arguments, scope and authority remain unchanged.",
+  "source": {
+    "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+    "beforeSha256": "c406411f3091ec1dd68c8febe2ff1bb8544cef828f2ecc9982b7f5ad7a709c6c",
+    "afterSha256": "4896c8265846aae2be9e05278cea2327033ed9614c3d8954b1f2a5f6dc94ca0b"
+  },
+  "offlineMeasurement": {
+    "schema": "EvaRetainedWorkInputProjection/v1",
+    "paidProviderRequests": 0,
+    "externalEffects": 0,
+    "frames": 15,
+    "receiptCount": 17,
+    "fixedMemoryAndIdentity": true,
+    "notHistoricalRequestReconstruction": true,
+    "notProviderUsageOrCreditMeasurement": true,
+    "ownedSDKMockTransport": true,
+    "sourceTaskAndToolHistory": "retained ordinary work",
+    "beforeSourceSha256": "c406411f3091ec1dd68c8febe2ff1bb8544cef828f2ecc9982b7f5ad7a709c6c",
+    "afterSourceSha256": "4896c8265846aae2be9e05278cea2327033ed9614c3d8954b1f2a5f6dc94ca0b",
+    "rows": [
+      {
+        "receiptPrefix": 3,
+        "before": {
+          "bytes": 70921,
+          "sha256": "3751b0ddbe997b237d0fa3da97a40e412c845e71ac1cbda8a172632d246f8e07"
+        },
+        "after": {
+          "bytes": 54236,
+          "sha256": "e6624b8fe63e152b4462284619dc136701f812503d36adf10ae79cd6940b2c98"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 4,
+        "before": {
+          "bytes": 102936,
+          "sha256": "917e2d6eaa6d38b0726f3e210886b1530530df5286f8b3291c7ace1397ba65e2"
+        },
+        "after": {
+          "bytes": 70898,
+          "sha256": "34e57f0d8fb1126efcc4d06ac86302361519f7c39e4eb63172a25d03f16676bb"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 5,
+        "before": {
+          "bytes": 109888,
+          "sha256": "29e8e575b86176320a116e83021b91a70f14a28731d36b6f510e8fd7cc77b21f"
+        },
+        "after": {
+          "bytes": 75134,
+          "sha256": "0dbf38792826626994c50bc4e10190e27faa272c6039d5bfc268d56b49dd438e"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 6,
+        "before": {
+          "bytes": 112991,
+          "sha256": "d4f511d164f541e669e1d9d4749257bcdf3c62253f4825ecf21bc09187f14c40"
+        },
+        "after": {
+          "bytes": 77339,
+          "sha256": "6c9757b307e47cb3186a7a73fb08b2050b5d2f9aad8d49c677c61d749105b844"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 7,
+        "before": {
+          "bytes": 114715,
+          "sha256": "0f988f946d8461d7ce15e26311d36ec6515fabedd143768202480b087141e916"
+        },
+        "after": {
+          "bytes": 79063,
+          "sha256": "0fc53bfd91449f81b0d4cf4acc7b37edcea7f6c48e060cba90c57e59d78564bc"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 8,
+        "before": {
+          "bytes": 120116,
+          "sha256": "365e0ff9c4fe947c954a42c56ddfa42d64a48151ab0c0ab5b36a1eb0b7f069f1"
+        },
+        "after": {
+          "bytes": 84464,
+          "sha256": "336b0f4ff0d265cc45af3df88f78c0e2159ed2836cc4f5c1850f5550092bea59"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 9,
+        "before": {
+          "bytes": 121919,
+          "sha256": "39cbaa27a846ad3c3352a266f4c5d715c300ab2c9c68efb7f7fe4402b91cdb77"
+        },
+        "after": {
+          "bytes": 86267,
+          "sha256": "5d4081d729607368db3f051a75e0049ef4a4cedb73948ab51234c28eab8b57ca"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 10,
+        "before": {
+          "bytes": 123721,
+          "sha256": "14bbb89cc1843f5775719adf3532e3689d2455ab77ab520fbc756e216e1501c5"
+        },
+        "after": {
+          "bytes": 88069,
+          "sha256": "e8a63260307fbf630f5cbd6e94607dcc19045a7c75b33435fd55c2befa5b5e13"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 11,
+        "before": {
+          "bytes": 125633,
+          "sha256": "e5ba694849937b3621a555b492a4953b0704e58a56ac8cfd9865afd33b5d7f66"
+        },
+        "after": {
+          "bytes": 89981,
+          "sha256": "85bfb83c185f81ac260b07906fba65037247f563121e8efb4949aceda1890539"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 12,
+        "before": {
+          "bytes": 133434,
+          "sha256": "dba436ff88244a94485f87bdea3daca4cdf86a9a01c71831815a1e6c54b85fe9"
+        },
+        "after": {
+          "bytes": 97782,
+          "sha256": "c8b4fb47899f91073940f0aeb741f5ab05870164a33cbdeb09a523b5a5843679"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 13,
+        "before": {
+          "bytes": 134856,
+          "sha256": "9df6708af1c2a8af717615ebe756e750842175c02c54a340356b9474d89f74ee"
+        },
+        "after": {
+          "bytes": 99204,
+          "sha256": "9e32d67df4172199cc228491c5a41b774943beb18123338c037111de26db80e6"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 14,
+        "before": {
+          "bytes": 142664,
+          "sha256": "0a7cd14c8ec39508289ade1a4755ddd781d307e068f992d3db3dff6ff4cb0cc3"
+        },
+        "after": {
+          "bytes": 107012,
+          "sha256": "73fff155d4d98f079a24fa9661a0b4a9281e3cc3827f63089ed4d289af55ca75"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 15,
+        "before": {
+          "bytes": 146659,
+          "sha256": "940ffb7df67c96db8f42eee112c5af53099a2a2fc4863e90c70405de34bba1b0"
+        },
+        "after": {
+          "bytes": 111007,
+          "sha256": "5d9c412d071a85a2624a5cca0dc5bb0b3a3161579e7cb833220b2d9917cfc0cc"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 16,
+        "before": {
+          "bytes": 157475,
+          "sha256": "221de88d372bcb8cb1252225bea6c76d4fc5113eedb571db1d225c7ddb04675f"
+        },
+        "after": {
+          "bytes": 121823,
+          "sha256": "1b9e5fa195998774ef6843b7928d3e8215706fac333391bfe0f86b864a468098"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      },
+      {
+        "receiptPrefix": 17,
+        "before": {
+          "bytes": 160380,
+          "sha256": "7e6b0415f82080971e9e8fb3b934090ad1012bbc73b68b852a734154bf776954"
+        },
+        "after": {
+          "bytes": 124728,
+          "sha256": "bb51f05ed840625e571504d02e14f28cbad7196408539d140bf6b24c2cf44818"
+        },
+        "lossless": true,
+        "sameToolDefinitions": true
+      }
+    ],
+    "sumBeforeBytes": 1878308,
+    "sumAfterBytes": 1367007
+  },
+  "difference": {
+    "preparedBytesBefore": 1878308,
+    "preparedBytesAfter": 1367007,
+    "preparedByteReduction": 511301,
+    "preparedByteReductionPercent": 27.22,
+    "everyPrefixSmaller": true,
+    "independentExpansionEquivalent": true
+  },
+  "validation": {
+    "tests": "Targeted run: 145 passed; one test-only tuple assertion failed. After correcting that assertion, all 36 receipt-view tests passed, including the previously failing case. No product change after the targeted run.",
+    "uncertaintyAndMismatchUnchanged": true,
+    "originalReceiptsUnchanged": true,
+    "sameToolsInstructionsCallsArguments": true,
+    "newPaidProviderRequests": 0,
+    "newExternalEffects": 0,
+    "independentSourceReplayReview": "GO for exact source hash; 36 receiptview tests and all15 owned request bodies independently checked"
+  },
+  "rejectedHypothesis": {
+    "catalogSelection": "No identical deferred gateway schema in the actual digital worker; specialized document descriptor retained. Catalogue/wiring changes abandoned."
+  },
+  "build": {
+    "core": {
+      "previousImage": "sha256:385bf6de78cb43a71854478a86fedd84e3111f54975f60c6770ec6f72bf30dc4",
+      "image": "sha256:30acae1a6c58d9fe8f1fe4ae18ab793c68ea74017954887ba8a7dc84a359793a",
+      "changedModules": [
+        "adapters/model/pydantic_conversation.py"
+      ],
+      "unchangedModules": 334,
+      "dependencySetUnchanged": true,
+      "layers": 426
+    },
+    "delegated-work-worker": {
+      "previousImage": "sha256:04a432598dc6732130777abedd277d1f95e8d51f50148c0a8fc9eda9fa1e3c16",
+      "image": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a",
+      "changedModules": [
+        "adapters/model/pydantic_conversation.py"
+      ],
+      "unchangedModules": 334,
+      "dependencySetUnchanged": true,
+      "layers": 419
+    }
+  },
+  "limits": [
+    "This is local request-body preparation with fixed memory/identity, not reconstruction of historical requests.",
+    "No measured provider-token, bill, model-quality, speed or fewer-call improvement from this offline check.",
+    "Previous ordinary work cost remains 478284 recorded tokens / 15 completed modelresponses /14 tools; original failures and accounting remain preserved.",
+    "The existing general workflow still requires multiple informed steps; broader execution efficiency is not completed by removing duplicate data."
+  ],
+  "historicalOrdinaryWork": "eva2/evidence/product/general-multi-service-execution-installed-20261010.json",
+  "installation": {
+    "core": {
+      "image": "sha256:30acae1a6c58d9fe8f1fe4ae18ab793c68ea74017954887ba8a7dc84a359793a",
+      "health": "healthy",
+      "exactChangedSource": true,
+      "unchangedOtherModules": 334,
+      "dependenciesUnchanged": true,
+      "mountsRetained": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a",
+      "health": "healthy",
+      "exactChangedSource": true,
+      "unchangedOtherModules": 334,
+      "dependenciesUnchanged": true,
+      "mountsRetained": true
+    },
+    "ordinarySavedDocumentUnchanged": true,
+    "oneImageUpdateDispatch": true,
+    "preDispatchInvocationErrors": [
+      "missing tools import path",
+      "system Python missing installed dependencies"
+    ]
+  },
+  "review": "eva2/reviews/work-input-inventory-final-review-20261010.json"
+}
