@@ -37,17 +37,22 @@ uitgevoerd; geen nieuwe diensten of mounts. Installatiebewijs:
 eva2/evidence/product/native-initiative-digital-installed-20261011.json.
 Review: eva2/reviews/native-initiative-digital-installed-review-20261011.json.
 
-/root/eva1_memory_transfer legt nu één concrete native gebruikersuitkomst vooraf
-vast met de bestaande starter/werker; geen nieuwe modelproef of uitvoering in
-die voorbereiding. Echte zelfgekozen uitvoering/privéterugmelding,
-kwaliteitsbeoordeling van agentaansturing en samenhangend gezinsgebruik blijven open.
-Volledige AIDE² en het gehele project blijven actief; oorspronkelijke 39/48 behouden.
-Geen eigenaarhandeling nodig. Spraak geparkeerd; geen nieuwe concurrentieserie.
+**Concrete vervolgoorzaak:** de bestaande toelating voor achtergrondreflecties
+heeft vandaag 4/4 persoonsplaatsen gebruikt. Nieuw eigen initiatief wacht daardoor
+op background_budget. Dit is een onbedoelde extra daggrens tegenover de eigenaarafspraak
+existingSubscriptionAutonomy=true en aanvullende dagcaps=null. De eerdere uitvoerkoppeling
+draait gezond; geen oude native thread hervatten of aanleiding fabriceren.
+/root/eva1_memory_transfer corrigeert de bestaande toelatingsroute met behoud van
+historische tellingen, account/providergrenzen, geheugen/opslag, privacy en stop.
+Daarna een echte eigen keuze via de dezelfde werker afmaken. Root verzorgt integratie,
+dashboard en gebundelde review. Geen nieuwe vergelijking of eigen budgetreset.
+Volledige AIDE² en het project blijven actief; oorspronkelijke 39/48 behouden.
+Geen eigenaarhandeling nodig. Spraak geparkeerd.
 
 Bewijs: eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json.
 Later gebruik: eva2/evidence/product/saved-artifact-later-use-result-20261011.json.
 Review: eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json.
-Dashboard inhoudelijk bijgewerkt: 2026-10-11T20:24:43.984328+00:00.
+Dashboard inhoudelijk bijgewerkt: 2026-10-11T20:36:02.625157+00:00.
 
 
 ## Historische voorbereiding en installatie — 11 oktober 2026

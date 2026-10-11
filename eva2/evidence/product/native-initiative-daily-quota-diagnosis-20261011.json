@@ -1,0 +1,29 @@
+{
+  "contract": "EvaQuietInitiativeDailyQuotaDiagnosis/v1",
+  "checkedAt": "2026-10-11T20:30:55.749652+00:00",
+  "observation": {
+    "thread": "runtime-reflections:2026-10-11",
+    "revision": 25,
+    "installationUsed": 4,
+    "installationLimit": 40,
+    "personLimit": 4,
+    "personUsedCounts": [
+      4
+    ],
+    "lastReason": "person_daily_limit_reached",
+    "lastEvent": "RUNTIME_REFLECTION_BLOCKED",
+    "sourceBudgetSha256": "c13e5f33682d5919aeae15fd7ac94919a3403d6920c2f524ea357bcdabc77ee5",
+    "hasInstallationCapacity": true
+  },
+  "ownerDecisionSource": "eva2/design/product/execution-workboard-v1.json#/audit/goalRevision/usageClarification",
+  "ownerExistingSubscriptionAutonomy": true,
+  "ownerAdditionalEvaDailyTokenCap": null,
+  "ownerAdditionalEvaDailyCallCap": null,
+  "consequence": "The current four-per-person reflection allowance blocks choosing another real native initiative; no pending native intent exists. The installed execution bridge is healthy.",
+  "correctionScope": "Remove the unintended extra daily admission boundary for authorized initiative/dream work through existing policy; retain historical usage and actual account/provider admission, memory/storage boundaries, privacy/stop and current model roles. No fabricated task or old closed replay.",
+  "nativeStatusEvidence": "Existing owner reader observed seven terminal entries, no new native entry since installation; latest own context review waiting/background_budget.",
+  "modelsOrActionsDispatchedByDiagnosis": 0,
+  "oldCountersOrClosedThreadsChanged": false,
+  "wholeGoalStatus": "active",
+  "newMainProductCompletion": false
+}

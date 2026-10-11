@@ -138,7 +138,7 @@ function Roadmap({ phases, tasks, searching }) {
 }
 
 const componentIcons = { 'answer-stream':'↗', conversation:'☏', memory:'◈', initiative:'✦', tools:'⚒', voice:'♪', projects:'▤', browser:'▣', installation:'⟳' };
-function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onComparison }) {
+function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onComparison, onRefresh, refreshing }) {
   const overview = project.deliveryOverview;
   if (!overview) return <p role="alert">Het actuele opleveroverzicht ontbreekt.</p>;
   const latest = overview.deliveries.find(item => ['installed', 'accepted'].includes(item.state));
@@ -165,10 +165,11 @@ function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onCompar
       <strong>{stale ? 'Verbinding verloren' : freshness === 'current' ? 'Voortgang handmatig bijgewerkt' : 'Let op: voortgang niet actueel bevestigd'}</strong>
       <span>{Number.isFinite(Date.parse(overview.reviewedAt)) ? `Inhoud gecontroleerd: ${new Date(overview.reviewedAt).toLocaleString('nl-NL')}` : 'Geen inhoudelijke controletijd beschikbaar'} · opgeslagen voortgang, geen live agentstatus</span>
       {(stale || freshness !== 'current') && <span>Dit is de laatst vastgelegde stand; huidig werk kan inmiddels veranderd zijn.</span>}
+      <button className="board-link" onClick={onRefresh} disabled={refreshing}>{refreshing ? 'Ophalen…' : 'Nu verversen'}</button>
     </div>
     <section className="delivery-kanban" aria-label="Projectwerkbord">
-      <article className="board-lane delivered"><h2><span aria-hidden="true">✓</span> Laatst opgeleverd</h2>{latest ? <><small>{latest.date} · {latest.state === 'accepted' ? 'door jou geaccepteerd' : 'geïnstalleerd'}</small><h3>{latest.title}</h3><details><summary>Resultaat, open punten en bewijs</summary><p>{latest.result}</p><p>{latest.remaining}</p><small>{latest.source}</small></details></> : <p>Geen geïnstalleerde oplevering vastgelegd.</p>}</article>
-      <article className="board-lane doing"><h2><span aria-hidden="true">●</span> Laatst gemeld werk</h2><small>{stale || freshness !== 'current' ? 'Huidige uitvoering niet bevestigd' : overview.now.state}</small><h3>{overview.now.title}</h3><details><summary>Werk en eindvoorwaarde</summary><p>{overview.now.detail}</p><p><b>Klaar wanneer:</b> {overview.now.doneWhen}</p></details></article>
+      <article className="board-lane delivered"><h2><span aria-hidden="true">✓</span> Laatst opgeleverd</h2>{latest ? <><small>{formatDeliveryDate(latest.date)} · {latest.state === 'accepted' ? 'door jou geaccepteerd' : 'geïnstalleerd'}</small><h3>{latest.title}</h3><p className="lane-summary">{latest.summary || latest.result}</p><details><summary>Resultaat, open punten en bewijs</summary><p>{latest.result}</p><p>{latest.remaining}</p><small>{latest.source}</small></details></> : <p>Geen geïnstalleerde oplevering vastgelegd.</p>}</article>
+      <article className="board-lane doing"><h2><span aria-hidden="true">●</span> Laatst gemeld werk</h2><small>{stale || freshness !== 'current' ? 'Huidige uitvoering niet bevestigd' : overview.now.state}</small><h3>{overview.now.title}</h3><p className="lane-summary">{overview.now.summary || overview.now.detail}</p><details><summary>Werk en eindvoorwaarde</summary><p>{overview.now.detail}</p><p><b>Klaar wanneer:</b> {overview.now.doneWhen}</p></details></article>
       <article className="board-lane upcoming"><h2><span aria-hidden="true">→</span> Hierna</h2><small>{overview.next.state}</small><h3>{overview.next.title}</h3><details><summary>Volgende stap</summary><p>{overview.next.detail}</p><button className="board-link" onClick={onWork}>Hele uitvoervolgorde →</button></details></article>
       <article className="board-lane waiting"><h2><span aria-hidden="true">◷</span> Van jou nodig</h2><small>{ownerAction.blocksIndependentWork === true ? 'Deze stap wacht op jouw besluit' : 'Oordeel staat los van verder werk'}</small><h3>{ownerAction.title || 'Geen extra handeling vastgelegd'}</h3><p className="lane-summary">{ownerSteps[0] || ownerAction.detail || ownerAction.expected}</p>{ownerSteps.length > 0 && <details className="owner-next-action"><summary>Zo doe je dat</summary><ol>{ownerSteps.map(step => <li key={step}>{step}</li>)}</ol><p>{ownerAction.expected}</p>{ownerAction.url && <a href={ownerAction.url}>{ownerAction.linkLabel || 'Open de proef'} →</a>}</details>}</article>
     </section>
@@ -268,7 +269,7 @@ export default function ProjectDashboard() {
   const [tab, setTab] = useState('overzicht');
   const [selected, setSelected] = useState(null);
   const [filter, setFilter] = useState('');
-  const query = useGetOne('project', { id: 'project' }, { refetchInterval: 5000, retry: false });
+  const query = useGetOne('project', { id: 'project' }, { refetchInterval: 5000, refetchIntervalInBackground: true, refetchOnWindowFocus: true, refetchOnReconnect: true, retry: false });
   if (!query.data) return <div className="project-loading"><h1>Eva, in één oogopslag.</h1><p role={query.error ? 'alert' : undefined}>{query.error ? 'De projectbron is niet bereikbaar. Er wordt geen groene status verzonnen.' : 'Actuele projectbron ophalen…'}</p><button onClick={() => query.refetch()}>Opnieuw ophalen</button></div>;
   const { project, active: storedActive, milestones, queued, completed, runtime, browserAccess, updatedAt, readAt, revision } = query.data;
   const recordedWork = project.deliveryOverview?.now;
@@ -300,7 +301,7 @@ export default function ProjectDashboard() {
       {query.error && <div className="project-warning" role="alert">Verbinding met de projectbron verloren. Onderstaande gegevens zijn van de vorige controle.</div>}
       <section className="project-heading"><div><p className="eyebrow">VAN AMBITIE NAAR DAGELIJKS GEBRUIK</p><h1>{tab === 'overzicht' ? 'Waar staat Eva écht?' : tab === 'werk' ? 'Dit moet er nog af.' : tab === 'details' ? 'Resultaten en bewijs' : 'Leren van de besten.'}</h1><p>{tab === 'overzicht' ? null : tab === 'werk' ? 'De afgesproken volgorde naar een complete Eva.' : tab === 'details' ? 'Eerdere opleveringen, praktijktests en technische onderbouwing.' : 'Actuele bronnen, open keuzes en bewijs. Geen verzonnen voorsprong.'}</p></div>{tab !== 'overzicht' && <span className="phase-tag">In ontwikkeling</span>}</section>
       {tab === 'overzicht' && <>
-        <DeliveryOverview project={project} runtime={runtime} stale={Boolean(query.error)} onWork={() => setTab('werk')} onHistory={() => setTab('details')} onComparison={() => setTab('keuzes')}/>
+        <DeliveryOverview project={project} runtime={runtime} stale={Boolean(query.error)} onWork={() => setTab('werk')} onHistory={() => setTab('details')} onComparison={() => setTab('keuzes')} onRefresh={() => query.refetch()} refreshing={query.isFetching}/>
         <SmallTaskChecklist project={project} stale={Boolean(query.error)}/>
       </>}
       {tab === 'details' && <>

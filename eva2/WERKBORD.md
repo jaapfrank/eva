@@ -1,16 +1,29 @@
-## Actueel werk — 2026-10-11T20:24:43.984328+00:00
+## Actueel werk — 2026-10-11T20:30:55.749652+00:00
+## Dashboardcontrole — 2026-10-11T20:36:02.625157+00:00
 
-**Laatst opgeleverd:** Eigen initiatieven aangesloten op dezelfde programmeer- en verbeterroute. Geïnstalleerd; onafhankelijke bron- en
-installatiereview GO. 224 gerichte controles groen; beide diensten gezond.
-Eva's eerdere zelfgemaakte, verbeterde en later hergebruikte hulpmiddel blijft behouden.
+De geopende browser bleef op de oude 18:02-stand terwijl werkbord/API al 22:30
+bevatten; herladen toont de actuele bron. Achtergrondverversing, terugkeer- en
+verbindingsherstelverversing expliciet ingeschakeld; huidige en laatst geleverde
+uitkomst direct zichtbaar plus Nu verversen. Geen productafronding hierdoor.
+Werkelijke browser gecontroleerd: nieuwe werkbordwijziging zonder herladen zichtbaar,
+Nu verversen gebruikt, nul JavaScriptfouten; 12 bestaande dashboardchecks en build groen.
+Bewijs: eva2/evidence/product/dashboard-live-refresh-20261011.json.
+Daggrenscorrectie blijft in uitvoering; oorspronkelijke taken/statussen behouden.
 
-**Nu:** De koppeling is geïnstalleerd en onafhankelijk goedgekeurd. Nu legt de uitvoerder één concrete vervolgstap vast om zelfgekozen verbeterwerk via de bestaande werker echt af te maken. Geen nieuwe vergelijking of herhaling van de geslaagde hulpmiddelproef. Echte native uitvoering/privéterugmelding en volledige AIDE² blijven open.
 
-**Wie:** /root/eva1_memory_transfer legt de ene concrete gebruikersuitkomst vooraf vast.
- /root verzorgt coördinatie/dashboard/docs/Git. Geen handeling van Jaap nodig.
+**Laatst opgeleverd:** eigen initiatief aangesloten op dezelfde programmeer- en
+verbeterroute. Geïnstalleerd; bron- en installatiereview GO. Beide diensten gezond.
+De eerdere zelfgemaakte, verbeterde en later hergebruikte hulpmiddelen blijven behouden.
 
-**Daarna:** Een aantoonbare verbetering van de aansturing onafhankelijk beoordelen en toepassen met bestaande AIDE²-voorzieningen. Daarna herhaald passend initiatief, leren van de menselijke reactie en samenhangend gezinsgebruik afronden.
-Het volledige goal blijft actief; oorspronkelijke 39/48 kleine afrondingen behouden.
+**Nu:** De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken.
+
+**Wie:** /root/eva1_memory_transfer corrigeert de bestaande toelating en controleert
+behoud van tellers/stop/accountgrenzen. /root verzorgt integratie/dashboard/Git.
+Geen handeling van Jaap nodig.
+
+**Daarna:** echte eigen keuze uitvoeren/terugmelden, aansturing verbeteren,
+passend initiatief en samenhangend gezinsgebruik afmaken. Het volledige goal
+blijft actief; oorspronkelijke 39/48 kleine afrondingen behouden.
 Spraak geparkeerd; geen vergelijkingsserie.
 
 ## Actief volledig projectgoal — 11 oktober 2026

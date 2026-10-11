@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T20:24:43.984328+00:00",
+  "lastUpdated": "2026-10-11T20:30:55.749652+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -129,7 +129,7 @@
       "nextOutcomes": [
         {
           "title": "Droommodus · zelfgekozen verbeterwerk afmaken",
-          "detail": "De koppeling is geïnstalleerd en onafhankelijk goedgekeurd. Nu legt de uitvoerder één concrete vervolgstap vast om zelfgekozen verbeterwerk via de bestaande werker echt af te maken. Geen nieuwe vergelijking of herhaling van de geslaagde hulpmiddelproef. Echte native uitvoering/privéterugmelding en volledige AIDE² blijven open."
+          "detail": "De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken."
         },
         {
           "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T20:24:43.984328+00:00",
+        "checkedAt": "2026-10-11T20:36:41.274881+00:00",
         "deliveries": [
           {
             "title": "Eigen initiatieven aangesloten op dezelfde programmeer- en verbeterroute",
@@ -1036,7 +1036,8 @@
             "review": "eva2/reviews/native-initiative-digital-installed-review-20261011.json",
             "reviewSha256": "707134ec2807044cb5f810d976613ded235b1069d78fcdc9f8d9f9d77e0cb605",
             "independentReview": "GO voor de exacte geïnstalleerde koppeling; geen claim van native nut, privébezorging of volledige AIDE².",
-            "usage": "0 nieuwe handmatige Eva-modelaanvragen voor bron/build/installatie/review. Automatisch runtimeverbruik niet gemeten; ontwikkelcredits onbekend."
+            "usage": "0 nieuwe handmatige Eva-modelaanvragen voor bron/build/installatie/review. Automatisch runtimeverbruik niet gemeten; ontwikkelcredits onbekend.",
+            "summary": "Eigen initiatieven gebruiken nu dezelfde programmeer- en verbeterroute. De koppeling draait; een nieuw zelfgekozen eindresultaat is nog niet aangetoond."
           },
           {
             "title": "Eva verbetert zelf haar hulpmiddel en gebruikt de verbetering later",
@@ -4677,16 +4678,17 @@
         ],
         "now": {
           "title": "Droommodus · zelfgekozen verbeterwerk afmaken",
-          "detail": "De koppeling is geïnstalleerd en onafhankelijk goedgekeurd. Nu legt de uitvoerder één concrete vervolgstap vast om zelfgekozen verbeterwerk via de bestaande werker echt af te maken. Geen nieuwe vergelijking of herhaling van de geslaagde hulpmiddelproef. Echte native uitvoering/privéterugmelding en volledige AIDE² blijven open.",
+          "detail": "De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/native-initiative-digital-installed-20261011.json",
-          "doneWhen": "Een echt zelfgekozen initiatief gebruikt de bestaande digitale uitvoerder, controleert het lokale resultaat en legt dat bij het oorspronkelijke initiatief terug. Aflevering, nut, stoppen en persoonsgrenzen worden afzonderlijk zichtbaar; ACK/start telt niet als afronding.",
-          "phase": "native_initiative_outcome_preparation",
+          "source": "eva2/evidence/product/native-initiative-daily-quota-diagnosis-20261011.json",
+          "doneWhen": "Toegestaan eigen initiatief/droomwerk wordt niet door de onbedoelde extra daggrens geblokkeerd; historisch verbruik, accounttoegang, stoppen, persoonsgrenzen en voorgrondprioriteit blijven behouden. Daarna een authentiek zelfgekozen initiatief via dezelfde werker daadwerkelijk afmaken en terugleggen.",
+          "phase": "native_initiative_daily_quota_correction",
           "executor": "/root/eva1_memory_transfer",
           "coordination": "/root",
-          "review": "eva2/reviews/native-initiative-digital-installed-review-20261011.json"
+          "review": "eva2/reviews/native-initiative-digital-installed-review-20261011.json",
+          "summary": "De uitvoerder corrigeert de onbedoelde daggrens die nieuw eigen initiatief tegenhoudt. De uitvoerkoppeling is al geïnstalleerd; daarna maakt Eva een echte eigen keuze af."
         },
         "next": {
           "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
@@ -4698,14 +4700,14 @@
         "ownerAction": {
           "required": false,
           "title": "Geen handeling van jou nodig",
-          "detail": "Geen handeling van jou nodig. De geïnstalleerde koppeling is goedgekeurd. Eén uitvoerende agent bereidt de concrete native gebruikersuitkomst voor; de coördinator verzorgt integratie, bewijs en dashboard.",
+          "detail": "Geen handeling van jou nodig. De uitvoerder corrigeert de daggrens; Codex installeert de correctie en werkt het echte resultaat bij.",
           "steps": [],
           "expected": "Het dashboard toont apart wat draait, wat in aanbouw is en wat nog niet bewezen is.",
           "blocksIndependentWork": false,
           "source": "eva2/PROJECTDOEL.md"
         },
-        "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T20:24:43.984328+00:00",
+        "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
+        "reviewedAt": "2026-10-11T20:36:41.274881+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4765,10 +4767,25 @@
           "source": "eva2/evidence/product/learning-cycle-native-criteria-20261011.json",
           "doneWhen": "De geïnstalleerde route gebruikt een echte opgeslagen werkervaring en persoonsgebonden feedback bij een volgende relevante opdracht, met zichtbaar gewijzigd gedrag. Een technische gecontroleerde proef en jouw gezinsacceptatie blijven afzonderlijk; privacy, stoppen en geen dubbele acties behouden.",
           "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
+        },
+        "browserRefreshCorrection": {
+          "checkedAt": "2026-10-11T20:36:02.625157+00:00",
+          "observedBeforeReload": "Open localhost browser showed 18:02 project review while source/API contained 22:30; reload returned current source.",
+          "change": "Enable background polling and explicit focus/reconnect refetch; visible summaries and manual refresh.",
+          "verified": true,
+          "uiInstalledAt": "2026-10-11T20:36:41.274881+00:00",
+          "uiVisibleCurrentSummary": true,
+          "manualRefreshVisible": true,
+          "backgroundPollingConfigured": true,
+          "remainingVerification": "Hidden-tab browser throttling not independently measured; background polling/focus/reconnect enabled.",
+          "verifiedAt": "2026-10-11T20:37:43.648821+00:00",
+          "automaticForegroundPropagationVerified": true,
+          "manualRefreshVerified": true,
+          "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-11T20:24:43.984328+00:00",
-      "checkedAt": "2026-10-11T20:24:43.984328+00:00",
+      "reviewedAt": "2026-10-11T20:30:55.749652+00:00",
+      "checkedAt": "2026-10-11T20:30:55.749652+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11061,7 +11078,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-11T20:22:14.930600+00:00",
+        "checkedAt": "2026-10-11T20:36:02.625157+00:00",
         "basis": "Geaccepteerde oorspronkelijke functies behouden. Feedback bij nieuw werk toegepast. Eva heeft zelf code gemaakt, verbeterd, onafhankelijk laten toetsen en later dezelfde verbeterde bron gebruikt. Volledige agentaansturing/droomcyclus nog open.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11101,11 +11118,13 @@
             "name": "Eigen initiatief",
             "state": "incomplete",
             "label": "Resultaat geleverd · oordeel open",
-            "result": "Een zelfgekozen bijdrage is werkelijk uitgevoerd en privé teruggelezen (I1.1). Algemene bronkeuze en automatisering I2 zijn technisch afgerond.",
-            "remaining": "Herhaald passend initiatief, timing en leren van de menselijke reactie als samenhangend geheel aantonen. I1.2 blijft jouw oordeel over nut en hinder; dit is geen ontbrekende vaste camera- of afvalfunctie.",
+            "result": "Een eerdere eigen bijdrage is uitgevoerd en privé teruggelezen. Nu zijn eigen initiatieven ook aangesloten op dezelfde algemene programmeer- en verbeterroute; deze koppeling is geïnstalleerd en onafhankelijk beoordeeld.",
+            "remaining": "De onbedoelde daggrens verwijderen; daarna een nieuw zelfgekozen resultaat en privéterugmelding aantonen. Herhaald passend initiatief en leren van jouw reactie blijven open.",
             "evidencePaths": [
               "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
-              "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json"
+              "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json",
+              "eva2/evidence/product/native-initiative-digital-installed-20261011.json",
+              "eva2/evidence/product/native-initiative-daily-quota-diagnosis-20261011.json"
             ]
           },
           {
@@ -11138,7 +11157,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T20:24:43.984328+00:00",
+      "lastUpdatedAt": "2026-10-11T20:30:55.749652+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11532,8 +11551,8 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "De koppeling is geïnstalleerd en onafhankelijk goedgekeurd. Nu legt de uitvoerder één concrete vervolgstap vast om zelfgekozen verbeterwerk via de bestaande werker echt af te maken. Geen nieuwe vergelijking of herhaling van de geslaagde hulpmiddelproef. Echte native uitvoering/privéterugmelding en volledige AIDE² blijven open.",
-      "currentEvidence": "eva2/evidence/product/native-initiative-digital-installed-20261011.json",
+      "currentWork": "De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken.",
+      "currentEvidence": "eva2/evidence/product/native-initiative-daily-quota-diagnosis-20261011.json",
       "nextStep": "Een aantoonbare verbetering van de aansturing onafhankelijk beoordelen en toepassen met bestaande AIDE²-voorzieningen. Daarna herhaald passend initiatief, leren van de menselijke reactie en samenhangend gezinsgebruik afronden.",
       "usageClarification": {
         "date": "2026-09-07",
@@ -11550,7 +11569,7 @@
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
       "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
-      "designUpdatedAt": "2026-10-11T20:24:43.984328+00:00",
+      "designUpdatedAt": "2026-10-11T20:36:02.625157+00:00",
       "wholeProjectGoalStatus": "active",
       "subdeliveriesDoNotCompleteGoal": true
     },
@@ -14312,7 +14331,7 @@
       "ownerCorrection": "Vaste oorspronkelijke hoofdcategorieën met eigen status; concrete bewezen deeluitkomsten eronder in dezelfde tabel. Hoofdomvang behouden.",
       "verification": "Desktop en 390px mobiel gecontroleerd: negen vaste hoofdcategorieën met eigen status, vijf zichtbare deeluitkomsten, bewijsdetail en menselijke acceptatie apart. Geen horizontale pagina-overloop. Bestaande aantallen afgeronde kaarten niet als percentage gebruikt."
     },
-    "parallelWorkNotes": "## Actuele taakverdeling\n\n/root/eva1_memory_transfer legt één concrete native gebruikersuitkomst vooraf vast; geen uitvoering/modelcalls in de voorbereiding. /root/product_execution_memory_review heeft de exacte bron en installatie GO gegeven en is gereed. /root publiceert de oplevering, houdt dashboard/docs/Git bij en coördineert vervolg. Geen overlappende bestandsverantwoordelijkheid, tweede platform of nieuwe vergelijkingsserie.",
+    "parallelWorkNotes": "## Actuele taakverdeling\n\n/root/eva1_memory_transfer corrigeert de aangetoonde onbedoelde daggrens via bestaande toelating/policy en gerichte tests; geen native modelproef/installatie door hem. /root beheert dashboard/docs/evidence/installatie. Onafhankelijke review volgt gebundeld op bevroren bron. De eerdere uitvoerkoppeling blijft geïnstalleerd; geen gesloten herhaling, nieuwe taak-ID of vergelijkingsserie.",
     "initiativeDeliveryAU007": {
       "status": "done_limited_card_appreciation",
       "scope": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
@@ -20872,7 +20891,7 @@
           "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         }
       ],
-      "nextAction": "De koppeling is geïnstalleerd en onafhankelijk goedgekeurd. Nu legt de uitvoerder één concrete vervolgstap vast om zelfgekozen verbeterwerk via de bestaande werker echt af te maken. Geen nieuwe vergelijking of herhaling van de geslaagde hulpmiddelproef. Echte native uitvoering/privéterugmelding en volledige AIDE² blijven open.",
+      "nextAction": "De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Het volledige geïnstalleerde geheel voldoet aan alle eindvoorwaarden van eva2/PROJECTDOEL.md, inclusief latere toepassing van de leercyclus, ontbrekende mogelijkheid realiseren en hergebruiken, AIDE² voor aansturing en code/uitbreidingen, onafhankelijke eindreview en echte gezinsbeoordeling. Deelopleveringen sluiten het projectgoal niet af; oude acceptaties blijven geldig binnen hun oorspronkelijke scope.",
       "continuationRule": "Het volledige projectgoal blijft actief. Werk vanuit de concrete ontbrekende koppeling naar werkend geïnstalleerd gedrag; oorspronkelijke kleine taken en acceptaties blijven behouden.",
@@ -33331,5 +33350,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T20:24:43.984328+00:00"
+  "updatedAt": "2026-10-11T20:30:55.749652+00:00"
 }
