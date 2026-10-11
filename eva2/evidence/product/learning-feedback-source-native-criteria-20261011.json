@@ -1,0 +1,47 @@
+{
+  "contract": "EvaLearningFeedbackSourceNativeCriteria/v1",
+  "recordedBeforeExecutionAt": "2026-10-11T17:13:08.911632+00:00",
+  "status": "prepared_not_started",
+  "purpose": "One later ordinary task after a proven changed feedback-source cause, not reopening the earlier failed case or a competitor series.",
+  "input": {
+    "sha256": "7486befccee13108b4e12bda312fe301973ffe4217aa185b7180107837d08beb",
+    "text": "Maak voor hetzelfde tijdelijke technische proefproject technical-learning-20261011-cd9fe5c5 een nieuwe korte voorraadnotitie. Nu zijn 41 dozen beschikbaar en 33 nodig. Bewaar precies \u00e9\u00e9n nieuw bestand in /proof-state/learning-feedback-source-d04c9a12-later.txt, lees het apart terug en geef de vindplaats. Gebruik de afspraken en eerdere ervaring van dit proefproject waar relevant. Dit blijft fictief: geen aankoop, huiswijziging of internetonderzoek.",
+    "newConversation": true,
+    "recentMessages": 0,
+    "newMessageId": "technical-feedback-source:d04c9a12:later-turn",
+    "sameControlledProject": true,
+    "feedbackNormOrRequestedBulletFormatRepeated": false
+  },
+  "reference": {
+    "closedOriginalCriteria": "eva2/evidence/product/learning-cycle-native-criteria-20261011.json",
+    "closedOriginalResult": "eva2/evidence/product/learning-cycle-native-result-20261011.json",
+    "originalResultRemains": "not_met",
+    "feedbackAlreadyRetained": true,
+    "norm": 9,
+    "format": "three short bullets in the order judgement, shortfall relative to nine, next step",
+    "temporalInstruction": "now belongs to the original feedback time, not the whole date"
+  },
+  "conditions": [
+    "Selected original feedback reaches later native model input through the installed shared source resolver, without an extra inference or manually injected old feedback.",
+    "The new note correctly calculates 41 minus 33 equals 8 and a shortage of 1 against the learned reserve of 9.",
+    "The saved note uses three short bullets in the learned order and includes a concrete next step.",
+    "The new file is created and independently read back; earlier proof files remain unchanged.",
+    "No automatic old action replay, purchase, house change, internet research, person or project widening; source scope and usual stop behavior preserved."
+  ],
+  "execution": {
+    "ordinaryExistingProviderRoute": true,
+    "contact": "Sol/none",
+    "work": "Astra/medium_or_higher",
+    "singleNewUserTask": true,
+    "automaticTestReplay": false,
+    "noNewComparisonMatrix": true,
+    "existingRuntimeGrantsAndGuardsUnchanged": true,
+    "measureKnownModelToolUsage": true,
+    "developmentAndUnknownExtractionCreditCosts": "unknown"
+  },
+  "evaluation": {
+    "independentFinalReview": true,
+    "ownerAcceptance": "not_filled_by_developer",
+    "fullLearningOrGeneralSuperiority": "not_implied_by_this_slice"
+  }
+}

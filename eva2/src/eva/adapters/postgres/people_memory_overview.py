@@ -28,7 +28,7 @@ from eva.application.people_memory_overview import (
     PeopleMemoryOverview,
     PeopleMemoryOverviewError,
 )
-from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
+from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt, RecallCurrentFacts
 from eva.application.memory_audience import TelegramGroupConsentReference
 from eva.application.telegram_group_consent import TelegramGroupConsent
 from eva.application.telegram_pairing import TelegramDynamicBinding
@@ -143,9 +143,51 @@ class PostgresOwnerMemorySources:
         return self._read(now=now, limit=limit, context_conversations=channels,
                           context_voice=True, history_query=query_text)
 
+    def selected_private_sources(
+        self, query: RecallCurrentFacts,
+        selected_refs: tuple[tuple[str, str, str], ...], *, now: datetime,
+    ) -> tuple[dict[str, object], ...]:
+        """Resolve at most three exact original ingresses selected by semantic recall.
+
+        The canonical verified owner can have server-admitted project conversations.
+        A Telegram bridge remains tied to its exact private chat. This method does
+        not search history or infer missing source identities from derived text.
+        """
+        owner = str(self._owner)
+        alias = None if self._bindings is None else self._bindings.private_bridge_principal(
+            principal_id=owner, principal_binding_id=self._binding)
+        if (query.tenant_id != self._tenant or query.installation_id != self._installation
+                or query.audience.kind != "private_person"
+                or query.audience.principal_id != query.principal_id
+                or not (query.principal_id == owner or (alias is not None
+                    and query.principal_id == alias and query.conversation_id == alias))
+                or (isinstance(query.conversation_id, str)
+                    and query.conversation_id.startswith(("telegram:-", "household:")))):
+            return ()
+        if (not isinstance(selected_refs, tuple) or len(selected_refs) > 32
+                or any(not isinstance(ref, tuple) or len(ref) != 3
+                       or any(not isinstance(value, str) or not value or len(value) > 1024
+                              for value in ref) for ref in selected_refs)):
+            raise ValueError("selected private memory source references are invalid")
+        binding = query.scope.get("observation_binding_sha256")
+        if binding is not None and (not isinstance(binding, str)
+                                    or not re.fullmatch(r"[0-9a-f]{64}", binding)):
+            raise ValueError("selected private source observation binding is invalid")
+        if query.project_id is not None and (not isinstance(query.project_id, str)
+                                             or not query.project_id.strip()
+                                             or len(query.project_id) > 200):
+            raise ValueError("selected private source project is invalid")
+        refs = tuple(dict.fromkeys(ref for ref in selected_refs if ref[0] in {owner, alias}))
+        source_keys = tuple(dict.fromkeys((ref[0], ref[1]) for ref in refs))[:3]
+        refs = tuple(ref for ref in refs if (ref[0], ref[1]) in source_keys)
+        if not refs:
+            return ()
+        return self._read(now=now, limit=3, selected_refs=refs, selected_query=query)
+
     def _read(self, *, now: datetime, limit: int, before: str | None = None,
               source_id: str | None = None, context_conversations=None, after=None,
-              context_voice=False, exclude_conversation=None, history_query=None):
+              context_voice=False, exclude_conversation=None, history_query=None,
+              selected_refs=None, selected_query: RecallCurrentFacts | None = None):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -249,13 +291,57 @@ class PostgresOwnerMemorySources:
                     query = query.where(history_channels, sa.or_(
                         sa.func.to_tsvector(dictionary, sa.func.coalesce(data["content"].astext, "")).op("@@")(terms),
                         reply_match))
+                ingress = None
+                if selected_refs is not None:
+                    assert selected_query is not None
+                    ingress = operational_events.alias("selected_private_ingress")
+                    original = ingress.c.payload["data"]
+                    binding = selected_query.scope.get("observation_binding_sha256")
+                    query = query.join(ingress, sa.and_(
+                        ingress.c.tenant_id == e.tenant_id,
+                        ingress.c.installation_id == e.installation_id,
+                        ingress.c.thread_id == sa.literal("conversation:") + data["source_ref"].astext,
+                        ingress.c.sequence == 1, ingress.c.event_type == "INGRESS_COMMITTED",
+                        ingress.c.occurred_at <= now,
+                        original["kind"].astext == "conversation_ingress",
+                        original["principal_id"].astext == data["principal_id"].astext,
+                        original["conversation_id"].astext == data["conversation_id"].astext,
+                        original["message_id"].astext == data["source_ref"].astext,
+                        original["project_id"].astext.is_not_distinct_from(selected_query.project_id),
+                        sa.not_(original.has_key("content_erasure")),
+                        original["text"].astext.is_not(None),
+                    )).add_columns(
+                        ingress.c.event_id.label("ingress_event_id"),
+                        ingress.c.payload.label("ingress_payload"),
+                        ingress.c.payload_sha256.label("ingress_payload_sha256"),
+                        ingress.c.occurred_at.label("ingress_occurred_at"),
+                    ).where(
+                        sa.tuple_(data["principal_id"].astext, data["source_ref"].astext,
+                                  data["evidence_ref"].astext).in_(selected_refs),
+                        data["project_id"].astext.is_not_distinct_from(selected_query.project_id),
+                        data["privacy_class"].astext.in_(selected_query.allowed_privacy_classes),
+                        data["occurred_at"].astext <= stamp,
+                        sa.not_(data["conversation_id"].astext.startswith("household:")),
+                    )
+                    if binding is not None:
+                        query = query.where(
+                            data["evidence_ref"].astext == f"observation-binding:{binding}",
+                            original["observation_binding"]["binding_sha256"].astext == binding,
+                        )
+                    else:
+                        query = query.where(sa.not_(data["evidence_ref"].astext.startswith("observation-binding:")))
+                    # Several selected facts can share one original ingress. Choose
+                    # one still-admitted source proof per ingress, never a nearby turn.
+                    query = query.distinct(ingress.c.event_id).order_by(
+                        ingress.c.event_id, e.occurred_at.desc(), e.event_id.desc())
                 if source_id is not None:
                     query = query.where(e.event_id == UUID(source_id))
                 if cursor:
                     query = query.where(sa.tuple_(e.occurred_at, e.event_id) < cursor)
                 PostgresOperationalTimeline(self._engine, self._scope)._scope(conn)
-                rows = conn.execute(query.order_by(e.occurred_at.desc(), e.event_id.desc())
-                                    .limit(limit + 1)).all()
+                if selected_refs is None:
+                    query = query.order_by(e.occurred_at.desc(), e.event_id.desc())
+                rows = conn.execute(query.limit(limit + 1)).all()
                 sources = []
                 for row in rows[:limit]:
                     if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
@@ -268,6 +354,43 @@ class PostgresOwnerMemorySources:
                         raise PeopleMemoryOverviewError("memory source scope differs")
                     state = ("retained" if row.phase == "memory_retained" else
                              "needs_help" if row.phase == "memory_needs_help" else "pending")
+                    if selected_refs is not None:
+                        assert selected_query is not None
+                        if (doc.project_id != selected_query.project_id
+                                or doc.privacy_class not in selected_query.allowed_privacy_classes
+                                or doc.occurred_at > stamp
+                                or (doc.principal_id == alias and doc.conversation_id != alias)
+                                or (doc.principal_id, doc.source_ref, doc.evidence_ref) not in selected_refs):
+                            raise PeopleMemoryOverviewError("selected private source scope differs")
+                        if canonical_sha256(row.ingress_payload) != bytes(row.ingress_payload_sha256).hex():
+                            raise PeopleMemoryOverviewError("selected private ingress hash differs")
+                        original = row.ingress_payload.get("data")
+                        if (not isinstance(original, dict) or original.get("kind") != "conversation_ingress"
+                                or original.get("principal_id") != doc.principal_id
+                                or original.get("conversation_id") != doc.conversation_id
+                                or original.get("message_id") != doc.source_ref
+                                or original.get("project_id") != doc.project_id
+                                or "content_erasure" in original
+                                or not isinstance(original.get("text"), str) or not original["text"].strip()
+                                or row.ingress_occurred_at > now):
+                            raise PeopleMemoryOverviewError("selected private ingress scope differs")
+                        binding = selected_query.scope.get("observation_binding_sha256")
+                        if binding is not None:
+                            original_binding = original.get("observation_binding")
+                            if (doc.evidence_ref != f"observation-binding:{binding}"
+                                    or not isinstance(original_binding, dict)
+                                    or original_binding.get("binding_sha256") != binding):
+                                raise PeopleMemoryOverviewError("selected private source observation binding differs")
+                        text = original["text"]
+                        truncated = len(text) > 4096
+                        if truncated:
+                            suffix = "\n[Fragment; overige oorspronkelijke tekst niet opgenomen.]"
+                            text = text[:4096 - len(suffix)] + suffix
+                        sources.append({"source_ref": doc.source_ref, "evidence_ref": doc.evidence_ref,
+                            "principal_id": doc.principal_id, "project_id": doc.project_id,
+                            "occurred_at": row.ingress_occurred_at.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                            "text": text, "truncated": truncated})
+                        continue
                     if history_query is not None:
                         sources.append((doc, state))
                         continue
@@ -276,6 +399,10 @@ class PostgresOwnerMemorySources:
                     sources.append(MemorySource(str(row.event_id),
                         row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                         doc.content[:2048], len(doc.content) > 2048, state))
+                if selected_refs is not None:
+                    order = {key: index for index, key in enumerate(dict.fromkeys(
+                        (ref[0], ref[1]) for ref in selected_refs))}
+                    return tuple(sorted(sources, key=lambda item: order[(item["principal_id"], item["source_ref"])]))
                 if history_query is not None:
                     return tuple(sources)
                 if source_id is not None or context_conversations is not None:

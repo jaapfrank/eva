@@ -10,23 +10,28 @@ sluit dit goal niet af.
 
 ## Actuele uitvoering — 11 oktober 2026
 
-Het overkoepelende Codex-goal is actief. Nieuwe afgehandelde digitale
-privétaakuitkomsten gaan naar de bestaande persoonsgebonden geheugenqueue.
-De achtergrondwerker zoekt nu met de aangenomen taak en nieuwste opgeslagen
-bijsturing, ook als het oorspronkelijke bericht alleen “doe het nog eens” was.
-De volledige correctielog blijft bij het model; de oorspronkelijke bron en
-persoonsgrenzen blijven gelijk. Dit gebruikt één bestaande geheugenaanroep.
+Het overkoepelende Codex-goal is actief. Uitkomsten en taakcontext gebruiken het
+bestaande persoonsgeheugen. De oorspronkelijke bron van geselecteerde relevante
+privéherinneringen is aangesloten op gesprek en achtergrondwerk, zodat precieze
+vorm, vervolgstap en oorspronkelijke tijdsbetekenis behouden blijven.
+Kern en taakwerker gezond; bronreview GO en 130 geselecteerde modelvrije cases
+geslaagd. Geen extra modelaanvraag voor deze bronkoppeling.
 
-De nieuwe koppeling is geïnstalleerd in kern en werker, beide gezond met dezelfde
-53 brongebonden taakmodules. De 107 geselecteerde lokale cases hebben een groene
-uitslag over twee gerichte runs; bron- en installatiereview GO.
-Eerdere uitkomst-opslag/wissen/herstartchecks en PostgreSQL-bewijs blijven behouden.
+Eén vooraf vastgelegde nieuwe latere opdracht heeft de gehele relevante bijsturing
+toegepast zonder de norm of vorm opnieuw te vertellen: 41−33=8 over, 1 tekort tegen
+de norm van 9, drie korte bullets en concrete vervolgstap. Het opgeslagen bestand
+is onafhankelijk gelezen; beide eerdere bestanden ongewijzigd. Eindreview GO
+voor installatie en beperkte toepassing; volledige native modelinvoer ontbreekt.
+De oorspronkelijke volledige leerproef blijft gesloten met NOT_MET.
+Dit is beperkte technische feedbacktoepassing, geen gezinsacceptatie of algemene
+kwaliteits-/efficiëntievoorsprong: bekende ondergrens 51.294 tokens/6 responses/5 tools.
 
-Echte latere toepassing van ervaring, menselijke feedback en later veranderd gedrag
-blijven nog open. De volledige leercyclus en AIDE² zijn daarmee niet afgerond.
-Vervolg hieronder zonder nieuwe vergelijkingsserie.
-Bewijs: eva2/evidence/product/task-context-memory-installed-20261011.json.
-Eerder bewijs: eva2/evidence/product/private-work-outcome-memory-installed-20261011.json.
+Nu volgt ontbrekende mogelijkheden zelf realiseren en later hergebruiken,
+daarna volledige AIDE²-aansturing/code/apps/addons en droommodus. Het volledige
+projectgoal, brede leercyclus en gezinsacceptatie blijven open.
+Bewijs: eva2/evidence/product/learning-feedback-source-native-result-20261011.json.
+Eindreview: eva2/reviews/learning-feedback-source-native-final-review-20261011.json.
+Installatie: eva2/evidence/product/learning-feedback-source-installed-20261011.json.
 
 ## Vier samenhangende productuitkomsten
 

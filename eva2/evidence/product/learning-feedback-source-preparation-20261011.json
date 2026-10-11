@@ -1,0 +1,73 @@
+{
+  "contract": "EvaLearningFeedbackSourcePreparation/v1",
+  "recordedAt": "2026-10-11T17:08:20.394948+00:00",
+  "baselineCommit": "f04d44b7873afa8b1545fe2a7f2af39de835f39f",
+  "status": "source_checked_not_installed",
+  "sourceHashes": {
+    "eva2/src/eva/adapters/postgres/people_memory_overview.py": "2ef05d5b1640a9c5d0c8d7468dcb3415078b0681aae475009850579afc3cbbe1",
+    "eva2/src/eva/adapters/projection/hindsight.py": "b0fa3a1bffe6f7f358ae81f530b099d817ad43c3e5653471171361903ce8d720",
+    "eva2/src/eva/bootstrap/private_conversation_resources.py": "1f1b505d098a5d9e0bc3305c8439b4e4218dbe06c21a240554fd71cdee11a111",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "6471d46a126669adf6996f857ff72c433d7dc21885656e77f30b1cfc3a896dfe"
+  },
+  "testHashes": {
+    "eva2/tests/postgres/test_people_memory_overview.py": "9aecb66882a91af72cc2895e080009f7963e1855a03420a1481257919963361b",
+    "eva2/tests/projection/test_hindsight.py": "930f91f22a63712cb4671bda28b21f7d8f8dfe3d6d49a92fc6ba9ed5441daf5d",
+    "eva2/tests/model/test_pydantic_conversation_model.py": "f13e4c258372acc94db5433c4886b02fc607e9f007f39a8c83eb97b9eed58f56",
+    "eva2/tests/bootstrap/test_private_conversation_resources.py": "96ff4b292d600aaea8158875146e47725a798835f4dc19085666a28f66a868b1"
+  },
+  "checks": {
+    "newPostgresCases": 21,
+    "existingPostgresCases": 18,
+    "rootNewCases": 6,
+    "existingSelectedModelMemoryCases": 85,
+    "uniquePassingSelectedCases": 130,
+    "modelFree": true,
+    "paidProviderCalls": 0,
+    "realSdkRequestProjectionCalls": 1,
+    "runtimeDatabaseUsed": false
+  },
+  "developmentErrors": [
+    {
+      "test": "test_private_recall_includes_memory_on_first_turn_and_reuses_same_question",
+      "cause": "source enrichment unnecessarily replaced an unchanged cached PresenceMemory object",
+      "correction": "preserve cached object when confirmed facts did not change",
+      "verification": "failed existing case and two original-source cache/project cases pass after minimal correction"
+    },
+    {
+      "stage": "publication",
+      "cause": "root Git invocation refused different repository ownership",
+      "correction": "run Git as the existing repository owner; no runtime or test repetition"
+    }
+  ],
+  "scope": {
+    "originalPrivateSourcesMaximum": 3,
+    "perSourceCharactersMaximum": 4096,
+    "additionalModelRequests": 0,
+    "sameSemanticSelection": true,
+    "samePersonAndProject": true,
+    "foregroundAndExistingTaskWorker": true,
+    "noNewPlannerOrMemoryPlatform": true
+  },
+  "installationPlan": {
+    "targetServices": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "imageOnlyExistingInstallation": true,
+    "changedModules": [
+      "adapters/postgres/people_memory_overview.py",
+      "adapters/projection/hindsight.py",
+      "bootstrap/private_conversation_resources.py",
+      "adapters/model/pydantic_conversation.py"
+    ],
+    "preserveOtherSourcesConfigurationMountsAndData": true,
+    "noRollbackLoop": true
+  },
+  "limitations": [
+    "This proves original feedback transport and model input; changed native later-work behavior is not yet proven.",
+    "The earlier complete learning case remains NOT_MET and closed.",
+    "A selected merged observation may reference one source; this does not reconstruct every constituent.",
+    "Sources unavailable after erasure, retention expiry or authority changes are not added; semantic recall remains separate.",
+    "Development credit cost and full Hindsight extraction usage are unknown."
+  ]
+}

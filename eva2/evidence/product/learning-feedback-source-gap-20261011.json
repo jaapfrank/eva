@@ -1,0 +1,22 @@
+{
+  "contract": "EvaLearningFeedbackSourceGap/v1",
+  "recordedAt": "2026-10-11T16:56:34.679406+00:00",
+  "previousGoalTurn": "progress: installed retention repair, recovered original operations, observed later norm use and failed full feedback application, published evidence and live dashboard",
+  "baselineCommit": "f04d44b7",
+  "originalClosedResult": "eva2/evidence/product/learning-cycle-native-result-20261011.json",
+  "existing": "Hindsight retains source facts and exact original conversation ingress remains in the ordinary PostgreSQL journal.",
+  "observedGap": "Two exact selected project observations were read by ID. One omits the source fact's requested presentation and next step. Both extraction and observation interpret an original 'now' prohibition as a calendar-day prohibition. Adapter keeps source metadata but does not attach exact retained ingress to the selected model memory.",
+  "readScope": "Only exact previously selected fact IDs and existing own technical-project sources; no broad family-history scan.",
+  "outcome": "Later work can use complete original feedback, including format and source-time scope, through the installed ordinary memory and task route.",
+  "plannedChange": "Extend existing scoped owner-memory source reader for exact selected refs; bind complete original ingress, current authority, exact person/project, retention/erasure/hash. Attach a small deduplicated source envelope to selected memories and render it with provenance in the existing model adapter. Reuse both foreground and work composition.",
+  "hardConditions": [
+    "no new memory/planner/platform",
+    "no old action replay or source promoted to a new instruction",
+    "current tenant/person/audience/project boundaries preserved",
+    "erased/expired/missing source unavailable",
+    "original closed case and errors preserved",
+    "no new comparison series"
+  ],
+  "finishWhen": "Exact source-feedback selection and model input are verified, independently reviewed and installed; any new behavioral observation is scoped separately from the original failed case.",
+  "effortAndUsage": "One existing-route correction with focused checks and one shared core/worker installation. Source lookup adds no model request; at most three deduplicated exact source excerpts. Actual added input and any necessary behavioral usage recorded; development credits unknown."
+}

@@ -1896,3 +1896,73 @@ def test_recall_diagnostic_failure_does_not_discard_memory(hindsight_server, mon
     assert [fact.fact_id for fact in memory.confirmed_facts] == [
         "hindsight:permitted-source"]
     assert "PRIVATE-DIAGNOSTIC-ERROR" not in caplog.text
+
+
+def test_original_private_source_is_deduplicated_and_revalidated_on_cache_hit(hindsight_server):
+    base_url, state = hindsight_server
+    doc = _conversation_document()
+    metadata = {
+        "principal_id": doc.principal_id, "source_ref": doc.source_ref,
+        "evidence_ref": doc.evidence_ref, "privacy_class": doc.privacy_class,
+        "trust": doc.trust, "audience_kind": "private_person",
+        "audience_id": doc.audience.audience_id,
+    }
+    state.group_recall_response = {"results": [
+        {"id": name, "text": text, "type": "world", "mentioned_at": NOW,
+         "scores": {"final": score}, "metadata": metadata}
+        for name, text, score in (
+            ("feedback", "That day no new task may be started.", 1.0),
+            ("norm", "The project requires a reserve of nine.", 0.9),
+        )
+    ]}
+    original = {
+        "principal_id": doc.principal_id, "source_ref": doc.source_ref,
+        "evidence_ref": doc.evidence_ref, "project_id": None, "occurred_at": NOW,
+        "text": "Use three short bullets with a next step. Start nothing new now.",
+        "truncated": False,
+    }
+    calls = []
+    available = [True]
+
+    def sources(query, references):
+        calls.append((query, references))
+        return (dict(original),) if available[0] else ()
+
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+                                   private_source_resolver=sources)
+    first = engine.recall_for_presence_fast(_query())
+    assert len(calls) == 1
+    assert calls[0][1] == ((doc.principal_id, doc.source_ref, doc.evidence_ref),)
+    assert sum("original_source" in fact.value for fact in first.confirmed_facts) == 1
+    assert first.confirmed_facts[0].value["original_source"]["text"] == original["text"]
+    assert [fact.value["text"] for fact in first.confirmed_facts] == [
+        "That day no new task may be started.", "The project requires a reserve of nine."]
+    requests = len(state.requests)
+    # The original source was erased or authority expired during the cache lease.
+    available[0] = False
+    second = engine.recall_for_presence_fast(_query())
+    assert len(calls) == 2 and len(state.requests) == requests
+    assert all("original_source" not in fact.value for fact in second.confirmed_facts)
+    assert first.recall == second.recall
+
+
+def test_original_private_source_never_crosses_project(hindsight_server):
+    base_url, state = hindsight_server
+    doc = _conversation_document()
+    state.group_recall_response = {"results": [{
+        "id": "project-feedback", "text": "An extracted preference.", "type": "world",
+        "mentioned_at": NOW, "scores": {"final": 1.0},
+        "metadata": {"principal_id": doc.principal_id, "source_ref": doc.source_ref,
+                     "evidence_ref": doc.evidence_ref, "privacy_class": doc.privacy_class,
+                     "trust": doc.trust},
+    }]}
+    wrong_source = {
+        "principal_id": doc.principal_id, "source_ref": doc.source_ref,
+        "evidence_ref": doc.evidence_ref, "project_id": "another-project",
+        "occurred_at": NOW, "text": "Private source in another project.",
+        "truncated": False,
+    }
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+                                   private_source_resolver=lambda _q, _r: (wrong_source,))
+    recalled = engine.recall_for_presence(_query())
+    assert all("original_source" not in fact.value for fact in recalled.confirmed_facts)

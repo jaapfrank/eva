@@ -238,8 +238,10 @@ class HindsightMemoryEngine:
         active_group_consent_resolver: ActiveGroupConsentResolver | None = None,
         active_household_consent_resolver: ActiveHouseholdConsentResolver | None = None,
         private_alias_resolver: Callable[[RecallCurrentFacts], tuple[str, ...]] | None = None,
+        private_source_resolver: Callable[[RecallCurrentFacts, tuple[tuple[str, str, str], ...]], tuple[dict[str, Any], ...]] | None = None,
     ) -> None:
         self._private_alias_resolver = private_alias_resolver
+        self._private_source_resolver = private_source_resolver
         self._config = config
         self._base_url = config.base_url.rstrip("/")
         self._known_banks: set[str] = set()
@@ -393,11 +395,16 @@ class HindsightMemoryEngine:
             return self.recall_for_presence(query)
         principals = self._private_recall_principals(query)
         key = self._fast_presence_key(query) + ":" + canonical_sha256(list(principals))
+        cached_memory = None
         with self._cache_lock:
             cached = self._fast_presence_cache.get(key)
             if cached is not None and time.monotonic() - cached[0] <= 30:
-                return cached[1]
+                cached_memory = cached[1]
             generation = self._fast_presence_generation
+        if cached_memory is not None:
+            # An erased/expired source or revoked binding must not survive in
+            # a semantic-recall cache. Resolve exact source authority again.
+            return self._with_private_sources(query, cached_memory)
         memory = self.recall_for_presence(query)
         if principals != self._private_recall_principals(query):
             return self._empty_presence(query)
@@ -407,6 +414,53 @@ class HindsightMemoryEngine:
                 while len(self._fast_presence_cache) > 128:
                     self._fast_presence_cache.pop(next(iter(self._fast_presence_cache)))
         return memory
+
+    def _with_private_sources(self, query: RecallCurrentFacts, memory: PresenceMemory) -> PresenceMemory:
+        """Attach original messages to selected memories, without another model call.
+
+        Extraction and consolidation can lose intent or broaden relative time.
+        The existing private source reader resolves only the selected references
+        with current authority, retention, erasure and exact project checks.
+        """
+        facts = tuple(fact.model_copy(update={"value": {
+            key: value for key, value in fact.value.items() if key != "original_source"
+        }}) if isinstance(fact.value, dict) and "original_source" in fact.value else fact
+            for fact in memory.confirmed_facts)
+        if facts != memory.confirmed_facts:
+            memory = replace(memory, confirmed_facts=facts)
+        if self._private_source_resolver is None or query.audience.kind != "private_person":
+            return memory
+        references = []
+        for fact in facts:
+            provenance = fact.value.get("reference_provenance", {}) if isinstance(fact.value, dict) else {}
+            references.append((fact.subject, provenance.get("source_ref", fact.source_ref),
+                               provenance.get("evidence_ref", fact.evidence_ref)))
+        try:
+            sources = self._private_source_resolver(query, tuple(dict.fromkeys(references)))
+            if len(sources) > 3:
+                raise HindsightProjectionProtocolError("original source count differs")
+            available = {}
+            for item in sources:
+                reference = (item["principal_id"], item["source_ref"], item["evidence_ref"])
+                if (reference not in references or item["project_id"] != query.project_id
+                        or not isinstance(item["text"], str) or not item["text"]
+                        or len(item["text"]) > 4096 or type(item["truncated"]) is not bool
+                        or not isinstance(item["occurred_at"], str)):
+                    raise HindsightProjectionProtocolError("original source scope differs")
+                _canonical_timestamp(item["occurred_at"])
+                available[reference] = item
+        except Exception:
+            # Missing original sources do not turn a paraphrase into a quote or
+            # prevent an ordinary reply. No private diagnostic content is logged.
+            _LOGGER.debug("Original private memory sources unavailable")
+            return memory
+        enriched = []
+        for fact, reference in zip(facts, references, strict=True):
+            source = available.pop(reference, None)
+            if source is not None and isinstance(fact.value, dict):
+                fact = fact.model_copy(update={"value": {**fact.value, "original_source": source}})
+            enriched.append(fact)
+        return replace(memory, confirmed_facts=tuple(enriched))
 
     @staticmethod
     def _project_partition(installation_id: str, project_id: str) -> str:
@@ -1659,7 +1713,7 @@ class HindsightMemoryEngine:
         except Exception:
             # Diagnostics must never change a successful recall or expose errors.
             pass
-        return memory
+        return self._with_private_sources(query, memory)
 
     @staticmethod
     def _require_private_recall_audience(query: RecallCurrentFacts) -> None:

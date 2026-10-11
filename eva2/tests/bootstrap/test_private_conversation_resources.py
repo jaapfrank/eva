@@ -36,8 +36,23 @@ def test_shared_resources_preserve_consent_and_reread_private_binding(monkeypatc
     memory, identity = resources.build_private_conversation_resources(configured, engine,
         group_consent=group, household_voice=household, identity_pack=None)
     assert memory == "memory" and seen["engine"] is engine
-    assert seen["memory"] == {"active_group_consent_resolver": group,
-        "active_household_consent_resolver": household, "private_alias_resolver": "aliases"}
+    assert seen["memory"]["active_group_consent_resolver"] is group
+    assert seen["memory"]["active_household_consent_resolver"] is household
+    assert seen["memory"]["private_alias_resolver"] == "aliases"
+    source_lookup = seen["memory"]["private_source_resolver"]
+    source_reads = []
+    class SourceReader:
+        def __init__(self, selected_engine, **kwargs):
+            source_reads.append((selected_engine, kwargs))
+        def selected_private_sources(self, query, refs, *, now):
+            return (query, refs, now)
+    monkeypatch.setattr(resources, "PostgresOwnerMemorySources", SourceReader)
+    for _ in range(2):
+        current[0] = object()
+        returned = source_lookup("query", (("owner", "message", "evidence"),))
+        assert returned[:2] == ("query", (("owner", "message", "evidence"),))
+        assert source_reads[-1][1]["telegram_bindings"] is current[0]
+        assert source_reads[-1][0] is engine
     assert seen["alias"]["owner"] == UUID(configured.background_principal_id)
     assert seen["alias"]["binding"] == UUID(configured.dashboard_principal_binding_id)
     assert seen["alias"]["authority_scope"].tenant_id == UUID(configured.dashboard_tenant_id)

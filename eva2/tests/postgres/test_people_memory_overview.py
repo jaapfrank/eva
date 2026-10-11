@@ -745,3 +745,191 @@ def test_people_memory_overview_rejects_out_of_order_memory_success(
         people_memory_engine, tenant_id=tenant, installation_id=installation
     ).snapshot(now=NOW + timedelta(seconds=2), hindsight_state="ready")
     assert result.memory_flow == "unavailable"
+
+
+@pytest.fixture
+def selected_private_case(people_memory_engine, request):
+    from dataclasses import replace
+    from types import SimpleNamespace
+    from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
+    from eva.application.memory import RecallCurrentFacts
+    from tests.postgres.test_delegated_work_store import _seed_authority, _id
+
+    label = "selected-private-" + hashlib.sha256(request.node.name.encode()).hexdigest()[:16]
+    authority, _, binding = _seed_authority(people_memory_engine, label)
+    owner = _id(label, "principal")
+    tenant, installation = f"tenant:{label}", f"installation:{label}"
+    bindings = TelegramPrincipalBindings((
+        TelegramPrincipalBinding(101, str(owner), ("101",), str(binding)),
+    ))
+    reader = PostgresOwnerMemorySources(people_memory_engine, tenant_id=tenant,
+        installation_id=installation, owner=owner, binding=binding,
+        authority_scope=authority, telegram_bindings=bindings)
+    outbox = PostgresMemoryOutbox(people_memory_engine, tenant_id=tenant, installation_id=installation)
+    timeline = _timeline(people_memory_engine, tenant=tenant, installation=installation)
+    query = RecallCurrentFacts(recall_id=label, installation_id=installation, tenant_id=tenant,
+        principal_id=str(owner), audience=MemoryAudience.private_person(principal_id=str(owner)),
+        conversation_id="server-admitted-project-conversation", project_id="project:current",
+        query_purpose="work_context", requested_valid_at=NOW.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        scope={"kind":"private"}, subject_ids=(str(owner),), query_text="continue relevant work")
+
+    def seed(name, text="Original source", *, project="project:current", principal=None,
+             conversation=None, ingress_changes=None, ingress_at=None, **document_changes):
+        principal = principal or str(owner)
+        conversation = conversation or "project-source:" + name
+        message = "selected:" + uuid5(NAMESPACE_URL, label + name).hex
+        source_time = NOW - timedelta(seconds=10)
+        original = {"kind":"conversation_ingress", "principal_id":principal,
+                    "conversation_id":conversation, "message_id":message, "text":text}
+        if project is not None:
+            original["project_id"] = project
+        original.update(ingress_changes or {})
+        timeline.create_thread(thread_id="conversation:" + message,
+            checkpoint_id="conversation:" + message + ":ingress",
+            occurred_at=ingress_at or source_time, data=original)
+        document = replace(_document(label + name), tenant_id=tenant, installation_id=installation,
+            principal_id=principal, conversation_id=conversation, source_ref=message,
+            evidence_ref="conversation-reply:" + message, project_id=project,
+            occurred_at=source_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            audience=MemoryAudience.private_person(principal_id=principal),
+            content="Normalized memory material; not the original layout")
+        document = replace(document, **document_changes)
+        outbox.enqueue(document)
+        return document, (principal, document.source_ref, document.evidence_ref)
+
+    return SimpleNamespace(reader=reader, query=query, seed=seed, outbox=outbox,
+        engine=people_memory_engine, owner=owner, binding=binding, authority=authority,
+        timeline=timeline)
+
+
+def test_selected_private_sources_preserve_original_project_text_time_and_dedup(selected_private_case):
+    from dataclasses import replace
+    case = selected_private_case
+    text = "Nu alleen drie bullets:\n- eerst een\n- dan twee\n- daarna de volgende stap. Stop na die stap."
+    document, ref = case.seed("format", text)
+    duplicate = replace(document, document_id=document.document_id + ":duplicate")
+    case.outbox.enqueue(duplicate)
+    case.seed("nearby-unselected", "Do not fetch this nearby conversation")
+    result = case.reader.selected_private_sources(case.query, (ref, ref), now=NOW)
+    assert result == ({"source_ref":document.source_ref, "evidence_ref":document.evidence_ref,
+        "principal_id":str(case.owner), "project_id":"project:current",
+        "occurred_at":(NOW-timedelta(seconds=10)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "text":text, "truncated":False},)
+    assert "Normalized memory material" not in result[0]["text"]
+
+
+@pytest.mark.parametrize("source_project,query_project,available", [
+    (None,None,True), ("project:current","project:current",True),
+    (None,"project:current",False), ("project:current",None,False),
+    ("project:other","project:current",False),
+])
+def test_selected_private_sources_require_exact_project_including_none(
+    selected_private_case, source_project, query_project, available,
+):
+    from dataclasses import replace
+    case = selected_private_case
+    _doc, ref = case.seed("project", project=source_project)
+    result = case.reader.selected_private_sources(replace(case.query, project_id=query_project), (ref,), now=NOW)
+    assert bool(result) is available
+
+
+def test_selected_private_sources_bound_original_count_order_and_explicit_fragment(selected_private_case):
+    case = selected_private_case
+    first, ref1 = case.seed("first", "first source")
+    second, ref2 = case.seed("long", "x" * 5000)
+    third, ref3 = case.seed("third", "third source")
+    _fourth, ref4 = case.seed("fourth", "fourth source is outside the result budget")
+    result = case.reader.selected_private_sources(case.query, (ref2,ref1,ref2,ref3,ref4), now=NOW)
+    assert [r["source_ref"] for r in result] == [second.source_ref,first.source_ref,third.source_ref]
+    assert result[0]["truncated"] is True and len(result[0]["text"]) == 4096
+    assert result[0]["text"].endswith("[Fragment; overige oorspronkelijke tekst niet opgenomen.]")
+    assert all("fourth source" not in r["text"] for r in result)
+
+
+def test_selected_private_sources_refuse_foreign_people_alias_chats_and_shared_queries(selected_private_case):
+    from dataclasses import replace
+    from types import SimpleNamespace
+    case = selected_private_case
+    owner_doc, owner_ref = case.seed("owner")
+    _other_doc, other_ref = case.seed("other", principal="person:other")
+    _alias_doc, alias_ref = case.seed("alias", principal="telegram:101", conversation="telegram:101")
+    _misbound_doc, misbound_ref = case.seed("misbound", principal="telegram:101", conversation="telegram:202")
+    assert case.reader.selected_private_sources(case.query, (other_ref,misbound_ref), now=NOW) == ()
+    assert len(case.reader.selected_private_sources(case.query, (alias_ref,), now=NOW)) == 1
+    stranger = replace(case.query, principal_id="person:other",
+        audience=MemoryAudience.private_person(principal_id="person:other"))
+    assert case.reader.selected_private_sources(stranger, (owner_ref,), now=NOW) == ()
+    alias_query = replace(case.query, principal_id="telegram:101", conversation_id="telegram:202",
+        audience=MemoryAudience.private_person(principal_id="telegram:101"))
+    assert case.reader.selected_private_sources(alias_query, (alias_ref,), now=NOW) == ()
+    for kind in ("household", "telegram_group"):
+        shared = SimpleNamespace(**{**{field:getattr(case.query, field)
+            for field in case.query.__dataclass_fields__},
+            "audience":SimpleNamespace(kind=kind,principal_id=str(case.owner))})
+        assert case.reader.selected_private_sources(shared, (owner_ref,), now=NOW) == ()
+    for conversation in ("telegram:-123", "household:shared:conversation:test"):
+        assert case.reader.selected_private_sources(replace(case.query, conversation_id=conversation),
+                                                   (owner_ref,), now=NOW) == ()
+
+
+@pytest.mark.parametrize("reason", ["source_erased","ingress_erased","expired","future_source",
+                                    "future_ingress","private_class","wrong_evidence","ingress_project"])
+def test_selected_private_sources_reject_unavailable_or_mismatched_source(selected_private_case, reason):
+    from dataclasses import replace
+    case = selected_private_case
+    changes = {}
+    if reason == "expired":
+        changes["retention_until"] = (NOW-timedelta(seconds=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    if reason == "future_source":
+        changes["occurred_at"] = (NOW+timedelta(seconds=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    if reason == "future_ingress":
+        changes["ingress_at"] = NOW+timedelta(seconds=1)
+    if reason == "private_class":
+        changes["privacy_class"] = "restricted"
+    if reason == "ingress_erased":
+        changes["ingress_changes"] = {"content_erasure":{"status":"erased"}, "text":None}
+    if reason == "ingress_project":
+        changes["ingress_changes"] = {"project_id":"project:other"}
+    document, ref = case.seed(reason, **changes)
+    if reason == "source_erased":
+        case.outbox.erase_content(principal_sha256=hashlib.sha256(str(case.owner).encode()).hexdigest(),
+            document_id=document.document_id, operation_sha256="ab"*32, erased_at=NOW)
+    if reason == "wrong_evidence":
+        ref = (ref[0],ref[1],"conversation-reply:another-source")
+    assert case.reader.selected_private_sources(case.query, (ref,), now=NOW) == ()
+
+
+@pytest.mark.parametrize("source_binding,ingress_binding,query_binding,available", [
+    ("a"*64,"a"*64,"a"*64,True), ("b"*64,"b"*64,"a"*64,False),
+    ("a"*64,"b"*64,"a"*64,False), ("a"*64,"a"*64,None,False),
+])
+def test_selected_private_sources_keep_exact_observation_binding(selected_private_case,
+    source_binding, ingress_binding, query_binding, available):
+    from dataclasses import replace
+    case = selected_private_case
+    _doc, ref = case.seed("observation", evidence_ref="observation-binding:"+source_binding,
+        ingress_changes={"observation_binding":{"binding_sha256":ingress_binding}})
+    scope = {"kind":"private", **({"observation_binding_sha256":query_binding} if query_binding else {})}
+    result = case.reader.selected_private_sources(replace(case.query, scope=scope), (ref,), now=NOW)
+    assert bool(result) is available
+
+
+def test_selected_private_sources_recheck_current_owner_and_raw_ingress_hash(selected_private_case, monkeypatch):
+    import eva.adapters.postgres.people_memory_overview as module
+    from eva.adapters.postgres.current_catalog import metadata
+    case = selected_private_case
+    _doc, ref = case.seed("hash")
+    canonical = module.canonical_sha256
+    def wrong_ingress_hash(value):
+        return "00"*32 if value.get("data",{}).get("kind") == "conversation_ingress" else canonical(value)
+    with monkeypatch.context() as patch:
+        patch.setattr(module,"canonical_sha256",wrong_ingress_hash)
+        with pytest.raises(RuntimeError, match="ingress hash differs"):
+            case.reader.selected_private_sources(case.query, (ref,), now=NOW)
+    assert case.reader.selected_private_sources(case.query, (ref,), now=NOW)
+    bindings = metadata.tables["eva_core.principal_bindings"]
+    with case.engine.begin() as connection:
+        connection.execute(sa.update(bindings).where(bindings.c.tenant_id==case.authority.tenant_id,
+            bindings.c.principal_binding_id==case.binding).values(status="revoked"))
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        case.reader.selected_private_sources(case.query, (ref,), now=NOW)

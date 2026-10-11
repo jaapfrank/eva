@@ -1,0 +1,68 @@
+{
+  "contract": "EvaLearningFeedbackLaterUseResult/v1",
+  "recordedAt": "2026-10-11T17:22:09.127667+00:00",
+  "criteria": "eva2/evidence/product/learning-feedback-source-native-criteria-20261011.json",
+  "criteriaSha256": "277057b57417f5ace171306e9bb020e529e3a291b15d9c164cf1b4f4e4a16c5c",
+  "installation": "eva2/evidence/product/learning-feedback-source-installed-20261011.json",
+  "status": "native_later_application_observed_awaiting_independent_review",
+  "nativeState": "succeeded",
+  "ordinaryProviderRoute": true,
+  "demonstrated": [
+    "A new ordinary task in another controlled private conversation uses an earlier retained project norm without it being repeated.",
+    "The new note correctly calculates 41-33=8 and a shortage of one against the earlier norm of nine.",
+    "The saved file contains the learned three short bullets in the requested order, including a concrete next step.",
+    "The explicit new task is carried out despite an earlier source-time instruction not to start new work then.",
+    "Root independently read the actual workspace file outside the model route; both earlier proof files retain their original SHA256."
+  ],
+  "savedDocument": {
+    "path": "/proof-state/learning-feedback-source-d04c9a12-later.txt",
+    "sha256": "39fabbb96f489cadc7baec637202e1210b185c014949cc0c0ddbe25a793e43d3",
+    "content": "- Tekort: 41 dozen beschikbaar \u2212 33 nodig = 8 dozen restvoorraad; de norm is minimaal 9.\n- Ontbreekt ten opzichte van de norm: 1 doos.\n- Volgende stap: plan in deze fictieve voorraadberekening 1 extra doos in.\n",
+    "bulletCount": 3,
+    "firstPreviousFileUnchanged": true,
+    "laterPreviousFileUnchanged": true
+  },
+  "modelReportedReadback": "Opgeslagen en apart teruggelezen: /proof-state/learning-feedback-source-d04c9a12-later.txt\n\nDe notitie bevat precies drie korte bullets: tekort met 8 dozen restvoorraad, 1 doos ontbreekt tegenover de norm van 9, en als volgende fictieve stap 1 extra doos inplannen. Eerdere notities zijn niet gewijzigd.",
+  "usage": {
+    "foregroundMeasured": {
+      "measurement": "measured",
+      "model_attempts": 1,
+      "tool_calls": 1,
+      "input_tokens": 6077,
+      "output_tokens": 254
+    },
+    "workerReportedPartial": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 5,
+      "tool_calls": 4,
+      "input_tokens": 44506,
+      "output_tokens": 457,
+      "total_tokens": 44963,
+      "cost_usd_micros": null
+    },
+    "registeredModelResponsesLowerBound": 6,
+    "registeredToolsLowerBound": 5,
+    "knownTokenLowerBound": 51294,
+    "dispatchToWorkerCompletionSeconds": 55.312,
+    "memoryExtractionAndCompleteTotal": "unknown",
+    "creditCost": "unknown",
+    "developmentCreditCost": "unknown"
+  },
+  "privateEvidenceHashes": {
+    "later-payload.private.json": "7486befccee13108b4e12bda312fe301973ffe4217aa185b7180107837d08beb",
+    "later-sent.private.json": "a29650fbc3a2447d65c8a3a841d0e5cfc94edaa8515aff290a9477b6ff1f3396",
+    "later-receipt.private.json": "b315a70371754af02205bbd730730701f364f032fef6d53cc99fac85adcce93d",
+    "later-observation-completed.private.json": "e4c395e84515907d817f6fe0c77774dc85bf7e4f533b10f3d28ec283fb5a2ab5",
+    "independent-document-readback.private.json": "0f94fb302759a8b96aee60c274aaafb98195ed9c4d0e9bd0eee3b10b6207afbb"
+  },
+  "limits": [
+    "This is a controlled technical task, not family acceptance or general learning quality.",
+    "The actual full native model input is not copied into the report; source-to-SDK input is covered by exact installed source and selected PG/SDK tests. No isolated causal improvement claim.",
+    "The earlier complete case remains NOT_MET and closed; this distinct necessary later task does not overwrite its scores.",
+    "The existence of one correct learned workflow does not complete all four product outcomes or the full AIDE2/dream cycle.",
+    "Stop/person/project rules are preserved and tested on the changed route; no new physical stop or speaker test was run.",
+    "No efficiency or superiority claim; 51,294 known tokens for this limited task remains substantial."
+  ]
+}

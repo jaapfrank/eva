@@ -1,0 +1,54 @@
+{
+  "contract": "EvaLearningFeedbackSourceInstalled/v1",
+  "recordedAt": "2026-10-11T17:14:28.986610+00:00",
+  "status": "installed",
+  "singleUpdateDispatch": true,
+  "rollback": false,
+  "sourcePreparation": "eva2/evidence/product/learning-feedback-source-preparation-20261011.json",
+  "review": "eva2/reviews/learning-feedback-source-review-20261011.json",
+  "reviewSha256": "20dcb2c9edd4e7ef6f3a5c09d57edcd2d92f21f58af27b775197d1d2138c5092",
+  "services": [
+    {
+      "service": "core",
+      "image": "sha256:063889331024e6e472528ff7134687e450ebf8cf8a43ceb71761fa12473b51e2",
+      "healthy": true,
+      "sameEnvironmentValues": true,
+      "sameMounts": true,
+      "exactFourModuleHashes": true,
+      "otherPythonSourcesRetained": 333
+    },
+    {
+      "service": "delegated-work-worker",
+      "image": "sha256:b3e3c1cf45ff36e3727bc4850ef1975fcaa886397ca63a663add1444283d15ce",
+      "healthy": true,
+      "sameEnvironmentValues": true,
+      "sameMounts": true,
+      "exactFourModuleHashes": true,
+      "otherPythonSourcesRetained": 331
+    }
+  ],
+  "installationPreparationErrors": [
+    {
+      "cause": "memory-only compose projection does not describe current core configuration",
+      "stage": "read-only preparation",
+      "runtimeChange": false
+    },
+    {
+      "cause": "unnecessary composite input omitted a dependency; rejected before dispatch",
+      "stage": "compose validation",
+      "runtimeChange": false
+    },
+    {
+      "cause": "readback initially compared environment entry order rather than equal environment values",
+      "stage": "verification",
+      "runtimeChange": false
+    }
+  ],
+  "correction": "Use exact installed two-service core/worker config and compare effective unchanged environment values. Other memory services are not dispatched.",
+  "limits": [
+    "Source and model-input tests passed; later native feedback application awaits separately preregistered one-task observation.",
+    "Old NOT_MET remains closed; no general learning or AIDE2 completion claimed."
+  ],
+  "modelCallsDuringInstallation": 0,
+  "developmentCreditCost": "unknown"
+}

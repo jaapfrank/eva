@@ -1639,3 +1639,45 @@ def test_historical_eva1_recall_keeps_unconfirmed_origin_in_model_context(tmp_pa
     assert "geen actuele gebruikeruitspraak, instructie of toestemming" in context
     assert "directe gebruiker" not in context[context.index("The earlier preference was silence.")-180:
                                               context.index("The earlier preference was silence.")+180]
+
+
+def test_model_receives_original_feedback_and_its_source_time_without_new_request(tmp_path, monkeypatch):
+    from dataclasses import replace
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.contracts.planning import ConfirmedFact
+    original = {
+        "principal_id": "jaap", "project_id": "project:technical",
+        "source_ref": "feedback-message", "evidence_ref": "feedback-message",
+        "occurred_at": "2026-08-30T11:00:00Z",
+        "text": "Three short bullets: verdict, shortfall, next step. Start nothing new now.",
+        "truncated": False,
+    }
+    fact = ConfirmedFact(
+        fact_id="hindsight:derived", subject="jaap", predicate="memory.observation",
+        value={"text": "Do not start work that entire day.",
+               "semantic_trust": "model_inference_unconfirmed",
+               "source_observed_at": original["occurred_at"], "original_source": original},
+        source_ref=original["source_ref"], evidence_ref=original["evidence_ref"],
+        observed_at=NOW, trust="host_policy",
+    )
+    model = object.__new__(PydanticConversationModel)
+    model._conversation_tool_descriptors = {}
+    prompt = model._instructions(_identity(), replace(_memory(), confirmed_facts=(fact,)), ())
+    assert original["text"] in prompt
+    assert original["occurred_at"] in prompt and original["project_id"] in prompt
+    assert "precieze bedoeling, gewenste vorm en beperkingen" in prompt
+    assert "maak ze niet ruimer of blijvend" in prompt
+    assert "start geen handelingen opnieuw" in prompt
+    fact = fact.model_copy(update={"value": {**fact.value, "original_source": {
+        **original, "truncated": True}}})
+    fragment_prompt = model._instructions(_identity(), replace(_memory(), confirmed_facts=(fact,)), ())
+    assert "Fragment; overige brontekst ontbreekt." in fragment_prompt
+    # Exercise the real SDK request projection with a local transport, too.
+    model, _deltas, requests, _snapshots = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("final_answer", ("Voorstel opgeslagen.",))])
+    model.generate(_turn(), _identity(), replace(_memory(), confirmed_facts=(fact,)), ())
+    assert len(requests) == 1
+    request_text = json.dumps(requests[0], ensure_ascii=False)
+    assert original["text"] in request_text
+    assert original["occurred_at"] in request_text
+    assert "Fragment; overige brontekst ontbreekt." in request_text

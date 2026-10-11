@@ -1,0 +1,182 @@
+{
+  "contract": "EvaLearningFeedbackSourceReview/v1",
+  "reviewedAt": "2026-10-11T17:11:53.959707+00:00",
+  "decision": "GO",
+  "sourceDecision": "GO",
+  "existingImageOnlyInstallationPlanDecision": "GO",
+  "status": "source_and_plan_reviewed_not_an_installation_readback",
+  "baselineCommit": "f04d44b7873afa8b1545fe2a7f2af39de835f39f",
+  "sourceHashes": {
+    "eva2/src/eva/adapters/postgres/people_memory_overview.py": "2ef05d5b1640a9c5d0c8d7468dcb3415078b0681aae475009850579afc3cbbe1",
+    "eva2/src/eva/adapters/projection/hindsight.py": "b0fa3a1bffe6f7f358ae81f530b099d817ad43c3e5653471171361903ce8d720",
+    "eva2/src/eva/bootstrap/private_conversation_resources.py": "1f1b505d098a5d9e0bc3305c8439b4e4218dbe06c21a240554fd71cdee11a111",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "6471d46a126669adf6996f857ff72c433d7dc21885656e77f30b1cfc3a896dfe"
+  },
+  "testHashes": {
+    "eva2/tests/postgres/test_people_memory_overview.py": "9aecb66882a91af72cc2895e080009f7963e1855a03420a1481257919963361b",
+    "eva2/tests/projection/test_hindsight.py": "930f91f22a63712cb4671bda28b21f7d8f8dfe3d6d49a92fc6ba9ed5441daf5d",
+    "eva2/tests/model/test_pydantic_conversation_model.py": "f13e4c258372acc94db5433c4886b02fc607e9f007f39a8c83eb97b9eed58f56",
+    "eva2/tests/bootstrap/test_private_conversation_resources.py": "96ff4b292d600aaea8158875146e47725a798835f4dc19085666a28f66a868b1"
+  },
+  "publicEvidence": [
+    {
+      "path": "eva2/evidence/product/learning-feedback-source-preparation-20261011.json",
+      "sha256": "87dee2073c33210555d52ad49e41acf2a65fa6dd9dea835922e23d9a16b0055a",
+      "sourceAndTestHashesMatchCheckout": true
+    },
+    {
+      "path": "eva2/evidence/product/learning-feedback-source-gap-20261011.json",
+      "sha256": "5b0f11fa6f91d8aa2e1f3dc152412c959128b382cc704ce06d821871e78ff0ec"
+    }
+  ],
+  "scope": {
+    "reviewed": "Current four-module source diff and four test diffs, necessary surrounding source, and narrow existing foreground/worker shared-composition call sites.",
+    "excludedCurrentDiff": "eva2/design/product/execution-workboard-v1.json",
+    "privateDataReads": 0,
+    "newTests": 0,
+    "newModelCalls": 0,
+    "newRuntimeProbes": 0,
+    "sourceEdits": 0,
+    "onlyWrittenFile": "eva2/reviews/learning-feedback-source-review-20261011.json"
+  },
+  "findings": [],
+  "assessment": [
+    {
+      "decision": "PASS",
+      "subject": "Exact selected original ingress",
+      "source": "eva2/src/eva/adapters/postgres/people_memory_overview.py:146",
+      "detail": "Accepts only selected principal/source/evidence triples; no history search or nearby-turn inference. Source join requires exact conversation thread, INGRESS_COMMITTED sequence1, principal/conversation/message/project equality. Exact project including None and observation binding stay enforced."
+    },
+    {
+      "decision": "PASS",
+      "subject": "Current private authority and aliases",
+      "source": "eva2/src/eva/adapters/postgres/people_memory_overview.py:159",
+      "detail": "Canonical owner and current admitted private bridge are the only subjects. Bridge sources remain tied to exact private chat; group/household scopes excluded. Existing read-only transaction checks current private owner authority in its separate authority namespace before reading conversation storage. Shared composition reloads bridge bindings for each lookup."
+    },
+    {
+      "decision": "PASS",
+      "subject": "Hash, erasure, retention and time",
+      "sources": [
+        "eva2/src/eva/adapters/postgres/people_memory_overview.py:204",
+        "eva2/src/eva/adapters/postgres/people_memory_overview.py:237",
+        "eva2/src/eva/adapters/postgres/people_memory_overview.py:347",
+        "eva2/src/eva/adapters/postgres/people_memory_overview.py:365"
+      ],
+      "detail": "Both queued source and original ingress canonical hashes are verified. Erased queue or ingress, expired retention, future event/source, foreign project, disallowed privacy class and invalid current authority do not supply raw source text. Source time is the original ingress event time, not recall time."
+    },
+    {
+      "decision": "PASS",
+      "subject": "Bounded raw source context",
+      "source": "eva2/src/eva/adapters/postgres/people_memory_overview.py:180",
+      "detail": "First three distinct selected principal/source keys only; at most 4096 characters each, with explicit fragment marker and truncated flag. Deduplicates ingress and restores selected-source order. Missing original source does not become a fabricated quotation or trigger broad history retrieval."
+    },
+    {
+      "decision": "PASS",
+      "subject": "Raw-source cache revalidation",
+      "source": "eva2/src/eva/adapters/projection/hindsight.py:404",
+      "detail": "Every semantic cache hit strips any prior original_source and resolves exact source authority again. Missing/revoked/erased/expired sources cannot leave old raw excerpts attached. Existing semantic recall remains separate. No second semantic recall or model call is introduced for enrichment."
+    },
+    {
+      "decision": "PASS",
+      "subject": "Preserved semantic selection and trust",
+      "source": "eva2/src/eva/adapters/projection/hindsight.py:425",
+      "detail": "Uses selected fact provenance, validates resolver output against exact selected refs/project, and attaches each resolved source once. Derived fact text, rank, recall evidence and semantic trust remain unchanged. Failure adds no raw source and logs no private diagnostic contents."
+    },
+    {
+      "decision": "PASS",
+      "subject": "Shared foreground and worker composition",
+      "sources": [
+        "eva2/src/eva/bootstrap/private_conversation_resources.py:40",
+        "eva2/src/eva/bootstrap/runtime.py:1704",
+        "eva2/src/eva/bootstrap/delegated_digital_composition.py:207"
+      ],
+      "detail": "Both existing routes call the same resource builder and receive the same bounded PostgreSQL source resolver. Existing identity, consent and alias resolvers remain intact; no new planner, memory store or execution route."
+    },
+    {
+      "decision": "PASS_FOR_MODEL_INPUT",
+      "subject": "Source intent, format and original time",
+      "source": "eva2/src/eva/adapters/model/pydantic_conversation.py:2863",
+      "detail": "Renders exact permitted original text, source date/project and fragment qualifier adjacent to derived context. Explains source precedence for precise intent/format, constrains relative-time instructions to the source moment, and denies old action replay or expanded authority. This proves context transport, not that a future model obeys the complete feedback."
+    }
+  ],
+  "validation": {
+    "reviewer": "Static independent diff/context review and exact SHA256 binding; scoped git diff --check passes.",
+    "reportedPassingSelectedChecks": {
+      "newPostgresCases": 21,
+      "existingPostgresCases": 18,
+      "rootNewCases": 6,
+      "existingSelectedModelMemoryCases": 85,
+      "uniquePassingSelectedCases": 130,
+      "modelFree": true,
+      "paidProviderCalls": 0,
+      "realSdkRequestProjectionCalls": 1,
+      "runtimeDatabaseUsed": false
+    },
+    "countsQualification": "130 unique selected passing checks are implementer/root reports, including real disposable PostgreSQL16.13 source tests; not rerun by reviewer.",
+    "disposableDatabaseStatus": "Root reports closed; runtime database unused.",
+    "actualSdkProjection": "One existing owned SDK request projection with local transport is reported; not a paid provider request.",
+    "reportedRegressionAndCorrection": [
+      {
+        "test": "test_private_recall_includes_memory_on_first_turn_and_reuses_same_question",
+        "cause": "source enrichment unnecessarily replaced an unchanged cached PresenceMemory object",
+        "correction": "preserve cached object when confirmed facts did not change",
+        "verification": "failed existing case and two original-source cache/project cases pass after minimal correction"
+      },
+      {
+        "stage": "publication",
+        "cause": "root Git invocation refused different repository ownership",
+        "correction": "run Git as the existing repository owner; no runtime or test repetition"
+      }
+    ],
+    "sourceTestsInspected": [
+      "exact original ingress/project/dedup/order/fragment",
+      "foreign owner/alias/group exclusion",
+      "erasure, retention, future source, privacy/evidence and original-project rejection",
+      "observation-binding and raw ingress hash/current-owner checks",
+      "cache erasure revalidation and wrong-project source exclusion",
+      "unchanged shared consent/bridge reload",
+      "original feedback/date/fragment in real local SDK request projection"
+    ]
+  },
+  "installationPlan": {
+    "targetServices": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "mechanism": "existing image-only installation helper",
+    "approvedChangedModules": [
+      "eva2/src/eva/adapters/postgres/people_memory_overview.py",
+      "eva2/src/eva/adapters/projection/hindsight.py",
+      "eva2/src/eva/bootstrap/private_conversation_resources.py",
+      "eva2/src/eva/adapters/model/pydantic_conversation.py"
+    ],
+    "conditions": [
+      "Candidate and installed modules must match these four source hashes in both images.",
+      "Preserve all other source modules and dependency bytes, configuration/environment, mounts/data and existing provider/consent/profile routes.",
+      "Keep foreground/worker release-bound profile sources aligned using existing package/readback checks.",
+      "Retain old failed learning case, memory errors and results; no replay or new paid proof is authorized by this review."
+    ],
+    "imageIds": "not provided at source-review stage; bind later exact packaging/install readback separately",
+    "installedBehaviorClaim": false
+  },
+  "limitations": [
+    "Merged semantic observations may expose one constituent source only; complete source reconstruction is not claimed.",
+    "At most three excerpts and explicit 4096-character fragments; complete text beyond the limit is not supplied.",
+    "Unavailable original source is omitted while semantic recall remains separate; this is not a new general privacy/stop audit.",
+    "Model-free source transport and local request projection do not prove improved later native formatting, time interpretation or full feedback use.",
+    "Development credit costs and complete Hindsight extraction usage remain unknown."
+  ],
+  "completion": {
+    "originalLearningCase": "NOT_MET; closed and preserved",
+    "sourceAndModelInputCorrectionProven": true,
+    "installedByThisReview": false,
+    "nativeBehaviorImprovementProven": false,
+    "fullLearningCycle": false,
+    "AIDE2Completed": false,
+    "wholeGoal": "active",
+    "newMainCompletion": false,
+    "familyOrOwnerAcceptance": false,
+    "newComparisonSeries": false,
+    "voice": "parked"
+  }
+}

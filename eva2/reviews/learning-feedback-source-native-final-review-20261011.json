@@ -1,0 +1,242 @@
+{
+  "contract": "EvaLearningFeedbackSourceNativeFinalReview/v1",
+  "reviewedAt": "2026-10-11T17:29:10.738071+00:00",
+  "decision": "GO",
+  "decisionScope": "Exact installed original-feedback source correction and honest record of one distinct bounded native later-feedback application.",
+  "materialBlockers": [],
+  "sourceReview": {
+    "path": "eva2/reviews/learning-feedback-source-review-20261011.json",
+    "sha256": "20dcb2c9edd4e7ef6f3a5c09d57edcd2d92f21f58af27b775197d1d2138c5092",
+    "unchanged": true
+  },
+  "sourceHashes": {
+    "eva2/src/eva/adapters/postgres/people_memory_overview.py": "2ef05d5b1640a9c5d0c8d7468dcb3415078b0681aae475009850579afc3cbbe1",
+    "eva2/src/eva/adapters/projection/hindsight.py": "b0fa3a1bffe6f7f358ae81f530b099d817ad43c3e5653471171361903ce8d720",
+    "eva2/src/eva/bootstrap/private_conversation_resources.py": "1f1b505d098a5d9e0bc3305c8439b4e4218dbe06c21a240554fd71cdee11a111",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "6471d46a126669adf6996f857ff72c433d7dc21885656e77f30b1cfc3a896dfe"
+  },
+  "publicEvidenceSnapshots": [
+    {
+      "path": "eva2/evidence/product/learning-feedback-source-installed-20261011.json",
+      "sha256AtReview": "7ac57dac4b8ebd65ba03c157c8749d1094f84ea531f4e62d42d271d97f948556"
+    },
+    {
+      "path": "eva2/evidence/product/learning-feedback-source-native-criteria-20261011.json",
+      "sha256AtReview": "277057b57417f5ace171306e9bb020e529e3a291b15d9c164cf1b4f4e4a16c5c"
+    },
+    {
+      "path": "eva2/evidence/product/learning-feedback-source-native-result-20261011.json",
+      "sha256AtReview": "01ad27bc287cf353035b1ba54941daeb9c3768836c9f2c9d721e63108ff982bc"
+    }
+  ],
+  "privateEvidence": {
+    "root": "/home/administrator/project/.eva2-artifacts/learning-feedback-source-20261011",
+    "rootMode": "0700",
+    "readFilesMode": "0600",
+    "sha256": {
+      "later-payload.private.json": "7486befccee13108b4e12bda312fe301973ffe4217aa185b7180107837d08beb",
+      "later-sent.private.json": "a29650fbc3a2447d65c8a3a841d0e5cfc94edaa8515aff290a9477b6ff1f3396",
+      "later-receipt.private.json": "b315a70371754af02205bbd730730701f364f032fef6d53cc99fac85adcce93d",
+      "later-observation-completed.private.json": "e4c395e84515907d817f6fe0c77774dc85bf7e4f533b10f3d28ec283fb5a2ab5",
+      "independent-document-readback.private.json": "0f94fb302759a8b96aee60c274aaafb98195ed9c4d0e9bd0eee3b10b6207afbb",
+      "core-before.private.json": "2e58117c88e0ba1100b877ab5fc02db876b42d686eeabb6c192ded8d9278f1c0",
+      "core-after.private.json": "95e45f0e8595aa80a4f3ebee80d8a7c7b68f1455e9d809082613abdf47be1682",
+      "delegated-work-worker-before.private.json": "76e9905406e265a08a3b907a362751c97e08efe675662fdd8d8fbb50e0ab2367",
+      "delegated-work-worker-after.private.json": "ebbf4e9f7e22f0ca87b8583ed8d4193ee3ff64eb5400b0b6a60a7f8b0f386100",
+      "candidate-readback.private.json": "2d80869f86fe96c32027e2a6e5c05421cab0cfaee65d9119d9af2601f3387511",
+      "core-sources-before.private.json": "f5705f1550eff4481c6a408640bfcf63237af16e16e1474b9c6d643e444cdd77",
+      "core-candidate-sources.private.json": "a9e1c3c75c6668e2fc006e6a6145ef476e80a92b6452f67f29eb9602bf3fad57",
+      "delegated-work-worker-sources-before.private.json": "ab22450f7ec6fc717bd06f6ee9e2a1b6447b73cc521dd071df22f13e0be93219",
+      "delegated-work-worker-candidate-sources.private.json": "ba04d33cde723951042787f08bb3666e8f352e1c57d67889631d2f4e4f4b3370"
+    },
+    "resultListedFivePrivateHashesMatchActualFiles": true
+  },
+  "installation": {
+    "decision": "GO",
+    "core": {
+      "beforeImage": "sha256:e8e4a42cf01ac777567a0118cf4c6f109b19fa7e35498c5181686982e9912a74",
+      "installedImage": "sha256:063889331024e6e472528ff7134687e450ebf8cf8a43ceb71761fa12473b51e2",
+      "healthy": true,
+      "pythonModuleCount": 337,
+      "changedReviewedModules": 4,
+      "unchangedOtherModules": 333,
+      "addedModules": 0,
+      "removedModules": 0,
+      "mountCount": 25
+    },
+    "delegatedWorkWorker": {
+      "beforeImage": "sha256:255171720df4f36991da82f64deba95a7c0e234db1f8ed46f5b296392b629954",
+      "installedImage": "sha256:b3e3c1cf45ff36e3727bc4850ef1975fcaa886397ca63a663add1444283d15ce",
+      "healthy": true,
+      "pythonModuleCount": 335,
+      "changedReviewedModules": 4,
+      "unchangedOtherModules": 331,
+      "addedModules": 0,
+      "removedModules": 0,
+      "mountCount": 21
+    },
+    "independentlyCompared": [
+      "Four candidate module hashes equal exact source review in each image inventory.",
+      "All other module hashes unchanged; no module added or removed.",
+      "After-inspect immutable image IDs equal candidate-readback image IDs.",
+      "No mount at an ancestor, the package root or any descendant of /opt/eva/src/eva overrides candidate source bytes.",
+      "Environment maps equal with no duplicate keys.",
+      "Effective mounts equal; HostConfig Binds/Mounts are equal after order normalization, and all other HostConfig fields equal.",
+      "Commands, entrypoint, process arguments, user, working directory, healthcheck, ports, volume declaration and network names retained."
+    ],
+    "qualification": "Review of recorded before/after and extracted technical inventories. Candidate sameImageConfig and single update/no rollback are reported in installation artifacts; no new live Docker inspection or full dependency/rootfs audit performed.",
+    "preparationErrorsPreserved": "Public installation record retains read-only Compose projection/validation errors and initial environment-order verification mistake; these are not reclassified as successful runtime attempts."
+  },
+  "inputBinding": {
+    "criteriaSha256Verified": "277057b57417f5ace171306e9bb020e529e3a291b15d9c164cf1b4f4e4a16c5c",
+    "preregistrationBeforeDispatch": true,
+    "preregisteredPayloadHashMatchesExactEffectiveBytes": true,
+    "effectiveTextAndMessageIdMatchPreregistration": true,
+    "actualDispatchAt": "2026-10-11T17:17:01.687835+00:00",
+    "logicalPayloadOccurredAt": "2026-10-11T17:13:08Z",
+    "clockQualification": "Logical canonical payload/work creation time is the prepared source time; actual dispatch is separately recorded after criteria registration and installation.",
+    "singleDispatch": true,
+    "httpStatus": 200,
+    "newConversationVsBothPriorCaseSessions": true,
+    "recentMessages": 0,
+    "normAndFormatNotRetoldInNewUserPrompt": true,
+    "ownerTenantInstallationConversationMessageAndPrivateAudienceMatchNativeWork": true,
+    "projectBindingSameInPayloadAndJournal": true,
+    "journalIngressTextMatchesEffectivePayload": true
+  },
+  "nativeOutcome": {
+    "decision": "PASS_FOR_OBSERVED_OUTPUT_AND_PERSISTENCE",
+    "state": "succeeded",
+    "generation": 1,
+    "claimCount": 1,
+    "errorCode": null,
+    "nativePreparedHandoffMatchesStoredTask": true,
+    "nativeHandoffContainsEarlierNormAndFullThreeBulletIntent": true,
+    "nativeHandoffDoesNotRepeatBroadCalendarDayProhibition": true,
+    "registeredMemoryEvidenceIds": 5,
+    "documentPath": "/proof-state/learning-feedback-source-d04c9a12-later.txt",
+    "documentSha256": "39fabbb96f489cadc7baec637202e1210b185c014949cc0c0ddbe25a793e43d3",
+    "utf8Bytes": 212,
+    "nonemptyLines": 3,
+    "bulletCount": 3,
+    "learnedOrder": [
+      "shortage judgement and 41 minus 33 equals 8 against reserve9",
+      "one missing box relative to reserve9",
+      "concrete next step: plan one extra box in the fictional calculation"
+    ],
+    "separateReadback": "Native result reports independent save/read steps; existing root-produced physical workspace readback independently confirms exact bytes outside the model route.",
+    "previousFilesUnchanged": [
+      {
+        "sha256": "70b21a0d21ce5847c98b28f4e766059ba33ffa3bd345e0baedd13db59aa48962",
+        "utf8Bytes": 221
+      },
+      {
+        "sha256": "bc098699dc93fcb5359b817ac2d1d82fff955b0f91b8e2468057472c753ca93b",
+        "utf8Bytes": 572
+      }
+    ],
+    "modelOutputHashMatchesRecordedResult": true
+  },
+  "preregisteredConditions": [
+    {
+      "condition": 1,
+      "assessment": "SUPPORTED_WITH_NATIVE_INPUT_EXPORT_LIMITATION",
+      "detail": "Exact installed shared source composition and prior selected PG/owned-SDK projection tests prove the mechanism. Native journal has five Hindsight evidence IDs and the actual handoff contains the earlier norm and complete bullet intent. Full actual native model input was not exported; exact original quote arrival in that complete request is not independently replayed or claimed as isolated causal proof."
+    },
+    {
+      "condition": 2,
+      "assessment": "PASS",
+      "detail": "Actual saved note calculates 41 minus 33 equals8 and one missing box against remembered9."
+    },
+    {
+      "condition": 3,
+      "assessment": "PASS",
+      "detail": "Exactly three short bullets: judgement, shortfall, concrete fictional next step; no table or additional prose."
+    },
+    {
+      "condition": 4,
+      "assessment": "PASS",
+      "detail": "New exact path, real native save/separate-read report, independent physical content SHA, both old document bytes hash-identical."
+    },
+    {
+      "condition": 5,
+      "assessment": "BOUNDED_SUPPORT",
+      "detail": "One new dispatch/work claim, exact person/private/project binding, explicit fictional task and no old file changes. Existing guard/source/privacy/stop paths preserved; no new physical stop/person/speaker trial or full negative-action trace audit. No source promoted to broader permissions or old failed case re-executed is claimed."
+    }
+  ],
+  "usage": {
+    "foregroundMeasured": {
+      "modelAttempts": 1,
+      "toolCalls": 1,
+      "inputTokens": 6077,
+      "outputTokens": 254,
+      "knownTokens": 6331
+    },
+    "workerReported": {
+      "measurement": "partial",
+      "completedResponses": 5,
+      "toolCalls": 4,
+      "inputTokens": 44506,
+      "outputTokens": 457,
+      "knownTokens": 44963,
+      "costUsdMicros": null
+    },
+    "registeredResponsesLowerBound": 6,
+    "registeredToolsLowerBound": 5,
+    "knownTokenLowerBound": 51294,
+    "dispatchToRecordedWorkerCompletionSeconds": 55.312165,
+    "publishedRoundedSeconds": 55.312,
+    "physicalSdkRequestTotal": null,
+    "completeTokenTotal": null,
+    "memoryExtractionTokens": null,
+    "credits": null,
+    "developmentCredits": null,
+    "efficiencyOrSuperiorityAdvantageProven": false
+  },
+  "preparationCountLabelCorrection": {
+    "retainedPreparationField": "rootNewCases=6",
+    "correctMeaning": "six selected root cases: two new Hindsight cases, one new SDK case, three existing composition checks",
+    "uniquePassingTotalUnchanged": 130,
+    "breakdown": {
+      "existingSelectedCases": 85,
+      "postgresCases": 39,
+      "postgresNew": 21,
+      "postgresExisting": 18,
+      "rootSelected": 6,
+      "rootNew": 3,
+      "rootExisting": 3
+    },
+    "qualification": "Corrects the label in this review while retaining preparation bytes and source-review hash; no hertest or criteria revision."
+  },
+  "limitations": [
+    "One controlled technical later task supports limited earlier-feedback use; no general learning quality or family acceptance.",
+    "Complete actual native request context not exported; no isolated causal improvement attribution to this one source correction.",
+    "Observed successful new task despite old source-time now restriction does not prove every future time interpretation.",
+    "Known token count is a lower bound; extraction, missing usage, physical attempts and credit costs remain unknown.",
+    "Earlier complete learning case remains NOT_MET and closed, with its original result and scores preserved."
+  ],
+  "completion": {
+    "installedCorrection": true,
+    "boundedLaterFeedbackApplicationObserved": true,
+    "oldCase": "NOT_MET; closed",
+    "wholeGoal": "active",
+    "fullLearningCycle": false,
+    "allFourProductOutcomesComplete": false,
+    "AIDE2Completed": false,
+    "familyOrOwnerAcceptance": false,
+    "newComparisonSeries": false,
+    "voice": "parked"
+  },
+  "reviewerActions": {
+    "writtenFiles": [
+      "eva2/reviews/learning-feedback-source-native-final-review-20261011.json"
+    ],
+    "implementationChanges": 0,
+    "runtimeChanges": 0,
+    "newTests": 0,
+    "providerCalls": 0,
+    "newNativeRetainsOrProbes": 0,
+    "authOrStandaloneConfigFilesRead": 0,
+    "secretValuesPrinted": false
+  }
+}

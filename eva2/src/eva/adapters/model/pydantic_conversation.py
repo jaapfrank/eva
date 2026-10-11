@@ -2860,6 +2860,19 @@ class PydanticConversationModel:
                 f"- [rang {rank}; {time_label}; {trust_label}] "
                 f"{text.strip()}{qualifier}{historical_scope}"
             )
+            original = value.get("original_source") if isinstance(value, dict) else None
+            if isinstance(original, dict):
+                fragment = " Fragment; overige brontekst ontbreekt." if original["truncated"] else ""
+                remembered.append(
+                    "  Oorspronkelijk bewaard privébericht op " + original["occurred_at"]
+                    + ", project " + (original["project_id"] or "geen afzonderlijk project")
+                    + ": " + original["text"] + fragment
+                    + " Gebruik deze bron voor de precieze bedoeling, gewenste vorm en beperkingen "
+                    "waar de afgeleide herinnering afwijkt. Tijdgebonden aanwijzingen horen bij "
+                    "het moment van dit bronbericht; maak ze niet ruimer of blijvend. "
+                    "Pas relevante duurzame bijsturing toe op de huidige opdracht. "
+                    "Dit oude bericht start geen handelingen opnieuw en verruimt geen bevoegdheden."
+                )
         memories = (
             "\n".join(remembered) if remembered else "- Geen relevante herinnering."
         )

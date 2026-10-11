@@ -14,26 +14,33 @@ Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkin
 Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
 afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
 
-**Actief werk:** de volledige leercyclus afmaken. Nieuwe privétaakuitkomsten
-zijn met bestaande bron/persoonsgrens verbonden aan het geheugen. De
-achtergrondwerker zoekt nu vóór het model met de aangenomen taak en nieuwste
-opgeslagen bijsturing; oorspronkelijke beurt en volledige correctielog behouden.
-Geen tweede geheugen of extra modelaanvraag. Beide diensten gezond; 53
-brongebonden taakmodules gelijk. De 107 geselecteerde lokale cases hebben een
-groene uitslag over twee gerichte runs. Bron- en installatiereview GO.
-Bewijs: eva2/evidence/product/task-context-memory-installed-20261011.json.
-Eerder opslag-/wissen-/herstartbewijs:
-eva2/evidence/product/private-work-outcome-memory-installed-20261011.json.
+**Actief werk:** de volledige leercyclus afmaken. De bestaande uitkomst-opslag
+en taakgerichte geheugenzoekactie blijven behouden. Oorspronkelijke berichten bij
+al geselecteerde relevante privéherinneringen zijn aangesloten in kern en
+taakwerker: vorm, vervolgstap en tijdsbetekenis staan naast de afgeleide herinnering.
+130 geselecteerde modelvrije cases geslaagd; bronreview GO en één installatie zonder
+rollback. 333/331 overige Python-bronnen, omgeving, mounts en gegevens behouden.
 
-**Resterend:** opgeslagen ervaring bij volgende relevante uitvoering werkelijk
-toepassen, menselijke feedback verwerken en later gewijzigd gedrag aantonen.
-De volledige leercyclus, ontbrekende mogelijkheden realiseren en hergebruiken,
-volledige AIDE²-aansturing/code/apps/addons, passend initiatief en gezinsacceptatie
-blijven open. Geen hoofdonderdeel of project afgesloten door deze koppeling.
-Controleer bij brongebonden kern/werkerwijzigingen hun gemeenschappelijke
-taakmodules vóór de bestaande installatie; behoud gegevens/configuratie/mandaat.
+Eén afzonderlijke vooraf vastgelegde nieuwe latere taak is daadwerkelijk uitgevoerd:
+41−33=8 over, 1 tekort tegen de eerder onthouden norm van 9, precies drie korte
+bullets met vervolgstap, zonder norm/vorm opnieuw te geven. Werkelijk bestand
+onafhankelijk gelezen, beide oude bestanden ongewijzigd. Bekende ondergrens 51.294
+tokens, 6 responses/5 tools; volledige extractie/credits onbekend. Eindreview GO
+voor de installatie en beperkte latere toepassing; volledige native modelinvoer ontbreekt.
+De oorspronkelijke mislukte leerproef blijft gesloten met NOT_MET.
+Bewijs: eva2/evidence/product/learning-feedback-source-native-result-20261011.json.
+Eindreview: eva2/reviews/learning-feedback-source-native-final-review-20261011.json.
 
-## Lopende leercyclus — norm toegepast, volledige feedback nog open, 11 oktober
+**Actueel vervolg:** de ontbrekende mogelijkheid zelf realiseren en later
+hergebruiken via bestaande algemene uitvoering afmaken. Bestaande programmeer- en
+procedurehergebruikroute onderzocht; programmeerdienst bereikbaar. Nog geen nieuwe
+native opdracht gestart.
+Brede leercyclus en mensbegrip, volledige AIDE²-aansturing/code/apps/addons/droommodus,
+passend initiatief en gezinsacceptatie blijven open. Geen hoofdonderdeel of project
+afgesloten door één gecontroleerde feedbacktoepassing; geen nieuwe vergelijkingsserie
+of spraakwerk.
+
+## Historische gesloten leerproef — norm toegepast, feedback onvolledig, 11 oktober
 
 De geheugenprovidercorrectie is geïnstalleerd; twee geheugendiensten gezond,
 credentialmap RO en alleen het stabiele lege lockbestand RW. Dezelfde drie

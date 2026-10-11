@@ -1,10 +1,12 @@
 """Shared identity and authorized memory composition for private conversation work."""
+from datetime import UTC, datetime
 from pathlib import Path
 from uuid import UUID
 
 from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.adapters.postgres.private_memory_aliases import PostgresPrivateMemoryAliases
+from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
 from eva.adapters.projection.hindsight import HindsightMemoryEngine, HindsightProjectionConfig
 from eva.application.conversation import IdentityProfile
 from eva.application.identity_verifier import load_identity_pack_trust_binding
@@ -35,6 +37,26 @@ def build_private_conversation_resources(settings, engine, *, group_consent,
                                           UUID(settings.dashboard_installation_id)),
             bindings_loader=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
         )
+    def original_sources(query, selected_refs):
+        if (settings.dashboard_principal_binding_id is None
+                or settings.background_principal_id is None):
+            return ()
+        # Reload the same trusted bridge for each source lookup, including a
+        # semantic cache hit. A previous read grants no lasting source access.
+        bindings = (None if settings.telegram_principal_bindings_file is None
+                    else load_principal_bindings(settings.telegram_principal_bindings_file))
+        reader = PostgresOwnerMemorySources(
+            engine, tenant_id=settings.background_tenant_id,
+            installation_id=settings.background_installation_id,
+            owner=UUID(settings.background_principal_id),
+            binding=UUID(settings.dashboard_principal_binding_id),
+            authority_scope=TimelineScope(UUID(settings.dashboard_tenant_id),
+                                          UUID(settings.dashboard_installation_id)),
+            telegram_bindings=bindings,
+        )
+        return reader.selected_private_sources(
+            query, selected_refs, now=datetime.now(UTC).replace(microsecond=0))
+
     memory = HindsightMemoryEngine(
         HindsightProjectionConfig(
             settings.hindsight_url,
@@ -46,6 +68,7 @@ def build_private_conversation_resources(settings, engine, *, group_consent,
         active_group_consent_resolver=group_consent,
         active_household_consent_resolver=household_voice,
         private_alias_resolver=private_memory_aliases,
+        private_source_resolver=original_sources,
     )
     identity = IdentityProfile(
         name=settings.identity_name,
