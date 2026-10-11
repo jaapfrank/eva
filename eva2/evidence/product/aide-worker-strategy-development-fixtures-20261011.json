@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-10-11T22:03:58.969420+00:00",
+  "credits": null,
+  "development": {
+    "caseCount": 2,
+    "cases": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/development/cases.private.json",
+      "sha256": "6ea7161fddc2c48e5aa7106c650a3c9ec491742944b47b6afeca33bd546df053"
+    },
+    "scorer": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/development/scorer.private.py",
+      "sha256": "d289cb0e2951bd329d8e0a7bcf9afb713264b1b365e50fddcc16b50a18aed70e"
+    },
+    "sharedScorer": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/scorer_common.private.py",
+      "sha256": "290ec36fcc8316826bdefb940bbcb0a310ee1ae198974de260e459a9f9964ffe"
+    }
+  },
+  "developmentCriteria": "Correct actual program/result behavior, actual stored-source procedure reuse and separate file readback; human clarification/repair counts. No plan-word, import-word, call-count or resource-only intelligence score.",
+  "fixtureManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/fixture-manifest.private.json",
+    "sha256": "629ea8e6cc8d0c00877c4a3701037221c15eebe603e05cbf50156549e63fa5dd"
+  },
+  "fullAide2Complete": false,
+  "independentFinal": {
+    "caseCount": 2,
+    "casesSha256": "8ecb7e431acb28ac8775e6fd2fd42d67f25e9cc6768206d1b2300802c4981a5f",
+    "questionsAndAnswersProtected": true,
+    "registration": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/final/registration.private.json",
+      "sha256": "e8b5af5d3b80a7cf97fb194ffe0563fdc4b4e8cb72603cd8ac7b3106915d4332"
+    },
+    "scorerSha256": "17b8b7435b5ed1690fa77e731689cab868513a91950b10433134b1699427e1de"
+  },
+  "nativeTrials": 0,
+  "originalManifestSha256": "59ccbd3e7c3c23e455a02316699ee93b2fe2d983cece302fc26b154583e24bc7",
+  "originalQualityCriteriaSha256": "57b4fc30c0446d45c52e2ca054a8bb38fad0041440f7184f2b59636b3093b39c",
+  "preExecutionCorrection": {
+    "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/pre-execution-preparation-correction.private.json",
+    "sha256": "94c67b8737c0c0f7ee902b6683c89266bcfe5d2123e3a517008bb2500ac37ef2"
+  },
+  "preparationErrors": [
+    {
+      "failure": "System Python lacked Pydantic at scorer import, before synthetic records. Existing project venv used; no dependency install, program or model execution.",
+      "receiptSha256": "3baa69bdea78221ea217c592ae2ccff8b87bf75325f8c87b4c61513244550e26"
+    }
+  ],
+  "producerInterface": {
+    "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/producer-interface.private.json",
+    "sha256": "36e32e2b3965a06dfbaea2689e2298638e35ac1e472cc5e845d55501b8102102"
+  },
+  "providerRequests": 0,
+  "purePreparationChecks": {
+    "data": "Synthetic observation records only; no candidate program or worker execution.",
+    "failed": 0,
+    "passed": 17,
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/pure-scorer-checks.private.json",
+      "sha256": "34728fee649f6f27964a660bcf7355c0680722dd5dbf1d4e5b83ddede2d29828"
+    },
+    "syntaxFiles": 3
+  },
+  "qualityGainProven": false,
+  "remainingAdmission": [
+    "Profile-compatible grant plus <=4 physically shared provider attempts per task including helpers; global42/200000totalTokens/70tools/0retry limits including construction/final/later before model input.",
+    "Exact source/literal-to-SDK projection, current private scope/owner/project/stop authority and original ingress/task/session IDs.",
+    "Trusted original action/proof/provider journals, complete measured role usage, independent source/result readbacks and sealed case/task/receipt/export runbindings.",
+    "Final host admission must contain exact private runbindings root and safe runtime/scope bindings. Canonical compact bytes with no trailing newline must match HostFinalAssessment binding hash. Model/producer receives admitted task only, never final oracle/gold/scorer.",
+    "Baseline work and trusted bindings sealed before constructing opt-in DevelopmentAssessment. Source installation alone does not register or authorize this experiment."
+  ],
+  "resourceEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/aide-worker-strategy-resource-binding-20261011.json",
+    "sha256": "c84844528f02a744b7e2779ec31db8b4ffb93669893f3a8137e3084004305c82"
+  },
+  "schema": "eva2.aide.worker_strategy_development_fixtures.v1",
+  "scopeEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/aide-worker-strategy-evaluation-scope-20261011.json",
+    "sha256": "dc0d8376ae0491ca6b2a7a018945cf26fc80de3fb2982f28ff331d428a562394"
+  },
+  "status": "fixtures_and_scorers_fixed_no_native_execution_admission",
+  "technicalChoice": "Use current DelegatedDigitalRunner/build_digital_runner composition and ordinary programming/procedure/provider actions. The two read historical drivers supply composition examples only and are not executed."
+}

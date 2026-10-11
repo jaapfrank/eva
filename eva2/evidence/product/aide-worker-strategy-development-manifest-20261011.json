@@ -1,0 +1,71 @@
+{
+  "checkedAt": "2026-10-11T21:56:09.001218+00:00",
+  "contract": "EvaWorkerStrategyDevelopmentFixtureManifest/v1",
+  "development": {
+    "caseCount": 2,
+    "cases": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/development/cases.private.json",
+      "sha256": "89371e08e1a4c2d454e944a81394e9351c9b2c3b86c2bdc541c81ee216d84784"
+    },
+    "scorer": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/development/scorer.private.py",
+      "sha256": "86ccfe2302697d5800415966be51d43d6456ee5f8c12a6f089d1d99ff4fde8bb"
+    },
+    "sharedScorer": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/scorer_common.private.py",
+      "sha256": "02b58df38312b69565a865a4f3e4aac55a2857561142d573561a7a54e88ae7a1"
+    }
+  },
+  "fullAide2Complete": false,
+  "method": {
+    "credits": "unknown",
+    "models": 0,
+    "nativeTasks": 0,
+    "oldProtectedCasesRead": false,
+    "productCodeOrRuntimeChanges": 0,
+    "scorerSyntaxChecks": 3,
+    "submittedProgramsExecuted": 0
+  },
+  "originalScopeSha256": "dc0d8376ae0491ca6b2a7a018945cf26fc80de3fb2982f28ff331d428a562394",
+  "privateFixtureManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/fixture-manifest.private.json",
+    "sha256": "293370b85641902c47aa186e17db6a22cf65a7e47277937ad713a62ccd6f77a8"
+  },
+  "producerExportInterface": {
+    "artifact_evidence": {
+      "checks": "One actual isolated-execution observation per fixed check: check_id, program_sha256, stdin_sha256(canonical JSON), stdout, stderr, exit_code, timed_out, receipt_sha256. No model success metrics.",
+      "executions": "Nonempty actual native program/procedure action observations for task itself, with durable original receipt identities/proofs. A post-hoc oracle execution alone is not native task execution.",
+      "files": "Object containing program/result and optional preserved mapping by exact path. Each item: path, content, sha256, readback_content, readback_sha256, readback_receipt_sha256.",
+      "progress": "Actual progress/action events and optional save_work_progress observations, retained for honest-work/overhead assessment. Mere plan words/counts give no semantic points.",
+      "reuse_probe": "For multistep cases: same check fields plus dependency_source_sha256; execute same verified program against the trusted fixed dependency-probe fixture, separate cloned isolation only. Original task dependency remains byte-identical. This behavioral dependency observation establishes actual reuse rather than matching an import word."
+    },
+    "contract": "EvaWorkerStrategyProducerExportInterface/v1",
+    "final_export": "EvaWorkerStrategyFinalWorkEvidence/v1: exact fields contract,binding,execution_admission,baseline,candidate. binding exact registration_sha256/case_set_sha256/baseline_sha256/candidate_sha256; both evidence legs use same schema but stage=independent_final. execution_admission contains safe scope/runtime metadata; its canonical bytes/hash must equal separately fixed HostFinalAssessment.bindings.execution_admission. Root must not read protected final fixtures/scorer or print prompts/oracles.",
+    "fixture_setup": "Case initial files may be loaded into this task-scoped existing programming workspace by trusted setup. No oracle/expected outputs/scorer in model workspace or model context. Fixed actual initial task is not human repair.",
+    "ingress": "Current DelegatedDigitalRunner/build_digital_runner on the normal current worker composition. Fresh host-bound private technical ConversationTurn; canonical current UTC; original ingress journal; exact current profile/grant accepted by profile.accepts_grant. No fake smaller grant. Limit case provider attempts through existing journal_factory maximum_model_requests<=4 plus physical helper/shared ledger. No old script execution.",
+    "policy_selection": "Host extracts only the checked _work_strategy literal from exact source; all other runner bytes/profile/authorizer remain fixed. Runtime/source/SDK projection proof must establish the selected literal actually used.",
+    "program_result_readback": "Read /workspace/main.py and /workspace/result.json through existing programming/procedure/physical file route independently after terminal work. Preserve supplied dependency file hashes. Never execute submitted code on host.",
+    "resource_binding_sha256": "dcc4084ed62480dc8173b6e8d05102c05e47bb7acdc0665554e29ccfcd14a6c7",
+    "still_missing": "Trusted producer/export construction and exact per-source receipt validation/readiness; these files prepare fixtures/scorers only and run no agent or native process.",
+    "usage_authority": "Original normalized work receipt + each actual provider journal request, completion/failure and measured input/output; root stop/authority checks, current scope/profile and full action receipts supply trusted run_bindings; case/help/hard/artifact hashes under exact published schema."
+  },
+  "protectedFinalMetadata": {
+    "caseCount": 2,
+    "casesSha256": "b3b49b6a26bdfba5bd92acf9b6b8c5ac703ee074a1291bcc18821f68f57d7e67",
+    "registrationSha256": "f1ca9295b71a1109886a919d4b6924342605d9cb3e808625b50dfb9ae4e990ff",
+    "scorerSha256": "96fc01800fa2d6b9fefc42703baaf9ee8469c58ff4988fd55350ca75b8f4a7dc"
+  },
+  "qualityCriteriaUnchanged": true,
+  "remainingExecutionGate": "Trusted producer/source-to-SDK binding, exact current installed profiles/scope, complete physical usage and real artifact exports must be proven before model input. Feasibility and every independent isolated check share the42attempt/200000token/70tool ceiling.",
+  "resourceSupplementSha256": "c84844528f02a744b7e2779ec31db8b4ffb93669893f3a8137e3084004305c82",
+  "sourceFamiliesUnchanged": true,
+  "status": "development_and_protected_final_fixtures_prepared_no_execution",
+  "technicalDriverChoice": {
+    "historicalTechnicalSourceSha256": {
+      "l3-programming-20261002/candidate-run.py": "ac06f2b6885bb412488d89e5168063ff6dd42625439c8e5995443dbee2765d93",
+      "l3-typed-programming-20261002/programming-task.py": "228c5322ddb55b6d5b29a422092e9ce331e1d17fca1245e28fa8ac8dcf9504d7"
+    },
+    "reuse": "Current DelegatedDigitalRunner/build_digital_runner ordinary composition. The two historical scripts demonstrate composition only; current grants/deadline/stop/procedure/progress must remain."
+  },
+  "wholeGoalStatus": "active"
+}

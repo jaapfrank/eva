@@ -1,0 +1,77 @@
+{
+  "checkedAt": "2026-10-11T22:08:41.082356+00:00",
+  "credits": null,
+  "currentFixtureManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/fixture-manifest.private.json",
+    "sha256": "c0b15836d641dceb1511236280c2de3f2eb076d62458d91409658c47cb4f5ce7"
+  },
+  "development": {
+    "caseCount": 2,
+    "cases": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/development/cases.private.json",
+      "sha256": "20df6b3781776ff768255de62cc6302c5a78bf1dccdffe62b4d11262e9104d3d"
+    },
+    "scorer": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/development/scorer.private.py",
+      "sha256": "d289cb0e2951bd329d8e0a7bcf9afb713264b1b365e50fddcc16b50a18aed70e"
+    },
+    "sharedScorer": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/scorer_common.private.py",
+      "sha256": "290ec36fcc8316826bdefb940bbcb0a310ee1ae198974de260e459a9f9964ffe"
+    }
+  },
+  "feasibilityReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/execution-feasibility.private.json",
+    "sha256": "0f3103b092ce05eb49924fbd4c226f937612bfa1043afc49fae6ce1fa99aac27"
+  },
+  "independentFinal": {
+    "caseCount": 2,
+    "casesSha256": "c95e91eed6c00b7f4ec91c8ee2878f0e3400e75f3997a5d6dfbd5fe391305f25",
+    "protected": true,
+    "registration": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/final/registration.private.json",
+      "sha256": "7d06fdef0add9de5cbb5a0e1afdd5af4e8f2427204f4383edfda252f81125fa4"
+    },
+    "scorerSha256": "17b8b7435b5ed1690fa77e731689cab868513a91950b10433134b1699427e1de"
+  },
+  "models": 0,
+  "nativeInputGO": false,
+  "nativeQualityGainProven": false,
+  "nativeTrials": 0,
+  "originalCriteriaSha256": "57b4fc30c0446d45c52e2ca054a8bb38fad0041440f7184f2b59636b3093b39c",
+  "originalManifestSha256": "59ccbd3e7c3c23e455a02316699ee93b2fe2d983cece302fc26b154583e24bc7",
+  "originalScopeEvidenceSha256": "dc0d8376ae0491ca6b2a7a018945cf26fc80de3fb2982f28ff331d428a562394",
+  "previousPreparationPublicEvidence": {
+    "path": "eva2/evidence/product/aide-worker-strategy-development-fixtures-20261011.json",
+    "qualification": "Preserved pre-feasibility preparation; use latest hashes in this receipt for actual future binding.",
+    "sha256": "70dbb31833497a9a94a4446efa4495b446163e8109b3610fe40f231367a84c76"
+  },
+  "procedureFeasibility": {
+    "correction": "Same fixed transformation/checks/answers; self-contained source and explicit fixed reuse-input.json. Actual native designation/resolution/execution of same stored source required, no new implementation. Old draft inputs/assumptions retained.",
+    "noFakeProductLoss": true,
+    "ordinaryExecution": "Only one stored source mounted as /eva-procedure.py, Python-I; program workspace dependencies are not transmitted.",
+    "originalThreeBehaviorOraclesUnchanged": true,
+    "source": "operations/procedure_execution.py:139-153"
+  },
+  "producerInterface": {
+    "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/producer-interface.private.json",
+    "sha256": "5d269f2a27355de47b8cf42930180c89b34d0fd7b3b02e062f0cc4b86f95f5c4"
+  },
+  "resourceBoundary": {
+    "afterEachResponse": "Add actual registered input+output including helpers before any next call; at/above ceiling or any UNKNOWN, stop all subsequent shared requests.",
+    "automaticRetries": 0,
+    "beforeEachDispatch": "Shared physical request/tool allowance, current source/profile/private actor/project/stop authorization; require previously dispatched usage fully measured and cumulative measured tokens <200000.",
+    "meaning": "Ceilings are not expected costs or a guarantee of in-flight consumption; unsupported output caps are not replaced by another transport.",
+    "overshootOrUnknown": "Preserve actual usage and NOT_MET/incomplete. No reset, automatic retry, quota extension, zero unknown usage or pass beyond the ceiling.",
+    "physicalHardInFlightTokenGuarantee": false,
+    "providerSource": "adapters/model/openai_codex_provider.py:633-636",
+    "roles": "Sol/none contact only; Astra/medium work and every helper. Per task at most4 physical provider attempts.",
+    "sharedRegisteredTotalTokenAcceptanceStopCeiling": 200000,
+    "tokenCostsGuaranteed": false,
+    "totalProviderAttempts": 42,
+    "totalTools": 70
+  },
+  "resourceEvidenceSha256": "c84844528f02a744b7e2779ec31db8b4ffb93669893f3a8137e3084004305c82",
+  "schema": "eva2.aide.worker_strategy_execution_feasibility.v1",
+  "status": "model_free_fixture_feasibility_corrected_execution_not_admitted"
+}
