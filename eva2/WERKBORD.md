@@ -1,49 +1,43 @@
-## Actueel werk — 2026-10-11T20:54:42.210116+00:00
+## Actueel werk — 2026-10-11T21:30:19.820101+00:00
 
-**Laatst opgeleverd:** de onbedoelde extra daggrens voor eigen initiatief is
-gecorrigeerd en geïnstalleerd. Kern en taakwerker gezond; 89 gerichte controles en
-bronreview GO. Historische tellingen, mandaat, configuratie en gegevens behouden.
-Onafhankelijke installatie-eindcontrole GO; geen nieuw native resultaat geclaimd.
+**Laatst opgeleverd:** nieuwe verbetercycli geïnstalleerd met behoud van oude
+beoordelingen. Vier exacte modules, 93 gerichte controles, bronreview GO.
+Alle 1.910 oude ontvangst-/resultaatbestanden bytegelijk, oude rondes blijven
+verbruikt. Kern, taakwerker en bestaande hostbeoordelaar gezond.
 
-**Nu:** een echte eigen keuze van Eva via de bestaande digitale uitvoerder
-afmaken en privé terugmelden. Laatste geregistreerde contextbeoordeling is ouder
-dan de installatie; geen actuele blokkade of nieuwe uitvoering daaruit afleiden.
+**Volgende uitkomst:** de echte verbetering van agentaansturing uitvoeren,
+onafhankelijk beoordelen, toepassen en later gebruiken.
 
-**Wie:** /root volgt de native route en verzorgt integratie/dashboard/Git.
-Bronuitvoerder klaar; onafhankelijke gebundelde bron- en installatiereview GO.
+**Wie:** /root verzorgt integratie, werkelijk gebruik, dashboard en Git.
+De bestaande onafhankelijke reviewer doet de gebundelde eindcontrole.
 
-**Daarna:** agentaansturing verbeteren, herhaald passend initiatief en
-samenhangend gezinsgebruik afmaken. Hele projectgoal actief; oorspronkelijke
-39/48 kleine afrondingen behouden. Geen handeling van Jaap nodig.
-Spraak geparkeerd; geen vergelijkingsserie.
+**Van Jaap nodig:** geen handeling voor deze technische oplevering.
+Volledige gezinsbeoordeling blijft afzonderlijk. Hele goal actief; 39/48
+oorspronkelijke kleine afrondingen behouden, spraak geparkeerd.
 
-**Dashboard:** inhoud en runtimebinding bijgewerkt. Automatische verversing,
-terugkeer-/herstelverversing en Nu verversen zijn geïnstalleerd; eerdere echte
-browsercontrole zonder herladen geslaagd.
-Installatie: eva2/evidence/product/native-initiative-subscription-installed-20261011.json.
-Review: eva2/reviews/native-initiative-subscription-installed-review-20261011.json.
-Verversing: eva2/evidence/product/dashboard-live-refresh-20261011.json.
+**Dashboard:** overzicht, huidige oplevering, volgend resultaat en inhoudelijke
+controletijd gelijkgetrokken aan dezelfde bron. Automatische verversing blijft actief.
 
 ## Actuele uitvoerfase — 11 oktober 2026
 
-De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. De bestaande
-contextplanner kan vanaf 23:33 opnieuw een beoordeling plannen; dit is toelating,
-geen voorspelling van een initiatief. Oude beoordelingen en tellingen blijven intact.
+Nieuwe verbetercycli zijn geïnstalleerd op de bestaande wachtrij. Iedere oude
+beoordeling behoudt haar oorspronkelijke protocol, beoordelaar en toepassing.
+Alle 1.910 oude ontvangst- en resultaatbestanden blijven bytegelijk; de twee
+bestaande rondes blijven verbruikt. Kern en taakwerker bevatten twee exacte
+adapters; dezelfde hostbeoordelaar twee exacte modules. 93 gerichte controles
+slagen, één bestaande optionele native controle blijft overgeslagen.
+Onafhankelijke bron- en installatiereview GO.
 
-De beperkte brondiagnose is afgerond. De bestaande AIDE²-route heeft één protocol
-per onderdeel; een volgende ronde voor hetzelfde onderdeel mist nog de binding
-die oude beoordelingen en opgeslagen resultaten behoudt. /root werkt deze aansluiting
-uit op de bestaande wachtrij, zonder tweede verbeterplatform. Native krijgt alleen
-ronde-, bron- en ontwikkelmetadata; eindgevallen, scorer en registratie blijven
-onafhankelijk bij de host. Nog geen nieuwe bronimplementatie, installatie of
-modelproef uit deze diagnose.
+Dit is een aansluiting voor nieuwe rondes, geen nieuwe kwaliteitsverbetering
+of volledige AIDE². De volgende uitkomst is een concrete verbetering van Eva's
+aansturing toepassen en bij later werk gebruiken. De normale initiatiefplanner
+wordt vanaf het toegelaten venster om 23:33 gevolgd, zonder oude beoordelingen,
+criteria, reserveringen of verbruik te resetten. Passend initiatief en gezinsgebruik
+blijven open. Geen spraakwerk, nieuwe vergelijkingsserie of eigenaarhandeling.
 
-Daarna echte verbetering van agentaansturing toepassen en later gebruiken; passend
-initiatief en gezinsgebruik blijven open. Volledig goal actief, spraak geparkeerd,
-geen nieuwe vergelijkingsserie en geen eigenaarhandeling.
-
-Diagnose: eva2/evidence/product/aide-harness-remaining-gap-20261011.json.
-Wachtbewijs: eva2/evidence/product/native-initiative-next-window-20261011.json.
+Bewijs: eva2/evidence/product/component-improvement-rounds-installed-20261011.json.
+Bronreview: eva2/reviews/component-improvement-rounds-source-review-20261011.json.
+Installatiereview: eva2/reviews/component-improvement-rounds-installed-review-20261011.json.
 
 ## Actief volledig projectgoal — 11 oktober 2026
 

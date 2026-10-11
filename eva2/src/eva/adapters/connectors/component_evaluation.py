@@ -62,6 +62,25 @@ class ComponentEvaluationClient:
         return self._post("/reviewed-component", {"action": action, "review_id": review_id,
             "request_id": request_id, "task_id": task_id}, limit=16384)
 
+    def round_status(self, path, *, scope_sha256):
+        if dict(self.final_assessment_scopes).get(path) != scope_sha256:
+            raise ValueError("no independent final round for this source")
+        result = self._post("/component-assessment", {"action": "round_status",
+            "path": path, "scope_sha256": scope_sha256}, limit=16384)
+        fields = {"contract", "path", "scope_sha256", "registration_sha256", "baseline_sha256",
+                  "source_target_sha256", "state", "independent_final", "installed"}
+        if (set(result) != fields or result.get("contract") != "EvaComponentImprovementRound/v1"
+                or result.get("path") != path or result.get("scope_sha256") != scope_sha256
+                or result.get("state") not in {"available", "consumed"}
+                or result.get("independent_final") is not True or result.get("installed") is not False
+                or any(not isinstance(result.get(k), str) or not re.fullmatch(r"[0-9a-f]{64}", result[k])
+                       for k in ("registration_sha256", "baseline_sha256"))
+                or (result.get("source_target_sha256") is not None and (
+                    not isinstance(result["source_target_sha256"], str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", result["source_target_sha256"])))):
+            raise ValueError("independent round metadata binding differs")
+        return result
+
     def evaluate(self, draft):
         path = draft["path"]
         target = draft.get("source_target")

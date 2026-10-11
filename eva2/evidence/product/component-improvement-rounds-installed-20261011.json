@@ -1,0 +1,106 @@
+{
+  "checkedAt": "2026-10-11T21:25:43.319825+00:00",
+  "status": "installed_exact_sources_and_preserved_rounds",
+  "services": {
+    "core": {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:44b4a5db42aa90b48b46fc514967522948c1be9870f0d9cdab8a3ca2924fa389",
+      "containerId": "5c1a2e19fe35452a8b4bbcd160002683473f31c6f6825ae2bbe1f7e52ce076cb",
+      "pid": 3808825,
+      "health": "healthy",
+      "sourceItems": 340,
+      "changedSourceItems": 2,
+      "retainedSourceItems": 338,
+      "envCommandUserMountsRetained": true,
+      "hostConfigRetained": true,
+      "networkInventoryRetained": true,
+      "actualRelease": {
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+        "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+        "worker_program_sha256": "0e695c96f60031d6760cf022ca43009df09f588ff22ffd0c2d4b1399f65b82ea"
+      }
+    },
+    "delegated-work-worker": {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:89f4b117fb8eb4fac7b8502a514ddc83cfaa8107297beb9bfd3976864c1b0d13",
+      "containerId": "da66ef5c9ccb5dc182ceeacd1fc82aeda4e9f4b2e08e04b77594da8312b581b6",
+      "pid": 3809467,
+      "health": "healthy",
+      "sourceItems": 338,
+      "changedSourceItems": 2,
+      "retainedSourceItems": 336,
+      "envCommandUserMountsRetained": true,
+      "hostConfigRetained": true,
+      "networkInventoryRetained": true,
+      "actualRelease": {
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+        "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+        "worker_program_sha256": "0e695c96f60031d6760cf022ca43009df09f588ff22ffd0c2d4b1399f65b82ea"
+      }
+    }
+  },
+  "hostSources": {
+    "operations/component_final_assessment.py": "6d3181faf86f38a04a98b02ddaa96cdcf801662af3299156eb79b74c570b0e32",
+    "operations/component_evaluation_service.py": "e7b3fd7ccba2c4c9e947ea4695efc2b4246bb161fd3a0ae98d0681e46f0d35ca"
+  },
+  "retainedHostSources": 17,
+  "hostConfigSha256": "47652790d79a6188f42945f0746c7ee5ab42653e3080f3961e646678a4ac4857",
+  "oldReceiptFileCount": 1910,
+  "oldReceiptsByteExact": true,
+  "oldRounds": [
+    {
+      "baseline_sha256": "2554605179fcdff8b2b8793b8dbbdecaffdeddaafc31c65063f19e6e9269beb7",
+      "contract": "EvaComponentImprovementRound/v1",
+      "independent_final": true,
+      "installed": false,
+      "registration_sha256": "411523c03e970c861c3b36cfd57d1b4689969484c6e4b462027174093ac00f44",
+      "source_target_sha256": null,
+      "state": "consumed"
+    },
+    {
+      "baseline_sha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+      "contract": "EvaComponentImprovementRound/v1",
+      "independent_final": true,
+      "installed": false,
+      "registration_sha256": "7edd15aea459cade04c2f5c982fe05693d86ff864779fba53a51b36d65c24c57",
+      "source_target_sha256": "7fe314563ac440c839b6bc7ac501ba763adfbec0efd44075dc7f687af2bfafec",
+      "state": "consumed"
+    }
+  ],
+  "hostHealth": {
+    "status": "ready"
+  },
+  "sourceReviewSha256": "b0b9ef728b585f8987653849bc6af786d1837cd1953c9dc547cd72e48bf57bb8",
+  "sourceFiles": {
+    "operations/component_final_assessment.py": "6d3181faf86f38a04a98b02ddaa96cdcf801662af3299156eb79b74c570b0e32",
+    "operations/component_evaluation_service.py": "e7b3fd7ccba2c4c9e947ea4695efc2b4246bb161fd3a0ae98d0681e46f0d35ca",
+    "adapters/connectors/component_evaluation.py": "278ae7fd7442d56c49c79e134613a9614fae6c8f33c91403ca9f4dd0bf74184d",
+    "adapters/postgres/component_improvement_actions.py": "f76573bb17c540fce090eb53a12c24c6a1d5b4e898a2f05792f910d2787468d7"
+  },
+  "readyz": {
+    "httpStatus": 200,
+    "ready": true
+  },
+  "policyBytesRetained": true,
+  "budgetBytesRetained": true,
+  "manualEvaModelRequestsForBuildProbeInstall": 0,
+  "newRoundRegistered": false,
+  "newQualityImprovementProven": false,
+  "fullAide2Complete": false,
+  "prepFailuresRetained": [
+    "rounds-build-preparation-failure.private.json",
+    "rounds-host-readiness-preparation-error.private.json"
+  ],
+  "contract": "EvaComponentImprovementRoundsInstalled/v1",
+  "verificationScope": "Four exact reviewed modules installed through the existing two services and same host evaluator. Existing registrations still consumed; no protected final data exposed or new native improvement claimed.",
+  "testEvidence": "eva2/evidence/product/component-improvement-rounds-source-tests-20261011.json",
+  "uniquePassingChecks": 93,
+  "existingOptionalSkip": 1,
+  "wholeGoalStatus": "active",
+  "developmentCreditCosts": "unknown",
+  "runtimeUsageMeasured": false
+}

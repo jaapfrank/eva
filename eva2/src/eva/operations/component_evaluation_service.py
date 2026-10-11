@@ -256,6 +256,8 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                     request_id=value["request_id"], task_id=value["task_id"], scope_sha256=value["scope_sha256"])
             elif value.get("action") == "status" and set(value) == {"action", "review_id", "scope_sha256"}:
                 result = self.server.final_assessments.status(value["review_id"], scope_sha256=value["scope_sha256"])
+            elif value.get("action") == "round_status" and set(value) == {"action", "path", "scope_sha256"}:
+                result = self.server.final_assessments.round_status(value["path"], scope_sha256=value["scope_sha256"])
             else:
                 raise ValueError()
         except (ValueError, KeyError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):

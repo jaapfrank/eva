@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T21:06:43.611403+00:00",
+  "lastUpdated": "2026-10-11T21:30:19.820101+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -128,8 +128,8 @@
       "summary": "Eva heeft zelf een hulpmiddel gemaakt, verbeterd en later hergebruikt. De uitvoerkoppeling en daggrenscorrectie voor eigen initiatief zijn geïnstalleerd; een nieuw zelfgekozen resultaat, volledige agentaansturing en gezinsgebruik blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · agentaansturing en eigen uitvoering afmaken",
-          "detail": "De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. De bestaande planner komt vanaf 23:33 opnieuw in aanmerking voor een eigen beoordeling; oude registratie blijft intact. Intussen wordt het concrete resterende gat in AIDE²-agentaansturing onderzocht om dezelfde verbeterroute af te maken."
+          "title": "Hierna · agentaansturing werkelijk verbeteren",
+          "detail": "De aansluiting voor nieuwe verbetercycli is geïnstalleerd en onafhankelijk goedgekeurd. Gebruik dezelfde route voor een concreet kwaliteitstekort in Eva’s aansturing; pas alleen bewezen kwaliteitswinst toe en bewijs later gebruik. Volledige AIDE² en gezinsgebruik blijven open."
         },
         {
           "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T21:06:43.611403+00:00",
+        "checkedAt": "2026-10-11T21:30:19.820101+00:00",
         "deliveries": [
+          {
+            "title": "Nieuwe verbetercycli met behoud van oude beoordelingen",
+            "date": "2026-10-11T21:25:43.319825+00:00",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "technicalOutcomeCompleted": true,
+            "completionScope": "Four exact reviewed modules installed in the same core/worker/host route; original final receipts and consumed registrations preserved.",
+            "summary": "Eva kan een volgende vastgelegde verbetercyclus gebruiken zonder oude beoordelingen te overschrijven.",
+            "result": "Vier modules geïnstalleerd, 93 gerichte controles geslaagd, 1.910 oude bestanden bytegelijk en beide oude rondes blijven verbruikt. Veilige rondestatus via de bestaande echte verbinding teruggelezen.",
+            "remaining": "Werkelijke verbetering van agentaansturing toepassen en later gebruiken; volledige droomcyclus en gezinsgebruik.",
+            "source": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
+            "review": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json",
+            "independentReview": "Onafhankelijke bron- en installatiereview GO voor de exacte aansluiting. Geen nieuwe native kwaliteitswinst of volledige AIDE² geclaimd.",
+            "usage": "0 handmatige Eva-modelaanvragen voor deze bron/build/installatie; automatisch runtimeverbruik en ontwikkelcredits onbekend.",
+            "reviewSha256": "964895d986d68cebe786c212bc696cbf2230b27cb843e53ee4f68434484ba51c"
+          },
           {
             "title": "Onbedoelde extra daggrens voor eigen initiatief gecorrigeerd",
             "date": "2026-10-11T20:47:03.465020+00:00",
@@ -4693,18 +4709,18 @@
           }
         ],
         "now": {
-          "title": "AIDE² · volgende verbetercyclus aansluiten",
-          "detail": "De brondiagnose is afgerond. De bestaande AIDE²-route kan varianten beoordelen en toepassen, maar mist nog een herbruikbare actuele rondebinding voor agent/harnesswerk met behoud van oude beoordelingen. Nu de bestaande registratie aan afzonderlijke rondes binden; geen tweede verbeterplatform. De geïnstalleerde initiatiefroute wordt daarnaast gevolgd vanaf het eerstvolgende toegelaten venster om 23:33; uitvoering is niet gegarandeerd.",
-          "state": "in_progress",
-          "activeExecution": true,
+          "title": "AIDE² · nieuwe verbetercycli geïnstalleerd",
+          "detail": "De technische aansluiting is afgerond. Vier exacte modules draaien, 1.910 oude bestanden blijven bytegelijk en oude rondes worden niet opnieuw uitgevoerd. Volgende gebruikersuitkomst: echte verbetering van agentaansturing toepassen en later gebruiken. Volledige AIDE² blijft open.",
+          "state": "completed",
+          "activeExecution": false,
           "owner": "/root",
-          "source": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json",
+          "source": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
           "doneWhen": "De bestaande verbeterroute accepteert een nieuwe vastgelegde ronde voor een actuele versie van hetzelfde onderdeel; oude bronnen, verbruikte beoordelingen en resultaten blijven behouden en bij herstart leesbaar. Alleen onafhankelijke kwaliteitswinst wordt toegepast. Daarna echte verbetercyclus van agentaansturing en samenhangend gezinsgebruik afronden.",
-          "phase": "existing_aide_round_binding",
+          "phase": "aide_round_installed_approved",
           "executor": "/root",
           "coordination": "/root",
-          "review": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
-          "summary": "Diagnose klaar. Nu volgende verbetercyclus voor hetzelfde onderdeel aansluiten, met behoud van eerdere resultaten."
+          "review": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json",
+          "summary": "Nieuwe verbetercycli geïnstalleerd en onafhankelijk goedgekeurd. 93 gerichte controles geslaagd; oude beoordelingen en resultaten behouden."
         },
         "next": {
           "title": "Daarna · agentaansturing werkelijk verbeteren",
@@ -4723,7 +4739,7 @@
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T21:06:43.611403+00:00",
+        "reviewedAt": "2026-10-11T21:30:19.820101+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4800,8 +4816,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-11T21:06:43.611403+00:00",
-      "checkedAt": "2026-10-11T21:06:43.611403+00:00",
+      "reviewedAt": "2026-10-11T21:30:19.820101+00:00",
+      "checkedAt": "2026-10-11T21:30:19.820101+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11094,7 +11110,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-11T20:54:42.210116+00:00",
+        "checkedAt": "2026-10-11T21:30:19.820101+00:00",
         "basis": "Geaccepteerde oorspronkelijke functies behouden. Feedback bij nieuw werk toegepast. Eva heeft zelf code gemaakt, verbeterd, onafhankelijk laten toetsen en later dezelfde verbeterde bron gebruikt. Volledige agentaansturing/droomcyclus nog open.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11174,7 +11190,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T21:06:43.611403+00:00",
+      "lastUpdatedAt": "2026-10-11T21:30:19.820101+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11493,6 +11509,47 @@
         "javascriptErrors": 0,
         "installationReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
         "installationReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
+      },
+      "historicalCurrentBeforeRoundsInstalled20261011": {
+        "now": {
+          "title": "AIDE² · nieuwe verbetercycli geïnstalleerd",
+          "detail": "Vier exacte modules draaien in kern, taakwerker en dezelfde beoordelingsdienst. Alle 1.910 oude ontvangst- en resultaatbestanden zijn bytegelijk; de twee bestaande rondes blijven verbruikt. Dit is de aansluiting voor nieuwe rondes, nog geen nieuwe kwaliteitsverbetering of volledige AIDE².",
+          "state": "in_progress",
+          "activeExecution": true,
+          "owner": "/root",
+          "source": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
+          "doneWhen": "De bestaande verbeterroute accepteert een nieuwe vastgelegde ronde voor een actuele versie van hetzelfde onderdeel; oude bronnen, verbruikte beoordelingen en resultaten blijven behouden en bij herstart leesbaar. Alleen onafhankelijke kwaliteitswinst wordt toegepast. Daarna echte verbetercyclus van agentaansturing en samenhangend gezinsgebruik afronden.",
+          "phase": "aide_round_installed_review",
+          "executor": "/root",
+          "coordination": "/root",
+          "review": "eva2/reviews/component-improvement-rounds-source-review-20261011.json",
+          "summary": "Nieuwe verbetercycli zijn geïnstalleerd. 93 gerichte controles geslaagd; behoud van oude beoordelingen gecontroleerd. Onafhankelijke installatiereview loopt."
+        },
+        "nextOutcomes": [
+          {
+            "title": "Nu · geïnstalleerde aansluiting afronden",
+            "detail": "Nieuwe verbetercycli draaien met behouden oude beoordelingen; onafhankelijke installatiereview loopt. Daarna een concrete aansturingsverbetering via dezelfde route uitvoeren en later gebruiken."
+          },
+          {
+            "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
+            "detail": "Een aantoonbare verbetering van de aansturing onafhankelijk beoordelen en toepassen met bestaande AIDE²-voorzieningen. Daarna herhaald passend initiatief, leren van de menselijke reactie en samenhangend gezinsgebruik afronden."
+          },
+          {
+            "title": "Eindpunt · Eén bruikbare digitale huisgenoot",
+            "detail": "De vier productuitkomsten samen opleveren met onafhankelijke eindbeoordeling en gezinsacceptatie. Het volledige goal blijft actief; AIDE² is nog niet af."
+          }
+        ],
+        "checkedAt": "2026-10-11T21:21:35.467397+00:00"
+      },
+      "dashboardVerificationRoundsInstalled20261011": {
+        "checkedAt": "2026-10-11T21:27:02.442931+00:00",
+        "evidence": "eva2/evidence/product/dashboard-rounds-installation-current-20261011.json",
+        "actualUserBrowserObserved": true,
+        "automaticRefreshObserved": true,
+        "javascriptErrors": 0,
+        "wholeGoalActive": true,
+        "installationReview": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json",
+        "installationReviewSha256": "964895d986d68cebe786c212bc696cbf2230b27cb843e53ee4f68434484ba51c"
       }
     },
     "pendingTechnicalReview": {
@@ -11577,8 +11634,8 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "De brondiagnose is afgerond. De bestaande AIDE²-route kan varianten beoordelen en toepassen, maar mist nog een herbruikbare actuele rondebinding voor agent/harnesswerk met behoud van oude beoordelingen. Nu de bestaande registratie aan afzonderlijke rondes binden; geen tweede verbeterplatform. De geïnstalleerde initiatiefroute wordt daarnaast gevolgd vanaf het eerstvolgende toegelaten venster om 23:33; uitvoering is niet gegarandeerd.",
-      "currentEvidence": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json",
+      "currentWork": "Nieuwe verbetercycli geïnstalleerd en onafhankelijk goedgekeurd. Volgende uitkomst: echte verbetering van agentaansturing via dezelfde route toepassen en bij later werk gebruiken. Volledige projectgoal actief.",
+      "currentEvidence": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
       "nextStep": "Een concrete tekortkoming van Eva's aansturing met vaste ontwikkel- en onafhankelijke eindcriteria verbeteren, de winnaar toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden.",
       "usageClarification": {
         "date": "2026-09-07",
@@ -11595,7 +11652,7 @@
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
       "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
-      "designUpdatedAt": "2026-10-11T21:06:43.611403+00:00",
+      "designUpdatedAt": "2026-10-11T21:30:19.820101+00:00",
       "wholeProjectGoalStatus": "active",
       "subdeliveriesDoNotCompleteGoal": true
     },
@@ -14832,8 +14889,8 @@
     "currentRuntime": {
       "recordedAt": "2026-10-11T20:50:50.682674+00:00",
       "image": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
-      "coreImage": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
-      "workerImage": "sha256:b3f20f02b851973300656c3a814069944cc204728a8d995d637c32dae1b93cbb",
+      "coreImage": "sha256:44b4a5db42aa90b48b46fc514967522948c1be9870f0d9cdab8a3ca2924fa389",
+      "workerImage": "sha256:89f4b117fb8eb4fac7b8502a514ddc83cfaa8107297beb9bfd3976864c1b0d13",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
       "coreHealth": "healthy",
@@ -14881,7 +14938,9 @@
         "worker_program_sha256": "1bcde708cbd1ad152480bf7c137398b246d5092c712a7f8988ad8a45800907e3"
       },
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
-      "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
+      "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372",
+      "updatedAt": "2026-10-11T21:26:23.928821+00:00",
+      "evidencePath": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -30982,16 +31041,90 @@
       "technicalWorkNotBlocked": true
     },
     "aideHarnessCurrentGap20261011": {
-      "checkedAt": "2026-10-11T21:06:43.611403+00:00",
+      "checkedAt": "2026-10-11T21:30:19.820101+00:00",
       "evidence": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json",
-      "state": "implementation_next",
+      "state": "installed_approved",
       "existingRouteReused": true,
       "currentCompletedDiagnosis": true,
-      "sourceImplementationCompleted": false,
-      "installed": false,
+      "sourceImplementationCompleted": true,
+      "installed": true,
       "newModelCalls": 0,
       "creditCosts": null,
-      "remaining": "Bind fresh rounds on the existing final queue; preserve consumed protocols and historical receipts. Independent final criteria remain host-owned. Complete actual agent-harness improvement and family use."
+      "remaining": "Bind fresh rounds on the existing final queue; preserve consumed protocols and historical receipts. Independent final criteria remain host-owned. Complete actual agent-harness improvement and family use.",
+      "testEvidence": "eva2/evidence/product/component-improvement-rounds-source-tests-20261011.json",
+      "uniquePassingChecks": 93,
+      "installedEvidence": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
+      "newQualityImprovementProven": false,
+      "fullAide2Completed": false,
+      "installedReview": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json",
+      "installedReviewSha256": "964895d986d68cebe786c212bc696cbf2230b27cb843e53ee4f68434484ba51c"
+    },
+    "componentImprovementRoundsInstalled20261011": {
+      "checkedAt": "2026-10-11T21:26:23.928821+00:00",
+      "evidence": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
+      "sourceReview": "eva2/reviews/component-improvement-rounds-source-review-20261011.json",
+      "sourceReviewSha256": "b0b9ef728b585f8987653849bc6af786d1837cd1953c9dc547cd72e48bf57bb8",
+      "installed": true,
+      "oldReceiptsPreserved": 1910,
+      "manualEvaModelRequests": 0,
+      "fullAide2Completed": false,
+      "installedReview": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json",
+      "installedReviewSha256": "964895d986d68cebe786c212bc696cbf2230b27cb843e53ee4f68434484ba51c",
+      "independentInstalledReview": "GO"
+    },
+    "historicalRuntimeBeforeRoundsInstalled20261011": {
+      "recordedAt": "2026-10-11T20:50:50.682674+00:00",
+      "image": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
+      "coreImage": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
+      "workerImage": "sha256:b3f20f02b851973300656c3a814069944cc204728a8d995d637c32dae1b93cbb",
+      "core": "eva2-managed-b-slot3-core",
+      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "coreHealth": "healthy",
+      "workerHealth": "healthy",
+      "readyStatus": true,
+      "repositoryHeadFullyInstalled": false,
+      "reviewedSourceIdentity": {
+        "eva2/src/eva/adapters/postgres/delegated_work.py": "63a14e28fb9807a9bb59f501e9785c876314f14ec12ce358a07fa1a4451d8184",
+        "eva2/src/eva/adapters/postgres/initiative_execution.py": "ec26001fc2f6104ab7e631c24c79fe1b22dd924455c6a692e469009bcf79a60a",
+        "eva2/src/eva/adapters/postgres/sensory_events.py": "ad6c2821ca440651e03ca5ac18562df5a005ab571068af32d527b619c53f5603",
+        "eva2/src/eva/application/initiative_execution.py": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+        "eva2/src/eva/application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+        "eva2/src/eva/bootstrap/delegated_digital_composition.py": "578f40bb75a88fdadcf0f1cd51705f50d6f278c94e20fd17a4ccfead885092c1",
+        "eva2/src/eva/bootstrap/delegated_digital_profile.py": "e5cc98dfb27ccda6df02d0bd2945b5e7c72247abc231c5618a20666320f5dbdc",
+        "eva2/src/eva/bootstrap/delegated_digital_runner.py": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d",
+        "eva2/src/eva/bootstrap/native_initiative_work.py": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
+        "eva2/src/eva/bootstrap/runtime.py": "f73152e960eba61f890b093b49b80167def02a16497a3be9d15c5384309030d1",
+        "eva2/src/eva/contracts/delegated_digital_work.py": "d6c1b49b7b5c68a5229bcf8ea7057821aa246eab0c0d4e8617bdf740db708339",
+        "eva2/src/eva/contracts/delegated_work.py": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+        "eva2/src/eva/operations/delegated_work_worker.py": "a9c4a75ad3ceaccc2c3c86c97c9736c99b6758e22a76c306b20bf2756c0847a4",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
+        "eva2/src/eva/adapters/postgres/runtime_resource_usage.py": "dad4680a686f610af1b0cab8b1ced8d4c12dea9e48918c04db8e95116e205c0c",
+        "eva2/src/eva/application/free_will.py": "ed66feefff611ff15d01d3f34e23b66969488392970757b1b290017abd0eb0dc",
+        "eva2/src/eva/bootstrap/idle_capacity.py": "62f3bebcab2bd8a3c8b4af73d4e08afe1f74134129ba56f243988181b60bf3d0"
+      },
+      "retainedSourceItems": {
+        "core": 334,
+        "worker": 332
+      },
+      "evidence": "eva2/evidence/product/native-initiative-subscription-installed-20261011.json",
+      "meaning": "Exact subscription initiative admission correction installed and source-reviewed. New self-chosen outcome, installed independent review and full AIDE² remain open.",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-candidate.compose.private.json",
+      "sourceBase": {
+        "core": "sha256:04a956f0548b16898960893624ccf44fce7525e4786351788839d7d4ddb43a4b",
+        "delegated-work-worker": "sha256:ed70f755881bafff9682733cbf197df4ad2d455a65a519b3c8f241f77a50edec"
+      },
+      "freshProfileParityVerified": true,
+      "configurationEnvironmentMountsRetained": true,
+      "freshFullProfileParityVerified": true,
+      "freshFullProfile": {
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "model_profile_release_sha256": "b4ec40af58e111bdcf5ef8f3725d0903a4bf6e2e5191f13dbb5ce812988e5bb4",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+        "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+        "worker_program_sha256": "1bcde708cbd1ad152480bf7c137398b246d5092c712a7f8988ad8a45800907e3"
+      },
+      "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
+      "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
     }
   },
   "activeTaskId": "AU-008",
@@ -33463,5 +33596,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T21:00:10.821706+00:00"
+  "updatedAt": "2026-10-11T21:30:19.820101+00:00"
 }

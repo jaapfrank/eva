@@ -218,8 +218,11 @@ class HostFinalAssessment:
 
 class FinalComponentAssessments:
     """One final candidate per registered experiment; no holdout feedback loop."""
-    def __init__(self, config, *, assessors, publisher, applications, task_state):
-        if (not isinstance(config, dict) or set(config) != {"receipt_root", "scope_sha256", "protocols"}
+    def __init__(self, config, *, assessors, publisher, applications, task_state,
+                 retained_assessors=None, retained_publishers=None):
+        required = {"receipt_root", "scope_sha256", "protocols"}
+        if (not isinstance(config, dict) or not required <= set(config)
+                or set(config) - required - {"retained_rounds"}
                 or not config["protocols"] or set(config["protocols"]) != set(assessors)):
             raise ValueError("invalid final assessment queue")
         self.scope = _identifier(config["scope_sha256"])
@@ -231,6 +234,29 @@ class FinalComponentAssessments:
                 validate_saved_artifact_target(protocol["source_target"], relative_path=path,
                                                baseline_sha256=protocol["baseline_sha256"])
             _assessor_protocol(assessors[path], protocol)
+        # Each receipt keeps its original independent assessor and release binding.
+        # Advancing the active target never resets a consumed registration.
+        self.retained_rounds = json.loads(json.dumps(config.get("retained_rounds", {})))
+        self.retained_assessors = retained_assessors or {}
+        self.retained_publishers = retained_publishers or {}
+        if (not isinstance(self.retained_rounds, dict)
+                or set(self.retained_rounds) != set(self.retained_assessors)
+                or set(self.retained_rounds) != set(self.retained_publishers)):
+            raise ValueError("retained final round bindings differ")
+        active_registrations = {p["registration_sha256"] for p in self.protocols.values()}
+        for registration, value in self.retained_rounds.items():
+            _identifier(registration)
+            if (not isinstance(value, dict) or set(value) != {"path", "protocol"}
+                    or not isinstance(value.get("protocol"), dict)
+                    or registration in active_registrations
+                    or value["protocol"].get("registration_sha256") != registration):
+                raise ValueError("retained final registration differs")
+            protocol = value["protocol"]
+            CandidateRequest(value["path"], protocol["baseline_sha256"], "pass")
+            if protocol.get("source_target") is not None:
+                validate_saved_artifact_target(protocol["source_target"], relative_path=value["path"],
+                                               baseline_sha256=protocol["baseline_sha256"])
+            _assessor_protocol(self.retained_assessors[registration], protocol)
         self.root = _path(config["receipt_root"], exists=False)
         self.root.mkdir(mode=0o700, parents=True, exist_ok=True)
         info = self.root.stat()
@@ -254,9 +280,7 @@ class FinalComponentAssessments:
                     raise ValueError("final receipt differs")
                 _identifier(job["request_id"])
                 self.applications._task(job["task_id"])
-                if (self.protocols.get(job.get("path"), {}).get("source_target") is not None
-                        or job.get("path", "").startswith("saved_artifact_")):
-                    self._queued_package(job)
+                self._queued_package(job)
                 if job["state"] in {"assessing", "publishing", "answer_assessing"}:
                     job.update(state="unconfirmed", reason="assessment_interrupted_after_dispatch")
                     _save(path, job)
@@ -292,9 +316,6 @@ class FinalComponentAssessments:
         _identifier(request_id)
         self.applications._task(task_id)
         if scope_sha256 != self.scope: raise ValueError("final source differs")
-        protocol = self.protocols.get(package["path"])
-        _protocol_package(package, protocol)
-        _assessor_protocol(self.assessors[package["path"]], protocol)
         if self.task_state(task_id) == "cancelled": raise ValueError("final task was stopped")
         review_id = package["candidate_package_sha256"]
         with self.condition:
@@ -302,9 +323,12 @@ class FinalComponentAssessments:
             existing = self.jobs.get(review_id)
             if existing:
                 if (existing["task_id"] != task_id or existing["request_id"] != request_id
-                        or existing["protocol_sha256"] != protocol["registration_sha256"]):
+                        or self._queued_package(existing) != package):
                     raise ValueError("final replay differs")
                 return self._result(existing)
+            protocol = self.protocols.get(package["path"])
+            _protocol_package(package, protocol)
+            _assessor_protocol(self.assessors[package["path"]], protocol)
             if any(j["protocol_sha256"] == protocol["registration_sha256"] for j in self.jobs.values()):
                 raise ValueError("final experiment already consumed; no optimizer feedback")
             directory = self.root / review_id
@@ -329,14 +353,41 @@ class FinalComponentAssessments:
 
     def _queued_package(self, job):
         _, package = _artifact(job["package"])
-        protocol = self.protocols.get(job["path"], {})
+        protocol, assessor, _ = self._round(job)
         if (job["protocol_sha256"] != protocol.get("registration_sha256")
                 or package["path"] != job["path"]
                 or package["candidate_package_sha256"] != job["review_id"]):
             raise ValueError("queued independent protocol changed")
         _protocol_package(package, protocol)
-        _assessor_protocol(self.assessors[job["path"]], protocol)
+        _assessor_protocol(assessor, protocol)
         return package
+
+    def _round(self, job):
+        protocol = self.protocols.get(job["path"], {})
+        if protocol.get("registration_sha256") == job["protocol_sha256"]:
+            return protocol, self.assessors[job["path"]], self.publisher
+        retained = self.retained_rounds.get(job["protocol_sha256"])
+        if retained is None or retained["path"] != job["path"]:
+            raise ValueError("queued independent protocol changed")
+        return (retained["protocol"], self.retained_assessors[job["protocol_sha256"]],
+                self.retained_publishers[job["protocol_sha256"]])
+
+    def round_status(self, path, *, scope_sha256):
+        """Public current-round metadata; no scorer, oracle or private file paths."""
+        with self.condition:
+            protocol = self.protocols.get(path)
+            if scope_sha256 != self.scope or protocol is None:
+                raise ValueError("final round is unavailable")
+            consumed = any(j["protocol_sha256"] == protocol["registration_sha256"]
+                           for j in self.jobs.values())
+            target = protocol.get("source_target")
+            return {"contract": "EvaComponentImprovementRound/v1", "path": path,
+                    "scope_sha256": self.scope,
+                    "registration_sha256": protocol["registration_sha256"],
+                    "baseline_sha256": protocol["baseline_sha256"],
+                    "source_target_sha256": None if target is None else digest(canonical(target)),
+                    "state": "consumed" if consumed else "available",
+                    "independent_final": True, "installed": False}
 
     def _run(self):
         while True:
@@ -344,7 +395,7 @@ class FinalComponentAssessments:
                 if self.closed: return
                 pending = [j for j in self.jobs.values() if j["state"] in {"queued", "waiting"}
                     or (j["state"] == "awaiting_independent_answer_assessment"
-                        and getattr(self.assessors[j["path"]], "answer_evidence_ready", lambda:False)())]
+                         and getattr(self._round(j)[1], "answer_evidence_ready", lambda:False)())]
                 if not pending:
                     self.condition.wait(timeout=0.5)
                     continue
@@ -374,7 +425,7 @@ class FinalComponentAssessments:
                         _save(self.root / (job["review_id"] + ".json"), job)
                     if ready != "ready": continue
                     package = self._queued_package(job)
-                    assessor = self.assessors[job["path"]]
+                    _, assessor, publisher = self._round(job)
                     result = (assessor.complete(package, self.root / job["review_id"])
                               if job["state"] == "answer_assessing"
                               else assessor(package, self.root / job["review_id"]))
@@ -391,7 +442,7 @@ class FinalComponentAssessments:
                         _save(self.root / (job["review_id"] + ".json"), job)
                     if job["state"] == "publishing":
                         # Keep status/stop available while trusted image building runs.
-                        release = self.publisher(package, result, self.root / job["review_id"])
+                        release = publisher(package, result, self.root / job["review_id"])
                         _, published_package = _artifact(release["package"])
                         if published_package != package:
                             raise ValueError("publisher did not prepare the exact selected package")
@@ -420,8 +471,9 @@ class FinalComponentAssessments:
 def configured_final_assessments(config, *, applications, runtime_config):
     from eva.operations.component_application_runtime import ComponentApplicationRuntime
     from eva.operations.component_release_publisher import ComponentReleasePublisher
-    if not isinstance(config, dict) or set(config) != {
-            "receipt_root", "scope_sha256", "protocols", "assessments", "publisher"}:
+    required = {"receipt_root", "scope_sha256", "protocols", "assessments", "publisher"}
+    if (not isinstance(config, dict) or not required <= set(config)
+            or set(config) - required - {"retained_rounds"}):
         raise ValueError("final assessment host configuration differs")
     runtime = ComponentApplicationRuntime(runtime_config)
     if config["scope_sha256"] != runtime.config["scope_sha256"]:
@@ -431,7 +483,22 @@ def configured_final_assessments(config, *, applications, runtime_config):
         if config["protocols"][path]["registration_sha256"] != assessor.config["registration"]["sha256"]:
             raise ValueError("final protocol and independent registration differ")
         _assessor_protocol(assessor, config["protocols"][path])
+    retained, retained_assessors, retained_publishers = {}, {}, {}
+    if not isinstance(config.get("retained_rounds", {}), dict):
+        raise ValueError("retained independent host rounds differ")
+    for registration, value in config.get("retained_rounds", {}).items():
+        if (not isinstance(value, dict) or set(value) != {"path", "protocol", "assessment", "publisher"}
+                or not isinstance(value.get("protocol"), dict)
+                or value["protocol"].get("registration_sha256") != registration):
+            raise ValueError("retained independent host round differs")
+        assessor = HostFinalAssessment(value["assessment"])
+        if assessor.config["registration"]["sha256"] != registration:
+            raise ValueError("retained protocol and independent registration differ")
+        retained[registration] = {"path": value["path"], "protocol": value["protocol"]}
+        retained_assessors[registration] = assessor
+        retained_publishers[registration] = ComponentReleasePublisher(value["publisher"])
     return FinalComponentAssessments({key: config[key] for key in
-        ("receipt_root", "scope_sha256", "protocols")}, assessors=assessors,
+        ("receipt_root", "scope_sha256", "protocols")} | {"retained_rounds": retained}, assessors=assessors,
         publisher=ComponentReleasePublisher(config["publisher"]), applications=applications,
-        task_state=runtime.ready_to_apply)
+        task_state=runtime.ready_to_apply, retained_assessors=retained_assessors,
+        retained_publishers=retained_publishers)

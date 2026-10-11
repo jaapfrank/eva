@@ -1,0 +1,149 @@
+{
+  "contract": "EvaComponentImprovementRoundsInstalledReview/v1",
+  "checkedAt": "2026-10-11T21:29:31.815236Z",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact four-module existing-service installation and honest public evidence. No new registered round, native model experiment, protected-input inspection or general quality assessment.",
+  "bindings": {
+    "publicInstalledEvidence": {
+      "path": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
+      "sha256": "5d0f4afe167fc6bec79177e183d23f9387bda0d5490f77b99fc09e038d14cb99"
+    },
+    "sourceReview": {
+      "path": "eva2/reviews/component-improvement-rounds-source-review-20261011.json",
+      "sha256": "b0b9ef728b585f8987653849bc6af786d1837cd1953c9dc547cd72e48bf57bb8"
+    },
+    "testReceipt": {
+      "path": "eva2/evidence/product/component-improvement-rounds-source-tests-20261011.json",
+      "sha256": "38e24c30e75915be47542803c7aed51ce2435e6f1f6b97b58c9df10e9434f8ba"
+    },
+    "sourceFiles": {
+      "operations/component_final_assessment.py": "6d3181faf86f38a04a98b02ddaa96cdcf801662af3299156eb79b74c570b0e32",
+      "operations/component_evaluation_service.py": "e7b3fd7ccba2c4c9e947ea4695efc2b4246bb161fd3a0ae98d0681e46f0d35ca",
+      "adapters/connectors/component_evaluation.py": "278ae7fd7442d56c49c79e134613a9614fae6c8f33c91403ca9f4dd0bf74184d",
+      "adapters/postgres/component_improvement_actions.py": "f76573bb17c540fce090eb53a12c24c6a1d5b4e898a2f05792f910d2787468d7"
+    },
+    "privateTechnicalMetadata": {
+      "rounds-installed-verification.private.json": "acf34b59d1b58096117e1dc7eea839e3a94b80c69f13f944225969925018bf83",
+      "rounds-runtime-baseline.private.json": "75abf273ac59c2be2614472e9dc5c019c4821e6a495df171dcc02470ddee41a5",
+      "rounds-build.private.json": "a850ef8bdb2ffd642efc2b08d998433155ddfa7a7e5eabebf54e0490710aa67c",
+      "rounds-actual-core-sources.private.json": "5ee13534d87342987bc71bd2555af5cbd8751b439e3fa0a19e62c0499c2d3902",
+      "rounds-actual-delegated-work-worker-sources.private.json": "a1e95b653dccb0781ab3042c6867decb748366c4a4980312f9fc776b285d2fb6",
+      "rounds-actual-core-profile.private.json": "a835472a986f10315ab21d00205f439558e47d4e6d6edb08627478aed48cde0e",
+      "rounds-actual-delegated-work-worker-profile.private.json": "a835472a986f10315ab21d00205f439558e47d4e6d6edb08627478aed48cde0e",
+      "rounds-actual-core-inspect.private.json": "720ff3045863dd213fa8c21f651c9093d5b4d313f3e7c10bd07801b3db32e1e4",
+      "rounds-actual-delegated-work-worker-inspect.private.json": "c6a43f1d21cf04e36701d5967662c3938882f4af8d54694e09f57a1a2a1eb37e",
+      "rounds-installed-public-metadata.private.json": "381c214443e7650bc1fafabfe47624af96a99b7c0bab3508c66579a2a05df7b4",
+      "rounds-host-install.private.json": "600b53f12a4563a38e8efab1ea8b6db064998bf7784f0c2b015e0cd5ee5248e9",
+      "rounds-installation-plan.private.json": "017517a763f194d158d37fe51fb0f870c31929ce2bbc8127844f8b6544be9bd6",
+      "rounds-image-update-receipt.private.json": "fcd40543e0c5b1381a30b6f370f65dd190cc6a1cc37fb10d725e016bba7639f6"
+    },
+    "dashboardEvidence": {
+      "path": "eva2/evidence/product/dashboard-rounds-installation-current-20261011.json",
+      "sha256": "2e539b66b7d3cd16e5110cc702cd6601fba59256608e8af66d204eab5a8b80cc"
+    },
+    "boardAtReviewSha256": "c8b7a438142e3f8f85c6fc6a29a33fc95853c27480db8854ba38eb41647a6a22"
+  },
+  "independentChecks": {
+    "core": {
+      "image": "sha256:44b4a5db42aa90b48b46fc514967522948c1be9870f0d9cdab8a3ca2924fa389",
+      "healthyRunning": true,
+      "sourceItems": 340,
+      "changedItems": 2,
+      "retainedItems": 338,
+      "addedOrRemovedItems": 0,
+      "changedModules": [
+        "adapters/connectors/component_evaluation.py",
+        "adapters/postgres/component_improvement_actions.py"
+      ],
+      "mountCount": 25
+    },
+    "worker": {
+      "image": "sha256:89f4b117fb8eb4fac7b8502a514ddc83cfaa8107297beb9bfd3976864c1b0d13",
+      "healthyRunning": true,
+      "sourceItems": 338,
+      "changedItems": 2,
+      "retainedItems": 336,
+      "addedOrRemovedItems": 0,
+      "changedModules": [
+        "adapters/connectors/component_evaluation.py",
+        "adapters/postgres/component_improvement_actions.py"
+      ],
+      "mountCount": 21
+    },
+    "actualFullProfilesEqual": true,
+    "actualRelease": {
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+      "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+      "worker_program_sha256": "0e695c96f60031d6760cf022ca43009df09f588ff22ffd0c2d4b1399f65b82ea"
+    },
+    "localInitiativeCapabilityCount": 12,
+    "containerEnvMapsCommandsUserHealthConfigurationEqual": true,
+    "containerMountsHostConfigNetworkInventoryAndPublishedPortsEqual": true,
+    "expectedMetadataChanges": "New immutable image/container identities and Compose provenance labels; Hostname is container metadata. Effective runtime configuration and mounts are retained.",
+    "sameHostServiceActiveAndReady": true,
+    "hostSourceItems": 19,
+    "changedHostSourceItems": 2,
+    "retainedHostSourceItems": 17,
+    "changedHostModules": [
+      "operations/component_final_assessment.py",
+      "operations/component_evaluation_service.py"
+    ],
+    "installedHostBytesMatchReviewedSources": true,
+    "hostConfigurationSha256": "47652790d79a6188f42945f0746c7ee5ab42653e3080f3961e646678a4ac4857",
+    "hostConfigurationBytesUnchanged": true,
+    "originalAssessmentPublisherAndProtocolReferencesRetained": true,
+    "originalReceiptResultFileCount": 1910,
+    "originalReceiptResultFilesSha256Identical": 1910,
+    "receiptContentsParsed": false,
+    "mandateFileSha256": "26eccb55c0f69518a7ee100df214ac06974fb9afab2f2467438dba6977d46d88",
+    "budgetFileSha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+    "mandateAndBudgetBytesUnchanged": true,
+    "sameOwnerMandateCasHttpStatus": 200,
+    "sameOwnerMandateCasResult": "unchanged",
+    "safeOldRoundStatusFields": 9,
+    "oldRoundStates": [
+      "consumed",
+      "consumed"
+    ],
+    "oldRegistrationsAndBaselineHashesMatchPublicEvidence": true,
+    "hostHealthStatus": "ready",
+    "coreReadyzHttpStatus": 200,
+    "currentGoalActive": true,
+    "original39of48AndAcceptancesPreserved": true,
+    "executionTasksMilestonesCompletionsEqualToHead": true
+  },
+  "preparationAndAccounting": {
+    "sourceTests": {
+      "uniqueCurrentPassed": 93,
+      "existingOptionalSkipped": 1
+    },
+    "retainedSourceFixtureFailures": "Two other-person audience fixture errors; final constructor-based cases passed, source-GO remains exact.",
+    "retainedInstallationPreparationFailures": [
+      "rounds-build-preparation-failure.private.json",
+      "rounds-host-readiness-preparation-error.private.json"
+    ],
+    "installationFailureQualification": "Inventory preparation misread a status object; the existing built images were retained. First immediate host health observation preceded HTTP readiness; the same service became ready without another restart.",
+    "manualEvaModelRequestsForBuildProbeInstall": 0,
+    "reviewerModelRequests": 0,
+    "reviewerTestsOrNativeProbesStarted": 0,
+    "reviewerRuntimeChanges": 0,
+    "usageMeasured": false,
+    "automaticRuntimeUsage": "unknown",
+    "developmentCreditCosts": "unknown"
+  },
+  "publicationAssessment": {
+    "publicInstalledClaimsMatchInspectedMetadata": true,
+    "newRoundRegistered": false,
+    "newQualityImprovementProven": false,
+    "fullAide2Completed": false,
+    "wholeProjectGoalCompleted": false,
+    "dashboardDistinguishesInstalledBindingFromNextActualAgentImprovement": true,
+    "browserObservationEvidence": "Existing parent-recorded automatic DOM refresh, content time 23:26:23, current/latest/next titles and zero JavaScript errors. Reviewer did not start another browser check."
+  },
+  "method": "Recomputed before/after module-inventory differences and profile equality; compared recorded Docker configuration metadata without printing environment values; hashed the 1,910 original files and host configuration/mandate/budget for byte identity only, without parsing contents; verified new host source bytes and existing safe nine-field status receipts. No credentials, final cases, scorer contents or original receipt bodies were inspected.",
+  "conclusion": "GO for this exact installed round-binding slice. Original consumed rounds and readbacks are preserved. An actual agent/harness improvement, new native usefulness, family acceptance and the whole AIDE²/project outcome remain open.",
+  "onlyWrittenFile": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json"
+}

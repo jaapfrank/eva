@@ -19,6 +19,49 @@ from tests.postgres.test_scheduled_failure_return import database
 NOW = datetime(2026, 9, 24, 12, tzinfo=UTC)
 
 
+@pytest.mark.parametrize("state,matching,available", [
+    ("available", True, True), ("consumed", True, False), ("available", False, False)])
+def test_source_read_reports_exact_current_round_and_preserves_replay(database, tmp_path, state, matching, available):
+    from eva.adapters.postgres.component_improvement_actions import READ
+    from eva.contracts.canonical_json import canonical_sha256
+    turn = ConversationTurn.private("component-round-read-" + state + str(matching),
+        "installation", "owner", "conversation", "message", "Read own component", "2026-09-24T12:00:00Z")
+    PostgresConversationJournal(database, external_timeline_scope(
+        turn.tenant_id, turn.installation_id, "test")).admit(turn)
+    source = "VALUE = 1\n"
+    (tmp_path / "example.py").write_text(source)
+    identity = canonical_sha256({k:getattr(turn,k) for k in
+                                ("tenant_id", "installation_id", "principal_id")})
+    calls = []
+    class Evaluator:
+        final_assessment_scopes = (("example.py", identity),)
+        def round_status(self, path, *, scope_sha256):
+            assert path == "example.py" and scope_sha256 == identity
+            calls.append((path, scope_sha256))
+            return {"contract":"EvaComponentImprovementRound/v1", "path":path,
+                "scope_sha256":identity, "registration_sha256":"e"*64,
+                "baseline_sha256":hashlib.sha256(source.encode()).hexdigest() if matching else "f"*64,
+                "source_target_sha256":None, "state":state, "independent_final":True, "installed":False}
+    spec = SimpleNamespace(execution_id="execution:round-read", source=SimpleNamespace(
+        model_dump=lambda **kw:{"message":turn.message_id}))
+    instance = ComponentImprovementActions(database, spec, turn, lambda value:None,
+        lambda value:None, lambda:NOW)
+    instance.root, instance.evaluator = tmp_path, Evaluator()
+    call = ConversationActionCall("source-read", READ, {"path":"example.py", "start_line":1})
+    receipt = instance.execute(turn, call, step_index=1)
+    result = receipt.output["operation_result"]
+    assert result["registered_improvement_available"] is available
+    assert result["improvement_round"]["state"] == state
+    assert result["source_sha256"] == hashlib.sha256(source.encode()).hexdigest()
+    assert instance.execute(turn, call, step_index=1) == receipt
+    assert calls == [("example.py", identity)]
+    with pytest.raises(ConversationConflict, match="scope differs"):
+        other = ConversationTurn.private(turn.tenant_id, turn.installation_id,
+            "other-person", turn.conversation_id, turn.message_id, turn.text,
+            "2026-09-24T12:00:00Z")
+        instance.execute(other, call, step_index=2)
+
+
 def test_exact_component_document_is_durable_and_replay_keeps_original_call(database, tmp_path):
     turn = ConversationTurn.private("component-test", "installation", "owner", "conversation", "message",
                                     "Improve a component", "2026-09-24T12:00:00Z")

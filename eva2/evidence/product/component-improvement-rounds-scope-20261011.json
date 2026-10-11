@@ -1,0 +1,26 @@
+{
+  "contract": "EvaExistingImprovementRoundIntegrationScope/v1",
+  "declaredAt": "2026-10-11T21:13:07.994066+00:00",
+  "baselineCommit": "7219f213",
+  "baselineSourceSha256": {
+    "operations/component_final_assessment.py": "57120df2f6b759be5542ba8802a82326d97c87f2dbc2d3b682b47cc7db781b5b",
+    "operations/component_evaluation_service.py": "c2c87c24dc7fdd96f58e09fb6b353cfddd32e74c0dd4ec07b57ac76842eca6d6",
+    "adapters/connectors/component_evaluation.py": "db91a92f1e8fd9f51eddd603cb2257dee502277fa5068b3022d527eaeb4b239f",
+    "adapters/postgres/component_improvement_actions.py": "a7d312c177dbea650fd5440bddf8fb6ba1f055bac228cf6038207e581aa6cb26"
+  },
+  "originalGapEvidence": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json",
+  "result": "A fresh round on the same installed or saved target uses the existing queue; prior packages, consumed registrations, assessors, release bindings and readbacks remain exact. Existing source action reports safe active-round metadata.",
+  "conditions": [
+    "Retained terminal receipts remain byte-exact across current-target advancement and restart.",
+    "Queued old work uses its original assessor and publisher; no automatic reassessment of terminal or unconfirmed jobs.",
+    "One selected candidate per registered final experiment; no consumed reset or access to independent cases/scorer.",
+    "Current source baseline, target and owner scope remain checked; stop and task readiness remain enforced.",
+    "No second evaluator, registration service, optimizer, provider or worker queue."
+  ],
+  "expectedEffort": "One four-module source integration, one targeted check batch, one bundled review, one update through the existing managed installation; only justified corrections repeat a affected check.",
+  "modelUseForSourceIntegration": 0,
+  "manualNativeProbesAuthorizedByThisScope": false,
+  "developmentCreditCost": null,
+  "wholeGoalCompleted": false,
+  "fullAide2Completed": false
+}

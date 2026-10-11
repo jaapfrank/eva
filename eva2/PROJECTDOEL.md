@@ -10,24 +10,24 @@ sluit dit goal niet af.
 
 ## Actuele uitvoerfase — 11 oktober 2026
 
-De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. De bestaande
-contextplanner kan vanaf 23:33 opnieuw een beoordeling plannen; dit is toelating,
-geen voorspelling van een initiatief. Oude beoordelingen en tellingen blijven intact.
+Nieuwe verbetercycli zijn geïnstalleerd op de bestaande wachtrij. Iedere oude
+beoordeling behoudt haar oorspronkelijke protocol, beoordelaar en toepassing.
+Alle 1.910 oude ontvangst- en resultaatbestanden blijven bytegelijk; de twee
+bestaande rondes blijven verbruikt. Kern en taakwerker bevatten twee exacte
+adapters; dezelfde hostbeoordelaar twee exacte modules. 93 gerichte controles
+slagen, één bestaande optionele native controle blijft overgeslagen.
+Onafhankelijke bron- en installatiereview GO.
 
-De beperkte brondiagnose is afgerond. De bestaande AIDE²-route heeft één protocol
-per onderdeel; een volgende ronde voor hetzelfde onderdeel mist nog de binding
-die oude beoordelingen en opgeslagen resultaten behoudt. /root werkt deze aansluiting
-uit op de bestaande wachtrij, zonder tweede verbeterplatform. Native krijgt alleen
-ronde-, bron- en ontwikkelmetadata; eindgevallen, scorer en registratie blijven
-onafhankelijk bij de host. Nog geen nieuwe bronimplementatie, installatie of
-modelproef uit deze diagnose.
+Dit is een aansluiting voor nieuwe rondes, geen nieuwe kwaliteitsverbetering
+of volledige AIDE². De volgende uitkomst is een concrete verbetering van Eva's
+aansturing toepassen en bij later werk gebruiken. De normale initiatiefplanner
+wordt vanaf het toegelaten venster om 23:33 gevolgd, zonder oude beoordelingen,
+criteria, reserveringen of verbruik te resetten. Passend initiatief en gezinsgebruik
+blijven open. Geen spraakwerk, nieuwe vergelijkingsserie of eigenaarhandeling.
 
-Daarna echte verbetering van agentaansturing toepassen en later gebruiken; passend
-initiatief en gezinsgebruik blijven open. Volledig goal actief, spraak geparkeerd,
-geen nieuwe vergelijkingsserie en geen eigenaarhandeling.
-
-Diagnose: eva2/evidence/product/aide-harness-remaining-gap-20261011.json.
-Wachtbewijs: eva2/evidence/product/native-initiative-next-window-20261011.json.
+Bewijs: eva2/evidence/product/component-improvement-rounds-installed-20261011.json.
+Bronreview: eva2/reviews/component-improvement-rounds-source-review-20261011.json.
+Installatiereview: eva2/reviews/component-improvement-rounds-installed-review-20261011.json.
 
 ## Actuele gebruikersuitkomst — eigen hulpmiddel verbeteren en later gebruiken
 

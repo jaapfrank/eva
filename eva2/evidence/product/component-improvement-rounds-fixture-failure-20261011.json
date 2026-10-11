@@ -1,0 +1,47 @@
+{
+  "contract": "EvaImprovementRoundSourceVerification/v1",
+  "checkedAt": "2026-10-11T21:18:04.154937+00:00",
+  "sourceSha256": {
+    "operations/component_final_assessment.py": "6d3181faf86f38a04a98b02ddaa96cdcf801662af3299156eb79b74c570b0e32",
+    "operations/component_evaluation_service.py": "e7b3fd7ccba2c4c9e947ea4695efc2b4246bb161fd3a0ae98d0681e46f0d35ca",
+    "adapters/connectors/component_evaluation.py": "278ae7fd7442d56c49c79e134613a9614fae6c8f33c91403ca9f4dd0bf74184d",
+    "adapters/postgres/component_improvement_actions.py": "f76573bb17c540fce090eb53a12c24c6a1d5b4e898a2f05792f910d2787468d7"
+  },
+  "testSourceSha256": {
+    "eva2/tests/operations/test_component_improvement_rounds.py": "a7d7a3c5ba6e6050edab2ba8f2433fa2fc43e56ecfb5e48238a5f17eedc0e4bb",
+    "eva2/tests/postgres/test_component_document_reference.py": "d3745e29013a032e078dffe00a542e989fc2eaaf1a4292fd578c1bbc77924f99"
+  },
+  "status": "failed",
+  "batches": [
+    {
+      "passed": 85,
+      "skipped": 1,
+      "failed": 0,
+      "kind": "Existing isolated development/final/application/transport checks plus6newroundchecks"
+    },
+    {
+      "passed": 11,
+      "failed": 3,
+      "kind": "Newloader, existingPGroute and new3PGcases;3failures were invalid testfixture audience construction after all new round assertions passed"
+    },
+    {
+      "passed": null,
+      "failed": null,
+      "kind": "Only3affectedPGcases after correcting principal and audience; production sources unchanged"
+    }
+  ],
+  "uniqueCurrentPassingChecks": null,
+  "existingSkippedNativeCheck": 1,
+  "modelCalls": 0,
+  "nativeProbes": 0,
+  "productionDatabaseAltered": false,
+  "disposableTestDatabaseCleanedByExistingFixture": true,
+  "logs": {
+    "source-postgres-fixture-corrected-tests.private.log": "28673fc570cca8cee563dd07da777adeef25e55b53290d3224b3f2ca10791191",
+    "source-new-loader-postgres-tests.private.log": "59a0279dd404799bf7d0ea24d9dfa98c265a1aacbcf1f2617f97630de138f3c3",
+    "source-tests.private.log": "b7d7ead61b721b479628058d8bdd132e0cbe6bc6067f7a333b12689fcb23fab3"
+  },
+  "developmentCreditCosts": null,
+  "fullAide2Completed": false,
+  "wholeGoalCompleted": false
+}

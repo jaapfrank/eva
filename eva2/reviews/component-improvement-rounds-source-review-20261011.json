@@ -1,0 +1,91 @@
+{
+  "contract": "EvaComponentImprovementRoundsSourceReview/v1",
+  "checkedAt": "2026-10-11T21:21:33.901550Z",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact four-module source integration of fresh registered rounds in the existing final queue, plus the two named test files. GO permits one existing managed installation subject to retained host bindings; no installed/native quality or whole-goal claim.",
+  "bindings": {
+    "head": "7219f2138c158edeac3decf77d65de028d0c1bbc",
+    "sourceFiles": {
+      "operations/component_final_assessment.py": "6d3181faf86f38a04a98b02ddaa96cdcf801662af3299156eb79b74c570b0e32",
+      "operations/component_evaluation_service.py": "e7b3fd7ccba2c4c9e947ea4695efc2b4246bb161fd3a0ae98d0681e46f0d35ca",
+      "adapters/connectors/component_evaluation.py": "278ae7fd7442d56c49c79e134613a9614fae6c8f33c91403ca9f4dd0bf74184d",
+      "adapters/postgres/component_improvement_actions.py": "f76573bb17c540fce090eb53a12c24c6a1d5b4e898a2f05792f910d2787468d7"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_component_improvement_rounds.py": "a7d7a3c5ba6e6050edab2ba8f2433fa2fc43e56ecfb5e48238a5f17eedc0e4bb",
+      "eva2/tests/postgres/test_component_document_reference.py": "b9733e64948c5663b95b01e22e98aa5a4f7d40c762bb0d13205316026f02bb01"
+    },
+    "scopeEvidence": {
+      "path": "eva2/evidence/product/component-improvement-rounds-scope-20261011.json",
+      "sha256": "b758cad3b1f911e158f62a186dc4f09936af4453824fa8ce243bb2749d7a507e"
+    },
+    "testReceipt": {
+      "path": "eva2/evidence/product/component-improvement-rounds-source-tests-20261011.json",
+      "sha256": "38e24c30e75915be47542803c7aed51ce2435e6f1f6b97b58c9df10e9434f8ba"
+    },
+    "gapReceipt": {
+      "path": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json",
+      "sha256": "2bcfc7f069f34caae43d08047b5f2b15d7c56bbe751efcef85a621d19c527a21"
+    },
+    "sourceLocations": {
+      "operations/component_final_assessment.py": {
+        "self.retained_rounds =": 239,
+        "self._queued_package(job)": 283,
+        "def request(": 314,
+        "def _queued_package(": 354,
+        "def _round(": 365,
+        "def round_status(": 375,
+        "def _run(": 392,
+        "def configured_final_assessments(": 471
+      },
+      "operations/component_evaluation_service.py": {
+        "elif value.get(\"action\") == \"round_status\"": 259
+      },
+      "adapters/connectors/component_evaluation.py": {
+        "def round_status(": 65
+      },
+      "adapters/postgres/component_improvement_actions.py": {
+        "current_round =": 372,
+        "value[\"registered_improvement_available\"] =": 375
+      }
+    }
+  },
+  "findings": [
+    "Retained jobs resolve their original protocol, assessor and publisher by protocol_sha256. Retargeting the active path does not assign its new assessor or publisher to an older pending or answer-stage job.",
+    "Startup validates every retained package against its own round. Old terminal receipts/packages are not rewritten or reevaluated merely because the active target changes. Existing interrupted-dispatch handling remains unconfirmed and does not replay.",
+    "A same-identity/package replay returns the original receipt. A new request still consumes registration_sha256 once; old registrations are not reset by adding a fresh round.",
+    "Existing scope, task identity, cancelled-state and readiness checks remain before assessment and after assessment/publication. Source actions retain current authorization and exact baseline/target checks.",
+    "Authenticated round_status exposes only the closed nine-field contract: path, scope hash, registration hash, baseline hash, optional target hash, state and fixed flags. The client rejects extra fields and mismatches. No protected cases, expected answers, scorer, command or private file paths are exposed.",
+    "Source-read availability requires an unconsumed round and exact current source/target hashes. The stored source-read receipt remains an observation; it grants no new authority and later dispatch revalidates the source.",
+    "The existing configuration loader now composes retained assessors and publishers within the same dispatcher. No second queue, register, daemon, optimizer, provider or new evaluation rule is introduced."
+  ],
+  "validation": {
+    "uniqueCurrentPassingChecks": 93,
+    "existingOptionalNativeSkip": 1,
+    "roundCases": "Installed/saved retarget with terminal receipt bytes unchanged, old replay, once-per-registration, original pending assessor/publisher, preserved old answer stage, missing/changed retained target rejection, authenticated safe status, and existing host-loader composition.",
+    "postgresCases": "Actual source-read/current-round receipt storage and exact replay for available, consumed and stale-baseline observations; a valid other-person/private-audience turn is rejected.",
+    "fixtureFailures": "Two failed other-person fixture preparations are preserved in the root test evidence. Final code uses ConversationTurn.private to construct all audience invariants; the three affected cases then passed. Production source hashes never changed during those repairs.",
+    "reviewerCorrection": "The reviewer initially described the first audience fixture correction as sufficient too early; this final assessment binds only the constructor-based final test source and completed PASS receipt.",
+    "newTestsStartedByReviewer": 0,
+    "modelRequestsByReviewer": 0,
+    "nativeProbesByReviewer": 0,
+    "protectedCasesOrScorerReadByReviewer": false
+  },
+  "installationConditions": [
+    "Install only these four exact source hashes through the existing update route; keep the current owner scope, service/queues, data, mounts, provider accounts and evaluation rules.",
+    "Preserve the original protocol, assessment files/configuration and publisher configuration for every retained registration. Supply those exact bindings to retained_rounds; do not overwrite old registrations, packages, readbacks, terminal states or unconfirmed receipts.",
+    "Keep each pending/answer-stage job bound to its original host-owned assessor/publisher and retain its existing isolated result. No automatic reassessment, criterion change, consumed reset or silent source rebasing.",
+    "Verify packaged core/worker source and release-profile parity with the existing mandate/profile binding before new native work. Existing configured final/utility/saved routes retain their exact source boundaries.",
+    "Report installation and actual future quality separately. A safe available-round observation is not a completed assessment, applied improvement or native-usefulness result."
+  ],
+  "limits": {
+    "installedResultReviewed": false,
+    "nativeBehaviorImprovementProven": false,
+    "fullAide2Completed": false,
+    "wholeGoalCompleted": false,
+    "originalL3AndUnknownPreserved": true,
+    "developmentCreditCost": "unknown",
+    "reviewerMutation": "eva2/reviews/component-improvement-rounds-source-review-20261011.json"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "contract": "EvaDashboardRoundsInstallationObserved/v1",
+  "checkedAt": "2026-10-11T21:27:02.442931+00:00",
+  "url": "http://localhost:44712/",
+  "method": "Current user in-app tab DOM observation after automatic source refresh; no reload or rebuild.",
+  "displayedContentTime": "11-10-2026, 23:26:23",
+  "displayedLatest": "Nieuwe verbetercycli met behoud van oude beoordelingen",
+  "displayedCurrent": "AIDE² · nieuwe verbetercycli geïnstalleerd",
+  "displayedNext": "Daarna · agentaansturing werkelijk verbeteren",
+  "displayedOwnerAction": "Geen handeling van jou nodig",
+  "javascriptErrors": 0,
+  "installedEvidence": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
+  "installedEvidenceSha256": "5d0f4afe167fc6bec79177e183d23f9387bda0d5490f77b99fc09e038d14cb99",
+  "originalTaskCount": 48,
+  "originalCompleted": 39,
+  "wholeGoalStatus": "active",
+  "fullAide2Complete": false,
+  "newEvaModelRequests": 0
+}

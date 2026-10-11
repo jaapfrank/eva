@@ -47,6 +47,38 @@ production data or credentials, a readonly root, bounded temporary storage,
 nonroot execution, dropped capabilities and bounded CPU, memory, processes,
 output and execution time. Use only an image without baked-in secrets or data.
 
+## Registered follow-up rounds — installed 11 October 2026
+
+The existing final queue now retains the exact protocol, independent assessor and
+publisher for each historical registration. A new active round for the same source
+path does not rebind old pending work or rewrite terminal receipts. A registration
+still admits one assessment; adding a round never resets a consumed registration.
+
+The same authenticated component-assessment route exposes a closed nine-field
+round-status contract. The existing source-read action reports availability only
+when the unconsumed round matches the actual baseline and saved-target hash.
+Protected final cases, scorers and host file paths are not exposed to Eva.
+
+To retarget a source, keep its old host assessment and publisher configuration,
+and place their original bindings in final_component_assessments.retained_rounds,
+keyed by the old registration SHA256. Each entry contains path, protocol,
+assessment and publisher. Add separately fixed meaningful criteria for the new
+active round; never silently rebase or reuse a consumed final assessment.
+
+Four exact modules are installed in the existing core, worker and host service.
+The 93 targeted passing checks cover preserved terminal rounds, pending and
+answer-stage continuation with their original assessor/publisher, authenticated
+metadata and the real PostgreSQL source-read route. One pre-existing optional
+container check remains skipped. The live readback keeps both current rounds
+consumed and all 1,910 historical receipt/result files byte-identical.
+
+This proves the recurring-round connection, not another native improvement.
+Actual agent-harness quality, the complete dream cycle and family use remain open.
+
+[Installation evidence](evidence/product/component-improvement-rounds-installed-20261011.json)
+· [Source review](reviews/component-improvement-rounds-source-review-20261011.json)
+· [Installation review](reviews/component-improvement-rounds-installed-review-20261011.json)
+
 ## Configuration
 
 Run `python -m eva.operations.component_evaluation_service --config FILE` on the
