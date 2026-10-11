@@ -1,6 +1,7 @@
 """Host-bound context for native work; model text never grants authority."""
 from __future__ import annotations
 
+from dataclasses import dataclass
 from contextlib import contextmanager
 from contextvars import ContextVar
 from typing import Protocol
@@ -47,3 +48,9 @@ def authorize_initiative_action(turn: ConversationTurn, name: str) -> None:
     guard = require_initiative_context(turn)
     if guard is not None and not guard.action_allowed(name):
         raise ConversationConflict("initiative action has no admitted cost and authority profile")
+
+
+@dataclass(frozen=True, slots=True)
+class NativeInitiativeDelegation:
+    """Host queue receipt, never a completed native reply."""
+    work_id: str

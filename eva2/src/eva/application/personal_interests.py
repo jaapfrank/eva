@@ -250,6 +250,9 @@ class PersonalInterestWorker(_PersonalWorkerBase[PersonalInterestStore]):
                 if self._execute_native is None:
                     raise RuntimeError("native initiative executor unavailable")
                 reply = self._execute_native(claim)
+                from eva.application.initiative_execution import NativeInitiativeDelegation
+                if isinstance(reply, NativeInitiativeDelegation):
+                    return "pending"
                 result = self._store.complete_native(claim, reply, now=now)
                 return "completed" if result is not None and result.phase == "initiative_completed" else "blocked"
             except Exception as error:

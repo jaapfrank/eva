@@ -159,6 +159,61 @@ class DelegatedHouseholdDigitalWorkSpec(DelegatedDigitalWorkSpec):
         return self
 
 
+# Local actions still use the installed programming/evaluator boundaries. This
+# list is only the set a separate, owner-admitted host mandate may explicitly pin.
+INITIATIVE_LOCAL_CAPABILITIES = frozenset({
+    "save_work_progress", "list_programming_tools", "use_programming_tool",
+    "write_programming_file", "start_programming_process",
+    "read_own_component_source", "draft_own_component_improvement",
+    "evaluate_own_component_improvement", "compare_own_component_improvements",
+    "prepare_own_component_release", "apply_reviewed_component_improvement",
+    "get_reviewed_component_application",
+})
+
+
+class InitiativeWorkSource(PrivateWorkSource):
+    """Native intent reference, deliberately not an owner ingress reference."""
+    @model_validator(mode="after")
+    def _private_origin(self):
+        if (self.audience.principal_id != self.principal_id
+                or not self.conversation_id.startswith("initiative-task:")
+                or self.message_id != "initiative-execute:" + self.conversation_id.removeprefix("initiative-task:")):
+            raise ValueError("initiative source requires its exact native private identity")
+        return self
+
+
+class InitiativeWorkOrigin(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True, strict=True)
+    kind: Literal["eva_initiative"]
+    intent_id: str = Field(pattern=r"^personal-interest:[0-9a-f]{64}$")
+    thread_id: Identifier
+    claim_revision: int = Field(ge=1)
+    mandate_sha256: Sha256
+
+
+class DelegatedInitiativeDigitalWorkSpec(DelegatedDigitalWorkSpec):
+    contract: Literal["DelegatedInitiativeDigitalWork/v1"]
+    schema_version: Literal[1]
+    source: InitiativeWorkSource
+    origin: InitiativeWorkOrigin
+
+    @model_validator(mode="after")
+    def _initiative_binding(self):
+        from uuid import NAMESPACE_URL, uuid5
+        from eva.contracts.canonical_json import canonical_sha256
+        key = self.origin.intent_id.removeprefix("personal-interest:")
+        if (self.generation != 1 or self.origin.thread_id != "intent:" + self.origin.intent_id
+                or self.parent_task_id != self.origin.intent_id
+                or self.work_id != "work:eva-initiative:" + key
+                or self.execution_id != self.work_id
+                or self.source.conversation_id != "initiative-task:" + key
+                or self.source.principal_id != self.owner_principal_id
+                or self.episode_id != str(uuid5(NAMESPACE_URL,
+                    "initiative-digital-work:" + canonical_sha256(self.origin.model_dump(mode="json"))))):
+            raise ValueError("initiative digital work differs from its original intent")
+        return self
+
+
 class DelegatedDigitalWorkResult(DelegatedWorkResult):
     """Multi-response completion; only price may remain unmeasured."""
     contract: Literal["DelegatedDigitalWorkResult/v4"]

@@ -1,18 +1,17 @@
-## Actueel werk — 2026-10-11T19:53:54.636134+00:00
+## Actueel werk — 2026-10-11T20:24:43.984328+00:00
 
-**Laatst opgeleverd:** Eva maakte twee varianten van haar eigen hulpmiddel, de winnaar
-slaagde onafhankelijk (0/12 → 12/12 nieuwe gevallen, nul behoudfouten), en Eva
-gebruikte diezelfde verbeterde bron later bij ander werk. Geïnstalleerd en beoordeeld.
+**Laatst opgeleverd:** Eigen initiatieven aangesloten op dezelfde programmeer- en verbeterroute. Geïnstalleerd; onafhankelijke bron- en
+installatiereview GO. 224 gerichte controles groen; beide diensten gezond.
+Eva's eerdere zelfgemaakte, verbeterde en later hergebruikte hulpmiddel blijft behouden.
 
-**Nu:** De bestaande rustwerker en contextverbetering zijn aanwezig. Het concrete ontbrekende stuk: een zelfgekozen initiatief kan de bestaande digitale programmeer-/verbeterroute nog niet gebruiken. Die aansluiting wordt nu gebouwd, inclusief terugkoppeling van het echte eindresultaat. Een startmelding telt niet als afgerond werk; gewone gesprekken en stoppen houden voorrang.
+**Nu:** De koppeling is geïnstalleerd en onafhankelijk goedgekeurd. Nu legt de uitvoerder één concrete vervolgstap vast om zelfgekozen verbeterwerk via de bestaande werker echt af te maken. Geen nieuwe vergelijking of herhaling van de geslaagde hulpmiddelproef. Echte native uitvoering/privéterugmelding en volledige AIDE² blijven open.
 
-**Wie:** /root/eva1_memory_transfer bouwt de runtimekoppeling en gerichte checks;
- /root coördineert, houdt dit bord bij en integreert. Gebundelde onafhankelijke review volgt.
+**Wie:** /root/eva1_memory_transfer legt de ene concrete gebruikersuitkomst vooraf vast.
+ /root verzorgt coördinatie/dashboard/docs/Git. Geen handeling van Jaap nodig.
 
-**Daarna:** vaste kwaliteitsbeoordeling/toepassing van agentaansturing, passend
-initiatief en dagelijks gezinsgebruik. Geen handeling van Jaap nodig. Het volledige
-projectgoal blijft actief; oorspronkelijke 39/48 kleine afrondingen behouden.
-Spraak geparkeerd; geen nieuwe vergelijkingsserie.
+**Daarna:** Een aantoonbare verbetering van de aansturing onafhankelijk beoordelen en toepassen met bestaande AIDE²-voorzieningen. Daarna herhaald passend initiatief, leren van de menselijke reactie en samenhangend gezinsgebruik afronden.
+Het volledige goal blijft actief; oorspronkelijke 39/48 kleine afrondingen behouden.
+Spraak geparkeerd; geen vergelijkingsserie.
 
 ## Actief volledig projectgoal — 11 oktober 2026
 

@@ -1,0 +1,73 @@
+"""Host-only native handoff through the existing digital work queue."""
+from datetime import UTC, datetime, timedelta
+from functools import partial
+import os
+from pathlib import Path
+from uuid import NAMESPACE_URL, uuid5
+
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
+from eva.adapters.postgres.initiative_execution import PostgresInitiativeAuthority, InitiativeMandateDenied
+from eva.adapters.postgres.operational_timeline import transition_timeline_thread
+from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+from eva.contracts.canonical_json import canonical_sha256
+
+
+from eva.application.initiative_execution import NativeInitiativeDelegation
+
+
+def configured_initiative_authority(owner_store):
+    path = os.environ.get("EVA_INITIATIVE_MANDATE_FILE")
+    if not path:
+        base = os.environ.get("EVA_MCP_AUTONOMY_MANDATE_FILE")
+        if not base:
+            raise InitiativeMandateDenied("initiative mandate unavailable")
+        path = str(Path(base).with_name("initiative-mandate.json"))
+    return PostgresInitiativeAuthority(owner_store,
+        partial(read_runtime_secret_file, path, setting_name="EVA_INITIATIVE_MANDATE_FILE"))
+
+
+def admit_native_initiative(authority, claim, service):
+    """Atomically commit queue admission and the parent's pending outcome."""
+    if service is None or service.digital_profile is None:
+        raise InitiativeMandateDenied("native digital work is not composed")
+    guard, turn = authority.bind(claim)
+    profile = service.digital_profile
+    grant = authority.digital_grant(profile)
+    now = service.now()
+    origin = {"kind": "eva_initiative", "intent_id": claim.intent_id,
+        "thread_id": claim.thread_id, "claim_revision": claim.revision,
+        "mandate_sha256": guard.mandate_sha}
+    work_id = "work:eva-initiative:" + claim.intent_id.removeprefix("personal-interest:")
+    spec = profile.build_spec(initiative_origin=origin, grant=grant,
+        source={key: getattr(turn, key) for key in (
+            "tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")} |
+            {"audience": {"kind": "private_person", "principal_id": turn.principal_id}},
+        source_ingress_sha256=canonical_sha256(PostgresConversationJournal._ingress_data(turn)),
+        work_id=work_id, execution_id=work_id,
+        episode_id=str(uuid5(NAMESPACE_URL, "initiative-digital-work:" + canonical_sha256(origin))),
+        generation=1, parent_task_id=claim.intent_id,
+        owner_principal_id=str(service.owner_principal_id),
+        principal_binding_id=str(service.principal_binding_id),
+        task=turn.text, created_at=now, deadline=now + timedelta(seconds=grant.timeout_seconds))
+    if (service.store._engine is not authority.owner._engine
+            or service.owner_principal_id != authority.owner._owner
+            or service.principal_binding_id != authority.owner._binding
+            or service.conversation_scope != authority.owner._scope
+            or service.store.scope != authority.owner._authority):
+        raise InitiativeMandateDenied("native handoff differs from its host owner scope")
+    with authority.owner._engine.begin() as conn:
+        guard.check_locked(conn)
+        service.store.admit(spec=spec, title="Eigen initiatief van Eva",
+            summary="Native initiatief; resultaat wacht op digitale uitvoering.",
+            worker_role="digital-worker", retention_policy_id="initiative-private-work:v1",
+            retention_until=now + timedelta(days=7), occurred_at=now, _connection=conn,
+            _native_guard=guard)
+        authority.timeline._scope(conn)
+        transition_timeline_thread(conn, authority.owner._scope, thread_id=claim.thread_id,
+            expected_revision=claim.revision, checkpoint_id=claim.thread_id + ":digital-admitted",
+            phase="initiative_work_waiting", status="waiting_for_proof",
+            event_type="PERSONAL_INITIATIVE_WORK_ADMITTED", occurred_at=now,
+            data={"intent_id": claim.intent_id, "origin": "eva_initiative",
+                  "work_id": spec.work_id, "spec_sha256": spec.sha256,
+                  "mandate_sha256": guard.mandate_sha})
+    return NativeInitiativeDelegation(spec.work_id)

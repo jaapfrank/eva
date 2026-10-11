@@ -23,7 +23,10 @@ _SOURCES = (
     "contracts/delegated_work.py", "contracts/delegated_digital_work.py",
     "bootstrap/delegated_digital_profile.py", "bootstrap/household_work_corrections.py",
     "adapters/postgres/scheduled_work.py", "adapters/postgres/work_corrections.py",
-    "application/background_execution.py",
+    "application/background_execution.py", "application/initiative_execution.py",
+    "adapters/postgres/initiative_execution.py", "bootstrap/native_initiative_work.py",
+    "adapters/postgres/owner_initiatives.py", "application/personal_interests.py",
+    "bootstrap/runtime.py",
     "application/conversation.py", "application/cancellation.py",
     "adapters/postgres/background_model_journal.py",
     "adapters/postgres/conversation_journal.py", "adapters/postgres/conversation_actions.py",
@@ -164,12 +167,14 @@ class DelegatedDigitalProfile:
             self.engine_release_sha256, DIGITAL_OUTPUT_SHA256,
         )
 
-    def build_spec(self, *, source, source_ingress_sha256, grant=None, origin=None, **identity):
+    def build_spec(self, *, source, source_ingress_sha256, grant=None, origin=None, initiative_origin=None, **identity):
         def stamp(value):
             if value.tzinfo is None or value.utcoffset() is None or value.microsecond:
                 raise ValueError("digital work timestamps require aware whole seconds")
             return value.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         selected_grant = self.grant() if grant is None else grant
+        if origin is not None and initiative_origin is not None:
+            raise ValueError("digital work cannot combine initiative and household origins")
         if origin is not None and grant is None:
             selected_grant = DelegatedDigitalWorkGrant.model_validate({
                 **selected_grant.to_payload(),
@@ -186,6 +191,11 @@ class DelegatedDigitalProfile:
             identity["execution_id"] = identity["work_id"]
         spec_type = DelegatedDigitalWorkSpec
         envelope = dict(contract="DelegatedDigitalWork/v4", schema_version=4, audience="private")
+        if initiative_origin is not None:
+            from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+            spec_type = DelegatedInitiativeDigitalWorkSpec
+            envelope = dict(contract="DelegatedInitiativeDigitalWork/v1", schema_version=1,
+                audience="private", origin=initiative_origin)
         if origin is not None:
             from uuid import NAMESPACE_URL, uuid5
             from eva.contracts.delegated_work import HouseholdWorkOrigin

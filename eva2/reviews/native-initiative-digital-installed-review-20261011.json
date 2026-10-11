@@ -1,0 +1,153 @@
+{
+  "contract": "EvaNativeInitiativeDigitalInstalledReview/v1",
+  "checkedAt": "2026-10-11T20:23:04.107985+00:00",
+  "reviewer": "independent_product_execution_memory_review",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Installed frozen native-initiative-to-existing-digital-queue bridge and honest bounded publication. No source re-audit or native semantic/transport trial.",
+  "bindings": {
+    "sourceReviewPath": "eva2/reviews/native-initiative-digital-source-review-20261011.json",
+    "sourceReviewSha256": "4a01fefb695a3eb7d18ed1250c262c3b03e775339b8efb908990c8a2b20d4931",
+    "sourceEvidencePath": "eva2/evidence/product/native-initiative-digital-source-20261011.json",
+    "sourceEvidenceSha256": "8b6ed7f7678624f0ea8ff1dd1fd4aff9cf911a6f2b6aa9eb8a2489c631fcac55",
+    "publicInstalledEvidencePath": "eva2/evidence/product/native-initiative-digital-installed-20261011.json",
+    "publicInstalledEvidenceSha256": "c40cd9e7573f4caae278777755ff10518111e9eae1658a311676619cd5ef3808",
+    "verificationReceiptPath": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/installed-verification.private.json",
+    "verificationReceiptSha256": "c643efdead0778d9e965fd9a36360fab59bf1e8824251353d3985f067418402b",
+    "imageUpdateReceiptSha256": "c7dc59e256c38be08dca8fe7ecd8dd8400c110f1bb8923f4467cc4be102c6e9b",
+    "compositionReceiptSha256": "21dc80f95304e548460b6c4888f44398ae0a23cdbddc0d8751d30b36c91eafa9",
+    "mandateRevisionReceiptSha256": "1cfe48f8a514a38e081dc921dad8b65fa91f0db06e762a327a1f59a87c5145c6",
+    "sourceFiles": {
+      "adapters/postgres/delegated_work.py": "63a14e28fb9807a9bb59f501e9785c876314f14ec12ce358a07fa1a4451d8184",
+      "adapters/postgres/initiative_execution.py": "ec26001fc2f6104ab7e631c24c79fe1b22dd924455c6a692e469009bcf79a60a",
+      "adapters/postgres/sensory_events.py": "ad6c2821ca440651e03ca5ac18562df5a005ab571068af32d527b619c53f5603",
+      "application/initiative_execution.py": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+      "application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+      "bootstrap/delegated_digital_composition.py": "578f40bb75a88fdadcf0f1cd51705f50d6f278c94e20fd17a4ccfead885092c1",
+      "bootstrap/delegated_digital_profile.py": "e5cc98dfb27ccda6df02d0bd2945b5e7c72247abc231c5618a20666320f5dbdc",
+      "bootstrap/delegated_digital_runner.py": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d",
+      "bootstrap/native_initiative_work.py": "0ad037cd8e5af3a0da960c4c61d8bdb4f953827010ef117907529d475b05773f",
+      "bootstrap/runtime.py": "1d37db2821805b9e41a5dc86688d1826a8f7298736bc2a093b41cf44acfb3660",
+      "contracts/delegated_digital_work.py": "d6c1b49b7b5c68a5229bcf8ea7057821aa246eab0c0d4e8617bdf740db708339",
+      "contracts/delegated_work.py": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+      "operations/delegated_work_worker.py": "a9c4a75ad3ceaccc2c3c86c97c9736c99b6758e22a76c306b20bf2756c0847a4"
+    },
+    "privateArtifactRoot": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011",
+    "privateArtifactSha256": {
+      "installed-verification.private.json": "c643efdead0778d9e965fd9a36360fab59bf1e8824251353d3985f067418402b",
+      "image-update-receipt.private.json": "c7dc59e256c38be08dca8fe7ecd8dd8400c110f1bb8923f4467cc4be102c6e9b",
+      "composition-probe.private.json": "21dc80f95304e548460b6c4888f44398ae0a23cdbddc0d8751d30b36c91eafa9",
+      "installation-plan.private.json": "24147c126cfea12a5f4b9f5329d6acabd3ca495c7a4c4c2fbda0aeb44e21faf7",
+      "mandate-revision.private.json": "1cfe48f8a514a38e081dc921dad8b65fa91f0db06e762a327a1f59a87c5145c6",
+      "baseline.compose.private.json": "ae6d76ac0323e16b72a7d4548b96dce3356aafe21155783c3b54c3785276b6c7",
+      "candidate.compose.private.json": "c3894b989c733b1eb97ba727d5ed5d7148344f1fef3e0fa8ef517b03b80bf960",
+      "core-before.private.json": "df4523a029809c05173cb77b6965a99702c7d4bf144fb77c196a503520ce224f",
+      "core-after.private.json": "75adb485d48a10faccd7e68fe69f8c799a0d4732f7d834c85dd77d0cdd628ff1",
+      "delegated-work-worker-before.private.json": "ab1f85bd364dd2ab506295ed34c4f2b6a0f78badc2f52944add8304ef0771e72",
+      "delegated-work-worker-after.private.json": "2c6e538e7cd824eed54992afebe27323c0963369f01c4df87feeb2310d2903ff",
+      "core-source-before.private.json": "2d4c8d540503c4aa65a929567e2a135a84ed28b3e42336980c1e9b2ad4403840",
+      "core-source-after.private.json": "ca61977ce0f28b4a2c00d646cc2725ccd75018db36337332e2a02d242d095068",
+      "delegated-work-worker-source-before.private.json": "6bbd77884a0abf8ee94892f3f77f3c9a8e8f45fb7f34a61d06246ca8fd333fd8",
+      "delegated-work-worker-source-after.private.json": "b105a327486661f177c296f6cdd189bc430cc414328ec7372cc5f5acb5063d0a",
+      "core-installed-profile.private.json": "2012d271b0ae9917f8232c10c34d2ad830673b3a272f9c26eaca4d118cf3d97b",
+      "delegated-work-worker-installed-profile.private.json": "2012d271b0ae9917f8232c10c34d2ad830673b3a272f9c26eaca4d118cf3d97b",
+      "metadata-correction.private.json": "8f16e5f860801346795c7a6b6840cb09dc48955b40918562c1614313ddc05922",
+      "source-evidence-metadata-change.private.json": "557148109c62e38f91511184502b21865d2ba3f32f7b1457e99cb98d5c9c1679"
+    }
+  },
+  "independentChecks": {
+    "services": {
+      "core": {
+        "imageId": "sha256:04a956f0548b16898960893624ccf44fce7525e4786351788839d7d4ddb43a4b",
+        "healthyInNativeReadback": true,
+        "beforeModuleCount": 339,
+        "afterModuleCount": 340,
+        "changedModules": 12,
+        "newModules": 1,
+        "reviewedModuleHashMatches": 13,
+        "unchangedModules": 327,
+        "removedModules": 0,
+        "environmentValuesIdentical": true,
+        "effectiveMountsIdentical": true,
+        "processAndSecurityConfigIdentical": true
+      },
+      "delegated-work-worker": {
+        "imageId": "sha256:ed70f755881bafff9682733cbf197df4ad2d455a65a519b3c8f241f77a50edec",
+        "healthyInNativeReadback": true,
+        "beforeModuleCount": 337,
+        "afterModuleCount": 338,
+        "changedModules": 12,
+        "newModules": 1,
+        "reviewedModuleHashMatches": 13,
+        "unchangedModules": 325,
+        "removedModules": 0,
+        "environmentValuesIdentical": true,
+        "effectiveMountsIdentical": true,
+        "processAndSecurityConfigIdentical": true
+      }
+    },
+    "configuration": "Recomputed before/after unique-key environment maps, effective full mount records, sorted bind sets, entrypoint/command/user/workdir/healthcheck/ports/volumes and retained read-only/capability/security/restart configuration. Compose differs only in the two image fields; no new service, mount or environment key.",
+    "profileParity": {
+      "passed": true,
+      "source": "Both retained actual installed profile stdout receipts equal each other and the composition receipt.",
+      "release": {
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "model_profile_release_sha256": "b4ec40af58e111bdcf5ef8f3725d0903a4bf6e2e5191f13dbb5ce812988e5bb4",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+        "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+        "worker_program_sha256": "949b9888cbad122ae14efba7b0aa1dfcbb95d25d8571837c8c22a72634c42cb5"
+      }
+    },
+    "mandate": {
+      "passed": true,
+      "existingProviderProfilesByteSemanticsPreserved": 10,
+      "explicitInstalledLocalCapabilities": 12,
+      "onlyAddedField": "digital_work",
+      "enabledRetained": true,
+      "profileMatchesInstalledComposition": true,
+      "previousMandateSha256": "a84a1cd9056dba36f46a8236b75c3bb843cb272fd068eeabd1a3209ea62e9d3f",
+      "mandateSha256": "8a9eeb58d10b5f396557d3a77fe0273b41cb030afe7a70831f32d07b316e36dd",
+      "existingOwnerCasStatus": "revised",
+      "actualHostFileBytesMatchCandidate": true,
+      "actualHostFileOwnerGroupModePreserved": true,
+      "authorityOrigin": "Existing owner-only CAS outside native initiative context; native text supplies no authorization."
+    },
+    "publication": {
+      "passed": true,
+      "installedScopeConsistent": true,
+      "pendingReviewLabelIsPreVerdictSnapshot": true,
+      "originalSourceEvidenceRestoredExactHash": true,
+      "limitsExplicit": [
+        "No native self-chosen semantic result proof",
+        "No live private delivery proof",
+        "No full in-flight model preemption proof",
+        "No new harness quality gain",
+        "No full AIDE2/whole learning cycle/family acceptance/general competitor win"
+      ],
+      "newManualEvaModelRequests": 0,
+      "automaticRuntimeUsage": "Not measured by installation evidence; no zero-total-usage inference.",
+      "developmentCredits": "unknown"
+    }
+  },
+  "retainedSourceValidation": {
+    "passedChecks": 224,
+    "pytestSeconds": 22.47,
+    "fixturePostgresVersion": "16.13",
+    "receiptSha256": "4eb80c390ae0649f7e11af33edef2610c560f7b111e3d4cdfe86f56d463f7f00",
+    "logSha256": "96a29b31b3e1a1c03a62f0ba09ca5d9278241d7083bf0127319b8a5c39000c52",
+    "reviewerReranTests": false,
+    "meaning": "Synthetic programming/readback-to-original-parent completion and current stop/revocation boundaries were assessed in source GO; installation confirms exact deployment, not live semantic usefulness."
+  },
+  "preparationCorrections": [
+    "Root changed hash-bound source-evidence metadata after source review. Changed bytes/correction were preserved privately; original checkedAt/status and exact SHA256 were restored before this review.",
+    "Reviewer first omitted PYTHONPATH for a pure canonical-hash import; corrected environment without product action.",
+    "Reviewer initially compared raw Binds list order; effective full mounts and sorted bind sets are identical.",
+    "Reviewer initially assumed snake_case in the retained CAS projection; corrected to its actual camelCase field and recomputed both canonical mandate digests."
+  ],
+  "reviewerActions": "Read retained technical installation/profile/module/config receipts and the actual existing mandate file for exact bytes/ownership/mode. No server/queue/lifespan, test, model, provider, procedure, evaluator or runtime mutation; only this review file written.",
+  "conclusion": "GO for this installed technical bridge. Exact reviewed native origin and guarded queue/result route are deployed with matched worker composition and owner-admitted local capabilities. Native usefulness and actual private transport remain separate unmet evidence requirements.",
+  "wholeGoalStatus": "active",
+  "fullAide2Completed": false,
+  "familyAcceptanceCompleted": false,
+  "voiceStatus": "parked"
+}

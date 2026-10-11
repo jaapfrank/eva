@@ -190,7 +190,8 @@ class PostgresSensoryEventStore:
             return ()
         try:
             policy, _ = self._initiative_authorizer()
-            return tuple(sorted({cap["action_name"] for cap in policy["capabilities"]}))
+            return tuple(sorted({cap["action_name"] for cap in policy["capabilities"]}
+                | set(policy.get("digital_work", {}).get("capability_ids", ()))))
         except Exception:
             return ()  # Missing or revoked mandate is not execution authority.
 

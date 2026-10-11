@@ -1,0 +1,128 @@
+{
+  "contract": "EvaNativeInitiativeDigitalSourceReview/v1",
+  "checkedAt": "2026-10-11T20:13:22.213846+00:00",
+  "reviewer": "independent_product_execution_memory_review",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact frozen native-initiative bridge source, retained targeted tests and proposed bounded installation/configuration plan.",
+  "bindings": {
+    "sourceFiles": {
+      "adapters/postgres/delegated_work.py": "63a14e28fb9807a9bb59f501e9785c876314f14ec12ce358a07fa1a4451d8184",
+      "adapters/postgres/initiative_execution.py": "ec26001fc2f6104ab7e631c24c79fe1b22dd924455c6a692e469009bcf79a60a",
+      "adapters/postgres/sensory_events.py": "ad6c2821ca440651e03ca5ac18562df5a005ab571068af32d527b619c53f5603",
+      "application/initiative_execution.py": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+      "application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+      "bootstrap/delegated_digital_composition.py": "578f40bb75a88fdadcf0f1cd51705f50d6f278c94e20fd17a4ccfead885092c1",
+      "bootstrap/delegated_digital_profile.py": "e5cc98dfb27ccda6df02d0bd2945b5e7c72247abc231c5618a20666320f5dbdc",
+      "bootstrap/delegated_digital_runner.py": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d",
+      "bootstrap/native_initiative_work.py": "0ad037cd8e5af3a0da960c4c61d8bdb4f953827010ef117907529d475b05773f",
+      "bootstrap/runtime.py": "1d37db2821805b9e41a5dc86688d1826a8f7298736bc2a093b41cf44acfb3660",
+      "contracts/delegated_digital_work.py": "d6c1b49b7b5c68a5229bcf8ea7057821aa246eab0c0d4e8617bdf740db708339",
+      "contracts/delegated_work.py": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+      "operations/delegated_work_worker.py": "a9c4a75ad3ceaccc2c3c86c97c9736c99b6758e22a76c306b20bf2756c0847a4"
+    },
+    "frozenManifestSha256": "515bdbb043a982544b2b263a1a0709ce27ea36c7cf952195d893c6ac0c29c043",
+    "frozenManifestPath": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/native-bridge-frozen-source.private.json",
+    "sourcePatchSha256": "8aed5d0e70842c71de33caee86c6f3c6424a832c4832c78a274dc184bd9d2e55",
+    "testFiles": {
+      "eva2/tests/postgres/test_native_initiative_digital_work.py": "204698ce25ce9d90d6011144a8004689dcceb3d6d776c46bba6fd18503173b53"
+    },
+    "testReceiptPath": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/native-bridge-targeted-tests.private.json",
+    "testReceiptSha256": "4eb80c390ae0649f7e11af33edef2610c560f7b111e3d4cdfe86f56d463f7f00",
+    "testLogSha256": "96a29b31b3e1a1c03a62f0ba09ca5d9278241d7083bf0127319b8a5c39000c52",
+    "configPlanPath": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/native-bridge-config-plan.private.json",
+    "configPlanSha256": "b404407fdce273229376b5df25f88d7d79d46e7ddc4505e9add694df34709c1a",
+    "compositionProbePath": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/probe-fresh-digital-profile.private.py",
+    "compositionProbeSha256": "bd990fb8d2ce76b662bc5aa3b3819b1fe06291c100d7f22d63f086de297729bc",
+    "baselineComposeSha256": "ae6d76ac0323e16b72a7d4548b96dce3356aafe21155783c3b54c3785276b6c7",
+    "publicSourceEvidencePath": "eva2/evidence/product/native-initiative-digital-source-20261011.json",
+    "publicSourceEvidenceSha256": "8b6ed7f7678624f0ea8ff1dd1fd4aff9cf911a6f2b6aa9eb8a2489c631fcac55"
+  },
+  "assessedBehavior": {
+    "nativeOrigin": {
+      "passed": true,
+      "evidence": [
+        "contracts/delegated_digital_work.py:176",
+        "adapters/postgres/initiative_execution.py:278",
+        "bootstrap/delegated_digital_runner.py:569"
+      ],
+      "finding": "Separate native contract/origin reconstructs the exact durable intent. Owner source loader remains unchanged and rejects initiative-shaped owner ingress."
+    },
+    "admissionAndMandate": {
+      "passed": true,
+      "evidence": [
+        "bootstrap/native_initiative_work.py:29",
+        "adapters/postgres/delegated_work.py:326",
+        "adapters/postgres/initiative_execution.py:265",
+        "adapters/postgres/initiative_execution.py:394"
+      ],
+      "finding": "Same digital queue; admission and original-parent pending transition commit atomically. Explicit nonempty installed local capability subset and host profile are required. Existing provider cost/configuration/argument/data profiles remain separately required; model/initiative cannot revise its mandate."
+    },
+    "dispatchStopAndRevocation": {
+      "passed": true,
+      "evidence": [
+        "adapters/postgres/delegated_work.py:1002",
+        "bootstrap/delegated_digital_runner.py:505",
+        "operations/delegated_work_worker.py:166",
+        "adapters/postgres/initiative_execution.py:394"
+      ],
+      "finding": "Current owner binding, durable parent stop/revision, mandate file/digest/revocation and call stop are rechecked before subsequent work/tool dispatch. Guard remains in worker-thread and cleanup context. Stop/revocation prevents parent completion from a late result; recorded usage/result evidence is retained."
+    },
+    "terminalReturn": {
+      "passed": true,
+      "evidence": [
+        "application/personal_interests.py:252",
+        "adapters/postgres/initiative_execution.py:304",
+        "adapters/postgres/delegated_work.py:1466"
+      ],
+      "finding": "Queue receipt/start is pending. Only a terminal succeeded result with current guard creates the original parent PERSONAL_INITIATIVE_COMPLETED event, content hash, result hash and usage. Failures become blocked; repeated recorded terminal outcome creates no second completion."
+    },
+    "existingRoutes": {
+      "passed": true,
+      "finding": "Ordinary owner/household source loading remains unchanged; native branch is explicitly typed. Existing personal interest worker and delegated worker are reused, with no new queue or daemon. Original InitiativeCompletionDelivery consumes the same completion event conditionally."
+    }
+  },
+  "validation": {
+    "retainedImplementerTests": {
+      "passed": 224,
+      "pytestSeconds": 22.47,
+      "disposablePostgresVersion": "16.13",
+      "runtimeDsnUsed": false,
+      "externalModels": 0,
+      "nativeProviderTrials": 0
+    },
+    "coveredBoundaries": [
+      "pending-versus-completion",
+      "atomic handoff rollback",
+      "explicit profile and capability rejection",
+      "exact durable source/owner/scope/hash/revision",
+      "stop/revocation/disabled-file/revoked-binding",
+      "late result cannot complete stopped/revoked parent",
+      "failure never completes parent",
+      "stop before claim starts no model route",
+      "existing runner programming write and physical local readback then parent result",
+      "native context cleared for following owner turn",
+      "existing idle/foreground overlap checks"
+    ],
+    "reviewerActions": "Read frozen sources, narrow existing interface context, receipts/log and config/probe source; recomputed hashes. No tests, profile probe, model, queue, provider or runtime action executed.",
+    "developmentFailureDisclosure": "Retained receipt identifies earlier preparation/schema/context failures; earlier raw output logs were not saved. Final test log is retained and hash-bound.",
+    "reviewPreparationCorrection": "First scope read used root PROJECTDOEL.md, which is absent; read corrected eva2/PROJECTDOEL.md. No product effect."
+  },
+  "installationConditions": [
+    "Overlay exactly these 13 source hashes on the retained core/worker images; preserve all other source/dependencies/configuration/mounts and existing worker.",
+    "Run the reviewed model-free composition probe under the actual unchanged environment/mounts; require core and worker release metadata equality, including worker_program_sha256. No presumed profile file or request text is authority.",
+    "Add only optional digital_work to the existing initiative mandate with actual matching worker_profile_release_sha256 and explicit approved nonempty subset of installed local capabilities; retain every existing provider profile.",
+    "Use existing owner-only dashboard_revise_initiative_mandate(expected_sha256,candidate_sha256), with candidate digest excluding enabled and outside native initiative context.",
+    "Read back installed exact sources, healthy services and mandate/profile binding before claiming installation; this source GO is not a live result or transport claim."
+  ],
+  "limitations": [
+    "Synthetic tests demonstrate queue-to-programming/readback-to-original-parent completion, not native semantic usefulness or family acceptance.",
+    "Composition probe is reviewed but not yet executed; exact runtime/config installation remains to be checked.",
+    "Existing private InitiativeCompletionDelivery is conditional on existing configured delivery and was not executed; no recipient-delivery claim.",
+    "Existing foreground/idle gates prevent starting new quiet work; full preemption of an already-running model request is not established.",
+    "No full AIDE2, harness-quality, superiority, general privacy guarantee or new main-project completion.",
+    "Development credits and complete runtime/credit costs are unknown; no efficiency claim."
+  ],
+  "wholeGoalStatus": "active",
+  "voiceStatus": "parked"
+}

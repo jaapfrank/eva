@@ -980,25 +980,15 @@ class PostgresHindsightMemoryRuntime:
             authority_scope=self._dashboard_authority_scope)
 
     def _initiative_authority(self):
-        from functools import partial
-        from eva.adapters.credentials.runtime_files import read_runtime_secret_file
-        from eva.adapters.postgres.initiative_execution import PostgresInitiativeAuthority
-        path = os.environ.get("EVA_INITIATIVE_MANDATE_FILE")
-        if not path:
-            base = os.environ.get("EVA_MCP_AUTONOMY_MANDATE_FILE")
-            if not base:
-                raise RuntimeError("initiative mandate unavailable")
-            path = str(Path(base).with_name("initiative-mandate.json"))
-        return PostgresInitiativeAuthority(self._owner_initiatives(),
-            partial(read_runtime_secret_file, path, setting_name="EVA_INITIATIVE_MANDATE_FILE"))
+        from eva.bootstrap.native_initiative_work import configured_initiative_authority
+        return configured_initiative_authority(self._owner_initiatives())
 
     def execute_native_initiative(self, claim):
-        from eva.application.initiative_execution import initiative_execution
-        guard, turn = self._initiative_authority().bind(claim)
-        with initiative_execution(guard):
-            # Same durable journal, actual effects and model limits as conversations.
-            # Do not invoke after_response: this is not a direct user assertion.
-            return self.respond(turn)
+        from eva.bootstrap.native_initiative_work import admit_native_initiative
+        # The selected quiet initiative remains native work, not owner ingress.
+        # Admission is pending; only the existing worker's durable result closes it.
+        return admit_native_initiative(self._initiative_authority(), claim,
+            self._delegated_work_owner_service)
 
     def dashboard_revoke_initiative_mandate(self):
         return self._initiative_authority().revoke()
@@ -2280,6 +2270,8 @@ def create_runtime_app() -> FastAPI:
         ),
         memory_storage_budget=storage_budget,
     )
+    if delegated_work_store is not None:
+        delegated_work_store._initiative_authority_loader = runtime._initiative_authority
     runtime._work_memory = None if delegated_work_service is None else work_memory
     native_voice = (None if household_voice is None else household_voice.build_service(
         runtime=runtime, engine=engine, work_server=household_work_server,

@@ -35,18 +35,25 @@ tooltelgrenzen; volledig runtimeverbruik en creditkosten blijven onbekend.
 Dit is kwaliteitswinst voor deze nieuwe mogelijkheid, geen efficiëntieclaim.
 Voorbereidingsfouten blijven bewaard; geen derde variant of herhaalde eindproef.
 
-**Actief werk:** de bestaande rustwerker en algemene digitale uitvoerder verbinden.
-Een zelfgekozen initiatief kan die programmeer-/verbeterroute nog niet gebruiken;
-de ontbrekende aansluiting en echte eindterugkoppeling worden nu gebouwd door
-/root/eva1_memory_transfer. /root coördineert en integreert. Daarna vaste
-kwaliteitsbeoordeling van agentaansturing, passend initiatief en gezinsgebruik.
-Volledige AIDE² en het gehele project blijven open; oorspronkelijke 39/48 behouden.
+**Actief werk:** de rustwerker en algemene digitale uitvoerder zijn verbonden
+en de exacte koppeling is eenmaal geïnstalleerd. 224 gerichte controles,
+bron- en installatiereview GO; kern/werker gezond, 13 bronmodules gecontroleerd,
+327/325 overige modules plus omgeving/mounts/gegevens behouden. Bestaande mandaat-CAS
+uitgevoerd; geen nieuwe diensten of mounts. Installatiebewijs:
+eva2/evidence/product/native-initiative-digital-installed-20261011.json.
+Review: eva2/reviews/native-initiative-digital-installed-review-20261011.json.
+
+/root/eva1_memory_transfer legt nu één concrete native gebruikersuitkomst vooraf
+vast met de bestaande starter/werker; geen nieuwe modelproef of uitvoering in
+die voorbereiding. Echte zelfgekozen uitvoering/privéterugmelding,
+kwaliteitsbeoordeling van agentaansturing en samenhangend gezinsgebruik blijven open.
+Volledige AIDE² en het gehele project blijven actief; oorspronkelijke 39/48 behouden.
 Geen eigenaarhandeling nodig. Spraak geparkeerd; geen nieuwe concurrentieserie.
 
 Bewijs: eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json.
 Later gebruik: eva2/evidence/product/saved-artifact-later-use-result-20261011.json.
 Review: eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json.
-Dashboard inhoudelijk bijgewerkt: 2026-10-11T19:53:54.636134+00:00.
+Dashboard inhoudelijk bijgewerkt: 2026-10-11T20:24:43.984328+00:00.
 
 
 ## Historische voorbereiding en installatie — 11 oktober 2026

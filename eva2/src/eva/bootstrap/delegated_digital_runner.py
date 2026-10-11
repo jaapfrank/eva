@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import replace
 
 import asyncio
-from contextlib import suppress
+from contextlib import suppress, nullcontext
 from datetime import UTC, datetime, timedelta
 import hashlib
 import json
@@ -21,6 +21,7 @@ from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWor
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.adapters.subagents.tool_free_child import ToolFreeChildOutcome
 from eva.application.background_execution import BackgroundExecutionScope, background_execution
+from eva.application.initiative_execution import initiative_execution
 from eva.application.cancellation import CancellationSignal, cancellation_scope
 from eva.application.conversation import ConversationActionReceipt, ConversationConflict, ConversationExecutionLimitReached, ConversationModelUsage, LivingConversation
 from eva.contracts.canonical_json import canonical_sha256
@@ -496,7 +497,7 @@ class DelegatedDigitalRunner:
         from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec, DelegatedDigitalWorkResult
         signal = CancellationSignal()
         usage = DelegatedWorkUsage.unmeasured()
-        journal = source = actions = reply = programming = None
+        journal = source = actions = reply = programming = native_guard = native_context = None
         latest_usage = ConversationModelUsage.unmeasured()
         deadline = parse_utc_timestamp(spec.deadline)
         call = DelegatedWorkCall(spec.work_id, "digital:" + spec.work_id, call_id, spec)
@@ -508,6 +509,8 @@ class DelegatedDigitalRunner:
             if self.clock() >= deadline:
                 signal.cancel()
                 signal.check()
+            if native_guard is not None:
+                native_guard.check(turn)
             self.store.authorize_tool_dispatch(call)
 
         def dispatch_guard(turn):
@@ -563,7 +566,16 @@ class DelegatedDigitalRunner:
             if spec.grant.maximum_cost_usd_micros is not None:
                 raise ConversationConflict("background subscription price is not measurable")
             deadline = min(deadline, self.clock() + timedelta(seconds=spec.grant.timeout_seconds))
-            source = self.source_loader(spec.source.model_dump(mode="json"))
+            from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+            if isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
+                # No owner-loader bypass. Reconstruct only a host-bound native
+                # intent and propagate its current guard into the worker thread.
+                native_guard = self.store._native_guard(spec)
+                source = native_guard.turn
+                native_context = initiative_execution(native_guard)
+                native_context.__enter__()
+            else:
+                source = self.source_loader(spec.source.model_dump(mode="json"))
             if canonical_sha256(PostgresConversationJournal._ingress_data(source)) != spec.source_ingress_sha256:
                 raise ConversationConflict("background original ingress differs")
             if cancellation_event is not None and cancellation_event.is_set():
@@ -613,7 +625,8 @@ class DelegatedDigitalRunner:
                 prompted_states = set()
                 with cancellation_scope(signal), background_execution(BackgroundExecutionScope(
                     source, spec.execution_id, dispatch_guard, remaining_model_output,
-                    remaining_model_time)):
+                    remaining_model_time)), (initiative_execution(native_guard)
+                        if native_guard is not None else nullcontext()):
                     while True:
                         reply = conversation.respond(source, before_step=checkpoint, model_journal=journal)
                         authorize(source)
@@ -711,9 +724,13 @@ class DelegatedDigitalRunner:
                 if programming is not None:
                     await asyncio.to_thread(programming.close)
             finally:
-                watcher.cancel()
-                with suppress(asyncio.CancelledError):
-                    await watcher
+                try:
+                    watcher.cancel()
+                    with suppress(asyncio.CancelledError):
+                        await watcher
+                finally:
+                    if native_context is not None:
+                        native_context.__exit__(None, None, None)
 
     @staticmethod
     def _usage(actual, tool_calls):

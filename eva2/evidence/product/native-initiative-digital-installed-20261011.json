@@ -1,0 +1,115 @@
+{
+  "contract": "EvaNativeInitiativeDigitalInstallation/v1",
+  "checkedAt": "2026-10-11T20:19:11.617527+00:00",
+  "status": "installed_final_review_pending",
+  "outcome": "Self-chosen native initiative can use the existing digital queue and programming/improvement capabilities; actual terminal outcome returns to the original initiative, not at ACK/start.",
+  "services": {
+    "core": {
+      "image": "sha256:04a956f0548b16898960893624ccf44fce7525e4786351788839d7d4ddb43a4b",
+      "healthy": true,
+      "reviewedModules": 13,
+      "unchangedModules": 327,
+      "newModules": 1,
+      "environmentRetained": true,
+      "mountsRetained": true,
+      "entrypointUserWorkdirRetained": true,
+      "profileParity": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:ed70f755881bafff9682733cbf197df4ad2d455a65a519b3c8f241f77a50edec",
+      "healthy": true,
+      "reviewedModules": 13,
+      "unchangedModules": 325,
+      "newModules": 1,
+      "environmentRetained": true,
+      "mountsRetained": true,
+      "entrypointUserWorkdirRetained": true,
+      "profileParity": true
+    }
+  },
+  "sourceFiles": {
+    "adapters/postgres/delegated_work.py": "63a14e28fb9807a9bb59f501e9785c876314f14ec12ce358a07fa1a4451d8184",
+    "adapters/postgres/initiative_execution.py": "ec26001fc2f6104ab7e631c24c79fe1b22dd924455c6a692e469009bcf79a60a",
+    "adapters/postgres/sensory_events.py": "ad6c2821ca440651e03ca5ac18562df5a005ab571068af32d527b619c53f5603",
+    "application/initiative_execution.py": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+    "application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+    "bootstrap/delegated_digital_composition.py": "578f40bb75a88fdadcf0f1cd51705f50d6f278c94e20fd17a4ccfead885092c1",
+    "bootstrap/delegated_digital_profile.py": "e5cc98dfb27ccda6df02d0bd2945b5e7c72247abc231c5618a20666320f5dbdc",
+    "bootstrap/delegated_digital_runner.py": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d",
+    "bootstrap/native_initiative_work.py": "0ad037cd8e5af3a0da960c4c61d8bdb4f953827010ef117907529d475b05773f",
+    "bootstrap/runtime.py": "1d37db2821805b9e41a5dc86688d1826a8f7298736bc2a093b41cf44acfb3660",
+    "contracts/delegated_digital_work.py": "d6c1b49b7b5c68a5229bcf8ea7057821aa246eab0c0d4e8617bdf740db708339",
+    "contracts/delegated_work.py": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+    "operations/delegated_work_worker.py": "a9c4a75ad3ceaccc2c3c86c97c9736c99b6758e22a76c306b20bf2756c0847a4"
+  },
+  "sourceReview": "eva2/reviews/native-initiative-digital-source-review-20261011.json",
+  "sourceReviewSha256": "4a01fefb695a3eb7d18ed1250c262c3b03e775339b8efb908990c8a2b20d4931",
+  "targetedChecks": {
+    "passed": 224,
+    "seconds": 22.47,
+    "realDisposablePostgres": true,
+    "syntheticModelAndTools": true,
+    "testReceiptSha256": "4eb80c390ae0649f7e11af33edef2610c560f7b111e3d4cdfe86f56d463f7f00",
+    "fixtureRemoved": true
+  },
+  "installation": {
+    "existingUpdaterUsedOnce": true,
+    "newServices": [],
+    "newMounts": [],
+    "newEnvKeys": [],
+    "exactSourceAndProfileParity": true,
+    "workerRelease": {
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "model_profile_release_sha256": "b4ec40af58e111bdcf5ef8f3725d0903a4bf6e2e5191f13dbb5ce812988e5bb4",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+      "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+      "worker_program_sha256": "949b9888cbad122ae14efba7b0aa1dfcbb95d25d8571837c8c22a72634c42cb5"
+    },
+    "existingMandateOwnerCas": {
+      "status": "revised",
+      "previousMandateSha256": "a84a1cd9056dba36f46a8236b75c3bb843cb272fd068eeabd1a3209ea62e9d3f",
+      "mandateSha256": "8a9eeb58d10b5f396557d3a77fe0273b41cb030afe7a70831f32d07b316e36dd",
+      "localCapabilities": 12,
+      "providerProfilesPreserved": 10,
+      "ownerCasRoute": true,
+      "nativeContext": false
+    },
+    "existingProviderProfilesRetained": 10,
+    "enabledNotToggled": true,
+    "fileOwnerModeRetained": true,
+    "installationReceiptSha256": "c7dc59e256c38be08dca8fe7ecd8dd8400c110f1bb8923f4467cc4be102c6e9b",
+    "verificationReceiptSha256": "c643efdead0778d9e965fd9a36360fab59bf1e8824251353d3985f067418402b",
+    "compositionReceiptSha256": "21dc80f95304e548460b6c4888f44398ae0a23cdbddc0d8751d30b36c91eafa9"
+  },
+  "proven": {
+    "sameQueueProgrammingLocalReadbackOriginalParentResult": true,
+    "onlyRealTerminalCompletionClosesParent": true,
+    "stopAndRevocationTargetedChecks": true,
+    "installedHealthyExactReviewedSource": true
+  },
+  "limits": {
+    "nativeSelfChosenSemanticResultProven": false,
+    "livePrivateTransportProven": false,
+    "fullPreemptionOfInFlightModelProven": false,
+    "newHarnessQualityGainProven": false,
+    "fullAide2Proven": false,
+    "wholeLearningCycleProven": false,
+    "familyAcceptance": false,
+    "generalCompetitorWin": false
+  },
+  "existingForegroundIdleGatesRetained": true,
+  "ordinaryOwnerResultReturnUnchanged": true,
+  "samePersonalInitiativeCompletedDeliveryEvent": true,
+  "newManualEvaModelRequests": 0,
+  "automaticRuntimeModelUsage": "not measured by this installation record",
+  "developmentCredits": "unknown",
+  "productFunctionCompleted": false,
+  "technicalInstallationCompleted": true,
+  "goalStatus": "active",
+  "originalTaskStatesAndCriteriaPreserved": true,
+  "originalCompleted": 39,
+  "originalTaskCount": 48,
+  "speechParked": true,
+  "dockerDesktopUntouched": true,
+  "preparationFailuresPreservedInSourceReceipt": true
+}

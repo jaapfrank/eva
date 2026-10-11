@@ -3,6 +3,7 @@
 from __future__ import annotations
 from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
+from contextlib import nullcontext
 import re
 import hashlib
 from dataclasses import dataclass
@@ -15,7 +16,7 @@ from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.current_catalog import delegated_work_runs, metadata
 from eva.adapters.postgres.operational_timeline import (
-    TimelineScope, insert_initial_timeline_thread, operational_events, operational_checkpoints,
+    TimelineScope, PostgresOperationalTimeline, insert_initial_timeline_thread, operational_events, operational_checkpoints,
 )
 from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
@@ -24,7 +25,7 @@ from eva.contracts.delegated_work import (
     DelegatedWorkSpec, DelegatedResearchSpec, DelegatedHouseholdResearchSpec, load_delegated_work_spec, load_delegated_work_result,
     DelegatedWorkUsage,
 )
-from eva.contracts.delegated_digital_work import DelegatedHouseholdDigitalWorkSpec
+from eva.contracts.delegated_digital_work import DelegatedHouseholdDigitalWorkSpec, DelegatedInitiativeDigitalWorkSpec
 from eva.contracts.workboard import WorkBoard
 from eva.application.delegated_work_delivery import PrivateWorkDestination
 from eva.adapters.postgres.delegated_work_delivery import record_admission_destination
@@ -153,15 +154,40 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         household_authorizer=None,
         household_clock=None,
         failure_report_clock=None,
+        initiative_authority_loader=None,
     ) -> None:
         if engine.url.get_backend_name() != "postgresql":
             raise ValueError("delegated work requires PostgreSQL")
         self._engine = engine
+        self._initiative_authority_loader = initiative_authority_loader
         self._failure_report_clock = failure_report_clock or (lambda: datetime.now(UTC))
         self._scope_value = scope
         self._role = role
         self._household_authorizer = household_authorizer
         self._household_clock = household_clock or (lambda: datetime.now(UTC).replace(microsecond=0))
+
+    def _native_guard(self, spec):
+        if not isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
+            return None
+        try:
+            if self._initiative_authority_loader is None:
+                raise RuntimeError("native digital authority is not composed")
+            return self._initiative_authority_loader().bind_work(spec)[0]
+        except (ValueError, RuntimeError) as error:
+            raise DelegatedWorkConflict("native initiative authority unavailable") from error
+
+    def _settle_native(self, connection, spec, *, state, result=None, usage=None, now, guard=None):
+        if not isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
+            return
+        if self._initiative_authority_loader is None:
+            raise DelegatedWorkConflict("native outcome authority is not composed")
+        self._initiative_authority_loader().settle_work(connection, spec,
+            state=state, result=result, usage=usage, now=now, guard=guard)
+        # The host-bound parent is in the existing external conversation
+        # namespace. Restore only this queue's fixed canonical authority scope,
+        # never a scope supplied by the task/model, before reading its result.
+        PostgresOperationalTimeline(self._engine, self.scope)._scope(connection)
+        self._scope(connection)
 
     def _authorize_household(self, spec, connection, *, require_open=False, read_only=False):
         if not isinstance(spec, _HOUSEHOLD_WORK_TYPES):
@@ -293,7 +319,22 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         delivery_destination: PrivateWorkDestination | None = None,
         household_continuation_execution_id: str | None = None,
         household_request_origin=None,
+        _connection=None,
+        _native_guard=None,
     ) -> DelegatedWorkAdmission:
+        if isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
+            if (_connection is None or _native_guard is None or resumes_work_id is not None
+                    or delivery_destination is not None
+                    or spec.origin.intent_id != _native_guard.claim.intent_id
+                    or spec.origin.claim_revision != _native_guard.claim.revision
+                    or spec.origin.mandate_sha256 != _native_guard.mandate_sha):
+                raise DelegatedWorkConflict("native admission requires its atomic host handoff")
+            if _native_guard.authority.owner._authority != self.scope:
+                raise DelegatedWorkConflict("native queue authority scope differs")
+            _native_guard.check_locked(_connection)
+            PostgresOperationalTimeline(self._engine, self.scope)._scope(_connection)
+        elif _connection is not None or _native_guard is not None:
+            raise DelegatedWorkConflict("owner admission cannot borrow a native transaction")
         # These three values are trusted operator-display labels, not task text.
         # The local cockpit remains unauthenticated until its own product gate.
         title = _bounded_text(title, maximum=120, label="work title")
@@ -323,7 +364,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         )
         spec_payload = spec.model_dump(mode="json")
         spec_sha256 = canonical_sha256(spec_payload)
-        with self._engine.begin() as connection:
+        with (self._engine.begin() if _connection is None else nullcontext(_connection)) as connection:
             self._scope(connection)
             if household_continuation_execution_id is not None and (
                     resumes_work_id is None
@@ -560,6 +601,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 return None
             try:
                 self._authorize_household(loaded.spec, connection)
+                self._native_guard(loaded.spec)
                 self._validate_owner_binding(
                     connection,
                     owner_principal_id=UUID(loaded.spec.owner_principal_id),
@@ -646,6 +688,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 return None
             try:
                 self._authorize_household(loaded.spec, connection)
+                self._native_guard(loaded.spec)
                 self._validate_owner_binding(
                     connection,
                     owner_principal_id=UUID(loaded.spec.owner_principal_id),
@@ -904,6 +947,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             )
             if work_update.rowcount != 1:
                 raise DelegatedWorkConflict("delegated stop raced")
+            self._settle_native(connection, loaded.spec, state="stopped", now=now)
             return self._load_locked(connection, work_id)
 
     def stop_requested(self, call: DelegatedWorkCall) -> bool:
@@ -935,6 +979,13 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             finally:
                 transaction.rollback()
 
+    def execution_authority_current(self, call):
+        try:
+            self._native_guard(call.spec)
+            return self.household_authority_current(call)
+        except DelegatedWorkConflict:
+            return False
+
     def household_authority_current(self, call):
         if not isinstance(call.spec, _HOUSEHOLD_WORK_TYPES):
             return True
@@ -950,6 +1001,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
 
     def authorize_tool_dispatch(self, call: DelegatedWorkCall) -> None:
         """Recheck durable call, owner binding and stop immediately before tool dispatch."""
+        self._native_guard(call.spec)
         with self._engine.begin() as connection:
             self._scope(connection)
             self._authorize_household(call.spec, connection)
@@ -1331,6 +1383,12 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         failure_report: str | None = None,
     ) -> StoredDelegatedWork:
         now = _whole_second(now, label="result time")
+        guard = None
+        if isinstance(call.spec, DelegatedInitiativeDigitalWorkSpec) and state == "succeeded":
+            try:
+                guard = self._native_guard(call.spec)
+            except DelegatedWorkConflict:
+                pass  # Preserve usage/result, but never complete a stopped/revoked parent.
         result_payload = None if result is None else result.model_dump(mode="json")
         usage_payload = usage.model_dump(mode="json")
         with self._engine.begin() as connection:
@@ -1405,6 +1463,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                           "spec_sha256": call.spec.sha256, "error_code": error_code,
                           "report": failure_report,
                           "report_sha256": hashlib.sha256(failure_report.encode()).hexdigest()})
+            self._settle_native(connection, call.spec, state=state, result=result,
+                usage=usage, now=now, guard=guard)
             return self._load_locked(connection, call.work_id)
 
     def _mark_needs_help(
@@ -1439,6 +1499,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         )
         if work_result.rowcount != 1:
             raise DelegatedWorkConflict("delegated work help transition raced")
+        self._settle_native(connection, work.spec, state="needs_help", now=now)
 
     def _validate_owner_binding(
         self,

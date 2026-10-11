@@ -34,7 +34,8 @@ _EXECUTION_SOURCES = (
     "bootstrap/delegated_work_result_reader.py",
     "bootstrap/delegated_work_owner_service.py",
     "adapters/postgres/delegated_work_actions.py",
-    "bootstrap/delegated_digital_runner.py",
+    "bootstrap/delegated_digital_runner.py", "bootstrap/native_initiative_work.py",
+    "adapters/postgres/initiative_execution.py", "application/initiative_execution.py",
     "bootstrap/background_browser_context.py",
     "adapters/connectors/browser_session.py",
     "adapters/connectors/browser_autostart.py",
@@ -213,6 +214,13 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
         model=settings.conversation_model, reasoning_effort=settings.conversation_reasoning_effort,
         timeout_seconds=120.0, research_timeout_seconds=120.0,
         resource_budget=settings.runtime_resource_budget, conversation_tools=descriptors)
+    def initiative_authority():
+        from eva.adapters.postgres.owner_initiatives import PostgresOwnerInitiatives
+        from eva.bootstrap.native_initiative_work import configured_initiative_authority
+        return configured_initiative_authority(PostgresOwnerInitiatives(engine,
+            tenant_id=settings.background_tenant_id, installation_id=settings.background_installation_id,
+            owner=owner, binding=binding, authority_scope=store.scope))
+    store._initiative_authority_loader = initiative_authority
     source_loader = _SourceTurnLoader(engine, SimpleNamespace(
         scope=service.conversation_scope, authorize_turn=service.validate_authority))
     if household_authority is not None:

@@ -1,0 +1,38 @@
+{
+  "contract": "EvaDashboardInstalledOutcomeVerification/v1",
+  "checkedAt": "2026-10-11T20:25:05.135180+00:00",
+  "route": "http://localhost:44712/",
+  "http": 200,
+  "apiHTTP": 200,
+  "renderedBrowser": {
+    "currentWorkVisible": true,
+    "latestDeliveryVisible": true,
+    "noOwnerActionVisible": true,
+    "nextVisible": true,
+    "latestInstalled": true,
+    "javascriptErrors": 0
+  },
+  "now": {
+    "title": "Droommodus · zelfgekozen verbeterwerk afmaken",
+    "phase": "native_initiative_outcome_preparation",
+    "executor": "/root/eva1_memory_transfer"
+  },
+  "latest": {
+    "title": "Eigen initiatieven aangesloten op dezelfde programmeer- en verbeterroute",
+    "state": "installed",
+    "source": "eva2/evidence/product/native-initiative-digital-installed-20261011.json",
+    "review": "eva2/reviews/native-initiative-digital-installed-review-20261011.json"
+  },
+  "sourceReview": "GO",
+  "installationReview": "GO",
+  "installationReviewSha256": "707134ec2807044cb5f810d976613ded235b1069d78fcdc9f8d9f9d77e0cb605",
+  "sourceEvidenceOriginalBytesRestored": true,
+  "originalTaskStatesAndCriteriaPreserved": true,
+  "originalCompleted": 39,
+  "originalTasks": 48,
+  "newMainProductCompletion": false,
+  "wholeGoalStatus": "active",
+  "noOwnerActionRequired": true,
+  "newManualEvaModelRequests": 0,
+  "developmentCredits": "unknown"
+}

@@ -1,0 +1,30 @@
+{
+  "contract": "EvaDashboardCurrentWorkVerification/v1",
+  "checkedAt": "2026-10-11T20:18:18.565919+00:00",
+  "route": "http://localhost:44712/",
+  "dataRoute": "http://127.0.0.1:44712/project-state",
+  "http": 200,
+  "renderedBrowser": {
+    "currentWorkVisible": true,
+    "latestDeliveryVisible": true,
+    "noOwnerActionVisible": true,
+    "javascriptErrors": 0
+  },
+  "current": "Droommodus · eigen verbeterwerk daadwerkelijk uitvoeren",
+  "phase": "native_initiative_installation",
+  "latest": "Eva verbetert zelf haar hulpmiddel en gebruikt de verbetering later",
+  "sourceReview": "eva2/reviews/native-initiative-digital-source-review-20261011.json",
+  "sourceReviewSha256": "4a01fefb695a3eb7d18ed1250c262c3b03e775339b8efb908990c8a2b20d4931",
+  "verificationErrorRetained": {
+    "cause": "Old verifier matched previous wording. Correct current wording was then observed successfully.",
+    "privateReceipt": "dashboard-stale-verifier.private.json",
+    "notProductFailure": true
+  },
+  "originalTaskStatesPreserved": true,
+  "originalCompletedCount": 39,
+  "originalTaskCount": 48,
+  "goalStatus": "active",
+  "productFunctionCompleted": false,
+  "manualEvaModelRequests": 0,
+  "developmentCredits": "unknown"
+}

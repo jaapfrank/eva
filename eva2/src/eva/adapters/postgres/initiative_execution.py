@@ -103,7 +103,7 @@ class PostgresInitiativeAuthority:
             raise InitiativeMandateDenied("initiative mandate file unavailable") from error
         fields = {"contract", "mandate_id", "owner_principal_id", "enabled",
                   "authorization_source", "capabilities", "tenant_scope", "installation_scope"}
-        if (not isinstance(data, dict) or set(data) != fields
+        if (not isinstance(data, dict) or set(data) not in (fields, fields | {"digital_work"})
                 or data["contract"] != "EvaCostlessInitiativeMandate/v1"
                 or data["owner_principal_id"] != str(self.owner._owner)
                 or data["tenant_scope"] != str(self.owner._scope.tenant_id)
@@ -113,6 +113,19 @@ class PostgresInitiativeAuthority:
                            for k in ("mandate_id", "authorization_source"))
                 or not isinstance(data["capabilities"], list)):
             raise InitiativeMandateDenied("initiative mandate is invalid")
+        digital = data.get("digital_work")
+        if digital is not None:
+            from eva.contracts.delegated_digital_work import INITIATIVE_LOCAL_CAPABILITIES
+            if (not isinstance(digital, dict)
+                    or set(digital) != {"worker_profile_release_sha256", "capability_ids"}
+                    or not isinstance(digital["worker_profile_release_sha256"], str)
+                    or re.fullmatch(r"[0-9a-f]{64}", digital["worker_profile_release_sha256"]) is None
+                    or not isinstance(digital["capability_ids"], list)
+                    or not digital["capability_ids"]
+                    or any(not isinstance(name, str) or name not in INITIATIVE_LOCAL_CAPABILITIES
+                           for name in digital["capability_ids"])
+                    or len(set(digital["capability_ids"])) != len(digital["capability_ids"])):
+                raise InitiativeMandateDenied("digital initiative requires an explicit local host profile")
         for cap in data["capabilities"]:
             required = {"action_name", "configuration_sha256", "new_cost_eur_cents",
                         "new_obligation", "data_scope", "communication_scope",
@@ -249,7 +262,96 @@ class PostgresInitiativeAuthority:
                     data={"owner_principal_id": str(self.owner._owner)})
         return {"status": "revoked", "new_actions_allowed": False}
 
-    def bind(self, claim):
+    def digital_grant(self, profile):
+        from eva.contracts.delegated_digital_work import DelegatedDigitalWorkGrant
+        policy, _ = self.policy()
+        digital = policy.get("digital_work")
+        if (digital is None or digital["worker_profile_release_sha256"]
+                != profile.release.worker_profile_release_sha256):
+            raise InitiativeMandateDenied("digital initiative host profile is not admitted")
+        permitted = set(digital["capability_ids"]) | {c["action_name"] for c in policy["capabilities"]}
+        grant = profile.grant().to_payload()
+        grant["capability_ids"] = [name for name in grant["capability_ids"] if name in permitted]
+        if not grant["capability_ids"]:
+            raise InitiativeMandateDenied("digital initiative has no installed admitted capability")
+        return DelegatedDigitalWorkGrant.model_validate(grant)
+
+    def bind_work(self, spec):
+        from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+        if not isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
+            raise InitiativeMandateDenied("native digital contract is required")
+        origin = spec.origin
+        owner = self.owner
+        if (spec.owner_principal_id != str(owner._owner)
+                or spec.principal_binding_id != str(owner._binding)):
+            raise InitiativeMandateDenied("native digital owner binding differs")
+        claim = PostgresPersonalInterestStore._claim_from_events(owner._tenant_id,
+            owner._installation_id, self.timeline.events(origin.thread_id), origin.claim_revision)
+        guard, turn = self.bind(claim, work_spec=spec)
+        expected = {key: getattr(turn, key) for key in (
+            "tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")}
+        expected["audience"] = {"kind": "private_person", "principal_id": turn.principal_id}
+        if (spec.source.model_dump(mode="json") != expected
+                or canonical_sha256(PostgresConversationJournal._ingress_data(turn)) != spec.source_ingress_sha256
+                or origin.intent_id != claim.intent_id or origin.mandate_sha256 != guard.mandate_sha):
+            raise InitiativeMandateDenied("native digital source differs from its durable initiative")
+        policy, _ = self.policy()
+        digital = policy.get("digital_work")
+        if (digital is None or digital["worker_profile_release_sha256"] != spec.worker_profile_release_sha256
+                or not set(spec.grant.capability_ids).issubset(
+                    set(digital["capability_ids"]) | {c["action_name"] for c in policy["capabilities"]})):
+            raise InitiativeMandateDenied("native digital capability binding differs")
+        return guard, turn
+
+    def settle_work(self, conn, spec, *, state, result, usage, now, guard=None):
+        """Persist the real outcome on its original parent in the queue transaction."""
+        owner = self.owner
+        self.timeline._scope(conn)
+        c, e = operational_checkpoints.c, operational_events.c
+        row = conn.execute(owner._query().where(c.thread_id == spec.origin.thread_id)
+            .with_for_update(of=operational_checkpoints)).one_or_none()
+        if row is None:
+            raise InitiativeMandateDenied("native parent is absent")
+        if row.phase == "personal_stopped":
+            return  # Stop wins; a late result cannot manufacture completion.
+        if (row.phase != "initiative_work_waiting" or row.status != "waiting_for_proof"
+                or row.revision != spec.origin.claim_revision + 1):
+            raise InitiativeMandateDenied("native parent outcome no longer matches")
+        bound = conn.execute(sa.select(e.payload, e.payload_sha256).where(
+            e.tenant_id == owner._scope.tenant_id, e.installation_id == owner._scope.installation_id,
+            e.thread_id == row.thread_id, e.sequence == row.revision)).one()
+        if (canonical_sha256(bound.payload) != bytes(bound.payload_sha256).hex()
+                or bound.payload["data"].get("spec_sha256") != spec.sha256
+                or bound.payload["data"].get("work_id") != spec.work_id):
+            raise InitiativeMandateDenied("native parent work receipt differs")
+        complete = state == "succeeded" and result is not None and guard is not None
+        if complete:
+            try:
+                # Includes current owner, stop/revision and admitted mandate lock.
+                guard.check_locked(conn)
+            except (InitiativeMandateDenied, RuntimeError):
+                complete = False
+        data = {"intent_id": spec.origin.intent_id, "origin": "eva_initiative",
+            "work_id": spec.work_id, "spec_sha256": spec.sha256, "work_state": state}
+        if complete:
+            data.update(content=result.output, content_sha256=result.output_sha256,
+                filename="initiatief-resultaat.md", provider="eva:delegated-digital-work",
+                conversation_id=spec.source.conversation_id, message_id=spec.source.message_id,
+                call_id=result.call_id, result_sha256=canonical_sha256(result.to_payload()),
+                delegated_usage=usage.to_payload(), semantic_verification=False)
+        else:
+            data.update(reason="Digitale uitvoering niet bevestigd onder het actuele initiatiefmandaat.",
+                delegated_usage=None if usage is None else usage.to_payload())
+        transition_timeline_thread(conn, owner._scope, thread_id=row.thread_id,
+            expected_revision=row.revision, checkpoint_id=row.thread_id + ":digital-outcome",
+            phase="initiative_completed" if complete else "initiative_blocked",
+            status="completed" if complete else "needs_help",
+            event_type="PERSONAL_INITIATIVE_COMPLETED" if complete else "PERSONAL_INITIATIVE_BLOCKED",
+            occurred_at=now, data=data)
+
+    def bind(self, claim, *, work_spec=None):
         policy, digest = self.policy()
         from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
         durable = PostgresPersonalInterestStore._claim_from_events(
@@ -268,15 +370,16 @@ class PostgresInitiativeAuthority:
         except CheckpointConflict:
             if self.timeline.events(thread)[0].payload["data"] != data:
                 raise InitiativeMandateDenied("native execution binding differs") from None
-        guard = NativeInitiativeGuard(self, claim, turn, digest, thread)
+        guard = NativeInitiativeGuard(self, claim, turn, digest, thread, work_spec=work_spec)
         guard.check(turn)
         return guard, turn
 
 
 class NativeInitiativeGuard:
-    def __init__(self, authority, claim, turn, mandate_sha, thread):
+    def __init__(self, authority, claim, turn, mandate_sha, thread, *, work_spec=None):
         self.authority, self.claim, self.turn = authority, claim, turn
         self.mandate_sha, self.thread = mandate_sha, thread
+        self.work_spec = work_spec
 
     def check(self, turn):
         if turn != self.turn:
@@ -286,20 +389,49 @@ class NativeInitiativeGuard:
             raise InitiativeMandateDenied("initiative mandate changed")
         owner = self.authority.owner
         with owner._engine.begin() as conn:
-            owner._authorize(conn, datetime.now(UTC).replace(microsecond=0))
-            row = conn.execute(owner._query().where(
-                operational_checkpoints.c.thread_id == self.claim.thread_id
-            ).with_for_update(of=operational_checkpoints)).one_or_none()
-            if (row is None or row.revision != self.claim.revision
-                    or row.phase != "exploration_claimed" or row.status != "waiting_for_proof"
-                    or row.adoption["data"].get("execution_mode") != "autonomous_task"):
-                raise InitiativeMandateDenied("initiative stopped, superseded or no longer claimed")
+            self.check_locked(conn)
+
+    def check_locked(self, conn):
+        """Same owner rows serialize native tool admission, handoff and stop."""
+        policy = self.authority._read()
+        if (not policy["enabled"] or canonical_sha256({k: v for k, v in policy.items()
+                if k != "enabled"}) != self.mandate_sha):
+            raise InitiativeMandateDenied("initiative host mandate changed before dispatch")
+        owner = self.authority.owner
+        owner._authorize(conn, datetime.now(UTC).replace(microsecond=0))
+        c = operational_checkpoints.c
+        mandate = conn.execute(sa.select(operational_checkpoints).where(
+            c.tenant_id == owner._scope.tenant_id, c.installation_id == owner._scope.installation_id,
+            c.thread_id == self.authority.thread).with_for_update()).one()
+        if (mandate.phase == "initiative_mandate_revoked"
+                or self.authority._admitted_digest(conn) != self.mandate_sha):
+            raise InitiativeMandateDenied("initiative mandate revoked or revised before dispatch")
+        row = conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)
+            .with_for_update(of=operational_checkpoints)).one_or_none()
+        revision = self.claim.revision + (1 if self.work_spec is not None else 0)
+        phase = "initiative_work_waiting" if self.work_spec is not None else "exploration_claimed"
+        if (row is None or row.revision != revision or row.phase != phase
+                or row.status != "waiting_for_proof"
+                or row.adoption["data"].get("execution_mode") != "autonomous_task"):
+            raise InitiativeMandateDenied("initiative stopped, superseded or no longer claimed before dispatch")
+        if self.work_spec is not None:
+            e = operational_events.c
+            bound = conn.execute(sa.select(e.payload, e.payload_sha256).where(
+                e.tenant_id == owner._scope.tenant_id, e.installation_id == owner._scope.installation_id,
+                e.thread_id == self.claim.thread_id, e.sequence == revision)).one()
+            if (canonical_sha256(bound.payload) != bytes(bound.payload_sha256).hex()
+                    or bound.payload["data"].get("work_id") != self.work_spec.work_id
+                    or bound.payload["data"].get("spec_sha256") != self.work_spec.sha256):
+                raise InitiativeMandateDenied("initiative delegated work binding differs")
+        return row
 
     def action_allowed(self, name):
         self.check(self.turn)
         policy, _ = self.authority.policy()
-        # Only provider actions have pinned profiles. Internal self-grants, recursion,
-        # shell execution and unprofiled research never inherit an owner user command.
+        # Local work requires the separately admitted host profile; never infer
+        # internal privileges from an initiative's text or an owner-shaped ingress.
+        if self.work_spec is not None:
+            return name in self.work_spec.grant.capability_ids
         return any(c["action_name"] == name for c in policy["capabilities"])
 
     def authorize_request(self, request, *, phase):
@@ -330,12 +462,7 @@ class NativeInitiativeGuard:
                 raise InitiativeMandateDenied("initiative mandate revoked before dispatch")
             if self.authority._admitted_digest(conn) != self.mandate_sha:
                 raise InitiativeMandateDenied("initiative mandate revised before dispatch")
-            intent = conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)
-                .with_for_update(of=operational_checkpoints)).one_or_none()
-            if (intent is None or intent.revision != self.claim.revision
-                    or intent.phase != "exploration_claimed"
-                    or intent.status != "waiting_for_proof"):
-                raise InitiativeMandateDenied("initiative stopped before dispatch; previous effects may remain unverified")
+            self.check_locked(conn)
             state = conn.execute(sa.select(operational_checkpoints).where(
                 *scope_filter, c.thread_id == self.thread).with_for_update()).one()
             transition_timeline_thread(conn, owner._scope, thread_id=self.thread,

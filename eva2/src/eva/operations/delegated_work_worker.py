@@ -165,7 +165,8 @@ class DelegatedWorkWorker:
             if await asyncio.to_thread(self._store.stop_requested, call):
                 active_cancellation.set()
                 return
-            checker = getattr(self._store, "household_authority_current", None)
+            checker = getattr(self._store, "execution_authority_current",
+                getattr(self._store, "household_authority_current", None))
             if checker is not None and not await asyncio.to_thread(checker, call):
                 active_cancellation.set()
                 return

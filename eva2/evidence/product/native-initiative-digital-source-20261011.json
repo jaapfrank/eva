@@ -1,0 +1,68 @@
+{
+  "contract": "EvaNativeInitiativeDigitalSource/v1",
+  "checkedAt": "2026-10-11T20:11:25.391571+00:00",
+  "status": "built_review_pending",
+  "sourceFiles": {
+    "adapters/postgres/delegated_work.py": "63a14e28fb9807a9bb59f501e9785c876314f14ec12ce358a07fa1a4451d8184",
+    "adapters/postgres/initiative_execution.py": "ec26001fc2f6104ab7e631c24c79fe1b22dd924455c6a692e469009bcf79a60a",
+    "adapters/postgres/sensory_events.py": "ad6c2821ca440651e03ca5ac18562df5a005ab571068af32d527b619c53f5603",
+    "application/initiative_execution.py": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+    "application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+    "bootstrap/delegated_digital_composition.py": "578f40bb75a88fdadcf0f1cd51705f50d6f278c94e20fd17a4ccfead885092c1",
+    "bootstrap/delegated_digital_profile.py": "e5cc98dfb27ccda6df02d0bd2945b5e7c72247abc231c5618a20666320f5dbdc",
+    "bootstrap/delegated_digital_runner.py": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d",
+    "bootstrap/native_initiative_work.py": "0ad037cd8e5af3a0da960c4c61d8bdb4f953827010ef117907529d475b05773f",
+    "bootstrap/runtime.py": "1d37db2821805b9e41a5dc86688d1826a8f7298736bc2a093b41cf44acfb3660",
+    "contracts/delegated_digital_work.py": "d6c1b49b7b5c68a5229bcf8ea7057821aa246eab0c0d4e8617bdf740db708339",
+    "contracts/delegated_work.py": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+    "operations/delegated_work_worker.py": "a9c4a75ad3ceaccc2c3c86c97c9736c99b6758e22a76c306b20bf2756c0847a4"
+  },
+  "frozenManifestSha256": "515bdbb043a982544b2b263a1a0709ce27ea36c7cf952195d893c6ac0c29c043",
+  "tests": {
+    "passed": 224,
+    "seconds": 22.47,
+    "receiptSha256": "4eb80c390ae0649f7e11af33edef2610c560f7b111e3d4cdfe86f56d463f7f00",
+    "logSha256": "96a29b31b3e1a1c03a62f0ba09ca5d9278241d7083bf0127319b8a5c39000c52",
+    "disposablePostgres": "16.13",
+    "fixtureClosed": true,
+    "runtimeDatabaseUsed": false
+  },
+  "behavior": {
+    "sameDigitalQueue": true,
+    "nativeOriginPreserved": true,
+    "ownerIngressLoaderUnchanged": true,
+    "ackIsNotCompletion": true,
+    "syntheticProgrammingAndPhysicalLocalReadbackPassed": true,
+    "sameInitiativeResultStored": true,
+    "durableStopAndRevocationChecked": true
+  },
+  "priority": {
+    "new_idle_work": "existing foreground/idle_capacity gates retained",
+    "foreground_does_not_wait_for_idle_callback": "existing synthetic foreground-overlap check passed",
+    "in_flight_model_full_preemption": false,
+    "worker": "existing separate delegated digital worker"
+  },
+  "delivery": {
+    "parent_result": "same PERSONAL_INITIATIVE_COMPLETED event + original intent thread; ACK/start never completion",
+    "existing_transport": "InitiativeCompletionDelivery",
+    "conditional_on_existing_delivery_configuration": true,
+    "transport_not_executed_in_this_change": true,
+    "uncertain_delivery_not_retried": true
+  },
+  "configuration": {
+    "existingMandateFile": true,
+    "newMounts": false,
+    "newDaemonOrQueue": false,
+    "optionalDigitalWorkBindingRequired": true,
+    "sourceProfileComputedFromActualComposition": true
+  },
+  "developmentFailuresRetainedInTestReceipt": true,
+  "earlyRawFailureOutputsPreserved": false,
+  "manualEvaModelRequests": 0,
+  "creditCosts": null,
+  "installed": false,
+  "fullAide2Completed": false,
+  "productFunctionCompleted": false,
+  "originalSmallCompletionCount": "39/48",
+  "wholeGoalStatus": "active"
+}
