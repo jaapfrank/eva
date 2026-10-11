@@ -1,0 +1,241 @@
+{
+  "contract": "EvaSavedArtifactNativeImprovementFinalReview/v1",
+  "reviewer": "/root/product_execution_memory_review",
+  "reviewedAt": "2026-10-11T19:43:29.403801+00:00",
+  "verdict": "GO",
+  "openBlockers": [],
+  "boundedOutcomeMet": true,
+  "fullAide2Completed": false,
+  "projectGoalStatus": "active",
+  "scope": "One assisted, source-bound finite-decimal extension of the existing owner-private saved active-minutes helper: native variant development, fixed independent final, exact reviewed application and one ordinary later use. No whole-project, harness, dream, initiative or family-acceptance completion.",
+  "bindings": {
+    "baselineSourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "candidateAndAppliedSourceSha256": "5cdbb531485dff6edacd68853f5bc0c806e94368f7045522ae810a80b18ef7db",
+    "improvementWorkId": "work:eva-chat:6bcf3c1d-1ab4-570c-95e6-b4843c1f41c7",
+    "laterWorkId": "work:eva-chat:a0b6b6be-b08b-5ba0-bd28-4f279aa03070",
+    "reviewId": "ed7709d2bd793fe1ef17cdfae4a2921bfba18ea52056b92d50c9d8d9f84614ba",
+    "inputReviewSha256": "2e36034fa73da25775a034853d66ff5932c1545069f3f4fb0784a8580501970b",
+    "installedReviewSha256": "7b99c546cec87702c1e7222c784303cb66ec17f11d1e15ac056561d81bd19f47",
+    "improvementCriteriaSha256": "bec2fc300b83452a80278d682bc44f7c2790ac2e058cec625e47cbdfff2ac0d0",
+    "fixedPreparationManifestSha256": "54674172783b5bc8491724da6927cc85913efd1384b375457e5e51a865f0fb5d",
+    "independentFinalRegistrationSha256": "7edd15aea459cade04c2f5c982fe05693d86ff864779fba53a51b36d65c24c57",
+    "finalDecisionSha256": "72f2d53917b9e7de4891a784f53a9ce1337cefa163b087dee0eabafedaeec9ba",
+    "isolatedFinalReportSha256": "fbc328e22f9a20e896be8974bfc2bcc820a6837bfaacaab6d8bee316c5a1e900",
+    "selectedPackageSha256": "a29fadfa2425a2a6804b4c63186db5daeb32a8077cde493c11821311797c8e20",
+    "savedApplicationReceiptSha256": "5ebaa75337c243d4c96059f078379f328623a8143f59f236af0146a5a6695443",
+    "improvementObservationSha256": "ccfc210f5e0339634243f65f317f88bfeda93b80d59712ffcb0261588945678c",
+    "laterCriteriaSha256": "61fff109e7493a5ed1e7d45e352216d6a1f2801c8e5c2117ccdb96c100611669",
+    "laterPayloadTemplateSha256": "d5b49407348e1c56a583e6163928d94dbea0d9e8e4556d9ee80c86d1ec62de00",
+    "laterEffectivePayloadSha256": "26a8c12715e86e84e395b0c2a48724a6985b72522f5b52a6d5830f8df642d79d",
+    "laterSentMarkerSha256": "12e5510b68a04894969b4be29f29d2639d873f498828258920901042f063c5ed",
+    "laterIngressReceiptSha256": "517fa8915566b34818beedad0f7e201117bf4b1724289c4c5b12c09a6f4de3dc",
+    "laterObservationSha256": "4d52bedd15d78846b8c2a9ba666ccf10672105fb2943766dce6a28cc6821e563",
+    "physicalReadbackSha256": "9f2de68727b6485a468fab9547f76a0ce546e5c45f0c54cda50b132a397aacde",
+    "physicalResultFileSha256": "0694abf225274d8229c8bfcaf4d3e58a0a1f5e93f770c5e3fb517ade1d8c569a"
+  },
+  "development": {
+    "nativeTaskState": "succeeded",
+    "claimCount": 1,
+    "distinctVariants": 2,
+    "developmentEvaluations": 2,
+    "thirdVariantUsed": false,
+    "comparisons": 1,
+    "selectedPackagePreparations": 1,
+    "baselineCorrectPublicCases": 24,
+    "selectedCandidateCorrectPublicCases": 32,
+    "publicCases": 32,
+    "fractionalBaseline": 0,
+    "fractionalCandidate": 8,
+    "fractionalCases": 8,
+    "preservationFailures": 0,
+    "qualification": "Baseline is correct for original integer requirements; finite decimals were a new declared extension."
+  },
+  "independentFinal": {
+    "decision": "accept",
+    "fixedCases": 30,
+    "fractionalCases": 12,
+    "fractionalCorrectBaseline": 0,
+    "fractionalCorrectCandidate": 12,
+    "preservationCases": 18,
+    "preservationFailures": 0,
+    "correctnessRegressions": 0,
+    "completeBaselineAndCandidate": true,
+    "strictGain": 12,
+    "scorerModelCalls": 0,
+    "exactTargetImageCommandRegistrationCriteriaRunnerScorerBindingsVerified": true,
+    "protectedCasesAnswersRunnerAndScorerContentsDisclosed": false
+  },
+  "application": {
+    "status": "saved_and_designated",
+    "exactSelectedCandidateReceiptVerified": true,
+    "sameOwnerProjectAndTaskBindingVerified": true,
+    "oneApplication": true,
+    "originalSourceUnchanged": true,
+    "newSourceBytes": 3784,
+    "originalSourceBytes": 3321,
+    "runtimeImagePublicationPerformedForSavedHelper": false
+  },
+  "laterUse": {
+    "state": "succeeded",
+    "claimCount": 1,
+    "ordinaryTasks": 1,
+    "sameOwnerPrivateAudienceAndProject": true,
+    "newSessionRecentMessagesEmpty": true,
+    "questionContainsNoCodeProcedureReferenceOrVariantId": true,
+    "resolvedAndExecutedExactNewDesignatedReference": true,
+    "executedSourceSha256": "5cdbb531485dff6edacd68853f5bc0c806e94368f7045522ae810a80b18ef7db",
+    "actualInputObjectExactlyMatchesOrdinaryQuestion": true,
+    "inputHashUsesFixedSortedCompactJsonNormalization": true,
+    "newProgrammingActions": 0,
+    "actualActiveMinutes": {
+      "bureaulamp": 7,
+      "pomp": 11.75,
+      "radio": 0,
+      "ventilator": 5.5
+    },
+    "expectedActiveMinutes": {
+      "bureaulamp": 7,
+      "pomp": 11.75,
+      "radio": 0,
+      "ventilator": 5.5
+    },
+    "executionExitCode": 0,
+    "executionCancelled": false,
+    "executionTimedOut": false,
+    "stdoutOrStderrTruncated": false,
+    "executionMilliseconds": 903,
+    "resultSavedAndSeparatePhysicalReadbackMatches": true,
+    "physicalResultBytes": 84,
+    "originalAndImprovedSourceHashesPreserved": true,
+    "nativeIsolatedReportFlags": {
+      "installed": false,
+      "semantic_success_verified": false
+    },
+    "nativeOuterSemanticSuccessVerified": false,
+    "qualification": "False native isolated-report semantic/install flags remain literal. Independent output/file evidence, installed route and application/designation are separate facts."
+  },
+  "protocolBudget": {
+    "registeredMaximum": {
+      "max_candidate_development_evaluations": 3,
+      "independent_final_assessments": 1,
+      "application_after_win": 1,
+      "later_ordinary_use_tasks": 1
+    },
+    "actual": {
+      "candidateDevelopmentEvaluations": 2,
+      "independentFinalAssessments": 1,
+      "applications": 1,
+      "laterOrdinaryTasks": 1
+    },
+    "logicalBudgetMet": true,
+    "physicalIngressAttempts": {
+      "improvement": 2,
+      "improvementStatuses": [
+        422,
+        200
+      ],
+      "laterUse": 1,
+      "laterUseStatuses": [
+        200
+      ]
+    },
+    "acceptedImprovementEpisodes": 1,
+    "acceptedLaterEpisodes": 1,
+    "qualification": "The first improvement HTTP request failed before admission for noncanonical UTC. Its correction is retained separately; no failed request or old UNKNOWN is recounted as success."
+  },
+  "measuredUsage": {
+    "episodes": {
+      "improvement": {
+        "contactRegisteredRequests": 1,
+        "workRegisteredRequests": 11,
+        "knownInputTokens": 253088,
+        "knownOutputTokens": 5311,
+        "knownTotalTokens": 258399,
+        "journalToolCalls": 11,
+        "storedWorkToolCalls": 18,
+        "storedWorkUsageMeasurement": "partial"
+      },
+      "laterUse": {
+        "contactRegisteredRequests": 1,
+        "workRegisteredRequests": 7,
+        "knownInputTokens": 84494,
+        "knownOutputTokens": 1487,
+        "knownTotalTokens": 85981,
+        "journalToolCalls": 7,
+        "storedWorkToolCalls": 8,
+        "storedWorkUsageMeasurement": "partial"
+      }
+    },
+    "aggregate": {
+      "registeredModelRequests": 20,
+      "knownInputTokens": 337582,
+      "knownOutputTokens": 6798,
+      "journalToolCalls": 18,
+      "storedWorkToolCalls": 26,
+      "knownTotalTokens": 344380
+    },
+    "finalScorerModelCalls": 0,
+    "fullRuntimeTokens": null,
+    "memoryProcessingTokens": null,
+    "creditCost": null,
+    "completePhysicalToolTotal": null,
+    "qualification": "Registered/journal counts are retained, not asserted as all physical SDK attempts. Stored work tool counts use another boundary and are not summed into a deduplicated physical-tool total. Stored work usage remains partial; full runtime and credits unknown."
+  },
+  "retainedPreparationFailures": [
+    {
+      "kind": "automatic_policy_rejection",
+      "receiptSha256": "17c5361d92808d3fd2224f081ca005d3dd6e21393c2e4adaf650ef5ed23ecd2c",
+      "bundledActionExecuted": false,
+      "modelStartedByDeniedAction": false,
+      "specificReasonAvailable": false,
+      "qualification": "Blocked bundled preparation was not executed; narrower edits/preparation writes were separately permitted. This review does not override tool controls."
+    },
+    {
+      "kind": "source_reference_prefix_precision",
+      "qualification": "Exact resolver prefix corrected before model input; fixed criteria/cases/source/scope unchanged."
+    },
+    {
+      "kind": "pre_ingress_timestamp_422",
+      "receiptSha256": "ba2bac3234864cdec01d1d70485ba4682ced12e86f9a87c8597d719755644610",
+      "payloadAccepted": false,
+      "canonicalTimestampAccepted": true,
+      "qualification": "First marker/failure evidence retained. Same ordinary text and scope received once after canonical UTC correction."
+    },
+    {
+      "kind": "PowerShell_preparation_quoting",
+      "qualification": "Root public result retains one quoting failure before runtime request; no new task or evaluation followed from that preparation failure."
+    }
+  ],
+  "reviewerCheckQualification": "Existing receipts and outputs only. Initial raw-string input hashing was corrected to fixed sorted/compact JSON normalization; input objects match exactly. A pre-write check interpreted the recorded zero model-start count as a boolean; corrected to its actual numeric representation. No evaluator, scorer, procedure or model rerun.",
+  "publicationSnapshots": [
+    {
+      "path": "eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json",
+      "sha256": "3729528c7c525537edc996d498b2e06d531144c74e05f72fd0059a7daa6d845e",
+      "statusAtReview": "improvement_applied_later_use_pending",
+      "qualifiedAsPriorStageSnapshot": true
+    },
+    {
+      "path": "eva2/evidence/product/saved-artifact-later-use-result-20261011.json",
+      "sha256": "5e909207ec5d125f00b6bef9a2a41f9e7c6bc954c9fb2bb50921d20c3276452f",
+      "statusAtReview": "met_pending_independent_publication_review",
+      "claimsMatchNativeAndPhysicalEvidence": true
+    }
+  ],
+  "reviewActivity": {
+    "modelRequests": 0,
+    "candidateOrProcedureExecutions": 0,
+    "evaluatorRuns": 0,
+    "testRuns": 0,
+    "serviceStarts": 0,
+    "newNativeProbes": 0,
+    "productEdits": 0,
+    "oldHiddenBenchmarkCasesRead": false
+  },
+  "limitations": [
+    "This proves the declared finite-decimal helper extension and its one subsequent ordinary application, within fixed cases and scopes.",
+    "The objective, public development suite and independent protocol were prepared by people; this is not spontaneous autonomous problem discovery.",
+    "Full exact native provider inputs were not reconstructed here; no isolated causal, general efficiency, speed, superiority or universal privacy claim.",
+    "No whole AIDE2, harness improvement, dream scheduling, fitting initiative, daily family acceptance or main project goal completion.",
+    "Old closed probes, losses, UNKNOWN and original small-task conditions remain history; none is reopened or renamed by this review."
+  ]
+}

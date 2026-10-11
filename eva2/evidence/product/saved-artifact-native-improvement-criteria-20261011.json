@@ -15,7 +15,7 @@
     "later_ordinary_use_tasks": 1
   },
   "endpoint": "http://127.0.0.1:44710/internal/v1/turns/respond",
-  "ordinaryImprovementMessageSha256": "999ee316c929e8f22522e03a50c3ccb4d236e88c911b80369adcce1d2dc6a189",
+  "ordinaryImprovementMessageSha256": "fb69c3525a8b7ed4b0f73287554d5573873c772038f7b2fe8f34d442c71e89b1",
   "models": "Sol/none contact; Astra/medium substantive improvement",
   "applicationGate": "Fixed independent all-fractional success, preservation_failures=0 and strict gain; never self-approval",
   "laterUseGate": "One new ordinary task, same owner/project, no code/variant/ref ID in question; actual applied source executes, old source retained",

@@ -1,0 +1,75 @@
+{
+  "contract": "EvaSavedArtifactNativeImprovementResult/v1",
+  "checkedAt": "2026-10-11T19:44:10.868921+00:00",
+  "status": "improved_applied_and_later_reused",
+  "workId": "work:eva-chat:6bcf3c1d-1ab4-570c-95e6-b4843c1f41c7",
+  "reviewId": "ed7709d2bd793fe1ef17cdfae4a2921bfba18ea52056b92d50c9d8d9f84614ba",
+  "candidateSha256": "5cdbb531485dff6edacd68853f5bc0c806e94368f7045522ae810a80b18ef7db",
+  "development": {
+    "variants": 2,
+    "baselineTotalCorrect": 24,
+    "candidateTotalCorrect": 32,
+    "cases": 32,
+    "fractionalBaseline": 0,
+    "fractionalCandidate": 8,
+    "fractionalCases": 8,
+    "preservationFailures": 0,
+    "thirdVariantUsed": false
+  },
+  "independentFinal": {
+    "decision": "accept",
+    "cases": 30,
+    "fractionalBaseline": 0,
+    "fractionalCandidate": 12,
+    "fractionalCases": 12,
+    "preservationFailures": 0,
+    "correctnessRegressions": 0,
+    "completeBothLegs": true,
+    "scorerModelCalls": 0,
+    "qualification": "Aggregate verified by independent evaluator; protected cases/answers not given to developer."
+  },
+  "application": {
+    "status": "saved_and_designated",
+    "oldSourceUnchanged": true,
+    "exactCandidateConfirmed": true
+  },
+  "knownRegisteredUsage": {
+    "contactModelAttempts": 1,
+    "workModelAttempts": 11,
+    "knownInputTokens": 253088,
+    "knownOutputTokens": 5311,
+    "knownTotalTokens": 258399,
+    "journalToolCalls": 11,
+    "storedWorkResultToolCalls": 18,
+    "storedWorkResultMeasurement": "partial",
+    "qualification": "Contact/work journal measured; stored work result partial and counters have different boundaries. Full runtime including memory processing and credit cost remain unknown. No efficiency claim."
+  },
+  "preparationFailures": [
+    "Initial compound preparation rejected by automatic policy, no reason supplied; no execution",
+    "Partial resolver ID made exact before dispatch",
+    "First HTTP request 422 before model admission because timestamp format was noncanonical; installed pure validator confirms. Original failure preserved; same input received once after correction.",
+    "One PowerShell quoting failure during correction preparation, no runtime request"
+  ],
+  "remaining": [
+    "Agent harness improvement and dream cycle",
+    "Initiative, daily family use and full acceptance"
+  ],
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "goalStatus": "active",
+  "independentPublicationReview": {
+    "verdict": "GO",
+    "path": "eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json",
+    "sha256": "d89a8c18055c2857b141a038a0daab24119ffe22c233009ccce011c50ae26b65"
+  },
+  "laterUseEvidence": "eva2/evidence/product/saved-artifact-later-use-result-20261011.json",
+  "laterUseConfirmed": true,
+  "technicalOutcomeCompleted": true,
+  "knownCombinedRegisteredUsage": {
+    "modelAttempts": 20,
+    "knownTotalTokens": 344380,
+    "fullRuntimeTotal": null,
+    "creditCost": null,
+    "qualification": "Improvement and later task journals; memory/helper-inclusive full total remains unknown. No efficiency claim."
+  }
+}

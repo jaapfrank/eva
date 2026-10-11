@@ -14,7 +14,42 @@ Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkin
 Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
 afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
 
-## Actueel geïnstalleerd — hulpmiddelverbetering, 2026-10-11T19:12:56.743377+00:00
+## Actuele gebruikersuitkomst — eigen hulpmiddel verbeteren en later gebruiken
+
+De bestaande verbeterroute is geïnstalleerd in kern, werker en beoordelaar.
+Eva heeft zelf twee varianten gemaakt en vergeleken: ontwikkeling 24/32 → 32/32.
+De afzonderlijke afgeschermde eindbeoordeling accepteert de winnaar:
+nieuwe decimale gevallen 0/12 → 12/12, nul behoudfouten of regressies.
+De exacte bron is bewaard en als werkwijze aangewezen; de oorspronkelijke bron blijft gelijk.
+
+In een andere gewone opdracht, zonder broncode, variant- of referentie-ID in de
+vraag, vond en draaide Eva deze verbetering zonder nieuwe implementatie.
+Bureaulamp 7, pomp 11,75, radio 0 en ventilator 5,5 minuten. Het echte
+resultaatbestand is apart fysiek teruggelezen. Gebundelde onafhankelijke
+publicatiereview GO; deze beperkte gebruikersuitkomst is afgerond en geïnstalleerd.
+Geen nieuwe model-/vergelijkingsrun nodig.
+
+Gemeten voor verbetering plus later gebruik: 20 geregistreerde modelaanvragen
+en 344.380 bekende tokens. De werkresultaten hebben partial-usage en afwijkende
+tooltelgrenzen; volledig runtimeverbruik en creditkosten blijven onbekend.
+Dit is kwaliteitswinst voor deze nieuwe mogelijkheid, geen efficiëntieclaim.
+Voorbereidingsfouten blijven bewaard; geen derde variant of herhaalde eindproef.
+
+**Volgende uitkomst:** agentaansturing aantoonbaar verbeteren en de bestaande
+rustcapaciteit/reflectie-/uitvoerroute gebruiken voor droomplanning. Daarna
+passend initiatief, bredere leercyclus en samenhangend dagelijks gezinsgebruik.
+Volledige AIDE² en het gehele project blijven open; oorspronkelijke 39/48 behouden.
+Geen eigenaarhandeling nodig. Spraak geparkeerd; geen nieuwe concurrentieserie.
+
+Bewijs: eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json.
+Later gebruik: eva2/evidence/product/saved-artifact-later-use-result-20261011.json.
+Review: eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json.
+Dashboard bijgewerkt: 2026-10-11T19:44:10.868921+00:00.
+
+
+## Historische voorbereiding en installatie — 11 oktober 2026
+
+### Geïnstalleerde route vóór de native verbetercyclus, 2026-10-11T19:12:56.743377+00:00
 
 Toepassingsroute in bestaande kern, werker en beoordelaar geïnstalleerd. Exacte
 bron/configuratie teruggelezen, diensten gezond; 337/335 overige runtimebronnen
@@ -24,7 +59,7 @@ met vooraf vaste ontwikkel-/eindcriteria, toepassing alleen bij aantoonbare wins
 één latere gewone opdracht. Agentaansturing, droomplanning en volledig project open.
 Bewijs: eva2/evidence/product/saved-artifact-application-installed-20261011.json.
 
-## Actief werk — AIDE² en droomcyclus, 11 oktober 2026
+### Stand vóór de native hulpmiddelverbetering, 11 oktober 2026
 
 De geïnstalleerde geheugenroute past oorspronkelijke feedback bij nieuw werk toe:
 norm, antwoordvorm en vervolgstap; eerdere onafhankelijke review GO.

@@ -1,0 +1,100 @@
+{
+  "contract": "EvaSavedArtifactNativeImprovementInputReview/v1",
+  "reviewer": "/root/product_execution_memory_review",
+  "reviewedAt": "2026-10-11T19:20:04.045661+00:00",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Only the concrete ordinary improvement input template and preregistered criteria, checked against the fixed evaluator manifests and installed route GO. No dispatch, candidate evaluation, queue operation or improvement outcome.",
+  "bindings": {
+    "publicCriteriaPath": "eva2/evidence/product/saved-artifact-native-improvement-criteria-20261011.json",
+    "criteriaSha256": "bec2fc300b83452a80278d682bc44f7c2790ac2e058cec625e47cbdfff2ac0d0",
+    "payloadTemplateSha256": "39a42f827db6ffc567db05d668ce3ef264f5708e97ef025bfcb4624d8d8cdc8f",
+    "messageTextSha256": "fb69c3525a8b7ed4b0f73287554d5573873c772038f7b2fe8f34d442c71e89b1",
+    "sourceTargetSha256": "7fe314563ac440c839b6bc7ac501ba763adfbec0efd44075dc7f687af2bfafec",
+    "baselineSourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "developmentSuiteSha256": "e5125d0f1fba1d3a8b625e8acd387e4c421f096c37ed7005e39e93225f173a14",
+    "independentRegistrationSha256": "7edd15aea459cade04c2f5c982fe05693d86ff864779fba53a51b36d65c24c57",
+    "fixedPreparationManifestSha256": "54674172783b5bc8491724da6927cc85913efd1384b375457e5e51a865f0fb5d",
+    "developmentSpecSha256": "2fc04db417fff5362dc7aabdeb0a0033cee929c768a02c84d6f175ce66277183",
+    "installedReviewPath": "eva2/reviews/saved-artifact-application-installed-review-20261011.json",
+    "installedReviewSha256": "7b99c546cec87702c1e7222c784303cb66ec17f11d1e15ac056561d81bd19f47",
+    "installedReviewVerdict": "GO"
+  },
+  "checks": {
+    "exactTenantInstallationPrincipalAndProjectMatchTarget": true,
+    "audienceEqualsCanonicalPrivatePersonForSamePrincipal": true,
+    "sameRegisteredProject": true,
+    "recentMessagesEmpty": true,
+    "newMessageDiffersFromOriginalSourceMessage": true,
+    "completeFixedProcedureReferenceLiteralPresentWithPathArgument": true,
+    "sourceTargetBaselineSuiteAndRegistrationHashesExact": true,
+    "payloadTextHashEqualsPreregisteredMessageHash": true,
+    "embeddedDevelopmentSpecificationFieldsExactlyPreserved": true,
+    "publicDevelopmentCases": 32,
+    "independentFinalCases": 30,
+    "allFixedEvaluatorFileHashesUnchanged": true,
+    "protectedCaseAnswersOrScorerCommandContentsDisclosed": false,
+    "modelRoles": "Sol/none contact; Astra/medium substantive improvement",
+    "modelRolesDoNotOverrideExistingRoute": true,
+    "budgetExactlyMatchesBothFixedManifestAndRegistration": {
+      "max_candidate_development_evaluations": 3,
+      "independent_final_assessments": 1,
+      "application_after_win": 1,
+      "later_ordinary_use_tasks": 1
+    },
+    "twoInitialVariantsPlusAtMostOneParentBoundFurtherVariant": true,
+    "noRepeatedIdenticalVariantRequested": true,
+    "oneHostIndependentFinalOnlyAndNoSelfApproval": true,
+    "applicationOnlyAfterVerifiedFixedIndependentGain": true,
+    "laterOrdinaryUseSameOwnerProjectWithoutCodeVariantOrReferenceInQuestion": true,
+    "initialTaskOnlyPreparesExactSelectedPackageThenTerminates": true,
+    "originalIntegerBehaviorAcknowledgedCorrect": true,
+    "sourceChangesLimitedToBoundFiniteDecimalExtension": true,
+    "noOtherHouseChangesInternetResearchOrNewPlatformRequested": true,
+    "candidateToolResolutionBoundBytes": 16384,
+    "fixedDevelopmentCandidateBoundaryBytes": 65536,
+    "byteBoundQualification": "The message explicitly retains the existing stricter 16384-byte save/resolution bound. The copied original development boundary remains unchanged; this does not relax the application route.",
+    "goalRemainsActive": true
+  },
+  "resolvedInputPrecision": {
+    "finding": "Original template wrote the bound reference digest after the words procedure-reference without its literal colon-prefixed resolver ID.",
+    "originalPayloadTemplateSha256": "9d1d6ed5ce62df2fa59a5233067924de6390fb14e643bcf53901e8ca6a10caa8",
+    "originalCriteriaSha256": "afb07f2fb69f09bca4a783b48dbdbb4b2f928eed29ea228b8dfb95e73a6ba9b9",
+    "originalMessageTextSha256": "999ee316c929e8f22522e03a50c3ccb4d236e88c911b80369adcce1d2dc6a189",
+    "correction": "Root made a separately permitted narrow text edit to state path=procedure-reference:<exact bound digest> and updated the pre-dispatch text-hash binding.",
+    "sourceCriteriaCasesScorersScopesRolesAndBudgetsChanged": false,
+    "reviewerMadePayloadOrProductEdit": false
+  },
+  "automaticReviewBoundary": {
+    "rootReportedDeniedAction": "Bundled preparation: make payload prefix explicit, change dashboard phase, create send script.",
+    "reportedReason": "blocked by policy",
+    "specificReasonAvailable": false,
+    "deniedBundledActionExecuted": false,
+    "rootReportedNarrowPrecisionEditSeparatelyPermitted": true,
+    "reviewDoesNotOverrideAutomaticReviewOrAuthorizeCircumvention": true,
+    "noSendScriptDashboardOrHTTPActionPerformedByReviewer": true
+  },
+  "reviewerPreparationCorrections": [
+    "Initial standalone check used system Python without pydantic; corrected to the existing test venv without product changes.",
+    "Initial audience-id-null assumption was replaced by the actual canonical person:<principal> representation.",
+    "An assumed UUID-only conversation/message check was discarded; no such new input criterion was added."
+  ],
+  "reviewActivity": {
+    "modelRequests": 0,
+    "candidateExecutions": 0,
+    "evaluationInvocations": 0,
+    "queueOperations": 0,
+    "serviceOrDockerStarts": 0,
+    "HTTPRequests": 0,
+    "testRuns": 0,
+    "productOrInputEdits": 0,
+    "oldHiddenBenchmarkCasesRead": false
+  },
+  "limitations": [
+    "GO applies to the exact hashed template and unchanged fixed protocol, not to a future modified request.",
+    "Actual dispatch serialization, native model roles, physical attempts, usage, development evaluation counts, final outcome, application and later use must be retained and assessed from their real receipts.",
+    "The 3-development/1-final/1-application/1-later-use budget is unchanged. Unknown or failed prior work must not be silently reset, retried or recounted as success.",
+    "No semantic improvement, native causal attribution, whole AIDE2, efficiency, superiority, family acceptance or universal privacy claim follows from input readiness.",
+    "This read-only review cannot clear the previous automatic policy rejection; any further tool action remains subject to its own controls."
+  ]
+}

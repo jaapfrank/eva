@@ -1,0 +1,25 @@
+{
+  "contract": "EvaProjectDashboardRenderedProgressCheck/v1",
+  "checkedAt": "2026-10-11T19:19:04.248978+00:00",
+  "url": "http://127.0.0.1:44712/",
+  "apiHTTP": 200,
+  "htmlHTTP": 200,
+  "javascriptErrors": 0,
+  "currentTaskRendered": true,
+  "latestDeliveryRendered": true,
+  "checkedBoardTime": "2026-10-11T19:16:34.197623+00:00",
+  "scope": "Actual rendered page and its live project-state data; not a native Eva improvement or whole-project completion.",
+  "manualEvaModelRequests": 0,
+  "latestVerifiedAt": "2026-10-11T19:44:41.244957+00:00",
+  "finalPublicationRender": {
+    "apiHTTP": 200,
+    "javascriptErrors": 0,
+    "currentDisplayed": true,
+    "latestDisplayed": true,
+    "installedLabelExactCaseDisplayed": false,
+    "phase": "existing_harness_and_idle_route_inspection",
+    "checkedAt": "2026-10-11T19:44:10.868921+00:00",
+    "latestDelivery": "Eva verbetert zelf haar hulpmiddel en gebruikt de verbetering later",
+    "qualification": "Actual rendered current/latest text confirmed. Literal exact-case badge check did not match; installed state separately comes from bound runtime/application evidence."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "contract": "EvaSavedArtifactLaterUseCriteria/v1",
+  "fixedAt": "2026-10-11T19:31:46.644242+00:00",
+  "expectedActiveMinutes": {
+    "bureaulamp": 7,
+    "pomp": 11.75,
+    "radio": 0,
+    "ventilator": 5.5
+  },
+  "actualAppliedSourceSha256": "5cdbb531485dff6edacd68853f5bc0c806e94368f7045522ae810a80b18ef7db",
+  "required": "Existing designated improved source found and executed without reference/code/variant ID in ordinary question; no regenerated program; actual result saved and separately read back; original source remains unchanged",
+  "maxOrdinaryLaterTasks": 1,
+  "payloadTemplateSha256": "d5b49407348e1c56a583e6163928d94dbea0d9e8e4556d9ee80c86d1ec62de00",
+  "knownModelsBeforeLater": 12,
+  "noCompetitorRun": true
+}

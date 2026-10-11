@@ -1,0 +1,49 @@
+{
+  "contract": "EvaSavedArtifactLaterUseResult/v1",
+  "checkedAt": "2026-10-11T19:44:10.868921+00:00",
+  "status": "met",
+  "workId": "work:eva-chat:a0b6b6be-b08b-5ba0-bd28-4f279aa03070",
+  "state": "succeeded",
+  "sourceSha256": "5cdbb531485dff6edacd68853f5bc0c806e94368f7045522ae810a80b18ef7db",
+  "actualActiveMinutes": {
+    "bureaulamp": 7,
+    "pomp": 11.75,
+    "radio": 0,
+    "ventilator": 5.5
+  },
+  "expectedActiveMinutes": {
+    "bureaulamp": 7,
+    "pomp": 11.75,
+    "radio": 0,
+    "ventilator": 5.5
+  },
+  "resultSha256": "0694abf225274d8229c8bfcaf4d3e58a0a1f5e93f770c5e3fb517ade1d8c569a",
+  "originalSourceUnchanged": true,
+  "newImplementationActions": 0,
+  "existingDesignatedReferenceFound": true,
+  "exactImprovedSourceExecuted": true,
+  "separatePhysicalReadback": true,
+  "isolatedExecutionReportFlags": {
+    "installed": false,
+    "semantic_success_verified": false
+  },
+  "knownRegisteredUsage": {
+    "contactModelAttempts": 1,
+    "workModelAttempts": 7,
+    "knownInputTokens": 84494,
+    "knownOutputTokens": 1487,
+    "knownTotalTokens": 85981,
+    "journalToolCalls": 7,
+    "storedWorkResultToolCalls": 8,
+    "storedWorkResultMeasurement": "partial",
+    "fullRuntimeUsage": null,
+    "creditCost": null
+  },
+  "qualification": "One ordinary later task in new session without source/reference/candidate hint. Independent readback verifies actual result; isolated executor flags and partial work result remain separate. No family acceptance or general efficiency claim.",
+  "independentPublicationReview": {
+    "verdict": "GO",
+    "path": "eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json",
+    "sha256": "d89a8c18055c2857b141a038a0daab24119ffe22c233009ccce011c50ae26b65"
+  },
+  "independentReviewConfirmed": true
+}
