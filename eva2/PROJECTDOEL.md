@@ -34,7 +34,7 @@ correctie van de onbedoelde extra daggrens zijn geïnstalleerd. Kern en taakwerk
 draaien gezond. 89 gerichte controles en onafhankelijke bronreview GO; zes exacte
 bronmodules, verse volledige profielpariteit en ongewijzigd mandaat bevestigd.
 Historische tellingen, account/providergrenzen, geheugen, configuratie en gegevens
-blijven behouden. De afzonderlijke installatie-eindcontrole volgt.
+blijven behouden. De gebundelde onafhankelijke installatie-eindcontrole is GO.
 
 **Nu afmaken:** een authentieke eigen keuze van Eva via dezelfde uitvoerder
 daadwerkelijk afmaken en privé terugmelden. De laatste opgeslagen beoordeling
@@ -46,11 +46,12 @@ Geen eigenaarhandeling nodig. Spraak geparkeerd.
 
 Installatie: eva2/evidence/product/native-initiative-subscription-installed-20261011.json.
 Bronreview: eva2/reviews/native-initiative-subscription-source-review-20261011.json.
+Installatiereview: eva2/reviews/native-initiative-subscription-installed-review-20261011.json.
 
 Bewijs: eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json.
 Later gebruik: eva2/evidence/product/saved-artifact-later-use-result-20261011.json.
 Review: eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json.
-Dashboard inhoudelijk bijgewerkt: 2026-10-11T20:50:50.682674+00:00.
+Dashboard inhoudelijk bijgewerkt: 2026-10-11T20:54:42.210116+00:00.
 
 
 ## Historische voorbereiding en installatie — 11 oktober 2026

@@ -1,16 +1,16 @@
-## Actueel werk — 2026-10-11T20:50:50.682674+00:00
+## Actueel werk — 2026-10-11T20:54:42.210116+00:00
 
 **Laatst opgeleverd:** de onbedoelde extra daggrens voor eigen initiatief is
 gecorrigeerd en geïnstalleerd. Kern en taakwerker gezond; 89 gerichte controles en
 bronreview GO. Historische tellingen, mandaat, configuratie en gegevens behouden.
-Installatie-eindcontrole volgt; geen nieuw native resultaat geclaimd.
+Onafhankelijke installatie-eindcontrole GO; geen nieuw native resultaat geclaimd.
 
 **Nu:** een echte eigen keuze van Eva via de bestaande digitale uitvoerder
 afmaken en privé terugmelden. Laatste geregistreerde contextbeoordeling is ouder
 dan de installatie; geen actuele blokkade of nieuwe uitvoering daaruit afleiden.
 
 **Wie:** /root volgt de native route en verzorgt integratie/dashboard/Git.
-Bronuitvoerder klaar; onafhankelijke review bundelen op de concrete installatie.
+Bronuitvoerder klaar; onafhankelijke gebundelde bron- en installatiereview GO.
 
 **Daarna:** agentaansturing verbeteren, herhaald passend initiatief en
 samenhangend gezinsgebruik afmaken. Hele projectgoal actief; oorspronkelijke
@@ -21,6 +21,7 @@ Spraak geparkeerd; geen vergelijkingsserie.
 terugkeer-/herstelverversing en Nu verversen zijn geïnstalleerd; eerdere echte
 browsercontrole zonder herladen geslaagd.
 Installatie: eva2/evidence/product/native-initiative-subscription-installed-20261011.json.
+Review: eva2/reviews/native-initiative-subscription-installed-review-20261011.json.
 Verversing: eva2/evidence/product/dashboard-live-refresh-20261011.json.
 
 ## Actief volledig projectgoal — 11 oktober 2026

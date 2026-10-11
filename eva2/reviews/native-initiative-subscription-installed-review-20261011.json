@@ -1,0 +1,153 @@
+{
+  "contract": "EvaNativeInitiativeSubscriptionInstalledReview/v1",
+  "checkedAt": "2026-10-11T20:54:04.132800+00:00",
+  "reviewer": "independent_product_execution_memory_review",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact installed six-source subscription-initiative correction and truthful dashboard/documentation publication. Native useful outcome/private return remain open.",
+  "bindings": {
+    "sourceReviewPath": "eva2/reviews/native-initiative-subscription-source-review-20261011.json",
+    "sourceReviewSha256": "1fa1c4b06e012dd80c87f2071bf7cfa2340ae59b70b58deb803f3c5de20db77b",
+    "sourceEvidenceSha256": "6094d3583e9608f5dacfca63bbe4fc17da432a5a45e5802592addc755608e400",
+    "publicInstalledEvidencePath": "eva2/evidence/product/native-initiative-subscription-installed-20261011.json",
+    "publicInstalledEvidenceSha256": "98ddd3d67f488c69135b0619a2440d58920826ffd168a55df22d388ef6fe69c1",
+    "verificationReceiptPath": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-installed-verification.private.json",
+    "verificationReceiptSha256": "345d01fb61df91518be5a7737854c4ab7d525ebe7a914307d8f8ee310a6ba062",
+    "imageUpdateReceiptSha256": "24f6a203c9f6e98e2a87dfa6ea169afb0c22a0eb4042c7540dfb181e7e5bb105",
+    "sourceFiles": {
+      "adapters/model/pydantic_conversation.py": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
+      "adapters/postgres/runtime_resource_usage.py": "dad4680a686f610af1b0cab8b1ced8d4c12dea9e48918c04db8e95116e205c0c",
+      "application/free_will.py": "ed66feefff611ff15d01d3f34e23b66969488392970757b1b290017abd0eb0dc",
+      "bootstrap/idle_capacity.py": "62f3bebcab2bd8a3c8b4af73d4e08afe1f74134129ba56f243988181b60bf3d0",
+      "bootstrap/native_initiative_work.py": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
+      "bootstrap/runtime.py": "f73152e960eba61f890b093b49b80167def02a16497a3be9d15c5384309030d1"
+    },
+    "privateArtifactRoot": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011",
+    "privateArtifactSha256": {
+      "subscription-installed-verification.private.json": "345d01fb61df91518be5a7737854c4ab7d525ebe7a914307d8f8ee310a6ba062",
+      "subscription-image-update-receipt.private.json": "24f6a203c9f6e98e2a87dfa6ea169afb0c22a0eb4042c7540dfb181e7e5bb105",
+      "subscription-installation-plan.private.json": "fe43095ebd30c919cd20e3b8db3c35af8713386dd1250b36fb0b768aad9143d7",
+      "subscription-core-baseline-inspect.private.json": "06facd79b4369eba4ff14c816ca26eaaaacd9bf83ee4963df1337a872ffa8815",
+      "subscription-delegated-work-worker-baseline-inspect.private.json": "d64bc3592ed90632d2d504ca7f2485539caa60684d5825c0b90b6367bbff08d8",
+      "subscription-core-baseline-sources.private.json": "d3f6a072a567cd1faab54ecddf8b8e1031bcc2ede7b8232dc3514524dcd11c42",
+      "subscription-delegated-work-worker-baseline-sources.private.json": "2e62f9220daf272549a3c0c1e11ca245f34becd3b806fdbbe83ae3ff964087c0",
+      "subscription-actual-core-inspect.private.json": "9d7cdb0703bc9212677b93b57c05cfcd78342d059b54aaadde1102de8b5de9d5",
+      "subscription-actual-delegated-work-worker-inspect.private.json": "986b8788dbd831e1c184eccb5521790630dcab250b33357bf4c42a8302b959f4",
+      "subscription-actual-core-sources.private.json": "907e48922236b94fba442ba3f16450cceb05cb5ba1c9ca185a8adcdbf3d4bc4f",
+      "subscription-actual-delegated-work-worker-sources.private.json": "78d38289674a6843d69fcd6b8f68a1876a2af4cd8acd17fe65d6d871961d15ec",
+      "subscription-actual-core-profile.private.json": "72d21834031b18ac4672ed410453d359eb52db646201d9c9490ca05d56bd43c5",
+      "subscription-actual-delegated-work-worker-profile.private.json": "72d21834031b18ac4672ed410453d359eb52db646201d9c9490ca05d56bd43c5",
+      "subscription-probe-route-diagnosis.private.json": "9e8dead47d64b8dc7c3f9c4664259e82db4a442434381c8528925d0701274fd5",
+      "subscription-verification-order-diagnosis.private.json": "4aeb10be09fb531d252af0dd924c6aef4b72cbeba99476c0f013bdeb3b587244",
+      "subscription-hostconfig-order-diagnosis.private.json": "7086b907c72d1d3de981c1ca70f7b85c7a850878e80ebfdc0fecc1f5b1fc6729"
+    },
+    "dashboardEvidencePath": "eva2/evidence/product/dashboard-subscription-installation-current-20261011.json",
+    "dashboardEvidenceSha256": "f59a43359b11e433de2eb873f7bd7015e9c3f1c47336e40b21fd4b9f49981e43",
+    "dashboardOverviewSnapshotSha256": "15be4f8cae4742cc173d4bd12a73ed2e8c6c99fff2ab5a07de07c95786a43919",
+    "documentationSnapshots": {
+      "AGENTS.md": "1a2ce73f8fe2352a12c91b7a02fc0bafe342e614083de0f46bf25483aaed725e",
+      "eva2/PROJECTDOEL.md": "94f1a659b36526bd8148a5911381a8baf1cee45b8d305ad0a52d28e9fc5e9372"
+    }
+  },
+  "independentChecks": {
+    "services": {
+      "core": {
+        "image": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
+        "healthy": true,
+        "sources": 340,
+        "changedSources": 6,
+        "retainedSources": 334,
+        "addedSources": 0,
+        "removedSources": 0,
+        "environmentValuesRetained": true,
+        "processConfigurationRetained": true,
+        "hostConfigurationRetained": true,
+        "mountsRetained": true,
+        "networkInventoryRetained": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:b3f20f02b851973300656c3a814069944cc204728a8d995d637c32dae1b93cbb",
+        "healthy": true,
+        "sources": 338,
+        "changedSources": 6,
+        "retainedSources": 332,
+        "addedSources": 0,
+        "removedSources": 0,
+        "environmentValuesRetained": true,
+        "processConfigurationRetained": true,
+        "hostConfigurationRetained": true,
+        "mountsRetained": true,
+        "networkInventoryRetained": true
+      }
+    },
+    "freshFullProfile": {
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "model_profile_release_sha256": "b4ec40af58e111bdcf5ef8f3725d0903a4bf6e2e5191f13dbb5ce812988e5bb4",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+      "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+      "worker_program_sha256": "1bcde708cbd1ad152480bf7c137398b246d5092c712a7f8988ad8a45800907e3"
+    },
+    "freshProfileParity": true,
+    "existingOwnerCas": {
+      "httpStatus": 200,
+      "result": {
+        "status": "unchanged",
+        "mandate_sha256": "8a9eeb58d10b5f396557d3a77fe0273b41cb030afe7a70831f32d07b316e36dd"
+      }
+    },
+    "mandatePermissionsAndProfileUnchanged": true,
+    "policyBytesSha256": "26eccb55c0f69518a7ee100df214ac06974fb9afab2f2467438dba6977d46d88",
+    "budgetBytesSha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+    "sourceBudgetSha256": "c13e5f33682d5919aeae15fd7ac94919a3403d6920c2f524ea357bcdabc77ee5",
+    "actualExistingMandateBytesHashMatches": true,
+    "actualMountedBudgetBytesHashMatches": true,
+    "configurationFinding": "Recomputed complete source inventories, unique-key environment maps, all stable process fields, effective mounts, normalized Binds/Mounts and remaining HostConfig fields, network keys and published ports. Six exact changes only; no sources added/removed, new service/mount/environment key or host/network mutation.",
+    "readyzRetainedReadback": {
+      "httpStatus": 200,
+      "ready": true
+    },
+    "stopOwnerForegroundGuards": "Retained source GO and exact installed hashes bind the once-per-review/current owner-private authority/provider/stop/foreground behavior. No new live stop or model probe performed.",
+    "ledgerPreservation": "Image-only update and unchanged budget/policy bytes introduce no reset or large-cap rewrite. Source GO binds isolated PG proof that saturated legacy ledger values/revisions/payload hashes remain intact; automatic current runtime usage and totals were not probed."
+  },
+  "publicationAssessment": {
+    "verdict": "GO",
+    "publicEvidencePreservedUnchanged": true,
+    "independentInstalledReviewPendingIsPreVerdictSnapshot": true,
+    "latestDeliveryState": "installed",
+    "productFunctionCompleted": false,
+    "currentNativeOutcome": "not yet verified; next genuine self-chosen choice/execution/private return remains open",
+    "lastReviewIsHistorical": "20:33:07Z review precedes service installation at 20:44:46Z/20:44:58Z; its background_budget result is not current success/blockage evidence.",
+    "dashboardAndDocsAligned": true,
+    "retainedBrowserEvidenceApiStatus": 200,
+    "retainedBrowserEvidenceJsErrors": 0,
+    "wholeGoalActive": true,
+    "originalSmallTasksRetainedAsPublished": "39/48",
+    "manualModelRequestsForBuildProbeInstall": 0,
+    "automaticRuntimeUsage": null,
+    "developmentCredits": null,
+    "creditCost": null,
+    "noNativeUsefulnessPrivateDeliveryHarnessAide2FamilyOrSuperiorClaim": true
+  },
+  "retainedValidation": {
+    "sourceChecksPassed": 89,
+    "unit": 48,
+    "postgres": 41,
+    "reviewerReranTests": false,
+    "newModelOrNativeTrial": false
+  },
+  "preparationErrorsPreserved": [
+    "First model-free profile probe omitted existing second connector network; discovery unavailable, no model/action. Corrected probe uses actual baseline network namespace/read-only mounts.",
+    "First installed observer compared environment list order; corrected to identical key/value maps without reinstall.",
+    "Second installed observer compared bind/mount list order; corrected only order-independent lists, actual mounts and other host fields exact."
+  ],
+  "reviewPreparationCorrection": "Reviewer first assumed an inventory sources wrapper; actual retained stdout is a direct path/hash map. Corrected schema and recomputed counts, with no product action.",
+  "limitations": [
+    "Native self-chosen useful result and private transport remain unverified.",
+    "Full in-flight model preemption, full AIDE2/harness quality, whole learning cycle and family acceptance remain open.",
+    "Current automatic runtime model usage and complete costs are unknown.",
+    "No provider/lease/credential or held-out case operation was performed by reviewer."
+  ],
+  "reviewerActions": "Read retained own technical installation snapshots, narrow public current dashboard/docs and hash-bound evidence; hashed only existing authorized mandate/budget file bytes. No test/model/provider/native execution/queue/evaluator/runtime mutation; only this review file written.",
+  "wholeGoalStatus": "active",
+  "voiceStatus": "parked"
+}
