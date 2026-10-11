@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T16:02:38.714648+00:00",
+  "lastUpdated": "2026-10-11T16:24:35.634455+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -125,7 +125,7 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Volledig Eva2-projectgoal actief: een persoon, geheugen/mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing en uitbreidingen. Taakuitkomst→privégeheugen is geïnstalleerd; later toepassen en feedbacklus nog open. Algemene HA/documentuitvoering, Eva1-geheugen en gewone eigenaar-Telegramtekst blijven behouden. Geen volledige Eva1-vervanging of algemene concurrentievoorsprong bewezen. 39/48 bestaande kleine taken behouden; spraak geparkeerd.",
+      "summary": "Volledig Eva2-projectgoal actief. Huidig werk: ervaring en feedback later toepassen. Eerste technische opdracht afgemaakt; geheugenopslag faalt op een alleen-lezen lockbestand. Oorzaak lokaal bevestigd, correctie in uitvoering en nog niet geïnstalleerd. Geïnstalleerde algemene uitvoering, Eva1-geheugen en eigenaar-Telegramtekst blijven behouden. Geen nieuwe hoofdafronding of algemene concurrentievoorsprong; spraak geparkeerd.",
       "nextOutcomes": [
         {
           "title": "Nu · Ervaring en feedback later toepassen",
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T16:02:38.714648+00:00",
+        "checkedAt": "2026-10-11T16:24:35.634455+00:00",
         "deliveries": [
           {
             "title": "Achtergrondwerk zoekt geheugen met de echte taak en nieuwste bijsturing",
@@ -4550,33 +4550,33 @@
           }
         ],
         "now": {
-          "title": "Leercyclus · eerdere ervaring en feedback toepassen bij nieuw werk",
-          "detail": "Twee geheugenkoppelingen zijn geïnstalleerd en onafhankelijk beoordeeld. De bestaande opslag-, correctie- en gespreksroute is onderzocht. Nu ontbreekt het praktijkbewijs dat een eerdere taakervaring en feedback bij een volgende relevante opdracht gedrag veranderen. Nog geen nieuwe modelproef gestart.",
+          "title": "Leercyclus · geheugenopslag herstellen, daarna ervaring toepassen",
+          "detail": "De eerste technische leeropdracht is afgemaakt en teruggelezen; de bijsturing is ontvangen. Het opslaan van de ervaring loopt vast: de geheugenprovider kan zijn lockbestand niet schrijven. De oorzaak is zonder modelaanvragen bevestigd. Codex corrigeert die aansluiting; nog niet geïnstalleerd. Daarna volgt dezelfde vooraf vastgelegde tweede opdracht in een nieuwe sessie. Geen opdracht opnieuw uitvoeren.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/task-context-memory-installed-20261011.json",
+          "source": "eva2/evidence/product/learning-cycle-memory-access-diagnosis-20261011.json",
           "doneWhen": "De geïnstalleerde route gebruikt een echte opgeslagen werkervaring en persoonsgebonden feedback bij een volgende relevante opdracht, met zichtbaar gewijzigd gedrag. Een technische gecontroleerde proef en jouw gezinsacceptatie blijven afzonderlijk; privacy, stoppen en geen dubbele acties behouden.",
           "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
         },
         "next": {
-          "title": "Ontbrekende mogelijkheden realiseren en volledige AIDE²/droomcyclus",
-          "detail": "Werk de bestaande uitvoer- en ontwikkelroute af voor nieuwe herbruikbare mogelijkheden. AIDE² verbetert taakgedrag, agentaansturing, code en apps/addons; kwaliteit vóór tokenbesparing. Daarna passend initiatief en samenhangende gezinsoplevering.",
+          "title": "Opgeslagen ervaring en feedback bij nieuw werk toepassen",
+          "detail": "Na de geheugenreparatie dezelfde bewaarde opslagoperaties afronden. Eva maakt vervolgens de andere notitie in een nieuwe sessie, zonder de eerdere norm opnieuw te vertellen. Daarna onafhankelijke beoordeling; geen nieuwe vergelijkingsserie.",
           "state": "planned",
           "activeExecution": false,
-          "source": "eva2/PROJECTDOEL.md"
+          "source": "eva2/evidence/product/learning-cycle-native-criteria-20261011.json"
         },
         "ownerAction": {
           "required": false,
-          "title": "Geen handeling nodig om door te bouwen",
-          "detail": "Codex maakt de leercyclus af. Je kunt Eva intussen gewone privétekst sturen in Telegram, zonder /eva2. Nieuwe gezinsbeoordeling wordt pas gevraagd met een concrete bruikbare uitkomst.",
+          "title": "Deze technische fout lost Codex op",
+          "detail": "Geen handeling of herhaalde proef van jou nodig. De lopende reparatie en latere leerproef betreffen het technische werk van Codex; gezinsacceptatie blijft apart.",
           "steps": [],
           "expected": "Nieuwe gewone privétekst gebruikt Eva2; antwoord en later resultaat horen bij je oorspronkelijke bericht.",
           "blocksIndependentWork": false,
-          "source": "eva2/evidence/product/telegram-default-private-installed-20261011.json"
+          "source": "eva2/evidence/product/learning-cycle-memory-access-diagnosis-20261011.json"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T16:02:38.714648+00:00",
+        "reviewedAt": "2026-10-11T16:24:35.634455+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4626,10 +4626,20 @@
           "expected": "Nieuwe gewone privétekst gebruikt Eva2; antwoord en later resultaat horen bij je oorspronkelijke bericht.",
           "blocksIndependentWork": false,
           "source": "eva2/evidence/product/telegram-default-private-installed-20261011.json"
+        },
+        "historicalNowBeforeMemoryAccessDiagnosis20261011": {
+          "title": "Leercyclus · eerdere ervaring en feedback toepassen bij nieuw werk",
+          "detail": "Twee geheugenkoppelingen geïnstalleerd; bestaande leerbewijzen hergebruikt. Eén tijdelijke technische opdracht is vooraf vastgelegd: eerste notitie, bijsturing, andere notitie in nieuwe sessie zonder de oude norm te herhalen. De gewone geïnstalleerde route wordt gecontroleerd; dit is geen nieuwe vergelijking of gezinsacceptatie.",
+          "state": "in_progress",
+          "activeExecution": true,
+          "owner": "/root",
+          "source": "eva2/evidence/product/learning-cycle-native-criteria-20261011.json",
+          "doneWhen": "De geïnstalleerde route gebruikt een echte opgeslagen werkervaring en persoonsgebonden feedback bij een volgende relevante opdracht, met zichtbaar gewijzigd gedrag. Een technische gecontroleerde proef en jouw gezinsacceptatie blijven afzonderlijk; privacy, stoppen en geen dubbele acties behouden.",
+          "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
         }
       },
-      "reviewedAt": "2026-10-11T16:02:38.714648+00:00",
-      "checkedAt": "2026-10-11T16:02:38.714648+00:00",
+      "reviewedAt": "2026-10-11T16:09:50.905591+00:00",
+      "checkedAt": "2026-10-11T16:09:50.905591+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -10984,7 +10994,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T16:02:38.714648+00:00",
+      "lastUpdatedAt": "2026-10-11T16:09:50.905591+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -20667,7 +20677,7 @@
           "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         }
       ],
-      "nextAction": "De geïnstalleerde gespreks-/werkroute gebruiken om eerdere taakervaring en feedback bij een volgende relevante opdracht aantoonbaar toe te passen. Alleen een bewezen ontbrekende koppeling herstellen; geen nieuwe vergelijkingsserie.",
+      "nextAction": "Leercyclus afmaken: de bewezen geheugenproviderfout herstellen, dezelfde opgeslagen ervaring en feedback afronden en vervolgens bij nieuw werk toepassen.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Het volledige geïnstalleerde geheel voldoet aan alle eindvoorwaarden van eva2/PROJECTDOEL.md, inclusief latere toepassing van de leercyclus, ontbrekende mogelijkheid realiseren en hergebruiken, AIDE² voor aansturing en code/uitbreidingen, onafhankelijke eindreview en echte gezinsbeoordeling. Deelopleveringen sluiten het projectgoal niet af; oude acceptaties blijven geldig binnen hun oorspronkelijke scope.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",

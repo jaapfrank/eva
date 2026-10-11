@@ -1,0 +1,49 @@
+{
+  "contract": "EvaLearningCycleMemoryAccessDiagnosis/v1",
+  "recordedAt": "2026-10-11T16:24:35.634455+00:00",
+  "criteria": "eva2/evidence/product/learning-cycle-native-criteria-20261011.json",
+  "caseSha256": "e7abd7f76dd94ea4d11ed6afc8636096466d8f99e35d93b43107b0263db52a48",
+  "facts": {
+    "firstTask": "succeeded; native worker saved and separately read its first report",
+    "feedback": "accepted through the installed ordinary private route",
+    "laterTaskStarted": false,
+    "semanticRetentionCompleted": false,
+    "retentionFailure": "OSError errno 30 at /home/hindsight/.codex/auth.lock during fresh lease adoption",
+    "cause": "Credential directory is mounted read-only; the provider needs a writable stable lock to adopt a newly published access-only credential.",
+    "modelFreeBaseline": {
+      "exitCode": 31,
+      "lockWriteFailed": true,
+      "authUnchanged": true,
+      "lockInodePreserved": true
+    },
+    "modelFreeCandidate": {
+      "exitCode": 0,
+      "adoptedFreshLease": true,
+      "refreshAuthority": false,
+      "networkEnabled": false,
+      "authUnchanged": true,
+      "lockInodePreserved": true
+    }
+  },
+  "correction": {
+    "state": "being_implemented; not_installed",
+    "approach": "Keep credential directory and auth.json read-only; publish a stable empty lock and mount only auth.lock read-write. Preserve existing native memory operations; do not repeat the work request."
+  },
+  "usage": {
+    "newModelCallsForDiagnosis": 0,
+    "creditCost": null,
+    "developmentUsage": "not independently measured"
+  },
+  "completion": {
+    "productFunctionCompleted": false,
+    "familyAccepted": false,
+    "wholeGoalStatus": "active",
+    "laterApplication": "not yet demonstrated"
+  },
+  "preserved": {
+    "originalCriteria": true,
+    "oldMemoryFailures": true,
+    "originalTaskAndFeedback": true,
+    "existingAcceptances": true
+  }
+}

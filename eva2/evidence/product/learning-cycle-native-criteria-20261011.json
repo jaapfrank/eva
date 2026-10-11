@@ -1,0 +1,37 @@
+{
+  "contract": "EvaLearningCycleNativeCriteria/v1",
+  "registeredAt": "2026-10-11T16:09:19.917443+00:00",
+  "sourceBaseCommit": "de61777a",
+  "scope": "One controlled technical learning case through installed ordinary private route; not actual family feedback or AIDE2 optimization.",
+  "projectId": "technical-learning-20261011-cd9fe5c5",
+  "reference": "Installed core e8e4a42c and worker 25517172, existing semantic/outcome/task-context memory.",
+  "ordinaryPrompts": [
+    "Dit is een tijdelijk technisch proefproject technical-learning-20261011-cd9fe5c5, geen feit over het gezin. Maak en bewaar één korte Nederlandstalige voorraadnotitie in /proof-state/technical-learning-20261011-cd9fe5c5-first.txt. Proefgegevens: 25 dozen beschikbaar, 18 nodig. Bereken het restant. Behandel dit alleen als fictieve testgegevens; verander geen huisinstellingen en bestel niets. Lees je opgeslagen notitie apart terug en geef de vindplaats. Gebruik de bestaande documentmogelijkheid; start geen internetonderzoek.",
+    "Bijsturing voor alleen het tijdelijke proefproject technical-learning-20261011-cd9fe5c5: mijn norm voor voorraadnotities is een restvoorraad van minimaal 9 dozen. Dat was in je vorige resultaat niet duidelijk. Onthoud voor volgende notities in dit project deze volgorde: eerst oordeel voldoende of tekort, daarna het aantal ontbrekende dozen ten opzichte van die norm, daarna één volgende stap. Gebruik precies drie korte bullets en geen tabel. Dit is gecontroleerde proefinput van de ontwikkelaar, geen algemene voorkeur of uitspraak van Jaap over het gezin. Pas de vorige notitie niet aan en start nu geen nieuwe taak.",
+    "Maak voor het tijdelijke technische proefproject technical-learning-20261011-cd9fe5c5 een nieuwe korte voorraadnotitie. Nu zijn 34 dozen beschikbaar en 28 nodig. Bewaar precies één nieuw bestand in /proof-state/technical-learning-20261011-cd9fe5c5-later.txt, lees het apart terug en geef de vindplaats. Gebruik de afspraken en eerdere ervaring van dit proefproject waar relevant. Dit blijft fictief: geen aankoop, huiswijziging of internetonderzoek."
+  ],
+  "requestPayloadHashes": [
+    "32cc180040895ba982906be6c7c35d2be0cfba2dce165173eb4790a90afaef03",
+    "b4a0995daa99a158a826762df9cae1d972c21296850f73dac1ceafa101852e6d",
+    "0cd8e388a2fc134f7bec397721e92f6eecf12f3377f96a3f902f82494695bed0"
+  ],
+  "criteria": {
+    "first_task": "Real saved first report and separate readback, remaining stock 7; its native completed outcome is queued with source/project/person binding.",
+    "feedback": "Original correction retained through ordinary after-response queue under the same project/person, not injected manually into task memory.",
+    "later_application": "Different conversation and no supplied recent messages; later saved report calculates stock 6, labels shortage, missing 3 toward prior norm 9, three bullets in agreed order and next step. Prior norm is not repeated in the later prompt.",
+    "provenance": "Evidence that retained earlier task/feedback participates in the later native recall; no manually fabricated outcome.",
+    "boundaries": "Same authorized private scope; project test input is labelled fictional and not a real family preference. No purchase or HA change; no retry/repeated write; original memories and prior evidence retained.",
+    "review": "Independent review of exact controlled test result; not owner acceptance or whole-goal completion."
+  },
+  "budget": {
+    "ordinary_turns": 3,
+    "maximum_new_task_handoffs": 2,
+    "automatic_retries": 0,
+    "comparison_runs": 0,
+    "runtime_limits": "Existing admitted provider/task/resource limits remain unchanged; no new global timeout or limit.",
+    "expected_work": "Two short document writes/readbacks and one feedback turn; stop and preserve error evidence if native execution fails.",
+    "token_or_credit_cost": "Unknown before execution; report measured journal/worker usage and missing extraction accounting separately."
+  },
+  "caseSha256": "e7abd7f76dd94ea4d11ed6afc8636096466d8f99e35d93b43107b0263db52a48",
+  "providerRole": "Content/task work via existing Astra/medium route; no comparator run."
+}
