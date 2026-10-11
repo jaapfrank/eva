@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "contract": "EvaIndependentGoalCompletionReview/v1",
+  "recordedAt": "2026-10-11T12:18:56.744090+00:00",
+  "reviewer": "/root/product_execution_memory_review",
+  "decision": "GO",
+  "blockers": [],
+  "explicitCurrentGoalSatisfied": true,
+  "entireEva2ProductComplete": false,
+  "fullEva1ReplacementAccepted": false,
+  "scope": "Completion of the three explicit current owner requests and requested design documentation, using the active goal completion sentence. No final family acceptance, universal reliability, superiority or retirement of all Eva1 routes is inferred.",
+  "decisionBasis": {
+    "activeGoalReadInFull": true,
+    "explicitCompletionCondition": "Deze opdracht is klaar wanneer de gerichte algemene uitvoering werkend geïnstalleerd is, de geheugenoverdracht met aantallen/herkomst/uitsluitingen is gecontroleerd, en de vervangingsvoorwaarden met de echte resterende gaten zichtbaar zijn. Een beperking wordt concreet gemeld; technisch tussenwerk telt niet als volledige productafronding. Spraak blijft geparkeerd; ongebruikte Docker Desktop blijft ongemoeid.",
+    "criterionLine": 16,
+    "coordinatorCompletionRecommendationUsedAsPremise": false,
+    "derivation": "The active goal explicitly closes on installed targeted execution, checked memory transfer and visible replacement conditions with remaining gaps. The broader project and added Human Understanding section retain their separate open outcome and design status. None of those open outcomes has been relabelled as proven."
+  },
+  "binding": {
+    "activeGoal": {
+      "path": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective.md",
+      "sha256": "aa0ef9ed3c8846492bbaf2fd9dbe2a5aa210710fce17a78a3ee3bf5fd540b7dc"
+    },
+    "coordinatorAudit": {
+      "path": "eva2/evidence/product/owner-execution-memory-replacement-goal-audit-20261011.json",
+      "sha256": "1e923cc4551be9a0a5fda98786a1f67e8cf1e8d1ba719805c85fa9b93b10d133"
+    },
+    "existingDeliveryEvidenceSha256": {
+      "eva2/evidence/product/general-multi-service-execution-installed-20261010.json": "c4ac249d5b1456a141f7823da818b8512ea7b89d0ecea8c68b392c53fc857976",
+      "eva2/evidence/product/eva1-memory-product-import-20261010.json": "f7219c7b9ad258cda4fee02d4b0c82f5d5689fe35b038e7eb130aa0b16403aa7",
+      "eva2/evidence/product/work-input-inventory-installed-20261010.json": "759205e84301a18cb971a39a7a07076af54ea920fc2e91d87d5c683c830ea97a",
+      "eva2/evidence/product/telegram-default-private-installed-20261011.json": "a223cf83d4c85a887f7416a3e2cf21b7970453b3f716638461e4034c07525b78"
+    },
+    "existingIndependentReviewsSha256": {
+      "eva2/reviews/product-general-execution-memory-final-review-20261010.json": "c9c438c6bf668dabbbfdfa323db985a0058b5d1ba43a5129588f597a21a73e38",
+      "eva2/reviews/work-input-inventory-final-review-20261010.json": "ae98d1696a73a9d9becff6b30bf4490329569afb97fbd3e998867043b2c0b5c8",
+      "eva2/reviews/telegram-default-private-final-review-20261011.json": "d52baeb4fa4183c9b702560df78f17423b7fef4d3ee74840702d1bd753a93c7e"
+    },
+    "currentDocumentationSha256": {
+      "AGENTS.md": "73cf5f3391d5f3a7bb5e2e8ffbd364da7e052e1b09a3c66bfd860adccff495bc",
+      "eva2/PROJECTDOEL.md": "1fb7aa1f7a4ce69593ae928e0f74b5c55c96131d570dafc1eebee80345308960",
+      "eva2/WERKBORD.md": "e6e5a48a4bc284c43e955431e4dc8be4db0757bc8aefb85f0aa5ac43b93a67b9",
+      "eva2/design/product/execution-workboard-v1.json": "768b7e6d1b39a55d3a398054940d63a82f1da32789a574e5390c5bb86ef91e14"
+    },
+    "currentReviewedRuntimeAndImporterSourceSha256": {
+      "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "0fd8f1b48cffd7d8d7e2f6e96916166e69186a39d88cbb745393b05bb015714f",
+      "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "64a5f9696b1105c2960df2f67281b58018e51a7a59a7ae684ab47dd2a2003fd0",
+      "eva2/src/eva/bootstrap/delegated_digital_runner.py": "2f1a6777c7e41555e6bc11092e62ea8a84875998fc7854ff1d1bd3f63eb7184f",
+      "eva2/src/eva/application/memory.py": "07fedf412eb4463d788b669fbd6269286425acd603dc91b0bbd4c2a9e68fc2fb",
+      "eva2/src/eva/adapters/projection/hindsight.py": "4e41417bf19a0fe73fb1477453b07f60454fc8f9637664378cc19a0fe049c33c",
+      "eva2/src/eva/adapters/model/pydantic_conversation.py": "4896c8265846aae2be9e05278cea2327033ed9614c3d8954b1f2a5f6dc94ca0b",
+      "eva2/tools/import_eva1_memory.py": "fea2b26458a76bb567ca6edadb8e735561743ceb1b885a6df8325f26578b10d4"
+    },
+    "retainedOriginalExecutionEvidenceSha256": {
+      "ordinary-house-overview-request.private.json": "da942590de307727dfb1d25e27f34ea9441c0caf7dc303fa39b5b47efd8a77c4",
+      "ordinary-house-overview-resume-v2-state.private.json": "a2b501770cb312d91c837b5455e529390c6c2ffe683b23ae8f9ff79db66dad0e",
+      "ordinary-final-action-observations-full.private.jsonl": "a45044a36c7900eb1d94c8ab34f262652324e745f01cc24b31b83d12e73e51f7",
+      "ordinary-house-overview-file-readback.private.json": "ac1db1a25a3ee742203ecb65483f9d5a662bdb764da5afed890df29ae338eb6a",
+      "ordinary-house-overview-file-content.private.txt": "488116c851fbfa6d77c84edbe329f314bcd04a0247ad787f17076c0289435c83"
+    }
+  },
+  "requirements": [
+    {
+      "id": "G1",
+      "requirement": "Targeted general execution works, is installed, and has completed one ordinary request with separate readback and understandable result.",
+      "status": "SATISFIED",
+      "basis": "The original ordinary website request was preserved through two failed and one succeeded generation. Existing general executor and discovery selected HA and document tools; precisely one durable note was saved and separately read through MCP. The independent original review bound arguments, state observations, original actor/message and independent host bytes. Current retained evidence hashes and actual 1440-byte note remain exact.",
+      "installationBasis": "Independent installed execution review and subsequent input-projection installation review bind core and worker source/image state. All six current repository runtime modules still match those reviewed sources; the later model projection correction is explicitly applied. The new coordinator audit additionally reports matching live hashes in both unchanged healthy images.",
+      "resultRoute": "Result is available on the original website work route; no Telegram delivery is inferred.",
+      "qualification": "Native verified=false and the two failed generations remain. One targeted route and its regressions do not establish arbitrary-service reliability or efficiency."
+    },
+    {
+      "id": "G2",
+      "requirement": "Eva1 memory is available through checked repeatable import with provenance, person boundaries, source/data preservation and exclusions.",
+      "status": "SATISFIED",
+      "basis": "Existing independent review checked exact snapshot/private-owner binding, actual completion of 45 native documents and 11 children, ordinary scoped recall with 15 legacy facts, and unchanged reimport with zero native requests/writes. 3187 rows reconcile to 1115 selected, 1975 archived, one test and 96 unmapped excluded. No existing Eva2 documents were deleted. Legacy trust also reaches actual model context; source text supplies no instructions or permission.",
+      "currentPresence": "Coordinator audit reports one read-only native document listing with all 45 expected IDs; this reviewer did not issue another native request. Current importer and memory source hashes remain the reviewed versions.",
+      "qualification": "Unattributed/Eva labels remain historical unverified source material, not confirmed owner statements. Unmapped people are excluded. This proves the imported private scope, not general identity recognition or all-family memory access."
+    },
+    {
+      "id": "G3",
+      "requirement": "Replacement conditions and actual daily gaps are concrete and visible; existing daily entry and use instructions are reused.",
+      "status": "SATISFIED",
+      "basis": "PROJECTDOEL explicitly lists memory, independent execution, daily entry, Eva1 retirement and family usefulness, with delivered evidence and open conditions. The installed selected owner-private text route, original archive/actor/reply binding and use instructions are independently reviewed. All five live bot source hashes still match that review. Three stale current dashboard summaries were corrected without changing old results or accepted task counts.",
+      "qualification": "A new real Telegram exchange, daily acceptance, media/voice/other accounts, old slash routes and Eva1 background retirement remain open. The requirement is to make readiness conditions and gaps visible; full retirement is not claimed as achieved."
+    },
+    {
+      "id": "G4",
+      "requirement": "Process the requested Human Understanding direction in the goal and full project plan using existing architecture and independently assessed improvement.",
+      "status": "SATISFIED_AS_DOCUMENTATION",
+      "basis": "Active goal and PROJECTDOEL describe person understanding, patterns/expectations, initiative, feedback, missing capability development and memory/behavior adjustment. Dream mode includes AIDE2-inspired control/code/skills/apps improvement. Hindsight/PostgreSQL and existing execution/development are the starting point; six capacities do not mandate six agents or a new database.",
+      "qualification": "The complete learning loop, better intelligence and integrated self-development are not newly built or accepted by this documentation."
+    },
+    {
+      "id": "G5",
+      "requirement": "Keep existing roles, original failures/UNKNOWN and task conditions, honest usage, dashboard/use instructions; no new comparison series or speech work.",
+      "status": "SATISFIED",
+      "basis": "Pinned original delivery bytes are unchanged. Sol/none contact and Astra/medium work are retained in the reviewed route. Successful work remains 478284 known tokens; all three generations remain 540522 known background tokens with partial accounting and unknown complete totals/credits. Offline 27.22% prepared-byte reduction is not relabelled as provider savings. Board retains 39/48 and separately open product/family outcomes. Current instructions use the existing bot without owner installation work.",
+      "qualification": "Neither the historical counter nor this bounded goal completion establishes broader product acceptance or superiority."
+    }
+  ],
+  "currentIndependentFileChecks": {
+    "sixReviewedRuntimeModuleHashesMatch": true,
+    "reviewedImporterHashMatches": true,
+    "fiveInstalledBotSourceHashesMatch": true,
+    "fiveRetainedOrdinaryExecutionEvidenceHashesMatch": true,
+    "actualSavedNote": {
+      "bytes": 1440,
+      "sha256": "488116c851fbfa6d77c84edbe329f314bcd04a0247ad787f17076c0289435c83",
+      "matchesOriginal": true
+    },
+    "noPrivateMessageOrMemoryContentPrinted": true
+  },
+  "currentCoordinatorChecksNotReexecuted": {
+    "scope": "Read from the hash-bound goal audit; supplements earlier independent installation/result reviews.",
+    "healthyContainers": 2,
+    "matchingRuntimeModulesPerContainer": 6,
+    "botService": "active",
+    "readyzReady": true,
+    "nativeDocumentListCount": 45,
+    "nativeExpectedIdSetMatches": true,
+    "notClaimedAsNewIndependentNativeRead": true
+  },
+  "openProductOutcomes": [
+    "New real owner Telegram exchange and daily/family acceptance.",
+    "Broad general execution reliability and excessive recorded usage.",
+    "Media, voice, other accounts/groups and remaining old command routes; old Eva1 autonomous background before full retirement.",
+    "Integrated person understanding, prediction/feedback learning and on-demand capability development.",
+    "General quality, speed or efficiency advantage over competitors and complete Eva2 end acceptance."
+  ],
+  "reviewActivity": {
+    "newModelCalls": 0,
+    "newNativeRequests": 0,
+    "newTests": 0,
+    "newComparisonRuns": 0,
+    "runtimeMutations": 0,
+    "productSourceMutations": 0,
+    "rejectedPrivateStatusReadsRetriedOrBypassed": false,
+    "onlyWrittenFile": "eva2/reviews/owner-execution-memory-replacement-goal-audit-review-20261011.json"
+  }
+}

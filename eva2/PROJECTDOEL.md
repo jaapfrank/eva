@@ -1,5 +1,23 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Afgeronde eigenaaropdracht — 11 oktober 2026
+
+De drie expliciete goalvoorwaarden zijn onafhankelijk gecontroleerd en bereikt:
+de gerichte algemene uitvoering is geïnstalleerd, de Eva1-geheugenoverdracht is
+gecontroleerd en concrete vervangingsvoorwaarden staan zichtbaar. De huidige
+code draait in kern, werker en bot; alle 45 verwachte importdocumenten zijn
+aanwezig en de echte opgeslagen notitie is ongewijzigd.
+
+Dit sluit deze afgebakende opdracht af, niet het gehele Eva2-project. Een nieuwe
+echte Telegramuitwisseling, dagelijks gezinsgebruik, bredere betrouwbaarheid,
+efficiëntie, resterende gebruikte ingangen en oud Eva1-achtergrondgedrag blijven
+open. De Human Understanding-leerkringloop is ontwerprichting, niet afgebouwd.
+Bestaande kleine taaktellers en alle eerdere fouten/UNKNOWN blijven behouden.
+
+Audit: eva2/evidence/product/owner-execution-memory-replacement-goal-audit-20261011.json.
+Onafhankelijke GO: eva2/reviews/owner-execution-memory-replacement-goal-audit-review-20261011.json.
+Geen nieuwe modeltaak of vergelijkingsserie voor deze eindcontrole.
+
 ## Ontwerprichting: mensen begrijpen en zelfstandig ontwikkelen — 11 oktober 2026
 
 Het besproken Human Understanding Engine-voorstel scherpt de huisgenootvisie aan.

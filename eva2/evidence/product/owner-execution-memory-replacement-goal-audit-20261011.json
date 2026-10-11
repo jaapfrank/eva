@@ -1,0 +1,90 @@
+{
+  "contract": "EvaOwnerGoalCompletionAudit/v1",
+  "recordedAt": "2026-10-11T12:16:13.976785+00:00",
+  "objective": {
+    "file": "/mnt/c/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective.md",
+    "sha256": "aa0ef9ed3c8846492bbaf2fd9dbe2a5aa210710fce17a78a3ee3bf5fd540b7dc",
+    "explicitCompletionCondition": "Installed targeted general execution, checked Eva1 memory transfer with provenance/exclusions, and visible concrete replacement conditions and gaps."
+  },
+  "scope": "The three explicit current owner requests and the documented Human Understanding direction. Not completion of the entire Eva2 product, universal reliability, owner acceptance, or proven superiority.",
+  "requirements": [
+    {
+      "request": 1,
+      "requirement": "An ordinary request discovers connected services, executes dependent actions, separately reads the saved result, and returns a comprehensible result.",
+      "evidence": "eva2/evidence/product/general-multi-service-execution-installed-20261010.json",
+      "inspection": "Original real website task completed via HA and documents; independent MCP and volume readback recorded. Today the 1440-byte actual note still matches the original SHA256.",
+      "status": "proven_for_targeted_route",
+      "qualification": "Two failed generations, partial usage and native verified=false remain. This is not proof for arbitrary services or all ordinary tasks."
+    },
+    {
+      "request": 1,
+      "requirement": "The targeted execution and memory corrections are installed in the current core and worker.",
+      "evidence": "eva2/evidence/product/work-input-inventory-installed-20261010.json",
+      "inspection": "Read actual /opt/eva/src/eva modules in both live containers. All six module hashes match the reviewed execution/memory sources with the later reviewed input-inventory correction. Both current images healthy; readyz confirms database, memory projection and model provider ready.",
+      "status": "proven_current"
+    },
+    {
+      "request": 2,
+      "requirement": "Eva1 memory is transferred repeatably with provenance and person boundaries, retaining source and existing Eva2 memory and excluding archive/test/unmapped people.",
+      "evidence": "eva2/evidence/product/eva1-memory-product-import-20261010.json",
+      "inspection": "Reviewed selection accounts for all 3187 rows: 1115 imported, 1975 archived, one test row and 96 unmapped person rows excluded. 45 documents, legacy_unverified/confidential and source provenance retained; original scoped recall and zero-write repeated import preserved. Today one native read-only list confirms all 45 expected imported document IDs in the exact existing bank.",
+      "status": "proven_for_imported_scope",
+      "qualification": "Unattributed/Eva labels remain historical source material, not verified owner statements. Other people are not silently merged."
+    },
+    {
+      "request": 3,
+      "requirement": "Replacement conditions, actual daily gaps and use instructions are visible; reuse a daily entry rather than maintaining two ordinary private text routes.",
+      "evidence": "eva2/evidence/product/telegram-default-private-installed-20261011.json",
+      "inspection": "Five live host source hashes still match the independently approved installation; bot service active. Existing owner private text uses Eva2 without prefix. PROJECTDOEL has the explicit replacement table; board summary, remaining work and housemate row now agree with the delivery overview.",
+      "status": "proven_for_installed_entry_and_visible_conditions",
+      "qualification": "New real Telegram exchange, media/voice/other users, old autonomous background and full daily acceptance remain open. Replacement readiness is not full replacement acceptance."
+    },
+    {
+      "request": "direction",
+      "requirement": "Document person understanding, expectations, initiative, outcome feedback, on-demand capabilities and AIDE2-inspired improvement using the actual existing architecture.",
+      "evidence": "eva2/PROJECTDOEL.md",
+      "inspection": "Active goal, AGENTS and PROJECTDOEL describe one learning loop, existing Hindsight/PostgreSQL and execution/development first, AIDE2 for controller/code/skills/apps and independent evaluation. Proposed six capacities are not six compulsory agents or a second database.",
+      "status": "documented_as_requested",
+      "qualification": "Design is not implementation evidence for the complete learning loop or a superior product."
+    },
+    {
+      "request": "constraints",
+      "requirement": "No new comparison series, preserved previous failures/UNKNOWN/criteria, existing model roles, speech parked and unused Docker Desktop untouched.",
+      "evidence": "AGENTS.md",
+      "inspection": "Current work consists of read-only live-source, note and native-document checks plus correcting current summaries. Existing reviews bind provider roles. No new model task, comparison, deployment, voice work or Docker Desktop operation in this audit. Original result bytes and counts unchanged.",
+      "status": "preserved"
+    }
+  ],
+  "currentChecks": {
+    "coreImage": "sha256:30acae1a6c58d9fe8f1fe4ae18ab793c68ea74017954887ba8a7dc84a359793a",
+    "workerImage": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a",
+    "healthyContainers": 2,
+    "runtimeModuleHashMatchesPerContainer": 6,
+    "botSourceHashMatches": 5,
+    "botService": "active",
+    "ready": true,
+    "actualNoteBytes": 1440,
+    "actualNoteSha256": "488116c851fbfa6d77c84edbe329f314bcd04a0247ad787f17076c0289435c83",
+    "nativeImportedDocuments": 45,
+    "nativeExpectedIdSetMatches": true,
+    "nativeDocumentListTotal": 45
+  },
+  "newUsage": {
+    "manualEvaModelRequests": 0,
+    "memoryRecallOrRetainRequests": 0,
+    "newNativeComparisonRuns": 0,
+    "runtimeMutations": 0,
+    "developmentCredits": null
+  },
+  "preparationFinding": "An attempted host-side read of the existing internal Hindsight hostname could not resolve it. The same read-only API was then reached from the existing core network. This was an audit preparation error, not a failing Eva memory service. No resource was restarted.",
+  "remainingProductWork": [
+    "Normal family usefulness and acceptance",
+    "General execution reliability and excessive recorded usage",
+    "Old media/voice/other-account entry routes and Eva1 background before full retirement",
+    "Integrated person-understanding learning loop and on-demand capability development",
+    "No established general quality or efficiency lead over competitors"
+  ],
+  "historicalCountsUnchanged": true,
+  "completionRecommendation": "The explicit bounded three-request goal and design-documentation addition are satisfied. The entire Eva2 product remains unfinished.",
+  "independentReview": "eva2/reviews/owner-execution-memory-replacement-goal-audit-review-20261011.json"
+}
