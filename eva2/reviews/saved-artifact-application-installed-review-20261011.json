@@ -1,0 +1,163 @@
+{
+  "contract": "EvaSavedArtifactApplicationInstalledReview/v1",
+  "reviewer": "/root/product_execution_memory_review",
+  "reviewedAt": "2026-10-11T19:14:18.353090+00:00",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact existing evaluator host and core/worker installation of the reviewed saved-artifact application route. No variant evaluation, semantic improvement, application or later ordinary use is claimed.",
+  "bindings": {
+    "planReview": {
+      "path": "eva2/reviews/saved-artifact-application-installation-plan-review-20261011.json",
+      "sha256": "77aa9e2bd364d0a8c02d97eddf87e6ac1618631ed4bee3041cb5d9bb4fde234f",
+      "verdict": "GO"
+    },
+    "privatePlanSha256": "c1f519ed0015521171cbe7b6a34d99aed275ef508658fd60be7d0897ed3df8da",
+    "hostInstallationReceiptSha256": "83b8866fef634b507ba0420be11783f3f8caa3c386774949536dff8f44ef7397",
+    "imageUpdateReceiptSha256": "9ff664e80a28354aebc06fab3568d8b7d70493425a6ad9e472e0e887097c093e",
+    "installedChecksSha256": "08495f0ff43e6354c10ea9f4127a4460feac23846467dda7e576bd0efe1bb999",
+    "beforeRuntimeReadbackSha256": "0fa17eb50f9d4a7509a701934311b1d2c825bdbdc3ad69f393192a14b2e499b8",
+    "afterRuntimeReadbackSha256": "66556bce7067476d7e81eade20ce3b346c653e3c5818302a774ef2c79ecaf171",
+    "buildReceiptSha256": "b643e7f7b9491b4bad6662609299e5a74e84d45973c87e3ae0bceb2fd3da3dbf",
+    "preparedComposeSha256": "ae6d76ac0323e16b72a7d4548b96dce3356aafe21155783c3b54c3785276b6c7",
+    "serviceConfigSha256": "47652790d79a6188f42945f0746c7ee5ab42653e3080f3961e646678a4ac4857",
+    "clientConfigSha256": "3e1492aeefed147f0dcc13a574e22deade57322faed93cd6b3eb9227cf9b4180",
+    "developmentSuiteSha256": "e5125d0f1fba1d3a8b625e8acd387e4c421f096c37ed7005e39e93225f173a14",
+    "independentFinalRegistrationSha256": "7edd15aea459cade04c2f5c982fe05693d86ff864779fba53a51b36d65c24c57",
+    "unchangedEvaluatorPreparationManifestSha256": "54674172783b5bc8491724da6927cc85913efd1384b375457e5e51a865f0fb5d",
+    "sourceReviews": {
+      "eva2/reviews/saved-artifact-application-source-review-20261011.json": {
+        "sha256": "26689c5c3513bec46fe99ee2c3f962d89314cd35f6c2cab091c2577d71c1c283",
+        "verdict": "GO"
+      },
+      "eva2/reviews/saved-artifact-final-assessment-source-review-20261011.json": {
+        "sha256": "80a16f967a9a77c2789a9bd6fd8d9ffc5db00965b32c18537a33dbf75216c006",
+        "verdict": "GO"
+      }
+    }
+  },
+  "independentEvidenceRecomputation": {
+    "containers": {
+      "core": {
+        "image": "sha256:f28238ab8551c1b19b912610fdf9588732b4f2751232195442d55234e150a3ae",
+        "beforeModules": 337,
+        "afterModules": 339,
+        "addedModules": [
+          "operations/component_application_runtime.py",
+          "operations/saved_artifact_application.py"
+        ],
+        "existingModulesChanged": 0,
+        "existingModulesUnchanged": 337,
+        "removedModules": 0,
+        "addedModuleHashes": {
+          "operations/saved_artifact_application.py": "1620a58a9137fa3eed06cba7a422701227c4d3f95aa453b320b5b5856103c1a7",
+          "operations/component_application_runtime.py": "da67d5ece2645a89c36d7ed2f3801f8abb88fcfdae1fc50d1f68953d717caba2"
+        },
+        "mountCount": 25,
+        "healthy": true,
+        "environmentValuesAndProcessConfigurationRetained": true,
+        "mountsRetained": true,
+        "preparedClientConfigurationLoaded": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:54bc905c7505583ed0fe08695751d905abf59587d063b04110868f24442a78f2",
+        "beforeModules": 335,
+        "afterModules": 337,
+        "addedModules": [
+          "operations/component_application_runtime.py",
+          "operations/saved_artifact_application.py"
+        ],
+        "existingModulesChanged": 0,
+        "existingModulesUnchanged": 335,
+        "removedModules": 0,
+        "addedModuleHashes": {
+          "operations/saved_artifact_application.py": "1620a58a9137fa3eed06cba7a422701227c4d3f95aa453b320b5b5856103c1a7",
+          "operations/component_application_runtime.py": "da67d5ece2645a89c36d7ed2f3801f8abb88fcfdae1fc50d1f68953d717caba2"
+        },
+        "mountCount": 21,
+        "healthy": true,
+        "environmentValuesAndProcessConfigurationRetained": true,
+        "mountsRetained": true,
+        "preparedClientConfigurationLoaded": true
+      }
+    },
+    "immutableImagesMatchPreparedBuildAndNativeUpdater": true,
+    "beforeImagesMatchReviewedBaseline": true,
+    "composeDifferenceOnlyTwoImageFields": true,
+    "environmentMapsComparedWithUniqueKeys": true,
+    "processFieldsCompared": [
+      "Cmd",
+      "Entrypoint",
+      "User",
+      "WorkingDir",
+      "Healthcheck",
+      "StopSignal",
+      "ExposedPorts"
+    ],
+    "hostSourcesMatchPlanAndSourceReviews": true,
+    "hostModulesBefore": 18,
+    "hostModulesAfter": 19,
+    "hostModulesExistingChanged": 4,
+    "hostModulesAdded": 1,
+    "hostModulesUnchanged": 14,
+    "hostModulesRemoved": 0,
+    "hostActiveRunningPid": 2762310,
+    "hostExecStartUsesPreparedConfig": true,
+    "hostPythonPathUsesReviewedHostSourceBeforeRepository": true,
+    "hostHealthReady": true,
+    "actualServiceAndClientConfigHashesMatchPlan": true,
+    "clientFileOwnerModeAndOldQueuesRetained": true,
+    "nativeUpdaterTerminalStatus": "running_with_retained_mounts",
+    "evidenceMethod": "Recomputed hashes, module deltas, before/after inspect identities and equality from the bounded retained installation artifacts; no additional live probe or service execution.",
+    "reviewerModelRequests": 0,
+    "reviewerTestRuns": 0,
+    "reviewerDockerOrServiceStarts": 0,
+    "actualCredentialsRead": false,
+    "hiddenFinalCasesDisclosedOrChanged": false,
+    "protectedFinalScorerOrCommandDisclosedOrChanged": false
+  },
+  "publication": {
+    "path": "eva2/evidence/product/saved-artifact-application-installed-20261011.json",
+    "reviewedSnapshotSha256": "28bc6f7423b45ed569d2c2c6343ce431f73e5a5fc747874a993faba35bdbae7d",
+    "reviewedSnapshotStatus": "installed",
+    "reviewedSnapshotInstalledReviewStatus": "pending",
+    "claimScopeSupported": true,
+    "limitedRouteInstalled": true,
+    "nativeGainAndLaterUseRemainOpen": true,
+    "productFunctionCompleted": false,
+    "fullAide2Completed": false,
+    "goalStatus": "active",
+    "originalSmallCompletions": "39/48 unchanged",
+    "qualification": "The reviewed publication still had the installation-review status pending. This review supplies GO for the exact installation; changing that review-status metadata does not supply native quality evidence."
+  },
+  "retainedCorrections": [
+    {
+      "receiptSha256": "d287a0f9b836e1821a41111729bc73985f5424ebef92b913f24ba0ddbacb8b32",
+      "phase": "pre-dispatch observer",
+      "cause": "Structured metadata status treated as queue-state string",
+      "effectBeforeCorrection": false
+    },
+    {
+      "receiptSha256": "819d186f52be61ceb7a575a73e2468bc16e17f958c29a1efa39b948fa7985c6e",
+      "phase": "host startup",
+      "cause": "Older later-sorted drop-in overrode PYTHONPATH so old source loaded with new configuration",
+      "correction": "Drop-in precedence corrected; exact reviewed source/configuration/criteria retained; no model or variant started."
+    },
+    {
+      "phase": "readback observer",
+      "cause": "Environment list order changed",
+      "correction": "Compared full key/value maps with no duplicate keys."
+    },
+    {
+      "phase": "readback observer",
+      "cause": "Minimal runtime lacks cat",
+      "correction": "Fixed Python file read used in retained root readback."
+    }
+  ],
+  "limits": [
+    "The final cases, criteria, scorer and protocol budgets remain fixed and closed to builders.",
+    "No paid model request or saved-artifact variant evaluation was performed by this reviewer.",
+    "Native quality gain, selected winning variant, independently accepted final result, reviewed application and later ordinary use remain unproven.",
+    "No universal privacy guarantee, full AIDE2 completion, family acceptance, general superiority or efficiency claim follows from installation.",
+    "The complete project goal remains active; existing failures and UNKNOWN remain preserved."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "contract": "EvaSavedArtifactNativeImprovementCriteria/v1",
+  "fixedBeforeDispatchAt": "2026-10-11T19:15:04.761097+00:00",
+  "sourceTargetSha256": "7fe314563ac440c839b6bc7ac501ba763adfbec0efd44075dc7f687af2bfafec",
+  "baselineSourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+  "scopeProject": "technical-ability-20261011-30cad653",
+  "developmentSuiteSha256": "e5125d0f1fba1d3a8b625e8acd387e4c421f096c37ed7005e39e93225f173a14",
+  "independentRegistrationSha256": "7edd15aea459cade04c2f5c982fe05693d86ff864779fba53a51b36d65c24c57",
+  "developmentCases": 32,
+  "independentFinalCases": 30,
+  "budget": {
+    "max_candidate_development_evaluations": 3,
+    "independent_final_assessments": 1,
+    "application_after_win": 1,
+    "later_ordinary_use_tasks": 1
+  },
+  "endpoint": "http://127.0.0.1:44710/internal/v1/turns/respond",
+  "ordinaryImprovementMessageSha256": "999ee316c929e8f22522e03a50c3ccb4d236e88c911b80369adcce1d2dc6a189",
+  "models": "Sol/none contact; Astra/medium substantive improvement",
+  "applicationGate": "Fixed independent all-fractional success, preservation_failures=0 and strict gain; never self-approval",
+  "laterUseGate": "One new ordinary task, same owner/project, no code/variant/ref ID in question; actual applied source executes, old source retained",
+  "limits": "Assisted technical decimal extension; no whole AIDE2, efficiency/superiority or family acceptance claim",
+  "goalStatus": "active",
+  "modelsStarted": false
+}

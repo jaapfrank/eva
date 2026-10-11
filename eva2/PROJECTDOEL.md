@@ -8,6 +8,16 @@ afmaakt en ontbrekende mogelijkheden zelf kan realiseren. Het gehele project
 blijft het doel. Een afzonderlijke reparatie, import, installatie of deelopdracht
 sluit dit goal niet af.
 
+## Actueel geïnstalleerd — hulpmiddelverbetering, 2026-10-11T19:12:56.743377+00:00
+
+Toepassingsroute in bestaande kern, werker en beoordelaar geïnstalleerd. Exacte
+bron/configuratie teruggelezen, diensten gezond; 337/335 overige runtimebronnen
+behouden. Installatiefouten (metadata-shape en drop-inprecedentie) blijven bewaard;
+geen rollback, variant- of modelproef gestart. Nu één begrensde echte verbetercyclus
+met vooraf vaste ontwikkel-/eindcriteria, toepassing alleen bij aantoonbare winst en
+één latere gewone opdracht. Agentaansturing, droomplanning en volledig project open.
+Bewijs: eva2/evidence/product/saved-artifact-application-installed-20261011.json.
+
 ## Actuele uitvoering — 11 oktober 2026
 
 De geïnstalleerde geheugenroute past oorspronkelijke feedback bij nieuw werk toe:

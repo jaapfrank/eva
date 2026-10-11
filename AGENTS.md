@@ -14,6 +14,16 @@ Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkin
 Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
 afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
 
+## Actueel geïnstalleerd — hulpmiddelverbetering, 2026-10-11T19:12:56.743377+00:00
+
+Toepassingsroute in bestaande kern, werker en beoordelaar geïnstalleerd. Exacte
+bron/configuratie teruggelezen, diensten gezond; 337/335 overige runtimebronnen
+behouden. Installatiefouten (metadata-shape en drop-inprecedentie) blijven bewaard;
+geen rollback, variant- of modelproef gestart. Nu één begrensde echte verbetercyclus
+met vooraf vaste ontwikkel-/eindcriteria, toepassing alleen bij aantoonbare winst en
+één latere gewone opdracht. Agentaansturing, droomplanning en volledig project open.
+Bewijs: eva2/evidence/product/saved-artifact-application-installed-20261011.json.
+
 ## Actief werk — AIDE² en droomcyclus, 11 oktober 2026
 
 De geïnstalleerde geheugenroute past oorspronkelijke feedback bij nieuw werk toe:

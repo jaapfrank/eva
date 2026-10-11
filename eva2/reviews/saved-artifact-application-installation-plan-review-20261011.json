@@ -1,0 +1,109 @@
+{
+  "contract": "EvaSavedArtifactApplicationInstallationPlanReview/v1",
+  "reviewer": "/root/product_execution_memory_review",
+  "reviewedAt": "2026-10-11T19:07:03.927374+00:00",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Prepared single update of the existing evaluator host plus two-module overlays in the existing core and worker. No installation, candidate evaluation, model request or task-quality result is asserted.",
+  "sourceCommit": "8489ced09d679e80039a1fcecf4d7495e10a2f03",
+  "bindings": {
+    "privatePlanSha256": "c1f519ed0015521171cbe7b6a34d99aed275ef508658fd60be7d0897ed3df8da",
+    "serviceConfigSha256": "47652790d79a6188f42945f0746c7ee5ab42653e3080f3961e646678a4ac4857",
+    "clientConfigSha256": "3e1492aeefed147f0dcc13a574e22deade57322faed93cd6b3eb9227cf9b4180",
+    "beforeServiceConfigSha256": "055c9d1ea4c4af8c56ba6935b3502d9579f05b9f16ae6ee49186a0cba8a3caf1",
+    "beforeClientConfigSha256": "8fd7fc724d72e4799140da8221bc5ad51e75e61664d1e6394d0bbb0f1b6a6f52",
+    "baselineComposeSha256": "1ee7fa94a7a7b1993e296b2fc789f0372f9b5d064f2e64214b2f4a948bb5f652",
+    "baselineImages": {
+      "core": "sha256:286bc8d230220cb83a79bfc41a2885b3bae9becc11bd00b957fac9bb25ff754c",
+      "delegated-work-worker": "sha256:bc1d102ffcc4c10fc03d61869fa6d6aff3d25a1a8591e03d01d5c64236fe867f"
+    },
+    "sourceRecordSha256": "d3bdaad4aa0d87e2fd78e66d06fc3cc0ca5f5837e928fa4460b49b72e2020ca0",
+    "baselineSourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "sourceTargetSha256": "7fe314563ac440c839b6bc7ac501ba763adfbec0efd44075dc7f687af2bfafec",
+    "evaluatorPreparationManifestSha256": "54674172783b5bc8491724da6927cc85913efd1384b375457e5e51a865f0fb5d",
+    "developmentSuiteSha256": "e5125d0f1fba1d3a8b625e8acd387e4c421f096c37ed7005e39e93225f173a14",
+    "independentRegistrationSha256": "7edd15aea459cade04c2f5c982fe05693d86ff864779fba53a51b36d65c24c57",
+    "finalRunnerSha256": "901ca06f3f4bb8a8303aebf36cb1a90d5f45d5ab65428755e1c6390560d1c958",
+    "finalScorerSha256": "12115303cc72279010febf4eb5be292353c374579b5fbbf1e62faacc450572ef",
+    "finalCriteriaSha256": "ecc2dc629ec1afa69a727b111b245469d989c6afde44a8b54a4aa3d923009787",
+    "finalDatasetSha256": "8f4dd5982a5499f628f2bde6ced0f7f91cd40d1725b27d4bc94dc56a3aa6275e",
+    "finalCommandSha256": "cab09b3cec4a4c04d405fa61bcff39be5072fe03ec9e5aa43191a7a9576f8e1d",
+    "hostSourceHashes": {
+      "operations/component_application_runtime.py": "da67d5ece2645a89c36d7ed2f3801f8abb88fcfdae1fc50d1f68953d717caba2",
+      "operations/component_final_assessment.py": "57120df2f6b759be5542ba8802a82326d97c87f2dbc2d3b682b47cc7db781b5b",
+      "operations/component_release_publisher.py": "c7ecdf3582d7237bd1b4d82c4c476b8f78f34443b23972e4233927e2b2a64396",
+      "operations/reviewed_component_application.py": "f6ece56ba05d1771a3341f1f50a6513bca9c7e793da0e893a020b3aff73f8aa0",
+      "operations/saved_artifact_application.py": "1620a58a9137fa3eed06cba7a422701227c4d3f95aa453b320b5b5856103c1a7"
+    },
+    "coreWorkerSourcePaths": [
+      "operations/component_application_runtime.py",
+      "operations/saved_artifact_application.py"
+    ],
+    "finalAssessmentSourceReview": {
+      "path": "eva2/reviews/saved-artifact-final-assessment-source-review-20261011.json",
+      "sha256": "80a16f967a9a77c2789a9bd6fd8d9ffc5db00965b32c18537a33dbf75216c006",
+      "verdict": "GO"
+    },
+    "applicationSourceReviewSha256": "66ce4cae3a4e3bbd97093f60fc0c56d8faf55d15f4eeaf0cb18b9431982510db",
+    "applicationSourceReviewVerdict": "GO",
+    "applicationSourceTestReceiptSha256": "1175d6d38794b4e96c6df2f8ea2d463348568670388fea136299715e86f7b42b"
+  },
+  "independentChecks": {
+    "hostModulesBefore": 18,
+    "hostModulesPrepared": 19,
+    "hostExistingModulesChanged": 4,
+    "hostModulesAdded": 1,
+    "hostModulesUnchanged": 14,
+    "hostModulesRemoved": 0,
+    "preparedHostSourcesEqualCheckoutAndPlanCommit": true,
+    "preparedHostDeltaExactlyMatchesPlan": true,
+    "developmentConfigExactlyEqualsFixedEvaluatorConfig": true,
+    "finalAssessmentConfigExactlyEqualsProtectedFixedConfig": true,
+    "ownPreparationFilesAndHashesPreserved": true,
+    "baselineSourceTargetAndRegistrationExact": true,
+    "developmentSuiteHashIndependentlyRecomputed": true,
+    "finalProtocolBaselineTargetAndRegistrationExact": true,
+    "scopeShaEqualsCanonicalTenantInstallationPrincipal": true,
+    "applicationRuntimeFinalQueueAndNewClientScopeEqual": true,
+    "allowedPathsAddExactlyOneDerivedVirtualPath": true,
+    "existingServiceSectionsAndFinalProtocolsAssessmentsRetained": true,
+    "existingProgrammingAndApplicationQueuesRetained": true,
+    "existingClientRoutesScopesAndSuiteBindingsRetained": true,
+    "baselineComposeAndImageBindingsExact": true,
+    "DevelopmentAssessmentConstructionPassed": true,
+    "HostFinalAssessmentConstructionAndBindingsPassed": true,
+    "configuredComponentEvaluatorConstructionPassed": true,
+    "serviceLoadConfigPassed": true,
+    "serviceLoadConfigCredentialQualification": "Only the unchanged credential-file read was substituted with a synthetic valid 64-byte ASCII token. The actual credential was not read or independently revalidated.",
+    "actualCredentialFileReads": 0,
+    "protectedCaseOrAnswerContentsDisclosed": false,
+    "protectedCommandOrScorerContentsDisclosed": false,
+    "queueConstructors": 0,
+    "serverConstructors": 0,
+    "candidateOrBaselineExecutionInvocations": 0,
+    "modelRequests": 0,
+    "testRunsByReviewer": 0
+  },
+  "retainedTestEvidence": {
+    "applicationSourceBoundChecks": 17,
+    "applicationSourceBoundLogSha256": "304728422255963bb71e8667ad5f7810e8affd44077ba5fbc4cfa7bbe0158313",
+    "finalAssessmentChecks": 37,
+    "qualification": "Existing receipts and log hashes checked; no test suite repeated."
+  },
+  "reviewPreparationCorrections": [
+    "Root named _checked_config; actual existing function is component_evaluation_service.load_config.",
+    "Initial reviewer constructor preflight used system Python lacking pydantic; rerun used the already existing test venv without product changes.",
+    "A reviewer assertion expected a scope field on the application queue; that queue has no such field. Corrected assertion checks the actual runtime, final queue and client scope fields.",
+    "A pre-write review lookup expected verdict; the existing final source review stores decision. Corrected before writing this review."
+  ],
+  "installationBoundary": [
+    "Install exactly the prepared two modules in core and worker and the five prepared host-source entries; preserve existing image/process configuration, mounts, other modules, credentials, queues and old source bytes.",
+    "GO covers the hash-bound plan. Candidate image equality, service health and actual installed configuration require subsequent readback before an installed claim.",
+    "Fixed protocol budgets and integration gates remain unchanged: at most three candidate development evaluations, one independent final assessment, one application after verified improvement, one later ordinary use."
+  ],
+  "limits": [
+    "No criterion, protected case, expected answer or scorer was changed.",
+    "No candidate improvement, application, later use, general privacy guarantee, autonomous add-on completion, full AIDE2 or superiority is proved by this plan review.",
+    "The complete project goal remains active; old failures and UNKNOWN are retained."
+  ]
+}

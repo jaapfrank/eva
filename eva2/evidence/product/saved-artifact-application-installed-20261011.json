@@ -1,0 +1,91 @@
+{
+  "contract": "EvaSavedArtifactApplicationInstalledChecks/v1",
+  "checkedAt": "2026-10-11T19:12:56.743377+00:00",
+  "status": "installed",
+  "containers": {
+    "core": {
+      "imageExact": true,
+      "healthy": true,
+      "sourceDeltaExact": true,
+      "sourceBytesExact": true,
+      "mountsRetained": true,
+      "environmentRetained": true,
+      "reviewedClientLoaded": true,
+      "noHostTools": true,
+      "image": "sha256:f28238ab8551c1b19b912610fdf9588732b4f2751232195442d55234e150a3ae",
+      "changedSources": [
+        "operations/component_application_runtime.py",
+        "operations/saved_artifact_application.py"
+      ],
+      "unchangedModules": 337
+    },
+    "delegated-work-worker": {
+      "imageExact": true,
+      "healthy": true,
+      "sourceDeltaExact": true,
+      "sourceBytesExact": true,
+      "mountsRetained": true,
+      "environmentRetained": true,
+      "reviewedClientLoaded": true,
+      "noHostTools": true,
+      "image": "sha256:54bc905c7505583ed0fe08695751d905abf59587d063b04110868f24442a78f2",
+      "changedSources": [
+        "operations/component_application_runtime.py",
+        "operations/saved_artifact_application.py"
+      ],
+      "unchangedModules": 335
+    }
+  },
+  "hostHealthy": true,
+  "sameService": true,
+  "hostSourceBound": true,
+  "fixedConfigSha256": "47652790d79a6188f42945f0746c7ee5ab42653e3080f3961e646678a4ac4857",
+  "fixedClientSha256": "3e1492aeefed147f0dcc13a574e22deade57322faed93cd6b3eb9227cf9b4180",
+  "planReviewSha256": "77aa9e2bd364d0a8c02d97eddf87e6ac1618631ed4bee3041cb5d9bb4fde234f",
+  "installationCorrectionsRetained": [
+    "install-preflight-error.private.json",
+    "host-startup-correction.private.json"
+  ],
+  "observerCorrections": [
+    "Docker environment identity is key/value equality, not list ordering; values unchanged",
+    "Minimal runtime has Python but no cat utility; file read done with Python"
+  ],
+  "manualEvaModelRequests": 0,
+  "nativeImprovementRun": false,
+  "fullAide2Completed": false,
+  "completionScope": "Existing fixed saved-helper development/final comparison and reviewed application route installed; actual native gain and later use remain open.",
+  "hostModulesChanged": 4,
+  "hostModulesAdded": 1,
+  "hostModulesUnchanged": 14,
+  "sourceReviews": [
+    "eva2/reviews/saved-artifact-application-source-review-20261011.json",
+    "eva2/reviews/saved-artifact-final-assessment-source-review-20261011.json"
+  ],
+  "planReview": "eva2/reviews/saved-artifact-application-installation-plan-review-20261011.json",
+  "installedReview": "eva2/reviews/saved-artifact-application-installed-review-20261011.json",
+  "installedReviewStatus": "GO",
+  "imageUpdater": "Existing single image-only update; running_with_retained_mounts; no rollback",
+  "installationFailures": [
+    {
+      "phase": "pre-dispatch observer",
+      "cause": "Structured metadata status was treated as a queue-state string",
+      "effects": 0
+    },
+    {
+      "phase": "host startup",
+      "cause": "An older, later-sorted systemd drop-in overrode PYTHONPATH, loading old assessor source",
+      "correction": "One precedence correction, exact reviewed code/config preserved",
+      "nativeModelRequests": 0
+    }
+  ],
+  "remaining": [
+    "Bounded native saved-helper variant comparison, fixed independent final, apply only verified gain and later ordinary use",
+    "Agent-harness improvement",
+    "Dream scheduling and fitting initiative",
+    "Daily family use and final acceptance"
+  ],
+  "productFunctionCompleted": false,
+  "originalSmallCompletions": "39/48 unchanged",
+  "goalStatus": "active",
+  "installedReviewSha256": "7b99c546cec87702c1e7222c784303cb66ec17f11d1e15ac056561d81bd19f47"
+}

@@ -125,11 +125,11 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Volledig goal actief. Bronkoppeling geïnstalleerd; toepassing van verbeteringen verpakt, nog niet geïnstalleerd. Nu installatieplan afronden en één update, daarna echte verbetering en later gebruik. Hoofdafrondingen ongewijzigd.",
+      "summary": "Volledig goal actief. Toepassingsroute geïnstalleerd en onafhankelijk goedgekeurd. Concrete invoer van de begrensde verbetercyclus wordt gecontroleerd; die uitvoering is nog niet gestart. Hoofdafrondingen ongewijzigd.",
       "nextOutcomes": [
         {
-          "title": "Nu · Volledige AIDE²- en droomcyclus",
-          "detail": "De bronkoppeling draait. Twee installatiepakketten voor kern en werker zijn gebouwd: alleen toepassingscode verandert; 337 andere kernmodules en 335 werkermodules blijven gelijk. Vaste ontwikkel- en afzonderlijke eindcriteria zijn voorbereid. Nu wordt het installatieplan gebundeld gecontroleerd en volgt één update. Daarna maakt Eva varianten van haar eigen hulpmiddel, past alleen aantoonbare winst toe en gebruikt die later. Nog geen nieuwe kwaliteitswinst of afgeronde AIDE²."
+          "title": "Nu · Echte AIDE²-verbetercyclus",
+          "detail": "Toepassingsroute geïnstalleerd en onafhankelijk goedgekeurd: kern, werker en beoordelaar gezond. Eén vooraf vastgelegde hulpmiddelverbetering is voorbereid (decimalen naast gehele minuten). De automatische controle blokkeerde de gebundelde voorbereiding met “blocked by policy”, zonder nadere reden; geen Eva-modelaanvraag of kandidaat gestart. Nu controle van de concrete invoerbinding en vaste grenzen. Daarna varianten vergelijken, onafhankelijke eindbeoordeling, toepassing alleen bij winst en later gebruik."
         },
         {
           "title": "Daarna · Passend initiatief en samenhangend dagelijks gebruik",
@@ -1021,8 +1021,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T19:06:20.157952+00:00",
+        "checkedAt": "2026-10-11T19:16:34.197623+00:00",
         "deliveries": [
+          {
+            "title": "Toepassingsroute voor beoordeelde hulpmiddelverbeteringen geïnstalleerd",
+            "date": "2026-10-11T19:12:56.743377+00:00",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "technicalOutcomeCompleted": true,
+            "completionScope": "Existing fixed saved-helper development/final comparison and reviewed application route installed; actual native gain and later use remain open.",
+            "result": "Kern en werker eenmaal bijgewerkt; beoordelaar met vaste criteria actief. Exacte twee gewijzigde runtimebronnen gecontroleerd; 337/335 overige modules, omgevingswaarden, mounts en gegevens behouden.",
+            "remaining": "Echte variantvergelijking, onafhankelijke kwaliteitswinst, daadwerkelijke toepassing en later gebruik. Agentaansturing/droommodus en gezinsacceptatie blijven open.",
+            "source": "eva2/evidence/product/saved-artifact-application-installed-20261011.json",
+            "review": "eva2/reviews/saved-artifact-application-installed-review-20261011.json",
+            "independentReview": "GO voor exact geïnstalleerde route; nog geen kwaliteitswinst, toepassing of later gebruik.",
+            "usage": "0 nieuwe handmatige Eva-modelaanvragen of concurrentieproeven; ontwikkelcredits onbekend."
+          },
           {
             "title": "Toepassing van beoordeelde hulpmiddelverbeteringen verpakt",
             "date": "2026-10-11T19:06:20.157952+00:00",
@@ -4633,20 +4647,20 @@
           }
         ],
         "now": {
-          "title": "AIDE² · toepassingsroute installeren",
-          "detail": "De bronkoppeling draait. Twee installatiepakketten voor kern en werker zijn gebouwd: alleen toepassingscode verandert; 337 andere kernmodules en 335 werkermodules blijven gelijk. Vaste ontwikkel- en afzonderlijke eindcriteria zijn voorbereid. Nu wordt het installatieplan gebundeld gecontroleerd en volgt één update. Daarna maakt Eva varianten van haar eigen hulpmiddel, past alleen aantoonbare winst toe en gebruikt die later. Nog geen nieuwe kwaliteitswinst of afgeronde AIDE².",
+          "title": "AIDE² · invoer voor echte verbetering controleren",
+          "detail": "Toepassingsroute geïnstalleerd en onafhankelijk goedgekeurd: kern, werker en beoordelaar gezond. Eén vooraf vastgelegde hulpmiddelverbetering is voorbereid (decimalen naast gehele minuten). De automatische controle blokkeerde de gebundelde voorbereiding met “blocked by policy”, zonder nadere reden; geen Eva-modelaanvraag of kandidaat gestart. Nu controle van de concrete invoerbinding en vaste grenzen. Daarna varianten vergelijken, onafhankelijke eindbeoordeling, toepassing alleen bij winst en later gebruik.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/saved-artifact-application-packaged-20261011.json",
-          "review": "eva2/reviews/saved-artifact-application-source-review-20261011.json",
+          "source": "eva2/evidence/product/saved-artifact-native-improvement-criteria-20261011.json",
+          "review": "eva2/reviews/saved-artifact-application-installed-review-20261011.json",
           "doneWhen": "Een echte kandidaat haalt de vaste kwaliteitscriteria, wordt onafhankelijk beoordeeld, via de bestaande route bewaard en bij een latere gewone opdracht daadwerkelijk gebruikt. Zonder aantoonbare verbetering blijft de huidige versie behouden.",
-          "evidence": "eva2/evidence/product/saved-artifact-application-packaged-20261011.json",
-          "phase": "packaged_pending_installation_plan_review"
+          "evidence": "eva2/evidence/product/saved-artifact-application-installed-20261011.json",
+          "phase": "native_input_binding_review"
         },
         "next": {
-          "title": "Daarna · echte verbetering en later gebruik",
-          "detail": "Eva vergelijkt maximaal drie ontwikkelvarianten van één bewaard hulpmiddel. Eén onafhankelijke eindbeoordeling bepaalt of de beste versie wordt toegepast. Daarna één andere gewone opdracht met dat hulpmiddel; vervolgens agentaansturing, droomplanning en passend initiatief.",
+          "title": "Daarna · agentaansturing en droomplanning",
+          "detail": "Dezelfde verbeterroute gebruiken voor aantoonbaar betere agentaansturing; rustig geplande verbetering en passend initiatief verbinden aan de bestaande geheugen- en uitvoerroute. Geen nieuw platform of concurrentieserie.",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md"
@@ -4654,14 +4668,14 @@
         "ownerAction": {
           "required": false,
           "title": "Geen handeling van jou nodig",
-          "detail": "Geen handeling van jou nodig. Codex rondt de installatie af; Eva doorloopt daarna de vastgelegde verbetercyclus.",
+          "detail": "Geen handeling van jou nodig. Codex controleert de concrete invoer voor de vastgelegde verbetercyclus; de geïnstalleerde route blijft beschikbaar.",
           "steps": [],
           "expected": "Het dashboard toont apart wat draait, wat in aanbouw is en wat nog niet bewezen is.",
           "blocksIndependentWork": false,
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T19:06:20.157952+00:00",
+        "reviewedAt": "2026-10-11T19:16:34.197623+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4723,8 +4737,8 @@
           "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
         }
       },
-      "reviewedAt": "2026-10-11T19:06:20.157952+00:00",
-      "checkedAt": "2026-10-11T19:06:20.157952+00:00",
+      "reviewedAt": "2026-10-11T19:16:34.197623+00:00",
+      "checkedAt": "2026-10-11T19:16:34.197623+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11017,7 +11031,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-11T19:06:20.157952+00:00",
+        "checkedAt": "2026-10-11T19:16:34.197623+00:00",
         "basis": "Geaccepteerde oorspronkelijke functies behouden. Feedback later toegepast en zelf code maken/later gebruiken bewezen. Bronkoppeling voor verbetering van eigen hulpmiddelen geïnstalleerd; de volledige AIDE²-cyclus nog open.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11068,8 +11082,8 @@
             "name": "Zelfstandig werk",
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
-            "result": "Algemene HA/documentuitvoering geïnstalleerd. Eva maakt zelf een ontbrekend hulpmiddel, bewaart en gebruikt dezelfde bron bij een andere opdracht. Eigen bewaarde Python-hulpmiddelen zijn nu aangesloten op de bestaande verbeterroute; volledige AIDE²-toepassing nog open. Gewone eigenaar-privétekst gebruikt Eva2 zonder /eva2.",
-            "remaining": "Vaste beoordeling en toepassing van de betere hulpmiddelversie, later verbeterd gebruik, agentaansturing en droomplanning afmaken. Dagelijks gezinsgebruik en vervangingsvoorwaarden blijven apart.",
+            "result": "Algemene HA/documentuitvoering geïnstalleerd. Eva maakt zelf een hulpmiddel en gebruikt dezelfde bron later. De vaste variantbeoordeling en route om een betere hulpmiddelversie te bewaren zijn nu geïnstalleerd; echte kwaliteitswinst en toepassing volgen. Gewone eigenaar-privétekst gebruikt Eva2 zonder /eva2.",
+            "remaining": "Echte hulpmiddelverbetering, onafhankelijk eindresultaat, toepassing en later gebruik; daarna agentaansturing, droomplanning, dagelijks gezinsgebruik en vervangingsvoorwaarden.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11084,12 +11098,13 @@
               "eva2/evidence/product/ability-reuse-task-deadline-installed-20261011.json",
               "eva2/evidence/product/ability-create-later-reuse-result-20261011.json",
               "eva2/reviews/ability-create-later-reuse-final-review-20261011.json",
-              "eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json"
+              "eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json",
+              "eva2/evidence/product/saved-artifact-application-installed-20261011.json"
             ]
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T19:06:20.157952+00:00",
+      "lastUpdatedAt": "2026-10-11T19:16:34.197623+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
