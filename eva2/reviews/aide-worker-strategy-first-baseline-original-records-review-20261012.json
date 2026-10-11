@@ -1,0 +1,138 @@
+{
+  "contract": "EvaWorkerStrategyOriginalBaselineRecordsReview/v1",
+  "reviewedAt": "2026-10-11T23:09:55.320085+00:00",
+  "verdict": "GO",
+  "scope": "Exact wire-close export correction, preserved first-baseline records, one record-only reseal and bounded publication.",
+  "openBlockers": [],
+  "sourceReview": {
+    "verdict": "GO",
+    "originalHttpCloseShape": {
+      "closed": true
+    },
+    "sameOriginalIdentityAndProgrammingSessionRequired": true,
+    "booleanTrueRequired": true,
+    "existingServiceSource": "eva2/src/eva/operations/component_evaluation_service.py:167",
+    "existingCloseImplementation": "eva2/src/eva/operations/programming_workspace.py:439",
+    "targetedChecks": {
+      "passed": 2,
+      "unittestSeconds": 0.028,
+      "reviewerRerun": false
+    }
+  },
+  "recoveryReview": {
+    "verdict": "GO",
+    "performedByRoot": true,
+    "reviewedBeforeExecution": true,
+    "exactOriginalInputsVerified": 13,
+    "originalBytesAndLedgerUnchanged": true,
+    "sealedArtifactEqualsIndependentPreRecoveryView": true,
+    "outputCreation": "two exclusive owner-root mode0400 exports",
+    "newModelRequests": 0,
+    "newNativeChecks": 0,
+    "newToolDispatches": 0,
+    "newAdmissions": 0,
+    "terminalStateAndErrorPreserved": true
+  },
+  "baselineTask": {
+    "verdict": "NOT_MET",
+    "nativeState": "failed",
+    "nativeErrorCode": "budget_exceeded",
+    "completedTasks": 0,
+    "programWrittenAndIndependentlyReadBack": true,
+    "programSha256": "024c9a1cea1175fb5edf140eaf051277c9ef031bd6bb445ea6f8c5bb77a0a252",
+    "nativeProgramExecutions": 0,
+    "resultFilePresent": false,
+    "sourceBehaviorChecksPassed": 3,
+    "sourceBehaviorChecksTotal": 3,
+    "sourceChecksProveCompletedTask": false,
+    "originalCleanupVerified": true,
+    "humanAssistance": 0,
+    "classification": "A measured terminal task loss; export shape mismatch is a separate producer defect.",
+    "wholeDevelopmentBaselineAssessmentComplete": false
+  },
+  "usage": {
+    "physicalProviderRequests": 4,
+    "physicalUsageCompleteForThisCase": true,
+    "roles": [
+      {
+        "role": "work",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "medium",
+        "requests": 4
+      }
+    ],
+    "inputTokens": 38509,
+    "outputTokens": 438,
+    "totalTokens": 38947,
+    "nativeToolActions": 4,
+    "existingIsolatedSourceChecks": 3,
+    "sharedLedgerToolCount": 7,
+    "storedWorkMeasurement": "partial",
+    "storedWorkMeasurementUnchanged": true,
+    "creditCost": null,
+    "developmentCreditCost": null
+  },
+  "remainingRecordedResources": {
+    "providerAttempts": 38,
+    "toolCalls": 63,
+    "measuredTokenAllowance": 161053,
+    "ledgerReset": false,
+    "snapshotOnlyNotNewAdmission": true,
+    "tokenAllowanceIsMeasuredStopAndAcceptanceBoundNotGuaranteedInFlightCeiling": true
+  },
+  "publicationReview": {
+    "verdict": "GO",
+    "firstObservationClaimsMatchPreservedRecords": true,
+    "sourceChecksTaskCompletionAndExportCorrectionRemainSeparate": true,
+    "noNewProductCompletionQualityGainOrFullAide2Claim": true,
+    "finalResultClaimsMatchOriginalObservationAndVerifiedRecovery": true,
+    "finalResultBindingReviewedAt": "2026-10-11T23:10:38.246793+00:00",
+    "comparisonScope": "Final-result editorial delta only; no additional source, test or native review."
+  },
+  "bindings": {
+    "wireCloseSourceDeltaSha256": "8b2122eee5f49dd4803abce416f26956efc5d43f9f2144d125b1b26727d3cd8f",
+    "producerSourceFiles": {
+      "physical_guard.py": "4e1bc3dc1a4216d198625bb32adb39308e794703556ce31f508c5bb5d98bcb98",
+      "composition_entry.py": "1a64c0975b29fbac5282d0f1a5a605568f0bd2d0ed4fa67b8366dc07a5d8ce0d",
+      "host_producer.py": "f941a05d0a51be1e89e75d6fee4d9b9c436d7c69f09b89e0c1abfc35da5b2762"
+    },
+    "producerTestSha256": "7919961243b07862aa60b15ad85e2fbcda088f9a8d9ec1637160557be2664241",
+    "sourceTestLogSha256": "53983354fe2601b405f7654a5e93f9ad3198c48f11fba37daeedefc7deeecca0",
+    "recordOnlyRecoveryScriptSha256": "5f37ea0ab1d0d31a051557aa5a3b66a7fc9d4fbc03ab030a355b8d7a010bb586",
+    "sealedRunSha256": "1a06fa7ebc1f02578e2ad453cdee0f3177f275cb1d526dfad12112486d4ed008",
+    "recordOnlyRecoveryReceiptSha256": "a6f3936e72ad8924618eee7fbb7b63afc5f181ea55cd51dad7b7e7c85a3c268d",
+    "independentPrivateReviewSha256": "6b00bf15cad3c3e29ee128d8b20f5183cdd9b0dcf651325f0d4e519114abd5eb",
+    "originalRawSha256": "0468460885487d1e0918b042b32f277d891d03825012d6b3068b00b614c55505",
+    "originalSourceChecksSha256": "f409cc07b239ef48de367fab4cc5332721f1fbd10e89bd79023374159bae7751",
+    "originalReadbacksSha256": "f0ec07e327fba5580890ebfd5532fcedcf8dd49c0082b087d4b1b567fa707bc8",
+    "originalLedgerSha256": "e7aa4c59ee343b1f3f22c557a3aa892ae165466eda5133fd5604e8a12739aa8c",
+    "originalCommandLogSha256": "aa3880f30f3764b9f706b449f07f0c06fd3929956f51e28571da2777976d299e",
+    "publicObservationPath": "eva2/evidence/product/aide-worker-strategy-first-baseline-observation-20261012.json",
+    "publicObservationSha256": "c94099f138eafb6f61efacfc588fa61a1c471e9f4b797ac3672df8cec5a7b96e",
+    "fixedSharedScorerSha256": "290ec36fcc8316826bdefb940bbcb0a310ee1ae198974de260e459a9f9964ffe",
+    "unchangedDevelopmentCasesSha256": "20df6b3781776ff768255de62cc6302c5a78bf1dccdffe62b4d11262e9104d3d",
+    "publicFinalResultPath": "eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json",
+    "publicFinalResultSha256": "5c1d42b2b886356fc6c3b0acd42b66c8f2d50a6489d224dbb134ad1862fa6f6e"
+  },
+  "reviewerActivities": {
+    "nativeCalls": 0,
+    "providerCalls": 0,
+    "programOrCheckExecutions": 0,
+    "testReruns": 0,
+    "purePreservedRecordPerCaseAnalysis": true
+  },
+  "preparationError": {
+    "correction": "actual schema keys read; immutable inputs rechecked",
+    "effects": 0,
+    "field": "physical_requests.status",
+    "kind": "metadata_key_assumption"
+  },
+  "phaseAuthority": {
+    "secondBaselineAdmittedByThisReview": false,
+    "candidateFinalOrLaterAdmittedByThisReview": false,
+    "originalReviewAndAdmissionControlUnchanged": true,
+    "wholeProjectGoalActive": true,
+    "fullAide2Completed": false,
+    "speechParked": true
+  }
+}

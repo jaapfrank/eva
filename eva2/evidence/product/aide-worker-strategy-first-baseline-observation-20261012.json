@@ -1,0 +1,64 @@
+{
+  "contract": "EvaWorkerStrategyFirstBaselineObservation/v1",
+  "recordedAt": "2026-10-11T23:06:23.469332+00:00",
+  "status": "native_failed_export_correction_reviewed",
+  "caseId": "dev-simple-programming",
+  "leg": "baseline",
+  "stage": "development",
+  "nativeOutcome": {
+    "state": "failed",
+    "errorCode": "budget_exceeded",
+    "completedUserTask": false,
+    "nativeProgramExecutions": 0,
+    "resultFilePresent": false,
+    "programWritten": true
+  },
+  "independentSourceChecks": {
+    "passed": 3,
+    "total": 3,
+    "completedUserTaskProven": false
+  },
+  "usage": {
+    "complete": true,
+    "providerRequests": 4,
+    "inputTokens": 38509,
+    "outputTokens": 438,
+    "totalTokens": 38947,
+    "nativeToolActions": 4,
+    "isolatedCheckExecutions": 3,
+    "sharedLedgerToolCount": 7,
+    "creditCost": null,
+    "codexDevelopmentUsage": null
+  },
+  "originalCloseProof": {
+    "present": true,
+    "identityAndSessionBound": true,
+    "response": {
+      "closed": true
+    }
+  },
+  "exportCorrection": {
+    "cause": "Host exporter expected the internal close shape instead of the original successful HTTP close response.",
+    "review": "Independent reviewer approved exact source correction and original-record-only export.",
+    "performed": false,
+    "manifestSha256": "8b2122eee5f49dd4803abce416f26956efc5d43f9f2144d125b1b26727d3cd8f"
+  },
+  "originalEvidence": {
+    "rawSha256": "0468460885487d1e0918b042b32f277d891d03825012d6b3068b00b614c55505",
+    "checksSha256": "f409cc07b239ef48de367fab4cc5332721f1fbd10e89bd79023374159bae7751",
+    "readbacksSha256": "f0ec07e327fba5580890ebfd5532fcedcf8dd49c0082b087d4b1b567fa707bc8",
+    "commandLogSha256": "aa3880f30f3764b9f706b449f07f0c06fd3929956f51e28571da2777976d299e"
+  },
+  "remaining": {
+    "baselineSecondStarted": false,
+    "candidateStarted": false,
+    "independentFinalStarted": false,
+    "laterUseStarted": false,
+    "fullAide2Completed": false,
+    "productFunctionCompleted": false,
+    "wholeProjectGoalActive": true
+  },
+  "noNewComparisonSeries": true,
+  "speechParked": true,
+  "ownerActionRequired": false
+}

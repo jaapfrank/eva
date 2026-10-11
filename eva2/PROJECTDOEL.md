@@ -10,48 +10,33 @@ sluit dit goal niet af.
 
 ## Actuele uitvoerfase — 12 oktober 2026
 
-De bronafbakening voor werkaanpakvarianten is eenmaal geïnstalleerd. De
-standaardwerkinstructie blijft letterlijk gelijk; alleen haar ene tekstbody mag
-later variëren, met alle overige bronbytes en bevoegdheden behouden.
-41 bron-/importercontroles en een afzonderlijke run van 65 taakbewijscontroles
-slagen. Geen claim van 106 unieke tests.
+De eerste vaste programmeertaak is uitgevoerd en onafhankelijk beoordeeld:
+0/1 afgeronde opdracht, 3/3 afzonderlijke bronchecks, geen menselijke hulp.
+Eva schreef correcte code, maar voerde het programma niet uit en leverde geen
+result.json. De oorspronkelijke proefgrens van vier aanvragen werd bereikt.
+Volledig fysiek gemeten: 38.509 invoer + 438 uitvoer = 38.947 tokens; vier native
+acties en drie reeds uitgevoerde geïsoleerde checks. De opgeslagen partial-vlag
+blijft apart van de volledige fysieke usage. Geen algemeen kwaliteitsoordeel.
 
-Kern en taakwerker draaien met de exacte bron; 339/337 overige Pythonmodules
-zijn gelijk. De bestaande hostbeoordelaar bevat twee exacte gewijzigde modules
-en 17 behouden modules. Configuratie, beide netwerken, mounts, budget en mandaat
-behouden; alle 1.910 oude bestanden bytegelijk. De optionele echte-taakbeoordeling
-is nog inactief en er is geen nieuwe ronde geregistreerd. Onafhankelijke bron-
-en installatiereview zijn GO voor deze exacte aansluiting.
+De sessie was aantoonbaar gesloten. De exporter herkende de werkelijke HTTPvorm
+niet; dat is gericht gecorrigeerd. De oorspronkelijke records zijn eenmaal
+geëxporteerd en onafhankelijk gecontroleerd. Oude bytes en het taakverlies
+blijven behouden. Geen nieuwe modellen, native acties of programma-/checkuitvoering.
 
-Nog geen nieuwe modelproef of kwaliteitsverbetering. De volgende uitkomst:
-één echte variant van Eva's werkaanpak vergelijken op vaste programmeertaken,
-afzonderlijk beoordelen, alleen bij aantoonbare winst toepassen en bij later
-werk gebruiken. Eén baseline/één kandidaat; originele beoordeling en de
-afzonderlijke verbruiksbinding behouden. Geen nieuwe vergelijkingsserie.
+Nu het ontbrekende eindresultaat aanpakken: Eva moet het programma werkelijk
+uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor;
+geen herhaling van deze gesloten taak of nieuwe vergelijkingsserie. Kandidaat,
+volledige ontwikkel-/eindbeoordeling en later gebruik zijn nog niet gestart.
+De bestaande criteria en resterende proefmiddelen blijven gelden.
 
-Twee voorbereidingsfouten blijven bewaard: de proef miste aanvankelijk het
-tweede bestaande netwerk; de eerste omgevingscontrole vergeleek volgorde in
-plaats van unieke waarden. Dezelfde pakketten zijn gebruikt; geen rebuild,
-rollback of tweede installatie. Nul handmatige Eva-modelaanvragen voor deze
-bron/build/installatie; automatisch verbruik en ontwikkelcredits onbekend.
+De geïnstalleerde standaardwerkwijze is ongewijzigd. Het volledige projectgoal
+en volledige AIDE² blijven actief en open. Persoonlijkheid, geheugenbasis en
+39/48 oorspronkelijke kleine afrondingen behouden. Spraak geparkeerd.
+Geen handeling van Jaap nodig.
 
-De gewone initiatiefcyclus koos op 11 oktober om 23:34 passende stilte zonder
-blokkade. Dit bewijst een actieve cyclus, geen afgerond nieuw initiatief.
-Het volledige projectgoal blijft actief; persoonlijkheid, geheugenbasis,
-oude beoordelingen en 39/48 kleine afrondingen behouden. Geen spraakwerk of
-handeling van Jaap nodig.
-
-Bewijs: eva2/evidence/product/worker-strategy-boundary-installed-20261011.json.
-Bronreview: eva2/reviews/aide-worker-strategy-source-review-20261011.json.
-
-
-Een verdere gerichte hostbroncorrectie verwijdert twee circulaire afhankelijkheden
-uit de identiteit van de optionele taakbeoordeling. Haar vaste configuratie blijft
-bindend; originele referentiebestanden en alle vijf runtimevelden worden apart
-exact gecontroleerd. 71 gerichte checks en onafhankelijke bronreview GO. Nog niet
-geactiveerd: dezelfde toekomstige proefconfiguratie en de echte werkregistratie
-worden voorbereid. Geen nieuwe modelproef of kwaliteitswinst door deze correctie.
-Bewijs: eva2/evidence/product/aide-worker-strategy-assessment-identity-source-20261012.json.
+Resultaat: eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json.
+Review: eva2/reviews/aide-worker-strategy-first-baseline-original-records-review-20261012.json.
+Geïnstalleerde aansluiting: eva2/evidence/product/worker-strategy-boundary-installed-20261011.json.
 
 ## Actuele gebruikersuitkomst — eigen hulpmiddel verbeteren en later gebruiken
 

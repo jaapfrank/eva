@@ -1,58 +1,54 @@
-## Actueel werk — 2026-10-11T22:42:05.963790+00:00
+## Actueel werk — 2026-10-11T23:11:35.024002+00:00
 
-**Laatst opgeleverd:** bronafbakening voor werkaanpakvarianten geïnstalleerd;
-de standaardwerkwijze blijft gelijk.
+**Laatst opgeleverd:** eerste werkaanpakproef beoordeeld en rapportexport
+hersteld. Geen nieuwe productfunctie afgerond.
 
-**Nu:** de vaste taken en dezelfde uitvoerconfiguratie voor beide werkaanpakken
-liggen klaar. De onafhankelijke reviewer controleert de echte uitvoerder vóór
-de eerste modelaanvraag. De modelproef is nog niet gestart.
+**Uitkomst:** 0/1 afgeronde opdracht. De bron is correct (3/3 aparte checks),
+maar geen native uitvoering of eindbestand. Vier modelaanvragen: 38.947 tokens.
+De oorspronkelijke sessie was al gesloten; oude bewijsbytes zijn behouden.
+De exporter is hersteld zonder nieuwe modellen, acties of checks.
 
-**Einduitkomst:** alleen echte kwaliteitswinst toepassen en bij later werk gebruiken.
-Een foutloze referentie zonder benodigde hulp stopt deze steekproef; een gelijkspel
-behoudt de huidige versie. Geen nieuwe vergelijkingsserie.
+**Nu/volgende:** Eva moet het geschreven programma uitvoeren en het gevraagde
+resultaat opleveren. Het bestaande taakspoor gebruiken voor een gerichte
+verbetering; deze gesloten taak niet herhalen. Kandidaat, volledige
+eindbeoordeling en later gebruik zijn nog niet gestart.
 
-**Van Jaap nodig:** geen handeling. Het volledige projectgoal blijft actief.
+**Van Jaap nodig:** niets. Het volledige projectgoal blijft actief.
 Persoonlijkheid, geheugenbasis en 39/48 oorspronkelijke kleine afrondingen behouden;
 de volledige leercyclus en AIDE² blijven open. Spraak geparkeerd.
 
-**Dashboard:** dit is opgeslagen voortgang met de hierboven genoemde controletijd.
-Geen nieuwe hoofdfunctie als afgerond gemarkeerd.
+**Dashboard:** actuele opgeslagen stand met bovenstaande controletijd.
+De oorspronkelijke taakmislukking blijft zichtbaar.
 
 ## Actuele uitvoerfase — 12 oktober 2026
 
-De bronafbakening voor werkaanpakvarianten is eenmaal geïnstalleerd. De
-standaardwerkinstructie blijft letterlijk gelijk; alleen haar ene tekstbody mag
-later variëren, met alle overige bronbytes en bevoegdheden behouden.
-41 bron-/importercontroles en een afzonderlijke run van 65 taakbewijscontroles
-slagen. Geen claim van 106 unieke tests.
+De eerste vaste programmeertaak is uitgevoerd en onafhankelijk beoordeeld:
+0/1 afgeronde opdracht, 3/3 afzonderlijke bronchecks, geen menselijke hulp.
+Eva schreef correcte code, maar voerde het programma niet uit en leverde geen
+result.json. De oorspronkelijke proefgrens van vier aanvragen werd bereikt.
+Volledig fysiek gemeten: 38.509 invoer + 438 uitvoer = 38.947 tokens; vier native
+acties en drie reeds uitgevoerde geïsoleerde checks. De opgeslagen partial-vlag
+blijft apart van de volledige fysieke usage. Geen algemeen kwaliteitsoordeel.
 
-Kern en taakwerker draaien met de exacte bron; 339/337 overige Pythonmodules
-zijn gelijk. De bestaande hostbeoordelaar bevat twee exacte gewijzigde modules
-en 17 behouden modules. Configuratie, beide netwerken, mounts, budget en mandaat
-behouden; alle 1.910 oude bestanden bytegelijk. De optionele echte-taakbeoordeling
-is nog inactief en er is geen nieuwe ronde geregistreerd. Onafhankelijke bron-
-en installatiereview zijn GO voor deze exacte aansluiting.
+De sessie was aantoonbaar gesloten. De exporter herkende de werkelijke HTTPvorm
+niet; dat is gericht gecorrigeerd. De oorspronkelijke records zijn eenmaal
+geëxporteerd en onafhankelijk gecontroleerd. Oude bytes en het taakverlies
+blijven behouden. Geen nieuwe modellen, native acties of programma-/checkuitvoering.
 
-Nog geen nieuwe modelproef of kwaliteitsverbetering. De volgende uitkomst:
-één echte variant van Eva's werkaanpak vergelijken op vaste programmeertaken,
-afzonderlijk beoordelen, alleen bij aantoonbare winst toepassen en bij later
-werk gebruiken. Eén baseline/één kandidaat; originele beoordeling en de
-afzonderlijke verbruiksbinding behouden. Geen nieuwe vergelijkingsserie.
+Nu het ontbrekende eindresultaat aanpakken: Eva moet het programma werkelijk
+uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor;
+geen herhaling van deze gesloten taak of nieuwe vergelijkingsserie. Kandidaat,
+volledige ontwikkel-/eindbeoordeling en later gebruik zijn nog niet gestart.
+De bestaande criteria en resterende proefmiddelen blijven gelden.
 
-Twee voorbereidingsfouten blijven bewaard: de proef miste aanvankelijk het
-tweede bestaande netwerk; de eerste omgevingscontrole vergeleek volgorde in
-plaats van unieke waarden. Dezelfde pakketten zijn gebruikt; geen rebuild,
-rollback of tweede installatie. Nul handmatige Eva-modelaanvragen voor deze
-bron/build/installatie; automatisch verbruik en ontwikkelcredits onbekend.
+De geïnstalleerde standaardwerkwijze is ongewijzigd. Het volledige projectgoal
+en volledige AIDE² blijven actief en open. Persoonlijkheid, geheugenbasis en
+39/48 oorspronkelijke kleine afrondingen behouden. Spraak geparkeerd.
+Geen handeling van Jaap nodig.
 
-De gewone initiatiefcyclus koos op 11 oktober om 23:34 passende stilte zonder
-blokkade. Dit bewijst een actieve cyclus, geen afgerond nieuw initiatief.
-Het volledige projectgoal blijft actief; persoonlijkheid, geheugenbasis,
-oude beoordelingen en 39/48 kleine afrondingen behouden. Geen spraakwerk of
-handeling van Jaap nodig.
-
-Bewijs: eva2/evidence/product/worker-strategy-boundary-installed-20261011.json.
-Bronreview: eva2/reviews/aide-worker-strategy-source-review-20261011.json.
+Resultaat: eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json.
+Review: eva2/reviews/aide-worker-strategy-first-baseline-original-records-review-20261012.json.
+Geïnstalleerde aansluiting: eva2/evidence/product/worker-strategy-boundary-installed-20261011.json.
 
 ## Actief volledig projectgoal — 11 oktober 2026
 

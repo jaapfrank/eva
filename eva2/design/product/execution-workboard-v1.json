@@ -125,15 +125,15 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Eva heeft zelf een hulpmiddel gemaakt, verbeterd en later hergebruikt. De uitvoerkoppeling en daggrenscorrectie voor eigen initiatief zijn geïnstalleerd; een nieuw zelfgekozen resultaat, volledige agentaansturing en gezinsgebruik blijven open.",
+      "summary": "Eerste programmeertaak beoordeeld: correcte bron, maar geen uitgevoerd programma of eindbestand. Vier modelaanvragen: 38.947 tokens. Rapportexport hersteld; geen herhaling. Volledige AIDE² en het project blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · aansturingsverbetering en eigen uitvoering",
-          "detail": "De terugkerende verbeterroute is geïnstalleerd en goedgekeurd. Eén begrensde onafhankelijke bronbeoordeling bepaalt de noodzakelijke huidige aansturingsverbetering. Oude context- en hulpmiddelproeven worden niet herhaald. Geen nieuwe betaalde proef gestart."
+          "title": "Nu · programma én resultaat afmaken",
+          "detail": "Eva moet het geschreven programma ook uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor voor een gerichte verbetering van de werkaanpak; geen nieuwe vergelijkingsserie. De eerste taak is beoordeeld en wordt niet herhaald."
         },
         {
           "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
-          "detail": "Een aantoonbare verbetering van de aansturing onafhankelijk beoordelen en toepassen met bestaande AIDE²-voorzieningen. Daarna herhaald passend initiatief, leren van de menselijke reactie en samenhangend gezinsgebruik afronden."
+          "detail": "Een aantoonbare verbetering van de werkaanpak onafhankelijk beoordelen, toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden."
         },
         {
           "title": "Eindpunt · Eén bruikbare digitale huisgenoot",
@@ -1021,8 +1021,35 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T22:42:05.963790+00:00",
+        "checkedAt": "2026-10-11T23:11:35.024002+00:00",
         "deliveries": [
+          {
+            "title": "Eerste werkaanpakproef: code correct, opdracht niet afgemaakt",
+            "date": "2026-10-11T23:11:35.024002+00:00",
+            "state": "comparison_failed",
+            "productFunctionCompleted": false,
+            "technicalOutcomeCompleted": false,
+            "completionScope": "One original baseline development task. No completed original user task, candidate or general comparison.",
+            "summary": "Eerste programmeertaak beoordeeld: correcte bron, maar geen uitgevoerd programma of eindbestand. Vier modelaanvragen: 38.947 tokens. Rapportexport hersteld; geen herhaling.",
+            "result": "Onder de oorspronkelijke proefgrens van vier aanvragen schreef Eva de juiste bron. Het programma werd niet uitgevoerd en result.json ontbreekt. Onafhankelijke beoordeling: 0/1 afgeronde opdracht, 3/3 aparte codecontroles, 0 menselijke hulpverzoeken. De echte sluitreceipt en volledig gemeten verbruik zijn behouden.",
+            "remaining": "Het afrondingstekort gericht verbeteren. Kandidaat, volledige ontwikkel-/eindbeoordeling en later gebruik zijn nog niet uitgevoerd; volledige AIDE² blijft open.",
+            "source": "eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json",
+            "review": "eva2/reviews/aide-worker-strategy-first-baseline-original-records-review-20261012.json",
+            "reviewSha256": "2a3ceba433df2e3dd8a520e3f4597c3186d77994cea073cedbaee24d150bb2db",
+            "independentReview": "GO voor exacte rapportexport en beperkte publicatie; NOT_MET voor de oorspronkelijke taak.",
+            "usage": "4 Astra/medium-aanvragen; 38.509 invoer + 438 uitvoer = 38.947 tokens. 4 native acties en 3 bestaande geïsoleerde checks, samen 7 getelde tools. Herstel: 0 nieuwe modelaanvragen. Creditkosten en ontwikkelverbruik onbekend.",
+            "children": [
+              {
+                "title": "Rapportexport hersteld uit oorspronkelijke bewijsbytes",
+                "state": "source_corrected",
+                "date": "2026-10-11T23:11:35.024002+00:00",
+                "result": "De echte gesloten HTTP-sessie was al vastgelegd. De exporter herkent deze vorm nu; uitsluitend bewaarde gegevens zijn geëxporteerd. Onafhankelijke review geslaagd. Geen nieuwe native uitvoering, checks of modelaanvragen.",
+                "remaining": "Dit herstel maakt de oorspronkelijke taak niet alsnog succesvol.",
+                "source": "eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json",
+                "review": "eva2/reviews/aide-worker-strategy-first-baseline-original-records-review-20261012.json"
+              }
+            ]
+          },
           {
             "title": "Werkagent klaargezet voor begrensde zelfverbetering",
             "date": "2026-10-11T22:02:59.718527+00:00",
@@ -4725,38 +4752,39 @@
           }
         ],
         "now": {
-          "title": "AIDE² · echte werkaanpak vergelijken",
+          "title": "AIDE² · het ontbrekende eindresultaat aanpakken",
           "state": "in_progress",
-          "phase": "aide_work_strategy_producer_review",
+          "phase": "aide_work_strategy_first_baseline_assessed",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root",
           "coordination": "/root",
-          "summary": "De vaste programmeertaken en beide uitvoerconfiguraties liggen klaar. De uitvoerder wordt onafhankelijk gecontroleerd vóór de eerste modelaanvraag.",
-          "detail": "Eén huidige werkaanpak en maximaal één kandidaat. De modelproef is nog niet gestart. Alleen aantoonbare kwaliteitswinst wordt toegepast; een foutloze referentie zonder hulp stopt deze proef. Geen nieuwe hoofdfunctie afgerond.",
-          "source": "eva2/evidence/product/aide-worker-strategy-execution-readiness-20261012.json",
+          "summary": "Eerste programmeertaak beoordeeld: correcte bron, maar geen uitgevoerd programma of eindbestand. Vier modelaanvragen: 38.947 tokens. Rapportexport hersteld; geen herhaling.",
+          "detail": "De oorspronkelijke proef is afgesloten als niet gehaald. Drie aparte codecontroles slagen, maar bewijzen geen afgeronde opdracht. Onafhankelijke beoordeling en export zijn gereed; de bestaande gegevens en oorspronkelijke taakmislukking zijn behouden. Geen kandidaat of nieuwe native uitvoering gestart.",
+          "source": "eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json",
           "doneWhen": "Improve real agent control via the existing variant/development/independent-final/application route and prove use in later ordinary work.",
-          "review": "/root/product_execution_memory_review"
+          "review": "eva2/reviews/aide-worker-strategy-first-baseline-original-records-review-20261012.json",
+          "reviewSha256": "2a3ceba433df2e3dd8a520e3f4597c3186d77994cea073cedbaee24d150bb2db"
         },
         "next": {
-          "title": "Werkaanpak verbeteren en daarna toepassen",
-          "detail": "Een concrete tekortkoming van Eva's aansturing met vaste ontwikkel- en onafhankelijke eindcriteria verbeteren, de winnaar toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden.",
+          "title": "Programma uitvoeren en resultaat echt opleveren",
+          "detail": "Werk vanuit deze aangetoonde ontbrekende afronding. Volgende begrensde uitvoering alleen als zij een concrete productverbetering toetst binnen de bestaande criteria en resterende middelen. Alleen een betere kandidaat toepassen en daarna gebruiken.",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md",
-          "summary": "Een zinvolle proef vooraf vastleggen; alleen een aantoonbaar betere werkinstructie installeren en in later werk laten gebruiken."
+          "summary": "Eva moet het geschreven programma ook uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor voor een gerichte verbetering van de werkaanpak; geen nieuwe vergelijkingsserie."
         },
         "ownerAction": {
           "required": false,
           "title": "Geen handeling van jou nodig",
-          "detail": "Codex volgt de eigen uitvoering van Eva en werkt het werkelijke resultaat bij. Je hoeft deze technische correctie niet zelf te testen.",
+          "detail": "Codex behandelt het technische afrondingstekort. De eerste proef en rapportexport zijn afgesloten; je hoeft die niet zelf te testen.",
           "steps": [],
           "expected": "Het dashboard toont apart wat draait, wat in aanbouw is en wat nog niet bewezen is.",
           "blocksIndependentWork": false,
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T22:25:28.832363+00:00",
+        "reviewedAt": "2026-10-11T23:11:35.024002+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4833,8 +4861,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-11T22:25:28.832363+00:00",
-      "checkedAt": "2026-10-11T22:42:05.963790+00:00",
+      "reviewedAt": "2026-10-11T23:11:35.024002+00:00",
+      "checkedAt": "2026-10-11T23:11:35.024002+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11127,7 +11155,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-11T21:30:19.820101+00:00",
+        "checkedAt": "2026-10-11T23:11:35.024002+00:00",
         "basis": "Geaccepteerde oorspronkelijke functies behouden. Feedback bij nieuw werk toegepast. Eva heeft zelf code gemaakt, verbeterd, onafhankelijk laten toetsen en later dezelfde verbeterde bron gebruikt. Volledige agentaansturing/droomcyclus nog open.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11207,7 +11235,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T21:32:56.093030+00:00",
+      "lastUpdatedAt": "2026-10-11T23:11:35.024002+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11651,9 +11679,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "De terugkerende verbeterroute is geïnstalleerd en goedgekeurd. Eén begrensde onafhankelijke bronbeoordeling bepaalt de noodzakelijke huidige aansturingsverbetering. Oude context- en hulpmiddelproeven worden niet herhaald. Geen nieuwe betaalde proef gestart.",
-      "currentEvidence": "eva2/evidence/product/aide-agent-harness-next-outcome-scope-20261011.json",
-      "nextStep": "Een concrete tekortkoming van Eva's aansturing met vaste ontwikkel- en onafhankelijke eindcriteria verbeteren, de winnaar toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden.",
+      "currentWork": "Eva moet het geschreven programma ook uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor voor een gerichte verbetering van de werkaanpak; geen nieuwe vergelijkingsserie.",
+      "currentEvidence": "eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json",
+      "nextStep": "Werk vanuit deze aangetoonde ontbrekende afronding. Volgende begrensde uitvoering alleen als zij een concrete productverbetering toetst binnen de bestaande criteria en resterende middelen. Alleen een betere kandidaat toepassen en daarna gebruiken.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -31074,7 +31102,13 @@
       "newQualityImprovementProven": false,
       "fullAide2Completed": false,
       "installedReview": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json",
-      "installedReviewSha256": "964895d986d68cebe786c212bc696cbf2230b27cb843e53ee4f68434484ba51c"
+      "installedReviewSha256": "964895d986d68cebe786c212bc696cbf2230b27cb843e53ee4f68434484ba51c",
+      "currentBaselineEvidence": "eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json",
+      "currentBaselineCompleted": false,
+      "currentBaselineMeasuredTokens": 38947,
+      "currentBaselineReview": "eva2/reviews/aide-worker-strategy-first-baseline-original-records-review-20261012.json",
+      "currentBaselineReviewSha256": "2a3ceba433df2e3dd8a520e3f4597c3186d77994cea073cedbaee24d150bb2db",
+      "originalRecordsExportRecovered": true
     },
     "componentImprovementRoundsInstalled20261011": {
       "checkedAt": "2026-10-11T21:26:23.928821+00:00",
@@ -31143,8 +31177,8 @@
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
     },
-    "checkedAt": "2026-10-11T22:42:05.963790+00:00",
-    "reviewedAt": "2026-10-11T22:25:28.832363+00:00"
+    "checkedAt": "2026-10-11T23:11:35.024002+00:00",
+    "reviewedAt": "2026-10-11T23:11:35.024002+00:00"
   },
   "activeTaskId": "AU-008",
   "maxActiveImplementationTasks": 1,
@@ -33615,5 +33649,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T22:42:05.963790+00:00"
+  "updatedAt": "2026-10-11T23:11:35.024002+00:00"
 }

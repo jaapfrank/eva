@@ -1,0 +1,142 @@
+{
+  "contract": "EvaWorkerStrategyProducerInputIndependentReview/v1",
+  "checkedAt": "2026-10-11T22:56:55Z",
+  "verdict": "GO",
+  "verdictScope": "Frozen private producer and exactly two baseline development inputs. This is input readiness, not quality, final-assessment, candidate, installation or full AIDE2 completion.",
+  "openBlockers": [],
+  "inputAdmission": {
+    "phase": "baseline_development_only",
+    "controlPath": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/producer/reviewed-root-baseline-control.private.json",
+    "controlSha256": "33553a080c540c35802e127e99323971447cc5a35522ce60c8b69ce13d38eaec",
+    "deltaKeys": [
+      "execution_admitted",
+      "admitted_case_keys"
+    ],
+    "admittedCaseKeys": [
+      "baseline:development:dev-simple-programming",
+      "baseline:development:dev-multistep-programming"
+    ],
+    "constructionAdmitted": false,
+    "candidateDevelopmentAdmitted": false,
+    "independentFinalAdmitted": false,
+    "laterOrdinaryAdmitted": false,
+    "caseRetryAdmitted": false
+  },
+  "bindings": {
+    "producerFiles": {
+      "physical_guard.py": "4e1bc3dc1a4216d198625bb32adb39308e794703556ce31f508c5bb5d98bcb98",
+      "composition_entry.py": "1a64c0975b29fbac5282d0f1a5a605568f0bd2d0ed4fa67b8366dc07a5d8ce0d",
+      "host_producer.py": "d90fcee9cbe746456c83f318d8576e9367be9543bb7765f47df9fd41f86c8de8"
+    },
+    "preparationV2Sha256": "eb1bddbdf3653d6e4a45f99662f963e94ffe2bbf4f0cac782d9d69db8874f6d1",
+    "terminalLossDeltaSha256": "50cb3076fabae67003d1616194948776d0f8b5166c8ec4835f693265b7eaf897",
+    "knownLossFinalDeltaSha256": "2f389b5ba071daa910cec8e37193d232879c0e15927ac6d1f46c53887958af56",
+    "inactiveControlSha256": "a82285f6c0e4b51e2a0fc8f1f97d908988ce969499c5dfaebb3f1627dca52737",
+    "runtimeBindingSha256": "a90df551631f61a61e55c60fbc86ff8e67bcbccaec48e3858de7f72cc3d1206b",
+    "fixedCaseRegistrySha256": "09d76eb251480a500c94b1cd37fec97716a585ed676e37a37ebe5eec23994d1e",
+    "futureClientSha256": "b84cb43135944d70ce158a6838649d8ca44856e4c55c70337eb3b9a380698fcc",
+    "futureFactoryProbeSha256": "f516b94751a6f692b0f39f8cadd018b9dedcd5ffb84aff18e1151b13e6375fda",
+    "boundDevelopmentSuiteSha256": "ce1a5fab4da58261fd758d1cdff4d6d972ef9fe5ccfd7cec425c77b642a9a4ac",
+    "developmentIngressSha256": "47bec36646b6ea52e1effc261c8f89d2452ad321058b8e4a6a49bb8e38cf8079",
+    "developmentCheckInputsSha256": "219afde8de48620f4aaffb56576d9a3e606f010493653700c75024ea1e9cd729",
+    "independentFinalIdentityManifestSha256": "0277fd6e98f9f183f1a320499da259bb5965df95df2725041e33449218178857",
+    "originalScopeSha256": "dc0d8376ae0491ca6b2a7a018945cf26fc80de3fb2982f28ff331d428a562394",
+    "originalManifestSha256": "59ccbd3e7c3c23e455a02316699ee93b2fe2d983cece302fc26b154583e24bc7",
+    "resourceDecisionSha256": "c84844528f02a744b7e2779ec31db8b4ffb93669893f3a8137e3084004305c82",
+    "resourcePrivateBindingSha256": "dcc4084ed62480dc8173b6e8d05102c05e47bb7acdc0665554e29ccfcd14a6c7",
+    "baselineSourceSha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+    "baselineStrategySha256": "3ff1b6434378ff93387accb0255ac5a066828dc7d79fc7fba48779ce2fa960a0",
+    "futureRuntimeRelease": {
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "model_profile_release_sha256": "6f659313d96f5fd7e7bffbc3091947c6cfa2eaad8e515fc6787e2210e8d73bf3",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+      "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+      "worker_program_sha256": "009871cde73c6d3ae6a59a6e6ab5417729afdb2cac6e035e7d270d08ba705d42"
+    },
+    "coreImage": "sha256:d0667cb6c18a237f7b2f36d3db1a6b3deb6f74b60051e08105d3633ba7b22085",
+    "workerImage": "sha256:a30db3ee9a157588d1f1e98b31c7816763151c38e84a48c1b7747767f4680e7d",
+    "rootReadinessEvidencePath": "eva2/evidence/product/aide-worker-strategy-execution-readiness-20261012.json",
+    "rootReadinessEvidenceSha256": "7ca4ecf3f8ca5b5c9e14346ed668e83e5b9f201a4b29bf738a6ef86239298d0d",
+    "boardSha256AtRead": "77fc3d936937cf9e47db7284840477fd1e82b827ce90fa667b8ffc553bb12754",
+    "reviewerPureBindingReceiptSha256": "b3fbaa1b784e73b8cd0458dea9ebad5e76355bbfddbba789a5b0a31680134c0b",
+    "assessmentIdentitySourceReviewSha256": "e22e4f7dc9a375b41ab35cb35a62c245ec4e5fb4ea82eac2fe620fb2a87123a9",
+    "futureControlReviewSha256": "7b90f38ba351808a376c982e6641d4a78229321af74e58fc4cba10d59596480e"
+  },
+  "checks": {
+    "ordinaryFactoryAndWorker": "Current build_digital_runner, original owner service/ingress journal/store and single ordinary worker claim are used; no app lifespan, new queue, daemon or retries.",
+    "identityAndSource": "All ten task/session identities unique and fixed; six unprotected raw ingress/work identities checked with current constructors; four protected final identities equal the independent frozen manifest. project_id is None; actual dispatch UTC time is separately bound.",
+    "futureCompositionParity": "Both source legs use the same future client/config/grant/roles. Full installed source map and actual imported strategy are checked before physical provider send. Candidate once-binding retains accounting policy, stable lock and earlier requests/tools; all bytes outside the literal hook remain fixed.",
+    "authorityAndStop": "Original scoped source loading/current owner authorization and durable tool-dispatch/stop guard checked before each native provider/tool dispatch; terminal source is reread. Cleanup observes the existing idle/close result; a zero-programming loss invents no idle call.",
+    "toolConfigurationQualification": "tool_configuration_sha256 is the actual normal full composition fingerprint including tool descriptors/configuration, not a separately exposed native tool-only digest.",
+    "trustedExports": "Original model/action/source journals, native procedure and programming evidence, exact physical file readback and original usage retained. Host-owned exclusive stage evidence/run bindings are sealed by raw/canonical hashes; no candidate-produced quality metrics.",
+    "knownLosses": "Missing main/result/native execution/reuse and known post-designation implementation count are retained as scoreable quality loss when source/usage are complete. Incomplete isolated checks cannot masquerade as complete correct outcomes; their original report bytes remain preserved.",
+    "unsafeAndUnknown": "Unsafe links/ownership/hash/scope, ambiguous receipt source, unfinished or unknown provider usage and shared overshoot remain refused. Verified zero provider requests are physically zero, but the fixed scorer rejects them as unexercised.",
+    "heldOutProtection": "Producer receives only selected admitted task/fixture/input parameters. Protected oracles and scorer are not mounted or exported to the worker/builder. Final input loading preserves canonical object semantics.",
+    "publication": "Readiness truthfully records zero native cases/models, prospective inactive config, unknown credits and no new product completion. executionTasks/milestones/completions matched HEAD at review; full goal remains active."
+  },
+  "resourceBounds": {
+    "sharedPhysicalProviderAttempts": 42,
+    "maximumPhysicalAttemptsPerCaseIncludingHelpers": 4,
+    "constructionMaximumAdmittedNow": 0,
+    "sharedToolsIncludingHostChecks": 70,
+    "sharedCombinedMeasuredTokensStopAndAcceptance": 200000,
+    "retries": 0,
+    "hostedSearch": "Refused before dispatch because an exact before-each-hosted-tool fence is unavailable.",
+    "inFlightTokenCapGuaranteed": false,
+    "unknownUsageRankable": false,
+    "measuredOvershootRankable": false,
+    "allPreviousLedgerEntriesPreserved": true
+  },
+  "phaseRules": {
+    "baseline": "Only the two exact admitted inputs, once; seal complete original results and apply the fixed scorer.",
+    "earlyStop": "If both baseline tasks reach the fixed quality maximum with zero assistance, complete source/usage/hard-condition evidence, keep baseline and do not start construction/candidate/final/later.",
+    "otherPhases": "Remain closed. Later approval requires fixed source/actor/round/evidence and remaining shared ledger; final requires exact sealed execution admission and fresh baseline-pinned assessor, not placeholders."
+  },
+  "testEvidence": [
+    {
+      "kind": "original frozen producer offline checks",
+      "passed": 14,
+      "seconds": 0.882,
+      "logSha256": "7ffc45bea8c6fdc1a73ce7258aa340f27baf1a6f07ec29c1d0475c1e40cda12e"
+    },
+    {
+      "kind": "targeted terminal-loss/input type delta",
+      "passed": 6,
+      "seconds": 0.663,
+      "logSha256": "aa019fe9cb78ec65eb06b5a511582a7c5edd6aa15bbd4e9c40102a9dbb69fc85"
+    },
+    {
+      "kind": "targeted known-loss export delta",
+      "passed": 3,
+      "seconds": 0.073,
+      "logSha256": "32fe0901cc24f52c94157618c9ee47627e9281508dab2a61caf3be155cec0b68"
+    }
+  ],
+  "verificationActivity": {
+    "newModelRequests": 0,
+    "nativeAdmissions": 0,
+    "nativeCaseRuns": 0,
+    "testsRerunByReviewer": 0,
+    "newFactoryConstructionsByReviewer": 0,
+    "newEvaluatorRunsByReviewer": 0,
+    "productOrRuntimeMutationsByReviewer": 0,
+    "reviewerWrites": [
+      "reviewer pure binding receipt",
+      "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/producer/reviewed-root-baseline-control.private.json",
+      "this review"
+    ]
+  },
+  "preservedPreparationErrors": [
+    "Prior producer frozen versions and original check/factory receipts preserved.",
+    "UTC datetime-versus-string constructor bug, mandatory successful artifact/reuse export and incorrect quoted final reuse input were caught and corrected before native input.",
+    "Known post-designation loss and incomplete check export corrected without changing scorer/criteria.",
+    "Reviewer wrong import location/key assumption and matching datetime constructor diagnostic retained in private pure-binding receipt."
+  ],
+  "limitations": [
+    "No native task result, quality gain, causality, efficiency or full AIDE2 proven by this preparation.",
+    "No final/candidate/construction/later input is authorized by this baseline-only control.",
+    "200000 tokens is a cumulative measured stop/acceptance boundary; the current provider cannot guarantee a hard cap inside one in-flight response.",
+    "Provider credits/costs and automatic runtime usage remain unknown.",
+    "An unrelated ordinary future-profile claim is rejected before start_call; its original lease may expire normally. No full preemption claim."
+  ]
+}
