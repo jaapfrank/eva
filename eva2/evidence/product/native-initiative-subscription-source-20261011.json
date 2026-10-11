@@ -1,0 +1,35 @@
+{
+  "contract": "EvaNativeInitiativeSubscriptionSource/v1",
+  "checkedAt": "2026-10-11T20:38:50.945466+00:00",
+  "status": "built_source_review_pending",
+  "remainingUserDeficit": "Unexpected legacy daily reflection cap prevents new owner-private initiative despite existing subscription authorization.",
+  "change": "Owner-private context review uses current owner/subscription admission and existing durable per-review claim; old memory/reflection resource policy and counters remain intact.",
+  "sourceFiles": {
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
+    "eva2/src/eva/adapters/postgres/runtime_resource_usage.py": "dad4680a686f610af1b0cab8b1ced8d4c12dea9e48918c04db8e95116e205c0c",
+    "eva2/src/eva/application/free_will.py": "ed66feefff611ff15d01d3f34e23b66969488392970757b1b290017abd0eb0dc",
+    "eva2/src/eva/bootstrap/idle_capacity.py": "62f3bebcab2bd8a3c8b4af73d4e08afe1f74134129ba56f243988181b60bf3d0",
+    "eva2/src/eva/bootstrap/native_initiative_work.py": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
+    "eva2/src/eva/bootstrap/runtime.py": "f73152e960eba61f890b093b49b80167def02a16497a3be9d15c5384309030d1",
+    "eva2/tests/bootstrap/test_subscription_initiative_admission.py": "974a8082478842f6a58f052761d2b636b60bde4d3c0270fe733de0e609fc925e",
+    "eva2/tests/postgres/test_subscription_initiative_reviews.py": "95aa6c1362208fa35d03dad378218b2b6d8663917916dd70af96bbd903dfe4cc"
+  },
+  "manifestSha256": "f1f9c484e80ee5f8d6b9c8b51da1162915801c83407c093cfd863d32809dc1e3",
+  "targetedChecks": {
+    "passed": 89,
+    "failed": 0,
+    "skipped": 0,
+    "unit": 48,
+    "postgres": 41,
+    "fixtureRemoved": true
+  },
+  "manualEvaModelRequests": 0,
+  "actionsDispatched": 0,
+  "installed": false,
+  "productFunctionCompleted": false,
+  "runtimeConfigBudgetChanged": false,
+  "historicalCountersReset": false,
+  "newPlatformOrService": false,
+  "developmentCreditCost": null,
+  "next": "Independent frozen-source review, same existing updater and owner-CAS profile pin, then genuine native outcome."
+}

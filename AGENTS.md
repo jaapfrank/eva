@@ -48,9 +48,10 @@ heeft vandaag 4/4 persoonsplaatsen gebruikt. Nieuw eigen initiatief wacht daardo
 op background_budget. Dit is een onbedoelde extra daggrens tegenover de eigenaarafspraak
 existingSubscriptionAutonomy=true en aanvullende dagcaps=null. De eerdere uitvoerkoppeling
 draait gezond; geen oude native thread hervatten of aanleiding fabriceren.
-/root/eva1_memory_transfer corrigeert de bestaande toelatingsroute met behoud van
-historische tellingen, account/providergrenzen, geheugen/opslag, privacy en stop.
-Daarna een echte eigen keuze via de dezelfde werker afmaken. Root verzorgt integratie,
+De correctie is bevroren: 89 gerichte controles slagen. /root/product_execution_memory_review
+beoordeelt de exacte bron; root installeert daarna via de bestaande updater/profielbinding.
+Historische tellingen, account/providergrenzen, geheugen/opslag, privacy en stop behouden.
+Daarna een echte eigen keuze via dezelfde werker afmaken. Root verzorgt integratie,
 dashboard en gebundelde review. Geen nieuwe vergelijking of eigen budgetreset.
 Volledige AIDE² en het project blijven actief; oorspronkelijke 39/48 behouden.
 Geen eigenaarhandeling nodig. Spraak geparkeerd.

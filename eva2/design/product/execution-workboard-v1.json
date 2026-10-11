@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T20:36:41.274881+00:00",
+        "checkedAt": "2026-10-11T20:38:50.945466+00:00",
         "deliveries": [
           {
             "title": "Eigen initiatieven aangesloten op dezelfde programmeer- en verbeterroute",
@@ -4678,17 +4678,17 @@
         ],
         "now": {
           "title": "Droommodus · zelfgekozen verbeterwerk afmaken",
-          "detail": "De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken.",
+          "detail": "De concrete correctie is bevroren: 48 unitcontroles en 41 transactionele PostgreSQL-controles slagen. Geheugenquota, budgetbestand en historische tellingen blijven intact. De onafhankelijke beoordelaar controleert de exacte bron; daarna installeert de coördinator eenmaal via de bestaande updater en profielbinding. De draaiende uitvoerkoppeling blijft behouden; nieuw zelfgekozen eindresultaat is nog open.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/native-initiative-daily-quota-diagnosis-20261011.json",
+          "source": "eva2/evidence/product/native-initiative-subscription-source-20261011.json",
           "doneWhen": "Toegestaan eigen initiatief/droomwerk wordt niet door de onbedoelde extra daggrens geblokkeerd; historisch verbruik, accounttoegang, stoppen, persoonsgrenzen en voorgrondprioriteit blijven behouden. Daarna een authentiek zelfgekozen initiatief via dezelfde werker daadwerkelijk afmaken en terugleggen.",
-          "phase": "native_initiative_daily_quota_correction",
-          "executor": "/root/eva1_memory_transfer",
+          "phase": "native_initiative_subscription_source_review",
+          "executor": "/root/product_execution_memory_review",
           "coordination": "/root",
           "review": "eva2/reviews/native-initiative-digital-installed-review-20261011.json",
-          "summary": "De uitvoerder corrigeert de onbedoelde daggrens die nieuw eigen initiatief tegenhoudt. De uitvoerkoppeling is al geïnstalleerd; daarna maakt Eva een echte eigen keuze af."
+          "summary": "De daggrenscorrectie is gebouwd; 89 gerichte controles slagen. Nu onafhankelijke review, daarna installatie en een echte eigen keuze van Eva."
         },
         "next": {
           "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
@@ -4707,7 +4707,7 @@
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T20:36:41.274881+00:00",
+        "reviewedAt": "2026-10-11T20:38:50.945466+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -11551,8 +11551,8 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken.",
-      "currentEvidence": "eva2/evidence/product/native-initiative-daily-quota-diagnosis-20261011.json",
+      "currentWork": "De concrete correctie is bevroren: 48 unitcontroles en 41 transactionele PostgreSQL-controles slagen. Geheugenquota, budgetbestand en historische tellingen blijven intact. De onafhankelijke beoordelaar controleert de exacte bron; daarna installeert de coördinator eenmaal via de bestaande updater en profielbinding. De draaiende uitvoerkoppeling blijft behouden; nieuw zelfgekozen eindresultaat is nog open.",
+      "currentEvidence": "eva2/evidence/product/native-initiative-subscription-source-20261011.json",
       "nextStep": "Een aantoonbare verbetering van de aansturing onafhankelijk beoordelen en toepassen met bestaande AIDE²-voorzieningen. Daarna herhaald passend initiatief, leren van de menselijke reactie en samenhangend gezinsgebruik afronden.",
       "usageClarification": {
         "date": "2026-09-07",
@@ -11569,7 +11569,7 @@
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
       "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
-      "designUpdatedAt": "2026-10-11T20:36:02.625157+00:00",
+      "designUpdatedAt": "2026-10-11T20:38:50.945466+00:00",
       "wholeProjectGoalStatus": "active",
       "subdeliveriesDoNotCompleteGoal": true
     },
@@ -20891,7 +20891,7 @@
           "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         }
       ],
-      "nextAction": "De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken.",
+      "nextAction": "De concrete correctie is bevroren: 48 unitcontroles en 41 transactionele PostgreSQL-controles slagen. Geheugenquota, budgetbestand en historische tellingen blijven intact. De onafhankelijke beoordelaar controleert de exacte bron; daarna installeert de coördinator eenmaal via de bestaande updater en profielbinding. De draaiende uitvoerkoppeling blijft behouden; nieuw zelfgekozen eindresultaat is nog open.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Het volledige geïnstalleerde geheel voldoet aan alle eindvoorwaarden van eva2/PROJECTDOEL.md, inclusief latere toepassing van de leercyclus, ontbrekende mogelijkheid realiseren en hergebruiken, AIDE² voor aansturing en code/uitbreidingen, onafhankelijke eindreview en echte gezinsbeoordeling. Deelopleveringen sluiten het projectgoal niet af; oude acceptaties blijven geldig binnen hun oorspronkelijke scope.",
       "continuationRule": "Het volledige projectgoal blijft actief. Werk vanuit de concrete ontbrekende koppeling naar werkend geïnstalleerd gedrag; oorspronkelijke kleine taken en acceptaties blijven behouden.",

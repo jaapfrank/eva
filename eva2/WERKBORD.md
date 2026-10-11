@@ -8,7 +8,9 @@ uitkomst direct zichtbaar plus Nu verversen. Geen productafronding hierdoor.
 Werkelijke browser gecontroleerd: nieuwe werkbordwijziging zonder herladen zichtbaar,
 Nu verversen gebruikt, nul JavaScriptfouten; 12 bestaande dashboardchecks en build groen.
 Bewijs: eva2/evidence/product/dashboard-live-refresh-20261011.json.
-Daggrenscorrectie blijft in uitvoering; oorspronkelijke taken/statussen behouden.
+Daggrenscorrectie gebouwd met 89 geslaagde controles; onafhankelijke bronreview loopt.
+Nog niet geïnstalleerd; daarna één bestaande update en echte eigen keuze.
+Oorspronkelijke taken/statussen behouden.
 
 
 **Laatst opgeleverd:** eigen initiatief aangesloten op dezelfde programmeer- en
