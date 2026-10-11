@@ -1,0 +1,96 @@
+{
+  "contract": "EvaBoundTaskMemoryDelivery/v1",
+  "date": "2026-10-11T15:43:02.016590+00:00",
+  "status": "installed_independently_reviewed",
+  "whole_project_goal": "active",
+  "completes_whole_learning_cycle": false,
+  "completes_aide2": false,
+  "new_whole_product_outcome_completed": false,
+  "existing": "Foreground memory already recalls facts, experiences and corrections. Accepted work already supplies its canonical task and full durable owner correction log to the task model.",
+  "concrete_before_failure": "Initial background recall used only the original short source message Doe het nog eens.; the canonical task and correction were appended only after that lookup.",
+  "change": "One task-bound memory view enriches only query_text before the same fast/normal backend call with admitted task and latest durable correction. All correction entries still reach the model. Original turn and ingress hash are retained.",
+  "privacy": "Exact tenant, installation, principal, audience, conversation, project, subjects, scope and conversation_reply purpose are checked before dispatch. No cross-person query fallback.",
+  "measured": {
+    "before_regression": "Missing canonical topic reproduced by the new runner-level test against unchanged source.",
+    "after_first_run": {
+      "passed": 97,
+      "failed": 10,
+      "selected_cases": 107
+    },
+    "failure_cause": "Test environment lacked project-pinned tiktoken==0.14.0; native runtime already had it. Fingerprint matched ModuleNotFoundError exactly.",
+    "repaired_targeted_run": {
+      "passed": 11,
+      "failed": 0,
+      "overlap_with_first_passes": 1,
+      "duration_seconds": 3.55
+    },
+    "combined_green_selected_cases": 107,
+    "single_run_107_passes_claimed": false,
+    "new_feature_checks": 10,
+    "model_tool_and_memory_calls_in_controlled_runner_case": {
+      "scripted_model_responses": 3,
+      "verified_tools": 2,
+      "memory_backend_calls": 1
+    }
+  },
+  "installation": {
+    "services": {
+      "core": {
+        "image": "sha256:e8e4a42cf01ac777567a0118cf4c6f109b19fa7e35498c5181686982e9912a74",
+        "health": "healthy",
+        "source_count": 337,
+        "source_changes": [
+          "bootstrap/delegated_digital_runner.py"
+        ],
+        "retained_modules": 336,
+        "environment_values_commands_user_healthcheck_exact": true,
+        "mounts_exact": true,
+        "image_layers": 2
+      },
+      "delegated-work-worker": {
+        "image": "sha256:255171720df4f36991da82f64deba95a7c0e234db1f8ed46f5b296392b629954",
+        "health": "healthy",
+        "source_count": 335,
+        "source_changes": [
+          "adapters/postgres/delegated_work.py",
+          "bootstrap/delegated_digital_runner.py"
+        ],
+        "retained_modules": 333,
+        "environment_values_commands_user_healthcheck_exact": true,
+        "mounts_exact": true,
+        "image_layers": 1
+      }
+    },
+    "release_bound_modules_agree": 53,
+    "core_ready_http_status": 200,
+    "new_manual_model_requests": 0,
+    "native_later_learning_proven": false
+  },
+  "preparation_corrections": [
+    "Initial test collection needed the repository PYTHONPATH.",
+    "An existing pre-update core/worker release-source mismatch was found before dispatch: delegated_work.py differed. Exact already independently reviewed core store bytes were carried to worker; 53 release-bound sources now agree.",
+    "Worker inherited 419 filesystem layers. Its exact overlaid filesystem metadata/configuration were retained in one layer before the single update; no failing native deployment or rollback.",
+    "Uninstalled intermediate archive changed runner only. Final archive additionally aligns the store and is explicitly bound by filename/hash.",
+    "Initial installation readback compared environment array ordering; values/maps were identical. The corrected check rejects duplicate keys and compares exact values."
+  ],
+  "usage": {
+    "new_manual_eva_model_requests": 0,
+    "new_comparison_runs": 0,
+    "new_native_learning_experiment": false,
+    "development_credits": "unknown",
+    "extra_memory_or_model_calls_added_per_work": 0
+  },
+  "source_sha256": "1e748d071e5f5f968e0f7ebb704bdb8557a3b7456750ee8556b31381447217e1",
+  "source_review": "eva2/reviews/task-context-memory-source-review-20261011.json",
+  "installed_review": "eva2/reviews/task-context-memory-installed-review-20261011.json",
+  "private_artifact_root": "/home/administrator/project/.eva2-artifacts/task-context-memory-20261011",
+  "limitations": [
+    "Controlled query-selection proof is not native semantic recall or proof that Eva acts differently later.",
+    "A new real later use of experience, user-feedback processing and later changed behavior remain open.",
+    "Full AIDE²/controller/code/extensions/dream execution remains open.",
+    "No superiority, speed, native token saving or family acceptance is inferred."
+  ],
+  "next": "Use the existing outcome-memory and conversation path to demonstrate relevant later application and feedback; complete this learning outcome before broadening.",
+  "installed_review_sha256": "702cd6d0caf95ec3b0c9734c25d6daf0c01fb6bba9928ef1bc676da752d7076c",
+  "publication_updated_at": "2026-10-11T15:46:04.597516+00:00"
+}

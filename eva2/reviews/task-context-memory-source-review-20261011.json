@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "contract": "EvaTaskContextMemorySourceReview/v1",
+  "recordedAt": "2026-10-11T15:36:44.504712+00:00",
+  "reviewer": "product_execution_memory_review",
+  "decision": "GO",
+  "phase": "source",
+  "scope": "Only the task-context recall queryview in delegated_digital_runner.py and its focused runner regressions. No broader source audit, installation or native quality claim.",
+  "binding": {
+    "sources": {
+      "eva2/src/eva/bootstrap/delegated_digital_runner.py": "1e748d071e5f5f968e0f7ebb704bdb8557a3b7456750ee8556b31381447217e1"
+    },
+    "tests": {
+      "eva2/tests/application/test_delegated_digital_runner.py": "e6f04430e558e9dfcf46c19a011b46d665bc6d09f3d106726d93b6344176fe7e"
+    },
+    "technicalEvidence": {
+      "before-test.private.log": "0e6b2b800fc77e39fb44b1ad720bdd0b9e8eb512117ea449b16a5827619e1516",
+      "after-tests.private.log": "acf8a6bf8a505cbd621bc7df5bf1d94f1c4053ed2cbd34af56762ee266e89c15",
+      "repaired-tests.private.log": "4cff2681710d877a559125bc987118d8c11503887a390cc80ce7014329a0a9a4"
+    },
+    "scopeDocuments": {
+      "AGENTS.md": "8efebddeafa3a4c088ba0389c7992c80e26b0859afdf5ade3e74339a920a1a91",
+      "eva2/PROJECTDOEL.md": "65500f3714348f273c0ba4004e1eeb1af87816ed303ac4de5a4dd9fe0d6e9e9d"
+    }
+  },
+  "blockers": [],
+  "sourceAssessment": [
+    {
+      "subject": "Relevant context before recall",
+      "lines": [
+        65,
+        102,
+        587,
+        598
+      ],
+      "finding": "The bound admitted task and newest persisted owner correction are appended before the existing LivingConversation recall reaches the same backend. The original query text is retained; no parallel recall or new storage is introduced."
+    },
+    {
+      "subject": "Person and audience binding",
+      "lines": [
+        68,
+        98
+      ],
+      "finding": "The wrapper reconstructs the exact existing person/person-project/household/group scope, including the private observation binding. It rejects changed tenant, installation, principal, audience, conversation, project, subject, scope or query purpose before backend dispatch. dataclasses.replace changes only query_text; limits, privacy classes, validity, candidate selection and recall identity are preserved."
+    },
+    {
+      "subject": "Original source and authority",
+      "lines": [
+        562,
+        568,
+        584,
+        598
+      ],
+      "finding": "The original ingress hash and current authorization remain checked before composing the memory view. Neither ConversationTurn nor the canonical grant is modified. Connector actions receive the original turn; retrieval anchors add no action or write authority. Existing memory alias resolution, filtering and returned-fact trust remain in the same backend/model path."
+    },
+    {
+      "subject": "Correction history",
+      "lines": [
+        83,
+        85,
+        114,
+        119,
+        587,
+        590
+      ],
+      "finding": "One immutable correction tuple feeds both views: newest correction for retrieval, complete ordered correction history for the existing task model. Earlier owner corrections are not discarded from model context."
+    },
+    {
+      "subject": "Fast path and cache",
+      "lines": [
+        104,
+        111
+      ],
+      "finding": "Normal recall stays normal, fast recall uses the backend fast method when callable and otherwise the existing normal method once. The unchanged Hindsight cache key includes query text, so a changed task/correction is not mapped to an unrelated cached question."
+    },
+    {
+      "subject": "Stop, budget and replay",
+      "lines": [
+        504,
+        528,
+        600,
+        657
+      ],
+      "finding": "No stop, admission, deadline, output-budget, action receipt or replay code is changed. LivingConversation still checkpoints before initial recall and each step, and the runner still requires the original source and current authorization. Existing verified-action recovery and no-repeat rules remain on the original execution identity."
+    }
+  ],
+  "validation": {
+    "beforeRegression": {
+      "result": "failed as intended",
+      "cases": 1,
+      "seconds": 1.64,
+      "observedMissingContext": "The query was only the vague original message; admitted task topic was absent."
+    },
+    "initialAfterRun": {
+      "cases": 107,
+      "passed": 97,
+      "failed": 10,
+      "seconds": 15.0,
+      "allTenNewFeatureCasesPassed": true
+    },
+    "environmentFailure": {
+      "cause": "ModuleNotFoundError:No module named 'tiktoken'",
+      "runnerFingerprint": "672355ae23db59531e824f71424086c7f0914870347d8386030ceaf2b17f2472",
+      "fingerprintIndependentlyMatched": true,
+      "repairReportedByImplementer": "Install the already runtime-pinned tiktoken 0.14.0 in the local test environment only; no product source change."
+    },
+    "focusedRepairRun": {
+      "passed": 11,
+      "failed": 0,
+      "seconds": 3.55,
+      "coverage": "All four previously failing parametrized functions; ten failed cases plus one already passing deadline parameter."
+    },
+    "combinedCoverage": "All 107 selected cases are covered by passing results across the initial run and focused environment-repaired rerun; no single all-green 107-case run is claimed.",
+    "newFeatureChecks": [
+      "one full runner regression verifies task/latest correction before recall while original turn and model/tool counts are retained",
+      "normal and fast backend dispatch with all non-query fields equal",
+      "seven mismatched scope/purpose cases reject before backend dispatch"
+    ],
+    "existingCriticalChecks": "The selected suite retains stop/revocation, cancellation cleanup, exact release/grant, measured and unknown budgets, verified-effect resume and provider deadline coverage."
+  },
+  "qualifications": [
+    "This is source GO for the exact runner hash, not an installed-runtime or native later-use result.",
+    "The full runner regression uses the real conversation loop with controlled memory/model/tools; it proves context delivery, not improved native retrieval ranking or smarter later behavior.",
+    "The existing unconfirmed/trust qualifiers and source evidence remain authoritative; search text does not make recalled task outcomes independently verified.",
+    "Source/module profile binding must remain exact through packaging and installation; existing grants or persisted task authority must not be expanded.",
+    "The full Eva2 project goal, relevant later application, human feedback, full learning cycle, AIDE² and household acceptance remain active/open."
+  ],
+  "reviewActivity": {
+    "newTestsStartedByReviewer": 0,
+    "paidModelCalls": 0,
+    "newNativeBehaviorTrials": 0,
+    "implementationEdits": 0,
+    "runtimeMutations": 0,
+    "previouslyDeniedAuxiliaryReadsRetried": false,
+    "writtenFileOnly": "eva2/reviews/task-context-memory-source-review-20261011.json"
+  }
+}

@@ -1,6 +1,8 @@
 """Execute admitted private digital work with Eva's existing conversation loop."""
 from __future__ import annotations
 
+from dataclasses import replace
+
 import asyncio
 from contextlib import suppress
 from datetime import UTC, datetime, timedelta
@@ -58,6 +60,55 @@ def _remaining_budget_context(grant, actual, *, calls, dispatches, response_outp
               "all required completion steps. Once the question is supported by the gathered evidence, "
               "finish the result instead of collecting optional additional material. If essential work "
               "cannot fit, save an honest continuation point; the deadline is not extended.")
+
+
+class _TaskMemory:
+    """Use the admitted task as search context in the same scoped memory backend."""
+
+    def __init__(self, memory, source, task, corrections):
+        self._memory, self._source, self._task = memory, source, task
+        audience = source.audience
+        if audience.kind == "private_person":
+            self._scope = {"kind": "person", "principal_id": source.principal_id}
+            if source.project_id is not None:
+                self._scope.update(kind="person_project", project_id=source.project_id)
+            if source.observation_binding is not None:
+                self._scope["observation_binding_sha256"] = source.observation_binding.binding_sha256
+        elif audience.kind == "household":
+            self._scope = {"kind": "household", "household_id": audience.household_id}
+        elif audience.kind == "telegram_group":
+            self._scope = {"kind": "telegram_group", "group_chat_id": audience.group_chat_id}
+        else:
+            raise ConversationConflict("background memory audience is unsupported")
+        # Full corrections already reach the task model; the newest one helps
+        # retrieval find the current topic without copying a long correction log.
+        self._latest_correction = corrections[-1]["instruction"] if corrections else None
+
+    def _query(self, query):
+        source = self._source
+        if (query.tenant_id != source.tenant_id
+                or query.installation_id != source.installation_id
+                or query.principal_id != source.principal_id
+                or query.audience != source.audience
+                or query.conversation_id != source.conversation_id
+                or query.project_id != source.project_id
+                or query.subject_ids != (source.principal_id,)
+                or query.scope != self._scope
+                or query.query_purpose != "conversation_reply"):
+            raise ConversationConflict("background memory query differs from its source")
+        text = query.query_text + "\nGebonden achtergrondopdracht: " + self._task
+        if self._latest_correction:
+            text += "\nMeest recente bijsturing van de eigenaar: " + self._latest_correction
+        return replace(query, query_text=text)
+
+    def recall_for_presence(self, query):
+        return self._memory.recall_for_presence(self._query(query))
+
+    def recall_for_presence_fast(self, query):
+        recall = getattr(self._memory, "recall_for_presence_fast", None)
+        if not callable(recall):
+            recall = self._memory.recall_for_presence
+        return recall(self._query(query))
 
 
 class _TaskModel:
@@ -533,8 +584,10 @@ class DelegatedDigitalRunner:
             actions = BackgroundConnectorActions((*connector_tools, progress, improvements, programming), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
             from eva.adapters.postgres.work_corrections import work_corrections
+            corrections = tuple(work_corrections(self.store._engine, spec))
+            task_memory = _TaskMemory(self.memory, source, spec.task, corrections)
             task_model = _TaskModel(self.model, spec.task, self.browser_context,
-                                    corrections=work_corrections(self.store._engine, spec),
+                                    corrections=corrections,
                                     attempt_work_id=spec.work_id,
                                     budget_context=lambda: _remaining_budget_context(spec.grant, latest_usage,
                                         calls=actions.calls, dispatches=actions.dispatches,
@@ -542,7 +595,7 @@ class DelegatedDigitalRunner:
                                             if latest_usage.measurement == "measured" else None),
                                         response_input_tokens=self.profile.maximum_response_input_tokens,
                                         remaining_wall_seconds=max(0, int((deadline - self.clock()).total_seconds()))))
-            conversation = LivingConversation(self.memory, task_model, self.identity, actions)
+            conversation = LivingConversation(task_memory, task_model, self.identity, actions)
 
             def execute():
                 nonlocal reply

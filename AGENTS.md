@@ -14,21 +14,24 @@ Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkin
 Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
 afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
 
-**Actief werk:** de volledige leercyclus afmaken. De ontbrekende koppeling van
-nieuwe privétaakuitkomsten naar het bestaande persoonsgeheugen is nu geïnstalleerd:
-succes, mislukking en stoppen behouden de oorspronkelijke bron en hun onzekerheid.
-Eenmalige opslag, wissen en herstart zijn gericht gecontroleerd. Dit geldt voor
-nieuwe digitale privéopdrachten; oude proefuitkomsten worden niet bulkgeïmporteerd.
-19 gerichte applicatie/service/eigenaarchecks en één echte PostgreSQL-lifecycle
-slagen. Kern en taakwerker zijn gezond; bronhashes, mounts en configuratie bevestigd.
-De onafhankelijke bron- en installatiereview zijn GO. Bewijs:
+**Actief werk:** de volledige leercyclus afmaken. Nieuwe privétaakuitkomsten
+zijn met bestaande bron/persoonsgrens verbonden aan het geheugen. De
+achtergrondwerker zoekt nu vóór het model met de aangenomen taak en nieuwste
+opgeslagen bijsturing; oorspronkelijke beurt en volledige correctielog behouden.
+Geen tweede geheugen of extra modelaanvraag. Beide diensten gezond; 53
+brongebonden taakmodules gelijk. De 107 geselecteerde lokale cases hebben een
+groene uitslag over twee gerichte runs. Bron- en installatiereview GO.
+Bewijs: eva2/evidence/product/task-context-memory-installed-20261011.json.
+Eerder opslag-/wissen-/herstartbewijs:
 eva2/evidence/product/private-work-outcome-memory-installed-20261011.json.
 
-**Resterend:** de opgeslagen ervaring in een volgende relevante beurt aantoonbaar
-toepassen, menselijke feedback verwerken en het gewijzigde gedrag later gebruiken.
-De volledige leercyclus, zelf ontbrekende mogelijkheden realiseren, de volledige
-AIDE²-aansturing en apps/addons, passend initiatief en gezinsacceptatie zijn nog open.
-Geen nieuw hoofdonderdeel of volledig project afgerond door deze koppeling.
+**Resterend:** opgeslagen ervaring bij volgende relevante uitvoering werkelijk
+toepassen, menselijke feedback verwerken en later gewijzigd gedrag aantonen.
+De volledige leercyclus, ontbrekende mogelijkheden realiseren en hergebruiken,
+volledige AIDE²-aansturing/code/apps/addons, passend initiatief en gezinsacceptatie
+blijven open. Geen hoofdonderdeel of project afgesloten door deze koppeling.
+Controleer bij brongebonden kern/werkerwijzigingen hun gemeenschappelijke
+taakmodules vóór de bestaande installatie; behoud gegevens/configuratie/mandaat.
 
 ## Historische afgeronde deelopdracht — 11 oktober 2026
 

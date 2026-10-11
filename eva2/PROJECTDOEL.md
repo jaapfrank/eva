@@ -10,18 +10,23 @@ sluit dit goal niet af.
 
 ## Actuele uitvoering — 11 oktober 2026
 
-Het overkoepelende Codex-goal is actief. Nieuwe afgehandelde digitale privétaak-
-uitkomsten zijn nu verbonden met de bestaande persoonsgebonden geheugenqueue.
-Ook falen en stoppen worden eerlijk opgenomen; taakinhoud kan via de bestaande
-eigenaarroute worden gewist zonder de oorspronkelijke gespreksbeurt te verwijderen.
-19 gerichte checks en één echte PostgreSQL-lifecycle slagen. De kern is geïnstalleerd
-en gezond; 333 bestaande Pythonmodules, configuratie, mounts en werker zijn behouden.
-Oude testuitkomsten worden niet opnieuw als gezinsherinnering ingelezen.
+Het overkoepelende Codex-goal is actief. Nieuwe afgehandelde digitale
+privétaakuitkomsten gaan naar de bestaande persoonsgebonden geheugenqueue.
+De achtergrondwerker zoekt nu met de aangenomen taak en nieuwste opgeslagen
+bijsturing, ook als het oorspronkelijke bericht alleen “doe het nog eens” was.
+De volledige correctielog blijft bij het model; de oorspronkelijke bron en
+persoonsgrenzen blijven gelijk. Dit gebruikt één bestaande geheugenaanroep.
 
-Dit sluit één ontbrekende koppeling. Een nieuwe echte later-toepassing, feedbacklus,
-volledige AIDE² en de samenhangende huisgenoot blijven open. Vervolg binnen onderstaande
-volgorde; geen extra vergelijkingsserie. Bewijs:
-eva2/evidence/product/private-work-outcome-memory-installed-20261011.json.
+De nieuwe koppeling is geïnstalleerd in kern en werker, beide gezond met dezelfde
+53 brongebonden taakmodules. De 107 geselecteerde lokale cases hebben een groene
+uitslag over twee gerichte runs; bron- en installatiereview GO.
+Eerdere uitkomst-opslag/wissen/herstartchecks en PostgreSQL-bewijs blijven behouden.
+
+Echte latere toepassing van ervaring, menselijke feedback en later veranderd gedrag
+blijven nog open. De volledige leercyclus en AIDE² zijn daarmee niet afgerond.
+Vervolg hieronder zonder nieuwe vergelijkingsserie.
+Bewijs: eva2/evidence/product/task-context-memory-installed-20261011.json.
+Eerder bewijs: eva2/evidence/product/private-work-outcome-memory-installed-20261011.json.
 
 ## Vier samenhangende productuitkomsten
 

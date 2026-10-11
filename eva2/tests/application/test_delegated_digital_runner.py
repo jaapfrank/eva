@@ -1312,3 +1312,99 @@ def test_typed_file_write_obeys_upstream_error_result(is_error):
         "path": "/workspace/main.py", "content": "print(42)", "mode": "rewrite"}),
         {"status": "verified", "programming_result": {"isError": is_error}})
     assert _has_completed_tool_evidence([receipt]) is (not is_error)
+
+
+def test_followup_worker_recalls_bound_task_and_latest_feedback_before_model(monkeypatch):
+    """A vague original message must not hide the topic and owner's correction."""
+    from dataclasses import replace
+    import eva.adapters.postgres.work_corrections as corrections
+
+    source, spec, store, tools, journal, runner, identity = fixture()
+    source = replace(source, text="Doe het nog eens.")
+    spec = spec.model_copy(update={
+        "task": "Compare the documents and save a short household agenda summary.",
+        "source_ingress_sha256": canonical_sha256(PostgresConversationJournal._ingress_data(source)),
+    })
+    runner.source_loader = lambda _: source
+    feedback = "De vorige samenvatting was te technisch. Gebruik voortaan drie korte actiepunten."
+    monkeypatch.setattr(corrections, "work_corrections", lambda *args: (
+        {"instruction": feedback, "recorded_at": source.occurred_at, "work_id": spec.work_id},
+    ))
+
+    class RelevantMemory(_Memory):
+        def __init__(self):
+            self.queries = []
+        def recall_for_presence(self, query):
+            self.queries.append(query)
+            return super().recall_for_presence(query)
+
+    memory = RelevantMemory()
+    runner.memory = memory
+    tools.release.set()
+    outcome = asyncio.run(runner.run(spec, call_id="call:followup"))
+    assert outcome.status == "succeeded", outcome
+    assert len(memory.queries) == 1
+    assert "household agenda summary" in memory.queries[0].query_text
+    assert feedback in memory.queries[0].query_text
+    assert memory.queries[0].principal_id == source.principal_id
+    assert memory.queries[0].audience == source.audience
+    assert all(call[0] == source for call in tools.calls)
+    assert source.text == "Doe het nog eens."
+    assert outcome.usage.completed_model_responses == 3
+    assert outcome.usage.tool_calls == 2
+
+
+@pytest.mark.parametrize("fast", [False, True])
+def test_bound_task_memory_keeps_existing_backend_path_and_query_scope(fast):
+    from dataclasses import asdict
+    from eva.application.memory import RecallCurrentFacts
+    from eva.bootstrap.delegated_digital_runner import _TaskMemory
+
+    source = ConversationTurn.private("tenant", "install", "owner", "chat", "message",
+                                      "Doe het nog eens.", NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    query = RecallCurrentFacts("recall", "install", "tenant", "owner", source.audience,
+        "chat", None, "conversation_reply", source.occurred_at,
+        {"kind": "person", "principal_id": "owner"}, ("owner",), source.text,
+        maximum_facts=7, allowed_privacy_classes=("confidential",))
+    calls = []
+    class Backend:
+        def recall_for_presence(self, actual):
+            calls.append(("normal", actual))
+            return "normal-result"
+        def recall_for_presence_fast(self, actual):
+            calls.append(("fast", actual))
+            return "fast-result"
+    memory = _TaskMemory(Backend(), source, "Maak een agendaoverzicht.", (
+        {"instruction": "Beperk het tot drie actiepunten."},))
+    method = memory.recall_for_presence_fast if fast else memory.recall_for_presence
+    assert method(query) == ("fast-result" if fast else "normal-result")
+    assert len(calls) == 1 and calls[0][0] == ("fast" if fast else "normal")
+    original, actual = asdict(query), asdict(calls[0][1])
+    assert actual.pop("query_text").endswith("Beperk het tot drie actiepunten.")
+    original.pop("query_text")
+    assert actual == original
+
+
+@pytest.mark.parametrize("change", [
+    {"tenant_id": "other"}, {"installation_id": "other"},
+    {"conversation_id": "other"}, {"project_id": "other"},
+    {"subject_ids": ("other",)}, {"scope": {"kind": "person", "principal_id": "other"}},
+    {"query_purpose": "initiative"},
+])
+def test_bound_task_memory_never_sends_private_context_under_another_query(change):
+    from dataclasses import replace
+    from eva.application.memory import RecallCurrentFacts
+    from eva.bootstrap.delegated_digital_runner import _TaskMemory
+
+    source = ConversationTurn.private("tenant", "install", "owner", "chat", "message",
+                                      "Doe het nog eens.", NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    query = RecallCurrentFacts("recall", "install", "tenant", "owner", source.audience,
+        "chat", None, "conversation_reply", source.occurred_at,
+        {"kind": "person", "principal_id": "owner"}, ("owner",), source.text)
+    class NoDispatch:
+        def recall_for_presence(self, actual):
+            raise AssertionError("wrong scope reached memory transport")
+        recall_for_presence_fast = recall_for_presence
+    memory = _TaskMemory(NoDispatch(), source, "Privéopdracht.", ())
+    with pytest.raises(ConversationConflict, match="background memory query differs"):
+        memory.recall_for_presence_fast(replace(query, **change))

@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "contract": "EvaTaskContextMemoryInstalledReview/v1",
+  "recordedAt": "2026-10-11T15:45:30.774890+00:00",
+  "reviewer": "product_execution_memory_review",
+  "decision": "GO",
+  "phase": "installed",
+  "scope": "Bounded packaging, installed readback and honest publication for the previously source-reviewed task-context memory view; exact previously reviewed store bytes align the worker release with admission.",
+  "binding": {
+    "sourceReviews": {
+      "eva2/reviews/task-context-memory-source-review-20261011.json": "6eea01137292691af0f46542670b4c049e63b29df412d30ed01ca470b4a06baf",
+      "eva2/reviews/private-work-outcome-memory-source-review-20261011.json": "5c85e36cc3a885f1111cf819732dd3dd3f19275fb96bf6ff6a027e99ecd77d32"
+    },
+    "publicEvidence": {
+      "path": "eva2/evidence/product/task-context-memory-installed-20261011.json",
+      "sha256": "0e6e6550dda798ae7172f252adf7b73493e131ff3fb3b079241c9c1786d5a7d7",
+      "reviewedStatus": "installed_awaiting_independent_installation_review"
+    },
+    "runnerSha256": "1e748d071e5f5f968e0f7ebb704bdb8557a3b7456750ee8556b31381447217e1",
+    "previouslyReviewedStoreSha256": "ac2d627cbde4aa343e7b107261f005f47cbd3d83b15fe357e5beafe5722e299e",
+    "installedCoreImage": "sha256:e8e4a42cf01ac777567a0118cf4c6f109b19fa7e35498c5181686982e9912a74",
+    "installedWorkerImage": "sha256:255171720df4f36991da82f64deba95a7c0e234db1f8ed46f5b296392b629954",
+    "technicalArtifacts": {
+      "installation-receipt.private.json": "a86f8b883498791266e7461c8bccf1287b731dab2f0ef20453a703a073b71655",
+      "native-installation-readback.private.json": "ad124ab7492cac4182b821783a8bb192ffb0431301967a074554c3577c8f91ec",
+      "worker-flatten-readback.private.json": "4ea40f4dc36cdd2332dfa14212c1c95f0c8d2643e77201635f71f2a600ae3d34",
+      "worker-profile-aligned-image.private.tar": "8d3a9f6be4d3959bb4e2974d277aaf599f625c5b4c1085e620c900094a91825d",
+      "worker-profile-aligned-rootfs.private.tar": "840b2d10a6c6ef7f2d87073037cc86aa56db3a5104b3378439fc0e325135aab1",
+      "worker-candidate-flat.private.tar": "ef34fff2b1c04b65144bf888da7dc71c9b852e074f30429ce4a2933173a56670",
+      "core-before.private.json": "8490c9e9e4b6f63e540c0d28d1b47551492c8600808f1d2334e6414f6cf215ea",
+      "delegated-work-worker-before.private.json": "ce4e1935f7c45f285e10e045c583b4c4098240e0b433b22542f64b5ee750e55d",
+      "core-sources-before.private.json": "d8b7c60746ab28b47634b8653c49fb4da26550d1a7a28daf5349b4d605f00d07",
+      "delegated-work-worker-sources-before.private.json": "f12c52273292a5805c910fa353463051944776cae14dbe6a87f58eca0f6f8b68"
+    },
+    "scopeDocuments": {
+      "AGENTS.md": "23e8f05b97deb8be2cad35d910c6f1cb65d14884b6c0f64059148837f2eee105",
+      "eva2/PROJECTDOEL.md": "c49acdbf8dbe3898112bdc94fc75674f7b3bb4ddc3108c4440104e17aa3fc463",
+      "eva2/WERKBORD.md": "6c354ae2fa281d5cf41183846e20518945ad8f29d0571aa239909beae1e6b767"
+    }
+  },
+  "blockers": [],
+  "packagingAssessment": {
+    "preexistingReleaseDifferenceIndependentlyConfirmed": [
+      "adapters/postgres/delegated_work.py"
+    ],
+    "beforeWorkerStoreSha256": "505b25d91fe8ba857a61ec22ab3f442c45b19832f1971986766856b874b750f3",
+    "workerAlignmentUsesExactPreviouslyReviewedStore": true,
+    "corePreviousFilesystemLayerRetained": true,
+    "coreLayerCountBefore": 1,
+    "coreLayerCountAfter": 2,
+    "coreNewLayer": "Only COPY of the reviewed runner to its existing module path.",
+    "workerFullArchiveOverlayComparisonIndependent": true,
+    "workerLayerCountBefore": 419,
+    "workerLayerCountAfter": 1,
+    "workerDescendantFilesystemEntriesBefore": 12203,
+    "workerDescendantFilesystemEntriesAfter": 12203,
+    "workerMissingDescendants": 0,
+    "workerAddedDescendants": 0,
+    "workerDifferentContentExactly": [
+      "opt/eva/src/eva/adapters/postgres/delegated_work.py",
+      "opt/eva/src/eva/bootstrap/delegated_digital_runner.py"
+    ],
+    "workerOtherEntryMetadataChanges": 0,
+    "workerFilesystemManifestSha256": "a27760678bdd695628eedf8682d354f05706389e2a331d6da1735061bd88ac7a",
+    "workerImageConfigurationArchitectureOSEqual": true,
+    "loadedWorkerFilesystemDiffIDsAndConfigMatchFinalArchive": true,
+    "rootMarkerQualification": "The source archive has an explicit dot root-directory marker; the flattened archive represents it implicitly. All 12,203 descendant entries are compared. Running root mode 0755 and uid/gid 0:0 match that marker; the placeholder root timestamp is not claimed as preserved runtime state.",
+    "intermediateExportQualification": "worker-candidate-flat.private.tar retains the old store and changed only runner. It is explicitly an uninstalled intermediate, excluded from the final GO. The final worker-profile-aligned archives and running image contain both exact reviewed hashes.",
+    "earlierIntermediateBindingConcernResolvedByFinalArchiveAndLiveReadback": true
+  },
+  "installationAssessment": {
+    "independentLiveReadOnlyDockerAndModuleInspection": true,
+    "core": {
+      "healthy": true,
+      "pythonModules": 337,
+      "changed": [
+        "bootstrap/delegated_digital_runner.py"
+      ],
+      "unchanged": 336,
+      "added": 0,
+      "removed": 0,
+      "environmentMapsAndRuntimeConfigEqual": true,
+      "imageConfigEqual": true,
+      "mountMapsEqual": true,
+      "mountCount": 25
+    },
+    "worker": {
+      "healthy": true,
+      "pythonModules": 335,
+      "changed": [
+        "adapters/postgres/delegated_work.py",
+        "bootstrap/delegated_digital_runner.py"
+      ],
+      "unchanged": 333,
+      "added": 0,
+      "removed": 0,
+      "environmentMapsAndRuntimeConfigEqual": true,
+      "imageConfigEqual": true,
+      "mountMapsEqual": true,
+      "mountCount": 21
+    },
+    "runtimeConfigCompared": [
+      "Cmd",
+      "Entrypoint",
+      "User",
+      "WorkingDir",
+      "Volumes",
+      "ExposedPorts",
+      "Healthcheck",
+      "StopSignal",
+      "StopTimeout"
+    ],
+    "environmentKeyUniquenessConfirmed": true,
+    "releaseBoundSourceCount": 53,
+    "allReleaseBoundSourcesEqual": true,
+    "coreReadyHTTP": 200,
+    "coreReady": true,
+    "receiptStatus": "running_with_retained_mounts",
+    "noGrantRoleMandateOrPrivateScopeExpansionIntroducedByPackaging": true
+  },
+  "publicationAssessment": {
+    "sourceTestsAndPreparationFailuresReportedAccurately": true,
+    "testCoverageQualification": "97 initial passes plus eleven repaired parameter cases, one overlap, cover all 107 selected cases; no single all-green 107-case run claimed.",
+    "exactFinalArchiveAndImageBindingConfirmed": true,
+    "sourceOnlyModelFreeProofSeparatedFromNativeLaterUse": true,
+    "dashboardHTTP": 200,
+    "dashboardReadbackSha256": "d02d9fc658787664a2850664670b655a62dd9c5d56191940d50ec64b859afa06",
+    "latestDeliveryInstalled": true,
+    "wholeProductFunctionCompleted": false,
+    "currentWorkStillLearningCycle": true,
+    "reviewPendingTextTruthfulAtCapture": true,
+    "AGENTSAndPROJECTDOELRetainActiveWholeProjectGoal": true
+  },
+  "qualifications": [
+    "GO covers this exact installed query-context coupling and release alignment; it does not complete the entire Eva2 goal.",
+    "Both prior source GO artifacts remain the source assessments. The store is carried byte-for-byte to worker; no new store behavior was designed or re-audited.",
+    "No new paid model call or native relevant later-use experiment establishes smarter task behavior, memory ranking, token savings or efficiency.",
+    "Relevant later application, user feedback, changed later behavior, full learning cycle, AIDE² and household acceptance remain open.",
+    "Environment and mount lists are compared as maps; ordering differences are not value changes. Duplicate environment keys were independently excluded."
+  ],
+  "reviewActivity": {
+    "newProductTests": 0,
+    "paidModelCalls": 0,
+    "newNativeBehaviorTrials": 0,
+    "implementationEdits": 0,
+    "runtimeMutations": 0,
+    "sourceReaudit": false,
+    "previouslyDeniedAuxiliaryReadsRetried": false,
+    "writtenFileOnly": "eva2/reviews/task-context-memory-installed-review-20261011.json"
+  }
+}

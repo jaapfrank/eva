@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T15:21:51.921417+00:00",
+  "lastUpdated": "2026-10-11T15:46:04.597516+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1027,8 +1027,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T15:21:51.921417+00:00",
+        "checkedAt": "2026-10-11T15:46:04.597516+00:00",
         "deliveries": [
+          {
+            "title": "Achtergrondwerk zoekt geheugen met de echte taak en nieuwste bijsturing",
+            "date": "2026-10-11T15:43:02.016590+00:00",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "completionScope": "Installed task-context recall coupling; full learning cycle and AIDE² remain open.",
+            "result": "Bestaande geheugenzoekactie krijgt aangenomen taak en laatste opgeslagen correctie vóór het model antwoordt. Eén geheugenaanroep; oorspronkelijke afzender/persoonsgrens behouden. Kern en werker gezond en 53 taakversie-hashes gelijk.",
+            "remaining": "Echte eerdere ervaring bij later werk toepassen, menselijke feedback verwerken en later aangepast gedrag aantonen. Volledige leercyclus en AIDE² blijven open.",
+            "source": "eva2/evidence/product/task-context-memory-installed-20261011.json",
+            "review": "eva2/reviews/task-context-memory-installed-review-20261011.json",
+            "usage": "0 nieuwe handmatige Eva-modelaanvragen of vergelijkingsproeven. 107 geselecteerde lokale cases groen over twee gerichte runs; ontwikkelcredits onbekend.",
+            "independentReview": "GO (bron, verpakking, installatie en beperkte publicatie)",
+            "reviewSha256": "702cd6d0caf95ec3b0c9734c25d6daf0c01fb6bba9928ef1bc676da752d7076c"
+          },
           {
             "title": "Nieuwe privétaakuitkomsten verbonden met Eva’s persoonsgeheugen",
             "date": "2026-10-11T15:16:09.300448+00:00",
@@ -4543,12 +4557,13 @@
         ],
         "now": {
           "title": "Leercyclus: taakuitkomsten gebruiken in later gesprek en leren",
-          "detail": "Taakuitkomst→privégeheugen geïnstalleerd en gezond; 20 gerichte controles en onafhankelijke bron-/installatiereview geslaagd. Oude proeven niet opnieuw ingelezen. Nu afronden: relevante taakervaring in een volgende beurt toepassen, feedback verwerken en later aangepast gedrag gebruiken. Volledige leercyclus en AIDE² blijven open.",
+          "detail": "Taakuitkomsten→privégeheugen en taakcontext→geheugenzoekactie zijn geïnstalleerd en onafhankelijk beoordeeld. Vervolgens echte relevante eerdere ervaring en feedback bij later werk aantoonbaar toepassen. Volledige leercyclus en AIDE² blijven open.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/private-work-outcome-memory-installed-20261011.json",
-          "doneWhen": "Een werkelijk afgehandelde taakuitkomst is duurzaam persoonsgebonden beschikbaar en wordt bij een volgende relevante beurt gebruikt; falen wordt niet als succes herinnerd, stoppen/replay/privacy blijven behouden. Werkend geïnstalleerd met gerichte controles en onafhankelijke review."
+          "source": "eva2/evidence/product/task-context-memory-installed-20261011.json",
+          "doneWhen": "Een werkelijk afgehandelde taakuitkomst is duurzaam persoonsgebonden beschikbaar en wordt bij een volgende relevante beurt gebruikt; falen wordt niet als succes herinnerd, stoppen/replay/privacy blijven behouden. Werkend geïnstalleerd met gerichte controles en onafhankelijke review.",
+          "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
         },
         "next": {
           "title": "Ontbrekende mogelijkheden realiseren en volledige AIDE²/droomcyclus",
@@ -4570,7 +4585,7 @@
           "source": "eva2/evidence/product/telegram-default-private-installed-20261011.json"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T15:21:51.921417+00:00",
+        "reviewedAt": "2026-10-11T15:46:04.597516+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -10953,7 +10968,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T15:21:51.921417+00:00",
+      "lastUpdatedAt": "2026-10-11T15:27:57.564122+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11073,8 +11088,8 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "Bestaande taakuitkomsten koppelen aan persoonsgebonden geheugen, latere toepassing en leren.",
-      "currentEvidence": "eva2/evidence/product/private-work-outcome-memory-installed-20261011.json",
+      "currentWork": "Eerdere ervaring en feedback via de bestaande geïnstalleerde geheugenroute werkelijk later toepassen; taakcontextkoppeling onafhankelijk GO.",
+      "currentEvidence": "eva2/evidence/product/task-context-memory-installed-20261011.json",
       "nextStep": "Werk de huidige leercyclus af: relevante eerdere taakervaring toepassen, feedback verwerken en later aantoonbaar gebruiken; daarna ontbrekende mogelijkheden en volledige AIDE².",
       "usageClarification": {
         "date": "2026-09-07",
@@ -11091,7 +11106,7 @@
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
       "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
-      "designUpdatedAt": "2026-10-11T15:16:09.300448+00:00",
+      "designUpdatedAt": "2026-10-11T15:46:04.597516+00:00",
       "wholeProjectGoalStatus": "active",
       "subdeliveriesDoNotCompleteGoal": true
     },
@@ -14326,25 +14341,37 @@
       "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-11T15:16:09.300448+00:00",
-      "image": "sha256:cd424e280f65a5584891c3cb3fb87ed94b6ce1c787c0ba037637a1b29cc0f942",
-      "workerImage": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a",
+      "recordedAt": "2026-10-11T15:46:39.292782+00:00",
+      "image": "sha256:e8e4a42cf01ac777567a0118cf4c6f109b19fa7e35498c5181686982e9912a74",
+      "workerImage": "sha256:255171720df4f36991da82f64deba95a7c0e234db1f8ed46f5b296392b629954",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "readyStatus": 200,
-      "sourceBase": "retained image sha256:30acae1a6c58d9fe8f1fe4ae18ab793c68ea74017954887ba8a7dc84a359793a",
+      "sourceBase": {
+        "core": "sha256:cd424e280f65a5584891c3cb3fb87ed94b6ce1c787c0ba037637a1b29cc0f942",
+        "worker": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a"
+      },
       "repositoryHeadFullyInstalled": false,
       "reviewedSourceIdentity": {
         "eva2/src/eva/adapters/postgres/delegated_work.py": "ac2d627cbde4aa343e7b107261f005f47cbd3d83b15fe357e5beafe5722e299e",
         "eva2/src/eva/application/delegated_work_memory.py": "2b236d15d7cfbd8fc1c90522e5a385f0af5a9f74c77516cc7d543d10517a5952",
         "eva2/src/eva/bootstrap/delegated_work_memory.py": "0dde10066f73cb3f37da5c8de75cb35f31d90395a04e66b879edc1b76b78ac00",
-        "eva2/src/eva/bootstrap/runtime.py": "80117993d0a62a95767117ba7b1e63d11aa46cc0f975090744c67a843f91c771"
+        "eva2/src/eva/bootstrap/runtime.py": "80117993d0a62a95767117ba7b1e63d11aa46cc0f975090744c67a843f91c771",
+        "eva2/src/eva/bootstrap/delegated_digital_runner.py": "1e748d071e5f5f968e0f7ebb704bdb8557a3b7456750ee8556b31381447217e1"
       },
       "sameRuntimeSourceItems": 333,
-      "evidence": "eva2/evidence/product/private-work-outcome-memory-installed-20261011.json",
-      "meaning": "Exact reviewed outcome-memory modules installed in flattened core; existing filesystem/configuration/mounts retained, worker unchanged. Full repository replacement and native later-use are not claimed."
+      "evidence": "eva2/evidence/product/task-context-memory-installed-20261011.json",
+      "meaning": "Task-context memory query installed and independently reviewed; true later learning and whole AIDE² remain open.",
+      "coreImage": "sha256:e8e4a42cf01ac777567a0118cf4c6f109b19fa7e35498c5181686982e9912a74",
+      "canonicalSourceDiffersFromRelease": "Core retains existing cold-path memory modules; worker retains its original module inventory with exact reviewed store alignment. All 53 release-bound execution modules agree.",
+      "health": "core and delegated worker healthy; core ready HTTP 200",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/task-context-memory-20261011/candidate.compose.private.json",
+      "retainedSourceItems": {
+        "core": 336,
+        "worker": 333
+      }
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -30232,6 +30259,27 @@
         "eva2/src/eva/adapters/api/app.py": "4b3bf1992cd4b12d0a6c983413697735bd4bc4f09728e8d1a5831aa8a05d4448",
         "eva2/src/eva/adapters/api/dashboard_conversation.py": "60d5c1d1589121c7c21109ae5456282ab89873a959329bda6dbb322b177cca2f"
       }
+    },
+    "historicalRuntimeBeforeTaskContextMemory20261011": {
+      "recordedAt": "2026-10-11T15:16:09.300448+00:00",
+      "image": "sha256:cd424e280f65a5584891c3cb3fb87ed94b6ce1c787c0ba037637a1b29cc0f942",
+      "workerImage": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a",
+      "core": "eva2-managed-b-slot3-core",
+      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "coreHealth": "healthy",
+      "workerHealth": "healthy",
+      "readyStatus": 200,
+      "sourceBase": "retained image sha256:30acae1a6c58d9fe8f1fe4ae18ab793c68ea74017954887ba8a7dc84a359793a",
+      "repositoryHeadFullyInstalled": false,
+      "reviewedSourceIdentity": {
+        "eva2/src/eva/adapters/postgres/delegated_work.py": "ac2d627cbde4aa343e7b107261f005f47cbd3d83b15fe357e5beafe5722e299e",
+        "eva2/src/eva/application/delegated_work_memory.py": "2b236d15d7cfbd8fc1c90522e5a385f0af5a9f74c77516cc7d543d10517a5952",
+        "eva2/src/eva/bootstrap/delegated_work_memory.py": "0dde10066f73cb3f37da5c8de75cb35f31d90395a04e66b879edc1b76b78ac00",
+        "eva2/src/eva/bootstrap/runtime.py": "80117993d0a62a95767117ba7b1e63d11aa46cc0f975090744c67a843f91c771"
+      },
+      "sameRuntimeSourceItems": 333,
+      "evidence": "eva2/evidence/product/private-work-outcome-memory-installed-20261011.json",
+      "meaning": "Exact reviewed outcome-memory modules installed in flattened core; existing filesystem/configuration/mounts retained, worker unchanged. Full repository replacement and native later-use are not claimed."
     }
   },
   "activeTaskId": "AU-008",
