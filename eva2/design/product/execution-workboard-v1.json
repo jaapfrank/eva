@@ -128,16 +128,16 @@
       "summary": "Het volledige Eva2-goal is actief. Eén nieuwe latere taak heeft de eerdere volledige bijsturing toegepast; bronkoppeling geïnstalleerd, onafhankelijke eindreview loopt. Daarna ontbrekende mogelijkheden maken en hergebruiken. Geen nieuwe vergelijking of spraakwerk.",
       "nextOutcomes": [
         {
-          "title": "Nu · Ervaring en feedback later toepassen",
-          "detail": "De twee geheugenkoppelingen zijn geïnstalleerd. Aantonen dat Eva een eerdere taakervaring en bijsturing bij een volgende relevante opdracht gebruikt."
+          "title": "Nu · Volledige AIDE²- en droomcyclus",
+          "detail": "Zelf een hulpmiddel maken, controleren, bewaren en later gebruiken is technisch bewezen. Nu dezelfde verbeterroute aansluiten op Eva’s agentaansturing én eigen code/apps/addons, met onafhankelijke beoordeling en latere toepassing."
         },
         {
-          "title": "Daarna · Zelf mogelijkheden toevoegen en verbeteren",
-          "detail": "Bestaande algemene uitvoerder en verbeterroute hergebruiken voor een ontbrekende mogelijkheid en volledige AIDE² voor aansturing, code en uitbreidingen."
+          "title": "Daarna · Passend initiatief en samenhangend dagelijks gebruik",
+          "detail": "Dezelfde geheugen- en uitvoerroute gebruiken voor herhaald passend initiatief, leren van reacties en later bijsturen."
         },
         {
           "title": "Eindpunt · Eén bruikbare digitale huisgenoot",
-          "detail": "Passend initiatief en dagelijks gezinsgebruik afronden, met onafhankelijke beoordeling en jouw acceptatie. Het volledige goal blijft actief."
+          "detail": "De vier productuitkomsten samen opleveren met onafhankelijke eindbeoordeling en gezinsacceptatie. Het volledige goal blijft actief; AIDE² is nog niet af."
         }
       ],
       "openRisks": [
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T18:11:10.568799+00:00",
+        "checkedAt": "2026-10-11T18:16:12.737697+00:00",
         "deliveries": [
           {
             "title": "Eva maakt zelf een hulpmiddel en gebruikt het later zelfstandig",
@@ -4607,13 +4607,14 @@
         ],
         "now": {
           "title": "Volledige AIDE²- en droomcyclus",
-          "detail": "Zelf maken en later hergebruiken is technisch bewezen en de deadlinecorrectie geïnstalleerd. Nu de bestaande verbetering van agentaansturing, code en uitbreidingen verbinden met kiezen, onafhankelijk beoordelen, toepassen en later gedrag; geen tweede platform of nieuwe vergelijkingsserie.",
+          "detail": "Zelf maken en later hergebruiken is technisch bewezen. De broncontrole toont het concrete resterende gat: de verbeterroute beoordeelt nu geïnstalleerde Eva-code, maar nog geen door Eva bewaard hulpmiddel/app/addon. Ik sluit dat aan op dezelfde vergelijking, onafhankelijke eindbeoordeling en toepassing; daarna rustige planning en verbeterde agentaansturing. Nog geen nieuwe AIDE²-code geïnstalleerd.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
           "source": "eva2/PROJECTDOEL.md",
           "review": "eva2/reviews/ability-create-later-reuse-final-review-20261011.json",
-          "doneWhen": "Eva doorloopt een echte kwaliteitsverbetercyclus voor haar aansturing én code of uitbreiding, met onafhankelijke eindbeoordeling, gecontroleerde toepassing en latere bruikbare verbetering."
+          "doneWhen": "Eva doorloopt een echte kwaliteitsverbetercyclus voor haar aansturing én code of uitbreiding, met onafhankelijke eindbeoordeling, gecontroleerde toepassing en latere bruikbare verbetering.",
+          "evidence": "eva2/evidence/product/aide-extension-gap-20261011.json"
         },
         "next": {
           "title": "Passend initiatief en samenhangend dagelijks gebruik",
@@ -4632,7 +4633,7 @@
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T18:11:10.568799+00:00",
+        "reviewedAt": "2026-10-11T18:16:12.737697+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4694,8 +4695,8 @@
           "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
         }
       },
-      "reviewedAt": "2026-10-11T16:50:02.157382+00:00",
-      "checkedAt": "2026-10-11T17:49:24.116140+00:00",
+      "reviewedAt": "2026-10-11T18:16:12.737697+00:00",
+      "checkedAt": "2026-10-11T18:16:12.737697+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11059,7 +11060,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T17:49:24.116140+00:00",
+      "lastUpdatedAt": "2026-10-11T18:16:12.737697+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11325,6 +11326,26 @@
         "newManualEvaModelCalls": 0,
         "developmentCredits": "unknown",
         "verificationScope": "Public dashboard and source consistency only; not a new learning-cycle result."
+      },
+      "historicalNextOutcomesBeforeAideAlignment20261011": [
+        {
+          "title": "Nu · Ervaring en feedback later toepassen",
+          "detail": "De twee geheugenkoppelingen zijn geïnstalleerd. Aantonen dat Eva een eerdere taakervaring en bijsturing bij een volgende relevante opdracht gebruikt."
+        },
+        {
+          "title": "Daarna · Zelf mogelijkheden toevoegen en verbeteren",
+          "detail": "Bestaande algemene uitvoerder en verbeterroute hergebruiken voor een ontbrekende mogelijkheid en volledige AIDE² voor aansturing, code en uitbreidingen."
+        },
+        {
+          "title": "Eindpunt · Eén bruikbare digitale huisgenoot",
+          "detail": "Passend initiatief en dagelijks gezinsgebruik afronden, met onafhankelijke beoordeling en jouw acceptatie. Het volledige goal blijft actief."
+        }
+      ],
+      "dashboardVerificationAideAlignment20261011": {
+        "checkedAt": "2026-10-11T18:16:12.737697+00:00",
+        "source": "eva2/evidence/product/dashboard-aide-progress-alignment-20261011.json",
+        "scope": "Align current overview and next-step summaries; original tasks, prior results and acceptance unchanged.",
+        "newProductFunctionCompleted": false
       }
     },
     "pendingTechnicalReview": {

@@ -34,6 +34,15 @@ latere toepassing. Geen tweede platform, nieuwe vergelijkingsserie of herhaling
 van deze geslaagde bronchecks. Kwaliteitsverbetering en werkelijk later toepassen
 staan voorop; een lagere tokenstand is niet het doel.
 
+
+De gerichte broncontrole heeft nu het ontbrekende koppelvlak vastgesteld:
+de bestaande verbeterroute behandelt geïnstalleerde Eva-code, terwijl een door
+Eva bewaard hulpmiddel nog geen beoordeelbaar en toepasbaar verbeterdoel is.
+Sluit de geverifieerde bron, eigenaar/project en baselinehash aan op dezelfde
+vergelijking en onafhankelijke eindbeoordeling; publiceer winst via bestaande
+opslag en herbruikbare werkwijze. Er is hierdoor nog geen nieuwe AIDE²-code
+geïnstalleerd. Broncontrole: eva2/evidence/product/aide-extension-gap-20261011.json.
+
 Daarna passend initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en
 echte gezinsacceptatie afmaken. Het volledige projectgoal blijft actief.
 Spraak blijft geparkeerd; ongebruikte Docker Desktop blijft ongemoeid.

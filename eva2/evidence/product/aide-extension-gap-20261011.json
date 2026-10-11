@@ -1,0 +1,55 @@
+{
+  "contract": "EvaAideExtensionGap/v1",
+  "checkedAt": "2026-10-11T18:16:55.522342+00:00",
+  "scope": "Focused read-only source audit of existing improvement route and verified saved capability.",
+  "existing": "Installed-code candidate, development comparison, independent final assessment and managed application already exist. Saved capability creation and later use proven separately.",
+  "gap": "Saved procedure/artifact is not a target of installed-component evaluation and application. Increasing the Python path allowlist does not bind saved owner/project source receipts or publish through the document/procedure route.",
+  "sourceReferences": [
+    {
+      "path": "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
+      "lines": [
+        149,
+        253,
+        273,
+        309
+      ]
+    },
+    {
+      "path": "eva2/src/eva/operations/component_evaluation.py",
+      "lines": [
+        144,
+        154
+      ]
+    },
+    {
+      "path": "eva2/src/eva/adapters/connectors/component_evaluation.py",
+      "lines": [
+        66,
+        67
+      ]
+    },
+    {
+      "path": "eva2/src/eva/operations/component_final_assessment.py",
+      "lines": [
+        229,
+        231
+      ]
+    },
+    {
+      "path": "eva2/src/eva/operations/reviewed_component_application.py",
+      "lines": [
+        92,
+        99
+      ]
+    }
+  ],
+  "nextImplementation": "Bind an explicit saved-artifact target to verified source/reference, owner/project, receipt and baseline hash. Reuse fixed comparison and independent assessment; publish only an accepted gain through verified save and procedure designation. Retain baseline on tie/loss.",
+  "excludedClaims": [
+    "No new AIDE² code installed by this audit",
+    "No autonomous dream scheduling proven",
+    "No quality gain or general superiority proven"
+  ],
+  "newEvaModelCalls": 0,
+  "sourceEdits": 0,
+  "developmentCredits": "unknown"
+}

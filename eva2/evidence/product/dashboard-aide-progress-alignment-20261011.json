@@ -1,0 +1,70 @@
+{
+  "contract": "EvaProjectDashboardAlignment/v1",
+  "checkedAt": "2026-10-11T18:16:12.737697+00:00",
+  "reason": "Some current navigation summaries still described completed learning and ability work as next work. Delivery overview was current; navigation summaries were stale.",
+  "before": {
+    "nextOutcomes": [
+      {
+        "title": "Nu · Ervaring en feedback later toepassen",
+        "detail": "De twee geheugenkoppelingen zijn geïnstalleerd. Aantonen dat Eva een eerdere taakervaring en bijsturing bij een volgende relevante opdracht gebruikt."
+      },
+      {
+        "title": "Daarna · Zelf mogelijkheden toevoegen en verbeteren",
+        "detail": "Bestaande algemene uitvoerder en verbeterroute hergebruiken voor een ontbrekende mogelijkheid en volledige AIDE² voor aansturing, code en uitbreidingen."
+      },
+      {
+        "title": "Eindpunt · Eén bruikbare digitale huisgenoot",
+        "detail": "Passend initiatief en dagelijks gezinsgebruik afronden, met onafhankelijke beoordeling en jouw acceptatie. Het volledige goal blijft actief."
+      }
+    ],
+    "lastUpdatedAt": "2026-10-11T17:49:24.116140+00:00",
+    "checkedAt": "2026-10-11T17:49:24.116140+00:00"
+  },
+  "after": {
+    "nextOutcomes": [
+      {
+        "title": "Nu · Volledige AIDE²- en droomcyclus",
+        "detail": "Zelf een hulpmiddel maken, controleren, bewaren en later gebruiken is technisch bewezen. Nu dezelfde verbeterroute aansluiten op Eva’s agentaansturing én eigen code/apps/addons, met onafhankelijke beoordeling en latere toepassing."
+      },
+      {
+        "title": "Daarna · Passend initiatief en samenhangend dagelijks gebruik",
+        "detail": "Dezelfde geheugen- en uitvoerroute gebruiken voor herhaald passend initiatief, leren van reacties en later bijsturen."
+      },
+      {
+        "title": "Eindpunt · Eén bruikbare digitale huisgenoot",
+        "detail": "De vier productuitkomsten samen opleveren met onafhankelijke eindbeoordeling en gezinsacceptatie. Het volledige goal blijft actief; AIDE² is nog niet af."
+      }
+    ],
+    "now": {
+      "title": "Volledige AIDE²- en droomcyclus",
+      "detail": "Zelf maken en later hergebruiken is technisch bewezen. De broncontrole toont het concrete resterende gat: de verbeterroute beoordeelt nu geïnstalleerde Eva-code, maar nog geen door Eva bewaard hulpmiddel/app/addon. Ik sluit dat aan op dezelfde vergelijking, onafhankelijke eindbeoordeling en toepassing; daarna rustige planning en verbeterde agentaansturing. Nog geen nieuwe AIDE²-code geïnstalleerd.",
+      "state": "in_progress",
+      "activeExecution": true,
+      "owner": "/root",
+      "source": "eva2/PROJECTDOEL.md",
+      "review": "eva2/reviews/ability-create-later-reuse-final-review-20261011.json",
+      "doneWhen": "Eva doorloopt een echte kwaliteitsverbetercyclus voor haar aansturing én code of uitbreiding, met onafhankelijke eindbeoordeling, gecontroleerde toepassing en latere bruikbare verbetering."
+    }
+  },
+  "executionTasksSha256": "778d2c9b9fc523d4aab0ee579827b82fee164c008c15f65c0f9f50c7da298136",
+  "taskStatusesAndEndConditionsChanged": false,
+  "deliveriesChanged": false,
+  "productFunctionCompleted": false,
+  "runtimeChanged": false,
+  "newEvaModelCalls": 0,
+  "developmentCredits": "unknown",
+  "source": "eva2/design/product/execution-workboard-v1.json",
+  "liveVerification": {
+    "url": "http://127.0.0.1:44712/",
+    "updatedAt": "2026-10-11T18:16:55.597Z",
+    "revision": "7de9b26d19ea115a5e24908f111170fea0213f16be51cb878a5a66c1af52166f",
+    "latestVisible": true,
+    "concreteGapVisibleAfterOpeningWorkDetail": true,
+    "notInstalledQualificationVisible": true,
+    "jsErrors": [],
+    "ownerActionRequired": false
+  },
+  "verificationPreparationError": "Initial UI check wrongly expected collapsed work details to be visible. Corrected by opening the existing details panel; dashboard code unchanged.",
+  "originalExecutionTasksUnchanged": true,
+  "existingDeliveriesUnchanged": true
+}
