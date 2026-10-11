@@ -1,6 +1,7 @@
 """Host-only native handoff through the existing digital work queue."""
 from datetime import UTC, datetime, timedelta
 from functools import partial
+import hashlib
 import os
 from pathlib import Path
 from uuid import NAMESPACE_URL, uuid5
@@ -71,3 +72,53 @@ def admit_native_initiative(authority, claim, service):
                   "work_id": spec.work_id, "spec_sha256": spec.sha256,
                   "mandate_sha256": guard.mandate_sha})
     return NativeInitiativeDelegation(spec.work_id)
+
+
+def subscription_initiative_available(authority, model):
+    """Current private owner authority plus the existing subscription, not quota headroom."""
+    owner = authority.owner
+    predicate = getattr(model, "existing_subscription_autonomy", None)
+    if (not callable(predicate) or not predicate(
+            tenant_id=owner._tenant_id, installation_id=owner._installation_id)):
+        return False
+    authority.policy()  # Rechecks verified owner, host policy and durable revocation.
+    return True
+
+
+def admit_initiative_review(authority, model, budget, claim, *, now):
+    """Use the review's durable dispatch claim instead of an unrelated memory quota.
+
+    The original reflection ledger and its source hash remain immutable. Usage is
+    accounted on this same review's WILL_MODEL_STARTED/decision events. Missing
+    subscription authority retains the ordinary pinned reflection admission.
+    """
+    owner = authority.owner
+    authority.policy()
+    prefix = "sensory:initiative-review:" + hashlib.sha256(
+        str(owner._owner).encode()).hexdigest()[:24] + ":"
+    if (claim.event.source != "initiative-review"
+            or claim.event.event_type != "private_opportunity_review"
+            or not claim.thread_id.startswith(prefix)
+            or not claim.thread_id[len(prefix):].isdigit()
+            or claim.event.source_event_id != claim.thread_id.removeprefix("sensory:")
+            or claim.operation_id != claim.event.source_event_id):
+        raise InitiativeMandateDenied("private review differs from its host owner source")
+    state = authority.timeline.load(claim.thread_id)
+    if (state.phase != "will_model_started" or state.status != "active"
+            or state.revision != claim.revision or state.deadline is None
+            or state.deadline <= now):
+        raise InitiativeMandateDenied("private review dispatch claim is not current")
+    events = authority.timeline.events(claim.thread_id)
+    original = {"event_type": claim.event.event_type, "source": claim.event.source,
+        "source_event_id": claim.event.source_event_id, "payload": claim.event.payload}
+    if not events or events[0].payload.get("data") != original:
+        raise InitiativeMandateDenied("private review original source differs")
+    if not subscription_initiative_available(authority, model):
+        return budget.admit_background_reflection(tenant_id=owner._tenant_id,
+            installation_id=owner._installation_id, principal_id=str(owner._owner),
+            now=now, reservation_id=claim.thread_id, spread_over_day=True)
+    from eva.adapters.postgres.runtime_resource_usage import BackgroundReflectionAdmission
+    person_used, installation_used = budget.read_usage_counts(
+        principal_id=str(owner._owner), now=now)
+    return BackgroundReflectionAdmission(True, budget._day(now), person_used,
+        installation_used, "existing_subscription_review")

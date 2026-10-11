@@ -29,31 +29,28 @@ tooltelgrenzen; volledig runtimeverbruik en creditkosten blijven onbekend.
 Dit is kwaliteitswinst voor deze nieuwe mogelijkheid, geen efficiëntieclaim.
 Voorbereidingsfouten blijven bewaard; geen derde variant of herhaalde eindproef.
 
-**Actief werk:** de rustwerker en algemene digitale uitvoerder zijn verbonden
-en de exacte koppeling is eenmaal geïnstalleerd. 224 gerichte controles,
-bron- en installatiereview GO; kern/werker gezond, 13 bronmodules gecontroleerd,
-327/325 overige modules plus omgeving/mounts/gegevens behouden. Bestaande mandaat-CAS
-uitgevoerd; geen nieuwe diensten of mounts. Installatiebewijs:
-eva2/evidence/product/native-initiative-digital-installed-20261011.json.
-Review: eva2/reviews/native-initiative-digital-installed-review-20261011.json.
+**Actief werk:** de bestaande initiatief→digitale uitvoerder-koppeling en de
+correctie van de onbedoelde extra daggrens zijn geïnstalleerd. Kern en taakwerker
+draaien gezond. 89 gerichte controles en onafhankelijke bronreview GO; zes exacte
+bronmodules, verse volledige profielpariteit en ongewijzigd mandaat bevestigd.
+Historische tellingen, account/providergrenzen, geheugen, configuratie en gegevens
+blijven behouden. De afzonderlijke installatie-eindcontrole volgt.
 
-**Concrete vervolgoorzaak:** de bestaande toelating voor achtergrondreflecties
-heeft vandaag 4/4 persoonsplaatsen gebruikt. Nieuw eigen initiatief wacht daardoor
-op background_budget. Dit is een onbedoelde extra daggrens tegenover de eigenaarafspraak
-existingSubscriptionAutonomy=true en aanvullende dagcaps=null. De eerdere uitvoerkoppeling
-draait gezond; geen oude native thread hervatten of aanleiding fabriceren.
-De correctie is bevroren: 89 gerichte controles slagen. /root/product_execution_memory_review
-beoordeelt de exacte bron; root installeert daarna via de bestaande updater/profielbinding.
-Historische tellingen, account/providergrenzen, geheugen/opslag, privacy en stop behouden.
-Daarna een echte eigen keuze via dezelfde werker afmaken. Root verzorgt integratie,
-dashboard en gebundelde review. Geen nieuwe vergelijking of eigen budgetreset.
-Volledige AIDE² en het project blijven actief; oorspronkelijke 39/48 behouden.
+**Nu afmaken:** een authentieke eigen keuze van Eva via dezelfde uitvoerder
+daadwerkelijk afmaken en privé terugmelden. De laatste opgeslagen beoordeling
+dateert van vóór deze installatie; zij bewijst nog geen nieuw resultaat of huidige
+blokkade. Geen oude thread heropenen of aanleiding fabriceren. Daarna de volledige
+AIDE²-aansturing en samenhangend gezinsgebruik. Geen nieuwe vergelijkingsserie.
+Het hele projectgoal blijft actief; oorspronkelijke 39/48 behouden.
 Geen eigenaarhandeling nodig. Spraak geparkeerd.
+
+Installatie: eva2/evidence/product/native-initiative-subscription-installed-20261011.json.
+Bronreview: eva2/reviews/native-initiative-subscription-source-review-20261011.json.
 
 Bewijs: eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json.
 Later gebruik: eva2/evidence/product/saved-artifact-later-use-result-20261011.json.
 Review: eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json.
-Dashboard inhoudelijk bijgewerkt: 2026-10-11T20:36:02.625157+00:00.
+Dashboard inhoudelijk bijgewerkt: 2026-10-11T20:50:50.682674+00:00.
 
 
 ## Historische voorbereiding en installatie — 11 oktober 2026

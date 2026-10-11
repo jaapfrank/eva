@@ -1,0 +1,21 @@
+{
+  "contract": "EvaProjectDashboardContentVerification/v1",
+  "checkedAt": "2026-10-11T20:51:42.483093+00:00",
+  "status": "updated_visible",
+  "url": "http://localhost:44712/",
+  "apiHTTP": 200,
+  "apiMatchesLeadingBoard": true,
+  "actualUserBrowserVerified": true,
+  "browserRefreshedWithoutReload": true,
+  "visibleLatest": "Onbedoelde extra daggrens voor eigen initiatief gecorrigeerd",
+  "visibleCurrent": "Zelfgekozen werk afronden en terugmelden",
+  "visibleNext": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
+  "visibleOwnerAction": "Geen handeling van jou nodig",
+  "visibleContentCheckedAt": "2026-10-11T20:50:50.682674+00:00",
+  "javascriptErrors": [],
+  "smallTasksPreserved": "39/48",
+  "wholeGoalActive": true,
+  "noMainOutcomeMarkedComplete": true,
+  "manualModelRequestsForDashboardUpdate": 0,
+  "scope": "Data publication and visible dashboard only; native initiative result still open."
+}

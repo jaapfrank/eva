@@ -1,32 +1,27 @@
-## Actueel werk — 2026-10-11T20:30:55.749652+00:00
-## Dashboardcontrole — 2026-10-11T20:36:02.625157+00:00
+## Actueel werk — 2026-10-11T20:50:50.682674+00:00
 
-De geopende browser bleef op de oude 18:02-stand terwijl werkbord/API al 22:30
-bevatten; herladen toont de actuele bron. Achtergrondverversing, terugkeer- en
-verbindingsherstelverversing expliciet ingeschakeld; huidige en laatst geleverde
-uitkomst direct zichtbaar plus Nu verversen. Geen productafronding hierdoor.
-Werkelijke browser gecontroleerd: nieuwe werkbordwijziging zonder herladen zichtbaar,
-Nu verversen gebruikt, nul JavaScriptfouten; 12 bestaande dashboardchecks en build groen.
-Bewijs: eva2/evidence/product/dashboard-live-refresh-20261011.json.
-Daggrenscorrectie gebouwd met 89 geslaagde controles; onafhankelijke bronreview loopt.
-Nog niet geïnstalleerd; daarna één bestaande update en echte eigen keuze.
-Oorspronkelijke taken/statussen behouden.
+**Laatst opgeleverd:** de onbedoelde extra daggrens voor eigen initiatief is
+gecorrigeerd en geïnstalleerd. Kern en taakwerker gezond; 89 gerichte controles en
+bronreview GO. Historische tellingen, mandaat, configuratie en gegevens behouden.
+Installatie-eindcontrole volgt; geen nieuw native resultaat geclaimd.
 
+**Nu:** een echte eigen keuze van Eva via de bestaande digitale uitvoerder
+afmaken en privé terugmelden. Laatste geregistreerde contextbeoordeling is ouder
+dan de installatie; geen actuele blokkade of nieuwe uitvoering daaruit afleiden.
 
-**Laatst opgeleverd:** eigen initiatief aangesloten op dezelfde programmeer- en
-verbeterroute. Geïnstalleerd; bron- en installatiereview GO. Beide diensten gezond.
-De eerdere zelfgemaakte, verbeterde en later hergebruikte hulpmiddelen blijven behouden.
+**Wie:** /root volgt de native route en verzorgt integratie/dashboard/Git.
+Bronuitvoerder klaar; onafhankelijke review bundelen op de concrete installatie.
 
-**Nu:** De geïnstalleerde uitvoerkoppeling is gezond en goedgekeurd. Actuele oorzaak gevonden: een oude grens van 4 achtergrondreflecties per persoon per dag is bereikt en houdt Eva tegen om nieuw initiatief te kiezen. Dit botst met de eigenaarafspraak zonder extra daglimieten. De uitvoerder corrigeert alleen die toelating, met behoud van bestaande tellingen/accountgrenzen; daarna een echte eigen keuze afmaken.
-
-**Wie:** /root/eva1_memory_transfer corrigeert de bestaande toelating en controleert
-behoud van tellers/stop/accountgrenzen. /root verzorgt integratie/dashboard/Git.
-Geen handeling van Jaap nodig.
-
-**Daarna:** echte eigen keuze uitvoeren/terugmelden, aansturing verbeteren,
-passend initiatief en samenhangend gezinsgebruik afmaken. Het volledige goal
-blijft actief; oorspronkelijke 39/48 kleine afrondingen behouden.
+**Daarna:** agentaansturing verbeteren, herhaald passend initiatief en
+samenhangend gezinsgebruik afmaken. Hele projectgoal actief; oorspronkelijke
+39/48 kleine afrondingen behouden. Geen handeling van Jaap nodig.
 Spraak geparkeerd; geen vergelijkingsserie.
+
+**Dashboard:** inhoud en runtimebinding bijgewerkt. Automatische verversing,
+terugkeer-/herstelverversing en Nu verversen zijn geïnstalleerd; eerdere echte
+browsercontrole zonder herladen geslaagd.
+Installatie: eva2/evidence/product/native-initiative-subscription-installed-20261011.json.
+Verversing: eva2/evidence/product/dashboard-live-refresh-20261011.json.
 
 ## Actief volledig projectgoal — 11 oktober 2026
 

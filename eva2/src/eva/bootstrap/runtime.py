@@ -2086,6 +2086,8 @@ def create_runtime_app() -> FastAPI:
                 admission_blocker=model.autonomous_admission_blocker,
                 context_review_budget=reflection_budget,
                 context_review_authorizer=lambda: runtime._initiative_authority().policy(),
+                context_review_admission=lambda claim, now: admit_initiative_review(
+                    runtime._initiative_authority(), model, reflection_budget, claim, now=now),
                 clock=lambda: datetime.now(tz=UTC).replace(microsecond=0),
 
             )
@@ -2218,6 +2220,9 @@ def create_runtime_app() -> FastAPI:
         work_memory = DelegatedWorkMemory(
             engine, delegated_work_service, lambda document: runtime._cold_path.submit(document))
         service_tasks = (*service_tasks, work_memory.run_once)
+    from eva.bootstrap.native_initiative_work import (
+        admit_initiative_review, subscription_initiative_available,
+    )
     from eva.bootstrap.idle_capacity import idle_capacity_available
     runtime = PostgresHindsightMemoryRuntime(
         engine,
@@ -2230,6 +2235,8 @@ def create_runtime_app() -> FastAPI:
             idle_capacity=lambda: idle_capacity_available(
                 model=model, reflection_budget=reflection_budget,
                 delegated_work_store=delegated_work_store,
+                initiative_capacity=lambda: subscription_initiative_available(
+                    runtime._initiative_authority(), model),
             ),
             service_tasks=service_tasks,
             outbox=memory_outbox,

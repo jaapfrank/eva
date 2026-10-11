@@ -2348,6 +2348,18 @@ class PydanticConversationModel:
                 ).hexdigest()
         raise ConversationModelError("conversation credentials were rejected")
 
+    def existing_subscription_autonomy(self, *, tenant_id: str, installation_id: str) -> bool:
+        """Identify the existing scoped subscription route without spending or refreshing.
+
+        Lease validity, provider limits and measured per-request usage are still
+        checked by the normal dispatch. This grants no access to another endpoint.
+        """
+        budget = self._resource_budget
+        return (budget is not None and budget.tenant_id == tenant_id
+                and budget.installation_id == installation_id
+                and budget.unknown_cost_policy == "block_autonomous_spend"
+                and self._endpoint == _CODEX_SUBSCRIPTION_ENDPOINT)
+
     def autonomous_admission_blocker(self) -> AutonomousAdmissionBlocker | None:
         """Existing subscription use is not a new external spending commitment.
 

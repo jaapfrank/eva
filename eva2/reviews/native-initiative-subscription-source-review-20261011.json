@@ -1,0 +1,126 @@
+{
+  "contract": "EvaNativeInitiativeSubscriptionSourceReview/v1",
+  "checkedAt": "2026-10-11T20:40:17.315095+00:00",
+  "reviewer": "independent_product_execution_memory_review",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact frozen six-source subscription initiative admission correction and existing installation plan. No runtime/native semantic trial or broader autonomy claim.",
+  "bindings": {
+    "sourceFiles": {
+      "adapters/model/pydantic_conversation.py": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
+      "adapters/postgres/runtime_resource_usage.py": "dad4680a686f610af1b0cab8b1ced8d4c12dea9e48918c04db8e95116e205c0c",
+      "application/free_will.py": "ed66feefff611ff15d01d3f34e23b66969488392970757b1b290017abd0eb0dc",
+      "bootstrap/idle_capacity.py": "62f3bebcab2bd8a3c8b4af73d4e08afe1f74134129ba56f243988181b60bf3d0",
+      "bootstrap/native_initiative_work.py": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
+      "bootstrap/runtime.py": "f73152e960eba61f890b093b49b80167def02a16497a3be9d15c5384309030d1"
+    },
+    "testFiles": {
+      "eva2/tests/bootstrap/test_subscription_initiative_admission.py": "974a8082478842f6a58f052761d2b636b60bde4d3c0270fe733de0e609fc925e",
+      "eva2/tests/postgres/test_subscription_initiative_reviews.py": "95aa6c1362208fa35d03dad378218b2b6d8663917916dd70af96bbd903dfe4cc"
+    },
+    "frozenManifestPath": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-initiative-frozen-source.private.json",
+    "frozenManifestSha256": "f1f9c484e80ee5f8d6b9c8b51da1162915801c83407c093cfd863d32809dc1e3",
+    "sourcePatchSha256": "e1a62fc6cc742fb378e383babb01b15534e66654ca9f7a53c1f3c2a58052d8d6",
+    "testReceiptPath": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-initiative-targeted-tests.private.json",
+    "testReceiptSha256": "9564606ff6aa93f6c9195b747d8db3466a132039c0c72629dabb324aa0c7b719",
+    "testLogSha256": {
+      "subscription-initiative-unit-tests.private.log": "682a2d966c59940e3f9b47d8e1ff39018bc1378aab169397bc111b0c4e98ea56",
+      "subscription-initiative-postgres-tests.private.log": "79ed212a7d0e8987267102b3f07fe7e4b77c78103768b630f50f4e2b86d2c263"
+    },
+    "publicSourceEvidencePath": "eva2/evidence/product/native-initiative-subscription-source-20261011.json",
+    "publicSourceEvidenceSha256": "6094d3583e9608f5dacfca63bbe4fc17da432a5a45e5802592addc755608e400",
+    "ownerRulePath": "eva2/design/product/execution-workboard-v1.json#audit.goalRevision.usageClarification",
+    "ownerRuleCompactSortedJsonSha256": "f8a5616e73a9183be465a08bc3c11ea498c83195e861639c711c60be0673c83c",
+    "baseCommit": "05e7da2dae311ebc8cf6111714a49ac23e82a567",
+    "retainedBridgeSourceReviewSha256": "4a01fefb695a3eb7d18ed1250c262c3b03e775339b8efb908990c8a2b20d4931",
+    "retainedBridgeInstalledReviewSha256": "707134ec2807044cb5f810d976613ded235b1069d78fcdc9f8d9f9d77e0cb605"
+  },
+  "findings": [
+    {
+      "status": "passed",
+      "source": "adapters/model/pydantic_conversation.py:2351",
+      "finding": "Subscription predicate requires exact existing Codex subscription endpoint and matching tenant/installation resource scope. It neither reads/refreshes credentials nor grants another endpoint; normal request admission, access lease/provider errors and bounded measured usage remain required."
+    },
+    {
+      "status": "passed",
+      "source": "bootstrap/native_initiative_work.py:88",
+      "finding": "Only the current verified owner private initiative-review source with exact durable event payload, operation identity, thread prefix/revision, WILL_MODEL_STARTED active phase and unexpired deadline receives subscription review admission. Current mandate/revocation is rechecked."
+    },
+    {
+      "status": "passed",
+      "source": "application/free_will.py:333",
+      "finding": "Existing atomic model-start fence remains before recall/dispatch. Two-worker, lost-response, expired-claim and revoked-authority tests demonstrate one attempt per durable review and retained will_usage_uncertain; no ambiguous retry/reset."
+    },
+    {
+      "status": "passed",
+      "source": "adapters/postgres/runtime_resource_usage.py:183",
+      "finding": "New method reads legacy pinned daily reflection counters only. Existing reflection reservations, policy/source hash and memory/storage paths remain unchanged; saturated person4/installation6 ledger/revision/payload hashes are preserved in real isolated PG tests."
+    },
+    {
+      "status": "passed",
+      "source": "application/free_will.py:340",
+      "finding": "Private callback is excluded for household reviews, which retain existing admission/shared-context guards. Original ordinary sensory route is unchanged; fresh owner alias/person/private memory scope and pre-model authority checks remain."
+    },
+    {
+      "status": "passed",
+      "source": "bootstrap/idle_capacity.py:23",
+      "finding": "Authorized subscription initiative can supply capacity when legacy reflection slots are exhausted. Existing provider admission blocker, pending/running digital work gate, actual compute capacity and foreground overlap gates still prevent new quiet work where required."
+    }
+  ],
+  "ownerRuleAlignment": {
+    "existingSubscriptionAutonomy": true,
+    "additionalEvaDailyTokenCap": null,
+    "additionalEvaDailyCallCap": null,
+    "legacyMemoryReflectionPolicyRewritten": false,
+    "historicalCountersReset": false,
+    "fakeLargeCapsIntroduced": false,
+    "newBillingRouteOrCreditPurchaseAuthorized": false,
+    "perTaskRequestUsageStopAndProviderLimitsRetained": true,
+    "interpretation": "Separate legacy memory/reflection reservations from owner-authorized existing subscription initiative review; preserve both ledgers and conservative unknown-result semantics."
+  },
+  "validation": {
+    "retainedTestsPassed": 89,
+    "unit": 48,
+    "postgres": 41,
+    "unitSeconds": 2.43,
+    "postgresSeconds": 26.88,
+    "firstRunsPassed": true,
+    "fixturePostgres": "16.13",
+    "fixtureReportedRemoved": true,
+    "productionDsnUsed": false,
+    "newLiveModelCalls": 0,
+    "newLiveActionDispatches": 0,
+    "reviewerReranTests": false,
+    "hashesRecomputed": true,
+    "criticalCases": [
+      "exact endpoint/scope/no credential read",
+      "expired or revoked current owner/mandate",
+      "saturated legacy ledger unchanged",
+      "concurrent review dispatch once",
+      "lost response remains uncertain without retry",
+      "expired source/revision/payload rejection",
+      "non-subscription keeps pinned old admission",
+      "private callback never admits household",
+      "foreground overlap/pending work/compute/provider blocker",
+      "provider limit or missing auth not retried"
+    ]
+  },
+  "installationConditions": [
+    "Overlay only these six runtime module hashes on the current exact core/worker through the existing updater; retain all other sources/dependencies/commands/env/mounts/services.",
+    "Run the already-reviewed model-free fresh composition probe in both actual retained environments; require full core/worker release parity, including worker_program_sha256. Source changes must not reuse a stale release.",
+    "Keep the existing initiative mandate permission/capability list and enabled state; pin any required fresh worker_profile_release_sha256 through the same existing owner-only expected/candidate digest CAS, outside native initiative context.",
+    "Keep runtime resource-budget JSON/source hash, all legacy reflection/memory/storage ledgers and historical outcomes unchanged; do not reset usage or enlarge caps.",
+    "Read back installed exact sources, health, effective environment/mounts and actual mandate/profile binding before publishing installed status."
+  ],
+  "limitations": [
+    "This is source/preparation GO, not installation or a live native self-chosen useful outcome.",
+    "Subscription predicate identifies the current route; it does not assert credit headroom or valid credentials before normal provider dispatch.",
+    "Legacy memory/reflection/storage allowances remain and are not removed or repurposed as an extra owner initiative daily cap.",
+    "Foreground priority for new quiet work is preserved; full preemption of an already-running model call is not proven.",
+    "No private delivery, full AIDE2/harness-quality, family acceptance or superiority claim.",
+    "Development credit costs and complete runtime usage remain unknown."
+  ],
+  "reviewerActions": "Read the frozen diff, targeted tests/receipts/logs, narrow existing dispatch/claim/provider context and current public owner rule. No model/provider, credential, runtime, test, queue, evaluator or held-out case operation; only this review receipt written.",
+  "wholeGoalStatus": "active",
+  "voiceStatus": "parked"
+}

@@ -250,6 +250,7 @@ class SensoryDecisionWorker:
         clock: Callable[[], datetime] | None = None,
         context_review_budget=None,
         context_review_authorizer=None,
+        context_review_admission=None,
         household_context=None,
     ) -> None:
         self._store = store
@@ -268,6 +269,7 @@ class SensoryDecisionWorker:
         self._clock = clock
         self._context_review_budget = context_review_budget
         self._context_review_authorizer = context_review_authorizer
+        self._context_review_admission = context_review_admission
         self._household_context = household_context
         self._prefer_revalidation = False
 
@@ -335,10 +337,13 @@ class SensoryDecisionWorker:
                 if started is None:
                     return "idle"
                 claim = started
-                admission = None if self._context_review_budget is None else self._context_review_budget.admit_background_reflection(
-                    tenant_id=self._tenant_id, installation_id=self._installation_id,
-                    principal_id=self._principal_id, now=self._current_time(now),
-                    reservation_id=claim.thread_id, spread_over_day=True)
+                if not household_review and self._context_review_admission is not None:
+                    admission = self._context_review_admission(claim, now=self._current_time(now))
+                else:
+                    admission = None if self._context_review_budget is None else self._context_review_budget.admit_background_reflection(
+                        tenant_id=self._tenant_id, installation_id=self._installation_id,
+                        principal_id=self._principal_id, now=self._current_time(now),
+                        reservation_id=claim.thread_id, spread_over_day=True)
                 if admission is None or not admission.admitted:
                     self._store.complete(claim, FreeWillDecision("silence",
                         "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",

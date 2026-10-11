@@ -20,14 +20,19 @@ def spare_compute_available() -> bool:
         return False
 
 
-def idle_capacity_available(*, model, reflection_budget, delegated_work_store) -> bool:
+def idle_capacity_available(*, model, reflection_budget, delegated_work_store, initiative_capacity=None) -> bool:
     # Subscription credits are not inferred from machine idleness. Existing
     # model admission and real per-operation budgets still apply at execution.
     if model.autonomous_admission_blocker() is not None:
         return False
-    if (reflection_budget is None
-            or not reflection_budget.has_installation_capacity(now=datetime.now(UTC).replace(microsecond=0))):
-        return False
+    reflection_available = (reflection_budget is not None
+        and reflection_budget.has_installation_capacity(now=datetime.now(UTC).replace(microsecond=0)))
+    if not reflection_available:
+        try:
+            if initiative_capacity is None or initiative_capacity() is not True:
+                return False
+        except Exception:
+            return False  # Missing, changed or revoked private authority never starts work.
     if (delegated_work_store is not None
             and delegated_work_store.has_pending_or_running_work()):
         return False

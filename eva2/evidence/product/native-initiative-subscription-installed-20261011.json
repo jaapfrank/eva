@@ -1,0 +1,141 @@
+{
+  "contract": "EvaNativeInitiativeSubscriptionInstalled/v1",
+  "checkedAt": "2026-10-11T20:50:50.682674+00:00",
+  "status": "installed_exact_sources_config_profiles",
+  "independentInstalledReview": "pending",
+  "scope": "Six-source correction to owner-private native initiative admission on the existing subscription route. Source reviewed; no completed new self-chosen outcome or full AIDE² claimed.",
+  "sourceEvidence": {
+    "path": "eva2/evidence/product/native-initiative-subscription-source-20261011.json",
+    "sha256": "6094d3583e9608f5dacfca63bbe4fc17da432a5a45e5802592addc755608e400"
+  },
+  "sourceReview": {
+    "path": "eva2/reviews/native-initiative-subscription-source-review-20261011.json",
+    "sha256": "1fa1c4b06e012dd80c87f2071bf7cfa2340ae59b70b58deb803f3c5de20db77b",
+    "verdict": "GO"
+  },
+  "privateVerification": {
+    "path": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-installed-verification.private.json",
+    "sha256": "345d01fb61df91518be5a7737854c4ab7d525ebe7a914307d8f8ee310a6ba062"
+  },
+  "sourceFiles": {
+    "adapters/model/pydantic_conversation.py": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
+    "adapters/postgres/runtime_resource_usage.py": "dad4680a686f610af1b0cab8b1ced8d4c12dea9e48918c04db8e95116e205c0c",
+    "application/free_will.py": "ed66feefff611ff15d01d3f34e23b66969488392970757b1b290017abd0eb0dc",
+    "bootstrap/idle_capacity.py": "62f3bebcab2bd8a3c8b4af73d4e08afe1f74134129ba56f243988181b60bf3d0",
+    "bootstrap/native_initiative_work.py": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
+    "bootstrap/runtime.py": "f73152e960eba61f890b093b49b80167def02a16497a3be9d15c5384309030d1"
+  },
+  "freshFullProfile": {
+    "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+    "model_profile_release_sha256": "b4ec40af58e111bdcf5ef8f3725d0903a4bf6e2e5191f13dbb5ce812988e5bb4",
+    "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+    "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+    "worker_program_sha256": "1bcde708cbd1ad152480bf7c137398b246d5092c712a7f8988ad8a45800907e3"
+  },
+  "services": {
+    "core": {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
+      "sourceItems": 340,
+      "retainedSourceItems": 334,
+      "changedSourceItems": 6,
+      "configEnvCommandIdentityRetained": true,
+      "mountsRetained": true,
+      "hostConfigRetained": true,
+      "networkInventoryRetained": true,
+      "completeFreshProfileMatch": true,
+      "state": "running",
+      "health": "healthy"
+    },
+    "delegated-work-worker": {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:b3f20f02b851973300656c3a814069944cc204728a8d995d637c32dae1b93cbb",
+      "sourceItems": 338,
+      "retainedSourceItems": 332,
+      "changedSourceItems": 6,
+      "configEnvCommandIdentityRetained": true,
+      "mountsRetained": true,
+      "hostConfigRetained": true,
+      "networkInventoryRetained": true,
+      "completeFreshProfileMatch": true,
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "readyz": {
+    "httpStatus": 200,
+    "ready": true
+  },
+  "existingMandate": {
+    "httpStatus": 200,
+    "result": {
+      "status": "unchanged",
+      "mandate_sha256": "8a9eeb58d10b5f396557d3a77fe0273b41cb030afe7a70831f32d07b316e36dd"
+    }
+  },
+  "retainedPolicy": {
+    "policyBytesSha256": "26eccb55c0f69518a7ee100df214ac06974fb9afab2f2467438dba6977d46d88",
+    "budgetBytesSha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+    "sourceBudgetSha256": "c13e5f33682d5919aeae15fd7ac94919a3403d6920c2f524ea357bcdabc77ee5",
+    "noBudgetPolicyRewrite": true,
+    "noHistoricalCounterReset": true,
+    "accountProviderAdmissionRetained": true
+  },
+  "checks": {
+    "unitPassed": 48,
+    "postgresPassed": 41,
+    "totalPassed": 89,
+    "newTestsRepeatedDuringInstallation": false,
+    "oneExistingUpdater": true,
+    "rollback": false,
+    "sameSubscriptionNoNewProvider": true
+  },
+  "preparationErrors": [
+    {
+      "issue": "First model-free profile probe omitted the existing second connector network.",
+      "consequence": "Discovery unavailable before any model or action; temporary probe removed.",
+      "correction": "Fresh probe used the actual baseline network namespace and retained read-only mounts; full profile parity confirmed.",
+      "evidence": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-probe-route-diagnosis.private.json"
+    },
+    {
+      "issue": "First installed observer compared environment list ordering.",
+      "consequence": "False discrepancy; all 84 environment key/value pairs unchanged.",
+      "correction": "Compared environment as key/value map; no reinstall or configuration mutation.",
+      "evidence": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-verification-order-diagnosis.private.json"
+    },
+    {
+      "issue": "Second installed observer compared host bind/mount list ordering.",
+      "consequence": "False discrepancy; exact members and actual destination mounts identical.",
+      "correction": "Normalized only those order-independent lists; all other host fields exact.",
+      "evidence": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-hostconfig-order-diagnosis.private.json"
+    }
+  ],
+  "nativeObservation": {
+    "checkedAt": "2026-10-11T20:49:50.016412+00:00",
+    "http": 200,
+    "records": 7,
+    "newOutcomeConfirmed": false,
+    "latestReview": {
+      "updated_at": "2026-10-11T20:33:07+00:00",
+      "phase": "will_decided",
+      "state": "waiting",
+      "reason": "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",
+      "blocker": "background_budget",
+      "intent_id": null
+    },
+    "meaning": "Latest retained review precedes installation; it is not a post-install proof of either success or continued blockage."
+  },
+  "usage": {
+    "manualEvaModelRequestsForSourceBuildProbeInstall": 0,
+    "automaticRuntimeUsageAfterRestart": null,
+    "developmentCredits": null,
+    "creditCost": null,
+    "noRuntimeZeroUsageClaim": true
+  },
+  "next": "Follow a genuine new owner-private context review, selected intent, actual terminal digital result and private return; then agent-harness improvement and family use.",
+  "wholeGoalActive": true,
+  "mainProductOutcomeCompleted": false,
+  "originalSmallTasksRetained": "39/48",
+  "speechParked": true,
+  "competitorRunsStarted": 0
+}
