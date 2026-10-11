@@ -1,0 +1,76 @@
+{
+  "contract": "EvaSavedArtifactFinalAssessmentSourceReview/v1",
+  "reviewed_at": "2026-10-11T18:57:22.079354+00:00",
+  "decision": "GO",
+  "material_blockers": [],
+  "scope": "Only the final-assessment adapter source and its focused synthetic tests. Fixed saved-target and original-baseline propagation through HostFinalAssessment, protocol admission, queued restart/dispatch and answer completion.",
+  "source_files": {
+    "eva2/src/eva/operations/component_final_assessment.py": "57120df2f6b759be5542ba8802a82326d97c87f2dbc2d3b682b47cc7db781b5b"
+  },
+  "test_files": {
+    "eva2/tests/operations/test_saved_artifact_final_assessment.py": "85335bac4beaf5057a77e1fcc68e5ef66500d90aa1de40c1c5fa278310b3bd5b"
+  },
+  "checks": [
+    {
+      "location": "component_final_assessment.py:86",
+      "finding": "Protocol admission validates the selected package and exact baseline SHA and source_target. A legacy installed protocol cannot admit a saved artifact."
+    },
+    {
+      "location": "component_final_assessment.py:103",
+      "finding": "Host configuration is deep-copied; the saved manifest is validated and copied into the fixed ComponentEvaluator. Later target mutation is refused."
+    },
+    {
+      "location": "component_final_assessment.py:137",
+      "finding": "Original baseline content is rehashed by CandidateRequest and must match the exact fixed target. Different owner/project/helper/save identities are rejected before scorer or sandbox evaluation."
+    },
+    {
+      "location": "component_final_assessment.py:147",
+      "finding": "Saved report path, baseline/candidate SHA, image and command SHA are checked; final binding includes the fixed source-target digest and registration/scorer/file hashes."
+    },
+    {
+      "location": "component_final_assessment.py:183",
+      "finding": "Answer completion validates the selected source and retained report/final binding again, then uses the existing report without repeating the runner."
+    },
+    {
+      "location": "component_final_assessment.py:245",
+      "finding": "Queue collaborators are assigned before loading retained jobs; saved jobs are checked against current fixed protocols before the dispatcher starts."
+    },
+    {
+      "location": "component_final_assessment.py:290",
+      "finding": "Request/replay preserves task, request, scope and frozen registration binding. One independent assessment per registration remains enforced."
+    },
+    {
+      "location": "component_final_assessment.py:330",
+      "finding": "Waiting/restarted jobs recheck package artifact hash, path, review ID, baseline, protocol registration and target before dispatch; mismatches fail closed."
+    },
+    {
+      "location": "component_final_assessment.py:420",
+      "finding": "Configured host assessment registration and source_target must match protocol configuration. Installed routes retain absent optional target and existing queue/stop/publication behavior."
+    }
+  ],
+  "test_evidence": {
+    "receipt_sha256": "303bb7ea8063b03ab46020a07b03b8c6005e2a8e9eec72b0b73c42dcbc90a41d",
+    "actual_stdout_log_sha256": "668392d719b5882109e399e425f6cb484dde7cefb873b4584faaa0f6d429ecc1",
+    "actual_stdout_log_hash_verified": true,
+    "passed": 37,
+    "seconds": "5.53",
+    "exit_code": 0,
+    "coverage": "Exact baseline/target, coherent foreign source rejection, no-target legacy rejection, immutable target, resealed wrong baseline, one dispatch across restart, changed waiting/restarted target rejection, retained-report tampering, answer completion without rerun, installed component compatibility.",
+    "reviewer_reran_tests": false,
+    "model_calls": 0,
+    "native_runs": 0
+  },
+  "ownership_boundary": {
+    "reviewer_evaluator_criteria_cases_or_scorers_reviewed": false,
+    "reviewer_evaluator_files_modified": false,
+    "product_source_test_runtime_or_configuration_mutations": 0,
+    "only_mutated_file": "eva2/reviews/saved-artifact-final-assessment-source-review-20261011.json"
+  },
+  "limitations": [
+    "GO is for this exact source coupling. No runtime installation, newly configured native saved suite, functional gain or saved-helper application is established here.",
+    "The independent evaluator criteria/cases/scorers remain unchanged; this review does not self-review their implementation.",
+    "Current authority, alias/project, forgetting/retention and guarded application remain separate integration requirements and cannot be inferred from a matching static target alone.",
+    "Whole project goal and full AIDE² remain active; no general privacy, superiority or efficiency claim.",
+    "Development credits remain unknown."
+  ]
+}

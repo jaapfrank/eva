@@ -55,11 +55,14 @@ Onafhankelijke installatiecontrole GO: eva2/reviews/saved-artifact-component-eva
 Het volledige projectgoal blijft actief.
 
 **Actuele werkstand — 11 oktober:** bronkoppeling geïnstalleerd; toepassing van
-beoordeelde hulpmiddelverbeteringen nu in aanbouw. De aparte eindbeoordelings-
-koppeling heeft 37 gerichte tests doorstaan. De nieuwe toepassingscode is nog niet
-gecontroleerd of geïnstalleerd; vaste ontwikkel- en afgeschermde eindcriteria worden
-vooraf vastgelegd. Geen nieuwe concurrentieproef of eigenaarhandeling. Het dashboard
-is bij deze taakwissel gelijkgetrokken; hoofdafrondingen blijven ongewijzigd.
+beoordeelde hulpmiddelverbeteringen gebouwd met 17 gerichte checks en onafhankelijke
+bronreview GO. De aparte eindbeoordelingskoppeling heeft 37 checks en een tweede
+onafhankelijke bronreview GO. Vaste ontwikkel-/afgeschermde eindcriteria vooraf
+voorbereid; geen varianten, modellen of native metingen daarmee gestart. Nu één
+installatie in de bestaande kern/werker/beoordelaar, daarna een echte begrensde
+verbetercyclus en later gebruik. Nog geen nieuwe kwaliteitswinst of volledige AIDE²
+bewezen. Geen concurrentieserie of eigenaarhandeling; hoofdafrondingen ongewijzigd.
+Bronbewijs: eva2/evidence/product/saved-artifact-application-source-20261011.json.
 
 
 Daarna passend initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en

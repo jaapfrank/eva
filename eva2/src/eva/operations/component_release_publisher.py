@@ -45,6 +45,16 @@ class ComponentReleasePublisher:
                   "measured_gain_evidence": assessment["evidence"],
                   "independent_review_evidence": assessment["registration"]}
         _save(directory / "review.json", review, initial=True)
+        if package.get("source_target", {}).get("kind") == "saved_artifact":
+            from eva.operations.saved_artifact_application import publication_plan
+            _save(directory / "publication.json", publication_plan(package), initial=True)
+            files = {"package": "package.json", "review": "review.json", "publication": "publication.json"}
+            release = {key: {"path": str(directory / filename),
+                            "sha256": digest((directory / filename).read_bytes())}
+                       for key, filename in files.items()}
+            release.update(kind="saved_artifact", update_receipt=str(directory / "saved-application.private.json"))
+            _verify_release(review_id, release)
+            return release
         checkout = directory / "source"
         branch = "codex/eva-improvement-" + review_id[:20]
         self._command(["git", "-c", "safe.directory=" + str(self.repository), "-C",

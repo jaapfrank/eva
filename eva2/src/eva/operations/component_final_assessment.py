@@ -9,7 +9,9 @@ import os
 from pathlib import Path
 import threading
 from eva.application.component_improvements import bind_selected_release
-from eva.operations.component_evaluation import CandidateRequest, ComponentEvaluator, EvaluationConfig
+from eva.operations.component_evaluation import (
+    CandidateRequest, ComponentEvaluator, EvaluationConfig, validate_saved_artifact_target,
+)
 from eva.operations.reviewed_component_application import _artifact, _identifier, _path, _save
 from tools.import_component_release import canonical, digest, load_object
 
@@ -80,11 +82,27 @@ def validate_selected_package(package):
             "source_target": package["source_target"]} if "source_target" in package else {}))
     return package
 
+
+def _protocol_package(package, protocol):
+    validate_selected_package(package)
+    if not protocol or protocol.get("baseline_sha256") != package["baseline_sha256"]:
+        raise ValueError("no frozen final protocol for this baseline")
+    if protocol.get("source_target") != package.get("source_target"):
+        raise ValueError("selected source differs from frozen final target")
+    return package
+
+
+def _assessor_protocol(assessor, protocol):
+    if (isinstance(assessor, HostFinalAssessment)
+            and assessor.config.get("source_target") != protocol.get("source_target")):
+        raise ValueError("final protocol and fixed assessment target differ")
+
+
 class HostFinalAssessment:
     """Fixed host scorer and private oracles; candidate executes only in isolation."""
     def __init__(self, config):
         if (not isinstance(config, dict)
-                or set(config) - {"evaluation", "scorer", "registration", "bindings", "answer_evidence_file"}
+                or set(config) - {"evaluation", "scorer", "registration", "bindings", "answer_evidence_file", "source_target"}
                 or not {"evaluation", "scorer", "registration", "bindings"} <= set(config)):
             raise ValueError("invalid independent assessment configuration")
         self.config = json.loads(json.dumps(config))
@@ -93,10 +111,16 @@ class HostFinalAssessment:
         if not evaluation["image"].startswith("sha256:"):
             raise ValueError("final evaluator image must be immutable")
         _identifier(evaluation["image"][7:])
-        self.evaluator = ComponentEvaluator(EvaluationConfig(**evaluation))
+        source_target = self.config.get("source_target")
+        if source_target is not None:
+            self.config["source_target"] = validate_saved_artifact_target(source_target)
+        self.evaluator = ComponentEvaluator(EvaluationConfig(**evaluation),
+                                           source_target=self.config.get("source_target"))
         self._validate()
 
     def _validate(self):
+        if self.config.get("source_target") != self.evaluator.source_target:
+            raise ValueError("fixed independent assessment target changed")
         _, registration = _artifact(self.config["registration"])
         scorer = _path(self.config["scorer"]["path"])
         if digest(scorer.read_bytes()) != self.config["scorer"]["sha256"]:
@@ -110,19 +134,45 @@ class HostFinalAssessment:
         self.scorer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.scorer)
 
-    def __call__(self, package, output_root):
-        self._validate()
+    def _candidate(self, package):
         validate_selected_package(package)
-        self.scorer.check_candidate(package["candidate_content"].encode(), package["candidate_sha256"])
-        report = self.evaluator.evaluate(CandidateRequest(
+        request = CandidateRequest(
             package["path"], package["baseline_sha256"], package["candidate_content"],
             **({"baseline_source": package["baseline_content"],
-                "source_target": package["source_target"]} if "source_target" in package else {})))
-        report["final_assessment_binding"] = {
+                "source_target": package["source_target"]} if "source_target" in package else {}))
+        if request.source_target != self.evaluator.source_target:
+            raise ValueError("selected source differs from fixed independent target")
+        return request
+
+    def _report_target(self, package, report):
+        if report.get("source_target") != package.get("source_target"):
+            raise ValueError("independent report source target differs")
+        if package.get("source_target") is not None and (
+                report.get("relative_path") != package["path"]
+                or report.get("baseline_sha256") != package["baseline_sha256"]
+                or report.get("candidate_sha256") != package["candidate_sha256"]
+                or report.get("image_id") != self.evaluator.config.image
+                or report.get("command_sha256") != digest(json.dumps(
+                    self.evaluator.config.command, separators=(",", ":")).encode())):
+            raise ValueError("independent report saved source binding differs")
+
+    def _final_binding(self, report):
+        binding = {
             "registration_sha256": self.config["registration"]["sha256"],
             "scorer_sha256": self.config["scorer"]["sha256"],
             "bindings": {k: v["sha256"] for k, v in self.config["bindings"].items()},
             "image_id": report["image_id"], "command_sha256": report["command_sha256"]}
+        if self.config.get("source_target") is not None:
+            binding["source_target_sha256"] = digest(canonical(self.config["source_target"]))
+        return binding
+
+    def __call__(self, package, output_root):
+        self._validate()
+        request = self._candidate(package)
+        self.scorer.check_candidate(package["candidate_content"].encode(), package["candidate_sha256"])
+        report = self.evaluator.evaluate(request)
+        self._report_target(package, report)
+        report["final_assessment_binding"] = self._final_binding(report)
         _save(output_root / "isolated-final.private.json", report, initial=True)
         return self._decide(package, report, output_root)
 
@@ -132,7 +182,12 @@ class HostFinalAssessment:
 
     def complete(self, package, output_root):
         self._validate()
+        self._candidate(package)
         report = load_object(_path(str(output_root / "isolated-final.private.json")))
+        self._report_target(package, report)
+        if (package.get("source_target") is not None
+                and report.get("final_assessment_binding") != self._final_binding(report)):
+            raise ValueError("retained independent saved assessment binding changed")
         filename = self.config.get("answer_evidence_file")
         if not filename:
             raise ValueError("no separately admitted answer evidence")
@@ -172,6 +227,10 @@ class FinalComponentAssessments:
         for path, protocol in self.protocols.items():
             CandidateRequest(path, protocol["baseline_sha256"], "pass")
             _identifier(protocol["registration_sha256"])
+            if protocol.get("source_target") is not None:
+                validate_saved_artifact_target(protocol["source_target"], relative_path=path,
+                                               baseline_sha256=protocol["baseline_sha256"])
+            _assessor_protocol(assessors[path], protocol)
         self.root = _path(config["receipt_root"], exists=False)
         self.root.mkdir(mode=0o700, parents=True, exist_ok=True)
         info = self.root.stat()
@@ -195,6 +254,9 @@ class FinalComponentAssessments:
                     raise ValueError("final receipt differs")
                 _identifier(job["request_id"])
                 self.applications._task(job["task_id"])
+                if (self.protocols.get(job.get("path"), {}).get("source_target") is not None
+                        or job.get("path", "").startswith("saved_artifact_")):
+                    self._queued_package(job)
                 if job["state"] in {"assessing", "publishing", "answer_assessing"}:
                     job.update(state="unconfirmed", reason="assessment_interrupted_after_dispatch")
                     _save(path, job)
@@ -231,8 +293,8 @@ class FinalComponentAssessments:
         self.applications._task(task_id)
         if scope_sha256 != self.scope: raise ValueError("final source differs")
         protocol = self.protocols.get(package["path"])
-        if not protocol or protocol["baseline_sha256"] != package["baseline_sha256"]:
-            raise ValueError("no frozen final protocol for this baseline")
+        _protocol_package(package, protocol)
+        _assessor_protocol(self.assessors[package["path"]], protocol)
         if self.task_state(task_id) == "cancelled": raise ValueError("final task was stopped")
         review_id = package["candidate_package_sha256"]
         with self.condition:
@@ -264,6 +326,17 @@ class FinalComponentAssessments:
             job = self.jobs.get(review_id)
             if scope_sha256 != self.scope or job is None: raise ValueError("final assessment is unavailable")
             return self._result(job)
+
+    def _queued_package(self, job):
+        _, package = _artifact(job["package"])
+        protocol = self.protocols.get(job["path"], {})
+        if (job["protocol_sha256"] != protocol.get("registration_sha256")
+                or package["path"] != job["path"]
+                or package["candidate_package_sha256"] != job["review_id"]):
+            raise ValueError("queued independent protocol changed")
+        _protocol_package(package, protocol)
+        _assessor_protocol(self.assessors[job["path"]], protocol)
+        return package
 
     def _run(self):
         while True:
@@ -300,11 +373,7 @@ class FinalComponentAssessments:
                             job["state"] = "answer_assessing" if job["state"] == "awaiting_independent_answer_assessment" else "assessing"
                         _save(self.root / (job["review_id"] + ".json"), job)
                     if ready != "ready": continue
-                    _, package = _artifact(job["package"])
-                    protocol = self.protocols.get(job["path"], {})
-                    if (job["protocol_sha256"] != protocol.get("registration_sha256")
-                            or package["baseline_sha256"] != protocol.get("baseline_sha256")):
-                        raise ValueError("queued independent protocol changed")
+                    package = self._queued_package(job)
                     assessor = self.assessors[job["path"]]
                     result = (assessor.complete(package, self.root / job["review_id"])
                               if job["state"] == "answer_assessing"
@@ -361,6 +430,7 @@ def configured_final_assessments(config, *, applications, runtime_config):
     for path, assessor in assessors.items():
         if config["protocols"][path]["registration_sha256"] != assessor.config["registration"]["sha256"]:
             raise ValueError("final protocol and independent registration differ")
+        _assessor_protocol(assessor, config["protocols"][path])
     return FinalComponentAssessments({key: config[key] for key in
         ("receipt_root", "scope_sha256", "protocols")}, assessors=assessors,
         publisher=ComponentReleasePublisher(config["publisher"]), applications=applications,

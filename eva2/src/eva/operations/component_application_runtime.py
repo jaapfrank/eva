@@ -96,8 +96,9 @@ class ComponentApplicationRuntime:
             raise ValueError("application task readiness invalid")
         return payload["state"]
 
-    @staticmethod
-    def apply_release(release):
+    def apply_release(self, release):
+        if release.get("kind") == "saved_artifact":
+            return self._apply_saved_artifact(release)
         from tools.installation_runtime_update import update_runtime
         from eva.operations.component_evaluation import _capture
         def command(argv, *, deadline=15, limit=1024 * 1024):
@@ -108,6 +109,27 @@ class ComponentApplicationRuntime:
             return result["stdout"]
         return update_runtime(project=release["project"], installed=release["installed"],
                               candidate=release["candidate"], receipt=release["receipt"], run=command)
+
+    def _apply_saved_artifact(self, release):
+        from eva.operations.reviewed_component_application import _save
+        from eva.operations.saved_artifact_application import receipt_confirms_application
+        # Reserve before the only effect-capable core call; never retry dispatch.
+        receipt = release["receipt"]
+        _save(receipt, {"contract": "EvaSavedArtifactApplication/v1",
+            "status": "dispatch_result_unknown", "task_id": release["task_id"],
+            "publication": release["publication"]}, initial=True)
+        payload = {key: release[key] for key in ("publication", "candidate_content", "task_id")}
+        payload["scope_sha256"] = self.config["scope_sha256"]
+        command = "from eva.operations.saved_artifact_application import runtime_apply;import json,sys;print(json.dumps(runtime_apply(json.loads(sys.stdin.read()))))"
+        result = self.run(["docker", "exec", "-i", self.config["core_container"], "python", "-c", command],
+            input=json.dumps(payload), text=True, capture_output=True)
+        if result.returncode != 0 or len(result.stdout) > 16384:
+            raise RuntimeError("saved artifact application is unconfirmed; inspect retained receipt")
+        observed = json.loads(result.stdout)
+        if not receipt_confirms_application(observed, release["publication"], release["task_id"]):
+            raise RuntimeError("saved artifact application proof differs")
+        _save(receipt, observed)
+        return observed
 
 
 def configured_component_applications(config):

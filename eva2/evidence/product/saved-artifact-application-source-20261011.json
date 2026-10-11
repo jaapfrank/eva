@@ -1,0 +1,68 @@
+{
+  "contract": "EvaSavedArtifactApplicationSource/v1",
+  "checkedAt": "2026-10-11T18:58:36.266551+00:00",
+  "state": "source_reviewed_not_installed",
+  "wholeGoal": "active",
+  "productFunctionCompleted": false,
+  "change": "Use the existing independent-final publisher and durable application queue for saved Python tools: verified versioned save/designation, unchanged original, actual task/owner/project/ingress and stop checks; no image rebuild for the improved tool itself.",
+  "sourceHashes": {
+    "eva2/src/eva/operations/component_application_runtime.py": "da67d5ece2645a89c36d7ed2f3801f8abb88fcfdae1fc50d1f68953d717caba2",
+    "eva2/src/eva/operations/component_final_assessment.py": "57120df2f6b759be5542ba8802a82326d97c87f2dbc2d3b682b47cc7db781b5b",
+    "eva2/src/eva/operations/component_release_publisher.py": "c7ecdf3582d7237bd1b4d82c4c476b8f78f34443b23972e4233927e2b2a64396",
+    "eva2/src/eva/operations/reviewed_component_application.py": "f6ece56ba05d1771a3341f1f50a6513bca9c7e793da0e893a020b3aff73f8aa0",
+    "eva2/src/eva/operations/saved_artifact_application.py": "1620a58a9137fa3eed06cba7a422701227c4d3f95aa453b320b5b5856103c1a7",
+    "eva2/tests/operations/test_saved_artifact_application.py": "84b9394b43afce12e9d51398d2586a2c5749e0ed284c5dcb02a9ef4d6c8dbd53",
+    "eva2/tests/operations/test_saved_artifact_final_assessment.py": "85335bac4beaf5057a77e1fcc68e5ef66500d90aa1de40c1c5fa278310b3bd5b"
+  },
+  "reviews": [
+    {
+      "path": "eva2/reviews/saved-artifact-application-source-review-20261011.json",
+      "sha256": "26689c5c3513bec46fe99ee2c3f962d89314cd35f6c2cab091c2577d71c1c283",
+      "decision": "GO for exact source only"
+    },
+    {
+      "path": "eva2/reviews/saved-artifact-final-assessment-source-review-20261011.json",
+      "sha256": "80a16f967a9a77c2789a9bd6fd8d9ffc5db00965b32c18537a33dbf75216c006",
+      "decision": "GO for exact source only"
+    }
+  ],
+  "tests": [
+    {
+      "scope": "Saved-artifact application",
+      "passed": 17,
+      "seconds": 1.64,
+      "receiptSha256": "1175d6d38794b4e96c6df2f8ea2d463348568670388fea136299715e86f7b42b"
+    },
+    {
+      "scope": "Final-assessment saved and retained installed routes",
+      "passed": 37,
+      "seconds": 5.53,
+      "receiptSha256": "303bb7ea8063b03ab46020a07b03b8c6005e2a8e9eec72b0b73c42dcbc90a41d"
+    }
+  ],
+  "retainedDevelopmentFailures": [
+    "New test wrapper initially assumed context-manager support; corrected to the existing close API.",
+    "New test initially expected dispatch_unconfirmed; corrected to the existing unconfirmed state.",
+    "Independent review found insufficient scope/reference and original ingress binding; corrected before any installation or effect."
+  ],
+  "fixedExperimentPrepared": {
+    "developmentCases": 32,
+    "sealedFinalCases": 30,
+    "preparationManifestSha256": "54674172783b5bc8491724da6927cc85913efd1384b375457e5e51a865f0fb5d",
+    "status": "prepared_not_executed",
+    "candidateMeasurementsAtMost": 3,
+    "finalAssessmentsAtMost": 1,
+    "applicationsAtMost": 1,
+    "laterUseTasksAtMost": 1
+  },
+  "usage": {
+    "newManualEvaModelRequests": 0,
+    "newNativeCandidateExperiments": 0,
+    "developmentCredits": "unknown"
+  },
+  "remaining": [
+    "One installation into existing core/worker/evaluator and binding of the already fixed criteria.",
+    "One genuine bounded improvement, independent final assessment, actual application and later ordinary use.",
+    "Agent harness improvement, dream scheduling, initiative and whole family acceptance remain within the active full goal."
+  ]
+}

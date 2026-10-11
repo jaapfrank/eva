@@ -54,6 +54,9 @@ def _artifact(binding):
 
 def _verify_release(review_id, release):
     """Reuse importer attestations and the established overlay/updater formats."""
+    if isinstance(release, dict) and release.get("kind") == "saved_artifact":
+        from eva.operations.saved_artifact_application import verify_saved_release
+        return verify_saved_release(review_id, release)
     if (not isinstance(release, dict)
             or set(release) != _ARTIFACTS | {"project", "update_receipt"}
             or not isinstance(release["project"], str) or not release["project"]):
@@ -227,6 +230,7 @@ class ReviewedComponentApplications:
     def _result(self, job):
         return {key: job[key] for key in ("request_id", "review_id", "task_id", "state")} | {
             "installed": job["state"] == "completed",
+            **({"saved_artifact": job["saved_artifact"]} if "saved_artifact" in job else {}),
             **({"reason": job["reason"]} if "reason" in job else {})}
 
     def register(self, review_id, release):
@@ -322,6 +326,17 @@ class ReviewedComponentApplications:
             return
         try:
             receipt = load_object(_path(path))
+            if release.get("kind") == "saved_artifact":
+                from eva.operations.saved_artifact_application import receipt_confirms_application
+                verified = _verify_release(job["review_id"], release)
+                if not receipt_confirms_application(receipt, verified["publication"], job["task_id"]):
+                    return
+                job["state"] = "completed"
+                job["saved_artifact"] = {"reference": receipt["reference"],
+                    "publication": receipt["publication"], "old_source_unchanged": True}
+                job.pop("reason", None)
+                self._persist(job)
+                return
             candidate = _artifact(release["candidate"])[1]
             images = {name: candidate["services"][name]["image"]
                       for name in ("core", "delegated-work-worker")}
@@ -387,6 +402,8 @@ class ReviewedComponentApplications:
                     if digest(canonical(release)) != job["release_sha256"]:
                         raise ValueError("registered release changed")
                     update = _verify_release(job["review_id"], release)
+                    if update.get("kind") == "saved_artifact":
+                        update["task_id"] = job["task_id"]
                     if update["receipt"].exists():
                         raise ValueError("an updater receipt already exists")
                 except Exception:

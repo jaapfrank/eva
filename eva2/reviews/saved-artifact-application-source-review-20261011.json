@@ -1,0 +1,49 @@
+{
+  "conclusion": "Exact source/actor/reference bindings and durable one-dispatch queue are coherent; original source is preserved through existing verified save/designation.",
+  "contract": "EvaSavedArtifactApplicationSourceReview/v1",
+  "limits": {
+    "credits": "unknown",
+    "model_calls": 0,
+    "native_application_or_task_quality_proven": false,
+    "native_runs": 0,
+    "prior_installed_regressions": {
+      "evidence": "parent-reported earlier run",
+      "passed": 96
+    },
+    "reviewer_test_runs": 0,
+    "runtime_installations": 0
+  },
+  "open_blockers": [],
+  "private_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/saved-artifact-apply-20261011/saved-application-source-review.private.json",
+    "sha256": "66ce4cae3a4e3bbd97093f60fc0c56d8faf55d15f4eeaf0cb18b9431982510db"
+  },
+  "resolved_findings": [
+    {
+      "id": "new_reference_scope_binding",
+      "state": "resolved"
+    },
+    {
+      "id": "explicit_actor_and_original_ingress_binding",
+      "state": "resolved"
+    }
+  ],
+  "reviewer": "/root/eva1_memory_transfer",
+  "scope": "Independent source review of saved-artifact publication/application only; self-authored final assessment excluded.",
+  "source_sha256": {
+    "eva2/src/eva/operations/component_application_runtime.py": "da67d5ece2645a89c36d7ed2f3801f8abb88fcfdae1fc50d1f68953d717caba2",
+    "eva2/src/eva/operations/component_release_publisher.py": "c7ecdf3582d7237bd1b4d82c4c476b8f78f34443b23972e4233927e2b2a64396",
+    "eva2/src/eva/operations/reviewed_component_application.py": "f6ece56ba05d1771a3341f1f50a6513bca9c7e793da0e893a020b3aff73f8aa0",
+    "eva2/src/eva/operations/saved_artifact_application.py": "1620a58a9137fa3eed06cba7a422701227c4d3f95aa453b320b5b5856103c1a7",
+    "eva2/tests/operations/test_saved_artifact_application.py": "84b9394b43afce12e9d51398d2586a2c5749e0ed284c5dcb02a9ef4d6c8dbd53"
+  },
+  "test_evidence": {
+    "elapsed_seconds": "1.64",
+    "execution": "parent-run synthetic checks; receipt and source hashes independently verified",
+    "passed": 17,
+    "path": "/home/administrator/project/.eva2-artifacts/saved-artifact-apply-20261011/application-tests-source-binding.private.json",
+    "sha256": "1175d6d38794b4e96c6df2f8ea2d463348568670388fea136299715e86f7b42b",
+    "stdout_sha256": "304728422255963bb71e8667ad5f7810e8affd44077ba5fbc4cfa7bbe0158313"
+  },
+  "verdict": "GO"
+}
