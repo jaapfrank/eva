@@ -1,0 +1,108 @@
+{
+  "contract": "EvaTelegramDefaultPrivateDelivery/v1",
+  "recordedAt": "2026-10-11T12:07:03.673176+00:00",
+  "result": "installed",
+  "scope": "Ordinary text from one already linked owner-private Telegram account uses the existing Eva2 core without /eva2. This is not a full Eva1 replacement.",
+  "installation": {
+    "startedAt": "2026-10-11T11:59:36.548548+00:00",
+    "completedAt": "2026-10-11T11:59:37.396776+00:00",
+    "files": {
+      "src/config.js": "88e4b44561ccc9b2c7b70c5fc183bb3e78f930ed976839cec1a715c452b2c9f9",
+      "src/telegramdialogue.js": "6a07d979341a0b57a9aad937dc9c2c53e3f86fbddd11fef68d9bac8748b97f94",
+      "src/integrations/eva2canary.js": "064716aedc9a38163ffa63a301137dd5743bc944267d18a2197eb426b0cd8e2c",
+      "src/integrations/telegram.js": "23b9ccaf7fe2e51d712a4a30a7f36f2ce5f7b3334052fd5ecc63eae81a681703",
+      "src/integrations/telegrampolling.js": "0dff757e65006df3833b2033c942cb51bf44d53bac7d6c42c4bcfc3f12e800ab"
+    },
+    "restartCount": 1,
+    "coreWorkerRestartCount": 0,
+    "rollbackApplied": false,
+    "afterPID": 246198,
+    "serviceState": "active",
+    "configuredOwnerBindingMatches": true,
+    "canaryURLUnchanged": true,
+    "containersUnchangedAndHealthy": true
+  },
+  "configuration": {
+    "separateDropin": "/etc/systemd/system/eva.service.d/40-eva2-default-private.conf",
+    "selectedPrivateBindings": 1,
+    "previousDropinsPreserved": true
+  },
+  "checks": {
+    "routeAndDraftTestsPassed": 9,
+    "candidateActualHostIngressMockTransportPassed": 1,
+    "installedActualHostIngressMockTransportPassed": 1,
+    "sourceParseChecksPassed": 5,
+    "hostPatchApplyCheckPassed": true,
+    "liveChecks": {
+      "readyz": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      },
+      "hostHTTP": 200,
+      "telegramConnectedLog": false,
+      "telegramStartFailureLog": false,
+      "telegramErrorLogCount": 0
+    }
+  },
+  "preserved": {
+    "archivedOriginalDialogueRoute": true,
+    "originalSenderAndMessageReplyBinding": true,
+    "legacyHistoryNotForwardedAsEva2Conversation": true,
+    "automaticEva1Fallback": false,
+    "coreWorkerImages": {
+      "eva2-managed-b-slot3-core": {
+        "image": "sha256:30acae1a6c58d9fe8f1fe4ae18ab793c68ea74017954887ba8a7dc84a359793a",
+        "health": "healthy"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "image": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a",
+        "health": "healthy"
+      }
+    }
+  },
+  "failureEvidence": [
+    "Initial actual-host ingress test found plain messages still serialized by the existing polling classifier. The shared route classifier fixed it; initial failure remains in private checks.",
+    "Two auxiliary private-status reads were automatically rejected without a stated reason. They were not retried or bypassed; prepared outbox and core-private work status remain unknown.",
+    "One publication command had a JavaScript template syntax error before execution; a subsequent administrator publication failed reading a root-owned receipt before any writes. Root-only receipt reading resolved this without changing its private permissions."
+  ],
+  "restartEvidence": {
+    "gracefulDrainProven": false,
+    "capturedHostActiveTurns": 0,
+    "capturedInteractivePending": 0,
+    "capturedDatabaseProcessingRows": 0,
+    "preparedOutboxCount": null,
+    "corePrivateWorkStatus": null,
+    "source": "checks/pre-restart-processing.private.json"
+  },
+  "usage": {
+    "newManualEvaProviderRequests": 0,
+    "realTelegramTestExchanges": 0,
+    "testsFakeTransportOnly": true,
+    "developmentCredits": null,
+    "realLatencyTokensOrQualityGainMeasured": false
+  },
+  "ownerAcceptance": "open",
+  "remaining": [
+    "A new ordinary owner Telegram exchange and owner acceptance have not been observed in this delivery proof.",
+    "Media, voice, other accounts, groups and old slash commands retain their existing routes.",
+    "Existing Eva1 autonomous background behavior is not disabled by this text routing change.",
+    "Full daily replacement and general reliability remain open; the earlier 478284-token execution is not made efficient by this change.",
+    "Human Understanding Engine and the complete learning loop are documented direction, not newly implemented capabilities."
+  ],
+  "independentReview": {
+    "path": "eva2/reviews/telegram-default-private-final-review-20261011.json",
+    "candidateReviewSha256BeforeInstallation": "de4bb3445d32cbb39c8f5b3a20cd940e3143769647e7b3b1cab509df15fdecfb",
+    "candidateDecision": "GO",
+    "installationReadbackDecisionReported": "GO"
+  },
+  "returnPath": {
+    "originalFilesRetainedPrivately": "before/",
+    "onlyOneNewDropin": true,
+    "existingDataPreserved": true,
+    "rollbackApplied": false
+  },
+  "privateEvidenceRoot": "/home/administrator/project/.eva2-artifacts/telegram-default-private-20261011"
+}

@@ -1027,8 +1027,21 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-10T16:59:17.422389+00:00",
+        "checkedAt": "2026-10-11T12:07:03.673176+00:00",
         "deliveries": [
+          {
+            "title": "Gewone eigenaar-privétekst in Telegram gebruikt nu Eva2 zonder /eva2",
+            "date": "2026-10-11T11:59:37.396776+00:00",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "completionScope": "One existing owner private-text entry; not the entire conversation capability or full Eva1 replacement.",
+            "result": "Vijf hostbronnen en één aparte drop-in geïnstalleerd; één botdienst-herstart. Ontvanger en handler delen de berichtkeuze; tussenvragen lopen naast Eva2-werk. Historische Eva1-route en oorspronkelijke reply-binding behouden. Tests tegen de geïnstalleerde handler slagen met nagebootst netwerkverkeer.",
+            "remaining": "Nieuwe echte Telegramuitwisseling en eigenaaracceptatie open. Media, spraak, groepen, andere accounts en oude slash-opdrachten houden hun oude routes; Eva1-achtergrondgedrag is niet uitgezet. Geen volledige Eva1-vervanging of bewezen intelligentiewinst.",
+            "source": "eva2/evidence/product/telegram-default-private-installed-20261011.json",
+            "review": "eva2/reviews/telegram-default-private-final-review-20261011.json",
+            "usage": "0 nieuwe handmatige Eva-modelaanvragen; geen echte Telegramtestberichten. Negen route-/drafttests en één host-ingresstest vóór en na installatie; ontwikkelcredits onbekend.",
+            "independentReview": "GO (bron en installatie)"
+          },
           {
             "title": "Dubbele huisgegevens uit modelaanvraag verwijderd",
             "date": "2026-10-10T16:59:17.422389+00:00",
@@ -1048,11 +1061,12 @@
             "productFunctionCompleted": true,
             "completionScope": "Installed general execution across existing HA and document services; one ordinary private request completed.",
             "result": "Bestaande algemene uitvoerder vond de bedoelde ruimtes zelf, las actuele huisgegevens, sloeg precies één notitie op en las die met een aparte tool terug. De echte notitie is ook onafhankelijk op het volume gecontroleerd. Kern en werker draaien met de correcties.",
-            "remaining": "Volledige gezinsacceptatie en overstap van de standaard Telegramroute open. Eén geslaagde opdracht bewijst geen algemene superioriteit. Native verified=false blijft apart van onafhankelijk bevestigd opslag-/terugleesbewijs.",
+            "remaining": "Volledige gezinsacceptatie en brede betrouwbaarheid blijven open. De standaard eigenaar-privétekstroute is op 11 oktober geïnstalleerd; nieuwe echte Telegramuitwisseling nog niet bewezen. Eén geslaagde opdracht bewijst geen algemene superioriteit. Native verified=false blijft apart van onafhankelijk bevestigd opslag-/terugleesbewijs.",
             "source": "eva2/evidence/product/general-multi-service-execution-installed-20261010.json",
             "review": "eva2/reviews/product-general-execution-memory-final-review-20261010.json",
             "usage": "Geslaagde generatie: 478.284 bekende tokens / 15 modelresponses / 14 tools / 150 s. Inclusief twee behouden mislukte generaties: 540.522 bekende tokens. Volledig verbruik en credits onbekend; geen efficiëntiewinst.",
-            "independentReview": "GO"
+            "independentReview": "GO",
+            "historicalRemainingBeforeTelegramDefault20261011": "Volledige gezinsacceptatie en overstap van de standaard Telegramroute open. Eén geslaagde opdracht bewijst geen algemene superioriteit. Native verified=false blijft apart van onafhankelijk bevestigd opslag-/terugleesbewijs."
           },
           {
             "title": "Eva1-geheugen beschikbaar in Eva2: 1.115 regels in 45 privédocumenten",
@@ -4515,35 +4529,35 @@
           }
         ],
         "now": {
-          "title": "Invoercorrectie geïnstalleerd; kern en taakwerker gezond",
-          "detail": "Eén concrete verspilling opgelost: dubbele huisinventaris vóór de modelaanvraag verwijderd zonder informatieverlies. Offline SDK-aanvraagdata 27,22% kleiner. Geen nieuwe betaalde Eva-modelcalls of vergelijkingsserie. Vervolg hieronder nog niet gestart.",
-          "state": "installed",
-          "activeExecution": false,
+          "title": "Dagelijks gebruik en resterende vervangingsvoorwaarden",
+          "detail": "Gewone eigenaar-privétekst gebruikt geïnstalleerde Eva2; geheugenimport en algemene uitvoering behouden. Nieuwe echte uitwisseling blijft open. Media/spraak/andere accounts en oud achtergrondgedrag maken volledige vervanging nog niet bewezen. Human Understanding en AIDE² voor Eva/apps/addons zijn ontwerprichting.",
+          "state": "in_progress",
+          "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/work-input-inventory-installed-20261010.json",
-          "review": "eva2/reviews/work-input-inventory-final-review-20261010.json",
-          "doneWhen": "Exacte bron geïnstalleerd, beide diensten gezond, 334 overige modules/dependencies/mounts en bewaarde notitie behouden."
+          "source": "eva2/PROJECTDOEL.md",
+          "doneWhen": "De bruikbare dagelijkse ingang en werkelijk resterende vervangingsvoorwaarden staan met installatiebewijs en afzonderlijke eigenaaracceptatie zichtbaar."
         },
         "next": {
-          "title": "Eén dagelijkse privé-ingang voor Eva2",
-          "detail": "Geplande volgende gebruikersuitkomst, nog niet gestart. Gewone Telegramberichten gebruiken nog Eva1; /eva2 gebruikt Eva2. Geen nieuwe vergelijkingsserie of spraakwerk.",
+          "title": "Eerstvolgende ontbrekende schakel in zelfstandig handelen en leren",
+          "detail": "Werk vanuit een concreet tekort op het bestaande werkbord naar één bruikbare uitkomst. Hergebruik geheugen, uitvoering, initiatief en ontwikkeling. Geen tweede platform, nieuwe vergelijkingsserie of spraakwerk.",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md"
         },
         "ownerAction": {
           "required": false,
-          "title": "Je kunt het opgeleverde resultaat nu lezen",
-          "detail": "Geen technische handeling nodig. Gebruik in Telegram /eva2 vóór je vraag.",
+          "title": "Gewone tekst naar je bestaande Telegrambot",
+          "detail": "Voor jouw gekoppelde privéaccount is /eva2 niet meer nodig. Er is geen installatiehandeling nodig; een nieuwe echte uitwisseling is nog niet geobserveerd in dit bewijs.",
           "steps": [
-            "Telegram: /eva2 Lees /proof-state/huisoverzicht-2026-10-10.txt en vat het kort samen. Start niets nieuws."
+            "Stuur Hoi Eva als gewone tekst in je bestaande privéchat met Eva.",
+            "Je kunt daarna vragen: Lees /proof-state/huisoverzicht-2026-10-10.txt en vat het kort samen. Start niets nieuws."
           ],
-          "expected": "Eva leest het bestaande huisoverzicht; geen nieuwe wijziging of onderzoeksopdracht.",
+          "expected": "Nieuwe gewone privétekst gebruikt Eva2; antwoord en later resultaat horen bij je oorspronkelijke bericht.",
           "blocksIndependentWork": false,
-          "source": "eva2/evidence/product/general-multi-service-execution-installed-20261010.json"
+          "source": "eva2/evidence/product/telegram-default-private-installed-20261011.json"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-10T16:59:17.422389+00:00",
+        "reviewedAt": "2026-10-11T12:07:03.673176+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4573,8 +4587,8 @@
           }
         }
       },
-      "reviewedAt": "2026-10-10T16:59:17.422389+00:00",
-      "checkedAt": "2026-10-10T16:59:17.422389+00:00",
+      "reviewedAt": "2026-10-11T11:48:55.453320+00:00",
+      "checkedAt": "2026-10-11T11:38:00.294953+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",

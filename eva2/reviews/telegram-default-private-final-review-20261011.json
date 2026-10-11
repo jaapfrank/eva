@@ -1,0 +1,383 @@
+{
+  "schemaVersion": 1,
+  "contract": "EvaIndependentProductReview/v1",
+  "recordedAt": "2026-10-11T12:08:41.411813+00:00",
+  "reviewer": "/root/product_execution_memory_review",
+  "decision": "GO",
+  "phase": "installed_final_review",
+  "blockers": [],
+  "scope": "Installed ordinary text ingress for one existing owner-private Telegram binding, retained original archive/reply/actor binding, shared polling selection, one host-only restart, and bounded publication readback. Real new Telegram exchange and full Eva1 replacement remain open.",
+  "binding": {
+    "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/telegram-default-private-20261011",
+    "candidateManifestSha256": "37af9f87a2bf135fe3479af918dcf6bc6c6b2f573f068b674619376f99090ebc",
+    "candidateHostFilesSha256": {
+      "src/config.js": "88e4b44561ccc9b2c7b70c5fc183bb3e78f930ed976839cec1a715c452b2c9f9",
+      "src/telegramdialogue.js": "6a07d979341a0b57a9aad937dc9c2c53e3f86fbddd11fef68d9bac8748b97f94",
+      "src/integrations/eva2canary.js": "064716aedc9a38163ffa63a301137dd5743bc944267d18a2197eb426b0cd8e2c",
+      "src/integrations/telegram.js": "23b9ccaf7fe2e51d712a4a30a7f36f2ce5f7b3334052fd5ecc63eae81a681703",
+      "src/integrations/telegrampolling.js": "0dff757e65006df3833b2033c942cb51bf44d53bac7d6c42c4bcfc3f12e800ab"
+    },
+    "beforeHostFilesSha256": {
+      "src/config.js": "d80810b1ba973ebd5ab37f21f99c8ac953af13e12a47d6e3544e976064035f90",
+      "src/telegramdialogue.js": "06ef18434ce25ece98c3806d50af9f9b319fe0ed77e565ebeb2060b2c5ad746e",
+      "src/integrations/eva2canary.js": "5388e7fca2ab670efa33400da59126231ff6eb0ce963831868df6639e4add382",
+      "src/integrations/telegram.js": "d9c390612cbba3b82b63f87e0a40abd3f6f0783f9c8d50ccdf1e945533fa75b0",
+      "src/integrations/telegrampolling.js": "2c382e95e0d9d1108bedc82f6e7cf242de9c9b84b28c87948458809fd5ef63e4"
+    },
+    "candidateDefaultPrivateDropinSha256": "4c8f47461bf653bee93aa8e71213ffd620bd7856e6d75ea72cbf81b3d2312383",
+    "canonicalSourceSha256": {
+      "eva2/deploy/telegram-bridge/src/telegramdialogue.js": "6a07d979341a0b57a9aad937dc9c2c53e3f86fbddd11fef68d9bac8748b97f94",
+      "eva2/deploy/telegram-bridge/src/integrations/telegrampolling.js": "0dff757e65006df3833b2033c942cb51bf44d53bac7d6c42c4bcfc3f12e800ab",
+      "eva2/deploy/telegram-bridge/src/integrations/eva2canary.js": "064716aedc9a38163ffa63a301137dd5743bc944267d18a2197eb426b0cd8e2c"
+    },
+    "hostWiringPatchSha256": "5194b6b75c009d23f72171c4047073e2f7b7aa65096074e0b13b74ab1ac194e2",
+    "retainedDraftWiringPatchSha256": "62db254d092a5ea902737d86294609cdbf2536b45b4c3c3d6e3e9640d85b1466",
+    "privateEvidenceSha256": {
+      "preparation.private.json": "2e2ffd81761ec63590bfc601c7ed35c6c73a87d92edd738de97775a8f5ed4648",
+      "checks/pre-restart-processing.private.json": "620dc1282f480a12906d086c338cfdbdf92f65feda00bd8c293c0b6c16b4104e",
+      "checks/initial-ingress-failure.json": "dd96e267414b79c0f91eeddec7cd28210b5ff0bf2ef7594a7494e3206b1b30ce",
+      "installation.private.json": "531c62d8ac9b92438a141df81b0b6df02ffe4ab29b90c2b79d6af78a12465806"
+    },
+    "testSourceSha256": {
+      "eva2/tests/support/telegram_default_private.test.mjs": "2aa9f0aac68d92372f149161b50b1dcdd80da20c35fbf1668e4f6840c284492c",
+      "eva2/tests/support/telegram_default_private_ingress.test.mjs": "3bf295cab8e4926cfd0d66b46b54b1dfe5857250e8a37bb8f43040e10b28f84a",
+      "eva2/tests/support/telegram_draft_lane.test.mjs": "fbf06d7505e0233ff8d3cc448a2c870119db0dc9718f05cce77469502d13c15f"
+    },
+    "documentationSha256": {
+      "AGENTS.md": "73cf5f3391d5f3a7bb5e2e8ffbd364da7e052e1b09a3c66bfd860adccff495bc",
+      "eva2/PROJECTDOEL.md": "1fb7aa1f7a4ce69593ae928e0f74b5c55c96131d570dafc1eebee80345308960",
+      "eva2/WERKBORD.md": "e6e5a48a4bc284c43e955431e4dc8be4db0757bc8aefb85f0aa5ac43b93a67b9",
+      "eva2/design/product/execution-workboard-v1.json": "f0f50f708ca72b76ef84e440c754c99eeccf9f4041d3045d8b55c56f24c7d7e6",
+      "eva2/deploy/telegram-bridge/README.md": "c19e7b4e13dfc983ea8bd84c7b243686c0efa619f70b3352157d494557b10041"
+    },
+    "activeGoal": {
+      "path": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective.md",
+      "sha256": "aa0ef9ed3c8846492bbaf2fd9dbe2a5aa210710fce17a78a3ee3bf5fd540b7dc",
+      "read": true
+    },
+    "installedHostFilesSha256": {
+      "src/config.js": "88e4b44561ccc9b2c7b70c5fc183bb3e78f930ed976839cec1a715c452b2c9f9",
+      "src/telegramdialogue.js": "6a07d979341a0b57a9aad937dc9c2c53e3f86fbddd11fef68d9bac8748b97f94",
+      "src/integrations/eva2canary.js": "064716aedc9a38163ffa63a301137dd5743bc944267d18a2197eb426b0cd8e2c",
+      "src/integrations/telegram.js": "23b9ccaf7fe2e51d712a4a30a7f36f2ce5f7b3334052fd5ecc63eae81a681703",
+      "src/integrations/telegrampolling.js": "0dff757e65006df3833b2033c942cb51bf44d53bac7d6c42c4bcfc3f12e800ab"
+    },
+    "installedDefaultPrivateDropinSha256": "4c8f47461bf653bee93aa8e71213ffd620bd7856e6d75ea72cbf81b3d2312383",
+    "publicDelivery": {
+      "path": "eva2/evidence/product/telegram-default-private-installed-20261011.json",
+      "sha256": "a223cf83d4c85a887f7416a3e2cf21b7970453b3f716638461e4034c07525b78",
+      "read": true
+    }
+  },
+  "independentChecks": {
+    "source": {
+      "threeCanonicalAssetsMatchCandidate": true,
+      "hostPatchApplyCheckPassed": true,
+      "fiveCandidateJavaScriptFilesParse": true,
+      "selectedPrivateBindings": 1,
+      "selectedBindingAlreadyBotAllowed": true,
+      "selectedPrivateChatAlreadyCoreBound": true,
+      "existingCoreURLUnchanged": true,
+      "defaultOnlyPositivePrivateChatMatchingSender": true,
+      "explicitEva2CommandRetained": true,
+      "ordinaryOtherAccountsGroupsSlashCommandsAndMediaRetainRoutes": true,
+      "fiveInstalledHostFilesMatchReviewedCandidate": true,
+      "canonicalAssetsAndTestSourcesUnchangedSinceCandidateReview": true
+    },
+    "messageBinding": {
+      "archiveRetainsOriginalInput": true,
+      "archivedRouteTakesPrecedenceOnReplay": true,
+      "historicalInferenceUnchanged": true,
+      "changedArchivedContentFailsClosed": true,
+      "corePromptUsesTrimmedSelectedText": true,
+      "originalChatSenderMessageAndReplyTargetPreserved": true,
+      "hostEva1HistoryNotForwarded": true,
+      "Eva2FailureDoesNotFallbackToEva1": true,
+      "singleCoreDispatchForHandledInput": true
+    },
+    "fakeTransportIngress": {
+      "actualHostComposition": true,
+      "laterPollingBatchCanAnswerWhileFirstRequestBlocked": true,
+      "sameSelectorUsedForPollingAndHandler": true,
+      "originalReplyAndDraftTargetsPreserved": true,
+      "completedAndInFlightReplaysDoNotRedispatch": true,
+      "unallowedSenderDoesNotReachCore": true,
+      "wrongFinalMessageIdentityRejected": true,
+      "historicalEva1ReplayRemainsEva1": true,
+      "unfinishedPollingPrefixRemainsReplayable": true
+    },
+    "tests": {
+      "independentlyExecutedUnitAndExistingDraftTestsPassed": 9,
+      "independentlyExecutedActualHostIngressTestsPassed": 1,
+      "modelAndTelegramTransportReplacedLocally": true,
+      "paidProviderRequests": 0,
+      "realTelegramExchanges": 0,
+      "initialIngressFailureEvidencePreserved": true
+    },
+    "documentation": {
+      "goalReread": true,
+      "humanUnderstandingDirectionClearlyDesign": true,
+      "noNewBuiltInstalledAcceptedCapabilityClaimFromDesign": true,
+      "existingArchitectureAndModelRolesRetained": true,
+      "dailyPrivateIngressRemainsCurrentWork": true,
+      "noNewComparisonSeriesOrVoiceWork": true,
+      "selectedPrivateTextExplicitlyInstalled": true,
+      "realNewTelegramExchangeAndOwnerAcceptanceExplicitlyOpen": true,
+      "mediaVoiceOtherAccountsGroupsOldCommandsAndBackgroundOutsideDelivery": true,
+      "noExtraCompletedProductFunctionOnBoard": true,
+      "historicalResultsAndCostUnknownsRetained": true
+    },
+    "installedReadback": {
+      "fiveLiveSourceHashesIndependentlyMatchCandidateAndInstallation": true,
+      "separateDropinExactCandidateBytes": true,
+      "separateDropinPresentInSystemdDropInPaths": true,
+      "serviceMainPID": 246198,
+      "serviceActiveState": "active",
+      "serviceSubState": "running",
+      "liveProcessWorkingDirectory": "/home/administrator/project/Bottie",
+      "configuredOwnerBindingMatches": "Installation receipt reports matching one selected binding; independently reviewed authorized candidate and exact loaded drop-in are unchanged.",
+      "canaryURLUnchanged": true,
+      "coreWorkerContainerIDsAndImagesIndependentlyUnchangedAndHealthy": {
+        "core": {
+          "containerID": "ad4fc9108d8d4f330c384633f37568da35746f723c19e2ac4a97024a560b0454",
+          "image": "sha256:30acae1a6c58d9fe8f1fe4ae18ab793c68ea74017954887ba8a7dc84a359793a",
+          "health": "healthy"
+        },
+        "worker": {
+          "containerID": "e239f71101928ee97e0686e0d03544efd53d9a32d5dc70a952dbf7f02a680e95",
+          "image": "sha256:6901a6a7549dfebbdf7adf037c9b9f5018754b0aa000301723d09d9ad83e209a",
+          "health": "healthy"
+        }
+      },
+      "readyzIndependentlyRead": {
+        "database": "ready",
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true,
+        "detail": null,
+        "httpStatus": 200
+      },
+      "hostIndependentlyRead": {
+        "method": "HEAD",
+        "httpStatus": 200,
+        "bodyRead": false
+      },
+      "installedActualHostIngressFakeTransportPassReportedByInstaller": 1,
+      "previousIndependentCandidateIngressProofAppliesToExactUnchangedLiveSources": true,
+      "restartCountReportedByInstallation": 1,
+      "coreWorkerRestartCountReported": 0,
+      "rollbackApplied": false,
+      "newTestRunsInFinalReadback": 0,
+      "newModelCallsInFinalReadback": 0,
+      "realTelegramConnectivityOrNewExchangeProven": false,
+      "missingConnectedJournalLabelNotUsedAsConnectivityProof": true
+    },
+    "publication": {
+      "publicReceiptHashMatchesSuppliedFinalSHA256": true,
+      "sourceHashesMatchIndependentLiveReadback": true,
+      "candidateDecisionAndPreInstallationReviewHashRetained": true,
+      "fakeTransportOnlyAndOwnerAcceptanceOpen": true,
+      "gracefulDrainNotClaimedAndDeniedAuxiliaryReadsRemainUnknown": true,
+      "initialPollingFailureAndPublicationPreparationFailuresRetained": true,
+      "noPrivateIDsOrSecretsInPublicReceipt": true,
+      "humanUnderstandingClearlyDesignNotInstalledCapability": true,
+      "noFullEva1ReplacementEfficiencyQualityOrNewModelBehaviorClaim": true
+    }
+  },
+  "restartAssessment": {
+    "conclusion": "Recorded quiet host state is sufficient for this one existing host service update; no core or worker restart.",
+    "recordedArchiveStatusCounts": {
+      "completed": 1065,
+      "failed": 8
+    },
+    "recordedArchiveObservedAt": "2026-10-11T11:55:13.892411+00:00",
+    "recordedArchiveHasNoProcessingReceivedOrUncertainRows": true,
+    "hostAPIStateReportedByInstaller": {
+      "activeTurns": 0,
+      "interactivePending": 0
+    },
+    "existingDirectExitSignalHandlerObserved": true,
+    "pollingDrainFunctionRetained": true,
+    "gracefulServiceDrain": "NOT_ESTABLISHED",
+    "preservationOfActivelyStreamingSynchronousRequests": "NOT_CLAIMED",
+    "preparedOutboxCount": "UNKNOWN",
+    "corePrivateWorkStatus": "UNKNOWN",
+    "additionalReadChecksReportedRejected": true,
+    "rejectedChecksNotRetriedOrBypassed": true,
+    "installationScope": "Five host source files plus separate default-ID drop-in; same credentials and core URL; existing core and worker remain running."
+  },
+  "limits": [
+    "GO confirms installed selected owner-private text routing and retained message binding; no new real Telegram exchange or owner acceptance was observed.",
+    "Existing independent candidate fake-transport tests and exact installed source equivalence establish routing behavior. The installer additionally reports the same ingress test passed against installed source; no new reviewer test run was needed.",
+    "Media, voice, other accounts, groups, old slash commands and Eva1 background activity retain their existing routes; full daily replacement and general reliability remain open.",
+    "The recorded quiet host state supported this one update. Graceful drain and preservation of an actively streaming synchronous request remain unestablished; prepared outbox and core-private work status remain UNKNOWN and refused checks were not retried or bypassed.",
+    "Readiness and host HTTP 200 do not prove a real Telegram exchange or external Telegram connectivity. Journal labels are not used as such proof.",
+    "Human Understanding and the complete learning loop remain design direction. No efficiency or quality gain is proved; historical usage and credit unknowns remain unchanged."
+  ],
+  "reviewActivity": {
+    "newModelCalls": 0,
+    "realTelegramMessagesSent": 0,
+    "runtimeMutations": 0,
+    "filesWritten": [
+      "eva2/reviews/telegram-default-private-final-review-20261011.json"
+    ],
+    "newTestsInFinalReadback": 0,
+    "rejectedReadsRetriedOrBypassed": false,
+    "privateTokenOrMessageContentFetchedInFinalReadback": false,
+    "finalReadbackOnlyReviewArtifactChanged": true
+  },
+  "candidateReview": {
+    "decision": "GO",
+    "sha256BeforeInstallation": "de4bb3445d32cbb39c8f5b3a20cd940e3143769647e7b3b1cab509df15fdecfb",
+    "recordedAt": "2026-10-11T11:59:27.514505+00:00",
+    "assessment": {
+      "schemaVersion": 1,
+      "contract": "EvaIndependentProductReview/v1",
+      "recordedAt": "2026-10-11T11:59:27.514505+00:00",
+      "reviewer": "/root/product_execution_memory_review",
+      "decision": "GO",
+      "phase": "candidate_installation_review",
+      "blockers": [],
+      "scope": "Selected existing owner-private Telegram text route, existing archive and reply binding, polling overlap, bounded host-only restart, and current design-versus-delivery documentation.",
+      "binding": {
+        "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/telegram-default-private-20261011",
+        "candidateManifestSha256": "37af9f87a2bf135fe3479af918dcf6bc6c6b2f573f068b674619376f99090ebc",
+        "candidateHostFilesSha256": {
+          "src/config.js": "88e4b44561ccc9b2c7b70c5fc183bb3e78f930ed976839cec1a715c452b2c9f9",
+          "src/telegramdialogue.js": "6a07d979341a0b57a9aad937dc9c2c53e3f86fbddd11fef68d9bac8748b97f94",
+          "src/integrations/eva2canary.js": "064716aedc9a38163ffa63a301137dd5743bc944267d18a2197eb426b0cd8e2c",
+          "src/integrations/telegram.js": "23b9ccaf7fe2e51d712a4a30a7f36f2ce5f7b3334052fd5ecc63eae81a681703",
+          "src/integrations/telegrampolling.js": "0dff757e65006df3833b2033c942cb51bf44d53bac7d6c42c4bcfc3f12e800ab"
+        },
+        "beforeHostFilesSha256": {
+          "src/config.js": "d80810b1ba973ebd5ab37f21f99c8ac953af13e12a47d6e3544e976064035f90",
+          "src/telegramdialogue.js": "06ef18434ce25ece98c3806d50af9f9b319fe0ed77e565ebeb2060b2c5ad746e",
+          "src/integrations/eva2canary.js": "5388e7fca2ab670efa33400da59126231ff6eb0ce963831868df6639e4add382",
+          "src/integrations/telegram.js": "d9c390612cbba3b82b63f87e0a40abd3f6f0783f9c8d50ccdf1e945533fa75b0",
+          "src/integrations/telegrampolling.js": "2c382e95e0d9d1108bedc82f6e7cf242de9c9b84b28c87948458809fd5ef63e4"
+        },
+        "candidateDefaultPrivateDropinSha256": "4c8f47461bf653bee93aa8e71213ffd620bd7856e6d75ea72cbf81b3d2312383",
+        "canonicalSourceSha256": {
+          "eva2/deploy/telegram-bridge/src/telegramdialogue.js": "6a07d979341a0b57a9aad937dc9c2c53e3f86fbddd11fef68d9bac8748b97f94",
+          "eva2/deploy/telegram-bridge/src/integrations/telegrampolling.js": "0dff757e65006df3833b2033c942cb51bf44d53bac7d6c42c4bcfc3f12e800ab",
+          "eva2/deploy/telegram-bridge/src/integrations/eva2canary.js": "064716aedc9a38163ffa63a301137dd5743bc944267d18a2197eb426b0cd8e2c"
+        },
+        "hostWiringPatchSha256": "5194b6b75c009d23f72171c4047073e2f7b7aa65096074e0b13b74ab1ac194e2",
+        "retainedDraftWiringPatchSha256": "62db254d092a5ea902737d86294609cdbf2536b45b4c3c3d6e3e9640d85b1466",
+        "privateEvidenceSha256": {
+          "preparation.private.json": "2e2ffd81761ec63590bfc601c7ed35c6c73a87d92edd738de97775a8f5ed4648",
+          "checks/pre-restart-processing.private.json": "620dc1282f480a12906d086c338cfdbdf92f65feda00bd8c293c0b6c16b4104e",
+          "checks/initial-ingress-failure.json": "dd96e267414b79c0f91eeddec7cd28210b5ff0bf2ef7594a7494e3206b1b30ce"
+        },
+        "testSourceSha256": {
+          "eva2/tests/support/telegram_default_private.test.mjs": "2aa9f0aac68d92372f149161b50b1dcdd80da20c35fbf1668e4f6840c284492c",
+          "eva2/tests/support/telegram_default_private_ingress.test.mjs": "3bf295cab8e4926cfd0d66b46b54b1dfe5857250e8a37bb8f43040e10b28f84a",
+          "eva2/tests/support/telegram_draft_lane.test.mjs": "fbf06d7505e0233ff8d3cc448a2c870119db0dc9718f05cce77469502d13c15f"
+        },
+        "documentationSha256": {
+          "AGENTS.md": "587d9e1f33e0e9571aedc9287655eb775a663ada588fb9aed31ebc444330e274",
+          "eva2/PROJECTDOEL.md": "ee7cbdef181a0dd56cd4e928d204e7fab309729a9076733e7b430e429d1359ab",
+          "eva2/WERKBORD.md": "567c0eb20d4d3ab709e653555c35785a1e7112cdeb510653ef3acf7bbd646b77",
+          "eva2/design/product/execution-workboard-v1.json": "5cdc9c041888e04cf570d8942fb92d45dc35de1b5fa97fd1d576cbaab2945ff4",
+          "eva2/deploy/telegram-bridge/README.md": "c19e7b4e13dfc983ea8bd84c7b243686c0efa619f70b3352157d494557b10041"
+        },
+        "activeGoal": {
+          "path": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective.md",
+          "sha256": "de157930691df2425618e0f13af4c8c57c8815c788d056452c56d0db0d5fd01d",
+          "read": true
+        }
+      },
+      "independentChecks": {
+        "source": {
+          "threeCanonicalAssetsMatchCandidate": true,
+          "fiveLiveHostFilesStillMatchBefore": true,
+          "hostPatchApplyCheckPassed": true,
+          "fiveCandidateJavaScriptFilesParse": true,
+          "selectedPrivateBindings": 1,
+          "selectedBindingAlreadyBotAllowed": true,
+          "selectedPrivateChatAlreadyCoreBound": true,
+          "existingCoreURLUnchanged": true,
+          "defaultOnlyPositivePrivateChatMatchingSender": true,
+          "explicitEva2CommandRetained": true,
+          "ordinaryOtherAccountsGroupsSlashCommandsAndMediaRetainRoutes": true
+        },
+        "messageBinding": {
+          "archiveRetainsOriginalInput": true,
+          "archivedRouteTakesPrecedenceOnReplay": true,
+          "historicalInferenceUnchanged": true,
+          "changedArchivedContentFailsClosed": true,
+          "corePromptUsesTrimmedSelectedText": true,
+          "originalChatSenderMessageAndReplyTargetPreserved": true,
+          "hostEva1HistoryNotForwarded": true,
+          "Eva2FailureDoesNotFallbackToEva1": true,
+          "singleCoreDispatchForHandledInput": true
+        },
+        "fakeTransportIngress": {
+          "actualHostComposition": true,
+          "laterPollingBatchCanAnswerWhileFirstRequestBlocked": true,
+          "sameSelectorUsedForPollingAndHandler": true,
+          "originalReplyAndDraftTargetsPreserved": true,
+          "completedAndInFlightReplaysDoNotRedispatch": true,
+          "unallowedSenderDoesNotReachCore": true,
+          "wrongFinalMessageIdentityRejected": true,
+          "historicalEva1ReplayRemainsEva1": true,
+          "unfinishedPollingPrefixRemainsReplayable": true
+        },
+        "tests": {
+          "independentlyExecutedUnitAndExistingDraftTestsPassed": 9,
+          "independentlyExecutedActualHostIngressTestsPassed": 1,
+          "modelAndTelegramTransportReplacedLocally": true,
+          "paidProviderRequests": 0,
+          "realTelegramExchanges": 0,
+          "initialIngressFailureEvidencePreserved": true
+        },
+        "documentation": {
+          "goalReread": true,
+          "humanUnderstandingDirectionClearlyDesign": true,
+          "noNewBuiltInstalledAcceptedCapabilityClaimFromDesign": true,
+          "existingArchitectureAndModelRolesRetained": true,
+          "dailyPrivateIngressRemainsCurrentWork": true,
+          "noNewComparisonSeriesOrVoiceWork": true,
+          "candidateStillDescribedAsPreparedNotInstalledOrRealExchangeVerified": true
+        }
+      },
+      "restartAssessment": {
+        "conclusion": "Recorded quiet host state is sufficient for this one existing host service update; no core or worker restart.",
+        "recordedArchiveStatusCounts": {
+          "completed": 1065,
+          "failed": 8
+        },
+        "recordedArchiveObservedAt": "2026-10-11T11:55:13.892411+00:00",
+        "recordedArchiveHasNoProcessingReceivedOrUncertainRows": true,
+        "hostAPIStateReportedByInstaller": {
+          "activeTurns": 0,
+          "interactivePending": 0
+        },
+        "existingDirectExitSignalHandlerObserved": true,
+        "pollingDrainFunctionRetained": true,
+        "gracefulServiceDrain": "NOT_ESTABLISHED",
+        "preservationOfActivelyStreamingSynchronousRequests": "NOT_CLAIMED",
+        "preparedOutboxCount": "UNKNOWN",
+        "corePrivateWorkStatus": "UNKNOWN",
+        "additionalReadChecksReportedRejected": true,
+        "rejectedChecksNotRetriedOrBypassed": true,
+        "installationScope": "Five host source files plus separate default-ID drop-in; same credentials and core URL; existing core and worker remain running."
+      },
+      "limits": [
+        "Candidate approval is not installation confirmation; live source/configuration and service status require the planned same-artifact readback update.",
+        "Fake core and Telegram transport verify message routing and binding, not new real Telegram behavior, model quality or owner acceptance.",
+        "Default routing scope is selected private text; media, voice and other existing routes remain outside this delivery.",
+        "The recorded quiet host state supports this one update; graceful drain and survival of an actively streaming synchronous request are not established.",
+        "Human Understanding is design direction, not a newly delivered capability or superiority claim."
+      ],
+      "reviewActivity": {
+        "newModelCalls": 0,
+        "realTelegramMessagesSent": 0,
+        "runtimeMutations": 0,
+        "filesWritten": [
+          "eva2/reviews/telegram-default-private-final-review-20261011.json"
+        ]
+      }
+    }
+  }
+}

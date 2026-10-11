@@ -1,6 +1,49 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Opgeleverd — 10 oktober 2026
+## Actuele ontwerprichting — 11 oktober 2026
+
+Het besproken Human Understanding Engine-voorstel wordt als ontwerprichting
+verwerkt in eva2/PROJECTDOEL.md en het actieve goal-bestand: persoonsbegrip,
+patronen en toetsbare verwachtingen, passend initiatief, leren van uitkomsten,
+en ontbrekende mogelijkheden zelfstandig realiseren. Feiten en hypotheses
+blijven onderscheiden. Droommodus omvat ook AIDE²-geïnspireerde verbetering
+van Eva, haar aansturing, vaardigheden en apps/addons.
+
+Gebruik eerst de echte Hindsight/PostgreSQL-, initiatief-, uitvoer- en
+ontwikkelvoorzieningen. De voorgestelde Brainstem/ANIMA/Qwen/SQLite-opzet en vier
+uitvoertypen zijn geen bevestigde huidige basis en starten geen herbouw.
+De dagelijkse eigenaar-privétekstingang is geïnstalleerd; een nieuwe echte
+uitwisseling en de resterende vervangingsvoorwaarden blijven afzonderlijk open.
+Ontwerpstatus, installatiebewijs en menselijke acceptatie blijven afzonderlijk;
+geen nieuwe vergelijkingsserie en spraak blijft geparkeerd.
+
+## Opgeleverd 11 oktober — gewone privétekst naar Eva2
+
+Gewone privétekst van Jaaps bestaande gekoppelde account gaat nu via de bestaande
+Telegrambot naar Eva2, zonder /eva2. De expliciete opdracht blijft werken.
+De gekozen route ligt per oorspronkelijk bericht vast; oude Eva1-beurten
+worden bij herhaling niet opnieuw als Eva2 ingedeeld. De ontvanger en handler
+gebruiken dezelfde route, zodat een tussenvraag niet achter lopend Eva2-werk wacht.
+
+Vijf hostbestanden en één aparte configuratie-dropin zijn geïnstalleerd met één
+botdienst-herstart. Kern, taakwerker, geheugen en spraak zijn behouden.
+Negen route-/drafttests en de echte-host-ingresstest met nagebootst netwerkverkeer
+slagen; die ingresstest slaagt ook tegen de geïnstalleerde bron.
+De kern is ready en de host bereikbaar. Geen nieuwe handmatige Eva-modelaanvragen.
+Een eerste test vond de nog seriële ontvanger; dat foutbewijs blijft behouden.
+
+**Gebruik:** stuur gewone tekst naar de bestaande Telegrambot, bijvoorbeeld
+**Hoi Eva**. /eva2 is niet meer nodig voor dit account. Een nieuwe echte uitwisseling
+en de eigenaaracceptatie zijn nog niet vastgesteld in dit opleverbewijs.
+Foto's, spraak, andere accounts, groepen en oude slash-opdrachten behouden hun
+oude routes. Het oude achtergrondgedrag is niet door deze tekstroutering uitgezet.
+Dit is daardoor nog geen volledige Eva1-vervanging of bewijs van betere intelligentie.
+
+Resultaat: eva2/evidence/product/telegram-default-private-installed-20261011.json.
+Review: eva2/reviews/telegram-default-private-final-review-20261011.json.
+Spraak blijft geparkeerd; geen nieuwe vergelijkingsserie.
+
+## Historische oplevering — 10 oktober 2026
 
 De drie nieuwste eigenaarvragen zijn samen uitgevoerd. De algemene uitvoerroute
 is geïnstalleerd in kern en taakwerker. Een gewone opdracht vond zelf huisgegevens

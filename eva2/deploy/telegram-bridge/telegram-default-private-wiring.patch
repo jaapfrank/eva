@@ -1,0 +1,73 @@
+--- a/src/config.js
++++ b/src/config.js
+@@ -490,6 +490,7 @@
+     .filter(Boolean)
+     .map(Number),
+   eva2CanaryUrl: (env.EVA2_CANARY_URL || '').replace(/\/$/, ''),
++  eva2DefaultPrivateIds: env.EVA2_TELEGRAM_DEFAULT_PRIVATE_IDS || '',
+ 
+   webPort: numberSetting('WEB_PORT', 3210),
+   webHost: env.WEB_HOST || '127.0.0.1',
+--- a/src/integrations/telegram.js
++++ b/src/integrations/telegram.js
+@@ -156,7 +156,10 @@
+       : 'huisgenoot');
+   const resolvedRole = role || (message.from?.is_bot ? 'assistant' : 'user');
+   const routeMeta = meta && typeof meta === 'object' ? meta : {};
+-  const dialogueRoute = telegramDialogueRoute(
++  const existingArchive = telegramMessage(chatId, message.message_id);
++  const dialogueRoute = existingArchive
++    ? archivedTelegramDialogueRoute(existingArchive)
++    : telegramDialogueRoute(
+     routeMeta.dialogueRoute,
+     archivedTelegramDialogueRoute({
+       role: resolvedRole,
+@@ -199,7 +202,15 @@
+     message: ctx.message,
+     sender: ctx.from ? resolveName(ctx.from) : null,
+     role: 'user',
+-    meta: { inbound: true, fromTelegramId: String(fromTelegramId) },
++    meta: {
++      inbound: true,
++      fromTelegramId: String(fromTelegramId),
++      dialogueRoute: typeof ctx.message.text === 'string'
++        ? (eva2CanaryPrompt(ctx.message.text, {
++          chatId: ctx.chat.id, fromId: ctx.from.id,
++          defaultPrivateIds: config.eva2DefaultPrivateIds,
++        }) !== null ? 'eva2' : 'eva1') : null,
++    },
+   });
+   if (ctx.message.reply_to_message) {
+     archiveTelegramPayload({
+@@ -2591,7 +2602,8 @@
+     const stop = typing(ctx);
+     stamp('prep_ms', tPrep);
+     try {
+-      if (eva2CanaryPrompt(ctx.message.text) !== null) {
++      const archivedMessage = telegramMessage(ctx.chat.id, ctx.message.message_id);
++      if (eva2CanaryPrompt(ctx.message.text, { archivedMessage }) !== null) {
+         const tCanary = performance.now();
+         try {
+           const draftSink = createEva2DraftSink({
+@@ -2605,6 +2617,7 @@
+             messageId: ctx.message.message_id,
+             fromId: ctx.from.id,
+             text: ctx.message.text,
++            archivedMessage,
+             telegramDate: ctx.message.date,
+             onDraft: draftSink ? draftSink.map(labelEva2TelegramReply) : null,
+             onReceipt: draftSink ? (text) => draftSink.receipt(text) : null,
+@@ -2787,6 +2800,13 @@
+   startPreparedTelegramOutbox();
+   // long polling start (loopt voor altijd; niet awaiten)
+   pollTelegramConcurrently(bot, {
++    canOverlap: (update) => typeof update.message?.text === 'string'
++      && eva2CanaryPrompt(update.message.text, {
++        chatId: update.message.chat?.id,
++        fromId: update.message.from?.id,
++        defaultPrivateIds: config.eva2DefaultPrivateIds,
++        archivedMessage: telegramMessage(update.message.chat?.id, update.message.message_id),
++      }) !== null,
+     onError: (error) => logTimeline('system', `Telegram-fout: ${errMsg(error.error || error).slice(0, 200)}`),
+   }).catch((e) => {
+     logTimeline('system', `Telegram kon niet starten: ${errMsg(e).slice(0, 200)}. Klopt het token?`);

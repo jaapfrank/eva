@@ -27,6 +27,29 @@ export function eva2TelegramPrompt(text) {
   return value.replace(EVA2_COMMAND, '').trim();
 }
 
+/** Select new private text only; historical archive inference stays unchanged. */
+export function eva2IncomingTelegramPrompt(text, {
+  chatId, fromId, defaultPrivateIds = '', archivedMessage = null,
+} = {}) {
+  const explicit = eva2TelegramPrompt(text);
+  if (archivedMessage) {
+    if (archivedMessage.role !== 'user' || archivedMessage.content !== text) {
+      throw new Error('Telegram dialogue route does not match its archived input');
+    }
+    return archivedTelegramDialogueRoute(archivedMessage) === 'eva2'
+      ? (explicit ?? text.trim()) : null;
+  }
+  if (explicit !== null) return explicit;
+  if (typeof text !== 'string' || !text.trim() || text.trimStart().startsWith('/')) return null;
+  if (!Number.isSafeInteger(chatId) || chatId < 1 || chatId !== fromId) return null;
+  if (typeof defaultPrivateIds !== 'string' || !defaultPrivateIds.trim()) return null;
+  const ids = defaultPrivateIds.split(',').map((value) => value.trim());
+  if (ids.some((value) => !/^[1-9]\d*$/u.test(value) || !Number.isSafeInteger(Number(value)))) {
+    throw new Error('Eva2 default private Telegram IDs are invalid');
+  }
+  return ids.includes(String(fromId)) ? text.trim() : null;
+}
+
 /**
  * Leid alleen voor oude archiefregels zonder expliciete route een route af.
  * Nieuwe regels krijgen altijd meta.dialogueRoute; deze fallback houdt de

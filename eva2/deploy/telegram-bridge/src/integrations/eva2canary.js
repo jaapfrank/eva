@@ -1,10 +1,10 @@
-import { eva2TelegramPrompt } from '../telegramdialogue.js';
+import { eva2IncomingTelegramPrompt } from '../telegramdialogue.js';
 
 const DRAFT_MIN_GROWTH = 32;
 const DRAFT_MAX_INTERVAL_MS = 300;
 
-export function eva2CanaryPrompt(text) {
-  return eva2TelegramPrompt(text);
+export function eva2CanaryPrompt(text, options) {
+  return eva2IncomingTelegramPrompt(text, options);
 }
 
 export function createEva2DraftSink({ chatId, draftId, sendDraft, clock = Date.now }) {
@@ -216,6 +216,8 @@ export async function askEva2Canary({
   messageId,
   fromId,
   text,
+  defaultPrivateIds = '',
+  archivedMessage = null,
   telegramDate,
   fetchImpl = fetch,
   onDraft = null,
@@ -225,7 +227,7 @@ export async function askEva2Canary({
   idleTimeoutMs = 120_000,
   signal = null,
 }) {
-  const prompt = eva2CanaryPrompt(text);
+  const prompt = eva2CanaryPrompt(text, { chatId, fromId, defaultPrivateIds, archivedMessage });
   if (prompt === null) return null;
   if (!prompt) throw new Error('Zet je vraag achter /eva2');
   if (!baseUrl) throw new Error('Eva B-canary is niet geconfigureerd');

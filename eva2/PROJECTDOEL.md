@@ -1,6 +1,104 @@
 # Eva — digitale huisgenoot die leert en handelt
 
-## Gerichte invoercorrectie — 10 oktober 2026
+## Ontwerprichting: mensen begrijpen en zelfstandig ontwikkelen — 11 oktober 2026
+
+Het besproken Human Understanding Engine-voorstel scherpt de huisgenootvisie aan.
+Eva leert personen begrijpen, herkent relevante patronen, vormt toetsbare
+verwachtingen, neemt passend initiatief en leert van resultaten en reacties.
+Dit is een ontwerprichting; de onderdelen hieronder zijn niet door deze
+documentatie als gebouwd, geïnstalleerd of geaccepteerd aangemerkt.
+
+| Vermogen | Gewenst gedrag | Aansluiting en werkelijk resterend werk |
+| --- | --- | --- |
+| Mensen begrijpen | Voorkeuren en eerdere ervaringen gebruiken; hypotheses met bron, onzekerheid en tegenbewijs kunnen corrigeren. | Bestaand persoonsgebonden geheugen hergebruiken; samenhangend leren van persoonsaannames is hiermee nog niet bewezen. |
+| Patronen en verwachtingen | Verbanden onderzoeken en later vaststellen of verwachtingen klopten. | Bestaande gebeurtenissen en geheugen gebruiken; vastgelegde voorspelling en terugkoppeling moeten op de echte route aantoonbaar samenhangen. |
+| Passend initiatief | Zelf zien waar hulp welkom is, handelen of vragen en leren van de reactie. | Bestaande initiatiefroute beoordelen op hergebruik; relevantie voor het gezin blijft een menselijk oordeel. |
+| Ontbrekende mogelijkheden realiseren | Zelf documentatie onderzoeken en benodigde mogelijkheden bouwen/aansluiten, gebruiken en controleren. | Bestaande algemene uitvoer- en ontwikkelroute gebruiken; geen specifieke vuilnisbak-, crypto- of robotfunctie als vervanging van dit algemene vermogen. |
+| Droommodus en zelfverbetering | Bij passende gelegenheid herinneringen verwerken en Eva, haar aansturing, vaardigheden en apps/addons aantoonbaar verbeteren. | Bestaande kandidaatvergelijking en AIDE²-gerichte voorzieningen hergebruiken; verbetering van iedere genoemde vaardigheid is niet reeds bewezen. |
+
+De gezamenlijke kringloop is **waarnemen → relevant geheugen →
+verwachting/afweging → handelen → resultaat/feedback → geheugen en gedrag
+bijstellen**. Een ontbrekende mogelijkheid kan onderdeel van het handelen zijn.
+Een gewone chat is een bruikbaar begin; HA, camera's, spraak en andere koppelingen
+volgen de behoefte van de installatie.
+
+### Aansluiting op de actuele technische basis
+
+Eva2 gebruikt Hindsight voor semantisch geheugen en PostgreSQL voor operationele
+gegevens, identiteit en scopes. Bestaande initiatieven, algemene uitvoering en
+componentontwikkeling vormen de eerste hergebruikskandidaten. De in het voorstel
+genoemde Brainstem/ANIMA/Qwen-opzet en vier uitvoertypen zijn niet bevestigd als
+actuele Eva2-architectuur. SOUL-import bestaat; SELF.md en world.json zijn geen
+aangetoonde huidige broncontracten. Een nieuwe SQLite-database/vectorindex wordt
+niet toegevoegd zonder een concreet ontbrekend vermogen en onderbouwde keuze.
+
+De zes namen beschrijven verantwoordelijkheden, niet zes verplichte agents.
+Alleen betekenisvolle veranderingen vragen redeneerwerk; niet elke gebeurtenis
+of heartbeat vereist een modelaanvraag. De huidige modelrollen blijven gelden:
+Sol/none voor simpel contact, Astra minimaal medium voor inhoudelijk werk.
+
+### Bewijs van verbetering en uitvoervolgorde
+
+Beoordeel of Eva daadwerkelijk nuttige hulp afmaakt, relevante ervaringen
+terughaalt, gecorrigeerde aannames laat vallen en minder menselijke begeleiding
+nodig heeft. Voorspellingskwaliteit, snelheid en verbruik blijven afzonderlijke
+metingen. De voorgestelde 90%/70%-doelen en confidence-waarden zijn geen behaalde
+resultaten of universeel geschikte acceptatiegrenzen.
+
+AIDE²-geïnspireerde verbetering omvat aansturing, code en uitbreidingen;
+geheugenconsolidatie alleen is onvoldoende. Scheid kandidaatontwikkeling en
+onafhankelijke eindbeoordeling. Pas alleen bewezen verbeteringen toe; behoud
+foutbewijs en een werkende terugweg. Beschikbare CPU is geen beschikbaar
+creditbudget. Vergelijking met oorspronkelijke AIDE/AIDE² blijft expliciet.
+
+**Nu:** de dagelijkse eigenaar-privétekstingang is geïnstalleerd. Nieuwe echte
+uitwisseling en concrete resterende vervangingsvoorwaarden blijven zichtbaar.
+**Daarna:** de eerstvolgende werkelijk ontbrekende schakel van de kringloop uit
+het bestaande werkbord afronden. De aangescherpte richting maakt geen nieuwe
+vergelijkingsserie of tweede uitvoerplatform actief. Spraak blijft geparkeerd.
+
+## Opgeleverd 11 oktober — gewone privétekst naar Eva2
+
+Gewone privétekst van Jaaps bestaande gekoppelde account gaat nu via de bestaande
+Telegrambot naar Eva2, zonder /eva2. De expliciete opdracht blijft werken.
+De gekozen route ligt per oorspronkelijk bericht vast; oude Eva1-beurten
+worden bij herhaling niet opnieuw als Eva2 ingedeeld. De ontvanger en handler
+gebruiken dezelfde route, zodat een tussenvraag niet achter lopend Eva2-werk wacht.
+
+Vijf hostbestanden en één aparte configuratie-dropin zijn geïnstalleerd met één
+botdienst-herstart. Kern, taakwerker, geheugen en spraak zijn behouden.
+Negen route-/drafttests en de echte-host-ingresstest met nagebootst netwerkverkeer
+slagen; die ingresstest slaagt ook tegen de geïnstalleerde bron.
+De kern is ready en de host bereikbaar. Geen nieuwe handmatige Eva-modelaanvragen.
+Een eerste test vond de nog seriële ontvanger; dat foutbewijs blijft behouden.
+
+**Gebruik:** stuur gewone tekst naar de bestaande Telegrambot, bijvoorbeeld
+**Hoi Eva**. /eva2 is niet meer nodig voor dit account. Een nieuwe echte uitwisseling
+en de eigenaaracceptatie zijn nog niet vastgesteld in dit opleverbewijs.
+Foto's, spraak, andere accounts, groepen en oude slash-opdrachten behouden hun
+oude routes. Het oude achtergrondgedrag is niet door deze tekstroutering uitgezet.
+Dit is daardoor nog geen volledige Eva1-vervanging of bewijs van betere intelligentie.
+
+Resultaat: eva2/evidence/product/telegram-default-private-installed-20261011.json.
+Review: eva2/reviews/telegram-default-private-final-review-20261011.json.
+Spraak blijft geparkeerd; geen nieuwe vergelijkingsserie.
+
+### Wanneer kan Eva2 Eva1 vervangen?
+
+| Voorwaarde | Werkelijk geleverd | Nog niet aangetoond of nog te doen |
+| --- | --- | --- |
+| Bestaande herinneringen bruikbaar | 1.115 actieve historische regels in 45 privédocumenten; privéteruglezing en herimport zonder nieuwe writes gecontroleerd. | Andere niet gekoppelde personen blijven apart; historische informatie is niet automatisch actueel bevestigd. |
+| Zelfstandig hulp afmaken | Eén gewone opdracht vond HA-gegevens, schreef precies één document en las dat afzonderlijk terug; geïnstalleerd. | Brede betrouwbaarheid en efficiëntie; eerdere fouten en 478.284 tokens blijven zichtbaar. |
+| Eén dagelijkse gesprekspartner | Gewone privétekst van het gekoppelde eigenaaraccount gebruikt nu Eva2 zonder prefix; oorspronkelijke berichtkoppeling gecontroleerd. | Een nieuwe echte uitwisseling en dagelijks gebruik zijn nog niet beoordeeld. Media, spraak, andere accounts, groepen en oude slash-opdrachten behouden hun oude routes. |
+| Eva1 kan werkelijk uit | Bron en gegevens blijven behouden als terugweg. | Oude achtergrondactiviteiten zijn niet uitgezet door deze tekstoverstap; gebruikte resterende routes eerst concreet vaststellen. |
+| Een betere huisgenoot | Eerdere beperkte acceptaties en geheugenvoordelen blijven behouden. | Samenhangend mensbegrip, nieuwe mogelijkheden zelf realiseren en leren van uitkomsten zijn niet door deze tekstoverstap bewezen. |
+
+Eva1 kan als dagelijkse uitvoerder vervallen wanneer de werkelijk gebruikte
+ingangen en dagelijkse handelingen via dezelfde Eva2 bruikbaar zijn, de gegevens
+beschikbaar blijven en Jaap dat gebruik accepteert. Sluit een concreet gebruikt
+gat; bouw geen ongebruikte voorbeeldkoppelingen of nieuwe brede vergelijkingsserie.
+
+## Historische invoercorrectie — 10 oktober 2026
 
 De bestaande modelinvoer bevatte dezelfde huisinventaris als inhoud én als bewijs.
 De bestaande verliesvrije verwijzing omvat nu ook inventory: één volledige kopie,
@@ -16,7 +114,7 @@ Bewijs: eva2/evidence/product/work-input-inventory-installed-20261010.json.
 Review: eva2/reviews/work-input-inventory-final-review-20261010.json.
 Volgende geplande gebruikersuitkomst blijft de dagelijkse privé-ingang; niet gestart.
 
-## Opgeleverd — 10 oktober 2026
+## Historische oplevering — 10 oktober 2026
 
 De drie nieuwste eigenaarvragen zijn samen uitgevoerd. De algemene uitvoerroute
 is geïnstalleerd in kern en taakwerker. Een gewone opdracht vond zelf huisgegevens
