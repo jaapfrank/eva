@@ -1,12 +1,15 @@
-## Actueel werk — 2026-10-11T21:30:19.820101+00:00
+## Actueel werk — 2026-10-11T21:37:55.192541+00:00
 
 **Laatst opgeleverd:** nieuwe verbetercycli geïnstalleerd met behoud van oude
 beoordelingen. Vier exacte modules, 93 gerichte controles, bronreview GO.
 Alle 1.910 oude ontvangst-/resultaatbestanden bytegelijk, oude rondes blijven
 verbruikt. Kern, taakwerker en bestaande hostbeoordelaar gezond.
 
-**Volgende uitkomst:** de echte verbetering van agentaansturing uitvoeren,
-onafhankelijk beoordelen, toepassen en later gebruiken.
+**Nu:** één afgebakende werkinstructie op de bestaande verbeterroute aansluiten.
+De onafhankelijke reviewer legt vooraf de echte taakbeoordeling vast.
+De gewone initiatiefcyclus koos om 23:34 zelf passende stilte, zonder blokkade.
+Geen betaalde nieuwe proef gestart.
+**Einduitkomst:** de verbetering onafhankelijk beoordelen, toepassen en later gebruiken.
 
 **Wie:** /root verzorgt integratie, werkelijk gebruik, dashboard en Git.
 De bestaande onafhankelijke reviewer doet de gebundelde eindcontrole.
@@ -30,10 +33,19 @@ Onafhankelijke bron- en installatiereview GO.
 
 Dit is een aansluiting voor nieuwe rondes, geen nieuwe kwaliteitsverbetering
 of volledige AIDE². De volgende uitkomst is een concrete verbetering van Eva's
-aansturing toepassen en bij later werk gebruiken. De normale initiatiefplanner
-wordt vanaf het toegelaten venster om 23:33 gevolgd, zonder oude beoordelingen,
-criteria, reserveringen of verbruik te resetten. Passend initiatief en gezinsgebruik
-blijven open. Geen spraakwerk, nieuwe vergelijkingsserie of eigenaarhandeling.
+aansturing toepassen en bij later werk gebruiken.
+
+De selectie is afgerond: geen nieuwe contextproef zonder aangetoond tekort.
+De bestaande programmeeragent krijgt één afgebakende verbeterbare werkinstructie;
+alle overige bronbytes en bevoegdheden blijven buiten de variant. De onafhankelijke
+reviewer legt eerst betekenisvolle ontwikkel- en afgeschermde eindcriteria vast.
+Nog geen nieuwe modelproef of kwaliteitsverbetering.
+
+De gewone initiatiefcyclus nam om 23:34 zelf een besluit: geen nieuwe bijdrage,
+geen blokkade. Deze passende stilte bewijst een actieve cyclus, geen afgerond
+nieuw initiatief. Oude beoordelingen, criteria, reserveringen en verbruik blijven.
+Passend initiatief en gezinsgebruik blijven open. Geen spraakwerk, nieuwe
+vergelijkingsserie of eigenaarhandeling.
 
 Bewijs: eva2/evidence/product/component-improvement-rounds-installed-20261011.json.
 Bronreview: eva2/reviews/component-improvement-rounds-source-review-20261011.json.

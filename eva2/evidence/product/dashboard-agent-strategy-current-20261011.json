@@ -1,0 +1,18 @@
+{
+  "contract": "EvaDashboardCurrentWorkUpdate/v1",
+  "checkedAt": "2026-10-11T21:40:29.608921+00:00",
+  "contentReviewedAt": "2026-10-11T21:37:55.192541+00:00",
+  "url": "http://localhost:44712/",
+  "observedInUserBrowser": true,
+  "refresh": "existing automatic refresh; no reload or UI rebuild",
+  "visibleCurrentWork": "AIDE² · eigen werkaanpak verbeterbaar maken",
+  "visibleNext": "Werkaanpak verbeteren en daarna toepassen",
+  "visibleLatest": "Nieuwe verbetercycli met behoud van oude beoordelingen",
+  "displayedOriginalBuildAndEvidenceCount": "39/48",
+  "countIsProductPercentage": false,
+  "javascriptErrors": 0,
+  "nativeInitiativeCycle": "2026-10-11T21:34:31+00:00; silence; no blocker; no new task",
+  "completeProjectClaim": false,
+  "fullAide2Complete": false,
+  "goalStatus": "active"
+}

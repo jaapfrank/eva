@@ -20,10 +20,19 @@ Onafhankelijke bron- en installatiereview GO.
 
 Dit is een aansluiting voor nieuwe rondes, geen nieuwe kwaliteitsverbetering
 of volledige AIDE². De volgende uitkomst is een concrete verbetering van Eva's
-aansturing toepassen en bij later werk gebruiken. De normale initiatiefplanner
-wordt vanaf het toegelaten venster om 23:33 gevolgd, zonder oude beoordelingen,
-criteria, reserveringen of verbruik te resetten. Passend initiatief en gezinsgebruik
-blijven open. Geen spraakwerk, nieuwe vergelijkingsserie of eigenaarhandeling.
+aansturing toepassen en bij later werk gebruiken.
+
+De selectie is afgerond: geen nieuwe contextproef zonder aangetoond tekort.
+De bestaande programmeeragent krijgt één afgebakende verbeterbare werkinstructie;
+alle overige bronbytes en bevoegdheden blijven buiten de variant. De onafhankelijke
+reviewer legt eerst betekenisvolle ontwikkel- en afgeschermde eindcriteria vast.
+Nog geen nieuwe modelproef of kwaliteitsverbetering.
+
+De gewone initiatiefcyclus nam om 23:34 zelf een besluit: geen nieuwe bijdrage,
+geen blokkade. Deze passende stilte bewijst een actieve cyclus, geen afgerond
+nieuw initiatief. Oude beoordelingen, criteria, reserveringen en verbruik blijven.
+Passend initiatief en gezinsgebruik blijven open. Geen spraakwerk, nieuwe
+vergelijkingsserie of eigenaarhandeling.
 
 Bewijs: eva2/evidence/product/component-improvement-rounds-installed-20261011.json.
 Bronreview: eva2/reviews/component-improvement-rounds-source-review-20261011.json.

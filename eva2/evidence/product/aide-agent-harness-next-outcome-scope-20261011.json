@@ -1,0 +1,35 @@
+{
+  "contract": "EvaAideAgentHarnessNextOutcomeScope/v1",
+  "recordedAt": "2026-10-11T21:32:56.093030+00:00",
+  "goalStatus": "active",
+  "previousTurnClassification": "progress",
+  "previousEvidence": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
+  "userOutcome": "Improve real agent control via the existing variant/development/independent-final/application route and prove use in later ordinary work.",
+  "alreadyInstalled": "Recurring round bindings, original assessors/publishers, safe source-read round status, general digital initiative execution and code extension route.",
+  "nextAction": "One bounded source/public-evidence selection of a genuine current quality deficit or necessary harness boundary; observe the ordinary autonomous initiative cycle on the currently live core. Do not repeat a consumed context/helper assessment.",
+  "requiredBeforeModelTrial": [
+    "Actual current source and permitted change boundary",
+    "Concrete quality deficit or admitted useful extension",
+    "Fixed development criteria and separately held independent final criteria",
+    "Original assessments/registrations/unknown preserved",
+    "Matched current profile/provider/mandate and ordinary task route",
+    "Defined few variants and total bounded resource allowance before dispatch"
+  ],
+  "hardConditions": [
+    "privacy and actor boundaries",
+    "current owner authority",
+    "stop and foreground priority",
+    "old receipts and consumed registrations preserved",
+    "quality before costs, no false completion"
+  ],
+  "criteriaOwner": "independent evaluator; optimizing builder cannot change protected final rules/cases",
+  "newModelTrialStarted": false,
+  "newComparisonSeries": false,
+  "newTaskIds": false,
+  "originalTaskStatusesChanged": false,
+  "roles": {
+    "coordinator": "/root",
+    "sourceSelection": "/root/product_execution_memory_review"
+  },
+  "creditCosts": "unknown"
+}

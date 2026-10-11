@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T21:30:19.820101+00:00",
+  "lastUpdated": "2026-10-11T21:32:56.093030+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -128,8 +128,8 @@
       "summary": "Eva heeft zelf een hulpmiddel gemaakt, verbeterd en later hergebruikt. De uitvoerkoppeling en daggrenscorrectie voor eigen initiatief zijn geïnstalleerd; een nieuw zelfgekozen resultaat, volledige agentaansturing en gezinsgebruik blijven open.",
       "nextOutcomes": [
         {
-          "title": "Hierna · agentaansturing werkelijk verbeteren",
-          "detail": "De aansluiting voor nieuwe verbetercycli is geïnstalleerd en onafhankelijk goedgekeurd. Gebruik dezelfde route voor een concreet kwaliteitstekort in Eva’s aansturing; pas alleen bewezen kwaliteitswinst toe en bewijs later gebruik. Volledige AIDE² en gezinsgebruik blijven open."
+          "title": "Nu · aansturingsverbetering en eigen uitvoering",
+          "detail": "De terugkerende verbeterroute is geïnstalleerd en goedgekeurd. Eén begrensde onafhankelijke bronbeoordeling bepaalt de noodzakelijke huidige aansturingsverbetering. Oude context- en hulpmiddelproeven worden niet herhaald. Geen nieuwe betaalde proef gestart."
         },
         {
           "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T21:30:19.820101+00:00",
+        "checkedAt": "2026-10-11T21:32:56.093030+00:00",
         "deliveries": [
           {
             "title": "Nieuwe verbetercycli met behoud van oude beoordelingen",
@@ -4709,25 +4709,26 @@
           }
         ],
         "now": {
-          "title": "AIDE² · nieuwe verbetercycli geïnstalleerd",
-          "detail": "De technische aansluiting is afgerond. Vier exacte modules draaien, 1.910 oude bestanden blijven bytegelijk en oude rondes worden niet opnieuw uitgevoerd. Volgende gebruikersuitkomst: echte verbetering van agentaansturing toepassen en later gebruiken. Volledige AIDE² blijft open.",
-          "state": "completed",
-          "activeExecution": false,
+          "title": "AIDE² · eigen werkaanpak verbeterbaar maken",
+          "state": "in_progress",
+          "phase": "aide_work_strategy_source_boundary",
+          "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
-          "doneWhen": "De bestaande verbeterroute accepteert een nieuwe vastgelegde ronde voor een actuele versie van hetzelfde onderdeel; oude bronnen, verbruikte beoordelingen en resultaten blijven behouden en bij herstart leesbaar. Alleen onafhankelijke kwaliteitswinst wordt toegepast. Daarna echte verbetercyclus van agentaansturing en samenhangend gezinsgebruik afronden.",
-          "phase": "aide_round_installed_approved",
           "executor": "/root",
           "coordination": "/root",
-          "review": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json",
-          "summary": "Nieuwe verbetercycli geïnstalleerd en onafhankelijk goedgekeurd. 93 gerichte controles geslaagd; oude beoordelingen en resultaten behouden."
+          "summary": "De bestaande programmeeragent krijgt één afgebakende, verbeterbare werkinstructie. De gewone initiatiefcyclus is actief en koos zojuist terecht niets nieuws.",
+          "detail": "De huidige route kan contextselectie en eigen code verbeteren. Nu wordt alleen de werkinstructie van dezelfde agent aangesloten op de bestaande variant- en beoordelingsroute. Er zijn nog geen nieuwe varianten of kwaliteitsmetingen uitgevoerd.",
+          "source": "eva2/evidence/product/aide-next-harness-selection-20261011.json",
+          "doneWhen": "Improve real agent control via the existing variant/development/independent-final/application route and prove use in later ordinary work.",
+          "review": "/root/product_execution_memory_review"
         },
         "next": {
-          "title": "Daarna · agentaansturing werkelijk verbeteren",
+          "title": "Werkaanpak verbeteren en daarna toepassen",
           "detail": "Een concrete tekortkoming van Eva's aansturing met vaste ontwikkel- en onafhankelijke eindcriteria verbeteren, de winnaar toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden.",
           "state": "planned",
           "activeExecution": false,
-          "source": "eva2/PROJECTDOEL.md"
+          "source": "eva2/PROJECTDOEL.md",
+          "summary": "Een zinvolle proef vooraf vastleggen; alleen een aantoonbaar betere werkinstructie installeren en in later werk laten gebruiken."
         },
         "ownerAction": {
           "required": false,
@@ -4739,7 +4740,7 @@
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T21:30:19.820101+00:00",
+        "reviewedAt": "2026-10-11T21:37:55.192541+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4816,8 +4817,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-11T21:30:19.820101+00:00",
-      "checkedAt": "2026-10-11T21:30:19.820101+00:00",
+      "reviewedAt": "2026-10-11T21:32:56.093030+00:00",
+      "checkedAt": "2026-10-11T21:32:56.093030+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11190,7 +11191,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T21:30:19.820101+00:00",
+      "lastUpdatedAt": "2026-10-11T21:32:56.093030+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11634,8 +11635,8 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "Nieuwe verbetercycli geïnstalleerd en onafhankelijk goedgekeurd. Volgende uitkomst: echte verbetering van agentaansturing via dezelfde route toepassen en bij later werk gebruiken. Volledige projectgoal actief.",
-      "currentEvidence": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json",
+      "currentWork": "De terugkerende verbeterroute is geïnstalleerd en goedgekeurd. Eén begrensde onafhankelijke bronbeoordeling bepaalt de noodzakelijke huidige aansturingsverbetering. Oude context- en hulpmiddelproeven worden niet herhaald. Geen nieuwe betaalde proef gestart.",
+      "currentEvidence": "eva2/evidence/product/aide-agent-harness-next-outcome-scope-20261011.json",
       "nextStep": "Een concrete tekortkoming van Eva's aansturing met vaste ontwikkel- en onafhankelijke eindcriteria verbeteren, de winnaar toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden.",
       "usageClarification": {
         "date": "2026-09-07",
@@ -11652,7 +11653,7 @@
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
       "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
-      "designUpdatedAt": "2026-10-11T21:30:19.820101+00:00",
+      "designUpdatedAt": "2026-10-11T21:32:56.093030+00:00",
       "wholeProjectGoalStatus": "active",
       "subdeliveriesDoNotCompleteGoal": true
     },
@@ -31125,7 +31126,9 @@
       },
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
-    }
+    },
+    "checkedAt": "2026-10-11T21:37:55.192541+00:00",
+    "reviewedAt": "2026-10-11T21:37:55.192541+00:00"
   },
   "activeTaskId": "AU-008",
   "maxActiveImplementationTasks": 1,
@@ -33596,5 +33599,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T21:30:19.820101+00:00"
+  "updatedAt": "2026-10-11T21:32:56.093030+00:00"
 }
