@@ -797,3 +797,10 @@ def test_failure_cause_survives_actual_sdk_transport_and_stream_cleanup():
         assert session.local_stream_closed is True
         assert session.observation["provider_failure"]["event_kind"] == "response.failed"
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("seconds", [0, -1, True, float("inf"), float("nan"), "300"])
+def test_phase_timeout_requires_finite_positive_host_duration(seconds):
+    with pytest.raises(ValueError, match="positive and finite"):
+        OpenAICodexProviderSettings(endpoint="https://example.test/responses",
+                                   model_name="gpt-6-astra", timeout_seconds=seconds)

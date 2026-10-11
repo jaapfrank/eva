@@ -1,0 +1,30 @@
+{
+  "contract": "EvaAbilityReuseDeadlineInstalled/v1",
+  "status": "INSTALLED",
+  "sourceReview": "eva2/reviews/ability-reuse-task-deadline-source-review-20261011.json",
+  "reviewSha256": "207629706a3e24b9108114d670eb07f17fa81629e9eb4528dcf3d0b447cba2a5",
+  "services": {
+    "core": {
+      "image": "sha256:c95f3966c525738f2076c0ce41fbc5462d5b027d17abc661814c7055d138c0cb",
+      "healthy": true,
+      "exact_sources": true,
+      "environment_retained": true,
+      "mounts_retained": true,
+      "process_config_retained": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:3d609fe7face3c27c459bf657155151322644b7f40278b638447007310980fdd",
+      "healthy": true,
+      "exact_sources": true,
+      "environment_retained": true,
+      "mounts_retained": true,
+      "process_config_retained": true
+    }
+  },
+  "changes": "Background responses use remaining admitted task time; existing foreground settings, cancellation and task grant unchanged.",
+  "model_calls": 0,
+  "native_reuse": "NOT_YET_RUN",
+  "original_unknown_retained": true,
+  "credits": "UNKNOWN",
+  "preparation_failures": "Two helper PYTHONPATH omissions failed before Compose/runtime dispatch; logs retained. Existing validated runtime and source/tool paths used."
+}

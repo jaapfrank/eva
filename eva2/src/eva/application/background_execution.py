@@ -5,6 +5,7 @@ from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
 import hashlib
+import math
 from typing import Iterator
 from collections.abc import Callable
 
@@ -17,6 +18,7 @@ class BackgroundExecutionScope:
     work_id: str
     authorize_dispatch: Callable[[ConversationTurn], None] | None = None
     remaining_model_output_tokens: Callable[[ConversationTurn], int] | None = None
+    remaining_model_time_seconds: Callable[[ConversationTurn], float] | None = None
 
     def __post_init__(self) -> None:
         if self.source_turn.audience.kind not in {"private_person", "household"}:
@@ -81,6 +83,21 @@ def background_model_output_limit(turn: ConversationTurn) -> int | None:
     if isinstance(remaining, bool) or not isinstance(remaining, int) or remaining <= 0:
         raise ConversationConflict("background model output allowance is invalid")
     return remaining
+
+
+def background_model_time_limit(turn: ConversationTurn) -> float | None:
+    """Use the admitted job's remaining time, without renewing its deadline."""
+    scope = _current.get()
+    if scope is None:
+        return None
+    background_execution_namespace(turn)
+    if scope.remaining_model_time_seconds is None:
+        return None
+    remaining = scope.remaining_model_time_seconds(turn)
+    if (isinstance(remaining, bool) or not isinstance(remaining, (int, float))
+            or not math.isfinite(remaining) or remaining <= 0):
+        raise ConversationConflict("background model time allowance is invalid")
+    return float(remaining)
 
 
 def has_background_execution() -> bool:

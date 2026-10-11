@@ -207,8 +207,8 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
     memory, identity = build_private_conversation_resources(settings, engine,
         group_consent=group_consent, household_voice=household_voice,
         identity_pack=identity_pack)
-    # Background phases may use the provider's existing 120-second maximum;
-    # the runner's cancellation signal still enforces the admitted task deadline.
+    # Foreground-style defaults apply outside an admitted task. The runner
+    # binds each background response to that task's remaining deadline.
     model = PydanticConversationModel(auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model, reasoning_effort=settings.conversation_reasoning_effort,
         timeout_seconds=120.0, research_timeout_seconds=120.0,

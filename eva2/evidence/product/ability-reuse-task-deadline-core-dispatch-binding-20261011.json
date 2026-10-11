@@ -1,0 +1,13 @@
+{
+  "contract": "EvaAbilityReuseCoreDispatchBinding/v1",
+  "boundAt": "2026-10-11T18:03:46.992840+00:00",
+  "preparedCriteria": "eva2/evidence/product/ability-reuse-task-deadline-native-input-20261011.json",
+  "payloadSha256": "21d14658cd71983423d6ee3586b6615c9019fefc875fb62d385d3c794a99eab0",
+  "onlyUpdatedField": "occurred_at",
+  "transportCorrection": "First HTTP attempt incorrectly selected owner proxy port44711, rejected403 before ingress: exact conversation journal and work list empty. Use actual existing core port44710.",
+  "proxyDeniedNoModelOrWorkAdmission": true,
+  "nativeInputCountBeforeDispatch": 0,
+  "noOldTaskReset": true,
+  "sameReviewedQuestionIdentityDataCriteria": true,
+  "remainingMandate": "One actual ordinary native input under existing grant; no model retry or comparison series. Proxy preparation failure remains recorded."
+}

@@ -539,6 +539,10 @@ class DelegatedDigitalRunner:
                 raise _DigitalBudgetExceeded("background model output budget exhausted")
             return remaining
 
+        def remaining_model_time(turn):
+            authorize(turn)
+            return max(0.0, (deadline - self.clock()).total_seconds())
+
         async def watch():
             while True:
                 if cancellation_event is not None and cancellation_event.is_set():
@@ -603,7 +607,8 @@ class DelegatedDigitalRunner:
                 # budgets. Never admit another task or retry an uncertain effect.
                 prompted_states = set()
                 with cancellation_scope(signal), background_execution(BackgroundExecutionScope(
-                    source, spec.execution_id, dispatch_guard, remaining_model_output)):
+                    source, spec.execution_id, dispatch_guard, remaining_model_output,
+                    remaining_model_time)):
                     while True:
                         reply = conversation.respond(source, before_step=checkpoint, model_journal=journal)
                         authorize(source)

@@ -1,0 +1,59 @@
+{
+  "contract": "EvaAbilityReuseDeadlineCorrection/v1",
+  "recordedAt": "2026-10-11T17:56:17.894319+00:00",
+  "status": "SOURCE_AND_CANDIDATE_CHECKED_NOT_INSTALLED",
+  "proven_gap": {
+    "prior_result": "eva2/evidence/product/ability-create-reuse-native-result-20261011.json",
+    "response_stopped_seconds": 120,
+    "job_deadline_still_valid": true,
+    "upstream_wait_cause": "UNKNOWN"
+  },
+  "change": "Use exact authorized task remaining wall time for model response and SDK transport; retain the existing job watcher and source authorization. No task grant expansion or timer renewal.",
+  "foreground": "Existing conversation constructor and configured foreground durations unchanged.",
+  "source_hashes": {
+    "application/background_execution.py": "59bab1c9e4a8abb34f9c628f370415891ed3209c238e13513aa50b84dc985d2f",
+    "bootstrap/delegated_digital_runner.py": "70033c285ba1dbbf287dce7458d7200c0d712b332a2ff189e7a7580372435907",
+    "adapters/model/pydantic_conversation.py": "87b1da25e161cd4ac965cf5b75d4dba7bf640bf4d9e413d1e68ac9576bb90c66",
+    "adapters/model/openai_codex_provider.py": "87c4a8acf6a1e1744edbce4f65ed6beeec31ec3696ef77bc21c34616b87b4ac1",
+    "bootstrap/delegated_digital_composition.py": "b85b8c43a270a6c1e5ac3e691dc2e71b25c9ca4fa87e146b90cfa9b3482a57cf"
+  },
+  "focused_checks": {
+    "passed": 288,
+    "duration_seconds": 10.87,
+    "suites": [
+      "tests/application/test_background_execution.py",
+      "tests/application/test_delegated_digital_runner.py",
+      "tests/model/test_pydantic_conversation_model.py",
+      "tests/model/test_openai_codex_provider_shared.py",
+      "tests/bootstrap/test_delegated_digital_composition.py"
+    ],
+    "external_model_calls": 0
+  },
+  "candidate_images": {
+    "core": {
+      "image": "sha256:c95f3966c525738f2076c0ce41fbc5462d5b027d17abc661814c7055d138c0cb",
+      "modified": {
+        "application/background_execution.py": "59bab1c9e4a8abb34f9c628f370415891ed3209c238e13513aa50b84dc985d2f",
+        "bootstrap/delegated_digital_runner.py": "70033c285ba1dbbf287dce7458d7200c0d712b332a2ff189e7a7580372435907",
+        "adapters/model/pydantic_conversation.py": "87b1da25e161cd4ac965cf5b75d4dba7bf640bf4d9e413d1e68ac9576bb90c66",
+        "adapters/model/openai_codex_provider.py": "87c4a8acf6a1e1744edbce4f65ed6beeec31ec3696ef77bc21c34616b87b4ac1",
+        "bootstrap/delegated_digital_composition.py": "b85b8c43a270a6c1e5ac3e691dc2e71b25c9ca4fa87e146b90cfa9b3482a57cf"
+      },
+      "unchanged_source_count": 332
+    },
+    "delegated-work-worker": {
+      "image": "sha256:3d609fe7face3c27c459bf657155151322644b7f40278b638447007310980fdd",
+      "modified": {
+        "application/background_execution.py": "59bab1c9e4a8abb34f9c628f370415891ed3209c238e13513aa50b84dc985d2f",
+        "bootstrap/delegated_digital_runner.py": "70033c285ba1dbbf287dce7458d7200c0d712b332a2ff189e7a7580372435907",
+        "adapters/model/pydantic_conversation.py": "87b1da25e161cd4ac965cf5b75d4dba7bf640bf4d9e413d1e68ac9576bb90c66",
+        "adapters/model/openai_codex_provider.py": "87c4a8acf6a1e1744edbce4f65ed6beeec31ec3696ef77bc21c34616b87b4ac1",
+        "bootstrap/delegated_digital_composition.py": "b85b8c43a270a6c1e5ac3e691dc2e71b25c9ca4fa87e146b90cfa9b3482a57cf"
+      },
+      "unchanged_source_count": 330
+    }
+  },
+  "retained": "Original failed work, UNKNOWN usage, source candidate, held-out cases and original scoring remain unchanged.",
+  "next": "One ordinary later-use correction episode after installation, separately bound before native input; no new comparison series.",
+  "credits": "UNKNOWN"
+}

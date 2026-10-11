@@ -14,6 +14,7 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass
 import hashlib
 import json
+import math
 from time import monotonic
 from types import TracebackType
 from typing import Any, Literal, cast
@@ -129,8 +130,12 @@ class OpenAICodexProviderSettings:
         )
         if not self.model_name.strip() or len(self.model_name) > 120:
             raise ValueError("Codex model name is invalid")
-        if not 1 <= self.timeout_seconds <= 120:
-            raise ValueError("Codex phase timeout must be 1..120 seconds")
+        # The caller owns the phase deadline. Background work can use its
+        # admitted remaining duration; foreground callers retain their caps.
+        if (isinstance(self.timeout_seconds, bool)
+                or not isinstance(self.timeout_seconds, (int, float))
+                or not math.isfinite(self.timeout_seconds) or self.timeout_seconds <= 0):
+            raise ValueError("Codex phase timeout must be positive and finite")
         if self.reasoning_effort not in {"none", "low", "medium", "high"}:
             raise ValueError("Codex reasoning effort is invalid")
         for value in (self.maximum_request_bytes, self.maximum_response_bytes):

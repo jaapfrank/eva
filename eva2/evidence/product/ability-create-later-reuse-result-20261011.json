@@ -1,0 +1,129 @@
+{
+  "contract": "EvaAbilityCreateAndLaterReuseResult/v1",
+  "recordedAt": "2026-10-11T18:06:42.984216+00:00",
+  "status": "CREATION_AND_LATER_REUSE_VERIFIED_FOR_THIS_CAPABILITY",
+  "originalCreationResult": {
+    "path": "eva2/evidence/product/ability-create-reuse-native-result-20261011.json",
+    "sha256": "d15bbdf37ac09380cfe75bf86d7c2e74595b33a2660708497a08fcd9d232de94",
+    "originalFailureAndUnknownRetained": true
+  },
+  "criteria": {
+    "path": "eva2/evidence/product/ability-create-reuse-native-criteria-20261011.json",
+    "sha256": "801a818ff63c1bad1ae325e827421d98015e55de441e8d5711905d347f9f4c37",
+    "unchanged": true
+  },
+  "correctiveEpisode": "eva2/evidence/product/ability-reuse-task-deadline-native-input-20261011.json",
+  "coreDispatchBinding": "eva2/evidence/product/ability-reuse-task-deadline-core-dispatch-binding-20261011.json",
+  "installedCorrection": "eva2/evidence/product/ability-reuse-task-deadline-installed-20261011.json",
+  "native": {
+    "work_id": "work:eva-chat:d18a1a41-3d46-59f5-b226-2835c0c5ecf5",
+    "state": "succeeded",
+    "claim_count": 1,
+    "createdAt": "2026-10-11 18:03:46+00:00",
+    "completedAt": "2026-10-11 18:05:06+00:00",
+    "elapsedFromIngressRoundedSeconds": 80,
+    "sourceConversationNew": true,
+    "recentMessageCount": 0,
+    "noBuilderCodeOrProcedureIdGiven": true,
+    "programmingSteps": 0,
+    "procedureActionNames": [
+      "resolve_reusable_procedure",
+      "run_reusable_procedure"
+    ],
+    "executedOriginalContentSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "execution": {
+      "stderr": "",
+      "stdout": "{\"active_minutes\": {\"beveiligingslamp\": 40, \"pomp\": 40, \"radio\": 0, \"verwarmer\": 70}}\n",
+      "cancelled": false,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_ms": 1105,
+      "stderr_truncated": false,
+      "stdout_truncated": false
+    },
+    "sourceUnchanged": true,
+    "firstOutputUnchanged": true,
+    "result": {
+      "active_minutes": {
+        "pomp": 40,
+        "beveiligingslamp": 40,
+        "radio": 0,
+        "verwarmer": 70
+      }
+    },
+    "outputFile": {
+      "path": "/proof-state/ability-active-minutes-30cad653-reuse-after-deadline.json",
+      "sha256": "a71ae8801edbf731d630f211f1bcf26dc66f6a38c5f742ae7bfe24b4144e0b7d",
+      "bytes": 86
+    },
+    "meaning": "Saved Eva-authored capability found and executed through existing installed procedure route; no new host program/service was installed."
+  },
+  "checks": {
+    "firstNativeCreationAndPersistenceVerified": true,
+    "independentSourceCasesPassedPreviously": 6,
+    "laterDifferentExportCorrect": true,
+    "laterNativeSameSourceExecuted": true,
+    "noRegeneratedSource": true,
+    "originalArtifactsUnchanged": true,
+    "taskStopDeadlineAndPersonGuardPreserved": true
+  },
+  "usage": {
+    "foreground": {
+      "measurement": "measured",
+      "model_attempts": 1,
+      "tool_calls": 1,
+      "input_tokens": 6389,
+      "output_tokens": 461
+    },
+    "workerModelJournal": {
+      "measurement": "measured",
+      "model_attempts": 7,
+      "tool_calls": 6,
+      "input_tokens": 71903,
+      "output_tokens": 808
+    },
+    "taskReceipt": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 7,
+      "tool_calls": 8,
+      "input_tokens": 71903,
+      "output_tokens": 808,
+      "total_tokens": 72711,
+      "cost_usd_micros": null
+    },
+    "registeredModelRequests": 8,
+    "knownTokenLowerBound": 79561,
+    "modelJournalToolCalls": 7,
+    "taskPlusForegroundDispatchCounter": 9,
+    "completeRegisteredResponseTokensKnown": true,
+    "memoryExtractionAndFullRuntimeTotal": "UNKNOWN",
+    "creditCost": "UNKNOWN",
+    "developmentUsage": "UNKNOWN"
+  },
+  "preparationFailures": [
+    "Two updater module-import omissions failed before Compose/runtime dispatch; logs retained.",
+    "Wrong owner proxy44711 refused403 with zero ingress/work/model admission; corrected to current core44710 before actual native input.",
+    "Observer helper missing import failed before query; corrected without model calls.",
+    "Preparation ingress timestamp replaced by actual dispatch time before input; question/data/person/project/criteria unchanged and prior bytes kept."
+  ],
+  "interpretation": [
+    "Original unassisted creation plus later same-source execution now demonstrated for one previously missing capability.",
+    "Current later task completed before 120s: this success does not by itself prove the longer response duration caused success; the exact deadline fix is separately covered by local tests.",
+    "No extra hidden-source checks or native retries; old failed later task remains closed with UNKNOWN usage.",
+    "Full AIDE²/controller/apps/addons/dream, appropriate initiative, broad human understanding and family acceptance remain open.",
+    "No efficiency or competitor superiority claimed; 79,561 registered tokens for this episode remains substantial."
+  ],
+  "proceduralBudgetQualification": {
+    "preregisteredNewHttpDispatches": 1,
+    "actualHttpAttempts": 2,
+    "deniedBeforeEvaAdmission": 1,
+    "actualNativeEpisodes": 1,
+    "literalHttpAttemptLimitMet": false,
+    "nativeGrantUnchanged": true,
+    "originalPreregistrationUnchanged": true,
+    "coreDispatchCorrectionBoundBeforeActualNativeInput": true,
+    "meaning": "Technical later-reuse outcome demonstrated, but the literal physical HTTP attempt maximum was exceeded by the wrong-proxy preparation error. No full protocol-compliance claim."
+  }
+}

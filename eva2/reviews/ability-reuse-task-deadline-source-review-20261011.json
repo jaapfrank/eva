@@ -1,0 +1,155 @@
+{
+  "contract": "EvaIndependentAbilityReuseTaskDeadlineSourceReview/v1",
+  "reviewedAt": "2026-10-11T17:58:39.468372+00:00",
+  "reviewer": "product_execution_memory_review",
+  "decision": "GO",
+  "decisionScope": "Exact five-module source change and candidate images are suitable for the planned existing core/worker image update. This is not installed behavior or successful native reuse.",
+  "baselineHead": "eb21ebcafc0e6f0bea8ceb82029f1c4484ac52d0",
+  "reviewedSourceAndTestDiffSha256": "65015e49dbcd3960dbe48f80665d11b5b2e2e3b497535b9bc48d41b0ab4e819e",
+  "sourceHashes": {
+    "application/background_execution.py": "59bab1c9e4a8abb34f9c628f370415891ed3209c238e13513aa50b84dc985d2f",
+    "bootstrap/delegated_digital_runner.py": "70033c285ba1dbbf287dce7458d7200c0d712b332a2ff189e7a7580372435907",
+    "adapters/model/pydantic_conversation.py": "87b1da25e161cd4ac965cf5b75d4dba7bf640bf4d9e413d1e68ac9576bb90c66",
+    "adapters/model/openai_codex_provider.py": "87c4a8acf6a1e1744edbce4f65ed6beeec31ec3696ef77bc21c34616b87b4ac1",
+    "bootstrap/delegated_digital_composition.py": "b85b8c43a270a6c1e5ac3e691dc2e71b25c9ca4fa87e146b90cfa9b3482a57cf"
+  },
+  "testFileHashes": {
+    "eva2/tests/application/test_background_execution.py": "89cb63c54f486160be398869579c02f1fe1011793d0cd7687a40d1e096973108",
+    "eva2/tests/application/test_delegated_digital_runner.py": "e5d94423e0d7756924683fd555f626fdf4cbad2d03f22d6955cc268feb0f381b",
+    "eva2/tests/model/test_openai_codex_provider_shared.py": "8df2a9f7967903bfd54f4b3ed82f90be9fb9410ed982076fd932e34ac74ac6aa",
+    "eva2/tests/model/test_pydantic_conversation_model.py": "320355c051e10ba946676879ee5e42c6012eb871613703e9daf82ebabfd13450"
+  },
+  "materialBlockers": [],
+  "checks": [
+    {
+      "topic": "Authorized remaining duration",
+      "finding": "background_model_time_limit first checks exact ContextVar-bound source identity. The runner callback calls its existing authorize guard, rechecking cancellation, immutable effective deadline and durable store authority before returning positive remaining seconds. Invalid/zero/nonfinite time is rejected."
+    },
+    {
+      "topic": "No deadline renewal",
+      "finding": "Runner reuses the existing min(spec.deadline, start plus original grant duration). It neither changes grant limits nor creates a new retry, work, claim or deadline. Each model phase captures one monotonic deadline; internal transport retries consume that same phase time."
+    },
+    {
+      "topic": "SDK and outer bound",
+      "finding": "The SDK receives the remaining duration of that captured phase deadline; outer asyncio.timeout uses its current remaining duration. SDK credential/setup delay cannot extend the outer phase. A positive SDK floor cannot extend the outer zero-time expiry."
+    },
+    {
+      "topic": "Tool and language-repair time",
+      "finding": "Both ordinary generation and language repair supply the same live host callback. A subsequent phase reads time remaining against the existing task deadline, so earlier model/tool/repair time is already spent. Input preparation after phase capture is also deducted from the outer allowance."
+    },
+    {
+      "topic": "Stop and stale source/authority",
+      "finding": "Existing 50ms task watcher, run_cancellable, exact source ingress check, durable dispatch guard and final authorize remain. Source mismatch fails before allowance use; expired/owner-stop paths do not permit tools, and local owned stream closure is checked by the model-free runner transport tests."
+    },
+    {
+      "topic": "UNKNOWN usage and uncertain effects",
+      "finding": "The durable output-budget guard still rejects partial/unknown prior usage; existing failed-request journaling and replay prohibition remain unchanged. No automatic continuation of the closed failed native case is introduced."
+    },
+    {
+      "topic": "Foreground/provider limits",
+      "finding": "PydanticConversationModel constructor still restricts configured foreground-style duration to1..120 seconds. Shared provider now accepts only positive finite host durations; only trusted callers supply these values. Existing other provider caller constant/settings behavior is unchanged."
+    },
+    {
+      "topic": "Module boundary and mandate",
+      "finding": "Host time callback stays in application scope and runner composition; adapter only consumes a duration. No user/model-set deadline field, capability, role, store or instruction-authority change."
+    }
+  ],
+  "regressionEvidence": {
+    "receiptSha256": "477e7458711333500518fb1934b54fbe6f81fb203146d3bb1680497a7c9a45dd",
+    "status": "passed",
+    "selectedCases": 288,
+    "durationSeconds": 10.87,
+    "suites": [
+      "tests/application/test_background_execution.py",
+      "tests/application/test_delegated_digital_runner.py",
+      "tests/model/test_pydantic_conversation_model.py",
+      "tests/model/test_openai_codex_provider_shared.py",
+      "tests/bootstrap/test_delegated_digital_composition.py"
+    ],
+    "testRunReportedByRootAndReceiptInspected": true,
+    "reviewerReranTests": false,
+    "coverage": "Invalid/source-mismatched duration, dynamic remaining balance, SDK/outer duration equality within elapsed setup, longer300s/shorter20s/legacy30s bounds, owner stop and already expired admission, source/authority guards, preserved UNKNOWN no internal retry; existing language/continuation/provider/composition checks.",
+    "externalModelCalls": 0,
+    "nativeReuseProven": false,
+    "qualification": "Receipt binds the exact source hashes and completed exec output; no fresh test or native probe performed by the reviewer."
+  },
+  "candidatePreparation": {
+    "buildReceiptSha256": "338a78c7c269631a3665399f48a17e685f4fe7563432624ba59b0aa216527727",
+    "images": {
+      "core": "sha256:c95f3966c525738f2076c0ce41fbc5462d5b027d17abc661814c7055d138c0cb",
+      "delegated-work-worker": "sha256:3d609fe7face3c27c459bf657155151322644b7f40278b638447007310980fdd"
+    },
+    "independentlyRecomputedSourceInventoryDiff": true,
+    "core": {
+      "beforeModules": 337,
+      "candidateModules": 337,
+      "unchanged": 332,
+      "changed": 5,
+      "added": 0,
+      "removed": 0
+    },
+    "worker": {
+      "beforeModules": 335,
+      "candidateModules": 335,
+      "unchanged": 330,
+      "changed": 5,
+      "added": 0,
+      "removed": 0
+    },
+    "inventoryBindings": {
+      "core": {
+        "beforeSha256": "9acfd529d58c6e0cf43d340dcbe5b81f010e0df373b960cbd997ace8b666ff0e",
+        "candidateSha256": "718d070f8007c63b8f4dce7eedc5cb051ffb10e3360207643832ebdbf1258440",
+        "candidateIid": "sha256:c95f3966c525738f2076c0ce41fbc5462d5b027d17abc661814c7055d138c0cb"
+      },
+      "delegated-work-worker": {
+        "beforeSha256": "2c2d083b74f89dac9180a7c85d86584cd20e20d6b8e4c8ae3a56ba54ca3d2e93",
+        "candidateSha256": "bec6c8cfa3ee6d97e67ee303c9c7a855a0a83c721c0d5706e0ba3a33f0ae70f2",
+        "candidateIid": "sha256:3d609fe7face3c27c459bf657155151322644b7f40278b638447007310980fdd"
+      }
+    },
+    "candidateSourceHashesEqualReviewedSourceInBothImages": true,
+    "composeScope": "Root reports only the two image fields change; credentials/configuration documents were not read in this review.",
+    "plannedInstallation": "Existing image update only, retaining mounts, data, environment and existing installation path; actual installed image/source/health binding remains to be read back.",
+    "currentlyInstalledByThisReview": false
+  },
+  "publicationBinding": {
+    "path": "eva2/evidence/product/ability-reuse-task-deadline-source-20261011.json",
+    "sha256": "e48b9ab9b91d2aebe68643d9983a7e2c6e0e449ea9cc6f01dde35abdd69ff45a",
+    "scopeHonest": true
+  },
+  "correctiveInputBinding": {
+    "path": "eva2/evidence/product/ability-reuse-task-deadline-native-input-20261011.json",
+    "sha256": "d7f139c3526b063eb09914b8dd263251d5d9ebe0adadbb538562bb08619c9b94",
+    "payloadSha256": "83bf70f47fe2c4ae41fbdb867c931154f138ebf06d0b632ea619adcacb16fe49",
+    "sameOriginalCriteriaSha256": "801a818ff63c1bad1ae325e827421d98015e55de441e8d5711905d347f9f4c37",
+    "preservedClosedResultSha256": "d15bbdf37ac09380cfe75bf86d7c2e74595b33a2660708497a08fcd9d232de94",
+    "newSessionAndMessage": true,
+    "recentMessages": 0,
+    "samePrivatePersonProject": true,
+    "sameEarlierLaterExportAndExpectedResult": true,
+    "noBuilderCodeProcedureIdOrRulesRetold": true,
+    "originalGeneratedSourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "newResultPathPreservesOldPaths": true,
+    "oneDispatchNoAutomaticRetry": true,
+    "grantLimits": {
+      "models": 32,
+      "tools": 31,
+      "seconds": 300
+    },
+    "gate": "Only after exact reviewed installation/readback; this source review does not dispatch native input or reopen the original case."
+  },
+  "limitations": {
+    "slowUpstreamCause": "UNKNOWN",
+    "successfulLaterReuse": "NOT_YET_PROVEN",
+    "efficiencyOrSuperiority": "NOT_PROVEN",
+    "oldFailedNativeCase": "CLOSED_NOT_MET_WITH_UNKNOWN_USAGE_RETAINED",
+    "fullLearningCycle": false,
+    "fullAIDE2": false,
+    "wholeGoal": "active",
+    "voice": "parked",
+    "reviewerModelCalls": 0,
+    "reviewerRuntimeChanges": 0,
+    "reviewerProductEdits": 0
+  }
+}

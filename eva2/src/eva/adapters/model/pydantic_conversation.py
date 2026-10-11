@@ -47,7 +47,7 @@ from pydantic_ai.messages import (
 from pydantic_ai.models import Model
 from pydantic_ai.usage import UsageLimits
 
-from eva.application.background_execution import background_model_output_limit
+from eva.application.background_execution import background_model_output_limit, background_model_time_limit
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
@@ -1000,9 +1000,12 @@ class PydanticConversationModel:
         prior_actions: tuple[ConversationActionReceipt, ...] = (),
         cache_key: str | None = None,
         output_tokens_limit: Callable[[], int] | None = None,
+        timeout_seconds_limit: Callable[[], float | None] | None = None,
     ) -> tuple[str, ConversationActionCall | None, ConversationModelUsage,
                ConversationModelTiming]:
         """Run one framework-owned phase and stop before external execution."""
+        task_time = timeout_seconds_limit() if timeout_seconds_limit is not None else None
+        phase_deadline = monotonic() + (self._timeout_seconds if task_time is None else task_time)
         self._admit_request(self._phase_admission_body(
             prompt=prompt, instructions=instructions, tools=tools,
             completed_action=completed_action, prior_actions=prior_actions,
@@ -1283,7 +1286,7 @@ class PydanticConversationModel:
                             OpenAICodexProviderSettings(
                                 endpoint=self._endpoint,
                                 model_name=self._model,
-                                timeout_seconds=self._timeout_seconds,
+                                timeout_seconds=max(0.000001, phase_deadline - monotonic()),
                                 reasoning_effort=self._reasoning_effort,
                                 maximum_request_bytes=_MAX_STREAM_BYTES,
                                 maximum_response_bytes=_MAX_STREAM_BYTES,
@@ -1369,7 +1372,7 @@ class PydanticConversationModel:
             ConversationModelUsage,
             ConversationModelTiming,
         ]:
-            async with asyncio.timeout(self._timeout_seconds):
+            async with asyncio.timeout(max(0.0, phase_deadline - monotonic())):
                 return await run_cancellable(execute)
 
         try:
@@ -1551,6 +1554,7 @@ class PydanticConversationModel:
             prior_actions=prior_actions,
             cache_key=self._cache_key(turn),
             output_tokens_limit=task_output_limit,
+            timeout_seconds_limit=lambda: background_model_time_limit(turn),
         )
         usages.append(usage)
         timings.append(timing)
@@ -1582,6 +1586,7 @@ class PydanticConversationModel:
                 prior_actions=prior_actions,
                 cache_key=self._cache_key(turn),
                 output_tokens_limit=task_output_limit,
+                timeout_seconds_limit=lambda: background_model_time_limit(turn),
             )
             usages.append(usage)
             timings.append(timing)

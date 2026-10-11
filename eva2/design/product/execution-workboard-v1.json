@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T17:49:24.116140+00:00",
+  "lastUpdated": "2026-10-11T18:11:10.568799+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1007,7 +1007,7 @@
           "Geparkeerd volgens eigenaarprioriteit. Bestaande werking en bewijs behouden; nu geen speakerproef of spraakbouw gevraagd."
         ],
         "projects": [
-          "Zelf ontbrekende mogelijkheid maken en controleren is beperkt native aangetoond; later hergebruik nog open door voortijdige modelstop. Die concrete grens gericht corrigeren; geen nieuw platform of vaste voorbeeldfunctie.",
+          "Technisch zelf een ontbrekende mogelijkheid maken, controleren/bewaren en later dezelfde bron zelfstandig gebruiken aangetoond. Volledige AIDE²/droomcyclus aansluiten; geen nieuw platform of vaste voorbeeldfunctie.",
           "Volledige AIDE²/droommodus voor agentaansturing, code en apps/addons afronden; L3.4–L3.7 blijven beperkte, afgeronde deelbewijzen.",
           "Gewone eigenaar-privétekst is overgezet. Nieuwe echte uitwisseling, overige gebruikte ingangen, oud Eva1-achtergrondgedrag en gezinsacceptatie blijven open.",
           "Oude P2.1-dekking, verliezen en UNKNOWN blijven behouden; geen nieuwe vergelijkingsserie."
@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T17:49:24.116140+00:00",
+        "checkedAt": "2026-10-11T18:11:10.568799+00:00",
         "deliveries": [
+          {
+            "title": "Eva maakt zelf een hulpmiddel en gebruikt het later zelfstandig",
+            "date": "2026-10-11T18:08:27.843827+00:00",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "completionScope": "Technisch vermogen zelf een ontbrekend Python-hulpmiddel maken, controleren, bewaren en bij een latere gewone opdracht gebruiken bewezen. Het gehele zelfstandig werk en AIDE² blijven open.",
+            "result": "Eva maakte zelf de code; 6 onafhankelijke bronchecks groen. In een andere sessie vond en draaide ze dezelfde bron zonder aanwijzen: pomp40,beveiligingslamp40,radio0,verwarmer70 minuten. Nieuw bestand fysiek teruggelezen; oude bron/resultaat behouden. Bestaande geïnstalleerde algemene route gebruikt.",
+            "remaining": "Volledige AIDE²/droomcyclus, kwaliteitsverbetering, passend initiatief en gezinsgebruik blijven open. Deze technische gebruikersuitkomst sluit het hele project niet af.",
+            "source": "eva2/evidence/product/ability-create-later-reuse-result-20261011.json",
+            "review": "eva2/reviews/ability-create-later-reuse-final-review-20261011.json",
+            "independentReview": "GO voor deze technische maken→bewaren→later gebruiken-uitkomst. Eén fysieke HTTPpoging te veel (403 vóór Eva-toelating) expliciet bewaard; geen volledige protocol-, efficiëntie- of hoofdprojectclaim.",
+            "usage": "Nieuwe toepassing: 8 geregistreerde modelaanvragen, 79.561 bekende tokens, circa80s. Modeltoolteller7 en taak/contactteller9 hebben verschillende grenzen. Volledig runtimeverbruik en credits onbekend; geen efficiëntieclaim.",
+            "reviewSha256": "15ac5cb0f61fe3facde4596b2976f2740616ee3ee45501f50f0f54e7c2a6f02c",
+            "technicalOutcomeCompleted": true
+          },
           {
             "title": "Eigen hulpmiddel gemaakt en gecontroleerd; hergebruik nog open",
             "date": "2026-10-11T17:48:24.849935+00:00",
@@ -4591,18 +4606,18 @@
           }
         ],
         "now": {
-          "title": "Zelfgemaakte mogelijkheid later gebruiken · voortijdige modelstop oplossen",
-          "detail": "De creatie en eerste uitvoering zijn klaar, inclusief 6 onafhankelijke bronchecks. De latere gewone vraag stopte op de lokale modelantwoordgrens van 120 seconden terwijl de taak nog tijd had. Codex corrigeert deze concrete grens binnen de bestaande taakdeadline; oude unknown en nieuwe bron blijven behouden. Nog geen broncorrectie of nieuwe uitvoering gestart.",
+          "title": "Volledige AIDE²- en droomcyclus",
+          "detail": "Zelf maken en later hergebruiken is technisch bewezen en de deadlinecorrectie geïnstalleerd. Nu de bestaande verbetering van agentaansturing, code en uitbreidingen verbinden met kiezen, onafhankelijk beoordelen, toepassen en later gedrag; geen tweede platform of nieuwe vergelijkingsserie.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/ability-create-reuse-native-result-20261011.json",
-          "review": "eva2/reviews/ability-create-reuse-native-review-20261011.json",
-          "doneWhen": "Het bestaande modelantwoordpad respecteert de nog geldige taakdeadline en stoppen. Daarna, alleen indien noodzakelijk en vooraf afzonderlijk gebonden, aantonen dat de gewone latere vraag dezelfde zelfgemaakte bron vindt en uitvoert. Geen nieuwe vergelijkingsserie of gesloten case reset."
+          "source": "eva2/PROJECTDOEL.md",
+          "review": "eva2/reviews/ability-create-later-reuse-final-review-20261011.json",
+          "doneWhen": "Eva doorloopt een echte kwaliteitsverbetercyclus voor haar aansturing én code of uitbreiding, met onafhankelijke eindbeoordeling, gecontroleerde toepassing en latere bruikbare verbetering."
         },
         "next": {
-          "title": "Volledige AIDE²- en droomcyclus",
-          "detail": "Na daadwerkelijk later hergebruik de bestaande varianten- en beoordelingsroute verbinden met agentaansturing, code en uitbreidingen, met bewezen toepassing van verbetering.",
+          "title": "Passend initiatief en samenhangend dagelijks gebruik",
+          "detail": "Dezelfde leer- en uitvoerroute gebruiken voor herhaald passend initiatief, menselijke feedback en latere bijsturing; technische gereedheid en gezinsacceptatie apart.",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md"
@@ -4610,14 +4625,14 @@
         "ownerAction": {
           "required": false,
           "title": "Geen handeling van jou nodig",
-          "detail": "Geen handeling van jou nodig. Codex behandelt de concrete voortijdige modelstop. Dit is een technische fout, geen nieuwe verplichte gezinsproef.",
+          "detail": "Codex maakt de volledige AIDE²-/droomcyclus af. Geen nieuwe speakerproef of vergelijkingsserie nodig voor deze stap.",
           "steps": [],
           "expected": "Nieuwe gewone privétekst gebruikt Eva2; antwoord en later resultaat horen bij je oorspronkelijke bericht.",
           "blocksIndependentWork": false,
-          "source": "eva2/evidence/product/ability-create-reuse-native-result-20261011.json"
+          "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T17:49:24.116140+00:00",
+        "reviewedAt": "2026-10-11T18:11:10.568799+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -10973,8 +10988,8 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-11T17:48:24.849935+00:00",
-        "basis": "Geaccepteerde oorspronkelijke functies behouden. De nieuwe latere toepassing van norm, antwoordvorm en vervolgstap is geïnstalleerd en onafhankelijk beoordeeld; brede leercyclus en AIDE² blijven open.",
+        "checkedAt": "2026-10-11T18:08:27.843827+00:00",
+        "basis": "Geaccepteerde oorspronkelijke functies behouden. Bijsturing is later toegepast; zelf code maken en later dezelfde bron gebruiken is technisch bewezen. Volledige AIDE² en gezinsacceptatie blijven open.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
         "rows": [
@@ -11024,8 +11039,8 @@
             "name": "Zelfstandig werk",
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
-            "result": "De bestaande opdracht over HA en documenten is afgemaakt en geïnstalleerd. Eva heeft nu ook zelf een ontbrekend Python-hulpmiddel gemaakt, gecontroleerd, geregistreerd en op een export uitgevoerd; 6 onafhankelijke bronchecks geslaagd. Gewone eigenaar-privétekst gebruikt Eva2 zonder /eva2.",
-            "remaining": "Later zelfstandig hergebruik bleef uit: de eerste modelaanvraag stopte vóór tooluitvoering. De lokale antwoordtijdgrens moet gericht worden gecorrigeerd. Volledige AIDE² voor aansturing/code/apps/addons/droommodus, dagelijks gezinsgebruik en vervangingsvoorwaarden blijven open; geen nieuwe vergelijkingsserie.",
+            "result": "Algemene HA/documentopdracht geïnstalleerd. Eva maakt nu ook zelf een ontbrekend hulpmiddel, controleert/bewaart het en vindt en gebruikt dezelfde bron bij een andere gewone opdracht. Bronchecks6/6 en resultaat40/40/0/70 apart teruggelezen; geen code opnieuw gemaakt. Gewone eigenaar-privétekst gebruikt Eva2 zonder /eva2.",
+            "remaining": "Volledige AIDE² voor agentaansturing/code/apps/addons/droommodus, kwaliteit/verbruik en dagelijks gezinsgebruik/vervangingsvoorwaarden afmaken; geen nieuwe vergelijkingsserie.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11036,7 +11051,10 @@
               "eva2/evidence/product/general-multi-service-execution-installed-20261010.json",
               "eva2/evidence/product/telegram-default-private-installed-20261011.json",
               "eva2/evidence/product/task-context-memory-installed-20261011.json",
-              "eva2/evidence/product/ability-create-reuse-native-result-20261011.json"
+              "eva2/evidence/product/ability-create-reuse-native-result-20261011.json",
+              "eva2/evidence/product/ability-reuse-task-deadline-installed-20261011.json",
+              "eva2/evidence/product/ability-create-later-reuse-result-20261011.json",
+              "eva2/reviews/ability-create-later-reuse-final-review-20261011.json"
             ]
           }
         ]

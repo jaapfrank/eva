@@ -1189,7 +1189,9 @@ def test_task_boundary_closes_blocked_provider_with_longer_phase_limit(tmp_path,
     asyncio.run(run())
     expected_calls = 0 if boundary == "expired_before_admission" else 1
     assert len(requests) == len(admissions) == len(journal.usages) == expected_calls
-    assert provider_limits == [120] * expected_calls
+    expected_limit = {"shorter_deadline": 20, "legacy_grant": 30}.get(boundary, 300)
+    assert len(provider_limits) == expected_calls
+    assert all(expected_limit - 0.2 <= limit <= expected_limit for limit in provider_limits)
     assert tools.calls == [] and spec.grant.to_payload() == grant_before
     if expected_calls:
         assert closed.is_set() and sessions[0].local_stream_closed is True
@@ -1219,7 +1221,8 @@ def test_each_model_turn_observes_remaining_admitted_wall_time():
         def generate(self, *args, **kwargs):
             context = next(value for value in kwargs["self_context"] if "remaining" in value and "wall_seconds" in value)
             budget = json.JSONDecoder().raw_decode(context[context.index("{"):])[0]
-            observed.append(budget["remaining"]["wall_seconds"])
+            from eva.application.background_execution import background_model_time_limit
+            observed.append((budget["remaining"]["wall_seconds"], background_model_time_limit(args[0])))
             result = base.generate(*args, **kwargs)
             current[0] += timedelta(seconds=30)
             return result
@@ -1227,7 +1230,7 @@ def test_each_model_turn_observes_remaining_admitted_wall_time():
     tools.release.set()
     result = asyncio.run(runner.run(spec, call_id="call:wall-budget"))
     assert result.status == "succeeded", result
-    assert observed == [180, 150, 120]
+    assert observed == [(180, 180), (150, 150), (120, 120)]
     assert len(tools.calls) == 2
 
 

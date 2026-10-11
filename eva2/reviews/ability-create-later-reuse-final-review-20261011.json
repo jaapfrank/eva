@@ -1,0 +1,251 @@
+{
+  "contract": "EvaIndependentCreateLaterReuseFinalReview/v1",
+  "reviewedAt": "2026-10-11T18:10:31.941270+00:00",
+  "reviewer": "product_execution_memory_review",
+  "decision": "GO",
+  "decisionScope": "The limited technical capability outcome: Eva created, independently checked and preserved a missing utility, then found and executed that same source for a different ordinary request in a separate corrective native episode.",
+  "technicalSuboutcome": "DEMONSTRATED",
+  "wholeProjectCompletion": "NOT_COMPLETE",
+  "allOriginalTrialProtocolSatisfied": false,
+  "originalTwoMessageCase": "CLOSED_NOT_MET; its later failed model request and UNKNOWN usage remain unchanged.",
+  "publicResult": {
+    "path": "eva2/evidence/product/ability-create-later-reuse-result-20261011.json",
+    "sha256": "ae508aa6035945308d5af0abac28574fa8d310f5919eb225ce3cf2263b93823e",
+    "safeBoundedClaimsChecked": true
+  },
+  "publicAndReviewBindings": {
+    "originalCriteria": {
+      "path": "eva2/evidence/product/ability-create-reuse-native-criteria-20261011.json",
+      "sha256": "801a818ff63c1bad1ae325e827421d98015e55de441e8d5711905d347f9f4c37"
+    },
+    "originalClosedResult": {
+      "path": "eva2/evidence/product/ability-create-reuse-native-result-20261011.json",
+      "sha256": "d15bbdf37ac09380cfe75bf86d7c2e74595b33a2660708497a08fcd9d232de94"
+    },
+    "correctiveInput": {
+      "path": "eva2/evidence/product/ability-reuse-task-deadline-native-input-20261011.json",
+      "sha256": "d7f139c3526b063eb09914b8dd263251d5d9ebe0adadbb538562bb08619c9b94"
+    },
+    "firstDispatchBinding": {
+      "path": "eva2/evidence/product/ability-reuse-task-deadline-dispatch-binding-20261011.json",
+      "sha256": "7f4b8b82fb88a5f41831a5eecc945db1c27523706cfcec4692578f6f0b89f608"
+    },
+    "coreDispatchBinding": {
+      "path": "eva2/evidence/product/ability-reuse-task-deadline-core-dispatch-binding-20261011.json",
+      "sha256": "1d73b94c27411f759a8f7258fb9cc1c53550f483074bb08d07349c135c47fb13"
+    },
+    "installedCorrection": {
+      "path": "eva2/evidence/product/ability-reuse-task-deadline-installed-20261011.json",
+      "sha256": "9420858a9b84f10dabdc9a559cdfd5877dfd27392934695aff2e109126fde90a"
+    },
+    "sourceReview": {
+      "path": "eva2/reviews/ability-reuse-task-deadline-source-review-20261011.json",
+      "sha256": "207629706a3e24b9108114d670eb07f17fa81629e9eb4528dcf3d0b447cba2a5"
+    },
+    "originalOutcomeReview": {
+      "path": "eva2/reviews/ability-create-reuse-native-review-20261011.json",
+      "sha256": "c4f7b836f689136b8fba6f07397ee093838433c4811f6610d7e41e90986faafa"
+    }
+  },
+  "creationAndIndependentChecks": {
+    "previousIndependentReviewRetained": true,
+    "sourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "sourceBytes": 3321,
+    "independentHeldOutCasesPassed": 6,
+    "heldOutCasesRerunInThisReview": false,
+    "nativeOwnTestsNotIndependentScore": true,
+    "savedFirstResultSha256": "9bb77ae113cc81b83f80cbdb95f7f39a354dd0a630f506dbf7b0da0674a19afc",
+    "savedFirstResultBytes": 47,
+    "creationSourceAndFirstResultBytesIdenticalAfterLaterUse": true
+  },
+  "installedCorrection": {
+    "coreImage": "sha256:c95f3966c525738f2076c0ce41fbc5462d5b027d17abc661814c7055d138c0cb",
+    "workerImage": "sha256:3d609fe7face3c27c459bf657155151322644b7f40278b638447007310980fdd",
+    "matchesExactFiveModuleSourceGo": true,
+    "candidateImmutableImagesIndependentlyBoundToRunningInspect": true,
+    "coreSourceModules": {
+      "total": 337,
+      "changed": 5,
+      "unchanged": 332,
+      "added": 0,
+      "removed": 0
+    },
+    "workerSourceModules": {
+      "total": 335,
+      "changed": 5,
+      "unchanged": 330,
+      "added": 0,
+      "removed": 0
+    },
+    "bothHealthyInRetainedReadback": true,
+    "environmentMapsEqualWithoutDuplicateKeys": true,
+    "processConfigEqual": true,
+    "mountsEqual": true,
+    "mountCounts": {
+      "core": 25,
+      "worker": 21
+    },
+    "hostConfigEqualAfterMountListOrderNormalization": true,
+    "noSourceDirectoryMountShadowing": true,
+    "reviewerFreshStatusProbe": false,
+    "installationReceiptSha256": "2dacb2b29a25c0e09e4043c4cbb6f54d419b2e1a1357a3c19838eb30b6a4beef",
+    "qualification": "Existing before/after technical snapshots independently compared earlier in this same final review; no credentials/configuration documents read."
+  },
+  "nativeReuse": {
+    "workId": "work:eva-chat:d18a1a41-3d46-59f5-b226-2835c0c5ecf5",
+    "terminalState": "succeeded",
+    "claimCount": 1,
+    "samePrivateOwnerProjectSourceBinding": true,
+    "distinctConversationAndMessageFromOriginalTwoRequests": true,
+    "recentMessages": 0,
+    "ownerSuppliedCodeOrProcedureId": false,
+    "ownerRetoldRules": false,
+    "handoffContainsReferenceFromExistingOrdinaryRecall": true,
+    "actualProcedureActionNames": [
+      "resolve_reusable_procedure",
+      "run_reusable_procedure"
+    ],
+    "sameDesignatedSourceExecutedSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "nativeRegenerationOrProgrammingActions": 0,
+    "isolatedExitCode": 0,
+    "isolatedStderr": "",
+    "isolatedTimedOut": false,
+    "isolatedCancelled": false,
+    "isolatedElapsedMs": 1105,
+    "nativeSemanticSuccessVerified": false,
+    "independentContentJudgement": "PASS",
+    "independentPhysicalFileResult": {
+      "active_minutes": {
+        "pomp": 40,
+        "beveiligingslamp": 40,
+        "radio": 0,
+        "verwarmer": 70
+      }
+    },
+    "resultBytes": 86,
+    "resultSha256": "a71ae8801edbf731d630f211f1bcf26dc66f6a38c5f742ae7bfe24b4144e0b7d",
+    "resultPath": "/proof-state/ability-active-minutes-30cad653-reuse-after-deadline.json",
+    "sourceAndFirstOutputPreserved": true,
+    "taskGuardPreservedByReviewedSource": true,
+    "nativeStopTrialPerformed": false,
+    "taskGrant": {
+      "models": 32,
+      "tools": 31,
+      "seconds": 300,
+      "childNetworkAccess": false
+    },
+    "providerStreamsLocallyClosedInAllSevenSelectedWorkerRegistrations": true,
+    "nativeRemoteQuiescenceVerified": false,
+    "fullResolveMetadataExported": false,
+    "resolveEvidenceQualification": "Completed scoped resolve admission/checkpoint followed by isolated execution of exactly the same source reference/hash; no additional metadata or family-memory probe."
+  },
+  "dispatchAndPreparation": {
+    "preparedPayloadSha256": "83bf70f47fe2c4ae41fbdb867c931154f138ebf06d0b632ea619adcacb16fe49",
+    "proxyRejectedPayloadSha256": "5ae1f1d8286bfc787af8bb4c7ad9739ffec8aa7d0445d9b5da46ef64feb93dbb",
+    "actualCorePayloadSha256": "21d14658cd71983423d6ee3586b6615c9019fefc875fb62d385d3c794a99eab0",
+    "onlyPayloadFieldChangedAcrossVariants": "occurred_at",
+    "questionDataPersonProjectMessageIdentityUnchanged": true,
+    "originalPreparedBytesRetainedAt": "native-prepared-payload.private.json",
+    "coreBindingPrecedesActualDispatch": true,
+    "coreHttpStatus": 200,
+    "proxy403BeforeIngressOrWork": "Root-recorded in preserved public core binding; one final exact-scope ingress and one work are independently present.",
+    "deniedTransportNotCountedAsSuccessfulNativeInput": true,
+    "physicalHttpBudget": {
+      "preregistered": 1,
+      "actualAttempts": 2,
+      "deniedBeforeEvaAdmission": 1,
+      "actualNativeEpisodes": 1,
+      "literalPhysicalHttpMaximumMet": false,
+      "qualification": "This preparation error prevents a full literal protocol-compliance claim. The final technical content/source outcome remains evidenced; original criteria and the HTTP budget are not rewritten."
+    },
+    "automaticModelOrWorkRetryOfOldCase": false,
+    "preparationErrorsRetained": "Two pre-Compose updater import omissions, wrong proxy403, pre-query observer missing import, and ingress-time preparation correction.",
+    "noNewTestOrPaidProbeByReviewer": true
+  },
+  "timing": {
+    "logicalCreatedAt": "2026-10-11 18:03:46+00:00",
+    "actualCoreDispatchAt": "2026-10-11T18:03:46.993055+00:00",
+    "completedAt": "2026-10-11 18:05:06+00:00",
+    "logicalCreatedToCompletionWholeSeconds": 80,
+    "actualClientDispatchToSecondPrecisionWorkCompletionSeconds": 79.006945,
+    "callStartToCompletionWholeSeconds": 64,
+    "causalTimeoutBenefitOrSpeedImprovement": "NOT_PROVEN; this successful later task finishes before120s even at the wider task clock."
+  },
+  "usage": {
+    "foreground": {
+      "measurement": "measured",
+      "model_attempts": 1,
+      "tool_calls": 1,
+      "input_tokens": 6389,
+      "output_tokens": 461
+    },
+    "workerRecordedInputTokens": 71903,
+    "workerRecordedOutputTokens": 808,
+    "registeredModelRequests": 8,
+    "successfulWorkerRegistrations": 7,
+    "allSelectedRegisteredResponseTokensMeasured": true,
+    "knownEpisodeTokenLowerBound": 79561,
+    "registeredModelToolCalls": 7,
+    "workerTaskReceiptToolCounter": 8,
+    "taskReceiptPlusForegroundToolCounter": 9,
+    "reconciledPhysicalTools": null,
+    "completePhysicalSdkAttempts": null,
+    "episodeMemoryExtractionAndFullRuntimeUsage": null,
+    "credits": null,
+    "developmentCredits": null,
+    "priorOriginalCaseKnownTokenLowerBound": 243893,
+    "priorUnmeasuredRequestRetained": 1,
+    "combinedKnownLowerBoundAcrossOriginalAndCorrectiveEpisodes": 323454,
+    "fullCombinedTokens": null,
+    "efficiencyOrSuperiorQuality": "NOT_PROVEN"
+  },
+  "scopeLimits": {
+    "onePreviouslyMissingUtilityCreatedCheckedSavedAndAppliedLater": true,
+    "fullyAutonomousAddonCreation": false,
+    "generalPrivacyGuarantee": false,
+    "familyAcceptance": false,
+    "fullAIDE2": false,
+    "fullLearningCycle": false,
+    "wholeGoal": "active",
+    "voice": "parked",
+    "newComparisonSeries": false,
+    "noClosedFailureErasedOrRescored": true,
+    "noNewMainProjectCompletion": true
+  },
+  "privateArtifactManifestSha256": "009c537e0fbd8ad8aa148ca28b3d97c3a599c59330dab41c0560289bcd7b53d8",
+  "independentlyVerifiedSelectedPrivateArtifactHashes": {
+    "installation-receipt.private.json": "2dacb2b29a25c0e09e4043c4cbb6f54d419b2e1a1357a3c19838eb30b6a4beef",
+    "focused-tests-receipt.private.json": "477e7458711333500518fb1934b54fbe6f81fb203146d3bb1680497a7c9a45dd",
+    "image-build-results.private.json": "338a78c7c269631a3665399f48a17e685f4fe7563432624ba59b0aa216527727",
+    "core-before.private.json": "2d7527f2fe80c594698bb9092acf95cab4a8bb46dfe3e5e5b3e853c50c3652cf",
+    "core-after.private.json": "c0a7c9581497c09cd67dee5c9299ad591b22219f799e7d2691c14f305904a58f",
+    "delegated-work-worker-before.private.json": "8c38d5f93b320f2b42919a6f0870ddedf7debcb04485326f8de683b54c9cc70c",
+    "delegated-work-worker-after.private.json": "49511dd7907dd8cd52667d2473536040a530705f1cf76f6c76f1eb4178b51859",
+    "core-sources-before.private.json": "9acfd529d58c6e0cf43d340dcbe5b81f010e0df373b960cbd997ace8b666ff0e",
+    "core-candidate-sources.private.json": "718d070f8007c63b8f4dce7eedc5cb051ffb10e3360207643832ebdbf1258440",
+    "delegated-work-worker-sources-before.private.json": "2c2d083b74f89dac9180a7c85d86584cd20e20d6b8e4c8ae3a56ba54ca3d2e93",
+    "delegated-work-worker-candidate-sources.private.json": "bec6c8cfa3ee6d97e67ee303c9c7a855a0a83c721c0d5706e0ba3a33f0ae70f2",
+    "core-candidate.iid": "fb9662160eaeb78c7718f0df8d2224bfb07b4ce9a9b0b35942b05099ba8b9d82",
+    "delegated-work-worker-candidate.iid": "eeeb23f2ff7e4185237d519647087af9b0aad28ed5bb2cc7d9fb43e7a3bc80a2",
+    "native-prepared-payload.private.json": "83bf70f47fe2c4ae41fbdb867c931154f138ebf06d0b632ea619adcacb16fe49",
+    "native-proxy-rejected-payload.private.json": "5ae1f1d8286bfc787af8bb4c7ad9739ffec8aa7d0445d9b5da46ef64feb93dbb",
+    "native-dispatch-payload.private.json": "5ae1f1d8286bfc787af8bb4c7ad9739ffec8aa7d0445d9b5da46ef64feb93dbb",
+    "native-payload.private.json": "21d14658cd71983423d6ee3586b6615c9019fefc875fb62d385d3c794a99eab0",
+    "native-sent.private.json": "9fe74c2cd23b21b4bc1f3193471b154162e51e8aacf7a1808026dbfef584a0a9",
+    "native-core-sent.private.json": "3e2a595c351bd144c2a576cc6598932a85f0d8ca6e5e01c69e876eb7b9f6aef7",
+    "native-core-response.private.json": "ed8bc32f9dcbf644f47a299e81d19863441d0f4831b4e8e3f2bca6b0559291ca",
+    "native-core-receipt.private.json": "8b7d61d9ff891c2713fc430e23b9281d5bac2d02f178ac731ba9953aa31360c6",
+    "native-observation-latest.private.json": "d3a5c225a120090f9352a0e88dd688e273beddbd0b3091537d61eea33b4db503",
+    "native-completed-files-readback.private.json": "e8c671c489ab612a084ee2a05de54e4ffc99826154c53a97cdb3985050a6cd40"
+  },
+  "skippedPrivateArtifactClasses": "Configuration/compose documents and unrelated cases were not read; manifest SHA is a binding, not a claim that every listed file was inspected.",
+  "reviewActivity": {
+    "newModels": 0,
+    "newNativeProbes": 0,
+    "retests": 0,
+    "runtimeEdits": 0,
+    "productEdits": 0,
+    "onlyOwnReviewFileWritten": true
+  },
+  "materialBlockersForLimitedTechnicalOutcome": []
+}

@@ -1681,3 +1681,28 @@ def test_model_receives_original_feedback_and_its_source_time_without_new_reques
     assert original["text"] in request_text
     assert original["occurred_at"] in request_text
     assert "Fragment; overige brontekst ontbreekt." in request_text
+
+
+def test_background_phase_uses_remaining_job_time_for_sdk_and_outer_timer(tmp_path, monkeypatch):
+    from contextlib import asynccontextmanager
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.adapters.model import pydantic_conversation as module
+    limits, transport_limits = [], []
+    @asynccontextmanager
+    async def capture_timeout(seconds):
+        limits.append(seconds)
+        yield
+    monkeypatch.setattr(module.asyncio, "timeout", capture_timeout)
+    model, _, _, _ = _phase_transport_adapter(tmp_path, monkeypatch, [("final_answer", ("Hallo.",))])
+    provider = module.OpenAICodexProvider
+    class ObservedProvider(provider):
+        def __init__(self, settings, **kwargs):
+            transport_limits.append(settings.timeout_seconds)
+            super().__init__(settings, **kwargs)
+    monkeypatch.setattr(module, "OpenAICodexProvider", ObservedProvider)
+    with background_execution(BackgroundExecutionScope(
+            _turn(), "work:long", remaining_model_time_seconds=lambda _: 257)):
+        assert _generate(model).text == "Hallo."
+    assert 256 <= limits[0] <= 257
+    assert 256 <= transport_limits[0] <= limits[0]
+    assert model._timeout_seconds == 60

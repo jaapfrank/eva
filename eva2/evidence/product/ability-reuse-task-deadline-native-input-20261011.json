@@ -1,0 +1,56 @@
+{
+  "contract": "EvaAbilityReuseCorrectiveEpisode/v1",
+  "boundAt": "2026-10-11T17:57:05.548894+00:00",
+  "authorization": "Active whole-project goal and direct owner authorization for necessary trials; one corrective ordinary later-use episode after proven source cause changes. No competitors or comparison matrix.",
+  "originalCriteria": {
+    "path": "eva2/evidence/product/ability-create-reuse-native-criteria-20261011.json",
+    "sha256": "801a818ff63c1bad1ae325e827421d98015e55de441e8d5711905d347f9f4c37",
+    "unchanged": true
+  },
+  "originalClosedResult": {
+    "path": "eva2/evidence/product/ability-create-reuse-native-result-20261011.json",
+    "sha256": "d15bbdf37ac09380cfe75bf86d7c2e74595b33a2660708497a08fcd9d232de94",
+    "unchanged": true,
+    "unknownUsageRetained": true
+  },
+  "changedCause": "Installed background per-response duration must use exact admitted remaining task duration rather than premature 120s cap. Native input only after reviewed source installation.",
+  "inputBinding": {
+    "payloadSha256": "83bf70f47fe2c4ae41fbdb867c931154f138ebf06d0b632ea619adcacb16fe49",
+    "project_id": "technical-ability-20261011-30cad653",
+    "conversation_id": "technical-ability-20261011-30cad653:reuse-after-deadline",
+    "message_id": "technical-ability-20261011-30cad653:reuse-after-deadline-turn",
+    "recent_message_count": 0,
+    "ordinary_question": true,
+    "no_builder_code_or_procedure_reference": true,
+    "input_same_as_original_later_attempt": true,
+    "different_from_creation_export": true,
+    "synthetic_personal_scope": true
+  },
+  "expected": {
+    "active_minutes": {
+      "pomp": 40,
+      "beveiligingslamp": 40,
+      "radio": 0,
+      "verwarmer": 70
+    }
+  },
+  "outputPath": "/proof-state/ability-active-minutes-30cad653-reuse-after-deadline.json",
+  "sourceCandidateSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+  "endChecks": [
+    "correct independently read output",
+    "native recorded execution of original designated procedure exact source hash",
+    "no regenerated code or builder assistance",
+    "original source/first output unchanged",
+    "same person scope and stop guard preserved"
+  ],
+  "budget": {
+    "new_http_dispatches": 1,
+    "native_grant_unchanged": true,
+    "maximum_model_runs": 32,
+    "maximum_tool_calls": 31,
+    "timeout_seconds": 300,
+    "no_automatic_retry": true,
+    "credit_cost": "UNKNOWN"
+  },
+  "interpretation": "A successful episode confirms this later application after correction. It does not erase earlier failure, prove efficiency, complete AIDE² or close the entire product goal."
+}

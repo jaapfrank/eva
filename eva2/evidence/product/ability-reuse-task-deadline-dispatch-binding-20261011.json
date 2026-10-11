@@ -1,0 +1,12 @@
+{
+  "contract": "EvaAbilityReuseDispatchBinding/v1",
+  "boundAt": "2026-10-11T18:02:11.134364+00:00",
+  "originalReviewedInput": "eva2/evidence/product/ability-reuse-task-deadline-native-input-20261011.json",
+  "originalPreparedPayloadSha256": "83bf70f47fe2c4ae41fbdb867c931154f138ebf06d0b632ea619adcacb16fe49",
+  "actualPayloadSha256": "5ae1f1d8286bfc787af8bb4c7ad9739ffec8aa7d0445d9b5da46ef64feb93dbb",
+  "onlyUpdatedField": "occurred_at",
+  "reason": "Use actual ingress time rather than preparation time; native admission counts from ingress. No old task, criterion or clock reset; this single new input has not yet been sent.",
+  "inputSemanticsAndIdentityUnchanged": true,
+  "expectedUnchanged": true,
+  "singleDispatch": true
+}

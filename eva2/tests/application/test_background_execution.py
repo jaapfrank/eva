@@ -83,3 +83,26 @@ def test_later_step_identity_still_conflicts_across_competing_providers():
         assert PostgresExternalConversationTools._identity(turn, "read_document", 1) == (
             PostgresExternalConversationTools._identity(turn, "write_document", 1)
         )
+
+
+@pytest.mark.parametrize("value", [0, -1, True, "300", float("inf"), float("nan")])
+def test_invalid_time_allowance_rejected(value):
+    from eva.application.background_execution import background_model_time_limit
+    turn = source_turn()
+    with background_execution(BackgroundExecutionScope(
+            turn, "work:time", remaining_model_time_seconds=lambda _: value)):
+        with pytest.raises(ConversationConflict, match="time allowance"):
+            background_model_time_limit(turn)
+
+
+def test_time_allowance_refreshes_exact_source_and_resets():
+    from eva.application.background_execution import background_model_time_limit
+    turn = source_turn()
+    remaining = iter((300, 140, 0.5))
+    assert background_model_time_limit(turn) is None
+    with background_execution(BackgroundExecutionScope(
+            turn, "work:time", remaining_model_time_seconds=lambda _: next(remaining))):
+        assert [background_model_time_limit(turn) for _ in range(3)] == [300, 140, 0.5]
+        with pytest.raises(ConversationConflict, match="source turn"):
+            background_model_time_limit(replace(turn, message_id="other"))
+    assert background_model_time_limit(turn) is None

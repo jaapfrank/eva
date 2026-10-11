@@ -14,41 +14,41 @@ Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkin
 Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
 afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
 
-## Actief werk — zelf maken en later hergebruiken, 11 oktober 2026
+## Actief werk — AIDE² en droomcyclus, 11 oktober 2026
 
-De geïnstalleerde geheugenroute heeft oorspronkelijke relevante bijsturing bij een
-nieuwe taak toegepast: norm, drie korte bullets en vervolgstap; onafhankelijke
-eindreview GO. De eerdere NOT_MET-proef blijft gesloten en het gehele goal actief.
+De geïnstalleerde geheugenroute past oorspronkelijke feedback bij nieuw werk toe:
+norm, antwoordvorm en vervolgstap; eerdere onafhankelijke review GO.
 
-Daarna heeft Eva via de bestaande algemene route zelf een ontbrekend Python-
-hulpmiddel gemaakt, gecontroleerd, als werkwijze geregistreerd en werkelijk
-uitgevoerd. Bron van 3.321 bytes, juist resultaat 95/30; zes onafhankelijke
-bronchecks geslaagd. Geen tweede platform, nieuwe hostsoftware of vaste
-huisfunctie toegevoegd.
+Het ontbrekende vermogen om zelf een hulpmiddel te maken en later zelfstandig te
+gebruiken is nu technisch aangetoond. Eva maakte en controleerde zelf een Python-
+hulpmiddel; zes onafhankelijke bronchecks slagen. In een andere sessie vond en
+draaide Eva dezelfde bewaarde bron zonder code of procedure-ID in de vraag:
+40/40/0/70 actieve minuten. Het nieuwe bestand is afzonderlijk fysiek teruggelezen;
+bron en eerste resultaat bleven gelijk. Geen nieuw platform of vaste huisfunctie.
 
-De latere gewone vraag met andere invoer is eenmaal gestart in een nieuwe sessie,
-zonder code/procedure-ID. Haar eerste modelaanvraag stopte na 120 seconden,
-vóór tools en vóór de bestaande taakdeadline. Geen bevestigd later hergebruik:
-UNKNOWN-verbruik en oorspronkelijke voorwaarden blijven behouden. Bekende
-tokenondergrens 243.893; 19 registraties, één met onbekend verbruik. Model-toolcalls
-17 en taak-/foregroundteller 19 zijn verschillende telgrenzen; credits onbekend.
+De lokale 120s modelstop is gecorrigeerd en eenmaal geïnstalleerd: ieder antwoord
+gebruikt de resterende bestaande taakduur, met behoud van stoppen en toelating.
+288 gerichte modelvrije checks groen; exacte kern/werker/configuratie/gegevens
+behouden. De nieuwe taak slaagt met 8 geregistreerde modelaanvragen en 79.561
+bekende tokens, circa 80s vanaf ingress. De oude mislukking en UNKNOWN blijven
+gesloten bewaard; dit bewijst geen algemene efficiëntie- of kwaliteitsvoorsprong.
+De nieuwe uitvoering eindigde vóór 120s: geen geïsoleerde causale snelheidsclaim.
 
-**Nu afmaken:** de concrete lokale antwoordtijdgrens laten aansluiten op de nog
-geldige achtergrondtaak, met behoud van stoppen, persoonsgrenzen en bestaande
-toelating. Controleer de kleinste noodzakelijke broncorrectie modelvrij en
-installeer haar eenmaal. Geen oude case reset of automatische herhaling.
-Een noodzakelijke nieuwe uitvoering na gewijzigde oorzaak wordt afzonderlijk
-vooraf gebonden binnen het bestaande mandaat; geen nieuwe vergelijkingsserie.
+**Nu afmaken:** de volledige AIDE²-/droomcyclus voor Eva's agentaansturing,
+code en uitbreidingen aansluiten op de bestaande verbeterroute en de nu bewezen
+latere toepassing. Geen tweede platform, nieuwe vergelijkingsserie of herhaling
+van deze geslaagde bronchecks. Kwaliteitsverbetering en werkelijk later toepassen
+staan voorop; een lagere tokenstand is niet het doel.
 
-Daarna blijven volledige AIDE²-aansturing/code/apps/addons/droommodus, passend
-initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en gezinsacceptatie open.
-Dit is geen afsluiting van één heel hoofdonderdeel of van het project.
-Spraak geparkeerd; ongebruikte Docker Desktop ongemoeid.
+Daarna passend initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en
+echte gezinsacceptatie afmaken. Het volledige projectgoal blijft actief.
+Spraak blijft geparkeerd; ongebruikte Docker Desktop blijft ongemoeid.
 
-Creatie/hergebruik: eva2/evidence/product/ability-create-reuse-native-result-20261011.json.
-Review: eva2/reviews/ability-create-reuse-native-review-20261011.json.
-Onafhankelijke GO voor beperkte publicatie; NO_GO voor volledige creatie/hergebruik-afronding.
-Geheugenoplevering: eva2/reviews/learning-feedback-source-native-final-review-20261011.json.
+Resultaat: eva2/evidence/product/ability-create-later-reuse-result-20261011.json
+Eindreview: eva2/reviews/ability-create-later-reuse-final-review-20261011.json.
+Onafhankelijke GO voor deze technische uitkomst; de letterlijke HTTPpoginggrens
+is overschreden door één pre-ingress403 en blijft expliciet. Geen volledige
+protocol-, efficiëntie-, privacy- of hoofdprojectclaim.
 
 ## Historische gesloten leerproef — norm toegepast, feedback onvolledig, 11 oktober
 
