@@ -1,0 +1,119 @@
+{
+  "contract": "EvaLearningCycleMemoryAccessSourceReview/v1",
+  "reviewedAt": "2026-10-11T16:32:08.616971+00:00",
+  "decision": "GO",
+  "phase": "bounded_source_and_existing_installation_plan",
+  "baseCommit": "0b178be2c6a72c6b5a5a300a84176b71402bb137",
+  "scope": {
+    "files": {
+      "eva2/deploy/living-core/hindsight.compose.yml": "7db217669ddbf6ab8ee5ab48a4fc10f0f78f07878be9a4d0dd6424d52627dd31",
+      "eva2/deploy/living-core/managed-b.compose.yml": "b94c1207a819a00a954bc236134aeed8758d59db07c0db5cff2fd20f9830ec20",
+      "eva2/deploy/living-core/stack.compose.yml": "7843d933a41575f9d4c81200e6dbbfc4a790ec3929088d67864745d8a3938a2a",
+      "eva2/deploy/living-core/telegram-test-conversation.compose.yml": "ad25a070d5c6a91caf492404ab48bf10c79dc449f2ac64722847def5358288d3",
+      "eva2/src/eva/operations/model_credentials.py": "1df1b4f5de919b57e243d6308cb6c192094e95733b04b3444fad1f7369f6fe5b",
+      "eva2/tests/bootstrap/test_managed_b_manifest.py": "61dd17d730d9424fa0262aaa4ca5772238cf3bc8019f953487c1da4ee97ce5b0",
+      "eva2/tests/bootstrap/test_model_credential_deployment.py": "d0a1acfada9fe247ba8c261025287e2148790664ea6ce57c682e8d7dbd81a5e2",
+      "eva2/tests/bootstrap/test_telegram_test_ingress_deployment.py": "fcea95aa60ead41144ab86159e9dd40924a3c5d2bc40cdec77cad0b360ea10be",
+      "eva2/tests/operations/test_model_credentials.py": "8fc1582aead50e3525b7e126be5603ed6434cbb110f23a7d74f544b1cf559012",
+      "eva2/tests/operations/test_prepare_telegram_conversation_test.py": "c3f2417cb3f6d17b140efa07c594d1492ef6df4dac6cf1d4c491eec9be731a7e",
+      "eva2/tools/prepare_telegram_conversation_test.py": "dd70f454372c914075c1c012a646ba9b9e0baafd98bf56afd1c25bd6913aabc7"
+    },
+    "purpose": "Correct only the stable Hindsight access-only credential lock; keep credential directory and auth.json read-only for the consumer.",
+    "notReviewed": [
+      "new runtime installation or native retention completion",
+      "later learned application or complete learning cycle",
+      "full project completion or AIDE2 completion"
+    ]
+  },
+  "findings": [],
+  "assessment": [
+    {
+      "result": "PASS",
+      "subject": "Stable lock and filesystem boundary",
+      "source": "eva2/src/eva/operations/model_credentials.py:135",
+      "detail": "Creates an empty lock once with exclusive creation and validates existing lock without truncating, replacing, or unlinking it. Rejects symlink, hardlink, non-regular, nonempty, wrong-owner/mode and changed-name inode. Existing flock coordination survives auth.json atomic rotation."
+    },
+    {
+      "result": "PASS",
+      "subject": "Access-only credential and health boundary",
+      "source": "eva2/src/eva/operations/model_credentials.py:171",
+      "detail": "Health check requires the prepublished lock and the exact access-only auth JSON shape. No refresh credential, network call, lock replacement or lease publication is added to this check. Structural readiness does not prove OAuth validity, provider availability or completed semantic retention."
+    },
+    {
+      "result": "PASS",
+      "subject": "Unchanged lease path creates or checks lock",
+      "source": "eva2/src/eva/operations/model_credentials.py:210",
+      "detail": "Lock preparation runs before the unchanged-auth early return; auth publication retains the existing atomic file replacement and directory fsync."
+    },
+    {
+      "result": "PASS",
+      "subject": "Mount and dependency scope",
+      "sources": [
+        "eva2/deploy/living-core/hindsight.compose.yml",
+        "eva2/deploy/living-core/managed-b.compose.yml",
+        "eva2/deploy/living-core/stack.compose.yml",
+        "eva2/deploy/living-core/telegram-test-conversation.compose.yml"
+      ],
+      "detail": "Consumer credential directory remains read-only; only auth.lock is a separate read-write file bind with create_host_path=false. Publisher deployments use structural lease health and service_healthy dependency; isolated prepublished Telegram manifest requires preparation before creation."
+    },
+    {
+      "result": "PASS_WITH_EXISTING_LIMITATION",
+      "subject": "Isolated preparer delta",
+      "source": "eva2/tools/prepare_telegram_conversation_test.py:214",
+      "detail": "New empty lock is created in the existing fresh private directory and remains separate from five sealed inputs. The two reported positive-path failures are at the pre-existing missing signature_verifier call on line 197, before this new line. This review does not assert that the complete preparer API path passes."
+    }
+  ],
+  "validation": {
+    "reviewerActions": [
+      "read exact current scoped git diff and relevant source context",
+      "verify eleven current file SHA256 values",
+      "read and hash the public diagnosis evidence"
+    ],
+    "reviewerNewTestRuns": 0,
+    "reviewerProviderRequests": 0,
+    "reviewerPrivateCredentialReads": 0,
+    "implementerReportedTests": {
+      "lockAndManifestChecks": {
+        "passed": 48,
+        "deselected": 1,
+        "deselectionReason": "unrelated native Docker network address-pool case"
+      },
+      "withPreparationSuite": {
+        "passed": 49,
+        "failed": 2,
+        "failureReason": "existing positive preparer paths omit required signature_verifier; not repaired by this patch"
+      },
+      "independentlyRerunByReviewer": false
+    },
+    "rootReportedOfflineReproduction": {
+      "baseline": "read-only credential directory fails with errno 30 at auth.lock",
+      "candidate": "only stable auth.lock writable permits fresh access-only lease adoption",
+      "networkRequests": 0,
+      "authBytesUnchanged": true,
+      "lockInodePreserved": true,
+      "qualification": "Root-produced current-image evidence; reviewer read its public record, did not run another reproduction."
+    }
+  },
+  "evidence": {
+    "path": "eva2/evidence/product/learning-cycle-memory-access-diagnosis-20261011.json",
+    "sha256": "39e1b3188d7a50de83f42592cc9e502a11bffd74c3a096546300b631623d0409"
+  },
+  "installationPlan": {
+    "decision": "GO for the stated existing two-service update",
+    "requiredBoundary": "Only hindsight and hindsight-access-lease are recreated; retained data and native storage operations are preserved, and the first work request is not repeated.",
+    "preCreationRequirement": "The stable auth.lock must exist and pass validation before consumer container creation; create_host_path=false and a read-only health check do not create a missing bind source.",
+    "preCreationStatus": "Root reports new publisher module already prepared and validated existing private runtime directory, empty mode0600 stable lock and access-only shape in a networkless temporary container, then removed that container.",
+    "packagingStatus": "Root reports publisher derivative changes only this module among 220 Python modules, Hindsight image unchanged, normalized Compose valid and other services/config/data mounts unchanged. Full derivative hashes and installed runtime readback are not independently established by this source review.",
+    "preservedPreparationFailure": "Initial local legacy Docker builder rejected COPY --chmod; root reports replacement build uses mode0644 context and retains the original failure evidence.",
+    "installedByThisReview": false
+  },
+  "conclusion": {
+    "materialSourceBlockers": 0,
+    "sourceCorrectionApproved": true,
+    "nativeRetentionCompletedProven": false,
+    "laterLearningApplicationProven": false,
+    "wholeProjectGoalStatus": "active",
+    "completeLearningCycleAndAIDE2": "not established",
+    "speech": "parked"
+  }
+}

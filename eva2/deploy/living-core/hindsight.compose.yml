@@ -6,7 +6,18 @@ services:
     user: "1000:1000"
     restart: unless-stopped
     healthcheck:
-      disable: true
+      test:
+        - CMD
+        - /usr/local/bin/python
+        - -c
+        - >-
+          from pathlib import Path;
+          from eva.operations.model_credentials import check_codex_consumer_auth;
+          check_codex_consumer_auth(Path('/run/eva/hindsight-access/auth.json'))
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 2s
     command:
       - python
       - -m
@@ -46,10 +57,17 @@ services:
       - ${EVA_HINDSIGHT_BIND_ADDRESS:-127.0.0.1}:${EVA_HINDSIGHT_PORT:-44672}:8888
     volumes:
       - ${EVA_HINDSIGHT_ACCESS_DIR:?set EVA_HINDSIGHT_ACCESS_DIR to a runtime-owned Hindsight access directory}:/home/hindsight/.codex:ro
+      # Publish/validate this stable inode before Hindsight is created.
+      - type: bind
+        source: ${EVA_HINDSIGHT_ACCESS_DIR:?set EVA_HINDSIGHT_ACCESS_DIR to a runtime-owned Hindsight access directory}/auth.lock
+        target: /home/hindsight/.codex/auth.lock
+        read_only: false
+        bind:
+          create_host_path: false
       - hindsight-data:/home/hindsight/.pg0
     depends_on:
       hindsight-access-lease:
-        condition: service_started
+        condition: service_healthy
     security_opt:
       - no-new-privileges:true
     healthcheck:

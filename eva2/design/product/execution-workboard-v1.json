@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T16:24:35.634455+00:00",
+  "lastUpdated": "2026-10-11T16:50:02.157382+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -125,7 +125,7 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Volledig Eva2-projectgoal actief. Huidig werk: ervaring en feedback later toepassen. Eerste technische opdracht afgemaakt; geheugenopslag faalt op een alleen-lezen lockbestand. Oorzaak lokaal bevestigd, correctie in uitvoering en nog niet geïnstalleerd. Geïnstalleerde algemene uitvoering, Eva1-geheugen en eigenaar-Telegramtekst blijven behouden. Geen nieuwe hoofdafronding of algemene concurrentievoorsprong; spraak geparkeerd.",
+      "summary": "Volledig Eva2-projectgoal actief. Geheugenreparatie geïnstalleerd; oude opslagoperaties afgerond en nieuwe opslag werkt automatisch. Eva past een onthouden norm toe bij nieuw werk, maar antwoordvorm, volgende stap en feedbacktijdscope zijn nog niet goed. Dat concrete leertekort wordt nu afgemaakt. Geen volledige leerafronding of nieuwe concurrentieclaim; spraak geparkeerd.",
       "nextOutcomes": [
         {
           "title": "Nu · Ervaring en feedback later toepassen",
@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T16:24:35.634455+00:00",
+        "checkedAt": "2026-10-11T16:50:02.157382+00:00",
         "deliveries": [
+          {
+            "title": "Geheugenopslag hersteld; eerdere norm bij later werk toegepast",
+            "date": "2026-10-11T16:33:32.314837+00:00",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "result": "Twee geheugendiensten bijgewerkt en gezond. De drie bewaarde opslagoperaties zijn afgerond; twee nieuwe operaties liepen automatisch goed. Eva gebruikte in een andere sessie de eerdere projectnorm zonder die opnieuw te krijgen: 6 over, 3 tekort. Nieuwe notitie opgeslagen en apart teruggelezen; eerste bestand behouden.",
+            "remaining": "De volledige technische leerproef is niet geslaagd: drie korte bullets en volgende stap ontbreken, en 'nu' is te breed als kalenderdag uitgelegd. Volledige leercyclus, gezinsacceptatie en AIDE² blijven open.",
+            "source": "eva2/evidence/product/learning-cycle-memory-access-installed-20261011.json",
+            "review": "eva2/reviews/learning-cycle-native-result-review-20261011.json",
+            "usage": "15 geregistreerde modelresponses / 12 tools; bekende tokenondergrens 137.596. Geheugenextractie, volledig totaal en creditkosten onbekend. Geen efficiëntie- of kwaliteitsvoorsprong aangetoond.",
+            "independentReview": "GO voor installatie en beperkte normtoepassing; volledige leerproef niet geslaagd",
+            "resultEvidence": "eva2/evidence/product/learning-cycle-native-result-20261011.json",
+            "sourceReview": "eva2/reviews/learning-cycle-memory-access-source-review-20261011.json",
+            "reviewSha256": "360c209cbd59a66c76563691c7a75101972f992c61840e18b056407135cc4c8b"
+          },
           {
             "title": "Achtergrondwerk zoekt geheugen met de echte taak en nieuwste bijsturing",
             "date": "2026-10-11T15:43:02.016590+00:00",
@@ -4550,33 +4565,33 @@
           }
         ],
         "now": {
-          "title": "Leercyclus · geheugenopslag herstellen, daarna ervaring toepassen",
-          "detail": "De eerste technische leeropdracht is afgemaakt en teruggelezen; de bijsturing is ontvangen. Het opslaan van de ervaring loopt vast: de geheugenprovider kan zijn lockbestand niet schrijven. De oorzaak is zonder modelaanvragen bevestigd. Codex corrigeert die aansluiting; nog niet geïnstalleerd. Daarna volgt dezelfde vooraf vastgelegde tweede opdracht in een nieuwe sessie. Geen opdracht opnieuw uitvoeren.",
+          "title": "Leercyclus · norm toegepast, antwoordvorm nog niet",
+          "detail": "De geheugenreparatie is geïnstalleerd. De drie oorspronkelijke opslagoperaties zijn afgerond; nieuwe ervaring wordt automatisch opgeslagen. In een nieuwe sessie gebruikte Eva de eerdere norm van 9: 6 over, dus 3 tekort. Beide bestanden zijn apart teruggelezen. De gevraagde drie korte bullets en volgende stap ontbreken; ook de tijdscope van feedback werd te breed uitgelegd. De onafhankelijke beoordeling bevestigt deze beperkte uitkomst. Resterend werk: de volledige feedback in de bestaande taakoverdracht bewaren en toepassen. De volledige leercyclus blijft open.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/learning-cycle-memory-access-diagnosis-20261011.json",
+          "source": "eva2/evidence/product/learning-cycle-native-result-20261011.json",
           "doneWhen": "De geïnstalleerde route gebruikt een echte opgeslagen werkervaring en persoonsgebonden feedback bij een volgende relevante opdracht, met zichtbaar gewijzigd gedrag. Een technische gecontroleerde proef en jouw gezinsacceptatie blijven afzonderlijk; privacy, stoppen en geen dubbele acties behouden.",
-          "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
+          "review": "eva2/reviews/learning-cycle-native-result-review-20261011.json"
         },
         "next": {
-          "title": "Opgeslagen ervaring en feedback bij nieuw werk toepassen",
-          "detail": "Na de geheugenreparatie dezelfde bewaarde opslagoperaties afronden. Eva maakt vervolgens de andere notitie in een nieuwe sessie, zonder de eerdere norm opnieuw te vertellen. Daarna onafhankelijke beoordeling; geen nieuwe vergelijkingsserie.",
+          "title": "Volledige feedback meenemen naar later werk",
+          "detail": "Herstel het concrete gat tussen onthouden feedback en de volgende taak: inhoud, gewenste antwoordvorm en oorspronkelijke tijdscope moeten samen worden toegepast. Gebruik de bestaande geheugen- en taakoverdracht. Geen vast script voor deze voorbeeldsom en geen herhaling van de afgesloten proef om een groene score te krijgen.",
           "state": "planned",
           "activeExecution": false,
-          "source": "eva2/evidence/product/learning-cycle-native-criteria-20261011.json"
+          "source": "eva2/evidence/product/learning-cycle-native-result-20261011.json"
         },
         "ownerAction": {
           "required": false,
-          "title": "Deze technische fout lost Codex op",
-          "detail": "Geen handeling of herhaalde proef van jou nodig. De lopende reparatie en latere leerproef betreffen het technische werk van Codex; gezinsacceptatie blijft apart.",
+          "title": "Geen handeling van jou nodig",
+          "detail": "Codex herstelt de ontbrekende toepassing van feedback. De gecontroleerde technische proef is afgerond met een tekort; dit vraagt geen herhaalde gebruiksproef van jou. Gezinsacceptatie blijft afzonderlijk.",
           "steps": [],
           "expected": "Nieuwe gewone privétekst gebruikt Eva2; antwoord en later resultaat horen bij je oorspronkelijke bericht.",
           "blocksIndependentWork": false,
-          "source": "eva2/evidence/product/learning-cycle-memory-access-diagnosis-20261011.json"
+          "source": "eva2/evidence/product/learning-cycle-native-result-20261011.json"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T16:24:35.634455+00:00",
+        "reviewedAt": "2026-10-11T16:50:02.157382+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4638,8 +4653,8 @@
           "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
         }
       },
-      "reviewedAt": "2026-10-11T16:09:50.905591+00:00",
-      "checkedAt": "2026-10-11T16:09:50.905591+00:00",
+      "reviewedAt": "2026-10-11T16:50:02.157382+00:00",
+      "checkedAt": "2026-10-11T16:50:02.157382+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -10932,8 +10947,8 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-11T16:02:38.714648+00:00",
-        "basis": "Geaccepteerde oorspronkelijke functies blijven behouden; de actuele volledige projectscope, twee geïnstalleerde geheugenkoppelingen en open leercyclus/AIDE² zijn expliciet gescheiden.",
+        "checkedAt": "2026-10-11T16:47:30.302466+00:00",
+        "basis": "Geaccepteerde oorspronkelijke functies behouden. Geïnstalleerde geheugenkoppelingen en beperkte toepassing van een onthouden norm zijn apart van de open volledige leercyclus en AIDE² vastgelegd.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
         "rows": [
@@ -10951,8 +10966,8 @@
             "name": "Geheugen",
             "state": "incomplete",
             "label": "Geheugenbasis geaccepteerd · leercyclus open",
-            "result": "Gekozen geheugenfuncties en latere onderwerpvoortzetting blijven geaccepteerd. Eva1-geheugen is geïmporteerd. Nieuwe privétaakuitkomsten worden opgeslagen; achtergrondwerk zoekt nu met de echte opdracht en laatste bijsturing. Beide koppelingen zijn geïnstalleerd en onafhankelijk beoordeeld.",
-            "remaining": "Een echte eerdere ervaring én menselijke feedback bij later werk toepassen en aantonen dat Eva anders handelt. De volledige leercyclus en het brede mensbegrip zijn nog niet afgerond. De 96 niet gekoppelde persoonsregels blijven apart; archief/testmateriaal blijft buiten actief geheugen.",
+            "result": "Geaccepteerde geheugenbasis en Eva1-import behouden. Werkuitkomsten en feedback worden via de geïnstalleerde route opgeslagen. Bij een nieuwe opdracht in een andere sessie gebruikte Eva de eerdere norm van 9 zonder herhaling: 6 over en 3 tekort. Beide bestanden apart teruggelezen; nieuwe opslag automatisch geslaagd.",
+            "remaining": "Volledige feedback toepassen: de gevraagde antwoordvorm en volgende stap gingen verloren en de tijdscope werd te breed uitgelegd. De gecontroleerde leerproef is daarom niet volledig geslaagd. Brede leercyclus, mensbegrip en gezinsacceptatie blijven open; 96 niet gekoppelde persoonsregels blijven apart.",
             "evidencePaths": [
               "eva2/design/product/execution-workboard-v1.json",
               "eva2/evidence/product/p2-published-results-20261006.json",
@@ -10960,7 +10975,9 @@
               "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
               "eva2/evidence/product/eva1-memory-product-import-20261010.json",
               "eva2/evidence/product/private-work-outcome-memory-installed-20261011.json",
-              "eva2/evidence/product/task-context-memory-installed-20261011.json"
+              "eva2/evidence/product/task-context-memory-installed-20261011.json",
+              "eva2/evidence/product/learning-cycle-native-result-20261011.json",
+              "eva2/evidence/product/learning-cycle-memory-access-installed-20261011.json"
             ]
           },
           {
@@ -10994,7 +11011,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T16:09:50.905591+00:00",
+      "lastUpdatedAt": "2026-10-11T16:50:02.157382+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -20677,7 +20694,7 @@
           "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         }
       ],
-      "nextAction": "Leercyclus afmaken: de bewezen geheugenproviderfout herstellen, dezelfde opgeslagen ervaring en feedback afronden en vervolgens bij nieuw werk toepassen.",
+      "nextAction": "Het concrete leertekort afmaken: volledige relevante feedback met antwoordvorm en oorspronkelijke tijdscope naar later werk meenemen, via de bestaande geheugen- en taakoverdracht. Geen nieuwe vergelijkingsserie.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Het volledige geïnstalleerde geheel voldoet aan alle eindvoorwaarden van eva2/PROJECTDOEL.md, inclusief latere toepassing van de leercyclus, ontbrekende mogelijkheid realiseren en hergebruiken, AIDE² voor aansturing en code/uitbreidingen, onafhankelijke eindreview en echte gezinsbeoordeling. Deelopleveringen sluiten het projectgoal niet af; oude acceptaties blijven geldig binnen hun oorspronkelijke scope.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
@@ -29073,9 +29090,9 @@
           "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       },
-      "lastUpdated": "2026-10-11T16:02:38.714648+00:00",
-      "updatedAt": "2026-10-11T16:02:38.714648+00:00",
-      "checkedAt": "2026-10-11T16:02:38.714648+00:00",
+      "lastUpdated": "2026-10-11T16:50:02.157382+00:00",
+      "updatedAt": "2026-10-11T16:50:02.157382+00:00",
+      "checkedAt": "2026-10-11T16:50:02.157382+00:00",
       "ownerPriority20261010": {
         "authorization": "Latest three direct owner requests in current chat",
         "outcomes": [

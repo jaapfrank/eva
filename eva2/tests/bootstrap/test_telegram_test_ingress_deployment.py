@@ -354,7 +354,7 @@ def test_real_conversation_test_stack_is_isolated_and_access_only() -> None:
     assert hindsight["environment"]["HINDSIGHT_API_LLM_PROVIDER"] == (
         "openai-codex"
     )
-    assert len(hindsight["volumes"]) == 2
+    assert len(hindsight["volumes"]) == 3
     access = next(
         mount
         for mount in hindsight["volumes"]
@@ -362,6 +362,11 @@ def test_real_conversation_test_stack_is_isolated_and_access_only() -> None:
     )
     assert access["read_only"] is True
     assert access["bind"] == {"create_host_path": False}
+    lock = next(mount for mount in hindsight["volumes"]
+                if mount["target"] == "/home/hindsight/.codex/auth.lock")
+    assert lock["read_only"] is False
+    assert lock["source"] == access["source"] + "/auth.lock"
+    assert lock["bind"] == {"create_host_path": False}
 
     assert document["networks"] == {
         "telegram-test": {

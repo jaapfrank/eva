@@ -85,6 +85,12 @@ def test_preparer_seals_only_access_credentials_and_signed_identity(
     hindsight = json.loads((destination / "hindsight-access/auth.json").read_bytes())
     assert set(hindsight["tokens"]) == {"access_token", "account_id"}
     assert "refresh_token" not in json.dumps(hindsight)
+    lock = destination / "hindsight-access/auth.lock"
+    assert lock.read_bytes() == b""
+    assert lock.stat().st_nlink == 1
+    assert lock.stat().st_uid == lock.stat().st_gid == os.geteuid()
+    assert stat_mode(lock) == 0o600
+    assert set(p.name for p in lock.parent.iterdir()) == {"auth.json", "auth.lock"}
     assert stat_mode(destination / "model-access.json") == 0o600
     environment = (tmp_path / "test-root" / "conversation.env").read_text()
     assert "@sha256:" in environment

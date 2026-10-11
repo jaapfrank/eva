@@ -1,0 +1,74 @@
+{
+  "contract": "EvaLearningCycleMemoryAccessInstalled/v1",
+  "installedAt": "2026-10-11T16:33:32.314837+00:00",
+  "recordedAt": "2026-10-11T16:35:48.317254+00:00",
+  "diagnosis": "eva2/evidence/product/learning-cycle-memory-access-diagnosis-20261011.json",
+  "sourceReview": "eva2/reviews/learning-cycle-memory-access-source-review-20261011.json",
+  "installed": {
+    "publisherImage": "sha256:a6851c80b8ec88a75c4b99ff9c7beec2824ff8b7c38ca4a21a74d91c67d741d1",
+    "publisherModuleSha256": "1df1b4f5de919b57e243d6308cb6c192094e95733b04b3444fad1f7369f6fe5b",
+    "providerImageUnchanged": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "pythonModulesCompared": 220,
+    "changedPythonModules": 1,
+    "services": [
+      "hindsight-access-lease",
+      "hindsight"
+    ],
+    "bothHealthy": true,
+    "oneComposeUpdate": true,
+    "credentialDirectoryReadOnly": true,
+    "onlyEmptyLockFileWritable": true,
+    "lockInodePreserved": true,
+    "providerModelEnvironmentUnchanged": true,
+    "coreWorkerDatabaseContainersUnchanged": true,
+    "existingDataMountsPreserved": true
+  },
+  "checks": {
+    "localModelFreeTestsPassed": 48,
+    "unrelatedNativeNetworkTestDeselected": 1,
+    "preparationSuite": {
+      "passed": 49,
+      "existingSignatureVerifierInterfaceFailures": 2
+    },
+    "nativeProviderFixture": {
+      "baseline": "errno30 read-only auth.lock",
+      "candidate": "fresh access-only lease adopted; auth unchanged and stable lock inode",
+      "networkEnabled": false
+    }
+  },
+  "preservedFailures": [
+    "Two initial new test assertions used an unrelated named-volume parsing assumption; corrected before green run.",
+    "Docker address pool prevented an unrelated native-network test before resource creation.",
+    "First image build used COPY --chmod unsupported by the local legacy builder; corrected using existing mode0644 context.",
+    "Two root observation/envelope conversion mistakes failed before memory mutation; corrected to actual dataclass/event interfaces.",
+    "Environment-list ordering was initially compared literally; semantic environment map is unchanged."
+  ],
+  "currentRecovery": {
+    "state": "completed",
+    "scope": "Exactly the three owned preregistered technical-case memory documents, same source bytes and native operation IDs after the cause changed; original needs_help events and retry counts retained.",
+    "firstTaskRepeated": false,
+    "newManualSourceInjection": false,
+    "completedCount": 3,
+    "originalNativeIdsPreserved": true,
+    "oldCheckpointRetryCounts": [
+      3,
+      3,
+      3
+    ],
+    "newOrdinaryMemoryOperationsSucceeded": 2
+  },
+  "usage": {
+    "modelCallsForInstallation": 0,
+    "memoryExtractionUsage": "not yet independently reconciled",
+    "creditCost": null,
+    "developmentUsage": "not independently measured"
+  },
+  "completion": {
+    "installedRepair": true,
+    "fullLearningCycle": false,
+    "productFunctionCompleted": false,
+    "familyAccepted": false,
+    "goal": "active"
+  },
+  "resultEvidence": "eva2/evidence/product/learning-cycle-native-result-20261011.json"
+}

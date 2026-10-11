@@ -132,6 +132,66 @@ def build_codex_consumer_auth(source: Path) -> bytes:
     )
 
 
+def _codex_consumer_lock(directory: int, name: str, *, create: bool) -> None:
+    """Keep the consumer flock inode stable while auth.json rotates beside it."""
+
+    flags = os.O_RDWR | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    created = False
+    try:
+        if create:
+            try:
+                descriptor = os.open(name, flags | os.O_CREAT | os.O_EXCL,
+                                     CODEX_LEASE_FILE_MODE, dir_fd=directory)
+                created = True
+            except FileExistsError:
+                descriptor = os.open(name, flags, dir_fd=directory)
+        else:
+            descriptor = os.open(name, flags, dir_fd=directory)
+    except OSError as error:
+        raise ModelCredentialLeaseError("Codex consumer lock is unavailable") from error
+    try:
+        if created:
+            os.fchmod(descriptor, CODEX_LEASE_FILE_MODE)
+        opened = os.fstat(descriptor)
+        named = os.stat(name, dir_fd=directory, follow_symlinks=False)
+        if (not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1
+                or opened.st_uid != MODEL_LEASE_OWNER_UID
+                or opened.st_gid != CODEX_LEASE_READER_GID
+                or stat.S_IMODE(opened.st_mode) != CODEX_LEASE_FILE_MODE
+                or opened.st_size != 0
+                or (named.st_dev, named.st_ino) != (opened.st_dev, opened.st_ino)):
+            raise ModelCredentialLeaseError("Codex consumer lock differs from its contract")
+        if created:
+            os.fsync(descriptor)
+            os.fsync(directory)
+    finally:
+        os.close(descriptor)
+
+
+def check_codex_consumer_auth(target: Path) -> None:
+    """Check the prepublished access-only lease and lock without changing either."""
+
+    directory = _open_lease_directory(target.parent, reader_gid=CODEX_LEASE_READER_GID,
+                                     required_mode=CODEX_LEASE_DIRECTORY_MODE)
+    try:
+        _codex_consumer_lock(directory, target.with_suffix(".lock").name, create=False)
+        raw = read_shared_runtime_file_bytes(
+            str(target), setting_name="Codex consumer auth", owner_uid=MODEL_LEASE_OWNER_UID,
+            reader_gid=CODEX_LEASE_READER_GID, required_mode=CODEX_LEASE_FILE_MODE,
+        )
+        value = json.loads(raw)
+        tokens = value.get("tokens") if isinstance(value, dict) else None
+        if (not isinstance(tokens, dict) or value.get("auth_mode") != "chatgpt"
+                or set(value) != {"auth_mode", "tokens"}
+                or set(tokens) != {"access_token", "account_id"}
+                or any(not isinstance(tokens[key], str) or not tokens[key] for key in tokens)):
+            raise ModelCredentialLeaseError("Codex consumer auth differs from its contract")
+    except (RuntimeError, ValueError, UnicodeDecodeError) as error:
+        raise ModelCredentialLeaseError("Codex consumer lease is unavailable") from error
+    finally:
+        os.close(directory)
+
+
 def _publish_bytes(
     lease: bytes,
     target: Path,
@@ -139,6 +199,7 @@ def _publish_bytes(
     reader_gid: int,
     directory_mode: int,
     file_mode: int,
+    consumer_lock_name: str | None = None,
 ) -> bool:
     directory = _open_lease_directory(
         target.parent, reader_gid=reader_gid, required_mode=directory_mode
@@ -146,6 +207,8 @@ def _publish_bytes(
     temporary_name = f".model-lease-{secrets.token_hex(16)}.tmp"
     descriptor: int | None = None
     try:
+        if consumer_lock_name is not None:
+            _codex_consumer_lock(directory, consumer_lock_name, create=True)
         try:
             current = read_shared_runtime_file_bytes(
                 str(target),
@@ -217,6 +280,7 @@ def publish_codex_consumer_auth(source: Path, target: Path) -> bool:
         reader_gid=CODEX_LEASE_READER_GID,
         directory_mode=CODEX_LEASE_DIRECTORY_MODE,
         file_mode=CODEX_LEASE_FILE_MODE,
+        consumer_lock_name=target.with_suffix(".lock").name,
     )
 
 
@@ -304,6 +368,7 @@ __all__ = [
     "ModelCredentialLeaseError",
     "build_access_lease",
     "build_codex_consumer_auth",
+    "check_codex_consumer_auth",
     "install_auth_owner",
     "publish_access_lease",
     "publish_codex_consumer_auth",

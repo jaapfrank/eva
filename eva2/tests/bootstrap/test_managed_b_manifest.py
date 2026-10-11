@@ -69,6 +69,7 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
             assert volume.get("read_only") is True or volume["target"] in {
                 "/run/eva/model-lease",
                 "/run/eva/hindsight-access",
+                "/home/hindsight/.codex/auth.lock",
                 "/var/lib/eva/restore-authority",
             }
             assert volume["bind"] == {"create_host_path": False}
@@ -255,7 +256,7 @@ def test_managed_b_dependency_order_and_sealed_volumes() -> None:
         "postgres": {"condition": "service_healthy"}
     }
     assert services["hindsight"]["depends_on"] == {
-        "hindsight-access-lease": {"condition": "service_started"},
+        "hindsight-access-lease": {"condition": "service_healthy"},
         "hindsight-postgres": {"condition": "service_healthy"},
     }
     assert services["core"]["depends_on"] == {

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 import yaml
 
 
@@ -59,8 +60,40 @@ def test_stack_has_one_external_refresh_owner_and_access_only_consumers() -> Non
         "/run/eva/model-lease/auth.json"
     )
     assert publisher["healthcheck"] == {"disable": True}
-    assert hindsight_publisher["healthcheck"] == {"disable": True}
+    assert "check_codex_consumer_auth" in hindsight_publisher["healthcheck"]["test"][-1]
     assert "codex-consumer" in hindsight_publisher["command"]
     assert hindsight["depends_on"]["hindsight-access-lease"]["condition"] == (
-        "service_started"
+        "service_healthy"
     )
+
+
+@pytest.mark.parametrize("manifest,consumer", [
+    ("managed-b.compose.yml", "hindsight"),
+    ("hindsight.compose.yml", "hindsight"),
+    ("stack.compose.yml", "hindsight"),
+    ("telegram-test-conversation.compose.yml", "telegram-conversation-hindsight-test"),
+])
+def test_hindsight_only_lock_has_write_access_in_access_only_credential_directory(manifest, consumer):
+    services = yaml.safe_load((STACK.parent / manifest).read_text())["services"]
+    hindsight = services[consumer]
+    credential_mounts = []
+    for mount in hindsight["volumes"]:
+        if isinstance(mount, str):
+            if ":/home/hindsight/.codex:" not in mount:
+                continue
+            source, target, mode = mount.rsplit(":", 2)
+            mount = {"source": source, "target": target, "read_only": mode == "ro"}
+        if str(mount["target"]).startswith("/home/hindsight/.codex"):
+            credential_mounts.append(mount)
+    assert len(credential_mounts) == 2
+    directory = next(m for m in credential_mounts if m["target"] == "/home/hindsight/.codex")
+    lock = next(m for m in credential_mounts if m["target"] == "/home/hindsight/.codex/auth.lock")
+    assert directory["read_only"] is True
+    assert lock["read_only"] is False
+    assert lock["source"] == directory["source"] + "/auth.lock"
+    assert lock["type"] == "bind" and lock["bind"] == {"create_host_path": False}
+    if "hindsight-access-lease" in services:
+        publisher = services["hindsight-access-lease"]
+        assert hindsight["depends_on"]["hindsight-access-lease"] == {"condition": "service_healthy"}
+        assert "check_codex_consumer_auth" in publisher["healthcheck"]["test"][-1]
+        assert "codex-consumer" in publisher["command"]

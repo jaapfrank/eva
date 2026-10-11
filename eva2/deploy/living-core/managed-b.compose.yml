@@ -152,7 +152,18 @@ services:
     user: "1000:1000"
     restart: unless-stopped
     healthcheck:
-      disable: true
+      test:
+        - CMD
+        - /usr/local/bin/python
+        - -c
+        - >-
+          from pathlib import Path;
+          from eva.operations.model_credentials import check_codex_consumer_auth;
+          check_codex_consumer_auth(Path('/run/eva/hindsight-access/auth.json'))
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 2s
     entrypoint: ["/usr/local/bin/python"]
     command:
       - -m
@@ -221,6 +232,13 @@ services:
         read_only: true
         bind:
           create_host_path: false
+      # The rotating auth directory stays read-only; Codex only writes its flock.
+      - type: bind
+        source: ${EVA_HINDSIGHT_ACCESS_DIR:?set the runtime-owned Hindsight access directory}/auth.lock
+        target: /home/hindsight/.codex/auth.lock
+        read_only: false
+        bind:
+          create_host_path: false
       - type: bind
         source: ${EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST:?set a Hindsight-runtime-owned PostgreSQL DSN file}
         target: /run/secrets/hindsight_database_dsn
@@ -229,7 +247,7 @@ services:
           create_host_path: false
     depends_on:
       hindsight-access-lease:
-        condition: service_started
+        condition: service_healthy
       hindsight-postgres:
         condition: service_healthy
     tmpfs:

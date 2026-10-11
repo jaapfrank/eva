@@ -1,0 +1,321 @@
+{
+  "contract": "EvaLearningCycleNativeResultReview/v1",
+  "reviewedAt": "2026-10-11T16:49:29.325127+00:00",
+  "decision": "GO_FOR_BOUNDED_INSTALLATION_AND_HONEST_RESULT_RECORD",
+  "originalPreregisteredCaseDecision": "NO_GO",
+  "fullLearningCycleDecision": "NOT_ESTABLISHED",
+  "scope": {
+    "kind": "one controlled developer technical case; not family acceptance, comparative series or AIDE2 optimization",
+    "privateArtifactRoot": "/home/administrator/project/.eva2-artifacts/learning-cycle-native-20261011",
+    "readArtifactSha256": {
+      "case.private.json": "e7abd7f76dd94ea4d11ed6afc8636096466d8f99e35d93b43107b0263db52a48",
+      "phase-1-receipt.private.json": "f24afb982557ef63cbda09324aa6cac8d6c5b719d4d1c3ea9be6148c66c03051",
+      "phase-2-payload.private.json": "50c13383969c9e90660abecb1e5c0095354ec56d08a57eb437628c0cef78f6f0",
+      "phase-2-receipt.private.json": "64d9e69caf95c24064ebcd67db7f15375b103a8156a8ee70a78c4e3ecb37f42c",
+      "phase-3-canonical-payload.private.json": "f32db93bb4c00de50403efe7e5db2cce2efb2be5bd0c8e4a96841d7e31a9edf5",
+      "phase-3-canonical-receipt.private.json": "87cd8fbcd3d9c4b607fff5c9d77f5dfe6b02b3e964fee9f29c160fae89f8fe0b",
+      "memory-recovery-result.private.json": "1e11ff2181e0db075c50e87c996a68071e3228207b093ae7ed852f4d912ea41d",
+      "phase-1-work.private.json": "073d4ecbc84c524e2258727e9edabfdcb6d4c3dbc4e78599088e1779c9935673",
+      "phase-3-native-observation-typed.private.json": "bda6740b0a0510d4cdf8251fd9f4a6d3fb8b70db7f518d53a5f60df6bc702a98",
+      "first-document-readback.private.json": "08be9a1312a384b12bcf21da10460dc4b458ccb7d521e62f0b8b87a7ff04ae5d",
+      "later-document-readback.private.json": "1df8172103c7dea1f9f7bb5fe4d9d254d94227bd32a168e878728da6ee598536",
+      "memory-install-readback.private.json": "5c9b2c765daf155ea717734132185f355f5cd1f44a43e36fe6b9ed816e77ede9",
+      "phase-3-payload.private.json": "02d24c222d27cbea7cca8c9ed178bf36dfa58e33214cbd9b0f2fc2840899d34d",
+      "phase-3-receipt.private.json": "0b536d02ff77efd91372d1408c6c6df0957b282b07b2f86c765bd42b3a20e4e6",
+      "phase-1-journal.private.json": "7a26fd2957620abfe96828d3cf16f8f22b4d35f1b4bb42b74b42f1878e72e8e2",
+      "memory-after-later-work.private.json": "778b0bb4eb39aed0ff4f7312017fb1e669b708fe81cc2b726aa11207c0bc14c7"
+    },
+    "privatePermissionsObserved": {
+      "root": "0700",
+      "listedReadArtifacts": "0600"
+    },
+    "phase1EffectivePayload": "original case phasePayloads[0] as authorized",
+    "fieldOnlyReadEvidence": {
+      "path": "/home/administrator/project/.eva2-artifacts/learning-cycle-native-20261011/memory-after-diagnosis.private.json",
+      "field": "phase2Usage",
+      "canonicalFieldSha256": "d1837a50a8be7667dec093898c24a2535af668318dacbd799c22884148a3e4b7",
+      "alsoMatchesCompleteAllowedLaterMemorySnapshot": true
+    }
+  },
+  "publicEvidence": [
+    {
+      "path": "eva2/evidence/product/learning-cycle-native-criteria-20261011.json",
+      "sha256": "892ac530666135b6a27505c092fd8e51c1818c64f0ad790b0174958d028339eb",
+      "role": "original unchanged preregistered criteria"
+    },
+    {
+      "path": "eva2/evidence/product/learning-cycle-memory-access-installed-20261011.json",
+      "sha256": "7960e315a8c10ec5b6e25c6f9d643dcd41f5a243df4e22c29003222b7c2bfdb5",
+      "role": "installation publication captured before recovery completion; in_progress recovery is historical at its recordedAt"
+    },
+    {
+      "path": "eva2/reviews/learning-cycle-memory-access-source-review-20261011.json",
+      "sha256": "75df90d29ab5409175e875e5c4722de7fb9a91da8433d6cc7a9084fb149e6c28",
+      "role": "previous exact source GO, not a new source audit"
+    },
+    {
+      "path": "eva2/evidence/product/learning-cycle-native-result-20261011.json",
+      "sha256": "56a70696e5022cff4e08b09a772a83acbb0fb0c93799e8d6055ad762b7932531",
+      "role": "final bounded result publication; overall not_met matches independent original-criteria review"
+    }
+  ],
+  "assessment": {
+    "installedRepair": {
+      "decision": "GO",
+      "moduleSha256": "1df1b4f5de919b57e243d6308cb6c192094e95733b04b3444fad1f7369f6fe5b",
+      "publisherImage": "sha256:a6851c80b8ec88a75c4b99ff9c7beec2824ff8b7c38ca4a21a74d91c67d741d1",
+      "hindsightImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "readbackConfirms": [
+        "both services healthy",
+        "exact reviewed publisher module",
+        "provider environment semantically preserved",
+        "only stable lock file writable",
+        "existing data mounts preserved",
+        "lock inode preserved"
+      ],
+      "qualification": "Independent review of supplied recorded readback, not a fresh live probe or independent full image filesystem comparison. 220-module/one-change packaging and unaffected core/worker/database are recorded in public installation evidence."
+    },
+    "effectiveInput": {
+      "caseHashMatchesPreregistration": true,
+      "allThreeTextsMatchOriginalCase": true,
+      "messageAndPrivateScopeBindingsPreserved": true,
+      "onlyEffectivePayloadDifferences": [
+        "phase2 occurred_at",
+        "phase3 occurred_at"
+      ],
+      "receiptsHttpStatus": [
+        200,
+        200,
+        200
+      ],
+      "laterConversationDifferent": true,
+      "recentMessageCounts": [
+        0,
+        0,
+        0
+      ],
+      "laterPromptDoesNotRestateStockNorm": true,
+      "audienceNormalization": "Stored work source omits ingress audience_id; private kind and principal, and all other source binding fields match exactly."
+    },
+    "firstTask": {
+      "state": "succeeded",
+      "generation": 1,
+      "claimCount": 1,
+      "savedArtifactExists": true,
+      "contentSha256": "70b21a0d21ce5847c98b28f4e766059ba33ffa3bd345e0baedd13db59aa48962",
+      "utf8Bytes": 221,
+      "remainingStock": 7,
+      "separateReadback": "Native result records save then separate read; independent supplied physical content readback hashes exactly. Full tool-by-tool action observations were outside this bounded review."
+    },
+    "memoryRecovery": {
+      "decision": "GO_FOR_THREE_EXISTING_OPERATIONS",
+      "recoveryExitCode": 0,
+      "originalNativeOperations": 3,
+      "nativeIdsPreservedFromStartedToCompleted": true,
+      "nativeCreatedBeforeRepair": true,
+      "nativeCompletedAfterRepair": true,
+      "allNativeBatchesAndChildrenCompleted": true,
+      "allReceiptsDisposition": "retained",
+      "documentCount": 3,
+      "samePrivateBank": true,
+      "receiptDocumentIdsMatchNativeMetadata": true,
+      "localCheckpointStatuses": [
+        "completed",
+        "completed",
+        "completed"
+      ],
+      "localCheckpointPhases": [
+        "memory_retained",
+        "memory_retained",
+        "memory_retained"
+      ],
+      "localRetryCounts": [
+        3,
+        3,
+        3
+      ],
+      "nativeRetryCounts": [
+        0,
+        0,
+        0
+      ],
+      "extractionErrors": [
+        0,
+        0,
+        0
+      ],
+      "identifierBoundary": "Started/completed recovery operation IDs equal provider native IDs; local checkpoint.operation_id is separate. No equality between those namespaces is asserted.",
+      "historyQualification": "Additional authorized memory-after-later-work snapshot directly preserves all three original queued/attempted/retry/needs_help events followed by success; original retry_count=3 retained.",
+      "sourceTokenizationNotProviderUsage": true,
+      "firstTaskRepeated": false,
+      "oldNeedsHelpEventsIndependentlyRead": true
+    },
+    "laterTask": {
+      "state": "succeeded",
+      "generation": 1,
+      "claimCount": 1,
+      "savedArtifactExists": true,
+      "contentSha256": "bc098699dc93fcb5359b817ac2d1d82fff955b0f91b8e2468057472c753ca93b",
+      "utf8Bytes": 572,
+      "oldFileUnchanged": true,
+      "remainingStock": 6,
+      "recalledProjectMinimum": 9,
+      "shortfall": 3,
+      "physicalContentHashVerified": true,
+      "handoffContainsProjectNormNotPresentInLaterInput": true,
+      "nativeReplyHindsightEvidenceIdCount": 5,
+      "nativeReplyEvidenceIdsDistinct": true,
+      "nativeReplySourceAndTextHashMatch": true,
+      "limitedLearningEvidence": "The earlier controlled project norm is used in a different session with no supplied recent-message history. This supports a narrow retained-and-retrieved norm observation, not general learning quality, superiority, or a counterfactual causal efficiency claim."
+    },
+    "normalPostRepairRetention": {
+      "decision": "PASS_FOR_THIS_OWNED_CASE",
+      "source": "memory-after-later-work.private.json",
+      "laterConversationEventSequence": [
+        "MEMORY_RETAIN_QUEUED",
+        "MEMORY_RETAIN_ATTEMPTED",
+        "MEMORY_RETAIN_SUCCEEDED"
+      ],
+      "laterWorkOutcomeEventSequence": [
+        "MEMORY_RETAIN_QUEUED",
+        "MEMORY_RETAIN_ATTEMPTED",
+        "MEMORY_RETAIN_SUCCEEDED"
+      ],
+      "laterConversationDocumentMatchesEffectivePhase3Source": true,
+      "laterWorkContentContainsExactNativeCompletedOutput": true,
+      "allFiveRowsSameOwnerProjectInstallationAndPrivateAudience": true,
+      "allFiveQueuedContentHashesMatchSuccessReceipts": true,
+      "allFiveSuccessDocumentIdsMatchQueuedDocumentIds": true,
+      "allFiveRowsSamePrivateBank": true,
+      "fiveUniqueDocumentIds": true,
+      "laterTwoCheckpointAttemptCounts": [
+        1,
+        1
+      ],
+      "noLaterNeedsHelpOrRetryEvents": true,
+      "workOutcomesRemainModelInferenceUnconfirmed": true,
+      "manualHelpForLaterTwo": "No manual resume indicated: ordinary queued-attempted-success sequence has one attempt; manual provider repair and resume concerned original three only."
+    }
+  },
+  "originalCriteriaFindings": [
+    {
+      "criterion": "later_application",
+      "decision": "FAIL",
+      "evidence": "later-document-readback.private.json",
+      "detail": "The saved 572-byte note has zero bullets and follows inventory/arithmetic prose. It does not supply exactly three short bullets in the required order: judgement, missing amount, then one concrete next step. Correct arithmetic and norm do not satisfy the whole original condition."
+    },
+    {
+      "criterion": "feedback scope and temporal meaning",
+      "decision": "LIMITATION_OBSERVED",
+      "evidence": "phase-3-native-observation-typed.private.json: work.stored.spec.task",
+      "detail": "The handoff broadens feedback instruction start now no new task to no new task that calendar day. The original feedback constrained the current feedback turn, not all of 11 October. This is not treated as a correct remembered agreement."
+    },
+    {
+      "criterion": "budget and no repetition",
+      "decision": "QUALIFIED_ONLY",
+      "detail": "Two observed work handoffs each succeeded once with generation1/claim_count1. Three successful ordinary-turn receipts are recorded. Existing memory checkpoint retries remain 3; native batch retry counts are 0. No blanket zero-retry result is asserted for all background processing."
+    },
+    {
+      "criterion": "boundaries",
+      "decision": "BOUNDED_SUPPORT",
+      "detail": "Canonical prompts preserve the same authorized private/project binding and explicitly fictional input; the later physical document remains project-scoped and the original file is unchanged. Native work outputs report no purchase, HA change or internet action. This review did not add new transport or action probes."
+    }
+  ],
+  "preservedPreparationFailure": {
+    "initialPhase3Envelope": {
+      "httpStatus": 422,
+      "durationSeconds": 0.037,
+      "initialTime": "2026-10-11T16:36:19.978777+00:00",
+      "canonicalTime": "2026-10-11T16:37:25Z",
+      "allOtherPayloadFieldsExactlyEqual": true,
+      "oldEnvelopeAndReceiptRetained": true
+    },
+    "reviewerQualification": "Initial payload and HTTP422 receipt now authorized and independently read. Canonical successful turn retains same prompt/IDs/criteria, unique committed ingress/reply and one observed worker claim. Pre-model wire rejection is also recorded in root publication; no fresh provider probe was performed."
+  },
+  "usage": {
+    "workerUsageIndependentlyRead": {
+      "completedModelResponses": 12,
+      "firstWork": 5,
+      "laterWork": 7,
+      "toolCalls": 10,
+      "knownTokens": 120957,
+      "measurement": "partial",
+      "providerCost": null
+    },
+    "combinedKnownTokens": 137596,
+    "registeredCompletedResponsesRootReported": 15,
+    "combinedRegisteredTools": 12,
+    "fullyReconciledPhysicalRequests": null,
+    "completeProviderTokenTotal": null,
+    "hindsightProviderTokens": null,
+    "credits": null,
+    "developmentUsage": "not independently measured",
+    "qualification": "Native extraction source-tokenization counts are not provider usage; unknown accounting remains unknown.",
+    "foregroundUsageIndependentlyRead": {
+      "firstTurn": {
+        "modelAttempts": 1,
+        "toolCalls": 1,
+        "inputTokens": 5128,
+        "outputTokens": 220,
+        "measurement": "measured"
+      },
+      "feedbackTurn": {
+        "modelAttempts": 1,
+        "toolCalls": 0,
+        "inputTokens": 5295,
+        "outputTokens": 70,
+        "measurement": "measured"
+      },
+      "laterTurn": {
+        "modelAttempts": 1,
+        "toolCalls": 1,
+        "inputTokens": 5629,
+        "outputTokens": 297,
+        "measurement": "measured"
+      },
+      "registeredModelAttempts": 3,
+      "registeredTools": 2,
+      "knownTokens": 16639
+    }
+  },
+  "publicationClaims": {
+    "installedRepairAllowed": true,
+    "boundedProjectNormRecallAllowed": true,
+    "wholePreregisteredCasePassAllowed": false,
+    "fullLearningCyclePassAllowed": false,
+    "AIDE2CompletionAllowed": false,
+    "familyOrOwnerAcceptanceAllowed": false,
+    "newP2SeriesOrComparisonClaimAllowed": false,
+    "newResultPublicationBinding": {
+      "path": "eva2/evidence/product/learning-cycle-native-result-20261011.json",
+      "sha256": "56a70696e5022cff4e08b09a772a83acbb0fb0c93799e8d6055ad762b7932531",
+      "decision": "GO_FOR_HONEST_NOT_MET_PUBLICATION"
+    }
+  },
+  "completion": {
+    "wholeGoal": "active",
+    "productFunctionFullyCompleted": false,
+    "familyAccepted": false,
+    "fullLearningCycle": false,
+    "AIDE2Completed": false,
+    "speech": "parked"
+  },
+  "reviewerActions": {
+    "sourceOrRuntimeChanges": 0,
+    "newTests": 0,
+    "providerRequests": 0,
+    "newNativeRetains": 0,
+    "credentialOrConfigPrivateReads": 0,
+    "scope": "Authorized own-case snapshots and public evidence only; later memory snapshot and phase2 usage field read after explicit bounded authorization. Only this review file modified; no new tests/native/model operations."
+  },
+  "publicResultPublicationDecision": "GO",
+  "publicResultPublicationAssessment": {
+    "overallNotMetPreserved": true,
+    "formatAndTimeScopeFailuresExplicit": true,
+    "fileHashesAndUsageArithmeticMatchReadEvidence": true,
+    "twoPostRepairRetentionClaimsNowSupportedByExistingAllowedSnapshot": true,
+    "wholeGoalActiveAndNoNewCompletionClaims": true,
+    "creditsAndFullUsageRemainUnknown": true,
+    "noNewComparisonOrFamilyAcceptanceClaim": true
+  }
+}

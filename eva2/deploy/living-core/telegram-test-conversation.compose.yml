@@ -42,6 +42,14 @@ services:
         read_only: true
         bind:
           create_host_path: false
+      # This isolated route uses a prepublished consumer lease. Its publisher
+      # must create auth.lock before compose up; Docker may not create a directory.
+      - type: bind
+        source: ${EVA_TEST_HINDSIGHT_ACCESS_DIR_HOST:?set an access-only Hindsight auth directory}/auth.lock
+        target: /home/hindsight/.codex/auth.lock
+        read_only: false
+        bind:
+          create_host_path: false
       - type: volume
         source: telegram-conversation-hindsight-data
         target: /home/hindsight/.pg0

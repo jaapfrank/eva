@@ -1,0 +1,108 @@
+{
+  "contract": "EvaLearningCycleNativeResult/v1",
+  "recordedAt": "2026-10-11T16:44:14.914338+00:00",
+  "criteria": "eva2/evidence/product/learning-cycle-native-criteria-20261011.json",
+  "caseSha256": "e7abd7f76dd94ea4d11ed6afc8636096466d8f99e35d93b43107b0263db52a48",
+  "installation": "eva2/evidence/product/learning-cycle-memory-access-installed-20261011.json",
+  "scope": "One controlled technical project and developer feedback through installed private conversation/work/memory routes; not actual family acceptance or a competitor comparison.",
+  "overall": "not_met",
+  "demonstrated": {
+    "firstTaskSavedAndSeparatelyRead": true,
+    "feedbackReceivedThroughOrdinaryRoute": true,
+    "threeOriginalMemoryDocumentsRetained": true,
+    "laterNewConversationWithNoRecentMessages": true,
+    "priorNormNotRepeatedInLaterRequestOrFirstReport": true,
+    "later34Minus28Equals6": true,
+    "rememberedMinimum9AndShortfall3Applied": true,
+    "laterReportSavedAndSeparatelyRead": true,
+    "firstReportHashUnchanged": true,
+    "newConversationAndWorkOutcomeRetainedAutomatically": true
+  },
+  "unmet": {
+    "threeShortBulletsInRequestedOrder": false,
+    "nextStepAsThirdBullet": false,
+    "feedbackTimeScopeFaithfullyCarried": "Native handoff broadened 'start no new work now' from the feedback turn to the calendar day. That broader restriction is not independently supported by the original feedback."
+  },
+  "evidence": {
+    "firstFileSha256": "70b21a0d21ce5847c98b28f4e766059ba33ffa3bd345e0baedd13db59aa48962",
+    "laterFileSha256": "bc098699dc93fcb5359b817ac2d1d82fff955b0f91b8e2468057472c753ca93b",
+    "laterMemoryEvidenceCount": 5,
+    "firstWorkerClaimCount": 1,
+    "laterWorkerClaimCount": 1,
+    "bothNativeWorkStates": "succeeded",
+    "factualNormEnteredNativeHandoff": true,
+    "presentationFeedbackMissingFromNativeHandoff": true
+  },
+  "recovery": {
+    "existingLocalRetryCounts": [
+      3,
+      3,
+      3
+    ],
+    "originalNativeOperationIdsPreserved": true,
+    "sameNativeSourcesAndProjectScope": true,
+    "threeNativeOperationsCompletedAfterCauseChanged": true,
+    "originalFailuresRetained": true,
+    "firstTaskNotRepeated": true,
+    "manualTechnicalHelp": "One provider configuration correction plus exact existing retention operations resumed using existing adapter and receipts. No replacement memory source or instruction injection."
+  },
+  "normalPostRepairQueue": {
+    "laterConversation": [
+      "MEMORY_RETAIN_QUEUED",
+      "MEMORY_RETAIN_ATTEMPTED",
+      "MEMORY_RETAIN_SUCCEEDED"
+    ],
+    "laterWorkOutcome": [
+      "MEMORY_RETAIN_QUEUED",
+      "MEMORY_RETAIN_ATTEMPTED",
+      "MEMORY_RETAIN_SUCCEEDED"
+    ],
+    "manualHelpForTheseTwo": false
+  },
+  "usage": {
+    "foreground": {
+      "registeredModelAttempts": 3,
+      "registeredToolCalls": 2,
+      "tokens": 16639,
+      "measurement": "measured"
+    },
+    "workers": {
+      "registeredCompletedResponses": 12,
+      "registeredToolCalls": 10,
+      "tokens": 120957,
+      "measurement": "partial"
+    },
+    "combinedKnownTokenLowerBound": 137596,
+    "registeredCompletedResponses": 15,
+    "registeredTools": 12,
+    "memoryExtractionModelUsage": null,
+    "completeTotal": null,
+    "creditCost": null,
+    "developmentUsage": "not independently measured",
+    "efficiencyAdvantageProven": false,
+    "operationMetadataTotalTokensAreNotProviderModelUsage": true
+  },
+  "preparationFailures": {
+    "initialLaterEnvelope": {
+      "httpStatus": 422,
+      "modelDispatch": false,
+      "cause": "Noncanonical timestamp rejected by wire parser; corrected to canonical UTC Z, same text/IDs/criteria; original bytes retained."
+    },
+    "diagnosticSerialization": "Two read-only native observations initially used wrong event/dataclass serialization; corrected without replaying work.",
+    "otherPreservedFailures": "See installed repair evidence; no rollback/reinstall loop."
+  },
+  "limits": [
+    "Full controlled-case criteria not met; only the recalled norm and calculation are demonstrated.",
+    "No general learning mastery, family acceptance, quality superiority or complete AIDE²/dream cycle demonstrated.",
+    "Privacy/stop guarantees are retained through existing unchanged boundaries and earlier checks; this case is not a new general privacy/stop proof.",
+    "Known tokens exclude unmeasured memory extraction and missing usage; no savings claim."
+  ],
+  "nextConcreteGap": "Carry the complete relevant feedback, presentation intent and original time scope into later work; reuse existing memory/handoff paths, no example-specific bullet script.",
+  "project": {
+    "wholeGoal": "active",
+    "newMainCompletion": false,
+    "historicalSmallTaskCounts": "unchanged",
+    "voice": "parked",
+    "newComparisonSeries": false
+  }
+}

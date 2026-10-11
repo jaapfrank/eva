@@ -33,6 +33,33 @@ blijven open. Geen hoofdonderdeel of project afgesloten door deze koppeling.
 Controleer bij brongebonden kern/werkerwijzigingen hun gemeenschappelijke
 taakmodules vóór de bestaande installatie; behoud gegevens/configuratie/mandaat.
 
+## Lopende leercyclus — norm toegepast, volledige feedback nog open, 11 oktober
+
+De geheugenprovidercorrectie is geïnstalleerd; twee geheugendiensten gezond,
+credentialmap RO en alleen het stabiele lege lockbestand RW. Dezelfde drie
+bewaarde opslagoperaties zijn afgerond na de gewijzigde oorzaak. Oude fouten,
+native operatie-ID's en lokale retrytellers blijven behouden; eerste werk niet
+herhaald. Nieuwe gespreks- en werkuitkomst zijn automatisch opgeslagen.
+
+De vooraf vastgelegde andere opdracht is in een nieuwe sessie uitgevoerd,
+zonder de eerdere norm te herhalen. Eva gebruikt minimum 9: 34-28=6 over,
+dus 3 tekort. Nieuwe notitie en eerste ongewijzigde notitie fysiek teruggelezen.
+Dit bewijst beperkte toepassing van projectervaring; de volledige proef is
+NOT_MET: drie korte bullets/volgende stap ontbreken, en 'start nu niets nieuws'
+is in de overdracht onterecht naar de kalenderdag verbreed.
+
+Bekende ondergrens 137.596 tokens, 15 geregistreerde responses en 12 tools.
+Geheugenextractie, volledig totaal en credits onbekend. Geholpen technische
+proef, geen gezinsacceptatie, algemene voorsprong of volledige AIDE².
+Vervolg: volledige relevante feedback, vorm en oorspronkelijke tijdscope in de
+bestaande geheugen-/taakoverdracht bewaren en toepassen. Geen voorbeeldscript,
+gesloten proefherhaling of nieuwe vergelijkingsserie. Projectgoal blijft actief,
+spraak geparkeerd. Bestaande voorbereider-API-fouten blijven afzonderlijk.
+
+Resultaat: eva2/evidence/product/learning-cycle-native-result-20261011.json.
+Installatie: eva2/evidence/product/learning-cycle-memory-access-installed-20261011.json.
+Review: eva2/reviews/learning-cycle-native-result-review-20261011.json.
+
 ## Historische afgeronde deelopdracht — 11 oktober 2026
 
 De drie expliciete goalvoorwaarden zijn onafhankelijk gecontroleerd en bereikt:

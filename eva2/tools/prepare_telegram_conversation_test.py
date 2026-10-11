@@ -210,6 +210,8 @@ def prepare_conversation_inputs(
         _write_private(
             hindsight_directory / "auth.json", hindsight_raw, owner=hindsight_owner
         )
+        # Mutable flock coordination, separate from the five sealed inputs.
+        _write_private(hindsight_directory / "auth.lock", b"", owner=hindsight_owner)
         volume = f"eva2-telegram-test-conversation-hindsight-{uuid4().hex[:16]}"
         environment = {
             "EVA_TEST_CONVERSATION_CORE_IMAGE": core_image,
