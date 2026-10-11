@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T15:46:04.597516+00:00",
+  "lastUpdated": "2026-10-11T15:51:04.828538+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1027,7 +1027,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T15:46:04.597516+00:00",
+        "checkedAt": "2026-10-11T15:51:04.828538+00:00",
         "deliveries": [
           {
             "title": "Achtergrondwerk zoekt geheugen met de echte taak en nieuwste bijsturing",
@@ -4585,7 +4585,7 @@
           "source": "eva2/evidence/product/telegram-default-private-installed-20261011.json"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T15:46:04.597516+00:00",
+        "reviewedAt": "2026-10-11T15:51:04.828538+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4615,8 +4615,8 @@
           }
         }
       },
-      "reviewedAt": "2026-10-11T15:21:51.921417+00:00",
-      "checkedAt": "2026-10-11T15:16:09.300448+00:00",
+      "reviewedAt": "2026-10-11T15:51:04.828538+00:00",
+      "checkedAt": "2026-10-11T15:51:04.828538+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -10909,6 +10909,106 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
+        "checkedAt": "2026-10-11T15:51:04.828538+00:00",
+        "basis": "Geaccepteerde oorspronkelijke functies blijven behouden; de actuele volledige projectscope, twee geïnstalleerde geheugenkoppelingen en open leercyclus/AIDE² zijn expliciet gescheiden.",
+        "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
+        "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
+        "rows": [
+          {
+            "name": "Persoonlijkheid",
+            "state": "observed",
+            "label": "Door jou geaccepteerd · M3.3",
+            "result": "Warmte, eigen oordeel en stijl in gewoon gebruik: jouw acceptatie van 5 oktober blijft staan. Dit is de M3-scope; geen bewijs van algemene voorsprong.",
+            "remaining": "Geen oorspronkelijke M3-taak open. Volledige gezinsacceptatie blijft F2.",
+            "evidencePaths": [
+              "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
+            ]
+          },
+          {
+            "name": "Geheugen",
+            "state": "incomplete",
+            "label": "Geheugenbasis geaccepteerd · leercyclus open",
+            "result": "Gekozen geheugenfuncties en latere onderwerpvoortzetting blijven geaccepteerd. Eva1-geheugen is geïmporteerd. Nieuwe privétaakuitkomsten worden opgeslagen; achtergrondwerk zoekt nu met de echte opdracht en laatste bijsturing. Beide koppelingen zijn geïnstalleerd en onafhankelijk beoordeeld.",
+            "remaining": "Een echte eerdere ervaring én menselijke feedback bij later werk toepassen en aantonen dat Eva anders handelt. De volledige leercyclus en het brede mensbegrip zijn nog niet afgerond. De 96 niet gekoppelde persoonsregels blijven apart; archief/testmateriaal blijft buiten actief geheugen.",
+            "evidencePaths": [
+              "eva2/design/product/execution-workboard-v1.json",
+              "eva2/evidence/product/p2-published-results-20261006.json",
+              "eva2/evidence/product/p2-eva2-original-cm08-result-20261008.json",
+              "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
+              "eva2/evidence/product/eva1-memory-product-import-20261010.json",
+              "eva2/evidence/product/private-work-outcome-memory-installed-20261011.json",
+              "eva2/evidence/product/task-context-memory-installed-20261011.json"
+            ]
+          },
+          {
+            "name": "Eigen initiatief",
+            "state": "incomplete",
+            "label": "Resultaat geleverd · oordeel open",
+            "result": "Een zelfgekozen bijdrage is werkelijk uitgevoerd en privé teruggelezen (I1.1). Algemene bronkeuze en automatisering I2 zijn technisch afgerond.",
+            "remaining": "Herhaald passend initiatief, timing en leren van de menselijke reactie als samenhangend geheel aantonen. I1.2 blijft jouw oordeel over nut en hinder; dit is geen ontbrekende vaste camera- of afvalfunctie.",
+            "evidencePaths": [
+              "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
+              "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json"
+            ]
+          },
+          {
+            "name": "Zelfstandig werk",
+            "state": "incomplete",
+            "label": "Werkend en geïnstalleerd · gezinsgebruik open",
+            "result": "Een echte opdracht over HA en documenten is afgemaakt en onafhankelijk teruggelezen. Gewone eigenaar-privétekst gebruikt nu Eva2 zonder /eva2. Bestaande browser-, onderzoeks- en beperkte verbetercycli blijven behouden; de nieuwe taakcontext-geheugenkoppeling is geïnstalleerd.",
+            "remaining": "Een ontbrekende mogelijkheid zelf realiseren en later hergebruiken; volledige AIDE² voor agentaansturing én code/apps/addons/droommodus. Nieuwe echte Telegramuitwisseling, dagelijks gezinsgebruik en resterende vervangingsvoorwaarden blijven open. De eerdere 478.284 tokens blijven een efficiëntietekort; geen nieuwe vergelijkingsserie.",
+            "evidencePaths": [
+              "eva2/evidence/product/p2-published-results-20261006.json",
+              "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
+              "eva2/evidence/product/l3-context-candidate-b-installed-20261007.json",
+              "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json",
+              "eva2/evidence/product/p2-eva2-original-cm08-result-20261008.json",
+              "eva2/evidence/product/p2-eva2-original-cm05-result-20261008.json",
+              "eva2/evidence/product/general-multi-service-execution-installed-20261010.json",
+              "eva2/evidence/product/telegram-default-private-installed-20261011.json",
+              "eva2/evidence/product/task-context-memory-installed-20261011.json"
+            ]
+          }
+        ]
+      },
+      "lastUpdatedAt": "2026-10-11T15:51:04.828538+00:00",
+      "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
+      "resultLabelVerification": {
+        "checkedAt": "2026-10-09T11:50:46.902135+00:00",
+        "sourceSha256": {
+          "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx": "506923498c9de6f63ec9dd6e00a0bb345cc4f325a99408f4129b006b9a1f33ea",
+          "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css": "3f74b3080d409b18fce7057f19f17489d7b3936c15396830922101b77550211d"
+        },
+        "build": "vite build --mode project: exit 0; bestaande dependencies",
+        "installedService": "eva2-project-dashboard.service",
+        "servedAssets": [
+          "/assets/index-DLE02AwT.js",
+          "/assets/index-BiT7eFGA.css"
+        ],
+        "http": {
+          "/": 200,
+          "/project-state": 200
+        },
+        "renderedResultLabels": [
+          "Proef geslaagd",
+          "Proef onbeslist",
+          "Proefroute hersteld",
+          "Taak niet afgemaakt"
+        ],
+        "renderedColors": [
+          "groen",
+          "geel",
+          "blauw",
+          "rood"
+        ],
+        "renderedDates": "nl-NL / Europe/Amsterdam",
+        "review": "p2_eva1_lease_review_20261006: GO; scores, UNKNOWN, 48 taakstatussen/eindvoorwaarden en 39 afgeronde taken behouden",
+        "productFunctionCompleted": false,
+        "newEvaModelCalls": 0
+      },
+      "historicalSummaryBeforeTelegramDefault20261011": "Nieuwe opleveringen: algemene uitvoering over HA en documenten werkt geïnstalleerd; 1.115 Eva1-geheugenregels beschikbaar. 39/48 oorspronkelijke kleine taken behouden. Standaard Telegramroute gebruikt nog Eva1. Gezinsacceptatie, algemene superioriteit en efficiënter werk niet bewezen; spraak geparkeerd.",
+      "historicalSummaryBeforeWholeGoal20261011": "Algemene uitvoering over HA en documenten geïnstalleerd; 1.115 Eva1-geheugenregels in 45 privédocumenten beschikbaar. Gewone eigenaar-privétekst in Telegram gebruikt Eva2 zonder /eva2. Nieuwe echte uitwisseling, volledige gezinsacceptatie, brede betrouwbaarheid en efficiënter werk blijven open. 39/48 oorspronkelijke kleine taken behouden; spraak geparkeerd.",
+      "historicalHousemateSummaryBeforeLearningStatus20261011": {
         "checkedAt": "2026-10-11T12:16:13.976785+00:00",
         "basis": "Bestaande acceptaties en de begrensde geïnstalleerde uitvoering, geheugenoverdracht en eigenaar-privétekstingang; bestaande taakvoorwaarden en tellers blijven behouden.",
         "headline": "Persoonlijkheid en gekozen geheugenfuncties geaccepteerd. Nu ook Eva1-geheugen en algemene uitvoering over twee diensten geïnstalleerd.",
@@ -10968,43 +11068,22 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T15:27:57.564122+00:00",
-      "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
-      "resultLabelVerification": {
-        "checkedAt": "2026-10-09T11:50:46.902135+00:00",
-        "sourceSha256": {
-          "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx": "506923498c9de6f63ec9dd6e00a0bb345cc4f325a99408f4129b006b9a1f33ea",
-          "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css": "3f74b3080d409b18fce7057f19f17489d7b3936c15396830922101b77550211d"
-        },
-        "build": "vite build --mode project: exit 0; bestaande dependencies",
-        "installedService": "eva2-project-dashboard.service",
-        "servedAssets": [
-          "/assets/index-DLE02AwT.js",
-          "/assets/index-BiT7eFGA.css"
+      "dashboardVerificationLearningStatus20261011": {
+        "checkedAt": "2026-10-11T15:52:27.698311+00:00",
+        "url": "http://localhost:44712/",
+        "verified": "Visible browser text, not only project-state JSON",
+        "headline": "Volledig projectgoal actief",
+        "cardsUpdated": [
+          "Geheugen",
+          "Eigen initiatief",
+          "Zelfstandig werk"
         ],
-        "http": {
-          "/": 200,
-          "/project-state": 200
-        },
-        "renderedResultLabels": [
-          "Proef geslaagd",
-          "Proef onbeslist",
-          "Proefroute hersteld",
-          "Taak niet afgemaakt"
-        ],
-        "renderedColors": [
-          "groen",
-          "geel",
-          "blauw",
-          "rood"
-        ],
-        "renderedDates": "nl-NL / Europe/Amsterdam",
-        "review": "p2_eva1_lease_review_20261006: GO; scores, UNKNOWN, 48 taakstatussen/eindvoorwaarden en 39 afgeronde taken behouden",
-        "productFunctionCompleted": false,
-        "newEvaModelCalls": 0
-      },
-      "historicalSummaryBeforeTelegramDefault20261011": "Nieuwe opleveringen: algemene uitvoering over HA en documenten werkt geïnstalleerd; 1.115 Eva1-geheugenregels beschikbaar. 39/48 oorspronkelijke kleine taken behouden. Standaard Telegramroute gebruikt nog Eva1. Gezinsacceptatie, algemene superioriteit en efficiënter werk niet bewezen; spraak geparkeerd.",
-      "historicalSummaryBeforeWholeGoal20261011": "Algemene uitvoering over HA en documenten geïnstalleerd; 1.115 Eva1-geheugenregels in 45 privédocumenten beschikbaar. Gewone eigenaar-privétekst in Telegram gebruikt Eva2 zonder /eva2. Nieuwe echte uitwisseling, volledige gezinsacceptatie, brede betrouwbaarheid en efficiënter werk blijven open. 39/48 oorspronkelijke kleine taken behouden; spraak geparkeerd."
+        "learningCycleComplete": false,
+        "aide2Complete": false,
+        "originalAcceptedMemoryScopeRetained": true,
+        "originalTaskStatesChanged": false,
+        "noRuntimeDeployment": true
+      }
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
