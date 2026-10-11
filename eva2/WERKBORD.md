@@ -1,5 +1,18 @@
 ## Actueel werk — 2026-10-11T23:38:28.027894+00:00
 
+## Actueel 12 oktober — zelfgekozen verbetering toepassen
+
+De initiatief→uitkomstgeheugen-koppeling is geïnstalleerd. De volgende concrete
+ontbrekende overgang zit in dezelfde verbeterroute: de uitgestelde toepassing
+van een onafhankelijk beoordeeld bewaard hulpmiddel laadt uitsluitend een gewone
+gebruikersingang, waardoor een native initiatief daar vastloopt. Maak uitsluitend
+de bestaande bron-/toestemmingskoppeling passend voor die echte initiatiefherkomst;
+behoud huidige eigenaar, mandaat, stop, exacte bron en onafhankelijke beoordeling.
+Geen tweede verbeterplatform, gesloten proefherhaling of nieuwe vergelijking.
+Werk is gestart; installatie en later werkelijk gebruik nog niet aangetoond.
+Het volledige projectgoal met vier productuitkomsten, leercyclus en AIDE² blijft
+actief. Historische 39/48 kleine afrondingen en eerdere bewijsclaims blijven staan.
+
 **Laatst opgeleverd:** eigen digitaal initiatief gebruikt dezelfde privéroute
 naar uitkomstgeheugen als gewone opdrachten. Gericht gecontroleerd en geïnstalleerd;
 beide diensten gezond. Geen nieuwe modelproef.

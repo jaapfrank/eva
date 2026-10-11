@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T23:41:05.032229+00:00",
+        "checkedAt": "2026-10-11T23:46:38.141122+00:00",
         "deliveries": [
           {
             "title": "Eigen initiatief aangesloten op privégeheugen",
@@ -4768,18 +4768,18 @@
           }
         ],
         "now": {
-          "title": "AIDE² · leren en verbeteren op werkelijke ervaring",
-          "state": "planned",
-          "phase": "existing_idle_improvement_cycle",
-          "activeExecution": false,
+          "title": "Zelfgekozen verbetering na beoordeling toepassen",
+          "state": "in_progress",
+          "phase": "native_reviewed_artifact_application",
+          "activeExecution": true,
           "owner": "/root",
           "executor": "/root",
           "coordination": "/root",
-          "summary": "De geheugenovergang is geïnstalleerd. Hierna de bestaande ontwikkel-/verbeterroute in rustige momenten aansluiten op werkelijk gevonden tekorten.",
-          "detail": "Geen nieuwe vergelijking of voorbeeldfunctie. De onhaalbare vier-aanvragenproef wordt niet doorgedraaid. Echt later initiatiefgebruik blijft afzonderlijk open.",
-          "source": "eva2/PROJECTDOEL.md",
-          "doneWhen": "Een bestaande verbeterroute gebruikt echte ervaring, beoordeelt een verbetering onafhankelijk en past haar later bij gewoon werk toe.",
-          "review": "eva2/reviews/native-initiative-outcome-memory-installed-review-20261012.json",
+          "summary": "Concrete ontbrekende koppeling: de toepassing van beoordeelde hulpmiddelen accepteert nog alleen een gewone gebruikersopdracht. Eigen initiatief moet dezelfde bestaande route kunnen gebruiken.",
+          "detail": "Dezelfde bewaarde bron, onafhankelijke eindbeoordeling en gecontroleerde documentopslag. Actuele herkomst, mandaat en stoppen blijven gelden. Geen nieuwe verbeterplatform- of vergelijkingsserie.",
+          "source": "eva2/src/eva/operations/saved_artifact_application.py",
+          "doneWhen": "De bestaande toepassingsroute herkent het oorspronkelijke native initiatief, controleert de huidige toestemming en bewaart uitsluitend het onafhankelijk geaccepteerde hulpmiddel; gewone opdrachten blijven werken.",
+          "review": null,
           "reviewSha256": "e8c8cf5d8b478d7529d8f7f1c53f7754b99a780ecb6bacdfbe7e66b0dd03ad8b"
         },
         "next": {
@@ -4788,7 +4788,7 @@
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md",
-          "summary": "Een toegepaste verbetering moet later relevant gedrag verbeteren; niet alleen een opgeslagen reflectie of kandidaat."
+          "summary": "Na deze aansluiting: een echte verbetering uitvoeren en de toegepaste variant bij later relevant werk gebruiken. Agentaansturing en de volledige AIDE²/droomcyclus blijven open."
         },
         "ownerAction": {
           "required": false,
@@ -4878,7 +4878,7 @@
         }
       },
       "reviewedAt": "2026-10-11T23:41:05.032229+00:00",
-      "checkedAt": "2026-10-11T23:41:05.032229+00:00",
+      "checkedAt": "2026-10-11T23:46:38.141122+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11695,9 +11695,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "De geheugenovergang is geïnstalleerd. Hierna de bestaande ontwikkel-/verbeterroute in rustige momenten aansluiten op werkelijk gevonden tekorten.",
+      "currentWork": "Zelfgekozen verbetering na beoordeling toepassen",
       "currentEvidence": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
-      "nextStep": "Een toegepaste verbetering moet later relevant gedrag verbeteren; niet alleen een opgeslagen reflectie of kandidaat.",
+      "nextStep": "Na deze aansluiting: een echte verbetering uitvoeren en de toegepaste variant bij later relevant werk gebruiken. Agentaansturing en de volledige AIDE²/droomcyclus blijven open.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",

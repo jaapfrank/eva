@@ -1,5 +1,18 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Actueel 12 oktober — zelfgekozen verbetering toepassen
+
+De initiatief→uitkomstgeheugen-koppeling is geïnstalleerd. De volgende concrete
+ontbrekende overgang zit in dezelfde verbeterroute: de uitgestelde toepassing
+van een onafhankelijk beoordeeld bewaard hulpmiddel laadt uitsluitend een gewone
+gebruikersingang, waardoor een native initiatief daar vastloopt. Maak uitsluitend
+de bestaande bron-/toestemmingskoppeling passend voor die echte initiatiefherkomst;
+behoud huidige eigenaar, mandaat, stop, exacte bron en onafhankelijke beoordeling.
+Geen tweede verbeterplatform, gesloten proefherhaling of nieuwe vergelijking.
+Werk is gestart; installatie en later werkelijk gebruik nog niet aangetoond.
+Het volledige projectgoal met vier productuitkomsten, leercyclus en AIDE² blijft
+actief. Historische 39/48 kleine afrondingen en eerdere bewijsclaims blijven staan.
+
 ## Actief volledig projectgoal — 11 oktober 2026
 
 Het actieve Codex-goal omvat het gehele Eva2-project: een persoon, geheugen en
