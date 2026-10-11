@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-11T22:09:01.612593+00:00",
+  "url": "http://localhost:44712/",
+  "verification": "Read actual user browser DOM after automatic refresh.",
+  "displayedContentCheckedAt": "2026-10-12 00:07:23 Europe/Amsterdam",
+  "displayedDeliveryAt": "2026-10-12 00:02 Europe/Amsterdam",
+  "displayedDelivery": "Werkagent klaargezet voor begrensde zelfverbetering",
+  "displayedWork": "AIDE² · echte werkaanpak vergelijken",
+  "coreAvailable": true,
+  "wholeProjectGoalActive": true,
+  "smallTaskCount": "39/48",
+  "countIsNotProductPercentage": true,
+  "ownerActionRequired": false,
+  "browserConsoleErrors": 0,
+  "sourceCommit": "15d853ef",
+  "sourceCommitPushed": true,
+  "nativeQualityGainProven": false,
+  "remaining": "Fixed ordinary execution/evidence binding before the first native work-strategy trial."
+}
