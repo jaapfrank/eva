@@ -75,7 +75,9 @@ def validate_selected_package(package):
     if (package.get("development_selection_sha256") != digest(canonical(choice))
             or bind_selected_release(base, choice) != package):
         raise ValueError("selected release differs from development choice")
-    CandidateRequest(package["path"], package["baseline_sha256"], package["candidate_content"])
+    CandidateRequest(package["path"], package["baseline_sha256"], package["candidate_content"],
+        **({"baseline_source": package.get("baseline_content"),
+            "source_target": package["source_target"]} if "source_target" in package else {}))
     return package
 
 class HostFinalAssessment:
@@ -113,7 +115,9 @@ class HostFinalAssessment:
         validate_selected_package(package)
         self.scorer.check_candidate(package["candidate_content"].encode(), package["candidate_sha256"])
         report = self.evaluator.evaluate(CandidateRequest(
-            package["path"], package["baseline_sha256"], package["candidate_content"]))
+            package["path"], package["baseline_sha256"], package["candidate_content"],
+            **({"baseline_source": package["baseline_content"],
+                "source_target": package["source_target"]} if "source_target" in package else {})))
         report["final_assessment_binding"] = {
             "registration_sha256": self.config["registration"]["sha256"],
             "scorer_sha256": self.config["scorer"]["sha256"],

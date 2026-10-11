@@ -1,0 +1,87 @@
+{
+  "contract": "EvaSavedArtifactImprovementInstallation/v1",
+  "timestamp": "2026-10-11T18:35:09.140202+00:00",
+  "status": "installed",
+  "installed": true,
+  "source_evidence": "eva2/evidence/product/saved-artifact-component-evaluation-source-20261011.json",
+  "source_review": "eva2/reviews/saved-artifact-component-evaluation-source-review-20261011.json",
+  "source_review_sha256": "554199da30f8fda463b2f419603cc6bb6958c24253d7cbd11ca2af7455e778c2",
+  "source_files": {
+    "eva2/src/eva/adapters/connectors/component_evaluation.py": "db91a92f1e8fd9f51eddd603cb2257dee502277fa5068b3022d527eaeb4b239f",
+    "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "a7d312c177dbea650fd5440bddf8fb6ba1f055bac228cf6038207e581aa6cb26",
+    "eva2/src/eva/application/component_development.py": "f48d40e9eebbff3bf798a4cde83c83bd1378f70ecbf6cbb6763cec58e43be304",
+    "eva2/src/eva/application/component_improvements.py": "0f1838b308347d6da0d4f7ef962ee07b4aadf17c7422f0ef4dbeedec80c4dd19",
+    "eva2/src/eva/bootstrap/delegated_digital_runner.py": "394d697369a4db70b13cdf456a46a987911a56d8756f2d6d3e67691e59ae1532",
+    "eva2/src/eva/operations/component_evaluation.py": "10e30c578e4a91456702aead270b610fa634d5cd2b92db8d604c7eeabd09fa6b",
+    "eva2/src/eva/operations/component_evaluation_service.py": "c2c87c24dc7fdd96f58e09fb6b353cfddd32e74c0dd4ec07b57ac76842eca6d6",
+    "eva2/src/eva/operations/component_final_assessment.py": "2cdc899ef8002cf349a58df0b3bf9d988a1ee40a45f6daebea53cb1eba7f8682",
+    "eva2/src/eva/providers/procedure_reference_actions.py": "4b761ad5817778aeaa48ad5088f8b65b445b3da2c9fabfed2f9bdb58ebb31fd0",
+    "eva2/tests/application/test_saved_component_improvements.py": "6bd191c9900d7fc1eca8c0d6255d41fa85e00090e4bb4e5480abb32331df75a5",
+    "eva2/tests/operations/test_saved_artifact_component_evaluation.py": "872f4828186c7d64603d9ef10d72e700b8e785da812fc4d05f1b85e5e6c8ce98"
+  },
+  "runtime_checks": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:286bc8d230220cb83a79bfc41a2885b3bae9becc11bd00b957fac9bb25ff754c",
+      "healthy": true,
+      "source_module_hashes": {
+        "adapters/connectors/component_evaluation.py": "db91a92f1e8fd9f51eddd603cb2257dee502277fa5068b3022d527eaeb4b239f",
+        "adapters/postgres/component_improvement_actions.py": "a7d312c177dbea650fd5440bddf8fb6ba1f055bac228cf6038207e581aa6cb26",
+        "application/component_development.py": "f48d40e9eebbff3bf798a4cde83c83bd1378f70ecbf6cbb6763cec58e43be304",
+        "application/component_improvements.py": "0f1838b308347d6da0d4f7ef962ee07b4aadf17c7422f0ef4dbeedec80c4dd19",
+        "bootstrap/delegated_digital_runner.py": "394d697369a4db70b13cdf456a46a987911a56d8756f2d6d3e67691e59ae1532",
+        "operations/component_evaluation.py": "10e30c578e4a91456702aead270b610fa634d5cd2b92db8d604c7eeabd09fa6b",
+        "operations/component_evaluation_service.py": "c2c87c24dc7fdd96f58e09fb6b353cfddd32e74c0dd4ec07b57ac76842eca6d6",
+        "operations/component_final_assessment.py": "2cdc899ef8002cf349a58df0b3bf9d988a1ee40a45f6daebea53cb1eba7f8682",
+        "providers/procedure_reference_actions.py": "4b761ad5817778aeaa48ad5088f8b65b445b3da2c9fabfed2f9bdb58ebb31fd0"
+      },
+      "other_python_sources_byteexact": 328,
+      "environment_retained": true,
+      "mounts_retained": true
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:bc1d102ffcc4c10fc03d61869fa6d6aff3d25a1a8591e03d01d5c64236fe867f",
+      "healthy": true,
+      "source_module_hashes": {
+        "adapters/connectors/component_evaluation.py": "db91a92f1e8fd9f51eddd603cb2257dee502277fa5068b3022d527eaeb4b239f",
+        "adapters/postgres/component_improvement_actions.py": "a7d312c177dbea650fd5440bddf8fb6ba1f055bac228cf6038207e581aa6cb26",
+        "application/component_development.py": "f48d40e9eebbff3bf798a4cde83c83bd1378f70ecbf6cbb6763cec58e43be304",
+        "application/component_improvements.py": "0f1838b308347d6da0d4f7ef962ee07b4aadf17c7422f0ef4dbeedec80c4dd19",
+        "bootstrap/delegated_digital_runner.py": "394d697369a4db70b13cdf456a46a987911a56d8756f2d6d3e67691e59ae1532",
+        "operations/component_evaluation.py": "10e30c578e4a91456702aead270b610fa634d5cd2b92db8d604c7eeabd09fa6b",
+        "operations/component_evaluation_service.py": "c2c87c24dc7fdd96f58e09fb6b353cfddd32e74c0dd4ec07b57ac76842eca6d6",
+        "operations/component_final_assessment.py": "2cdc899ef8002cf349a58df0b3bf9d988a1ee40a45f6daebea53cb1eba7f8682",
+        "providers/procedure_reference_actions.py": "4b761ad5817778aeaa48ad5088f8b65b445b3da2c9fabfed2f9bdb58ebb31fd0"
+      },
+      "other_python_sources_byteexact": 326,
+      "environment_retained": true,
+      "mounts_retained": true
+    }
+  },
+  "host_checks": {
+    "service": "eva-component-evaluation.service",
+    "active": true,
+    "running_pythonpath_exact": true,
+    "source_modules_replaced": 7,
+    "other_source_modules_retained": 11,
+    "previous_snapshot_byteexact": true,
+    "same_config_sha256": "055c9d1ea4c4af8c56ba6935b3502d9579f05b9f16ae6ee49186a0cba8a3caf1",
+    "listener_available": true,
+    "live_saved_artifact_suite_configured": false
+  },
+  "installation": {
+    "dispatches": 1,
+    "rollback_or_reinstall": false,
+    "receipt_status": "running_with_retained_mounts",
+    "private_check_receipt_sha256": "855b22b6b1dca8f52bf1f48ba9de24d4f14ae45a7a73dd093f1253c64a56bb53"
+  },
+  "verification_preparation_error": "First check incorrectly compared Docker environment list order. Same keys/values were retained; changed order is immaterial. Corrected comparison; no install repeat.",
+  "new_eva_model_requests": 0,
+  "development_credits": null,
+  "completion_scope": "Verified saved Python source resolution and owner/receipt-bound variants in the existing improvement/evaluation route. Source installed; not a full AIDE² cycle.",
+  "remaining": [
+    "Fixed saved-target development and independent final protocols in the live host",
+    "Saved-artifact publication/application and later improved use",
+    "Agent harness improvement and quiet dream scheduling"
+  ],
+  "whole_goal": "active"
+}

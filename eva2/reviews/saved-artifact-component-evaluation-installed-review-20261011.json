@@ -1,0 +1,99 @@
+{
+  "contract": "EvaSavedArtifactComponentEvaluationInstalledReview/v1",
+  "reviewed_at": "2026-10-11T18:37:02.099476+00:00",
+  "decision": "GO",
+  "scope": "Installed saved-artifact source bridge in the existing component improvement/evaluation route; bounded packaging, runtime readback and publication check.",
+  "material_blockers": [],
+  "source_review_binding": {
+    "path": "eva2/reviews/saved-artifact-component-evaluation-source-review-20261011.json",
+    "sha256": "554199da30f8fda463b2f419603cc6bb6958c24253d7cbd11ca2af7455e778c2",
+    "source_and_test_bytes_still_match_frozen_manifest": true,
+    "new_source_reaudit_performed": false
+  },
+  "independent_native_readback": {
+    "core": {
+      "image": "sha256:286bc8d230220cb83a79bfc41a2885b3bae9becc11bd00b957fac9bb25ff754c",
+      "healthy": true,
+      "python_modules": 337,
+      "reviewed_modules_exact": 9,
+      "other_sources_byteexact": 328,
+      "mounts_match_retained_update_receipt": true,
+      "mount_count": 25
+    },
+    "delegated_work_worker": {
+      "image": "sha256:bc1d102ffcc4c10fc03d61869fa6d6aff3d25a1a8591e03d01d5c64236fe867f",
+      "healthy": true,
+      "python_modules": 335,
+      "reviewed_modules_exact": 9,
+      "other_sources_byteexact": 326,
+      "mounts_match_retained_update_receipt": true,
+      "mount_count": 21
+    },
+    "method": "Read-only Docker image/health/mount metadata and live Python file hashing, compared to the frozen source manifest, retained update receipt and original module inventory. No product logic or model execution.",
+    "evaluator_host": {
+      "service": "eva-component-evaluation.service",
+      "active": true,
+      "substate": "running",
+      "current_source_pythonpath_matches_new_snapshot": true,
+      "snapshot_python_modules": 18,
+      "source_modules_replaced": 7,
+      "other_modules_byteexact": 11,
+      "old_snapshot_bytes_preserved": true,
+      "new_snapshot_bytes_match_manifest": true
+    }
+  },
+  "installation_receipts": {
+    "status": "running_with_retained_mounts",
+    "one_update_dispatch_reported": true,
+    "rollback_or_reinstall_reported": false,
+    "environment_retained": {
+      "core": true,
+      "delegated_work_worker": true,
+      "evidence": "Root installed-checks receipt reports identical environment keys/values; prepared-image receipt reports identical image configuration. Environment values were not published."
+    },
+    "evaluator_config_and_queue_retained_reported": true,
+    "same_evaluator_config_sha256_reported": "055c9d1ea4c4af8c56ba6935b3502d9579f05b9f16ae6ee49186a0cba8a3caf1",
+    "private_receipt_sha256": {
+      "installed_checks": "855b22b6b1dca8f52bf1f48ba9de24d4f14ae45a7a73dd093f1253c64a56bb53",
+      "image_update": "d699ea6df9f7788d99e1632308bf1c308b83974fa032b727683d974cf9202524",
+      "host_update": "35f2f5288d0bfe4567687f44334e9fe2d8b642a3a21268c609680932acd3f0bd",
+      "host_source_manifest": "570633c00ca808330e6386dcb67711174c1688f6ef5e44982e9ba67869dbe9e1",
+      "prepared_image_checks": "36c789745e5c392710c3bd5b6199c3b7f3dead5b57fc64c7b012dae7792b0010"
+    }
+  },
+  "publication_binding": {
+    "path": "eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json",
+    "sha256": "dd369f4924ff890be05b63aef0b8b992667743fd30786a749352acb3a0dbe5ad",
+    "installed_source_hashes_and_images_match_approved_bridge": true,
+    "public_runtime_and_host_checks_match_private_receipt": true,
+    "claims_do_not_complete_whole_goal_or_AIDE2": true,
+    "dashboard_progress": {
+      "path": "eva2/evidence/product/dashboard-saved-artifact-progress-20261011.json",
+      "sha256": "5fd9cea3e6adb868494c8644011f14e6f3cb2bb9b75d8f8365a44209cb66e1b8",
+      "root_recorded_browser_http": 200,
+      "root_recorded_javascript_errors": 0,
+      "reviewer_repeated_browser_check": false,
+      "scope_matches_installed_bridge_and_open_full_AIDE2": true,
+      "review_pending_label_is_historical_pre_final_review_state": true,
+      "current_work_remains_in_progress_and_whole_goal_active": true
+    },
+    "dashboard_binding_checked_at": "2026-10-11T18:37:28.749330+00:00",
+    "previous_installation_review_sha256": "526dbae1a69ac9b73afdeaa79209bd692807fe008ed6a9974fc4a869cb0d93b2"
+  },
+  "preserved_failures_and_precisions": [
+    "Root first verification compared environment list order. Identical maps are the relevant comparison; verification was corrected without another installation.",
+    "Reviewer initial readback used a container ID as a named inventory key and failed at lookup. Corrected read-only lookup completed; no source/runtime mutation or new model request."
+  ],
+  "limitations": [
+    "No live saved-artifact suite is configured; exact host-bound development and independent final protocols remain open.",
+    "No saved-helper automatic publishing/application, native semantic gain or later improved use is established by this installation.",
+    "Full learning cycle, AIDE², harness improvement and quiet dream scheduling remain active and incomplete.",
+    "No general privacy, superiority, speed or efficiency claim; development credits remain unknown."
+  ],
+  "review_activity": {
+    "new_model_requests": 0,
+    "new_product_tests_or_native_behavior_probes": 0,
+    "runtime_mutations": 0,
+    "scope": "Only narrow installed readbacks and this review file."
+  }
+}

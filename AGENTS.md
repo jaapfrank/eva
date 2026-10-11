@@ -41,13 +41,24 @@ van deze geslaagde bronchecks. Kwaliteitsverbetering en werkelijk later toepasse
 staan voorop; een lagere tokenstand is niet het doel.
 
 
-De gerichte broncontrole heeft nu het ontbrekende koppelvlak vastgesteld:
-de bestaande verbeterroute behandelt geïnstalleerde Eva-code, terwijl een door
-Eva bewaard hulpmiddel nog geen beoordeelbaar en toepasbaar verbeterdoel is.
-Sluit de geverifieerde bron, eigenaar/project en baselinehash aan op dezelfde
-vergelijking en onafhankelijke eindbeoordeling; publiceer winst via bestaande
-opslag en herbruikbare werkwijze. Er is hierdoor nog geen nieuwe AIDE²-code
-geïnstalleerd. Broncontrole: eva2/evidence/product/aide-extension-gap-20261011.json.
+De vastgestelde bronkoppeling is nu gebouwd en eenmaal geïnstalleerd in de
+bestaande kern, werker en beoordelaar. Een geverifieerd bewaard Python-hulpmiddel
+kan via dezelfde route worden gelezen en als exact eigenaar-/receiptgebonden
+variant worden voorgesteld; een vaste optionele beoordelingssuite gebruikt
+dezelfde geïsoleerde moduleplek voor referentie en kandidaat. 211 geïntegreerde
+checks slagen; twee eerdere native bronchecks (vóór/na targetaanscherping) behouden.
+328 andere kernmodules, 326 werkermodules en 11 hostmodules byteexact behouden;
+configuratie, mounts en gegevens gelijk. Nul nieuwe handmatige Eva-modelaanvragen.
+
+**Hetzelfde werk nu afmaken:** de vaste ontwikkel- en onafhankelijke eindcriteria
+voor een werkelijk hulpmiddel aansluiten, een aantoonbaar betere kandidaat via
+bestaande opslag toepassen en later gebruiken. De live saved-suite en die toepassing
+zijn nog niet aangesloten. Daarna echte verbetering van agentaansturing en
+droomplanning. Deze bronintegratie sluit geen hoofdonderdeel of volledig AIDE² af.
+Installatie: eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json.
+Bronreview: eva2/reviews/saved-artifact-component-evaluation-source-review-20261011.json.
+Onafhankelijke installatiecontrole GO: eva2/reviews/saved-artifact-component-evaluation-installed-review-20261011.json.
+Het volledige projectgoal blijft actief.
 
 Daarna passend initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en
 echte gezinsacceptatie afmaken. Het volledige projectgoal blijft actief.

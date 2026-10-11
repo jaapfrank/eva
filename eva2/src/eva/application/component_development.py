@@ -54,7 +54,7 @@ def compare_development_evaluations(entries):
     criteria = validate_development_criteria(assessment.get("criteria"))
     criterion_hash = canonical_sha256(criteria)
     reference = (first["relative_path"], first["baseline_sha256"], first["image_id"],
-                 first["command_sha256"], assessment.get("assessment_sha256"), criterion_hash)
+                 first["command_sha256"], assessment.get("assessment_sha256"), criterion_hash, canonical_sha256(first.get("source_target")))
     if not isinstance(reference[4], str) or not re.fullmatch(r"[0-9a-f]{64}", reference[4]):
         raise ValueError("development assessment binding missing")
     seen_steps, seen_candidates = set(), set()
@@ -82,7 +82,7 @@ def compare_development_evaluations(entries):
         observed = report.get("development_assessment", {})
         binding = (report.get("relative_path"), report.get("baseline_sha256"), report.get("image_id"),
                    report.get("command_sha256"), observed.get("assessment_sha256"),
-                   canonical_sha256(observed.get("criteria")))
+                   canonical_sha256(observed.get("criteria")), canonical_sha256(report.get("source_target")))
         if (binding != reference or observed.get("contract") != "EvaComponentDevelopmentAssessment/v1"
                 or report.get("contract") != "EvaIsolatedComponentEvaluation/v1"
                 or report.get("installed") is not False

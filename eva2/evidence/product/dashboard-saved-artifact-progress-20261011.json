@@ -1,0 +1,47 @@
+{
+  "contract": "EvaDashboardProgressCheck/v1",
+  "timestamp": "2026-10-11T18:36:45.533654+00:00",
+  "url": "http://localhost:44712/",
+  "http": 200,
+  "javascript_errors": [],
+  "rendered_checks": [
+    {
+      "value": "Eigen bewaarde hulpmiddelen aangesloten op dezelfde verbeterroute",
+      "present": true
+    },
+    {
+      "value": "AIDE²: verbeteringen zelfstandig toepassen",
+      "present": true
+    }
+  ],
+  "current_work": {
+    "title": "AIDE²: verbeteringen zelfstandig toepassen",
+    "detail": "Bronkoppeling voor Eva’s eigen bewaarde Python-hulpmiddelen is geïnstalleerd en gecontroleerd. Nu dezelfde route afmaken met vaste ontwikkel-/eindcriteria, de betere versie bewaren en later gebruiken. Daarna agentaansturing en rustige droomplanning. Volledige AIDE² blijft open.",
+    "state": "in_progress",
+    "activeExecution": true,
+    "owner": "/root",
+    "source": "eva2/PROJECTDOEL.md",
+    "review": "eva2/reviews/saved-artifact-component-evaluation-installed-review-20261011.json",
+    "doneWhen": "Eva doorloopt een echte kwaliteitsverbetercyclus voor haar aansturing én code of uitbreiding, met onafhankelijke eindbeoordeling, gecontroleerde toepassing en latere bruikbare verbetering.",
+    "evidence": "eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json"
+  },
+  "latest_delivery": {
+    "title": "Eigen bewaarde hulpmiddelen aangesloten op dezelfde verbeterroute",
+    "date": "2026-10-11T18:35:56.442544+00:00",
+    "state": "installed",
+    "productFunctionCompleted": false,
+    "technicalOutcomeCompleted": true,
+    "completionScope": "Bronresolutie en gebonden varianten voor opgeslagen Python-hulpmiddelen geïnstalleerd; volledige AIDE²-cyclus nog open.",
+    "result": "De bestaande route kan een geverifieerd bewaard hulpmiddel opnieuw lezen, varianten maken en bron/eigenaar/bewaarbewijs aan de vergelijking binden. Kern en werker gezond; 9 exacte bronmodules en 7 evaluatormodules geïnstalleerd. 211 geïntegreerde checks groen; vaste geïsoleerde bronvergelijking geslaagd.",
+    "remaining": "Vaste ontwikkel- en eindbeoordeling voor een echt hulpmiddel activeren; de aantoonbaar betere versie veilig bewaren/toepassen en later gebruiken. Agentaansturing en droomplanning blijven open.",
+    "source": "eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json",
+    "review": "eva2/reviews/saved-artifact-component-evaluation-installed-review-20261011.json",
+    "independentReview": "Bronreview GO; onafhankelijke installatiecontrole loopt.",
+    "usage": "0 nieuwe handmatige Eva-modelaanvragen of concurrentieproeven. Twee eerdere containerchecks (vóór en na targetaanscherping) bewaard; niet opnieuw uitgevoerd. Ontwikkelcredits onbekend."
+  },
+  "source": "eva2/design/product/execution-workboard-v1.json",
+  "live_api_log_sha256": "cc4d5b2c1ade230ce9293b861999e342c34063e081e38209588aa95d0e10503d",
+  "original_task_counts_unchanged": true,
+  "whole_goal": "active",
+  "publication_preparation_error": "First export ran as non-owner of private root0600 log; stopped before changes. Same retained log exported as owner, browser check not repeated."
+}

@@ -36,6 +36,15 @@ def read_component(root, path, start_line=1):
     if target.suffix != ".py" or target.stat().st_size > 1_048_576:
         raise ValueError("component source must be a bounded Python file")
     raw = target.read_bytes()
+    return read_component_content(path, raw, start_line=start_line)
+
+
+def read_component_content(path, raw, *, start_line=1):
+    """Read a host-resolved source; the caller owns artifact authority."""
+    if type(start_line) is not int or start_line < 1:
+        raise ValueError("source line must be positive")
+    if not isinstance(raw, bytes) or len(raw) > 1_048_576:
+        raise ValueError("component source must be bounded bytes")
     lines = raw.decode("utf-8").splitlines(keepends=True)
     selected = []
     length = 0
@@ -55,7 +64,13 @@ def draft_component(root, arguments, *, parent=None):
     target = component_source(root, arguments["path"])
     if target.suffix != ".py" or not target.is_file() or target.stat().st_size > 65536:
         raise ValueError("drafts support Python components up to 64 KiB")
-    raw = target.read_bytes()
+    return draft_component_content(arguments, target.read_bytes(), parent=parent)
+
+
+def draft_component_content(arguments, raw, *, parent=None, source_target=None):
+    """Draft against exact host-resolved bytes using the same lineage rules."""
+    if not isinstance(raw, bytes) or not 1 <= len(raw) <= 65536:
+        raise ValueError("drafts support Python components up to 64 KiB")
     before = hashlib.sha256(raw).hexdigest()
     installed_source = raw.decode("utf-8")
     source = installed_source
@@ -80,6 +95,8 @@ def draft_component(root, arguments, *, parent=None):
         source = parent_source
         lineage = {"parent_candidate_sha256": parent["candidate_sha256"],
                    "ancestor_candidate_sha256s": [*ancestors, parent["candidate_sha256"]]}
+    if parent is not None and parent.get("source_target") != source_target:
+        raise ValueError("parent artifact target binding differs")
     old, new = arguments["old_text"], arguments["new_text"]
     if not old or old == new or source.count(old) != 1:
         raise ValueError("component patch requires one exact distinct replacement")
@@ -103,6 +120,11 @@ def draft_component(root, arguments, *, parent=None):
                         "Dit voorstel is niet uitgevoerd of geïnstalleerd; verwachte winst is geen meting."}
     if lineage is not None:
         result["candidate_lineage"] = lineage
+    if source_target is not None:
+        from eva.operations.component_evaluation import validate_saved_artifact_target
+        result["source_target"] = validate_saved_artifact_target(source_target,
+            relative_path=arguments["path"], baseline_sha256=before)
+        result["baseline_content"] = installed_source
     return result
 
 
@@ -114,6 +136,7 @@ def prepare_component_release(draft, report):
             or report.get("relative_path") != draft.get("path")
             or report.get("baseline_sha256") != draft.get("source_sha256")
             or report.get("candidate_sha256") != draft.get("candidate_sha256")
+            or report.get("source_target") != draft.get("source_target")
             or hashlib.sha256(draft["candidate_content"].encode()).hexdigest() != draft["candidate_sha256"]
             or report.get("installed") is not False
             or report.get("semantic_improvement_verified") is not False):
@@ -139,6 +162,15 @@ def prepare_component_release(draft, report):
             "installation through the existing managed release process"],
         "guidance": "Bewaar dit exacte pakket met de documenttool. Verwachte winst is geen meting; "
             "een nul-exitcode is geen installatiebesluit. Noem de resterende beoordeling expliciet."}
+    if "source_target" in draft:
+        from eva.operations.component_evaluation import validate_saved_artifact_target
+        payload["source_target"] = validate_saved_artifact_target(draft["source_target"],
+            relative_path=draft["path"], baseline_sha256=draft["source_sha256"])
+        content = draft.get("baseline_content")
+        if not isinstance(content, str) or hashlib.sha256(content.encode()).hexdigest() != draft["source_sha256"]:
+            raise ValueError("saved artifact baseline content differs")
+        payload["baseline_content"] = content
+        payload["required_before_installation"][-1] = "verified artifact save and reusable designation under current owner authority"
     if "draft_step" in draft:
         payload["draft_step"] = draft["draft_step"]
     if "candidate_lineage" in draft:

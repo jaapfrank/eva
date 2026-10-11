@@ -572,8 +572,13 @@ class DelegatedDigitalRunner:
             journal = self.journal_factory(source, spec)
             progress = BackgroundWorkProgress(self.store._engine, spec, source, authorize,
                                               dispatch_guard, self.clock)
+            artifact_sources = [tool.resolve_improvement_source for tool in self.connector_tools
+                                if hasattr(tool, "resolve_improvement_source")]
+            if len(artifact_sources) > 1:
+                raise ConversationConflict("ambiguous saved component source route")
             improvements = ComponentImprovementActions(self.store._engine, spec, source, authorize,
-                                                        dispatch_guard, self.clock)
+                dispatch_guard, self.clock,
+                **({"source_resolver": artifact_sources[0]} if artifact_sources else {}))
             programming = ProgrammingActions(self.store._engine, spec, source, authorize,
                                              dispatch_guard, self.clock)
             connector_tools = tuple(

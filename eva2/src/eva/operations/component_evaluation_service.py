@@ -11,9 +11,13 @@ import signal
 from pathlib import Path
 import threading
 
-from eva.operations.component_evaluation import CandidateRequest, ComponentEvaluator, EvaluationConfig
+from eva.operations.component_evaluation import (
+    CandidateRequest, ComponentEvaluator, EvaluationConfig, validate_saved_artifact_target,
+)
 
 _MAX_BODY = 96 * 1024
+# Two bounded sources can expand sixfold when JSON escapes control characters.
+_MAX_EVALUATE_BODY = 1024 * 1024
 
 
 def _object(pairs):
@@ -33,7 +37,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -53,6 +57,12 @@ def load_config(path):
         CandidateRequest(item, "0" * 64, "pass")
     if type(config.get("procedure_execution_enabled", False)) is not bool:
         raise ValueError("invalid procedure execution switch")
+    if "saved_artifact_suite" in config:
+        value = config["saved_artifact_suite"]
+        if (not isinstance(value, dict) or set(value) != {"source_target", "evaluation", "assessment"}
+                or not isinstance(value["evaluation"], dict) or not isinstance(value["assessment"], dict)):
+            raise ValueError("invalid fixed saved artifact development suite")
+        validate_saved_artifact_target(value["source_target"])
     settings = EvaluationConfig(image=config["image"], command=tuple(config["command"]),
         **{key: config[key] for key in limits if key in config})
     with Path(config["token_file"]).open("rb") as stream:
@@ -67,9 +77,12 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None):
         self.evaluator = evaluator
         self.component_suites = component_suites or {}
+        if saved_artifact_suite is not None:
+            validate_saved_artifact_target(saved_artifact_suite.source_target)
+        self.saved_artifact_suite = saved_artifact_suite
         self.procedure_executor = procedure_executor
         self.programming_workspaces = programming_workspaces
         self.reviewed_applications = reviewed_applications
@@ -283,7 +296,8 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                         or content_types[0].split(";", 1)[0].strip().lower() != "application/json"):
                     raise ValueError()
                 length = int(lengths[0])
-                if not 1 <= length <= _MAX_BODY:
+                maximum_body = _MAX_EVALUATE_BODY if self.path == "/evaluate" else _MAX_BODY
+                if not 1 <= length <= maximum_body:
                     raise ValueError()
                 raw = self.rfile.read(length)
                 if len(raw) != length:
@@ -294,17 +308,27 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                         raise ValueError()
                     request = payload
                 else:
-                    if not isinstance(payload, dict) or set(payload) != {"relative_path", "baseline_sha256", "source"}:
+                    package_fields = {"relative_path", "baseline_sha256", "source"}
+                    if (not isinstance(payload, dict) or set(payload) not in (
+                            package_fields, package_fields | {"baseline_source", "source_target"})):
                         raise ValueError()
                     request = CandidateRequest(**payload)
-                    if request.relative_path not in self.server.allowed_paths:
+                    if request.source_target is not None:
+                        if (self.server.saved_artifact_suite is None
+                                or request.source_target != self.server.saved_artifact_suite.source_target):
+                            raise ValueError()
+                    elif set(payload) != package_fields or request.relative_path not in self.server.allowed_paths:
                         raise ValueError()
             except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
                 self._reply(400, {"error": "invalid_request"})
                 return
             try:
-                report = (self.server.procedure_executor.execute(**request) if procedure
-                          else self.server.component_suites.get(request.relative_path, self.server.evaluator).evaluate(request))
+                if procedure:
+                    report = self.server.procedure_executor.execute(**request)
+                else:
+                    evaluator = (self.server.saved_artifact_suite if request.source_target is not None
+                        else self.server.component_suites.get(request.relative_path, self.server.evaluator))
+                    report = evaluator.evaluate(request)
             except ValueError:
                 self._reply(400, {"error": "candidate_rejected"})
                 return
@@ -357,10 +381,21 @@ def main():
         evaluation["command"] = tuple(evaluation["command"])
         component_suites[path] = ComponentEvaluator(EvaluationConfig(**evaluation),
             assessment=DevelopmentAssessment(value["assessment"]))
+    saved_artifact_suite = None
+    if "saved_artifact_suite" in config:
+        value = config["saved_artifact_suite"]
+        if (not isinstance(value, dict) or set(value) != {"source_target", "evaluation", "assessment"}
+                or not isinstance(value["evaluation"], dict)):
+            raise ValueError("invalid fixed saved artifact development suite")
+        evaluation = dict(value["evaluation"])
+        evaluation["command"] = tuple(evaluation["command"])
+        saved_artifact_suite = ComponentEvaluator(EvaluationConfig(**evaluation),
+            assessment=DevelopmentAssessment(value["assessment"]), source_target=value["source_target"])
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
                           allowed_paths=allowed_paths, procedure_executor=executor,
                           programming_workspaces=programming, reviewed_applications=applications,
-                          component_suites=component_suites, final_assessments=final_assessments) as server:
+                          component_suites=component_suites, final_assessments=final_assessments,
+                          saved_artifact_suite=saved_artifact_suite) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)

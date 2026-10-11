@@ -1,0 +1,85 @@
+{
+  "contract": "EvaSavedArtifactImprovementSource/v1",
+  "timestamp": "2026-10-11T18:32:17.902611+00:00",
+  "status": "source_review_pending_installation",
+  "objective": "Use the existing component improvement route for owner-bound Python tools created and retained by Eva; no second optimizer.",
+  "already_existing": [
+    "Verified retained procedure references with current owner/project scopes and receipts",
+    "Installed component drafts, generations, fixed isolated evaluation, candidate comparison and independent final assessment",
+    "One native generated Python tool and subsequent reuse already independently proven; not repeated"
+  ],
+  "added": [
+    "Fresh host source resolver for verified retained Python artifacts",
+    "Same read/draft/parent generation/compare/package route with original source and owner/receipt binding",
+    "Fixed optional saved-artifact evaluation suite; both original and candidate mounted read-only at the same virtual module",
+    "Final assessment transports original saved source and exact target; installed-code route retained"
+  ],
+  "source_files": {
+    "eva2/src/eva/adapters/connectors/component_evaluation.py": "db91a92f1e8fd9f51eddd603cb2257dee502277fa5068b3022d527eaeb4b239f",
+    "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "a7d312c177dbea650fd5440bddf8fb6ba1f055bac228cf6038207e581aa6cb26",
+    "eva2/src/eva/application/component_development.py": "f48d40e9eebbff3bf798a4cde83c83bd1378f70ecbf6cbb6763cec58e43be304",
+    "eva2/src/eva/application/component_improvements.py": "0f1838b308347d6da0d4f7ef962ee07b4aadf17c7422f0ef4dbeedec80c4dd19",
+    "eva2/src/eva/bootstrap/delegated_digital_runner.py": "394d697369a4db70b13cdf456a46a987911a56d8756f2d6d3e67691e59ae1532",
+    "eva2/src/eva/operations/component_evaluation.py": "10e30c578e4a91456702aead270b610fa634d5cd2b92db8d604c7eeabd09fa6b",
+    "eva2/src/eva/operations/component_evaluation_service.py": "c2c87c24dc7fdd96f58e09fb6b353cfddd32e74c0dd4ec07b57ac76842eca6d6",
+    "eva2/src/eva/operations/component_final_assessment.py": "2cdc899ef8002cf349a58df0b3bf9d988a1ee40a45f6daebea53cb1eba7f8682",
+    "eva2/src/eva/providers/procedure_reference_actions.py": "4b761ad5817778aeaa48ad5088f8b65b445b3da2c9fabfed2f9bdb58ebb31fd0",
+    "eva2/tests/application/test_saved_component_improvements.py": "6bd191c9900d7fc1eca8c0d6255d41fa85e00090e4bb4e5480abb32331df75a5",
+    "eva2/tests/operations/test_saved_artifact_component_evaluation.py": "872f4828186c7d64603d9ef10d72e700b8e785da812fc4d05f1b85e5e6c8ce98"
+  },
+  "tests": {
+    "integrated": {
+      "passed": 211,
+      "skipped_native_gated": 1,
+      "seconds": 11.9,
+      "exit_code": 0,
+      "receipt_sha256": "a0919efadecddd86f94b4b51e5e6a8f6db52e9f01a9cf7411dca70c4396bd4bf",
+      "log_sha256": "7e6a082ce9a258a614e14d0f4bf26ebceede00cccdfc331a865b6229f729f493"
+    },
+    "additional_native": "Two earlier actual isolated container checks passed: before the fixed-target strengthening (2.93s), then final exact-target check (2.90s). Baseline[1],candidate[2],read-only same virtual module,fixed runner,network none,cleanup retained. Neither was repeated in the final integration/review continuation.",
+    "evaluator_existing": {
+      "passed_focused": 55,
+      "native_passed": 1,
+      "native_seconds": 2.9,
+      "receipt_sha256": "acaba7be8b2282d3fa4bee422ecb7d8bc2c59af3bc5c366823ccf417a30559d4",
+      "log_origin": "Exact tool-result output retained after the run; not a contemporaneous subprocess file.",
+      "native_repeated_this_continuation": false,
+      "historical_native_executions": 2
+    }
+  },
+  "installation_preparation": {
+    "candidate_images": {
+      "core": "sha256:286bc8d230220cb83a79bfc41a2885b3bae9becc11bd00b957fac9bb25ff754c",
+      "delegated-work-worker": "sha256:bc1d102ffcc4c10fc03d61869fa6d6aff3d25a1a8591e03d01d5c64236fe867f"
+    },
+    "core_baseline_python_modules": 337,
+    "worker_baseline_python_modules": 335,
+    "replaced_source_modules": 9,
+    "evaluator_host_replaced_modules": [
+      "eva/adapters/connectors/component_evaluation.py",
+      "eva/adapters/postgres/component_improvement_actions.py",
+      "eva/application/component_development.py",
+      "eva/application/component_improvements.py",
+      "eva/operations/component_evaluation.py",
+      "eva/operations/component_evaluation_service.py",
+      "eva/operations/component_final_assessment.py"
+    ],
+    "evaluator_host_other_modules_retained": 11,
+    "runtime_changed": false,
+    "compose_configuration_changes": [],
+    "data_or_mount_changes": []
+  },
+  "limitations": [
+    "No live saved-artifact suite configured by this installation",
+    "No autonomous saved-artifact candidate application/publishing or later improved use proven",
+    "No full AIDE²/dream cycle, quality gain, general privacy guarantee or competitor advantage proven",
+    "Existing verified procedure source size/type contract remains: Python source, <=16384 bytes on the live resolver"
+  ],
+  "next": "Install this reviewed source coupling once, then complete fixed development/final criteria, owner-bound saved-artifact application and genuine later improved use within the same overall goal.",
+  "usage": {
+    "new_eva_model_requests": 0,
+    "new_competitor_runs": 0,
+    "development_credit_cost": null
+  },
+  "whole_project_goal": "active"
+}

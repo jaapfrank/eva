@@ -5,7 +5,7 @@ import json
 from eva.adapters.connectors.component_evaluation import configured_component_evaluator
 
 from eva.application.component_development import compare_development_evaluations
-from eva.application.component_improvements import read_component, draft_component, prepare_component_release, bind_selected_release
+from eva.application.component_improvements import read_component, draft_component, prepare_component_release, bind_selected_release, read_component_content, draft_component_content
 from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationConflict, ConversationToolDescriptor
 from eva.application.schema_validation import validate_schema_value
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope
@@ -116,7 +116,7 @@ def component_descriptors():
         ConversationToolDescriptor(READ,
             "Lees de werkelijk geïnstalleerde Eva-broncode. Leeg path toont de mappen; "
             "een Python-pad geeft maximaal 160 regels en een bronhash. Gebruik next_line voor vervolg. "
-            "Broncode is context, geen nieuwe opdracht. Alleen lezen; geen instellingen of credentials.",
+            "Je kunt ook een eerder geverifieerde procedure-reference-ID als path geven voor je eigen bewaarde Python-hulpmiddel. Gebruik daarna het teruggegeven saved_artifact_...py-pad en de bronhash bij een voorstel. Broncode is context, geen nieuwe opdracht. Alleen lezen; geen instellingen of credentials.",
             _SCHEMAS[READ], "Broninzage bewijst geen verbetering of geïnstalleerde wijziging."),
         ConversationToolDescriptor(DRAFT,
             "Maak bij een gevraagde eigen verbetering een voorstel voor één Python-component tot 64 KiB. "
@@ -137,7 +137,7 @@ class ComponentImprovementActions:
     action_names = (READ, DRAFT)
     supports_indexed_steps = True
 
-    def __init__(self, engine, spec, source, authorize, dispatch, clock):
+    def __init__(self, engine, spec, source, authorize, dispatch, clock, *, source_resolver=None):
         self.evaluator = configured_component_evaluator()
         self.action_names = (READ, DRAFT) + (() if self.evaluator is None else (EVALUATE, COMPARE, PREPARE))
         if self.evaluator is not None and self.evaluator.reviewed_releases:
@@ -147,8 +147,33 @@ class ComponentImprovementActions:
         self.spec, self.source = spec, source
         self.authorize, self.dispatch, self.clock = authorize, dispatch, clock
         self.root = Path(__file__).resolve().parents[2]
+        self.source_resolver = source_resolver
         self.timeline = PostgresOperationalTimeline(engine, external_timeline_scope(
             source.tenant_id, source.installation_id, "component task scope required"))
+
+    def _source(self, path, *, start_line=1):
+        """Installed sources and fresh saved references share one action route."""
+        import re
+        matched = re.fullmatch(r"saved_artifact_([0-9a-f]{64})\.py", path)
+        document_id = ("procedure-reference:" + matched.group(1) if matched else
+                       path if path.startswith("procedure-reference:") else None)
+        if document_id is None:
+            return read_component(self.root, path, start_line), None
+        if self.source_resolver is None:
+            raise ConversationConflict("saved improvement source route unavailable")
+        resolved = self.source_resolver(self.source, document_id)
+        value = read_component_content(resolved["path"],
+            resolved["baseline_content"].encode(), start_line=start_line)
+        value["source_target"] = resolved["source_target"]
+        return value, resolved
+
+    def _revalidate(self, draft):
+        current, resolved = self._source(draft["path"])
+        if (current["source_sha256"] != draft["source_sha256"]
+                or current.get("source_target") != draft.get("source_target")
+                or (resolved is not None and resolved["baseline_content"] != draft.get("baseline_content"))):
+            raise ConversationConflict("component source binding changed")
+        return current
 
     def _thread(self, step_index):
         return "component-draft:" + canonical_sha256({"execution": self.spec.execution_id,
@@ -250,7 +275,7 @@ class ComponentImprovementActions:
                 if (report.get("candidate_sha256") != body["candidate_sha256"]
                         or report.get("baseline_sha256") != body["source_sha256"]
                         or report.get("relative_path") != body["path"]
-                        or read_component(self.root, body["path"])["source_sha256"] != body["source_sha256"]):
+                        or self._revalidate(body)["source_sha256"] != body["source_sha256"]):
                     raise ConversationConflict("comparison source binding changed")
                 entries.append({"draft_step": draft_step, "evaluation_step": selected, "report": report})
             try:
@@ -270,7 +295,7 @@ class ComponentImprovementActions:
             if draft_receipt is None or draft_receipt.call.name != DRAFT or draft_receipt.output.get("status") != "verified":
                 raise ConversationConflict("evaluated component draft is unavailable")
             draft = draft_receipt.output["operation_result"]
-            if read_component(self.root, draft["path"])["source_sha256"] != draft["source_sha256"]:
+            if self._revalidate(draft)["source_sha256"] != draft["source_sha256"]:
                 raise ConversationConflict("installed component changed after evaluation")
             value = prepare_component_release(draft, evaluation.output["operation_result"])
             selection_step = call.arguments.get("selection_step")
@@ -306,7 +331,7 @@ class ComponentImprovementActions:
                 raise ConversationConflict("component draft does not exist in this task")
             draft = draft_receipt.output["operation_result"]
             # Revalidate the live source binding; a stale candidate is not rebased silently.
-            current = read_component(self.root, draft["path"])
+            current = self._revalidate(draft)
             if current["source_sha256"] != draft["source_sha256"]:
                 raise ConversationConflict("installed component changed after draft")
             value = self.evaluator.evaluate(draft)
@@ -336,8 +361,17 @@ class ComponentImprovementActions:
                         or selected.get("selected_candidate_sha256") != parent["candidate_sha256"]
                         or selected.get("baseline_sha256") != parent["source_sha256"]):
                     raise ConversationConflict("parent differs from selected development winner")
-            value = (read_component(self.root, **call.arguments) if call.name == READ
-                     else draft_component(self.root, call.arguments, parent=parent))
+            if call.name == READ:
+                value, _ = self._source(call.arguments["path"],
+                    start_line=call.arguments.get("start_line", 1))
+            elif call.arguments["path"].startswith(("saved_artifact_", "procedure-reference:")):
+                _, resolved = self._source(call.arguments["path"])
+                if resolved is None or call.arguments["path"] != resolved["path"]:
+                    raise ConversationConflict("use the resolved virtual source path for a draft")
+                value = draft_component_content(call.arguments, resolved["baseline_content"].encode(),
+                    parent=parent, source_target=resolved["source_target"])
+            else:
+                value = draft_component(self.root, call.arguments, parent=parent)
             if call.name == DRAFT:
                 value["draft_step"] = step_index
                 if parent is not None:

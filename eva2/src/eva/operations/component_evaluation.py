@@ -8,6 +8,7 @@ image is cleared before execution; no host environment or credentials are mounte
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 import hashlib
 import json
 import os
@@ -42,11 +43,74 @@ class EvaluationConfig:
             raise ValueError("invalid trusted component evaluation configuration")
 
 
+_SAVED_TARGET_KEYS = {"kind", "procedure_reference_id", "scope", "artifact_path",
+    "content_sha256", "receipt_sha256", "source_call_id", "source_message_id",
+    "tool_configuration_sha256", "retention_until"}
+_SHA256 = re.compile(r"[0-9a-f]{64}")
+
+
+def validate_saved_artifact_target(target, *, relative_path=None, baseline_sha256=None):
+    """Validate a host-resolved source manifest; this does not grant source access.
+
+    Current authority, source availability and retention are checked by the
+    existing procedure resolver before dispatch. No executable path or suite is
+    taken from this manifest: its only runner path is derived from the reference.
+    """
+    from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
+    if (not isinstance(target, dict) or set(target) != _SAVED_TARGET_KEYS
+            or target.get("kind") != "saved_artifact"):
+        raise ValueError("saved artifact target fields differ")
+    scope = target["scope"]
+    if (not isinstance(scope, dict) or set(scope) != {
+            "tenant_id", "installation_id", "principal_id", "project_id"}
+            or any(not isinstance(scope[key], str) or not scope[key].strip()
+                   or len(scope[key]) > 256 or "\x00" in scope[key]
+                   for key in ("tenant_id", "installation_id", "principal_id"))
+            or (scope["project_id"] is not None and (
+                not isinstance(scope["project_id"], str) or not scope["project_id"].strip()
+                or len(scope["project_id"]) > 200 or "\x00" in scope["project_id"]))):
+        raise ValueError("saved artifact source scope is invalid")
+    for key in ("content_sha256", "receipt_sha256", "tool_configuration_sha256"):
+        if not isinstance(target[key], str) or not _SHA256.fullmatch(target[key]):
+            raise ValueError("saved artifact source hash is invalid")
+    for key in ("source_call_id", "source_message_id"):
+        if (not isinstance(target[key], str) or not target[key].strip()
+                or len(target[key]) > 1024 or "\x00" in target[key]):
+            raise ValueError("saved artifact source identity is invalid")
+    artifact = target["artifact_path"]
+    if not isinstance(artifact, str):
+        raise ValueError("saved artifact path is invalid")
+    path = PurePosixPath(artifact)
+    if (not path.is_absolute() or str(path) != artifact or len(artifact) > 4096
+            or path.suffix != ".py" or any(part in {".", ".."} for part in path.parts)
+            or "\x00" in artifact):
+        raise ValueError("saved artifact path is invalid")
+    retention = target["retention_until"]
+    if not isinstance(retention, str) or len(retention) > 64:
+        raise ValueError("saved artifact retention is invalid")
+    try:
+        until = datetime.fromisoformat(retention.replace("Z", "+00:00"))
+    except ValueError:
+        raise ValueError("saved artifact retention is invalid") from None
+    if until.tzinfo is None or until.utcoffset() is None:
+        raise ValueError("saved artifact retention is unbound")
+    reference_hash = canonical_sha256({"scope": scope, "receipt": target["receipt_sha256"]})
+    if target["procedure_reference_id"] != "procedure-reference:" + reference_hash:
+        raise ValueError("saved artifact reference scope and receipt binding differs")
+    if relative_path is not None and relative_path != "saved_artifact_" + reference_hash + ".py":
+        raise ValueError("saved artifact virtual path differs")
+    if baseline_sha256 is not None and target["content_sha256"] != baseline_sha256:
+        raise ValueError("saved artifact baseline manifest hash differs")
+    return json.loads(canonical_json_bytes(target))
+
+
 @dataclass(frozen=True)
 class CandidateRequest:
     relative_path: str
     baseline_sha256: str
     source: str
+    baseline_source: str | None = None
+    source_target: dict | None = None
 
     def __post_init__(self):
         if not isinstance(self.relative_path, str):
@@ -60,6 +124,16 @@ class CandidateRequest:
                 or not re.fullmatch(r"[0-9a-f]{64}", self.baseline_sha256)
                 or not isinstance(self.source, str) or not 1 <= len(self.source.encode("utf-8")) <= 65536):
             raise ValueError("invalid bounded Python candidate")
+        if (self.baseline_source is None) != (self.source_target is None):
+            raise ValueError("saved artifact requires baseline source and target together")
+        if self.source_target is not None:
+            if (not isinstance(self.baseline_source, str)
+                    or not 1 <= len(self.baseline_source.encode("utf-8")) <= 65536
+                    or hashlib.sha256(self.baseline_source.encode("utf-8")).hexdigest() != self.baseline_sha256):
+                raise ValueError("saved artifact baseline source hash differs")
+            object.__setattr__(self, "source_target", validate_saved_artifact_target(
+                self.source_target, relative_path=self.relative_path,
+                baseline_sha256=self.baseline_sha256))
 
 
 def _capture(argv, *, deadline, limit):
@@ -99,9 +173,10 @@ def _capture(argv, *, deadline, limit):
 
 
 class ComponentEvaluator:
-    def __init__(self, config: EvaluationConfig, *, assessment=None):
+    def __init__(self, config: EvaluationConfig, *, assessment=None, source_target=None):
         self.config = config
         self.assessment = assessment
+        self.source_target = None if source_target is None else validate_saved_artifact_target(source_target)
 
     def _container(self, image_id, command, *, mount=None, output_limit=None):
         cfg = self.config
@@ -134,6 +209,8 @@ class ComponentEvaluator:
                 raise RuntimeError("component evaluation container cleanup failed")
 
     def evaluate(self, request: CandidateRequest) -> dict:
+        if self.source_target is not None and request.source_target != self.source_target:
+            raise ValueError("saved artifact differs from fixed assessment target")
         cfg = self.config
         inspection = _capture(["docker", "image", "inspect", "--format", "{{.Id}}", cfg.image],
                               deadline=10, limit=1024)
@@ -142,19 +219,32 @@ class ComponentEvaluator:
                 or not re.fullmatch(r"sha256:[0-9a-f]{64}", image_id)):
             raise RuntimeError("trusted local evaluation image is unavailable")
         target = "/opt/eva/src/eva/" + request.relative_path
-        reader = ("/usr/local/bin/python", "-I", "-c",
-            "import hashlib,json,pathlib,sys; p=pathlib.Path(sys.argv[1]); "
-            "assert str(p.resolve())==str(p) and p.is_file(); "
-            "f=p.open('rb'); b=f.read(65537); assert len(b)<=65536; "
-            "print(json.dumps({'sha256':hashlib.sha256(b).hexdigest()}))", target)
-        source_read = self._container(image_id, reader, output_limit=1024)
-        if source_read["exit_code"] != 0 or source_read["timed_out"] or source_read["stdout_truncated"]:
-            raise RuntimeError("baseline Python source unavailable or exceeds bound")
-        if json.loads(source_read["stdout"]).get("sha256") != request.baseline_sha256:
-            raise ValueError("baseline source changed")
+        manifest = None
+        if request.source_target is None:
+            reader = ("/usr/local/bin/python", "-I", "-c",
+                "import hashlib,json,pathlib,sys; p=pathlib.Path(sys.argv[1]); "
+                "assert str(p.resolve())==str(p) and p.is_file(); "
+                "f=p.open('rb'); b=f.read(65537); assert len(b)<=65536; "
+                "print(json.dumps({'sha256':hashlib.sha256(b).hexdigest()}))", target)
+            source_read = self._container(image_id, reader, output_limit=1024)
+            if source_read["exit_code"] != 0 or source_read["timed_out"] or source_read["stdout_truncated"]:
+                raise RuntimeError("baseline Python source unavailable or exceeds bound")
+            if json.loads(source_read["stdout"]).get("sha256") != request.baseline_sha256:
+                raise ValueError("baseline source changed")
+            baseline = self._container(image_id, cfg.command)
+        else:
+            # Revalidate the copied manifest at dispatch; both legs use the same
+            # trusted image/command and identical virtual module destination.
+            request = CandidateRequest(request.relative_path, request.baseline_sha256,
+                request.source, request.baseline_source, request.source_target)
+            manifest = request.source_target
         candidate_bytes = request.source.encode("utf-8")
-        baseline = self._container(image_id, cfg.command)
         with tempfile.TemporaryDirectory(prefix="eva-component-evaluation-") as directory:
+            if manifest is not None:
+                original = Path(directory) / "baseline.py"
+                original.write_bytes(request.baseline_source.encode("utf-8"))
+                original.chmod(0o444)
+                baseline = self._container(image_id, cfg.command, mount=(str(original), target))
             candidate = Path(directory) / "candidate.py"
             candidate.write_bytes(candidate_bytes)
             candidate.chmod(0o444)
@@ -170,6 +260,8 @@ class ComponentEvaluator:
                            "cpu_millicores": round(cfg.cpus * 1000), "pids": cfg.pids},
                 "baseline": baseline, "candidate": measured,
                 "semantic_improvement_verified": False, "installed": False}
+        if manifest is not None:
+            report["source_target"] = manifest
         if self.assessment is not None:
             report["development_assessment"] = self.assessment.assess(report)
         return report

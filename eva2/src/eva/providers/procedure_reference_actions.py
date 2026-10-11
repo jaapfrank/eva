@@ -63,6 +63,37 @@ class ProcedureReferenceActions:
         return tuple(ProcedureScope(turn.tenant_id, turn.installation_id, p, turn.project_id)
                      for p in principals)
 
+    def resolve_improvement_source(self, turn, document_id):
+        """Host-only fresh source binding for the existing component evaluator."""
+        host = self._host(turn)
+        store = PostgresMemoryOutbox(self.engine, tenant_id=turn.tenant_id,
+                                    installation_id=turn.installation_id)
+        service = ProcedureReferences(store, host)
+        for scope in self._scopes(turn):
+            refs = service.resolve_candidates(scope, (document_id,), now=self.clock())
+            if not refs:
+                continue
+            if len(refs) != 1 or not refs[0].reference.path.endswith(".py"):
+                raise ProcedureReferenceRejected("improvement requires a reusable Python artifact")
+            reference = refs[0].reference
+            target = {"kind": "saved_artifact", "procedure_reference_id": reference.document_id,
+                "scope": asdict(scope), "artifact_path": reference.path,
+                "content_sha256": reference.content_sha256,
+                "receipt_sha256": reference.receipt_sha256,
+                "source_call_id": reference.source_call_id,
+                "source_message_id": reference.source_message_id,
+                "tool_configuration_sha256": reference.tool_configuration_sha256,
+                "retention_until": reference.retention_until}
+            from eva.operations.component_evaluation import validate_saved_artifact_target
+            path = "saved_artifact_" + reference.document_id.split(":", 1)[1] + ".py"
+            target = validate_saved_artifact_target(target, relative_path=path,
+                                                   baseline_sha256=reference.content_sha256)
+            host.require_scope(scope)
+            host.require_current()
+            return {"path": path, "baseline_content": refs[0].untrusted_content,
+                    "source_target": target}
+        raise ProcedureReferenceRejected("saved improvement source unavailable")
+
     def _candidate_page(self, store, turn, cursor):
         scopes = self._scopes(turn)
         selected, source_cursor = scopes[0], cursor
