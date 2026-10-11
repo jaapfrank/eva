@@ -24,6 +24,27 @@ Installatie: eva2/evidence/product/native-initiative-subscription-installed-2026
 Review: eva2/reviews/native-initiative-subscription-installed-review-20261011.json.
 Verversing: eva2/evidence/product/dashboard-live-refresh-20261011.json.
 
+## Actuele uitvoerfase — 11 oktober 2026
+
+De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. De bestaande
+contextplanner kan vanaf 23:33 opnieuw een beoordeling plannen; dit is toelating,
+geen voorspelling van een initiatief. Oude beoordelingen en tellingen blijven intact.
+
+De beperkte brondiagnose is afgerond. De bestaande AIDE²-route heeft één protocol
+per onderdeel; een volgende ronde voor hetzelfde onderdeel mist nog de binding
+die oude beoordelingen en opgeslagen resultaten behoudt. /root werkt deze aansluiting
+uit op de bestaande wachtrij, zonder tweede verbeterplatform. Native krijgt alleen
+ronde-, bron- en ontwikkelmetadata; eindgevallen, scorer en registratie blijven
+onafhankelijk bij de host. Nog geen nieuwe bronimplementatie, installatie of
+modelproef uit deze diagnose.
+
+Daarna echte verbetering van agentaansturing toepassen en later gebruiken; passend
+initiatief en gezinsgebruik blijven open. Volledig goal actief, spraak geparkeerd,
+geen nieuwe vergelijkingsserie en geen eigenaarhandeling.
+
+Diagnose: eva2/evidence/product/aide-harness-remaining-gap-20261011.json.
+Wachtbewijs: eva2/evidence/product/native-initiative-next-window-20261011.json.
+
 ## Actief volledig projectgoal — 11 oktober 2026
 
 Het actieve Codex-goal omvat het gehele Eva2-project: een persoon, geheugen en

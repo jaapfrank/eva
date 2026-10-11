@@ -1,6 +1,39 @@
 # AIDE/AIDE² application in Eva — bounded results and limits
 
-## Current purpose and result — 7 October 2026
+## Current result and remaining scope — 11 October 2026
+
+Eva's installed context-selection change has a bounded independently measured
+answer-quality gain. The saved-helper route now also completes variant creation,
+development comparison, an independent protected final assessment, accepted
+application, and exact later reuse in a different ordinary task.
+
+For that helper, Eva made two variants. Development correctness improved from
+24/32 to 32/32. On previously unseen decimal cases, the original integer helper
+scored 0/12 and the accepted extension 12/12, with no preservation failures.
+A later ordinary task found and executed the designated improved source without
+a source/variant ID in the question; its real saved output was independently
+read back. Combined known registered usage is 20 requests and 344,380 tokens;
+full runtime usage and credit cost remain unknown.
+
+This demonstrates a fixed, operator-prepared code-extension improvement and
+later use. It does not demonstrate spontaneous discovery, a recurring autonomous
+agent-harness evolution loop, broad household quality or superiority. Those
+remain part of the active full project goal. The existing idle initiative route
+and general digital worker are now connected and installed; their new genuinely
+self-chosen semantic result is still open.
+
+[Helper improvement](../../evidence/product/saved-artifact-native-improvement-result-20261011.json)
+· [Later ordinary use](../../evidence/product/saved-artifact-later-use-result-20261011.json)
+· [Independent review](../../reviews/saved-artifact-native-improvement-final-review-20261011.json)
+· [Installed initiative bridge](../../evidence/product/native-initiative-digital-installed-20261011.json).
+
+Original AIDE searches task programs; AIDE² also improves the agent harness.
+Eva's code-extension result and its earlier context-selection gain are separate
+bounded applications. They are not a full replication of either paper.
+The dated sections below preserve the original failed attempts, later results,
+unchanged criteria and UNKNOWN; they are not the current completion claim.
+
+## Historical purpose and result — 7 October 2026
 
 The owner defines better Eva behaviour as the primary goal: programming and
 delivering working changes, coherent personal conversation, useful initiative,

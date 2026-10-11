@@ -1,0 +1,48 @@
+{
+  "contract": "EvaNativeInitiativeVerifiedSchedulerWait/v1",
+  "checkedAt": "2026-10-11T21:00:10.821706+00:00",
+  "classificationPreviousTurn": "progress",
+  "previousProgress": "Installed exact six-source admission correction independently approved; visible dashboard and GitHub updated. Full goal retained.",
+  "currentHandles": [
+    {
+      "container": "49167382a074",
+      "pid": 3446800,
+      "role": "core",
+      "running": true,
+      "health": "healthy"
+    },
+    {
+      "container": "38d79bdd2289",
+      "pid": 3447459,
+      "role": "delegated-worker",
+      "running": true,
+      "health": "healthy"
+    }
+  ],
+  "currentReadyz": {
+    "ready": true,
+    "database": "ready",
+    "memory_projection": "ready",
+    "model_provider": "ready"
+  },
+  "configuration": {
+    "backgroundWorkEnabled": true,
+    "coldPathIdleSeconds": 300
+  },
+  "latestNativeObservationAt": "2026-10-11T20:55:26+00:00",
+  "latestReviewAt": "2026-10-11T20:33:07+00:00",
+  "latestReviewPhase": "will_decided",
+  "latestReviewPrecedesInstallation": true,
+  "existingCadence": {
+    "source": "eva2/src/eva/adapters/postgres/sensory_events.py:102",
+    "oneHourBetweenTerminalReviews": true,
+    "nextReviewEligibleAt": "2026-10-11T21:33:07+00:00",
+    "eligibilityIsNotExecutionGuarantee": true
+  },
+  "terminalNativeRecords": 7,
+  "newIntentConfirmed": false,
+  "noReplayTimerResetOrManufacturedNativeIntent": true,
+  "manualEvaModelRequestsForObservation": 0,
+  "automaticUsageUnknown": true,
+  "parallelWork": "Determine and complete the remaining AIDE² agent-harness loop using existing evaluator, ordinary work and application route."
+}

@@ -1,5 +1,38 @@
 # Isolated component evaluation
 
+## Current installed scope — 11 October 2026
+
+The installed route now covers an exact saved Python artifact as well as installed
+components. A saved target binds owner/project scope, procedure reference, verified
+source receipt, current source hash and retention. The comparison uses the existing
+isolated runner; the candidate cannot choose or change the fixed development
+criteria or independent final assessment. An accepted gain is saved, read back and
+designated through the existing document/procedure route. Installed components
+continue through the existing reviewed application and managed runtime updater.
+
+One actual saved helper was improved by Eva, independently assessed, applied and
+later reused in another ordinary task: development 24/32 → 32/32; new held-out
+decimal cases 0/12 → 12/12, with no preservation failures. Its original source
+remained unchanged. This is an extension beyond its original integer requirement,
+not proof that the original helper violated that requirement.
+
+The installed client currently offers timestamps, canonical JSON, cancellation,
+adapters/postgres/delegated_work_actions.py, and one exact saved-helper target.
+Different targets still require meaningful fixed checks and independent
+assessment bindings; this route does not give candidate code permission to
+invent its own passing score. The broader agent-harness/dream cycle and family
+acceptance remain open.
+
+[Measured helper result](evidence/product/saved-artifact-native-improvement-result-20261011.json)
+· [Later ordinary use](evidence/product/saved-artifact-later-use-result-20261011.json)
+· [Independent review](reviews/saved-artifact-native-improvement-final-review-20261011.json)
+· [Whole project goal](PROJECTDOEL.md).
+
+The configuration and initial-suite sections below describe the original
+September implementation. Their initial three-target scope and “no accepted
+candidate yet” statements are historical; use the current client/runtime bindings
+and exact release evidence for the installed scope.
+
 The digital worker can read installed source, record an exact replacement draft,
 and request an isolated comparison using `evaluate_own_component_improvement`.
 Its `draft_step` points to the earlier durable draft in the same execution scope.

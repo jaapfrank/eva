@@ -1,0 +1,63 @@
+{
+  "contract": "EvaDashboardAideCurrentStatePublicationReview/v1",
+  "checkedAt": "2026-10-11T21:08:29.015810Z",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "The eight named public documentation/dashboard/evidence files only. Publication review of current bounded helper gain, installed initiative correction, scheduler eligibility and still-open agent/harness work.",
+  "bindings": {
+    "head": "fe60d479c3877b736174941a107b6454027a0e41",
+    "files": {
+      "AGENTS.md": "b3d0e06153eb1d2034df18f0f5461421a90ed919f4f6b4c0b8962681fd09f2e8",
+      "eva2/PROJECTDOEL.md": "04d015fc0c62e1be6d63783a9e23572c108c2df3dce4b0fd813245d19bbb335e",
+      "eva2/WERKBORD.md": "2be44761e6534e9465188a284caea332ad0edafb7310ab54f7e705051f434bc8",
+      "eva2/COMPONENT_EVALUATION.md": "17f1e1a661444efe40924bea8e842bb2b283cf353b239604e552f0da7dbd1ee7",
+      "eva2/experiments/aide-20260929/README.md": "072bebf52d6f44cf2db9890baf7ff40ab37afdb8fba6b063337261ad65125e5b",
+      "eva2/design/product/execution-workboard-v1.json": "098460ee06336b20fa7fb7640c4b49c3d77f60dda63ff338c834095bfdd617af",
+      "eva2/evidence/product/native-initiative-next-window-20261011.json": "19c4a6ab97c4d34a7ef1eb2ec742fa3da349e530fd4ec146aebe8da4fb7a583e",
+      "eva2/evidence/product/aide-harness-remaining-gap-20261011.json": "2bcfc7f069f34caae43d08047b5f2b15d7c56bbe751efcef85a621d19c527a21"
+    }
+  },
+  "checks": {
+    "originalTaskCount": 48,
+    "originalCompleted": 39,
+    "originalTaskStatusDoneConditionsAcceptancesPreserved": true,
+    "boardSubtreesEqualToHead": {
+      "executionTasks": true,
+      "milestones": true,
+      "completions": true,
+      "rules": true,
+      "statusValues": true,
+      "activeTaskId": true,
+      "deliveryRecordsUnchanged": true
+    },
+    "originalHistoricalUnknownAndAcceptanceFieldsChanged": false,
+    "currentWorkDoneWhenIsProgressScopeNotOriginalTaskCriterion": true,
+    "latestInstalledDeliveriesUnchanged": true,
+    "helperIntegerBaselineStillRecognizedAsCorrectForOriginalContract": true,
+    "helperIndependentDecimalGainAndExactLaterUseRemainBounded": true,
+    "recurringAgentHarnessAndWholeAideGoalRemainOpen": true,
+    "wholeProjectGoalStillActive": true,
+    "speechParked": true,
+    "newSourceImplementationOrInstallationFromDiagnosisClaimed": false,
+    "newNativeUsefulnessOrPrivateDeliveryClaimed": false,
+    "next2333WindowDescribesEligibilityOnly": true,
+    "automaticRuntimeUsageRemainsUnknown": true
+  },
+  "correctedBeforeGo": [
+    "Both leading board fields now say the existing route lacks a reusable current round binding for agent/harness work; they no longer deny the existing multi-path/configured registration capability.",
+    "Both leading board fields now describe 23:33 as the earliest admitted window and explicitly state that execution is not guaranteed."
+  ],
+  "method": {
+    "protectedDataRead": false,
+    "modelRequests": 0,
+    "nativeProbes": 0,
+    "testsStarted": 0,
+    "runtimeChanges": 0,
+    "productSourceOrDocumentationChanges": 0,
+    "browserVisibilityIndependentlyAssessedByThisReview": false,
+    "qualification": "Parent reports a separate live browser/API visibility check; this GO assesses exact publication bytes, not new browser or runtime behavior.",
+    "developmentCredits": "unknown",
+    "onlyWrittenFile": "eva2/reviews/dashboard-aide-current-state-review-20261011.json"
+  },
+  "conclusion": "Publish these exact bytes. Preserve the separate original outcomes and immutable diagnostic/wait receipts. Proceed with the existing round-binding implementation; this publication completes no whole-project, native usefulness, family acceptance or full AIDE² condition."
+}

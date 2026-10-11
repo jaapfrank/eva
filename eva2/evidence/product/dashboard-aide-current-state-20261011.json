@@ -1,0 +1,29 @@
+{
+  "contract": "EvaDashboardCurrentContentVerification/v1",
+  "checkedAt": "2026-10-11T21:07:20.536653+00:00",
+  "url": "http://localhost:44712/",
+  "apiStatus": 200,
+  "source": "eva2/design/product/execution-workboard-v1.json",
+  "source_sha256": "098460ee06336b20fa7fb7640c4b49c3d77f60dda63ff338c834095bfdd617af",
+  "visibleContentCheckedAt": "2026-10-11T21:06:43.611403+00:00",
+  "currentTask": "AIDE² · volgende verbetercyclus aansluiten",
+  "currentDiagnosisCompleted": true,
+  "newSourceImplementationCompleted": false,
+  "next": "Daarna · agentaansturing werkelijk verbeteren",
+  "ownerActionRequired": false,
+  "browserObserved": {
+    "automaticUpdateWithoutReload": true,
+    "matchingCurrentTask": true,
+    "matchingContentCheckTime": true,
+    "consoleErrors": []
+  },
+  "goal": "active",
+  "scope": "whole Eva2 including learning and AIDE2; no new function completion claimed",
+  "originalTaskCountPreserved": "39/48",
+  "modelCallsForThisVerification": 0,
+  "developmentCreditCosts": null,
+  "verificationCompletedAt": "2026-10-11T21:09:00.036928+00:00",
+  "independentPublicationReview": "eva2/reviews/dashboard-aide-current-state-review-20261011.json",
+  "independentPublicationReviewSha256": "db645b64ee1d3fabf69c9eeb08d477e6f348a6685a5aac779e8c0208825cbe85",
+  "independentPublicationDecision": "GO"
+}

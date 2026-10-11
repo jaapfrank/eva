@@ -14,6 +14,27 @@ Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkin
 Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
 afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
 
+## Actuele uitvoerfase — 11 oktober 2026
+
+De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. De bestaande
+contextplanner kan vanaf 23:33 opnieuw een beoordeling plannen; dit is toelating,
+geen voorspelling van een initiatief. Oude beoordelingen en tellingen blijven intact.
+
+De beperkte brondiagnose is afgerond. De bestaande AIDE²-route heeft één protocol
+per onderdeel; een volgende ronde voor hetzelfde onderdeel mist nog de binding
+die oude beoordelingen en opgeslagen resultaten behoudt. /root werkt deze aansluiting
+uit op de bestaande wachtrij, zonder tweede verbeterplatform. Native krijgt alleen
+ronde-, bron- en ontwikkelmetadata; eindgevallen, scorer en registratie blijven
+onafhankelijk bij de host. Nog geen nieuwe bronimplementatie, installatie of
+modelproef uit deze diagnose.
+
+Daarna echte verbetering van agentaansturing toepassen en later gebruiken; passend
+initiatief en gezinsgebruik blijven open. Volledig goal actief, spraak geparkeerd,
+geen nieuwe vergelijkingsserie en geen eigenaarhandeling.
+
+Diagnose: eva2/evidence/product/aide-harness-remaining-gap-20261011.json.
+Wachtbewijs: eva2/evidence/product/native-initiative-next-window-20261011.json.
+
 ## Actuele gebruikersuitkomst — eigen hulpmiddel verbeteren en later gebruiken
 
 De bestaande verbeterroute is geïnstalleerd in kern, werker en beoordelaar.
@@ -57,7 +78,7 @@ Installatiereview: eva2/reviews/native-initiative-subscription-installed-review-
 Bewijs: eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json.
 Later gebruik: eva2/evidence/product/saved-artifact-later-use-result-20261011.json.
 Review: eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json.
-Dashboard inhoudelijk bijgewerkt: 2026-10-11T20:54:42.210116+00:00.
+Dashboard inhoudelijk bijgewerkt: 2026-10-11T21:06:43.611403+00:00.
 
 
 ## Historische voorbereiding en installatie — 11 oktober 2026

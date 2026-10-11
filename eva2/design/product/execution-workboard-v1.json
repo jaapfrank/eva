@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T20:30:55.749652+00:00",
+  "lastUpdated": "2026-10-11T21:06:43.611403+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -128,8 +128,8 @@
       "summary": "Eva heeft zelf een hulpmiddel gemaakt, verbeterd en later hergebruikt. De uitvoerkoppeling en daggrenscorrectie voor eigen initiatief zijn geïnstalleerd; een nieuw zelfgekozen resultaat, volledige agentaansturing en gezinsgebruik blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · zelfgekozen werk afronden en terugmelden",
-          "detail": "De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. Kern en taakwerker zijn gezond; 89 gerichte controles geslaagd. Nu de echte eigen keuze van Eva volgen tot een uitgevoerd resultaat en privéterugmelding; dat nieuwe resultaat is nog niet aangetoond."
+          "title": "Nu · agentaansturing en eigen uitvoering afmaken",
+          "detail": "De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. De bestaande planner komt vanaf 23:33 opnieuw in aanmerking voor een eigen beoordeling; oude registratie blijft intact. Intussen wordt het concrete resterende gat in AIDE²-agentaansturing onderzocht om dezelfde verbeterroute af te maken."
         },
         {
           "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T20:54:42.210116+00:00",
+        "checkedAt": "2026-10-11T21:06:43.611403+00:00",
         "deliveries": [
           {
             "title": "Onbedoelde extra daggrens voor eigen initiatief gecorrigeerd",
@@ -4693,22 +4693,22 @@
           }
         ],
         "now": {
-          "title": "Zelfgekozen werk afronden en terugmelden",
-          "detail": "De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. Kern en taakwerker zijn gezond; 89 gerichte controles geslaagd. Nu de echte eigen keuze van Eva volgen tot een uitgevoerd resultaat en privéterugmelding; dat nieuwe resultaat is nog niet aangetoond.",
+          "title": "AIDE² · volgende verbetercyclus aansluiten",
+          "detail": "De brondiagnose is afgerond. De bestaande AIDE²-route kan varianten beoordelen en toepassen, maar mist nog een herbruikbare actuele rondebinding voor agent/harnesswerk met behoud van oude beoordelingen. Nu de bestaande registratie aan afzonderlijke rondes binden; geen tweede verbeterplatform. De geïnstalleerde initiatiefroute wordt daarnaast gevolgd vanaf het eerstvolgende toegelaten venster om 23:33; uitvoering is niet gegarandeerd.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
-          "source": "eva2/evidence/product/native-initiative-subscription-installed-20261011.json",
-          "doneWhen": "Toegestaan eigen initiatief/droomwerk wordt niet door de onbedoelde extra daggrens geblokkeerd; historisch verbruik, accounttoegang, stoppen, persoonsgrenzen en voorgrondprioriteit blijven behouden. Daarna een authentiek zelfgekozen initiatief via dezelfde werker daadwerkelijk afmaken en terugleggen.",
-          "phase": "native_initiative_real_outcome",
+          "source": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json",
+          "doneWhen": "De bestaande verbeterroute accepteert een nieuwe vastgelegde ronde voor een actuele versie van hetzelfde onderdeel; oude bronnen, verbruikte beoordelingen en resultaten blijven behouden en bij herstart leesbaar. Alleen onafhankelijke kwaliteitswinst wordt toegepast. Daarna echte verbetercyclus van agentaansturing en samenhangend gezinsgebruik afronden.",
+          "phase": "existing_aide_round_binding",
           "executor": "/root",
           "coordination": "/root",
           "review": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
-          "summary": "De daggrenscorrectie draait. Nu moet Eva via de bestaande route zelf werk kiezen, afmaken en terugmelden; dat nieuwe resultaat is nog niet aangetoond."
+          "summary": "Diagnose klaar. Nu volgende verbetercyclus voor hetzelfde onderdeel aansluiten, met behoud van eerdere resultaten."
         },
         "next": {
-          "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
-          "detail": "Een aantoonbare verbetering van de aansturing onafhankelijk beoordelen en toepassen met bestaande AIDE²-voorzieningen. Daarna herhaald passend initiatief, leren van de menselijke reactie en samenhangend gezinsgebruik afronden.",
+          "title": "Daarna · agentaansturing werkelijk verbeteren",
+          "detail": "Een concrete tekortkoming van Eva's aansturing met vaste ontwikkel- en onafhankelijke eindcriteria verbeteren, de winnaar toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden.",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md"
@@ -4723,7 +4723,7 @@
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T20:54:42.210116+00:00",
+        "reviewedAt": "2026-10-11T21:06:43.611403+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4800,8 +4800,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-11T20:54:42.210116+00:00",
-      "checkedAt": "2026-10-11T20:54:42.210116+00:00",
+      "reviewedAt": "2026-10-11T21:06:43.611403+00:00",
+      "checkedAt": "2026-10-11T21:06:43.611403+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11174,7 +11174,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T20:54:42.210116+00:00",
+      "lastUpdatedAt": "2026-10-11T21:06:43.611403+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11577,9 +11577,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "De daggrenscorrectie is geïnstalleerd en onafhankelijk goedgekeurd. Kern en taakwerker zijn gezond; 89 gerichte controles geslaagd. Nu de echte eigen keuze van Eva volgen tot een uitgevoerd resultaat en privéterugmelding; dat nieuwe resultaat is nog niet aangetoond.",
-      "currentEvidence": "eva2/evidence/product/native-initiative-subscription-installed-20261011.json",
-      "nextStep": "Een aantoonbare verbetering van de aansturing onafhankelijk beoordelen en toepassen met bestaande AIDE²-voorzieningen. Daarna herhaald passend initiatief, leren van de menselijke reactie en samenhangend gezinsgebruik afronden.",
+      "currentWork": "De brondiagnose is afgerond. De bestaande AIDE²-route kan varianten beoordelen en toepassen, maar mist nog een herbruikbare actuele rondebinding voor agent/harnesswerk met behoud van oude beoordelingen. Nu de bestaande registratie aan afzonderlijke rondes binden; geen tweede verbeterplatform. De geïnstalleerde initiatiefroute wordt daarnaast gevolgd vanaf het eerstvolgende toegelaten venster om 23:33; uitvoering is niet gegarandeerd.",
+      "currentEvidence": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json",
+      "nextStep": "Een concrete tekortkoming van Eva's aansturing met vaste ontwikkel- en onafhankelijke eindcriteria verbeteren, de winnaar toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -11595,7 +11595,7 @@
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
       "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
-      "designUpdatedAt": "2026-10-11T20:54:42.210116+00:00",
+      "designUpdatedAt": "2026-10-11T21:06:43.611403+00:00",
       "wholeProjectGoalStatus": "active",
       "subdeliveriesDoNotCompleteGoal": true
     },
@@ -30973,6 +30973,25 @@
       "originalSmallTasksUnchanged": true,
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372",
       "installedReviewVerdict": "GO"
+    },
+    "nativeInitiativeCurrentWait20261011": {
+      "evidence": "eva2/evidence/product/native-initiative-next-window-20261011.json",
+      "nextEligibleAt": "2026-10-11T21:33:07+00:00",
+      "liveRuntimeVerified": true,
+      "nativeOutcomeOpen": true,
+      "technicalWorkNotBlocked": true
+    },
+    "aideHarnessCurrentGap20261011": {
+      "checkedAt": "2026-10-11T21:06:43.611403+00:00",
+      "evidence": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json",
+      "state": "implementation_next",
+      "existingRouteReused": true,
+      "currentCompletedDiagnosis": true,
+      "sourceImplementationCompleted": false,
+      "installed": false,
+      "newModelCalls": 0,
+      "creditCosts": null,
+      "remaining": "Bind fresh rounds on the existing final queue; preserve consumed protocols and historical receipts. Independent final criteria remain host-owned. Complete actual agent-harness improvement and family use."
     }
   },
   "activeTaskId": "AU-008",
@@ -33444,5 +33463,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T20:54:42.210116+00:00"
+  "updatedAt": "2026-10-11T21:00:10.821706+00:00"
 }

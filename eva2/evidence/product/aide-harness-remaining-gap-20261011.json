@@ -1,0 +1,240 @@
+{
+  "contract": "EvaAideHarnessRemainingGapDiagnosis/v1",
+  "checkedAt": "2026-10-11T21:05:04.277360Z",
+  "verdict": "GAP_CONFIRMED",
+  "scope": "One read-only diagnosis of public completed AIDE/L3 outcomes and ordinary current source/configuration metadata. No source review reopening, experiment, new criterion or product completion.",
+  "answer": {
+    "existingRoute": "A reusable variant/development/selection/final/application engine exists and has genuine bounded outcomes. It is not merely a set of process-success demonstrations.",
+    "remainingGap": "A fresh host-bound agent/harness round is not a recurring registered target on that engine. Current coverage is three utility components, one narrow context-selection method, and one exact saved-helper target. A new agent-control round still needs operator-prepared source/development/final/release bindings and, where required, separately admitted real task-answer evidence.",
+    "claimLimit": "The inspected evidence does not establish a recurring unattended general agent/harness improvement cycle. This does not revoke L3.4-L3.7 or require repeating any closed context/helper experiment."
+  },
+  "alreadyWorks": [
+    {
+      "evidence": "eva2/evidence/product/l3-context-final-independent-result-20261007.json",
+      "finding": "ContextB passed an independent fixed final assessment: zero hard/relevance/correctness regressions and one newly answerable task with a direct-answer win; this was a real bounded agent-context quality improvement."
+    },
+    {
+      "evidence": "eva2/evidence/product/l3-context-candidate-b-installed-20261007.json",
+      "finding": "The exact Eva-authored contextB source was applied by the managed route and independently read back."
+    },
+    {
+      "evidence": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
+      "finding": "The following admitted L3.7 pass used the actual best installed source and earlier experience, stopped without an unnecessary new variant, and did not repeat application. It explicitly did not demonstrate a second optimization/promotion cycle."
+    },
+    {
+      "evidence": "eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json",
+      "finding": "The saved helper was independently improved: fractional cases 0/12 to 12/12 with all preservation cases retained and zero regressions; exact new source was saved and designated."
+    },
+    {
+      "evidence": "eva2/evidence/product/saved-artifact-later-use-result-20261011.json",
+      "finding": "A later ordinary task resolved and executed that exact improved source without new implementation, and its physical result was independently read back."
+    },
+    {
+      "finding": "Current source connects authorized native initiative work to the existing digital queue and component/programming actions. This diagnosis performs no new native usefulness or delivery check."
+    }
+  ],
+  "concreteSourceConstraints": [
+    "Installed-code evaluator allowlisting and importer allowlisting are separate. The importer permits a context-body change only; adding a client path alone cannot create a safe general harness application route.",
+    "configured_final_assessments constructs multiple path-specific assessors in the existing service, so a second final register/daemon is unnecessary.",
+    "The current protocols and assessors are keyed by path, with one active configuration per path. A registration is deliberately consumed once; this is a protection against final-feedback optimization, not a defect to reset.",
+    "For ordinary installed-code paths, a freshly configured registration can coexist with retained terminal receipts in the existing receipt root, provided its exact baseline, assessor and publication references are current. This is source-level capability, not a new live-cycle claim.",
+    "For saved targets, startup revalidates even retained terminal packages against the current path protocol. Replacing that protocol/target under the same path would invalidate old receipt loading; prior round bindings must remain available for their own jobs.",
+    "HostFinalAssessment accepts separately admitted answer evidence through its existing answer_evidence_file/complete stage. It does not itself generate a general live agent-harness answer comparison. Isolated execution alone does not prove better agent behavior.",
+    "The existing repository chooser accepts only proven failed declarative checks from a bounded fixture repository; its availability is not proof of current live agent/harness evaluation coverage."
+  ],
+  "smallestNextDevelopmentTask": {
+    "title": "Bind a fresh agent/harness round above the existing evaluation and application route",
+    "implementationBoundary": "Extend the existing host configuration/round binding and its current component action projection; do not add a second optimizer, register, queue, daemon, provider or installation platform.",
+    "input": "One real current agent-control deficit or explicit admitted extension, the actual current source baseline and permitted source boundary, current actor/project/mandate and provider/model profile, fixed development suite, separately registered independent final assessment and current release/application baseline.",
+    "existingModuleResponsibilities": {
+      "operations/component_evaluation_service.py": "Compose the admitted target and its fixed DevelopmentAssessment through the existing component_suites mapping.",
+      "adapters/connectors/component_evaluation.py": "Expose exact allowed source/development bindings to the worker; reject stale or mismatched references.",
+      "adapters/postgres/component_improvement_actions.py": "Use existing draft/compare/prepare lineage and current dispatch authority; include a host-bound round reference only if needed to distinguish same-path registrations.",
+      "operations/component_final_assessment.py": "Keep the existing dispatcher. Bind each queued job to its original registration/assessor; load a fresh active round without replacing the consumed original protocol, protected inputs or retained receipts. Multiple paths are already supported.",
+      "operations/component_release_publisher.py + tools/import_component_release.py": "Admit only the specifically reviewed agent-control source boundary and use the fresh current integration/image baseline for exact accepted application.",
+      "adapters/model/pydantic_conversation.py + bootstrap/native_initiative_work.py": "Offer only safe active-round metadata to native initiative selection and admit work through the existing live owner/mandate/profile/stop checks and queue."
+    },
+    "nativeReadableMetadata": [
+      "admitted round identifier",
+      "current target/baseline hash and permitted source boundary",
+      "public development binding and aggregate allowed budget",
+      "previous public decision and exact current application readback"
+    ],
+    "hostOnlyAuthority": [
+      "registering or changing the independent final protocol",
+      "protected final cases and expected answers",
+      "final scorer and provider/criteria bindings",
+      "release approval and installation authority"
+    ],
+    "preserve": "Consumed registration, old source/results/UNKNOWN, original criteria, actor/person/project limits, subscription authority, stop/foreground priority and exact application receipts remain unchanged.",
+    "completionForThisSlice": "One admitted agent-control round can use the existing selection/final/application path with exact current bindings and preserved older rounds; claim behavioral improvement only after its separately admitted real outcome and later use establish it.",
+    "notAuthorizedByDiagnosis": "No contextB repeat, new benchmark matrix, protected-input disclosure, criterion change, paid/native request or automatic new protocol generation."
+  },
+  "bindings": {
+    "publicEvidence": {
+      "eva2/evidence/product/l3-context-final-independent-result-20261007.json": "ea1eaba22374d12e0378233f33b5f3c1f4f71a617dc001cee00170c67c33f92f",
+      "eva2/evidence/product/l3-context-candidate-b-installed-20261007.json": "0c3170cd5bafab4c633d819e64591b782f1df5a16389788a73fe053a9e258057",
+      "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json": "27be9fc9cad1206fb689887ceae7518f45a80f2db695dca55a70af879679a6b9",
+      "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json": "e6454d56627ffd938cbb11515873338cef1cbee662f4760c2aa91654220f8662",
+      "eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json": "fa938923c76e6c1b2ae0f926cead686fe8fbd06ba8e85dbbce682a5ecbafc032",
+      "eva2/evidence/product/saved-artifact-later-use-result-20261011.json": "2a920ea7f82611d0e5dd5a86f0631d396807261803b6ddcaa2c79fa1913a6caa"
+    },
+    "sourceFiles": {
+      "eva2/src/eva/adapters/postgres/component_improvement_actions.py": {
+        "sha256": "a7d312c177dbea650fd5440bddf8fb6ba1f055bac228cf6038207e581aa6cb26",
+        "lines": [
+          170,
+          261,
+          312,
+          318
+        ],
+        "reason": "Revalidate exact source, compare existing recorded variants, hand off only a registered path and current person scope."
+      },
+      "eva2/src/eva/adapters/connectors/component_evaluation.py": {
+        "sha256": "db91a92f1e8fd9f51eddd603cb2257dee502277fa5068b3022d527eaeb4b239f",
+        "lines": [
+          65,
+          71,
+          75,
+          99,
+          106
+        ],
+        "reason": "Only admitted targets and fixed image/command/development-assessment bindings are accepted."
+      },
+      "eva2/src/eva/operations/component_evaluation_service.py": {
+        "sha256": "c2c87c24dc7fdd96f58e09fb6b353cfddd32e74c0dd4ec07b57ac76842eca6d6",
+        "lines": [
+          371,
+          374,
+          382,
+          384,
+          392
+        ],
+        "reason": "One existing host service composes fixed development suites and the fixed saved target."
+      },
+      "eva2/src/eva/operations/component_development.py": {
+        "sha256": "8b672db72ab8d5b28baaa69da7e8aa354011af42ebf144349d7ad86643ea4604",
+        "lines": [
+          14,
+          31,
+          40,
+          57
+        ],
+        "reason": "DevelopmentAssessment computes host-owned metrics from fixed public development inputs."
+      },
+      "eva2/src/eva/application/component_development.py": {
+        "sha256": "f48d40e9eebbff3bf798a4cde83c83bd1378f70ecbf6cbb6763cec58e43be304",
+        "lines": [
+          56,
+          121,
+          123
+        ],
+        "reason": "Compare compatible evaluations and keep the reference on a tie or loss."
+      },
+      "eva2/src/eva/operations/component_final_assessment.py": {
+        "sha256": "57120df2f6b759be5542ba8802a82326d97c87f2dbc2d3b682b47cc7db781b5b",
+        "lines": [
+          219,
+          227,
+          257,
+          295,
+          308,
+          330,
+          429,
+          434
+        ],
+        "reason": "Existing dispatcher supports multiple paths, one active protocol/assessor per path, and one final candidate per registration. Retained saved jobs revalidate against the currently configured target."
+      },
+      "eva2/src/eva/operations/component_release_publisher.py": {
+        "sha256": "c7ecdf3582d7237bd1b4d82c4c476b8f78f34443b23972e4233927e2b2a64396",
+        "lines": [
+          14,
+          35,
+          48,
+          58,
+          64,
+          76
+        ],
+        "reason": "Apply only accepted exact source; installed-code publication is bound to a fixed integration commit and installed image reference. Saved application uses its existing separate target-specific publication route."
+      },
+      "eva2/tools/import_component_release.py": {
+        "sha256": "d0587d00997a1216bae4f777226858a54d92155ea3b3258016c4f7ae5e2388a5",
+        "lines": [
+          19,
+          20,
+          99,
+          141
+        ],
+        "reason": "Installed-code import covers three utility components and only the active_context body of delegated_work_actions; arbitrary agent orchestration changes are outside this boundary."
+      },
+      "eva2/src/eva/bootstrap/delegated_digital_runner.py": {
+        "sha256": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d",
+        "lines": [
+          579,
+          583,
+          591,
+          605,
+          610
+        ],
+        "reason": "Ordinary and native work already share source checks, grants, component actions, programming and task model composition."
+      },
+      "eva2/src/eva/adapters/model/pydantic_conversation.py": {
+        "sha256": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
+        "lines": [
+          1663,
+          1668,
+          1704,
+          1736,
+          1869,
+          1903,
+          1949
+        ],
+        "reason": "Repository-improvement chooser requires evidenced failed fixture checks; the native initiative receives authorized action names, not a new independent harness protocol."
+      },
+      "eva2/src/eva/bootstrap/native_initiative_work.py": {
+        "sha256": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
+        "lines": [
+          30,
+          38,
+          42,
+          60,
+          67
+        ],
+        "reason": "Existing native provenance, current authority and the single durable digital queue remain the initiative entry point."
+      }
+    },
+    "goalDocument": {
+      "path": "eva2/PROJECTDOEL.md",
+      "sha256": "38e4f150f5e3d7016bde6aa1b2f1851f04a9ef6d9dc1c83d94e0bea889e91f9c",
+      "section": "Verplichte leercyclus en AIDE²; whole project remains active"
+    },
+    "ordinaryClientMetadata": {
+      "preparedConfigSha256": "3e1492aeefed147f0dcc13a574e22deade57322faed93cd6b3eb9227cf9b4180",
+      "independentlyReadFields": [
+        "allowed_paths",
+        "suite_bindings keys",
+        "final_assessment_scopes keys",
+        "presence of saved_artifact_suite_sha256"
+      ],
+      "allowedPathCount": 5,
+      "specificDevelopmentPath": "adapters/postgres/delegated_work_actions.py",
+      "finalPathKinds": [
+        "installed context-selection component",
+        "one exact saved-helper target"
+      ],
+      "qualification": "Prepared ordinary client metadata matches the current paths reported by the parent; this diagnosis does not make a new live configuration readback."
+    }
+  },
+  "method": {
+    "protectedFinalInputsRead": false,
+    "oldIndependentHelperCasesRead": false,
+    "modelRequests": 0,
+    "nativeProbes": 0,
+    "testsStarted": 0,
+    "runtimeChanges": 0,
+    "productCodeChanges": 0,
+    "newServices": 0,
+    "developmentCredits": "unknown",
+    "onlyWrittenArtifact": "eva2/evidence/product/aide-harness-remaining-gap-20261011.json"
+  }
+}
