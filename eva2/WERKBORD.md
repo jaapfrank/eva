@@ -1,4 +1,4 @@
-## Actueel werk — 2026-10-11T21:37:55.192541+00:00
+## Actueel werk — 2026-10-11T21:43:20.302230+00:00
 
 **Laatst opgeleverd:** nieuwe verbetercycli geïnstalleerd met behoud van oude
 beoordelingen. Vier exacte modules, 93 gerichte controles, bronreview GO.
@@ -21,35 +21,41 @@ oorspronkelijke kleine afrondingen behouden, spraak geparkeerd.
 **Dashboard:** overzicht, huidige oplevering, volgend resultaat en inhoudelijke
 controletijd gelijkgetrokken aan dezelfde bron. Automatische verversing blijft actief.
 
-## Actuele uitvoerfase — 11 oktober 2026
+## Actuele uitvoerfase — 12 oktober 2026
 
-Nieuwe verbetercycli zijn geïnstalleerd op de bestaande wachtrij. Iedere oude
-beoordeling behoudt haar oorspronkelijke protocol, beoordelaar en toepassing.
-Alle 1.910 oude ontvangst- en resultaatbestanden blijven bytegelijk; de twee
-bestaande rondes blijven verbruikt. Kern en taakwerker bevatten twee exacte
-adapters; dezelfde hostbeoordelaar twee exacte modules. 93 gerichte controles
-slagen, één bestaande optionele native controle blijft overgeslagen.
-Onafhankelijke bron- en installatiereview GO.
+De bronafbakening voor werkaanpakvarianten is eenmaal geïnstalleerd. De
+standaardwerkinstructie blijft letterlijk gelijk; alleen haar ene tekstbody mag
+later variëren, met alle overige bronbytes en bevoegdheden behouden.
+41 bron-/importercontroles en een afzonderlijke run van 65 taakbewijscontroles
+slagen. Geen claim van 106 unieke tests.
 
-Dit is een aansluiting voor nieuwe rondes, geen nieuwe kwaliteitsverbetering
-of volledige AIDE². De volgende uitkomst is een concrete verbetering van Eva's
-aansturing toepassen en bij later werk gebruiken.
+Kern en taakwerker draaien met de exacte bron; 339/337 overige Pythonmodules
+zijn gelijk. De bestaande hostbeoordelaar bevat twee exacte gewijzigde modules
+en 17 behouden modules. Configuratie, beide netwerken, mounts, budget en mandaat
+behouden; alle 1.910 oude bestanden bytegelijk. De optionele echte-taakbeoordeling
+is nog inactief en er is geen nieuwe ronde geregistreerd. Onafhankelijke bron-
+en installatiereview zijn GO voor deze exacte aansluiting.
 
-De selectie is afgerond: geen nieuwe contextproef zonder aangetoond tekort.
-De bestaande programmeeragent krijgt één afgebakende verbeterbare werkinstructie;
-alle overige bronbytes en bevoegdheden blijven buiten de variant. De onafhankelijke
-reviewer legt eerst betekenisvolle ontwikkel- en afgeschermde eindcriteria vast.
-Nog geen nieuwe modelproef of kwaliteitsverbetering.
+Nog geen nieuwe modelproef of kwaliteitsverbetering. De volgende uitkomst:
+één echte variant van Eva's werkaanpak vergelijken op vaste programmeertaken,
+afzonderlijk beoordelen, alleen bij aantoonbare winst toepassen en bij later
+werk gebruiken. Eén baseline/één kandidaat; originele beoordeling en de
+afzonderlijke verbruiksbinding behouden. Geen nieuwe vergelijkingsserie.
 
-De gewone initiatiefcyclus nam om 23:34 zelf een besluit: geen nieuwe bijdrage,
-geen blokkade. Deze passende stilte bewijst een actieve cyclus, geen afgerond
-nieuw initiatief. Oude beoordelingen, criteria, reserveringen en verbruik blijven.
-Passend initiatief en gezinsgebruik blijven open. Geen spraakwerk, nieuwe
-vergelijkingsserie of eigenaarhandeling.
+Twee voorbereidingsfouten blijven bewaard: de proef miste aanvankelijk het
+tweede bestaande netwerk; de eerste omgevingscontrole vergeleek volgorde in
+plaats van unieke waarden. Dezelfde pakketten zijn gebruikt; geen rebuild,
+rollback of tweede installatie. Nul handmatige Eva-modelaanvragen voor deze
+bron/build/installatie; automatisch verbruik en ontwikkelcredits onbekend.
 
-Bewijs: eva2/evidence/product/component-improvement-rounds-installed-20261011.json.
-Bronreview: eva2/reviews/component-improvement-rounds-source-review-20261011.json.
-Installatiereview: eva2/reviews/component-improvement-rounds-installed-review-20261011.json.
+De gewone initiatiefcyclus koos op 11 oktober om 23:34 passende stilte zonder
+blokkade. Dit bewijst een actieve cyclus, geen afgerond nieuw initiatief.
+Het volledige projectgoal blijft actief; persoonlijkheid, geheugenbasis,
+oude beoordelingen en 39/48 kleine afrondingen behouden. Geen spraakwerk of
+handeling van Jaap nodig.
+
+Bewijs: eva2/evidence/product/worker-strategy-boundary-installed-20261011.json.
+Bronreview: eva2/reviews/aide-worker-strategy-source-review-20261011.json.
 
 ## Actief volledig projectgoal — 11 oktober 2026
 

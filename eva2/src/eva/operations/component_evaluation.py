@@ -8,6 +8,8 @@ image is cleared before execution; no host environment or credentials are mounte
 from __future__ import annotations
 
 from dataclasses import dataclass
+import ast
+import base64
 from datetime import datetime
 import hashlib
 import json
@@ -47,6 +49,40 @@ _SAVED_TARGET_KEYS = {"kind", "procedure_reference_id", "scope", "artifact_path"
     "content_sha256", "receipt_sha256", "source_call_id", "source_message_id",
     "tool_configuration_sha256", "retention_until"}
 _SHA256 = re.compile(r"[0-9a-f]{64}")
+
+
+WORK_STRATEGY_PATH = "bootstrap/delegated_digital_runner.py"
+
+
+def _work_strategy_surroundings(raw):
+    """Only one literal-return body may vary; all surrounding UTF-8 bytes are fixed."""
+    module = ast.parse(raw.decode("utf-8"))
+    classes = [node for node in module.body if isinstance(node, ast.ClassDef)
+               and node.name == "_TaskModel"]
+    if len(classes) != 1:
+        raise ValueError("work strategy requires exactly one target class")
+    methods = [node for node in classes[0].body
+               if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+               and node.name == "_work_strategy"]
+    if len(methods) != 1 or not isinstance(methods[0], ast.FunctionDef):
+        raise ValueError("work strategy requires exactly one synchronous method")
+    method = methods[0]
+    if (len(method.body) != 1 or not isinstance(method.body[0], ast.Return)
+            or not isinstance(method.body[0].value, ast.Constant)
+            or not isinstance(method.body[0].value.value, str)
+            or not method.body[0].value.value.strip()
+            or len(method.body[0].value.value.encode("utf-8")) > 4096):
+        raise ValueError("work strategy body must return only a bounded nonempty literal string")
+    first = method.body[0]
+    lines = raw.splitlines(keepends=True)
+    start = sum(map(len, lines[:first.lineno - 1])) + first.col_offset
+    end = sum(map(len, lines[:method.end_lineno - 1])) + method.end_col_offset
+    return raw[:start], raw[end:]
+
+
+def validate_work_strategy_candidate(baseline, candidate):
+    if _work_strategy_surroundings(baseline) != _work_strategy_surroundings(candidate):
+        raise ValueError("candidate changes bytes outside the work strategy body")
 
 
 def validate_saved_artifact_target(target, *, relative_path=None, baseline_sha256=None):
@@ -221,16 +257,30 @@ class ComponentEvaluator:
         target = "/opt/eva/src/eva/" + request.relative_path
         manifest = None
         if request.source_target is None:
+            strategy = request.relative_path == WORK_STRATEGY_PATH
+            source_result = ("{'sha256':hashlib.sha256(b).hexdigest(),"
+                "'source_base64':base64.b64encode(b).decode('ascii')}" if strategy else
+                "{'sha256':hashlib.sha256(b).hexdigest()}")
             reader = ("/usr/local/bin/python", "-I", "-c",
-                "import hashlib,json,pathlib,sys; p=pathlib.Path(sys.argv[1]); "
+                "import base64,hashlib,json,pathlib,sys; p=pathlib.Path(sys.argv[1]); "
                 "assert str(p.resolve())==str(p) and p.is_file(); "
                 "f=p.open('rb'); b=f.read(65537); assert len(b)<=65536; "
-                "print(json.dumps({'sha256':hashlib.sha256(b).hexdigest()}))", target)
-            source_read = self._container(image_id, reader, output_limit=1024)
+                "print(json.dumps(" + source_result + "))", target)
+            source_read = self._container(image_id, reader, output_limit=90112 if strategy else 1024)
             if source_read["exit_code"] != 0 or source_read["timed_out"] or source_read["stdout_truncated"]:
                 raise RuntimeError("baseline Python source unavailable or exceeds bound")
-            if json.loads(source_read["stdout"]).get("sha256") != request.baseline_sha256:
+            readback = json.loads(source_read["stdout"])
+            if readback.get("sha256") != request.baseline_sha256:
                 raise ValueError("baseline source changed")
+            if strategy:
+                try:
+                    original = base64.b64decode(readback["source_base64"], validate=True)
+                except (KeyError, TypeError, ValueError):
+                    raise ValueError("work strategy baseline source is missing or malformed") from None
+                if (len(original) > 65536
+                        or hashlib.sha256(original).hexdigest() != request.baseline_sha256):
+                    raise ValueError("work strategy baseline bytes differ")
+                validate_work_strategy_candidate(original, request.source.encode("utf-8"))
             baseline = self._container(image_id, cfg.command)
         else:
             # Revalidate the copied manifest at dispatch; both legs use the same

@@ -1,0 +1,88 @@
+{
+  "contract": "EvaWorkerStrategySourceBoundary/v1",
+  "checkedAt": "2026-10-11T21:43:20.302230+00:00",
+  "state": "built_tested_not_installed",
+  "change": "Expose the unchanged shared developing-agent planning paragraph as a bounded literal-only work strategy. Use the existing evaluator and importer.",
+  "files": [
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+      "bytes": 45302,
+      "before_sha256": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d"
+    },
+    {
+      "path": "eva2/tools/import_component_release.py",
+      "sha256": "17f6cf9a2203ce6f22f390992e47e1e4c90640d37986fdb84abd0a9822272f0d",
+      "bytes": 11067,
+      "before_sha256": "d0587d00997a1216bae4f777226858a54d92155ea3b3258016c4f7ae5e2388a5"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_evaluation.py",
+      "sha256": "c17286c4bec620bbb6f6c9adb0c0ea842830d6a26307a7d1a10a074998412fbd",
+      "bytes": 17699,
+      "before_sha256": "10e30c578e4a91456702aead270b610fa634d5cd2b92db8d604c7eeabd09fa6b"
+    },
+    {
+      "path": "eva2/tests/operations/test_work_strategy_source_boundary.py",
+      "sha256": "943040cbf0650d54cc188708030d23221003a6e28f542a47744edb15eaec5730",
+      "bytes": 11722,
+      "before_sha256": null
+    }
+  ],
+  "boundary": {
+    "relative_path": "bootstrap/delegated_digital_runner.py",
+    "class": "_TaskModel",
+    "method": "_work_strategy",
+    "candidate_body": "exactly one synchronous-method Return of a nonempty literal string",
+    "max_literal_utf8_bytes": 4096,
+    "max_candidate_utf8_bytes": 65536,
+    "surrounding_bytes": "exact baseline equality in both evaluator and standalone importer",
+    "baseline": "read-only trusted image bytes plus exact SHA256 rechecked before either evaluation suite",
+    "default": "original 403-byte paragraph and generate-context order preserved",
+    "previous_generate_ast_sha256": "495127a5a0ac5ead4ecc2e0257c9f1f3c89ec32f523dfc4f2294d0746df05c92",
+    "unchanged_authorities": [
+      "task",
+      "principal",
+      "tools",
+      "budget",
+      "stop",
+      "evidence",
+      "provider"
+    ]
+  },
+  "tests": {
+    "runs": 1,
+    "exit_code": 0,
+    "passed": 41,
+    "failed": 0,
+    "skipped": 0,
+    "deselected": 0,
+    "pytest_elapsed_seconds": 1.89,
+    "output": ".........................................                                [100%]\n41 passed in 1.89s\n",
+    "coverage": [
+      "standard self_context and normal runner route",
+      "outside-body bytes and extra-method refusal",
+      "executable/nonliteral/unbounded body refusal",
+      "exact baseline refusal",
+      "valid real importer main source application",
+      "fixed evaluator byte check before either suite",
+      "existing admission sizes and package mount contract",
+      "durable stop and foreground contact regression"
+    ],
+    "isolation": "temporary checkout/import receipt; Git metadata supplied by existing release fixture; evaluator Docker transport mocked; no real Git commit, container execution or candidate Python execution",
+    "diff_check": {
+      "exit_code": 0,
+      "output": ""
+    }
+  },
+  "testLogSha256": "784b0a1c534e8175725dc011ec6ef9a7fc86c3410536202d4ea92b612c67b969",
+  "independentReview": "pending combined source and genuine-work evidence binding",
+  "runtimeChanged": false,
+  "qualityImprovementProven": false,
+  "evaModelRequests": 0,
+  "nativeTrials": 0,
+  "creditCosts": "unknown",
+  "originalTaskStatesChanged": false,
+  "wholeGoalStatus": "active",
+  "remaining": "Connect host-owned actual task outcome evidence to development assessment before the bounded meaningful strategy experiment."
+}

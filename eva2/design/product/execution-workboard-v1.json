@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T21:32:56.093030+00:00",
+        "checkedAt": "2026-10-11T22:07:23.101068+00:00",
         "deliveries": [
+          {
+            "title": "Werkagent klaargezet voor begrensde zelfverbetering",
+            "date": "2026-10-11T22:02:59.718527+00:00",
+            "state": "installed",
+            "productFunctionCompleted": false,
+            "technicalOutcomeCompleted": true,
+            "completionScope": "Exact source boundary and inactive optional host assessment installed once; no new round or native quality gain.",
+            "summary": "De bron staat klaar om één werkinstructie gecontroleerd te verbeteren. De standaardwerkwijze blijft gelijk.",
+            "result": "41 broncontroles en een aparte run van 65 taakbewijscontroles slagen. Exacte modules draaien; kern, werker en host gezond. 1.910 oude bestanden behouden.",
+            "remaining": "Echte baseline/kandidaat-proef, onafhankelijke beoordeling, betere variant toepassen en later gebruiken. Volledige AIDE² blijft open.",
+            "source": "eva2/evidence/product/worker-strategy-boundary-installed-20261011.json",
+            "review": "eva2/reviews/aide-worker-strategy-installed-review-20261011.json",
+            "independentReview": "Onafhankelijke bron- en installatiereview GO voor deze aansluiting. Nog geen native kwaliteitswinst of afgeronde AIDE².",
+            "usage": "0 handmatige Eva-modelaanvragen voor bron/build/installatie; automatisch runtimeverbruik en ontwikkelcredits onbekend.",
+            "reviewSha256": "9dd2f7c0d2302bac60f8b866dd6ccf8b9b86281dc62aa9384c82fc1c4cc2fd03"
+          },
           {
             "title": "Nieuwe verbetercycli met behoud van oude beoordelingen",
             "date": "2026-10-11T21:25:43.319825+00:00",
@@ -4709,16 +4725,16 @@
           }
         ],
         "now": {
-          "title": "AIDE² · eigen werkaanpak verbeterbaar maken",
+          "title": "AIDE² · echte werkaanpak vergelijken",
           "state": "in_progress",
-          "phase": "aide_work_strategy_source_boundary",
+          "phase": "aide_work_strategy_native_preparation",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root",
           "coordination": "/root",
-          "summary": "De bestaande programmeeragent krijgt één afgebakende, verbeterbare werkinstructie. De gewone initiatiefcyclus is actief en koos zojuist terecht niets nieuws.",
-          "detail": "De huidige route kan contextselectie en eigen code verbeteren. Nu wordt alleen de werkinstructie van dezelfde agent aangesloten op de bestaande variant- en beoordelingsroute. Er zijn nog geen nieuwe varianten of kwaliteitsmetingen uitgevoerd.",
-          "source": "eva2/evidence/product/aide-next-harness-selection-20261011.json",
+          "summary": "De bronwijziging is geïnstalleerd. De vaste taken en gewone uitvoerroute voor één begrensde proef worden gebonden.",
+          "detail": "De taakbeoordeling is nog inactief; geen nieuwe proef gestart. De bron/installatie is onafhankelijk goedgekeurd. Eerst echte uitvoer- en taakbinding, dan één begrensde proef. Alleen aantoonbare winst wordt toegepast en later gebruikt.",
+          "source": "eva2/evidence/product/worker-strategy-boundary-installed-20261011.json",
           "doneWhen": "Improve real agent control via the existing variant/development/independent-final/application route and prove use in later ordinary work.",
           "review": "/root/product_execution_memory_review"
         },
@@ -4740,7 +4756,7 @@
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T21:37:55.192541+00:00",
+        "reviewedAt": "2026-10-11T22:07:23.101068+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -31127,8 +31143,8 @@
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
     },
-    "checkedAt": "2026-10-11T21:37:55.192541+00:00",
-    "reviewedAt": "2026-10-11T21:37:55.192541+00:00"
+    "checkedAt": "2026-10-11T22:07:23.101068+00:00",
+    "reviewedAt": "2026-10-11T22:07:23.101068+00:00"
   },
   "activeTaskId": "AU-008",
   "maxActiveImplementationTasks": 1,
@@ -33599,5 +33615,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T21:32:56.093030+00:00"
+  "updatedAt": "2026-10-11T22:07:23.101068+00:00"
 }

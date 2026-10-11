@@ -17,9 +17,10 @@ from pathlib import Path
 import subprocess
 
 _ACTIVE_CONTEXT_PATH = "adapters/postgres/delegated_work_actions.py"
+_WORK_STRATEGY_PATH = "bootstrap/delegated_digital_runner.py"
 ALLOWED_PATHS = frozenset({
     "contracts/timestamps.py", "contracts/canonical_json.py", "application/cancellation.py",
-    _ACTIVE_CONTEXT_PATH,
+    _ACTIVE_CONTEXT_PATH, _WORK_STRATEGY_PATH,
 })
 
 
@@ -87,6 +88,32 @@ def _active_context_surroundings(raw):
     return raw[:start], raw[end:]
 
 
+def _work_strategy_surroundings(raw):
+    """Only one literal-return body may vary; all surrounding UTF-8 bytes are fixed."""
+    module = ast.parse(raw.decode("utf-8"))
+    classes = [node for node in module.body if isinstance(node, ast.ClassDef)
+               and node.name == "_TaskModel"]
+    if len(classes) != 1:
+        raise ValueError("work strategy requires exactly one target class")
+    methods = [node for node in classes[0].body
+               if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+               and node.name == "_work_strategy"]
+    if len(methods) != 1 or not isinstance(methods[0], ast.FunctionDef):
+        raise ValueError("work strategy requires exactly one synchronous method")
+    method = methods[0]
+    if (len(method.body) != 1 or not isinstance(method.body[0], ast.Return)
+            or not isinstance(method.body[0].value, ast.Constant)
+            or not isinstance(method.body[0].value.value, str)
+            or not method.body[0].value.value.strip()
+            or len(method.body[0].value.value.encode("utf-8")) > 4096):
+        raise ValueError("work strategy body must return only a bounded nonempty literal string")
+    first = method.body[0]
+    lines = raw.splitlines(keepends=True)
+    start = sum(map(len, lines[:first.lineno - 1])) + first.col_offset
+    end = sum(map(len, lines[:method.end_lineno - 1])) + method.end_col_offset
+    return raw[:start], raw[end:]
+
+
 def prepare(package_file, review_file, checkout):
     package = load_object(package_file)
     package_hash = package.get("candidate_package_sha256")
@@ -101,7 +128,7 @@ def prepare(package_file, review_file, checkout):
     if path not in ALLOWED_PATHS or not isinstance(content, str):
         raise ValueError("component is outside the configured evaluation scope")
     raw = content.encode("utf-8")
-    limit = 65536 if path == _ACTIVE_CONTEXT_PATH else 32768
+    limit = 65536 if path in {_ACTIVE_CONTEXT_PATH, _WORK_STRATEGY_PATH} else 32768
     if len(raw) > limit or digest(raw) != package.get("candidate_sha256"):
         raise ValueError("candidate bytes differ")
     ast.parse(content, filename=path)
@@ -141,6 +168,9 @@ def prepare(package_file, review_file, checkout):
     if (path == _ACTIVE_CONTEXT_PATH
             and _active_context_surroundings(baseline) != _active_context_surroundings(raw)):
         raise ValueError("candidate changes bytes outside the active_context body")
+    if (path == _WORK_STRATEGY_PATH
+            and _work_strategy_surroundings(baseline) != _work_strategy_surroundings(raw)):
+        raise ValueError("candidate changes bytes outside the work strategy body")
     diff = difflib.unified_diff(baseline.decode().splitlines(keepends=True),
         content.splitlines(keepends=True), fromfile="a/" + path, tofile="b/" + path)
     patch = "".join(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n" for line in diff)

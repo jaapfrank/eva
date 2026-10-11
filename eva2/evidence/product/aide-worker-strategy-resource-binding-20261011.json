@@ -1,0 +1,80 @@
+{
+  "ceilings": {
+    "applications": 1,
+    "automatic_retries": 0,
+    "baseline_sources": 1,
+    "candidate_build_provider_attempts": 6,
+    "candidate_sources": 1,
+    "development_source_count": 2,
+    "development_tasks_per_source": 2,
+    "evaluation_and_later_task_count": 9,
+    "independent_final_legs": 2,
+    "independent_final_tasks_per_leg": 2,
+    "independent_finalists": 1,
+    "later_ordinary_tasks": 1,
+    "new_latency_deadline": null,
+    "provider_attempts_per_task_including_contact_and_helpers": 4,
+    "stochastic_repetitions": 0,
+    "total_provider_attempts": 42,
+    "total_registered_tokens_input_plus_output": 200000,
+    "total_tools_including_build_and_later": 70
+  },
+  "checkedAt": "2026-10-11T21:48:29.461483+00:00",
+  "contract": "EvaWorkerStrategyResourceSupplement/v1",
+  "contractClarifications": {
+    "case_set_sha256": "SHA256 of raw fixed cases_file bytes, matching DevelopmentAssessment file binding.",
+    "fixedReference": "At assessor initialization pin existing baseline evidence and run-binding bytes. Missing remains evidence_missing for that instance; no lazy baseline adoption/cache. Compose the assessor only after the exact baseline sample is sealed.",
+    "perCaseAllocation": "Unchanged limit fields contact_attempts + worker_and_helper_attempts sum<=4, including all helpers; construction<=6. All share aggregate42 attempts/200000 tokens/70 tools.",
+    "run_bindings_sha256": "SHA256 of raw run binding file bytes; export hashes use canonical_sha256(JSONobject)."
+  },
+  "decision": "TIGHTEN_RESOURCES_BEFORE_ANY_MODEL_INPUT",
+  "executionReadiness": "NO_GO; no model or native trial starts from this resource supplement.",
+  "fullAide2Complete": false,
+  "method": {
+    "credits": "unknown",
+    "criteriaOrCaseFamilyChanges": 0,
+    "models": 0,
+    "nativeTrials": 0,
+    "oldArtifactsModified": 0,
+    "productCodeChanges": 0,
+    "runtimeChanges": 0,
+    "testsStarted": 0
+  },
+  "originalPrivateCriteria": {
+    "bytesUnchanged": true,
+    "sha256": "57b4fc30c0446d45c52e2ca054a8bb38fad0041440f7184f2b59636b3093b39c"
+  },
+  "originalPrivateManifest": {
+    "bytesUnchanged": true,
+    "sha256": "59ccbd3e7c3c23e455a02316699ee93b2fe2d983cece302fc26b154583e24bc7"
+  },
+  "originalScope": {
+    "bytesUnchanged": true,
+    "path": "eva2/evidence/product/aide-worker-strategy-evaluation-scope-20261011.json",
+    "sha256": "dc0d8376ae0491ca6b2a7a018945cf26fc80de3fb2982f28ff331d428a562394"
+  },
+  "privateResourceBinding": {
+    "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/reviewer/resource-binding.private.json",
+    "sha256": "dcc4084ed62480dc8173b6e8d05102c05e47bb7acdc0665554e29ccfcd14a6c7"
+  },
+  "qualityCriteriaAndCaseFamiliesUnchanged": true,
+  "requiredBeforeExecution": [
+    "Prove trusted development evidence producer/interface and the fixed protected question/scorer bindings.",
+    "Demonstrate meaningful simple and multistep programming/progress/reuse task feasibility within the new ceilings before fixing task fixtures.",
+    "Bind exact current source/profile/scope/authority and keep every old criterion, consumed round, UNKNOWN and readback unchanged."
+  ],
+  "resourceOverride": "These smaller ceilings replace only the earlier146-attempt/1840000-token/two-candidate resource allowance; they are hard limits, not expected consumption or costs. The exact evidence schema is unchanged.",
+  "roles": [
+    {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "none",
+      "role": "contact"
+    },
+    {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium",
+      "role": "work_and_all_helpers"
+    }
+  ],
+  "wholeGoalStatus": "active"
+}

@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-11T21:57:12.762969+00:00",
+  "state": "built_tested_not_installed",
+  "sourceFiles": {
+    "eva2/src/eva/operations/component_development.py": "ba98bde53173257cfc21cc6f8d9699f954b0408788f99462ecb2620019d6cd07"
+  },
+  "checks": {
+    "passed": 65,
+    "failed": 0,
+    "skipped": 0,
+    "rerun": false,
+    "logSha256": "da08b4748efa115c4a39538d0918bd247e78a344a3eb485b27ea40812da3a737"
+  },
+  "result": "Optional fixed host assessment accepts sealed actual work observations, not model-supplied scores. Legacy configuration and hashes retained.",
+  "independentReview": "pending_combined_source_review",
+  "manualEvaModelRequests": 0,
+  "developmentCredits": null,
+  "nativeQualityGainProven": false,
+  "remaining": [
+    "fixed case/scorer binding",
+    "ordinary trusted producer",
+    "native comparison and independent final outcome",
+    "application and later ordinary use"
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "eva2.aide.worker_strategy_installed_review.v1",
+  "checkedAt": "2026-10-11T22:06:08.878227+00:00",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact installed literal work-strategy hook and optional host evidence validation, opt-in inactive. Publication only; no execution/quality approval.",
+  "bindings": {
+    "publicEvidence": {
+      "path": "eva2/evidence/product/worker-strategy-boundary-installed-20261011.json",
+      "sha256": "98cb3b11a753d7bd24e1bb8f4a54a1e2a077d8f427e547b5efc9b06bb1262358"
+    },
+    "sourceReview": {
+      "path": "eva2/reviews/aide-worker-strategy-source-review-20261011.json",
+      "sha256": "370496c77c14b69af4e0badc066b9bdee6886e9913209825374f43f5e23d8de0"
+    },
+    "technicalReceipts": {
+      "strategy-runtime-baseline.private.json": "354a0d3a302ae56e72991edc38023f774a5da9113325ab079e094ce57aea646c",
+      "strategy-build.private.json": "4bc1e1d3674e357dbd95387e7c2f3e1ae8c3aaf6f2f3faeb406620cacb0fff97",
+      "strategy-image-update-receipt.private.json": "a67c49906269fb276d279afb6d608d53be075aa103084e05e17288119b729fb4",
+      "strategy-host-install.private.json": "9e9ac0106bbac7238cd389cd3a29df385ccce381fe623e1f5da671c6e1af3aed",
+      "strategy-installed-verification.private.json": "1a4cb7b3baf299958ad87abad77496e43ee814c49767b9e323ff91e3ca30087d",
+      "strategy-actual-core-sources.private.json": "11d9202d399920b6a69b570f56b9bd54fad48eb51ae169048d1613883a659fcc",
+      "strategy-actual-worker-sources.private.json": "d222c03caf8a2813053ec3c14267b6aea69d5ff82c467bd6f62169ec02c434f4",
+      "strategy-actual-core-inspect.private.json": "927d5960d308fbe7b7c516446b5928a98f2b131ea1d5c0250de5cf0bc7f7d59e",
+      "strategy-actual-worker-inspect.private.json": "58213a66ff669f154f2bdee1a1aafd6446a1761238e253ce64a46be215c185a9"
+    },
+    "images": {
+      "core": "sha256:d0667cb6c18a237f7b2f36d3db1a6b3deb6f74b60051e08105d3633ba7b22085",
+      "worker": "sha256:a30db3ee9a157588d1f1e98b31c7816763151c38e84a48c1b7747767f4680e7d"
+    },
+    "sourceFiles": {
+      "bootstrap/delegated_digital_runner.py": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+      "operations/component_evaluation.py": "c17286c4bec620bbb6f6c9adb0c0ea842830d6a26307a7d1a10a074998412fbd",
+      "operations/component_development.py": "ba98bde53173257cfc21cc6f8d9699f954b0408788f99462ecb2620019d6cd07"
+    },
+    "importerSha256": "17f6cf9a2203ce6f22f390992e47e1e4c90640d37986fdb84abd0a9822272f0d",
+    "defaultStrategySha256": "3ff1b6434378ff93387accb0255ac5a066828dc7d79fc7fba48779ce2fa960a0",
+    "freshRelease": {
+      "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+      "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+      "worker_program_sha256": "009871cde73c6d3ae6a59a6e6ab5417729afdb2cac6e035e7d270d08ba705d42",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+    }
+  },
+  "independentChecks": {
+    "actualImageIdsEqualBuildAndUpdater": true,
+    "actualHealthyBoth": true,
+    "actualInventoriesEqualPreparedBuildInventories": true,
+    "actualRunnerHashEqualsSourceReviewBoth": true,
+    "runtimeSourceCounts": {
+      "core": 340,
+      "worker": 338
+    },
+    "buildPreservationCounts": {
+      "coreOtherPythonModules": 339,
+      "workerOtherPythonModules": 337,
+      "qualification": "Exact actual inventories matched the preserved build comparison; this phase starts no new candidate container or comparison."
+    },
+    "actualDefaultStrategyHashUnchangedBoth": true,
+    "freshCoreWorkerProfilesEqual": true,
+    "environmentValuesEqualWithoutDuplicateKeys": true,
+    "uidCommandEntrypointWorkingDirectoryHealthChecksEqual": true,
+    "allMountRecordsEqualByDestinationBeforeAfterUpdater": true,
+    "existingNetworksEqualBoth": true,
+    "hostSourcesExact19": true,
+    "twoReviewedHostModulesOnly": true,
+    "otherHostModulesByteExact17": true,
+    "oldHostSnapshotBytesStillExact": true,
+    "hostConfigFileHashExact": true,
+    "optInInactive": true,
+    "oldReceiptFileHashesRecomputed1910": true,
+    "ownerPolicyAndBudgetFileHashesRecomputedUnchanged": true,
+    "hostRecordedReadyActiveNRestarts0": true,
+    "publicEvidencePrivateBindingsRehashed": true,
+    "scopeSeparatesInstalledSourceFromMeaningfulNativeImprovement": true
+  },
+  "publicationMutation": {
+    "authorization": "Parent explicitly authorized only review.installation to remove circular/stale binding before final review.",
+    "previousPublicEvidenceSha256": "828057d006a17a01e573310eb67920247fae9bf8a3b4b2eedd39d6c81b660b48",
+    "onlyFieldChanged": "review.installation",
+    "finalPublicEvidenceSha256": "98cb3b11a753d7bd24e1bb8f4a54a1e2a077d8f427e547b5efc9b06bb1262358",
+    "publicEvidenceMustRemainByteExactAfterThisReview": true
+  },
+  "retainedPreparationErrors": [
+    "Probe originally omitted a second pre-existing network; same images then checked with both networks, no rebuild/reinstall.",
+    "First environment observation compared Docker array order; unique key/value maps match.",
+    "Independent mount-list comparison likewise required destination-keyed records; every record matches, with no changed mount fields."
+  ],
+  "limits": {
+    "reviewerModelRequests": 0,
+    "reviewerNewTests": 0,
+    "reviewerCandidateOrNativeRuns": 0,
+    "noNewAssessmentConfigurationOrRound": true,
+    "noNativeInputApproval": true,
+    "nativeQualityGainProven": false,
+    "fullAide2Complete": false,
+    "automaticRuntimeUsageReconciled": false,
+    "credits": null
+  },
+  "remainingBeforeNativeInput": [
+    "Fixed case/scorer and current source/literal-to-SDK runtime/projection bindings.",
+    "Trusted producer with complete original provider/action/readback evidence and current owner/project/stop admission.",
+    "Physical shared42provider/200000totalTokens/70tools/0retry ceiling, <=4 physical calls per case including contact/helpers, including construction/final/later usage.",
+    "Baseline sealed before opt-in DevelopmentAssessment composition; separate protected final assessment."
+  ],
+  "goalStatus": "Full project goal remains active. This is installed inactive infrastructure, not a new completed product function or quality/superiority/family acceptance result."
+}

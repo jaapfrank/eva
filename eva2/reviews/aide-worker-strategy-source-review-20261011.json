@@ -1,0 +1,110 @@
+{
+  "schema": "eva2.aide.worker_strategy_combined_source_review.v1",
+  "checkedAt": "2026-10-11T21:58:56.761491+00:00",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact pure worker-strategy hook, importer/evaluator source boundary and optional trusted developmental work-evidence validation; one installation with work_evidence inactive and no new assessment registration.",
+  "bindings": {
+    "sourceFiles": {
+      "bootstrap/delegated_digital_runner.py": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+      "operations/component_evaluation.py": "c17286c4bec620bbb6f6c9adb0c0ea842830d6a26307a7d1a10a074998412fbd",
+      "operations/component_development.py": "ba98bde53173257cfc21cc6f8d9699f954b0408788f99462ecb2620019d6cd07"
+    },
+    "importerFiles": {
+      "eva2/tools/import_component_release.py": "17f6cf9a2203ce6f22f390992e47e1e4c90640d37986fdb84abd0a9822272f0d"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_work_strategy_source_boundary.py": "943040cbf0650d54cc188708030d23221003a6e28f542a47744edb15eaec5730",
+      "eva2/tests/operations/test_component_development_work_evidence.py": "8d4ab3d19429bbf67e5270042331da1bea01e201082b2cb2282fe17dcf6e0352"
+    },
+    "sourceReceiptSha256": "98f30dc3c330502cf23be69b5d3ae99665c423e1140a74a8cfb49ebfe8c1896d",
+    "evidenceSourceReceiptSha256": "87d56bc983055f370720f75507d62af252c6b3f6180228018d014582fcd8d453",
+    "publicEvidence": {
+      "eva2/evidence/product/aide-next-harness-selection-20261011.json": "08e74e594882685615a7ae9b6a5c7159afc7918614cda4b9f1ec78518db29829",
+      "eva2/evidence/product/aide-worker-strategy-evaluation-scope-20261011.json": "dc0d8376ae0491ca6b2a7a018945cf26fc80de3fb2982f28ff331d428a562394",
+      "eva2/evidence/product/aide-worker-strategy-resource-binding-20261011.json": "c84844528f02a744b7e2779ec31db8b4ffb93669893f3a8137e3084004305c82",
+      "eva2/evidence/product/worker-strategy-work-evidence-source-20261011.json": "9ea8f936b9850a9374acce79d8a9ccd52172e8b972e2f62554dbee6bd6ded899"
+    }
+  },
+  "findings": [
+    {
+      "conclusion": "Pure hook preserves the original 403-byte strategy and context order.",
+      "sources": [
+        "bootstrap/delegated_digital_runner.py:127",
+        "bootstrap/delegated_digital_runner.py:159"
+      ],
+      "evidence": "Pinned pre-extraction generate AST plus standard/extended context regressions; no task, correction, budget, source, stop, tool or provider authority was moved."
+    },
+    {
+      "conclusion": "Only the literal return body may vary.",
+      "sources": [
+        "operations/component_evaluation.py:57",
+        "operations/component_evaluation.py:275",
+        "eva2/tools/import_component_release.py:91",
+        "eva2/tools/import_component_release.py:171"
+      ],
+      "evidence": "Both consumers require a synchronous unique method, one nonempty string-literal return <=4096 UTF-8 bytes and exact surrounding bytes. Trusted image/checkout baseline hash is checked first; tests cover executable bodies, extra methods, UTF-8/CRLF and real disposable source import."
+    },
+    {
+      "conclusion": "Work quality is obtained only from fixed host observations, never candidate stdout.",
+      "sources": [
+        "operations/component_development.py:133",
+        "operations/component_development.py:253",
+        "operations/component_development.py:323"
+      ],
+      "evidence": "Exact registration/cases/source/scope/runtime bindings, private bounded nonsymlink single-link records, raw runbinding hash, canonical exported observations and unique task/session/receipt/request IDs are validated before fixed host scoring. Baseline file hashes are pinned at composition and rechecked; missing baseline stays incomplete until fresh composition."
+    },
+    {
+      "conclusion": "Measured usage and authority are mandatory for developmental scoring.",
+      "sources": [
+        "operations/component_development.py:222",
+        "operations/component_development.py:301"
+      ],
+      "evidence": "Strict counter arithmetic, physical request identities, Sol/none contact and Astra/medium work/helper roles, helper-shared per-case caps, combined baseline/candidate limits, human-help hashes and true current-scope/authorization/stop/no-forbidden-effect proofs. Unknown/incomplete/mismatched evidence returns complete=false with no metrics."
+    },
+    {
+      "conclusion": "Legacy assessment mode retains its serialized output and assessment hash.",
+      "sources": [
+        "operations/component_development.py:19",
+        "operations/component_development.py:60"
+      ],
+      "evidence": "Optional-only dispatch; exact serialized legacy regression and unchanged fixed scorer/case recheck. No new provider, process, service, cache, retry or runtime action."
+    }
+  ],
+  "verification": {
+    "testsExecutedByReviewer": 0,
+    "modelRequestsByReviewer": 0,
+    "nativeTrialsByReviewer": 0,
+    "sourceReceiptsRehashed": true,
+    "originalLogsRehashed": true,
+    "reportedRuns": [
+      {
+        "passed": 41,
+        "seconds": 1.89,
+        "runs": 1,
+        "logSha256": "784b0a1c534e8175725dc011ec6ef9a7fc86c3410536202d4ea92b612c67b969"
+      },
+      {
+        "passed": 65,
+        "seconds": 1.52,
+        "runs": 1,
+        "logSha256": "da08b4748efa115c4a39538d0918bd247e78a344a3eb485b27ea40812da3a737"
+      }
+    ],
+    "countQualification": "Two preserved passing result sets; not independently advertised as 106 unique checks."
+  },
+  "installationConditions": [
+    "Install only the exact reviewed runtime/host/importer hashes using the existing updater, retaining existing configuration, mounts, services and all old round/protocol/receipt files.",
+    "Leave work_evidence and the new source path unregistered until fixed case/scorer/round, current owner/profile/source/stop admission and trusted producer bindings are independently ready.",
+    "Before any paid input, physically share the 42-provider/200000-total-token/70-tool/zero-retry ceiling including construction, helpers, final and later use. Generic DevelopmentAssessment input/output limits alone do not enforce that whole protocol.",
+    "Each real task must use the current profile-compatible grant; the extra four-call journal bound must include helpers through a shared physical cap. Static source evaluation is not native work or a quality result.",
+    "Seal the baseline work and runbindings before constructing the opt-in assessor; no in-place lazy adoption or closed-case retry."
+  ],
+  "limitations": [
+    "No installation verified by this receipt.",
+    "No model execution, quality gain, later application, efficiency or full AIDE² completion proven.",
+    "Artifact content and complete provider measurement originate in the separately trusted producer; this source validator checks their sealed bindings rather than independently creating those observations.",
+    "Construction usage, total combined-token ceiling and tool counts remain explicit producer/runtime/protocol duties; they are not silently treated as new evidence-schema fields.",
+    "Existing goal and original quality criteria remain active and unchanged; credits unknown."
+  ]
+}
