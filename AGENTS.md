@@ -60,6 +60,14 @@ Bronreview: eva2/reviews/saved-artifact-component-evaluation-source-review-20261
 Onafhankelijke installatiecontrole GO: eva2/reviews/saved-artifact-component-evaluation-installed-review-20261011.json.
 Het volledige projectgoal blijft actief.
 
+**Actuele werkstand — 11 oktober:** bronkoppeling geïnstalleerd; toepassing van
+beoordeelde hulpmiddelverbeteringen nu in aanbouw. De aparte eindbeoordelings-
+koppeling heeft 37 gerichte tests doorstaan. De nieuwe toepassingscode is nog niet
+gecontroleerd of geïnstalleerd; vaste ontwikkel- en afgeschermde eindcriteria worden
+vooraf vastgelegd. Geen nieuwe concurrentieproef of eigenaarhandeling. Het dashboard
+is bij deze taakwissel gelijkgetrokken; hoofdafrondingen blijven ongewijzigd.
+
+
 Daarna passend initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en
 echte gezinsacceptatie afmaken. Het volledige projectgoal blijft actief.
 Spraak blijft geparkeerd; ongebruikte Docker Desktop blijft ongemoeid.

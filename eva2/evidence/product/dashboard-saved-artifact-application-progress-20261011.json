@@ -1,0 +1,46 @@
+{
+  "contract": "EvaDashboardProgressUpdate/v1",
+  "checkedAt": "2026-10-11T18:48:08.592149+00:00",
+  "previousCurrent": {
+    "title": "AIDE²: verbeteringen zelfstandig toepassen",
+    "detail": "Bronkoppeling voor Eva’s eigen bewaarde Python-hulpmiddelen is geïnstalleerd en gecontroleerd. Nu dezelfde route afmaken met vaste ontwikkel-/eindcriteria, de betere versie bewaren en later gebruiken. Daarna agentaansturing en rustige droomplanning. Volledige AIDE² blijft open.",
+    "state": "in_progress",
+    "activeExecution": true,
+    "owner": "/root",
+    "source": "eva2/PROJECTDOEL.md",
+    "review": "eva2/reviews/saved-artifact-component-evaluation-installed-review-20261011.json",
+    "doneWhen": "Eva doorloopt een echte kwaliteitsverbetercyclus voor haar aansturing én code of uitbreiding, met onafhankelijke eindbeoordeling, gecontroleerde toepassing en latere bruikbare verbetering.",
+    "evidence": "eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json"
+  },
+  "current": {
+    "title": "AIDE² · verbeterde hulpmiddelen bewaren en later gebruiken",
+    "detail": "De bronkoppeling draait al. Nu in aanbouw: een onafhankelijk goedgekeurde hulpmiddelversie via dezelfde opslag bewaren en bij later werk gebruiken. De aparte eindbeoordelingskoppeling heeft 37 gerichte tests doorstaan; de nieuwe toepassingscode is nog niet gecontroleerd of geïnstalleerd. Vaste ontwikkel- en eindcriteria worden vooraf vastgelegd. Geen nieuwe concurrentieproef.",
+    "state": "in_progress",
+    "activeExecution": true,
+    "owner": "/root",
+    "source": "eva2/PROJECTDOEL.md",
+    "review": "eva2/reviews/saved-artifact-component-evaluation-installed-review-20261011.json",
+    "doneWhen": "Een echte kandidaat haalt de vaste kwaliteitscriteria, wordt onafhankelijk beoordeeld, via de bestaande route bewaard en bij een latere gewone opdracht daadwerkelijk gebruikt. Zonder aantoonbare verbetering blijft de huidige versie behouden.",
+    "evidence": "eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json"
+  },
+  "latestInstalled": {
+    "title": "Eigen bewaarde hulpmiddelen aangesloten op dezelfde verbeterroute",
+    "date": "2026-10-11T18:35:56.442544+00:00",
+    "state": "installed",
+    "source": "eva2/evidence/product/saved-artifact-component-evaluation-installed-20261011.json",
+    "reviewSha256": "0a97beb675c93690ab04d4d7759b4f188f5444daebfd253f270a95b1a6fbe93e"
+  },
+  "wholeGoal": "active",
+  "newProductCompletion": false,
+  "originalTaskCountUnchanged": "39/48",
+  "source": "eva2/design/product/execution-workboard-v1.json",
+  "liveReadback": {
+    "checkedAt": "2026-10-11T18:51:04.525415+00:00",
+    "url": "http://127.0.0.1:44712/project-state",
+    "http": 200,
+    "currentTitleMatched": true,
+    "latestInstalledMatched": true,
+    "ownerActionRequired": false,
+    "method": "PowerShell Invoke-RestMethod; actual returned fields compared"
+  }
+}
