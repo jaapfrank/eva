@@ -64,6 +64,12 @@ verbetercyclus en later gebruik. Nog geen nieuwe kwaliteitswinst of volledige AI
 bewezen. Geen concurrentieserie of eigenaarhandeling; hoofdafrondingen ongewijzigd.
 Bronbewijs: eva2/evidence/product/saved-artifact-application-source-20261011.json.
 
+**Installatievoorbereiding 2026-10-11T19:06:20.157952+00:00:** beide exacte pakketten gebouwd; alleen twee
+toepassingsmodules veranderen, 337 andere kernmodules en 335 werkermodules behouden.
+Vaste criteria voorbereid; gebundelde planreview en één installatie volgen. Nog geen
+native variant, toepassing of nieuwe kwaliteit aangetoond. Dashboard live bijgewerkt.
+Bewijs: eva2/evidence/product/saved-artifact-application-packaged-20261011.json.
+
 
 Daarna passend initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en
 echte gezinsacceptatie afmaken. Het volledige projectgoal blijft actief.

@@ -1,0 +1,49 @@
+{
+  "contract": "EvaSavedArtifactApplicationPackaging/v1",
+  "checkedAt": "2026-10-11T19:06:20.157952+00:00",
+  "status": "packaged_not_installed",
+  "images": {
+    "core": "sha256:f28238ab8551c1b19b912610fdf9588732b4f2751232195442d55234e150a3ae",
+    "delegated-work-worker": "sha256:54bc905c7505583ed0fe08695751d905abf59587d063b04110868f24442a78f2"
+  },
+  "sourcePackaging": {
+    "core": {
+      "image": "sha256:f28238ab8551c1b19b912610fdf9588732b4f2751232195442d55234e150a3ae",
+      "moduleCount": 339,
+      "changed": [
+        "operations/component_application_runtime.py",
+        "operations/saved_artifact_application.py"
+      ],
+      "unchangedModules": 337,
+      "importsPassed": true,
+      "hostToolsPresent": false
+    },
+    "delegated-work-worker": {
+      "image": "sha256:54bc905c7505583ed0fe08695751d905abf59587d063b04110868f24442a78f2",
+      "moduleCount": 337,
+      "changed": [
+        "operations/component_application_runtime.py",
+        "operations/saved_artifact_application.py"
+      ],
+      "unchangedModules": 335,
+      "importsPassed": true,
+      "hostToolsPresent": false
+    }
+  },
+  "planSha256": "c1f519ed0015521171cbe7b6a34d99aed275ef508658fd60be7d0897ed3df8da",
+  "candidateComposeSha256": "ae6d76ac0323e16b72a7d4548b96dce3356aafe21155783c3b54c3785276b6c7",
+  "sourceReviews": [
+    "eva2/reviews/saved-artifact-application-source-review-20261011.json",
+    "eva2/reviews/saved-artifact-final-assessment-source-review-20261011.json"
+  ],
+  "remaining": [
+    "Bundled installation-plan review and one existing-runtime update",
+    "Bounded development/final comparison of one actual saved helper",
+    "Apply only a verified gain; demonstrate later ordinary use",
+    "Agent-harness improvement and dream scheduling remain open"
+  ],
+  "manualEvaModelRequests": 0,
+  "productFunctionCompleted": false,
+  "originalSmallCompletions": "39/48 unchanged",
+  "goalStatus": "active"
+}
