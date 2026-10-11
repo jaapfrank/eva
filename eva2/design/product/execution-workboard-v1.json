@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T15:51:04.828538+00:00",
+  "lastUpdated": "2026-10-11T16:02:38.714648+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -34,94 +34,79 @@
       "runtimeLabel": "Slot 3",
       "roadmap": [
         {
-          "id": "actions",
-          "title": "Geheugen afgerond · eigen bijdrage beoordelen",
-          "outcome": "Eva onthoudt relevante persoonlijke kennis uit gewone gesprekken, verwerkt wijzigingen, gebruikt tijdelijke informatie op het juiste moment en laat irrelevante herhaling buiten blijvende kennis. Bestaande gegevens en persoonsgrenzen blijven behouden.",
-          "acceptance": "Gewone gesprekken tonen zelfstandig onthouden, correct bijwerken en passend terughalen; opgeslagen bewijs en menselijke acceptatie apart zichtbaar.",
+          "id": "whole-goal-1",
+          "title": "Leercyclus in later werk toepassen",
+          "outcome": "Eerdere taakervaring en feedback worden duurzaam bij de juiste persoon bewaard en beïnvloeden later relevant gedrag.",
+          "acceptance": "Eerdere taakervaring en feedback worden duurzaam bij de juiste persoon bewaard en beïnvloeden later relevant gedrag.",
           "taskIds": [
             "CO-008",
             "CO-004",
             "CO-005",
+            "AU-004"
+          ],
+          "keepVisible": true
+        },
+        {
+          "id": "whole-goal-2",
+          "title": "Ontbrekende mogelijkheid maken en hergebruiken",
+          "outcome": "Eva ontdekt een ontbrekende mogelijkheid, realiseert of koppelt haar, controleert de werking en gebruikt haar bij een andere opdracht.",
+          "acceptance": "Eva ontdekt een ontbrekende mogelijkheid, realiseert of koppelt haar, controleert de werking en gebruikt haar bij een andere opdracht.",
+          "taskIds": [
+            "AU-004",
+            "AU-003",
+            "TL-003"
+          ],
+          "keepVisible": true
+        },
+        {
+          "id": "whole-goal-3",
+          "title": "Volledige AIDE² en droommodus",
+          "outcome": "Varianten voor agentaansturing én code of apps/addons worden onafhankelijk beoordeeld; een verbetering wordt toegepast of de referentie blijft behouden. Rustig achtergrondwerk wijkt voor gesprek en stopt op verzoek.",
+          "acceptance": "Varianten voor agentaansturing én code of apps/addons worden onafhankelijk beoordeeld; een verbetering wordt toegepast of de referentie blijft behouden. Rustig achtergrondwerk wijkt voor gesprek en stopt op verzoek.",
+          "taskIds": [
+            "AU-003",
+            "AU-006"
+          ],
+          "keepVisible": true
+        },
+        {
+          "id": "whole-goal-4",
+          "title": "Passend eigen initiatief afronden",
+          "outcome": "Eva kiest en voltooit nuttig werk, beoordeelt timing en leert aantoonbaar van de menselijke reactie.",
+          "acceptance": "Eva kiest en voltooit nuttig werk, beoordeelt timing en leert aantoonbaar van de menselijke reactie.",
+          "taskIds": [
             "AU-007",
             "AU-008"
-          ]
+          ],
+          "keepVisible": true
         },
         {
-          "id": "paused-followup",
-          "title": "Hulpagenten en browserherstel",
-          "outcome": "Hulpagentlevenscyclus technisch afgerond; browserherstel volgt afzonderlijk.",
-          "acceptance": "Starten, volgen, stoppen en hervatten via de gebruikersroute; browserherstel met behouden profiel.",
+          "id": "whole-goal-5",
+          "title": "Eén Eva in dagelijks gebruik",
+          "outcome": "De gebruikte chatroutes, optionele mogelijkheden en installatie werken samen met behoud van identiteit, gegevens en persoonsgrenzen.",
+          "acceptance": "De gebruikte chatroutes, optionele mogelijkheden en installatie werken samen met behoud van identiteit, gegevens en persoonsgrenzen.",
           "taskIds": [
-            "AU-002",
-            "VB-004"
-          ]
-        },
-        {
-          "id": "daily",
-          "title": "Een dagelijkse huisgenoot",
-          "outcome": "Betrouwbaar praten en onthouden, met meer spontane, warme en ondernemende aanwezigheid dan Bottie.",
-          "acceptance": "Een echt gezinsgesprek loopt van tekst of stem naar herinneren en passend initiatief; onderbreken en hervatten werken zonder dubbele melding.",
-          "taskIds": [
-            "UX-000",
             "RT-001",
-            "EV-003",
-            "UP-001",
             "CO-007",
-            "CO-006",
-            "TL-001",
-            "TL-002",
-            "AU-001",
-            "TL-003",
-            "VB-003",
-            "AU-005",
-            "VB-001",
-            "VB-002"
-          ]
-        },
-        {
-          "id": "projects",
-          "title": "Zelfstandig leren en uitvoeren",
-          "outcome": "Een zichtbaar project afronden, met hulpagenten en herbruikbare vaardigheden.",
-          "acceptance": "Een ongezien meerdaags project hervat na herstart; aangeleerde skill opnieuw gebruikt; kosten, stop en gecontroleerde verbetering zichtbaar.",
-          "taskIds": [
-            "UX-001",
-            "UX-002",
-            "AU-004",
-            "AU-006",
-            "AU-003"
-          ]
-        },
-        {
-          "id": "install",
-          "title": "Eenvoudig installeren en behouden",
-          "outcome": "Installeren, verplaatsen en bijwerken zonder terminalwerk.",
-          "acceptance": "Een gewone gebruiker installeert Eva en herstelt identiteit en gegevens op een andere computer; updates hebben een werkende terugweg.",
-          "taskIds": [
             "IN-001",
-            "IN-002",
-            "IN-003"
-          ]
+            "IN-002"
+          ],
+          "keepVisible": true
         },
         {
-          "id": "proof",
-          "title": "De voorsprong bewijzen",
-          "outcome": "De complete Eva eerlijk vergelijken en zeven dagen thuis gebruiken.",
-          "acceptance": "Vooraf vastgelegde drempels, onafhankelijke controles en menselijke beoordeling gehaald; anders geen winst- of eindacceptatieclaim.",
+          "id": "whole-goal-6",
+          "title": "Samenhangende gezinsoplevering",
+          "outcome": "Het geïnstalleerde geheel is onafhankelijk beoordeeld en in gewoon gezinsgebruik geprobeerd; technische gereedheid en expliciete eigenaaracceptatie blijven apart.",
+          "acceptance": "Het geïnstalleerde geheel is onafhankelijk beoordeeld en in gewoon gezinsgebruik geprobeerd; technische gereedheid en expliciete eigenaaracceptatie blijven apart.",
           "taskIds": [
-            "CP-001",
-            "CP-002",
-            "CP-003",
             "FN-001",
-            "RB-007",
-            "RB-008",
-            "RB-009",
-            "RB-010",
             "FN-002",
             "FN-003"
-          ]
+          ],
+          "keepVisible": true
         }
       ],
-      "priorityDecision": "Werkende privé-Eva2 verder naar één gekozen dagelijkse ingang brengen; geen nieuwe vergelijkingsserie en geen actief spraakwerk.",
+      "priorityDecision": "Eerst volledige leercyclus aantonen in later werk; daarna ontbrekende mogelijkheden, AIDE²/droommodus, initiatief en dagelijks gezinsgebruik. Geen nieuwe vergelijkingsserie; spraak geparkeerd.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -143,12 +128,16 @@
       "summary": "Volledig Eva2-projectgoal actief: een persoon, geheugen/mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing en uitbreidingen. Taakuitkomst→privégeheugen is geïnstalleerd; later toepassen en feedbacklus nog open. Algemene HA/documentuitvoering, Eva1-geheugen en gewone eigenaar-Telegramtekst blijven behouden. Geen volledige Eva1-vervanging of algemene concurrentievoorsprong bewezen. 39/48 bestaande kleine taken behouden; spraak geparkeerd.",
       "nextOutcomes": [
         {
-          "title": "Opgeleverd · Taken afmaken en terugmelden",
-          "detail": "T1/T2/T3/T4 technisch afgerond, inclusief huisbediening, opgeslagen resultaten, browserovername en hervatting."
+          "title": "Nu · Ervaring en feedback later toepassen",
+          "detail": "De twee geheugenkoppelingen zijn geïnstalleerd. Aantonen dat Eva een eerdere taakervaring en bijsturing bij een volgende relevante opdracht gebruikt."
         },
         {
-          "title": "Nog nodig · Bestaande eindvoorwaarden",
-          "detail": "Resterende bestaande eindvoorwaarden afhandelen: toegang/toestemming voor afgeschermde vergelijking en innovatieproef, werkelijke computerherstart en menselijke speaker-/gezinsbeoordeling. Voltooide functies niet opnieuw bouwen of testen."
+          "title": "Daarna · Zelf mogelijkheden toevoegen en verbeteren",
+          "detail": "Bestaande algemene uitvoerder en verbeterroute hergebruiken voor een ontbrekende mogelijkheid en volledige AIDE² voor aansturing, code en uitbreidingen."
+        },
+        {
+          "title": "Eindpunt · Eén bruikbare digitale huisgenoot",
+          "detail": "Passend initiatief en dagelijks gezinsgebruik afronden, met onafhankelijke beoordeling en jouw acceptatie. Het volledige goal blijft actief."
         }
       ],
       "openRisks": [
@@ -999,35 +988,40 @@
           "Geen open werk binnen de geaccepteerde Telegramstreaming."
         ],
         "conversation": [
-          "Fysieke speakerconversatie en microfoononderbreking C3/C4 blijven open; volledige gezinsacceptatie blijft apart.",
-          "Gemelde Telegramuitval: modeldeadline na60seconden en generieke foutmelding. Diagnose vastgelegd; oorzaak van trage providerafronding en gerichte correctie nog open."
+          "Gewone eigenaar-privétekst gebruikt Eva2 zonder /eva2; een nieuwe echte uitwisseling en overige gebruikte ingangen blijven afzonderlijk open.",
+          "Spraakwerk C3/C4 is geparkeerd en houdt de vier kernuitkomsten niet op."
         ],
         "memory": [
-          "Privé-inhoud blijft bij de juiste persoon via de afgesproken privéroutes; geen open stemherkenningsbouw als voorwaarde voor dit geaccepteerde geheugenonderdeel."
+          "Geaccepteerde geheugenbasis en onderwerpvoortzetting blijven behouden. Taakuitkomsten en taakcontext zijn geïnstalleerd aan de bestaande geheugenroute gekoppeld.",
+          "Een eerdere werkervaring én feedback bij een volgende relevante taak daadwerkelijk toepassen en later gewijzigd gedrag aantonen; geen privécontext tussen personen vermengen."
         ],
         "initiative": [
-          "I1.1 geleverd en I2 technisch afgerond. I1.2: nut, timing en hinder in echt gezinsgebruik beoordelen; volledige acceptatie blijft apart."
+          "I1.1 en I2 behouden. Herhaald passend initiatief, timing en leren van de menselijke reactie als geheel aantonen.",
+          "I1.2 is jouw oordeel over nut en hinder; geen ontbrekende vaste camera- of afvalfunctie en geen blokkade voor onafhankelijk bouwen."
         ],
         "tools": [
           "De bestaande route over HA en documenten is nu werkelijk afgemaakt en geïnstalleerd. Ongeziene diensten/persoonlijke accounts blijven afhankelijk van gevraagde aansluiting.",
           "Bredere normale gebruiksresultaten en verbruik verbeteren; één opdracht bewijst niet iedere dienst of algemeen voordeel."
         ],
         "voice": [
-          "Verstaanbaar doorpraten en echte microfoononderbreking op woonkamer en daarna tweede speaker blijven C3/C4. Geen verplichte telefoon-/laptopproef."
+          "Geparkeerd volgens eigenaarprioriteit. Bestaande werking en bewijs behouden; nu geen speakerproef of spraakbouw gevraagd."
         ],
         "projects": [
-          "Gewone eigenaar-privétekst is overgezet naar Eva2. Nieuwe echte Telegramuitwisseling, overige gebruikte ingangen, oud Eva1-achtergrondgedrag en volledige gezinsacceptatie blijven open.",
-          "P2.1 oude dekking en UNKNOWN behouden; geen nieuwe vergelijkingsserie."
+          "Ontbrekende mogelijkheden via de bestaande uitvoerder realiseren, controleren en later hergebruiken.",
+          "Volledige AIDE²/droommodus voor agentaansturing, code en apps/addons afronden; L3.4–L3.7 blijven beperkte, afgeronde deelbewijzen.",
+          "Gewone eigenaar-privétekst is overgezet. Nieuwe echte uitwisseling, overige gebruikte ingangen, oud Eva1-achtergrondgedrag en gezinsacceptatie blijven open.",
+          "Oude P2.1-dekking, verliezen en UNKNOWN blijven behouden; geen nieuwe vergelijkingsserie."
         ],
         "browser": [
           "Optionele persoonlijke overnamebeleving en gezinsacceptatie blijven apart. Gatewayherstel na langere uitval kan tientallen seconden vragen; geen algemene snelheid-/kostenwinst of alle-websitesclaim."
         ],
         "installation": [
-          "O1/O2 en F1.1/F1.2 technisch afgerond, inclusief de bevestigde computerherstart. Vergelijking en gezinsacceptatie blijven afzonderlijk."
+          "O1/O2 en F1.1/F1.2 blijven technisch afgerond binnen hun oorspronkelijke scope, inclusief computerherstart.",
+          "Het volledige huidige geheel en optionele mogelijkheden samen installeren en beoordelen; eerdere kandidaatcontrole is geen afronding van het nieuwe volledige goal."
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T15:51:04.828538+00:00",
+        "checkedAt": "2026-10-11T16:02:38.714648+00:00",
         "deliveries": [
           {
             "title": "Achtergrondwerk zoekt geheugen met de echte taak en nieuwste bijsturing",
@@ -4556,13 +4550,13 @@
           }
         ],
         "now": {
-          "title": "Leercyclus: taakuitkomsten gebruiken in later gesprek en leren",
-          "detail": "Taakuitkomsten→privégeheugen en taakcontext→geheugenzoekactie zijn geïnstalleerd en onafhankelijk beoordeeld. Vervolgens echte relevante eerdere ervaring en feedback bij later werk aantoonbaar toepassen. Volledige leercyclus en AIDE² blijven open.",
+          "title": "Leercyclus · eerdere ervaring en feedback toepassen bij nieuw werk",
+          "detail": "Twee geheugenkoppelingen zijn geïnstalleerd en onafhankelijk beoordeeld. De bestaande opslag-, correctie- en gespreksroute is onderzocht. Nu ontbreekt het praktijkbewijs dat een eerdere taakervaring en feedback bij een volgende relevante opdracht gedrag veranderen. Nog geen nieuwe modelproef gestart.",
           "state": "in_progress",
           "activeExecution": true,
           "owner": "/root",
           "source": "eva2/evidence/product/task-context-memory-installed-20261011.json",
-          "doneWhen": "Een werkelijk afgehandelde taakuitkomst is duurzaam persoonsgebonden beschikbaar en wordt bij een volgende relevante beurt gebruikt; falen wordt niet als succes herinnerd, stoppen/replay/privacy blijven behouden. Werkend geïnstalleerd met gerichte controles en onafhankelijke review.",
+          "doneWhen": "De geïnstalleerde route gebruikt een echte opgeslagen werkervaring en persoonsgebonden feedback bij een volgende relevante opdracht, met zichtbaar gewijzigd gedrag. Een technische gecontroleerde proef en jouw gezinsacceptatie blijven afzonderlijk; privacy, stoppen en geen dubbele acties behouden.",
           "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
         },
         "next": {
@@ -4574,18 +4568,15 @@
         },
         "ownerAction": {
           "required": false,
-          "title": "Gewone tekst naar je bestaande Telegrambot",
-          "detail": "Voor jouw gekoppelde privéaccount is /eva2 niet meer nodig. Er is geen installatiehandeling nodig; een nieuwe echte uitwisseling is nog niet geobserveerd in dit bewijs.",
-          "steps": [
-            "Stuur Hoi Eva als gewone tekst in je bestaande privéchat met Eva.",
-            "Je kunt daarna vragen: Lees /proof-state/huisoverzicht-2026-10-10.txt en vat het kort samen. Start niets nieuws."
-          ],
+          "title": "Geen handeling nodig om door te bouwen",
+          "detail": "Codex maakt de leercyclus af. Je kunt Eva intussen gewone privétekst sturen in Telegram, zonder /eva2. Nieuwe gezinsbeoordeling wordt pas gevraagd met een concrete bruikbare uitkomst.",
+          "steps": [],
           "expected": "Nieuwe gewone privétekst gebruikt Eva2; antwoord en later resultaat horen bij je oorspronkelijke bericht.",
           "blocksIndependentWork": false,
           "source": "eva2/evidence/product/telegram-default-private-installed-20261011.json"
         },
         "maintenance": "Bij iedere taakstart, taakwissel, blokkade en oplevering registreert de coördinator eerst de stand in deze bron. Bij afronding staat er expliciet dat vervolg nog niet gestart is. De pagina haalt wijzigingen iedere vijf seconden op; na één uur zonder inhoudelijke controle is huidige uitvoering onbevestigd. Dit is geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T15:51:04.828538+00:00",
+        "reviewedAt": "2026-10-11T16:02:38.714648+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4613,10 +4604,32 @@
             "blocksIndependentWork": false,
             "expected": "Geen herhaling van deze geslaagde proef nodig."
           }
+        },
+        "historicalNowBeforeDetailAlignment20261011": {
+          "title": "Leercyclus: taakuitkomsten gebruiken in later gesprek en leren",
+          "detail": "Taakuitkomsten→privégeheugen en taakcontext→geheugenzoekactie zijn geïnstalleerd en onafhankelijk beoordeeld. Vervolgens echte relevante eerdere ervaring en feedback bij later werk aantoonbaar toepassen. Volledige leercyclus en AIDE² blijven open.",
+          "state": "in_progress",
+          "activeExecution": true,
+          "owner": "/root",
+          "source": "eva2/evidence/product/task-context-memory-installed-20261011.json",
+          "doneWhen": "Een werkelijk afgehandelde taakuitkomst is duurzaam persoonsgebonden beschikbaar en wordt bij een volgende relevante beurt gebruikt; falen wordt niet als succes herinnerd, stoppen/replay/privacy blijven behouden. Werkend geïnstalleerd met gerichte controles en onafhankelijke review.",
+          "review": "eva2/reviews/task-context-memory-installed-review-20261011.json"
+        },
+        "historicalOwnerActionBeforeDetailAlignment20261011": {
+          "required": false,
+          "title": "Gewone tekst naar je bestaande Telegrambot",
+          "detail": "Voor jouw gekoppelde privéaccount is /eva2 niet meer nodig. Er is geen installatiehandeling nodig; een nieuwe echte uitwisseling is nog niet geobserveerd in dit bewijs.",
+          "steps": [
+            "Stuur Hoi Eva als gewone tekst in je bestaande privéchat met Eva.",
+            "Je kunt daarna vragen: Lees /proof-state/huisoverzicht-2026-10-10.txt en vat het kort samen. Start niets nieuws."
+          ],
+          "expected": "Nieuwe gewone privétekst gebruikt Eva2; antwoord en later resultaat horen bij je oorspronkelijke bericht.",
+          "blocksIndependentWork": false,
+          "source": "eva2/evidence/product/telegram-default-private-installed-20261011.json"
         }
       },
-      "reviewedAt": "2026-10-11T15:51:04.828538+00:00",
-      "checkedAt": "2026-10-11T15:51:04.828538+00:00",
+      "reviewedAt": "2026-10-11T16:02:38.714648+00:00",
+      "checkedAt": "2026-10-11T16:02:38.714648+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -10909,7 +10922,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-11T15:51:04.828538+00:00",
+        "checkedAt": "2026-10-11T16:02:38.714648+00:00",
         "basis": "Geaccepteerde oorspronkelijke functies blijven behouden; de actuele volledige projectscope, twee geïnstalleerde geheugenkoppelingen en open leercyclus/AIDE² zijn expliciet gescheiden.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -10971,7 +10984,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T15:51:04.828538+00:00",
+      "lastUpdatedAt": "2026-10-11T16:02:38.714648+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11083,6 +11096,160 @@
         "originalAcceptedMemoryScopeRetained": true,
         "originalTaskStatesChanged": false,
         "noRuntimeDeployment": true
+      },
+      "historicalDirectivesBeforeDashboardAlignment20261011": {
+        "nextOutcomes": [
+          {
+            "title": "Opgeleverd · Taken afmaken en terugmelden",
+            "detail": "T1/T2/T3/T4 technisch afgerond, inclusief huisbediening, opgeslagen resultaten, browserovername en hervatting."
+          },
+          {
+            "title": "Nog nodig · Bestaande eindvoorwaarden",
+            "detail": "Resterende bestaande eindvoorwaarden afhandelen: toegang/toestemming voor afgeschermde vergelijking en innovatieproef, werkelijke computerherstart en menselijke speaker-/gezinsbeoordeling. Voltooide functies niet opnieuw bouwen of testen."
+          }
+        ],
+        "roadmap": [
+          {
+            "id": "actions",
+            "title": "Geheugen afgerond · eigen bijdrage beoordelen",
+            "outcome": "Eva onthoudt relevante persoonlijke kennis uit gewone gesprekken, verwerkt wijzigingen, gebruikt tijdelijke informatie op het juiste moment en laat irrelevante herhaling buiten blijvende kennis. Bestaande gegevens en persoonsgrenzen blijven behouden.",
+            "acceptance": "Gewone gesprekken tonen zelfstandig onthouden, correct bijwerken en passend terughalen; opgeslagen bewijs en menselijke acceptatie apart zichtbaar.",
+            "taskIds": [
+              "CO-008",
+              "CO-004",
+              "CO-005",
+              "AU-007",
+              "AU-008"
+            ]
+          },
+          {
+            "id": "paused-followup",
+            "title": "Hulpagenten en browserherstel",
+            "outcome": "Hulpagentlevenscyclus technisch afgerond; browserherstel volgt afzonderlijk.",
+            "acceptance": "Starten, volgen, stoppen en hervatten via de gebruikersroute; browserherstel met behouden profiel.",
+            "taskIds": [
+              "AU-002",
+              "VB-004"
+            ]
+          },
+          {
+            "id": "daily",
+            "title": "Een dagelijkse huisgenoot",
+            "outcome": "Betrouwbaar praten en onthouden, met meer spontane, warme en ondernemende aanwezigheid dan Bottie.",
+            "acceptance": "Een echt gezinsgesprek loopt van tekst of stem naar herinneren en passend initiatief; onderbreken en hervatten werken zonder dubbele melding.",
+            "taskIds": [
+              "UX-000",
+              "RT-001",
+              "EV-003",
+              "UP-001",
+              "CO-007",
+              "CO-006",
+              "TL-001",
+              "TL-002",
+              "AU-001",
+              "TL-003",
+              "VB-003",
+              "AU-005",
+              "VB-001",
+              "VB-002"
+            ]
+          },
+          {
+            "id": "projects",
+            "title": "Zelfstandig leren en uitvoeren",
+            "outcome": "Een zichtbaar project afronden, met hulpagenten en herbruikbare vaardigheden.",
+            "acceptance": "Een ongezien meerdaags project hervat na herstart; aangeleerde skill opnieuw gebruikt; kosten, stop en gecontroleerde verbetering zichtbaar.",
+            "taskIds": [
+              "UX-001",
+              "UX-002",
+              "AU-004",
+              "AU-006",
+              "AU-003"
+            ]
+          },
+          {
+            "id": "install",
+            "title": "Eenvoudig installeren en behouden",
+            "outcome": "Installeren, verplaatsen en bijwerken zonder terminalwerk.",
+            "acceptance": "Een gewone gebruiker installeert Eva en herstelt identiteit en gegevens op een andere computer; updates hebben een werkende terugweg.",
+            "taskIds": [
+              "IN-001",
+              "IN-002",
+              "IN-003"
+            ]
+          },
+          {
+            "id": "proof",
+            "title": "De voorsprong bewijzen",
+            "outcome": "De complete Eva eerlijk vergelijken en zeven dagen thuis gebruiken.",
+            "acceptance": "Vooraf vastgelegde drempels, onafhankelijke controles en menselijke beoordeling gehaald; anders geen winst- of eindacceptatieclaim.",
+            "taskIds": [
+              "CP-001",
+              "CP-002",
+              "CP-003",
+              "FN-001",
+              "RB-007",
+              "RB-008",
+              "RB-009",
+              "RB-010",
+              "FN-002",
+              "FN-003"
+            ]
+          }
+        ],
+        "priorityDecision": "Werkende privé-Eva2 verder naar één gekozen dagelijkse ingang brengen; geen nieuwe vergelijkingsserie en geen actief spraakwerk.",
+        "remainingProductWork": {
+          "answer-stream": [
+            "Geen open werk binnen de geaccepteerde Telegramstreaming."
+          ],
+          "conversation": [
+            "Gewone eigenaar-privétekst gebruikt Eva2 zonder /eva2; een nieuwe echte uitwisseling en overige gebruikte ingangen blijven afzonderlijk open.",
+            "Spraakwerk C3/C4 is geparkeerd en houdt de vier kernuitkomsten niet op."
+          ],
+          "memory": [
+            "Geaccepteerde geheugenbasis en onderwerpvoortzetting blijven behouden. Taakuitkomsten en taakcontext zijn geïnstalleerd aan de bestaande geheugenroute gekoppeld.",
+            "Een eerdere werkervaring én feedback bij een volgende relevante taak daadwerkelijk toepassen en later gewijzigd gedrag aantonen; geen privécontext tussen personen vermengen."
+          ],
+          "initiative": [
+            "I1.1 en I2 behouden. Herhaald passend initiatief, timing en leren van de menselijke reactie als geheel aantonen.",
+            "I1.2 is jouw oordeel over nut en hinder; geen ontbrekende vaste camera- of afvalfunctie en geen blokkade voor onafhankelijk bouwen."
+          ],
+          "tools": [
+            "De bestaande route over HA en documenten is nu werkelijk afgemaakt en geïnstalleerd. Ongeziene diensten/persoonlijke accounts blijven afhankelijk van gevraagde aansluiting.",
+            "Bredere normale gebruiksresultaten en verbruik verbeteren; één opdracht bewijst niet iedere dienst of algemeen voordeel."
+          ],
+          "voice": [
+            "Geparkeerd volgens eigenaarprioriteit. Bestaande werking en bewijs behouden; nu geen speakerproef of spraakbouw gevraagd."
+          ],
+          "projects": [
+            "Ontbrekende mogelijkheden via de bestaande uitvoerder realiseren, controleren en later hergebruiken.",
+            "Volledige AIDE²/droommodus voor agentaansturing, code en apps/addons afronden; L3.4–L3.7 blijven beperkte, afgeronde deelbewijzen.",
+            "Gewone eigenaar-privétekst is overgezet. Nieuwe echte uitwisseling, overige gebruikte ingangen, oud Eva1-achtergrondgedrag en gezinsacceptatie blijven open.",
+            "Oude P2.1-dekking, verliezen en UNKNOWN blijven behouden; geen nieuwe vergelijkingsserie."
+          ],
+          "browser": [
+            "Optionele persoonlijke overnamebeleving en gezinsacceptatie blijven apart. Gatewayherstel na langere uitval kan tientallen seconden vragen; geen algemene snelheid-/kostenwinst of alle-websitesclaim."
+          ],
+          "installation": [
+            "O1/O2 en F1.1/F1.2 blijven technisch afgerond binnen hun oorspronkelijke scope, inclusief computerherstart.",
+            "Het volledige huidige geheel en optionele mogelijkheden samen installeren en beoordelen; eerdere kandidaatcontrole is geen afronding van het nieuwe volledige goal."
+          ]
+        }
+      },
+      "dashboardVerificationDetailAlignment20261011": {
+        "checkedAt": "2026-10-11T16:02:38.714648+00:00",
+        "url": "http://localhost:44712/",
+        "observed": "Automatic five-second source refresh showed current learning-task title and no required owner action at 18:02:38 Europe/Amsterdam; no reload or rebuild required.",
+        "originalTaskCount": 48,
+        "originalCompleted": 39,
+        "allOriginalTaskStatusesAndEndConditionsPreserved": true,
+        "installedDeliveriesAndComparisonResultsPreserved": true,
+        "oldDirectivePreservedInHistory": true,
+        "goalStatus": "active",
+        "newProductFunctionCompleted": false,
+        "newManualEvaModelCalls": 0,
+        "developmentCredits": "unknown",
+        "verificationScope": "Public dashboard and source consistency only; not a new learning-cycle result."
       }
     },
     "pendingTechnicalReview": {
@@ -20424,173 +20591,85 @@
       "date": "2026-09-22",
       "authorizedBy": "Jaap",
       "status": "active",
-      "outcome": "Eva als herkenbare huisgenoot met sterk geheugen, nuttig eigen initiatief en zelfstandig digitaal werk bruikbaar opleveren. Spraakwerk is geparkeerd; bestaande acceptaties en de afgesproken eindvergelijking/gezinsacceptatie blijven bewaard.",
-      "currentStep": 7,
+      "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
+      "currentStep": 1,
       "steps": [
         {
           "number": 1,
-          "title": "Eén gesprek en stem",
-          "state": "open",
-          "existingCards": [
-            "VB-001"
-          ],
-          "doneWhen": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via Telegram en beide fysieke Voice PE-speakers; gedeelde kern en passende kanaalcontrole. Bestaande website/HA-paneel blijven optioneel; geen verplichte telefoon-/laptopproef.",
-          "preserve": "Bestaat: contactmodel, streaming, gesprek tijdens onderzoek, spraak en laptoponderbreking. Resteert: inhoudssnelheid, gelijke kanaalwerking en fysieke speakerproeven. Bestaande routes gebruiken; alleen een aangetoond tekort wijzigen.",
-          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
-          "historicalPlanningEffortHours": "4–12",
-          "blueprintSlices": [
-            "C1",
-            "C2",
-            "C3",
-            "C4"
-          ]
-        },
-        {
-          "number": 2,
-          "title": "Personen en continuïteit",
-          "state": "completed",
+          "title": "Leercyclus in later werk toepassen",
+          "state": "in_progress",
+          "doneWhen": "Eerdere taakervaring en feedback worden duurzaam bij de juiste persoon bewaard en beïnvloeden later relevant gedrag.",
           "existingCards": [
             "CO-008",
             "CO-004",
-            "CO-005"
+            "CO-005",
+            "AU-004"
           ],
-          "doneWhen": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder.",
-          "preserve": "Geaccepteerd onthouden, corrigeren, inzien/wissen, privégrenzen en latere onderwerpvoortzetting behouden. Tijdelijke voorkeur en stijlcorrectie afgerond; persoonlijkheid M3.3 op 5 oktober door Jaap geaccepteerd. Zeven dagen gezinspraktijk en eindoordeel blijven F2.",
-          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
-          "historicalPlanningEffortHours": "4–12",
-          "blueprintSlices": [
-            "M1",
-            "M2",
-            "M3"
+          "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
+        },
+        {
+          "number": 2,
+          "title": "Ontbrekende mogelijkheid maken en hergebruiken",
+          "state": "planned",
+          "doneWhen": "Eva ontdekt een ontbrekende mogelijkheid, realiseert of koppelt haar, controleert de werking en gebruikt haar bij een andere opdracht.",
+          "existingCards": [
+            "AU-004",
+            "AU-003",
+            "TL-003"
           ],
-          "completedAt": "2026-10-05T08:46:48.844686+00:00",
-          "technicalCompletion": "Oorspronkelijke M1/M2-acceptaties behouden; M3.1/M3.2 technisch afgerond en M3.3 nu expliciet door Jaap geaccepteerd. Fysieke spraak en volledige gezins-/projectacceptatie blijven afzonderlijk.",
-          "latestEvidence": "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
+          "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         },
         {
           "number": 3,
-          "title": "Taken afmaken en terugmelden",
-          "state": "completed",
+          "title": "Volledige AIDE² en droommodus",
+          "state": "planned",
+          "doneWhen": "Varianten voor agentaansturing én code of apps/addons worden onafhankelijk beoordeeld; een verbetering wordt toegepast of de referentie blijft behouden. Rustig achtergrondwerk wijkt voor gesprek en stopt op verzoek.",
           "existingCards": [
-            "AU-002",
-            "VB-004",
-            "UX-001",
-            "UX-002"
+            "AU-003",
+            "AU-006"
           ],
-          "doneWhen": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening.",
-          "preserve": "Bestaat: onderzoek, taakbediening, oorspronkelijke vraagbinding, bewaarde resultaten, algemene HA en browserovername. Resteert: volledige moeilijke taak binnen passend uitvoeringspad en ontbrekende echte kanaal-/browsergevallen. Geen nieuwe taak- of HA-laag uit voorzorg.",
-          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
-          "historicalPlanningEffortHours": "6–16",
-          "blueprintSlices": [
-            "T1",
-            "T2",
-            "T3",
-            "T4"
-          ],
-          "completedAt": "2026-10-05T01:55:56.276013+00:00",
-          "technicalCompletion": "Originele T1/T2/T3/T4 technisch afgerond met behouden eigen bewijs; T3-overname en gatewayhervatting zijn de laatste aanvulling. Menselijke/projectacceptatie apart.",
-          "latestEvidence": "eva2/evidence/product/t3-owned-handoff-installed-20261005.json"
+          "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         },
         {
           "number": 4,
-          "title": "Initiatief en huisaanwezigheid",
-          "state": "open",
+          "title": "Passend eigen initiatief afronden",
+          "state": "planned",
+          "doneWhen": "Eva kiest en voltooit nuttig werk, beoordeelt timing en leert aantoonbaar van de menselijke reactie.",
           "existingCards": [
-            "AU-008",
-            "AU-005",
-            "VB-002"
+            "AU-007",
+            "AU-008"
           ],
-          "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
-          "preserve": "Bestaande initiatiefcompositie, bronkoppelingen en resultaatroutes behouden. Resteert: een zelfgekozen werkelijk nuttige bijdrage en algemene waarnemingsautomatisering. Spraak is een mogelijke afleverroute, geen algemene voorwaarde.",
-          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
-          "historicalPlanningEffortHours": "4–12",
-          "blueprintSlices": [
-            "I1",
-            "I2"
-          ]
+          "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         },
         {
           "number": 5,
-          "title": "Leren en langdurig werk",
-          "state": "open",
+          "title": "Eén Eva in dagelijks gebruik",
+          "state": "planned",
+          "doneWhen": "De gebruikte chatroutes, optionele mogelijkheden en installatie werken samen met behoud van identiteit, gegevens en persoonsgrenzen.",
           "existingCards": [
-            "AU-004",
-            "AU-006",
-            "AU-003"
+            "RT-001",
+            "CO-007",
+            "IN-001",
+            "IN-002"
           ],
-          "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
-          "preserve": "L1, L2 en de begrensde eigen verbetering L3 technisch afgerond. R1 en de geplande eindvergelijking/gezinsbeoordeling blijven afzonderlijk open; geen herbouw van bestaand leerwerk.",
-          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
-          "historicalPlanningEffortHours": "8–24",
-          "blueprintSlices": [
-            "L1",
-            "L2",
-            "L3",
-            "R1"
-          ]
+          "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         },
         {
           "number": 6,
-          "title": "Installatie en herstel",
-          "state": "open",
-          "existingCards": [
-            "IN-001",
-            "IN-002",
-            "IN-003"
-          ],
-          "doneWhen": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken.",
-          "preserve": "Bestaat: wizard, target-provisioning, negen-servicevoorbereiding, export/herstel en terugweg. Resteert: gewone bootstrap zonder handgeschreven instellingen, modulekeuze en praktijkproef. Bestaande voorzieningen aansluiten; geïsoleerd herstel is geen volledige eigenaarproef.",
-          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
-          "historicalPlanningEffortHours": "6–18",
-          "blueprintSlices": [
-            "O1",
-            "O2"
-          ]
-        },
-        {
-          "number": 7,
-          "title": "Vergelijking voorbereiden en uitvoeren",
-          "state": "open",
-          "existingCards": [
-            "CP-001",
-            "CP-002",
-            "CP-003"
-          ],
-          "doneWhen": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat.",
-          "preserve": "Bestaat: EV-003, eerdere deelvergelijkingen en Inspect-/scorerhulpmiddelen. Resteert: actuele versies/toegang, gelijkwaardige complete vergelijking en transparante uitkomsten. Geen nieuw vergelijkingsframework.",
-          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
-          "historicalPlanningEffortHours": "4–12",
-          "blueprintSlices": [
-            "P1",
-            "P2"
-          ]
-        },
-        {
-          "number": 8,
-          "title": "Eindkandidaat en acceptatie",
-          "state": "open",
+          "title": "Samenhangende gezinsoplevering",
+          "state": "planned",
+          "doneWhen": "Het geïnstalleerde geheel is onafhankelijk beoordeeld en in gewoon gezinsgebruik geprobeerd; technische gereedheid en expliciete eigenaaracceptatie blijven apart.",
           "existingCards": [
             "FN-001",
-            "RB-007",
-            "RB-008",
-            "RB-009",
-            "RB-010",
             "FN-002",
             "FN-003"
           ],
-          "doneWhen": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie.",
-          "preserve": "Bestaat: beheerde installatie, bronherkomst, terugweg en afzonderlijke acceptaties. Resteert: één complete eindkandidaat en zeven dagen gezinsgebruik met expliciet oordeel. Geen nieuwe releasearchitectuur omdat acceptatie nog openstaat.",
-          "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
-          "historicalPlanningEffortHours": "4–12",
-          "blueprintSlices": [
-            "F1",
-            "F2"
-          ]
+          "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         }
       ],
-      "nextAction": "Eén oorspronkelijke ongebruikte XD08-ingang bronmatig binden aan de herstelde catalogus en vaste criteria/modelrollen. Evaluator werkt aan voorbereiding; nog geen modeluitvoering of gesloten herhaling.",
+      "nextAction": "De geïnstalleerde gespreks-/werkroute gebruiken om eerdere taakervaring en feedback bij een volgende relevante opdracht aantoonbaar toe te passen. Alleen een bewezen ontbrekende koppeling herstellen; geen nieuwe vergelijkingsserie.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
-      "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
+      "completionRule": "Het volledige geïnstalleerde geheel voldoet aan alle eindvoorwaarden van eva2/PROJECTDOEL.md, inclusief latere toepassing van de leercyclus, ontbrekende mogelijkheid realiseren en hergebruiken, AIDE² voor aansturing en code/uitbreidingen, onafhankelijke eindreview en echte gezinsbeoordeling. Deelopleveringen sluiten het projectgoal niet af; oude acceptaties blijven geldig binnen hun oorspronkelijke scope.",
       "continuationRule": "Actief oplevergoal: de 24 opdrachten uitvoeren, passend controleren en installeren. Alleen afhankelijk werk wacht op een proef of concrete blokkade. Geen nieuwe zakelijke of algemene audit-scope.",
       "stopRules": [
         "Geen ongewijzigde proefherhaling; eerst concrete gewijzigde oorzaak of ontbrekend bewijs.",
@@ -23379,7 +23458,7 @@
               "authorizedBy": "Jaap, 7 oktober 2026: ga door met AIDE² voor slimmer gedrag, maak duidelijke taken en maak Eva2 af.",
               "ownerActionRequired": false,
               "activeExecution": false,
-              "nextAction": "Afgerond; geen herhaling voor activiteit. P2.1 resterende oorspronkelijke vergelijking.",
+              "nextAction": "Deze begrensde cyclus is afgerond en wordt niet herhaald. Het volledige AIDE²-goal voor agentaansturing, code en apps/addons blijft open; zie het actuele werk bovenaan. P2.1 start geen nieuwe vergelijkingsserie.",
               "assignment": {
                 "baseCommit": "454395cd9407e264c3c1698c08a2c3080b50d9c3",
                 "owner": "/root",
@@ -23405,7 +23484,8 @@
               ],
               "completedAt": "2026-10-07T12:55:56.217274+00:00",
               "installedReviewState": "GO_DONE_original_bounded_finish",
-              "installedReviewSha256": "e6454d56627ffd938cbb11515873338cef1cbee662f4760c2aa91654220f8662"
+              "installedReviewSha256": "e6454d56627ffd938cbb11515873338cef1cbee662f4760c2aa91654220f8662",
+              "historicalNextActionBeforeFullGoal20261011": "Afgerond; geen herhaling voor activiteit. P2.1 resterende oorspronkelijke vergelijking."
             }
           ],
           "latestEvidence": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
@@ -23422,7 +23502,7 @@
             "basis": "Owner correction 2 October; current task definitions and targeted existing source/evidence; no new runtime trial."
           },
           "completionClarification": "A failed AIDE experiment may close that experiment, not the autonomous programming outcome. Preserve L3.1 historical closure. General programming requires a useful Eva-authored change executed, independently checked, installed and verified through her own route; one component microfix is bounded evidence only. De groene L3-status betreft de afgebakende toepassing; geen volledige AIDE²-cyclus of bewezen verbetering in alle vier huisgenootuitkomsten.",
-          "nextAction": "Afgerond: één onafhankelijk gemeten en toegepaste verbetering met herbruikbare vervolgroute. Droomplanner/appsbenchmark en bredere kwaliteitswinst zijn niet bewezen.",
+          "nextAction": "L3.1–L3.7 blijven technisch afgerond binnen hun oorspronkelijke begrensde scope. Het volledige huidige goal vereist nog later toepassen van werkervaring/feedback, ontbrekende mogelijkheden en AIDE² voor agentaansturing én code/apps/addons. Nu werkt Codex aan de leercyclus; geen nieuwe vergelijkingsserie.",
           "executorAdmissionCheck": {
             "checkedAt": "2026-10-02T00:35:22.610151+00:00",
             "installedCore": "eva2-managed-b-slot3-core",
@@ -23573,7 +23653,8 @@
               "L3.2",
               "L3.3"
             ]
-          }
+          },
+          "historicalNextActionBeforeFullGoal20261011": "Afgerond: één onafhankelijk gemeten en toegepaste verbetering met herbruikbare vervolgroute. Droomplanner/appsbenchmark en bredere kwaliteitswinst zijn niet bewezen."
         },
         {
           "id": "R1",
@@ -28703,7 +28784,7 @@
       "blueprint": "eva2/EVA2_BOUWPLAN.md",
       "ownerClarification20260928": "Volledige digitale huisgenoot in detail uitwerken zodat het gebouwd kan worden; geen zakelijke uitwerking.",
       "designCompletionRule": "Ontwerpafronding is geen functieafronding. Dagelijkse bruikbaarheid, technische onderscheiding, vergelijking en eigenaaracceptatie blijven afzonderlijk. R1-verlies laat technisch onderscheid open.",
-      "activeSliceId": "P2",
+      "activeSliceId": "L3",
       "goalActivatedAt": "2026-09-28T08:02:56.078145+00:00",
       "goalThreadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "executionAuthorizedBy": "Jaap, 28 September 2026: activate the complete delivery goal",
@@ -28982,9 +29063,9 @@
           "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       },
-      "lastUpdated": "2026-10-10T12:05:54.938589+00:00",
-      "updatedAt": "2026-10-10T12:05:54.938589+00:00",
-      "checkedAt": "2026-10-10T12:05:54.938589+00:00",
+      "lastUpdated": "2026-10-11T16:02:38.714648+00:00",
+      "updatedAt": "2026-10-11T16:02:38.714648+00:00",
+      "checkedAt": "2026-10-11T16:02:38.714648+00:00",
       "ownerPriority20261010": {
         "authorization": "Latest three direct owner requests in current chat",
         "outcomes": [
@@ -29030,7 +29111,177 @@
         "review": "eva2/reviews/product-general-execution-memory-final-review-20261010.json",
         "reviewStatus": "GO",
         "finishedAt": "2026-10-10T12:07:39.771438+00:00"
-      }
+      },
+      "historicalDirectivesBeforeDashboardAlignment20261011": {
+        "outcome": "Eva als herkenbare huisgenoot met sterk geheugen, nuttig eigen initiatief en zelfstandig digitaal werk bruikbaar opleveren. Spraakwerk is geparkeerd; bestaande acceptaties en de afgesproken eindvergelijking/gezinsacceptatie blijven bewaard.",
+        "currentStep": 7,
+        "nextAction": "Eén oorspronkelijke ongebruikte XD08-ingang bronmatig binden aan de herstelde catalogus en vaste criteria/modelrollen. Evaluator werkt aan voorbereiding; nog geen modeluitvoering of gesloten herhaling.",
+        "activeSliceId": "P2",
+        "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie voor het volledige project. Het autonome technische bouwgoal heeft het afzonderlijke eindpunt uit autonomousTechnicalGoal20261002; open externe/menselijke taken worden niet als voltooid geregistreerd.",
+        "steps": [
+          {
+            "number": 1,
+            "title": "Eén gesprek en stem",
+            "state": "open",
+            "existingCards": [
+              "VB-001"
+            ],
+            "doneWhen": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via Telegram en beide fysieke Voice PE-speakers; gedeelde kern en passende kanaalcontrole. Bestaande website/HA-paneel blijven optioneel; geen verplichte telefoon-/laptopproef.",
+            "preserve": "Bestaat: contactmodel, streaming, gesprek tijdens onderzoek, spraak en laptoponderbreking. Resteert: inhoudssnelheid, gelijke kanaalwerking en fysieke speakerproeven. Bestaande routes gebruiken; alleen een aangetoond tekort wijzigen.",
+            "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+            "historicalPlanningEffortHours": "4–12",
+            "blueprintSlices": [
+              "C1",
+              "C2",
+              "C3",
+              "C4"
+            ]
+          },
+          {
+            "number": 2,
+            "title": "Personen en continuïteit",
+            "state": "completed",
+            "existingCards": [
+              "CO-008",
+              "CO-004",
+              "CO-005"
+            ],
+            "doneWhen": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder.",
+            "preserve": "Geaccepteerd onthouden, corrigeren, inzien/wissen, privégrenzen en latere onderwerpvoortzetting behouden. Tijdelijke voorkeur en stijlcorrectie afgerond; persoonlijkheid M3.3 op 5 oktober door Jaap geaccepteerd. Zeven dagen gezinspraktijk en eindoordeel blijven F2.",
+            "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+            "historicalPlanningEffortHours": "4–12",
+            "blueprintSlices": [
+              "M1",
+              "M2",
+              "M3"
+            ],
+            "completedAt": "2026-10-05T08:46:48.844686+00:00",
+            "technicalCompletion": "Oorspronkelijke M1/M2-acceptaties behouden; M3.1/M3.2 technisch afgerond en M3.3 nu expliciet door Jaap geaccepteerd. Fysieke spraak en volledige gezins-/projectacceptatie blijven afzonderlijk.",
+            "latestEvidence": "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
+          },
+          {
+            "number": 3,
+            "title": "Taken afmaken en terugmelden",
+            "state": "completed",
+            "existingCards": [
+              "AU-002",
+              "VB-004",
+              "UX-001",
+              "UX-002"
+            ],
+            "doneWhen": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening.",
+            "preserve": "Bestaat: onderzoek, taakbediening, oorspronkelijke vraagbinding, bewaarde resultaten, algemene HA en browserovername. Resteert: volledige moeilijke taak binnen passend uitvoeringspad en ontbrekende echte kanaal-/browsergevallen. Geen nieuwe taak- of HA-laag uit voorzorg.",
+            "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+            "historicalPlanningEffortHours": "6–16",
+            "blueprintSlices": [
+              "T1",
+              "T2",
+              "T3",
+              "T4"
+            ],
+            "completedAt": "2026-10-05T01:55:56.276013+00:00",
+            "technicalCompletion": "Originele T1/T2/T3/T4 technisch afgerond met behouden eigen bewijs; T3-overname en gatewayhervatting zijn de laatste aanvulling. Menselijke/projectacceptatie apart.",
+            "latestEvidence": "eva2/evidence/product/t3-owned-handoff-installed-20261005.json"
+          },
+          {
+            "number": 4,
+            "title": "Initiatief en huisaanwezigheid",
+            "state": "open",
+            "existingCards": [
+              "AU-008",
+              "AU-005",
+              "VB-002"
+            ],
+            "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
+            "preserve": "Bestaande initiatiefcompositie, bronkoppelingen en resultaatroutes behouden. Resteert: een zelfgekozen werkelijk nuttige bijdrage en algemene waarnemingsautomatisering. Spraak is een mogelijke afleverroute, geen algemene voorwaarde.",
+            "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+            "historicalPlanningEffortHours": "4–12",
+            "blueprintSlices": [
+              "I1",
+              "I2"
+            ]
+          },
+          {
+            "number": 5,
+            "title": "Leren en langdurig werk",
+            "state": "open",
+            "existingCards": [
+              "AU-004",
+              "AU-006",
+              "AU-003"
+            ],
+            "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
+            "preserve": "L1, L2 en de begrensde eigen verbetering L3 technisch afgerond. R1 en de geplande eindvergelijking/gezinsbeoordeling blijven afzonderlijk open; geen herbouw van bestaand leerwerk.",
+            "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+            "historicalPlanningEffortHours": "8–24",
+            "blueprintSlices": [
+              "L1",
+              "L2",
+              "L3",
+              "R1"
+            ]
+          },
+          {
+            "number": 6,
+            "title": "Installatie en herstel",
+            "state": "open",
+            "existingCards": [
+              "IN-001",
+              "IN-002",
+              "IN-003"
+            ],
+            "doneWhen": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken.",
+            "preserve": "Bestaat: wizard, target-provisioning, negen-servicevoorbereiding, export/herstel en terugweg. Resteert: gewone bootstrap zonder handgeschreven instellingen, modulekeuze en praktijkproef. Bestaande voorzieningen aansluiten; geïsoleerd herstel is geen volledige eigenaarproef.",
+            "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+            "historicalPlanningEffortHours": "6–18",
+            "blueprintSlices": [
+              "O1",
+              "O2"
+            ]
+          },
+          {
+            "number": 7,
+            "title": "Vergelijking voorbereiden en uitvoeren",
+            "state": "open",
+            "existingCards": [
+              "CP-001",
+              "CP-002",
+              "CP-003"
+            ],
+            "doneWhen": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat.",
+            "preserve": "Bestaat: EV-003, eerdere deelvergelijkingen en Inspect-/scorerhulpmiddelen. Resteert: actuele versies/toegang, gelijkwaardige complete vergelijking en transparante uitkomsten. Geen nieuw vergelijkingsframework.",
+            "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+            "historicalPlanningEffortHours": "4–12",
+            "blueprintSlices": [
+              "P1",
+              "P2"
+            ]
+          },
+          {
+            "number": 8,
+            "title": "Eindkandidaat en acceptatie",
+            "state": "open",
+            "existingCards": [
+              "FN-001",
+              "RB-007",
+              "RB-008",
+              "RB-009",
+              "RB-010",
+              "FN-002",
+              "FN-003"
+            ],
+            "doneWhen": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie.",
+            "preserve": "Bestaat: beheerde installatie, bronherkomst, terugweg en afzonderlijke acceptaties. Resteert: één complete eindkandidaat en zeven dagen gezinsgebruik met expliciet oordeel. Geen nieuwe releasearchitectuur omdat acceptatie nog openstaat.",
+            "planningEffortHours": "Zie slices; na B0 opnieuw ramen",
+            "historicalPlanningEffortHours": "4–12",
+            "blueprintSlices": [
+              "F1",
+              "F2"
+            ]
+          }
+        ]
+      },
+      "wholeProjectGoalSource": "eva2/PROJECTDOEL.md"
     },
     "dashboardClarityCorrection20260922": {
       "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
