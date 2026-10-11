@@ -1,0 +1,46 @@
+{
+  "contract": "EvaWorkerStrategyAssessmentIdentitySource/v1",
+  "createdAt": "2026-10-11T22:26:50.653030+00:00",
+  "status": "source_reviewed_not_activated",
+  "change": "Configuration identity is fixed before task evidence exists; reference evidence and five exact runtime admission identities remain separately pinned and checked. Both self-referential dependencies removed.",
+  "source": {
+    "path": "eva2/src/eva/operations/component_development.py",
+    "sha256": "95f9f998c1ddd72edc6685a95915daaf8c0abe150ebda91850600c4e4e5f0e35"
+  },
+  "tests": {
+    "path": "eva2/tests/operations/test_component_development_work_evidence.py",
+    "sha256": "3649f9d5ec763d4b740d025ccc6d6f56ab5fdca857dcde9a78db9723434c492c",
+    "final_run_passed": 71,
+    "seconds": 0.92,
+    "log_sha256": "b0fc37a0d4c8fa14c8cc258f53a0222b5f209d711e64c4dd31886b9192cb9d8c",
+    "earlier_run": {
+      "passed": 66,
+      "reason_for_followup": "second runtime-identity cycle identified; source changed before provider input"
+    },
+    "new_model_requests": 0
+  },
+  "review": {
+    "verdict": "GO",
+    "path": "eva2/reviews/aide-worker-strategy-assessment-identity-source-review-20261011.json",
+    "sha256": "e22e4f7dc9a375b41ab35cb35a62c245ec4e5fb4ea82eac2fe620fb2a87123a9"
+  },
+  "controlPreparation": {
+    "immutable_future_client_sha256": "b84cb43135944d70ce158a6838649d8ca44856e4c55c70337eb3b9a380698fcc",
+    "baseline_native_execution_started": false,
+    "candidate_created": false,
+    "client_live_activation": false
+  },
+  "limitations": [
+    "No genuine work-strategy quality improvement or full AIDE² cycle demonstrated.",
+    "Reference evidence must exist before fresh live assessor composition; absent reference is not adopted later.",
+    "Runtime identities remain exact in independent admission; they are not inferred from static suite identity."
+  ],
+  "preserved": {
+    "old_acceptance_and_failed_unknown_evidence": true,
+    "existing_39_of_48_completions": true,
+    "whole_goal_active": true,
+    "speech_parked": true,
+    "no_new_comparison_series": true
+  },
+  "developmentCredits": "unknown"
+}

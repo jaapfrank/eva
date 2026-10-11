@@ -1,25 +1,26 @@
-## Actueel werk — 2026-10-11T21:43:20.302230+00:00
+## Actueel werk — 2026-10-11T22:25:28.832363+00:00
 
-**Laatst opgeleverd:** nieuwe verbetercycli geïnstalleerd met behoud van oude
-beoordelingen. Vier exacte modules, 93 gerichte controles, bronreview GO.
-Alle 1.910 oude ontvangst-/resultaatbestanden bytegelijk, oude rondes blijven
-verbruikt. Kern, taakwerker en bestaande hostbeoordelaar gezond.
+**Laatst opgeleverd:** bronafbakening voor werkaanpakvarianten geïnstalleerd.
+Standaardwerkwijze gelijk, kern en taakwerker gezond, onafhankelijke installatiereview GO.
 
-**Nu:** één afgebakende werkinstructie op de bestaande verbeterroute aansluiten.
-De onafhankelijke reviewer legt vooraf de echte taakbeoordeling vast.
-De gewone initiatiefcyclus koos om 23:34 zelf passende stilte, zonder blokkade.
-Geen betaalde nieuwe proef gestart.
-**Einduitkomst:** de verbetering onafhankelijk beoordelen, toepassen en later gebruiken.
+**Nu:** de echte AIDE²-proef aansluiten op de bestaande algemene uitvoerder.
+Een circulaire afhankelijkheid in de beoordelingsconfiguratie is in de bron
+gericht hersteld; 71 checks en onafhankelijke bronreview geslaagd.
+De echte modelproef is nog niet gestart. Eén huidige werkaanpak en één kandidaat,
+dezelfde vaste taken, modellen, hulpmiddelen en oorspronkelijke beoordelingsregels.
 
-**Wie:** /root verzorgt integratie, werkelijk gebruik, dashboard en Git.
-De bestaande onafhankelijke reviewer doet de gebundelde eindcontrole.
+**Einduitkomst:** alleen een aantoonbare kwaliteitsverbetering toepassen en later gebruiken.
+Een gelijkspel behoudt de bestaande versie. Geen nieuwe vergelijkingsserie.
 
-**Van Jaap nodig:** geen handeling voor deze technische oplevering.
-Volledige gezinsbeoordeling blijft afzonderlijk. Hele goal actief; 39/48
-oorspronkelijke kleine afrondingen behouden, spraak geparkeerd.
+**Wie:** /root integreert en houdt dashboard/Git bij; de uitvoerder maakt de
+bestaande werk-/resultaatregistratie af; de onafhankelijke reviewer beoordeelt het echte resultaat.
 
-**Dashboard:** overzicht, huidige oplevering, volgend resultaat en inhoudelijke
-controletijd gelijkgetrokken aan dezelfde bron. Automatische verversing blijft actief.
+**Van Jaap nodig:** geen handeling voor deze technische aansluiting.
+Het volledige goal blijft actief; 39/48 oorspronkelijke afrondingen en jouw
+acceptaties behouden. Spraak is geparkeerd.
+
+**Dashboard:** huidige uitvoering en inhoudelijke controletijd bijgewerkt.
+De status is opgeslagen voortgang; geen automatisch bewijs van agentactiviteit.
 
 ## Actuele uitvoerfase — 12 oktober 2026
 

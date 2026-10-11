@@ -42,8 +42,11 @@ class DevelopmentAssessment:
                                               self.paths["cases_file"][1])
             self.assessment_sha256 = canonical_sha256({
                 "static_assessment_sha256": self.assessment_sha256,
-                "work_evidence": self.work_evidence.config,
-                "baseline_reference": self.work_evidence.baseline_reference})
+                # Admission/runtime identities are checked against every sealed run.
+                # They cannot identify this suite: the model profile itself includes
+                # the client suite binding. Reference bytes are pinned separately.
+                "work_evidence": {key: value for key, value in
+                    self.work_evidence.config.items() if key != "runtime_bindings"}})
         spec = importlib.util.spec_from_file_location("eva_fixed_development_scorer",
                                                      self.paths["scorer_file"][0])
         module = importlib.util.module_from_spec(spec)

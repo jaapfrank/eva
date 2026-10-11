@@ -1,0 +1,91 @@
+{
+  "checkedAt": "2026-10-11T22:24:24.564603Z",
+  "contract": "EvaWorkerStrategyProspectiveCompositionBinding/v1",
+  "controlParity": [
+    "Preview uses the existing current immutable runtime/factory and a readonly future-client overlay with the same authenticated reference and existing networks; no new queue/store/daemon.",
+    "Both versions have identical future client/profile/roles/grants/tool configuration. Only the literal strategy source differs within the reviewed boundary.",
+    "Live worker claim_next compares all five release fields. A differing model_profile_release_sha256 prevents live-worker claims; worker_profile_release_sha256 may stay identical for the same grant.",
+    "The preview demonstrates prospective composition/control parity only, not an installed live round or native quality improvement."
+  ],
+  "eligiblePath": "bootstrap/delegated_digital_runner.py",
+  "existingApplicationFinalScopeSha256": "27fdd828734f6792cacfb658e63dcaa5dbfc590eeb6e2b871bf820294a59dd72",
+  "fullAIDE2Complete": false,
+  "futureClient": {
+    "minimalDelta": [
+      "append eligiblePath to allowed_paths",
+      "add suite_bindings[eligiblePath]",
+      "add final_assessment_scopes[eligiblePath]"
+    ],
+    "newReviewedReleaseBeforeFinal": "none",
+    "preserveExistingOptionalFields": [
+      "reviewed_releases",
+      "suite_bindings",
+      "final_assessment_scopes",
+      "saved_artifact_suite_sha256"
+    ],
+    "requiredFields": [
+      "url",
+      "token_file",
+      "allowed_paths",
+      "suite_sha256",
+      "timeout_seconds"
+    ],
+    "suiteFormula": "sha256(json.dumps([immutable evaluator image_id, command_sha256, static assessment_sha256], separators=(\",\", \":\")).encode())",
+    "unchangedFields": "Existing token reference, URL, timeout, other allowed paths/suites/scopes/reviews and saved-artifact binding."
+  },
+  "hostConfiguration": {
+    "applicationRuntime": "Preserve existing {core_container, scope_sha256}; no new runtime allowed-path register.",
+    "development": "component_suites[eligiblePath] = {evaluation, assessment}; assessment = {cases_file, scorer_file, criteria, work_evidence}.",
+    "final": "Extend protocols and assessments for eligiblePath in existing final_component_assessments; retain receipt_root, scope_sha256, publisher, original assessors/publishers and all old round files.",
+    "runtimeFields": [
+      "engine_release_sha256",
+      "worker_profile_release_sha256",
+      "model_profile_release_sha256",
+      "output_schema_sha256",
+      "tool_configuration_sha256"
+    ],
+    "workEvidenceFields": [
+      "evidence_root",
+      "run_bindings_root",
+      "registration_sha256",
+      "case_set_sha256",
+      "baseline_sha256",
+      "scope_sha256",
+      "runtime_bindings",
+      "limits"
+    ]
+  },
+  "nativeExecutionGO": false,
+  "nativeTrials": 0,
+  "pending": [
+    "Exact future-client SHA and normal factory/profile/tool readback",
+    "Host-owned execution-admission and final assessment configuration with that profile",
+    "Reviewed producer admission, full export, shared counters and stop/authorization proof"
+  ],
+  "priorBindingOrder": [
+    "Fix existing cases/scorers/criteria/resource/registration bytes and trusted static evaluator image/command.",
+    "Compute stable assessment identity excluding runtime_bindings and observed baseline hashes; compute new suite and future client.",
+    "Use exact same future client bytes and normal factory for both baseline/candidate; bind actual provider roles/grant plus full five-field release selector and tool configuration.",
+    "Record immutable scope/profile/source/case/session/ingress/run identities and physical shared request/tool fences before input.",
+    "Collect fully measured reference work once, seal its evidence and trusted run_bindings files, then construct fresh host assessment with exact runtime_bindings and baseline pins.",
+    "Activate reviewed host/client configuration once after the complete binding review; retain consumed rounds and receipts."
+  ],
+  "protectedCasesDisclosed": false,
+  "providerCalls": 0,
+  "resourceQualification": {
+    "automaticRetries": 0,
+    "constructionAndHelpersIncluded": true,
+    "credits": "UNKNOWN",
+    "providerAttemptCeiling": 42,
+    "providerCeilingIsPredispatch": true,
+    "registeredInputPlusOutputCeiling": 200000,
+    "tokenCeiling": "Unchanged measured acceptance/stop ceiling. Codex transport does not enforce an in-flight output-token bound. Overshoot or unknown usage ends further dispatch and is NOT_MET/incomplete, never reset or estimated.",
+    "toolCeiling": 70,
+    "toolCeilingRequiresPhysicalPredispatchFence": true
+  },
+  "sourceReview": {
+    "path": "eva2/reviews/aide-worker-strategy-assessment-identity-source-review-20261011.json",
+    "sha256": "e22e4f7dc9a375b41ab35cb35a62c245ec4e5fb4ea82eac2fe620fb2a87123a9"
+  },
+  "verdict": "GO_FOR_MODEL_FREE_PREPARATION"
+}

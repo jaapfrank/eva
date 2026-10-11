@@ -1,0 +1,62 @@
+{
+  "bindings": {
+    "fixedWorkEvidenceContractSha256": "75abf4b33a1d6212b9fe3ff904b9b87623f6be3bf30db9faccceeb0e610d3179",
+    "originalScopeSha256": "dc0d8376ae0491ca6b2a7a018945cf26fc80de3fb2982f28ff331d428a562394",
+    "previousCombinedSourceReviewSha256": "370496c77c14b69af4e0badc066b9bdee6886e9913209825374f43f5e23d8de0",
+    "previousInstalledReviewSha256": "9dd2f7c0d2302bac60f8b866dd6ccf8b9b86281dc62aa9384c82fc1c4cc2fd03",
+    "resourceSupplementSha256": "c84844528f02a744b7e2779ec31db8b4ffb93669893f3a8137e3084004305c82",
+    "sourceFiles": {
+      "eva2/src/eva/operations/component_development.py": "95f9f998c1ddd72edc6685a95915daaf8c0abe150ebda91850600c4e4e5f0e35",
+      "eva2/tests/operations/test_component_development_work_evidence.py": "3649f9d5ec763d4b740d025ccc6d6f56ab5fdca857dcde9a78db9723434c492c"
+    },
+    "testLogSha256": "b0fc37a0d4c8fa14c8cc258f53a0222b5f209d711e64c4dd31886b9192cb9d8c",
+    "testReceiptSha256": "0c860d5574a27afb8c28026d890bf1b959c6ed8bea447943884c795b2c6c3b4e",
+    "unchangedInstalledEvidenceSha256": "98cb3b11a753d7bd24e1bb8f4a54a1e2a077d8f427e547b5efc9b06bb1262358"
+  },
+  "checkedAt": "2026-10-11T22:24:24.564603Z",
+  "conditions": [
+    "Review the exact future client bytes, fixed evaluator image/command/suite and independent registration before admission.",
+    "Bind the complete resulting normal factory profile and actual tool configuration separately into immutable execution admission and the full work evidence configuration.",
+    "Seal both baseline files before fresh host assessment composition. Do not reuse the missing-baseline instance or change an existing consumed registration.",
+    "Install this host-only source delta together with the already bound suite activation; current containers and the installed evidence remain unchanged."
+  ],
+  "contract": "EvaWorkerStrategyAssessmentIdentitySourceReview/v1",
+  "findings": [
+    {
+      "lines": "component_development.py:36-49",
+      "result": "Suite identity includes fixed criteria/case/scorer hashes and work configuration except runtime_bindings. It includes neither baseline receipt hashes nor profiles derived from the client suite; both identified cycles are removed."
+    },
+    {
+      "lines": "component_development.py:133-167,224-234,268-287",
+      "result": "The complete runtime configuration remains deep-copied. All five runtime fields, scope/source/registration and trusted exports are compared on each leg. Existing initial baseline file hashes remain separately pinned and checked; an instance constructed without either baseline file never adopts it later."
+    },
+    {
+      "lines": "test_component_development_work_evidence.py:148-194",
+      "result": "Tests cover each missing reference file, all five changed runtime fields with unchanged suite identity and refused work, and coherent baseline tampering against the original instance."
+    }
+  ],
+  "limits": {
+    "credits": "UNKNOWN",
+    "fullAIDE2Complete": false,
+    "installedByThisReview": false,
+    "nativeExecutionGO": false,
+    "qualityGainProven": false
+  },
+  "openBlockers": [],
+  "preparation": {
+    "firstReferenceOnlyFixSupersededByThisRuntimeIdentityFix": true,
+    "oldProtectedCommandDisclosureReportedByRoot": "A reported old closed-case command appeared in root diagnostic output. Reviewer did not read that command or change old scores; no new strategy protected inputs or candidate execution is authorized by this review.",
+    "previous66CaseReceiptPreserved": true
+  },
+  "scope": "Only the assessment identity delta and its preserved baseline/runtime validation; not installation or native execution.",
+  "verdict": "GO",
+  "verification": {
+    "implementerTestsPassed": 71,
+    "legacyScoringAndSerializedResultUnchangedByDelta": true,
+    "nativeTrials": 0,
+    "providerCalls": 0,
+    "receiptOuterSeconds": 1.1820820940192789,
+    "reviewerTestsRun": 0,
+    "testReportedSeconds": 0.92
+  }
+}

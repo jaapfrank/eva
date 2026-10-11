@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T21:32:56.093030+00:00",
+  "lastUpdated": "2026-10-11T22:25:28.832363+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T22:07:23.101068+00:00",
+        "checkedAt": "2026-10-11T22:25:28.832363+00:00",
         "deliveries": [
           {
             "title": "Werkagent klaargezet voor begrensde zelfverbetering",
@@ -4727,14 +4727,14 @@
         "now": {
           "title": "AIDE² · echte werkaanpak vergelijken",
           "state": "in_progress",
-          "phase": "aide_work_strategy_native_preparation",
+          "phase": "aide_work_strategy_runtime_binding",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root",
           "coordination": "/root",
-          "summary": "De bronwijziging is geïnstalleerd. De vaste taken en gewone uitvoerroute voor één begrensde proef worden gebonden.",
-          "detail": "De taakbeoordeling is nog inactief; geen nieuwe proef gestart. De bron/installatie is onafhankelijk goedgekeurd. Eerst echte uitvoer- en taakbinding, dan één begrensde proef. Alleen aantoonbare winst wordt toegepast en later gebruikt.",
-          "source": "eva2/evidence/product/worker-strategy-boundary-installed-20261011.json",
+          "summary": "De configuratie-afhankelijkheid is gericht hersteld. De echte uitvoerder krijgt nu dezelfde proefconfiguratie voor de huidige en de nieuwe werkaanpak.",
+          "detail": "71 gerichte controles en onafhankelijke bronreview geslaagd. De echte proef is nog niet gestart; de broncorrectie is nog niet geactiveerd in de hostbeoordeling. Jouw eerdere acceptaties blijven behouden.",
+          "source": "eva2/reviews/aide-worker-strategy-assessment-identity-source-review-20261011.json",
           "doneWhen": "Improve real agent control via the existing variant/development/independent-final/application route and prove use in later ordinary work.",
           "review": "/root/product_execution_memory_review"
         },
@@ -4756,7 +4756,7 @@
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T22:07:23.101068+00:00",
+        "reviewedAt": "2026-10-11T22:25:28.832363+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4833,8 +4833,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-11T21:32:56.093030+00:00",
-      "checkedAt": "2026-10-11T21:32:56.093030+00:00",
+      "reviewedAt": "2026-10-11T22:25:28.832363+00:00",
+      "checkedAt": "2026-10-11T22:25:28.832363+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -31143,8 +31143,8 @@
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
     },
-    "checkedAt": "2026-10-11T22:07:23.101068+00:00",
-    "reviewedAt": "2026-10-11T22:07:23.101068+00:00"
+    "checkedAt": "2026-10-11T22:25:28.832363+00:00",
+    "reviewedAt": "2026-10-11T22:25:28.832363+00:00"
   },
   "activeTaskId": "AU-008",
   "maxActiveImplementationTasks": 1,
@@ -33615,5 +33615,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T22:07:23.101068+00:00"
+  "updatedAt": "2026-10-11T22:25:28.832363+00:00"
 }

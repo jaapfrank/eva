@@ -145,6 +145,46 @@ def test_missing_baseline_never_adopts_later_files_until_fresh_composition(work)
     assert work.assessor().assess(work.report)["candidate"]["complete"] is True
 
 
+@pytest.mark.parametrize("root_key", ["evidence_root", "run_bindings_root"])
+def test_assessment_identity_is_fixed_before_reference_evidence_exists(work, root_key):
+    path = work.roots[root_key] / (BASE + ".json")
+    raw = path.read_bytes()
+    sealed = work.assessor()
+    path.unlink()
+    before_run = work.assessor()
+    assert before_run.assessment_sha256 == sealed.assessment_sha256
+    write(path, json.loads(raw))
+    after_run = work.assessor()
+    assert after_run.assessment_sha256 == before_run.assessment_sha256
+    assert before_run.assess(work.report)["baseline"]["error"] == "evidence_missing"
+    assert after_run.assess(work.report)["candidate"]["complete"] is True
+
+
+@pytest.mark.parametrize("runtime_key", [
+    "engine_release_sha256", "worker_profile_release_sha256",
+    "model_profile_release_sha256", "output_schema_sha256",
+    "tool_configuration_sha256",
+])
+def test_runtime_admission_is_checked_separately_from_suite_identity(work, runtime_key):
+    fixed_suite = work.assessor().assessment_sha256
+    work.config["work_evidence"]["runtime_bindings"][runtime_key] = "9" * 64
+    changed_admission = work.assessor()
+    assert changed_admission.assessment_sha256 == fixed_suite
+    result = changed_admission.assess(work.report)
+    assert result["baseline"]["error"] == "strategy_or_runtime_binding_mismatch"
+    assert result["candidate"]["complete"] is False
+
+
+def test_reference_content_is_pinned_separately_from_configuration_identity(work):
+    original = work.assessor()
+    work.pairs[BASE]["runs"][0]["artifact_evidence"]["observed"] = 7
+    work.seal(BASE)
+    recomposed = work.assessor()
+    assert recomposed.assessment_sha256 == original.assessment_sha256
+    assert original.assess(work.report)["baseline"]["error"] == "missing_receipt_or_export_hash_mismatch"
+    assert recomposed.assess(work.report)["baseline"]["metrics"]["hits"] == 1
+
+
 def test_changed_baseline_is_rejected_even_with_coherent_new_host_exports(work):
     assessor = work.assessor()
     work.pairs[BASE]["runs"][0]["artifact_evidence"]["observed"] = 7

@@ -50,6 +50,15 @@ handeling van Jaap nodig.
 Bewijs: eva2/evidence/product/worker-strategy-boundary-installed-20261011.json.
 Bronreview: eva2/reviews/aide-worker-strategy-source-review-20261011.json.
 
+
+Een verdere gerichte hostbroncorrectie verwijdert twee circulaire afhankelijkheden
+uit de identiteit van de optionele taakbeoordeling. Haar vaste configuratie blijft
+bindend; originele referentiebestanden en alle vijf runtimevelden worden apart
+exact gecontroleerd. 71 gerichte checks en onafhankelijke bronreview GO. Nog niet
+geactiveerd: dezelfde toekomstige proefconfiguratie en de echte werkregistratie
+worden voorbereid. Geen nieuwe modelproef of kwaliteitswinst door deze correctie.
+Bewijs: eva2/evidence/product/aide-worker-strategy-assessment-identity-source-20261012.json.
+
 ## Actuele gebruikersuitkomst — eigen hulpmiddel verbeteren en later gebruiken
 
 De bestaande verbeterroute is geïnstalleerd in kern, werker en beoordelaar.
