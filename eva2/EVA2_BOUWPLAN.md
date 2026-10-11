@@ -1,5 +1,15 @@
 # Eva2 — het complete bouwplan
 
+## Actuele volledige eindscope — 11 oktober 2026
+
+Het volledige projectgoal staat in eva2/PROJECTDOEL.md. Alle vier
+huisgenootuitkomsten, de gesloten leercyclus en AIDE² voor agentaansturing,
+code en uitbreidingen behoren tot de afronding. De uitvoering/geheugen/
+Telegram-opleveringen zijn deelresultaten; hun audit sluit Eva2 niet af.
+Taakuitkomsten zijn nu aangesloten op bestaand persoonsgeheugen. Vervolg de echte
+latere toepassing en feedbacklus; volledige leercyclus en AIDE² blijven open.
+Spraak blijft geparkeerd; geen nieuwe vergelijkingsserie of tweede platform.
+
 ## Eigenaarverduidelijking 3 oktober 2026 — zelfstandig browsergebruik
 
 Eva gebruikt voor gewone browseropdrachten zelfstandig haar eigen reeds beschikbare

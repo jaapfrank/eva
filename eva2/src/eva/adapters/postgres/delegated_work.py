@@ -15,7 +15,7 @@ from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.current_catalog import delegated_work_runs, metadata
 from eva.adapters.postgres.operational_timeline import (
-    TimelineScope, insert_initial_timeline_thread, operational_events,
+    TimelineScope, insert_initial_timeline_thread, operational_events, operational_checkpoints,
 )
 from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
@@ -1092,6 +1092,36 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 return loaded
             finally:
                 transaction.rollback()
+
+    def next_memory_outcome(self, *, owner_principal_id: UUID,
+                            principal_binding_id: UUID, now: datetime,
+                            completed_since: datetime) -> StoredDelegatedWork | None:
+        """One retained private digital outcome not yet projected into memory."""
+        now = _whole_second(now, label="now")
+        completed_since = _whole_second(completed_since, label="completed_since")
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            self._validate_owner_binding(connection, owner_principal_id=owner_principal_id,
+                                         principal_binding_id=principal_binding_id)
+            marker = "work-memory:" + sa.func.encode(
+                sa.func.sha256(sa.func.convert_to(delegated_work_runs.c.work_id, "UTF8")), "hex")
+            processed = sa.exists(sa.select(1).where(
+                operational_checkpoints.c.tenant_id == self.scope.tenant_id,
+                operational_checkpoints.c.installation_id == self.scope.installation_id,
+                operational_checkpoints.c.thread_id == marker))
+            row = connection.execute(sa.select(delegated_work_runs).where(
+                delegated_work_runs.c.tenant_id == self.scope.tenant_id,
+                delegated_work_runs.c.installation_id == self.scope.installation_id,
+                delegated_work_runs.c.owner_principal_id == owner_principal_id,
+                delegated_work_runs.c.principal_binding_id == principal_binding_id,
+                delegated_work_runs.c.spec_payload["contract"].astext == "DelegatedDigitalWork/v4",
+                delegated_work_runs.c.spec_payload["audience"].astext == "private",
+                delegated_work_runs.c.state.in_(("succeeded", "verified", "failed", "stopped", "needs_help")),
+                delegated_work_runs.c.completed_at >= completed_since,
+                delegated_work_runs.c.retention_until > now, ~processed,
+            ).order_by(delegated_work_runs.c.completed_at, delegated_work_runs.c.work_id)
+              .limit(1)).mappings().one_or_none()
+            return None if row is None else self._validated(connection, row)
 
     def list_owned(
         self, *, owner_principal_id: UUID, principal_binding_id: UUID,

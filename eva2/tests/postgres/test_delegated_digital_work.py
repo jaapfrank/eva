@@ -56,7 +56,7 @@ def delegated_engine():
         engine.dispose()
 
 
-def test_digital_stop_resume_reuses_verified_effect_and_returns_once(delegated_engine):
+def test_digital_stop_resume_reuses_verified_effect_and_returns_once(delegated_engine, monkeypatch):
     label = "digital-pg-lifecycle"
     scope, _, binding = _seed_authority(delegated_engine, label)
     owner = _id(label, "principal")
@@ -152,6 +152,17 @@ def test_digital_stop_resume_reuses_verified_effect_and_returns_once(delegated_e
     second = store.load(resumed["work"]["work_id"], **service._owner).spec
     assert second.work_id != first.work_id and second.execution_id == first.execution_id
     assert second.source == first.source and second.source_ingress_sha256 == first.source_ingress_sha256
+    from eva.bootstrap.delegated_work_memory import DelegatedWorkMemory
+    from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
+    outbox = PostgresMemoryOutbox(delegated_engine, tenant_id=turn.tenant_id,
+                                 installation_id=turn.installation_id)
+    submitted = []
+    def submit(document):
+        submitted.append(document)
+        outbox.enqueue(document)
+    memory_projection = DelegatedWorkMemory(delegated_engine, service, submit, clock=lambda: now[0])
+    assert memory_projection.run_once() == "idle"  # activates; historical stopped attempt excluded
+
     now[0] += timedelta(seconds=1)
     claim = store.claim_next(worker_id="worker:digital-test", release=profile.release, now=now[0])
     assert claim is not None and claim.spec == second
@@ -171,3 +182,57 @@ def test_digital_stop_resume_reuses_verified_effect_and_returns_once(delegated_e
     assert service.private_return(turn, "ack", **identity)["status"] == "acknowledged"
     assert service.private_return(turn, "poll")["result"] is None
     assert journal.committed_reply(turn) == foreground
+
+
+    # The real recorded outcome reaches the same durable person memory outbox once.
+    memory_projection._next_poll = 0.0
+    assert memory_projection.run_once() == "queued"
+    assert len(submitted) == 1
+    doc = submitted[0]
+    assert doc.principal_id == turn.principal_id and outcome.result.output in doc.content
+    assert doc.source_ref == turn.message_id and doc.trust == "model_inference_unconfirmed"
+    assert len(outbox.pending()) == 1
+    restarted = DelegatedWorkMemory(delegated_engine, service, submit, clock=lambda: now[0])
+    assert restarted.run_once() == "idle"
+    assert len(submitted) == 1  # no new extraction or resurrected historical attempt
+    assert store.next_memory_outcome(**service._owner, now=now[0] + timedelta(days=60),
+                                    completed_since=NOW) is None
+
+
+    # Actual scoped source lookup and the existing owner command erase only this document.
+    from eva.application.memory import MemoryRetentionReceipt
+    from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    receipt = MemoryRetentionReceipt(bank_id="controlled:person", document_id=doc.document_id,
+        content_sha256=hashlib.sha256(doc.content.encode()).hexdigest())
+    job = outbox.begin(outbox.pending()[0], now=now[0])
+    outbox.succeed(job, receipt, now=now[0])
+    reader = PostgresOwnerMemorySources(delegated_engine, tenant_id=turn.tenant_id,
+        installation_id=turn.installation_id, owner=owner, binding=binding,
+        authority_scope=scope)
+    page = reader.page(now=now[0])
+    source_id = page.sources[0].source_id
+    assert reader.document(source_id, now=now[0])[0] == doc
+    assert memory_projection.owns(doc)
+    assert not memory_projection.owns(replace(doc, content=doc.content + " forged"))
+    erased_documents = []
+    def erase_document(**kwargs):
+        assert kwargs["source_message_id"] is None
+        erased_documents.append(kwargs["document_id"])
+        outbox.erase_content(principal_sha256=hashlib.sha256(kwargs["principal_id"].encode()).hexdigest(),
+            document_id=kwargs["document_id"], operation_sha256="ab" * 32,
+            erased_at=kwargs["now"])
+        return True
+    owner_runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    owner_runtime._owner_memory_sources = lambda: reader
+    owner_runtime._work_memory = memory_projection
+    owner_runtime._cold_path = SimpleNamespace(erase_document=erase_document)
+    monkeypatch.setattr("eva.bootstrap.runtime.datetime",
+        SimpleNamespace(now=lambda tz=None: now[0]))
+    assert owner_runtime.dashboard_forget_memory_source(source_id)["state"] == "erased"
+    assert erased_documents == [doc.document_id]
+    with pytest.raises(LookupError):
+        reader.document(source_id, now=now[0] + timedelta(days=1))
+    assert journal.committed_reply(turn) == foreground  # original request/reply preserved
+    restarted = DelegatedWorkMemory(delegated_engine, service, submit, clock=lambda: now[0])
+    assert restarted.run_once() == "idle" and len(submitted) == 1

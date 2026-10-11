@@ -683,6 +683,7 @@ class PostgresHindsightMemoryRuntime:
         if (delegated_work_store is None) != (dashboard_principal_binding_id is None):
             raise ValueError("delegated work dashboard binding is incomplete")
         self._delegated_work_store = delegated_work_store
+        self._work_memory = None
         self._telegram_principal_bindings = telegram_principal_bindings
         self._delegated_work_commands = delegated_work_commands
         self._delegated_work_owner_service = delegated_work_owner_service
@@ -924,12 +925,16 @@ class PostgresHindsightMemoryRuntime:
         doc, state = self._owner_memory_sources().document(source_id, now=now)
         if state != "retained":
             raise ConversationConflict("Deze bron is nog niet verwerkt. Probeer wissen na verwerking opnieuw.")
-        # Accept only a proven raw exchange binding; an arbitrary document/source
-        # reference must never authorize removal of a different conversation.
+        # A task experience erases its own semantic source, not the original
+        # user request. The durable projection marker prevents re-creation.
+        source_message_id = doc.source_ref
         if doc.document_id != f"{doc.conversation_id}:exchange:{doc.source_ref}":
-            raise ConversationConflict("Deze bron heeft geen ondersteunde gesprekskoppeling.")
+            projection = getattr(self, "_work_memory", None)
+            if projection is None or not projection.owns(doc):
+                raise ConversationConflict("Deze bron heeft geen ondersteunde gesprekskoppeling.")
+            source_message_id = None
         erased = self._cold_path.erase_document(principal_id=doc.principal_id,
-            document_id=doc.document_id, source_message_id=doc.source_ref, now=now)
+            document_id=doc.document_id, source_message_id=source_message_id, now=now)
         return {"contract": "EvaOwnerMemoryChange/v1", "source_id": source_id,
                 "state": "erased" if erased else "erasure_requested"}
 
@@ -2218,6 +2223,11 @@ def create_runtime_app() -> FastAPI:
                     budget=reflection_budget, principal_id=settings.background_principal_id,
                     authorize_initiative=lambda: runtime._initiative_authority().policy())
                 idle_tasks = (*idle_tasks, household_initiatives.run_once)
+    if delegated_work_service is not None:
+        from eva.bootstrap.delegated_work_memory import DelegatedWorkMemory
+        work_memory = DelegatedWorkMemory(
+            engine, delegated_work_service, lambda document: runtime._cold_path.submit(document))
+        service_tasks = (*service_tasks, work_memory.run_once)
     from eva.bootstrap.idle_capacity import idle_capacity_available
     runtime = PostgresHindsightMemoryRuntime(
         engine,
@@ -2270,6 +2280,7 @@ def create_runtime_app() -> FastAPI:
         ),
         memory_storage_budget=storage_budget,
     )
+    runtime._work_memory = None if delegated_work_service is None else work_memory
     native_voice = (None if household_voice is None else household_voice.build_service(
         runtime=runtime, engine=engine, work_server=household_work_server,
     ))

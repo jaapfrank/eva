@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "contract": "EvaIndependentProductSourceReview/v1",
+  "recordedAt": "2026-10-11T15:01:49.896449+00:00",
+  "reviewer": "/root/product_execution_memory_review",
+  "decision": "GO",
+  "phase": "final_bounded_source_review",
+  "scope": "Private terminal delegated digital outcome to the existing person-scoped durable cold memory path. Includes only necessary alias and erasure corrections; no full learning-cycle, AIDE2, installed behavior or family-acceptance claim.",
+  "binding": {
+    "sourceSha256": {
+      "eva2/src/eva/adapters/postgres/delegated_work.py": "ac2d627cbde4aa343e7b107261f005f47cbd3d83b15fe357e5beafe5722e299e",
+      "eva2/src/eva/application/delegated_work_memory.py": "2b236d15d7cfbd8fc1c90522e5a385f0af5a9f74c77516cc7d543d10517a5952",
+      "eva2/src/eva/bootstrap/delegated_work_memory.py": "0dde10066f73cb3f37da5c8de75cb35f31d90395a04e66b879edc1b76b78ac00",
+      "eva2/src/eva/bootstrap/runtime.py": "80117993d0a62a95767117ba7b1e63d11aa46cc0f975090744c67a843f91c771"
+    },
+    "testSourceSha256": {
+      "eva2/tests/application/test_delegated_work_memory.py": "f5295390207896c21817fda0238b2fc0033c922e4ba4a929e4be3b2bab24871d",
+      "eva2/tests/postgres/test_delegated_digital_work.py": "c72a0c6bfb2c2823783148398730c452ef185e7376bb01bdcf1b943bbbd85226"
+    },
+    "scopeDocumentationSha256": {
+      "AGENTS.md": "16f3ef7caa75c0905ecc01b70789b231702b529abdd4d228ec5ed6e432938da0",
+      "eva2/PROJECTDOEL.md": "e2ef42abce2def3141b06b82e6639c80c846ecec16b30785b660ac41a5b5545b"
+    },
+    "candidateBuild": {
+      "path": "/home/administrator/project/.eva2-artifacts/private-work-outcome-memory-20261011/build-result.private.json",
+      "sha256": "1bde26e1967972ac8f00d6c5309638665dddd9af7a6a6214a37167cab879b8f4",
+      "image": "sha256:7f507de979657facce9e0a35c40d12404b4993ebb405981371944d60cf4b0641",
+      "repositoryModuleHashesMatch": true,
+      "workerUnchangedReported": true,
+      "installationConfirmed": false
+    }
+  },
+  "blockers": [],
+  "resolvedFindings": [
+    {
+      "id": "B1",
+      "priority": 2,
+      "title": "Revoked original private alias previously blocked all later memory outcomes.",
+      "file": "eva2/src/eva/bootstrap/delegated_work_memory.py",
+      "line": 49,
+      "resolution": "Only the source-loader boundary now catches ConversationConflict and DelegatedWorkConflict, records source_unavailable without document content and skips it. Owner selection remains outside the catch and fails closed.",
+      "test": "test_revoked_source_alias_does_not_starve_later_valid_work",
+      "independentlyReadCorrectionAndTest": true
+    },
+    {
+      "id": "B2",
+      "priority": 1,
+      "title": "New work-outcome sources previously lacked the owner erasure path.",
+      "resolution": "The existing current owner source lookup remains mandatory. Non-exchange documents are admitted for erasure only when owns(document) finds a queued durable work marker with exact document ID, content hash and complete scoped provenance hash. Task erasure uses source_message_id=None, so the original question and reply are preserved. Projection markers remain after document/outbox erasure.",
+      "sourceLocations": [
+        "eva2/src/eva/bootstrap/runtime.py:933",
+        "eva2/src/eva/bootstrap/delegated_work_memory.py:109",
+        "eva2/src/eva/application/delegated_work_memory.py:76"
+      ],
+      "verification": "Read exact final guard and PostgreSQL regression: actual scoped owner source lookup, forged-content rejection, owner command with fake semantic transport, actual durable outbox redaction, preserved original reply, and no projection after restart. Coordinator reports final PG test passed.",
+      "independentlyReadCorrectionAndTest": true
+    },
+    {
+      "id": "B2-crash",
+      "priority": 1,
+      "title": "Enqueue-before-marker recovery must respect an already erased outcome.",
+      "resolution": "_recorded reads the existing outbox event under the distinct conversation/runtime scope. Apart from the separately assigned budget retention deadline, queued source data must exactly match. Erased content remains absent and becomes an erased projection skip marker. Recovery never calls submit again, preventing resurrection or a permanently blocking queue head.",
+      "sourceLocations": [
+        "eva2/src/eva/bootstrap/delegated_work_memory.py:55",
+        "eva2/src/eva/bootstrap/delegated_work_memory.py:83"
+      ],
+      "verification": "Read model-free existing-erasure unit check including rejection of a different principal, plus run_once reconciliation and persistent marker/query composition. No claim of a live process-kill experiment or real provider retention.",
+      "independentlyReadCorrectionAndTest": true
+    }
+  ],
+  "sourceAssessment": {
+    "strictPrivateDigitalSpecAndExactOriginalSourceHash": true,
+    "originalRuntimeAliasPreservedRatherThanReassigned": true,
+    "boundResultHashWorkIdSpecAndCallIdChecked": true,
+    "successIsWorkerReportedUnconfirmedNotExternalProof": true,
+    "failedStoppedNeedsHelpNeverPresentedAsSuccess": true,
+    "resumedAttemptUsesNewStableWorkDocumentId": true,
+    "boundedDocumentContentAndFullResultDigestPreserved": true,
+    "existingStorageBudgetAndDurableMemoryOutboxReused": true,
+    "durableActivationExcludesHistoricalBulk": true,
+    "scopeOwnerBindingRetentionAndCompletedTimestampFilteredInStore": true,
+    "durableProjectionIdsNoFreshModelLoop": true,
+    "existingOutboxBudgetAndErasureContractsReadOnlyReviewed": true,
+    "moduleBoundariesPreserved": true,
+    "oldOutcomeMassImportOrNewPaidTaskStartedByReview": false,
+    "existingOwnerMemoryLookupStillRequired": true,
+    "onlyExactDurablyProjectedWorkSourcesBecomeErasable": true,
+    "contentAndFullScopedProvenanceBoundForErasure": true,
+    "originalUserQuestionAndReplyPreservedByTaskErasure": true,
+    "separateCanonicalWorkAndRuntimeMemoryTimelineScopes": true,
+    "budgetRetentionDeadlineKeptSeparateFromProvenanceIdentity": true,
+    "enqueueBeforeProjectionMarkerReconciledWithoutSubmit": true,
+    "erasureTombstoneRecordedAsPermanentSkip": true,
+    "erasedOutcomeCannotResurrectOrStarveLaterOutcomeThroughThisReplayPath": true,
+    "composedRuntimeOwnsExactProjectionInstance": true,
+    "memoryOutboxImplementationUnchanged": true
+  },
+  "validation": {
+    "coordinatorReportedInitialApplicationAndServiceChecks": 13,
+    "coordinatorReportedPostgresLifecycleChecksPassed": 1,
+    "postgresLifecycleScope": "stop/resume with preserved distinct verified effects, one person-scoped durable outbox entry, no extra projection after restart",
+    "postgresImageVersion": "16.13; earlier 18.6 fixture mismatch stopped before product test and temporary container closed",
+    "providerRequestsInReportedChecks": 0,
+    "reviewerNewTestRuns": 0,
+    "aliasRegressionAddedAndRead": true,
+    "forgetRegression": "PASSED_REPORTED_AND_SOURCE_READ",
+    "coordinatorReportedFinalSelectedApplicationServiceOwnerChecksPassed": 19,
+    "coordinatorReportedFinalExpandedPostgresLifecycleChecksPassed": 1,
+    "finalPostgresSeconds": 5.59,
+    "finalPostgresIncludesOwnerLookupEraseOutboxRedactionOriginalReplyAndRestart": true,
+    "finalUnitTombstoneCheckAddedAndRead": true,
+    "finalFixtureClockCorrection": "Owner erase test initially used current wallclock against historical authority. Test clock was aligned with the same fixture clock; only affected PG test rerun, no product criterion/source correction.",
+    "earlierCountsNotAddedToFinalCounts": true,
+    "temporaryPostgresContainerClosedReported": true
+  },
+  "qualifications": [
+    "GO applies only to the four exact hash-bound source modules and the targeted alias/erasure corrections. The full Eva2 projectgoal remains active.",
+    "Candidate build source hashes match the reviewed repository; this review does not confirm installation, live semantic retention, or a new real owner exchange.",
+    "Terminal successful output remains model_inference_unconfirmed worker reporting, not independent proof of an external effect. Failure/stop/needs-help do not become success.",
+    "Existing memory storage budget, outbox and provider route are reused. Reported regression transports are fake; no new paid model requests or native comparison were needed.",
+    "This couples one missing outcome-memory link; later relevant application, the complete learning cycle, on-demand development, full AIDE2 improvement and family acceptance remain unproved."
+  ],
+  "reviewActivity": {
+    "newModelCalls": 0,
+    "newNativeProbes": 0,
+    "runtimeMutations": 0,
+    "productSourceMutations": 0,
+    "rejectedPrivateStatusReadsRetriedOrBypassed": false,
+    "onlyWrittenFile": "eva2/reviews/private-work-outcome-memory-source-review-20261011.json"
+  },
+  "priorReview": {
+    "sha256": "da89ad4b11a32d557cfa9b0fb2d98fa9b19b39876f26c83a798f542f5e303300",
+    "decision": "NO_GO",
+    "recordedAt": "2026-10-11T14:56:31.805396+00:00",
+    "blockers": [
+      {
+        "id": "B2",
+        "priority": 1,
+        "title": "New work-outcome sources cannot use the existing owner erasure command.",
+        "file": "eva2/src/eva/bootstrap/runtime.py",
+        "line": 929,
+        "relatedFile": "eva2/src/eva/application/delegated_work_memory.py",
+        "relatedLine": 65,
+        "finding": "The producer creates work-outcome:<digest>, while dashboard_forget_memory_source only accepts conversation_id:exchange:source_ref. A retained new task experience is rejected by the ordinary owner erasure path.",
+        "requiredCorrection": "Permit only a durably proven exact private work-outcome source through the existing document erasure flow; retain its projection/removal marker. A crash after enqueue but before projection-marker save must not make an already erased source replay or permanently block later valid outcomes.",
+        "verificationNeeded": "One targeted owner source lookup/erase check using fake semantic removal, including preserved tombstone after restart; no provider call or broad new forget subsystem."
+      }
+    ],
+    "sourceSha256": {
+      "eva2/src/eva/application/delegated_work_memory.py": "2b236d15d7cfbd8fc1c90522e5a385f0af5a9f74c77516cc7d543d10517a5952",
+      "eva2/src/eva/bootstrap/delegated_work_memory.py": "c3f39345f9c75191f1c3f4775d20b263d73ff00ed01dbc6fe2f9e50a9b5061bd",
+      "eva2/src/eva/adapters/postgres/delegated_work.py": "ac2d627cbde4aa343e7b107261f005f47cbd3d83b15fe357e5beafe5722e299e",
+      "eva2/src/eva/bootstrap/runtime.py": "80117993d0a62a95767117ba7b1e63d11aa46cc0f975090744c67a843f91c771"
+    }
+  }
+}

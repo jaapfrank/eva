@@ -1,4 +1,34 @@
-## Afgeronde eigenaaropdracht — 11 oktober 2026
+## Actief volledig projectgoal — 11 oktober 2026
+
+Het actieve Codex-goal omvat het gehele Eva2-project: een persoon, geheugen en
+mensbegrip, eigen initiatief en zelfstandig werk. De volledige leercyclus en
+AIDE² voor agentaansturing, code, vaardigheden en apps/addons zijn verplichte
+productuitkomsten. De drie eerdere eigenaaropdrachten blijven geleverde
+deelresultaten; hun audit bewijst geen voltooid project en beëindigt dit goal niet.
+
+Leidend: eva2/PROJECTDOEL.md en het actieve goal-objective.md. Sluit het goal pas
+bij het samenhangende geïnstalleerde geheel en de daarin vastgelegde eindvoorwaarden.
+Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkingsserie.
+Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
+afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
+
+**Actief werk:** de volledige leercyclus afmaken. De ontbrekende koppeling van
+nieuwe privétaakuitkomsten naar het bestaande persoonsgeheugen is nu geïnstalleerd:
+succes, mislukking en stoppen behouden de oorspronkelijke bron en hun onzekerheid.
+Eenmalige opslag, wissen en herstart zijn gericht gecontroleerd. Dit geldt voor
+nieuwe digitale privéopdrachten; oude proefuitkomsten worden niet bulkgeïmporteerd.
+19 gerichte applicatie/service/eigenaarchecks en één echte PostgreSQL-lifecycle
+slagen. Kern en taakwerker zijn gezond; bronhashes, mounts en configuratie bevestigd.
+De onafhankelijke bron- en installatiereview zijn GO. Bewijs:
+eva2/evidence/product/private-work-outcome-memory-installed-20261011.json.
+
+**Resterend:** de opgeslagen ervaring in een volgende relevante beurt aantoonbaar
+toepassen, menselijke feedback verwerken en het gewijzigde gedrag later gebruiken.
+De volledige leercyclus, zelf ontbrekende mogelijkheden realiseren, de volledige
+AIDE²-aansturing en apps/addons, passend initiatief en gezinsacceptatie zijn nog open.
+Geen nieuw hoofdonderdeel of volledig project afgerond door deze koppeling.
+
+## Historische afgeronde deelopdracht — 11 oktober 2026
 
 De drie expliciete goalvoorwaarden zijn onafhankelijk gecontroleerd en bereikt:
 de gerichte algemene uitvoering is geïnstalleerd, de Eva1-geheugenoverdracht is
