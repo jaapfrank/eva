@@ -1,0 +1,149 @@
+{
+  "contract": "EvaNativeAbilityCreationReuseResult/v1",
+  "recordedAt": "2026-10-11T17:46:31.333304+00:00",
+  "status": "CREATION_VERIFIED_REUSE_NOT_CONFIRMED",
+  "originalCriteria": {
+    "path": "eva2/evidence/product/ability-create-reuse-native-criteria-20261011.json",
+    "sha256": "801a818ff63c1bad1ae325e827421d98015e55de441e8d5711905d347f9f4c37"
+  },
+  "laterInput": {
+    "path": "eva2/evidence/product/ability-create-reuse-later-input-20261011.json",
+    "sha256": "f62298811277e4f0bd6f0524eb3950a8a50d0b178e6dc67b069c824385cee6a2"
+  },
+  "whatExisted": "Installed general task workspace, programming/process controls, verified procedure designation/resolve/isolated-run. No second implementation platform added.",
+  "whatChanged": "Eva herself generated a 3321-byte Python data-transform utility, tested it, saved and designated the verified source, and executed it on the initial export. No product/runtime source or installation configuration changed by this outcome.",
+  "creation": {
+    "workId": "work:eva-chat:d386eed9-b4ea-5d36-a355-5c58b4a80917",
+    "state": "succeeded",
+    "claimCount": 1,
+    "sourcePath": "/proof-state/ability-active-minutes-30cad653-tool.py",
+    "sourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "sourceBytes": 3321,
+    "builderSuppliedCode": false,
+    "firstResultPath": "/proof-state/ability-active-minutes-30cad653-first.json",
+    "firstResultSha256": "9bb77ae113cc81b83f80cbdb95f7f39a354dd0a630f506dbf7b0da0674a19afc",
+    "independentlyReadOutput": {
+      "active_minutes": {
+        "droger": 95,
+        "lamp": 30
+      }
+    },
+    "nativeOwnChecksReported": 532,
+    "independentSourceChecks": {
+      "count": 6,
+      "passed": 6,
+      "privateReceiptSha256": "a1a0cbfe3cf40dac89ab2e32c1a57290437bad7eceacf678e96feabbcbc2d96a",
+      "qualification": "Original schema-neutral cases retained; evaluator translated fields/time coordinates losslessly to preregistered integer-minute contract, preserving independent expectations."
+    },
+    "registration": "Native designation completed; exact source SHA confirmed by initial isolated run.",
+    "initialIsolatedExecution": {
+      "contentSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+      "exitCode": 0,
+      "timedOut": false,
+      "cancelled": false,
+      "installedIntoHostSoftware": false,
+      "availableAsSavedProcedure": true
+    },
+    "finishedAt": "2026-10-11 17:38:13+00:00"
+  },
+  "laterUse": {
+    "workId": "work:eva-chat:8e0a7a7e-542f-5d4a-a624-ac7f53910836",
+    "state": "ambiguous",
+    "claimCount": 1,
+    "errorCode": "timed_out",
+    "errorFingerprint": "477455588d88093bd24610bb7b84f25592273940520865c62a669e5cdbebfcf0",
+    "newSession": true,
+    "recentMessages": 0,
+    "implementationOrProcedureIdSupplied": false,
+    "criteriaRetold": false,
+    "registeredModelRequests": 1,
+    "tools": 0,
+    "resultConfirmed": false,
+    "sameSourceReuseConfirmed": false,
+    "usageQualification": "One failed provider admission with unmeasured usage; recorded child zero counters are not a complete zero-use claim.",
+    "createdAt": "2026-10-11 17:39:37+00:00",
+    "callStartedAt": "2026-10-11 17:40:03+00:00",
+    "finishedAt": "2026-10-11 17:42:11+00:00",
+    "specificGap": "Task stopped during its first model request before tool activity. Installed adapter bounds each response at 120 seconds despite a 300-second work grant. Precise cause of slow provider response remains unknown.",
+    "automaticRetry": false
+  },
+  "usage": {
+    "measuredPhases": [
+      {
+        "phase": "firstContact",
+        "measurement": "measured",
+        "model_attempts": 1,
+        "tool_calls": 1,
+        "input_tokens": 5822,
+        "output_tokens": 550,
+        "knownTokens": 6372
+      },
+      {
+        "phase": "firstWorker",
+        "measurement": "measured",
+        "model_attempts": 16,
+        "tool_calls": 15,
+        "input_tokens": 226622,
+        "output_tokens": 4606,
+        "knownTokens": 231228
+      },
+      {
+        "phase": "laterContact",
+        "measurement": "measured",
+        "model_attempts": 1,
+        "tool_calls": 1,
+        "input_tokens": 5813,
+        "output_tokens": 480,
+        "knownTokens": 6293
+      }
+    ],
+    "registeredRequests": 19,
+    "knownTokenLowerBound": 243893,
+    "missingUsageRequests": 1,
+    "fullTotalTokens": null,
+    "memoryExtractionTokens": null,
+    "creditCosts": null,
+    "developmentCredits": null,
+    "efficiencyOrSuperiorityProven": false,
+    "registeredModelToolCalls": 17,
+    "workerReceiptToolCalls": 17,
+    "taskReceiptAndForegroundTools": 19,
+    "toolBoundaryQualification": "Model usage reports 15 worker tools plus 2 foreground tools; task receipt reports 17 worker dispatches plus 2 foreground tools. These are distinct counters, not one reconciled physical tool total."
+  },
+  "retention": {
+    "oldFilesAndCases": "Unchanged; no closed case reopened. Original two-message budget exhausted; no automatic retry. Generated source and initial result remain available. Later end-condition remains not met.",
+    "scope": "One controlled private technical project; no live house operation, new connector, host installation or family acceptance."
+  },
+  "preparationErrors": [
+    "Readback observer initially omitted native DSN normalization and confused external journal scope with owner-store scope; corrected in observer only.",
+    "Procedure evidence initially used owner-store scope instead of existing authority external scope; corrected read-only.",
+    "Initial physical read occurred before worker completion and found no files; final read performed after completion."
+  ],
+  "privateEvidence": {
+    "first-payload.private.json": "4f5faebff6a3e29d91d6815b8922c29e2ef2b654b93a843ee72966acd231c1be",
+    "first-sent.private.json": "71f687a15ff62dc8e90b43b789cc2464b3085e53a78ef9d27886e1c0471e2de5",
+    "first-response.private.json": "484ca2f148a20ab9899e70c3cc558d9f9fff792005f8e2806ac89ffe0f6925ac",
+    "first-receipt.private.json": "dfd116d2cfff92b21f0f6b2d9bdc111c2a67f5fdcfc452d0294ca9d77f7ce2d4",
+    "first-action-evidence.private.json": "ba0f7c35130464ec904bf363e72bf8eb38f743cb63a47687eccb61f05260c3f4",
+    "first-completed-files-readback.private.json": "6641ba9a97becb80ab911d14dcf01ca0af765bfb604e0e9dda23f609f7e702c0",
+    "generated-source.private.py": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "later-payload.private.json": "c9f13d1f9819b34fbec211b8ae118d765851cad7d5eb024a2df569c970b6a768",
+    "later-sent.private.json": "938254b041f39344e1aaea6f692b1e61757442aa333b5b5bbc3e4939738b8303",
+    "later-response.private.json": "c0f5bc115ee0479d87dbb984472e826e6d2faeea553899d3ece645443cd435a7",
+    "later-receipt.private.json": "28561dbe3be4767d0104ad8a7f6b9ce5a9945520364b2f641993469cc744b2d9",
+    "later-action-evidence.private.json": "d86870b509e552763a22b0e444d89e1af98ed8122fba60599015f1eff0b77d60",
+    "independent-cases.private.json": "2442c5ab11b10e4013eca3e193af9c11eeb772ccc74d4b428e68e8a4d75b25e5",
+    "independent-source-check.private.json": "a1a0cbfe3cf40dac89ab2e32c1a57290437bad7eceacf678e96feabbcbc2d96a"
+  },
+  "completion": {
+    "boundedCreationAndChecks": true,
+    "combinedCreationAndLaterReuse": false,
+    "fullLearningCycle": false,
+    "fullAIDE2": false,
+    "wholeGoal": "active",
+    "newComparisonSeries": false,
+    "voice": "parked"
+  },
+  "next": "Smallest necessary correction of premature per-response time bounding within the existing admitted task deadline; retain unknown usage and old result. No automatic rerun, new benchmark or platform.",
+  "review": "eva2/reviews/ability-create-reuse-native-review-20261011.json"
+}

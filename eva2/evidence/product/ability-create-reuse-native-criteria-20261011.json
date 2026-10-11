@@ -1,0 +1,108 @@
+{
+  "contract": "EvaNativeAbilityCreationReuse/v1",
+  "registeredAt": "2026-10-11T17:34:28.973548+00:00",
+  "referenceCommit": "5bcdbcd2529f6dbaa016937c0967cd641be66709",
+  "currentReference": "General native programming workspace and verified procedure designation/resolve/run already installed. Assisted creation and separate reuse exist; combined unassisted creation/check/new-use not yet demonstrated.",
+  "improvement": "Eva itself creates a missing data transformation, tests it, saves a runnable procedure, and independently finds and executes the same source at a later different request.",
+  "scope": {
+    "project": "technical-ability-20261011-30cad653",
+    "principal": "33333333-3333-3333-8333-333333333333",
+    "audience": "private_person",
+    "paths": {
+      "source": "/proof-state/ability-active-minutes-30cad653-tool.py",
+      "first": "/proof-state/ability-active-minutes-30cad653-first.json",
+      "later": "/proof-state/ability-active-minutes-30cad653-later.json"
+    },
+    "firstMessageId": "technical-ability-20261011-30cad653:first-turn"
+  },
+  "initialPayloadSha256": "4f5faebff6a3e29d91d6815b8922c29e2ef2b654b93a843ee72966acd231c1be",
+  "conditions": [
+    "No implementation or procedure ID supplied by the builder to Eva. Actual native code generation, execution/check and verified designation required.",
+    "Independent examiner checks original generated source on held-out cases against the fixed window/state contract; optimizer cannot access cases or modify scorer.",
+    "First true result equals active_minutes droger95 lamp30, persisted bytes separately read.",
+    "Later new session uses different data, no source/procedure ID or rule re-explanation supplied; actual execution of exact same designated source SHA and correct persisted result required.",
+    "Existing person/project/private binding, no network/house actions, no changes to old source/data, terminal process cleanup retained; only this controlled new scope may change."
+  ],
+  "semanticContract": {
+    "input": "window.start/end integer start<end; events device nonempty string,minute integer,state on/off",
+    "output": "JSON object active_minutes mapping all devices to nonnegative integer minutes",
+    "ordering": "Sort per device, exact duplicates removed, repeated equal state remains same interval",
+    "time": "Carry state before start; otherwise off; half-open start-inclusive/end-exclusive window",
+    "conflict": "Contradictory states same device and minute rejected with nonzero/error, invalid input rejected"
+  },
+  "budget": {
+    "nativeUserMessages": 2,
+    "automaticRetries": 0,
+    "newComparisonMatrix": false,
+    "existingWorkerLimitsPerTask": {
+      "modelRuns": 32,
+      "toolCalls": 31,
+      "timeoutSeconds": 300
+    },
+    "selectedChecks": "Independent 4–6 held-out synthetic cases, no broader suite.",
+    "credits": null,
+    "estimate": "Two ordinary native tasks; current worker limits retained, actual usage reported; no new optimization platform."
+  },
+  "firstData": {
+    "window": {
+      "start": 0,
+      "end": 120
+    },
+    "events": [
+      {
+        "device": "droger",
+        "minute": 75,
+        "state": "off"
+      },
+      {
+        "device": "droger",
+        "minute": 10,
+        "state": "on"
+      },
+      {
+        "device": "droger",
+        "minute": 40,
+        "state": "on"
+      },
+      {
+        "device": "droger",
+        "minute": 75,
+        "state": "off"
+      },
+      {
+        "device": "droger",
+        "minute": 90,
+        "state": "on"
+      },
+      {
+        "device": "droger",
+        "minute": 130,
+        "state": "off"
+      },
+      {
+        "device": "lamp",
+        "minute": 0,
+        "state": "off"
+      },
+      {
+        "device": "lamp",
+        "minute": 20,
+        "state": "on"
+      },
+      {
+        "device": "lamp",
+        "minute": 50,
+        "state": "off"
+      }
+    ]
+  },
+  "firstExpected": {
+    "active_minutes": {
+      "droger": 95,
+      "lamp": 30
+    }
+  },
+  "ownerActionRequired": false,
+  "wholeGoalCompleteByThisOutcome": false,
+  "voice": "parked"
+}

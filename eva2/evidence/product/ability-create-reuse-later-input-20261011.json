@@ -1,0 +1,90 @@
+{
+  "contract": "EvaNativeAbilityLaterInput/v1",
+  "registeredAt": "2026-10-11T17:39:37.625795+00:00",
+  "originalCriteriaSha256": "801a818ff63c1bad1ae325e827421d98015e55de441e8d5711905d347f9f4c37",
+  "payloadSha256": "c9f13d1f9819b34fbec211b8ae118d765851cad7d5eb024a2df569c970b6a768",
+  "project": "technical-ability-20261011-30cad653",
+  "messageId": "technical-ability-20261011-30cad653:later-turn",
+  "conversationId": "technical-ability-20261011-30cad653:later-session",
+  "recentMessages": 0,
+  "input": {
+    "window": {
+      "start": 30,
+      "end": 100
+    },
+    "events": [
+      {
+        "device": "pomp",
+        "minute": 80,
+        "state": "off"
+      },
+      {
+        "device": "pomp",
+        "minute": 10,
+        "state": "on"
+      },
+      {
+        "device": "pomp",
+        "minute": 25,
+        "state": "off"
+      },
+      {
+        "device": "pomp",
+        "minute": 40,
+        "state": "on"
+      },
+      {
+        "device": "pomp",
+        "minute": 40,
+        "state": "on"
+      },
+      {
+        "device": "pomp",
+        "minute": 60,
+        "state": "on"
+      },
+      {
+        "device": "pomp",
+        "minute": 100,
+        "state": "on"
+      },
+      {
+        "device": "beveiligingslamp",
+        "minute": 20,
+        "state": "on"
+      },
+      {
+        "device": "beveiligingslamp",
+        "minute": 70,
+        "state": "off"
+      },
+      {
+        "device": "radio",
+        "minute": 130,
+        "state": "on"
+      },
+      {
+        "device": "verwarmer",
+        "minute": -10,
+        "state": "on"
+      },
+      {
+        "device": "verwarmer",
+        "minute": 150,
+        "state": "off"
+      }
+    ]
+  },
+  "expected": {
+    "active_minutes": {
+      "pomp": 40,
+      "beveiligingslamp": 40,
+      "radio": 0,
+      "verwarmer": 70
+    }
+  },
+  "expectedSourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+  "sourceOrProcedureIdProvided": false,
+  "rulesRetold": false,
+  "newComparisonSeries": false
+}

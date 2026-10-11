@@ -10,28 +10,39 @@ sluit dit goal niet af.
 
 ## Actuele uitvoering — 11 oktober 2026
 
-Het overkoepelende Codex-goal is actief. Uitkomsten en taakcontext gebruiken het
-bestaande persoonsgeheugen. De oorspronkelijke bron van geselecteerde relevante
-privéherinneringen is aangesloten op gesprek en achtergrondwerk, zodat precieze
-vorm, vervolgstap en oorspronkelijke tijdsbetekenis behouden blijven.
-Kern en taakwerker gezond; bronreview GO en 130 geselecteerde modelvrije cases
-geslaagd. Geen extra modelaanvraag voor deze bronkoppeling.
+De geïnstalleerde geheugenroute heeft oorspronkelijke relevante bijsturing bij een
+nieuwe taak toegepast: norm, drie korte bullets en vervolgstap; onafhankelijke
+eindreview GO. De eerdere NOT_MET-proef blijft gesloten en het gehele goal actief.
 
-Eén vooraf vastgelegde nieuwe latere opdracht heeft de gehele relevante bijsturing
-toegepast zonder de norm of vorm opnieuw te vertellen: 41−33=8 over, 1 tekort tegen
-de norm van 9, drie korte bullets en concrete vervolgstap. Het opgeslagen bestand
-is onafhankelijk gelezen; beide eerdere bestanden ongewijzigd. Eindreview GO
-voor installatie en beperkte toepassing; volledige native modelinvoer ontbreekt.
-De oorspronkelijke volledige leerproef blijft gesloten met NOT_MET.
-Dit is beperkte technische feedbacktoepassing, geen gezinsacceptatie of algemene
-kwaliteits-/efficiëntievoorsprong: bekende ondergrens 51.294 tokens/6 responses/5 tools.
+Daarna heeft Eva via de bestaande algemene route zelf een ontbrekend Python-
+hulpmiddel gemaakt, gecontroleerd, als werkwijze geregistreerd en werkelijk
+uitgevoerd. Bron van 3.321 bytes, juist resultaat 95/30; zes onafhankelijke
+bronchecks geslaagd. Geen tweede platform, nieuwe hostsoftware of vaste
+huisfunctie toegevoegd.
 
-Nu volgt ontbrekende mogelijkheden zelf realiseren en later hergebruiken,
-daarna volledige AIDE²-aansturing/code/apps/addons en droommodus. Het volledige
-projectgoal, brede leercyclus en gezinsacceptatie blijven open.
-Bewijs: eva2/evidence/product/learning-feedback-source-native-result-20261011.json.
-Eindreview: eva2/reviews/learning-feedback-source-native-final-review-20261011.json.
-Installatie: eva2/evidence/product/learning-feedback-source-installed-20261011.json.
+De latere gewone vraag met andere invoer is eenmaal gestart in een nieuwe sessie,
+zonder code/procedure-ID. Haar eerste modelaanvraag stopte na 120 seconden,
+vóór tools en vóór de bestaande taakdeadline. Geen bevestigd later hergebruik:
+UNKNOWN-verbruik en oorspronkelijke voorwaarden blijven behouden. Bekende
+tokenondergrens 243.893; 19 registraties, één met onbekend verbruik. Model-toolcalls
+17 en taak-/foregroundteller 19 zijn verschillende telgrenzen; credits onbekend.
+
+**Nu afmaken:** de concrete lokale antwoordtijdgrens laten aansluiten op de nog
+geldige achtergrondtaak, met behoud van stoppen, persoonsgrenzen en bestaande
+toelating. Controleer de kleinste noodzakelijke broncorrectie modelvrij en
+installeer haar eenmaal. Geen oude case reset of automatische herhaling.
+Een noodzakelijke nieuwe uitvoering na gewijzigde oorzaak wordt afzonderlijk
+vooraf gebonden binnen het bestaande mandaat; geen nieuwe vergelijkingsserie.
+
+Daarna blijven volledige AIDE²-aansturing/code/apps/addons/droommodus, passend
+initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en gezinsacceptatie open.
+Dit is geen afsluiting van één heel hoofdonderdeel of van het project.
+Spraak geparkeerd; ongebruikte Docker Desktop ongemoeid.
+
+Creatie/hergebruik: eva2/evidence/product/ability-create-reuse-native-result-20261011.json.
+Review: eva2/reviews/ability-create-reuse-native-review-20261011.json.
+Onafhankelijke GO voor beperkte publicatie; NO_GO voor volledige creatie/hergebruik-afronding.
+Geheugenoplevering: eva2/reviews/learning-feedback-source-native-final-review-20261011.json.
 
 ## Vier samenhangende productuitkomsten
 

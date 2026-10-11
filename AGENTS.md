@@ -14,31 +14,41 @@ Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkin
 Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
 afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
 
-**Actief werk:** de volledige leercyclus afmaken. De bestaande uitkomst-opslag
-en taakgerichte geheugenzoekactie blijven behouden. Oorspronkelijke berichten bij
-al geselecteerde relevante privéherinneringen zijn aangesloten in kern en
-taakwerker: vorm, vervolgstap en tijdsbetekenis staan naast de afgeleide herinnering.
-130 geselecteerde modelvrije cases geslaagd; bronreview GO en één installatie zonder
-rollback. 333/331 overige Python-bronnen, omgeving, mounts en gegevens behouden.
+## Actief werk — zelf maken en later hergebruiken, 11 oktober 2026
 
-Eén afzonderlijke vooraf vastgelegde nieuwe latere taak is daadwerkelijk uitgevoerd:
-41−33=8 over, 1 tekort tegen de eerder onthouden norm van 9, precies drie korte
-bullets met vervolgstap, zonder norm/vorm opnieuw te geven. Werkelijk bestand
-onafhankelijk gelezen, beide oude bestanden ongewijzigd. Bekende ondergrens 51.294
-tokens, 6 responses/5 tools; volledige extractie/credits onbekend. Eindreview GO
-voor de installatie en beperkte latere toepassing; volledige native modelinvoer ontbreekt.
-De oorspronkelijke mislukte leerproef blijft gesloten met NOT_MET.
-Bewijs: eva2/evidence/product/learning-feedback-source-native-result-20261011.json.
-Eindreview: eva2/reviews/learning-feedback-source-native-final-review-20261011.json.
+De geïnstalleerde geheugenroute heeft oorspronkelijke relevante bijsturing bij een
+nieuwe taak toegepast: norm, drie korte bullets en vervolgstap; onafhankelijke
+eindreview GO. De eerdere NOT_MET-proef blijft gesloten en het gehele goal actief.
 
-**Actueel vervolg:** de ontbrekende mogelijkheid zelf realiseren en later
-hergebruiken via bestaande algemene uitvoering afmaken. Bestaande programmeer- en
-procedurehergebruikroute onderzocht; programmeerdienst bereikbaar. Nog geen nieuwe
-native opdracht gestart.
-Brede leercyclus en mensbegrip, volledige AIDE²-aansturing/code/apps/addons/droommodus,
-passend initiatief en gezinsacceptatie blijven open. Geen hoofdonderdeel of project
-afgesloten door één gecontroleerde feedbacktoepassing; geen nieuwe vergelijkingsserie
-of spraakwerk.
+Daarna heeft Eva via de bestaande algemene route zelf een ontbrekend Python-
+hulpmiddel gemaakt, gecontroleerd, als werkwijze geregistreerd en werkelijk
+uitgevoerd. Bron van 3.321 bytes, juist resultaat 95/30; zes onafhankelijke
+bronchecks geslaagd. Geen tweede platform, nieuwe hostsoftware of vaste
+huisfunctie toegevoegd.
+
+De latere gewone vraag met andere invoer is eenmaal gestart in een nieuwe sessie,
+zonder code/procedure-ID. Haar eerste modelaanvraag stopte na 120 seconden,
+vóór tools en vóór de bestaande taakdeadline. Geen bevestigd later hergebruik:
+UNKNOWN-verbruik en oorspronkelijke voorwaarden blijven behouden. Bekende
+tokenondergrens 243.893; 19 registraties, één met onbekend verbruik. Model-toolcalls
+17 en taak-/foregroundteller 19 zijn verschillende telgrenzen; credits onbekend.
+
+**Nu afmaken:** de concrete lokale antwoordtijdgrens laten aansluiten op de nog
+geldige achtergrondtaak, met behoud van stoppen, persoonsgrenzen en bestaande
+toelating. Controleer de kleinste noodzakelijke broncorrectie modelvrij en
+installeer haar eenmaal. Geen oude case reset of automatische herhaling.
+Een noodzakelijke nieuwe uitvoering na gewijzigde oorzaak wordt afzonderlijk
+vooraf gebonden binnen het bestaande mandaat; geen nieuwe vergelijkingsserie.
+
+Daarna blijven volledige AIDE²-aansturing/code/apps/addons/droommodus, passend
+initiatief, bredere leercyclus/mensbegrip, dagelijkse routes en gezinsacceptatie open.
+Dit is geen afsluiting van één heel hoofdonderdeel of van het project.
+Spraak geparkeerd; ongebruikte Docker Desktop ongemoeid.
+
+Creatie/hergebruik: eva2/evidence/product/ability-create-reuse-native-result-20261011.json.
+Review: eva2/reviews/ability-create-reuse-native-review-20261011.json.
+Onafhankelijke GO voor beperkte publicatie; NO_GO voor volledige creatie/hergebruik-afronding.
+Geheugenoplevering: eva2/reviews/learning-feedback-source-native-final-review-20261011.json.
 
 ## Historische gesloten leerproef — norm toegepast, feedback onvolledig, 11 oktober
 

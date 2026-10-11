@@ -1,0 +1,205 @@
+{
+  "contract": "EvaIndependentAbilityCreationReuseReview/v1",
+  "reviewedAt": "2026-10-11T17:48:42.224394+00:00",
+  "reviewer": "product_execution_memory_review",
+  "decision": "GO",
+  "decisionScope": "Honest bounded publication of source creation, checks, designation and first execution, plus a preserved inconclusive later attempt.",
+  "originalCombinedOutcome": "NOT_MET",
+  "completionDecision": "NO_GO",
+  "completionBlocker": "The separate later request never executed a tool or produced a verified persisted result from the same designated source. Later native reuse remains UNKNOWN.",
+  "publication": {
+    "path": "eva2/evidence/product/ability-create-reuse-native-result-20261011.json",
+    "sha256": "d15bbdf37ac09380cfe75bf86d7c2e74595b33a2660708497a08fcd9d232de94",
+    "claimsChecked": true,
+    "noNewWholeGoalOrLearningCompletionClaim": true
+  },
+  "criteria": {
+    "originalPath": "eva2/evidence/product/ability-create-reuse-native-criteria-20261011.json",
+    "originalSha256": "801a818ff63c1bad1ae325e827421d98015e55de441e8d5711905d347f9f4c37",
+    "laterInputPath": "eva2/evidence/product/ability-create-reuse-later-input-20261011.json",
+    "laterInputSha256": "f62298811277e4f0bd6f0524eb3950a8a50d0b178e6dc67b069c824385cee6a2",
+    "bothRegisteredBeforeTheirRespectiveDispatch": true,
+    "conditionsUnchanged": true,
+    "laterSentBindingQualification": "Its criteriaSha256 identifies the separately preregistered later-input binding, which explicitly binds the original criteria SHA; it does not replace the original criteria."
+  },
+  "conditionResults": [
+    {
+      "condition": 1,
+      "status": "PASS",
+      "evidence": "Original user input supplies the contract and paths, not implementation or a procedure ID. Native programming writes the exact reviewed source; own test process finishes with exit 0; designation completes and the subsequent isolated run uses that source SHA."
+    },
+    {
+      "condition": 2,
+      "status": "PASS",
+      "evidence": "Six held-out independent subprocess checks pass. Cases stayed private and unchanged; schema-neutral fixture notation was mapped to the fixed integer-minute wire contract with the same exact positive coordinate scale for inputs and independent expected durations."
+    },
+    {
+      "condition": 3,
+      "status": "PASS",
+      "evidence": "Native isolated run returns droger95/lamp30, exit0 and empty stderr. Separate physical file readback verifies 47 result bytes and the exact 3321-byte source."
+    },
+    {
+      "condition": 4,
+      "status": "NOT_MET",
+      "evidence": "Different export, distinct session, no recent messages and no user-supplied code, procedure ID or rule explanation are confirmed. Foreground handoff contains the existing procedure reference, but the worker times out on its first model admission, with no programming/procedure actions and no result."
+    },
+    {
+      "condition": 5,
+      "status": "SUPPORTED_WITH_LIMITS",
+      "evidence": "The same owner/private/project/source bindings and disabled child network grant are confirmed; observed programming process ends and isolated execution completes. Later model stream closes locally and no script action starts. These scoped exports are not an exhaustive house-state, filesystem or provider-side settlement audit."
+    }
+  ],
+  "creation": {
+    "terminalState": "succeeded",
+    "claimCount": 1,
+    "sourceSha256": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "sourceBytes": 3321,
+    "generatedWriteMatchesIndependentCheckedAndPhysicalSource": true,
+    "programmingActionRecords": 5,
+    "procedureActionAdmissions": 3,
+    "designationCompleted": true,
+    "isolatedExecutionSourceMatches": true,
+    "isolatedExitCode": 0,
+    "independentResult": {
+      "active_minutes": {
+        "droger": 95,
+        "lamp": 30
+      }
+    },
+    "resultSha256": "9bb77ae113cc81b83f80cbdb95f7f39a354dd0a630f506dbf7b0da0674a19afc",
+    "resultBytes": 47,
+    "nativeSemanticSuccessVerified": false,
+    "nativeOwnTestsReported": 532,
+    "ownTestsAreIndependentScore": false,
+    "independentChecksPassed": 6,
+    "fullDesignationResultExported": false,
+    "designationEvidenceQualification": "Completed designation admission/checkpoint followed by execution of the same reference and source SHA. No additional full designation-metadata read or probe was performed."
+  },
+  "independentCheckBinding": {
+    "caseFileSha256": "2442c5ab11b10e4013eca3e193af9c11eeb772ccc74d4b428e68e8a4d75b25e5",
+    "checkReceiptSha256": "a1a0cbfe3cf40dac89ab2e32c1a57290437bad7eceacf678e96feabbcbc2d96a",
+    "networkIsolation": "unshare --net",
+    "wallTimeoutSecondsPerCase": 3,
+    "caseDataPublishedOrGivenToEva": false
+  },
+  "later": {
+    "state": "ambiguous",
+    "errorCode": "timed_out",
+    "claimCount": 1,
+    "newSession": true,
+    "recentMessages": 0,
+    "ownerInputHasNoCodeOrProcedureId": true,
+    "ownerInputRulesRetold": false,
+    "foregroundHandoffAlreadyContainsSavedProcedureReference": true,
+    "workerRegisteredAdmissions": 1,
+    "workerSuccessfulModelResponses": 0,
+    "workerTools": 0,
+    "programmingAndProcedureActions": 0,
+    "resultPresent": false,
+    "nativeSameSourceReuse": "UNKNOWN",
+    "measuredFailedRequestUsage": null,
+    "reportedZeroCountersAreActualZeroUse": false,
+    "modelAdmittedAt": "2026-10-11T17:40:11Z",
+    "modelRecordedAt": "2026-10-11T17:42:11Z",
+    "modelPhaseSeconds": 120.0,
+    "callStartToTerminalSeconds": 128.0,
+    "workGrantSeconds": 300,
+    "workDeadlineUtc": "2026-10-11T17:44:37Z",
+    "terminalSecondsBeforeDeadline": 146.0,
+    "localStreamClosed": true,
+    "providerSideSettlementVerified": false,
+    "automaticRetryOrReplayPerformed": false
+  },
+  "timeBoundaryDiagnosis": {
+    "sourceHashes": {
+      "eva2/src/eva/adapters/model/pydantic_conversation.py": "6471d46a126669adf6996f857ff72c433d7dc21885656e77f30b1cfc3a896dfe",
+      "eva2/src/eva/bootstrap/delegated_digital_composition.py": "218ae582c67447672539310cbd7856792af6dd2af05d44afc29a4477e5877191"
+    },
+    "workerSetting": "delegated_digital_composition.py:214 supplies timeout_seconds=120.0.",
+    "adapterBoundary": "pydantic_conversation.py:1372 applies asyncio.timeout(self._timeout_seconds); :624 rejects configured timeout above120.",
+    "confirmed": "Local 120-second per-response bound ends the first later work-model admission while the 300-second work grant still has time.",
+    "unknown": "Cause of the slow provider/model response and whether a larger phase limit would permit successful reuse.",
+    "followupScope": "Only examine/correct the existing phase bound against the admitted work deadline before further model execution. No rerun or new allowance is authorized by this review."
+  },
+  "usage": {
+    "firstForeground": {
+      "registeredRequests": 1,
+      "knownTokens": 6372,
+      "modelToolCalls": 1
+    },
+    "firstWorker": {
+      "registeredRequests": 16,
+      "allSelectedRegistrationsMeasured": true,
+      "knownTokens": 231228,
+      "registeredModelToolCalls": 15,
+      "taskReceiptToolCalls": 17,
+      "taskReceiptMeasurement": "partial"
+    },
+    "laterForeground": {
+      "registeredRequests": 1,
+      "knownTokens": 6293,
+      "modelToolCalls": 1
+    },
+    "laterWorker": {
+      "registeredRequests": 1,
+      "successfulResponses": 0,
+      "tools": 0,
+      "measurement": "unmeasured",
+      "inputTokens": null,
+      "outputTokens": null
+    },
+    "registeredRequests": 19,
+    "knownTokenLowerBound": 243893,
+    "missingUsageRequests": 1,
+    "registeredModelToolCalls": 17,
+    "taskReceiptAndForegroundTools": 19,
+    "reconciledPhysicalTools": null,
+    "completePhysicalSdkAttempts": null,
+    "fullTokens": null,
+    "memoryExtractionTokens": null,
+    "creditCosts": null,
+    "efficiencyOrGeneralSuperiorityProven": false
+  },
+  "preservation": {
+    "originalCriteriaAndLaterBindingHashesPreserved": true,
+    "originalFixtureAndGeneratedSourceHashesPreserved": true,
+    "firstSourceAndResultPhysicalSnapshotRetained": true,
+    "laterFailedAdmissionAndUnknownUsagePreserved": true,
+    "oldCasesRemainClosed": true,
+    "nativeUserMessagesUsed": 2,
+    "automaticRetries": 0,
+    "postLaterPhysicalOldFileReadbackPerformedByReviewer": false,
+    "qualification": "The later task has zero observed tools; source/result snapshot and current retained artifact bytes are preserved. No fresh broad filesystem or historical-case audit is claimed."
+  },
+  "scopeLimits": {
+    "fullAbilityCreationAndLaterReuseComplete": false,
+    "fullyAutonomousAddonDevelopmentProven": false,
+    "fullLearningCycleComplete": false,
+    "fullAIDE2Complete": false,
+    "wholeGoal": "active",
+    "familyAcceptanceProven": false,
+    "newComparisonSeries": false,
+    "voice": "parked",
+    "reviewerNewModels": 0,
+    "reviewerNewTestsInThisFinalReview": 0,
+    "reviewerRuntimeChanges": 0
+  },
+  "privateArtifactHashes": {
+    "first-payload.private.json": "4f5faebff6a3e29d91d6815b8922c29e2ef2b654b93a843ee72966acd231c1be",
+    "first-sent.private.json": "71f687a15ff62dc8e90b43b789cc2464b3085e53a78ef9d27886e1c0471e2de5",
+    "first-response.private.json": "484ca2f148a20ab9899e70c3cc558d9f9fff792005f8e2806ac89ffe0f6925ac",
+    "first-receipt.private.json": "dfd116d2cfff92b21f0f6b2d9bdc111c2a67f5fdcfc452d0294ca9d77f7ce2d4",
+    "first-action-evidence.private.json": "ba0f7c35130464ec904bf363e72bf8eb38f743cb63a47687eccb61f05260c3f4",
+    "first-completed-files-readback.private.json": "6641ba9a97becb80ab911d14dcf01ca0af765bfb604e0e9dda23f609f7e702c0",
+    "generated-source.private.py": "281eaba33106e635631a463b4a761f3af3885d2a818f241e1407249a6c366d79",
+    "later-payload.private.json": "c9f13d1f9819b34fbec211b8ae118d765851cad7d5eb024a2df569c970b6a768",
+    "later-sent.private.json": "938254b041f39344e1aaea6f692b1e61757442aa333b5b5bbc3e4939738b8303",
+    "later-response.private.json": "c0f5bc115ee0479d87dbb984472e826e6d2faeea553899d3ece645443cd435a7",
+    "later-receipt.private.json": "28561dbe3be4767d0104ad8a7f6b9ce5a9945520364b2f641993469cc744b2d9",
+    "later-action-evidence.private.json": "d86870b509e552763a22b0e444d89e1af98ed8122fba60599015f1eff0b77d60",
+    "independent-cases.private.json": "2442c5ab11b10e4013eca3e193af9c11eeb772ccc74d4b428e68e8a4d75b25e5",
+    "independent-source-check.private.json": "a1a0cbfe3cf40dac89ab2e32c1a57290437bad7eceacf678e96feabbcbc2d96a"
+  },
+  "reviewMethod": "Read only the controlled technical-case evidence, existing independent-check receipt and relevant adapter/worker timeout source. No native execution, retest, product edit or credential/config read.",
+  "materialPublicationBlockers": []
+}
