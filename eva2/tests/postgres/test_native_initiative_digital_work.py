@@ -11,6 +11,7 @@ import pytest
 import sqlalchemy as sa
 
 from eva.adapters.postgres.current_catalog import delegated_work_runs
+from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore, DelegatedWorkConflict
 from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
 from eva.adapters.postgres.operational_timeline import CheckpointConflict
@@ -261,3 +262,78 @@ def test_existing_runner_completes_native_programming_and_parent_without_owner_i
     artifact = f.control.artifact(f.claim.intent_id, now=NOW)
     assert artifact["content"] == "Created source and read back VALUE = 2."
     assert f.store.load(work.spec.work_id, **f.service._owner).result.output == artifact["content"]
+
+
+def test_completed_native_initiative_uses_same_private_outcome_memory(native_digital):
+    from eva.application.delegated_work_memory import outcome_document
+    from eva.bootstrap.delegated_work_memory import DelegatedWorkMemory
+    f = native_digital
+    _, work = admitted(f)
+    call = started(f, work)
+    saved = f.store.record_success(call, result(call), now=NOW)
+    selected = f.store.next_memory_outcome(**f.service._owner, now=NOW, completed_since=NOW)
+    assert selected == saved
+    source = f.auth.work_memory_source(saved, now=NOW)
+    document = outcome_document(saved, source, ingress_sha256=canonical_sha256(
+        PostgresConversationJournal._ingress_data(source)))
+    assert "Aanleiding (eigen initiatief van Eva)" in document.content
+    assert "Oorspronkelijke vraag (directe gebruiker)" not in document.content
+    assert document.principal_id == str(f.control._owner)
+    assert document.trust == "model_inference_unconfirmed"
+    assert saved.result.output in document.content
+    from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
+    outbox = PostgresMemoryOutbox(f.store._engine, tenant_id=source.tenant_id,
+        installation_id=source.installation_id)
+    submitted = []
+    def submit(document):
+        submitted.append(document)
+        outbox.enqueue(document)
+    projection = DelegatedWorkMemory(f.store._engine, f.service, submit, clock=lambda: NOW)
+    assert projection.run_once() == "queued"
+    assert submitted == [document] and len(outbox.pending()) == 1
+    restarted = DelegatedWorkMemory(f.store._engine, f.service, submit, clock=lambda: NOW)
+    assert restarted.run_once() == "idle"
+    assert submitted == [document] and len(outbox.pending()) == 1
+    assert f.store.next_memory_outcome(**f.service._owner, now=NOW, completed_since=NOW) is None
+    # Remembering the completed result does not request a new execution grant.
+    f.auth.revoke()
+    assert f.auth.work_memory_source(saved, now=NOW) == source
+
+
+@pytest.mark.parametrize("change", ["owner", "source_hash", "expired", "stop", "binding"])
+def test_native_memory_cannot_forge_origin_or_retain_late_success(native_digital, change):
+    from eva.adapters.postgres.current_catalog import metadata
+    f = native_digital
+    _, work = admitted(f)
+    call = started(f, work)
+    if change == "stop":
+        f.control.stop(f.claim.intent_id, now=NOW)
+    saved = f.store.record_success(call, result(call), now=NOW)
+    if change == "owner":
+        saved = replace(saved, spec=saved.spec.model_copy(update={"owner_principal_id": "other-owner"}))
+    elif change == "source_hash":
+        saved = replace(saved, spec=saved.spec.model_copy(update={"source_ingress_sha256": "f"*64}))
+    elif change == "expired":
+        saved = replace(saved, retention_until=NOW)
+    elif change == "binding":
+        table = metadata.tables["eva_core.principal_bindings"]
+        with f.store._engine.begin() as conn:
+            conn.execute(sa.update(table).where(table.c.tenant_id == f.control._authority.tenant_id,
+                table.c.principal_binding_id == f.control._binding).values(status="revoked"))
+    with pytest.raises(InitiativeMandateDenied):
+        f.auth.work_memory_source(saved, now=NOW)
+
+
+def test_failed_native_initiative_is_remembered_as_failure(native_digital):
+    from eva.application.delegated_work_memory import outcome_document
+    f = native_digital
+    _, work = admitted(f)
+    call = started(f, work)
+    saved = f.store.record_failure(call, usage=DelegatedWorkUsage.unmeasured(),
+        error_code="internal_error", error_fingerprint="e"*64, ambiguous=False, now=NOW)
+    source = f.auth.work_memory_source(saved, now=NOW)
+    document = outcome_document(saved, source, ingress_sha256=canonical_sha256(
+        PostgresConversationJournal._ingress_data(source)))
+    assert "Geen bevestigd eindresultaat" in document.content
+    assert "Niet als succes onthouden of automatisch herhalen" in document.content
+    assert "internal_error" in document.content

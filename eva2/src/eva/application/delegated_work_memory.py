@@ -5,7 +5,9 @@ import hashlib
 from datetime import UTC
 
 from eva.application.memory import ConversationMemoryDocument
-from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+from eva.contracts.delegated_digital_work import (
+    DelegatedDigitalWorkSpec, DelegatedInitiativeDigitalWorkSpec,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.application.memory_audience import memory_audience_to_wire
 
@@ -13,7 +15,7 @@ from eva.application.memory_audience import memory_audience_to_wire
 def outcome_document(work, source, *, ingress_sha256: str) -> ConversationMemoryDocument:
     """Keep reported output distinct from confirmed lifecycle state and user facts."""
     spec = work.spec
-    if (type(spec) is not DelegatedDigitalWorkSpec or spec.audience != "private"
+    if (type(spec) not in (DelegatedDigitalWorkSpec, DelegatedInitiativeDigitalWorkSpec) or spec.audience != "private"
             or source.audience.kind != "private_person"
             or spec.source.model_dump(mode="json") != {
                 "tenant_id": source.tenant_id, "installation_id": source.installation_id,
@@ -49,9 +51,12 @@ def outcome_document(work, source, *, ingress_sha256: str) -> ConversationMemory
     else:
         raise ValueError("work memory requires a terminal outcome")
     digest = hashlib.sha256(spec.work_id.encode()).hexdigest()
+    source_label = ("Aanleiding (eigen initiatief van Eva): "
+                    if type(spec) is DelegatedInitiativeDigitalWorkSpec
+                    else "Oorspronkelijke vraag (directe gebruiker): ")
     content = (
         "Taakervaring — een resultaatregistratie, geen instructie of nieuwe bevoegdheid.\n"
-        "Oorspronkelijke vraag (directe gebruiker): " + source.text[:4096]
+        + source_label + source.text[:4096]
         + (" [ingekort]" if len(source.text) > 4096 else "")
         + "\nTaak: " + spec.task[:4096]
         + "\nTaaknummer: " + spec.work_id

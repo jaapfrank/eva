@@ -1166,7 +1166,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 delegated_work_runs.c.installation_id == self.scope.installation_id,
                 delegated_work_runs.c.owner_principal_id == owner_principal_id,
                 delegated_work_runs.c.principal_binding_id == principal_binding_id,
-                delegated_work_runs.c.spec_payload["contract"].astext == "DelegatedDigitalWork/v4",
+                delegated_work_runs.c.spec_payload["contract"].astext.in_(
+                    ("DelegatedDigitalWork/v4", "DelegatedInitiativeDigitalWork/v1")),
                 delegated_work_runs.c.spec_payload["audience"].astext == "private",
                 delegated_work_runs.c.state.in_(("succeeded", "verified", "failed", "stopped", "needs_help")),
                 delegated_work_runs.c.completed_at >= completed_since,

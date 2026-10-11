@@ -16,6 +16,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.application.conversation import ConversationConflict
 from eva.application.delegated_work_memory import outcome_document, document_binding_sha256
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
 from eva.providers.mcp_autonomy import _SourceTurnLoader
 
 
@@ -45,7 +46,13 @@ class DelegatedWorkMemory:
             self._next_poll = time.monotonic() + 5.0
             return "idle"
         try:
-            source = self._source(work.spec.source.model_dump(mode="json"))
+            if type(work.spec) is DelegatedInitiativeDigitalWorkSpec:
+                loader = self._service.store._initiative_authority_loader
+                if loader is None:
+                    raise DelegatedWorkConflict("initiative memory source is unavailable")
+                source = loader().work_memory_source(work, now=now)
+            else:
+                source = self._source(work.spec.source.model_dump(mode="json"))
         except (ConversationConflict, DelegatedWorkConflict):
             # Forgotten/missing source content must never be reconstructed from the task.
             self._record(work, now, "source_unavailable", None)

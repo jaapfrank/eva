@@ -1,0 +1,81 @@
+{
+  "contract": "EvaNativeInitiativeOutcomeMemorySourceEvidence/v1",
+  "checkedAt": "2026-10-11T23:35:10.318798+00:00",
+  "status": "source_reviewed",
+  "alreadyExisted": [
+    "Durable person-scoped ordinary-work outcome outbox",
+    "Native initiative adoption/queue/completion/feedback/return",
+    "Stop/restart/erasure and source/result binding"
+  ],
+  "concreteGap": "Native digital initiative contract and native source were excluded from the ordinary work-memory projection",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/application/delegated_work_memory.py",
+      "sha256": "4eb7e708772546ddb35591db57718704a54b213040a8ecc5ae3a9e6208aa3b07"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_work_memory.py",
+      "sha256": "2d4a72a7599b869b5640c430388df95747a90e209e77a5d92fedd1a82233f20b"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/delegated_work.py",
+      "sha256": "a4ed32503983b06ffa9e86cbfca747a22e0aca7a332d038be26800ecdea45b54"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/initiative_execution.py",
+      "sha256": "fac56d72d2068167e7be8f7ffc8720f7e581539046e0a604a669fff0929f0293"
+    }
+  ],
+  "tests": {
+    "uniqueChecksPassed": 39,
+    "passComposition": [
+      "37 successful unchanged-source checks in corrected selection",
+      "1 corrected confirmed-failure case",
+      "1 ordinary stop/resume/readback/erasure lifecycle in separate database"
+    ],
+    "receiptSha256": "6c0a8f0db04c7cd524810aa12fcdbc1dd1566e737d7cfd5ee2095ea18707f98b",
+    "logs": {
+      "native-memory-tests-corrected.private.log": {
+        "sha256": "11b7260edd13d3c87af75ad984adc958b0f2866fe05308237d58f94d822cefe3"
+      },
+      "native-memory-tests-final.private.log": {
+        "sha256": "bf74248d3352de13e9ae433397c0c6f540255090dd26c2ba61969279243ce043"
+      },
+      "ordinary-lifecycle-tests.private.log": {
+        "sha256": "4fd5b4cb546ae975f90d658f69cb37834064b640cf76b0efe59c8e69816ef06d"
+      }
+    },
+    "disposablePostgres": "16.13",
+    "runtimeDatabaseUsed": false,
+    "fixturesRemoved": true
+  },
+  "review": {
+    "path": "eva2/reviews/native-initiative-outcome-memory-source-review-20261012.json",
+    "sha256": "93ca75b887fa169c68923d424e49e65e53291ec836abd6c01d5693ae94f76b97",
+    "sourceVerdict": "GO"
+  },
+  "behavior": [
+    "Same private memory outbox now accepts the two explicit digital-work types",
+    "Native adoption and admission source hashes and owner/retention are read-only checked",
+    "Successful native memory requires actual parent completion and bound result",
+    "Eva initiative is never labelled as a direct user request",
+    "Failure and stop are not success; UNKNOWN remains excluded",
+    "Existing activation cutoff, deduplication and erasure remain"
+  ],
+  "manualEvaModelRequests": 0,
+  "creditCosts": null,
+  "installed": false,
+  "authenticNewInitiativeUsed": false,
+  "fullLearningCycleCompleted": false,
+  "fullAide2Completed": false,
+  "wholeGoalStatus": "active",
+  "newStorageOrDaemon": false,
+  "originalSmallCompletionCount": "39/48",
+  "developmentErrorsPreserved": [
+    "Initial source concatenation syntax error, corrected before native use",
+    "Missing test import, corrected",
+    "Two existing PostgreSQL fixture styles required separate empty databases",
+    "Failure case originally used ambiguous=True (UNKNOWN), corrected to confirmed failure; UNKNOWN still excluded",
+    "Fixture receipt filename replacement kept initial snapshots but reused one final metadata filename; actual closure independently checked by exact owned names"
+  ]
+}

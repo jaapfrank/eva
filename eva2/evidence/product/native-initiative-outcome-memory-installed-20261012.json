@@ -1,0 +1,74 @@
+{
+  "contract": "EvaNativeInitiativeOutcomeMemoryInstalled/v1",
+  "checkedAt": "2026-10-11T23:36:35.858243+00:00",
+  "status": "installed",
+  "installed": true,
+  "sourceEvidence": "eva2/evidence/product/native-initiative-outcome-memory-source-20261012.json",
+  "sourceEvidenceSha256": "e08221429722cc69bf209d656cd826468ebfc44a1774acfe470dc4ee1f0a1cdb",
+  "sourceReview": "eva2/reviews/native-initiative-outcome-memory-source-review-20261012.json",
+  "sourceReviewSha256": "93ca75b887fa169c68923d424e49e65e53291ec836abd6c01d5693ae94f76b97",
+  "nativeReceiptSha256": "7c377ff4fdd300fb5f7b8ec5b45ed2b804af786d2d296522779d0a20a2c2833c",
+  "containers": {
+    "core": {
+      "container": "/eva2-managed-b-slot3-core",
+      "image": "sha256:530ebe6655017bb3a14fce3d1004277a7db4a9c86abe3bd92769c2a9a5f68740",
+      "health": "healthy",
+      "sourceCount": 340,
+      "unchangedSourceCount": 336,
+      "sourceHashes": {
+        "application/delegated_work_memory.py": "4eb7e708772546ddb35591db57718704a54b213040a8ecc5ae3a9e6208aa3b07",
+        "bootstrap/delegated_work_memory.py": "2d4a72a7599b869b5640c430388df95747a90e209e77a5d92fedd1a82233f20b",
+        "adapters/postgres/delegated_work.py": "a4ed32503983b06ffa9e86cbfca747a22e0aca7a332d038be26800ecdea45b54",
+        "adapters/postgres/initiative_execution.py": "fac56d72d2068167e7be8f7ffc8720f7e581539046e0a604a669fff0929f0293"
+      },
+      "environmentUnchanged": true,
+      "commandUserHealthcheckUnchanged": true,
+      "networksUnchanged": true,
+      "mountsRetainedByUpdater": true
+    },
+    "delegated-work-worker": {
+      "container": "/eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:ed8239c535b67c459ae8cf759bc3e5948b5a221ca824c7a5c36b8e82583ee862",
+      "health": "healthy",
+      "sourceCount": 340,
+      "unchangedSourceCount": 336,
+      "sourceHashes": {
+        "application/delegated_work_memory.py": "4eb7e708772546ddb35591db57718704a54b213040a8ecc5ae3a9e6208aa3b07",
+        "bootstrap/delegated_work_memory.py": "2d4a72a7599b869b5640c430388df95747a90e209e77a5d92fedd1a82233f20b",
+        "adapters/postgres/delegated_work.py": "a4ed32503983b06ffa9e86cbfca747a22e0aca7a332d038be26800ecdea45b54",
+        "adapters/postgres/initiative_execution.py": "fac56d72d2068167e7be8f7ffc8720f7e581539046e0a604a669fff0929f0293"
+      },
+      "environmentUnchanged": true,
+      "commandUserHealthcheckUnchanged": true,
+      "networksUnchanged": true,
+      "mountsRetainedByUpdater": true
+    }
+  },
+  "release": {
+    "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+    "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+    "worker_program_sha256": "e8f74c8a38236e6f680c3495e2a2c8506e36f46e635ae088942a9cc3eac1b95f",
+    "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+    "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+  },
+  "candidateComposeSha256": "6938f7edc94d36dd02f912523b5ab8406e7e8baeb82db3021c0c63ad22d3ba81",
+  "profileAndCapabilitiesRetained": true,
+  "mandateBytesRetained": true,
+  "meaning": "Eigen digitaal initiatief loopt voortaan door dezelfde persoonsgebonden uitkomstgeheugenroute als gewone opdrachten; bron, resultaat, fout en stop worden niet vermengd.",
+  "tests": {
+    "uniqueChecksPassed": 39,
+    "receiptSha256": "6c0a8f0db04c7cd524810aa12fcdbc1dd1566e737d7cfd5ee2095ea18707f98b",
+    "runtimeDatabaseUsed": false,
+    "fixturesRemoved": true
+  },
+  "manualEvaModelRequests": 0,
+  "creditCosts": null,
+  "authenticNewInitiativeUsed": false,
+  "laterRecallAndBehaviorProven": false,
+  "fullLearningCycleCompleted": false,
+  "fullAide2Completed": false,
+  "wholeGoalStatus": "active",
+  "originalSmallCompletionCount": "39/48",
+  "finalReviewPath": "eva2/reviews/native-initiative-outcome-memory-installed-review-20261012.json",
+  "remaining": "Nog geen nieuwe authentieke digitale initiatiefuitkomst beschikbaar; geen oude bijdrage heropend of aanleiding verzonnen. Werkelijke latere toepassing en de volledige leercyclus/AIDE² blijven open."
+}

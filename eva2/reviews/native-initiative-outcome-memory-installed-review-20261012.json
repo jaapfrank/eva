@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "kind": "native_initiative_outcome_memory_installed_review",
+  "checkedAt": "2026-10-11T23:40:26.739890Z",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact installed four-source initiative-outcome-to-private-memory bridge and truthful publication; no new native usefulness or full-goal assessment.",
+  "bindings": {
+    "publicInstalledEvidence": {
+      "path": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
+      "sha256": "1cf4a6a24c497d37e645d1fd5d58cb3a019bf9ee6d8821d46ebc326cfcd5d7c6"
+    },
+    "privateInstalledVerification": {
+      "artifact": "initiative-outcome-memory-20261012/install/installed-verification.private.json",
+      "sha256": "7c377ff4fdd300fb5f7b8ec5b45ed2b804af786d2d296522779d0a20a2c2833c"
+    },
+    "sourceReview": {
+      "path": "eva2/reviews/native-initiative-outcome-memory-source-review-20261012.json",
+      "sha256": "93ca75b887fa169c68923d424e49e65e53291ec836abd6c01d5693ae94f76b97"
+    },
+    "publicSourceEvidence": {
+      "path": "eva2/evidence/product/native-initiative-outcome-memory-source-20261012.json",
+      "sha256": "e08221429722cc69bf209d656cd826468ebfc44a1774acfe470dc4ee1f0a1cdb"
+    },
+    "frozenManifestSha256": "c250cff0b97f9109602c90bda3deab56934fcba0c27afe16cbcbc4fb8d2f3bdb",
+    "targetedChecksReceiptSha256": "6c0a8f0db04c7cd524810aa12fcdbc1dd1566e737d7cfd5ee2095ea18707f98b",
+    "buildReceiptSha256": "9c3ec6949b2dd8b1737c34bce47d39bc452a7adeff906c9d4342868084a7e11f",
+    "preInstallReceiptSha256": "fbc55b77727301f689a9228e4a0ab7be02af33ba0122c9b34397984cd3240970",
+    "imageUpdateReceiptSha256": "8a8fa7036da2b451ee2f9213ee4de146241f1576a5e649c132dbccbaeafb0067",
+    "profileReceiptSha256": "4535f1993f81827302091a3f1a008c07ea7b910b05839fca1e48f5370f41c795",
+    "candidateComposeSha256": "6938f7edc94d36dd02f912523b5ab8406e7e8baeb82db3021c0c63ad22d3ba81",
+    "sourceFiles": {
+      "application/delegated_work_memory.py": "4eb7e708772546ddb35591db57718704a54b213040a8ecc5ae3a9e6208aa3b07",
+      "bootstrap/delegated_work_memory.py": "2d4a72a7599b869b5640c430388df95747a90e209e77a5d92fedd1a82233f20b",
+      "adapters/postgres/delegated_work.py": "a4ed32503983b06ffa9e86cbfca747a22e0aca7a332d038be26800ecdea45b54",
+      "adapters/postgres/initiative_execution.py": "fac56d72d2068167e7be8f7ffc8720f7e581539046e0a604a669fff0929f0293"
+    },
+    "publicationAtReviewSha256": {
+      "AGENTS.md": "027f47aab373c8614ba10516d268b1b61df32048dc907d1402cf4c43fbd7df85",
+      "eva2/PROJECTDOEL.md": "37f41457e7c8cdb55eef09d3411fd02d9aa7bc1570ac2675780e72e66357e94e",
+      "eva2/WERKBORD.md": "574904727446decebfff6d467ed5d40ea3e1b0a8f07f637314f33d706d53b01d",
+      "eva2/design/product/execution-workboard-v1.json": "a04cc92619581c1044dce3945b991bb9f00157daae37279dd558da8699f8e39e"
+    }
+  },
+  "installationChecks": {
+    "actualSourcesIndependentlyComparedWithBaselineAndCandidates": true,
+    "containers": {
+      "core": {
+        "image": "sha256:530ebe6655017bb3a14fce3d1004277a7db4a9c86abe3bd92769c2a9a5f68740",
+        "health": "healthy",
+        "baselineSourceCount": 340,
+        "actualSourceCount": 340,
+        "changedSourceCount": 4,
+        "addedSourceCount": 0,
+        "unchangedSourceCount": 336,
+        "removedSourceCount": 0
+      },
+      "delegated-work-worker": {
+        "image": "sha256:ed8239c535b67c459ae8cf759bc3e5948b5a221ca824c7a5c36b8e82583ee862",
+        "health": "healthy",
+        "baselineSourceCount": 338,
+        "actualSourceCount": 340,
+        "changedSourceCount": 2,
+        "addedSources": [
+          "application/delegated_work_memory.py",
+          "bootstrap/delegated_work_memory.py"
+        ],
+        "unchangedSourceCount": 336,
+        "removedSourceCount": 0
+      }
+    },
+    "actualManifestsEqualCandidateManifests": true,
+    "fourExactSourceHashesMatchSourceGO": true,
+    "actualImagesMatchBuiltAndUpdaterCandidates": true,
+    "environmentValuesAndUniqueKeysUnchanged": true,
+    "commandEntrypointUserWorkingDirectoryHealthcheckUnchanged": true,
+    "actualMountsUnchanged": true,
+    "networkMembershipUnchanged": true,
+    "normalizedComposeChangedOnlyCoreAndWorkerImages": true,
+    "coreWorkerCompositionProfileCapabilitiesEngineOutputParity": true,
+    "workerProgramIdentityUpdatedSeparatelyFromRetainedProfileAndCapabilities": true,
+    "mandateBytesAndProfileReleaseRetained": true,
+    "preInstallActiveLeases": 0,
+    "updaterStatus": "running_with_retained_mounts",
+    "noAdditionalInstallationByReviewer": true
+  },
+  "publicationChecks": {
+    "installedEvidenceMatchesPrivateReceipt": true,
+    "sourceReviewAndEvidenceBindingsMatchCurrentBytes": true,
+    "actualWorkerAdditionDistinguishedFromModification": true,
+    "historicalExecutionTasksMilestonesCompletionsEqualHEAD": true,
+    "originalSmallCompletionCountRetained": "39/48",
+    "installedRouteSeparatedFromAuthenticResultAndLaterUse": true,
+    "oldBaselineLossAndUnknownPreserved": true,
+    "fullGoalStillActive": true,
+    "voiceParked": true,
+    "noNewProductFunctionCompletionClaim": true,
+    "noGeneralQualityOrPrivacyAcceptanceClaim": true,
+    "automaticRuntimeUsageNotInferredFromManualZero": true,
+    "remaining": "A new authentic digital initiative outcome and its later recall/behavior have not been demonstrated. Full learning cycle, AIDE2 and owner/family acceptance remain separate and open."
+  },
+  "validation": {
+    "reusedExactSourceReview": "GO",
+    "retainedUniqueSelectedSourceChecksPassed": 39,
+    "reviewerNewTests": 0,
+    "reviewerModelCalls": 0,
+    "reviewerNativeTrials": 0,
+    "reviewerRuntimeMutations": 0,
+    "rootManualEvaModelRequestsForThisChange": 0,
+    "creditCosts": "UNKNOWN",
+    "evidenceBasis": "Existing immutable build manifests, actual container/module readbacks, updater receipt and profile/lease/mandate observations; no new live query or execution."
+  },
+  "limitations": {
+    "authenticNativeDigitalInitiativeOutcomeProven": false,
+    "laterNativeRecallOrBehaviorProven": false,
+    "privateDeliveryProvenByThisReview": false,
+    "fullLearningCycleCompleted": false,
+    "fullAIDE2Completed": false,
+    "wholeGoalCompleted": false,
+    "ownerOrFamilyAcceptanceCompleted": false
+  }
+}

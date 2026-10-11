@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T22:25:28.832363+00:00",
+  "lastUpdated": "2026-10-11T23:41:05.032229+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -125,11 +125,11 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Eerste programmeertaak beoordeeld: correcte bron, maar geen uitgevoerd programma of eindbestand. Vier modelaanvragen: 38.947 tokens. Rapportexport hersteld; geen herhaling. Volledige AIDE² en het project blijven open.",
+      "summary": "Geheugen en zelfgemaakte hulpmiddelen zijn later toegepast. Nu authentiek initiatief en terugmelding afmaken; de onhaalbare AIDE-aansturingsproef wordt niet doorgedraaid.",
       "nextOutcomes": [
         {
-          "title": "Nu · programma én resultaat afmaken",
-          "detail": "Eva moet het geschreven programma ook uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor voor een gerichte verbetering van de werkaanpak; geen nieuwe vergelijkingsserie. De eerste taak is beoordeeld en wordt niet herhaald."
+          "title": "Nu · eigen initiatief werkelijk uitvoeren",
+          "detail": "De AIDE-aansturingsproef wordt niet doorgedraaid: de vastgelegde vier aanvragen zijn onvoldoende voor de vereiste zes handelingen. Nu controleren we de actuele eigen initiatieven en maken werkelijk beschikbaar werk af."
         },
         {
           "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T23:11:35.024002+00:00",
+        "checkedAt": "2026-10-11T23:41:05.032229+00:00",
         "deliveries": [
+          {
+            "title": "Eigen initiatief aangesloten op privégeheugen",
+            "date": "2026-10-11T23:36:35.858243+00:00",
+            "state": "installed",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "completionScope": "De gerichte initiatief→uitkomstgeheugen-koppeling is geïnstalleerd; geen voltooid hoofdonderdeel of volledige leercyclus.",
+            "summary": "Eigen digitale initiatieven gebruiken nu dezelfde geheugenroute als gewone opdrachten. Bron, resultaat, fout en stop blijven onderscheiden.",
+            "result": "Vier bestaande modules geïnstalleerd in gezonde kern en werker. 39 unieke gerichte controles geslaagd; oorspronkelijke geheugen-, stop-, wis- en herstartroute behouden.",
+            "remaining": "Nog geen authentieke nieuwe digitale initiatiefuitkomst of latere gedragswinst bewezen. De volledige leercyclus en AIDE² blijven open.",
+            "source": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
+            "review": "eva2/reviews/native-initiative-outcome-memory-installed-review-20261012.json",
+            "independentReview": "GO voor exacte geïnstalleerde bron en beperkte publicatie; geen nieuwe authentieke initiatiefuitkomst of volledige leercyclus geclaimd.",
+            "usage": "0 handmatige Eva-modelaanvragen. Ontwikkelcredits en geldkosten onbekend. Geen nieuwe vergelijkingsserie.",
+            "reviewSha256": "e8c8cf5d8b478d7529d8f7f1c53f7754b99a780ecb6bacdfbe7e66b0dd03ad8b"
+          },
           {
             "title": "Eerste werkaanpakproef: code correct, opdracht niet afgemaakt",
             "date": "2026-10-11T23:11:35.024002+00:00",
@@ -4752,39 +4768,39 @@
           }
         ],
         "now": {
-          "title": "AIDE² · het ontbrekende eindresultaat aanpakken",
-          "state": "in_progress",
-          "phase": "aide_work_strategy_first_baseline_assessed",
-          "activeExecution": true,
+          "title": "AIDE² · leren en verbeteren op werkelijke ervaring",
+          "state": "planned",
+          "phase": "existing_idle_improvement_cycle",
+          "activeExecution": false,
           "owner": "/root",
           "executor": "/root",
           "coordination": "/root",
-          "summary": "Eerste programmeertaak beoordeeld: correcte bron, maar geen uitgevoerd programma of eindbestand. Vier modelaanvragen: 38.947 tokens. Rapportexport hersteld; geen herhaling.",
-          "detail": "De oorspronkelijke proef is afgesloten als niet gehaald. Drie aparte codecontroles slagen, maar bewijzen geen afgeronde opdracht. Onafhankelijke beoordeling en export zijn gereed; de bestaande gegevens en oorspronkelijke taakmislukking zijn behouden. Geen kandidaat of nieuwe native uitvoering gestart.",
-          "source": "eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json",
-          "doneWhen": "Improve real agent control via the existing variant/development/independent-final/application route and prove use in later ordinary work.",
-          "review": "eva2/reviews/aide-worker-strategy-first-baseline-original-records-review-20261012.json",
-          "reviewSha256": "2a3ceba433df2e3dd8a520e3f4597c3186d77994cea073cedbaee24d150bb2db"
+          "summary": "De geheugenovergang is geïnstalleerd. Hierna de bestaande ontwikkel-/verbeterroute in rustige momenten aansluiten op werkelijk gevonden tekorten.",
+          "detail": "Geen nieuwe vergelijking of voorbeeldfunctie. De onhaalbare vier-aanvragenproef wordt niet doorgedraaid. Echt later initiatiefgebruik blijft afzonderlijk open.",
+          "source": "eva2/PROJECTDOEL.md",
+          "doneWhen": "Een bestaande verbeterroute gebruikt echte ervaring, beoordeelt een verbetering onafhankelijk en past haar later bij gewoon werk toe.",
+          "review": "eva2/reviews/native-initiative-outcome-memory-installed-review-20261012.json",
+          "reviewSha256": "e8c8cf5d8b478d7529d8f7f1c53f7754b99a780ecb6bacdfbe7e66b0dd03ad8b"
         },
         "next": {
-          "title": "Programma uitvoeren en resultaat echt opleveren",
-          "detail": "Werk vanuit deze aangetoonde ontbrekende afronding. Volgende begrensde uitvoering alleen als zij een concrete productverbetering toetst binnen de bestaande criteria en resterende middelen. Alleen een betere kandidaat toepassen en daarna gebruiken.",
+          "title": "Verbetering later bij gewoon werk toepassen",
+          "detail": "Gezinsbeoordeling blijft menselijk. Oude acceptaties, verliezen en UNKNOWN blijven behouden.",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md",
-          "summary": "Eva moet het geschreven programma ook uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor voor een gerichte verbetering van de werkaanpak; geen nieuwe vergelijkingsserie."
+          "summary": "Een toegepaste verbetering moet later relevant gedrag verbeteren; niet alleen een opgeslagen reflectie of kandidaat."
         },
         "ownerAction": {
           "required": false,
           "title": "Geen handeling van jou nodig",
-          "detail": "Codex behandelt het technische afrondingstekort. De eerste proef en rapportexport zijn afgesloten; je hoeft die niet zelf te testen.",
+          "detail": "Geen handeling nodig. De geheugenovergang is geïnstalleerd; authentiek later initiatiefgebruik en jouw oordeel blijven aparte feiten.",
           "steps": [],
           "expected": "Het dashboard toont apart wat draait, wat in aanbouw is en wat nog niet bewezen is.",
           "blocksIndependentWork": false,
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T23:11:35.024002+00:00",
+        "reviewedAt": "2026-10-11T23:41:05.032229+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4861,8 +4877,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-11T23:11:35.024002+00:00",
-      "checkedAt": "2026-10-11T23:11:35.024002+00:00",
+      "reviewedAt": "2026-10-11T23:41:05.032229+00:00",
+      "checkedAt": "2026-10-11T23:41:05.032229+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11235,7 +11251,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T23:11:35.024002+00:00",
+      "lastUpdatedAt": "2026-10-11T23:41:05.032229+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11679,9 +11695,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "Eva moet het geschreven programma ook uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor voor een gerichte verbetering van de werkaanpak; geen nieuwe vergelijkingsserie.",
-      "currentEvidence": "eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json",
-      "nextStep": "Werk vanuit deze aangetoonde ontbrekende afronding. Volgende begrensde uitvoering alleen als zij een concrete productverbetering toetst binnen de bestaande criteria en resterende middelen. Alleen een betere kandidaat toepassen en daarna gebruiken.",
+      "currentWork": "De geheugenovergang is geïnstalleerd. Hierna de bestaande ontwikkel-/verbeterroute in rustige momenten aansluiten op werkelijk gevonden tekorten.",
+      "currentEvidence": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
+      "nextStep": "Een toegepaste verbetering moet later relevant gedrag verbeteren; niet alleen een opgeslagen reflectie of kandidaat.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -14932,42 +14948,24 @@
       "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-11T20:50:50.682674+00:00",
-      "image": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
-      "coreImage": "sha256:44b4a5db42aa90b48b46fc514967522948c1be9870f0d9cdab8a3ca2924fa389",
-      "workerImage": "sha256:89f4b117fb8eb4fac7b8502a514ddc83cfaa8107297beb9bfd3976864c1b0d13",
-      "core": "eva2-managed-b-slot3-core",
-      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "recordedAt": "2026-10-11T23:36:35.858243+00:00",
+      "image": "sha256:530ebe6655017bb3a14fce3d1004277a7db4a9c86abe3bd92769c2a9a5f68740",
+      "coreImage": "sha256:530ebe6655017bb3a14fce3d1004277a7db4a9c86abe3bd92769c2a9a5f68740",
+      "workerImage": "sha256:ed8239c535b67c459ae8cf759bc3e5948b5a221ca824c7a5c36b8e82583ee862",
+      "core": "/eva2-managed-b-slot3-core",
+      "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "readyStatus": true,
       "repositoryHeadFullyInstalled": false,
-      "reviewedSourceIdentity": {
-        "eva2/src/eva/adapters/postgres/delegated_work.py": "63a14e28fb9807a9bb59f501e9785c876314f14ec12ce358a07fa1a4451d8184",
-        "eva2/src/eva/adapters/postgres/initiative_execution.py": "ec26001fc2f6104ab7e631c24c79fe1b22dd924455c6a692e469009bcf79a60a",
-        "eva2/src/eva/adapters/postgres/sensory_events.py": "ad6c2821ca440651e03ca5ac18562df5a005ab571068af32d527b619c53f5603",
-        "eva2/src/eva/application/initiative_execution.py": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
-        "eva2/src/eva/application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
-        "eva2/src/eva/bootstrap/delegated_digital_composition.py": "578f40bb75a88fdadcf0f1cd51705f50d6f278c94e20fd17a4ccfead885092c1",
-        "eva2/src/eva/bootstrap/delegated_digital_profile.py": "e5cc98dfb27ccda6df02d0bd2945b5e7c72247abc231c5618a20666320f5dbdc",
-        "eva2/src/eva/bootstrap/delegated_digital_runner.py": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d",
-        "eva2/src/eva/bootstrap/native_initiative_work.py": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
-        "eva2/src/eva/bootstrap/runtime.py": "f73152e960eba61f890b093b49b80167def02a16497a3be9d15c5384309030d1",
-        "eva2/src/eva/contracts/delegated_digital_work.py": "d6c1b49b7b5c68a5229bcf8ea7057821aa246eab0c0d4e8617bdf740db708339",
-        "eva2/src/eva/contracts/delegated_work.py": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
-        "eva2/src/eva/operations/delegated_work_worker.py": "a9c4a75ad3ceaccc2c3c86c97c9736c99b6758e22a76c306b20bf2756c0847a4",
-        "eva2/src/eva/adapters/model/pydantic_conversation.py": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
-        "eva2/src/eva/adapters/postgres/runtime_resource_usage.py": "dad4680a686f610af1b0cab8b1ced8d4c12dea9e48918c04db8e95116e205c0c",
-        "eva2/src/eva/application/free_will.py": "ed66feefff611ff15d01d3f34e23b66969488392970757b1b290017abd0eb0dc",
-        "eva2/src/eva/bootstrap/idle_capacity.py": "62f3bebcab2bd8a3c8b4af73d4e08afe1f74134129ba56f243988181b60bf3d0"
-      },
+      "reviewedSourceIdentity": "native initiative private work-outcome memory exact four modules",
       "retainedSourceItems": {
-        "core": 334,
-        "worker": 332
+        "core": 336,
+        "worker": 336
       },
-      "evidence": "eva2/evidence/product/native-initiative-subscription-installed-20261011.json",
-      "meaning": "Exact subscription initiative admission correction installed and source-reviewed. New self-chosen outcome, installed independent review and full AIDE² remain open.",
-      "composeOverride": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-candidate.compose.private.json",
+      "evidence": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
+      "meaning": "Gezonde geïnstalleerde geheugenovergang; geen authentieke nieuwe initiatiefuitkomst of volledige productafronding.",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/initiative-outcome-memory-20261012/build/candidate.compose.private.json",
       "sourceBase": {
         "core": "sha256:04a956f0548b16898960893624ccf44fce7525e4786351788839d7d4ddb43a4b",
         "delegated-work-worker": "sha256:ed70f755881bafff9682733cbf197df4ad2d455a65a519b3c8f241f77a50edec"
@@ -14976,16 +14974,16 @@
       "configurationEnvironmentMountsRetained": true,
       "freshFullProfileParityVerified": true,
       "freshFullProfile": {
-        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
-        "model_profile_release_sha256": "b4ec40af58e111bdcf5ef8f3725d0903a4bf6e2e5191f13dbb5ce812988e5bb4",
-        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
         "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
-        "worker_program_sha256": "1bcde708cbd1ad152480bf7c137398b246d5092c712a7f8988ad8a45800907e3"
+        "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+        "worker_program_sha256": "e8f74c8a38236e6f680c3495e2a2c8506e36f46e635ae088942a9cc3eac1b95f",
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
       },
-      "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
-      "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372",
-      "updatedAt": "2026-10-11T21:26:23.928821+00:00",
-      "evidencePath": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json"
+      "installedReview": "eva2/reviews/native-initiative-outcome-memory-installed-review-20261012.json",
+      "updatedAt": "2026-10-11T23:38:28.027894+00:00",
+      "evidencePath": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
+      "installedReviewSha256": "e8c8cf5d8b478d7529d8f7f1c53f7754b99a780ecb6bacdfbe7e66b0dd03ad8b"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -31177,8 +31175,71 @@
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
     },
-    "checkedAt": "2026-10-11T23:11:35.024002+00:00",
-    "reviewedAt": "2026-10-11T23:11:35.024002+00:00"
+    "checkedAt": "2026-10-11T23:41:05.032229+00:00",
+    "reviewedAt": "2026-10-11T23:41:05.032229+00:00",
+    "historicalRuntimeBeforeInitiativeOutcomeMemory20261012": {
+      "recordedAt": "2026-10-11T20:50:50.682674+00:00",
+      "image": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
+      "coreImage": "sha256:44b4a5db42aa90b48b46fc514967522948c1be9870f0d9cdab8a3ca2924fa389",
+      "workerImage": "sha256:89f4b117fb8eb4fac7b8502a514ddc83cfaa8107297beb9bfd3976864c1b0d13",
+      "core": "eva2-managed-b-slot3-core",
+      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "coreHealth": "healthy",
+      "workerHealth": "healthy",
+      "readyStatus": true,
+      "repositoryHeadFullyInstalled": false,
+      "reviewedSourceIdentity": {
+        "eva2/src/eva/adapters/postgres/delegated_work.py": "63a14e28fb9807a9bb59f501e9785c876314f14ec12ce358a07fa1a4451d8184",
+        "eva2/src/eva/adapters/postgres/initiative_execution.py": "ec26001fc2f6104ab7e631c24c79fe1b22dd924455c6a692e469009bcf79a60a",
+        "eva2/src/eva/adapters/postgres/sensory_events.py": "ad6c2821ca440651e03ca5ac18562df5a005ab571068af32d527b619c53f5603",
+        "eva2/src/eva/application/initiative_execution.py": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+        "eva2/src/eva/application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+        "eva2/src/eva/bootstrap/delegated_digital_composition.py": "578f40bb75a88fdadcf0f1cd51705f50d6f278c94e20fd17a4ccfead885092c1",
+        "eva2/src/eva/bootstrap/delegated_digital_profile.py": "e5cc98dfb27ccda6df02d0bd2945b5e7c72247abc231c5618a20666320f5dbdc",
+        "eva2/src/eva/bootstrap/delegated_digital_runner.py": "504e0c56b4ec145d87d63a7ec09146b655fe145cfdf71b5ea87781651a12fe7d",
+        "eva2/src/eva/bootstrap/native_initiative_work.py": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
+        "eva2/src/eva/bootstrap/runtime.py": "f73152e960eba61f890b093b49b80167def02a16497a3be9d15c5384309030d1",
+        "eva2/src/eva/contracts/delegated_digital_work.py": "d6c1b49b7b5c68a5229bcf8ea7057821aa246eab0c0d4e8617bdf740db708339",
+        "eva2/src/eva/contracts/delegated_work.py": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+        "eva2/src/eva/operations/delegated_work_worker.py": "a9c4a75ad3ceaccc2c3c86c97c9736c99b6758e22a76c306b20bf2756c0847a4",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
+        "eva2/src/eva/adapters/postgres/runtime_resource_usage.py": "dad4680a686f610af1b0cab8b1ced8d4c12dea9e48918c04db8e95116e205c0c",
+        "eva2/src/eva/application/free_will.py": "ed66feefff611ff15d01d3f34e23b66969488392970757b1b290017abd0eb0dc",
+        "eva2/src/eva/bootstrap/idle_capacity.py": "62f3bebcab2bd8a3c8b4af73d4e08afe1f74134129ba56f243988181b60bf3d0"
+      },
+      "retainedSourceItems": {
+        "core": 334,
+        "worker": 332
+      },
+      "evidence": "eva2/evidence/product/native-initiative-subscription-installed-20261011.json",
+      "meaning": "Exact subscription initiative admission correction installed and source-reviewed. New self-chosen outcome, installed independent review and full AIDE² remain open.",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/initiative-digital-20261011/subscription-candidate.compose.private.json",
+      "sourceBase": {
+        "core": "sha256:04a956f0548b16898960893624ccf44fce7525e4786351788839d7d4ddb43a4b",
+        "delegated-work-worker": "sha256:ed70f755881bafff9682733cbf197df4ad2d455a65a519b3c8f241f77a50edec"
+      },
+      "freshProfileParityVerified": true,
+      "configurationEnvironmentMountsRetained": true,
+      "freshFullProfileParityVerified": true,
+      "freshFullProfile": {
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "model_profile_release_sha256": "b4ec40af58e111bdcf5ef8f3725d0903a4bf6e2e5191f13dbb5ce812988e5bb4",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+        "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+        "worker_program_sha256": "1bcde708cbd1ad152480bf7c137398b246d5092c712a7f8988ad8a45800907e3"
+      },
+      "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
+      "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372",
+      "updatedAt": "2026-10-11T21:26:23.928821+00:00",
+      "evidencePath": "eva2/evidence/product/component-improvement-rounds-installed-20261011.json"
+    },
+    "nativeInitiativeOutcomeMemoryInstalled20261012": {
+      "state": "installed",
+      "evidence": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
+      "nativeReceiptSha256": "7c377ff4fdd300fb5f7b8ec5b45ed2b804af786d2d296522779d0a20a2c2833c",
+      "authenticNewInitiativeUsed": false,
+      "fullLearningCycleCompleted": false
+    }
   },
   "activeTaskId": "AU-008",
   "maxActiveImplementationTasks": 1,
@@ -33649,5 +33710,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T23:11:35.024002+00:00"
+  "updatedAt": "2026-10-11T23:41:05.032229+00:00"
 }

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "kind": "native_initiative_outcome_memory_source_review",
+  "checkedAt": "2026-10-11T23:34:34.221985Z",
+  "verdict": "GO",
+  "scope": "Exact four-module source bridge from a terminal private native digital initiative to the existing person-scoped memory outbox.",
+  "sourceVerdict": "GO",
+  "installationVerdict": "GO",
+  "openSourceBlockers": [],
+  "bindings": {
+    "sourceFiles": {
+      "application/delegated_work_memory.py": "4eb7e708772546ddb35591db57718704a54b213040a8ecc5ae3a9e6208aa3b07",
+      "bootstrap/delegated_work_memory.py": "2d4a72a7599b869b5640c430388df95747a90e209e77a5d92fedd1a82233f20b",
+      "adapters/postgres/delegated_work.py": "a4ed32503983b06ffa9e86cbfca747a22e0aca7a332d038be26800ecdea45b54",
+      "adapters/postgres/initiative_execution.py": "fac56d72d2068167e7be8f7ffc8720f7e581539046e0a604a669fff0929f0293"
+    },
+    "testFiles": {
+      "eva2/tests/postgres/test_native_initiative_digital_work.py": "c30cc27aa5420c9a08a44dc5caac2a9866dafe16c428803b98415c5cf4aa67c7"
+    },
+    "frozenManifestSha256": "c250cff0b97f9109602c90bda3deab56934fcba0c27afe16cbcbc4fb8d2f3bdb",
+    "targetedChecksReceipt": {
+      "artifact": "initiative-outcome-memory-20261012/targeted-checks.private.json",
+      "sha256": "6c0a8f0db04c7cd524810aa12fcdbc1dd1566e737d7cfd5ee2095ea18707f98b"
+    },
+    "testLogSha256": {
+      "native-memory-tests-corrected.private.log": "11b7260edd13d3c87af75ad984adc958b0f2866fe05308237d58f94d822cefe3",
+      "native-memory-tests-final.private.log": "bf74248d3352de13e9ae433397c0c6f540255090dd26c2ba61969279243ce043",
+      "ordinary-lifecycle-tests.private.log": "4fd5b4cb546ae975f90d658f69cb37834064b640cf76b0efe59c8e69816ef06d"
+    },
+    "fixtureClosureReceipt": {
+      "artifact": "initiative-outcome-memory-20261012/fixture-closure.private.json",
+      "sha256": "14b1695fc319bd6ae58d7b69c7b1825cef57896674489d89fde5804820e3d462"
+    }
+  },
+  "checks": {
+    "exactContractSelection": "Only DelegatedDigitalWork/v4 and DelegatedInitiativeDigitalWork/v1 are selected; the existing private owner, binding, retention, activation and terminal-state filters remain.",
+    "nativeProvenance": "Read-only reconstruction checks retained adopted intent, original admission sequence, owner binding, canonical ingress hash, work/spec/mandate hashes. It does not issue another execution grant or rename native origin as owner ingress.",
+    "terminalTruth": "A succeeded/verified worker result requires the original completed parent and matching result hash. A stopped parent cannot manufacture a success memory. Confirmed failure remains a failure; ambiguous execution remains outside the selected terminal states.",
+    "personAndTrust": "The document retains exact private person/source/project scope and model_inference_unconfirmed trust. Native text is explicitly labelled as Eva initiative and no new instruction, authority, general skill or proven improvement.",
+    "durableLifecycle": "Existing activation cutoff, scoped outbox, stable work document ID, enqueue-before-marker reconciliation, erased/tombstone handling and server-owned document erasure binding remain unchanged.",
+    "ordinaryRoute": "The existing ordinary source loader and memory submission route remain; this change adds no new daemon, queue, storage backend or model call.",
+    "exceptionBoundary": "InitiativeMandateDenied inherits ConversationConflict, so native source failures use the existing source_unavailable skip disposition.",
+    "testPrecision": "The corrected confirmed-failure test no longer claims a parent stop; actual late-success-after-stop rejection is tested separately."
+  },
+  "validation": {
+    "status": "passed_exact_source_and_test_binding",
+    "uniqueChosenChecksPassed": 39,
+    "passComposition": [
+      "37 successful unchanged-source checks in corrected selection",
+      "1 corrected confirmed-failure case",
+      "1 ordinary stop/resume/readback/erasure lifecycle in separate database"
+    ],
+    "logEvidence": "The corrected selection retains 37 passes and its original ambiguous-failure test failure. Only the corrected confirmed-failure case (1 pass, 5.63s) and the ordinary lifecycle case (1 pass, 5.45s) were then run separately. The 37 retained passes and both final passes bind unchanged production sources.",
+    "exercisedBoundaries": [
+      "Real disposable PostgreSQL native parent/result provenance",
+      "Real memory outbox enqueue and restart deduplication",
+      "Owner/source-hash/retention/binding/late-stop rejection",
+      "Confirmed native failure remains non-success",
+      "Existing ordinary stop/resume/readback/erasure lifecycle in separate database"
+    ],
+    "logHashesIndependentlyMatched": true,
+    "manifestAndCurrentSourcesIndependentlyMatched": true,
+    "currentTestFileIndependentlyMatched": true,
+    "fixtureClosure": "Existing exact-name closure receipt records all three owned fixtures absent. Its original close times are not inferred from the partly reused metadata filename.",
+    "runtimeDatabaseUsed": false,
+    "reviewerExecutedTests": 0,
+    "reviewerModelCalls": 0,
+    "reviewerNativeCalls": 0,
+    "rootManualEvaModelRequests": 0,
+    "preparationErrorsPreserved": [
+      "Initial source concatenation syntax error, corrected before native use",
+      "Missing test import, corrected",
+      "Two existing PostgreSQL fixture styles required separate empty databases",
+      "Failure case originally used ambiguous=True (UNKNOWN), corrected to confirmed failure; UNKNOWN still excluded",
+      "Fixture receipt filename replacement kept initial snapshots but reused one final metadata filename; actual closure independently checked by exact owned names"
+    ]
+  },
+  "installationConditions": [
+    "Use the existing updater for these exact frozen sources and retain owner configuration, mounts, memory outbox, activation checkpoint, original initiative events and all old task results.",
+    "Confirm exact installed source hashes and current core/worker release parity; any required existing mandate profile update must use its same-owner CAS.",
+    "Keep ambiguous/unknown execution outside completed memory claims and do not reinterpret historical direct initiative results as new digital-v1 evidence.",
+    "Publish installation and any subsequent authentic native outcome or later recall as separately measured evidence."
+  ],
+  "limitations": {
+    "installationProven": false,
+    "authenticNativeDigitalInitiativeOutcomeProven": false,
+    "laterNativeRecallOrUseProven": false,
+    "privateDeliveryProvenByThisReview": false,
+    "fullLearningCycleComplete": false,
+    "fullAIDE2Complete": false,
+    "ownerOrFamilyAcceptanceComplete": false,
+    "fullGoalRemainsActive": true,
+    "developmentCredits": "UNKNOWN"
+  },
+  "installationVerdictScope": "GO for one existing updater installation of the exact reviewed source; installed runtime and authentic native usefulness are not yet proven.",
+  "openBlockers": []
+}

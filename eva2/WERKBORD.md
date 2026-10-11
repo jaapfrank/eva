@@ -1,54 +1,60 @@
-## Actueel werk — 2026-10-11T23:11:35.024002+00:00
+## Actueel werk — 2026-10-11T23:38:28.027894+00:00
 
-**Laatst opgeleverd:** eerste werkaanpakproef beoordeeld en rapportexport
-hersteld. Geen nieuwe productfunctie afgerond.
+**Laatst opgeleverd:** eigen digitaal initiatief gebruikt dezelfde privéroute
+naar uitkomstgeheugen als gewone opdrachten. Gericht gecontroleerd en geïnstalleerd;
+beide diensten gezond. Geen nieuwe modelproef.
 
-**Uitkomst:** 0/1 afgeronde opdracht. De bron is correct (3/3 aparte checks),
-maar geen native uitvoering of eindbestand. Vier modelaanvragen: 38.947 tokens.
-De oorspronkelijke sessie was al gesloten; oude bewijsbytes zijn behouden.
-De exporter is hersteld zonder nieuwe modellen, acties of checks.
+**Nog open:** een echte nieuwe initiatiefuitkomst, latere toepassing, volledige
+leercyclus en AIDE². Geen hoofdafronding uit alleen deze technische koppeling.
 
-**Nu/volgende:** Eva moet het geschreven programma uitvoeren en het gevraagde
-resultaat opleveren. Het bestaande taakspoor gebruiken voor een gerichte
-verbetering; deze gesloten taak niet herhalen. Kandidaat, volledige
-eindbeoordeling en later gebruik zijn nog niet gestart.
+**Volgende:** bestaande ontwikkel-/verbeterroute in rustige momenten op echte
+tekorten en ervaringen laten aansluiten. Geen voorbeeldfunctie of tweede platform.
 
-**Van Jaap nodig:** niets. Het volledige projectgoal blijft actief.
-Persoonlijkheid, geheugenbasis en 39/48 oorspronkelijke kleine afrondingen behouden;
-de volledige leercyclus en AIDE² blijven open. Spraak geparkeerd.
+**Van Jaap nodig:** niets. Volledig projectgoal actief; spraak geparkeerd.
+Persoonlijkheid, geheugenbasis en 39/48 oorspronkelijke afrondingen behouden.
 
-**Dashboard:** actuele opgeslagen stand met bovenstaande controletijd.
-De oorspronkelijke taakmislukking blijft zichtbaar.
+**Dashboard:** dezelfde actuele oplevering, open punten en controletijd.
 
 ## Actuele uitvoerfase — 12 oktober 2026
 
-De eerste vaste programmeertaak is uitgevoerd en onafhankelijk beoordeeld:
-0/1 afgeronde opdracht, 3/3 afzonderlijke bronchecks, geen menselijke hulp.
-Eva schreef correcte code, maar voerde het programma niet uit en leverde geen
-result.json. De oorspronkelijke proefgrens van vier aanvragen werd bereikt.
-Volledig fysiek gemeten: 38.509 invoer + 438 uitvoer = 38.947 tokens; vier native
-acties en drie reeds uitgevoerde geïsoleerde checks. De opgeslagen partial-vlag
-blijft apart van de volledige fysieke usage. Geen algemeen kwaliteitsoordeel.
+**Opgeleverd en geïnstalleerd:** eigen digitaal initiatief loopt nu door dezelfde
+persoonsgebonden uitkomstgeheugenroute als gewone opdrachten. De selectie,
+typecontrole en bronlader sloegen dat taaktype eerder over. Vier bestaande
+modules gericht aangepast; geen tweede geheugen, planner of levensdaemon.
 
-De sessie was aantoonbaar gesloten. De exporter herkende de werkelijke HTTPvorm
-niet; dat is gericht gecorrigeerd. De oorspronkelijke records zijn eenmaal
-geëxporteerd en onafhankelijk gecontroleerd. Oude bytes en het taakverlies
-blijven behouden. Geen nieuwe modellen, native acties of programma-/checkuitvoering.
+Eva's gekozen aanleiding wordt niet als directe gebruikersvraag opgeslagen.
+Een werkresultaat blijft gerapporteerd, geen onafhankelijk feit. Een gestopte
+parent krijgt geen late succesherinnering. Bron-/resultaathashes, persoonstoegang,
+bewaartermijnen en bestaande wis-/herstartmarkers blijven behouden.
 
-Nu het ontbrekende eindresultaat aanpakken: Eva moet het programma werkelijk
-uitvoeren en het gevraagde eindbestand opleveren. Gebruik het bestaande taakspoor;
-geen herhaling van deze gesloten taak of nieuwe vergelijkingsserie. Kandidaat,
-volledige ontwikkel-/eindbeoordeling en later gebruik zijn nog niet gestart.
-De bestaande criteria en resterende proefmiddelen blijven gelden.
+39 unieke gerichte controles slagen (37 behouden passes, de gecorrigeerde
+confirmed-failurecase en de gewone stop/hervat/wis-route). Bron- en eindreview GO.
+Eén bestaande image-only installatie: beide diensten gezond, vier bronnen exact,
+336 overige bestanden per image bytegelijk; configuratie, mounts, netwerken,
+profiel en mandaat behouden. Geen handmatige Eva-modelaanvraag door deze wijziging.
+Ontwikkelfouten en eerdere ruwe testlogs blijven geregistreerd.
 
-De geïnstalleerde standaardwerkwijze is ongewijzigd. Het volledige projectgoal
-en volledige AIDE² blijven actief en open. Persoonlijkheid, geheugenbasis en
+**Nog open:** een nieuwe authentieke digitale initiatiefuitkomst en haar latere
+herinnering/gedragswinst. De bestaande actuele initiatiefcyclus koos stilte en
+heeft geen open digitale taak. Geen oude bijdrage heropenen of aanleiding
+fabriceren. De volledige leercyclus en AIDE² zijn niet afgerond.
+
+De AIDE-aansturingsproef wordt niet betaald doorgedraaid: de vastgelegde vier
+aanvragen zijn minder dan de minimaal zes vereiste stappen in haar tweede taak.
+Dat is een onhaalbare proefopzet, geen bewijs dat Eva de taak niet kan uitvoeren.
+De eerste gesloten taak blijft 0/1 af, 3/3 bronchecks, vier aanvragen/38.947 tokens;
+oude records, criteria en quota behouden. Geen nieuwe vergelijkingsserie.
+
+**Vervolg:** sluit de bestaande ontwikkel-/verbeterroute in rustige momenten aan
+op werkelijk geconstateerde tekorten en latere ervaring; geen nieuwe voorbeeldfunctie.
+Het volledige projectgoal blijft actief. Persoonlijkheid, geheugenbasis en
 39/48 oorspronkelijke kleine afrondingen behouden. Spraak geparkeerd.
 Geen handeling van Jaap nodig.
 
-Resultaat: eva2/evidence/product/aide-worker-strategy-first-baseline-result-20261012.json.
-Review: eva2/reviews/aide-worker-strategy-first-baseline-original-records-review-20261012.json.
-Geïnstalleerde aansluiting: eva2/evidence/product/worker-strategy-boundary-installed-20261011.json.
+Installatie: eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json.
+Bronreview: eva2/reviews/native-initiative-outcome-memory-source-review-20261012.json.
+Eindreview: eva2/reviews/native-initiative-outcome-memory-installed-review-20261012.json.
+Proefcontrole: eva2/reviews/aide-worker-strategy-original-continuation-feasibility-review-20261012.json.
 
 ## Actief volledig projectgoal — 11 oktober 2026
 

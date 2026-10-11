@@ -305,6 +305,57 @@ class PostgresInitiativeAuthority:
             raise InitiativeMandateDenied("native digital capability binding differs")
         return guard, turn
 
+    def work_memory_source(self, work, *, now):
+        """Read a retained outcome's original intent; never grant another action."""
+        from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+
+        spec, owner = work.spec, self.owner
+        if (type(spec) is not DelegatedInitiativeDigitalWorkSpec
+                or spec.owner_principal_id != str(owner._owner)
+                or spec.principal_binding_id != str(owner._binding)
+                or work.retention_until <= now):
+            raise InitiativeMandateDenied("initiative memory owner or retention differs")
+        try:
+            with owner._engine.begin() as conn:
+                owner._authorize(conn, now)
+                row = conn.execute(owner._query().where(
+                    operational_checkpoints.c.thread_id == spec.origin.thread_id)).one_or_none()
+                if row is None:
+                    raise InitiativeMandateDenied("initiative memory source is absent")
+            events = self.timeline.events(spec.origin.thread_id)
+        except (RuntimeError, TimelineNotFound) as error:
+            raise InitiativeMandateDenied("initiative memory source is unavailable") from error
+        claim = PostgresPersonalInterestStore._claim_from_events(
+            owner._tenant_id, owner._installation_id, events, spec.origin.claim_revision)
+        turn = execution_turn(claim)
+        expected = {key: getattr(turn, key) for key in (
+            "tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")}
+        expected["audience"] = {"kind": "private_person", "principal_id": turn.principal_id}
+        admission = next((event for event in events
+            if event.event_type == "PERSONAL_INITIATIVE_WORK_ADMITTED"
+            and event.sequence == spec.origin.claim_revision + 1), None)
+        bound = {} if admission is None else admission.payload.get("data", {})
+        if (claim.principal_id != str(owner._owner) or claim.intent_id != spec.origin.intent_id
+                or spec.source.model_dump(mode="json") != expected
+                or canonical_sha256(PostgresConversationJournal._ingress_data(turn))
+                    != spec.source_ingress_sha256
+                or bound.get("work_id") != spec.work_id
+                or bound.get("spec_sha256") != spec.sha256
+                or bound.get("mandate_sha256") != spec.origin.mandate_sha256):
+            raise InitiativeMandateDenied("initiative memory source binding differs")
+        if work.state in {"succeeded", "verified"}:
+            completion = next((event for event in reversed(events)
+                if event.event_type == "PERSONAL_INITIATIVE_COMPLETED"), None)
+            completed = {} if completion is None else completion.payload.get("data", {})
+            if (row.phase != "initiative_completed" or work.result is None
+                    or completed.get("work_id") != spec.work_id
+                    or completed.get("spec_sha256") != spec.sha256
+                    or completed.get("result_sha256") != canonical_sha256(work.result.to_payload())):
+                raise InitiativeMandateDenied("initiative memory lacks its completed parent")
+        return turn
+
     def settle_work(self, conn, spec, *, state, result, usage, now, guard=None):
         """Persist the real outcome on its original parent in the queue transaction."""
         owner = self.owner
