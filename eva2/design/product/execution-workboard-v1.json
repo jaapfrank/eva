@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T22:25:28.832363+00:00",
+        "checkedAt": "2026-10-11T22:42:05.963790+00:00",
         "deliveries": [
           {
             "title": "Werkagent klaargezet voor begrensde zelfverbetering",
@@ -4727,14 +4727,14 @@
         "now": {
           "title": "AIDE² · echte werkaanpak vergelijken",
           "state": "in_progress",
-          "phase": "aide_work_strategy_runtime_binding",
+          "phase": "aide_work_strategy_producer_review",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root",
           "coordination": "/root",
-          "summary": "De configuratie-afhankelijkheid is gericht hersteld. De echte uitvoerder krijgt nu dezelfde proefconfiguratie voor de huidige en de nieuwe werkaanpak.",
-          "detail": "71 gerichte controles en onafhankelijke bronreview geslaagd. De echte proef is nog niet gestart; de broncorrectie is nog niet geactiveerd in de hostbeoordeling. Jouw eerdere acceptaties blijven behouden.",
-          "source": "eva2/reviews/aide-worker-strategy-assessment-identity-source-review-20261011.json",
+          "summary": "De vaste programmeertaken en beide uitvoerconfiguraties liggen klaar. De uitvoerder wordt onafhankelijk gecontroleerd vóór de eerste modelaanvraag.",
+          "detail": "Eén huidige werkaanpak en maximaal één kandidaat. De modelproef is nog niet gestart. Alleen aantoonbare kwaliteitswinst wordt toegepast; een foutloze referentie zonder hulp stopt deze proef. Geen nieuwe hoofdfunctie afgerond.",
+          "source": "eva2/evidence/product/aide-worker-strategy-execution-readiness-20261012.json",
           "doneWhen": "Improve real agent control via the existing variant/development/independent-final/application route and prove use in later ordinary work.",
           "review": "/root/product_execution_memory_review"
         },
@@ -4834,7 +4834,7 @@
         }
       },
       "reviewedAt": "2026-10-11T22:25:28.832363+00:00",
-      "checkedAt": "2026-10-11T22:25:28.832363+00:00",
+      "checkedAt": "2026-10-11T22:42:05.963790+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -31143,7 +31143,7 @@
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
     },
-    "checkedAt": "2026-10-11T22:25:28.832363+00:00",
+    "checkedAt": "2026-10-11T22:42:05.963790+00:00",
     "reviewedAt": "2026-10-11T22:25:28.832363+00:00"
   },
   "activeTaskId": "AU-008",
@@ -33615,5 +33615,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T22:25:28.832363+00:00"
+  "updatedAt": "2026-10-11T22:42:05.963790+00:00"
 }

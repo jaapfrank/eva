@@ -1,26 +1,22 @@
-## Actueel werk — 2026-10-11T22:25:28.832363+00:00
+## Actueel werk — 2026-10-11T22:42:05.963790+00:00
 
-**Laatst opgeleverd:** bronafbakening voor werkaanpakvarianten geïnstalleerd.
-Standaardwerkwijze gelijk, kern en taakwerker gezond, onafhankelijke installatiereview GO.
+**Laatst opgeleverd:** bronafbakening voor werkaanpakvarianten geïnstalleerd;
+de standaardwerkwijze blijft gelijk.
 
-**Nu:** de echte AIDE²-proef aansluiten op de bestaande algemene uitvoerder.
-Een circulaire afhankelijkheid in de beoordelingsconfiguratie is in de bron
-gericht hersteld; 71 checks en onafhankelijke bronreview geslaagd.
-De echte modelproef is nog niet gestart. Eén huidige werkaanpak en één kandidaat,
-dezelfde vaste taken, modellen, hulpmiddelen en oorspronkelijke beoordelingsregels.
+**Nu:** de vaste taken en dezelfde uitvoerconfiguratie voor beide werkaanpakken
+liggen klaar. De onafhankelijke reviewer controleert de echte uitvoerder vóór
+de eerste modelaanvraag. De modelproef is nog niet gestart.
 
-**Einduitkomst:** alleen een aantoonbare kwaliteitsverbetering toepassen en later gebruiken.
-Een gelijkspel behoudt de bestaande versie. Geen nieuwe vergelijkingsserie.
+**Einduitkomst:** alleen echte kwaliteitswinst toepassen en bij later werk gebruiken.
+Een foutloze referentie zonder benodigde hulp stopt deze steekproef; een gelijkspel
+behoudt de huidige versie. Geen nieuwe vergelijkingsserie.
 
-**Wie:** /root integreert en houdt dashboard/Git bij; de uitvoerder maakt de
-bestaande werk-/resultaatregistratie af; de onafhankelijke reviewer beoordeelt het echte resultaat.
+**Van Jaap nodig:** geen handeling. Het volledige projectgoal blijft actief.
+Persoonlijkheid, geheugenbasis en 39/48 oorspronkelijke kleine afrondingen behouden;
+de volledige leercyclus en AIDE² blijven open. Spraak geparkeerd.
 
-**Van Jaap nodig:** geen handeling voor deze technische aansluiting.
-Het volledige goal blijft actief; 39/48 oorspronkelijke afrondingen en jouw
-acceptaties behouden. Spraak is geparkeerd.
-
-**Dashboard:** huidige uitvoering en inhoudelijke controletijd bijgewerkt.
-De status is opgeslagen voortgang; geen automatisch bewijs van agentactiviteit.
+**Dashboard:** dit is opgeslagen voortgang met de hierboven genoemde controletijd.
+Geen nieuwe hoofdfunctie als afgerond gemarkeerd.
 
 ## Actuele uitvoerfase — 12 oktober 2026
 

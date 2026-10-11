@@ -1,0 +1,70 @@
+{
+  "bindings": {
+    "assessmentSha256": "acfbb9851bcc1d4b46b33ea7eae02d9aff413f71bb37cc2384663afc814bbadd",
+    "commandSha256": "2133e840f2551295552cee3ddf47283f8c897f0a1f801f04e7ab0b3cef58ee8a",
+    "fixedFixtureManifestSha256": "c0b15836d641dceb1511236280c2de3f2eb076d62458d91409658c47cb4f5ce7",
+    "futureClientSha256": "b84cb43135944d70ce158a6838649d8ca44856e4c55c70337eb3b9a380698fcc",
+    "futureControlConfigSha256": "f1f3c69ee3faf40998a4feb4dd34353c13f9509fcbaaa84322fad305fd79fc5a",
+    "oldUnchangedLiveClientSha256": "3e1492aeefed147f0dcc13a574e22deade57322faed93cd6b3eb9227cf9b4180",
+    "originalResourceSupplementSha256": "c84844528f02a744b7e2779ec31db8b4ffb93669893f3a8137e3084004305c82",
+    "originalScopeSha256": "dc0d8376ae0491ca6b2a7a018945cf26fc80de3fb2982f28ff331d428a562394",
+    "pendingDevelopmentSuiteSha256": "e95c07467ba46ac5499bb8c61fdd2d3fdbedbb6d283f701f6f86b1fcbbab69d6",
+    "registrationSha256": "7d06fdef0add9de5cbb5a0e1afdd5af4e8f2427204f4383edfda252f81125fa4",
+    "reviewerFinalConfigTemplateSha256": "e6080667f8480c9f6fca072d38084b1b200bddcb8de4adc98108489866e0adf8",
+    "sourceReviewSha256": "e22e4f7dc9a375b41ab35cb35a62c245ec4e5fb4ea82eac2fe620fb2a87123a9",
+    "suiteSha256": "bd3d3a5ea7d2c97f6ce21c4eb421abdd50c478c742681bff9d77aaee55b7e321"
+  },
+  "checkedAt": "2026-10-11T22:28:28.042386Z",
+  "contract": "EvaWorkerStrategyFutureControlConfigurationReview/v1",
+  "earlyStop": {
+    "action": "When the sealed baseline reaches this maximum, no candidate can make strict gain on the fixed quality metrics. Stop before any still-unstarted candidate construction/work and final tasks; keep baseline.",
+    "baselineMaximum": {
+      "behavior_checks_passed": 6,
+      "completed_tasks": 2,
+      "human_assistance_requests": 0
+    },
+    "conclusion": "No quality headroom within this fixed sample; not an improvement, new score definition, resource victory or completed AIDE2 outcome.",
+    "criteriaReset": false,
+    "fixedBeforeInputs": true,
+    "newCases": false,
+    "required": "Both fixed development cases must have complete independent artifact/execution/readback/reuse evidence, all behavior checks, zero help, all hard guards true and fully measured original shared resource accounting.",
+    "tiesKeepBaseline": true
+  },
+  "fullAIDE2Complete": false,
+  "installedLiveRound": false,
+  "nativeExecutionGO": false,
+  "openBlockers": [],
+  "placeholderRules": [
+    "Do not treat pending development-suite or null final admission as execution authorization or scoring evidence.",
+    "No assessor instance constructed without baseline files may later adopt them.",
+    "Replace all runtime zeros with exact already-reviewed future-client factory/readback values; seal complete reference receipts before fresh host composition.",
+    "Host/profile/usage/admission review must precede the one activation and any provider input."
+  ],
+  "preparationError": {
+    "label": "Reviewer wrong baseline-reference interpretation; corrected read-only, no effect",
+    "sha256": "5395948596aab15f9e44159cea034df0d6e23be1089428490e84d879d5bd6242"
+  },
+  "qualityGainProven": false,
+  "sharedResourceRequirement": "The per-axis input/output limits of 200000 are not by themselves a combined 200000-token guarantee. Trusted producer/shared ledger and final admission must reject combined overshoot/UNKNOWN, retain all actual usage and stop further dispatch; no request/token reset.",
+  "stillRequired": [
+    "Same exact future client, normal factory, owner/stop/current authorization and provider roles for both versions",
+    "Exact final execution-admission seal before final host composition",
+    "Reviewed producer actual exports and physical shared fences before provider input"
+  ],
+  "verdict": "GO_FOR_MODEL_FREE_PREPARATION",
+  "verification": {
+    "containersStarted": 0,
+    "credentialsRead": false,
+    "credits": "UNKNOWN",
+    "nativeTrials": 0,
+    "protectedFinalInputsDisclosed": false,
+    "providerCalls": 0
+  },
+  "verified": [
+    "Exact old client comparison: only appended runner allowed_path, new path-specific suite binding and new path-specific final scope. Other allowed paths, suites, reviews, saved-artifact binding, URL/token reference/timeout and existing scopes are unchanged.",
+    "Future client parses through existing configured_component_evaluator without reading token contents.",
+    "Pure DevelopmentAssessment composition reproduces exact static assessment SHA before baseline exists and reports evidence_missing; all five zero runtime placeholders remain only preparation values.",
+    "Fixed current immutable core image and exact command SHA reproduce client suite SHA. Command AST parses/compiles the mounted source without executing its program; no Docker/evaluator/model run performed.",
+    "Final template uses exact pre-existing protected case/scorer/registration/resource/source hashes and same static parser evaluation. Runtime admission is explicitly missing and template is not activatable."
+  ]
+}
