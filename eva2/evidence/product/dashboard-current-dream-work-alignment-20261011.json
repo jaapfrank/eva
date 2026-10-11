@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-11T19:53:54.636134+00:00",
+  "kind": "dashboard_current_work_alignment",
+  "status": "updated",
+  "oldBoardReviewedAt": "2026-10-11T19:44:10.868921+00:00",
+  "latestDelivery": "eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json",
+  "currentExecution": {
+    "title": "Droommodus · eigen verbeterwerk daadwerkelijk uitvoeren",
+    "detail": "De bestaande rustwerker en contextverbetering zijn aanwezig. Het concrete ontbrekende stuk: een zelfgekozen initiatief kan de bestaande digitale programmeer-/verbeterroute nog niet gebruiken. Die aansluiting wordt nu gebouwd, inclusief terugkoppeling van het echte eindresultaat. Een startmelding telt niet als afgerond werk; gewone gesprekken en stoppen houden voorrang.",
+    "state": "in_progress",
+    "activeExecution": true,
+    "owner": "/root",
+    "source": "eva2/PROJECTDOEL.md",
+    "doneWhen": "Een zelfgekozen initiatief gebruikt de bestaande digitale uitvoerder en verbeterroute; het werkelijke resultaat wordt op het oorspronkelijke initiatief teruggelegd. Stoppen en persoongrenzen blijven behouden. Daarna vaste kwaliteitsbeoordeling en gecontroleerde toepassing van verbeterde agentaansturing.",
+    "phase": "native_initiative_digital_execution_implementation",
+    "executor": "/root/eva1_memory_transfer",
+    "coordination": "/root"
+  },
+  "newRuntimeFeatureClaim": false,
+  "productCompletionChanged": false,
+  "finding": "Live latest delivery was current; current work was broad, while goalRevision, deliveryPlan.currentStep/nextAction and the human workboard still described earlier memory work. Aligned those current directives; retained historical evidence and original completion counts.",
+  "usage": {
+    "newEvaModelRequests": 0,
+    "creditCost": null
+  },
+  "renderedVerification": {
+    "status": 200,
+    "currentWorkVisible": true,
+    "latestDeliveryVisible": true,
+    "noOwnerActionVisible": true,
+    "pageErrors": [],
+    "screenshot": "/home/administrator/project/.eva2-artifacts/dashboard-current-dream-20261011/overview.png"
+  },
+  "verificationNotes": [
+    "Existing legacy verify-project.cjs initially invoked without required EVA_DASHBOARD_PLAYWRIGHT_PACKAGE; stopped before browser.",
+    "First targeted check required collapsed detail text to be visible. Corrected the observation to open the existing Work and finish-condition detail; title/latest/no-owner-action already visible and no JavaScript error.",
+    "Existing installed Playwright/Chromium used. No Eva model request, native experiment, build or runtime restart."
+  ]
+}

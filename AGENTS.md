@@ -35,16 +35,18 @@ tooltelgrenzen; volledig runtimeverbruik en creditkosten blijven onbekend.
 Dit is kwaliteitswinst voor deze nieuwe mogelijkheid, geen efficiëntieclaim.
 Voorbereidingsfouten blijven bewaard; geen derde variant of herhaalde eindproef.
 
-**Volgende uitkomst:** agentaansturing aantoonbaar verbeteren en de bestaande
-rustcapaciteit/reflectie-/uitvoerroute gebruiken voor droomplanning. Daarna
-passend initiatief, bredere leercyclus en samenhangend dagelijks gezinsgebruik.
+**Actief werk:** de bestaande rustwerker en algemene digitale uitvoerder verbinden.
+Een zelfgekozen initiatief kan die programmeer-/verbeterroute nog niet gebruiken;
+de ontbrekende aansluiting en echte eindterugkoppeling worden nu gebouwd door
+/root/eva1_memory_transfer. /root coördineert en integreert. Daarna vaste
+kwaliteitsbeoordeling van agentaansturing, passend initiatief en gezinsgebruik.
 Volledige AIDE² en het gehele project blijven open; oorspronkelijke 39/48 behouden.
 Geen eigenaarhandeling nodig. Spraak geparkeerd; geen nieuwe concurrentieserie.
 
 Bewijs: eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json.
 Later gebruik: eva2/evidence/product/saved-artifact-later-use-result-20261011.json.
 Review: eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json.
-Dashboard bijgewerkt: 2026-10-11T19:44:10.868921+00:00.
+Dashboard inhoudelijk bijgewerkt: 2026-10-11T19:53:54.636134+00:00.
 
 
 ## Historische voorbereiding en installatie — 11 oktober 2026

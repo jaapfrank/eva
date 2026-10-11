@@ -1,3 +1,19 @@
+## Actueel werk — 2026-10-11T19:53:54.636134+00:00
+
+**Laatst opgeleverd:** Eva maakte twee varianten van haar eigen hulpmiddel, de winnaar
+slaagde onafhankelijk (0/12 → 12/12 nieuwe gevallen, nul behoudfouten), en Eva
+gebruikte diezelfde verbeterde bron later bij ander werk. Geïnstalleerd en beoordeeld.
+
+**Nu:** De bestaande rustwerker en contextverbetering zijn aanwezig. Het concrete ontbrekende stuk: een zelfgekozen initiatief kan de bestaande digitale programmeer-/verbeterroute nog niet gebruiken. Die aansluiting wordt nu gebouwd, inclusief terugkoppeling van het echte eindresultaat. Een startmelding telt niet als afgerond werk; gewone gesprekken en stoppen houden voorrang.
+
+**Wie:** /root/eva1_memory_transfer bouwt de runtimekoppeling en gerichte checks;
+ /root coördineert, houdt dit bord bij en integreert. Gebundelde onafhankelijke review volgt.
+
+**Daarna:** vaste kwaliteitsbeoordeling/toepassing van agentaansturing, passend
+initiatief en dagelijks gezinsgebruik. Geen handeling van Jaap nodig. Het volledige
+projectgoal blijft actief; oorspronkelijke 39/48 kleine afrondingen behouden.
+Spraak geparkeerd; geen nieuwe vergelijkingsserie.
+
 ## Actief volledig projectgoal — 11 oktober 2026
 
 Het actieve Codex-goal omvat het gehele Eva2-project: een persoon, geheugen en
@@ -11,6 +27,8 @@ bij het samenhangende geïnstalleerde geheel en de daarin vastgelegde eindvoorwa
 Behoud oorspronkelijke tests/acceptaties/fouten/UNKNOWN; geen nieuwe vergelijkingsserie.
 Spraak blijft geparkeerd. Werkende bron hergebruiken, één gebruikersuitkomst tegelijk
 afmaken en installeren. Alleen noodzakelijke gerichte controles en gebundelde review.
+
+### Historische werkstand vóór de latere hulpmiddelverbetering
 
 **Actief werk:** de volledige leercyclus afmaken. De ontbrekende koppeling van
 nieuwe privétaakuitkomsten naar het bestaande persoonsgeheugen is nu geïnstalleerd:
