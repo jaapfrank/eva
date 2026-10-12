@@ -2,6 +2,14 @@
 
 ## Actueel 12 oktober — algemene contextcorrectie geïnstalleerd; Eva voert de opdracht uit
 
+Het gewone vervolg (generatie6,9a073648-799f-517c-929c-290334de28bc) is nu
+afgesloten met input_budget_exceeded:2 complete responses,2 tools,105.564 bekende
+tokens;usage partial,volledig totaal en credits onbekend. Geen eindvoorstel.
+Onderzoek uitsluitend de twee nieuwe receipts en de werkelijke contextovergang
+modelvrij; corrigeer de gedeelde presentatie/selectie vóór een volgende uitvoering.
+Geen identieke betaalde herhaling of voorstel door Codex.
+Bewijs:eva2/evidence/product/retained-context-sharing-ordinary-result-20261012.json.
+
 Twee modules van de bestaande taak-/modelroute zijn exact geïnstalleerd.
 16 gerichte controles en onafhankelijke bronreview geslaagd; kern en werker
 gezond,343 overige Pythonbronnen per image en configuratie/gegevens behouden.

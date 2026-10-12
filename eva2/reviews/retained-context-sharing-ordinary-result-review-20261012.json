@@ -1,0 +1,93 @@
+{
+  "contract": "EvaIndependentOrdinaryTerminalPublicationReview/v1",
+  "recordedAt": "2026-10-12T18:11:59.288934+00:00",
+  "decision": "GO",
+  "scope": "Safe publication of this exact generation-6 terminal result only; no execution or diagnosis approval.",
+  "publicEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-context-sharing-ordinary-result-20261012.json",
+    "sha256": "5668b270c5a6db39966249226c54face5ab42075225f43314e25eaaf2edef487"
+  },
+  "bindings": {
+    "installedSource": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-context-sharing-installed-20261012.json",
+      "sha256": "c28c64e7a918896893f192a345f192a5a893d082f9f7f26c44fbec769990e83c"
+    },
+    "installedReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/retained-context-sharing-installed-review-20261012.json",
+      "sha256": "122f4c14fa11d405033b4aad832da887ae0a3e9b7595d34a314e9e765ab405bb"
+    },
+    "dispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/continuation-receipt.private.json",
+      "sha256": "429bb975d4a9530963362667088cdad8925e246446619aa60f4f65f53b375e4a"
+    },
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/continuation-preparation.private.json",
+      "sha256": "cd796762a91f2575e9f87faf4e80c9b581da2e940559bfc659564b54944cb062"
+    },
+    "work": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/continuation-work-2.private.json",
+      "sha256": "318bb93572747cd3e5c100148475dcfb5e07fa211c97c58048219da4828359a7"
+    },
+    "result": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/continuation-progress-2.private.json",
+      "sha256": "4809cbf6a18a77967aa94fea21eb1b44f71bab4709a2e21ffe9719473cf6521e"
+    }
+  },
+  "observed": {
+    "workId": "work:eva-resume:9a073648-799f-517c-929c-290334de28bc",
+    "generation": 6,
+    "parentWorkId": "work:eva-resume:20b1278c-cd1c-57c8-984d-cca4c3002e7d",
+    "state": "failed",
+    "errorCode": "budget_exceeded",
+    "errorFingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd",
+    "retainedReason": "input_budget_exceeded",
+    "resultAvailable": false,
+    "confirmedResult": null,
+    "deliveryState": "unbound",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 2,
+      "input_tokens": 104916,
+      "output_tokens": 648,
+      "total_tokens": 105564,
+      "cost_usd_micros": null
+    },
+    "knownInputTokens": 104916,
+    "knownOutputTokens": 648,
+    "knownTokenSubtotal": 105564,
+    "completeProviderTotal": null,
+    "creditCost": null
+  },
+  "findings": [
+    "Stored work and progress readbacks agree on terminal state, reason, usage and absent result.",
+    "Two completed responses and two tools precede the reported input-context rejection; the 105564-token subtotal is retained as partial measured usage.",
+    "Full provider total and credits remain unknown; no zero-cost or zero-dispatch claim is made.",
+    "The previous 61406-BPE measurement was explicitly a partial known envelope. This failed ordinary continuation remains negative outcome evidence.",
+    "Exact cause of the new rendering transition is outside this facts review; it cannot be inferred from the retained failure code alone.",
+    "Installed-source success remains separate from sustainable task execution, a completed readonly proposal or provider savings."
+  ],
+  "limits": {
+    "taskCompleted": false,
+    "providerSavingsProven": false,
+    "fullAIDE2Completed": false,
+    "newInputGO": false,
+    "retryAuthorizedByReview": false,
+    "budgetIncreaseAuthorized": false,
+    "migrationOrRenameAuthorized": false,
+    "manualDomainProposalDelivered": false,
+    "originalReadonlyScopePreserved": true,
+    "wholeProjectGoal": "active"
+  },
+  "reviewActions": {
+    "testsRerun": 0,
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseReads": 0,
+    "usageReconciliation": false,
+    "liveProbes": 0
+  },
+  "blockers": []
+}

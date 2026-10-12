@@ -1,0 +1,61 @@
+{
+  "contract": "EvaRetainedContextSharingOrdinaryResult/v1",
+  "recordedAt": "2026-10-12T18:10:45.105663+00:00",
+  "status": "failed",
+  "workId": "work:eva-resume:9a073648-799f-517c-929c-290334de28bc",
+  "generation": 6,
+  "parentWorkId": "work:eva-resume:20b1278c-cd1c-57c8-984d-cca4c3002e7d",
+  "state": "failed",
+  "errorCode": "budget_exceeded",
+  "retainedReason": "input_budget_exceeded",
+  "errorFingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 2,
+    "tool_calls": 2,
+    "input_tokens": 104916,
+    "output_tokens": 648,
+    "total_tokens": 105564,
+    "cost_usd_micros": null
+  },
+  "usageMeaning": "Partial measured usage; full provider total and credit costs unknown. Not zero-cost.",
+  "resultAvailable": false,
+  "deliveryState": "unbound",
+  "ordinaryContinuationDispatches": 1,
+  "bindings": {
+    "installedSource": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-context-sharing-installed-20261012.json",
+      "sha256": "c28c64e7a918896893f192a345f192a5a893d082f9f7f26c44fbec769990e83c"
+    },
+    "installedReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/retained-context-sharing-installed-review-20261012.json",
+      "sha256": "122f4c14fa11d405033b4aad832da887ae0a3e9b7595d34a314e9e765ab405bb"
+    },
+    "dispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/continuation-receipt.private.json",
+      "sha256": "429bb975d4a9530963362667088cdad8925e246446619aa60f4f65f53b375e4a"
+    },
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/continuation-preparation.private.json",
+      "sha256": "cd796762a91f2575e9f87faf4e80c9b581da2e940559bfc659564b54944cb062"
+    },
+    "work": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/continuation-work-2.private.json",
+      "sha256": "318bb93572747cd3e5c100148475dcfb5e07fa211c97c58048219da4828359a7"
+    },
+    "result": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/continuation-progress-2.private.json",
+      "sha256": "4809cbf6a18a77967aa94fea21eb1b44f71bab4709a2e21ffe9719473cf6521e"
+    }
+  },
+  "conclusion": "Eva began ordinary work but after two responses and two tools the retained task context again exceeded the input gate. Exact overlap sharing alone does not provide a sustainable working context. No completed proposal, provider saving or new product-function closure.",
+  "next": "Model-free diagnosis of the two new receipts and actual rendering transition; correct the smallest shared presentation/selection cause before any further ordinary continuation.",
+  "manualProposalWritten": false,
+  "codexDevelopmentCredits": "unknown",
+  "newComparisonSeries": false,
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "preserveOriginalReadonlyAndPostProposalApproval": true
+}
