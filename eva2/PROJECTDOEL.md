@@ -9,8 +9,11 @@ Nieuwste resultaat, benodigde ankers, fouten/UNKNOWN, acties en voortgang blijve
 Originele gegevens, bewijs, reader, mandaat en invoergrens veranderen niet.
 Eén modelmodule, zeven gerichte checks en bronreview GO; kern en werker gezond,
 344 andere Pythonbronnen per image en configuratie/gegevens gelijk.
-Onafhankelijke installatiereview GO; één gewone voortzetting geaccepteerd via
-revise_digital. Nog geen nieuw werkresultaat bevestigd.
+Onafhankelijke installatiereview GO. De achtste gewone voortzetting bleef binnen
+de invoergrens maar eindigde met internal_error/ambiguous na15 complete responses
+en15 tools:601.277 bekende tokens,APIusage partial;geen bevestigd eindvoorstel.
+Alle15 waargenomen streams gesloten. Oorzaak modelvrij reproduceren en de exacte
+foutfingerprint binden vóór verdere modeluitvoering.
 
 De zevende generatie is failed/input_budget_exceeded: vijf volledig gemeten
 modelresponses, vijf tools en 253.179 bekende tokens; taakusage partial, totaal en
@@ -29,6 +32,7 @@ Bron:eva2/evidence/product/retained-local-read-working-context-correction-202610
 Installatie:eva2/evidence/product/retained-local-read-working-context-installed-20261012.json.
 Bronreview:eva2/reviews/retained-local-read-working-context-source-review-20261012.json.
 Installatiereview:eva2/reviews/retained-local-read-working-context-installed-review-20261012.json.
+Actuele fout:eva2/evidence/product/retained-local-read-working-context-ordinary-result-20261012.json.
 Behouden fout:eva2/evidence/product/retained-page-coverage-ordinary-result-20261012.json.
 
 ## Eigenaarbesluit 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel

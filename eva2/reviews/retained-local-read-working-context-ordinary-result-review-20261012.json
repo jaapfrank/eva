@@ -1,0 +1,89 @@
+{
+  "contract": "EvaIndependentRetainedLocalReadWorkingContextOrdinaryResultReview/v1",
+  "reviewedAt": "2026-10-12T19:26:38.047259+00:00",
+  "decision": "GO",
+  "scope": "Safe factual publication of this closed generation only",
+  "publicEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-local-read-working-context-ordinary-result-20261012.json",
+    "sha256": "ec7e7e315519e51999006f122f942bf377ed290c3a97d33f64494390f3b01702"
+  },
+  "bindings": {
+    "sourceInstalled": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-local-read-working-context-installed-20261012.json",
+      "sha256": "88bba2162cd47584df597ece5683d4db42032076feb39789f6601b6f082655da"
+    },
+    "installedReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/retained-local-read-working-context-installed-review-20261012.json",
+      "sha256": "65dadd95bce10936f63bd3a429e9e2a6fee96337e511ea5ef780892093171d04"
+    },
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/continuation-preparation.private.json",
+      "sha256": "c50af62307adef2c090f4046ee4557cab4cd1d9e21b1a0dac73fed284faa88d4"
+    },
+    "dispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/continuation-dispatch.private.json",
+      "sha256": "7253f9c0e4e7cd068f281d16a396001cb5091c1e1f4c52be41243a94bb0a89fc"
+    },
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/continuation-receipt.private.json",
+      "sha256": "484adfe4d42b9dd0f0b5900f4a75392233ff01d93bca7a876c63c70741734dba"
+    },
+    "workSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/continuation-work-5.private.json",
+      "sha256": "da2d9d9f67e7ae49eda49e93b4cbd46ab2f59fbe365596e66aae8251963cf4dd"
+    },
+    "progressSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/continuation-progress-5.private.json",
+      "sha256": "51d7a8a14f0703da5631c09fd8e56bf37aabaf5118dc7d8ca1269f4148454007"
+    },
+    "liveListSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/continuation-live-list-5.private.json",
+      "sha256": "0269aa970b953657e8bf48ffd9c8a0ff6a31f597a1fe1ca65c374593ade909be"
+    },
+    "accountingObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/gen8-single-observation-terminal.private.json",
+      "sha256": "b9ebbc2c9f2292caa80e5f206556b31578cdcb7370f6fafc11eba545149f425b"
+    },
+    "newRetainedReceipts": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/gen8-receipts-running.snapshot.private.json",
+      "sha256": "6cf8f9483fe197ef12d2f9c400b52553ccd0201af9632439c8bcf9d80e418a01"
+    }
+  },
+  "workId": "work:eva-resume:28829439-9d4d-527e-ac7a-c592af0a050b",
+  "generation": 8,
+  "nativeState": "ambiguous",
+  "errorCode": "internal_error",
+  "errorFingerprint": "25b164a9b14d82e6abeca9c7b1ab8191153b97d8f2033cd63fcd788d106f115b",
+  "cause": "unknown",
+  "knownUsage": {
+    "admittedRequests": 15,
+    "completeMeasuredResponses": 15,
+    "closedLocalStreams": 15,
+    "toolCalls": 15,
+    "inputTokens": 598795,
+    "outputTokens": 2482,
+    "tokens": 601277,
+    "ownerApiMeasurement": "partial",
+    "fullTaskTotalAndCosts": "unknown"
+  },
+  "findings": [
+    "Preserved owner work, progress, scoped accounting and receipt snapshots agree: fifteen admitted requests, fifteen complete measured locally closed responses and no observed in-flight request in this child call. Recorded input tokens range from36714 to44570.",
+    "Last retained action step65 is verified; no further provider request is observed after it. The later host internal_error has no preserved failure report establishing its cause; no complete proposal/result is confirmed and delivery remains unbound.",
+    "The existing partial document remains exactly9240bytes/SHA5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732. Installation correctness and recorded request admission do not prove full task completion, matched provider savings or general function closure."
+  ],
+  "partialDocument": {
+    "path": "/var/lib/docker/volumes/eva2-workspace-files/_data/tuya-localtuya-migratievoorstel.md",
+    "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+    "bytes": 9240
+  },
+  "limitations": {
+    "taskOutcomeCompleted": false,
+    "productFunctionCompleted": false,
+    "providerSavingsProven": false,
+    "newExecutionAuthorityGranted": false
+  },
+  "historicalFailedRunsAndUnknownPreserved": true,
+  "reviewOperations": "Existing bound artifact and document-hash reads only; no tests, probes, provider/native calls or database operations.",
+  "wholeProjectGoalRemainsActive": true,
+  "blockers": []
+}

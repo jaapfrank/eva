@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T19:17:29.537743+00:00",
+        "checkedAt": "2026-10-12T19:27:41.048651+00:00",
         "deliveries": [
+          {
+            "id": "retained-local-read-working-context-ordinary-result-20261012",
+            "date": "2026-10-12T19:27:41.048651+00:00",
+            "title": "Werkcontext past;Eva’s onderzoek vastgelopen op interne fout",
+            "state": "failed",
+            "nativeState": "ambiguous",
+            "summary": "15 complete modelantwoorden en15 toolstappen;geen compleet voorstel bevestigd.",
+            "result": "601.277 bekende tokens;APIusage partial,totaal/credits onbekend. Interne foutoorzaak nog onbekend. Alle15 waargenomen modelstreams gesloten.",
+            "remaining": "Exacte hostovergang modelvrij reproduceren en herstellen. Geen nieuwe betaalde herhaling zonder causale correctie.",
+            "source": "eva2/evidence/product/retained-local-read-working-context-ordinary-result-20261012.json",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/retained-local-read-working-context-ordinary-result-review-20261012.json",
+            "reviewSha256": "a0fca24e4fc93f9aa28a0ff5e48a51008f3ffbb5a24933b03f26bbf664d3fa4b",
+            "independentReview": "GO uitsluitend voor behouden onvoltooide/ambiguous uitkomstfeiten."
+          },
           {
             "id": "retained-local-read-working-context-installed-20261012",
             "date": "2026-10-12T19:17:29.537743+00:00",
@@ -5286,8 +5302,8 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "ordinary_research_corrected_continuation_scheduled",
-          "taskId": "work:eva-resume:5124cce7-bb98-59d8-8ab1-d7a60ab44b20",
+          "phase": "ordinary_research_host_failure_model_free_diagnosis",
+          "taskId": "work:eva-resume:28829439-9d4d-527e-ac7a-c592af0a050b",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
@@ -5297,8 +5313,8 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Algemene contextcorrectie geïnstalleerd en onafhankelijk goedgekeurd. Eén gewone voortzetting bij Eva ingepland; nieuw werkresultaat nog niet bevestigd.",
-          "detail": "Vijf nieuwe bevindingen maakten de eerdere werkcontext te groot. Na echte invoerweigering blijven oudere pure lokale uitlezingen gericht opvraagbaar via hun bestaande bronversie en bereik. Het laatste resultaat, fouten, acties en voortgang blijven zichtbaar. Geen handmatig Tuya-voorstel.",
+          "summary": "Eva’s invoer past;na15 modelantwoorden/toolstappen volgde een interne fout. Geen compleet voorstel. Gerichte modelvrije diagnose loopt.",
+          "detail": "De algemene contextcorrectie is geïnstalleerd en onafhankelijk goedgekeurd. Vijftien echte aanvragen van36.714–44.570 invoertokens passen;laatste toolstap65 verified. Exacte volgende hostovergang wordt lokaal onderzocht vóór verdere modeluitvoering.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "eva2/evidence/product/tuya-readonly-preserved-proposal-20261012.json",
@@ -5352,18 +5368,18 @@
             "retainedLocalReadWorkingContextIndependentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T19:17:29.537743+00:00",
+            "checkedAt": "2026-10-12T19:25:18.916616+00:00",
             "coordinator": "/root",
             "coordinatorTask": "Algemene taakuitvoering afronden zodat Eva zelf onderzoekt en het voorstel maakt.",
-            "executor": "Eva2 · bestaande taakwerker",
-            "executorTask": "Oorspronkelijk lezend onderzoek vervolgen, eigen compleet voorstel opslaan en teruglezen.",
+            "executor": "/root/eva1_memory_transfer",
+            "executorTask": "Echte laatste receipt/projectie/phase modelvrij reproduceren;exceptionfingerprint binden vóór bronwijziging.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Bron en exacte installatie beoordeeld:GO. Eindresultaat nog afwachten.",
-            "modelUsage": "Gen7:5 complete gemeten responses,5tools,253.179 bekende tokens. APIusage partial;volledig totaal/credits onbekend. Gen6 en eerdere UNKNOWN apart behouden.",
-            "note": "Eén revise_digital geaccepteerd. Geen handmatig voorstel of nieuwe vergelijkingsserie; geen nieuw resultaat bevestigd."
+            "reviewerTask": "Gebundelde onafhankelijke feiten-/bronreview;geen nieuwe providerproef.",
+            "modelUsage": "Gen8:15 complete gemeten responses,15tools,601.277 bekende tokens. APIusage partial;totaal/credits onbekend. Alle15 waargenomen streams gesloten.",
+            "note": "Geen volledig voorstel;oude fouten en tussenvoorstel behouden. Geen automatische Telegram-terugmelding aan deze dashboardcontinuation gekoppeld."
           },
-          "checkedAt": "2026-10-12T19:17:29.537743+00:00",
-          "remaining": "Eva’s eigen volledige, opgeslagen en teruggelezen voorstel via de gewone taakroute. Actuele volledige invoerfit en taakafronding nog onbewezen."
+          "checkedAt": "2026-10-12T19:25:18.916616+00:00",
+          "remaining": "Bewezen oorzaak van de interne fout en Eva’s eigen complete opgeslagen voorstel. Geen betaalde herhaling zonder causale correctie."
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -5737,7 +5753,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-12T19:17:29.537743+00:00"
+        "updatedAt": "2026-10-12T19:27:41.048651+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",
