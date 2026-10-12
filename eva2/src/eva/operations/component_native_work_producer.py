@@ -1157,7 +1157,7 @@ def _launch(settings, config, source, identity, case, policy, run_root, ledger_r
     require(plan["user"] in {"65532", "65532:65532"}, "runtime-owned producer files require the existing unprivileged UID")
     name = "eva-component-work-" + uuid4().hex
     argv = ["create", "--pull", "never", "--name", name, "--read-only", "--no-healthcheck",
-        "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--log-driver", "none",
+        "--cap-drop", "ALL", "--security-opt", "no-new-privileges:true", "--log-driver", "none",
         "--user", plan["user"], "--workdir", plan["working_dir"], "--entrypoint", "python",
         "--network", plan["network_attachments"][0]]
     for value in plan["environment"]:

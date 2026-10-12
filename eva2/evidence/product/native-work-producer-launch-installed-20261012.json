@@ -1,0 +1,43 @@
+{
+  "contract": "EvaInstalledProducerLaunchCorrection/v1",
+  "checkedAt": "2026-10-12T03:39:11.975730+00:00",
+  "state": "installed",
+  "technicalOutcomeCompleted": true,
+  "productFunctionCompleted": false,
+  "summary": "De gedeelde zelfverbeteringsuitvoerder gebruikt de juiste Docker-parameter.",
+  "source": {
+    "path": "eva2/src/eva/operations/component_native_work_producer.py",
+    "sha256": "112da0c456beefa3719643058e32b463dff6dcbc205ceaaf1e39698a71420020"
+  },
+  "focusedChecks": {
+    "passed": 35,
+    "seconds": 2.23,
+    "launchCases": 2,
+    "realDockerCalls": 0,
+    "modelRequests": 0
+  },
+  "sourceReview": {
+    "path": "eva2/reviews/native-work-strategy-producer-launch-source-review-20261012.json",
+    "sha256": "f3c1c4a720ea86a00ad860b489c4d5493aa7ffbf3052481257d20cc553a67f2e",
+    "decision": "GO"
+  },
+  "actualInstallation": {
+    "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/producer-launch-correction/installed.private.json",
+    "sha256": "73b463bff30c76708c448dccc884ca3fc8a9a230ed5297e6538ad58581d74ed3",
+    "configurationSha256": "e435f882155dee2e4eca19b21724d33fba6c5a07cd1096c7eb073cf9ec78d99f",
+    "producerEntriesVerified": 2,
+    "otherHostSourcesUnchanged": 36,
+    "serviceState": "active",
+    "health": "ready",
+    "serviceRestarts": 1,
+    "coreAndWorkerHealthyUnchanged": true
+  },
+  "independentInstallationReviewClaimed": false,
+  "realImprovementCycleExecuted": false,
+  "nativeModelRequests": 0,
+  "retainedFailure": "eva2/evidence/product/native-work-lifecycle-preparation-failure-20261012.json",
+  "wholeGoalComplete": false,
+  "fullAide2Completed": false,
+  "qualityGainClaimed": false,
+  "credits": "unknown"
+}

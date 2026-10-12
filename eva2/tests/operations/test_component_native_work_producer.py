@@ -556,3 +556,65 @@ def test_changed_immutable_fixture_refused_before_any_isolated_check(setup, monk
     monkeypatch.setattr(ProcedureExecutor, "execute", lambda *args: pytest.fail("no check dispatch on changed fixtures"))
     with pytest.raises(p.ComponentWorkProductionError, match="immutable"):
         p._artifacts(s.settings, s.identity, s.case, raw, workspace, s.roots["output"], None, lambda: authority(s), s.binding)
+
+
+@pytest.mark.parametrize("relaxed_security", [False, True])
+def test_launch_passes_exact_docker_security_metadata_before_start(setup, monkeypatch,
+        tmp_path, relaxed_security):
+    if os.geteuid() != 0:
+        pytest.skip("synthetic runtime files require root ownership setup")
+    s = setup
+    client = Path(s.settings["runtime"]["client_file"])
+    os.chown(client, 65532, 65532)
+    client.chmod(0o400)
+    run_root = tmp_path / "launch"
+    run_root.mkdir(mode=0o700)
+    ledger = tmp_path / "launch-ledger"
+    ledger.mkdir(mode=0o700)
+    config = {"image": s.settings["runtime"]["image_id"], "environment": {"VISIBLE": "one"},
+        "user": "65532:65532", "working_dir": "/app", "package_path": "/opt/eva/src/eva",
+        "live_model_profile_release_sha256": digest("live-model"),
+        "networks": ["network-a", "network-b"], "mounts": [
+            {"type": "bind", "source": "/existing-workspace", "target": "/workspace", "read_only": False},
+            {"type": "bind", "source": str(client), "target": "/run/eva-component-evaluation/client.json", "read_only": True}]}
+    mounts = [config["mounts"][0],
+        {"type": "bind", "source": str(run_root / "runtime"), "target": p._RUNTIME_ROOT + "/assets", "read_only": True},
+        {"type": "bind", "source": str(run_root / "native"), "target": p._RUNTIME_ROOT + "/output", "read_only": False},
+        {"type": "bind", "source": str(ledger), "target": p._RUNTIME_ROOT + "/accounting", "read_only": False},
+        {"type": "bind", "source": str(run_root / "runtime/runner.py"), "target": "/opt/eva/src/eva/bootstrap/delegated_digital_runner.py", "read_only": True},
+        config["mounts"][1]]
+    commands = []
+    actual = {}
+    expected_raw = {"stored_work": {"state": "failed"}, "synthetic": True}
+
+    def docker(argv):
+        commands.append(argv)
+        if argv[0] == "create":
+            security = argv[argv.index("--security-opt") + 1]
+            actual.update({"Image": config["image"],
+                "NetworkSettings": {"Networks": {name: {} for name in config["networks"]}},
+                "Config": {"Env": ["VISIBLE=one"], "User": config["user"], "WorkingDir": config["working_dir"],
+                    "Entrypoint": ["python"], "Cmd": ["-B", p._RUNTIME_ROOT + "/assets/producer.py", "--runtime-config", p._RUNTIME_ROOT + "/assets/config.json"],
+                    "Healthcheck": {"Test": ["NONE"]}},
+                "Mounts": [{"Type": item["type"], "Source": item["source"], "Destination": item["target"], "RW": not item["read_only"]} for item in mounts],
+                "HostConfig": {"ReadonlyRootfs": True, "CapDrop": ["ALL"],
+                    "SecurityOpt": [] if relaxed_security else [security], "Privileged": False, "PortBindings": {}}})
+        if argv[0] == "inspect":
+            return {"returncode": 0, "stdout": json.dumps([actual]), "stderr": ""}
+        if argv[0] == "start":
+            p.exclusive(run_root / "native/raw-native.json", expected_raw, uid=65532)
+            p.exclusive(run_root / "native/admission.json", {"synthetic": True}, uid=65532)
+        return {"returncode": 0, "stdout": "", "stderr": ""}
+
+    monkeypatch.setattr(p, "_docker", docker)
+    arguments = (s.settings, config, s.baseline, s.identity, s.case, s.policy,
+        run_root, ledger, lambda: authority(s), s.binding)
+    if relaxed_security:
+        with pytest.raises(p.ComponentWorkProductionError, match="privilege changed"):
+            p._launch(*arguments)
+        assert not any(argv[0] == "start" for argv in commands)
+    else:
+        assert p._launch(*arguments) == expected_raw
+        assert sum(argv[0] == "start" for argv in commands) == 1
+    assert commands[-1][0] == "rm"
+    assert json.loads((run_root / "container-cleanup.json").read_bytes())["returncode"] == 0

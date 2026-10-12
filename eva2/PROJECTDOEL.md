@@ -1,29 +1,24 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — dashboard bijgewerkt; echte zelfverbetering nog open
+## Actueel 12 oktober — gedeelde uitvoerder gericht herstellen
 
-**Geïnstalleerd:** twee bestaande hostmodules voor taakherkomst en gezamenlijk
-verbruik. 44 gerichte controles en bronreview geslaagd; exacte bron en gezonde
-dienst teruggelezen. Bestaande runtime en gegevens behouden.
+De taakherkomst-/verbruikaansluiting blijft geïnstalleerd. De eerdere proefstart
+faalde vóór Eva modelinvoer kreeg; foutbewijs en gesloten poging blijven behouden.
 
-**Actueel:** de proefstart faalde vóór Eva een opdracht kreeg. De concrete
-Docker-parameter is in de toekomstige uitvoerder gecorrigeerd; de echte
-containerinstellingen zijn zonder starten gecontroleerd en onafhankelijk
-beoordeeld. De container is verwijderd. Oude foutregistratie, uitvoerder,
-manifest, eenmalige start en verstreken klok blijven ongewijzigd.
+Dezelfde bewezen Docker-parametermismatch is nu ook in de gedeelde producer
+gevonden en met één literalcorrectie hersteld. 35 gerichte controles slagen,
+inclusief doorgaan bij juiste metadata en weigeren bij zwakkere instellingen.
+De correctie is geïnstalleerd na bron-/configuratiereview. Exacte producer en
+twee configuratieverwijzingen teruggelezen; dienst ready, 36 overige hostbronnen
+en beide runtime-images behouden. Geen Eva-modelaanvraag.
 
-**Nog afmaken:** echte baseline en kandidaat uitvoeren, onafhankelijk beoordelen,
-alleen bewezen verbetering toepassen en bij later gewoon werk gebruiken.
-Geen variant, kwaliteitswinst of volledige AIDE² bewezen. Geen nieuwe
-hoofdafronding; 39/48 historische afrondingen en gezinsacceptaties behouden.
-Het gehele goal blijft actief. Geen handeling van Jaap nodig; spraak geparkeerd.
-Geen nieuwe concurrentenserie of modelaanvraag voor deze correctie. Credits onbekend.
+**Nu:** de exacte invoercontrole afronden en Eva haar eigen kandidaat laten
+bouwen en vergelijken via de bestaande verbetercyclus. **Daarna:** onafhankelijk beoordelen, alleen bewezen winst toepassen
+en bij later gewoon werk gebruiken. Geen kwaliteitswinst of hoofdafronding bewezen.
 
-Dashboardinhoud bijgewerkt op 2026-10-12T03:29:10.211203+00:00 en zichtbaar gecontroleerd op http://localhost:44712/.
-Geïnstalleerde aansluiting: eva2/evidence/product/native-work-lifecycle-usage-installed-20261012.json.
-Behouden startfout: eva2/evidence/product/native-work-lifecycle-preparation-failure-20261012.json.
-Correctie: eva2/evidence/product/native-work-lifecycle-launch-correction-20261012.json.
-Review: eva2/reviews/native-work-strategy-lifecycle-securityopt-review-20261012.json.
+Het gehele goal blijft actief; 39/48 historische afrondingen en gezinsacceptaties
+behouden. Geen handeling van Jaap nodig. Spraak geparkeerd; geen concurrentenserie.
+Dashboard bijgewerkt op 2026-10-12T03:41:06.167076+00:00. Ontwikkelcredits onbekend.
 
 ## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 

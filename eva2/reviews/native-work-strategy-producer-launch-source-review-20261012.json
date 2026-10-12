@@ -1,0 +1,88 @@
+{
+  "contract": "EvaIndependentSourceConfigurationReview/v1",
+  "checkedAt": "2026-10-12T03:37:14.459983Z",
+  "decision": "GO",
+  "sourceManifestSha256": "328ed4fb0e5a1bf6b697432bcae6bd88084bf94ff8b0408e793a78216bc0e092",
+  "openBlockers": [],
+  "scope": "Exact ordinary producer launch literal and two corresponding host producer-source pins; single host installation only.",
+  "bindings": {
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/producer-launch-correction/preparation.private.json",
+      "sha256": "328ed4fb0e5a1bf6b697432bcae6bd88084bf94ff8b0408e793a78216bc0e092"
+    },
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/operations/component_native_work_producer.py",
+      "sha256": "112da0c456beefa3719643058e32b463dff6dcbc205ceaaf1e39698a71420020"
+    },
+    "oldPinnedSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/host-preparation/source/eva/operations/component_native_work_producer.py",
+      "sha256": "80e42585caa1f255fc91965189899f85206ad763f0a42d754baf4bfe3620217c"
+    },
+    "correctedPrivateProducer": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/producer-launch-correction/producer.private.py",
+      "sha256": "112da0c456beefa3719643058e32b463dff6dcbc205ceaaf1e39698a71420020"
+    },
+    "testSource": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/operations/test_component_native_work_producer.py",
+      "sha256": "1b23b367b150e0ea76724b715fc12ae987ebb9b29180c86dfee3da46dc09b1be"
+    },
+    "previousServiceSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/producer-launch-correction/previous-service.private.json",
+      "sha256": "b36253ca737129350952c6a1e70cb655fe8408062a8e10198dede46a24f6b3dc"
+    },
+    "candidateService": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/producer-launch-correction/candidate-service.private.json",
+      "sha256": "e435f882155dee2e4eca19b21724d33fba6c5a07cd1096c7eb073cf9ec78d99f"
+    },
+    "plannedOverlay": {
+      "path": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/strategy-host-source/eva/operations/component_native_work_producer.py",
+      "expectedOldSha256": "80e42585caa1f255fc91965189899f85206ad763f0a42d754baf4bfe3620217c",
+      "expectedNewSha256": "112da0c456beefa3719643058e32b463dff6dcbc205ceaaf1e39698a71420020"
+    },
+    "realSecurityMetadataReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-strategy-lifecycle-securityopt-review-20261012.json",
+      "sha256": "bf4cf5346186b8a7b30733f0d53a64b72f573d7e5bd291e3868aa5ff79adb670"
+    }
+  },
+  "findings": [
+    "Exactly one _launch argument changes to no-new-privileges:true; existing verify_launch and every other producer byte remain unchanged.",
+    "Two new parametrized regression cases call the actual _launch and original verify_launch with a Docker stub. Correct security metadata reaches one start and cleanup; missing security stops before start and still records cleanup.",
+    "The candidate service differs at exactly four leaves: producer_file and producer_sha256 in the development and independent-final producer entries. Both point to the byte-identical corrected private source.",
+    "All other configuration values, fixed registration/cases/criteria/resources/runtime bindings and existing routes remain equal to the previous retained service snapshot."
+  ],
+  "validation": {
+    "retainedSourceReceipt": {
+      "passed": 35,
+      "seconds": 2.23,
+      "exitCode": 0,
+      "toolChunkId": "163037",
+      "newLaunchCases": 2,
+      "realDockerCalls": 0,
+      "modelRequests": 0
+    },
+    "reviewerRanTestsOrDocker": false,
+    "priorRealMetadataCheck": "Existing true-literal create/inspect/remove receipt is separately bound; no additional native verification inferred."
+  },
+  "installationConditions": [
+    "Install only the exact corrected host producer module and candidate service with its two source pins, preserving the remaining36 host sources and all current core/worker images, environment, mounts, data and profiles.",
+    "Retain the exact previous service80e425 producer/b362 configuration and all closed once/clock/runtime assets.",
+    "After the single normal host restart confirm actual loaded112da0 source, service ready and exact e435f882 configuration before any recovery input."
+  ],
+  "nativeInput": {
+    "decision": "NOT_READY",
+    "reason": "Installation/readback and the separately frozen recovery episode output/workspace/input/source binding are not part of this source GO.",
+    "oldOnceRemainsClosed": true,
+    "oldNativeOrProviderActionsNotReplayed": true,
+    "newRecoveryEpisodeMayBeReviewed": "A separate necessary start after the proved cause correction can use the same previously unadmitted fixed input within the existing goal mandate; this source review itself does not authorize dispatch.",
+    "noGenericExistingWorkspaceAdoption": true
+  },
+  "limits": {
+    "nativeExecutionProven": false,
+    "qualityGainProven": false,
+    "fullAide2Complete": false,
+    "wholeGoalComplete": false,
+    "newModelsByReviewer": 0,
+    "oldCriteriaInputsRolesBudgetsLedgersAndUnknownPreserved": true,
+    "credits": "unknown"
+  }
+}

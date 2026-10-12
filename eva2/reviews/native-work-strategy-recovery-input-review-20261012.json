@@ -1,0 +1,127 @@
+{
+  "contract": "EvaIndependentWorkStrategyRecoveryInputReview/v1",
+  "checkedAt": "2026-10-12T03:42:43.190031+00:00",
+  "decision": "GO",
+  "openBlockers": [],
+  "scope": "Exact one-module producer launch correction installation and prospective construction admission in a separate recovery episode of the unchanged production registration.",
+  "installation": {
+    "decision": "GO",
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/producer-launch-correction/installed.private.json",
+      "sha256": "73b463bff30c76708c448dccc884ca3fc8a9a230ed5297e6538ad58581d74ed3"
+    },
+    "sourceReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-strategy-producer-launch-source-review-20261012.json",
+      "sha256": "f3c1c4a720ea86a00ad860b489c4d5493aa7ffbf3052481257d20cc553a67f2e"
+    },
+    "loadedProducerSha256": "112da0c456beefa3719643058e32b463dff6dcbc205ceaaf1e39698a71420020",
+    "actualConfigurationSha256": "e435f882155dee2e4eca19b21724d33fba6c5a07cd1096c7eb073cf9ec78d99f",
+    "verifiedProducerEntries": 2,
+    "verifiedHostSources": 37,
+    "otherHostSourcesUnchanged": 36,
+    "serviceState": "active",
+    "healthHttpStatus": 200,
+    "health": "ready",
+    "restarts": 1,
+    "coreAndWorkerImagesHealthyUnchanged": true,
+    "initialImmediateHealthRefusalRetained": true,
+    "extraRestartOrReinstallation": false
+  },
+  "bindings": {
+    "driverManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-episode/driver-manifest.private.json",
+      "sha256": "31fe1657dd085145cc30456c45e56bb892b14a70bab74c62ec15dd2e8bca3ab5"
+    },
+    "driver": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-episode/recovery-driver.private.py",
+      "sha256": "73103ebbf04012afa4e6b3810c273d5d1088d83839e9efbbfe687be618dcd3d8"
+    },
+    "sourceResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-episode/source-result.private.json",
+      "sha256": "334ff272bc174b1901a797116f1a67973d5b7f65145cc088d1fcf467456e75dc"
+    },
+    "exactEmptyWorkspace": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-episode/exact-empty-workspace.private.json",
+      "sha256": "b666a82bcea493fa6337789d974b2f800d7ef1ff8934fe06dee1dbd6be0e3de2"
+    },
+    "patch": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-episode/recovery-driver.private.patch",
+      "sha256": "95c06a7b46d52817095077d325f023772995589b63418119770fa37a8ee1e409"
+    },
+    "inputRefs": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/inputs/input-refs.private.json",
+      "sha256": "541c72a58351862336ceffdba1c66192dedac6c4cb8a11f4cc0aa5c04b6aa07d"
+    },
+    "constructionInput": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/inputs/construction-input.private.json",
+      "sha256": "6fa5722529f8470a5cfdc44b2670ab6106f23510f2ee0676d399f880b3f65a27"
+    },
+    "resources": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/resources.private.json",
+      "sha256": "92ed869d75fd477c7c0aa0c52d7976abe0410027dcc3b79c7c82daed6618dc25"
+    },
+    "runtimeAdmission": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/runtime-admission.private.json",
+      "sha256": "92a3f04732924fb14e55fba5312b6097c42925ec462c58eacf4070214ac1b04d"
+    },
+    "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872"
+  },
+  "independentChecks": {
+    "criticalManifestReferencesMatchCurrentBytes": true,
+    "installedPrivateAndOverlayProducerHashesMatch": true,
+    "actualConfigurationBothProducerPinsMatch": true,
+    "actualHostSourceFilesMatchInstalledManifest": true,
+    "workspaceKeyRecomputedFromRetainedIdentityAndActorSource": true,
+    "workspaceIdentityMatchesRetainedOriginalRuntime": true,
+    "workspaceCurrentlyNonsymlinkResolvedExactEmpty": true,
+    "workspaceOwnerAndGroup": 10001,
+    "workspaceMode": "0700",
+    "workspaceDeviceAndInodeMatchPinnedProof": true,
+    "workspaceLinks": 2,
+    "retainedOldArtifactsExact": 10,
+    "oldNativeAndAccountingDirectoriesStillEmpty": true,
+    "newRecoveryOnceAbsentAtReview": true,
+    "recoveryRootOwner": 0,
+    "recoveryRootMode": "0700"
+  },
+  "admission": {
+    "construction": "GO_ONCE",
+    "episode": "Separate output root and prospective exclusive once marker; old once and clock remain closed and immutable.",
+    "sameOriginalInputCaseCriteriaRolesAndBudget": true,
+    "basis": "Necessary cause-directed start after a verified before-start launch defect; original input was never admitted or delivered to a model.",
+    "ordinaryAdmissionRequired": "Original source journal, typed spec, actual owner binding, ordinary queue claim and current lease/stop/retention checks remain required immediately before dispatch.",
+    "constructionProviderAttemptsIncludingHelpers": 6,
+    "constructionActiveSeconds": 150,
+    "originalParentSeconds": 1200,
+    "developmentTimeCredit": "At most one own real EVALUATE span after the original verified receipt proves exact spec/source/DRAFT/call/path/suite/baseline/candidate/ref and complete child evidence; no failed, replayed, static-only, truncated or unknown exclusion.",
+    "constructionToolScope": "Five component actions and save_work_progress; no programming or procedure expansion.",
+    "workspaceReuse": "Only construction may reuse the exact pinned empty original workspace after fresh provenance, inode, ownership, content and old-record checks; later keeps ordinary workspace refusal.",
+    "later": "CONDITIONAL_ON_EXACT_INDEPENDENT_ACCEPT_AND_ACTUAL_APPLY",
+    "laterConditions": "Same registered later input, exact accepted package and actual application/source projection, original current authority, one 150-second ordinary task, and complete shared accounting before every dispatch.",
+    "laterProviderAttemptsIncludingHelpers": 6,
+    "providerRetries": 0
+  },
+  "resources": {
+    "sharedProviderAttempts": 68,
+    "sharedPhysicalTools": 100,
+    "sharedMeasuredInputTokens": 385000,
+    "sharedMeasuredOutputTokens": 15000,
+    "sharedMeasuredCombinedTokens": 400000,
+    "unknownUsageBlocksFurtherDispatchAndRankableSeal": true,
+    "inFlightTokenCeilingGuaranteed": false,
+    "credits": "unknown"
+  },
+  "proofLimits": {
+    "newNativeOrModelExecutionByReviewer": false,
+    "newTestExecutionByReviewer": false,
+    "recoverySourceDeltaCheckedWithoutExecutingIt": true,
+    "priorChecksReusedWithTheirOriginalBindings": true,
+    "oldAttemptRearmedOrOverwritten": false,
+    "protectedInputsOrScorerDisclosed": false,
+    "originalClosedFourCallTrialReopened": false,
+    "qualityGainProven": false,
+    "authenticSelfChosenInitiativeProven": false,
+    "fullAide2Completed": false,
+    "wholeGoalComplete": false
+  }
+}
