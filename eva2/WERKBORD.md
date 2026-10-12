@@ -1,22 +1,24 @@
-## Actueel werk — 2026-10-12T01:02:38.151910+00:00
+## Actueel werk — 2026-10-12T01:35:32.118743+00:00
 
-## Actueel 12 oktober — werkaanpak verbeteren: uitvoering in aanbouw
+## Actueel 12 oktober — werkaanpak: bron beoordeeld, installatie voorbereiden
 
-De evaluatiekoppeling is gebouwd en voor haar eerdere exacte bron beoordeeld.
-Nu maken de bestaande uitvoerder en onafhankelijke reviewer de concrete
-werkuitvoering en vaste eindbeoordeling af. De coördinator sluit de oorspronkelijke
-taakduur en de eindbeoordeling aan. Geen tweede platform of nieuwe vergelijking.
+De aansluiting voor echte werkvergelijking en onafhankelijke eindbeoordeling is
+gericht gecontroleerd: 138 geslaagde bronchecks; daarna 17 overlappende checks
+voor de laatste correctie. Onafhankelijke bronreview GO. De twee exacte
+installatiepakketten zijn gebouwd. De werkproducent heeft afzonderlijke bronchecks;
+haar gebundelde review wordt afgerond.
 
-**Huidige bronwijzigingen:** in aanbouw, nog niet gericht getest/beoordeeld of
-geïnstalleerd. Daarna echte opdrachten uitvoeren, kwaliteitswinst onafhankelijk
-vaststellen, alleen bewezen winst toepassen en later gebruiken.
-De eerdere geïnstalleerde hulpmiddelverbetering blijft behouden.
-39/48 oorspronkelijke afrondingen en gezinsacceptaties blijven staan.
-Het gehele projectgoal blijft actief; volledige AIDE² en initiatief blijven open.
-Geen handeling van Jaap nodig; spraak blijft geparkeerd.
+**Stand:** gebouwd en beoordeeld; nog niet geïnstalleerd. Nu de bestaande
+runtimeconfiguratie aansluiten en eenmaal installeren. Daarna echte opdrachten
+vergelijken, alleen aantoonbare winst toepassen en later gebruiken.
+Bronchecks en gebouwde images bewijzen nog geen slimmer gedrag of volledige AIDE².
+De eerdere geïnstalleerde hulpmiddelverbetering en 39/48 oorspronkelijke
+afrondingen blijven behouden. Het gehele projectgoal blijft actief.
+Geen handeling van Jaap nodig; spraak geparkeerd; geen nieuwe vergelijkingsserie.
 
-Dashboardinhoud gecontroleerd op 2026-10-12T01:02:38.151910+00:00.
-Statusbewijs: eva2/evidence/product/dashboard-native-work-production-in-progress-20261012.json.
+Dashboardinhoud gecontroleerd op 2026-10-12T01:35:32.118743+00:00.
+Statusbewijs: eva2/evidence/product/dashboard-native-work-production-source-reviewed-20261012.json.
+Bronreview: eva2/reviews/native-work-strategy-final-source-review-20261012.json.
 
 ## Historisch 12 oktober — evaluatiekoppeling gebouwd; echte uitvoering nog open
 

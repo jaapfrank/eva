@@ -1,0 +1,42 @@
+{
+  "contract": "EvaProjectDashboardCurrentSource/v1",
+  "checkedAt": "2026-10-12T01:35:32.118743+00:00",
+  "status": "production_source_reviewed_installation_preparing",
+  "wholeGoalStatus": "active",
+  "meaning": "De bron voor echte werkvergelijking en onafhankelijke eindbeoordeling is gericht getest en beoordeeld. Installatiepakketten zijn gebouwd; runtimeconfiguratie en echte verbetercyclus zijn nog open.",
+  "workOwners": {
+    "coordinator": "/root",
+    "executor": "/root/eva1_memory_transfer",
+    "independentReviewer": "/root/product_execution_memory_review"
+  },
+  "currentChanges": {
+    "producerFileExists": true,
+    "producerComplete": true,
+    "producerReviewPending": true,
+    "deadlineTransferInProgress": false,
+    "independentFinalAuthorityPending": false,
+    "productionChangesTested": true,
+    "productionChangesReviewed": true,
+    "imagesBuilt": true,
+    "runtimeConfigurationPending": true,
+    "installed": false
+  },
+  "sourceReview": "eva2/reviews/native-work-strategy-final-source-review-20261012.json",
+  "sourceReviewSha256": "baab1035d527f7d425bbb1fef8201b447b3b32f3647d063adff6330ee151bedb",
+  "checks": "138 geslaagde bronchecks; daarna 17 overlappende gerichte checks. Werkproducent apart getest, review daarvan nog open.",
+  "lastInstalledEvidence": "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json",
+  "authenticNativeExecutionProven": false,
+  "fullAide2Completed": false,
+  "productFunctionCompleted": false,
+  "historicalTaskValuesPreserved": {
+    "executionTasks": "080b844ba19e8039d9bc40b63e86fe439b0926033dc8cea204a2e2047060b7ad",
+    "milestones": "2ba42c830d0c97cc6590da628d5520e9d97dc8d2c91380b58e9e387ce6505627",
+    "completions": "5d41ad2f06ca191463c651fc2e1c38494f85827affa56f2fb70830c08c3a897d"
+  },
+  "historicalSmallCompletions": "39/48; geen nieuwe oorspronkelijke afronding",
+  "newManualEvaModelRequests": 0,
+  "usageScope": "Bron-, build- en dashboardwerk; ontwikkelcredits en automatisch runtimeverbruik onbekend.",
+  "ownerActionRequired": false,
+  "newCompetitorSeriesStarted": false,
+  "oldClosedTrialPreserved": true
+}
