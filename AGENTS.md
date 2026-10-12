@@ -1,6 +1,18 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — beoordelingsroute gecorrigeerd en geïnstalleerd
+## Actueel vervolg 12 oktober — gemaakte code uitvoeren en afmaken
+
+De vorige voortzetting leverde twee geïnstalleerde beoordelingscorrecties op.
+De bestaande uitvoerder kan al hulpmiddelen maken en later gebruiken; geen tweede
+uitvoerder bouwen. Nu exact bepalen waarom de vier gesloten uitvoerexports geen
+brongebonden native uitvoering bevatten terwijl programmeeracties zijn vastgelegd.
+Alleen een bewezen productieoorzaak corrigeren, gericht modelvrij controleren en
+installeren. Geen nieuwe modelproef of wijziging van oude criteria, scores of klokken.
+Uitvoerder: /root/eva1_memory_transfer; gebundelde review: /root/product_execution_memory_review.
+Volledig goal actief, spraak geparkeerd; geen handeling van Jaap nodig.
+Dashboardinhoud gecontroleerd: 2026-10-12T06:37:45.233626+00:00.
+
+## Historisch 12 oktober — beoordelingsroute gecorrigeerd en geïnstalleerd
 
 Twee bestaande modules zijn geïnstalleerd: de eenmalig gemeten timing bereikt
 de vaste beoordelaar, en een onvolledige referentie stopt kandidaatwerk vóór
