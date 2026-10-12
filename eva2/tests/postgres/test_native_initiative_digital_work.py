@@ -337,3 +337,272 @@ def test_failed_native_initiative_is_remembered_as_failure(native_digital):
     assert "Geen bevestigd eindresultaat" in document.content
     assert "Niet als succes onthouden of automatisch herhalen" in document.content
     assert "internal_error" in document.content
+
+
+@pytest.fixture
+def native_saved_artifact(native_digital, tmp_path, monkeypatch):
+    """Real local gateway+journals, synthetic native task; no model transport."""
+    from eva.application.conversation import ConversationActionCall, ConversationTurn
+    from eva.application.initiative_execution import initiative_execution
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.providers.procedure_reference_actions import ProcedureReferenceActions
+    import eva.providers.procedure_reference_actions as module
+    from eva.providers.mcp_owner_authority import McpOwnerAuthority
+    from tests.postgres.test_procedure_reference_host import workspace_gateway
+    f = native_digital
+    # Keep production clocks honest; this entire fixture's authority is historical synthetic.
+    monkeypatch.setattr(module, "datetime", __import__("eva.adapters.postgres.initiative_execution", fromlist=["datetime"]).datetime)
+    with workspace_gateway("save_workspace_document") as (factory, handler):
+        adapter = factory(); asyncio.run(adapter.verify_catalog())
+        planner = adapter.planner()
+        config_sha = planner._specs["save_workspace_document"].configuration_sha256
+        profile = replace(f.profile, capability_ids=("apply_reviewed_component_improvement",
+            "read_own_component_source"))
+        f.profile = profile; f.service.digital_profile = profile
+        f.policy["digital_work"] = {"worker_profile_release_sha256": profile.release.worker_profile_release_sha256,
+            "capability_ids": list(profile.capability_ids)}
+        path = "/synthetic/own-helper.py"
+        cap = f.policy["capabilities"][0]
+        cap.update(action_name="save_workspace_document", configuration_sha256=config_sha,
+                   tool_name="save", observation_tool_name="read")
+        cap["execute_schema"] = {"type": "object", "properties": {
+            "path": {"type": "string", "pattern": "/synthetic/own-helper.*[.]py"},
+            "content": {"type": "string", "maxLength": 16384}},
+            "required": ["path", "content"], "additionalProperties": False}
+        cap["observe_schema"] = {"type": "object", "properties": {
+            "path": {"type": "string", "pattern": "/synthetic/own-helper.*[.]py"}},
+            "required": ["path"], "additionalProperties": False}
+        f.path.write_text(json.dumps(f.policy))
+        mandate_path = tmp_path / "owner-connector.json"
+        mandate_path.write_text(json.dumps({"contract": "OwnerConnectorMandate/v1", "mandate_id": "synthetic-owner",
+            "tenant_id": f.claim.tenant_id, "installation_id": f.claim.installation_id,
+            "owner_principal_id": f.claim.principal_id, "issued_at": "2020-01-01T00:00:00Z",
+            "authorization_source": "explicit synthetic owner authority", "enabled": True,
+            "public_https": True, "local_networks": []})); mandate_path.chmod(0o600)
+        authority = McpOwnerAuthority(f.control._engine, str(mandate_path))
+        actions = ProcedureReferenceActions(f.control._engine, authority=authority, gateway_factory=factory,
+            clock=lambda: NOW.strftime("%Y-%m-%dT%H:%M:%SZ"), native_authority_loader=lambda: f.auth)
+        tools = PostgresExternalConversationTools(f.control._engine, planner, adapter,
+                                                 authorize_turn=authority.authorize_turn)
+        _, work = admitted(f)
+        active, turn = f.auth.bind_work(work.spec)
+        baseline = "VALUE = 1\n"
+        until = (NOW + timedelta(days=6)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        # Existing owner-saved baseline is the actual supported improvement source.
+        owner_turn = replace(turn, conversation_id="owner-baseline", message_id="owner-baseline-message")
+        PostgresConversationJournal(f.control._engine, authority.scope).admit(owner_turn)
+        assert tools.execute(owner_turn, ConversationActionCall("owner-save", "save_workspace_document",
+            {"path": path, "content": baseline})).output["status"] == "verified"
+        designation = actions.execute(owner_turn, ConversationActionCall("owner-designate", "designate_reusable_procedure",
+            {"document_path": path, "use_when": "Use own useful helper", "retention_until": until}), step_index=1)
+        ref = designation.output["reference"]
+        target = {"kind": "saved_artifact", "procedure_reference_id": ref["document_id"],
+            "scope": {key: getattr(turn, key) for key in ("tenant_id", "installation_id", "principal_id", "project_id")},
+            "artifact_path": ref["path"], "content_sha256": ref["content_sha256"],
+            "receipt_sha256": ref["receipt_sha256"], "source_call_id": ref["source_call_id"],
+            "source_message_id": ref["source_message_id"], "tool_configuration_sha256": ref["tool_configuration_sha256"],
+            "retention_until": ref["retention_until"]}
+        with initiative_execution(active):
+            assert actions.resolve_improvement_source(turn, ref["document_id"])["baseline_content"] == baseline
+        call = started(f, work)
+        saved = f.store.record_success(call, result(call), now=NOW)
+        candidate = "VALUE = 2\n"
+        candidate_sha = hashlib.sha256(candidate.encode()).hexdigest()
+        publication = {"contract": "EvaSavedArtifactPublication/v1", "review_id": "a" * 64,
+            "source_target": target, "baseline_sha256": ref["content_sha256"], "candidate_sha256": candidate_sha,
+            "destination_path": "/synthetic/own-helper.improved-" + candidate_sha + ".py", "improvement_description": "Synthetic independently accepted change"}
+        yield SimpleNamespace(f=f, turn=turn, actions=actions, tools=tools, handler=handler,
+            work=saved, publication=publication, candidate=candidate, baseline=baseline, ref=ref,
+            authority=authority, namespace_path=path)
+
+
+def test_native_reviewed_application_then_later_ordinary_resolve_preserves_native_source(native_saved_artifact, monkeypatch):
+    from eva.application.initiative_execution import initiative_execution
+    from eva.application.conversation import ConversationActionCall
+    from eva.operations.saved_artifact_application import apply_in_core, receipt_confirms_application
+    from eva.application.procedure_references import ProcedureScope
+    f = native_saved_artifact; auth = f.f.auth
+    with pytest.raises(InitiativeMandateDenied):
+        auth.bind_work(f.work.spec)  # Finished work still cannot resume general tools.
+    from eva.application.conversation import ConversationConflict
+    with pytest.raises(ConversationConflict, match="not an owner connector instruction"):
+        _SourceTurnLoader(f.f.control._engine, f.authority)(f.work.spec.source.model_dump(mode="json"))
+    guard, turn = auth.bind_reviewed_saved_application(f.work.spec.work_id, f.publication, f.candidate)
+    from eva.bootstrap.runtime import RuntimeSettings
+    from eva.providers.procedure_reference_actions import ProcedureReferenceProviderFactory
+    from eva.operations.saved_artifact_application import runtime_apply
+    settings = SimpleNamespace(database_dsn=f.f.control._engine.url.render_as_string(hide_password=False),
+        dashboard_tenant_id=str(f.f.control._authority.tenant_id),
+        dashboard_installation_id=str(f.f.control._authority.installation_id))
+    monkeypatch.setattr(RuntimeSettings, "from_environment", lambda: settings)
+    monkeypatch.setattr(ProcedureReferenceProviderFactory, "load_settings", lambda: None)
+    monkeypatch.setattr(ProcedureReferenceProviderFactory, "build", lambda *args: SimpleNamespace(external_tools=(f.actions,)))
+    receipt = runtime_apply({"task_id": f.work.spec.work_id, "publication": f.publication,
+        "candidate_content": f.candidate, "scope_sha256": canonical_sha256({key: getattr(turn, key)
+            for key in ("tenant_id", "installation_id", "principal_id")})})
+    with initiative_execution(guard):
+        assert not guard.action_allowed("use_programming_tool")
+        with pytest.raises(InitiativeMandateDenied):
+            guard.authorize_procedure(ConversationActionCall("escape", "designate_reusable_procedure",
+                {"document_path": "other.py", "use_when": "Other", "retention_until": f.ref["retention_until"]}))
+    assert receipt_confirms_application(receipt, f.publication, f.work.spec.work_id)
+    assert f.handler.documents[f.namespace_path] == f.baseline
+    assert f.handler.documents[f.publication["destination_path"]] == f.candidate
+    # No fabricated owner ingress for either native save or terminal application.
+    assert auth.timeline.events("conversation:" + turn.message_id) == ()
+    auth.revoke()  # Historical source remains readable, never grants old execution.
+    later = replace(turn, conversation_id="later-owner", message_id="later-owner-message", text="Use the useful helper")
+    journal = PostgresConversationJournal(f.f.control._engine, f.authority.scope); journal.admit(later)
+    scope = ProcedureScope(turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id)
+    host = f.actions._host(later)
+    assert host.source_active(scope, turn.message_id)
+    assert host.load_save(scope, receipt["reference"]["source_call_id"]).admission["source_message_id"] == turn.message_id
+    resolved = f.actions.execute(later, ConversationActionCall("later-resolve", "resolve_reusable_procedure",
+        {"document_id": receipt["reference"]["document_id"]})).output
+    assert resolved["status"] == "resolved" and resolved["references"][0]["untrusted_content"] == f.candidate
+    with pytest.raises(InitiativeMandateDenied):
+        guard.check(turn)
+
+
+@pytest.mark.parametrize("change", ["owner", "project", "content", "destination"])
+def test_native_reviewed_binding_rejects_changed_package_before_effect(native_saved_artifact, change):
+    from copy import deepcopy
+    f = native_saved_artifact
+    publication = deepcopy(f.publication)
+    if change == "owner": publication["source_target"]["scope"]["principal_id"] = "someone-else"
+    elif change == "project": publication["source_target"]["scope"]["project_id"] = "other-project"
+    elif change == "content": publication["candidate_sha256"] = "b" * 64
+    else: publication["destination_path"] = "other.py"
+    if change in {"owner", "project"}:
+        target = publication["source_target"]
+        target["procedure_reference_id"] = "procedure-reference:" + canonical_sha256({
+            "scope": target["scope"], "receipt": target["receipt_sha256"]})
+    before = len(f.handler.calls)
+    with pytest.raises((InitiativeMandateDenied, ValueError)):
+        f.f.auth.bind_reviewed_saved_application(f.work.spec.work_id, publication, f.candidate)
+    assert len(f.handler.calls) == before
+
+
+@pytest.mark.parametrize("change", ["stop", "result", "retention", "mandate"])
+def test_terminal_guard_rechecks_completion_and_current_stop_before_every_dispatch(native_saved_artifact, change, monkeypatch):
+    from eva.application.orchestration import ToolRequest
+    f = native_saved_artifact
+    guard, turn = f.f.auth.bind_reviewed_saved_application(f.work.spec.work_id, f.publication, f.candidate)
+    if change == "mandate":
+        f.f.auth.revoke()
+    elif change == "stop":
+        assert f.f.control.stop(f.f.claim.intent_id, now=NOW)["status"] == "stopped"
+    elif change == "retention":
+        # The admitted retention is immutable; advance the actual guard clock.
+        from datetime import datetime
+        import eva.adapters.postgres.initiative_execution as module
+        expired_at = datetime.fromisoformat(f.publication["source_target"]["retention_until"].replace("Z", "+00:00")) + timedelta(seconds=1)
+        assert expired_at < f.work.retention_until
+        class ExpiredTime(datetime):
+            @classmethod
+            def now(cls, tz=None): return expired_at
+        monkeypatch.setattr(module, "datetime", ExpiredTime)
+    else:
+        with f.f.control._engine.begin() as conn:
+            f.f.store._scope(conn)
+            conn.execute(sa.update(delegated_work_runs).where(
+                delegated_work_runs.c.work_id == f.work.spec.work_id).values(
+                    result_sha256=bytes.fromhex("f" * 64)))
+    request = ToolRequest("test", "operation", "checkpoint", "save",
+        {"path": f.publication["destination_path"], "content": f.candidate}, {},
+        observation_tool_name="read", observation_arguments={"path": f.publication["destination_path"]},
+        tool_configuration_sha256=f.ref["tool_configuration_sha256"])
+    before = len(f.handler.calls)
+    from eva.application.conversation import ConversationStopped
+    from eva.adapters.postgres.delegated_work import DelegatedWorkStoreError
+    expected = (ConversationStopped if change == "stop" else
+                DelegatedWorkStoreError if change == "result" else InitiativeMandateDenied)
+    with pytest.raises(expected):
+        guard.authorize_request(request, phase="execute")
+    assert len(f.handler.calls) == before
+
+
+def test_terminal_guard_rejects_other_reads_and_original_overwrite(native_saved_artifact):
+    from eva.application.orchestration import ToolRequest
+    f = native_saved_artifact
+    guard, _ = f.f.auth.bind_reviewed_saved_application(f.work.spec.work_id, f.publication, f.candidate)
+    for path, content, phase in ((f.namespace_path, f.baseline, "execute"),
+                                 ("other.py", f.candidate, "observe"),
+                                 (f.publication["destination_path"], "changed", "execute")):
+        request = ToolRequest("test", "operation", "checkpoint", "save", {"path": path, "content": content}, {},
+            observation_tool_name="read", observation_arguments={"path": path},
+            tool_configuration_sha256=f.ref["tool_configuration_sha256"])
+        with pytest.raises(InitiativeMandateDenied, match="accepted package"):
+            guard.authorize_request(request, phase=phase)
+
+
+@pytest.mark.parametrize("when", ["before_bind", "after_bind", "after_save"])
+def test_real_owner_stop_blocks_deferred_native_effects_and_keeps_completion(native_saved_artifact, when):
+    from eva.application.initiative_execution import initiative_execution
+    from eva.application.conversation import ConversationStopped
+    from eva.operations.saved_artifact_application import apply_in_core
+    f = native_saved_artifact
+    previous = f.f.auth.timeline.events(f.f.claim.thread_id)
+    before = len(f.handler.calls)
+    if when == "before_bind":
+        assert f.f.control.stop(f.f.claim.intent_id, now=NOW)["status"] == "stopped"
+        with pytest.raises(ConversationStopped):
+            f.f.auth.bind_reviewed_saved_application(f.work.spec.work_id, f.publication, f.candidate)
+    else:
+        guard, turn = f.f.auth.bind_reviewed_saved_application(f.work.spec.work_id, f.publication, f.candidate)
+        original = f.tools.execute
+        def execute(*args, **kwargs):
+            receipt = original(*args, **kwargs)
+            assert f.f.control.stop(f.f.claim.intent_id, now=NOW)["status"] == "stopped"
+            return receipt
+        if when == "after_bind":
+            f.f.control.stop(f.f.claim.intent_id, now=NOW)
+        else:
+            f.tools.execute = execute
+        with initiative_execution(guard), pytest.raises(ConversationStopped):
+            apply_in_core(f.publication, f.candidate, f.work.spec.work_id, engine=f.f.control._engine,
+                procedures=f.actions, tools=f.tools, source_turn=turn, check_ready=lambda _: "ready")
+    assert f.f.auth.timeline.events(f.f.claim.thread_id) == previous
+    assert f.f.control.page(now=NOW)["cards"][0]["status"] == "done"
+    if when != "after_save":
+        assert len(f.handler.calls) == before
+    else:
+        from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
+        store = PostgresMemoryOutbox(f.f.control._engine, tenant_id=f.turn.tenant_id, installation_id=f.turn.installation_id)
+        refs, _ = store.list_sources(principal_id=f.turn.principal_id, project_id=None)
+        assert len(refs) == 1  # Original only; saved candidate has no new designation.
+
+
+def test_original_reference_erasure_between_save_and_designation_blocks_derived_reference(native_saved_artifact):
+    from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
+    from eva.application.initiative_execution import initiative_execution
+    from eva.operations.saved_artifact_application import apply_in_core
+    f = native_saved_artifact
+    guard, turn = f.f.auth.bind_reviewed_saved_application(f.work.spec.work_id, f.publication, f.candidate)
+    store = PostgresMemoryOutbox(f.f.control._engine, tenant_id=turn.tenant_id, installation_id=turn.installation_id)
+    original = f.tools.execute
+    def execute(*args, **kwargs):
+        receipt = original(*args, **kwargs)
+        store.erase_content(principal_sha256=hashlib.sha256(turn.principal_id.encode()).hexdigest(),
+            document_id=f.ref["document_id"], operation_sha256="b" * 64, erased_at=NOW)
+        return receipt
+    f.tools.execute = execute
+    with initiative_execution(guard), pytest.raises(InitiativeMandateDenied, match="erased"):
+        apply_in_core(f.publication, f.candidate, f.work.spec.work_id, engine=f.f.control._engine,
+            procedures=f.actions, tools=f.tools, source_turn=turn, check_ready=lambda _: "ready")
+    assert store.resolve_source(f.ref["document_id"], principal_id=turn.principal_id, project_id=None) is None
+    refs, _ = store.list_sources(principal_id=turn.principal_id, project_id=None)
+    assert refs == ()
+
+
+
+def test_legacy_native_completion_without_deferred_application_keeps_already_completed(native_digital):
+    f = native_digital
+    _, work = admitted(f)
+    call = started(f, work)
+    f.store.record_success(call, result(call), now=NOW)
+    original = f.auth.timeline.events(f.claim.thread_id)
+    assert f.control.stop(f.claim.intent_id, now=NOW)["status"] == "already_completed"
+    assert f.auth.timeline.events(f.claim.thread_id) == original
+    turn = f.auth.work_memory_source(f.store.load(work.spec.work_id, **f.service._owner), now=NOW)
+    PostgresConversationJournal(f.control._engine, f.control._scope).ensure_running(turn)

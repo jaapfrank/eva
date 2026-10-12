@@ -1,32 +1,45 @@
-## Actueel werk — 2026-10-11T23:38:28.027894+00:00
+## Actueel werk — 2026-10-12T00:23:58.026721+00:00
 
-## Actueel 12 oktober — zelfgekozen verbetering toepassen
+## Actueel 12 oktober — beoordeeld hulpmiddel uit eigen initiatief geïnstalleerd
 
-De initiatief→uitkomstgeheugen-koppeling is geïnstalleerd. De volgende concrete
-ontbrekende overgang zit in dezelfde verbeterroute: de uitgestelde toepassing
-van een onafhankelijk beoordeeld bewaard hulpmiddel laadt uitsluitend een gewone
-gebruikersingang, waardoor een native initiatief daar vastloopt. Maak uitsluitend
-de bestaande bron-/toestemmingskoppeling passend voor die echte initiatiefherkomst;
-behoud huidige eigenaar, mandaat, stop, exacte bron en onafhankelijke beoordeling.
-Geen tweede verbeterplatform, gesloten proefherhaling of nieuwe vergelijking.
-Werk is gestart; installatie en later werkelijk gebruik nog niet aangetoond.
-Het volledige projectgoal met vier productuitkomsten, leercyclus en AIDE² blijft
-actief. Historische 39/48 kleine afrondingen en eerdere bewijsclaims blijven staan.
+De bestaande verbeterroute accepteert nu ook de oorspronkelijke native
+initiatiefherkomst. Een onafhankelijk geaccepteerd hulpmiddel kan via dezelfde
+document-/procedurebron worden toegepast en later bij gewoon werk worden opgehaald.
+Geen tweede verbeterplatform, planner, geheugen of daemon.
 
-**Laatst opgeleverd:** eigen digitaal initiatief gebruikt dezelfde privéroute
-naar uitkomstgeheugen als gewone opdrachten. Gericht gecontroleerd en geïnstalleerd;
-beide diensten gezond. Geen nieuwe modelproef.
+Zes bestaande modules geïnstalleerd in gezonde kern en werker; twee exacte
+operationmodules van de bestaande verbeterdienst bijgewerkt (health 200).
+334 andere Python-bestanden per image, profiel, mandaat, mounts, netwerken en
+hostconfiguratie behouden. 89 unieke individuele gerichte controles slagen,
+waaronder 15 nieuwe keten-/stop-/wis-/later-ophaalcontroles in disposable PostgreSQL.
+Dit is geen enkele foutloze 89-test-run; oorspronkelijke fouten en deelreturncodes
+blijven bewaard. Geen handmatige Eva-modelaanvragen of nieuwe vergelijking.
 
-**Nog open:** een echte nieuwe initiatiefuitkomst, latere toepassing, volledige
-leercyclus en AIDE². Geen hoofdafronding uit alleen deze technische koppeling.
+Een stop na oorspronkelijke taakafronding gebruikt de bestaande stopmarker:
+het afgeronde werkresultaat blijft staan, maar uitgestelde toepassing stopt.
+Elke effectstap controleert de oorspronkelijke bron, bewaring en erasure opnieuw.
+Gewone historische bronuitlezing maakt het oude mandaat niet opnieuw actief.
 
-**Volgende:** bestaande ontwikkel-/verbeterroute in rustige momenten op echte
-tekorten en ervaringen laten aansluiten. Geen voorbeeldfunctie of tweede platform.
+**Nog open:** authentiek zelfgekozen verbeterwerk en later gewijzigd gedrag,
+de volledige leercyclus en AIDE² voor agentaansturing én code/apps/addons.
+De gehele gezinsacceptatie blijft menselijk; 39/48 historische afrondingen behouden.
+Het volledige projectgoal blijft actief. Spraak geparkeerd; Docker Desktop ongemoeid.
+Geen eigenaarhandeling nodig.
+
+Bewijs: eva2/evidence/product/native-reviewed-artifact-installed-20261012.json.
+Bronreview: eva2/reviews/native-reviewed-artifact-source-review-20261012.json.
+Eindreview GO: eva2/reviews/native-reviewed-artifact-installed-review-20261012.json.
+
+**Laatst opgeleverd:** de beoordeelde hulpmiddeltoepassing herkent nu ook eigen
+initiatief; exact geïnstalleerd in kern, werker en bestaande verbeterdienst.
+
+**Volgende:** authentieke verbetercyclus en later gebruik, inclusief agentaansturing
+en code/uitbreidingen, via dezelfde bestaande route afronden.
 
 **Van Jaap nodig:** niets. Volledig projectgoal actief; spraak geparkeerd.
 Persoonlijkheid, geheugenbasis en 39/48 oorspronkelijke afrondingen behouden.
 
-**Dashboard:** dezelfde actuele oplevering, open punten en controletijd.
+**Dashboard:** actuele installatie, open cyclus en controletijd zijn bijgewerkt.
 
 ## Actuele uitvoerfase — 12 oktober 2026
 

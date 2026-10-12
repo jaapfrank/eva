@@ -220,7 +220,11 @@ class PostgresOwnerInitiatives:
             if row is None:
                 raise LookupError("initiative unavailable")
             if row.phase in {"release_ready", "initiative_completed"}:
-                status = "already_completed"
+                # Completion stays immutable. Stop only the exact deferred native
+                # application capability via the existing source-turn stop marker.
+                status = ("stopped" if row.phase == "initiative_completed"
+                          and self._has_deferred_native_application(conn, row, now)
+                          else "already_completed")
             elif row.phase == "personal_stopped":
                 status = "stopped"
             else:
@@ -292,6 +296,39 @@ class PostgresOwnerInitiatives:
             self._stop_execution(intent_id)
         return {"status": "recorded", "intent_id": intent_id,
                 "execution_stopped": execution_stopped}
+
+    def _has_deferred_native_application(self, conn, row, now):
+        from eva.adapters.postgres.current_catalog import delegated_work_runs as work
+        from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+        from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+        e = operational_events.c
+        completion = conn.execute(sa.select(e.payload, e.payload_sha256).where(
+            e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
+            e.thread_id == row.thread_id, e.event_type == "PERSONAL_INITIATIVE_COMPLETED")
+            .order_by(e.sequence.desc()).limit(1)).one_or_none()
+        if completion is None:
+            return False  # Preserve legacy direct completion's already_completed behavior.
+        if canonical_sha256(completion.payload) != bytes(completion.payload_sha256).hex():
+            raise RuntimeError("native completed source hash differs")
+        bound = completion.payload.get("data", {})
+        if not isinstance(bound.get("work_id"), str):
+            return False
+        PostgresOperationalTimeline(self._engine, self._authority)._scope(conn)
+        try:
+            stored = conn.execute(sa.select(work).where(work.c.work_id == bound["work_id"])).mappings().one_or_none()
+            if stored is None:
+                return False
+            loaded = PostgresDelegatedWorkStore.validate_stored_row(stored)
+            spec = loaded.spec
+            return (type(spec) is DelegatedInitiativeDigitalWorkSpec
+                and spec.owner_principal_id == str(self._owner) and spec.principal_binding_id == str(self._binding)
+                and spec.origin.thread_id == row.thread_id and spec.sha256 == bound.get("spec_sha256")
+                and loaded.state in {"succeeded", "verified"} and loaded.result is not None
+                and canonical_sha256(loaded.result.to_payload()) == bound.get("result_sha256")
+                and loaded.retention_until > now
+                and "apply_reviewed_component_improvement" in spec.grant.capability_ids)
+        finally:
+            PostgresOperationalTimeline(self._engine, self._scope)._scope(conn)
 
     def _stop_execution(self, intent_id):
         from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore

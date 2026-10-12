@@ -31,11 +31,64 @@ class _AuthorizedProcedureSources:
         return self.store.resolve_source(*args, **kwargs)
 
 
+class _ProcedureSourceLoader:
+    """Owner INGRESS stays ordinary; native sources retain their separate journal."""
+    def __init__(self, engine, authority, native_authority_loader=None):
+        self.engine = engine
+        self.authority = authority
+        self.native_authority_loader = native_authority_loader
+
+    def native_authority(self):
+        from eva.application.initiative_execution import current_initiative
+        guard = current_initiative()
+        if guard is not None:
+            return guard.authority
+        if self.native_authority_loader is None:
+            raise ConversationConflict("native procedure source authority is unavailable")
+        return self.native_authority_loader()
+
+    def __call__(self, source):
+        if not isinstance(source, dict) or not isinstance(source.get("conversation_id"), str):
+            raise ConversationConflict("procedure source identity is invalid")
+        if not source["conversation_id"].startswith("initiative-task:"):
+            return _SourceTurnLoader(self.engine, self.authority)(source)
+        from eva.application.initiative_execution import current_initiative
+        guard = current_initiative()
+        if guard is not None:
+            turn = guard.turn
+            expected = {key: getattr(turn, key) for key in
+                        ("tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")}
+            expected["audience"] = {"kind": "private_person", "principal_id": turn.principal_id}
+            if source == expected:
+                guard.check(turn)
+                self.authority.authorize_turn(turn)
+                return turn
+        turn = self.native_authority().retained_procedure_source(source=source, now=datetime.now(UTC))
+        self.authority.authorize_turn(turn)
+        return turn
+
+    def native_source_active(self, scope, message):
+        from eva.application.initiative_execution import current_initiative
+        guard = current_initiative()
+        if guard is not None:
+            turn = guard.turn
+            if (message == turn.message_id and all(getattr(scope, key) == getattr(turn, key)
+                    for key in ("tenant_id", "installation_id", "principal_id", "project_id"))):
+                guard.check(turn)
+                self.authority.authorize_turn(turn)
+                return True
+        turn = self.native_authority().retained_procedure_source(scope=scope, message=message,
+                                                                now=datetime.now(UTC))
+        self.authority.authorize_turn(turn)
+        return True
+
+
 class ProcedureReferenceActions:
     action_names = _NAMES
     supports_indexed_steps = True
 
-    def __init__(self, engine, *, authority, gateway_factory, clock=None, authorize_turn=None, private_owner_resolver=None, executor=None):
+    def __init__(self, engine, *, authority, gateway_factory, clock=None, authorize_turn=None, private_owner_resolver=None, executor=None, native_authority_loader=None):
+        self.source_loader = _ProcedureSourceLoader(engine, authority, native_authority_loader)
         self.executor = executor
         self.action_names = _NAMES if executor is None else (*_NAMES, _RUN)
         self.engine, self.authority, self.gateway_factory = engine, authority, gateway_factory
@@ -48,7 +101,7 @@ class ProcedureReferenceActions:
             self.authorize_turn(turn)
         host = PostgresProcedureReferenceHost(self.engine, turn=turn, authority=self.authority,
                                               gateway_factory=self.gateway_factory,
-                                              load_source_turn=_SourceTurnLoader(self.engine, self.authority),
+                                              load_source_turn=self.source_loader,
                                               private_owner_resolver=self.private_owner_resolver)
         host.require_current()
         return host
@@ -66,6 +119,10 @@ class ProcedureReferenceActions:
     def resolve_improvement_source(self, turn, document_id):
         """Host-only fresh source binding for the existing component evaluator."""
         host = self._host(turn)
+        from eva.application.initiative_execution import current_initiative
+        guard = current_initiative()
+        if guard is not None and hasattr(guard, "authorize_reference"):
+            guard.authorize_reference(document_id)
         store = PostgresMemoryOutbox(self.engine, tenant_id=turn.tenant_id,
                                     installation_id=turn.installation_id)
         service = ProcedureReferences(store, host)
@@ -240,6 +297,11 @@ class ProcedureReferenceActions:
         return ProviderContribution("procedure_references", self.conversation_tools(self.executor), (self,))
 
     def execute(self, turn, call, *, step_index=0):
+        from eva.application.initiative_execution import authorize_initiative_action, current_initiative
+        authorize_initiative_action(turn, call.name)
+        guard = current_initiative()
+        if guard is not None and hasattr(guard, "authorize_procedure"):
+            guard.authorize_procedure(call)
         self._host(turn)
         timeline = PostgresOperationalTimeline(self.engine, self.authority.scope)
         slot = self._slot(turn, step_index)
@@ -409,6 +471,22 @@ class ProcedureReferenceProviderFactory:
         return mandate, gateway
 
     @staticmethod
+    def native_authority(engine, settings=None):
+        from uuid import UUID
+        from eva.bootstrap.runtime import RuntimeSettings
+        from eva.adapters.postgres.owner_initiatives import PostgresOwnerInitiatives
+        from eva.adapters.postgres.operational_timeline import TimelineScope
+        from eva.bootstrap.native_initiative_work import configured_initiative_authority
+        settings = settings or RuntimeSettings.from_environment()
+        owner = PostgresOwnerInitiatives(engine, tenant_id=settings.background_tenant_id,
+            installation_id=settings.background_installation_id,
+            owner=UUID(str(settings.background_principal_id)),
+            binding=UUID(str(settings.dashboard_principal_binding_id)),
+            authority_scope=TimelineScope(UUID(str(settings.dashboard_tenant_id)),
+                                          UUID(str(settings.dashboard_installation_id))))
+        return configured_initiative_authority(owner)
+
+    @staticmethod
     def build(settings, engine):
         from eva.providers.mcp_owner_authority import McpOwnerAuthority
         from eva.providers.mcp_gateway import McpGatewayProviderFactory
@@ -438,5 +516,6 @@ class ProcedureReferenceProviderFactory:
         from eva.adapters.connectors.procedure_execution import configured_procedure_executor
         actions = ProcedureReferenceActions(engine, authority=authority, gateway_factory=gateway_factory,
             authorize_turn=authorize_turn, private_owner_resolver=resolver,
-            executor=configured_procedure_executor())
+            executor=configured_procedure_executor(),
+            native_authority_loader=lambda: ProcedureReferenceProviderFactory.native_authority(engine))
         return actions.contribution()

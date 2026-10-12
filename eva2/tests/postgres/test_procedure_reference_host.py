@@ -22,7 +22,7 @@ NOW='2026-09-13T06:00:00Z'
 UNTIL='2026-10-13T06:00:00Z'
 
 @contextmanager
-def workspace_gateway():
+def workspace_gateway(action_name="save_document"):
     schema={'type':'object','properties':{'path':{'type':'string'},'content':{'type':'string'}},
             'required':['path','content'],'additionalProperties':False}
     read={'type':'object','properties':{'path':{'type':'string'}},'required':['path'],'additionalProperties':False}
@@ -39,7 +39,7 @@ def workspace_gateway():
             self._json({'id':body['id'],'jsonrpc':'2.0','result':{'structuredContent':{'content':self.documents[args['path']]},'content':[],'isError':False}})
     server=ThreadingHTTPServer(('127.0.0.1',0),Handler);thread=Thread(target=server.serve_forever,daemon=True);thread.start()
     spec=McpGatewayToolSpec(contract='EvaMcpGatewayProvider/v2',
-        descriptor=ConversationToolDescriptor(name='save_document',description='Save document',input_schema=schema),
+        descriptor=ConversationToolDescriptor(name=action_name,description='Save document',input_schema=schema),
         execute_tool_name='save',observe_tool_name='read',execute_catalog_name='save',observe_catalog_name='read',
         execute_catalog_sha256=_catalog_hash(rows[0]),observe_catalog_sha256=_catalog_hash(rows[1]),
         execute_argument_bindings=(McpGatewayArgumentBinding('path','path'),McpGatewayArgumentBinding('content','content')),

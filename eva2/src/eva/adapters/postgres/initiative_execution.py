@@ -306,6 +306,10 @@ class PostgresInitiativeAuthority:
         return guard, turn
 
     def work_memory_source(self, work, *, now):
+        """Read-only outcome-memory compatibility; no new execution authority."""
+        return self._retained_work_source(work, now=now)
+
+    def _retained_work_source(self, work, *, now, _connection=None):
         """Read a retained outcome's original intent; never grant another action."""
         from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
         from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
@@ -318,13 +322,15 @@ class PostgresInitiativeAuthority:
                 or work.retention_until <= now):
             raise InitiativeMandateDenied("initiative memory owner or retention differs")
         try:
-            with owner._engine.begin() as conn:
+            from contextlib import nullcontext
+            with (owner._engine.begin() if _connection is None else nullcontext(_connection)) as conn:
                 owner._authorize(conn, now)
                 row = conn.execute(owner._query().where(
-                    operational_checkpoints.c.thread_id == spec.origin.thread_id)).one_or_none()
+                    operational_checkpoints.c.thread_id == spec.origin.thread_id)
+                    .with_for_update(of=operational_checkpoints)).one_or_none()
                 if row is None:
                     raise InitiativeMandateDenied("initiative memory source is absent")
-            events = self.timeline.events(spec.origin.thread_id)
+                events = self.timeline.events(spec.origin.thread_id)
         except (RuntimeError, TimelineNotFound) as error:
             raise InitiativeMandateDenied("initiative memory source is unavailable") from error
         claim = PostgresPersonalInterestStore._claim_from_events(
@@ -349,12 +355,124 @@ class PostgresInitiativeAuthority:
             completion = next((event for event in reversed(events)
                 if event.event_type == "PERSONAL_INITIATIVE_COMPLETED"), None)
             completed = {} if completion is None else completion.payload.get("data", {})
-            if (row.phase != "initiative_completed" or work.result is None
+            if (row.phase != "initiative_completed" or row.status != "completed" or work.result is None
                     or completed.get("work_id") != spec.work_id
                     or completed.get("spec_sha256") != spec.sha256
                     or completed.get("result_sha256") != canonical_sha256(work.result.to_payload())):
                 raise InitiativeMandateDenied("initiative memory lacks its completed parent")
         return turn
+
+    def _completed_work(self, conn, work_id, *, now):
+        """Retained typed queue/result/parent provenance, without old execution rights."""
+        from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+        from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+        owner = self.owner
+        owner._authorize(conn, now)
+        store = PostgresDelegatedWorkStore(owner._engine, owner._authority)
+        # This owner transaction intentionally crosses the two existing exact
+        # scopes; the generic store setter correctly refuses implicit rebinding.
+        PostgresOperationalTimeline(owner._engine, owner._authority)._scope(conn)
+        work = store._load_terminal_locked(conn, work_id=work_id,
+            missing_message="native procedure work is absent")
+        spec = work.spec
+        if (type(spec) is not DelegatedInitiativeDigitalWorkSpec
+                or spec.owner_principal_id != str(owner._owner)
+                or spec.principal_binding_id != str(owner._binding)
+                or work.state not in {"succeeded", "verified"} or work.result is None
+                or work.stop_requested_at is not None or work.lease_owner is not None
+                or work.retention_until <= now):
+            raise InitiativeMandateDenied("native procedure work is not retained completed work")
+        turn = self._retained_work_source(work, now=now, _connection=conn)
+        return work, turn
+
+    def retained_procedure_source(self, *, source=None, scope=None, message=None, now):
+        """Exact historical source lookup; never reconstruct an owner INGRESS."""
+        from eva.adapters.postgres.current_catalog import delegated_work_runs as work
+        if source is not None:
+            fields = {"tenant_id", "installation_id", "principal_id", "conversation_id", "message_id", "audience"}
+            if (not isinstance(source, dict) or set(source) != fields
+                    or source["audience"] != {"kind": "private_person", "principal_id": str(self.owner._owner)}):
+                raise InitiativeMandateDenied("native procedure source is not private owner data")
+            identity = {key: source[key] for key in fields - {"audience"}}
+        elif scope is not None and isinstance(message, str) and message:
+            identity = {key: getattr(scope, key) for key in ("tenant_id", "installation_id", "principal_id")}
+            identity["message_id"] = message
+        else:
+            raise InitiativeMandateDenied("exact native source identity is required")
+        if any(identity[key] != expected for key, expected in (
+                ("tenant_id", self.owner._tenant_id), ("installation_id", self.owner._installation_id),
+                ("principal_id", str(self.owner._owner)))):
+            raise InitiativeMandateDenied("native procedure source scope differs")
+        with self.owner._engine.begin() as conn:
+            self.owner._authorize(conn, now)
+            PostgresOperationalTimeline(self.owner._engine, self.owner._authority)._scope(conn)
+            ids = conn.execute(sa.select(work.c.work_id).where(
+                work.c.spec_payload["contract"].astext == "DelegatedInitiativeDigitalWork/v1",
+                *(work.c.spec_payload["source"][key].astext == value for key, value in identity.items()))
+                .limit(2)).scalars().all()
+            if len(ids) != 1:
+                raise InitiativeMandateDenied("native procedure source is absent or ambiguous")
+            _, turn = self._completed_work(conn, ids[0], now=now)
+            if scope is not None and turn.project_id != scope.project_id:
+                raise InitiativeMandateDenied("native procedure project differs")
+            return turn
+
+    def reviewed_work_current(self, work_id, *, now):
+        """Eligibility only; a completed queue row alone grants no new dispatch."""
+        policy, digest = self.policy()
+        with self.owner._engine.begin() as conn:
+            work, turn = self._completed_work(conn, work_id, now=now)
+        spec = work.spec
+        digital = policy.get("digital_work")
+        if (digest != spec.origin.mandate_sha256 or digital is None
+                or digital["worker_profile_release_sha256"] != spec.worker_profile_release_sha256
+                or not set(spec.grant.capability_ids).issubset(
+                    set(digital["capability_ids"]) | {cap["action_name"] for cap in policy["capabilities"]})):
+            raise InitiativeMandateDenied("completed native work mandate or grant changed")
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        PostgresConversationJournal(self.owner._engine, self.owner._scope).ensure_running(turn)
+        return work, turn
+
+    def bind_reviewed_saved_application(self, work_id, publication, candidate_content):
+        """Host-only binding for one independently accepted saved-source publication."""
+        from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
+        from eva.operations.component_evaluation import validate_saved_artifact_target
+        from pathlib import PurePosixPath
+        import hashlib
+        now = datetime.now(UTC).replace(microsecond=0)
+        work, turn = self.reviewed_work_current(work_id, now=now)
+        target = validate_saved_artifact_target(publication["source_target"],
+            baseline_sha256=publication["baseline_sha256"])
+        actual_scope = {key: getattr(turn, key) for key in
+                        ("tenant_id", "installation_id", "principal_id", "project_id")}
+        candidate_sha = hashlib.sha256(candidate_content.encode()).hexdigest()
+        expected_path = str(PurePosixPath(target["artifact_path"]).with_name(
+            PurePosixPath(target["artifact_path"]).stem + ".improved-" + candidate_sha + ".py"))
+        if (publication.get("contract") != "EvaSavedArtifactPublication/v1"
+                or re.fullmatch(r"[0-9a-f]{64}", publication.get("review_id", "")) is None
+                or target["scope"] != actual_scope
+                or not 0 < len(candidate_content.encode()) <= 16384
+                or publication.get("candidate_sha256") != candidate_sha
+                or publication.get("destination_path") != expected_path
+                or datetime.fromisoformat(target["retention_until"].replace("Z", "+00:00")) <= now
+                or "apply_reviewed_component_improvement" not in work.spec.grant.capability_ids):
+            raise InitiativeMandateDenied("reviewed native publication binding differs")
+        claim = PostgresPersonalInterestStore._claim_from_events(self.owner._tenant_id,
+            self.owner._installation_id, self.timeline.events(work.spec.origin.thread_id),
+            work.spec.origin.claim_revision)
+        thread = "initiative-execution:" + claim.intent_id.removeprefix("personal-interest:")
+        # This is the original native execution thread; never create a terminal mandate.
+        self.timeline.load(thread)
+        expected = {"intent_id": claim.intent_id, "origin": "eva_initiative",
+            "mandate_sha256": work.spec.origin.mandate_sha256, "turn_sha256": canonical_sha256({
+                "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+                "message_id": turn.message_id, "text": turn.text, "occurred_at": turn.occurred_at})}
+        if self.timeline.events(thread)[0].payload.get("data") != expected:
+            raise InitiativeMandateDenied("original native execution binding differs")
+        guard = ReviewedNativeSavedArtifactGuard(self, claim, turn, work.spec.origin.mandate_sha256,
+            thread, work=work, publication=publication, candidate_content=candidate_content)
+        guard.check(turn)
+        return guard, turn
 
     def settle_work(self, conn, spec, *, state, result, usage, now, guard=None):
         """Persist the real outcome on its original parent in the queue transaction."""
@@ -548,3 +666,105 @@ class NativeInitiativeGuard:
                 "Beschikbare kosteloze capabilities en hostgrenzen op de uitgewerkte providerinvoer (gebruik het gewone toolschema voor je toolargumenten): " + json.dumps([
                     {"action": c["action_name"], "arguments": self._schema(c["execute_schema"])}
                     for c in policy["capabilities"]], ensure_ascii=False))
+
+class ReviewedNativeSavedArtifactGuard(NativeInitiativeGuard):
+    """No general terminal execution: exact accepted save/designation/readback only."""
+    def __init__(self, authority, claim, turn, mandate_sha, thread, *, work, publication, candidate_content):
+        super().__init__(authority, claim, turn, mandate_sha, thread, work_spec=work.spec)
+        self.publication = json.loads(json.dumps(publication))
+        self.candidate_content = candidate_content
+        self.result_sha256 = canonical_sha256(work.result.to_payload())
+        self._designation = None
+
+    def check_locked(self, conn):
+        owner = self.authority.owner
+        now = datetime.now(UTC).replace(microsecond=0)
+        policy = self.authority._read()
+        if not policy["enabled"] or canonical_sha256({k: v for k, v in policy.items() if k != "enabled"}) != self.mandate_sha:
+            raise InitiativeMandateDenied("reviewed native mandate changed before dispatch")
+        owner._authorize(conn, now)
+        c = operational_checkpoints.c
+        mandate = conn.execute(sa.select(operational_checkpoints).where(
+            c.tenant_id == owner._scope.tenant_id, c.installation_id == owner._scope.installation_id,
+            c.thread_id == self.authority.thread).with_for_update()).one()
+        if mandate.phase == "initiative_mandate_revoked" or self.authority._admitted_digest(conn) != self.mandate_sha:
+            raise InitiativeMandateDenied("reviewed native mandate revoked or revised")
+        work, turn = self.authority._completed_work(conn, self.work_spec.work_id, now=now)
+        if (work.spec != self.work_spec or turn != self.turn
+                or canonical_sha256(work.result.to_payload()) != self.result_sha256
+                or datetime.fromisoformat(self.publication["source_target"]["retention_until"].replace("Z", "+00:00")) <= now):
+            raise InitiativeMandateDenied("reviewed native result or retention changed")
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        PostgresConversationJournal(owner._engine, owner._scope).ensure_running(turn)
+        self._check_target_source(now)
+        return conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)).one()
+
+    def _check_target_source(self, now):
+        from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
+        target = self.publication["source_target"]
+        scope = target["scope"]
+        store = PostgresMemoryOutbox(self.authority.owner._engine, tenant_id=scope["tenant_id"],
+                                    installation_id=scope["installation_id"])
+        doc = store.resolve_source(target["procedure_reference_id"],
+            principal_id=scope["principal_id"], project_id=scope["project_id"])
+        if doc is None:
+            raise InitiativeMandateDenied("reviewed native original reference was erased")
+        wire = json.loads(doc.content)
+        expected = {"document_id": target["procedure_reference_id"], "path": target["artifact_path"],
+            **{key: target[key] for key in ("content_sha256", "receipt_sha256", "source_call_id",
+                "source_message_id", "tool_configuration_sha256", "retention_until")}}
+        if (wire.get("contract") != "ProcedureReference/v1"
+                or any(wire.get(key) != value for key, value in expected.items())
+                or doc.source_ref != target["source_message_id"]
+                or datetime.fromisoformat(doc.retention_until.replace("Z", "+00:00")) <= now):
+            raise InitiativeMandateDenied("reviewed native original reference changed or expired")
+
+    def action_allowed(self, name):
+        self.check(self.turn)
+        return name in {"save_workspace_document", "designate_reusable_procedure", "resolve_reusable_procedure"}
+
+    def authorize_reference(self, document_id):
+        self.check(self.turn)
+        if document_id != self.publication["source_target"]["procedure_reference_id"]:
+            raise InitiativeMandateDenied("reviewed native reference differs")
+
+    def bind_designation(self, arguments):
+        self.check(self.turn)
+        if (set(arguments) != {"document_path", "use_when", "retention_until"}
+                or arguments["document_path"] != self.publication["destination_path"]
+                or arguments["retention_until"] != self.publication["source_target"]["retention_until"]
+                or not isinstance(arguments["use_when"], str) or not arguments["use_when"].strip()
+                or len(arguments["use_when"]) > 1000
+                or (self._designation is not None and self._designation != arguments)):
+            raise InitiativeMandateDenied("reviewed native designation differs")
+        self._designation = dict(arguments)
+
+    def authorize_procedure(self, call):
+        self.check(self.turn)
+        if call.name == "designate_reusable_procedure" and self._designation is not None and call.arguments == self._designation:
+            return
+        if call.name == "resolve_reusable_procedure" and call.arguments == {
+                "document_id": self.publication["source_target"]["procedure_reference_id"]}:
+            return
+        raise InitiativeMandateDenied("reviewed native procedure action differs")
+
+    def authorize_request(self, request, *, phase):
+        import hashlib
+        target = self.publication["source_target"]
+        arguments = request.arguments
+        path, content = arguments.get("path"), arguments.get("content")
+        allowed = {target["artifact_path"]: target["content_sha256"],
+                   self.publication["destination_path"]: self.publication["candidate_sha256"]}
+        if (phase not in {"execute", "observe"}
+                or request.tool_configuration_sha256 != target["tool_configuration_sha256"]
+                or path not in allowed or not isinstance(content, str)
+                or hashlib.sha256(content.encode()).hexdigest() != allowed[path]
+                or (phase == "execute" and (path != self.publication["destination_path"]
+                    or content != self.candidate_content))
+                or (request.observation_arguments is not None
+                    and request.observation_arguments != {"path": path})):
+            raise InitiativeMandateDenied("reviewed native request differs from the accepted package")
+        super().authorize_request(request, phase=phase)
+
+    def instructions(self):
+        return "Host-only exact reviewed saved-artifact application; no model execution."

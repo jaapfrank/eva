@@ -62,6 +62,12 @@ try:
   if original is None:raise ValueError('application task is unavailable')
   rows=c.execute(sa.select(work.c.work_id,work.c.state,work.c.stop_requested_at,work.c.spec_payload).where(work.c.spec_payload['execution_id'].astext==original['execution_id'])).mappings().all()
   state=_execution_completion_state(rows,request['task_id'],request['scope_sha256'],canonical_sha256)
+  if state=='ready' and original.get('contract')=='DelegatedInitiativeDigitalWork/v1':
+   from eva.providers.procedure_reference_actions import ProcedureReferenceProviderFactory
+   from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+   from datetime import UTC,datetime
+   try:ProcedureReferenceProviderFactory.native_authority(e,s).reviewed_work_current(request['task_id'],now=datetime.now(UTC))
+   except (InitiativeMandateDenied,RuntimeError):state='cancelled'
   if state=='ready':
    leased=c.scalar(sa.select(sa.func.count()).select_from(work).where(work.c.lease_owner.is_not(None),work.c.lease_expires_at>sa.func.now()))
    locks=c.scalar(sa.text("SELECT count(*) FROM pg_locks WHERE locktype='advisory' AND granted AND database=(SELECT oid FROM pg_database WHERE datname=current_database()) AND pid<>pg_backend_pid()"))

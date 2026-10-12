@@ -1,0 +1,105 @@
+{
+  "contract": "EvaNativeReviewedArtifactSource/v1",
+  "checkedAt": "2026-10-12T00:13:13.506647+00:00",
+  "status": "source_checks_passed_not_installed",
+  "sourceManifestSha256": "6d6402995d4e39f2da526bfd70d9175d080dc1a06fab9d47ab3d372c2ccd7a02",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/postgres/initiative_execution.py",
+      "sha256": "3ccccb2b8a87c1b4b062e2dd4d002f5599bdfc23170f7ba24fd8b78283c8b3a3"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/owner_initiatives.py",
+      "sha256": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/procedure_reference_host.py",
+      "sha256": "bbf8a0482df1e892690251e622275bc01af54b35084e7daa01d90c4b12b8c29e"
+    },
+    {
+      "path": "eva2/src/eva/providers/procedure_reference_actions.py",
+      "sha256": "9cc455a796afa88e3982eae9ae3003f1b0cf2784433c12aad1e17014510cc2b7"
+    },
+    {
+      "path": "eva2/src/eva/operations/saved_artifact_application.py",
+      "sha256": "41d7ce11a54babfc28e75484087983f21629c5ce816dcc6bbbc1e8c508d5ada9"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_application_runtime.py",
+      "sha256": "76988669199c687fef1fd9fc091e402125f3754eae3737ad385e173424a99a79"
+    }
+  ],
+  "targetedChecksSha256": "c8c92e71bda85c09117cc129bf3f6288fb0051d688d4bb3fb664b6cefee2e8fa",
+  "uniqueChecksPassed": 89,
+  "testGroups": {
+    "ordinaryProviderAndApplication": 48,
+    "existingNativeQueueGuardMemory": 26,
+    "newNativeApplyStopErasureRetainedSource": 15
+  },
+  "runtimeDatabaseUsed": false,
+  "fixturesRemoved": true,
+  "manualEvaModelRequests": 0,
+  "creditCosts": null,
+  "changes": [
+    "Existing delayed application accepts the original typed native initiative work after independent saved-artifact evaluation.",
+    "Existing apply_reviewed_component_improvement grant and exact current save provider authorize only the accepted saved artifact.",
+    "Completed work keeps its original result; a later owner stop writes the existing exact conversation stop marker and prevents deferred application.",
+    "Every effect rechecks original source metadata, privacy scope, retention and erasure.",
+    "Ordinary source loader remains strict; a later ordinary task can read the exact retained native procedure source without restoring the old mandate."
+  ],
+  "developmentFailureReceiptsRetained": [
+    {
+      "receipt": "postgres-chain-tests.private.json",
+      "receiptSha256": "628641f7d25b80fd76472634e60cf393f75a8a544ac5d67eab993cd5d3ac1f93",
+      "returncode": 1,
+      "logSha256": "fb13abc38abc88e667f523b3ab02c5bf84f4c5356dd5d21483a6da0bb1301547"
+    },
+    {
+      "receipt": "postgres-final-chain-tests.private.json",
+      "receiptSha256": "512522057a00ef68b4b8972c48d3dabbbe8859c07d9a3fad2c91d6797c387f78",
+      "returncode": 1,
+      "logSha256": "569f24c3ffef4fbf4917b99b5b1e1d2ecbd69a9cd041edca52fb4d86ceb73a79"
+    },
+    {
+      "receipt": "postgres-final-nine-tests.private.json",
+      "receiptSha256": "6d05c6070904177a01b37ec777f4a15ef448e242a34a95e1205670a7c1fea910",
+      "returncode": 1,
+      "logSha256": "4453f497f172ef4404f9f64f1172440ee63283d4fb90301e2a03bd57c040bec1"
+    },
+    {
+      "receipt": "postgres-new-tests.private.json",
+      "receiptSha256": "d6c536e4416392c130a7198a081c5ec7d7af74ff3c63cf7cd3123fb8ac89dbac",
+      "returncode": 1,
+      "logSha256": "d28e19331b7b7066303a367364354c24002806c2d951919d0809ff697dd46aba"
+    },
+    {
+      "receipt": "postgres-scope-correction-tests.private.json",
+      "receiptSha256": "d6820d9b8ec788b8b490683bffafbb15acad802848389d1e7a9aa80e26d4038d",
+      "returncode": 1,
+      "logSha256": "dd4f24321907910f0ab9c0bbe9a9c08cfa8b7c6cb27b4eb2ec812aa5f2ebf436"
+    },
+    {
+      "receipt": "postgres-stop-erasure-tests.private.json",
+      "receiptSha256": "ded554973359340517207388eb306ed7c3149781c750740700cf5945b35c5631",
+      "returncode": 1,
+      "logSha256": "18a78a4413f18a3ce3847a1dd2424a4aea0aba0eca3ffb92a8d3e12dd6dbeaf2"
+    },
+    {
+      "receipt": "postgres-terminal-expectation-tests.private.json",
+      "receiptSha256": "c062901565660d870bbb994dcf0cfa31dc517baf96d22b7959c5f468e5be7045",
+      "returncode": 1,
+      "logSha256": "0ac5635c46070e437e85a3027b28d5f4248082397382cb7b6b04b0edabc4d994"
+    },
+    {
+      "receipt": "pure-tests.private.json",
+      "receiptSha256": "9a35eb80cc4dbf84d46b18ce39cb850c4b2f9cdab28224e6b97a88ca2b23edf4",
+      "returncode": 1,
+      "logSha256": "32a808bbf20d45569ba2fd899f27b05710389ff4d8335495b6ac8eb5e8ea5e2b"
+    }
+  ],
+  "testLimitations": "Disposable PostgreSQL and controlled gateway checks prove these source transitions; no new authentic self-chosen model task or family use is claimed.",
+  "fullLearningCycleCompleted": false,
+  "fullAide2Completed": false,
+  "wholeGoalStatus": "active",
+  "historicalSmallCompletionCount": "39/48"
+}

@@ -1,0 +1,106 @@
+{
+  "contract": "EvaNativeReviewedArtifactInstalled/v1",
+  "checkedAt": "2026-10-12T00:17:35.977060+00:00",
+  "status": "installed",
+  "installed": true,
+  "meaning": "Een onafhankelijk beoordeeld bewaard hulpmiddel kan nu vanuit het oorspronkelijke eigen initiatief via dezelfde bestaande route worden toegepast en later door een gewone opdracht worden opgehaald. Stoppen en gewiste bronnen blokkeren verdere toepassing.",
+  "sourceEvidence": "eva2/evidence/product/native-reviewed-artifact-source-20261012.json",
+  "sourceEvidenceSha256": "3e5fa73a73e38c298f9220f22f4328ba436c4f1269f6f33d49dfdbd5ee58d502",
+  "sourceReview": "eva2/reviews/native-reviewed-artifact-source-review-20261012.json",
+  "sourceReviewSha256": "c9f4e9e7cb30e299f747d05b7abd829c5575bed1671f603e5cac0388f3746209",
+  "sourceManifestSha256": "6d6402995d4e39f2da526bfd70d9175d080dc1a06fab9d47ab3d372c2ccd7a02",
+  "coreInstalledReceiptSha256": "886d6e2a8051dc328b67df2c94580e225a5a55b5b26c1d852362a87d121ec683",
+  "hostInstalledReceiptSha256": "8c82aac761f9b3a9581da7ef2a13251d5102d0fe4e73cd06fff1802fa9f022e6",
+  "containers": {
+    "core": {
+      "container": "/eva2-managed-b-slot3-core",
+      "image": "sha256:6cd8441eb3e5beacf31d067e7997ccd3a2b4e8d2226c41336f5ee672ac607f82",
+      "health": "healthy",
+      "sourceCount": 340,
+      "unchangedSourceCount": 334,
+      "sourceHashes": {
+        "adapters/postgres/initiative_execution.py": "3ccccb2b8a87c1b4b062e2dd4d002f5599bdfc23170f7ba24fd8b78283c8b3a3",
+        "adapters/postgres/owner_initiatives.py": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8",
+        "adapters/postgres/procedure_reference_host.py": "bbf8a0482df1e892690251e622275bc01af54b35084e7daa01d90c4b12b8c29e",
+        "providers/procedure_reference_actions.py": "9cc455a796afa88e3982eae9ae3003f1b0cf2784433c12aad1e17014510cc2b7",
+        "operations/saved_artifact_application.py": "41d7ce11a54babfc28e75484087983f21629c5ce816dcc6bbbc1e8c508d5ada9",
+        "operations/component_application_runtime.py": "76988669199c687fef1fd9fc091e402125f3754eae3737ad385e173424a99a79"
+      },
+      "environmentUnchanged": true,
+      "commandUserHealthcheckUnchanged": true,
+      "networksUnchanged": true,
+      "mountsRetainedByUpdater": true
+    },
+    "delegated-work-worker": {
+      "container": "/eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:db29b3cd754c3d1c0802115b7aaa9f78b415b3774fdfb10f9ccf74a3324fe2f2",
+      "health": "healthy",
+      "sourceCount": 340,
+      "unchangedSourceCount": 334,
+      "sourceHashes": {
+        "adapters/postgres/initiative_execution.py": "3ccccb2b8a87c1b4b062e2dd4d002f5599bdfc23170f7ba24fd8b78283c8b3a3",
+        "adapters/postgres/owner_initiatives.py": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8",
+        "adapters/postgres/procedure_reference_host.py": "bbf8a0482df1e892690251e622275bc01af54b35084e7daa01d90c4b12b8c29e",
+        "providers/procedure_reference_actions.py": "9cc455a796afa88e3982eae9ae3003f1b0cf2784433c12aad1e17014510cc2b7",
+        "operations/saved_artifact_application.py": "41d7ce11a54babfc28e75484087983f21629c5ce816dcc6bbbc1e8c508d5ada9",
+        "operations/component_application_runtime.py": "76988669199c687fef1fd9fc091e402125f3754eae3737ad385e173424a99a79"
+      },
+      "environmentUnchanged": true,
+      "commandUserHealthcheckUnchanged": true,
+      "networksUnchanged": true,
+      "mountsRetainedByUpdater": true
+    }
+  },
+  "release": {
+    "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+    "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+    "worker_program_sha256": "a7ca29447678af20f33e3ee20e36846c96bc885849e8c869d0d3ba2ef75e13a2",
+    "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+    "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+  },
+  "candidateComposeSha256": "3bbbe4e47460fbf08a1591da26002ec7115bdb6d9dbb3697ed9255ff8f08695d",
+  "host": {
+    "service": "eva-component-evaluation.service",
+    "healthStatus": 200,
+    "sourceFiles": {
+      "eva/operations/component_application_runtime.py": {
+        "oldSha256": "da67d5ece2645a89c36d7ed2f3801f8abb88fcfdae1fc50d1f68953d717caba2",
+        "newSha256": "76988669199c687fef1fd9fc091e402125f3754eae3737ad385e173424a99a79",
+        "uid": 0,
+        "gid": 0,
+        "mode": 420
+      },
+      "eva/operations/saved_artifact_application.py": {
+        "oldSha256": "1620a58a9137fa3eed06cba7a422701227c4d3f95aa453b320b5b5856103c1a7",
+        "newSha256": "41d7ce11a54babfc28e75484087983f21629c5ce816dcc6bbbc1e8c508d5ada9",
+        "uid": 0,
+        "gid": 0,
+        "mode": 420
+      }
+    },
+    "configurationRetained": true,
+    "criteriaOrRoundsModified": false,
+    "configSha256": "47652790d79a6188f42945f0746c7ee5ab42653e3080f3961e646678a4ac4857"
+  },
+  "profileAndCapabilitiesRetained": true,
+  "mandateBytesRetained": true,
+  "tests": {
+    "uniqueIndividualPassChecks": 89,
+    "single89PassInvocation": false,
+    "receiptSha256": "c8c92e71bda85c09117cc129bf3f6288fb0051d688d4bb3fb664b6cefee2e8fa",
+    "fixturesRemoved": true,
+    "runtimeDatabaseUsed": false,
+    "meaning": "48 gewone provider/application-, 26 bestaande native- en 15 nieuwe native ketencontroles. Oude fouten en werkelijk uitgevoerde deelreturncodes blijven behouden."
+  },
+  "manualEvaModelRequests": 0,
+  "creditCosts": null,
+  "authenticNewInitiativeUsed": false,
+  "laterOrdinaryReuseProvenInDisposableFixture": true,
+  "authenticLaterBehaviorProven": false,
+  "fullLearningCycleCompleted": false,
+  "fullAide2Completed": false,
+  "wholeGoalStatus": "active",
+  "historicalSmallCompletionCount": "39/48",
+  "remaining": "Een authentieke zelfgekozen verbetercyclus en haar latere gedragstoepassing blijven open. Agentaansturing en code/uitbreidingen moeten de volledige AIDE²-cyclus nog samen doorlopen; technische bron- en installatiecontrole is geen gezinsacceptatie.",
+  "finalReviewPath": "eva2/reviews/native-reviewed-artifact-installed-review-20261012.json"
+}

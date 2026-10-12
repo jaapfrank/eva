@@ -1,18 +1,34 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — zelfgekozen verbetering toepassen
+## Actueel 12 oktober — beoordeeld hulpmiddel uit eigen initiatief geïnstalleerd
 
-De initiatief→uitkomstgeheugen-koppeling is geïnstalleerd. De volgende concrete
-ontbrekende overgang zit in dezelfde verbeterroute: de uitgestelde toepassing
-van een onafhankelijk beoordeeld bewaard hulpmiddel laadt uitsluitend een gewone
-gebruikersingang, waardoor een native initiatief daar vastloopt. Maak uitsluitend
-de bestaande bron-/toestemmingskoppeling passend voor die echte initiatiefherkomst;
-behoud huidige eigenaar, mandaat, stop, exacte bron en onafhankelijke beoordeling.
-Geen tweede verbeterplatform, gesloten proefherhaling of nieuwe vergelijking.
-Werk is gestart; installatie en later werkelijk gebruik nog niet aangetoond.
-Het volledige projectgoal met vier productuitkomsten, leercyclus en AIDE² blijft
-actief. Historische 39/48 kleine afrondingen en eerdere bewijsclaims blijven staan.
+De bestaande verbeterroute accepteert nu ook de oorspronkelijke native
+initiatiefherkomst. Een onafhankelijk geaccepteerd hulpmiddel kan via dezelfde
+document-/procedurebron worden toegepast en later bij gewoon werk worden opgehaald.
+Geen tweede verbeterplatform, planner, geheugen of daemon.
 
+Zes bestaande modules geïnstalleerd in gezonde kern en werker; twee exacte
+operationmodules van de bestaande verbeterdienst bijgewerkt (health 200).
+334 andere Python-bestanden per image, profiel, mandaat, mounts, netwerken en
+hostconfiguratie behouden. 89 unieke individuele gerichte controles slagen,
+waaronder 15 nieuwe keten-/stop-/wis-/later-ophaalcontroles in disposable PostgreSQL.
+Dit is geen enkele foutloze 89-test-run; oorspronkelijke fouten en deelreturncodes
+blijven bewaard. Geen handmatige Eva-modelaanvragen of nieuwe vergelijking.
+
+Een stop na oorspronkelijke taakafronding gebruikt de bestaande stopmarker:
+het afgeronde werkresultaat blijft staan, maar uitgestelde toepassing stopt.
+Elke effectstap controleert de oorspronkelijke bron, bewaring en erasure opnieuw.
+Gewone historische bronuitlezing maakt het oude mandaat niet opnieuw actief.
+
+**Nog open:** authentiek zelfgekozen verbeterwerk en later gewijzigd gedrag,
+de volledige leercyclus en AIDE² voor agentaansturing én code/apps/addons.
+De gehele gezinsacceptatie blijft menselijk; 39/48 historische afrondingen behouden.
+Het volledige projectgoal blijft actief. Spraak geparkeerd; Docker Desktop ongemoeid.
+Geen eigenaarhandeling nodig.
+
+Bewijs: eva2/evidence/product/native-reviewed-artifact-installed-20261012.json.
+Bronreview: eva2/reviews/native-reviewed-artifact-source-review-20261012.json.
+Eindreview GO: eva2/reviews/native-reviewed-artifact-installed-review-20261012.json.
 ## Actief volledig projectgoal — 11 oktober 2026
 
 Het actieve Codex-goal omvat het gehele Eva2-project: een persoon, geheugen en

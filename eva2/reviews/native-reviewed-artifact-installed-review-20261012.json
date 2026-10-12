@@ -1,0 +1,150 @@
+{
+  "contract": "NativeReviewedArtifactInstalledReview/v1",
+  "checkedAt": "2026-10-12T00:23:20.820707Z",
+  "decision": "GO",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Exact geïnstalleerde zesmodule-koppeling voor beoordeeld bewaard hulpmiddel uit native initiatief, twee bestaande hostoperationmodules en veilige publicatie; geen beoordeling van authentieke nieuwe initiatiefuitvoering of volledige AIDE².",
+  "sourceManifestSha256": "6d6402995d4e39f2da526bfd70d9175d080dc1a06fab9d47ab3d372c2ccd7a02",
+  "bindings": {
+    "publicInstalledEvidence": "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json",
+    "publicInstalledEvidenceSha256": "016dc0f2df64480f71347d41a9d72821c4bff1a550f80a7725032f5ffde90258",
+    "sourceReview": "eva2/reviews/native-reviewed-artifact-source-review-20261012.json",
+    "sourceReviewSha256": "c9f4e9e7cb30e299f747d05b7abd829c5575bed1671f603e5cac0388f3746209",
+    "frozenManifestSha256": "6d6402995d4e39f2da526bfd70d9175d080dc1a06fab9d47ab3d372c2ccd7a02",
+    "targetedChecksSha256": "c8c92e71bda85c09117cc129bf3f6288fb0051d688d4bb3fb664b6cefee2e8fa",
+    "coreInstalledVerificationSha256": "886d6e2a8051dc328b67df2c94580e225a5a55b5b26c1d852362a87d121ec683",
+    "hostInstalledVerificationSha256": "8c82aac761f9b3a9581da7ef2a13251d5102d0fe4e73cd06fff1802fa9f022e6",
+    "sourceFiles": {
+      "adapters/postgres/initiative_execution.py": "3ccccb2b8a87c1b4b062e2dd4d002f5599bdfc23170f7ba24fd8b78283c8b3a3",
+      "adapters/postgres/owner_initiatives.py": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8",
+      "adapters/postgres/procedure_reference_host.py": "bbf8a0482df1e892690251e622275bc01af54b35084e7daa01d90c4b12b8c29e",
+      "providers/procedure_reference_actions.py": "9cc455a796afa88e3982eae9ae3003f1b0cf2784433c12aad1e17014510cc2b7",
+      "operations/saved_artifact_application.py": "41d7ce11a54babfc28e75484087983f21629c5ce816dcc6bbbc1e8c508d5ada9",
+      "operations/component_application_runtime.py": "76988669199c687fef1fd9fc091e402125f3754eae3737ad385e173424a99a79"
+    },
+    "technicalReadbacks": {
+      "build/build-result.private.json": "77c994ab4706b75be8c26936ac0293eb7e07f4ffeb5da8bb2dded463d2cbaaa1",
+      "build/baseline-core-sources.private.json": "eb9734e964993afbfb32ef9b8dc9d50ba6a911ad1e57faa1c82a92f6356f4cec",
+      "build/candidate-core-sources.private.json": "5b9a9819b2b0ad842ddb2ee284c02697dd18bcf1596531bbe7988b10eda1720f",
+      "build/baseline-delegated-work-worker-sources.private.json": "6f8ec5888eb3c788becbb1f6a462fb931ecc30d353d222caea352870217e2baf",
+      "build/candidate-delegated-work-worker-sources.private.json": "d6dbf0d2a5749e14bc6a701b01ac0bd91b877a8a1f9d9fc0cd12fb347c316bcb",
+      "build/baseline-core-inspect.private.json": "378cf5fa9921d39915c05dc1efd1215d429aad5f90663d947b6bbc03df83d910",
+      "build/baseline-delegated-work-worker-inspect.private.json": "f36cd88e329fea947a642d4f4a876158f062174740c6f0095144adbe719dcd70",
+      "install/image-update-receipt.private.json": "4d8fb963ec6e0fa0a4cd8b6b9fb43caf9acab612a1d96b18fc5e2836fb3adc54",
+      "install/pre-install-verification.private.json": "4b798ca9c64c13d27fdc8a21beda7b82b7782eaba7b039f7c5e698b3b691c49c",
+      "install/profile-verification.private.json": "8592cf4e538fe75537c54f681c07202640be2aac3078ea42c1219bb3b2cc7340",
+      "install/command-28.private.json": "fd0e6a755c6440b47db364c1570cc50a840e3a245a07006726830659267ce2bf",
+      "install/command-32.private.json": "284542029154d84480b505a9430bb52ab4aa26f56b8025f8f48b439cc890ed37",
+      "install/command-33.private.json": "0fe12f6cfbcff6da8103e782e8efa167cfbe1bf91d87a8f9384f4375f293a10f",
+      "install/command-34.private.json": "a0152971f5af6f97e9610db3691a90a8c2744230b95f715992b9a9c73b0182a0",
+      "install/command-35.private.json": "a52d78a3330c5ca11757a44741a44036f947854b6b75b1745fbeef30b189d847",
+      "host-baseline.private.json": "db9e8eaf6348f5a64c85e1188f501cb994153c21866ecfce3846d5573b25c828",
+      "install/install-host-operation-sources.private.py": "df90715c007a05459356e7c344ff9db07224509e7aa67fbe6e78d1d149a1a04f",
+      "install/dashboard-publication-repair.private.json": "0ee10dfe50c22ec186dc231a2a68603d6249df84985fac8673ff540e49304122"
+    },
+    "publicationFiles": {
+      "AGENTS.md": "9bfb8569afa2b1f6985196dbc4dcd7fa36664bd4bb940e8e324cd3c6885c674d",
+      "eva2/PROJECTDOEL.md": "f4be77fd38b31e93544bd64be39062a130f5c8bd59e1c450a2ad7c33bad2cb45",
+      "eva2/WERKBORD.md": "b97fcf47acbb0fe2503ce482c2a2914ab1a734d15c6334c3ddff91e21ce914a6",
+      "eva2/design/product/execution-workboard-v1.json": "3dd79ae8abdcf8e674d9f190295fd7883b72e9cf2365588fee53e399f54b1fae"
+    }
+  },
+  "verified": {
+    "sourceBinding": "Alle zes geïnstalleerde modules hebben exact de eerder beoordeelde manifesthash; geen bronheraudit of extra testuitvoering.",
+    "coreAndWorker": {
+      "core": {
+        "image": "sha256:6cd8441eb3e5beacf31d067e7997ccd3a2b4e8d2226c41336f5ee672ac607f82",
+        "health": "healthy",
+        "sourceCount": 340,
+        "changedSourceCount": 6,
+        "unchangedSourceCount": 334
+      },
+      "delegated-work-worker": {
+        "image": "sha256:db29b3cd754c3d1c0802115b7aaa9f78b415b3774fdfb10f9ccf74a3324fe2f2",
+        "health": "healthy",
+        "sourceCount": 340,
+        "changedSourceCount": 6,
+        "unchangedSourceCount": 334
+      }
+    },
+    "independentInventoryComparison": "Vóór-, kandidaat- en daadwerkelijke geïnstalleerde moduleinventarissen zijn vergeleken: 340 per container, zes gewijzigde, 334 bytegelijk, geen toegevoegde/verwijderde modules; gehele daadwerkelijke inventaris gelijk aan kandidaat.",
+    "runtimeConfiguration": "Daadwerkelijke vóór/na-inspects bevestigen unieke env-key/value-mappen, commands, entrypoint, gebruiker, healthcheck, working directory, mounttuples en netwerkdeelname gelijk; alleen gekozen images wijzigen.",
+    "profileAndMandate": "Volledige verse compositieprofielen van kern en werker gelijk; modelprofiel, mogelijkheden, engine en outputbindingen behouden. Oorspronkelijke mandaatbytes zijn in vóór/na technische readbacks gelijk en releasebinding sluit aan op actuele werker.",
+    "release": {
+      "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+      "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+      "worker_program_sha256": "a7ca29447678af20f33e3ee20e36846c96bc885849e8c869d0d3ba2ef75e13a2",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+    },
+    "host": {
+      "service": "eva-component-evaluation.service",
+      "healthStatus": 200,
+      "oldPid": 4113246,
+      "newPid": 885464,
+      "sourceFiles": {
+        "eva/operations/component_application_runtime.py": {
+          "oldSha256": "da67d5ece2645a89c36d7ed2f3801f8abb88fcfdae1fc50d1f68953d717caba2",
+          "newSha256": "76988669199c687fef1fd9fc091e402125f3754eae3737ad385e173424a99a79",
+          "uid": 0,
+          "gid": 0,
+          "mode": 420
+        },
+        "eva/operations/saved_artifact_application.py": {
+          "oldSha256": "1620a58a9137fa3eed06cba7a422701227c4d3f95aa453b320b5b5856103c1a7",
+          "newSha256": "41d7ce11a54babfc28e75484087983f21629c5ce816dcc6bbbc1e8c508d5ada9",
+          "uid": 0,
+          "gid": 0,
+          "mode": 420
+        }
+      },
+      "configurationSha256": "47652790d79a6188f42945f0746c7ee5ab42653e3080f3961e646678a4ac4857",
+      "configurationRetained": true,
+      "criteriaOrRoundsModified": false
+    },
+    "hostEvidence": "Bestaande hostinstallatie gebruikt uitsluitend twee vooraf gebonden operationmodules; werkelijke nieuwe PID, exacte bestandshashes/eigenaarschap/rechten, ongewijzigde configuratiehash en HTTP200-readback. De behouden hostinstallatiescriptasserties en technische baseline zijn gecontroleerd; oorspronkelijke beoordelaars/publishers/rounds worden niet herschreven."
+  },
+  "testEvidence": {
+    "reusedSourceReview": true,
+    "uniquePassingChecks": 89,
+    "composition": {
+      "ordinaryPure": 48,
+      "existingNativeFixtures": 26,
+      "newNativeFixtures": 15
+    },
+    "qualification": "Ontdubbelde geslaagde nodes uit behouden deeluitvoeringen; geen claim van één foutloze 89-case run. Alle oorspronkelijke fixture-/voorbereidingsfouten blijven behouden.",
+    "testsRunByThisInstallationReview": 0
+  },
+  "publication": {
+    "verdict": "GO",
+    "installedEvidenceMatchesPrivateReadbacks": true,
+    "historicalExecutionTasksMilestonesCompletionsEqualHead": true,
+    "preservedArrayLengths": {
+      "executionTasks": 32,
+      "milestones": 22,
+      "completions": 30
+    },
+    "fourHistoricalHousemateOutcomesEqualHead": true,
+    "historicalHousemateOutcomePath": "audit.projectDashboard.comparisonResults.housemateOutcomes",
+    "historicalSmallCompletionCount": "39/48",
+    "wholeGoalStatus": "active",
+    "authenticNewInitiativeUsed": false,
+    "authenticLaterBehaviorProven": false,
+    "fullLearningCycleCompleted": false,
+    "fullAide2Completed": false,
+    "claimBoundary": "Geïnstalleerde toepassings-/bronroute en modelvrije fixturekwaliteit zijn afzonderlijk van nog open authentiek gekozen verbeterwerk, later veranderd gedrag, gezinacceptatie en volledige AIDE² beschreven. Spraak blijft geparkeerd; oude resultaten/criteria/UNKNOWN blijven behouden.",
+    "preservedPreparationError": {
+      "receiptSha256": "0ee10dfe50c22ec186dc231a2a68603d6249df84985fac8673ff540e49304122",
+      "error": "ValueError_missing_leading_summary_after_section_replacement",
+      "correctedWithinDocumentation": true,
+      "runtimeChangedByRepair": false
+    }
+  },
+  "limitations": [
+    "Dit GO bewijst de exacte geïnstalleerde koppeling en veilige publicatie; geen authentieke native initiatiefuitkomst, privéaflevering of algemene kwaliteitswinst.",
+    "Latere gewone bronresolutie is alleen in de behouden disposable PostgreSQL-fixture bewezen; authentiek later gedrag blijft open.",
+    "Volledige leer-/droomcyclus, agentaansturing en code/addons binnen AIDE², menselijke gezinacceptatie en hoofdgoal blijven open.",
+    "Geen nieuwe modellen, tools, native proeven, tests, installatie of herstart uitgevoerd door deze review; ontwikkelcredits en automatisch runtimeverbruik worden hiermee niet gemeten."
+  ]
+}

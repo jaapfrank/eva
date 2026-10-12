@@ -132,12 +132,17 @@ def apply_in_core(publication, candidate_content, task_id, *, engine, procedures
         if save.output.get("status") != "verified":
             raise ValueError("saved application write is not verified")
         guard(source_turn)
+        designation_arguments = {"document_path": publication["destination_path"],
+            "use_when": (use_when[:450] + " — onafhankelijk beoordeelde verbetering: "
+                         + improvement[:500])[:1000],
+            "retention_until": target["retention_until"]}
+        from eva.application.initiative_execution import current_initiative
+        native_guard = current_initiative()
+        if native_guard is not None:
+            native_guard.bind_designation(designation_arguments)
         designation = procedures.execute(source_turn, ConversationActionCall(
             "reviewed-artifact-designate:" + publication["review_id"], "designate_reusable_procedure",
-            {"document_path": publication["destination_path"],
-             "use_when": (use_when[:450] + " — onafhankelijk beoordeelde verbetering: "
-                          + improvement[:500])[:1000],
-             "retention_until": target["retention_until"]}), step_index=1)
+            designation_arguments), step_index=1)
         if designation.output.get("status") != "designated":
             raise ValueError("saved application designation is not verified")
         guard(source_turn)
@@ -175,6 +180,10 @@ def runtime_apply(payload):
     from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
     from eva.operations.component_application_runtime import _execution_completion_state
     import asyncio
+    from contextlib import nullcontext
+    from eva.application.initiative_execution import initiative_execution
+    from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+    from eva.contracts.delegated_work import load_delegated_work_spec
     settings = RuntimeSettings.from_environment()
     engine = sa.create_engine(sqlalchemy_postgres_dsn(settings.database_dsn))
     try:
@@ -188,6 +197,8 @@ def runtime_apply(payload):
                 rows = c.execute(sa.select(work.c.work_id, work.c.state, work.c.stop_requested_at, work.c.spec_payload)
                     .where(work.c.spec_payload["execution_id"].astext == spec["execution_id"])).mappings().all()
                 state = _execution_completion_state(rows, task_id, payload["scope_sha256"], canonical_sha256)
+                if native_guard is not None:
+                    native_guard.check(turn)
                 leased = c.scalar(sa.select(sa.func.count()).select_from(work).where(
                     work.c.lease_owner.is_not(None), work.c.lease_expires_at > sa.func.now()))
                 return "waiting" if state == "ready" and leased else state
@@ -196,7 +207,12 @@ def runtime_apply(payload):
             spec = c.execute(sa.select(work.c.spec_payload).where(work.c.work_id == payload["task_id"])).scalar_one()
         contribution = ProcedureReferenceProviderFactory.build(ProcedureReferenceProviderFactory.load_settings(), engine)
         procedures = contribution.external_tools[0]
-        turn = _SourceTurnLoader(engine, procedures.authority)(spec["source"])
+        native_guard = None
+        if type(load_delegated_work_spec(spec)) is DelegatedInitiativeDigitalWorkSpec:
+            native_guard, turn = procedures.source_loader.native_authority().bind_reviewed_saved_application(
+                payload["task_id"], payload["publication"], payload["candidate_content"])
+        else:
+            turn = _SourceTurnLoader(engine, procedures.authority)(spec["source"])
         _verify_source_binding(spec, turn)
         if turn.project_id != payload["publication"]["source_target"]["scope"]["project_id"]:
             raise ValueError("saved application task project differs")
@@ -204,7 +220,8 @@ def runtime_apply(payload):
         asyncio.run(adapter.verify_catalog())
         tools = PostgresExternalConversationTools(engine, adapter.planner(), adapter,
             authorize_turn=procedures.authorize_turn)
-        return apply_in_core(payload["publication"], payload["candidate_content"], payload["task_id"],
-            engine=engine, procedures=procedures, tools=tools, source_turn=turn, check_ready=ready)
+        with initiative_execution(native_guard) if native_guard is not None else nullcontext():
+            return apply_in_core(payload["publication"], payload["candidate_content"], payload["task_id"],
+                engine=engine, procedures=procedures, tools=tools, source_turn=turn, check_ready=ready)
     finally:
         engine.dispose()

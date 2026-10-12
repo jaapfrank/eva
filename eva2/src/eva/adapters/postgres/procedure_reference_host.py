@@ -27,7 +27,11 @@ class PostgresProcedureReferenceHost:
                   "audience": {"kind": self.turn.audience.kind, "principal_id": self.turn.principal_id}}
         if self.load_turn(source) != self.turn:
             raise ProcedureReferenceRejected("current ingress differs")
-        PostgresConversationJournal(self.engine, self.authority.scope).ensure_running(self.turn)
+        if self.turn.conversation_id.startswith("initiative-task:"):
+            from eva.application.initiative_execution import require_initiative_context
+            require_initiative_context(self.turn)
+        else:
+            PostgresConversationJournal(self.engine, self.authority.scope).ensure_running(self.turn)
 
     def require_scope(self, scope):
         self.require_current()
@@ -110,6 +114,11 @@ class PostgresProcedureReferenceHost:
 
     def source_active(self, scope, message):
         self.require_scope(scope)
+        if message.startswith("initiative-execute:"):
+            try:
+                return self.load_turn.native_source_active(scope, message)
+            except (ConversationConflict, RuntimeError):
+                return False
         events = self.timeline.events("conversation:" + message)
         if not events or events[0].event_type != "INGRESS_COMMITTED":
             return False
@@ -137,6 +146,10 @@ class PostgresProcedureReferenceHost:
             command = wrapper._request_from_admission(original, admission["action_name"],
                                                        admission, admission.get("step_index", 0), historical=True)
             authorize_background_dispatch(self.turn)
+            from eva.application.initiative_execution import require_initiative_context
+            guard = require_initiative_context(self.turn)
+            if guard is not None:
+                guard.authorize_request(command, phase="observe")
             return await gateway.observe(command, None)
         observation = asyncio.run(observe())
         self.require_current()

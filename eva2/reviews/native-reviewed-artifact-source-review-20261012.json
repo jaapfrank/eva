@@ -1,0 +1,98 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "checkedAt": "2026-10-12T00:14:44Z",
+  "decision": "GO",
+  "verdict": "GO",
+  "scope": "Frozen native initiative to independently accepted saved-artifact application source bridge, and one bounded existing installation.",
+  "sourceManifestSha256": "6d6402995d4e39f2da526bfd70d9175d080dc1a06fab9d47ab3d372c2ccd7a02",
+  "openBlockers": [],
+  "bindings": {
+    "sourceManifest": "/home/administrator/project/.eva2-artifacts/native-reviewed-artifact-20261012/frozen-source.private.json",
+    "sourceManifestSha256": "6d6402995d4e39f2da526bfd70d9175d080dc1a06fab9d47ab3d372c2ccd7a02",
+    "sourceFiles": {
+      "adapters/postgres/initiative_execution.py": "3ccccb2b8a87c1b4b062e2dd4d002f5599bdfc23170f7ba24fd8b78283c8b3a3",
+      "adapters/postgres/owner_initiatives.py": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8",
+      "adapters/postgres/procedure_reference_host.py": "bbf8a0482df1e892690251e622275bc01af54b35084e7daa01d90c4b12b8c29e",
+      "providers/procedure_reference_actions.py": "9cc455a796afa88e3982eae9ae3003f1b0cf2784433c12aad1e17014510cc2b7",
+      "operations/saved_artifact_application.py": "41d7ce11a54babfc28e75484087983f21629c5ce816dcc6bbbc1e8c508d5ada9",
+      "operations/component_application_runtime.py": "76988669199c687fef1fd9fc091e402125f3754eae3737ad385e173424a99a79"
+    },
+    "targetedChecks": "/home/administrator/project/.eva2-artifacts/native-reviewed-artifact-20261012/targeted-checks.private.json",
+    "targetedChecksSha256": "c8c92e71bda85c09117cc129bf3f6288fb0051d688d4bb3fb664b6cefee2e8fa",
+    "testSourceReceiptSha256": "cdc41ab103e0cf34574ffe72fe8f749b54986c3a10765d813db9f2f83f79687d",
+    "testFiles": [
+      {
+        "path": "eva2/tests/postgres/test_native_initiative_digital_work.py",
+        "sha256": "12497cf9a06d2072563c9acb5da229aff8f4f9b755bbd32fd37a9235395aee83"
+      },
+      {
+        "path": "eva2/tests/postgres/test_procedure_reference_host.py",
+        "sha256": "5efa628c9e3af93d226e793615ac0a7322b266e32c60a12f31e75ce7417709c4"
+      }
+    ],
+    "fixtureRemovalReceiptSha256": "df6b2c2a238b778b4d7a9f9f53953e3ba4ef465c967dd7fa1151afa558b81092",
+    "publicSourceEvidence": "eva2/evidence/product/native-reviewed-artifact-source-20261012.json",
+    "publicSourceEvidenceSha256": "3e5fa73a73e38c298f9220f22f4328ba436c4f1269f6f33d49dfdbd5ee58d502"
+  },
+  "verified": {
+    "sourcesAndTestFilesMatchFrozenBindings": true,
+    "sourceBoundary": "Typed retained queue/spec/adoption/admission/completed-parent/result hashes remain the native origin; ordinary SourceTurnLoader stays closed and no owner INGRESS is manufactured.",
+    "terminalAuthority": "Original apply_reviewed_component_improvement capability plus unchanged current owner/native mandate, profile and exact save provider authorize only the host-bound publication, content, destination, designation and readbacks. Finished bind_work still denies general execution.",
+    "effectGuards": "Current owner binding, original completed work/result, exact parent, original reference metadata, retention, erasure and source-turn stop are rechecked before effect/readback/designation.",
+    "ownerStop": "The actual owner.stop route marks only the exact deferred native source turn; original completion remains unchanged. Legacy completed work without the deferred application capability retains already_completed behavior.",
+    "historicalUse": "A later ordinary same-owner task can resolve the retained verified native procedure after old initiative-mandate revocation; it receives its current ordinary authority and no revived native execution grant.",
+    "scopeTransactions": "Explicit transitions use only existing owner._authority and native owner._scope. Generic scoped-store validation is unchanged; the public work_memory_source API remains read-only. No new reverse parent-to-work row-lock ordering was added.",
+    "existingRoutePreservation": "Ordinary verified save/designation, unknown-dispatch reservation, independent accepted-package checks and the existing application queue remain in place; no second queue or daemon.",
+    "fixtureClosed": true
+  },
+  "testEvidence": {
+    "uniquePassingNodeids": 89,
+    "ordinaryProviderAndApplication": 48,
+    "existingNativeQueueGuardMemory": 26,
+    "newNativeApplicationStopErasureRetainedSource": 15,
+    "deduplicatedNodeidsVerified": true,
+    "invocationReceiptAndLogHashesVerified": true,
+    "postgresVersion": "16.13",
+    "runtimeDatabaseUsed": false,
+    "modelRequests": 0,
+    "liveNativeProviderCalls": 0,
+    "qualification": "Union of retained individual passing nodes across targeted selections. This is not one 89-test returncode-zero invocation. All failed invocation receipts and logs remain preserved.",
+    "criticalChecks": "runtime_apply and actual local gateway save/designation; later ordinary resolve; owner.stop before binding, after binding and after save; erasure before designation; unchanged legacy completion; changed owner/project/content/destination; result integrity and original reference expiry."
+  },
+  "resolvedFindings": [
+    {
+      "issue": "Owner stop previously returned already_completed while deferred effects remained possible.",
+      "resolution": "Narrow completed-native deferred-capability stop uses the existing exact conversation marker, preserves completion and is tested through the real owner route.",
+      "source": "adapters/postgres/owner_initiatives.py"
+    },
+    {
+      "issue": "Initial terminal grant and fixture required procedure capabilities forbidden by the existing digital mandate.",
+      "resolution": "Uses the existing apply_reviewed_component_improvement grant and separate current save-provider profile; no general procedure grant extension.",
+      "source": "adapters/postgres/initiative_execution.py"
+    },
+    {
+      "issue": "An erased original reference could previously be followed by a new derived designation.",
+      "resolution": "Current original reference/hash/retention/erasure is rechecked by each terminal guard; the actual erasure-between-effects test preserves erasure and prevents designation.",
+      "source": "adapters/postgres/initiative_execution.py"
+    },
+    {
+      "issue": "Generic store scope correctly rejected the new two-namespace transaction.",
+      "resolution": "Uses the established explicit Timeline scope transition with exact owner authority; generic setter remains unchanged.",
+      "source": "adapters/postgres/initiative_execution.py"
+    }
+  ],
+  "installationConditions": [
+    "Install only these six exact frozen modules on the existing current core and worker images, and the two corresponding existing host operation modules.",
+    "Preserve remaining source modules, dependencies, data, mounts, environment values, commands, client/assessment configuration, criteria, consumed rounds and historical result/receipt files.",
+    "Confirm actual installed hashes, health and core/worker profile parity; do not infer new mandate authority from a changed profile.",
+    "Do not execute a new model/native quality probe or reopen closed trials as part of this source approval."
+  ],
+  "limitations": [
+    "This review proves source integration and model-free controlled PostgreSQL/gateway transitions, not an authentic self-chosen initiative, independent native quality gain, installation completion or later family use.",
+    "Existing trusted accepted-package/final-assessment application boundary is reused. The new test publication is synthetic, not an independently scored native improvement.",
+    "No full learning-cycle, agent-harness/AIDE2 completion, superiority or replacement/family acceptance is established.",
+    "Historical failures, UNKNOWN, original criteria and 39/48 remain unchanged; the whole project goal remains active.",
+    "Reviewer performed source and retained-artifact checks only, with no test rerun, runtime action or model call. Development credits and complete automatic runtime usage remain unknown."
+  ],
+  "publicationVerdict": "GO for the exact source_checks_passed_not_installed evidence; zero manual model requests and no authentic native/full-goal claim are correctly separated."
+}

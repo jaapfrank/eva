@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-11T23:46:38.141122+00:00",
+        "checkedAt": "2026-10-12T00:23:58.026721+00:00",
         "deliveries": [
+          {
+            "title": "Zelfgekozen verbeterd hulpmiddel toepasbaar",
+            "date": "2026-10-12T00:17:35.977060+00:00",
+            "state": "installed",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "completionScope": "Gerichte eigen initiatief → onafhankelijk beoordeeld hulpmiddel → bestaande toepassingsroute; de volledige leercyclus/AIDE² blijft open.",
+            "summary": "Ook eigen verbeterwerk kan nu na onafhankelijke beoordeling een hulpmiddel bewaren en beschikbaar maken voor later gewoon werk.",
+            "result": "Zes modules in gezonde kern en werker, twee actieve hostmodules bijgewerkt; 89 unieke individuele checks geslaagd. Stoppen en bronverwijdering gecontroleerd; bestaande instellingen behouden.",
+            "remaining": "Een authentieke zelfgekozen verbetercyclus en haar latere gedragstoepassing blijven open. Agentaansturing en code/uitbreidingen moeten de volledige AIDE²-cyclus nog samen doorlopen; technische bron- en installatiecontrole is geen gezinsacceptatie.",
+            "source": "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json",
+            "review": "eva2/reviews/native-reviewed-artifact-installed-review-20261012.json",
+            "reviewSha256": "322df9fe04ae05574c5468b0a2c55f02a5e081e36a8517933f8c68a8c030407e",
+            "independentReview": "GO voor exacte geïnstalleerde bron en beperkte publicatie. Authentieke volledige verbetercyclus en gezinsacceptatie blijven open.",
+            "usage": "0 handmatige Eva-modelaanvragen. Ontwikkelcredits en geldkosten onbekend. Geen nieuwe vergelijking."
+          },
           {
             "title": "Eigen initiatief aangesloten op privégeheugen",
             "date": "2026-10-11T23:36:35.858243+00:00",
@@ -4768,39 +4784,39 @@
           }
         ],
         "now": {
-          "title": "Zelfgekozen verbetering na beoordeling toepassen",
-          "state": "in_progress",
-          "phase": "native_reviewed_artifact_application",
-          "activeExecution": true,
+          "title": "Zelfgekozen verbeterd hulpmiddel toepasbaar",
+          "state": "installed",
+          "phase": "native_reviewed_artifact_installed",
+          "activeExecution": false,
           "owner": "/root",
           "executor": "/root",
           "coordination": "/root",
-          "summary": "Concrete ontbrekende koppeling: de toepassing van beoordeelde hulpmiddelen accepteert nog alleen een gewone gebruikersopdracht. Eigen initiatief moet dezelfde bestaande route kunnen gebruiken.",
-          "detail": "Dezelfde bewaarde bron, onafhankelijke eindbeoordeling en gecontroleerde documentopslag. Actuele herkomst, mandaat en stoppen blijven gelden. Geen nieuwe verbeterplatform- of vergelijkingsserie.",
-          "source": "eva2/src/eva/operations/saved_artifact_application.py",
-          "doneWhen": "De bestaande toepassingsroute herkent het oorspronkelijke native initiatief, controleert de huidige toestemming en bewaart uitsluitend het onafhankelijk geaccepteerde hulpmiddel; gewone opdrachten blijven werken.",
-          "review": null,
-          "reviewSha256": "e8c8cf5d8b478d7529d8f7f1c53f7754b99a780ecb6bacdfbe7e66b0dd03ad8b"
+          "summary": "Ook eigen verbeterwerk kan nu na onafhankelijke beoordeling een hulpmiddel bewaren en beschikbaar maken voor later gewoon werk.",
+          "detail": "Zes modules in gezonde kern en werker, twee actieve hostmodules bijgewerkt; 89 unieke individuele checks geslaagd. Stoppen en bronverwijdering gecontroleerd; bestaande instellingen behouden.",
+          "source": "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json",
+          "doneWhen": "Exacte beoordeelde bron actief in kern, werker en bestaande verbeterdienst; stop en bronverwijdering behouden.",
+          "review": "eva2/reviews/native-reviewed-artifact-installed-review-20261012.json",
+          "reviewSha256": "322df9fe04ae05574c5468b0a2c55f02a5e081e36a8517933f8c68a8c030407e"
         },
         "next": {
-          "title": "Verbetering later bij gewoon werk toepassen",
-          "detail": "Gezinsbeoordeling blijft menselijk. Oude acceptaties, verliezen en UNKNOWN blijven behouden.",
+          "title": "Echte verbetercyclus en later gedrag afronden",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md",
-          "summary": "Na deze aansluiting: een echte verbetering uitvoeren en de toegepaste variant bij later relevant werk gebruiken. Agentaansturing en de volledige AIDE²/droomcyclus blijven open."
+          "summary": "Gebruik de bestaande ontwikkel-/eindbeoordelingsroute voor werkelijk gevonden tekorten, inclusief Eva’s agentaansturing en uitbreidingen.",
+          "detail": "Een echte gekozen verbetering en toepassing bij een volgende relevante situatie aantonen. Geen nieuwe vergelijkingsserie of tweede verbeterplatform."
         },
         "ownerAction": {
           "required": false,
           "title": "Geen handeling van jou nodig",
-          "detail": "Geen handeling nodig. De geheugenovergang is geïnstalleerd; authentiek later initiatiefgebruik en jouw oordeel blijven aparte feiten.",
+          "detail": "De koppeling is geïnstalleerd. De authentieke verbetercyclus en latere toepassing zijn de volgende uitvoerbare stap.",
           "steps": [],
-          "expected": "Het dashboard toont apart wat draait, wat in aanbouw is en wat nog niet bewezen is.",
+          "expected": "Dashboard onderscheidt geïnstalleerd, daadwerkelijk gebruikt en geaccepteerd.",
           "blocksIndependentWork": false,
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-11T23:41:05.032229+00:00",
+        "reviewedAt": "2026-10-12T00:23:58.026721+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4877,8 +4893,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-11T23:41:05.032229+00:00",
-      "checkedAt": "2026-10-11T23:46:38.141122+00:00",
+      "reviewedAt": "2026-10-12T00:23:58.026721+00:00",
+      "checkedAt": "2026-10-12T00:23:58.026721+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11171,8 +11187,8 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-11T23:11:35.024002+00:00",
-        "basis": "Geaccepteerde oorspronkelijke functies behouden. Feedback bij nieuw werk toegepast. Eva heeft zelf code gemaakt, verbeterd, onafhankelijk laten toetsen en later dezelfde verbeterde bron gebruikt. Volledige agentaansturing/droomcyclus nog open.",
+        "checkedAt": "2026-10-12T00:23:58.026721+00:00",
+        "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Gewoon werk, leren van feedback en hulpmiddelverbetering/later gebruik hebben beperkt echt bewijs. Native initiatiefgeheugen en beoordeelde hulpmiddeltoepassing zijn nu geïnstalleerd; authentieke volledige verbetercyclus en agentaansturing blijven open.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
         "rows": [
@@ -11211,22 +11227,23 @@
             "name": "Eigen initiatief",
             "state": "incomplete",
             "label": "Resultaat geleverd · oordeel open",
-            "result": "Een eerdere eigen bijdrage is uitgevoerd en privé teruggelezen. De algemene programmeer-/verbeterroute en de correctie van de onbedoelde extra daggrens zijn nu geïnstalleerd; bron- en installatiereview GO.",
-            "remaining": "Een nieuw authentiek zelfgekozen resultaat en privéterugmelding aantonen. Herhaald passend initiatief en leren van jouw reactie blijven open.",
+            "result": "Een eerdere eigen bijdrage is uitgevoerd en privé teruggelezen. De algemene programmeer-/verbeterroute en de correctie van de onbedoelde extra daggrens zijn nu geïnstalleerd; bron- en installatiereview GO. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
+            "remaining": "Een authentieke zelfgekozen verbetercyclus en haar latere gedragstoepassing blijven open. Agentaansturing en code/uitbreidingen moeten de volledige AIDE²-cyclus nog samen doorlopen; technische bron- en installatiecontrole is geen gezinsacceptatie.",
             "evidencePaths": [
               "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
               "eva2/evidence/product/i2-self-chosen-research-installed-20261005.json",
               "eva2/evidence/product/native-initiative-digital-installed-20261011.json",
               "eva2/evidence/product/native-initiative-daily-quota-diagnosis-20261011.json",
-              "eva2/evidence/product/native-initiative-subscription-installed-20261011.json"
+              "eva2/evidence/product/native-initiative-subscription-installed-20261011.json",
+              "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json"
             ]
           },
           {
             "name": "Zelfstandig werk",
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
-            "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar.",
-            "remaining": "Echte zelfgekozen digitale uitvoering en privéterugmelding, volledige AIDE² voor agentaansturing/droomcyclus en samenhangend gezinsgebruik. Deze technische installatie is geen volledige hoofdafronding.",
+            "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
+            "remaining": "Een authentieke zelfgekozen verbetercyclus en haar latere gedragstoepassing blijven open. Agentaansturing en code/uitbreidingen moeten de volledige AIDE²-cyclus nog samen doorlopen; technische bron- en installatiecontrole is geen gezinsacceptatie.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11246,12 +11263,13 @@
               "eva2/evidence/product/saved-artifact-native-improvement-result-20261011.json",
               "eva2/evidence/product/saved-artifact-later-use-result-20261011.json",
               "eva2/reviews/saved-artifact-native-improvement-final-review-20261011.json",
-              "eva2/evidence/product/native-initiative-digital-installed-20261011.json"
+              "eva2/evidence/product/native-initiative-digital-installed-20261011.json",
+              "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json"
             ]
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-11T23:41:05.032229+00:00",
+      "lastUpdatedAt": "2026-10-12T00:23:58.026721+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11611,6 +11629,19 @@
         "wholeGoalActive": true,
         "installationReview": "eva2/reviews/component-improvement-rounds-installed-review-20261011.json",
         "installationReviewSha256": "964895d986d68cebe786c212bc696cbf2230b27cb843e53ee4f68434484ba51c"
+      },
+      "dashboardVerificationNativeReviewedArtifactInstalled20261012": {
+        "checkedAt": "2026-10-12T00:23:58.026721+00:00",
+        "status": "visible_installed_delivery",
+        "browserVerified": true,
+        "url": "http://localhost:44712/",
+        "latestTitle": "Zelfgekozen verbeterd hulpmiddel toepasbaar",
+        "nextTitle": "Echte verbetercyclus en later gedrag afronden",
+        "ownerActionRequired": false,
+        "wholeGoalStatus": "active",
+        "review": "eva2/reviews/native-reviewed-artifact-installed-review-20261012.json",
+        "reviewSha256": "322df9fe04ae05574c5468b0a2c55f02a5e081e36a8517933f8c68a8c030407e",
+        "manualEvaModelRequests": 0
       }
     },
     "pendingTechnicalReview": {
@@ -11695,9 +11726,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Volledige digitale huisgenoot met vier uitkomsten, de gesloten leercyclus en AIDE² voor aansturing/code/uitbreidingen; eerdere drie eigenaaropdrachten zijn deelresultaten.",
-      "currentWork": "Zelfgekozen verbetering na beoordeling toepassen",
-      "currentEvidence": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
-      "nextStep": "Na deze aansluiting: een echte verbetering uitvoeren en de toegepaste variant bij later relevant werk gebruiken. Agentaansturing en de volledige AIDE²/droomcyclus blijven open.",
+      "currentWork": "Zelfgekozen verbeterd hulpmiddel toepasbaar — geïnstalleerd",
+      "currentEvidence": "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json",
+      "nextStep": "Gebruik de bestaande ontwikkel-/eindbeoordelingsroute voor werkelijk gevonden tekorten, inclusief Eva’s agentaansturing en uitbreidingen. Een echte gekozen verbetering en toepassing bij een volgende relevante situatie aantonen. Geen nieuwe vergelijkingsserie of tweede verbeterplatform.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -33710,5 +33741,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-11T23:41:05.032229+00:00"
+  "updatedAt": "2026-10-12T00:23:58.026721+00:00"
 }
