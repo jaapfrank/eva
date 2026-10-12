@@ -1,0 +1,64 @@
+{
+  "contract": "EvaIndependentRetainedExternalMcpReadInstalledReview/v1",
+  "reviewedAt": "2026-10-12T19:39:06.221714+00:00",
+  "decision": "GO",
+  "scope": "Exact installed source and limited factual publication",
+  "bindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/build-result.private.json",
+      "sha256": "37e6038043269890f35d2a49ace63d19b172d3e4e6fb9872f378787aec8fad8a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/installation-dispatch-receipt.private.json",
+      "sha256": "17953adaabc1aec1d253e89b5242315b2b6020d0e1ce6f395295a4193628bf85"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/installation-verification.private.json",
+      "sha256": "d7de6cda0b7019840b65aead96309ef7d400e47f1c396afc509f482658f8aab7"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-external-mcp-read-installed-20261012.json",
+      "sha256": "6e6259bc5f869b8acefc33817342ab57bfd0bd613e34d943fc7515f0a225cf4d"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/retained-external-mcp-read-source-review-20261012.json",
+      "sha256": "cc0715a9fe30024a603d6b4c976bc2e6571aee65ac471c8ca94ca7767fc0086c"
+    }
+  ],
+  "sourceManifestSha256": "e3961d82405434b28674da97872d99fb80dc8e7f347079fa630b7b5e6d763f43",
+  "sourceSha256": "1d9ec40a5a908b04bc1769ecfbaa01585417e1fac73a36a76cc9895ba7645c64",
+  "modelModuleUnchanged": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca",
+  "services": {
+    "core": {
+      "image": "sha256:c5c278a2eff489c85a0632f54123c192aa8adf0028e684b755d7cac3337627ca",
+      "inspectionSha256": "ccc2a77a65bab6064979892161645e90061784ce6372feb64e25f01ad339fefa",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "healthy": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:db906f17e15a70c8a947892eec2c6b05f577d2de3c1515f8acdf1170e1c4240d",
+      "inspectionSha256": "30580cfc252733b5cad47186ef1d2de59c1dfc96af471bafd65eaef7ab3dd587",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "healthy": true
+    }
+  },
+  "findings": [
+    "Existing build and installed inventory receipts bind the exact reviewed connector module in both images; 344 other Python sources per image, including the model module, are unchanged.",
+    "Retained before/installed inspections independently match environment maps, mounts by destination, process configuration and executable arguments. One updater dispatch is recorded; both recorded containers are healthy and readyz is ready.",
+    "The public artifact accurately describes installation and explicitly timestamps its pre-native-start snapshot. Ordinary task outcome is separate; no completed proposal, provider savings or new access/authority is inferred."
+  ],
+  "actualUpdateDispatches": 1,
+  "providerRequestsForBuildAndInstall": 0,
+  "limitations": {
+    "nativeTaskCompletionProven": false,
+    "providerSavingsProven": false,
+    "actualFutureInputFitProven": false,
+    "newExecutionAuthorityGranted": false
+  },
+  "originalReadonlyScopeAndSeparateApprovalBeforeMigrationPreserved": true,
+  "reviewOperations": "Existing artifact reads only; no tests, probes, provider/native calls, database operations or installation.",
+  "wholeProjectGoalRemainsActive": true,
+  "blockers": []
+}

@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T19:27:41.048651+00:00",
+        "checkedAt": "2026-10-12T19:40:14.669921+00:00",
         "deliveries": [
+          {
+            "id": "retained-external-mcp-read-installed-20261012",
+            "date": "2026-10-12T19:40:14.669921+00:00",
+            "title": "Externe MCP-resultaten correct behouden en teruglezen geïnstalleerd",
+            "state": "installed",
+            "installed": true,
+            "summary": "Algemene connectorroute onderscheidt echte MCP-resultaten en lokale leesselecties.",
+            "result": "Eén connector-module;4 gerichte checks plus echte retained-receipt→reader PASS. Bron- en installatiereview GO,kern/werker gezond.",
+            "remaining": "Eva’s eigen volledige voorstel via haar gewone taakroute. Geen volledige functieafronding of tokenbesparing bewezen.",
+            "source": "eva2/evidence/product/retained-external-mcp-read-installed-20261012.json",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/retained-external-mcp-read-installed-review-20261012.json",
+            "reviewSha256": "5075783c094b8a625d1f4ffe361ccf4429dc6a6a7113289de166818c6dfccfac",
+            "independentReview": "GO voor exacte installatie en beperkte feitenpublicatie."
+          },
           {
             "id": "retained-local-read-working-context-ordinary-result-20261012",
             "date": "2026-10-12T19:27:41.048651+00:00",
@@ -5302,8 +5318,8 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "ordinary_research_host_failure_model_free_diagnosis",
-          "taskId": "work:eva-resume:28829439-9d4d-527e-ac7a-c592af0a050b",
+          "phase": "ordinary_research_external_mcp_corrected_continuation_running",
+          "taskId": "work:eva-resume:52fa14eb-aff4-5622-af52-557f11c15c21",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
@@ -5313,8 +5329,8 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva’s invoer past;na15 modelantwoorden/toolstappen volgde een interne fout. Geen compleet voorstel. Gerichte modelvrije diagnose loopt.",
-          "detail": "De algemene contextcorrectie is geïnstalleerd en onafhankelijk goedgekeurd. Vijftien echte aanvragen van36.714–44.570 invoertokens passen;laatste toolstap65 verified. Exacte volgende hostovergang wordt lokaal onderzocht vóór verdere modeluitvoering.",
+          "summary": "Eva vervolgt zelf de leesopdracht. Algemene context- en MCP-correcties geïnstalleerd en onafhankelijk gecontroleerd;volledig voorstel nog niet bevestigd.",
+          "detail": "Alle66 actioncall-ID’s zijn uniek en de modelselector/phase zelf werkt. De exacte native foutfingerprint verwijst naar de bestaande retained-action-lezer;use_connector_tool werd ten onrechte altijd als lokaal behandeld. Productbron wordt gericht gecorrigeerd;geen handmatig voorstel of providerherhaling.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "eva2/evidence/product/tuya-readonly-preserved-proposal-20261012.json",
@@ -5365,21 +5381,27 @@
             "retainedLocalReadWorkingContextIndependentSourceReview": "GO",
             "retainedLocalReadWorkingContextInstalled": true,
             "retainedLocalReadWorkingContextNativeResultProven": false,
-            "retainedLocalReadWorkingContextIndependentInstalledReview": "GO"
+            "retainedLocalReadWorkingContextIndependentInstalledReview": "GO",
+            "retainedExternalMcpReadBuilt": true,
+            "retainedExternalMcpReadChecksPassed": 4,
+            "retainedExternalMcpReadInstalled": true,
+            "retainedExternalMcpReadNativeResultProven": false,
+            "retainedExternalMcpReadIndependentSourceReview": "GO",
+            "retainedExternalMcpReadIndependentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T19:25:18.916616+00:00",
+            "checkedAt": "2026-10-12T19:40:14.669921+00:00",
             "coordinator": "/root",
             "coordinatorTask": "Algemene taakuitvoering afronden zodat Eva zelf onderzoekt en het voorstel maakt.",
-            "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Echte laatste receipt/projectie/phase modelvrij reproduceren;exceptionfingerprint binden vóór bronwijziging.",
+            "executor": "Eva2 · bestaande taakwerker",
+            "executorTask": "Oorspronkelijk onderzoek afronden,zelf volledig voorstel opslaan en teruglezen.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Gebundelde onafhankelijke feiten-/bronreview;geen nieuwe providerproef.",
+            "reviewerTask": "Exacte bron en installatie beoordeeld:GO. Einduitkomst afzonderlijk afwachten.",
             "modelUsage": "Gen8:15 complete gemeten responses,15tools,601.277 bekende tokens. APIusage partial;totaal/credits onbekend. Alle15 waargenomen streams gesloten.",
-            "note": "Geen volledig voorstel;oude fouten en tussenvoorstel behouden. Geen automatische Telegram-terugmelding aan deze dashboardcontinuation gekoppeld."
+            "note": "Negende gewone generatie actief;één dispatch na exact gereproduceerde en herstelde oorzaak. Geen HA-wijzigingen of handmatig voorstel."
           },
-          "checkedAt": "2026-10-12T19:25:18.916616+00:00",
-          "remaining": "Bewezen oorzaak van de interne fout en Eva’s eigen complete opgeslagen voorstel. Geen betaalde herhaling zonder causale correctie."
+          "checkedAt": "2026-10-12T19:40:14.669921+00:00",
+          "remaining": "Gerichte connectorcorrectie afronden en installeren;dan Eva zelf het voorstel laten afronden via dezelfde gewone opdracht."
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -5753,7 +5775,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-12T19:27:41.048651+00:00"
+        "updatedAt": "2026-10-12T19:40:14.669921+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",

@@ -280,7 +280,7 @@ class ConnectorResults:
                 or admission.get("step_index", 0) != source["step_index"]
                 or admission.get("action_call_id") != source["call_id"]):
             raise ConversationConflict("retained action thread or call differs")
-        if name == "use_connector_tool":
+        if name == "use_connector_tool" and events[0].event_type == "CONNECTOR_SELECTION_ADMITTED":
             if (len(events) != 2 or events[0].event_type != "CONNECTOR_SELECTION_ADMITTED"
                     or events[-1].event_type != "CONNECTOR_SELECTION_COMPLETED"
                     or admission.get("owner") != self.owner):
@@ -294,11 +294,17 @@ class ConnectorResults:
                     or receipt.output.get("result") != self.read(reader, arguments)):
                 raise ConversationConflict("retained local selection source differs")
         else:
-            if (name not in {"home_assistant_request", "read_home_assistant_inventory", "save_workspace_document"}
+            if (name not in {"home_assistant_request", "read_home_assistant_inventory", "save_workspace_document", "use_connector_tool"}
                     or events[0].event_type != "TOOL_REQUEST_ADMITTED"
                     or events[-1].event_type != "STATE_VERIFIED"
                     or admission.get("execution_namespace") != background_execution_namespace(self.turn)):
                 raise ConversationConflict("retained action namespace or proof differs")
+            if name == "use_connector_tool":
+                from eva.providers.mcp_discovery import _arguments
+                reader, _ = _arguments(ConversationActionCall(
+                    source["call_id"], name, admission["action_arguments"]))
+                if reader.startswith(READER_PREFIX):
+                    raise ConversationConflict("retained external action is a local reader")
             receipt = port._receipt(self.turn, events, source["step_index"], project=False)
         if (receipt.output.get("status") != "verified"
                 or canonical_sha256(receipt.output) != source["receipt_sha256"]

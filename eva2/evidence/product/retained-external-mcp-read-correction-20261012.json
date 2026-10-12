@@ -1,0 +1,86 @@
+{
+  "contract": "EvaRetainedExternalMcpReadCorrection/v1",
+  "recordedAt": "2026-10-12T19:34:47.969494+00:00",
+  "status": "built_source_not_installed",
+  "purpose": "Let Eva use earlier verified external MCP results through the existing authorized reader while retaining strict local-selection and source identity checks.",
+  "sources": [
+    {
+      "changed": true,
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "1d9ec40a5a908b04bc1769ecfbaa01585417e1fac73a36a76cc9895ba7645c64"
+    }
+  ],
+  "tests": [
+    {
+      "path": "eva2/tests/connectors/test_connector_results.py",
+      "sha256": "5e0c0cf461a545007bb51528f18400bbf89e43965b6dfaed04498b15f4812b14"
+    }
+  ],
+  "frozenManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/frozen-source.private.json",
+    "sha256": "e3961d82405434b28674da97872d99fb80dc8e7f347079fa630b7b5e6d763f43"
+  },
+  "diagnosis": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/exact-receipt-boundary.private.json",
+    "sha256": "e0ffed30d7157637bb98e63725f6ceb9a44cdd674185597e9bd3b3a8cbc237ed"
+  },
+  "correctedActualTransition": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/corrected-receipt-boundary.private.json",
+    "sha256": "0f0d5620a9fbf5a6c34545a5a1eb2b1f51fcf53aa6f25a92169f58619520ec64"
+  },
+  "actualModelPhaseReplay": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/pure-transition-v4.private.json",
+    "sha256": "44300ace30cc020d9ba6eae73bbac37ed7c2988b0b00d2c5a2c82940eaee21d0"
+  },
+  "targetedChecks": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/targeted-checks.private.json",
+    "sha256": "ecbbc8f684dceb313a59d92363958f8965004475e9beef1457237eaa3709f62e"
+  },
+  "causalFacts": {
+    "originalNativeWork": "work:eva-resume:28829439-9d4d-527e-ac7a-c592af0a050b",
+    "lastVerifiedStep": 65,
+    "actualOriginalEventRoute": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "TOOL_EXECUTED",
+      "STATE_VERIFIED"
+    ],
+    "matchedNativeFailureFingerprint": "25b164a9b14d82e6abeca9c7b1ab8191153b97d8f2033cd63fcd788d106f115b",
+    "reproducedException": "ConversationConflict:retained local selection differs",
+    "oldWrongAssumption": "Every use_connector_tool action was treated as a two-event local selection; actual external MCP results use the existing external action proof route."
+  },
+  "changes": [
+    "Discriminate existing local reader selections from external MCP actions using actual admission/event and reader identity.",
+    "Retain existing thread/call/source/actor/execution namespace/proof verification; no new tool, reader, domain function or access grant."
+  ],
+  "checks": {
+    "uniqueTargetedChecksPassed": 4,
+    "actualStep65RetainedBodyAndReaderPass": true,
+    "actualRawProofBytesUnchanged": true,
+    "all66ActionIdsUnique": true,
+    "all66ModelReceiptSelectionAndPhasePass": true,
+    "modelModuleUnchanged": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca",
+    "externalAdapterUnchanged": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+  },
+  "buildPreparationFailure": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/build-preparation-failure.private.json",
+    "sha256": "f468039ba0a9963cf5cf2bf7f662f6545d48987aa5916603ee12c63f9286e14c"
+  },
+  "usage": {
+    "evaModelRequestsDuringCorrectionChecksAndBuild": 0,
+    "nativeActions": 0,
+    "databaseWrites": 0,
+    "codexDevelopmentCredits": "unknown"
+  },
+  "runtimeInstalled": false,
+  "nativeContinuationStarted": false,
+  "taskOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "providerSavingsProven": false,
+  "earlierFailuresAndUsagePreserved": true,
+  "manualTuyaProposalWritten": false,
+  "scope": "Original readonly task; no HA change/migration until separate explicit approval after Eva's completed proposal.",
+  "wholeProjectGoal": "active",
+  "newComparisonSeries": false,
+  "voice": "parked"
+}

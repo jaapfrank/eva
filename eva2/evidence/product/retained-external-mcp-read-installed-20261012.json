@@ -1,0 +1,76 @@
+{
+  "contract": "EvaRetainedExternalMcpReadInstalled/v1",
+  "recordedAt": "2026-10-12T19:38:04.289297+00:00",
+  "status": "installed",
+  "sourceEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-external-mcp-read-correction-20261012.json",
+    "sha256": "6230dcc5fe1659db853157b571ae32241cdcb348c2cb544885d21fbe264d84ab"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/retained-external-mcp-read-source-review-20261012.json",
+    "sha256": "cc0715a9fe30024a603d6b4c976bc2e6571aee65ac471c8ca94ca7767fc0086c"
+  },
+  "build": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/build-result.private.json",
+    "sha256": "37e6038043269890f35d2a49ace63d19b172d3e4e6fb9872f378787aec8fad8a"
+  },
+  "installation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/installation-verification.private.json",
+    "sha256": "d7de6cda0b7019840b65aead96309ef7d400e47f1c396afc509f482658f8aab7"
+  },
+  "dispatch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/installation-dispatch-receipt.private.json",
+    "sha256": "17953adaabc1aec1d253e89b5242315b2b6020d0e1ce6f395295a4193628bf85"
+  },
+  "services": {
+    "core": {
+      "image": "sha256:c5c278a2eff489c85a0632f54123c192aa8adf0028e684b755d7cac3337627ca",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/postgres/connector_results.py": "1d9ec40a5a908b04bc1769ecfbaa01585417e1fac73a36a76cc9895ba7645c64"
+      },
+      "inspectionSha256": "ccc2a77a65bab6064979892161645e90061784ce6372feb64e25f01ad339fefa"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:db906f17e15a70c8a947892eec2c6b05f577d2de3c1515f8acdf1170e1c4240d",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/postgres/connector_results.py": "1d9ec40a5a908b04bc1769ecfbaa01585417e1fac73a36a76cc9895ba7645c64"
+      },
+      "inspectionSha256": "30580cfc252733b5cad47186ef1d2de59c1dfc96af471bafd65eaef7ab3dd587"
+    }
+  },
+  "ready": true,
+  "actualRuntimeUpdates": 1,
+  "providerRequestsForBuildAndInstall": 0,
+  "codexDevelopmentCredits": "unknown",
+  "nativeContinuationStartedAtPublication": false,
+  "taskOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "scope": "Existing authorized local readers and verified external MCP results remain separate; exact thread/call/actor/execution/proof checks retained. Eva itself researches and proposes. Original readonly scope and separate later migration approval unchanged.",
+  "modelModuleUnchanged": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca",
+  "preservedPreviousFailure": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-local-read-working-context-ordinary-result-20261012.json",
+    "sha256": "ec7e7e315519e51999006f122f942bf377ed290c3a97d33f64494390f3b01702"
+  },
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "newComparisonSeries": false,
+  "manualTuyaProposalWritten": false
+}

@@ -1,0 +1,79 @@
+{
+  "contract": "EvaIndependentRetainedExternalMcpReadSourceReview/v1",
+  "reviewedAt": "2026-10-12T19:36:33.311962+00:00",
+  "decision": "GO",
+  "scope": [
+    "exact_frozen_source_installation",
+    "limited_source_facts_publication"
+  ],
+  "bindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/frozen-source.private.json",
+      "sha256": "e3961d82405434b28674da97872d99fb80dc8e7f347079fa630b7b5e6d763f43"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/source-and-tests.patch.private.diff",
+      "sha256": "397855e636525f362a52fafbb85b4e894d9dd3f668440884d106314f6ce0441e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/targeted-checks.private.json",
+      "sha256": "ecbbc8f684dceb313a59d92363958f8965004475e9beef1457237eaa3709f62e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/exact-receipt-boundary.private.json",
+      "sha256": "e0ffed30d7157637bb98e63725f6ceb9a44cdd674185597e9bd3b3a8cbc237ed"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/corrected-receipt-boundary.private.json",
+      "sha256": "0f0d5620a9fbf5a6c34545a5a1eb2b1f51fcf53aa6f25a92169f58619520ec64"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen8-transition-diagnosis/pure-transition-v4.private.json",
+      "sha256": "44300ace30cc020d9ba6eae73bbac37ed7c2988b0b00d2c5a2c82940eaee21d0"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-external-mcp-read-correction-20261012.json",
+      "sha256": "6230dcc5fe1659db853157b571ae32241cdcb348c2cb544885d21fbe264d84ab"
+    }
+  ],
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/postgres/connector_results.py",
+    "sha256": "1d9ec40a5a908b04bc1769ecfbaa01585417e1fac73a36a76cc9895ba7645c64"
+  },
+  "test": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/connectors/test_connector_results.py",
+    "sha256": "5e0c0cf461a545007bb51528f18400bbf89e43965b6dfaed04498b15f4812b14"
+  },
+  "unchangedSources": [
+    {
+      "changed": false,
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca"
+    },
+    {
+      "changed": false,
+      "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+    }
+  ],
+  "findings": [
+    "The exact retained step65 reproduces ConversationConflict:retained local selection differs with the preserved native fingerprint. Its original external MCP event route was incorrectly treated as a two-event local selection.",
+    "The changed branch discriminates by original first admission event. Local CONNECTOR_SELECTION_ADMITTED retains its strict two-event/owner/result checks; external use_connector_tool requires the ordinary TOOL_REQUEST_ADMITTED-to-STATE_VERIFIED route and existing execution namespace, thread, call, actor, source and receipt/proof hashes.",
+    "External reconstruction rejects local READER_PREFIX identities and invokes the unchanged ordinary _receipt(project=False). Current source authorization, timeline retention/load and stop checks remain; no external execution or new observation is performed by retained reading."
+  ],
+  "verification": {
+    "existingUniqueJUnitPasses": 4,
+    "actualRetainedStep65InMemoryPass": true,
+    "existingReaderReturnsExactOriginalText": true,
+    "rawCallOutputProofUnchanged": true,
+    "pure66ReceiptSelectionAndPhasePass": true,
+    "reviewerReranTests": false
+  },
+  "publicationDecision": "GO",
+  "publicStatus": "built_source_not_installed",
+  "limitations": "Model-free retained receipt/interface correction only. No native completion, full future input fit, matched provider savings, access expansion or new execution authority is established; the existing input gate remains.",
+  "preservedHistory": "Closed gen8 status/usage, earlier failures and UNKNOWN, original readonly mandate and documented diagnosis/build preparation errors remain unchanged.",
+  "reviewOperations": "Read-only frozen source/diff and existing artifact inspection; no tests, probes, provider/native calls or database operations.",
+  "wholeProjectGoalRemainsActive": true,
+  "blockers": []
+}

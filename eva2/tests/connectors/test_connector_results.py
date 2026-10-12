@@ -559,3 +559,80 @@ def test_compact_ancestor_reader_metadata_keeps_source_flags_and_exact_raw_reade
         {"pointer": "/output", "offset": 0, "limit": 80, "query": None})
     assert page["text"] == _encoded(projected.output).decode()[:80]
     assert _encoded([[e.event_type, e.payload] for e in timeline.events(thread)]) == original
+
+
+def _retained_mcp():
+    port, timeline, _, stopped, authorize = _retained_ha()
+    port._action_names = ("use_connector_tool",)
+    thread = port._thread_id(TURN, "use_connector_tool", 65)
+    from eva.application.background_execution import background_execution_namespace
+    observation = {"content": [{"type": "text", "text": "Retained external response. " * 700}]}
+    admission = {"action_name": "use_connector_tool", "action_call_id": "external-mcp",
+        "action_arguments": {"tool_id": "tool-read", "arguments_json": '{"key":"value"}'},
+        "step_index": 65, "conversation_id": TURN.conversation_id,
+        "principal_id": TURN.principal_id, "source_message_id": TURN.message_id,
+        "execution_namespace": background_execution_namespace(TURN),
+        "receipt_output": {"transport": "mcp_gateway", "tool_id": "tool-read"},
+        "observation_output_key": "result"}
+    timeline.rows[thread] = [
+        SimpleNamespace(event_type="TOOL_REQUEST_ADMITTED", payload={"data": admission}),
+        SimpleNamespace(event_type="TOOL_PREPARED", payload={"data": {}}),
+        SimpleNamespace(event_type="TOOL_EXECUTED", payload={"data": {}}),
+        SimpleNamespace(event_type="STATE_VERIFIED", payload={"data": {"proof": {
+            "expected": {}, "observed": {}, "evidence": {
+                "source": "mcp_gateway", "observation": observation}}}})]
+    return port, timeline, thread, stopped, authorize
+
+
+def test_retained_external_mcp_receipt_projects_and_reads_without_external_replay():
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    with background_execution(BackgroundExecutionScope(TURN, "same-execution")):
+        port, timeline, thread, _, authorize = _retained_mcp()
+        original = port._receipt(TURN, timeline.events(thread), 65, project=False)
+        raw = _encoded([[event.event_type, event.payload] for event in timeline.events(thread)])
+        projected = port._receipt(TURN, timeline.events(thread), 65)
+        assert projected.call == original.call and projected.output == original.output
+        assert PydanticConversationModel._receipt_presentation(projected) == original.output
+        reader = projected.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+        capture = ConnectorResults(timeline, TURN, authorize)
+        page = capture.read(reader, {"pointer": "/output/result/content/0/text",
+            "offset": 0, "limit": 60, "query": None})
+        assert page["text"] == original.output["result"]["content"][0]["text"][:60]
+        assert capture.read(reader, {"pointer": "/call/arguments/tool_id",
+            "offset": 0, "limit": 60, "query": None})["text"] == "tool-read"
+        assert port._receipt(TURN, timeline.events(thread), 65) == projected
+        assert _encoded([[event.event_type, event.payload] for event in timeline.events(thread)]) == raw
+        assert PydanticConversationModel._receipt_model_views((projected,))[-1] == (
+            PydanticConversationModel._receipt_model_views((original,))[-1])
+
+
+def test_retained_external_mcp_rejects_local_identity_bad_events_scope_and_stop():
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+    with background_execution(BackgroundExecutionScope(TURN, "same-execution")):
+        port, timeline, thread, stopped, authorize = _retained_mcp()
+        projected = port._receipt(TURN, timeline.events(thread), 65)
+        reader = projected.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+        capture = ConnectorResults(timeline, TURN, authorize)
+        args = {"pointer": "/output", "offset": 0, "limit": 60, "query": None}
+        admission = timeline.rows[thread][0].payload["data"]
+        for key, value in (("execution_namespace", "wrong"), ("principal_id", "other")):
+            previous = admission[key]
+            admission[key] = value
+            with pytest.raises(ConversationConflict):
+                capture.read(reader, args)
+            admission[key] = previous
+        previous = timeline.rows[thread][0].event_type
+        for kind in ("CONNECTOR_SELECTION_ADMITTED", "UNKNOWN_ADMISSION"):
+            timeline.rows[thread][0].event_type = kind
+            with pytest.raises(ConversationConflict):
+                capture.read(reader, args)
+        timeline.rows[thread][0].event_type = previous
+        previous = admission["action_arguments"]["tool_id"]
+        admission["action_arguments"]["tool_id"] = reader
+        with pytest.raises(ConversationConflict, match="local reader"):
+            capture.read(reader, args)
+        admission["action_arguments"]["tool_id"] = previous
+        stopped[0] = True
+        with pytest.raises(ConversationConflict, match="stopped"):
+            capture.read(reader, args)

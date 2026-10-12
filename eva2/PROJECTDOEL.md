@@ -1,39 +1,39 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — werkcontext gecorrigeerd; Eva maakt zelf het voorstel
+## Actueel 12 oktober — algemene uitvoering herstellen; Eva maakt zelf het voorstel
 
-De algemene modelroute is gecorrigeerd en geïnstalleerd. Alleen na een echte
-invoerweigering worden oudere gevalideerde pure lokale leesresultaten als exact
-bron-/bereikoverzicht aangeboden; hun tekst is dan expliciet niet in de modelcontext.
-Nieuwste resultaat, benodigde ankers, fouten/UNKNOWN, acties en voortgang blijven.
-Originele gegevens, bewijs, reader, mandaat en invoergrens veranderen niet.
-Eén modelmodule, zeven gerichte checks en bronreview GO; kern en werker gezond,
-344 andere Pythonbronnen per image en configuratie/gegevens gelijk.
-Onafhankelijke installatiereview GO. De achtste gewone voortzetting bleef binnen
-de invoergrens maar eindigde met internal_error/ambiguous na15 complete responses
-en15 tools:601.277 bekende tokens,APIusage partial;geen bevestigd eindvoorstel.
-Alle15 waargenomen streams gesloten. Oorzaak modelvrij reproduceren en de exacte
-foutfingerprint binden vóór verdere modeluitvoering.
+Eva onderzoekt zelf de oorspronkelijke leesopdracht en schrijft haar eigen
+onderbouwde voorstel. Codex herstelt algemene uitvoeringsfouten en schrijft geen
+Tuya-voorstel of vaste Tuya-functie. Geen HA-wijziging of migratie vóór apart
+akkoord op Eva's afgeronde voorstel.
 
-De zevende generatie is failed/input_budget_exceeded: vijf volledig gemeten
-modelresponses, vijf tools en 253.179 bekende tokens; taakusage partial, totaal en
-credits onbekend. De vijf nieuwe receipts maakten de bekende lokale phase groter:
-55.760→63.094 BPE. De nieuwe terugvalroute brengt die bekende phase naar 41.045,
-maar actuele volledige invoerfit, besparing en een compleet voorstel zijn onbewezen.
-Eerdere fouten, UNKNOWN en het tussenvoorstel blijven bewaard.
+De contextcorrectie is geïnstalleerd: na echte invoerweigering blijven oude
+gevalideerde lokale reads via hun exacte bestaande bron/bereik opvraagbaar;
+laatste resultaat, fouten/UNKNOWN, acties en voortgang blijven zichtbaar.
+Vijftien echte modelaanvragen van36.714–44.570 invoertokens pasten, waarna een
+andere interne fout de achtste generatie stopte. 601.277 bekende tokens,
+APIusage partial;volledig totaal/credits onbekend. Alle15 waargenomen streams
+zijn gesloten;het9.240-byte tussenvoorstel en oude fouten zijn behouden.
 
-Eva moet zelf de oorspronkelijke leesopdracht onderzoeken, het volledige voorstel
-opslaan en teruglezen. Codex schrijft geen Tuya-voorstel of vaste Tuya-functie.
-Geen HA-wijziging of migratie vóór apart akkoord op Eva's afgeronde voorstel.
+Die interne fout is modelvrij exact gereproduceerd: een externe MCP-use werd
+ten onrechte als lokale leesselectie behandeld. Eén connectormodule corrigeert
+het onderscheid via de bestaande admission/event/reader/proofroute. Vier gerichte
+checks en de echte bewaarde receipt65→reader-keten slagen;bronreview GO.
+De correctie is geïnstalleerd;kern/werker gezond,344 overige Pythonbronnen en
+configuratie/gegevens per image gelijk. De modelmodule blijft8f30010.
+Onafhankelijke installatiereview GO. De negende gewone generatie is actief:
+work:eva-resume:52fa14eb-aff4-5622-af52-557f11c15c21.
+Nog geen compleet voorstel bevestigd. Geen externe
+handeling blind herhalen of verdere providerpoging zonder nieuwe causale grond.
+
 Het gehele projectgoal blijft actief;39/48 oorspronkelijk en39/54 totaal gelijk.
 HUE1.1/HUE3.1 en volledige AIDE² open;geen nieuwe vergelijkingsserie,spraak geparkeerd.
 
-Bron:eva2/evidence/product/retained-local-read-working-context-correction-20261012.json.
-Installatie:eva2/evidence/product/retained-local-read-working-context-installed-20261012.json.
-Bronreview:eva2/reviews/retained-local-read-working-context-source-review-20261012.json.
-Installatiereview:eva2/reviews/retained-local-read-working-context-installed-review-20261012.json.
-Actuele fout:eva2/evidence/product/retained-local-read-working-context-ordinary-result-20261012.json.
-Behouden fout:eva2/evidence/product/retained-page-coverage-ordinary-result-20261012.json.
+Bron:eva2/evidence/product/retained-external-mcp-read-correction-20261012.json.
+Installatie:eva2/evidence/product/retained-external-mcp-read-installed-20261012.json.
+Bronreview:eva2/reviews/retained-external-mcp-read-source-review-20261012.json.
+Installatiereview:eva2/reviews/retained-external-mcp-read-installed-review-20261012.json.
+Behouden fout:eva2/evidence/product/retained-local-read-working-context-ordinary-result-20261012.json.
 
 ## Eigenaarbesluit 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel
 
