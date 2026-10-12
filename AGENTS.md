@@ -7,10 +7,11 @@ werkelijke bron en juiste verbeterregistratie teruggelezen, onafhankelijke revie
 
 **Voorbereid, niet geïnstalleerd:** werkelijke gewone en proefuitvoerprofielen
 berekend met de gecorrigeerde client. Twaalf configuratieverwijzingen en twee
-toelatingsverwijzingen voorbereid. Onafhankelijke review van deze voorbereiding loopt.
+toelatingsverwijzingen voorbereid. Onafhankelijke review van deze voorbereiding is GO.
 
-**Nu:** de bestaande hervatroute aansluiten op dezelfde verbeteropdracht en haar
-cumulatieve verbruik. De eerdere mislukte poging en 4.987 tokens blijven behouden.
+**Nu:** de hervatcode is gebouwd, nog niet geïnstalleerd. Laatste gerichte controles
+en aansluiting van bestaande pakketopslag worden afgerond. Dezelfde opdracht,
+eerdere mislukte poging en 4.987 tokens blijven behouden en worden eenmaal meegeteld.
 **Daarna:** de goedgekeurde verwijzingen installeren, Eva zelf één kandidaat laten
 vergelijken en onafhankelijk beoordelen; uitsluitend bewezen winst toepassen en
 bij later gewoon werk gebruiken.
@@ -19,7 +20,7 @@ Geen nieuwe Eva-modelaanvraag voor deze voorbereiding. Geen kandidaat of nieuwe
 hoofdafronding geclaimd. Het volledige goal blijft actief, inclusief leercyclus en
 AIDE². De 39/48 historische afrondingen en gezinsacceptaties blijven behouden.
 Geen handeling van Jaap nodig. Spraak geparkeerd; geen concurrentenserie.
-Credits onbekend. Dashboardinhoud bijgewerkt: 2026-10-12T04:17:50.564979+00:00.
+Credits onbekend. Dashboardinhoud bijgewerkt: 2026-10-12T04:35:24.649164+00:00.
 Bewijs: eva2/evidence/product/native-work-corrected-runtime-prepared-20261012.json.
 
 ## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten

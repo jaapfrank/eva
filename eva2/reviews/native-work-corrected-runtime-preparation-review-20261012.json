@@ -1,0 +1,107 @@
+{
+  "contract": "EvaIndependentCorrectedWorkRuntimePreparationReview/v1",
+  "checkedAt": "2026-10-12T04:19:23.677603+00:00",
+  "decision": "GO",
+  "openBlockers": [],
+  "scope": "Exact frozen corrected-scope factory metadata and prospective host configuration/runtime-admission bindings only.",
+  "bindings": {
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/preparation.private.json",
+      "sha256": "5da712706791d9208fc492ec7dfc93e7130bbdbf7866cd9cad58aa74ee0361a3"
+    },
+    "candidateHostConfiguration": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/service.candidate.private.json",
+      "sha256": "656601ced09789650dd5c8858a9245e9c49b833f9c271dcda1cebb049f159c7b"
+    },
+    "candidateRuntimeAdmission": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/runtime-admission.candidate.private.json",
+      "sha256": "d0eef1c19af7fcff73b5c79bf13f7cd7cc6799e02446db4998a38aa1e6e942c7"
+    },
+    "candidateDevelopmentSettings": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/development-settings.candidate.private.json",
+      "sha256": "58ab6c9be3854ba69a2d93f279f14cbc357141ed08fae59206e83c1940bf59c6"
+    },
+    "candidateIndependentFinalSettings": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/independent-final-settings.candidate.private.json",
+      "sha256": "16d938da6804f54672a94101a207c19626eb980da35bb8acd80ed8ac5f86ff87"
+    },
+    "candidateLifecycleRuntimePins": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/lifecycle-runtime-pins.candidate.private.json",
+      "sha256": "5312c85f74fde17618bf46ad2188cfd9eef3e231c0f6215d07316af210fbc552"
+    },
+    "prospectivePreviewClient": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/preview-client.prospective.private.json",
+      "sha256": "64e18e182827b30c0ca740f8396484e671b752e65834e6136a869779d614fe6b"
+    },
+    "ordinaryFactoryProjection": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/ordinary-profile.private.json",
+      "sha256": "9d148f90b013fd24cd66a5fb212a635811f7bf3667fc80792666ebe99d1ad2f6"
+    },
+    "previewFactoryProjection": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/preview-profile.private.json",
+      "sha256": "9e6e7fb21c93f226bc88a2d5778728dcde6414ab4c41a42ebf13431082179563"
+    },
+    "projectionResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/projection-result.private.json",
+      "sha256": "4c853f6f54bdf5e39ea4fb5adb984f283ca376a696f9a3866f7e5ea561aa6dd5"
+    },
+    "exactDeltas": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/corrected-scope-runtime/exact-jsonpointer-deltas.private.json",
+      "sha256": "ea106e5580600eb60a043787cbb7c9378e8dd81eefb3f55c00326763a5a27623"
+    },
+    "installedOrdinaryClientReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-client-scope-installed-review-20261012.json",
+      "sha256": "82c031c0899892ea5127adb3b141ed3a566060b534f11a0dbe441e1bc63a186f"
+    },
+    "unchangedConstructionResultReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-strategy-construction-result-review-20261012.json",
+      "sha256": "17e906efc8f3c810daa32d1b23b3194225bf926bee8fdc7d1ff7f9662387eab2"
+    }
+  },
+  "verified": {
+    "allFrozenFilesAndOriginalAssetsMatchCurrentHashes": true,
+    "ordinaryModelProfileSha256": "14a7dba5b43e0b6d8b7b90cdd3f4d2771a75a787c2bd6f4c68c71d613d3a07e6",
+    "previewModelProfileSha256": "65950987cd2e60f874faf9f6223a08f9bb1330e294fa8827806e15ee0a866ffc",
+    "projectionDifference": "Only release.model_profile_release_sha256; the other release fields, source hashes, capabilities, current and compatible grants match.",
+    "sourceKeys": 59,
+    "capabilities": 25,
+    "currentImmutableImage": "sha256:3d4cf04dfe9260e55839606441aea786db4283ca1a25f8cfc3d27b9faa22a6bd",
+    "sameImageAndNetworkNames": true,
+    "ordinaryWorkerClaimFence": "Existing store claim requires exact model_profile_release_sha256 as well as the other release fields; common worker_profile alone does not allow claiming preview work.",
+    "prospectiveClientMode": "0400",
+    "prospectiveClientUid": 65532,
+    "prospectiveClientNonsymlinkSingleLink": true,
+    "hostCandidateChangedLeaves": 12,
+    "runtimeAdmissionChangedLeaves": 2,
+    "allOtherConfigurationAndAdmissionFieldsIdentical": true,
+    "developmentAndFinalProducerReleaseSourceCapsClientPinsMatchPreview": true,
+    "bothWorkEvidenceConsumerBindingsMatchCandidateRuntimeAdmission": true,
+    "toolConfigurationBoundToActualPreviewModelProfile": true,
+    "hostFinalRawAdmissionReferenceMatchesCandidateBytes": true,
+    "resourcesDeadlinesInputsActorScopeRegistrationRolesLimitsCriteriaScorersProtocolsAndPublisherUnchanged": true,
+    "closedConstruction4987TokensAndOriginalArtifactsPreserved": true
+  },
+  "existingPreparationEvidence": {
+    "actualOrdinaryAndPreviewFactoryProjections": "passed",
+    "newModelCalls": 0,
+    "admissions": 0,
+    "factoryLifespanUsed": false,
+    "transientProjectionContainersRemoved": true,
+    "overstrictWorkerProfileDifferenceAssertionFailureRetained": true,
+    "failedAssertionCorrectedUsingAlreadyRetainedSuccessfulObservations": true,
+    "factoryProjectionRepeatedForTheAssertion": false
+  },
+  "readiness": {
+    "metadataAndProspectiveConfiguration": "GO",
+    "installedCandidateHostOrRuntimeAdmissionProven": false,
+    "nativeInputGo": "NOT_GRANTED",
+    "typedResumeAndCumulativeSameExecutionUsage": "open",
+    "remainingConstructionFeasibilityAndProspectiveAuthorityBinding": "open",
+    "oldOnceClockSpecOrUsageReset": false,
+    "newQuestionCaseOrComparisonSeries": false,
+    "noAdditionalModelFactoryDockerDbOrTestRunByReviewer": true,
+    "protectedQuestionsOrScorerRead": false,
+    "fullAide2OrQualityGainOrWholeGoalClaimed": false,
+    "credits": "unknown"
+  }
+}
