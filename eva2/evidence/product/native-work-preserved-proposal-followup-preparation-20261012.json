@@ -1,0 +1,48 @@
+{
+  "activity": {
+    "creditCost": "unknown",
+    "newEvaModelRequests": 0,
+    "newNativeDispatches": 0
+  },
+  "checkedAt": "2026-10-12T13:27:01.288111+02:00",
+  "contract": "EvaPreservedProposalFollowupPreparationPublic/v1",
+  "currentResult": {
+    "candidateApplied": false,
+    "candidatePreservedSha256": "9fd501a863ae1c1801c429adc7c05570fdfc138db78dfd27d9b465eba76e51a2",
+    "fullAideCycleCompleted": false,
+    "nativeFollowupStarted": false,
+    "projectOriginCorrectionInstalled": true,
+    "uniqueTargetedChecksPassed": 11
+  },
+  "forwardPreparation": {
+    "competitorSeriesAllowed": false,
+    "decisionSha256": "3bccebe5726368e1c4d84655ef500f8a510e5e1f1d81f31a9c45058a16192639",
+    "exactPreparationAndInputReviewPending": true,
+    "freshTechnicalEpisodeIdsRequired": true,
+    "nativeInputAllowed": false,
+    "newCandidateGenerationAllowed": false,
+    "notHistoricalRemainingBudget": true,
+    "originalCriteriaCasesAndModelRolesPreserved": true,
+    "separateProspectiveRequestCeiling": 61,
+    "separateProspectiveTokenCeiling": 332070,
+    "separateProspectiveToolCeiling": 94
+  },
+  "fullGoalActive": true,
+  "outcome": "Evaluate exact preserved code proposal, independently assess only valid selection, apply proven gain, then later use.",
+  "ownerActionRequired": false,
+  "pastUsage": {
+    "childAndCombinedUsage": "UNKNOWN",
+    "knownParentRequests": 7,
+    "knownParentTokens": 67930,
+    "knownParentTools": 6,
+    "oldRawOnceAndTimersPreserved": true
+  },
+  "productCompletionsChanged": false,
+  "state": "preparing",
+  "taskId": "HUE6.1",
+  "team": {
+    "builder": "/root/eva1_memory_transfer",
+    "coordinator": "/root",
+    "reviewer": "/root/product_execution_memory_review"
+  }
+}

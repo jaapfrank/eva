@@ -1,5 +1,28 @@
 # Eva2 — volledige digitale huisgenoot
 
+## Actueel 12 oktober — behouden voorstel gericht beoordelen
+
+De naamvormcorrectie is geïnstalleerd. Het exacte bewaarde codevoorstel blijft
+behouden; de bestaande registratie is nog beschikbaar. Historische child- en
+gezamenlijke usage blijven UNKNOWN ondanks actuele nul-contacttelling, omdat
+de volledige verwijderingshistorie niet bewaard is. Geen historische nulclaim.
+
+Eén noodzakelijke afzonderlijke vervolgopdracht wordt voorbereid binnen het
+actieve afmaakmandaat: dezelfde kandidaat, oorspronkelijke cases, criteria en
+modelrollen; eigen vooraf begrensde boekhouding en verse technische episode-IDs.
+De toegewezen toekomstige ruimte is geen restbudgetclaim voor de oude ronde.
+Oude registraties, klokken, reserveringen en verliesbewijs blijven behouden.
+De definitieve bron-/runtime-/invoerreview moet vóór dispatch kloppen.
+Nog geen nieuwe Eva-modelaanvragen, kandidaatgeneratie of concurrentenserie.
+
+Eén uitvoerder en één reviewer werken aan die voorbereiding; root coördineert.
+Beoordeling, alleen bewezen toepassing en later gebruik blijven open.
+Het gehele goal blijft actief; 39/48 oude en 39/54 totale afrondingen behouden.
+Spraak geparkeerd; geen handeling van Jaap nodig.
+Actuele voorbereiding: eva2/evidence/product/native-work-preserved-proposal-followup-preparation-20261012.json.
+Geïnstalleerde correctie: eva2/evidence/product/native-work-project-origin-installed-20261012.json.
+Dashboardinhoud bijgewerkt: 2026-10-12T13:27:01.288111+02:00.
+
 ## Actueel 12 oktober — beoordelingsaansluiting hersteld en geïnstalleerd
 
 De bestaande technische verbeteropdracht gebruikt component-work-strategy:REG;
