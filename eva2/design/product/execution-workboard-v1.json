@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T06:37:45.233626+00:00",
+  "lastUpdated": "2026-10-12T06:45:11.397762+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -125,19 +125,19 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Persoonlijkheid en geheugenbasis behouden. De verbeterbeoordeling is gecorrigeerd en geïnstalleerd. Gemaakte code betrouwbaar uitvoeren en de volledige AIDE²/leercyclus afronden blijven open.",
+      "summary": "Persoonlijkheid en geheugenbasis behouden. De eerdere beoordelingscorrectie is geïnstalleerd. Nu: uitvoerbewijs corrigeren; de volledige AIDE²-cyclus, zelfstandig initiatief en gezinsoplevering blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · bestaande kandidaatbeoordeling hervatten",
-          "detail": "De ontbrekende beoordelingsmodule is geïnstalleerd en de echte hostimport werkt. Dezelfde kandidaat moet nu worden beoordeeld; nog geen bewezen kwaliteitswinst."
+          "title": "Nu · uitvoerbewijs corrigeren en installeren",
+          "detail": "De bouwer corrigeert de bestaande beoordelingswaarnemer. Eva voert code al uit; deze correctie maakt het uitvoerbewijs betrouwbaarder. Gerichte broncorrectie afmaken, lokaal controleren, installeren en één gebundelde onafhankelijke review afronden."
         },
         {
-          "title": "Daarna · verbetering aantonen en gebruiken",
-          "detail": "Eva maakt en vergelijkt een kandidaat. Alleen onafhankelijk bewezen winst toepassen en bij later gewoon werk gebruiken."
+          "title": "Daarna · volledige verbetercyclus afronden",
+          "detail": "Een geldige kandidaat onafhankelijk beoordelen; uitsluitend aantoonbare winst toepassen en later gebruiken. De gesloten mislukte proef blijft behouden."
         },
         {
           "title": "Vervolgens · initiatief en geheel afronden",
-          "detail": "Passend zelfstandig initiatief, resultaatterugmelding en de vier huisgenootuitkomsten samen opleveren. Volledige gezinsacceptatie blijft apart; spraak geparkeerd."
+          "detail": "Zelfgekozen nuttig werk, resultaatterugmelding en de vier huisgenootuitkomsten samen opleveren. Gezinsacceptatie blijft apart; spraak geparkeerd."
         }
       ],
       "openRisks": [
@@ -1007,7 +1007,7 @@
           "Geparkeerd volgens eigenaarprioriteit. Bestaande werking en bewijs behouden; nu geen speakerproef of spraakbouw gevraagd."
         ],
         "projects": [
-          "Zelf ontbrekend hulpmiddel maken en later gebruiken aangetoond; nu ook eigen bronverbetering met vaste onafhankelijke winst en werkelijk later gebruik uitgevoerd. Agentaansturing/droomplanning blijven af te maken.",
+          "Een ontbrekend hulpmiddel zelf maken, beperkt verbeteren en later gebruiken is aangetoond. De volledige AIDE²-cyclus voor agentaansturing, code en uitbreidingen blijft open; de recent mislukte werkproef levert geen kwaliteitswinst.",
           "Volledige AIDE²/droommodus voor agentaansturing, code en apps/addons afronden; L3.4–L3.7 blijven beperkte, afgeronde deelbewijzen.",
           "Gewone eigenaar-privétekst is overgezet. Nieuwe echte uitwisseling, overige gebruikte ingangen, oud Eva1-achtergrondgedrag en gezinsacceptatie blijven open.",
           "Oude P2.1-dekking, verliezen en UNKNOWN blijven behouden; geen nieuwe vergelijkingsserie."
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T08:37:45.233646+02:00",
+        "checkedAt": "2026-10-12T08:52:05.165332+02:00",
         "deliveries": [
           {
             "id": "native-work-assessment-interface-installed-20261012",
@@ -4974,153 +4974,34 @@
           }
         ],
         "now": {
-          "title": "Zelfstandig werk · gemaakte code uitvoeren en afmaken",
+          "title": "Zelfverbetering · code-uitvoering betrouwbaar beoordelen",
           "state": "in_progress",
-          "phase": "source_bound_execution_cause_check",
+          "phase": "source_bound_execution_observer_correction",
           "activeExecution": false,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De uitvoerder kan al code maken en gebruiken. We onderzoeken nu waarom echte programmeeracties geen bevestigd, brongebonden eindresultaat opleveren.",
-          "detail": "De vier gesloten uitvoerexports missen herkende native code-uitvoering. Eerst de bewezen aansluiting herstellen; bestaande werkende mogelijkheden behouden. Geen nieuwe modelproef gestart.",
-          "source": "eva2/evidence/product/native-work-assessment-interface-installed-20261012.json",
-          "doneWhen": "Eva voert gemaakte code via de bestaande route uit en meldt het resultaat eerlijk terug; bron en werkelijke uitvoering passen aantoonbaar op elkaar.",
+          "summary": "De bouwer corrigeert de bestaande beoordelingswaarnemer. Eva voert code al uit; deze correctie maakt het uitvoerbewijs betrouwbaarder.",
+          "detail": "De gewone uitvoerder blijft behouden. Alleen bevestigde bron, processtart, juiste procesafsluiting en teruggelezen bron mogen samen als uitvoering tellen. De drie werkelijk onvoltooide taken blijven mislukt. Deze broncorrectie is nog niet geïnstalleerd.",
+          "source": "eva2/src/eva/operations/component_native_work_producer.py",
+          "remaining": "Gerichte broncorrectie afmaken, lokaal controleren, installeren en één gebundelde onafhankelijke review afronden.",
+          "doneWhen": "De geïnstalleerde waarnemer bevestigt uitsluitend de werkelijk aangetoonde bron/proces/exit-keten; onzekere uitvoering blijft ongeclaimd.",
           "implementationStatus": {
-            "evaluationBridgeBuilt": true,
-            "previousBridgeSourceReview": "GO, eerdere exacte bron",
-            "currentProductionChangesUnderReview": false,
-            "currentProductionChangesTested": true,
-            "installed": true,
-            "authenticNativeExecutionProven": true,
-            "fullAide2Completed": false,
-            "currentProductionSourceReview": "GO",
-            "producerReviewPending": false,
-            "imagesBuilt": true,
-            "runtimeConfigurationPending": false,
-            "runtimeSourcesInstalled": true,
-            "hostWorkProducerInstalled": true,
-            "hostSourcesPrepared": true,
-            "hostImportsVerified": true,
-            "producerSourceReviewed": true,
-            "registeredCaseDeadlineSourceReady": true,
-            "hostConfigurationPrepared": true,
-            "actualPreparedConfigurationLoaded": true,
-            "readerSourceReviewed": true,
-            "independentConfigurationReviewPending": false,
-            "independentInstallationReviewPending": false,
-            "independentInstallationReview": "GO",
-            "lifecycleInputBound": true,
-            "lifecycleDriverReviewed": true,
-            "nativeExecutionStarted": true,
-            "lifecycleUsageSourceBuilt": true,
-            "lifecycleUsageSourceTested": true,
-            "lifecycleUsageSourceInstalled": true,
-            "lifecycleUsageSourceReviewPending": false,
-            "lifecycleUsageSourceReview": "GO",
-            "lifecycleDriverReview": "GO voor oorspronkelijke bron vóór opstartfout; oude ingang gesloten",
-            "nativeInputReached": true,
-            "preparationFailureRetained": true,
-            "futureLaunchCorrectionPrepared": true,
-            "futureLaunchMetadataVerified": true,
-            "futureLaunchSourceReview": "GO for source and launch metadata only",
-            "originalAttemptClosed": true,
-            "sharedProducerLaunchCorrectionBuilt": true,
-            "sharedProducerLaunchCorrectionInstalled": true,
-            "nativeExecutionClosed": true,
-            "nativeCandidateConfirmed": true,
-            "constructionResultReviewPending": false,
-            "constructionResultReview": "GO for safe limited publication; failed execution retained",
-            "functionalCauseKnown": true,
-            "ordinarySourceReadCorrectionInstalled": true,
-            "actualReadOnlySourceAndRoundPassed": true,
-            "previewClientCorrectedPrepared": true,
-            "correctedRuntimeBindingPending": false,
-            "newNativeCandidateConfirmed": true,
-            "ordinaryClientInstalledReview": "GO",
-            "ordinaryClientInstalledReviewPending": false,
-            "correctedRuntimeProjectionInProgress": false,
-            "correctedRuntimeProjectionCompleted": true,
-            "correctedRuntimeReferencesPrepared": true,
-            "correctedRuntimeReferencesInstalled": true,
-            "correctedRuntimePreparationReviewPending": false,
-            "ordinaryResumeAccountingConnected": true,
-            "newNativeExecutionStarted": true,
-            "correctedRuntimePreparationReview": "GO voor exacte modelvrije configuratievoorbereiding; geen native uitvoering.",
-            "ordinaryResumeAccountingBuilt": true,
-            "ordinaryResumeAccountingInstalled": true,
-            "ordinaryResumeAccountingReviewPending": false,
-            "typedResumeInstallationReviewPending": false,
-            "typedResumeSourceReview": "GO",
-            "typedResumeInstallationReview": "GO",
-            "typedResumeInputReview": "GO_ONCE consumed; closed dispatch retained",
-            "newNativeExecutionClosed": true,
-            "newNativeEvaluationCompleted": false,
-            "newNativeQualityImprovementProven": false,
-            "currentEvaluationFailureCauseKnown": true,
-            "evaluationClockCorrectionBuilt": true,
-            "evaluationClockCorrectionInstalled": true,
-            "evaluationClockSourceReview": "GO",
-            "correctedProgramFutureBindingPending": false,
-            "evaluationClockInstallationReview": "GO for exact source installation and limited publication",
-            "evaluationClockInstallationReviewPending": false,
-            "correctedProgramFutureBindingPrepared": true,
-            "candidateAssessmentResumeReviewPending": false,
-            "candidateAssessmentResumeDispatched": true,
-            "candidateAssessmentResumeInputReview": "GO_ONCE",
-            "candidateAssessmentResumeClosed": true,
-            "candidateAssessmentResumeSucceeded": false,
-            "candidateAssessmentResultReviewPending": false,
-            "candidateAssessmentResultReview": "GO for accurate failure publication; no functional approval or new dispatch",
-            "candidateAssessmentFailureCauseKnown": true,
-            "candidateAssessmentImportClosureInstalled": true,
-            "candidateAssessmentImportClosureSourceReview": "GO",
-            "candidateAssessmentImportClosureInstallationReviewPending": false,
-            "candidateAssessmentImportClosureInstallationReview": "GO for exact installed technical dependency; no new input or quality approval",
-            "candidateAssessmentAfterImportPreparationInProgress": false,
-            "candidateAssessmentAfterImportInputReviewPending": false,
-            "candidateAssessmentAfterImportDispatched": true,
-            "candidateAssessmentAfterImportPreparationCompleted": true,
-            "candidateAssessmentAfterImportInputReview": "GO_ONCE consumed; closed execution",
-            "candidateAssessmentAfterImportClosed": true,
-            "candidateAssessmentAfterImportSucceeded": false,
-            "candidateAssessmentAfterImportResultReviewPending": false,
-            "assessmentInterfaceCorrectionInstalled": true,
-            "candidateAssessmentAfterImportResultReview": "GO voor nauwkeurige publicatie; geen kwaliteit of invoer-GO",
-            "assessmentInterfaceCorrectionBuilt": true,
-            "assessmentInterfaceSourceReview": "GO",
-            "assessmentInterfaceConfigurationReview": "GO",
-            "assessmentInterfaceInstalledReviewPending": false,
-            "assessmentInterfaceInstalledReview": "GO voor exacte installatie en feitelijke publicatie; geen native kwaliteitsclaim of nieuwe invoertoelating"
+            "previousInterfaceCorrectionInstalled": true,
+            "observerCorrectionInstalled": false,
+            "observerCorrectionChecksCompleted": false,
+            "observerCorrectionReviewCompleted": false,
+            "fullAide2Completed": false
           },
-          "remaining": "Onderscheid echte uitvoerfout van onvolledige waarneming; corrigeer uitsluitend de aangetoonde oorzaak, controleer gericht en installeer.",
-          "review": "eva2/reviews/native-work-assessment-interface-installed-review-20261012.json",
-          "reviewSha256": "0f602222955ccf22d0eb7752c742037bfd8bc30f5be5008a0b6a39d8c34e7b22",
-          "ordinaryClientInstalledReview": "eva2/reviews/native-work-client-scope-installed-review-20261012.json",
-          "ordinaryClientInstalledReviewSha256": "82c031c0899892ea5127adb3b141ed3a566060b534f11a0dbe441e1bc63a186f",
-          "preparationReview": "eva2/reviews/native-work-corrected-runtime-preparation-review-20261012.json",
-          "preparationReviewSha256": "c27d99d51246b61fb4da749583c4e1752e6c3af653aaca3bc6dfee55fa9f12f5",
-          "typedResumeInstalledReview": "eva2/reviews/native-work-typed-resume-installed-review-20261012.json",
-          "resultReview": "eva2/reviews/native-work-assessment-interface-installed-review-20261012.json",
-          "resultReviewSha256": "0f602222955ccf22d0eb7752c742037bfd8bc30f5be5008a0b6a39d8c34e7b22",
           "currentActivity": {
-            "checkedAt": "2026-10-12T08:37:45.233646+02:00",
-            "executionStarted": false,
+            "checkedAt": "2026-10-12T08:52:05.165332+02:00",
             "coordinator": "/root",
             "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Bestaande native actiereceipts en bronherkenning vergelijken; alleen een bewezen productoorzaak corrigeren.",
+            "executorTask": "Gerichte broncorrectie in bestaande waarnemer.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Eén gebundelde review van concrete oorzaak, bevroren bron en gerichte uitkomst.",
+            "reviewerTask": "Review volgt op exact bron-, test- en installatieresultaat.",
             "newModelRequestsThisCorrection": 0,
-            "note": "Opgeslagen gecontroleerde voortgang; geen live agenttelemetrie."
-          },
-          "preparation": {
-            "driverSha256": "3eeac1d0955a92e604b6ccbc01af49b70cfb6df24192c6d80082a64c29d2618b",
-            "manifestSha256": "0aa3af16482aca64df6b6bd044b8653b7b176814fb3a33351233073ad9898615",
-            "receiptSha256": "054c53d47e5df7cc5744d0a6ff2d60cfe9fd784c2dc8f883d36cac04e5ebc037",
-            "check": "PASS; één gerichte modelvrije controle",
-            "newModelRequests": 0,
-            "sameCandidate": true,
-            "closedAttemptsPreserved": 3
+            "note": "Gecontroleerde voortgang, geen live agenttelemetrie."
           }
         },
         "next": {
@@ -5138,7 +5019,7 @@
           "detail": "Dit zijn fouten in de technische beoordelingsroute die Codex oplost. Er wordt geen gezinsacceptatie voor je ingevuld."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T08:37:45.233646+02:00",
+        "reviewedAt": "2026-10-12T08:52:05.165332+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5239,8 +5120,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T08:37:45.233646+02:00",
-      "checkedAt": "2026-10-12T08:37:45.233646+02:00",
+      "reviewedAt": "2026-10-12T08:52:05.165332+02:00",
+      "checkedAt": "2026-10-12T08:52:05.165332+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11589,7 +11470,7 @@
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
-            "remaining": "Actuele uitvoerbinding coherent aansluiten en kandidaat beoordelen. Alleen onafhankelijk bewezen winst toepassen en bij later gewoon werk gebruiken. Volledige leercyclus en gezinsacceptatie blijven open.",
+            "remaining": "Nu wordt de beoordelingswaarnemer gecorrigeerd; de gewone code-uitvoering bestaat al. De volledige AIDE²-cyclus voor agentaansturing moet nog een onafhankelijk bewezen verbetering en later gebruik opleveren. Drie recente werkopdrachten bleven onvoltooid. Volledige leercyclus en gezinsacceptatie blijven open.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11621,7 +11502,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T08:37:45.233646+02:00",
+      "lastUpdatedAt": "2026-10-12T08:52:05.165332+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -34271,5 +34152,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T06:37:45.233626+00:00"
+  "updatedAt": "2026-10-12T06:45:11.397762+00:00"
 }

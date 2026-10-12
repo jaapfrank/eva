@@ -1,16 +1,17 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel vervolg 12 oktober — gemaakte code uitvoeren en afmaken
+## Actueel vervolg 12 oktober — brongebonden code-uitvoering vastleggen
 
-De vorige voortzetting leverde twee geïnstalleerde beoordelingscorrecties op.
-De bestaande uitvoerder kan al hulpmiddelen maken en later gebruiken; geen tweede
-uitvoerder bouwen. Nu exact bepalen waarom de vier gesloten uitvoerexports geen
-brongebonden native uitvoering bevatten terwijl programmeeracties zijn vastgelegd.
-Alleen een bewezen productieoorzaak corrigeren, gericht modelvrij controleren en
-installeren. Geen nieuwe modelproef of wijziging van oude criteria, scores of klokken.
-Uitvoerder: /root/eva1_memory_transfer; gebundelde review: /root/product_execution_memory_review.
-Volledig goal actief, spraak geparkeerd; geen handeling van Jaap nodig.
-Dashboardinhoud gecontroleerd: 2026-10-12T06:37:45.233626+00:00.
+De gewone uitvoerder heeft echte programmeerprocessen gestart. De beoordelings-
+waarnemer herkent samengestelde shell niet als bewezen uitvoering van de geschreven
+bron. Alleen een ondubbelzinnige bron → proces/PID → exit → finale bronhash-keten
+gericht aansluiten; muterende of onzekere shell blijft ongeclaimd. Drie oude taken
+bleven ook werkelijk onvoltooid en blijven mislukt. Geen gewone uitvoerder herbouwen,
+oude exports herschrijven of nieuwe modelproef starten.
+Uitvoerder: /root/eva1_memory_transfer; gebundelde eindreview: /root/product_execution_memory_review.
+Volledig goal actief; spraak geparkeerd; geen handeling van Jaap nodig.
+Dashboardinhoud gecontroleerd: 2026-10-12T08:52:05.165332+02:00.
+De eerdere beoordelingscorrectie is geïnstalleerd; de huidige waarnemercorrectie nog niet. Dashboardonderdelen en eerstvolgende uitkomsten zijn hiermee gelijkgetrokken.
 
 ## Historisch 12 oktober — beoordelingsroute gecorrigeerd en geïnstalleerd
 
