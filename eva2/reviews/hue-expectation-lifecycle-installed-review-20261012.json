@@ -1,0 +1,102 @@
+{
+  "contract": "EvaBoundedInstalledPublicationReview/v1",
+  "reviewedAt": "2026-10-12T16:11:47.651410+00:00",
+  "decision": "GO",
+  "scope": "Exact two-source lifecycle installation and safe publication of the separate closed two-turn HUE ordinary result.",
+  "publications": [
+    {
+      "path": "eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json",
+      "sha256": "22a17587bc802577e5dd7bf58e98c3363da81fc9b8d61118c6941645e99958e9"
+    },
+    {
+      "path": "eva2/evidence/product/hue-learning-recall-ordinary-result-20261012.json",
+      "sha256": "26d80c3706b9c1620828d075209e7c861c22cee380efc92dcce9546f0c7e2e30"
+    }
+  ],
+  "sourceManifestSha256": "63a66f568114de5cf70e3f7f8076a8e296bbd5678f11f5d62aae1026cdfe2fbc",
+  "sourceReview": {
+    "path": "eva2/reviews/hue-expectation-lifecycle-source-review-20261012.json",
+    "sha256": "e392339afca96b56a23827926e8085a9321dbc478a397027af92337de0f7c742"
+  },
+  "targetedChecksSha256": "a8f7da646fbc4022783f6034a7bb587ad93717b7fcaa299a9bac25ae0327f922",
+  "buildResultSha256": "906b3565c4a28d1f5ea8166a569ca3c9ad45042f21c2ce3051094219ff4aeba3",
+  "installationDispatchReceiptSha256": "21db4bd27c7999bae67cd4cb250ebc441175b7e55637ac1f4083f13b7183dd35",
+  "installationVerificationSha256": "a59f2c1756bfe778f73d78365f857b1744ce34d8a72846435d2921867ea5f0c3",
+  "preservedEarlierPreparation": {
+    "importFailureRetained": true,
+    "missingCallbackDeadlineRejectedBeforeDispatch": true,
+    "oldReceiptSha256": "c427aa3a2c35ea21e003ce9ebd4ecadcc2643d9e10e94fa8d784cc3d7c3e19f0",
+    "callbackCorrectionSha256": "debcc89591261125ffcd31e82ec168c87b2730a90b51ddf93ef89ea8653242e1",
+    "actualUpdaterDispatches": 1,
+    "rollbackOrSecondInstall": false
+  },
+  "installed": {
+    "images": {
+      "core": "sha256:c5d406e7248aafc3d400848ba321fa2206573cd7d73446c2036c0f414d796b02",
+      "delegated-work-worker": "sha256:e803554d66c3f202a54186c351ab3d31f3bdad8a576eebb55d3f2e0aadc66af9"
+    },
+    "exactSources": [
+      {
+        "path": "eva2/src/eva/application/human_understanding.py",
+        "sha256": "a2ea900bb07c27e983bd8b1bdce88966a19a8dfb5a9ad0eb140e4e1a8d5e180c"
+      },
+      {
+        "path": "eva2/src/eva/providers/human_understanding_actions.py",
+        "sha256": "151abdbbaf06d3421d538d681a7f865698194d43fd12a6c588ab352766e63907"
+      }
+    ],
+    "unchangedOtherPythonSourcesPerImage": 343,
+    "beforeCandidateInventoryChangedOnlyExactTwoModules": true,
+    "actualInstalledInspectionHashesAndImageIDsMatch": true,
+    "coreAndWorkerHealthy": true,
+    "readyzReady": true,
+    "environmentMapsProcessConfigurationMountsByDestinationAndNetworkNamesPreserved": true
+  },
+  "closedBehaviorPublication": {
+    "independentTerminalReviewSha256": "31bb24eda8e721421cac34c5761108df6461aba7d663dc3f9c47128fcd3b708f",
+    "originalCaseResultSha256": "60f4184ab5a556c1002013aa0c8d59076f6a8c74e7c70aa6e036b3f6df44e266",
+    "closureSha256": "24e5aba89570ac199471fbb6e3dc327e87ca31416e3a89ec24b35c7794e12468",
+    "helperMirrorSha256": "f2658ca051f7556f1177fcf31608d9aee83e776613e0d4a741efde67bfb9ad9b",
+    "committedOrdinaryTurns": 2,
+    "originalTypedRecordsInActualModelContext": 2,
+    "retainedCanonicalWrites": 3,
+    "confirmedPersonHypothesisRevisions": 1,
+    "confirmedExpectationRevisions": 0,
+    "laterTurnStarted": false,
+    "registeredPhysicalRequests": 13,
+    "completeUsageRequests": 12,
+    "unknownUsageRequests": 1,
+    "knownInputTokens": 40820,
+    "knownOutputTokens": 2895,
+    "knownCombinedTokens": 43715,
+    "fullTokens": null,
+    "ordinaryActionIntents": 5,
+    "queuedHUEWrites": 3,
+    "invalidInputAttempts": 2,
+    "fourOwnedResourcesClosedRemoved": true,
+    "snapshotsLogsAndOldRawRetained": true,
+    "distinctObservedProductValidatorAndHarnessAccountingBoundaries": true
+  },
+  "publicationChecks": {
+    "allReferencedRawHashesMatch": true,
+    "noFiveSuccessfulWriteOrThreeTurnClaim": true,
+    "noUnknownAsZero": true,
+    "closedHistoricalResultsAndUsageNotRewritten": true,
+    "originalCriteriaModelRolesAndProspectiveBudgetPreserved": true,
+    "pendingReviewAndNextActionAreTimestampedPublicationSnapshots": true,
+    "noPrivatePromptOrSyntheticPersonalContentPublished": true
+  },
+  "reviewReadbackQualification": "One reviewer read assumed a mapping for one-element Docker inspect arrays; corrected read-only. No runtime or test action.",
+  "limits": {
+    "installationOnlyBehaviorNotReplayed": true,
+    "HUE11Completed": false,
+    "HUE31Completed": false,
+    "fullAide2Completed": false,
+    "newInputAllowed": false,
+    "reviewerModelCalls": 0,
+    "reviewerNativeRuns": 0,
+    "testsReplayed": false,
+    "separateTuyaWorkNotReviewedOrAuthorizedByThisReceipt": true,
+    "concreteBlockers": []
+  }
+}

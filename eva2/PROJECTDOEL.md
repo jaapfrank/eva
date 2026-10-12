@@ -1,6 +1,38 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — actuele leerbronnen verbonden; echte latere toepassing toetsen
+## Actueel 12 oktober — oorspronkelijke Tuya-opdracht hervat; leercorrectie geïnstalleerd
+
+Het Tuya/LocalTuya-verzoek is via de bestaande eigenaarroute hervat nadat de
+bewezen te grote HA-modelcontext is gecorrigeerd. De nieuwe derde generatie
+gebruikt de oorspronkelijke uitsluitend-lezende opdracht en bewaarde resultaten.
+Nu het concrete voorstel afmaken; geen migratie, herstart of naamwijziging vóór
+Jaaps expliciete akkoord. De twee eerdere mislukte taken en hun verbruik blijven
+behouden. Deze gewone gebruikersopdracht is geen nieuwe vergelijkingsserie.
+
+De gewone leerproef bevestigt nu huidige bronrefs en één echte persoonsherziening.
+De verwachtingherziening werd afgewezen op review_at=null; de meetopzet stopte
+tussen beurten op een nog lopende helper. Twee gesprekken opgeslagen, derde
+gesprek niet gestart.13 fysieke aanvragen,12 volledig gemeten,43.715 bekende
+tokens; één UNKNOWN en volledig totaal/credits onbekend. Alle vier eigen
+proefresources gesloten; criteria, ruwe fouten en oudere UNKNOWN ongewijzigd.
+
+De terminale verwachting-lifecycle is gericht gecorrigeerd: confirmed/refuted
+met geldige voorgangerrefs mag zonder toekomstige reviewdatum; open/unknown blijft
+die datum vereisen.12 gerichte controles en onafhankelijke bron-GO. Twee modules
+in kern en werker geïnstalleerd,343 overige Pythonbronnen per image en configuratie
+behouden, beide gezond. Eén daadwerkelijke update; eigen voorbereidingsfouten
+apart behouden. Geen tweede geheugenplatform of automatische proefherhaling.
+
+Gehele projectgoal blijft actief.39/48 oorspronkelijke en39/54 totale afrondingen
+blijven staan; HUE1.1/HUE3.1 en volledige AIDE² nog open. Spraak geparkeerd.
+Werk vanuit het echte gebruikersresultaat; voeg geen bouwopdracht toe voor dit
+Tuya-voorbeeld en vul geen vergelijkingsdekking met extra proeven.
+
+Bewijs:eva2/evidence/product/hue-learning-recall-ordinary-result-20261012.json.
+Installatie:eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json.
+Bronreview:eva2/reviews/hue-expectation-lifecycle-source-review-20261012.json.
+
+## Historisch 12 oktober — actuele leerbronnen verbonden; echte latere toepassing toetsen
 
 De bewezen ontbrekende terughaalroute is gecorrigeerd en geïnstalleerd in kern
 en taakwerker. De bestaande PostgreSQL-broncontrole levert nu ook actuele typed

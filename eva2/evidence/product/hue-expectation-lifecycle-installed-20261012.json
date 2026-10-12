@@ -1,0 +1,56 @@
+{
+  "contract": "EvaHueExpectationLifecycleInstalled/v1",
+  "checkedAt": "2026-10-12T16:09:18.086916+00:00",
+  "wholeGoalActive": true,
+  "state": "installed",
+  "scope": "Paired terminal expectation revisions can record confirmed/refuted outcomes without a future review date. Open and unknown expectations still require a canonical review date.",
+  "sourceReview": {
+    "path": "eva2/reviews/hue-expectation-lifecycle-source-review-20261012.json",
+    "sha256": "e392339afca96b56a23827926e8085a9321dbc478a397027af92337de0f7c742",
+    "decision": "GO"
+  },
+  "changes": {
+    "modules": 2,
+    "uniquePureChecksPassed": 12,
+    "predecessorHashAndSourceValidationRetained": true,
+    "ownerProjectPrivacyStopRetained": true,
+    "ordinarySharedEngineRouteRetained": true,
+    "newStorageOrPlatform": false
+  },
+  "installed": {
+    "coreImage": "sha256:c5d406e7248aafc3d400848ba321fa2206573cd7d73446c2036c0f414d796b02",
+    "workerImage": "sha256:e803554d66c3f202a54186c351ab3d31f3bdad8a576eebb55d3f2e0aadc66af9",
+    "unchangedOtherPythonSourcesPerImage": 343,
+    "exactSourceAndInventoryVerified": true,
+    "environmentMountsAndProcessConfigurationRetained": true,
+    "coreAndWorkerHealthy": true,
+    "readyzReady": true,
+    "actualUpdateDispatches": 1,
+    "rollback": false
+  },
+  "preparationFailuresPreserved": [
+    "The first image import check named a nonexistent class; module import passed without a source change or image rebuild.",
+    "The first standard-library updater callback missed the existing deadline keyword. Python refused before update dispatch; the unchanged original containers were inspected, original receipt retained, and the same existing updater used once with its correct callback signature."
+  ],
+  "usage": {
+    "newEvaModelRequests": 0,
+    "newNativeBehaviorProbes": 0,
+    "newExternalHomeAssistantActions": 0,
+    "developmentCredits": null
+  },
+  "remaining": [
+    "True later ordinary use is not established by these source and installation checks.",
+    "HUE1.1/HUE3.1 and full AIDE² remain open; the closed ordinary two-turn partial result is preserved.",
+    "The separate original Tuya task is read-only research; migration still requires explicit approval."
+  ],
+  "independentInstalledReviewPending": true,
+  "evidenceSha256": {
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/frozen-source.private.json": "63a66f568114de5cf70e3f7f8076a8e296bbd5678f11f5d62aae1026cdfe2fbc",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/targeted-checks.private.json": "a8f7da646fbc4022783f6034a7bb587ad93717b7fcaa299a9bac25ae0327f922",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/build-result.private.json": "906b3565c4a28d1f5ea8166a569ca3c9ad45042f21c2ce3051094219ff4aeba3",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/installation-receipt.private.json": "c427aa3a2c35ea21e003ce9ebd4ecadcc2643d9e10e94fa8d784cc3d7c3e19f0",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/pre-dispatch-callback-correction.private.json": "debcc89591261125ffcd31e82ec168c87b2730a90b51ddf93ef89ea8653242e1",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/installation-dispatch-receipt.private.json": "21db4bd27c7999bae67cd4cb250ebc441175b7e55637ac1f4083f13b7183dd35",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/installation-verification.private.json": "a59f2c1756bfe778f73d78365f857b1744ce34d8a72846435d2921867ea5f0c3"
+  }
+}

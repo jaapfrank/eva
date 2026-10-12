@@ -28,12 +28,16 @@ class HumanUnderstandingActions:
             description="Bewaar een voorlopige persoonsinterpretatie of verwachting op basis van dit echte privébericht. "
                 "Herzie bij nieuwe tegeninformatie een eerdere leerrecord met haar exacte source_ref en evidence_ref. "
                 "Gebruik uitsluitend echte gebruikerinformatie, geen eigen antwoord als uitkomst. Alle interpretaties blijven onbevestigd; "
-                "confirmed/refuted benoemt de beoordeling van de eerdere verwachting of interpretatie, geen feitelijke zekerheid.",
+                "confirmed/refuted benoemt de beoordeling van de eerdere verwachting of interpretatie, geen feitelijke zekerheid. "
+                "Een open/onbesliste verwachting vereist een review_at. Een brongebonden bevestiging of weerlegging van "
+                "een eerdere verwachting mag review_at=null hebben: die vastgestelde uitkomst vraagt niet vanzelf een nieuwe toekomstige review.",
             input_schema={"type": "object", "properties": {
                 "kind": {"type": "string", "enum": ["person_hypothesis", "expectation"]},
                 "interpretation": {"type": "string", "minLength": 1, "maxLength": 1600},
                 "uncertainty_reason": {"type": "string", "minLength": 1, "maxLength": 600},
-                "review_at": {"type": ["string", "null"]},
+                "review_at": {"type": ["string", "null"],
+                    "description": "Canonieke UTC voor open/unknown verwachtingen. Bij confirmed/refuted met exacte "
+                        "paired predecessor refs mag dit null zijn; persoonsinterpretaties mogen ook null gebruiken."},
                 "outcome": {"type": "string", "enum": ["open", "confirmed", "refuted", "unknown"]},
                 "previous_source_ref": {"type": ["string", "null"]},
                 "previous_evidence_ref": {"type": ["string", "null"]}},

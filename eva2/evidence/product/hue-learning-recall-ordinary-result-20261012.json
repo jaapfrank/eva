@@ -1,0 +1,81 @@
+{
+  "contract": "EvaHueRecallOrdinaryFollowupResult/v1",
+  "checkedAt": "2026-10-12T16:07:41.520812+00:00",
+  "wholeGoalActive": true,
+  "taskIds": [
+    "HUE1.1",
+    "HUE3.1"
+  ],
+  "state": "closed_partial_learning",
+  "currentSourceManifestSha256": "f5f8a3074be24741269571ab480a29617e1e6fea91a127fb993cc7277252a83e",
+  "observed": {
+    "committedOrdinaryTurns": 2,
+    "currentCanonicalLearningRecordsPresented": 2,
+    "confirmedCanonicalWrites": 3,
+    "personHypothesisRevisions": 1,
+    "expectationRevisions": 0,
+    "laterUseTurnStarted": false,
+    "ordinaryRecallCorrectionPassedThisCase": true
+  },
+  "defects": {
+    "product": "Terminal expectation revisions with valid predecessor references were rejected when review_at was null.",
+    "measurement": "Between-turn accounting guard stopped before an already registered helper had settled; the final-turn settlement drain was never reached."
+  },
+  "usage": {
+    "registeredPhysicalRequestsIncludingHelpers": 13,
+    "requestsWithCompleteUsage": 12,
+    "requestsWithUnknownUsage": 1,
+    "knownInputTokens": 40820,
+    "knownOutputTokens": 2895,
+    "knownTokensLowerBound": 43715,
+    "totalTokens": null,
+    "model": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "creditCosts": null,
+    "developmentCredits": null,
+    "elapsedSeconds": 128.986856245,
+    "clockBoundary": "Core check start through terminal parent failure; physical cleanup recorded separately."
+  },
+  "cleanup": {
+    "ownedResourcesClosedAndRemoved": 4,
+    "databaseAndRawEvidenceRetained": true,
+    "helperId12TerminalUsageConfirmed": false,
+    "parentAcknowledgedHelperClosure": false
+  },
+  "preContentAttempt": {
+    "originalInputsSent": 0,
+    "registeredPhysicalRequests": 0,
+    "knownPartialTokens": 0,
+    "totalTokens": null,
+    "failure": "Oversized Hindsight bank namespace in test setup; corrected before first content execution.",
+    "rawAndOnceRetained": true
+  },
+  "preserved": {
+    "criteriaAndModelRolesUnchanged": true,
+    "closedOriginalFailuresAndUnknownRetained": true,
+    "sameProspectiveBudgetAcrossSetupAndContent": true,
+    "noAutomaticRepeat": true,
+    "voiceParked": true,
+    "competitorExecutions": 0
+  },
+  "completion": {
+    "hue11Completed": false,
+    "hue31Completed": false,
+    "fullAide2Completed": false,
+    "wholeProjectCompleted": false,
+    "ownerActionRequired": false
+  },
+  "nextAction": "Install the reviewed terminal-expectation lifecycle correction. Future evaluation must account for already started helpers before another turn; no closed run is reopened.",
+  "independentPrivateReview": {
+    "decision": "GO limited facts publication / NO_GO full HUE completion",
+    "sha256": "31bb24eda8e721421cac34c5761108df6461aba7d663dc3f9c47128fcd3b708f"
+  },
+  "evidenceSha256": {
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/ordinary-followup-bank-correction/native-usage/case-result.private.json": "60f4184ab5a556c1002013aa0c8d59076f6a8c74e7c70aa6e036b3f6df44e266",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/ordinary-followup-bank-correction/independent-terminal-technical-diagnosis.private.json": "719e76efa54ef0737795e10c3b0c4db5a4c6ace45a60f45d7200b481c1ede629",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/ordinary-followup-bank-correction/independent-terminal-review.private.json": "31bb24eda8e721421cac34c5761108df6461aba7d663dc3f9c47128fcd3b708f",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/ordinary-followup-bank-correction/resource-closure.private.json": "24e5aba89570ac199471fbb6e3dc327e87ca31416e3a89ec24b35c7794e12468",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/ordinary-followup-bank-correction/native-usage/helper-closed.private.json": "f2658ca051f7556f1177fcf31608d9aee83e776613e0d4a741efde67bfb9ad9b",
+    "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/ordinary-followup/resource-closure.private.json": "746a97335501e85e42a22bd99042a39bcf9ebcfced88a8474500292151099dd8"
+  }
+}

@@ -1021,8 +1021,38 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T15:21:44.010871+00:00",
+        "checkedAt": "2026-10-12T16:12:37.839929+00:00",
         "deliveries": [
+          {
+            "id": "hue-expectation-lifecycle-installed-20261012",
+            "date": "2026-10-12T16:12:37.839929+00:00",
+            "title": "Bevestigde en weerlegde verwachtingen bijwerken",
+            "state": "installed",
+            "summary": "De gewone leercyclus kan een afgeronde verwachting bijstellen zonder onnodige toekomstige reviewdatum.",
+            "result": "Twee modules geïnstalleerd;12 gerichte controles en onafhankelijke installatiereview geslaagd. Beide diensten gezond;343 overige Pythonbronnen behouden.",
+            "remaining": "Echte latere toepassing blijft apart te bewijzen; volledige HUE en AIDE² nog open.",
+            "source": "eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json",
+            "review": "eva2/reviews/hue-expectation-lifecycle-installed-review-20261012.json",
+            "reviewSha256": "e355852f687f43314d04f4878c9dc9167b1cb270b9b91657f5bd0f79e46510ac",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "independentReview": "GO voor exacte installatie; geen volledige leercyclusafronding."
+          },
+          {
+            "id": "hue-learning-recall-ordinary-result-20261012",
+            "date": "2026-10-12T16:12:37.839929+00:00",
+            "title": "Gewone leerproef: persoonsaanname echt herzien",
+            "state": "failed",
+            "summary": "Twee gesprekken uitgevoerd en één echte persoonsherziening bewaard. Verwachtingherziening liep vast; derde gesprek niet gestart.",
+            "result": "Huidige leerbronnen correct opgehaald.13 geregistreerde aanvragen;12 compleet,43.715 bekende tokens,1 UNKNOWN. Ruwe fouten behouden en vier eigen proefresources gesloten.",
+            "remaining": "Verwachting-lifecycle inmiddels gecorrigeerd en geïnstalleerd. Latere toepassing is nog niet bewezen. Geen herhaalde proef gestart.",
+            "source": "eva2/evidence/product/hue-learning-recall-ordinary-result-20261012.json",
+            "review": "eva2/reviews/hue-expectation-lifecycle-installed-review-20261012.json",
+            "reviewSha256": "e355852f687f43314d04f4878c9dc9167b1cb270b9b91657f5bd0f79e46510ac",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false,
+            "independentReview": "GO beperkte feitenpublicatie; NO_GO volledige HUE-afronding."
+          },
           {
             "id": "hue-learning-recall-correction-installed-20261012",
             "date": "2026-10-12T15:21:44.010871+00:00",
@@ -5162,9 +5192,9 @@
           }
         ],
         "now": {
-          "title": "Mensbegrip: een aanname bijstellen en later gebruiken",
+          "title": "Tuya-onderzoek hervat; leercorrectie geïnstalleerd",
           "state": "in_progress",
-          "phase": "ordinary_learning_recall_followup",
+          "phase": "tuya_readonly_resume_running",
           "taskId": "HUE1.1",
           "linkedTaskIds": [
             "HUE3.1"
@@ -5173,8 +5203,8 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Ontbrekend terughaalpad gecorrigeerd en geïnstalleerd. Nu één gerichte leercyclusproef op echte latere toepassing, binnen dezelfde criteria.",
-          "detail": "Drie echte beurten HTTP200, maar slechts twee oorspronkelijke HUE-records en geen revisies. Later veranderd gedrag niet bewezen. Bronfix blijft binnen bestaande PG/Hindsight-route; geen extra platform.",
+          "summary": "Jouw oorspronkelijke Tuya-verzoek draait opnieuw via de gewone taakroute, na de gerichte correctie voor grote HA-resultaten.",
+          "detail": "Geen migratie of naamwijziging vóór akkoord. De leercorrectie is in kern en werker geïnstalleerd: een bevestigde of weerlegde verwachting kan zonder toekomstige reviewdatum worden bijgewerkt. De eerdere proef bewijst één persoonsrevisie; latere toepassing blijft open.",
           "doneWhen": "Een later gewoon gesprek gebruikt de gewijzigde afweging, met behouden oorspronkelijke bronnen, onzekerheid en persoonsgrenzen.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "eva2/evidence/product/native-work-preserved-proposal-followup-result-20261012.json",
@@ -5196,21 +5226,27 @@
             "focusedSelectionTestPreparationFailures": 2,
             "independentSourceReview": "GO",
             "focusedChecksPassed": 16,
-            "independentInstalledReview": "GO"
+            "independentInstalledReview": "GO",
+            "recallCorrectionInstalled": true,
+            "recallCorrectionChecksPassed": 18,
+            "recallCorrectionIndependentInstalledReview": "GO",
+            "expectationLifecycleCorrectionInstalled": true,
+            "expectationLifecycleChecksPassed": 12,
+            "expectationLifecycleIndependentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T15:06:10.748120+00:00",
+            "checkedAt": "2026-10-12T16:09:18.149003+00:00",
             "coordinator": "/root",
-            "coordinatorTask": "Correctie integreren in gewone recall en werkend geïnstalleerd opleveren.",
-            "executor": "/root/eva1_memory_transfer",
-            "executorTask": "De bewezen ontbrekende typed-bronrefs in de bestaande geheugenroute corrigeren.",
+            "coordinatorTask": "Oorspronkelijke gebruikersopdracht afronden via de gewone digitale taakroute.",
+            "executor": "/root",
+            "executorTask": "Bestaande Tuya-onderzoekstaak volgen en het echte voorstel controleren.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Gesloten echte proef onafhankelijk beoordelen; geen nieuwe modeluitvoering.",
-            "modelUsage": "14 registraties inclusief behouden setupfout;12 volledig gemeten aanvragen,37.034 bekende tokens,2 onvolledige registraties. Volledig totaal en creditkosten onbekend.",
-            "note": "Geen handeling van Jaap nodig. Geen nieuwe vergelijkingsserie of spraakwerk."
+            "reviewerTask": "Exact geïnstalleerde leercorrectie en beperkte resultatenpublicatie beoordelen.",
+            "modelUsage": "Tuya: één gewone hervatting gestart; verbruik volgt uit de bestaande taakregistratie. De gesloten leerproef blijft13/12/1UNKNOWN/43.715 bekend, geen extra leerproef gestart.",
+            "note": "Geen handeling van Jaap nodig tijdens het onderzoek. Migratie zelf wacht op expliciet akkoord."
           },
-          "checkedAt": "2026-10-12T15:21:44.010871+00:00",
-          "remaining": "Voorlopige aanname → werkelijk tegenbewijs → herziening → ander antwoord later. HUE1.1/HUE3.1 blijven open totdat die hele route werkt."
+          "checkedAt": "2026-10-12T16:09:18.149003+00:00",
+          "remaining": "Een compleet Tuya/LocalTuya-voorstel opleveren. Echte latere toepassing van gewijzigde verwachtingen en volledige AIDE² blijven apart open."
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -15900,28 +15936,28 @@
       "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-12T13:34:20.123313+00:00",
-      "image": "sha256:7e2923803b1fc0eacebb0c5f796ee0e6883419035d1718e9b9593f01a60fcdb4",
-      "coreImage": "sha256:7e2923803b1fc0eacebb0c5f796ee0e6883419035d1718e9b9593f01a60fcdb4",
-      "workerImage": "sha256:0890255015a8ad511e848e96d462c247267db1f8eba5a35ba63e8859284ae684",
+      "recordedAt": "2026-10-12T16:13:11.993953+00:00",
+      "image": "sha256:c5d406e7248aafc3d400848ba321fa2206573cd7d73446c2036c0f414d796b02",
+      "coreImage": "sha256:c5d406e7248aafc3d400848ba321fa2206573cd7d73446c2036c0f414d796b02",
+      "workerImage": "sha256:e803554d66c3f202a54186c351ab3d31f3bdad8a576eebb55d3f2e0aadc66af9",
       "core": "/eva2-managed-b-slot3-core",
       "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "readyStatus": true,
       "repositoryHeadFullyInstalled": false,
-      "reviewedSourceIdentity": "Exact five-module retained Home Assistant model context correction",
+      "reviewedSourceIdentity": "Exact two-module terminal expectation lifecycle correction over retained HUE recall and HA context corrections",
       "retainedSourceItems": {
-        "core": 338,
-        "worker": 338
+        "core": 343,
+        "worker": 343
       },
-      "evidence": "eva2/evidence/product/telegram-ha-context-installed-20261012.json",
-      "evidencePath": "eva2/evidence/product/telegram-ha-context-installed-20261012.json",
-      "composeOverride": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/candidate.compose.private.json",
+      "evidence": "eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json",
+      "evidencePath": "eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/candidate.compose.private.json",
       "configurationEnvironmentMountsRetained": true,
-      "installedReview": "eva2/reviews/telegram-ha-context-installed-review-20261012.json",
-      "meaning": "Geïnstalleerde contextcorrectie en gezonde diensten; geen afgerond Tuya-migratievoorstel of volledige HUE-functie.",
-      "installedReviewSha256": "3f5383533200e9c3aae69cebc92f3a183c6e785129ba061f9655dfa7b3f3a7eb"
+      "installedReview": "eva2/reviews/hue-expectation-lifecycle-installed-review-20261012.json",
+      "meaning": "Geïnstalleerde leercorrectie en gezonde diensten. Oorspronkelijk Tuya-onderzoek opnieuw actief; compleet voorstel en volledige HUE/AIDE² nog niet bevestigd.",
+      "installedReviewSha256": "e355852f687f43314d04f4878c9dc9167b1cb270b9b91657f5bd0f79e46510ac"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -22901,11 +22937,11 @@
             {
               "id": "HUE3.1",
               "title": "Verwachting later met echte uitkomst vergelijken",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva legt vooraf een verwachting met bron, onzekerheid en controlemoment vast. Een latere echte uitkomst wordt als bevestigd, weerlegd of onbekend gekoppeld en verandert haar volgende afweging.",
-              "nextAction": "Voeg de ontbrekende verwachting-uitkomstverbinding toe aan de bestaande persoonsgeheugen- en rustige reflectieroute. Geen vooraf ingebouwde vuilnisbak-, agenda- of huiswerkfunctie.",
+              "nextAction": "Leerbron-/revisieroute geïnstalleerd en onafhankelijk gecontroleerd. Gerichte gewone leercyclus afmaken: echte correctie opslaan en later in een nieuwe sessie gebruiken.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -23164,7 +23200,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Een persoonsgebonden hypothese heeft herkomst, onzekerheid en tegenbewijs. Een latere correctie verandert de hypothese en het volgende relevante antwoord; de oude aanname wordt geen feit bij een andere persoon.",
-              "nextAction": "Bronanalyse gereed. Bestaande brongebonden correctie verbinden met herziene interpretatie en later recallgebruik; eerst bronverwijzingen bij Hindsight-consolidatie bevestigen.",
+              "nextAction": "Leerbron-/revisieroute geïnstalleerd en onafhankelijk gecontroleerd. Gerichte gewone leercyclus afmaken: echte correctie opslaan en later in een nieuwe sessie gebruiken.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {

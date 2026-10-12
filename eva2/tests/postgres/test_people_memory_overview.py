@@ -1216,3 +1216,56 @@ def test_learning_ordinary_action_outbox_recall_and_later_context(selected_priva
     journal.request_turn_stop(turn)
     with pytest.raises(ConversationStopped):
         provider.execute(turn, call)
+
+
+@pytest.mark.parametrize("outcome", ["confirmed", "refuted"])
+def test_terminal_expectation_without_review_keeps_exact_predecessor_and_unconfirmed_trust(outcome):
+    from eva.application.conversation import ConversationTurn, ConversationActionCall, ConversationActionInputRejected
+    from eva.application.human_understanding import build_human_understanding_document, parse_human_understanding_record
+    from eva.providers.human_understanding_actions import HumanUnderstandingActions, ACTION
+    original = ConversationTurn.private("tenant", "installation", "person", "conversation", "expectation-source",
+        "Original synthetic user information.", "2026-08-26T12:00:00Z", project_id="project")
+    parent = build_human_understanding_document(original, _learning_arguments())
+    turn = ConversationTurn.private("tenant", "installation", "person", "conversation", "actual-outcome-source",
+        "Actual synthetic user outcome.", "2026-08-27T12:00:00Z", project_id="project")
+    arguments = _learning_arguments(outcome=outcome, review_at=None, previous_source_ref=parent.source_ref,
+        previous_evidence_ref=parent.evidence_ref)
+    document = build_human_understanding_document(turn, arguments)
+    record = parse_human_understanding_record(document.content, evidence_ref=document.evidence_ref)
+    assert record["review_at"] is None and record["outcome"] == outcome
+    assert record["source_text_sha256"] == hashlib.sha256(turn.text.encode()).hexdigest()
+    assert document.trust == "model_inference_unconfirmed" and document.project_id == turn.project_id
+    class Reader:
+        available = True
+        def learning_source(self, query, source, evidence, *, now, follow_revisions):
+            assert (source, evidence) == (parent.source_ref, parent.evidence_ref)
+            assert follow_revisions is False
+            return ({"contract":"EvaHumanUnderstandingContext/v1", "records":[{"source_ref":source,
+                "evidence_ref":evidence,"record":parse_human_understanding_record(parent.content,evidence_ref=evidence)}]}
+                if self.available else None)
+    reader = Reader()
+    provider = HumanUnderstandingActions(None, source_reader=lambda:reader, submit=lambda doc:None)
+    assert provider._validate(turn, ConversationActionCall("terminal", ACTION, arguments), reader, None, NOW) == document
+    reader.available = False
+    with pytest.raises(ConversationActionInputRejected):
+        provider._validate(turn, ConversationActionCall("missing-parent", ACTION, arguments), reader, None, NOW)
+    with pytest.raises(ValueError, match="requires a predecessor"):
+        build_human_understanding_document(turn, _learning_arguments(outcome=outcome,review_at=None))
+    with pytest.raises(ValueError, match="must be paired"):
+        build_human_understanding_document(turn, {**arguments, "previous_evidence_ref":None})
+
+
+@pytest.mark.parametrize("outcome", ["open", "unknown"])
+def test_unresolved_expectation_still_requires_canonical_review(outcome):
+    from eva.application.conversation import ConversationTurn
+    from eva.application.human_understanding import build_human_understanding_document, parse_human_understanding_record
+    turn = ConversationTurn.private("tenant", "installation", "person", "conversation", "message",
+        "Synthetic unresolved user source.", "2026-08-26T12:00:00Z")
+    arguments = _learning_arguments(outcome=outcome, previous_source_ref="older-source",
+        previous_evidence_ref="human-understanding:"+"a"*64)
+    with pytest.raises(ValueError, match="review time is required"):
+        build_human_understanding_document(turn,{**arguments,"review_at":None})
+    with pytest.raises(ValueError, match="canonical UTC"):
+        build_human_understanding_document(turn,{**arguments,"review_at":"2026-08-27T12:00:00+00:00"})
+    doc = build_human_understanding_document(turn,arguments)
+    assert parse_human_understanding_record(doc.content,evidence_ref=doc.evidence_ref)["review_at"] == arguments["review_at"]

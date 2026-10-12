@@ -1,0 +1,64 @@
+{
+  "contract": "EvaBoundedSourceReview/v1",
+  "reviewedAt": "2026-10-12T16:05:24.862524+00:00",
+  "decision": "GO",
+  "scope": "Only exact two-module expectation lifecycle correction for source installation; no native input, learned behavior or product completion.",
+  "sourceManifestSha256": "63a66f568114de5cf70e3f7f8076a8e296bbd5678f11f5d62aae1026cdfe2fbc",
+  "targetedChecksSha256": "a8f7da646fbc4022783f6034a7bb587ad93717b7fcaa299a9bac25ae0327f922",
+  "patchSha256": "ad324a233e1e9b8f77df537519d0dc82d48610b8e42a10a95e7a51bd106b67a2",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/application/human_understanding.py",
+      "sha256": "a2ea900bb07c27e983bd8b1bdce88966a19a8dfb5a9ad0eb140e4e1a8d5e180c"
+    },
+    {
+      "path": "eva2/src/eva/providers/human_understanding_actions.py",
+      "sha256": "151abdbbaf06d3421d538d681a7f865698194d43fd12a6c588ab352766e63907"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "eva2/tests/postgres/test_people_memory_overview.py",
+      "sha256": "61984b6874549e54ea0df82ee4c392c2bfeaeaa600405816780e4211e09eb316"
+    }
+  ],
+  "unchangedModel": {
+    "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+    "sha256": "0ae0e6701dd5ad1ad01f3178405d72e897bd8a2b202f018a76cdbeb6abc5e7fe"
+  },
+  "basis": {
+    "actualClosedTerminalDiagnosisSha256": "719e76efa54ef0737795e10c3b0c4db5a4c6ace45a60f45d7200b481c1ede629",
+    "closedCaseResultSha256": "60f4184ab5a556c1002013aa0c8d59076f6a8c74e7c70aa6e036b3f6df44e266",
+    "closedTerminalReviewSha256": "31bb24eda8e721421cac34c5761108df6461aba7d663dc3f9c47128fcd3b708f",
+    "criteriaSha256": "f70436a5db70f7f5574a31282c5f427536c63069d1505d1a8dfe0b90d9f3f547"
+  },
+  "findings": {
+    "nullReviewAllowedOnlyForConfirmedOrRefutedExpectation": true,
+    "pairedCanonicalPredecessorStillRequiredForTerminalOutcome": true,
+    "realRetainedSameOwnerSameProjectSameKindOlderSourceRecheckedBeforeWrite": true,
+    "originalIngressCurrentStopAndReplayGuardsUnchanged": true,
+    "openAndUnknownExpectationStillRequireCanonicalReview": true,
+    "modelInferenceUnconfirmedTrustAndNoActionAuthorityUnchanged": true,
+    "canonicalSourceHashEvidenceHashAndLineageLimitsUnchanged": true,
+    "descriptorExplainsTheSameValidatorLifecycle": true,
+    "concreteBlockers": []
+  },
+  "validation": {
+    "uniquePureChecksPassed": 12,
+    "actualJUnitPassed": 12,
+    "returnCode": 0,
+    "logJUnitReceiptPatchHashesVerified": true,
+    "actualSourceAndTestHashesMatchManifest": true,
+    "databaseUsed": false,
+    "nativeActions": 0,
+    "models": 0
+  },
+  "limits": {
+    "installationReadbackStillRequired": true,
+    "newInputGO": false,
+    "nativeBehaviorProven": false,
+    "closedResultsUsageCriteriaAndOnceMarkersUnchanged": true,
+    "HUECompletionAllowed": false,
+    "fullAIDEClaimAllowed": false
+  }
+}

@@ -54,8 +54,8 @@ def _record(payload: object) -> dict[str, Any]:
     _timestamp(payload["recorded_at"])
     if payload["review_at"] is not None:
         _timestamp(payload["review_at"])
-    elif payload["kind"] == "expectation":
-        raise ValueError("expectation review time is required")
+    elif payload["kind"] == "expectation" and payload["outcome"] not in ("confirmed", "refuted"):
+        raise ValueError("unresolved expectation review time is required")
     source, evidence = payload["previous_source_ref"], payload["previous_evidence_ref"]
     if (source is None) != (evidence is None):
         raise ValueError("learning predecessor references must be paired")
