@@ -1,0 +1,121 @@
+{
+  "contract": "EvaNativeProgramObservationInstalled/v1",
+  "recorded_at": "2026-10-12T09:04:32.317634+02:00",
+  "status": "installed_independent_review_pending",
+  "outcome": "Truthful observation of existing Python program execution in the existing evaluator.",
+  "existing_behavior": "The ordinary Eva executor already starts programming processes. Three prior tasks were genuinely unfinished; missing execution observations did not mean no process started.",
+  "changed": [
+    {
+      "path": "eva2/src/eva/operations/component_native_work_producer.py",
+      "sha256": "d19320c89bee63b35d6e8e728601a6561aa7a7f62a0a7b174eab34cbce200420",
+      "responsibility": "Existing evaluator observer only; ordinary digital executor and model prompts unchanged."
+    },
+    {
+      "path": "eva2/tests/operations/test_component_native_work_producer.py",
+      "sha256": "f3f145ca950ce4094112a90fbfc553ab0ddb144f8f4a03b129ea3392c1f2f1a5",
+      "responsibility": "Two targeted observer checks."
+    }
+  ],
+  "observed_chain": [
+    "Successful original main.py write receipt",
+    "Unambiguous literal Python start, optional cd /workspace prefix and simple data redirection",
+    "Actual matching PID and same actor/session/workspace",
+    "Actual process exit receipt, with exit code retained",
+    "Independent final source readback agrees with the written source"
+  ],
+  "uncertain_execution": "Compound or mutating shell, heredoc, pipeline, unknown writes, concurrent processes, missing/wrong exit and changed final source remain unclaimed.",
+  "checks": {
+    "unique_targeted_checks_passed": 2,
+    "initial_passes": 2,
+    "changed_negative_node_passes": 1,
+    "physical_local_python_executions": 1,
+    "qualification": "Two nodes passed initially. After adding the conservative pending-second-process invalidation branch, only the affected grouped negative node was rerun and passed. The physical positive chain was not repeated.",
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-execution-observer-correction/targeted-checks.private.json",
+      "sha256": "fb7d3011283af5314f6184e511a8c3bdc74b3159d24f0bcdee57d724d4d1c7b2"
+    }
+  },
+  "installation": {
+    "host_overlay_source_exact": true,
+    "independent_producer_copy_exact": true,
+    "actual_import_origin_correct": true,
+    "service_health": {
+      "http_status": 200,
+      "payload": {
+        "status": "ready"
+      }
+    },
+    "service_restarts": 1,
+    "configuration_before_sha256": "7c8f2582fe77e30cc1eb0c664d6bbfddf90919e9b61618436ee7dfb88e22a6c3",
+    "configuration_after_sha256": "43874046640254e041af33a5cea2f9df366c8e874373755024e3d8759966c6bd",
+    "configuration_changes": "Only the two existing producer_file and producer_sha256 references.",
+    "other_configuration_preserved": true,
+    "other_host_sources_preserved": true,
+    "other_host_source_count": 37,
+    "core_worker_images_configuration_mounts_preserved": true,
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-source-bound-execution-correction/install-result.private.json",
+      "sha256": "0f038aee0c52c23f3d6651472699f8388592a15cc5bafe557c0a6c821bd5ad04"
+    }
+  },
+  "retained_original_evidence": {
+    "builder_closed_records_checked": 24,
+    "builder_closed_records_unchanged": true,
+    "installation_closed_records_checked": 10,
+    "installation_closed_records_unchanged": true,
+    "old_three_budget_exceeded_tasks": "Remain failed; no retrospective score, task-state, budget or clock change.",
+    "old_four_native_exports": "Closed and unchanged."
+  },
+  "usage": {
+    "new_manual_eva_model_requests": 0,
+    "new_native_model_episodes": 0,
+    "physical_local_python_executions": 1,
+    "development_credit_cost": "unknown",
+    "money": "unknown"
+  },
+  "development_errors": [
+    {
+      "commandExecuted": false,
+      "kind": "JavaScript quoting SyntaxError",
+      "nativeImpact": false,
+      "preservedAs": "this receipt; no native result or score changed",
+      "stage": "before source edit"
+    },
+    {
+      "stage": "installation-preparation metadata read",
+      "kind": "AttributeError from treating a list as a mapping",
+      "production_mutation": false,
+      "resolution": "Inspected the recorded structure and used its existing list interface."
+    }
+  ],
+  "scope": {
+    "ordinary_runner_changed": false,
+    "new_agent_platform": false,
+    "new_benchmark_series": false,
+    "quality_improvement_proven": false,
+    "full_aide2_completed": false,
+    "new_product_function_completed": false,
+    "whole_project_goal": "active",
+    "speech": "parked"
+  },
+  "limitations": [
+    "Only the single local test execution is physically demonstrated. No new ordinary/native task or model episode ran.",
+    "Original three budget_exceeded tasks remain failed; original four execution exports, scores and clocks remain closed.",
+    "Recognition intentionally excludes general compound shell, heredoc, pipeline, mutators and unknown source history.",
+    "A truthful observed nonzero exit is an execution observation, not a successful-task claim.",
+    "The local physical test does not prove a new native/model work episode or task-quality advantage.",
+    "Full AIDE² for agent control, its independent final assessment, controlled application and later use remain incomplete."
+  ],
+  "source_freeze": {
+    "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-execution-observer-correction/frozen-source.private.json",
+    "sha256": "2b3ba5d8a3ec2821a2223faa35693087006c010eca3a35f1e6c6125a7d32db21"
+  },
+  "source_result": {
+    "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-execution-observer-correction/source-result.private.json",
+    "sha256": "eb205b44831e958b855f40fb536ec8b0b1c6bb5db37489835ccaf3c148200ccc"
+  },
+  "independent_review": {
+    "status": "pending",
+    "expected_path": "eva2/reviews/native-program-observation-installed-review-20261012.json"
+  }
+}

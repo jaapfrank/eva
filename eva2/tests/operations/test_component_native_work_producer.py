@@ -622,3 +622,135 @@ def test_launch_passes_exact_docker_security_metadata_before_start(setup, monkey
         assert sum(argv[0] == "start" for argv in commands) == 1
     assert commands[-1][0] == "rm"
     assert json.loads((run_root / "container-cleanup.json").read_bytes())["returncode"] == 0
+
+
+def _observer_receipt(name, arguments, text, *, is_error=False, status="verified"):
+    return {"call": {"name": name, "call_id": name + ":observer", "arguments": arguments},
+        "output": {"status": status, "workspace": "/workspace",
+            "programming_result": {"isError": is_error, "content": [{"type": "text", "text": text}]}}}
+
+
+def _observer_write(content, *, is_error=False, status="verified"):
+    return _observer_receipt("write_programming_file",
+        {"path": "/workspace/main.py", "content": content, "mode": "rewrite"},
+        "Successfully wrote to /workspace/main.py (1 lines) ", is_error=is_error, status=status)
+
+
+def _observer_start(command, pid):
+    return _observer_receipt("start_programming_process", {"command": command},
+        "Process started with PID " + str(pid) + " (shell: /bin/bash)\nInitial output:")
+
+
+def _observer_exit(pid, exit_code, stdout=""):
+    return _observer_receipt("use_programming_tool",
+        {"tool_name": "read_process_output", "arguments_json": json.dumps({"pid": pid})},
+        "[Reading 1 new lines (total: 1 lines)]\n" + stdout
+        + "\n\u2705 Process completed with exit code " + str(exit_code) + " (runtime: 0.01s)")
+
+
+def _observer_raw(observer):
+    return {"identity": {"case_id": "observer-case"}, "programming_session_key": "observer-session",
+        "workspace_key": "observer-workspace", "action_receipts": observer.rows,
+        "stored_work": {"state": "failed", "error_code": "budget_exceeded"}}
+
+
+def _observe(observer, receipt, step, *, session="observer-session", workspace="observer-workspace"):
+    return observer.observe(receipt, {"case_id": "observer-case"}, step, session, workspace)
+
+
+def test_native_execution_observer_binds_one_physical_write_start_exit_readback(tmp_path):
+    import subprocess
+    # One real local process, no ordinary/native factory, provider, DB or tool dispatch.
+    workspace = tmp_path / "observer-workspace"
+    workspace.mkdir(mode=0o700)
+    source = b'print("observer checked")\n'
+    p.exclusive(workspace / "main.py", source, uid=10001, raw=True)
+    observer = p._NativeProgramObserver()
+    write = _observer_write(source.decode())
+    _observe(observer, write, 0)
+    process = subprocess.Popen("python3 main.py", shell=True, executable="/bin/bash", cwd=workspace,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    try:
+        # The same direct command ran under the declared real shell and PID.
+        start = _observer_start("python3 main.py", process.pid)
+        _observe(observer, start, 1)
+        assert observer.rows[1]["native_program_source_sha256"] is None
+        assert p._native_program_executions(_observer_raw(observer), p.sha(source)) == []
+        stdout, stderr = process.communicate(timeout=10)
+        assert process.returncode == 0 and stdout == "observer checked\n" and stderr == ""
+    finally:
+        if process.poll() is None:
+            process.kill()
+            process.wait()
+    exit_receipt = _observer_exit(process.pid, process.returncode, stdout)
+    _observe(observer, exit_receipt, 2)
+    observation, actual = p._read_workspace_file(workspace / "main.py")
+    assert actual == source and observation["readback_sha256"] == p.sha(source)
+    raw = _observer_raw(observer)
+    executions = p._native_program_executions(raw, observation["readback_sha256"])
+    assert len(executions) == 1
+    execution = executions[0]
+    assert execution["pid"] == process.pid and execution["exit_code"] == process.returncode
+    assert execution["source_sha256"] == p.sha(source) and execution["step_index"] == 1
+    assert execution["receipt"] == start and execution["receipt_sha256"] == canonical_sha256(start)
+    assert execution["exit_receipt"] == exit_receipt and execution["exit_step_index"] == 2
+    assert execution["exit_receipt_sha256"] == canonical_sha256(exit_receipt)
+    assert execution["write_receipt_sha256s"] == [canonical_sha256(write)]
+    assert raw["stored_work"] == {"state": "failed", "error_code": "budget_exceeded"}
+    assert p._direct_program_command("cd /workspace && python3 main.py < input.json > result.json")
+
+
+def test_native_execution_observer_refuses_uncertain_or_mutated_chains():
+    source = 'print("observer checked")\n'
+    source_sha = digest(source)
+    def chain(write=None, command="cd /workspace && python3 main.py", exit_pid=17,
+              session="observer-session", final_sha=source_sha, exit_code=0, mutator=False):
+        observer = p._NativeProgramObserver()
+        _observe(observer, _observer_write(source) if write is None else write, 0)
+        _observe(observer, _observer_start(command, 17), 1)
+        if mutator:
+            _observe(observer, _observer_receipt("use_programming_tool",
+                {"tool_name": "edit_block", "arguments_json": "{}"}, "edited"), 2)
+        if exit_pid is not None:
+            _observe(observer, _observer_exit(exit_pid, exit_code), 3, session=session)
+        return p._native_program_executions(_observer_raw(observer), final_sha), observer
+    for command in (
+        "cd /workspace && python3 main.py && cat result.json",
+        "cd /workspace && python3 - <<'PY'\nprint(1)\nPY",
+        "python3 main.py | cat", "python3 main.py &",
+        "python3 main.py; echo done", "python3 main.py > main.py",
+        "python3 main.py $(touch main.py)", "python3 -c 'exec(open(\"main.py\").read())'",
+        "python3 main.py >> result.json", "cd /other && python3 main.py",
+    ):
+        assert not p._direct_program_command(command)
+        assert chain(command=command)[0] == []
+    for write in (_observer_write(source, is_error=True),
+                  _observer_write(source, status="unconfirmed"),
+                  _observer_receipt("write_programming_file",
+                      {"path": "/workspace/main.py", "content": source}, "write not confirmed")):
+        assert chain(write=write)[0] == []
+    assert chain(exit_pid=18)[0] == []
+    assert chain(exit_pid=None)[0] == []
+    assert chain(session="another-session")[0] == []
+    assert chain(final_sha=digest(source + "# changed"))[0] == []
+    assert chain(mutator=True)[0] == []
+    # A schema listing does not substitute for the physical exit receipt.
+    _, observer = chain(exit_pid=None)
+    _observe(observer, _observer_receipt("list_programming_tools", {"tool_name": "read_process_output"},
+        "schema only"), 2, session=None, workspace=None)
+    assert p._native_program_executions(_observer_raw(observer), source_sha) == []
+    # An actual nonzero exit is an execution observation, never a success claim.
+    executions, _ = chain(exit_code=1)
+    assert len(executions) == 1 and executions[0]["exit_code"] == 1
+    # Changing source during a running process invalidates even a restored final hash.
+    _, observer = chain(exit_pid=None)
+    _observe(observer, _observer_write(source), 2)
+    _observe(observer, _observer_exit(17, 0), 3)
+    assert p._native_program_executions(_observer_raw(observer), source_sha) == []
+
+    # Concurrent execution makes the previous startup source uncertain too.
+    _, observer = chain(exit_pid=None)
+    _observe(observer, _observer_start("python3 main.py", 18), 2)
+    _observe(observer, _observer_exit(17, 0), 3)
+    _observe(observer, _observer_exit(18, 0), 4)
+    assert p._native_program_executions(_observer_raw(observer), source_sha) == []

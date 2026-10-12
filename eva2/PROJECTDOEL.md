@@ -1,17 +1,28 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel vervolg 12 oktober — brongebonden code-uitvoering vastleggen
+## Actueel vervolg 12 oktober — waarnemercorrectie geïnstalleerd en beoordeeld
 
-De gewone uitvoerder heeft echte programmeerprocessen gestart. De beoordelings-
-waarnemer herkent samengestelde shell niet als bewezen uitvoering van de geschreven
-bron. Alleen een ondubbelzinnige bron → proces/PID → exit → finale bronhash-keten
-gericht aansluiten; muterende of onzekere shell blijft ongeclaimd. Drie oude taken
-bleven ook werkelijk onvoltooid en blijven mislukt. Geen gewone uitvoerder herbouwen,
-oude exports herschrijven of nieuwe modelproef starten.
-Uitvoerder: /root/eva1_memory_transfer; gebundelde eindreview: /root/product_execution_memory_review.
-Volledig goal actief; spraak geparkeerd; geen handeling van Jaap nodig.
-Dashboardinhoud gecontroleerd: 2026-10-12T08:52:05.165332+02:00.
-De eerdere beoordelingscorrectie is geïnstalleerd; de huidige waarnemercorrectie nog niet. Dashboardonderdelen en eerstvolgende uitkomsten zijn hiermee gelijkgetrokken.
+De bestaande beoordelingswaarnemer koppelt bevestigde bronwrite, letterlijke
+Python-start, echte PID/exitreceipt en onafhankelijke finale bronhash.
+Twee unieke lokale controles slagen; één fysiek Python-proces, nul nieuwe
+Eva-modelaanvragen/native proeven. Alleen de getroffen negatieve controle
+herhaald na bronwijziging. Gewone uitvoerder en prompts behouden.
+
+Exacte producer en twee bestaande configuratieverwijzingen geïnstalleerd;
+één dienstherstart, gezondheid en echte hostimport gecontroleerd. 37 andere
+hostbronnen, kern/werker en gesloten bewijs behouden. Gebundelde onafhankelijke
+review GO voor bron, lokale controle, consumentinterface en exacte installatie.
+Geen nieuwe modelinvoertoelating, kwaliteitswinst of afgeronde AIDE².
+
+Nu het echte afrondingstekort gericht bepalen uit de drie behouden mislukkingen:
+bronfout, werkstrategie of proefresource onderscheiden. Geen oude episode heropenen,
+score wijzigen of nieuwe vergelijking. Vervolgens de volledige agentverbetercyclus,
+onafhankelijke eindbeoordeling en werkelijk later gebruik afmaken.
+Het hele goal blijft actief; 39/48 historische taakafrondingen behouden.
+Spraak geparkeerd. Geen handeling van Jaap nodig.
+Bewijs: eva2/evidence/product/native-program-observation-installed-20261012.json.
+Review: eva2/reviews/native-program-observation-installed-review-20261012.json.
+Dashboardinhoud gecontroleerd: 2026-10-12T09:10:41.263363+02:00.
 
 ## Historisch 12 oktober — beoordelingsroute gecorrigeerd en geïnstalleerd
 

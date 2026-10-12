@@ -1,0 +1,105 @@
+{
+  "contract": "EvaIndependentBoundedSourceAndInstalledReview/v1",
+  "checkedAt": "2026-10-12T07:08:52.098137Z",
+  "decision": "GO",
+  "sourceVerdict": "GO_FOR_OBSERVER_ONLY",
+  "installationVerdict": "GO",
+  "publicationVerdict": "GO",
+  "nativeInputVerdict": "NO_NEW_INPUT_AUTHORITY",
+  "openBlockers": [],
+  "scope": "Exact receipt-only native program observer, its existing assessment interface, targeted local checks and installed host copy/configuration references. Ordinary runner, prompts and native quality rules unchanged.",
+  "bindings": {
+    "publicEvidencePath": "eva2/evidence/product/native-program-observation-installed-20261012.json",
+    "publicEvidenceSha256": "f0d9c3e126e74b88658e980c075016f5db20c0c0dc4356af0dca7e812cf1ee6b",
+    "sourceManifestSha256": "2b3ba5d8a3ec2821a2223faa35693087006c010eca3a35f1e6c6125a7d32db21",
+    "sourceFiles": {
+      "operations/component_native_work_producer.py": "d19320c89bee63b35d6e8e728601a6561aa7a7f62a0a7b174eab34cbce200420"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_component_native_work_producer.py": "f3f145ca950ce4094112a90fbfc553ab0ddb144f8f4a03b129ea3392c1f2f1a5"
+    },
+    "checksSha256": "fb7d3011283af5314f6184e511a8c3bdc74b3159d24f0bcdee57d724d4d1c7b2",
+    "sourceResultSha256": "eb205b44831e958b855f40fb536ec8b0b1c6bb5db37489835ccaf3c148200ccc",
+    "patchSha256": "6270d5895d9dbbcbf6904500f48950cc093a99856bcc5babc92a3c25f13770ca",
+    "privateInstalledReceiptSha256": "0f038aee0c52c23f3d6651472699f8388592a15cc5bafe557c0a6c821bd5ad04",
+    "installationBeforeReceiptSha256": "ee4f62990d686e9649021058ffd1f0b0b66570fd35d548a298df32f669c2656d",
+    "configurationBeforeSha256": "7c8f2582fe77e30cc1eb0c664d6bbfddf90919e9b61618436ee7dfb88e22a6c3",
+    "configurationAfterSha256": "43874046640254e041af33a5cea2f9df366c8e874373755024e3d8759966c6bd",
+    "installedPrivateProducerSha256": "d19320c89bee63b35d6e8e728601a6561aa7a7f62a0a7b174eab34cbce200420",
+    "fixedScorerSha256": "1eafe321440750d115e43eb7dec820db470abb2a181cd13288fe2f17a484b6b3",
+    "originalPinsSha256": "392c7a124eda0a660793137df0ed991a256316e08f58517389e9a25da4b54a2f",
+    "junitSha256s": [
+      "fbda2f6d25deb8dfb88c2f2e0c676e90acd642a08e9b58ec6cc5a71335289623",
+      "192e701dcd2d63d377a84e795ebf3fc90af3d5ac67a43120ac5e7750223c93d6"
+    ],
+    "testLogSha256s": [
+      "910f3166cf9a60152348ab9118384cb381682ba3db8c6adf12ccf051a950d6f3",
+      "c0aac0575923210215f5d9bd9737ae3e449d0dfefd0619f1e01b483e40e54e50"
+    ],
+    "testInvocationSha256s": [
+      "1a0650c8fc1e0c58bbb62ad89d864c13e6dd2eb5323bfb4af8247a24962de698",
+      "bb5f31040d3c03d74eadde157fa2fbd7680725e71b39fe50d6efc01cb0b4e9f8"
+    ]
+  },
+  "sourceReview": {
+    "truthfulObservationChain": [
+      "Successful original main.py write with unchanged actor/session/workspace.",
+      "Finite literal direct Python command, optional exact cd /workspace prefix and simple safe data redirection.",
+      "Actual start PID, original same-session read_process_output exit receipt and retained exit code.",
+      "Independent final source readback hash equals the observed source.",
+      "Host replay of original receipt rows confirms the same write/start/exit bindings; foreign, duplicate or reordered scope/step evidence is not adopted."
+    ],
+    "uncertaintyRemainsUnclaimed": [
+      "Arbitrary compound shell, heredoc, pipeline or mutator.",
+      "Failed or unconfirmed write; absent/wrong PID or actual exit receipt.",
+      "Schema listing presented as process exit.",
+      "Concurrent pending process, source change during execution, foreign session/workspace or final source mismatch."
+    ],
+    "physicalAccountingAuthorityAndOrdinaryRunnerUnchanged": true,
+    "nonzeroExitRecordedWithoutTaskSuccessClaim": true,
+    "noNewEffectOrReadToolAdded": true
+  },
+  "consumerInterface": {
+    "compatible": true,
+    "unchangedWorkEvidenceReader": "operations/component_development.py:324-325",
+    "detail": "The reader validates artifact_evidence as a dictionary and its complete canonical hash against trusted runbindings, without imposing a closed fieldset on execution rows. Extra PID/exit/write-receipt fields are retained and hashed; known execution fields and fixed scoring remain unchanged.",
+    "scorerCasesCriteriaAndProtectedFinalInputsNotChangedOrShared": true
+  },
+  "checks": {
+    "uniqueNodesPassed": 2,
+    "initialNodesPassed": 2,
+    "changedNegativeNodeRerunPassed": 1,
+    "physicalLocalPythonExecutions": 1,
+    "qualification": "The initial positive local chain and grouped negative node passed. The final source adds only conservative invalidation for an already pending process; that changed negative node passed on the final hash. The physical positive chain was not repeated. The initial source hash was independently reconstructed by removing precisely that added branch.",
+    "actualOrdinaryNativeEpisodeNotTested": true,
+    "syntheticObserverReceiptsAroundLocalPhysicalProcess": true,
+    "reviewerDidNotRepeatTests": true
+  },
+  "installed": {
+    "exactHostModuleCount": 1,
+    "actualLoadedImportOriginConfirmedByReceipt": true,
+    "immutablePrivateProducerCopyExact": true,
+    "onlyTwoExistingProducerPathAndHashRefsChanged": true,
+    "otherConfigurationObjectsEqual": true,
+    "otherHostSourceRawHashesPreserved": 37,
+    "closedBuilderReferencesRawHashesPreserved": 24,
+    "closedInstallationReferencesRawHashesPreserved": 10,
+    "existingServiceRestartCount": 1,
+    "existingHealthHttpStatus": 200,
+    "existingHealthPayload": {
+      "status": "ready"
+    },
+    "coreWorkerImagesConfigurationAndMountsPreservedHealthy": true,
+    "newEvaModelRequests": 0,
+    "newNativeEpisodes": 0
+  },
+  "limitations": [
+    "GO covers technical observer source, local proof and exact installation only. It is not a new executor ability, model-quality result, winner or native input approval.",
+    "The old four exports, three real budget_exceeded task failures, original assessments, clocks, ledgers and closed once-records remain unchanged.",
+    "A process observation and truthful nonzero exit are separate from successful native completion and fixed task quality.",
+    "No final evaluation, application, later use, full AIDE², household acceptance, efficiency gain or new project completion is proved.",
+    "The exact public pending-review status is its immutable preparation snapshot; this external review binds it without rewriting evidence.",
+    "The full goal remains active; speech remains parked; development credits and money remain unknown.",
+    "Reviewer ran no tests, program process, factory, model, native action, Docker or DB operation."
+  ]
+}

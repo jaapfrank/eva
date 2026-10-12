@@ -131,6 +131,169 @@ def require_original_cleanup(raw):
     require(len(finalizers) == 1 and type(finalizers[0]["started"]) is bool, "original programming finally state unknown")
     require(not finalizers[0]["started"] or original_cleanup_verified(raw), "started programming lacks original idle or close proof")
 
+
+def _direct_program_command(command):
+    # Recognize one literal invocation, not arbitrary shell execution.
+    if not isinstance(command, str) or any(c in command for c in "\n\r\0$\\#" + chr(96)):
+        return False
+    try:
+        lexer = shlex.shlex(command, posix=True, punctuation_chars=";&|<>()")
+        lexer.whitespace_split = True
+        lexer.commenters = ""
+        tokens = list(lexer)
+    except ValueError:
+        return False
+    if tokens[:3] == ["cd", "/workspace", "&&"]:
+        tokens = tokens[3:]
+    if len(tokens) < 2 or tokens[0] not in {"python", "python3", "/usr/local/bin/python", "/usr/local/bin/python3"} or tokens[1] not in {"main.py", "./main.py", "/workspace/main.py"}:
+        return False
+    tail, seen = tokens[2:], set()
+    while tail:
+        if len(tail) < 2 or tail[0] not in {"<", ">"} or tail[0] in seen:
+            return False
+        seen.add(tail[0])
+        path = tail[1]
+        if not re.fullmatch(r"(?:/workspace/)?[A-Za-z0-9][A-Za-z0-9_.-]*", path) or path.rsplit("/", 1)[-1] == "main.py":
+            return False
+        tail = tail[2:]
+    return True
+
+
+def _program_result_text(receipt):
+    output = receipt.get("output", {})
+    if not isinstance(output, dict):
+        return None
+    result = output.get("programming_result", {})
+    if output.get("status") != "verified" or output.get("workspace") != "/workspace" or not isinstance(result, dict) or result.get("isError") is not False:
+        return None
+    content = result.get("content")
+    if not isinstance(content, list) or len(content) != 1 or not isinstance(content[0], dict) or content[0].get("type") != "text" or not isinstance(content[0].get("text"), str):
+        return None
+    return content[0]["text"]
+
+
+class _NativeProgramObserver:
+    """Source evidence from successful original write/start/exit receipts only."""
+    _READ_ONLY = {"read_file", "read_multiple_files", "list_directory", "read_process_output",
+        "get_file_info", "list_processes", "list_sessions"}
+
+    def __init__(self):
+        self.rows = []
+        self.scope = None
+        self.content = None
+        self.write_steps = []
+        self.pending = {}
+        self.unknown_start = False
+
+    def _invalidate(self):
+        self.content, self.write_steps = None, []
+        for pending in self.pending.values():
+            pending["source_sha256"] = None
+
+    def observe(self, receipt, identity, step_index, session_key, workspace_key):
+        row = {"identity": deepcopy(identity), "step_index": step_index,
+            "native_program_source_sha256": None, "receipt": deepcopy(receipt)}
+        self.rows.append(row)
+        if not session_key or not workspace_key:
+            return row
+        row.update(programming_session_key=session_key, workspace_key=workspace_key)
+        scope = (canonical_sha256(identity), session_key, workspace_key)
+        if scope != self.scope:
+            self.scope, self.content, self.write_steps = scope, None, []
+            self.pending, self.unknown_start = {}, False
+        call = receipt.get("call", {})
+        args = call.get("arguments", {})
+        tool = args.get("tool_name") if call.get("name") == "use_programming_tool" else None
+        try:
+            native_args = json.loads(args["arguments_json"]) if tool else args
+        except (KeyError, TypeError, ValueError):
+            self._invalidate()
+            self.unknown_start = True
+            return row
+        if not isinstance(native_args, dict):
+            self._invalidate()
+            return row
+        text = _program_result_text(receipt)
+        lines = text.splitlines() if text is not None else []
+        if call.get("name") == "write_programming_file" or tool == "write_file":
+            self._invalidate_pending_writes(native_args, text, lines, step_index)
+        elif call.get("name") == "start_programming_process" or tool == "start_process":
+            match = re.fullmatch(r"Process started with PID ([1-9]\d*) \(shell: /bin/(?:bash|sh)\)", lines[0].strip()) if lines else None
+            source = sha(self.content.encode()) if self.content is not None and not self.pending and not self.unknown_start and _direct_program_command(native_args.get("command")) else None
+            writes = list(self.write_steps)
+            if self.pending:
+                self._invalidate()
+            # The invoked program may itself change files; never infer another start.
+            self.content, self.write_steps = None, []
+            if match and int(match[1]) not in self.pending:
+                self.pending[int(match[1])] = {"row": row, "source_sha256": source, "write_steps": writes}
+            else:
+                self._invalidate()
+                self.unknown_start = True
+        elif tool == "read_process_output":
+            pid = native_args.get("pid")
+            header = re.fullmatch(r"\[Reading \d+ new lines \(total: \d+ lines\)\]", lines[0].strip()) if lines else None
+            footer = re.fullmatch(r"\u2705 Process completed with exit code (-?\d+) \(runtime: \d+(?:\.\d+)?s\)", lines[-1].strip()) if lines else None
+            markers = sum("Process completed with exit code " in line for line in lines)
+            if type(pid) is int and pid in self.pending and header and footer and markers == 1:
+                pending = self.pending.pop(pid)
+                if pending["source_sha256"] is not None:
+                    pending["row"].update(native_program_source_sha256=pending["source_sha256"],
+                        native_program_write_steps=pending["write_steps"], native_program_pid=pid,
+                        native_program_exit_step_index=step_index, native_program_exit_code=int(footer[1]))
+        elif tool and tool not in self._READ_ONLY:
+            self._invalidate()
+            self.unknown_start = True
+        return row
+
+    def _invalidate_pending_writes(self, args, text, lines, step):
+        before, writes = self.content, list(self.write_steps)
+        self._invalidate()
+        if self.pending or self.unknown_start or args.get("path") != "/workspace/main.py" or not isinstance(args.get("content"), str):
+            return
+        mode = args.get("mode", "rewrite")
+        verb = "wrote" if mode == "rewrite" else "appended" if mode == "append" else None
+        if not verb or text is None or not lines or not re.fullmatch(r"Successfully " + verb + r" to /workspace/main[.]py \(\d+ lines\)", lines[0].strip()):
+            return
+        if mode == "rewrite":
+            self.content, self.write_steps = args["content"], [step]
+        elif before is not None:
+            self.content, self.write_steps = before + args["content"], writes + [step]
+
+
+def _native_program_executions(raw, program_sha256):
+    if program_sha256 is None:
+        return []
+    rows = raw["action_receipts"]
+    steps = [row["step_index"] for row in rows]
+    if any(type(step) is not int for step in steps) or steps != sorted(set(steps)):
+        return []
+    observer = _NativeProgramObserver()
+    for row in rows:
+        if row.get("identity") != raw["identity"]:
+            return []
+        session, workspace = row.get("programming_session_key"), row.get("workspace_key")
+        if session and (session != raw["programming_session_key"] or workspace != raw["workspace_key"]):
+            return []
+        observer.observe(row["receipt"], row["identity"], row["step_index"], session, workspace)
+    actual = {row["step_index"]: row for row in rows}
+    executions = []
+    fields = ("native_program_source_sha256", "native_program_write_steps", "native_program_pid",
+        "native_program_exit_step_index", "native_program_exit_code")
+    for row in observer.rows:
+        if row.get("native_program_source_sha256") != program_sha256 or any(row.get(key) != actual[row["step_index"]].get(key) for key in fields):
+            continue
+        receipt = row["receipt"]
+        exit_row = actual[row["native_program_exit_step_index"]]
+        executions.append({"step_index": row["step_index"], "source_sha256": program_sha256,
+            "action_name": receipt["call"]["name"], "receipt_sha256": canonical_sha256(receipt), "receipt": receipt,
+            "pid": row["native_program_pid"], "exit_code": row["native_program_exit_code"],
+            "exit_step_index": exit_row["step_index"], "exit_receipt_sha256": canonical_sha256(exit_row["receipt"]),
+            "exit_receipt": exit_row["receipt"], "write_receipt_sha256s":
+                [canonical_sha256(actual[step]["receipt"]) for step in row["native_program_write_steps"]]})
+    return executions
+
+
 class PhysicalAccounting:
     def __init__(self, root, policy, *, execution_enabled=False, ledger_uid=None, host_binding=False):
         self.root = Path(root)
@@ -142,7 +305,7 @@ class PhysicalAccounting:
             raise ComponentWorkProductionError("only host root may seal the runtime-owned ledger")
         self.authority_check = None
         self.authorization_checks = []
-        self.program_content = None
+        self.program_observer = _NativeProgramObserver()
         for name in ("total_provider_attempts", "case_provider_attempts", "total_tokens", "total_tool_calls"):
             if type(self.policy.get(name)) is not int or self.policy[name] < 1:
                 raise ComponentWorkProductionError("invalid registered work resource binding")
@@ -151,7 +314,7 @@ class PhysicalAccounting:
         self.policy_sha256 = hashlib.sha256(json.dumps(self.policy,ensure_ascii=False,
             sort_keys=True,separators=(",",":"),allow_nan=False).encode()).hexdigest()
         self.native_projection_check = None
-        self.receipts = []
+        self.receipts = self.program_observer.rows
         self.journals = {}
         self.control_receipts = []
 
@@ -445,25 +608,9 @@ class PhysicalAccounting:
             guard.reserve_tool(call, cleanup_session=target.session_key if isinstance(target, ProgrammingActions) else None)
             receipt = original_actions(port,turn,call,step_index=step_index)
             from dataclasses import asdict
-            program_before=guard.program_content
-            args=call.arguments
-            tool=args.get("tool_name") if call.name=="use_programming_tool" else None
-            native_args=json.loads(args["arguments_json"]) if tool else args
-            writes=(call.name=="write_programming_file" or tool=="write_file")
-            if writes and native_args.get("path")=="/workspace/main.py" and isinstance(native_args.get("content"),str):
-                mode=native_args.get("mode","rewrite")
-                guard.program_content=native_args["content"] if mode=="rewrite" else (program_before+native_args["content"] if mode=="append" and program_before is not None else None)
-            elif tool and tool not in {"read_file","read_multiple_files","list_directory","read_process_output","get_file_info","list_processes","list_sessions"}:
-                guard.program_content=None
-            if call.name=="start_programming_process" or tool=="start_process":
-                import shlex
-                try:tokens=shlex.split(native_args["command"])
-                except (ValueError,KeyError):tokens=[]
-                direct=(len(tokens)>=2 and tokens[0] in {"python","python3","/usr/local/bin/python","/usr/local/bin/python3"} and tokens[1] in {"main.py","/workspace/main.py"} and all(t not in {";","&&","||","|","&"} for t in tokens))
-                observed_program_sha=hashlib.sha256(program_before.encode()).hexdigest() if direct and program_before is not None else None
-                if not direct:guard.program_content=None
-            else:observed_program_sha=None
-            guard.receipts.append({"identity":dict(_ACTIVE.get()),"step_index":step_index,"native_program_source_sha256":observed_program_sha,"receipt":asdict(receipt)})
+            programming = isinstance(target, ProgrammingActions)
+            guard.program_observer.observe(asdict(receipt), dict(_ACTIVE.get()), step_index,
+                target.session_key if programming else None, target.workspace_key if programming else None)
             return receipt
         def catalog(port, tools, allowed_names, authorize, maximum_calls):
             # Narrow the evaluation action/context view, outside the unchanged
@@ -1092,7 +1239,6 @@ def _runtime_main(config_file):
         identity = config["identity"]
         with guard.case(identity):
             guard.start_case_once(identity)
-            guard.program_content = config["case"]["fixture_files"].get("main.py")
             started = time.monotonic()
             turn, admission = entry.admit(identity, config["case"])
             admission_sha = exclusive(Path(config["runtime_output"]) / "admission.json", admission)
@@ -1253,15 +1399,7 @@ def _artifacts(settings, identity, case, raw, workspace, run_root, guard, author
     else:
         checks = [{"check_id": c["check_id"], "status": "missing"} for c in case["checks"]]
     exclusive(run_root / "isolated-checks.json", reports)
-    executions = []
-    for row in raw["action_receipts"]:
-        receipt = row["receipt"]
-        call = receipt["call"]
-        if (call["name"] == "start_programming_process" or call["name"] == "use_programming_tool"
-                and call["arguments"].get("tool_name") == "start_process"):
-            if program is not None and row.get("native_program_source_sha256") == sha(program):
-                executions.append({"step_index": row["step_index"], "source_sha256": sha(program), "action_name": call["name"],
-                    "receipt_sha256": canonical_sha256(receipt), "receipt": receipt})
+    executions = _native_program_executions(raw, sha(program) if program is not None else None)
     timing = {"elapsed_ms": max(0, round((time.monotonic() - raw["timing"]["started_monotonic_seconds"]) * 1000)),
         "clock_boundary": "admission_start_to_terminal_and_readback_checks"}
     artifact = {"files": files, "checks": checks, "executions": executions, "progress": raw["progress"],

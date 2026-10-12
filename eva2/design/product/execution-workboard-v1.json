@@ -125,11 +125,11 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Persoonlijkheid en geheugenbasis behouden. De eerdere beoordelingscorrectie is geïnstalleerd. Nu: uitvoerbewijs corrigeren; de volledige AIDE²-cyclus, zelfstandig initiatief en gezinsoplevering blijven open.",
+      "summary": "Persoonlijkheid en geheugenbasis behouden. Uitvoerbewijs voor zelfverbetering is gecorrigeerd, geïnstalleerd en onafhankelijk beoordeeld. Werkelijke taakafronding en volledige AIDE², initiatief en gezinsoplevering blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · uitvoerbewijs corrigeren en installeren",
-          "detail": "De bouwer corrigeert de bestaande beoordelingswaarnemer. Eva voert code al uit; deze correctie maakt het uitvoerbewijs betrouwbaarder. Gerichte broncorrectie afmaken, lokaal controleren, installeren en één gebundelde onafhankelijke review afronden."
+          "title": "Nu · het echte afrondingstekort aanpakken",
+          "detail": "De uitvoerwaarnemer is geïnstalleerd en onafhankelijk beoordeeld. Nu de bewezen stopoorzaak van drie onvoltooide werkopdrachten bepalen en het echte afrondingstekort aanpakken."
         },
         {
           "title": "Daarna · volledige verbetercyclus afronden",
@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T08:52:05.165332+02:00",
+        "checkedAt": "2026-10-12T09:10:41.263363+02:00",
         "deliveries": [
+          {
+            "id": "native-program-observation-installed-20261012",
+            "date": "2026-10-12T09:05:51.362508+02:00",
+            "title": "Uitvoerbewijs voor zelfverbetering gecorrigeerd",
+            "state": "installed",
+            "summary": "Bestaande waarnemer koppelt geschreven code aan werkelijk proces en exit. Correctie geïnstalleerd; dienst gezond.",
+            "result": "Twee gerichte lokale controles geslaagd; één lokale Python-uitvoering. Eén dienstherstart, nul nieuwe Eva-modelaanvragen.",
+            "remaining": "Volledige AIDE² voor agentaansturing, onafhankelijke eindbeoordeling, bewezen winst toepassen en later gebruiken blijven open.",
+            "source": "eva2/evidence/product/native-program-observation-installed-20261012.json",
+            "independentReview": "GO voor exacte bron, lokale controles, consumentinterface en installatie. Geen native kwaliteits- of invoertoelating.",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/native-program-observation-installed-review-20261012.json",
+            "reviewSha256": "e867786889ad6855a48a709c6c7073b274cdf89a3cd7ca2c4ad8b76a27a5762a"
+          },
           {
             "id": "native-work-assessment-interface-installed-20261012",
             "date": "2026-10-12T06:31:43.392302+00:00",
@@ -4974,34 +4989,36 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · code-uitvoering betrouwbaar beoordelen",
+          "title": "Zelfverbetering · werkopdrachten werkelijk afmaken",
           "state": "in_progress",
-          "phase": "source_bound_execution_observer_correction",
+          "phase": "unfinished_work_failure_diagnosis",
           "activeExecution": false,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De bouwer corrigeert de bestaande beoordelingswaarnemer. Eva voert code al uit; deze correctie maakt het uitvoerbewijs betrouwbaarder.",
-          "detail": "De gewone uitvoerder blijft behouden. Alleen bevestigde bron, processtart, juiste procesafsluiting en teruggelezen bron mogen samen als uitvoering tellen. De drie werkelijk onvoltooide taken blijven mislukt. Deze broncorrectie is nog niet geïnstalleerd.",
-          "source": "eva2/src/eva/operations/component_native_work_producer.py",
-          "remaining": "Gerichte broncorrectie afmaken, lokaal controleren, installeren en één gebundelde onafhankelijke review afronden.",
-          "doneWhen": "De geïnstalleerde waarnemer bevestigt uitsluitend de werkelijk aangetoonde bron/proces/exit-keten; onzekere uitvoering blijft ongeclaimd.",
+          "summary": "De uitvoerwaarnemer is geïnstalleerd en onafhankelijk beoordeeld. Nu de bewezen stopoorzaak van drie onvoltooide werkopdrachten bepalen en het echte afrondingstekort aanpakken.",
+          "detail": "De bouwer gebruikt bestaande foutgegevens en de gewone uitvoerder. Hij onderscheidt een bronfout, werkstrategie of proefresource; geen gesloten episode herstarten en geen extra modelproef voor deze diagnose. Daarna de volledige verbetercyclus en later gebruik afmaken.",
+          "doneWhen": "Het werkelijk resterende afrondingstekort is onderbouwd en de noodzakelijke vervolgstap voor de bestaande volledige verbetercyclus is concreet.",
+          "source": "eva2/evidence/product/native-work-candidate-assessment-after-import-result-20261012.json",
+          "previousInstalledCorrection": "eva2/evidence/product/native-program-observation-installed-20261012.json",
+          "previousInstalledReview": "eva2/reviews/native-program-observation-installed-review-20261012.json",
+          "previousInstalledReviewSha256": "e867786889ad6855a48a709c6c7073b274cdf89a3cd7ca2c4ad8b76a27a5762a",
           "implementationStatus": {
-            "previousInterfaceCorrectionInstalled": true,
-            "observerCorrectionInstalled": false,
-            "observerCorrectionChecksCompleted": false,
-            "observerCorrectionReviewCompleted": false,
-            "fullAide2Completed": false
+            "observerCorrectionInstalled": true,
+            "observerCorrectionChecksCompleted": true,
+            "observerCorrectionReviewCompleted": true,
+            "fullAide2Completed": false,
+            "workCompletionCauseConfirmed": false
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T08:52:05.165332+02:00",
+            "checkedAt": "2026-10-12T09:10:41.263363+02:00",
             "coordinator": "/root",
             "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Gerichte broncorrectie in bestaande waarnemer.",
+            "executorTask": "Gerichte stopoorzaakdiagnose uit behouden bewijs; geen nieuwe code of uitvoering tijdens diagnose.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Review volgt op exact bron-, test- en installatieresultaat.",
-            "newModelRequestsThisCorrection": 0,
-            "note": "Gecontroleerde voortgang, geen live agenttelemetrie."
+            "reviewerTask": "Waarnemercorrectie afgerond met technische GO; geen volgende review gestart.",
+            "newModelRequestsThisFollowup": 0,
+            "note": "Gecontroleerde opgeslagen voortgang, geen live agenttelemetrie."
           }
         },
         "next": {
@@ -5019,7 +5036,7 @@
           "detail": "Dit zijn fouten in de technische beoordelingsroute die Codex oplost. Er wordt geen gezinsacceptatie voor je ingevuld."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T08:52:05.165332+02:00",
+        "reviewedAt": "2026-10-12T09:10:41.263363+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5120,8 +5137,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T08:52:05.165332+02:00",
-      "checkedAt": "2026-10-12T08:52:05.165332+02:00",
+      "reviewedAt": "2026-10-12T09:10:41.263363+02:00",
+      "checkedAt": "2026-10-12T09:10:41.263363+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11470,7 +11487,7 @@
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
-            "remaining": "Nu wordt de beoordelingswaarnemer gecorrigeerd; de gewone code-uitvoering bestaat al. De volledige AIDE²-cyclus voor agentaansturing moet nog een onafhankelijk bewezen verbetering en later gebruik opleveren. Drie recente werkopdrachten bleven onvoltooid. Volledige leercyclus en gezinsacceptatie blijven open.",
+            "remaining": "De gecorrigeerde beoordelingswaarnemer is geïnstalleerd en onafhankelijk beoordeeld. Drie recente opdrachten bleven onvoltooid; de stopoorzaak wordt gericht nagegaan. Volledige AIDE² voor agentaansturing, bewezen verbetering, later gebruik en gezinsacceptatie blijven open.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11497,12 +11514,13 @@
               "eva2/evidence/product/native-work-strategy-host-installed-20261012.json",
               "eva2/evidence/product/native-work-corrected-runtime-prepared-20261012.json",
               "eva2/evidence/product/native-work-typed-resume-construction-result-20261012.json",
-              "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json"
+              "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json",
+              "eva2/evidence/product/native-program-observation-installed-20261012.json"
             ]
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T08:52:05.165332+02:00",
+      "lastUpdatedAt": "2026-10-12T09:10:41.263363+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
