@@ -1215,6 +1215,28 @@ class PydanticConversationModel:
                 and sum(local_read(r) for r in receipts[last_checkpoint + 1:]) >= 4)
 
     @staticmethod
+    def _saved_work_progress(
+        receipt: ConversationActionReceipt,
+    ) -> tuple[int, frozenset[str]] | None:
+        """Recognize the existing full-plan replacement receipt, never an effect."""
+        output, arguments = receipt.output, receipt.call.arguments
+        revision = output.get("revision")
+        steps = arguments.get("steps")
+        if (receipt.call.name != "save_work_progress"
+                or output.get("status") != "verified"
+                or output.get("contract") != "EvaWorkProgressSaved/v1"
+                or output.get("task_completion_verified") is not False
+                or output.get("progress") != arguments
+                or type(revision) is not int or revision < 1
+                or not isinstance(steps, list) or not steps):
+            return None
+        ids = [step.get("id") for step in steps if isinstance(step, dict)]
+        if (len(ids) != len(steps) or any(not isinstance(i, str) or not i for i in ids)
+                or len(set(ids)) != len(ids)):
+            return None
+        return revision, frozenset(ids)
+
+    @staticmethod
     def _receipt_context_selection(
         receipts: tuple[ConversationActionReceipt, ...], *, defer_local_reads: bool = False,
     ) -> tuple[tuple[ConversationActionReceipt, ...], str]:
@@ -1235,12 +1257,30 @@ class PydanticConversationModel:
                 for item in value:
                     protect(item)
         protect(baseline_latest)
+        snapshots = [(i, saved) for i, receipt in enumerate(receipts)
+                     if (saved := PydanticConversationModel._saved_work_progress(receipt)) is not None]
+        checkpoint = snapshots[-1] if snapshots else None
+        # The host contract replaces the previous working view with the full
+        # newer plan while retaining its raw event. Refuse stale revisions or
+        # lost step IDs; unrecognized, failed and external receipts stay intact.
+        if checkpoint is not None:
+            _, (revision, step_ids) = checkpoint
+            if any(old_revision >= revision or not old_ids.issubset(step_ids)
+                   for _, (old_revision, old_ids) in snapshots[:-1]):
+                checkpoint = None
         coverage: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
-        selected, overviews = [], []
+        selected, overviews, deferred_reads, superseded_progress = [], [], [], []
         deferred_sources: list[dict[str, Any]] = []
         source_indices: dict[tuple[str, str, str], int] = {}
         for position, receipt in enumerate(receipts):
             projection = (receipt.model_output or {}).get("ancestor_model_projection")
+            saved = PydanticConversationModel._saved_work_progress(receipt)
+            if (checkpoint is not None and saved is not None and position < checkpoint[0]
+                    and receipt.call.call_id not in protected):
+                superseded_progress.append({"call_id": receipt.call.call_id,
+                    "revision": saved[0], "replaced_by": receipts[checkpoint[0]].call.call_id,
+                    "progress": receipt.call.arguments})
+                continue
             if (position == len(receipts) - 1 or receipt.call.call_id in protected
                     or receipt.call.name != "use_connector_tool"
                     or receipt.output.get("status") != "verified"
@@ -1255,7 +1295,10 @@ class PydanticConversationModel:
             pages = result.get("pages") or [result]
             reader = receipt.call.arguments["tool_id"]
             ingress = projection["source"]["source_ingress_sha256"]
-            if defer_local_reads:
+            # After Eva actually saves findings, old source pages can use their
+            # existing scoped readers. New reads since that checkpoint remain
+            # visible until the next one; this is not blind pressure trimming.
+            if defer_local_reads or (checkpoint is not None and position < checkpoint[0]):
                 if any(page.get("found") is not True or not page["text"] for page in pages):
                     selected.append(receipt)
                     continue
@@ -1268,7 +1311,7 @@ class PydanticConversationModel:
                     deferred_sources.append({"reader_tool_id": reader,
                         "source_ingress_sha256": ingress, "source_version": key[2]})
                 arguments = json.loads(receipt.call.arguments["arguments_json"])
-                overviews.append({"call_id": receipt.call.call_id,
+                deferred_reads.append({"call_id": receipt.call.call_id,
                     "source_index": source_indices[key],
                     "selections": arguments.get("selections", [arguments]),
                     "ranges": [{"pointer": page["pointer"], "offset": page["offset"],
@@ -1313,16 +1356,22 @@ class PydanticConversationModel:
                 coverage.setdefault(group, []).append({"begin": page["offset"],
                     "end": page["next_offset"], "text": page["text"],
                     "call_id": receipt.call.call_id})
-        if not overviews:
+        if not overviews and not deferred_reads and not superseded_progress:
             return receipts, ""
         selected = tuple(selected)
         # Keep the current result and its literal reference anchors byte-identical.
         if PydanticConversationModel._receipt_model_views(
                 selected, _literal_slices=False)[-1] != baseline_latest:
             return receipts, ""
-        if defer_local_reads:
+        if defer_local_reads or deferred_reads or superseded_progress:
+            index = PydanticConversationModel._deferred_read_index(deferred_sources, deferred_reads)
+            if superseded_progress:
+                index["superseded_work_progress"] = superseded_progress
+            if overviews:
+                index["covered_local_reads"] = overviews
             note = (
-                "Modelcontextselectie wegens invoerruimte: onderstaande eerdere "
+                "Modelcontextselectie: na werkelijk opgeslagen werknotities of wegens "
+                "invoerruimte staan onderstaande eerdere "
                 "geverifieerde pure lokale leesresultaten staan als bronleesoverzicht "
                 "in deze aanvraag. Hun tekst is nu niet in deze modelcontext. "
                 "Gebruik bewaarde bevindingen en voortgang; lees alleen ontbrekende "
@@ -1336,9 +1385,15 @@ class PydanticConversationModel:
                 "Bij layout columns_v1 volgen leesrijen read_columns en bronrijen "
                 "source_columns. Selectierijen beginnen met hun selection_layouts-index; "
                 "pointerwaarden verwijzen naar pointer_table. Bereiken volgen range_columns. "
-                "Een source_ingress_sha256 op indexniveau geldt voor alle bronrijen.\n"
-                + canonical_json_bytes(PydanticConversationModel._deferred_read_index(
-                    deferred_sources, overviews)).decode("utf-8")
+                "Een source_ingress_sha256 op indexniveau geldt voor alle bronrijen. "
+                "covered_local_reads verwijst naar inhoud die elders zichtbaar blijft. "
+                "superseded_work_progress bewaart oudere volledige werkplannen één "
+                "keer onder progress; replaced_by geeft de nieuwere actuele weergave. "
+                "Oudere bevindingen blijven dus leesbaar, ook bij een verwijzing naar "
+                "een eerdere revision. De actuele werknotities blijven zichtbaar, oorspronkelijke "
+                "events blijven bewaard; werknotities zijn geen bewijs van externe "
+                "acties of taakafronding. Lees ontbrekende bronfeiten gericht terug.\n"
+                + canonical_json_bytes(index).decode("utf-8")
             )
             return selected, note
         note = (
@@ -1873,11 +1928,6 @@ class PydanticConversationModel:
             prior_actions = selected_receipts[:-1]
             self_context = (*self_context, read_overview)
         checkpoint_due = self._research_checkpoint_due(receipts, available_actions)
-        if checkpoint_due:
-            # One model-authored checkpoint, then the ordinary catalog returns.
-            # The host never invents findings, marks the task complete or acts
-            # externally on behalf of this checkpoint.
-            available_actions = ("save_work_progress",)
         # The runtime identifies exact duplicate gateway descriptors that remain
         # accessible through the authorized connector discovery route.
         compact_catalog = (
@@ -1943,14 +1993,15 @@ class PydanticConversationModel:
                 )
             if checkpoint_due:
                 instructions += (
-                    "\\nJe hebt meerdere lokale bronselecties gelezen sinds je laatste "
+                    "\nJe hebt meerdere lokale bronselecties gelezen sinds je laatste "
                     "werknotities. Leg nu met save_work_progress de werkelijk gelezen "
                     "bevindingen, hun bronverwijzingen, concrete resterende vragen en "
                     "eerstvolgende opleveractie vast voordat je verder onderzoekt. "
                     "Behoud alle bestaande stap-ID's. Herhaal niet alleen het plan. "
                     "Vul ontbrekende feiten niet in en sla geen credentials op. "
                     "Deze opslag bevestigt werknotities, geen extern effect of "
-                    "taakafronding. Na opslag zijn de gewone tools weer beschikbaar."
+                    "taakafronding. Alle gewone aangeboden tools blijven beschikbaar; "
+                    "een beperkt aanbod uit een eerdere fase is geen blijvende blokkade."
                 )
             if omitted:
                 instructions += (

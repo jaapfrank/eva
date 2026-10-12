@@ -1021,8 +1021,33 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T21:35:09.060179+00:00",
+        "checkedAt": "2026-10-12T22:05:09.932496+00:00",
         "deliveries": [
+          {
+            "id": "research-progress-context-installed-20261012",
+            "title": "Algemene taakroute gecorrigeerd: tools beschikbaar en broncontext kleiner",
+            "date": "2026-10-12T22:02:30.828432+00:00",
+            "status": "installed",
+            "statusLabel": "Geïnstalleerd",
+            "summary": "Tools blijven aangeboden tijdens opslaan van bevindingen. Oude notities blijven leesbaar; verwerkte bronpagina’s blijven gericht terugleesbaar.",
+            "detail": "Bronreview en gerichte checks geslaagd, kern en werker gezond. Het eindvoorstel blijft open; geen nieuwe hoofdafronding.",
+            "evidence": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-installed-20261012.json",
+            "review": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-source-review-20261012.json",
+            "userResultComplete": false
+          },
+          {
+            "id": "research-working-notes-ordinary-result-20261012",
+            "title": "Eva bewaart bevindingen; eindvoorstel niet afgerond",
+            "date": "2026-10-12T21:52:01.529430+00:00",
+            "state": "failed",
+            "statusLabel": "Niet afgerond",
+            "summary": "De opslag werkt, maar de uitvoering stopte op te grote modelinvoer. Geen eindvoorstel.",
+            "result": "15 responses · 15 tools · 795.700 bekende tokens. Volledig taakverbruik en creditkosten onbekend.",
+            "userResultComplete": false,
+            "productFunctionCompleted": false,
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-ordinary-result-20261012.json",
+            "remaining": "Algemene oorzaak gericht herstellen; Eva moet zelf het voorstel opleveren."
+          },
           {
             "id": "research-working-notes-installed-20261012",
             "title": "Algemene onderzoekroute: bevindingen bewaren en kleiner leesoverzicht",
@@ -5409,9 +5434,9 @@
           }
         ],
         "now": {
-          "title": "Eva maakt zelf het bestaande onderzoeksvoorstel af",
+          "title": "Algemene taakuitvoering herstellen; Eva’s voorstel nog open",
           "state": "in_progress",
-          "phase": "ordinary_research_continuation_running",
+          "phase": "corrected_ordinary_continuation_preparation",
           "taskId": "work:eva-resume:98d0ce93-a124-5d21-bd0b-747e2926b346",
           "linkedTaskIds": [
             "TL-001",
@@ -5420,32 +5445,42 @@
           ],
           "activeExecution": true,
           "owner": "/root",
-          "executor": "Eva · Astra/medium",
+          "executor": "Codex · algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva's eigen vervolguitvoering is gestart met de geïnstalleerde werknotitie- en contextcorrectie.",
-          "detail": "Eén gewone vervolgopdracht, dezelfde leesbevoegdheid en oorspronkelijke voorwaarden. Geen handmatig Tuya-voorstel door Codex.",
+          "summary": "Eva heeft bevindingen opgeslagen, maar stopte opnieuw vóór het eindvoorstel.",
+          "detail": "15 complete gemeten responses en 795.700 bekende tokens. Fout: input_budget_exceeded. Werknotities revision6; het tussenbestand is ongewijzigd.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json",
+          "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-ordinary-result-20261012.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/structured-stored-source-selection-ordinary-result-review-20261012.json",
           "previousResultReviewSha256": "d66d4b9e1de90b4186e7c8e6c37637977810d275be76616549de37e790e1f84a",
-          "implementationStatus": "Verliesvrije leesindex en bestaande werknotitie-fase geïnstalleerd; voorstel nog niet af.",
-          "currentActivity": "Eva onderzoekt, bewaart bevindingen en moet haar eindvoorstel zelf opslaan en teruglezen.",
-          "checkedAt": "2026-10-12T21:35:09.060179+00:00",
+          "implementationStatus": "Gewone tools blijven beschikbaar; oude werknotities letterlijk éénmaal en verwerkte bronpagina’s via hun readers. Geïnstalleerd, kern en werker gezond.",
+          "currentActivity": "Geïnstalleerde correctie gebonden; één gewone voortzetting van Eva’s eigen voorstel voorbereiden.",
+          "checkedAt": "2026-10-12T22:05:09.932496+00:00",
           "remaining": [
             "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
             "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."
           ],
-          "nativeRunning": true,
+          "nativeRunning": false,
           "observedUsage": {
-            "phase": "running",
-            "measurement": "pending",
+            "phase": "failed",
+            "measuredResponses": 15,
+            "tools": 15,
+            "inputTokens": 791145,
+            "outputTokens": 4555,
+            "knownTokens": 795700,
+            "completeTaskUsage": null,
             "creditCost": null
           },
           "currentObservation": {
-            "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-ordinary-start-20261012.json",
-            "sha256": "7b92b2b0dbc9e3ae5ea6be769eb90f14b9b9a878860fa0279c55faf7f874f137"
-          }
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-observation.private.json",
+            "sha256": "46d6ab36a9741d8c6215dd2f72c068cece84265c412c2dda4fec049d9470f8bf",
+            "progressRevision": 6,
+            "proposalComplete": false
+          },
+          "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-source-review-20261012.json",
+          "sourceReviewSha256": "e67f1d52cff1411d28a8ba194ef0a5ad6ed5574f5645974f57bdf11bea489dfd",
+          "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-installed-20261012.json"
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",

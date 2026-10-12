@@ -1,0 +1,178 @@
+{
+  "contract": "EvaIndependentBundledSourceResultReview/v1",
+  "createdAt": "2026-10-12T22:01:28.802116+00:00",
+  "verdict": "GO",
+  "scope": "Exacte een-modulebroninstallatie en veilige publicatie van de broncorrectie en gesloten gen12-feiten.",
+  "bindings": {
+    "freeze": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/frozen-source.private.json",
+      "sha256": "22ea33b8f9f11f86c3c503cb071fd7d268b35c638a616c2209e3d15b8ec4c95d"
+    },
+    "provider": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/pydantic_conversation.py.frozen.private",
+      "sha256": "9dc84c50fe855a10c126495faabbc9a32eb9832bbbd8c5a09926cceb3e14e300"
+    },
+    "tests": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/test_catalogue_model_view.py.frozen.private",
+      "sha256": "52be234b7da4b439c161b17752f56cecdd09f76ec001af06f06520aeef101c83"
+    },
+    "sourceFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-source-correction-20261012.json",
+      "sha256": "e14731ca8cfa802c671492f97d9b47273eece2c3e8861dcb50294220040f2670"
+    },
+    "gen12Facts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-ordinary-result-20261012.json",
+      "sha256": "ed8d9323f982ca846b399a7007420c0c1ea68011349c95d12a4359274cc4e0ec"
+    },
+    "gen12Terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-observation.private.json",
+      "sha256": "46d6ab36a9741d8c6215dd2f72c068cece84265c412c2dda4fec049d9470f8bf"
+    },
+    "gen12Accounting": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-accounting.private.json",
+      "sha256": "844450950b679928eb2b48fd67133a99829a4bc6ac5b69e8b9a2448bc25c4abf"
+    },
+    "gen12ExternalReceipts": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-receipts.private.json",
+      "sha256": "7bec562599900dd0a5f7f3cc963d4d45d95ad369b4a48a0e3aad7c6d02385e9f"
+    },
+    "gen12ProgressReceipts": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-note-diagnosis/task-owned-progress-receipts.private.json",
+      "sha256": "0e005f272047819921c6e7aa338cf7b03225dd4b76181520a350263ac4a67d6e"
+    },
+    "gen12Document": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-document.private.json",
+      "sha256": "bbc83b09420d9aee67e5647bb56b9c0b1e3f53ad8cb0c417ed1f4b115384326e"
+    },
+    "buildSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/build-source.private.json",
+      "sha256": "88161d916e831e388588587f860d83ce41cdf07fc36e6009946623c8d75ad538"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/build-result.private.json",
+      "sha256": "81ba9cc13631d3dcbecaddee1eb2fdb598bcfadc3e27c956aa74dc376648059b"
+    }
+  },
+  "previousInstalledProviderSha256": "d3c1ef8634560505c6681ce5e8822edf4a827f1104cef74911a4436c51636d07",
+  "sourceFindings": [
+    "De checkpoint-only catalogus is verwijderd. De gewone aangeboden tools blijven beschikbaar; een herinnering om bevindingen op te slaan verleent geen extra tool, grant of uitvoerbevoegdheid.",
+    "Alleen herkenbare verified EvaWorkProgressSaved/v1 met exact progress=arguments, task_completion_verified=false, positieve integerrevision en unieke stap-ID's gelden als opgeslagen plan. Het laatste plan moet nieuwer zijn dan iedere erkende voorganger en alle oude stap-ID's behouden.",
+    "Oudere erkende notities worden niet weggegooid: hun volledige oorspronkelijke progress-inhoud staat eenmaal onder superseded_work_progress met call_id, revision en replaced_by. Oude revisionverwijzingen blijven inhoudelijk leesbaar; beschermde literalankers blijven volledig.",
+    "Pure lokale pagina's voor de echte opgeslagen checkpoint gebruiken na bestaande volledige projectievalidatie hun oorspronkelijke scoped reader, bronversie, selectors en bereiken. Unieke latere reads blijven onder normale selectie zichtbaar; bestaande expliciete pressurefallback en exacte dekkingselectie blijven van kracht.",
+    "Nieuwste/current receipt, fouten/UNKNOWN, effecten en benodigde bronankers blijven behouden. Bij veranderd latestliteral valt selectie terug op de originele receipts. Raw events, source/proof, stop, accounting, actuele volledige inputgate, budget en permissions zijn niet gewijzigd."
+  ],
+  "gen12Findings": {
+    "workId": "work:eva-resume:98d0ce93-a124-5d21-bd0b-747e2926b346",
+    "state": "failed",
+    "errorCode": "budget_exceeded",
+    "exactSubtype": "input_budget_exceeded",
+    "completeMeasuredRequests": 15,
+    "unknownOrInflightCurrentCall": 0,
+    "allCurrentStreamsClosed": true,
+    "knownInputTokens": 791145,
+    "knownOutputTokens": 4555,
+    "knownTokens": 795700,
+    "tools": 15,
+    "toolBreakdown": {
+      "externalReads": 3,
+      "localReads": 9,
+      "progressSaves": 3
+    },
+    "realSavedNotes": {
+      "steps": [
+        124,
+        131,
+        136
+      ],
+      "revisions": [
+        4,
+        5,
+        6
+      ],
+      "sameTaskSourceSpecIdentity": true,
+      "originalStepIdsPreserved": true
+    },
+    "exactRepeatedLocalReadSteps": [
+      127,
+      130,
+      134,
+      138
+    ],
+    "proposal": {
+      "newConfirmedResult": false,
+      "bytes": 9240,
+      "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+      "unchanged": true
+    },
+    "qualification": "De oorspronkelijke externe-receiptexport miste drie interne saves; echte WORK_PROGRESS_SAVED-events vullen uitsluitend die bewijsgrens aan. Notesopslag bewijst geen proposalafronding. De tijdelijke toolbeperking was modelmatig als blokkade beschreven; latere verified externe reads bewijzen dat zij niet permanent was."
+  },
+  "testEvidence": {
+    "rawLogs": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests.stdout.private.log",
+        "sha256": "b32cdaf45e88ee42463f4bb35502e6ae5574f9d4d859f5c38961e5f29c1887f0"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests.stderr.private.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests-repair.stdout.private.log",
+        "sha256": "01c01662ea576fd3c4d3753557036bb30e73d28d8773a55d82587ef53127cd33"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests-repair.stderr.private.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests-final-repair.stdout.private.log",
+        "sha256": "a3b8d8e9ffda112761ace51f6eb9ab9006876751484f1933f7548143128fd760"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests-final-repair.stderr.private.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "uniquePassedNodesAcrossRuns": 60,
+    "initial": "59 passed/1 failed in 12.20s; UNKNOWN-fixture had een achtergebleven ongeldige projection.",
+    "firstRepair": "1 failed/59 deselected in 2.04s; oude singleton-selectorfixture verwachtte ten onrechte selections.",
+    "finalRepair": "1 passed/59 deselected in 1.79s.",
+    "reviewedCoverage": "Gewone catalogus beschikbaar, exacte oude planinhoud, actuele literals, na-checkpoint reads, verkeerde contract/arguments/steps/revisions en UNKNOWN/fouten/effecten.",
+    "reviewerReranTests": false
+  },
+  "buildBindings": {
+    "core": {
+      "beforeImage": "sha256:e8a0d4990b5314f05badc68260a7ff3e6d1e4484b01fda5afe835038f5003a8f",
+      "candidateImage": "sha256:062a501b576127039f2641fbf30581b871a3182c5e3f212bc5c49d6a0245089a",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "importsPassed": true
+    },
+    "delegated-work-worker": {
+      "beforeImage": "sha256:5ca885a18bfb58faeb4d0fda44c9040bd49cd242c21e96bf9055dc3706a084af",
+      "candidateImage": "sha256:45a6ae6b57388e898462e30d7e559ddcbb3359b35c875d71d9cbaed8f0023abd",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "importsPassed": true
+    }
+  },
+  "blockers": [],
+  "boundaries": [
+    "Causaal gerichte broncorrectie voor de waargenomen tijdelijke catalogusduiding en contextgroei; geen exclusieve verklaring voor alle gen12-contextdruk of toekomstige gedragswinst.",
+    "Actuele complete inputfit, nieuw notitieantwoord en natuurlijke voorstelkwaliteit blijven onbewezen; knownPhaseMeasurement blijft in de publicatie pending. Installatie kan afzonderlijk van toekomstige invoertoelating plaatsvinden.",
+    "API-usage blijft partial; volledig historisch taakverbruik en creditkosten blijven onbekend. Geen providerbesparing, taakafronding, migratie/toegangsverruiming of nieuwe vergelijking.",
+    "Oude native-uitkomst, notities, document, accounting en UNKNOWN blijven behouden; oorspronkelijke readonlyopdracht en acceptatievoorwaarden ongewijzigd."
+  ],
+  "sourceInstallationAllowed": true,
+  "publicationAllowed": true,
+  "newInputAuthority": false,
+  "taskCompleted": false,
+  "wholeProjectGoal": "active",
+  "reviewActions": {
+    "tests": 0,
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseOperations": 0,
+    "sourceEdits": 0
+  }
+}

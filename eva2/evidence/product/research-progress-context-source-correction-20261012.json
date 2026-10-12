@@ -1,0 +1,69 @@
+{
+  "contract": "EvaResearchProgressContextCorrection/v1",
+  "createdAt": "2026-10-12T21:59:25.505870+00:00",
+  "state": "built_not_installed",
+  "previousInstalledSource": "d3c1ef8634560505c6681ce5e8822edf4a827f1104cef74911a4436c51636d07",
+  "scope": "One existing provider module: ordinary tool catalogue remains available while saving findings. Recognized replaced work plans retain their exact contents once in the model index. Source pages before a real saved checkpoint use existing authorized source readers; new reads, current receipt, errors, unknowns, external effects and literal anchors remain visible. Raw records, roles, permissions and budgets unchanged.",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "9dc84c50fe855a10c126495faabbc9a32eb9832bbbd8c5a09926cceb3e14e300"
+    },
+    {
+      "path": "eva2/tests/model/test_catalogue_model_view.py",
+      "sha256": "52be234b7da4b439c161b17752f56cecdd09f76ec001af06f06520aeef101c83"
+    }
+  ],
+  "tests": {
+    "uniqueNodes": 60,
+    "initialPassed": 59,
+    "initialFixtureFailure": 1,
+    "firstRepairFailed": true,
+    "finalTargetedPassed": 1,
+    "finalTargetedDeselected": 59,
+    "testFailuresPreserved": true,
+    "modelRequests": 0,
+    "externalActions": 0,
+    "rawLogs": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests.stdout.private.log",
+        "sha256": "b32cdaf45e88ee42463f4bb35502e6ae5574f9d4d859f5c38961e5f29c1887f0"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests.stderr.private.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests-repair.stdout.private.log",
+        "sha256": "01c01662ea576fd3c4d3753557036bb30e73d28d8773a55d82587ef53127cd33"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests-repair.stderr.private.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests-final-repair.stdout.private.log",
+        "sha256": "a3b8d8e9ffda112761ace51f6eb9ab9006876751484f1933f7548143128fd760"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/tests-final-repair.stderr.private.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "frozenSource": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/frozen-source.private.json",
+    "sha256": "22ea33b8f9f11f86c3c503cb071fd7d268b35c638a616c2209e3d15b8ec4c95d"
+  },
+  "knownPhaseMeasurement": "pending exact historical receipt reconstruction",
+  "nativeBehavior": "not demonstrated",
+  "runtimeChanged": false,
+  "proposalCompleted": false,
+  "newProductFunctionCompleted": false,
+  "originalQuestionApprovalAndOwnerMandatePreserved": true,
+  "manualDomainProposalByCodex": false,
+  "newComparisonSeries": false,
+  "review": "pending concrete independent source review",
+  "modelRequests": 0,
+  "creditCost": null
+}

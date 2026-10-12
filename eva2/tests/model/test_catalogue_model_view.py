@@ -717,7 +717,7 @@ def test_column_read_index_preserves_filters_queries_pointer_escaping_and_multip
     assert len(canonical_json_bytes(compact)) < len(frozen)
 
 
-def test_research_checkpoint_uses_model_findings_once_then_restores_catalogue(tmp_path):
+def test_research_checkpoint_uses_model_findings_with_ordinary_catalogue_available(tmp_path):
     from eva.adapters.postgres.background_work_progress import progress_descriptor
     from eva.adapters.model.pydantic_conversation import _descriptor_tool
     from tests.model.test_pydantic_conversation_model import (
@@ -752,9 +752,9 @@ def test_research_checkpoint_uses_model_findings_once_then_restores_catalogue(tm
     result = _generate(model, available_actions=available,
                        prior_actions=history[:-1], completed_action=history[-1])
     assert result.action_call == call and result.text is None
-    assert [tool["name"] for tool in captured[0]["tools"]] == ["save_work_progress"]
+    assert {tool["name"] for tool in captured[0]["tools"]} == set(available)
     assert "Herhaal niet alleen het plan" in captured[0]["instructions"]
-    # Host storage remains the existing tool; only its verified receipt resets the phase.
+    # Host storage remains the existing tool; a verified save resets the reminder.
     saved = ConversationActionReceipt(call, {"status": "verified", "revision": 2,
         "progress": new_notes, "task_completion_verified": False})
     _generate(model, available_actions=available, prior_actions=history, completed_action=saved)
@@ -786,3 +786,84 @@ def test_checkpoint_does_not_interfere_with_short_tasks_errors_or_external_effec
     else:
         history = (*history, progress)
     assert not PydanticConversationModel._research_checkpoint_due(history, available)
+
+
+def _working_note(call_id, revision, evidence, *, ids=("original-step",)):
+    args = {"steps": [{"id": i, "title": "Existing task", "state": "working",
+                       "evidence": evidence} for i in ids], "handoff": "Continue from saved findings."}
+    return ConversationActionReceipt(ConversationActionCall(call_id, "save_work_progress", args),
+        {"status": "verified", "contract": "EvaWorkProgressSaved/v1", "revision": revision,
+         "progress": args, "task_completion_verified": False})
+
+
+def test_saved_findings_defer_only_earlier_reads_keep_new_evidence_errors_and_effects():
+    from dataclasses import replace
+    page, *_ = _coverage_pages()
+    first = _working_note("first-notes", 1, "Earlier work.")
+    old_read = page("old-read", offset=0, limit=800)
+    saved = _working_note("current-notes", 2, "Read source old-read; work is still incomplete.")
+    new_read = page("new-read", offset=8000, limit=500)
+    missing = page("missing-source", pointer="/missing")
+    unknown = replace(old_read, call=replace(old_read.call, call_id="unknown"),
+                      output={**old_read.output, "status": "ambiguous"}, model_output=None)
+    effect = ConversationActionReceipt(ConversationActionCall("external-effect", "change_document", {}),
+                                      {"status": "verified", "external_state_verified": True})
+    failed = replace(first, call=replace(first.call, call_id="failed-save"),
+                     output={**first.output, "status": "failed"})
+    history = (first, old_read, missing, saved, unknown, effect, failed, new_read)
+    frozen = canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history])
+    baseline = PydanticConversationModel._receipt_model_views(history, _literal_slices=False)[-1]
+    selected, note = PydanticConversationModel._receipt_context_selection(history)
+    assert selected == (missing, saved, unknown, effect, failed, new_read)
+    index = json.loads(note.split("\n", 1)[1])
+    reads = expand_deferred_read_index(index)["reads"]
+    assert [r["call_id"] for r in reads] == ["old-read"]
+    selector = json.loads(old_read.call.arguments["arguments_json"])
+    assert reads[0]["selections"] == selector.get("selections", [selector])
+    assert index["superseded_work_progress"] == [
+        {"call_id": "first-notes", "revision": 1, "replaced_by": "current-notes",
+         "progress": first.call.arguments}]
+    assert PydanticConversationModel._receipt_model_views(selected, _literal_slices=False)[-1] == baseline
+    assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history]) == frozen
+
+
+@pytest.mark.parametrize("change", ["unknown", "wrong_contract", "wrong_arguments",
+    "missing_steps", "duplicate_steps", "lost_step", "stale_revision", "boolean_revision"])
+def test_working_note_compaction_refuses_unrecognized_or_non_replacing_snapshots(change):
+    from dataclasses import replace
+    from tests.model.test_pydantic_conversation_model import RECEIPT
+    first = _working_note("first-notes", 2, "Keep this evidence.", ids=("first", "second"))
+    latest = _working_note("latest-notes", 3, "Current findings.", ids=("first", "second"))
+    output = dict(latest.output)
+    if change == "unknown": output["status"] = "ambiguous"
+    elif change == "wrong_contract": output["contract"] = "not-a-saved-plan"
+    elif change == "wrong_arguments": output["progress"] = {"steps": []}
+    elif change == "missing_steps":
+        latest = _working_note("latest-notes", 3, "Current", ids=())
+        output = latest.output
+    elif change == "duplicate_steps":
+        latest = _working_note("latest-notes", 3, "Current", ids=("first", "first"))
+        output = latest.output
+    elif change == "lost_step":
+        latest = _working_note("latest-notes", 3, "Current", ids=("first",))
+        output = latest.output
+    elif change == "stale_revision": output["revision"] = 2
+    else: output["revision"] = True
+    latest = replace(latest, output=output)
+    history = (first, latest, RECEIPT)
+    selected, _ = PydanticConversationModel._receipt_context_selection(history)
+    assert first in selected and latest in selected and selected[-1] == RECEIPT
+
+
+def test_saved_findings_preserve_current_literal_reference_anchor():
+    from dataclasses import replace
+    first = _working_note("first-notes", 1, "Exact earlier literal evidence. " * 200)
+    latest = _working_note("latest-notes", 2, "New findings.", ids=("original-step",))
+    current = ConversationActionReceipt(ConversationActionCall("current-read", "read_document", {}),
+                                       {"status": "verified", "text": first.call.arguments["steps"][0]["evidence"]})
+    history = (first, latest, current)
+    baseline = PydanticConversationModel._receipt_model_views(history, _literal_slices=False)[-1]
+    assert "first-notes" in json.dumps(baseline)
+    selected, _ = PydanticConversationModel._receipt_context_selection(history)
+    assert first in selected and selected[-1] == current
+    assert PydanticConversationModel._receipt_model_views(selected, _literal_slices=False)[-1] == baseline

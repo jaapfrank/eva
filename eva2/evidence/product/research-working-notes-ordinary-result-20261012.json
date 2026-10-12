@@ -1,0 +1,90 @@
+{
+  "contract": "EvaOrdinaryResearchContinuationResult/v1",
+  "observedAt": "2026-10-12T21:53:32.038728+00:00",
+  "workId": "work:eva-resume:98d0ce93-a124-5d21-bd0b-747e2926b346",
+  "state": "failed",
+  "errorCode": "input_budget_exceeded",
+  "completedAt": "2026-10-12T21:41:49+00:00",
+  "modelRole": "Astra/medium",
+  "usage": {
+    "admittedRequests": 15,
+    "completeResponses": 15,
+    "measuredResponses": 15,
+    "unknownOrInflight": 0,
+    "inputTokens": 791145,
+    "outputTokens": 4555,
+    "knownTokens": 795700,
+    "tools": 15,
+    "completeHistoricalTaskTokens": null,
+    "creditCost": null,
+    "ownerApiMeasurement": "partial"
+  },
+  "workingNotes": {
+    "previousRevision": 3,
+    "latestRevision": 6,
+    "savedRevisions": [
+      4,
+      5,
+      6
+    ],
+    "savedSteps": [
+      124,
+      131,
+      136
+    ],
+    "modelAuthored": true,
+    "originalStepIdsPreserved": true,
+    "proposalComplete": false
+  },
+  "document": {
+    "bytes": 9240,
+    "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+    "unchanged": true,
+    "newSavedProposal": false,
+    "newReadback": false
+  },
+  "exactRepeatedLocalReadSteps": [
+    127,
+    130,
+    134,
+    138
+  ],
+  "externalReadTools": 3,
+  "localReadTools": 9,
+  "workingNoteTools": 3,
+  "limitation": "Temporary checkpoint-only catalogue was interpreted in saved notes as an unavailable tool route; subsequent ordinary external reads prove that restriction was not permanent. End proposal, delivery, efficiency improvement and complete function are not demonstrated.",
+  "nativeRunning": false,
+  "wholeProjectGoal": "active",
+  "originalCompletedTasks": 39,
+  "originalTaskCount": 48,
+  "expandedCompletedTasks": 39,
+  "expandedTaskCount": 54,
+  "originalQuestionRolesPermissionsAndApprovalPreserved": true,
+  "haMutationAuthorized": false,
+  "newComparisonSeries": false,
+  "voiceWork": false,
+  "manualProposalByCodex": false,
+  "reviewStatus": "pending_concrete_bundle",
+  "sources": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-observation.private.json",
+      "sha256": "46d6ab36a9741d8c6215dd2f72c068cece84265c412c2dda4fec049d9470f8bf"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-accounting.private.json",
+      "sha256": "844450950b679928eb2b48fd67133a99829a4bc6ac5b69e8b9a2448bc25c4abf"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-receipts.private.json",
+      "sha256": "7bec562599900dd0a5f7f3cc963d4d45d95ad369b4a48a0e3aad7c6d02385e9f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-document.private.json",
+      "sha256": "bbc83b09420d9aee67e5647bb56b9c0b1e3f53ad8cb0c417ed1f4b115384326e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-note-diagnosis/task-owned-progress-receipts.private.json",
+      "sha256": "0e005f272047819921c6e7aa338cf7b03225dd4b76181520a350263ac4a67d6e"
+    }
+  ]
+}

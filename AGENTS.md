@@ -1,4 +1,35 @@
-## Actueel 12 oktober — werknotities in algemene onderzoekroute geïnstalleerd
+## Actueel 12 oktober — algemene uitvoering gecorrigeerd; eigen voorstel blijft open
+
+Generatie12 is gesloten met input_budget_exceeded:15 complete gemeten responses,
+15 tools en795.700 bekende tokens. Volledig historisch taakverbruik en creditkosten
+blijven onbekend. Eva heeft zelf werknotities revisions4/5/6 opgeslagen, maar het
+9.240-byte tussenbestand is ongewijzigd; geen nieuw eindvoorstel of afleveringsbewijs.
+De tijdelijke beperking tot alleen save_work_progress werd in notities als blokkade
+opgevat, terwijl latere gewone externe reads aantonen dat zij niet permanent was.
+
+De nieuwe broncorrectie houdt gewone tools aangeboden. Eerdere volledige werkplannen
+blijven één keer letterlijk leesbaar in de contextindex; de actuele weergave blijft
+de nieuwste. Na daadwerkelijk opgeslagen bevindingen gebruiken oudere pure lokale
+bronpagina's hun bestaande geautoriseerde readers. Nieuwe reads, nieuwste resultaat,
+fouten, UNKNOWN, externe effecten en benodigde letterlijke ankers blijven zichtbaar.
+Raw events, scope, rollen, bevoegdheden en grenzen veranderen niet. Geen Tuya-script.
+
+60 unieke gerichte checks gedekt:59 in de eerste run, één na herstel van twee fouten
+in de nieuwe testfixture. Beide foutlogs blijven bewaard. Onafhankelijke bronreview GO. Eén update geïnstalleerd; kern en werker gezond,
+344 andere Pythonbronnen per image behouden. De volledige bekende139-receiptfase
+meet64.951 naar61.959 BPE inclusief256 framing; bekende marge3.577. Dynamische
+recall en recente context blijven onbekend; dit is geen bewezen toekomstige fit
+of native efficiëntiewinst. Geen nieuw eindvoorstel of native vervolg gestart.
+Het gehele goal blijft actief;39/48 oorspronkelijk en39/54 uitgebreid behouden.
+Geen nieuwe vergelijkingsserie, spraak of handmatig voorstel. HA-migratie blijft
+wachten op apart akkoord nadat Eva zelf haar voorstel heeft afgemaakt.
+
+Behouden resultaat:eva2/evidence/product/research-working-notes-ordinary-result-20261012.json.
+Broncorrectie:eva2/evidence/product/research-progress-context-source-correction-20261012.json.
+Installatie:eva2/evidence/product/research-progress-context-installed-20261012.json.
+Review:eva2/reviews/research-progress-context-source-review-20261012.json.
+
+## Historisch 12 oktober — werknotities in algemene onderzoekroute geïnstalleerd
 
 Eén bestaande providermodule is na gerichte controles en onafhankelijke bronreview
 in kern en werker geïnstalleerd; beide zijn gezond. De geautoriseerde lokale

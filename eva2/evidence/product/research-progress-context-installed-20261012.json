@@ -1,0 +1,73 @@
+{
+  "contract": "EvaResearchProgressContextInstalled/v1",
+  "installedAt": "2026-10-12T22:02:30.828432+00:00",
+  "state": "installed",
+  "sourceModuleSha256": "9dc84c50fe855a10c126495faabbc9a32eb9832bbbd8c5a09926cceb3e14e300",
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-source-review-20261012.json",
+    "sha256": "e67f1d52cff1411d28a8ba194ef0a5ad6ed5574f5645974f57bdf11bea489dfd"
+  },
+  "runtimeVerification": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/installation-verification.private.json",
+    "sha256": "195835d3a6d2d191c1c5517fa87e71f70b00bb16a54d85438b6dd972a5a65e8c"
+  },
+  "services": {
+    "core": {
+      "image": "sha256:062a501b576127039f2641fbf30581b871a3182c5e3f212bc5c49d6a0245089a",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "9dc84c50fe855a10c126495faabbc9a32eb9832bbbd8c5a09926cceb3e14e300"
+      },
+      "inspectionSha256": "b5ff8fcf8f37f423c95b4b54cb6cc1eb0019f2714bdf3c8a99f8fea88bc544a8"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:45a6ae6b57388e898462e30d7e559ddcbb3359b35c875d71d9cbaed8f0023abd",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "9dc84c50fe855a10c126495faabbc9a32eb9832bbbd8c5a09926cceb3e14e300"
+      },
+      "inspectionSha256": "3477072d999edc3511fa8a11d2e23247e19b44b9769dc28a123d852957784b29"
+    }
+  },
+  "updateDispatches": 1,
+  "newModelRequests": 0,
+  "newNativeContinuation": false,
+  "proposalCompleted": false,
+  "originalCompletedTasks": 39,
+  "originalTaskCount": 48,
+  "expandedCompletedTasks": 39,
+  "expandedTaskCount": 54,
+  "knownTerminalInput": {
+    "originalInstalledBPEIncluding256Framing": 64951,
+    "candidateBPEIncluding256Framing": 61959,
+    "difference": 2992,
+    "knownMargin": 3577,
+    "receiptCount": 139,
+    "rawAncestor104Recovered": true,
+    "dynamicRecallAndRecentKnown": false,
+    "actualFutureFitProven": false,
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-note-diagnosis/final-paired-diagnosis-receipt.private.json",
+      "sha256": "6ea9cdb7f7a58c730efb537ef59bc5e1a545de42c5fd53c13f4c8b0420c06cc1"
+    }
+  },
+  "interpretation": "Ordinary catalogue restriction is corrected; historical notes remain exact and readable once, and pre-checkpoint pure local sources remain authorized and retrievable. This source installation is not a finished proposal or a demonstrated runtime efficiency win. Original failures, historical unknown usage, scope, permissions and approval conditions preserved.",
+  "wholeGoalActive": true,
+  "creditCost": null
+}
