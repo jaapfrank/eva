@@ -1,0 +1,100 @@
+{
+  "contract": "EvaFocusedIndependentInstalledReview/v1",
+  "recordedAt": "2026-10-12T20:44:58.589772+00:00",
+  "reviewer": "product_execution_memory_review",
+  "verdict": "GO",
+  "scope": "Exacte installatie en beperkte feitenpublicatie van de goedgekeurde bronretentie/JSON-selectiecorrectie.",
+  "publicInstalledFacts": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-installed-20261012.json",
+    "sha256": "87f9ca3ad6a0fa1d90da9514c410d9ffc781056bf7423e271492edb2a715a095"
+  },
+  "bindings": {
+    "sourceFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-correction-20261012.json",
+      "sha256": "af3e78bfa94ba6034872db1a049f52454ce966546b7e9c3ebfe4cc216206eea4"
+    },
+    "sourceReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/structured-stored-source-selection-source-review-20261012.json",
+      "sha256": "b5b3354ee2d7206c5829e90ccbc17e29359f9f76a4fedf8701152dc537e12d84"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/build-result.private.json",
+      "sha256": "196f96e23b197ff69ccd984380bc616f61f56ca1c7de5af732d795da5381f698"
+    },
+    "dispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/installation-dispatch-receipt.private.json",
+      "sha256": "ef2ba416f2489a218980f5e1a10e8928871846ab3900eb55bdcd618b8bb89909"
+    },
+    "verification": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/installation-verification.private.json",
+      "sha256": "ba51bbcdde1c589ae5c63ee19e8cb2a1955c115b7a2cd887a6b2f7e830624461"
+    }
+  },
+  "installedServices": {
+    "core": {
+      "image": "sha256:f64e568f6b704f7d66587816ef0188e2668f21e78bcb30aff5576e8fa4ce4a5b",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 343,
+      "exactModules": {
+        "adapters/postgres/connector_results.py": "92d3cc330449262ef1969bcca4f4273cd444fcff6df9e74787d09f010e01ca69",
+        "adapters/connectors/home_assistant_api.py": "2ae76649744922a49dc6dd1afa2f99c835f21a2f5f76cd532169bddf8e9206a0"
+      },
+      "inspectionSha256": "efb8f8f5c262ef58ec1a061010f8993cfecdbbcb24424734293a63ddff120dee"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:ae05ecc6e62c6d8c503c3c1a3e126fb491604fa3026ff127e29da663120c05cb",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 343,
+      "exactModules": {
+        "adapters/postgres/connector_results.py": "92d3cc330449262ef1969bcca4f4273cd444fcff6df9e74787d09f010e01ca69",
+        "adapters/connectors/home_assistant_api.py": "2ae76649744922a49dc6dd1afa2f99c835f21a2f5f76cd532169bddf8e9206a0"
+      },
+      "inspectionSha256": "6c2fdd07ac3f27ba1099223e3e587feba8c04d257620818da2298d3779034cef"
+    }
+  },
+  "actualUpdateDispatches": 1,
+  "readyz": {
+    "database": "ready",
+    "detail": null,
+    "memory_projection": "ready",
+    "model_provider": "ready",
+    "ready": true
+  },
+  "findings": [
+    "De gebonden dispatch- en verificatiereceipts bevestigen één updaterdispatch met exact de twee goedgekeurde modulehashes en kandidaatimages in kern en werker.",
+    "Beide diensten zijn healthy/ready. 343 overige Pythonbronbestanden per image, omgeving, mounts en procesconfiguratie blijven behouden.",
+    "De publieke installatiefeiten komen overeen met de exacte receipts en blijven gescheiden van taakresultaat. Geen modelaanvraag of native vervolg was gestart op deze publicatiesnapshot.",
+    "Historische verloren bronbytes zijn niet hersteld uit hun hash. De oorspronkelijke readonly-opdracht, oude mislukkingen en UNKNOWN blijven behouden."
+  ],
+  "blockers": [],
+  "boundary": {
+    "installedSourceAndSafePublicationGo": true,
+    "nativeInputAuthorityGranted": false,
+    "taskCompleted": false,
+    "productBehaviorProven": false,
+    "actualDynamicInputFitProven": false,
+    "providerSavingsProven": false,
+    "existingOwnerMandateUnchanged": true
+  },
+  "reviewerActions": {
+    "tests": 0,
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseWrites": 0,
+    "installationActions": 0
+  }
+}

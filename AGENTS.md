@@ -1,5 +1,26 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Actueel 12 oktober — Eva bewaart bevindingen; eigen eindvoorstel nog niet af
+
+Jaaps opdracht blijft: Eva moet zelf onderzoeken en haar voorstel opleveren.
+Codex schrijft geen Tuya-voorstel of voorbeeldfunctie. Generatie10 is gesloten
+met incomplete_work:28 complete gemeten modelresponses,27tools en1.232.985 bekende
+tokens. API-verbruik blijft partial; volledig taakverbruik en creditkosten onbekend.
+De huidige voortgang is revision3 met inventaris/afhankelijkheden working en
+voorstel blocked. Het9240B tussenbestand is ongewijzigd; geen eindresultaat of
+extra hoofdafronding. Geen input- of deadlinefout in deze uitvoering.
+Bronselectie wordt nu gericht onderzocht: grote HA-API-antwoorden worden vóór
+bewaren gepagineerd; volledige lokale selectie is daardoor niet vanzelf beschikbaar.
+De algemene bronbewaring en lokale JSON-selectie zijn nu geïnstalleerd na
+onafhankelijke bronreview en15 gerichte controles. Twee modules per image veranderd,
+343 andere Pythonbronnen behouden; kern en werker gezond. Geen volledige oude
+bronbytes uit hashes reconstrueren. Bekende huidige invoerruimte eerst controleren.
+Installatiebewijs:eva2/evidence/product/structured-stored-source-selection-installed-20261012.json.
+Geen automatische herhaling, handmatig voorstel, vergelijking of spraakwerk.
+Geen HA-wijziging vóór apart expliciet akkoord op Eva's uiteindelijke voorstel.
+Geheel goal actief;39/48 oorspronkelijk en39/54 uitgebreid blijven onveranderd.
+Bewijs:eva2/evidence/product/retained-read-context-index-ordinary-result-20261012.json.
+
 ## Actueel 12 oktober — Eva maakt zelf het voorstel; algemene contextcorrectie
 
 Eva onderzoekt de oorspronkelijke leesopdracht en schrijft zelf het onderbouwde

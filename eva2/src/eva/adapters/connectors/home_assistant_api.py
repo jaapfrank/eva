@@ -32,6 +32,7 @@ class _InvalidRequestBody(ConversationConflict):
 
 class HomeAssistantApiTool:
     action_names = (_ACTION,)
+    supports_stored_results = True
 
     def __init__(self, *, base_url, token, vision=None):
         self.base_url = base_url.rstrip("/")
@@ -216,10 +217,43 @@ class HomeAssistantApiTool:
                 result.update(response_json=encoded, truncated=False)
         except (KeyError, IndexError, TypeError, ValueError):
             result.update(selection_error="Response pointer does not exist; API call already completed. Do not repeat a write to change the selection.")
+        # The page is presentation, not the whole observation. Preserve a full
+        # response only when the selection omitted data or cut its text short.
+        source_json = json.dumps(value, ensure_ascii=False, sort_keys=True,
+                                 separators=(",", ":"), allow_nan=False)
+        if (result.get("truncated") is True or result.get("next_offset") is not None
+            or (result.get("total") is not None and a["offset"] > 0)
+            or ((a["response_pointer"] or result.get("selection_error"))
+                and len(source_json) > 40_000)):
+            result["source_response_json"] = source_json
         return result
 
+    @staticmethod
+    def _retain_source_response(request, result):
+        from eva.adapters.postgres.connector_results import captured_call, bounded_result
+        stored = captured_call(request, "source_response", lambda: result)
+        view = bounded_result(request, "source_response", stored)
+        if view == stored:
+            return stored
+        return {**{key: value for key, value in stored.items()
+                   if key != "source_response_json"},
+                "source_response_manifest": view,
+                "source_response_pointer": "/source_response_json",
+                "source_response_guidance": (
+                    "The complete API response is retained in this authorized local reader. "
+                    "Select /source_response_json and decode its JSON; the response_json "
+                    "or response_preview above remains only the original selected page. "
+                    "Do not repeat the API request to select more of this observation.")}
+
     async def execute(self, request):
-        result = await asyncio.to_thread(self._request, request.arguments)
+        from eva.adapters.postgres.connector_results import recovered_result
+        # A sealed response belongs to this exact request, actor and execution.
+        # An incomplete capture stays uncertain; never resend it to obtain pages.
+        result = await asyncio.to_thread(recovered_result, request, "source_response")
+        if result is None:
+            result = await asyncio.to_thread(self._request, request.arguments)
+        if "source_response_json" in result:
+            result = await asyncio.to_thread(self._retain_source_response, request, result)
         return ToolDispatchResult(True, canonical_sha256(result), {
             "response": result, "request_sha256": canonical_sha256(request.arguments)})
 

@@ -1,0 +1,122 @@
+{
+  "contract": "EvaFocusedIndependentSourceReview/v1",
+  "recordedAt": "2026-10-12T20:42:23.019380+00:00",
+  "reviewer": "product_execution_memory_review",
+  "verdict": "GO",
+  "scope": "Exacte twee modules voor retentie van grote API-bronnen en gestructureerde lokale bronselectie; installatie van identieke gebouwde bronbytes en beperkte bronpublicatie.",
+  "bindings": {
+    "frozenSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/source-correction/frozen-source.private.json",
+      "sha256": "5718db709c2817380ce22dfa3dcbb67db11bbb7749474a4f11752fdb8e954dc7"
+    },
+    "publicSourceFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-correction-20261012.json",
+      "sha256": "af3e78bfa94ba6034872db1a049f52454ce966546b7e9c3ebfe4cc216206eea4"
+    },
+    "apiFrozenManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-api-source-response/source-correction/frozen-source.private.json",
+      "sha256": "c5fce0615a171712e6094c094ec7e5d6b16bfc3f8d4c16bbc0a31fc6840a74ee"
+    },
+    "apiPatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-api-source-response/source-correction/source-and-tests.patch.private.diff",
+      "sha256": "d4fc1955c0b6444fe5f10084ea599e15046999fde70129c2556fcabe9ec8963b"
+    },
+    "apiTargetedChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-api-source-response/source-correction/targeted-checks.private.json",
+      "sha256": "aa1138476d7cba661b2e48442d79c87510ac18f893fd043cc17e769508220d13"
+    },
+    "apiFixtureMeasurement": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-api-source-response/source-correction/fixture-measurement.private.json",
+      "sha256": "a371f1626c33b29d9b2f14d2cf648d2392ee07f113a91ee6b2bf1e596ff93aed"
+    },
+    "readerFinalChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/source-correction/reader-final-targeted-checks.private.log",
+      "sha256": "bb2ab9942964212058d8545714f90daa2d997213cd0bf53922f84a567e9ebbaf"
+    },
+    "initialReaderFailuresPreserved": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/source-correction/reader-targeted-checks.private.log",
+      "sha256": "ed4ad9b363f9719931d2c298783277e4e1c4981b76b31956568b9971a9dc778f"
+    },
+    "repairedReaderChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/source-correction/reader-repaired-checks.private.log",
+      "sha256": "ec7adf3e0637795acc788538b14d59301a7fda99307b9f5ab4e1a8b054528598"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/build-result.private.json",
+      "sha256": "196f96e23b197ff69ccd984380bc616f61f56ca1c7de5af732d795da5381f698"
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "92d3cc330449262ef1969bcca4f4273cd444fcff6df9e74787d09f010e01ca69"
+    },
+    {
+      "path": "eva2/src/eva/adapters/connectors/home_assistant_api.py",
+      "sha256": "2ae76649744922a49dc6dd1afa2f99c835f21a2f5f76cd532169bddf8e9206a0"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "/home/administrator/project/Eva2/eva2/tests/connectors/test_connector_results.py",
+      "sha256": "4b23047badbeb6367cd2187b7dbcaf4ff1e380c4f00793627ec9ccdf7d777e64"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/tests/connectors/test_home_assistant_api.py",
+      "sha256": "5acf02bc30b1af5c9da9a648285e92c1f501eec391077cae00f862344dae2244"
+    }
+  ],
+  "findings": [
+    "Een grote gepagineerde of afgekorte API-bron blijft volledig als canonical JSON-tekst in de bestaande scoped capture. De oorspronkelijke zichtbare pagina, success/status en oorspronkelijke bronhash blijven behouden; source_response_manifest verwijst naar /source_response_json.",
+    "Capture en recovery binden tenant, installatie, principal, gesprek, message/audience, execution, operation, configuration, arguments en phase. Autorisatie/stop en complete seal/chunks/hash worden opnieuw gecontroleerd. Een onvolledige of overgrote capture blijft onzeker en wordt niet opnieuw extern opgevraagd om selecties te maken.",
+    "De optionele lokale json_filter vergelijkt uitsluitend een veldpointer met een exact scalartype; bool, integer, null en ontbrekend blijven onderscheiden. JSON-tekst wordt eenmaal gedecodeerd; floats in geselecteerde records blijven JSON-tekst. Filtering gaat vóór tekenpaginering en retourneert source_items/matched_items en has_more, geen onware volledige externe-stateclaim.",
+    "De bestaande reader blijft begrensd op 8192 tekens per gecombineerde selectie en 65536 UTF-8 bytes voor resultaat/receipt; de bestaande capturegrens blijft 2097152 bytes. Het positieve API-fixtureresultaat past binnen de resultaatgrens. Geen verhoging van productlimieten of mandaat.",
+    "Historische immutable reader-manifests blijven exact geldig met hun oorspronkelijke schema. Bron-/proofbytes worden niet geüpgraded; historische niet-bewaarde bronbytes zijn niet uit een hash gereconstrueerd.",
+    "Directe reader/modelconsumenten hergebruiken de bestaande validatie en bewaren de oorspronkelijke selectors, inclusief json_filter. Afgeleide selectie is geen nieuwe externe observatie; laatste resultaten, actor/sourcehashbinding, UNKNOWN, errors en stopvoorwaarden blijven behouden."
+  ],
+  "validation": {
+    "existingFinalTargetedChecksPassed": 15,
+    "apiChecks": 7,
+    "readerChecks": 8,
+    "reviewerReranTests": false,
+    "fixtureBoundary": "Bestaande synthetische/fake-transportcontroles; geen actuele HA/providermodel/DB-proef.",
+    "apiFixture": {
+      "completeRecords": 2465,
+      "sourceUtf8Bytes": 133421,
+      "capturedResultUtf8Bytes": 156597,
+      "originalSelectedRecords": 50,
+      "lateTargetRecords": 65,
+      "fakeTransportRequests": 1
+    },
+    "readerFixture": "Volledige 2465-recordbron wordt lokaal gefilterd naar drie late/disabled targets; geselecteerde floatwaarden blijven tekst. Typeverschillen, tekenpaginering, geen code-executie en legacy-schema worden behouden.",
+    "initialFailureBoundary": "De floatserialisatie en de synthetische fixture zonder oorspronkelijk proof faalden; beide oorspronkelijke logs blijven behouden. Gerichte reparatie twee PASS, finale selectie acht PASS.",
+    "candidateImages": {
+      "core": "sha256:f64e568f6b704f7d66587816ef0188e2668f21e78bcb30aff5576e8fa4ce4a5b",
+      "delegated-work-worker": "sha256:ae05ecc6e62c6d8c503c3c1a3e126fb491604fa3026ff127e29da663120c05cb"
+    },
+    "exactChangedPythonFilesPerImage": 2,
+    "unchangedPythonFilesPerImage": 343,
+    "importsPassed": true
+  },
+  "publication": "GO voor exact gebonden built_not_installed bronfeiten en beperkte fixture-evidentie.",
+  "blockers": [],
+  "boundary": {
+    "installationSourceGo": true,
+    "nativeInputAuthorization": false,
+    "taskCompleted": false,
+    "productBehaviorProven": false,
+    "actualDynamicInputFitProven": false,
+    "providerSavingsProven": false,
+    "oldResultsAndUnknownPreserved": true,
+    "originalReadonlyMandateUnchanged": true,
+    "physicalMigrationNeedsSeparateOriginalOwnerApproval": true,
+    "wholeProjectGoal": "active"
+  },
+  "reviewerActions": {
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "tests": 0,
+    "databaseWrites": 0,
+    "sourceEdits": 0
+  }
+}

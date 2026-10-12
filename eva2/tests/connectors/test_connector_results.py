@@ -674,3 +674,79 @@ def test_small_local_read_retains_exact_scoped_body_without_external_reobservati
     stopped[0] = True
     with pytest.raises(ConversationConflict, match="stopped"):
         route.execute(TURN, call, step_index=3)
+
+
+def test_json_filter_reads_relevant_complete_saved_records_after_first_hundred_without_replay():
+    # The remote page itself cannot contain these late records. A complete source
+    # is required, and one local selection must include disabled target rows too.
+    rows = [{"entity_id": f"sensor.item_{i}", "platform": "other", "disabled_by": None}
+            for i in range(2465)]
+    for i in (101, 700, 2400):
+        rows[i].update(platform="chosen", disabled_by="user" if i == 2400 else None,
+                       attributes={"temperature": 21.5})
+    output = {"source_response_json": json.dumps(rows), "response_json": json.dumps(rows[:50]),
+              "total": 2465, "next_offset": 50}
+    adapter, command, calls, capture = setup(output)
+    with result_capture(capture):
+        manifest = asyncio.run(adapter.execute(command)).details["invocation_response"]
+    before = {key: tuple(value) for key, value in capture.timeline.rows.items()}
+    args = {"pointer": "/source_response_json", "offset": 0, "limit": 8192, "query": None,
+            "json_filter": {"field": "/platform", "equals": "chosen"}}
+    page = capture.read(manifest["reader"]["tool_id"], args)
+    assert page["source_items"] == 2465 and page["matched_items"] == 3
+    assert page["decoded_json"] is True and page["has_more"] is False
+    assert json.loads(page["text"]) == [rows[i] for i in (101, 700, 2400)]
+    assert json.loads(page["text"])[-1]["disabled_by"] == "user"
+    assert page["sha256"] == manifest["sha256"]
+    assert len(calls) == 1
+    assert before == {key: tuple(value) for key, value in capture.timeline.rows.items()}
+
+
+@pytest.mark.parametrize("expected,ids", [(False, ["boolean"]), (0, ["integer"]), (None, ["null"])])
+def test_json_filter_preserves_scalar_types_and_does_not_match_missing_fields(expected, ids):
+    output = {"items": [{"id": "boolean", "flag": False}, {"id": "integer", "flag": 0},
+                        {"id": "null", "flag": None}, {"id": "missing"}]}
+    raw = _encoded(output); digest = hashlib.sha256(raw).hexdigest()
+    capture = object.__new__(ConnectorResults)
+    capture._bytes = lambda _: (raw, digest)
+    page = capture.read("eva-stored-result:" + "a"*64 + ":" + digest,
+                        {"pointer": "/items", "offset": 0, "limit": 8192, "query": None,
+                         "json_filter": {"field": "/flag", "equals": expected}})
+    assert [row["id"] for row in json.loads(page["text"])] == ids
+    assert page["source_items"] == 4 and page["matched_items"] == 1
+
+
+def test_json_filter_reuses_character_pagination_and_rejects_code_before_source_read():
+    rows = [{"group": "selected", "index": i, "body": "x"*100} for i in range(100)]
+    raw = _encoded({"items": rows}); digest = hashlib.sha256(raw).hexdigest()
+    capture = object.__new__(ConnectorResults)
+    accesses = []
+    capture._bytes = lambda key: accesses.append(key) or (raw, digest)
+    reader = "eva-stored-result:" + "a"*64 + ":" + digest
+    args = {"pointer": "/items", "offset": 0, "limit": 8192, "query": None,
+            "json_filter": {"field": "/group", "equals": "selected"}}
+    first = capture.read(reader, args)
+    second = capture.read(reader, {**args, "offset": first["next_offset"]})
+    assert first["has_more"] and not second["has_more"]
+    assert json.loads(first["text"] + second["text"]) == rows
+    assert first["matched_items"] == second["matched_items"] == 100
+    before = len(accesses)
+    with pytest.raises(ConversationConflict, match="JSON filter"):
+        capture.read(reader, {**args, "json_filter": {"expression": "__import__('os')"}})
+    assert len(accesses) == before
+
+
+def test_legacy_retained_reader_schema_remains_exactly_valid_after_filter_upgrade():
+    from copy import deepcopy
+    from eva.adapters.postgres.connector_results import (
+        ancestor_action_presentation, _legacy_selection_schema)
+    from eva.contracts.canonical_json import canonical_sha256
+    port, timeline, thread, _, _ = _retained_document()
+    receipt = port._receipt(TURN, timeline.events(thread), 2)
+    projection = deepcopy(receipt.model_output["ancestor_model_projection"])
+    projection["manifest"]["reader"]["arguments_schema"] = _legacy_selection_schema()
+    before = _encoded([projection, receipt.output])
+    arguments, output = ancestor_action_presentation(receipt, projection)
+    assert arguments["path"] == receipt.call.arguments["path"]
+    assert output["source_receipt_sha256"] == canonical_sha256(receipt.output)
+    assert _encoded([projection, receipt.output]) == before

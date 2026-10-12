@@ -1,0 +1,62 @@
+{
+  "contract": "EvaStructuredStoredSourceSelectionCorrection/v1",
+  "recordedAt": "2026-10-12T20:39:42.518481+00:00",
+  "status": "built_not_installed",
+  "frozenSource": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/source-correction/frozen-source.private.json",
+    "sha256": "5718db709c2817380ce22dfa3dcbb67db11bbb7749474a4f11752fdb8e954dc7"
+  },
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "92d3cc330449262ef1969bcca4f4273cd444fcff6df9e74787d09f010e01ca69"
+    },
+    {
+      "path": "eva2/src/eva/adapters/connectors/home_assistant_api.py",
+      "sha256": "2ae76649744922a49dc6dd1afa2f99c835f21a2f5f76cd532169bddf8e9206a0"
+    }
+  ],
+  "problem": "A large Home Assistant API response was reduced to50records before its returned data were captured; full response hashes were kept but remaining source bytes were not available to the local reader.",
+  "change": [
+    "Preserve the complete large paginated/truncated API response using the existing actor-bound connector capture and recovery. Keep old visible page/status/hash fields; expose source_response_manifest with /source_response_json.",
+    "Select relevant JSON-array records locally with optional json_filter field-pointer/scalar equality; decode JSON text once, before unchanged character pagination.",
+    "Keep old immutable reader manifests valid; do not rewrite historical receipts."
+  ],
+  "checks": {
+    "apiTargeted": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-api-source-response/source-correction/targeted-checks.private.json",
+      "sha256": "aa1138476d7cba661b2e48442d79c87510ac18f893fd043cc17e769508220d13"
+    },
+    "apiFixtureMeasurement": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-api-source-response/source-correction/fixture-measurement.private.json",
+      "sha256": "a371f1626c33b29d9b2f14d2cf648d2392ee07f113a91ee6b2bf1e596ff93aed"
+    },
+    "readerFinal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/source-correction/reader-final-targeted-checks.private.log",
+      "sha256": "bb2ab9942964212058d8545714f90daa2d997213cd0bf53922f84a567e9ebbaf"
+    },
+    "passedFinalTargetedChecks": 15,
+    "initialReaderFailurePreserved": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/source-correction/reader-targeted-checks.private.log",
+      "sha256": "ed4ad9b363f9719931d2c298783277e4e1c4981b76b31956568b9971a9dc778f"
+    }
+  },
+  "limits": {
+    "maximumCaptureBytes": 2097152,
+    "maximumReceiptBytes": 65536,
+    "maximumSelectedCharacters": 8192,
+    "unchanged": true
+  },
+  "modelRequests": 0,
+  "nativeRequests": 0,
+  "databaseWrites": 0,
+  "manualTuyaProposalWritten": false,
+  "taskOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "limitations": [
+    "Model-free fixtures establish source retention/selection, not an actual completed proposal or measured native efficiency improvement.",
+    "Historical API responses reduced before capture cannot be reconstructed from their hashes.",
+    "No new comparison series or general optimization platform.",
+    "HA remains read-only until separate explicit approval of Eva own finished proposal."
+  ]
+}

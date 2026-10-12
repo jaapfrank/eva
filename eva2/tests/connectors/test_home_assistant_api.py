@@ -42,6 +42,8 @@ def test_arbitrary_service_and_full_automation_config_use_same_transport(monkeyp
         assert receipt.disposition == "verified"
         assert json.loads(receipt.evidence["observation"]["response_json"])["temperature"] == 21.5
         assert receipt.evidence["observation"]["external_state_verified"] is False
+        assert "source_response_json" not in receipt.evidence["observation"]
+        assert "source_response_manifest" not in receipt.evidence["observation"]
         assert calls[-1][0:2] == ("POST", "http://ha.local:8123" + path)
         assert calls[-1][2]["json"] == body
         assert asyncio.run(tool.observe(request, None)).disposition == "pending"
@@ -139,3 +141,76 @@ def test_request_boundary_failures_are_not_correctable_json_receipts(changes):
         asyncio.run(tool.prepare(None, call))
     with pytest.raises(ConversationConflict):
         asyncio.run(tool.execute(SimpleNamespace(arguments=call.arguments)))
+
+
+def test_paginated_full_response_is_retained_once_and_read_locally():
+    from eva.adapters.postgres.connector_results import ConnectorResults, result_capture, _encoded
+    from eva.application.orchestration import ToolRequest
+    from tests.connectors.test_connector_results import Timeline
+    from tests.connectors.test_mcp_discovery import TURN
+
+    rows = [{"index": index, "platform": "target" if index >= 2400 else "other",
+             "measurement": index + 0.5} for index in range(2465)]
+    sent = []
+    class Socket:
+        def send(self, value): sent.append(json.loads(value))
+        def recv(self, **kwargs):
+            return json.dumps({"id": 1, "type": "result", "success": True, "result": rows})
+    @contextmanager
+    def session(): yield Socket()
+    tool = HomeAssistantApiTool(base_url="http://ha.local", token="local-fixture")
+    tool.admin._session = session
+    request = ToolRequest("thread", "api-operation", "checkpoint", "home_assistant.api.request",
+        args(transport="websocket", path="", body_json='{"type":"config/entity_registry/list"}'), {})
+    timeline = Timeline()
+    capture = ConnectorResults(timeline, TURN, lambda _: None)
+    with result_capture(capture):
+        dispatch = asyncio.run(tool.execute(request))
+        observation = asyncio.run(tool.observe(request, dispatch)).evidence["observation"]
+        assert observation["success"] is True
+        assert observation["total"] == 2465 and observation["next_offset"] == 50
+        assert json.loads(observation["response_json"]) == rows[:50]
+        assert observation["truncated"] is False
+        assert observation["response_sha256"] == __import__("hashlib").sha256(
+            json.dumps(rows, ensure_ascii=False, allow_nan=False).encode()).hexdigest()
+        manifest = observation["source_response_manifest"]
+        assert manifest["stored_complete"] and manifest["byte_length"] > 65536
+        assert len(_encoded(observation)) < 65536
+        assert asyncio.run(tool.execute(request)) == dispatch
+    reader = manifest["reader"]["tool_id"]
+    identifier = reader.split(":")[1]
+    retained = json.loads(capture._bytes(identifier)[0])
+    assert json.loads(retained["source_response_json"]) == rows
+    assert retained["source_response_json"] == json.dumps(rows, ensure_ascii=False,
+        sort_keys=True, separators=(",", ":"), allow_nan=False)
+    page = capture.read(reader, {"pointer": "/source_response_json", "offset": 0,
+        "limit": 150, "query": '"index":2400'})
+    assert page["found"] and '"platform":"target"' in page["text"]
+    assert len(sent) == 1  # all original rows, local read and recovery; one API request
+
+
+def test_full_response_above_capture_bound_is_not_claimed_or_reobserved():
+    from eva.adapters.postgres.connector_results import ConnectorResults, result_capture
+    from eva.application.orchestration import ToolRequest
+    from tests.connectors.test_connector_results import Timeline
+    from tests.connectors.test_mcp_discovery import TURN
+
+    tool = HomeAssistantApiTool(base_url="http://ha.local", token="local-fixture")
+    calls = []
+    def response(arguments):
+        calls.append(arguments)
+        return {"success": True, "total": 100, "next_offset": 50,
+                "response_json": "[]", "truncated": False,
+                "source_response_json": json.dumps({"value": "x" * 2_097_152})}
+    tool._request = response
+    request = ToolRequest("thread", "oversize-operation", "checkpoint",
+        "home_assistant.api.request", args(), {})
+    capture = ConnectorResults(Timeline(), TURN, lambda _: None)
+    with result_capture(capture):
+        with pytest.raises(ConversationConflict, match="transport bound"):
+            asyncio.run(tool.execute(request))
+        with pytest.raises(ConversationConflict, match="uncertain"):
+            asyncio.run(tool.execute(request))
+    assert len(calls) == 1
+    assert not any(event.event_type == "CONNECTOR_CAPTURE_SEALED"
+                   for events in capture.timeline.rows.values() for event in events)

@@ -1,0 +1,124 @@
+{
+  "contract": "EvaFocusedIndependentOutcomePublicationReview/v1",
+  "recordedAt": "2026-10-12T20:33:11.980981+00:00",
+  "reviewer": "product_execution_memory_review",
+  "verdict": "GO",
+  "scope": "Veilige beperkte feitenpublicatie van de gesloten gewone gen10-uitvoering; geen bronoorzaakonderzoek of nieuwe invoertoelating.",
+  "publicResult": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-read-context-index-ordinary-result-20261012.json",
+    "sha256": "11b55bc9adee832207cfb23ff012c02a2c458eec3a224ad27e53c5cabc442499"
+  },
+  "bindings": {
+    "sourceInstalled": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-read-context-index-installed-20261012.json",
+      "sha256": "5fee09e535f406cab43ff7d5c2e64738e79367dadee27a088ee34e2bda517505"
+    },
+    "installedReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/retained-read-context-index-installed-review-20261012.json",
+      "sha256": "f9ea783d86d615e434cb083b581ce17dc2b151edf7f656d1b8b9b7a1db29de45"
+    },
+    "dispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-dispatch.private.json",
+      "sha256": "765f403cd0f053c690cfa78f7be6a9ac7b8fd7eac23e1a85a3f93ab7d2a0902a"
+    },
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-receipt.private.json",
+      "sha256": "265e23685c388a8c505fcb1193b2f2c09f102ba9aa5ab56a520781655a793182"
+    },
+    "workSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-work-6.private.json",
+      "sha256": "3329c09028c8fbe466f2182e6e6fbf449bf0e993f0c8c3fc9663b1612c6e54fa"
+    },
+    "progressSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-progress-6.private.json",
+      "sha256": "8aa333693fead77dfbd55505e18d9f5768afdd7ef358884b58dddd654afca0bb"
+    },
+    "liveListSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-live-list-6.private.json",
+      "sha256": "4adec55439c14124a1fb84317f2b46ef2ac1aa43e13ea0b630ce96e7f9f6adf5"
+    },
+    "accountingObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/gen10-single-observation-completed-2.private.json",
+      "sha256": "8156e47f2dc6efcc6c6ce388351a4608d5dc2ac3a3c1fe62585617f8efdef9e9"
+    },
+    "newRetainedReceiptSnapshots": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/gen10-new-receipts-running.snapshot.private.json",
+        "sha256": "456d97aa02967302500a922fb2a2d90c32a5909a790e4a42d18544178eec49a1"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/gen10-new-receipts-completed-2.snapshot.private.json",
+        "sha256": "f1af301855729c4b26db6b3d50e10604169a9a4036e606c2b932f00bf32243f1"
+      }
+    ]
+  },
+  "workId": "work:eva-resume:6ef4db15-655d-57e9-b1aa-37a5e9b3825b",
+  "generation": 10,
+  "confirmed": {
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "errorFingerprint": "00b36797c8d248812b83afbe4c699e356138bc5cf93c5b719b5c3c144a7ef73b",
+    "progressRevision": 3,
+    "progressSteps": [
+      {
+        "id": "inventory",
+        "state": "working"
+      },
+      {
+        "id": "dependencies",
+        "state": "working"
+      },
+      {
+        "id": "proposal",
+        "state": "blocked"
+      }
+    ],
+    "progressIndependentlyVerified": false,
+    "resultAvailable": false,
+    "deliveryState": "unbound",
+    "observedAdmittedCompleteMeasuredRequests": 28,
+    "observedClosedLocalStreams": 28,
+    "observedUnknownOrInflightInExactCall": 0,
+    "knownInputTokens": 1226688,
+    "knownOutputTokens": 6297,
+    "knownTotalTokens": 1232985,
+    "tools": 27,
+    "ownerApiMeasurement": "partial",
+    "fullTaskTotal": null,
+    "creditCosts": null,
+    "newRetainedExternalReceipts": 26,
+    "localReaderReceipts": 18,
+    "inventoryReadReceipts": 1,
+    "haGetReceipts": 6,
+    "haTemplateEvaluationPostReceipts": 1,
+    "savedPartialDocument": {
+      "bytes": 9240,
+      "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732"
+    }
+  },
+  "findings": [
+    "De onafhankelijke som van de 28 unieke requestrecords komt exact overeen met de API en publieke telling; alle waargenomen lokale streams zijn gesloten. Dit kwalificeert uitsluitend deze exact gebonden call, niet oude generaties of volledige taak-/kostentotalen.",
+    "Werk en voortgang bevestigen incomplete_work: inventory en dependencies zijn working, proposal is blocked. Het bewaarde antwoord en voortgang zijn geen afgerond onderzoeksvoorstel; result ontbreekt en delivery blijft unbound.",
+    "De 26 nieuwe retained externe receipts zijn 18 lokale reads, één inventoryread en zeven HA-verzoeken. De enige POST is /api/template-evaluatie; deze bronnen bewijzen geen HA-configuratie-effect of migratie. Een nieuwe documentsave ontbreekt in deze snapshots; het bestaande tussenvoorstel blijft als onvolledig behouden.",
+    "De publicatie bewaart de bestaande broninstallatie afzonderlijk van de mislukte taakuitkomst. Geen input-budget/deadlinefout is in deze terminalbronnen geregistreerd; een dieper causaal productoordeel valt buiten deze feitenreview."
+  ],
+  "blockers": [],
+  "boundary": {
+    "safePublicationGo": true,
+    "taskCompleted": false,
+    "productFunctionCompleted": false,
+    "providerSavingsProven": false,
+    "newNativeInputAuthority": false,
+    "fullTaskUsageKnown": false,
+    "historicalUnknownPreserved": true,
+    "originalReadonlyScopePreserved": true,
+    "wholeProjectGoal": "active"
+  },
+  "reviewerActions": {
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "tests": 0,
+    "databaseWrites": 0,
+    "sourceEdits": 0
+  }
+}

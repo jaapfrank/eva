@@ -38,7 +38,7 @@ def _single_selection_schema():
                           "description": "Exact text search from offset; null reads directly."}}}
 
 
-def selection_schema():
+def _legacy_selection_schema():
     return {"description": "Read one selection, or 1..8 selections from the same saved result. "
             "For a batch the sum of all requested limits must be at most 8192 characters. "
             "The complete output and recorded receipt must each fit 65536 UTF-8 bytes; "
@@ -48,6 +48,25 @@ def selection_schema():
                  "properties": {"selections": {"type": "array", "minItems": 1, "maxItems": 8,
                                                "items": _single_selection_schema()}}}]}
 
+
+def selection_schema():
+    schema = _legacy_selection_schema()
+    filtered = _single_selection_schema()
+    filtered["properties"]["json_filter"] = {
+        "type": "object", "additionalProperties": False,
+        "required": ["field", "equals"], "properties": {
+            "field": {"type": "string", "maxLength": 2048,
+                      "description": "JSON pointer within each array item; empty compares the item."},
+            "equals": {"type": ["string", "integer", "boolean", "null"], "maxLength": 256}},
+        "description": "Select all array items with this exact scalar field value BEFORE character pagination. "
+                       "If pointer selects JSON text, decode that text once. Missing fields do not match. "
+                       "Use source_items/matched_items and has_more to check completeness; this makes no API call."}
+    schema["oneOf"][0] = filtered
+    schema["oneOf"][-1]["properties"]["selections"]["items"] = filtered
+    schema["description"] += (
+        " Optional json_filter selects relevant JSON-array records locally from the COMPLETE saved source, "
+        "including arrays stored as JSON text. Offsets/limits still count characters in the selected JSON.")
+    return schema
 
 
 def _encoded(value):
@@ -121,12 +140,15 @@ def ancestor_action_presentation(receipt, projection):
             or not re.fullmatch(re.escape(READER_PREFIX)+r"[0-9a-f]{64}:"+manifest["sha256"],
                                 str(manifest["reader"].get("tool_id", "")))
             or manifest["reader"].get("action") != "use_connector_tool"
-            or manifest["reader"].get("arguments_schema") != selection_schema()):
+            or manifest["reader"].get("arguments_schema") not in (
+                _legacy_selection_schema(), selection_schema())):
         raise ConversationConflict("retained action body projection differs")
     identifier = manifest["reader"]["tool_id"][len(READER_PREFIX):].split(":", 1)[0]
     helper = object.__new__(ConnectorResults)
     helper._bytes = lambda _: (_encoded(body), manifest["sha256"])
     expected = helper._manifest(identifier, body)
+    # Old immutable receipts retain the exact schema with which they were sealed.
+    expected["reader"]["arguments_schema"] = manifest["reader"]["arguments_schema"]
     expected.update(preview="", preview_omitted=True)
     if manifest != expected:
         raise ConversationConflict("retained action body manifest differs")
@@ -476,13 +498,23 @@ class ConnectorResults:
 
     @staticmethod
     def _validate_selection(arguments):
-        if not isinstance(arguments, dict) or set(arguments) != {"pointer", "offset", "limit", "query"}:
+        if (not isinstance(arguments, dict)
+                or set(arguments) not in ({"pointer", "offset", "limit", "query"},
+                    {"pointer", "offset", "limit", "query", "json_filter"})):
             raise ConnectorSelectionError("stored connector selection is invalid")
         pointer, offset, limit, query = (arguments[k] for k in ("pointer", "offset", "limit", "query"))
         if (not isinstance(pointer, str) or len(pointer) > 2048 or (pointer and not pointer.startswith("/"))
                 or type(offset) is not int or offset < 0 or type(limit) is not int or not 1 <= limit <= 8192
                 or (query is not None and (not isinstance(query, str) or not 1 <= len(query) <= 256))):
             raise ConnectorSelectionError("stored connector selection bounds are invalid")
+        if "json_filter" in arguments:
+            selection = arguments["json_filter"]
+            if (not isinstance(selection, dict) or set(selection) != {"field", "equals"}
+                    or not isinstance(selection["field"], str) or len(selection["field"]) > 2048
+                    or (selection["field"] and not selection["field"].startswith("/"))
+                    or type(selection["equals"]) not in (str, int, bool, type(None))
+                    or (isinstance(selection["equals"], str) and len(selection["equals"]) > 256)):
+                raise ConnectorSelectionError("stored connector JSON filter is invalid")
 
     @staticmethod
     def _select(document, arguments, digest, byte_length):
@@ -494,7 +526,42 @@ class ConnectorResults:
                 value = value[int(key)] if isinstance(value, list) and key.isdecimal() else value[key]
         except (KeyError, IndexError, TypeError, ValueError):
             raise ConnectorSelectionError("stored connector JSON pointer is absent") from None
-        text = value if isinstance(value, str) else _encoded(value).decode()
+        filter_metadata = {}
+        if "json_filter" in arguments:
+            selection = arguments["json_filter"]
+            decoded = isinstance(value, str)
+            if decoded:
+                try:
+                    value = json.loads(value)
+                except ValueError:
+                    raise ConnectorSelectionError("stored connector filter requires valid JSON text") from None
+            if not isinstance(value, list):
+                raise ConnectorSelectionError("stored connector filter requires a JSON array")
+            source_items = len(value)
+            matches = []
+            for item in value:
+                field = item
+                try:
+                    for part in ([] if not selection["field"] else selection["field"][1:].split("/")):
+                        key = part.replace("~1", "/").replace("~0", "~")
+                        field = field[int(key)] if isinstance(field, list) and key.isdecimal() else field[key]
+                except (KeyError, IndexError, TypeError, ValueError):
+                    continue
+                # JSON booleans and numbers are distinct, unlike Python equality.
+                if type(field) is type(selection["equals"]) and field == selection["equals"]:
+                    matches.append(item)
+            value = matches
+            filter_metadata = {"json_filter": dict(selection), "decoded_json": decoded,
+                               "source_items": source_items, "matched_items": len(matches)}
+        if filter_metadata:
+            try:
+                # Decoded source floats stay JSON text, outside durable typed fields.
+                text = json.dumps(value, ensure_ascii=False, sort_keys=True,
+                                  separators=(",", ":"), allow_nan=False)
+            except ValueError:
+                raise ConnectorSelectionError("stored connector filter contains invalid JSON numbers") from None
+        else:
+            text = value if isinstance(value, str) else _encoded(value).decode()
         selected = text.find(query, offset) if query is not None else min(offset, len(text))
         found = selected >= 0
         start = selected if found else len(text)
@@ -504,4 +571,5 @@ class ConnectorResults:
             "pointer": pointer, "offset": start, "next_offset": next_offset,
             "selection_length": len(text), "found": found, "text": page,
             "has_more": found and next_offset < len(text), "external_state_verified": False}
+        result.update(filter_metadata)
         return result

@@ -1,0 +1,117 @@
+{
+  "contract": "EvaRetainedReadContextIndexOrdinaryResult/v1",
+  "recordedAt": "2026-10-12T20:31:55.854854+00:00",
+  "status": "failed_incomplete_work",
+  "workId": "work:eva-resume:6ef4db15-655d-57e9-b1aa-37a5e9b3825b",
+  "parentWorkId": "work:eva-resume:52fa14eb-aff4-5622-af52-557f11c15c21",
+  "generation": 10,
+  "callId": "child-call:368ca54f-3fb2-4dfb-a678-7b38a478d073",
+  "oneOrdinaryDispatch": true,
+  "originalTaskScope": "read_only_until_separate_explicit_post_proposal_approval",
+  "manualTuyaProposalWritten": false,
+  "sourceInstalled": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-read-context-index-installed-20261012.json",
+    "sha256": "5fee09e535f406cab43ff7d5c2e64738e79367dadee27a088ee34e2bda517505"
+  },
+  "installedReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/retained-read-context-index-installed-review-20261012.json",
+    "sha256": "f9ea783d86d615e434cb083b581ce17dc2b151edf7f656d1b8b9b7a1db29de45"
+  },
+  "dispatch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-dispatch.private.json",
+    "sha256": "765f403cd0f053c690cfa78f7be6a9ac7b8fd7eac23e1a85a3f93ab7d2a0902a"
+  },
+  "receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-receipt.private.json",
+    "sha256": "265e23685c388a8c505fcb1193b2f2c09f102ba9aa5ab56a520781655a793182"
+  },
+  "workSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-work-6.private.json",
+    "sha256": "3329c09028c8fbe466f2182e6e6fbf449bf0e993f0c8c3fc9663b1612c6e54fa"
+  },
+  "progressSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-progress-6.private.json",
+    "sha256": "8aa333693fead77dfbd55505e18d9f5768afdd7ef358884b58dddd654afca0bb"
+  },
+  "liveListSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/continuation-live-list-6.private.json",
+    "sha256": "4adec55439c14124a1fb84317f2b46ef2ac1aa43e13ea0b630ce96e7f9f6adf5"
+  },
+  "accountingObservation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/gen10-single-observation-completed-2.private.json",
+    "sha256": "8156e47f2dc6efcc6c6ce388351a4608d5dc2ac3a3c1fe62585617f8efdef9e9"
+  },
+  "newRetainedReceiptSnapshots": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/gen10-new-receipts-running.snapshot.private.json",
+      "sha256": "456d97aa02967302500a922fb2a2d90c32a5909a790e4a42d18544178eec49a1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/gen10-new-receipts-completed-2.snapshot.private.json",
+      "sha256": "f1af301855729c4b26db6b3d50e10604169a9a4036e606c2b932f00bf32243f1"
+    }
+  ],
+  "failure": {
+    "errorCode": "incomplete_work",
+    "errorFingerprint": "00b36797c8d248812b83afbe4c699e356138bc5cf93c5b719b5c3c144a7ef73b",
+    "failureReportAvailable": true,
+    "cause": "Worker recorded its current plan with proposal blocked and two working steps; runner rejected that incomplete plan. No input-budget or deadline failure observed in this attempt."
+  },
+  "usage": {
+    "ownerApiMeasurement": "partial",
+    "completedMeasuredModelResponses": 28,
+    "toolCalls": 27,
+    "knownInputTokens": 1226688,
+    "knownOutputTokens": 6297,
+    "knownTotalTokens": 1232985,
+    "admittedRequestsObserved": 28,
+    "completedResponseRecordsObserved": 28,
+    "unknownOrInflightRequestsInObservedCall": 0,
+    "allObservedLocalStreamsClosed": true,
+    "fullTaskTotal": null,
+    "creditCosts": null,
+    "codexDevelopmentCredits": "unknown"
+  },
+  "progress": {
+    "revision": 3,
+    "workId": "work:eva-resume:6ef4db15-655d-57e9-b1aa-37a5e9b3825b",
+    "steps": [
+      {
+        "id": "inventory",
+        "state": "working"
+      },
+      {
+        "id": "dependencies",
+        "state": "working"
+      },
+      {
+        "id": "proposal",
+        "state": "blocked"
+      }
+    ],
+    "independentlyVerified": false
+  },
+  "resultAvailable": false,
+  "taskOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "savedPartialDocument": {
+    "bytes": 9240,
+    "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732"
+  },
+  "partialDocumentUnchanged": true,
+  "delivery": {
+    "state": "unbound",
+    "description": "Geen automatische Telegram-terugmelding gekoppeld."
+  },
+  "boundedFacts": [
+    "New dependencies and access limitations were saved in progress revision3; final document was not updated.",
+    "26 retained external receipts include18 local reads,1 inventory read and7 Home Assistant API requests.",
+    "The7 API requests are6GET and1POST /api/template evaluation; no HA configuration effects or completed migration are proven.",
+    "This attempt does not demonstrate a complete proposal, efficiency improvement or additional product function.",
+    "Original scope, criteria, previous failed runs and UNKNOWN remain preserved."
+  ],
+  "next": "Correct the evidenced general result-selection limitation before any new native continuation. No manual proposal or automatic rerun.",
+  "newComparisonSeries": false,
+  "wholeProjectGoal": "active",
+  "voice": "parked"
+}

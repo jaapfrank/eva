@@ -1,0 +1,72 @@
+{
+  "contract": "EvaStructuredStoredSourceSelectionInstalled/v1",
+  "recordedAt": "2026-10-12T20:44:24.079199+00:00",
+  "status": "installed",
+  "sourceFacts": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-correction-20261012.json",
+    "sha256": "af3e78bfa94ba6034872db1a049f52454ce966546b7e9c3ebfe4cc216206eea4"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/structured-stored-source-selection-source-review-20261012.json",
+    "sha256": "b5b3354ee2d7206c5829e90ccbc17e29359f9f76a4fedf8701152dc537e12d84"
+  },
+  "build": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/build-result.private.json",
+    "sha256": "196f96e23b197ff69ccd984380bc616f61f56ca1c7de5af732d795da5381f698"
+  },
+  "dispatch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/installation-dispatch-receipt.private.json",
+    "sha256": "ef2ba416f2489a218980f5e1a10e8928871846ab3900eb55bdcd618b8bb89909"
+  },
+  "verification": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/installation-verification.private.json",
+    "sha256": "ba51bbcdde1c589ae5c63ee19e8cb2a1955c115b7a2cd887a6b2f7e830624461"
+  },
+  "actualUpdateDispatches": 1,
+  "services": {
+    "core": {
+      "image": "sha256:f64e568f6b704f7d66587816ef0188e2668f21e78bcb30aff5576e8fa4ce4a5b",
+      "exactModules": {
+        "adapters/postgres/connector_results.py": "92d3cc330449262ef1969bcca4f4273cd444fcff6df9e74787d09f010e01ca69",
+        "adapters/connectors/home_assistant_api.py": "2ae76649744922a49dc6dd1afa2f99c835f21a2f5f76cd532169bddf8e9206a0"
+      },
+      "unchangedPythonSources": 343,
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      }
+    },
+    "delegated-work-worker": {
+      "image": "sha256:ae05ecc6e62c6d8c503c3c1a3e126fb491604fa3026ff127e29da663120c05cb",
+      "exactModules": {
+        "adapters/postgres/connector_results.py": "92d3cc330449262ef1969bcca4f4273cd444fcff6df9e74787d09f010e01ca69",
+        "adapters/connectors/home_assistant_api.py": "2ae76649744922a49dc6dd1afa2f99c835f21a2f5f76cd532169bddf8e9206a0"
+      },
+      "unchangedPythonSources": 343,
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      }
+    }
+  },
+  "ready": true,
+  "newModelRequests": 0,
+  "nativeContinuationStarted": false,
+  "manualTuyaProposalWritten": false,
+  "taskOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "oldFailedRunsAndUnknownPreserved": true,
+  "limitations": [
+    "Installation confirms the exact general source-retention and local-selection code, not a completed Eva proposal or native efficiency measurement.",
+    "A source lost before this fix cannot be reconstructed from its response hash.",
+    "No HA effects before separate post-proposal approval."
+  ]
+}
