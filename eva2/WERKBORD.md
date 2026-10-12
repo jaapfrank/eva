@@ -1,26 +1,25 @@
-## Actueel vervolg 12 oktober — waarnemercorrectie geïnstalleerd en beoordeeld
+## Actueel vervolg 12 oktober — stopoorzaak bekend; kandidaat niet toegepast
 
-De bestaande beoordelingswaarnemer koppelt bevestigde bronwrite, letterlijke
-Python-start, echte PID/exitreceipt en onafhankelijke finale bronhash.
-Twee unieke lokale controles slagen; één fysiek Python-proces, nul nieuwe
-Eva-modelaanvragen/native proeven. Alleen de getroffen negatieve controle
-herhaald na bronwijziging. Gewone uitvoerder en prompts behouden.
+De uitvoerwaarnemer is geïnstalleerd en onafhankelijk beoordeeld. De drie
+onvoltooide ontwikkeltaken bereikten hun vaste proefgrens van 8, 8 en 6 aanvragen.
+Hun foutstatus, verbruik en gesloten bewijs blijven behouden. De werkaanpak liet
+onvoldoende ruimte voor echte exit, teruglezing, planafronding en eindantwoord.
+Geen bronfout in de gewone uitvoerder bewezen; de kandidaat wordt niet toegepast.
 
-Exacte producer en twee bestaande configuratieverwijzingen geïnstalleerd;
-één dienstherstart, gezondheid en echte hostimport gecontroleerd. 37 andere
-hostbronnen, kern/werker en gesloten bewijs behouden. Gebundelde onafhankelijke
-review GO voor bron, lokale controle, consumentinterface en exacte installatie.
-Geen nieuwe modelinvoertoelating, kwaliteitswinst of afgeronde AIDE².
+De bestaande beoordelingsroute geeft onvolledige resultaten al terug aan Eva en
+stopt kandidaatwerk bij een onvolledige referentie. Geen tweede uitvoerder of
+feedbackplatform nodig. Nu de volledige AIDE²-cyclus voor de werkaanpak afmaken:
+onafhankelijk beoordelen, uitsluitend bewezen winst toepassen en later gebruiken.
+Geen oude proef heropenen, criteria aanpassen of nieuwe concurrentenserie.
+Deze diagnose gebruikte nul modelaanvragen, acties, tests of bronwijzigingen.
 
-Nu het echte afrondingstekort gericht bepalen uit de drie behouden mislukkingen:
-bronfout, werkstrategie of proefresource onderscheiden. Geen oude episode heropenen,
-score wijzigen of nieuwe vergelijking. Vervolgens de volledige agentverbetercyclus,
-onafhankelijke eindbeoordeling en werkelijk later gebruik afmaken.
-Het hele goal blijft actief; 39/48 historische taakafrondingen behouden.
-Spraak geparkeerd. Geen handeling van Jaap nodig.
-Bewijs: eva2/evidence/product/native-program-observation-installed-20261012.json.
+Het hele projectgoal blijft actief. 39/48 historische afrondingen en acceptaties
+behouden; volledige AIDE² en gezinsacceptatie blijven open. Spraak geparkeerd.
+Geen handeling van Jaap nodig.
+Diagnose: eva2/evidence/product/native-work-completion-cause-diagnosis-20261012.json.
+Installatie: eva2/evidence/product/native-program-observation-installed-20261012.json.
 Review: eva2/reviews/native-program-observation-installed-review-20261012.json.
-Dashboardinhoud gecontroleerd: 2026-10-12T09:10:41.263363+02:00.
+Dashboardinhoud bijgewerkt: 2026-10-12T09:24:14.067503+02:00.
 
 ## Historisch 12 oktober — beoordelingsroute gecorrigeerd en geïnstalleerd
 

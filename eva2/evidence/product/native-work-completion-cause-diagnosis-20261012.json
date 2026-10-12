@@ -1,0 +1,98 @@
+{
+  "contract": "EvaNativeWorkCompletionDiagnosis/v1",
+  "recordedAt": "2026-10-12T09:24:14.067503+02:00",
+  "status": "diagnosis_complete_candidate_not_applied",
+  "wholeGoalStatus": "active",
+  "scope": "Read-only diagnosis of the three original development-task stops and the existing ordinary feedback route.",
+  "originalEvidence": {
+    "path": "eva2/evidence/product/native-work-candidate-assessment-after-import-result-20261012.json",
+    "sha256": "cb4e3c6a2ed8f1064136ba547c2904dddbeec8968d7e8170ec507f76721ded54",
+    "privateDiagnosisSha256": "f757cfd50296a754f1685ba5d0bd0bc864a508b445bd5dbd4fcdf72e41cfc44b",
+    "originalExecutionBinding": "21106c68ebdd26969728484fbf1f863f8c6e83a9f4206bde4b1fd38d353a1343"
+  },
+  "observedStops": [
+    {
+      "leg": "baseline",
+      "caseId": "production-dev-ordered-batches",
+      "originalState": "failed",
+      "originalError": "budget_exceeded",
+      "completeMeasuredModelRequests": 8,
+      "sealedRunSha256": "353faba5b3a0291711ba8020baa9bc14a46cfc792d37e50e3b624f8a45cba5bb",
+      "rawNativeSha256": "504b2e32cbb592c6b795ba3b6dd4a8d1e37e5d876b212bfccbe0631d3aa9a785"
+    },
+    {
+      "leg": "candidate",
+      "caseId": "production-dev-ordered-batches",
+      "originalState": "failed",
+      "originalError": "budget_exceeded",
+      "completeMeasuredModelRequests": 8,
+      "sealedRunSha256": "c4df2a632fa212df80f1e04254efc5341ba1c081795cfbed8cbc9b7197b92ff8",
+      "rawNativeSha256": "5818513c56434cb2263ef399eeeada81caa7e01c600c5b4ac0eb4a923110b00d"
+    },
+    {
+      "leg": "candidate",
+      "caseId": "production-dev-label-totals",
+      "originalState": "failed",
+      "originalError": "budget_exceeded",
+      "completeMeasuredModelRequests": 6,
+      "sealedRunSha256": "2df9ac2baa250eedfb74520fc719092ad9ac2d7e196b033bf0d45ec61a3dbce7",
+      "rawNativeSha256": "771c6ec3d5156711ed272ee5e641b7875c3b53ffb6143dcf94486564d76acbc3"
+    }
+  ],
+  "confirmedCause": {
+    "exceptionFingerprint": "c7fb1c5abecc2b40b15a035b42ff9284fab3ae080a272f32419993af026ba9d8",
+    "cause": "The original development journal narrowed the actual grant to the registered per-case cap. The unfinished tasks exhausted 8, 8 and 6 model requests; their original budget_exceeded states remain failures.",
+    "ordinaryRunnerBugProven": false,
+    "taskQualityCompleted": false,
+    "strategyLesson": "The work strategy must leave room for confirmed process exit, independent result readback, post-execution plan closure and the final user reply. A file or a host exit-zero check does not replace native completion."
+  },
+  "ordinaryFeedbackRoute": {
+    "existingIncompleteBaselineReportReturned": true,
+    "existingCandidateWorkSkippedOnIncompleteBaseline": true,
+    "structuredReportRecordedInOriginalComponentActionReceipt": true,
+    "sourceRefs": [
+      {
+        "path": "eva2/src/eva/operations/component_native_work_producer.py",
+        "sha256": "d19320c89bee63b35d6e8e728601a6561aa7a7f62a0a7b174eab34cbce200420"
+      },
+      {
+        "path": "eva2/src/eva/adapters/postgres/conversation_journal.py",
+        "sha256": "1012e0b868cb830dc07616bd3b65ddea6473997c3ed9f3d5fa97f898dae82b10"
+      },
+      {
+        "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+        "sha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412"
+      },
+      {
+        "path": "eva2/src/eva/operations/component_work_execution.py",
+        "sha256": "fb89adc6f9f2f3dfd83e6345ad583d1e424bdefca8691ee753037cc6dc1d5cc3"
+      },
+      {
+        "path": "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
+        "sha256": "6d7461d652987a54ac356c27efa152514869d1e52862e5d73f1292ca934637c2"
+      }
+    ],
+    "newFeedbackPlatformNeeded": false
+  },
+  "decision": {
+    "applyOldCandidate": false,
+    "reopenClosedExecution": false,
+    "changeOriginalCriteriaOrCaps": false,
+    "retroactiveSuccess": false,
+    "next": "Complete the existing agent-strategy improvement cycle, using the installed observation and baseline guard, and independently assess any genuine improvement before application and later use. No new competitor series."
+  },
+  "measurement": {
+    "newEvaModelRequests": 0,
+    "newToolActions": 0,
+    "newNativeEpisodes": 0,
+    "newTests": 0,
+    "newProductionSourceEdits": 0,
+    "creditCost": null
+  },
+  "limitations": [
+    "This is a technical diagnosis, not an independent final quality comparison.",
+    "No broader ordinary-runner defect or general performance advantage is demonstrated.",
+    "The full AIDE² cycle, independent final assessment, application and later use remain open.",
+    "Previous failures, scores, usage, closed resources and owner acceptances remain unchanged."
+  ]
+}
