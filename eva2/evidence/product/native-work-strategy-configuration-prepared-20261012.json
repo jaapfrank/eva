@@ -1,0 +1,35 @@
+{
+  "contract": "EvaNativeWorkConfigurationPreparation/v1",
+  "checkedAt": "2026-10-12T02:18:11.323586+00:00",
+  "status": "configuration_prepared_installation_pending",
+  "currentCoreWorkerHealthy": true,
+  "existingEvaluationServiceActive": true,
+  "newHostConfigurationInstalled": false,
+  "sourceConfigurationBytes": 66984,
+  "sourceConfigurationSha256": "b36253ca737129350952c6a1e70cb655fe8408062a8e10198dede46a24f6b3dc",
+  "readerSourceSha256": "00c8aa3b7b96a90b3f4434024d9e7285a76c710114c023e199c5aafb81a1e4b7",
+  "readerBoundedMaximumBytes": 131072,
+  "readerSourceReview": "GO for exact source only",
+  "readerChecksPassed": 2,
+  "actualConfigurationLoadPassed": true,
+  "futureLivePreviewProfilePairSha256": "1dbb5f69745573246762af2c18703dfe54e549f839f5107de48326ae4cc71481",
+  "nativeWorkDispatched": false,
+  "manualEvaModelRequests": 0,
+  "developmentCredits": "unknown",
+  "fullLearningCycleCompleted": false,
+  "fullAide2Completed": false,
+  "newProductFunctionCompleted": false,
+  "remaining": [
+    "Install reviewed producer, host sources and prepared configuration in existing service.",
+    "Verify actual ordinary runtime matches prebound profile.",
+    "Perform registered baseline/candidate cycle, independent final assessment; apply only proven gain and demonstrate later use."
+  ],
+  "preserved": [
+    "39/48 original small completions",
+    "owner personality/memory acceptances",
+    "old failure and UNKNOWN evidence",
+    "whole-project active goal",
+    "parked voice",
+    "no new competitor series"
+  ]
+}

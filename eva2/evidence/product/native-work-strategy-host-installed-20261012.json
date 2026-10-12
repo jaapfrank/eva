@@ -1,0 +1,45 @@
+{
+  "contract": "EvaNativeWorkHostInstalled/v1",
+  "checkedAt": "2026-10-12T02:23:32.112257+00:00",
+  "status": "installed_healthy",
+  "installationReceiptSha256": "5163573d7110ec6290c22491ba53e7a1779f0913b3adf48bc0a528282ebe053c",
+  "configurationReview": "eva2/reviews/native-work-strategy-production-configuration-review-20261012.json",
+  "configurationReviewSha256": "f3509cfe9b89259b56cb64de38b5f40732028975093152cfe47ddb80a1a4e6a5",
+  "installationReviewPending": false,
+  "hostSourceCount": 37,
+  "originalHostSourceCount": 19,
+  "unchangedOriginalHostSourceCount": 11,
+  "serviceConfigurationBytes": 66984,
+  "serviceConfigurationSha256": "b36253ca737129350952c6a1e70cb655fe8408062a8e10198dede46a24f6b3dc",
+  "liveClientSha256": "5bb2fefb40b664421657c6976ee557b56ee91f7b2d56df69d67e33ba8a0ce4dc",
+  "actualOrdinaryProfilesEqualPrepared": true,
+  "actualOrdinaryModelProfileSha256": "cd67a76263d35ce6e3cea516c893d37a010f9f2fa17345caa947b44eb67ac2c8",
+  "existingQueueArtifactsRetained": true,
+  "environmentMountsImagesRetained": true,
+  "singleExistingServiceInstallation": true,
+  "reinstallationOrRollbackPerformed": false,
+  "verificationFailureRetained": {
+    "orderedMountListComparison": true,
+    "mountsConfirmedByDestinationWithoutRuntimeChange": true,
+    "oldDockerRunReceiptMisreadDuringPreparation": true,
+    "noReinstallationOrRollback": true
+  },
+  "manualEvaModelRequests": 0,
+  "nativeWorkDispatched": false,
+  "developmentCredits": "unknown",
+  "technicalOutcomeCompleted": true,
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "remaining": [
+    "Bind original construction and later-use execution to fixed budget.",
+    "Perform registered actual work improvement cycle; independently assess quality.",
+    "Apply only proven gain and demonstrate later use."
+  ],
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "newCompetitorSeries": false,
+  "installationReview": {
+    "verdict": "GO",
+    "path": "eva2/reviews/native-work-strategy-production-installed-review-20261012.json"
+  }
+}

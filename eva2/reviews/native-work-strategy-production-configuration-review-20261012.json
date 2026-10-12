@@ -1,0 +1,144 @@
+{
+  "contract": "EvaBoundedConfigurationInstallationReview/v1",
+  "checkedAt": "2026-10-12T02:20:33.368735+00:00",
+  "decision": "GO",
+  "scope": "Exacte voorbereide WORK_STRATEGY service-/clientconfiguratie installeren in de bestaande hostroute, met de afzonderlijk gecontroleerde 128KiB-reader.",
+  "sourceConfigurationSha256": "b36253ca737129350952c6a1e70cb655fe8408062a8e10198dede46a24f6b3dc",
+  "sourceManifestSha256": "fd063307d3d571ae674a84bd942161e82da374f4d83a99f9b95e2801662598b9",
+  "openBlockers": [],
+  "bindings": {
+    "serviceConfiguration": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/configuration-final/service.private.json",
+      "sha256": "b36253ca737129350952c6a1e70cb655fe8408062a8e10198dede46a24f6b3dc"
+    },
+    "configurationPreparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/configuration-final/config-preparation.private.json",
+      "sha256": "6d83007fc3661f452ed118dcfafec58113a6d62f393805ea62dafa95c07ceb2d"
+    },
+    "readerSourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/config-read-bound/frozen-source.private.json",
+      "sha256": "fd063307d3d571ae674a84bd942161e82da374f4d83a99f9b95e2801662598b9"
+    },
+    "readerChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/config-read-bound/targeted-checks.private.json",
+      "sha256": "e7db3908122ff95853058128dbbb77336947fa7ab5d89f282d5d69b9ae7e325c"
+    },
+    "actualConfigurationLoad": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/config-read-bound/actual-config-load.private.json",
+      "sha256": "e624f8e6dfa2ea8f3752b2bbc861e7f61f6c73e8989c6b86a274184f34fa929d"
+    },
+    "readerSource": {
+      "path": "eva2/src/eva/operations/component_evaluation_service.py",
+      "sha256": "00c8aa3b7b96a90b3f4434024d9e7285a76c710114c023e199c5aafb81a1e4b7"
+    },
+    "hostSourcePreparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/host-preparation/source-preparation.private.json",
+      "sha256": "3b3ced209265517366ff2b6e656503ed024a1563bf7d91ecece6097c5813fff5"
+    },
+    "actualHostVenvImports": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/host-preparation/actual-venv-imports.private.json",
+      "sha256": "10c6499216dfb0327827bf2953cb64fe4ee4f154f255fe9980df055daeaf0abe"
+    },
+    "futureProfilePair": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/configuration-final/profile-pair.private.json",
+      "sha256": "1dbb5f69745573246762af2c18703dfe54e549f839f5107de48326ae4cc71481"
+    },
+    "futureLiveClient": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/configuration-final/live-client.private.json",
+      "sha256": "5bb2fefb40b664421657c6976ee557b56ee91f7b2d56df69d67e33ba8a0ce4dc"
+    },
+    "previewClient": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/configuration-final/preview-client.private.json",
+      "sha256": "8018a7715e49421361e733c0b8cc581c18f02ecb7f208ddfe6c8d2753d752bf6"
+    },
+    "runtimeAdmission": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/runtime-admission.private.json",
+      "sha256": "92a3f04732924fb14e55fba5312b6097c42925ec462c58eacf4070214ac1b04d"
+    },
+    "developmentInputOnlyWrapper": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/development-inputs.wrapper.private.json",
+      "sha256": "b8bdeb53bd44486bc2eab0e06311490b98783c1dd5e7dbb8186b4c06a349b42d"
+    },
+    "protectedFinalInputOnlyWrapperSha256": "e77a4340318153d2c3d474e2ca56bced2645ead0c86a988d319647f2b5557165",
+    "protectedFinalIdentityMetadataSha256": "c3efbe464cfa036ecefb30f416c7de41e0918baa92827b425ae19f33a6214142",
+    "originalSetupSha256": "7b12e1aa42244e127a3129e5373338bc51ec162dbf91ead1f62e6ab2ca4b6d58",
+    "resourcesSha256": "92ed869d75fd477c7c0aa0c52d7976abe0410027dcc3b79c7c82daed6618dc25",
+    "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872",
+    "publicPreparationEvidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/native-work-strategy-configuration-prepared-20261012.json",
+      "sha256": "2ff0b48a188293b6ab603d8a7e3f8f8926f2fcc2645eed50d739738505e00513"
+    }
+  },
+  "verified": {
+    "serviceBytes": 66984,
+    "boundedReaderBytes": 131072,
+    "readerDeltaOnlyFixedReadBound": true,
+    "readerChecksPassed": 2,
+    "actualReaderConfigurationLoadPassed": true,
+    "actualHostVenvPureConstructorsValid": true,
+    "constructors": [
+      "DevelopmentAssessment",
+      "EvaluationConfig",
+      "ComponentEvaluator",
+      "ComponentWorkRuntime",
+      "NativeComponentWorkProducer",
+      "ComponentApplicationRuntime",
+      "HostFinalAssessment",
+      "ComponentReleasePublisher"
+    ],
+    "developmentSuiteSha256": "60d810a432aeedde111cb0b4cd25a21b478a37fc64a0ed8ae480e9621b3353f4",
+    "developmentAssessmentSha256": "9987d675686f6c7ecc43666f61b0d81986951ba7b8c810516f9dbea20a81321f",
+    "initialBaselineMissingExpected": true,
+    "bothProducerSettingsAndCaseSchemasValid": true,
+    "casesPerStage": 2,
+    "originalDevelopmentCaseObjectsUnchanged": true,
+    "originalProtectedIdentityRowsUnchanged": true,
+    "admissionFiveFieldsEqualDevFinalAndPreviewFactory": true,
+    "onlyModelProfileDiffersBetweenFutureLiveAndPreview": true,
+    "oldProtocolAssessmentPublisherObjectsExactInRetainedRounds": true,
+    "originalFinalReceiptRootScopeAndApplicationQueueUnchanged": true,
+    "existingSavedProgrammingStaticSuiteAndOtherServiceSettingsUnchanged": true,
+    "newGlobalPublisherBindsCurrentInstalledCompose": true,
+    "queueDaemonProviderFactoryDockerModelStartedByReviewer": false
+  },
+  "fixedBudget": {
+    "providerAttempts": 68,
+    "physicalTools": 100,
+    "inputTokens": 385000,
+    "outputTokens": 15000,
+    "retries": 0,
+    "perSimpleSeconds": 150,
+    "perMultistepSeconds": 210,
+    "constructionSeconds": 150,
+    "laterSeconds": 150,
+    "originalParentMinimumRemainingSeconds": 1050,
+    "independentFinalSeconds": 900,
+    "constructionAttempts": 6,
+    "laterAttempts": 6,
+    "finalAttempts": 28,
+    "developmentAttempts": 28,
+    "baselineMaximumQualityZeroHelpStopsBeforeCandidate": true,
+    "tokensAreMeasuredStopAndAcceptanceLimitsNotGuaranteedWithinInflightAnswer": true
+  },
+  "installationConditions": [
+    "De actieve hostbron moet de exact gecontroleerde reader 00c8aa3b… bevatten; de oorspronkelijke staged37-copy had nog de 64KiB-reader.",
+    "Installeer exact voorbereide service- en liveclientbytes via de bestaande route; behoud oude queues, consumed registraties, beoordelaars/publishers, mandaat en accounting.",
+    "Root controleert huidige actieve leases/jobstatus vóór de bestaande mutatie; dit is geen toestemming om oud werk te heropenen."
+  ],
+  "nativeExecutionDecision": "NOT_GRANTED_BY_THIS_INSTALLATION_PREPARATION_REVIEW",
+  "remainingBeforeInput": [
+    "Actual post-install host/service/config/source readback en gewone core/worker factorypariteit moeten overeenkomen met de toekomstige live cd67a762… en preview c11d25a2… bindingen.",
+    "De werkelijke parent moet het oorspronkelijke mandaat/bron/stop en de vaste construction150-grens plus resterende ontwikkelduur bieden; finale postcompletion-authority blijft afzonderlijk exact gebonden.",
+    "Globale construction/development/final/later accounting blijft volledig gemeten en gezamenlijk; UNKNOWN weigert verdere dispatch en score. Geen retries, gesloten herhaling of nieuwe criteria.",
+    "Pas alleen afzonderlijk bevestigde kwaliteitswinst toe en bewijs daarna één gewone latere toepassing; deze voorbereiding bewijst geen native nut of volledige AIDE2."
+  ],
+  "reviewPreparationErrorsRetained": [
+    "Eerste reviewer-constructoropdracht gebruikte verouderde classnamen en faalde op import vóór constructors. Herlezen van actuele klasschema gaf NativeComponentWorkProducer/ComponentWorkRuntime; de correcte metadata-opdracht slaagde. Geen bron-, config-, input- of gatewijziging."
+  ],
+  "qualifications": [
+    "Geen queue of FinalComponentAssessments-dispatcher geconstrueerd; geen thread/server/DB/Docker/provider/model/admission gestart.",
+    "Een tijdelijke canonical timestamp werd uitsluitend in een in-memory kopie gebruikt om settingsschema te valideren; die waarde verleent geen authority en is niet geschreven of verzonden.",
+    "Beschermde vragen/oracles/scorerinhoud niet gepubliceerd of doorgegeven; uitsluitend bindingsmetadata.",
+    "De publieke voorbereidingsstatus is terecht install pending en niet een nieuwe afgeronde productfunctie. Gehele goal en historische 39/48 blijven actief/behouden; credits onbekend."
+  ]
+}

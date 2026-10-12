@@ -1,0 +1,96 @@
+{
+  "contract": "EvaIndependentNativeWorkHostInstallationReview/v1",
+  "checkedAt": "2026-10-12T02:29:54.007741Z",
+  "decision": "GO",
+  "scope": "Exact existing WORK_STRATEGY host configuration installation and bounded public claims. No native execution or quality acceptance.",
+  "openBlockers": [],
+  "bindings": {
+    "publicEvidence": {
+      "path": "eva2/evidence/product/native-work-strategy-host-installed-20261012.json",
+      "sha256": "2d1aca55b8daa3f9f2771d43e8d3211076a8b182a8f1bc8fcffc3f10d2881d8e"
+    },
+    "installedVerification": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/configuration-install/installed-verification.private.json",
+      "sha256": "5163573d7110ec6290c22491ba53e7a1779f0913b3adf48bc0a528282ebe053c"
+    },
+    "configurationReview": {
+      "path": "eva2/reviews/native-work-strategy-production-configuration-review-20261012.json",
+      "sha256": "f3509cfe9b89259b56cb64de38b5f40732028975093152cfe47ddb80a1a4e6a5"
+    },
+    "preInstallationMetadataSha256": "c0e154a7ef3b8d6991603219994d9b667abe79f64cc046d1a0cf0eb2337f5277",
+    "serviceConfigurationSha256": "b36253ca737129350952c6a1e70cb655fe8408062a8e10198dede46a24f6b3dc",
+    "liveClientSha256": "5bb2fefb40b664421657c6976ee557b56ee91f7b2d56df69d67e33ba8a0ce4dc",
+    "preparedHostSourcesSha256": "3b3ced209265517366ff2b6e656503ed024a1563bf7d91ecece6097c5813fff5",
+    "profilePairSha256": "1dbb5f69745573246762af2c18703dfe54e549f839f5107de48326ae4cc71481",
+    "runtimeAdmissionSha256": "92a3f04732924fb14e55fba5312b6097c42925ec462c58eacf4070214ac1b04d"
+  },
+  "verified": {
+    "hostSourceCount": 37,
+    "hostHashesMatchReviewedPreparationIncluding128KiBReader": true,
+    "serviceConfigurationBytes": 66984,
+    "originalHostSourceCount": 19,
+    "unchangedOriginalHostSourceCount": 11,
+    "actualCoreAndWorkerProfilesEqual": true,
+    "actualProfilesMatchPreparedLiveProfile": true,
+    "actualSourceKeys": 59,
+    "actualCapabilityCount": 25,
+    "workerProfileSha256": "9e4405645ba1448a3ec300b68f1acdd2ab6c7c16159a0fc320afcff36f61f46b",
+    "modelProfileSha256": "cd67a76263d35ce6e3cea516c893d37a010f9f2fa17345caa947b44eb67ac2c8",
+    "programSha256": "4b5b7d1926a2491a3e059fc9119ef3b113b28e8cac3bf909a52365caa3aab867",
+    "ordinary1200AndHistorical300GrantsRetained": true,
+    "onlyPreparedClientModelProfileChangedAgainstPriorOrdinaryProfile": true,
+    "core": {
+      "image": "sha256:3d4cf04dfe9260e55839606441aea786db4283ca1a25f8cfc3d27b9faa22a6bd",
+      "health": "healthy"
+    },
+    "worker": {
+      "image": "sha256:984ea13b0ff39fc62bd26f65a7752f8a22f811affa0a6da5b15e82fa097f345f",
+      "health": "healthy"
+    },
+    "hostServiceExistingReadback": "active",
+    "activeLeasesBeforeInstallation": 0,
+    "oldApplicationQueueStates": {
+      "completed": 3
+    },
+    "oldFinalQueueStates": {
+      "application_requested": 2
+    },
+    "oldTopLevelQueueJsonHashesIndependentlyMatched": true,
+    "retainedReceiptPreservationMetadataConfirmed": true,
+    "oldProtocolsAssessorsPublishersRetained": true,
+    "imagesEnvironmentMountsNetworksDataRetained": true,
+    "singleExistingInstallation": true,
+    "imageBuildRollbackReinstallationDuringThisInstallation": false
+  },
+  "publication": {
+    "decision": "GO",
+    "finalPublicBytesBound": true,
+    "installationReviewLinkMatchesThisReview": true,
+    "technicalInstallationOnly": true,
+    "manualEvaModelRequests": 0,
+    "nativeWorkDispatched": false,
+    "productFunctionCompleted": false,
+    "fullAide2Completed": false,
+    "wholeProjectGoal": "active",
+    "voice": "parked",
+    "newCompetitorSeries": false,
+    "credits": "unknown"
+  },
+  "nativeExecutionDecision": "NOT_READY",
+  "remainingBeforeNativeInput": [
+    "Bind the original construction execution to its fixed 6-attempt/150-second and shared resource authority.",
+    "Bind the original later-use execution to its fixed 6-attempt/150-second and shared resource authority."
+  ],
+  "qualifications": [
+    "Construction and later-use execution bindings are outside this installation verdict; registration metadata alone grants no paid dispatch.",
+    "Preserved future preview bindings are distinct from the actual live model profile; the actual live profile was confirmed by existing postinstallation factory receipts.",
+    "The original closed four-call trial, its accounting and NO_GO remain unchanged.",
+    "No demonstrated quality gain, complete improvement cycle, native usefulness, family acceptance or efficiency claim follows from installation.",
+    "Measured token limits remain stop and acceptance limits; no guaranteed in-flight token ceiling or credit cost is claimed.",
+    "This review reused existing native readbacks and prior hash-bound source/configuration reviews. It started no factory, model, action, test or service."
+  ],
+  "preparationFailuresRetained": [
+    "A preflight read misinterpreted an old Docker-run stdout record.",
+    "Ordered mounts were initially compared by list order; existing readback confirmed exact values by destination without a runtime change or repeat installation."
+  ]
+}

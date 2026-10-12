@@ -1,32 +1,29 @@
-## Actueel werk — 2026-10-12T01:58:39.932645+00:00
+## Actueel werk — 2026-10-12T02:30:37.184260+00:00
 
-## Actueel 12 oktober — kern geïnstalleerd; werkproducent/configuratie afmaken
+## Actueel 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 
-Elf exacte bronnen draaien in gezonde kern en werker; 331 andere bronnen per
-image en bestaande instellingen/gegevens behouden. De gewone factory levert
-in beide diensten exact dezelfde vooraf gecontroleerde release. Nieuwe taken
-hebben de benodigde 1200 seconden; oude 300-secondegrenzen en overige
-model-/tool-/tokenlimieten zijn niet verruimd. Onafhankelijke installatie-review GO.
-De eerste pakketimportfout is vóór installatie gecorrigeerd; foutbewijs behouden.
+De bestaande beoordelingsdienst en gewone kern/werker zijn aangesloten op de
+geregistreerde verbetering van de werkaanpak. 37 exacte hostbronnen geïnstalleerd;
+beide feitelijke uitvoerprofielen gelijk aan voorbereiding. Bestaande images,
+instellingen, mounts, netwerken, gegevens en eerdere beoordelingen behouden.
+Kern, werker en dienst gezond. Onafhankelijke bron-, configuratie- en installatiereview GO. Geen nieuwe handmatige Eva-modelaanvraag voor deze aansluiting.
 
-**Voorbereid:** de werkproducent handhaaft de vaste 150/210-seconde grenzen;
-11 gerichte controles en bronreview GO. De 37 voorbereide hostbronnen laden in
-de echte hostvenv na toevoeging van de bestaande SQLAlchemy==2.0.52-afhankelijkheid.
-**Nog niet gereed:** de bestaande dienstconfiguratie en uitvoerbinding aansluiten.
-Een preview-constructor liep vast op een MCP-gatewayverzoek; geen model aangeroepen,
-foutbewijs bewaard. De voorbereide hostbronnen zijn nog niet als dienst geïnstalleerd.
-Daarna één echte geregistreerde cyclus, onafhankelijke kwaliteitswinst,
-toepassing en later gebruik. Er is nog geen nieuwe hoofdafronding of volledige AIDE².
-Geen nieuwe handmatige Eva-modelaanvragen voor deze installatie;
-ontwikkelcredits en automatisch runtimeverbruik onbekend.
+**Nu:** één echte verbetercyclus afmaken: werkresultaten vergelijken, onafhankelijk
+beoordelen, uitsluitend bewezen winst toepassen en later gebruiken. De volledige
+leercyclus en AIDE² zijn nog niet afgerond. Geen nieuwe hoofdafronding geclaimd.
 
-39/48 oorspronkelijke afrondingen en gezinsacceptaties blijven behouden.
-Het gehele projectgoal blijft actief. Geen handeling van Jaap nodig;
-spraak geparkeerd; geen nieuwe concurrentenserie.
-Dashboardinhoud bijgewerkt op 2026-10-12T01:58:39.932645+00:00.
-Bewijs: eva2/evidence/product/native-work-strategy-runtime-sources-installed-20261012.json.
-Installatiereview: eva2/reviews/native-work-strategy-runtime-installed-review-20261012.json.
-Voorbereiding: eva2/evidence/product/native-work-strategy-host-prepared-20261012.json.
+De fout in de verificatie van mountvolgorde is gericht hersteld door mounts per
+bestemming te vergelijken. Geen runtimewijziging, herinstallatie of rollback daarvoor.
+De oude voorbereidingsfouten en mislukte proef blijven bewaard.
+39/48 historische afrondingen en gezinsacceptaties behouden. Het gehele goal blijft
+actief. Geen handeling van Jaap nodig; spraak geparkeerd; geen concurrentenserie.
+Ontwikkelcredits en automatisch runtimeverbruik blijven onbekend.
+
+Dashboardinhoud gecontroleerd op 2026-10-12T02:30:37.184260+00:00.
+Bewijs: eva2/evidence/product/native-work-strategy-host-installed-20261012.json.
+Configuratiereview: eva2/reviews/native-work-strategy-production-configuration-review-20261012.json.
+
+Installatiereview: eva2/reviews/native-work-strategy-production-installed-review-20261012.json.
 
 ## Historisch 12 oktober — evaluatiekoppeling gebouwd; echte uitvoering nog open
 

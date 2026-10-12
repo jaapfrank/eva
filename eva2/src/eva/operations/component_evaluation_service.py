@@ -16,6 +16,7 @@ from eva.operations.component_evaluation import (
 )
 
 _MAX_BODY = 96 * 1024
+_MAX_CONFIG = 128 * 1024
 # Two bounded sources can expand sixfold when JSON escapes control characters.
 _MAX_EVALUATE_BODY = 1024 * 1024
 
@@ -31,8 +32,8 @@ def _object(pairs):
 
 def load_config(path):
     with Path(path).open("rb") as stream:
-        raw = stream.read(65537)
-    if len(raw) > 65536:
+        raw = stream.read(_MAX_CONFIG + 1)
+    if len(raw) > _MAX_CONFIG:
         raise ValueError("evaluation service configuration is too large")
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}

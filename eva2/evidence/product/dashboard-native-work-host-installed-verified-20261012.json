@@ -1,0 +1,14 @@
+{
+  "contract": "EvaDashboardNativeWorkHostInstalledVerified/v1",
+  "checkedAt": "2026-10-12T02:31:18.387255+00:00",
+  "sourceContentCheckedAt": "2026-10-12T02:30:37.184260+00:00",
+  "url": "http://localhost:44712/",
+  "browserVerified": true,
+  "visibleLastDelivery": "Beoordelingsdienst voor zelfverbetering aangesloten",
+  "visibleNow": "Zelfverbetering op echte opdrachten afronden",
+  "visibleContentCheckLocalTime": "12-10-2026, 04:30:37",
+  "ownerActionRequired": false,
+  "newMainCompletion": false,
+  "wholeProjectGoal": "active",
+  "source": "eva2/evidence/product/native-work-strategy-host-installed-20261012.json"
+}

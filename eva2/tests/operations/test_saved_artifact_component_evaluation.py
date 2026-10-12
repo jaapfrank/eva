@@ -330,6 +330,20 @@ def test_service_config_admits_only_existing_fixed_saved_suite_structure(tmp_pat
         load_config(config)
 
 
+def test_service_config_retains_fixed_128kib_read_bound(tmp_path):
+    token = tmp_path / "synthetic-token"; token.write_text("s" * 40)
+    path = tmp_path / "host.json"
+    data = {"image": IMAGE, "command": ["/usr/local/bin/python", "-c", "fixed-suite"],
+        "token_file": str(token), "bind_host": "127.0.0.1", "port": 12345,
+        "allowed_paths": ["contracts/synthetic.py"]}
+    raw = json.dumps(data).encode()
+    path.write_bytes(raw + b" " * (128 * 1024 - len(raw)))
+    assert load_config(path)[2] == frozenset({"contracts/synthetic.py"})
+    path.write_bytes(path.read_bytes() + b" ")
+    with pytest.raises(ValueError, match="configuration is too large"):
+        load_config(path)
+
+
 @pytest.mark.skipif(not os.environ.get("EVA2_TEST_SAVED_ARTIFACT_EVALUATION_IMAGE"),
                     reason="explicit existing synthetic container image required")
 def test_native_saved_sources_use_same_existing_container_runner():
