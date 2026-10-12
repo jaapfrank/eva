@@ -1,0 +1,53 @@
+{
+  "contract": "EvaNativeWorkCorrectedRuntimePreparation/v1",
+  "recordedAt": "2026-10-12T04:17:50.564979+00:00",
+  "status": "prepared_not_installed",
+  "technicalPreparationCompleted": true,
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "summary": "Actual ordinary and preview factory profiles computed with the corrected client; derived configuration candidates prepared. Resume/accounting connection remains open.",
+  "preparationSha256": "5da712706791d9208fc492ec7dfc93e7130bbdbf7866cd9cad58aa74ee0361a3",
+  "ordinaryRelease": {
+    "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+    "model_profile_release_sha256": "14a7dba5b43e0b6d8b7b90cdd3f4d2771a75a787c2bd6f4c68c71d613d3a07e6",
+    "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+    "worker_profile_release_sha256": "9e4405645ba1448a3ec300b68f1acdd2ab6c7c16159a0fc320afcff36f61f46b",
+    "worker_program_sha256": "4b5b7d1926a2491a3e059fc9119ef3b113b28e8cac3bf909a52365caa3aab867"
+  },
+  "previewRelease": {
+    "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+    "model_profile_release_sha256": "65950987cd2e60f874faf9f6223a08f9bb1330e294fa8827806e15ee0a866ffc",
+    "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+    "worker_profile_release_sha256": "9e4405645ba1448a3ec300b68f1acdd2ab6c7c16159a0fc320afcff36f61f46b",
+    "worker_program_sha256": "4b5b7d1926a2491a3e059fc9119ef3b113b28e8cac3bf909a52365caa3aab867"
+  },
+  "candidateServiceSha256": "656601ced09789650dd5c8858a9245e9c49b833f9c271dcda1cebb049f159c7b",
+  "candidateAdmissionSha256": "d0eef1c19af7fcff73b5c79bf13f7cd7cc6799e02446db4998a38aa1e6e942c7",
+  "hostReferenceChanges": 12,
+  "admissionReferenceChanges": 2,
+  "originalInputsPreserved": true,
+  "sourceRuntimeAndCapabilitiesEqual": true,
+  "newEvaModelRequests": 0,
+  "nativeWorkStarted": false,
+  "oldConstruction": {
+    "closed": true,
+    "modelRequests": 1,
+    "tokens": 4987,
+    "candidateConfirmed": false,
+    "usageRetained": true
+  },
+  "remaining": [
+    "Independent review of exact configuration candidates",
+    "Connect the existing typed resume route and preserve cumulative usage",
+    "Install approved configuration references",
+    "Native candidate development and independent final assessment",
+    "Apply only demonstrated improvement and prove later ordinary use"
+  ],
+  "credits": "unknown",
+  "preparationFailuresRetained": [
+    "own directory already existed before first script input/IO",
+    "extra differing-worker-profile assertion after two successful projections"
+  ],
+  "comparisonSeriesStarted": false,
+  "ownerActionRequired": false
+}

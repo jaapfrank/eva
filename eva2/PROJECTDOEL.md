@@ -1,27 +1,26 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — bronlezen in gewone verbeterroute hersteld
+## Actueel 12 oktober — zelfverbetering: hervatting en verbruik aansluiten
 
-De concrete fout is modelvrij gereproduceerd: gewone en proefclient verwisselden
-registratiehash en persoonscope. De gewone client is na onafhankelijke bronreview
-gecorrigeerd met één configuratiewaarde. In de draaiende kern en werker slagen
-bronlezen en de echte read-only opvraag van de verbeterregistratie. Beide gezond;
-images, overige instellingen, mounts, netwerken en gegevens behouden.
-Eén herstart per betrokken dienst, geen nieuwe modelaanvraag.
-Afzonderlijke controle van de werkelijke installatie: GO.
+**Geïnstalleerd:** bronlezen in de gewone verbeterroute. Kern en werker gezond;
+werkelijke bron en juiste verbeterregistratie teruggelezen, onafhankelijke review GO.
 
-**Nu:** dezelfde verbeteropdracht coherent aansluiten op de gecorrigeerde client.
-De proefclient is voorbereid; afgeleide uitvoerbindingen moeten nog aansluiten.
-**Daarna:** Eva zelf laten vergelijken, onafhankelijk beoordelen en alleen bewezen
-winst toepassen en bij later gewoon werk gebruiken.
+**Voorbereid, niet geïnstalleerd:** werkelijke gewone en proefuitvoerprofielen
+berekend met de gecorrigeerde client. Twaalf configuratieverwijzingen en twee
+toelatingsverwijzingen voorbereid. Onafhankelijke review van deze voorbereiding loopt.
 
-De afgesloten mislukte opdracht (één Astra/medium-aanvraag, 4.987 tokens) en oude
-foutbewijzen blijven behouden. Geen kandidaat, kwaliteitswinst of hoofdafronding
-geclaimd. Het volledige goal blijft actief, inclusief leercyclus en AIDE².
-39/48 historische afrondingen en gezinsacceptaties behouden. Geen handeling van
-Jaap nodig. Spraak geparkeerd; geen concurrentenserie. Credits onbekend.
-Dashboard bijgewerkt op 2026-10-12T04:06:07.550342+00:00.
-Bewijs: eva2/evidence/product/native-work-client-scope-installed-20261012.json.
+**Nu:** de bestaande hervatroute aansluiten op dezelfde verbeteropdracht en haar
+cumulatieve verbruik. De eerdere mislukte poging en 4.987 tokens blijven behouden.
+**Daarna:** de goedgekeurde verwijzingen installeren, Eva zelf één kandidaat laten
+vergelijken en onafhankelijk beoordelen; uitsluitend bewezen winst toepassen en
+bij later gewoon werk gebruiken.
+
+Geen nieuwe Eva-modelaanvraag voor deze voorbereiding. Geen kandidaat of nieuwe
+hoofdafronding geclaimd. Het volledige goal blijft actief, inclusief leercyclus en
+AIDE². De 39/48 historische afrondingen en gezinsacceptaties blijven behouden.
+Geen handeling van Jaap nodig. Spraak geparkeerd; geen concurrentenserie.
+Credits onbekend. Dashboardinhoud bijgewerkt: 2026-10-12T04:17:50.564979+00:00.
+Bewijs: eva2/evidence/product/native-work-corrected-runtime-prepared-20261012.json.
 
 ## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 
