@@ -115,9 +115,16 @@ class _TaskMemory:
 class _TaskModel:
     def __init__(self, model, task, browser_context=None, corrections=(), budget_context=None, attempt_work_id=None):
         self.model, self.task = model, task
+        # Keep the last occurrence: A, B, A must still present B before A.
+        # Durable correction records remain unchanged; only repeated instruction
+        # text is omitted from the model input.
+        latest_instruction = {
+            item["instruction"]: index for index, item in enumerate(corrections)
+        }
         self.owner_corrections = tuple(
             "Bewaarde bijsturing van de eigenaar, in volgorde; latere correcties vervangen eerdere alleen waar ze botsen: "
-            + item["instruction"] for item in corrections)
+            + item["instruction"] for index, item in enumerate(corrections)
+            if latest_instruction[item["instruction"]] == index)
         self.continuation_feedback = ()
         self.browser_context = browser_context
         self.budget_context = budget_context

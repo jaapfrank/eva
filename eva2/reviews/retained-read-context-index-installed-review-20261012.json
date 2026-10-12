@@ -1,0 +1,103 @@
+{
+  "contract": "EvaFocusedIndependentInstalledReview/v1",
+  "recordedAt": "2026-10-12T20:14:34.976574+00:00",
+  "reviewer": "product_execution_memory_review",
+  "verdict": "GO",
+  "scope": "Exacte installatie en beperkte feitenpublicatie van de drie eerder goedgekeurde contextindex-bronmodules.",
+  "bindings": {
+    "publicInstalledFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-read-context-index-installed-20261012.json",
+      "sha256": "5fee09e535f406cab43ff7d5c2e64738e79367dadee27a088ee34e2bda517505"
+    },
+    "sourceReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/retained-read-context-index-source-review-20261012.json",
+      "sha256": "296c6f1dd419598ce1ddddbecf0603d2cc5896bdfad25fc2c6d3141bf7b05ad6"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/build-result.private.json",
+      "sha256": "bfd0409bcd4d40f1fd0f1185f9404a0d9a0a3d8ea476ddb9b5cafe24fb6fb90b"
+    },
+    "installationDispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/installation-dispatch-receipt.private.json",
+      "sha256": "9e9a14b60ab4493cb8efa5d590a48ce7fcf718b4f8bb0c4e0719caf37993f2d0"
+    },
+    "verification": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/installation-verification.private.json",
+      "sha256": "6be99b6f72fd237f5e4009329773104d07e596b48aa27a8e57a7ce6d856d3aa9"
+    },
+    "preparationFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/installation-wrapper-preparation-failure.private.json",
+      "sha256": "9c55d71053ede40615f481400e7e25cc73e0cd8878ed2c4fccf1b614c63a7b4c"
+    }
+  },
+  "installedServices": {
+    "core": {
+      "image": "sha256:5f2ffbead488815e3e3acb785fbfd3d9a39cda7b24c9650f1f6673c735f38879",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 342,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "2a6541a52b9a73252311647807ff9329bdd8ff3c58f28634c3e04af71eae4d26",
+        "adapters/postgres/external_conversation_tools.py": "6a2f0356d1927c903f58d27a60f5addbdfb00c763d1cbf26d7e1408d80afde51",
+        "bootstrap/delegated_digital_runner.py": "a3006b3134c71cee3b3c2899944a0111d75f8b137fa8848d855fb463f35c69d5"
+      },
+      "inspectionSha256": "b956c27a51b2eba7262cb0881d9e8aa68505d7bfab14f512977986b69bb7ccf8"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:f86ac5c941da25ec5ff01c342759a0e7125d537223d39f702fe459b3b6e63f1e",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 342,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "2a6541a52b9a73252311647807ff9329bdd8ff3c58f28634c3e04af71eae4d26",
+        "adapters/postgres/external_conversation_tools.py": "6a2f0356d1927c903f58d27a60f5addbdfb00c763d1cbf26d7e1408d80afde51",
+        "bootstrap/delegated_digital_runner.py": "a3006b3134c71cee3b3c2899944a0111d75f8b137fa8848d855fb463f35c69d5"
+      },
+      "inspectionSha256": "5395ccc460d40ed1f8e95f30cb1f8cd014bee2fce9dcc903a648ae3cfa50501c"
+    }
+  },
+  "findings": [
+    "Gebonden dispatchreceipt en installatieverificatie bevestigen één updaterdispatch met exact de goedgekeurde drie modulehashes in beide kandidaatimages.",
+    "Beide diensten zijn healthy en ready. Inventariscontrole bevestigt 342 overige Pythonbronnen per image behouden; omgeving, mounts en procesconfiguratie zijn gelijk.",
+    "De wrapperfout gebruikte decision waar het bronreview verdict bevat. Die poging eindigde vóór updaterinvocatie met nul dispatches of runtimewijziging; het foutbewijs blijft behouden.",
+    "De openbare installatiefeiten komen overeen met de gebonden receipts. Zij claimen geen afgeronde taak, productgedrag, actuele volledige inputfit of providerbesparing."
+  ],
+  "actualRuntimeUpdateDispatches": 1,
+  "readyz": {
+    "database": "ready",
+    "detail": null,
+    "memory_projection": "ready",
+    "model_provider": "ready",
+    "ready": true
+  },
+  "blockers": [],
+  "boundary": {
+    "installedSourceAndPublicationGo": true,
+    "nativeInputAuthorityGranted": false,
+    "nativeTaskOutcomeAssessed": false,
+    "taskCompleted": false,
+    "actualDynamicInputFitProven": false,
+    "providerSavingsProven": false,
+    "existingOwnerMandateUnchanged": true,
+    "publicSnapshotBeforeNativeContinuation": true
+  },
+  "reviewerActions": {
+    "tests": 0,
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseWrites": 0,
+    "installationActions": 0
+  }
+}

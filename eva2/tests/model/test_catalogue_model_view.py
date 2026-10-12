@@ -569,11 +569,17 @@ def test_actual_input_misfit_defers_only_old_scoped_reads_and_rechecks_sdk_envel
     assert json.loads(outputs[failed.call.call_id]["output"]) == failed.output
     assert high_wire["input"][-2:] == low_wire["input"][-2:]
     selected, note = PydanticConversationModel._receipt_context_selection(receipts, defer_local_reads=True)
-    summaries = json.loads(note.split("\n", 1)[1])
+    index = json.loads(note.split("\n", 1)[1])
+    assert index["contract"] == "EvaDeferredLocalReadsModelIndex/v1"
+    assert index["action"] == "use_connector_tool"
     assert selected == (progress, failed, RECEIPT)
-    for summary, old in zip(summaries, (first, second), strict=True):
-        assert summary["call"]["arguments"] == old.call.arguments
-        assert summary["source_version"] == old.output["result"]["sha256"]
+    assert len(index["sources"]) == 1
+    for summary, old in zip(index["reads"], (first, second), strict=True):
+        source = index["sources"][summary["source_index"]]
+        assert summary["call_id"] == old.call.call_id
+        assert source["reader_tool_id"] == old.call.arguments["tool_id"]
+        assert summary["selections"] == [json.loads(old.call.arguments["arguments_json"])]
+        assert source["source_version"] == old.output["result"]["sha256"]
         assert summary["ranges"] == [{k: old.output["result"][k] for k in ("pointer", "offset", "next_offset", "selection_length")}]
     assert model._resource_budget is budget and budget.max_input_tokens == limit
     assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in receipts]) == original
@@ -601,3 +607,58 @@ def test_pressure_deferral_keeps_latest_literal_anchor_unknown_and_invalid_proje
     injected["ancestor_model_projection"]["source"]["receipt_sha256"] = "0" * 64
     with pytest.raises(ConversationModelError, match="differs"):
         PydanticConversationModel._receipt_context_selection((replace(other, model_output=injected), RECEIPT), defer_local_reads=True)
+
+
+def test_pressure_index_groups_small_reads_without_losing_selectors_or_source_versions():
+    from tests.model.test_pydantic_conversation_model import RECEIPT
+    page, source_port, shared_timeline, _, reader = _coverage_pages()
+    first = page("small-first", offset=0, limit=500)
+    second = page("small-second", offset=1000, limit=500)
+    pointer = page("small-pointer", pointer="/call/arguments", offset=2500, limit=500)
+    other_page, port, timeline, thread, _ = _coverage_pages()
+    timeline.rows[thread][0].payload["data"]["action_call_id"] = "other-retained-version"
+    from tests.connectors.test_connector_results import TURN
+    other_document = port._receipt(TURN, timeline.events(thread), 2)
+    other_reader = other_document.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    other = other_page("small-other-version", tool_id=other_reader, offset=3000, limit=500)
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda _: nullcontext()
+    route._timeline = lambda _: shared_timeline
+    route._ensure_running = source_port._ensure_running
+    selections = [{"pointer": "/call/arguments/content", "offset": offset, "limit": 100, "query": None}
+                  for offset in (6000, 7000)]
+    batch = route.execute(TURN, ConversationActionCall("small-batch", "use_connector_tool",
+        {"tool_id": reader, "arguments_json": json.dumps({"selections": selections})}), step_index=30)
+    prior = (first, second, pointer, batch, other)
+    history = (*prior, RECEIPT)
+    raw = canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history])
+    # Ordinary fitting history still exposes each unique page, regardless of size.
+    assert PydanticConversationModel._receipt_context_selection(history) == (history, "")
+    selected, note = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=True)
+    assert selected == (RECEIPT,)
+    index = json.loads(note.split("\n", 1)[1])
+    assert len(index["sources"]) == 2
+    assert [r["source_index"] for r in index["reads"]] == [0, 0, 0, 0, 1]
+    assert "Hun tekst is nu niet in deze modelcontext" in note
+    assert "bewaarde bevindingen en voortgang" in note
+    for read, receipt in zip(index["reads"], prior, strict=True):
+        source = index["sources"][read["source_index"]]
+        assert read["call_id"] == receipt.call.call_id
+        # These are the exact original authorized retrieval arguments, with no
+        # provider invocation, generated summary or inferred selector.
+        assert source["reader_tool_id"] == receipt.call.arguments["tool_id"]
+        original_arguments = json.loads(receipt.call.arguments["arguments_json"])
+        assert read["selections"] == original_arguments.get("selections", [original_arguments])
+        pages = receipt.output["result"].get("pages", [receipt.output["result"]])
+        assert read["ranges"] == [{key: page[key]
+                                  for key in ("pointer", "offset", "next_offset", "selection_length")}
+                                  for page in pages]
+        assert source["source_version"] == receipt.output["result"]["sha256"]
+        assert source["source_ingress_sha256"] == receipt.model_output["ancestor_model_projection"]["source"]["source_ingress_sha256"]
+    assert reader != other_reader
+    assert PydanticConversationModel._receipt_model_views(selected)[-1] == PydanticConversationModel._receipt_model_views(history)[-1]
+    assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history]) == raw

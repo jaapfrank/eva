@@ -636,3 +636,41 @@ def test_retained_external_mcp_rejects_local_identity_bad_events_scope_and_stop(
         stopped[0] = True
         with pytest.raises(ConversationConflict, match="stopped"):
             capture.read(reader, args)
+
+
+def test_small_local_read_retains_exact_scoped_body_without_external_reobservation():
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    port, timeline, thread, stopped, authorize = _retained_ha()
+    source_bytes = _encoded([[e.event_type, e.payload] for e in timeline.events(thread)])
+    original = port._receipt(TURN, timeline.events(thread), 1)
+    reader = original.model_output["result"]["reader"]["tool_id"]
+    route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda _: nullcontext()
+    route._timeline = lambda _: timeline
+    route._ensure_running = authorize
+    selector = {"pointer": "/response_json", "offset": 150, "limit": 100, "query": None}
+    call = ConversationActionCall("small-scoped-page", "use_connector_tool",
+        {"tool_id": reader, "arguments_json": json.dumps(selector)})
+    receipt = route.execute(TURN, call, step_index=3)
+    assert len(_encoded(receipt.output)) < 8192
+    assert receipt.output["result"]["text"] == original.output["result"]["response_json"][150:250]
+    projection = receipt.model_output["ancestor_model_projection"]
+    assert projection["source"]["call_id"] == call.call_id
+    assert PydanticConversationModel._receipt_presentation(receipt, ancestor=True) == receipt.output
+    # The original action and new source-body captures replay without reobservation.
+    rows_before = _encoded({key: [[e.event_type, e.payload] for e in rows]
+                           for key, rows in timeline.rows.items()})
+    assert route.execute(TURN, call, step_index=3) == receipt
+    assert _encoded({key: [[e.event_type, e.payload] for e in rows]
+                     for key, rows in timeline.rows.items()}) == rows_before
+    assert _encoded([[e.event_type, e.payload] for e in timeline.events(thread)]) == source_bytes
+    body = ConnectorResults(timeline, TURN, authorize).read(projection["manifest"]["reader"]["tool_id"],
+        {"pointer": "/call/arguments", "offset": 0, "limit": 1000, "query": None})
+    assert json.loads(body["text"]) == call.arguments
+    for status in ("selection_invalid", "ambiguous"):
+        refused = replace(receipt, output={**receipt.output, "status": status}, model_output=None)
+        assert route._body_presentation(TURN, refused, 3) is refused
+    stopped[0] = True
+    with pytest.raises(ConversationConflict, match="stopped"):
+        route.execute(TURN, call, step_index=3)

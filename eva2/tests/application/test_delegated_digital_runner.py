@@ -1333,6 +1333,33 @@ def test_typed_file_write_obeys_upstream_error_result(is_error):
     assert _has_completed_tool_evidence([receipt]) is (not is_error)
 
 
+@pytest.mark.parametrize("instructions,expected", [
+    (("Use three points.", "Use three points."), ("Use three points.",)),
+    (("Use three points.", "Use a paragraph.", "Use three points."),
+     ("Use a paragraph.", "Use three points.")),
+    (("Use three points.", "Use three points!"),
+     ("Use three points.", "Use three points!")),
+])
+def test_task_model_keeps_distinct_corrections_in_last_occurrence_order(instructions, expected):
+    """Repeated resumes must not expand input or reverse the latest correction."""
+    from copy import deepcopy
+    from eva.bootstrap.delegated_digital_runner import _TaskModel
+
+    class Capture:
+        def generate(self, *args, self_context=(), **kwargs):
+            return self_context
+
+    corrections = tuple({"instruction": text, "work_id": f"work:{index}"}
+                        for index, text in enumerate(instructions))
+    original = deepcopy(corrections)
+    model = _TaskModel(Capture(), "Write the requested result.", corrections=corrections)
+    prefix = "Bewaarde bijsturing van de eigenaar, in volgorde; latere correcties vervangen eerdere alleen waar ze botsen: "
+    context = model.generate(self_context=("Current task state.",))
+    assert tuple(text.removeprefix(prefix) for text in context if text.startswith(prefix)) == expected
+    assert context[0] == "Current task state."
+    assert corrections == original
+
+
 def test_followup_worker_recalls_bound_task_and_latest_feedback_before_model(monkeypatch):
     """A vague original message must not hide the topic and owner's correction."""
     from dataclasses import replace

@@ -1,0 +1,98 @@
+{
+  "contract": "EvaFocusedIndependentSourceReview/v1",
+  "recordedAt": "2026-10-12T20:11:37.289837+00:00",
+  "reviewer": "product_execution_memory_review",
+  "verdict": "GO",
+  "scope": "Exacte drie bronmodules voor contextselectie, behouden lokale reader en bijsturing; beperkte bronpublicatie en installatie van de identieke gebouwde bronbytes.",
+  "bindings": {
+    "frozenSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/source-correction/frozen-source.private.json",
+      "sha256": "2dc75fad9d16ab0b114805d3cd31dd464f2a0c13a30e5dc067580c801f01526a"
+    },
+    "builderPatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/source-correction/source-and-tests.patch.private.diff",
+      "sha256": "483de95a2648e08c08b84b046504f70ccd5cbd4dbdb28b96b23006fdf52c2cad"
+    },
+    "targetedChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/source-correction/targeted-checks.private.json",
+      "sha256": "915b296898b8fcad168add7282b5bdf5030a7d2fedab70bbd2ea678722ebfef7"
+    },
+    "rootRunnerChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/runner-correction-targeted-checks.private.json",
+      "sha256": "5bb56a4e2ccf470321083382ea448cd0cf665bc6dab0415e085d3290b25ae39b"
+    },
+    "measurement": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/source-correction/final-source-measurement.private.json",
+      "sha256": "39cbeaf03dbb95aef9586d9cc5e4ec11bc66f54a0b114354be8177be37d4f35a"
+    },
+    "publicSourceFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-read-context-index-correction-20261012.json",
+      "sha256": "a9eda16438044e23d6bce26a1b6240cedab228d10003d8103d6c538d910b2ffb"
+    },
+    "candidateBuild": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/build-result.private.json",
+      "sha256": "bfd0409bcd4d40f1fd0f1185f9404a0d9a0a3d8ea476ddb9b5cafe24fb6fb90b"
+    }
+  },
+  "sourceFiles": {
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "2a6541a52b9a73252311647807ff9329bdd8ff3c58f28634c3e04af71eae4d26",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "6a2f0356d1927c903f58d27a60f5addbdfb00c763d1cbf26d7e1408d80afde51",
+    "eva2/src/eva/bootstrap/delegated_digital_runner.py": "a3006b3134c71cee3b3c2899944a0111d75f8b137fa8848d855fb463f35c69d5"
+  },
+  "testFiles": {
+    "eva2/tests/model/test_catalogue_model_view.py": "2d3d581781f41693d82ea5eb3fb812cc32a4e5fad2193c552cb0c51adcba6188",
+    "eva2/tests/connectors/test_connector_results.py": "2b3f322780419eca1008b6d2f72d18160a823bc3251bd3460104bb94de04639f",
+    "eva2/tests/application/test_delegated_digital_runner.py": "cbfb3662006df1666067b01ce6598f1321913bd69ff0aca664933b6d743d2157"
+  },
+  "findings": [
+    "De gedeelde drukindex ontstaat uitsluitend na misfit van de volledige oorspronkelijke inputgate. Iedere verwijderde tekst is expliciet afwezig; oorspronkelijke call-ID, reader, ingresshash, bronversie, selector en tekenbereik blijven beschikbaar. Dezelfde volledige gate wordt opnieuw gecontroleerd vóór providerdispatch.",
+    "Kleine VERIFIED pure lokale reads krijgen de bestaande scoped retained-bodyprojectie. De oorspronkelijke actor, execution, ingress, thread, call en proof worden opnieuw gevalideerd; er ontstaat geen nieuwe externe observatie. Originele call/output/proof en nieuwste literal blijven behouden.",
+    "Alleen exact identieke bijsturingsteksten worden op hun laatste chronologische positie eenmaal gepresenteerd. Onderscheidende teksten en oorspronkelijke opgeslagen correcties blijven behouden.",
+    "Nieuwste resultaten en noodzakelijke verwijzingen, progress, effects, fouten, UNKNOWN en stopvoorwaarden blijven beschermd. Geen wijziging van mandaat, grants, caps, criteria, accounting of gewone volledige inputgate gevonden."
+  ],
+  "validation": {
+    "existingUniquePassingChecks": 10,
+    "builderChecks": 6,
+    "rootRunnerChecks": 4,
+    "testsRerunByReviewer": false,
+    "checksBoundary": "Bestaande gebonden JUnit/logs en exacte testbronnen gelezen; geen native gedragsbewijs.",
+    "buildSourceEquivalentToReviewedFreeze": true,
+    "buildRecordedFreezeSha256": "a8090b731b2d3650ac3346cbe8fdb27b9be2ea9acd202df965ce89f8e02f8af4",
+    "buildBoundary": "Het bouwreceipt verwijst naar een afzonderlijke voorbereidingsmanifesthash; alle drie modulehashes zijn exact gelijk aan de beoordeelde finale freeze. Beide inventarissen veranderen uitsluitend die drie bestanden; 342 andere Pythonbronnen per image blijven gelijk.",
+    "candidateImages": {
+      "core": "sha256:5f2ffbead488815e3e3acb785fbfd3d9a39cda7b24c9650f1f6673c735f38879",
+      "delegated-work-worker": "sha256:f86ac5c941da25ec5ff01c342759a0e7125d537223d39f702fe459b3b6e63f1e"
+    },
+    "reportExportFailurePreservedSha256": "60610040adfb94b0c2a3e317abcc98004009b131cc0950cc3db4b0c8582c78c1"
+  },
+  "measurement": {
+    "retainedReceipts": 78,
+    "knownEnvelopeBeforeIncluding256FramingBpe": 64660,
+    "knownEnvelopeAfterIncluding256FramingBpe": 47319,
+    "knownMarginBpe": 18217,
+    "selectedReceipts": 37,
+    "deferredReadOverviews": 41,
+    "uniqueSources": 10,
+    "syntheticNextReadSaveReadbackPassed": true,
+    "syntheticAdditionalContextBpe": 3982,
+    "boundary": "Lokale meting en synthetische toekomstige context; actuele recall en overige dynamische context ontbreken. Geen volledige actuele fit, providerbesparing of snelheidswinst bewezen."
+  },
+  "publication": "GO voor exact gebonden beperkte feiten: gebouwd, nog niet geïnstalleerd; oorspronkelijke mislukte taken, bronbewijs, partiële proposal en verbruiksonbekendheid blijven behouden.",
+  "blockers": [],
+  "authorityBoundary": {
+    "installationSourceGo": true,
+    "nativeInputAuthorization": false,
+    "taskCompleted": false,
+    "productBehaviorProven": false,
+    "providerSavingsProven": false,
+    "originalReadonlyScopePreserved": true,
+    "physicalMigrationNeedsOriginalOwnerAgreement": true
+  },
+  "reviewerActions": {
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "tests": 0,
+    "databaseWrites": 0,
+    "sourceEdits": 0
+  }
+}

@@ -1,43 +1,41 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — algemene uitvoering herstellen; Eva maakt zelf het voorstel
+## Actueel 12 oktober — Eva maakt zelf het voorstel; algemene contextcorrectie
 
-Eva onderzoekt zelf de oorspronkelijke leesopdracht en schrijft haar eigen
-onderbouwde voorstel. Codex herstelt algemene uitvoeringsfouten en schrijft geen
-Tuya-voorstel of vaste Tuya-functie. Geen HA-wijziging of migratie vóór apart
-akkoord op Eva's afgeronde voorstel.
+Eva onderzoekt de oorspronkelijke leesopdracht en schrijft zelf het onderbouwde
+voorstel. Codex herstelt de algemene uitvoering en schrijft geen Tuya-voorstel
+of vaste Tuya-functie. Geen HA-wijziging of migratie vóór afzonderlijk akkoord
+op Eva's afgeronde voorstel.
 
-De contextcorrectie is geïnstalleerd: na echte invoerweigering blijven oude
-gevalideerde lokale reads via hun exacte bestaande bron/bereik opvraagbaar;
-laatste resultaat, fouten/UNKNOWN, acties en voortgang blijven zichtbaar.
-Vijftien echte modelaanvragen van36.714–44.570 invoertokens pasten, waarna een
-andere interne fout de achtste generatie stopte. 601.277 bekende tokens,
-APIusage partial;volledig totaal/credits onbekend. Alle15 waargenomen streams
-zijn gesloten;het9.240-byte tussenvoorstel en oude fouten zijn behouden.
-
-Die interne fout is modelvrij exact gereproduceerd: een externe MCP-use werd
-ten onrechte als lokale leesselectie behandeld. Eén connectormodule corrigeert
-het onderscheid via de bestaande admission/event/reader/proofroute. Vier gerichte
-checks en de echte bewaarde receipt65→reader-keten slagen;bronreview GO.
-De correctie is geïnstalleerd;kern/werker gezond,344 overige Pythonbronnen en
-configuratie/gegevens per image gelijk. De modelmodule blijft8f30010.
-Onafhankelijke installatiereview GO. De negende gewone generatie is gestopt
-op input_budget_exceeded: 12 volledige responses, 12 tools, 596.063 bekende
-tokens. APIusage partial; volledig totaal/credits onbekend. Alle 12 waargenomen
-streams gesloten. Het tussenvoorstel blijft ongewijzigd; geen volledig voorstel.
-Eerst de exacte geweigerde aanvraag en fallback modelvrij reconstrueren. Geen
-nieuwe betaalde poging zonder causale correctie en geen handmatig Tuya-voorstel.
+De vorige context- en externe-MCP-correcties zijn geïnstalleerd. De negende gewone
+generatie stopte alsnog op input_budget_exceeded: 12 volledige responses, 12 tools,
+596.063 bekende tokens. APIusage partial; volledig totaal en credits onbekend.
+Alle 12 waargenomen streams gesloten; het 9.240-byte tussenvoorstel ongewijzigd.
 Werk: work:eva-resume:52fa14eb-aff4-5622-af52-557f11c15c21.
-Uitkomst: eva2/evidence/product/retained-external-mcp-read-ordinary-result-20261012.json.
 
-Het gehele projectgoal blijft actief;39/48 oorspronkelijk en39/54 totaal gelijk.
-HUE1.1/HUE3.1 en volledige AIDE² open;geen nieuwe vergelijkingsserie,spraak geparkeerd.
+De resterende contextgroei is modelvrij afgebakend: kleine lokale reads hadden
+geen retained-body-projectie, het leesoverzicht herhaalde bronmetadata en dezelfde
+hervataanwijzing werd vijf keer aangeboden. Drie bestaande modules corrigeren
+uitsluitend die algemene presentatie. Raw/bewijs/actor/source/stop, nieuwste
+resultaat, fouten/UNKNOWN, voortgang, bevoegdheden en invoergrenzen blijven behouden.
+Identieke aanwijzingen blijven op hun laatste chronologische positie zichtbaar;
+originele correctieregistraties blijven staan.
 
-Bron:eva2/evidence/product/retained-external-mcp-read-correction-20261012.json.
-Installatie:eva2/evidence/product/retained-external-mcp-read-installed-20261012.json.
-Bronreview:eva2/reviews/retained-external-mcp-read-source-review-20261012.json.
-Installatiereview:eva2/reviews/retained-external-mcp-read-installed-review-20261012.json.
-Behouden fout:eva2/evidence/product/retained-local-read-working-context-ordinary-result-20261012.json.
+Bronreview GO; 10 gerichte controles geslaagd. Drie exacte modules geïnstalleerd;
+kern en werker gezond, 342 overige Pythonbronnen per image behouden. Dezelfde
+bekende 78-receipt-aanvraag meet lokaal 64.660→47.319 BPE inclusief framing.
+Ook nieuwe leesinhoud/opslaan/teruglezen met extra context past in een begrensde
+lokale simulatie. Niet-bewaarde dynamische context en werkelijk toekomstig gedrag
+zijn niet bewezen. Exacte installatiereview GO. Eén gewone voortzetting is actief:
+work:eva-resume:6ef4db15-655d-57e9-b1aa-37a5e9b3825b. Nog geen volledig voorstel bevestigd.
+
+Het hele projectgoal blijft actief; 39/48 oorspronkelijk en 39/54 totaal gelijk.
+HUE1.1/HUE3.1 en volledige AIDE² open; geen nieuwe vergelijkingsserie, spraak geparkeerd.
+
+Bron: eva2/evidence/product/retained-read-context-index-correction-20261012.json.
+Installatie: eva2/evidence/product/retained-read-context-index-installed-20261012.json.
+Behouden uitkomst: eva2/evidence/product/retained-external-mcp-read-ordinary-result-20261012.json.
+Vorige installatie: eva2/evidence/product/retained-external-mcp-read-installed-20261012.json.
 
 ## Eigenaarbesluit 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel
 

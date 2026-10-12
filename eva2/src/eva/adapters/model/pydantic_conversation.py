@@ -1167,6 +1167,8 @@ class PydanticConversationModel:
         protect(baseline_latest)
         coverage: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
         selected, overviews = [], []
+        deferred_sources: list[dict[str, Any]] = []
+        source_indices: dict[tuple[str, str, str], int] = {}
         for position, receipt in enumerate(receipts):
             projection = (receipt.model_output or {}).get("ancestor_model_projection")
             if (position == len(receipts) - 1 or receipt.call.call_id in protected
@@ -1187,11 +1189,18 @@ class PydanticConversationModel:
                 if any(page.get("found") is not True or not page["text"] for page in pages):
                     selected.append(receipt)
                     continue
-                overviews.append({"call": {"call_id": receipt.call.call_id,
-                    "name": receipt.call.name, "arguments": receipt.call.arguments},
-                    "status": "verified",
-                    "model_context": "earlier_local_read_deferred_to_existing_authorized_reader",
-                    "source_ingress_sha256": ingress, "source_version": pages[0]["sha256"],
+                # Share only identical authorized reader/source-version metadata.
+                # Every call retains its original selectors and observed ranges;
+                # original argument/proof bytes remain in the retained source.
+                key = (reader, ingress, pages[0]["sha256"])
+                if key not in source_indices:
+                    source_indices[key] = len(deferred_sources)
+                    deferred_sources.append({"reader_tool_id": reader,
+                        "source_ingress_sha256": ingress, "source_version": key[2]})
+                arguments = json.loads(receipt.call.arguments["arguments_json"])
+                overviews.append({"call_id": receipt.call.call_id,
+                    "source_index": source_indices[key],
+                    "selections": arguments.get("selections", [arguments]),
                     "ranges": [{"pointer": page["pointer"], "offset": page["offset"],
                         "next_offset": page["next_offset"], "selection_length": page["selection_length"]}
                         for page in pages]})
@@ -1246,12 +1255,17 @@ class PydanticConversationModel:
                 "Modelcontextselectie wegens invoerruimte: onderstaande eerdere "
                 "geverifieerde pure lokale leesresultaten staan als bronleesoverzicht "
                 "in deze aanvraag. Hun tekst is nu niet in deze modelcontext. "
-                "Gebruik uitsluitend hun bestaande geautoriseerde reader en zichtbare "
-                "bronversie, pointer en bereik als die feiten nodig zijn; verzin ze niet. "
+                "Gebruik bewaarde bevindingen en voortgang; lees alleen ontbrekende "
+                "feiten gericht terug met hun bestaande geautoriseerde reader, zichtbare "
+                "bronversie, pointer en bereik. Verzin ontbrekende tekst niet. "
                 "Dit wist geen geschiedenis of bewijs en is geen nieuwe waarneming. "
                 "Het nieuwste resultaat, fouten, acties, voortgang en benodigde "
-                "zichtbare bronankers blijven aanwezig.\n"
-                + canonical_json_bytes(overviews).decode("utf-8")
+                "zichtbare bronankers blijven aanwezig. De gedeelde brontabel geeft "
+                "per source_index de reader voor use_connector_tool; arguments_json "
+                "is de JSON van {selections: <selections van deze read>}.\n"
+                + canonical_json_bytes({"contract": "EvaDeferredLocalReadsModelIndex/v1",
+                    "action": "use_connector_tool", "sources": deferred_sources,
+                    "reads": overviews}).decode("utf-8")
             )
             return selected, note
         note = (

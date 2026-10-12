@@ -473,12 +473,19 @@ class PostgresExternalConversationTools:
 
     def _body_presentation(self, turn, receipt, step_index):
         from eva.adapters.postgres.connector_results import (
-            ConnectorResults, MODEL_INLINE_BOUND, _encoded, retained_action_body,
+            ConnectorResults, MODEL_INLINE_BOUND, READER_PREFIX, _encoded, retained_action_body,
         )
+        # Small local pages need the same retained identity as large pages, so
+        # actual input pressure can return them to their original source reader.
+        pure_local_read = (receipt.call.name == "use_connector_tool"
+            and receipt.output.get("source") == "stored_connector_result"
+            and isinstance(receipt.call.arguments.get("tool_id"), str)
+            and receipt.call.arguments["tool_id"].startswith(READER_PREFIX))
         if (receipt.output.get("status") != "verified"
                 or receipt.call.name not in {"home_assistant_request", "read_home_assistant_inventory",
                                              "save_workspace_document", "use_connector_tool"}
-                or len(_encoded(retained_action_body(receipt))) <= MODEL_INLINE_BOUND):
+                or (not pure_local_read
+                    and len(_encoded(retained_action_body(receipt))) <= MODEL_INLINE_BOUND)):
             return receipt
         self._ensure_running(turn)
         capture = ConnectorResults(self._timeline(turn), turn, self._ensure_running)

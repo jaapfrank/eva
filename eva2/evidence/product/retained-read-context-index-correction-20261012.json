@@ -1,0 +1,95 @@
+{
+  "contract": "EvaRetainedReadContextIndexCorrection/v1",
+  "recordedAt": "2026-10-12T20:07:04.104870+00:00",
+  "status": "built_not_installed",
+  "purpose": "Repair general task context so Eva itself completes research and proposals. No domain-specific proposal generation.",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "2a6541a52b9a73252311647807ff9329bdd8ff3c58f28634c3e04af71eae4d26"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "6a2f0356d1927c903f58d27a60f5addbdfb00c763d1cbf26d7e1408d80afde51"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "a3006b3134c71cee3b3c2899944a0111d75f8b137fa8848d855fb463f35c69d5"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "eva2/tests/model/test_catalogue_model_view.py",
+      "sha256": "2d3d581781f41693d82ea5eb3fb812cc32a4e5fad2193c552cb0c51adcba6188"
+    },
+    {
+      "path": "eva2/tests/connectors/test_connector_results.py",
+      "sha256": "2b3f322780419eca1008b6d2f72d18160a823bc3251bd3460104bb94de04639f"
+    },
+    {
+      "path": "eva2/tests/application/test_delegated_digital_runner.py",
+      "sha256": "cbfb3662006df1666067b01ce6598f1321913bd69ff0aca664933b6d743d2157"
+    }
+  ],
+  "frozenSource": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/source-correction/frozen-source.private.json",
+    "sha256": "2dc75fad9d16ab0b114805d3cd31dd464f2a0c13a30e5dc067580c801f01526a"
+  },
+  "targetedChecks": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/source-correction/targeted-checks.private.json",
+    "sha256": "915b296898b8fcad168add7282b5bdf5030a7d2fedab70bbd2ea678722ebfef7"
+  },
+  "measurement": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/source-correction/final-source-measurement.private.json",
+    "sha256": "39cbeaf03dbb95aef9586d9cc5e4ec11bc66f54a0b114354be8177be37d4f35a"
+  },
+  "build": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-read-context-index/installation/build-result.private.json",
+    "sha256": "bfd0409bcd4d40f1fd0f1185f9404a0d9a0a3d8ea476ddb9b5cafe24fb6fb90b"
+  },
+  "checksPassed": 10,
+  "changes": [
+    "Give small verified pure local reads the same existing retained identity and validation as large reads; permit existing pressure fallback to use their exact authorized reader.",
+    "Group repeated reader/source-version metadata once while preserving readable exact selectors, ranges and original call IDs.",
+    "Present identical correction text once at its last chronological occurrence; retain original correction records and distinct corrections."
+  ],
+  "preserved": [
+    "Raw call/output/capture/proof, actor/source/execution/stop/erasure validation",
+    "Newest receipt, errors/UNKNOWN, effects/progress and needed literal anchors",
+    "Normal fitting requests, original input caps, provider route and model roles",
+    "Old failed generations, usage and partial proposal"
+  ],
+  "localMeasurement": {
+    "receipts": 78,
+    "beforeBpeIncludingFraming": 64660,
+    "afterBpeIncludingFraming": 47319,
+    "knownMargin": 18217,
+    "sameInputLimit": 65536,
+    "syntheticFutureReadSaveReadbackPassed": true,
+    "syntheticAdditionalContextBpe": 3982,
+    "lastSyntheticKnownMargin": 6549,
+    "actualDynamicContextFitProven": false,
+    "providerSavingsProven": false
+  },
+  "candidateImages": {
+    "core": "sha256:5f2ffbead488815e3e3acb785fbfd3d9a39cda7b24c9650f1f6673c735f38879",
+    "delegated-work-worker": "sha256:f86ac5c941da25ec5ff01c342759a0e7125d537223d39f702fe459b3b6e63f1e"
+  },
+  "unchangedPythonSourcesPerImage": 342,
+  "usage": {
+    "evaModelRequests": 0,
+    "nativeActions": 0,
+    "databaseWrites": 0,
+    "codexDevelopmentCredits": "unknown"
+  },
+  "reportOnlyErrorPreserved": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen9-budget-transition/source-correction/measurement-export-failure-1.private.json",
+    "sha256": "60610040adfb94b0c2a3e317abcc98004009b131cc0950cc3db4b0c8582c78c1"
+  },
+  "taskOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "nativeContinuationStarted": false,
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "newComparisonSeries": false
+}
