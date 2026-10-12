@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T22:05:09.932496+00:00",
+        "checkedAt": "2026-10-12T22:07:37.140505+00:00",
         "deliveries": [
           {
             "id": "research-progress-context-installed-20261012",
@@ -5434,10 +5434,10 @@
           }
         ],
         "now": {
-          "title": "Algemene taakuitvoering herstellen; Eva’s voorstel nog open",
+          "title": "Eva maakt zelf het onderzoeksvoorstel af",
           "state": "in_progress",
-          "phase": "corrected_ordinary_continuation_preparation",
-          "taskId": "work:eva-resume:98d0ce93-a124-5d21-bd0b-747e2926b346",
+          "phase": "ordinary_research_continuation_running",
+          "taskId": "work:eva-resume:36d06219-cec5-5a7b-a144-fd01e54de3ef",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
@@ -5445,38 +5445,31 @@
           ],
           "activeExecution": true,
           "owner": "/root",
-          "executor": "Codex · algemene taakroute",
+          "executor": "Eva · Astra/medium",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva heeft bevindingen opgeslagen, maar stopte opnieuw vóór het eindvoorstel.",
-          "detail": "15 complete gemeten responses en 795.700 bekende tokens. Fout: input_budget_exceeded. Werknotities revision6; het tussenbestand is ongewijzigd.",
+          "summary": "Eva werkt verder met haar bewaarde bevindingen en gewone tools. Het eindvoorstel is nog open.",
+          "detail": "Nieuwe voortzetting generatie13 gestart na de geïnstalleerde algemene correctie. Oude fout en verbruik blijven behouden.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-ordinary-result-20261012.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/structured-stored-source-selection-ordinary-result-review-20261012.json",
           "previousResultReviewSha256": "d66d4b9e1de90b4186e7c8e6c37637977810d275be76616549de37e790e1f84a",
           "implementationStatus": "Gewone tools blijven beschikbaar; oude werknotities letterlijk éénmaal en verwerkte bronpagina’s via hun readers. Geïnstalleerd, kern en werker gezond.",
-          "currentActivity": "Geïnstalleerde correctie gebonden; één gewone voortzetting van Eva’s eigen voorstel voorbereiden.",
-          "checkedAt": "2026-10-12T22:05:09.932496+00:00",
+          "currentActivity": "Eva moet ontbrekende feiten gericht selecteren en zelf het voorstel opslaan en teruglezen.",
+          "checkedAt": "2026-10-12T22:07:37.140505+00:00",
           "remaining": [
             "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
             "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."
           ],
-          "nativeRunning": false,
+          "nativeRunning": true,
           "observedUsage": {
-            "phase": "failed",
-            "measuredResponses": 15,
-            "tools": 15,
-            "inputTokens": 791145,
-            "outputTokens": 4555,
-            "knownTokens": 795700,
-            "completeTaskUsage": null,
+            "phase": "running",
+            "measurement": "pending",
             "creditCost": null
           },
           "currentObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen12-terminal-observation.private.json",
-            "sha256": "46d6ab36a9741d8c6215dd2f72c068cece84265c412c2dda4fec049d9470f8bf",
-            "progressRevision": 6,
-            "proposalComplete": false
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/continuation-work-start.private.json",
+            "sha256": "3cb49c6106927b4c08ee89c51184109f5e1aeb4fd4a2db3fe80cdeb4cc231d7f"
           },
           "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-source-review-20261012.json",
           "sourceReviewSha256": "e67f1d52cff1411d28a8ba194ef0a5ad6ed5574f5645974f57bdf11bea489dfd",

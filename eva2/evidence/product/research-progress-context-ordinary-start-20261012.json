@@ -1,0 +1,45 @@
+{
+  "contract": "EvaOrdinaryResearchContinuationStart/v1",
+  "observedAt": "2026-10-12T22:07:37.140505+00:00",
+  "workId": "work:eva-resume:36d06219-cec5-5a7b-a144-fd01e54de3ef",
+  "parentWorkId": "work:eva-resume:98d0ce93-a124-5d21-bd0b-747e2926b346",
+  "state": "call_started",
+  "generation": 13,
+  "oneOrdinaryDispatch": true,
+  "runtimeInstalled": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-installed-20261012.json",
+    "sha256": "bf7dbfeb5c8e3b37827f2d21219eb42ed1f2a124e4a47d5e3dec00f5c03c77be"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-source-review-20261012.json",
+    "sha256": "e67f1d52cff1411d28a8ba194ef0a5ad6ed5574f5645974f57bdf11bea489dfd"
+  },
+  "preparation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/continuation-ready-preparation-manifest.private.json",
+    "sha256": "f0397314c0e2297af28a623737223935a0fe3a0f5c92ac9bf5e61e8b4d7d4915"
+  },
+  "installedBinding": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/continuation-installed-binding.private.json",
+    "sha256": "691c7eb1d0a31f04e82f06d4b67f54c9bde32361e626abcdd56ab79bc8274694"
+  },
+  "correctionAccepted": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/continuation-receipt.private.json",
+    "sha256": "3da2217171db4ac65a353a6a3e8e51e9df4a41bb490e4be9f6dc63bfd7a74b3b"
+  },
+  "workStart": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/continuation-work-start.private.json",
+    "sha256": "3cb49c6106927b4c08ee89c51184109f5e1aeb4fd4a2db3fe80cdeb4cc231d7f"
+  },
+  "retainedProgressRevision": 6,
+  "retainedDocumentBytes": 9240,
+  "retainedDocumentSha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+  "currentRequestUsage": "pending",
+  "actualFutureFitProven": false,
+  "actualPerPhaseAdmissionAuthoritative": true,
+  "originalQuestionRolesScopeBudgetsAndApprovalConditionsPreserved": true,
+  "proposalCompleted": false,
+  "ownerActionNeeded": false,
+  "wholeGoalActive": true,
+  "nativeRunning": true,
+  "newComparisonSeries": false
+}
