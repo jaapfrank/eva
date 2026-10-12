@@ -1,6 +1,31 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — menselijke leerkoppeling geïnstalleerd; latere toepassing volgt
+## Actueel 12 oktober — ontbrekende leerbronrefs in gewone recall herstellen
+
+De echte driebeurtenproef is afgesloten:3 antwoorden opgeslagen,2 oorspronkelijke
+HUE-records daadwerkelijk behouden, maar0 herzieningen. Gewone recall gaf wel
+gespreksherinneringen terug, maar niet de typed bron-/bewijsrefs voor de correctie.
+Het latere antwoord gebruikte daardoor de oude, nog ongetoetste verwachting.
+HUE1.1/HUE3.1 zijn niet afgerond; HTTP200 en bewaren tellen niet als geleerd gedrag.
+
+Werk nu uitsluitend aan dit bewezen ontbrekende terughaalpad in de bestaande
+PG/Hindsight-koppeling. Geldige actuele leerbronnen voor dezelfde private persoon
+en project moeten ook beschikbaar zijn als semantische selectie ze mist.
+Begrens en dedupliceer die context; behoud onzekerheid, bronvalidatie, retentie,
+revisies en wisgrenzen. Geen tweede geheugen, platform of concurrentenserie.
+
+Huidige proef:13 registraties,12 volledig gemeten,37.034 bekende tokens,1 helper
+onvolledig. Met de eerdere lokale setupfout:14 registraties en2 UNKNOWN.
+Volledig verbruik en credits onbekend. Vier eigen proefcontainers gesloten;
+database-/antwoord-/foutbewijs behouden. Drie opzetfouten zijn apart vastgelegd.
+Onafhankelijke NO_GO voor HUE-afronding; GO uitsluitend voor deze feitenpublicatie.
+39/48 oorspronkelijke en39/54 totale afrondingen blijven staan. Goal blijft actief.
+AIDE² blijft deel van het gehele project; spraak geparkeerd.
+
+Bewijs:eva2/evidence/product/hue-learning-ordinary-result-20261012.json.
+Review:eva2/reviews/hue-learning-ordinary-result-review-20261012.json.
+
+## Historisch 12 oktober — menselijke leerkoppeling geïnstalleerd; latere toepassing volgt
 
 HUE1.1/HUE3.1 gebruiken nu de gewone gespreksactie, bestaande geheugenuitvoer,
 Hindsight-terughalen en PostgreSQL-broncontrole. Voorlopige persoonsinterpretaties

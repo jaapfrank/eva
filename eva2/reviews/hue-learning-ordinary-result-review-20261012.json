@@ -1,0 +1,347 @@
+{
+  "contract": "EvaHueOrdinaryLearningResultReview/v1",
+  "createdAt": "2026-10-12T15:06:24.990443+00:00",
+  "decision": "GO_LIMITED_SAFE_PUBLICATION",
+  "factsPublication": "GO_LIMITED_SAFE_FACTS",
+  "scope": "One closed synthetic ordinary three-turn case; independent review of existing artifacts only, no new execution or criteria changes.",
+  "case_id": "hue-ordinary-learning-20261012-one",
+  "sourceManifestSha256": "6e69e3f60fc9c889d6aed211a58b69ae3a2c87c243e496ae91f9218543b469b1",
+  "criteriaSha256": "f70436a5db70f7f5574a31282c5f427536c63069d1505d1a8dfe0b90d9f3f547",
+  "harnessSha256": "f366737a423b28b31e2ea668441263c2ccf310e87ab4bf84e27aa1fe6b2c887b",
+  "proofs": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/case-result.private.json",
+      "sha256": "e09a549120900dc241d302c60ee931250a8016e774f7499c6692c6b69ddfc999"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/ordinary-learning-criteria-both-kinds.private.json",
+      "sha256": "f70436a5db70f7f5574a31282c5f427536c63069d1505d1a8dfe0b90d9f3f547"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/frozen-source.private.json",
+      "sha256": "6e69e3f60fc9c889d6aed211a58b69ae3a2c87c243e496ae91f9218543b469b1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/ordinary-learning-check.private.py",
+      "sha256": "f366737a423b28b31e2ea668441263c2ccf310e87ab4bf84e27aa1fe6b2c887b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-budget-root.private.json",
+      "sha256": "996274e0ade08033721158f4743544a8ae1f3003317ae38f489f1837dee04270"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/runtime-config.private.json",
+      "sha256": "d19dbc6d8fcaa343a3ecb0f456a2047678d7b841f1d7bcb7bc43057e7785e0fb"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/ordinary-learning-resource-closure.private.json",
+      "sha256": "d9b8d4e5b04b6878b0223f41d0a3c845dca5c3a44df30487fc3389ef9822316c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/core-database-after-learning-check.private.sql",
+      "sha256": "6763451d3efac4980d804ae6951cc2090fa0ed63ba4ba6814d3371e7b4d0689b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/hindsight-database-after-learning-check.private.sql",
+      "sha256": "ccbe9a88fd249aa39e412c98c4c5d141caff1152c3f3c73e356a9b2ecceeb029"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-1-committed.private.json",
+      "sha256": "7b798724921ca4b3660e0fb268b20995ba2a2c68d53888f0fee1f6b97ad974ca"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-1-input.private.json",
+      "sha256": "6f4ef2b9309f2eb4a0d1c36d3e7621be1bd270be711710bfa6add17f185b4b4b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-1-lineage.private.json",
+      "sha256": "5915323ccd953aff8b0e2ca2475b8dde0667b634accac6c531a3a771caa87a25"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-1-response.private.json",
+      "sha256": "85442ef24a1da8c30242a9feb118aeab5b5d21b3623c5617679d6fa1d45d1e7f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-2-committed.private.json",
+      "sha256": "2763ec8f1465f1c854c29ecf0247440a3ce0bdb98b148c73ccbd8bac705fa892"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-2-input.private.json",
+      "sha256": "99be821c7bc85947a200621caf76d30ce3b53855ffed1456ab97ad4740b92898"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-2-lineage.private.json",
+      "sha256": "5915323ccd953aff8b0e2ca2475b8dde0667b634accac6c531a3a771caa87a25"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-2-response.private.json",
+      "sha256": "163cbcf8fde34f0718d87cca2e34ffbe10878fe334d8700c3d8610f9017387ac"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-3-committed.private.json",
+      "sha256": "9b803b6cc57615a43762932c49ed87119eb185c5f7b7f5975c4870ac21859915"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-3-input.private.json",
+      "sha256": "1898c9f1d54b4d9160756af8b7e78f240d0aa8af10432e4ce444c1d4e874a517"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/turn-3-response.private.json",
+      "sha256": "9f8298490a48297ca6864a359b579f8be56037b6876f7a68aea581f72aa33a1c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/model-input-01.private.json",
+      "sha256": "ca1e6ca5d537994275cda28f41e80e3e71b396e7eb515a1c343f5a5e091e6f4d"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/model-input-02.private.json",
+      "sha256": "90011b138ac56341ab81e378d9bf28a89dc29546339ff7ad3941a573b58c638a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/model-input-03.private.json",
+      "sha256": "718d2c5be9755ea566f6b4e5a9717856bb031f348b9f1f491b4a790c6861083e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/model-input-04.private.json",
+      "sha256": "48501e3c33c9bc6e1493b83d38f28ac21a402a6409fb050a52202c4d8cda1559"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/model-input-05.private.json",
+      "sha256": "e86f748a28374dfac37f39c3c492c68991f9ad9778dc752525c7d6e41fc6397b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/model-input-06.private.json",
+      "sha256": "c3dbe718c53c97cdcfa552dfe2d247f54ebd8358b98d702ef5e1ce993bc8f89a"
+    }
+  ],
+  "results": {
+    "HUE1.1": {
+      "verdict": "FAIL_THIS_CASE",
+      "provisionalRecord": "PASS",
+      "realCorrectionLinked": "FAIL",
+      "currentSuccessorRecallAndLaterUse": "FAIL",
+      "reason": "Original uncertain person record was canonically stored and retained. No same-kind successor was written after correction. Later answer still treats the original premise as untested."
+    },
+    "HUE3.1": {
+      "verdict": "FAIL_THIS_CASE",
+      "prospectiveExpectation": "PASS",
+      "reportedOutcomeLinked": "FAIL",
+      "outcomeUsedLater": "FAIL",
+      "reason": "Original open expectation was stored without fabricated outcome. No outcome revision was made; later context selects only original-turn memory and does not carry the reported disconfirmation."
+    }
+  },
+  "observations": {
+    "HTTP200": 3,
+    "independentlyCommittedReplies": 3,
+    "actualForegroundPayloads": 6,
+    "validatedOriginalKinds": 2,
+    "humanUnderstandingWrites": 2,
+    "revisionWrites": 0,
+    "ordinaryToolCalls": 3,
+    "toolNames": {
+      "record_human_understanding": 2,
+      "search_personal_memory": 1
+    },
+    "lineageReadbacksByteIdentical": true,
+    "lineageReadbackSha256": "5915323ccd953aff8b0e2ca2475b8dde0667b634accac6c531a3a771caa87a25",
+    "thirdNewConversation": true,
+    "sameFixedProject": true,
+    "thirdInputRecentEmpty": true,
+    "thirdActualModelRecentEmpty": true,
+    "thirdHasCurrentStructuredHUEChain": false,
+    "thirdSelectedSources": "original turn only",
+    "elapsedSeconds": 143.08978035009932
+  },
+  "technicalFindings": {
+    "originalRecords": [
+      {
+        "kind": "person_hypothesis",
+        "source_ref": "hue-ordinary-learning-20261012-one:turn:1",
+        "evidence_ref": "human-understanding:02f46133deac5d5021f676b5457fb4475dc52ccd040a77562447d69cfb71ee33",
+        "chainLength": 1,
+        "outcome": "open",
+        "canonicalSourceVerified": true,
+        "retentionSucceeded": true
+      },
+      {
+        "kind": "expectation",
+        "source_ref": "hue-ordinary-learning-20261012-one:turn:1",
+        "evidence_ref": "human-understanding:234a435f3f8d385fe6da7ec9af33e268fcb9974bbd72789aa5af616cd9948b27",
+        "chainLength": 1,
+        "outcome": "open",
+        "canonicalSourceVerified": true,
+        "retentionSucceeded": true
+      }
+    ],
+    "sourceIngress": [
+      {
+        "turn": 1,
+        "eventPayloadSha256": "9b6d6c2db1bb07c8ab24ff0b656a1dda2f88d5efc4c61f452da55fa2ab2736f8",
+        "sourceTextSha256": "2bf26dd83bc7d255d0e3d8a162d2ff7caffc83d3399bf3ce3c3b30f35dda49aa"
+      },
+      {
+        "turn": 2,
+        "eventPayloadSha256": "7a95e7e3a60878fed6281090392961ba19e86a527fe20bc1346a3c6f57da97d1",
+        "sourceTextSha256": "048ef247aaaf04312ab36aaed623fc6d97f421a028946a7d5102e40c0b554b8e"
+      },
+      {
+        "turn": 3,
+        "eventPayloadSha256": "8850e0721b9dc16f651ebedbacf9a50693f5eedb638e9d46957dc34cadeafed6",
+        "sourceTextSha256": "6a87794b0dcb97d41465d16af9f14f33224f2b94b9cb7ed4f480dd1f7b88d95f"
+      }
+    ],
+    "currentModelContextBoundary": "Turn2 ordinary recall and explicit memory search omit typed HUE record/evidence refs; neither turn2 nor turn3 actual payload contains EvaHumanUnderstandingContext/v1.",
+    "doNotInfer": "No exclusive implementation cause, general person-learning incapability, or universal failure is inferred. This receipt identifies the concrete missing ordinary recall boundary in this case.",
+    "scopeSafety": "Synthetic private scope and own bank only; no external service action or production-person memory modification observed."
+  },
+  "usage": {
+    "current": {
+      "foreground": {
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "registered": 6,
+        "complete": 6,
+        "unknown": 0,
+        "knownInputTokens": 15240,
+        "knownOutputTokens": 864,
+        "knownTotalTokens": 16104
+      },
+      "helper": {
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "registered": 7,
+        "complete": 6,
+        "unknown": 1,
+        "knownInputTokens": 19222,
+        "knownOutputTokens": 1708,
+        "knownTotalTokens": 20930
+      }
+    },
+    "currentRegistered": 13,
+    "currentComplete": 12,
+    "currentUnknown": 1,
+    "knownInputTokens": 34462,
+    "knownOutputTokens": 2572,
+    "knownTotalTokens": 37034,
+    "previousSetupRegisteredUnknown": 1,
+    "allAttemptRegistered": 14,
+    "allAttemptComplete": 12,
+    "allAttemptUnknown": 2,
+    "fullInputTokens": null,
+    "fullOutputTokens": null,
+    "fullTotalTokens": null,
+    "creditCost": null,
+    "limitation": "One current helper remains pending at terminal snapshot; one earlier local guard attempt retains null usage. Physical closure does not settle either row. Tool count3 includes builtin personal-memory search omitted by HUE-write capture."
+  },
+  "budget": {
+    "rootMaximumRequestsIncludingHelpers": 24,
+    "currentLedgerMaximumRequests": 23,
+    "maximumTurns": 3,
+    "maximumTools": 12,
+    "maximumRegisteredTokens": 150000,
+    "observedRequestAndToolCountsWithinCeilings": true,
+    "completeTokenCeilingCompliance": "UNKNOWN",
+    "unknownAccountingStoppedCase": true
+  },
+  "historicalPreparationFailures": [
+    {
+      "ref": {
+        "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage.before-ingress-fixture-correction/case-result.private.json",
+        "sha256": "f509de35da4ea1ab8c4dfa2a0c276a0c28eb47695a54835332fa3cf826f31b1f"
+      },
+      "httpStatuses": [
+        409
+      ],
+      "registeredAttempts": 0,
+      "completeUsage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "knownPartialUsage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "historical": true
+    },
+    {
+      "ref": {
+        "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage.before-setup-guard-correction/case-result.private.json",
+        "sha256": "4ce2a8055d72e0735ce3edb264323cb92e198fe63ad647c28b3d91e014034fda"
+      },
+      "httpStatuses": [
+        503
+      ],
+      "registeredAttempts": 1,
+      "completeUsage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "knownPartialUsage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "historical": true
+    },
+    {
+      "ref": {
+        "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage.before-wire-correction/case-result.private.json",
+        "sha256": "c453e44f4c3b73051547fb8921bd6128dbaca7712cae4927ac62326281abc61c"
+      },
+      "httpStatuses": [
+        422
+      ],
+      "registeredAttempts": 0,
+      "completeUsage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "knownPartialUsage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "historical": true
+    }
+  ],
+  "cleanup": {
+    "ownContainersRemoved": 4,
+    "ownResourcesClosed": true,
+    "productionResourcesChanged": false,
+    "coldPathAlive": false,
+    "usageSettlementSeparate": true
+  },
+  "claims": {
+    "HUE1_1Completed": false,
+    "HUE3_1Completed": false,
+    "familyAcceptance": false,
+    "generalLearningQuality": false,
+    "newInputGo": false,
+    "modelsByReviewer": 0
+  },
+  "safePublicSummary": "Three ordinary answers were committed. Two provisional records were stored with source proof, but their correction was not linked and later recall used only the original information. HUE1.1 and HUE3.1 remain open. Four own resources were closed; 14 registered attempts include12 complete,2 unknown, with37034 known tokens and3 ordinary toolcalls.",
+  "reviewPreparationError": "A read-only COPY parser invocation initially failed before reading due shell backslash escaping; corrected local parsing verified the same unchanged snapshot. No DB or runtime mutation.",
+  "completionDecision": "NO_GO_HUE_COMPLETION",
+  "publicEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/hue-learning-ordinary-result-20261012.json",
+    "sha256": "512521b26ba4ea678eebd8f6f148026531d0124e7967d4fe25d48f3c20b2d0f4"
+  },
+  "publicEvidenceSha256": "512521b26ba4ea678eebd8f6f148026531d0124e7967d4fe25d48f3c20b2d0f4",
+  "prePublicationReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/ordinary-learning-result-review-before-public-binding.private.json",
+    "sha256": "ac2b01817eaa6302a04645c3e41519fd191652cbdcceb39c94b6867712f8e91e"
+  },
+  "publicationReview": {
+    "status": "passed",
+    "scope": "Only exact safe result publication. No HUE completion, further input, new model run, or revised criteria authorized.",
+    "countsMatch": true,
+    "closedResourcesMatch": true,
+    "historicalUnknownPreserved": true,
+    "noPrivateQuestionsOrInterpretationTextPublished": true,
+    "observedGapQualified": "The omitted typed-reference recall boundary is observed in this case; no exclusive internal code cause or general learning-quality claim."
+  }
+}

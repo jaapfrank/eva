@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T14:10:18.268760+00:00",
+        "checkedAt": "2026-10-12T15:06:10.748202+00:00",
         "deliveries": [
+          {
+            "id": "hue-learning-ordinary-result-20261012",
+            "date": "2026-10-12T15:06:10.717424+00:00",
+            "title": "Leercyclusproef: ontbrekende leerbronnen gevonden",
+            "state": "failed",
+            "summary": "Drie antwoorden opgeslagen; correctie niet vastgelegd en later niet toegepast.",
+            "result": "Twee oorspronkelijke leerrecords;0 revisies. Concrete oorzaak in gewone bronophaling gevonden.",
+            "remaining": "Typed-bronrefs gewoon beschikbaar maken; daarna echte latere toepassing aantonen. Geïnstalleerde bronkoppeling blijft behouden.",
+            "source": "eva2/evidence/product/hue-learning-ordinary-result-20261012.json",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/hue-learning-ordinary-result-review-20261012.json",
+            "reviewSha256": "ea07d8ae6a8022201798356b879907e0af3027e810cae978eef1296948791fc5",
+            "independentReview": "NO_GO voor HUE-afronding; GO voor exacte beperkte feitenpublicatie van het tekort."
+          },
           {
             "id": "hue-learning-connection-installed-20261012",
             "date": "2026-10-12T14:08:49.256499+00:00",
@@ -5134,7 +5149,7 @@
         "now": {
           "title": "Mensbegrip: een aanname bijstellen en later gebruiken",
           "state": "in_progress",
-          "phase": "human_learning_installed_later_use_check",
+          "phase": "typed_human_learning_recall_correction",
           "taskId": "HUE1.1",
           "linkedTaskIds": [
             "HUE3.1"
@@ -5143,8 +5158,8 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Gewone geheugenkoppeling gebouwd, gecontroleerd en geïnstalleerd. Nu de latere toepassing met echte Hindsight en een echt model afzonderlijk aantonen.",
-          "detail": "Zes exacte modules geïnstalleerd in kern en werker, beide gezond.16 unieke gerichte controles geslaagd; proefopzetfouten behouden. Echte modelkeuze, daadwerkelijke Hindsight-retentie en later gewijzigd antwoord staan nog open.",
+          "summary": "Concreet leerprobleem gevonden: gewone geheugenophaling geeft wel gespreksherinneringen, maar mist de bewaarde leerbronnen. Die aansluiting wordt nu gericht hersteld.",
+          "detail": "Drie echte beurten HTTP200, maar slechts twee oorspronkelijke HUE-records en geen revisies. Later veranderd gedrag niet bewezen. Bronfix blijft binnen bestaande PG/Hindsight-route; geen extra platform.",
           "doneWhen": "Een later gewoon gesprek gebruikt de gewijzigde afweging, met behouden oorspronkelijke bronnen, onzekerheid en persoonsgrenzen.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "eva2/evidence/product/native-work-preserved-proposal-followup-result-20261012.json",
@@ -5169,15 +5184,15 @@
             "independentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T14:10:18.268760+00:00",
+            "checkedAt": "2026-10-12T15:06:10.748120+00:00",
             "coordinator": "/root",
-            "coordinatorTask": "Exacte installatie verifiëren en actuele oplevering publiceren.",
+            "coordinatorTask": "Correctie integreren in gewone recall en werkend geïnstalleerd opleveren.",
             "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Bronkandidaat bevroren;16 gerichte controles geslaagd.",
+            "executorTask": "De bewezen ontbrekende typed-bronrefs in de bestaande geheugenroute corrigeren.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Geïnstalleerde kandidaat beoordelen; één afzonderlijke gewone latere-gebruiksproef voorbereiden met eigen synthetisch geheugen.",
-            "modelUsage": "0 nieuwe Eva-modelaanvragen voor deze broncontrole en installatie; native proef nog niet gestart.",
-            "note": "Geen handeling van Jaap nodig; spraak geparkeerd. Oude tests en fouten blijven zichtbaar."
+            "reviewerTask": "Gesloten echte proef onafhankelijk beoordelen; geen nieuwe modeluitvoering.",
+            "modelUsage": "14 registraties inclusief behouden setupfout;12 volledig gemeten aanvragen,37.034 bekende tokens,2 onvolledige registraties. Volledig totaal en creditkosten onbekend.",
+            "note": "Geen handeling van Jaap nodig. Geen nieuwe vergelijkingsserie of spraakwerk."
           }
         },
         "next": {
@@ -5193,7 +5208,7 @@
         },
         "ownerAction": null,
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T14:01:31.800461+02:00",
+        "reviewedAt": "2026-10-12T15:07:36.187047+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",

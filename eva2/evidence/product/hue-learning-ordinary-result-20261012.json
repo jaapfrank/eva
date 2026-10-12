@@ -1,0 +1,91 @@
+{
+  "contract": "EvaHumanLearningOrdinaryProductResult/v1",
+  "recordedAt": "2026-10-12T15:06:10.717424+00:00",
+  "status": "not_completed",
+  "taskIds": [
+    "HUE1.1",
+    "HUE3.1"
+  ],
+  "sourceManifestSha256": "6e69e3f60fc9c889d6aed211a58b69ae3a2c87c243e496ae91f9218543b469b1",
+  "scriptSha256": "f366737a423b28b31e2ea668441263c2ccf310e87ab4bf84e27aa1fe6b2c887b",
+  "criteriaSha256": "f70436a5db70f7f5574a31282c5f427536c63069d1505d1a8dfe0b90d9f3f547",
+  "result": {
+    "committedUserTurns": 3,
+    "httpStatuses": [
+      200,
+      200,
+      200
+    ],
+    "originalTypedWrites": 2,
+    "typedRevisions": 0,
+    "ordinaryCommittedToolCalls": 3,
+    "harnessCapturedHueWrites": 2,
+    "laterAdaptedBehaviorProven": false,
+    "cause": "Ordinary recall exposed conversation memories but omitted the retained typed HUE source/evidence references. The correction turn could not bind a revision; the later turn still used the original untested expectation."
+  },
+  "usage": {
+    "currentRegistrations": 13,
+    "currentCompleteRequests": 12,
+    "currentUnknownRequests": 1,
+    "foregroundCompleteRequests": 6,
+    "foregroundKnownTokens": 16104,
+    "helperRegistrations": 7,
+    "helperCompleteRequests": 6,
+    "helperKnownTokens": 20930,
+    "knownPartialTokens": {
+      "input_tokens": 34462,
+      "output_tokens": 2572,
+      "total_tokens": 37034
+    },
+    "currentTotalUsage": null,
+    "previousGuardRegistrationUsage": null,
+    "combinedRegistrationsIncludingPreservedSetup": 14,
+    "combinedUnknownRegistrations": 2,
+    "creditCost": null,
+    "developmentCreditCost": null,
+    "elapsedSeconds": 143.08978035009932,
+    "timingBoundary": "Own native core process includes isolated helper readiness, three substantive turns and ordinary retention; not a contact latency benchmark."
+  },
+  "scope": {
+    "syntheticPrivatePersonAndProject": true,
+    "productionPrivateDataUsed": false,
+    "productionInstallationChangedByProbe": false,
+    "ownResourcesClosed": true,
+    "comparison": false,
+    "newTaskIds": false
+  },
+  "preparationErrorsPreserved": [
+    "API audience dataclass export rejected before model; corrected via existing wire converter.",
+    "Measurement guard rejected ordinary provider tool_search before inner HTTP transport; local registration remains UNKNOWN.",
+    "Root initially cleared only seed tables, retaining ingress journal; corrected by clearing all rows in the explicitly isolated eva_core schema."
+  ],
+  "evidence": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage/case-result.private.json",
+      "sha256": "e09a549120900dc241d302c60ee931250a8016e774f7499c6692c6b69ddfc999"
+    },
+    "closure": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/ordinary-learning-resource-closure.private.json",
+      "sha256": "d9b8d4e5b04b6878b0223f41d0a3c845dca5c3a44df30487fc3389ef9822316c"
+    },
+    "wireFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage.before-wire-correction/case-result.private.json",
+      "sha256": "c453e44f4c3b73051547fb8921bd6128dbaca7712cae4927ac62326281abc61c"
+    },
+    "guardFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage.before-setup-guard-correction/case-result.private.json",
+      "sha256": "4ce2a8055d72e0735ce3edb264323cb92e198fe63ad647c28b3d91e014034fda"
+    },
+    "fixtureFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/native-usage.before-ingress-fixture-correction/case-result.private.json",
+      "sha256": "f509de35da4ea1ab8c4dfa2a0c276a0c28eb47695a54835332fa3cf826f31b1f"
+    }
+  },
+  "independentReview": {
+    "path": "eva2/reviews/hue-learning-ordinary-result-review-20261012.json",
+    "status": "pending_binding_to_exact_publication"
+  },
+  "nextAction": "Correct the proven typed-reference recall gap in the existing PG/Hindsight ordinary route; do not start a comparison series or mark HUE complete from successful HTTP responses.",
+  "fullAide2Completed": false,
+  "wholeProjectCompleted": false
+}
