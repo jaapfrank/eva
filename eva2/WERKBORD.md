@@ -1,6 +1,24 @@
-## Actueel werk — 2026-10-12T00:52:04.196211+00:00
+## Actueel werk — 2026-10-12T01:02:38.151910+00:00
 
-## Actueel 12 oktober — evaluatiekoppeling gebouwd; echte uitvoering nog open
+## Actueel 12 oktober — werkaanpak verbeteren: uitvoering in aanbouw
+
+De evaluatiekoppeling is gebouwd en voor haar eerdere exacte bron beoordeeld.
+Nu maken de bestaande uitvoerder en onafhankelijke reviewer de concrete
+werkuitvoering en vaste eindbeoordeling af. De coördinator sluit de oorspronkelijke
+taakduur en de eindbeoordeling aan. Geen tweede platform of nieuwe vergelijking.
+
+**Huidige bronwijzigingen:** in aanbouw, nog niet gericht getest/beoordeeld of
+geïnstalleerd. Daarna echte opdrachten uitvoeren, kwaliteitswinst onafhankelijk
+vaststellen, alleen bewezen winst toepassen en later gebruiken.
+De eerdere geïnstalleerde hulpmiddelverbetering blijft behouden.
+39/48 oorspronkelijke afrondingen en gezinsacceptaties blijven staan.
+Het gehele projectgoal blijft actief; volledige AIDE² en initiatief blijven open.
+Geen handeling van Jaap nodig; spraak blijft geparkeerd.
+
+Dashboardinhoud gecontroleerd op 2026-10-12T01:02:38.151910+00:00.
+Statusbewijs: eva2/evidence/product/dashboard-native-work-production-in-progress-20261012.json.
+
+## Historisch 12 oktober — evaluatiekoppeling gebouwd; echte uitvoering nog open
 
 De bestaande evaluatieaanroep is uitgebreid met haar oorspronkelijke taak- en
 codevoorstelbinding. De host controleert aangeboden bron tegen het oorspronkelijke

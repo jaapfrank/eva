@@ -1,0 +1,38 @@
+{
+  "contract": "EvaProjectDashboardCurrentSource/v1",
+  "checkedAt": "2026-10-12T01:02:38.151910+00:00",
+  "status": "production_execution_in_progress",
+  "wholeGoalStatus": "active",
+  "meaning": "Nu worden echte werkopdrachten aangesloten op de bestaande verbeterroute. De uitvoerder en onafhankelijke beoordeling zijn in aanbouw; nog niet geïnstalleerd.",
+  "workOwners": {
+    "coordinator": "/root",
+    "executor": "/root/eva1_memory_transfer",
+    "independentReviewer": "/root/product_execution_memory_review"
+  },
+  "alreadyBuiltEvidence": "eva2/evidence/product/dashboard-native-work-execution-current-20261012.json",
+  "previousExactSourceReview": "eva2/reviews/native-work-execution-source-review-20261012.json",
+  "currentChanges": {
+    "producerFileExists": true,
+    "producerComplete": false,
+    "deadlineTransferInProgress": true,
+    "independentFinalAuthorityPending": true,
+    "productionChangesTested": false,
+    "productionChangesReviewed": false,
+    "installed": false
+  },
+  "lastInstalledEvidence": "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json",
+  "authenticNativeExecutionProven": false,
+  "fullAide2Completed": false,
+  "productFunctionCompleted": false,
+  "historicalTaskValuesPreserved": {
+    "executionTasks": "080b844ba19e8039d9bc40b63e86fe439b0926033dc8cea204a2e2047060b7ad",
+    "milestones": "2ba42c830d0c97cc6590da628d5520e9d97dc8d2c91380b58e9e387ce6505627",
+    "completions": "5d41ad2f06ca191463c651fc2e1c38494f85827affa56f2fb70830c08c3a897d"
+  },
+  "historicalSmallCompletions": "39/48; geen nieuwe oorspronkelijke afronding",
+  "newManualEvaModelRequests": 0,
+  "usageScope": "Bron- en dashboardwerk. Automatisch runtimeverbruik niet gemeten; ontwikkelcredits onbekend.",
+  "ownerActionRequired": false,
+  "newCompetitorSeriesStarted": false,
+  "oldClosedTrialPreserved": true
+}

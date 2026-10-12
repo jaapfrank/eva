@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T00:52:04.196211+00:00",
+  "lastUpdated": "2026-10-12T01:02:38.151910+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -125,19 +125,19 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Geheugen en zelfgemaakte hulpmiddelen zijn later toegepast. Nu authentiek initiatief en terugmelding afmaken; de onhaalbare AIDE-aansturingsproef wordt niet doorgedraaid.",
+      "summary": "De geheugenbasis en persoonlijkheid zijn geaccepteerd. Eva heeft een zelfgemaakt hulpmiddel verbeterd en later gebruikt. Nu ontbreekt nog de volledige verbetering van haar werkaanpak; daaraan wordt gewerkt.",
       "nextOutcomes": [
         {
-          "title": "Nu · eigen initiatief werkelijk uitvoeren",
-          "detail": "De AIDE-aansturingsproef wordt niet doorgedraaid: de vastgelegde vier aanvragen zijn onvoldoende voor de vereiste zes handelingen. Nu controleren we de actuele eigen initiatieven en maken werkelijk beschikbaar werk af."
+          "title": "Nu · werkaanpak verbeteren",
+          "detail": "Echte baseline- en kandidaatopdrachten via de bestaande uitvoerder aansluiten. Gerichte controle en installatie horen bij deze ene uitkomst."
         },
         {
-          "title": "Daarna · agentaansturing verbeteren en gezinsgebruik afronden",
-          "detail": "Een aantoonbare verbetering van de werkaanpak onafhankelijk beoordelen, toepassen en bij later werk gebruiken. Daarna herhaald passend initiatief en samenhangend gezinsgebruik afronden."
+          "title": "Daarna · verbetering toepassen en later gebruiken",
+          "detail": "Een vaste onafhankelijke eindbeoordeling bepaalt of de werkaanpak beter wordt. Alleen bewezen winst toepassen; later gebruik apart aantonen."
         },
         {
-          "title": "Eindpunt · Eén bruikbare digitale huisgenoot",
-          "detail": "De vier productuitkomsten samen opleveren met onafhankelijke eindbeoordeling en gezinsacceptatie. Het volledige goal blijft actief; AIDE² is nog niet af."
+          "title": "Vervolgens · initiatief en geheel afronden",
+          "detail": "Passend zelfstandig initiatief, resultaatterugmelding en de vier huisgenootuitkomsten samen opleveren. Spraak blijft geparkeerd; het hele projectgoal blijft actief."
         }
       ],
       "openRisks": [
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T00:52:04.196211+00:00",
+        "checkedAt": "2026-10-12T01:02:38.151910+00:00",
         "deliveries": [
           {
             "title": "Zelfgekozen verbeterd hulpmiddel toepasbaar",
@@ -4784,47 +4784,46 @@
           }
         ],
         "now": {
-          "title": "AIDE²: echte werkuitvoering aansluiten",
+          "title": "Eva haar werkaanpak laten verbeteren",
           "state": "in_progress",
-          "phase": "native_work_strategy_source_reviewed",
+          "phase": "native_work_producer_in_progress",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Bron geschreven, gericht getest en beoordeeld; nog niet geïnstalleerd. Concrete werkproducent en productieconfiguratie ontbreken nog.",
-          "detail": "Gebouwd: de bestaande evaluatieaanroep neemt de oorspronkelijke taak en het codevoorstel mee. De host controleert dat de aangeboden bron bij die taak hoort en verwerkt werkbewijs in de bestaande beoordelingsroute. Gericht gecontroleerd: 84 adapter/clientchecks en een aparte hostrun met 128 geslaagde checks en één bestaande skip; geen nieuwe Eva-modelaanvragen. Nog af te maken: de echte werkproducent aansluiten, vaste werkbeoordeling registreren, installeren en baseline/kandidaat daadwerkelijk laten uitvoeren. Daarna een bewezen verbetering toepassen en later gebruiken. De eerdere geslaagde hulpmiddelverbetering blijft behouden; deze nieuwe koppeling bewijst nog geen slimmer gedrag. Bronreview GO voor deze vijf modules. Een wijziging van de beoordelingsregels tijdens baseline stopt kandidaatwerk; twee gerichte checks na die correctie geslaagd.",
-          "source": "eva2/evidence/product/dashboard-native-work-execution-current-20261012.json",
-          "doneWhen": "De geïnstalleerde bestaande verbeterroute voert baseline en kandidaat op echte opdrachten uit, beoordeelt kwaliteit en hulp onafhankelijk en past uitsluitend bewezen verbetering toe; later gebruik wordt afzonderlijk aangetoond.",
-          "review": "eva2/reviews/native-work-execution-source-review-20261012.json",
-          "reviewSha256": "64b41bd3da86232337e45306e3eafe37511f65a97c22487385ebe44f689873c7",
+          "summary": "Nu worden echte werkopdrachten aangesloten op de bestaande verbeterroute. De uitvoerder en onafhankelijke beoordeling zijn in aanbouw; nog niet geïnstalleerd.",
+          "detail": "Al gedaan: de evaluatiekoppeling is gebouwd, gericht gecontroleerd en beoordeeld. Nu: een werkopdracht via Eva's bestaande kern en werker uitvoeren, oorspronkelijke taakduur en stoppen behouden, en de aparte eindbeoordeling aansluiten. Twee agents werken aan uitvoering en vaste beoordeling. De huidige aanpassingen zijn nog niet opnieuw beoordeeld of geïnstalleerd. Daarna moet een echte verbetering worden gemeten, toegepast en later gebruikt.",
+          "source": "eva2/evidence/product/dashboard-native-work-production-in-progress-20261012.json",
+          "doneWhen": "Eva verbetert haar werkaanpak op echte opdrachten; de onafhankelijke beoordeling bevestigt betere resultaten of minder hulp. Alleen bewezen winst wordt toegepast en bij later gewoon werk gebruikt.",
           "implementationStatus": {
-            "built": true,
-            "targetedChecksPassed": true,
+            "evaluationBridgeBuilt": true,
+            "previousBridgeSourceReview": "GO, eerdere exacte bron",
+            "currentProductionChangesUnderReview": false,
+            "currentProductionChangesTested": false,
             "installed": false,
             "authenticNativeExecutionProven": false,
-            "independentSourceReview": "GO",
             "fullAide2Completed": false
           }
         },
         "next": {
-          "title": "Werkproducent aansluiten en installeren",
+          "title": "Aansluiting installeren en echte verbetering aantonen",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md",
-          "summary": "Bestaande kern en werker gebruiken voor echte baseline-/kandidaatopdrachten.",
-          "detail": "Na de bronreview: de concrete werkproducent en vaste beoordeling aansluiten, exact installeren en één relevante verbetercyclus afmaken. Geen nieuwe concurrentenserie."
+          "summary": "Na gerichte broncontrole: installeren, echte opdrachten uitvoeren en de beste werkaanpak onafhankelijk beoordelen.",
+          "detail": "Een aantoonbare verbetering toepassen en bij een volgende opdracht gebruiken. Bij gelijkspel of verlies blijft de huidige werkaanpak staan. Geen nieuwe concurrentenserie."
         },
         "ownerAction": {
           "required": false,
           "title": "Geen handeling van jou nodig",
-          "detail": "Codex maakt de productieaansluiting af. Voor deze stap hoef je niets te testen of aan te melden.",
+          "detail": "Geen handeling van jou nodig. Codex en twee agents maken de uitvoering en onafhankelijke beoordeling af.",
           "steps": [],
           "expected": "Dashboard onderscheidt geïnstalleerd, daadwerkelijk gebruikt en geaccepteerd.",
           "blocksIndependentWork": false,
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T00:52:04.196211+00:00",
+        "reviewedAt": "2026-10-12T01:02:38.151910+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4899,10 +4898,33 @@
           "automaticForegroundPropagationVerified": true,
           "manualRefreshVerified": true,
           "javascriptErrors": []
+        },
+        "historicalNowBeforeNativeProducer20261012": {
+          "title": "AIDE²: echte werkuitvoering aansluiten",
+          "state": "in_progress",
+          "phase": "native_work_strategy_source_reviewed",
+          "activeExecution": true,
+          "owner": "/root",
+          "executor": "/root/eva1_memory_transfer",
+          "reviewer": "/root/product_execution_memory_review",
+          "summary": "Bron geschreven, gericht getest en beoordeeld; nog niet geïnstalleerd. Concrete werkproducent en productieconfiguratie ontbreken nog.",
+          "detail": "Gebouwd: de bestaande evaluatieaanroep neemt de oorspronkelijke taak en het codevoorstel mee. De host controleert dat de aangeboden bron bij die taak hoort en verwerkt werkbewijs in de bestaande beoordelingsroute. Gericht gecontroleerd: 84 adapter/clientchecks en een aparte hostrun met 128 geslaagde checks en één bestaande skip; geen nieuwe Eva-modelaanvragen. Nog af te maken: de echte werkproducent aansluiten, vaste werkbeoordeling registreren, installeren en baseline/kandidaat daadwerkelijk laten uitvoeren. Daarna een bewezen verbetering toepassen en later gebruiken. De eerdere geslaagde hulpmiddelverbetering blijft behouden; deze nieuwe koppeling bewijst nog geen slimmer gedrag. Bronreview GO voor deze vijf modules. Een wijziging van de beoordelingsregels tijdens baseline stopt kandidaatwerk; twee gerichte checks na die correctie geslaagd.",
+          "source": "eva2/evidence/product/dashboard-native-work-execution-current-20261012.json",
+          "doneWhen": "De geïnstalleerde bestaande verbeterroute voert baseline en kandidaat op echte opdrachten uit, beoordeelt kwaliteit en hulp onafhankelijk en past uitsluitend bewezen verbetering toe; later gebruik wordt afzonderlijk aangetoond.",
+          "review": "eva2/reviews/native-work-execution-source-review-20261012.json",
+          "reviewSha256": "64b41bd3da86232337e45306e3eafe37511f65a97c22487385ebe44f689873c7",
+          "implementationStatus": {
+            "built": true,
+            "targetedChecksPassed": true,
+            "installed": false,
+            "authenticNativeExecutionProven": false,
+            "independentSourceReview": "GO",
+            "fullAide2Completed": false
+          }
         }
       },
-      "reviewedAt": "2026-10-12T00:52:04.196211+00:00",
-      "checkedAt": "2026-10-12T00:52:04.196211+00:00",
+      "reviewedAt": "2026-10-12T01:02:38.151910+00:00",
+      "checkedAt": "2026-10-12T01:02:38.151910+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11195,8 +11217,8 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T00:23:58.026721+00:00",
-        "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Gewoon werk, leren van feedback en hulpmiddelverbetering/later gebruik hebben beperkt echt bewijs. Native initiatiefgeheugen en beoordeelde hulpmiddeltoepassing zijn nu geïnstalleerd; authentieke volledige verbetercyclus en agentaansturing blijven open.",
+        "checkedAt": "2026-10-12T01:02:38.151910+00:00",
+        "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Geaccepteerde persoonlijkheid en geheugenbasis blijven behouden. De volledige leercyclus en AIDE² zijn nog niet af.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
         "rows": [
@@ -11277,7 +11299,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T00:52:04.196211+00:00",
+      "lastUpdatedAt": "2026-10-12T01:02:38.151910+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11706,6 +11728,16 @@
         "browserReadback": "Verified in existing IAB tab before source-review addition; final rendered readback pending.",
         "sourceReviewPath": "eva2/reviews/native-work-execution-source-review-20261012.json",
         "sourceReviewSha256": "64b41bd3da86232337e45306e3eafe37511f65a97c22487385ebe44f689873c7"
+      },
+      "dashboardVerificationNativeProductionCurrent20261012": {
+        "checkedAt": "2026-10-12T01:02:38.151910+00:00",
+        "source": "eva2/evidence/product/dashboard-native-work-production-in-progress-20261012.json",
+        "sourceContentAligned": true,
+        "renderedCheckPending": false,
+        "visibleCurrentTask": true,
+        "visibleNextStep": true,
+        "visibleOwnerAction": true,
+        "visibleContentCheckedAt": "12-10-2026, 03:02:38"
       }
     },
     "pendingTechnicalReview": {
@@ -33805,5 +33837,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T00:52:04.196211+00:00"
+  "updatedAt": "2026-10-12T01:02:38.151910+00:00"
 }
