@@ -1,3 +1,31 @@
+## Actueel 13 oktober — eigen tussenvoorstel bewaard; actieve werkcontext herstellen
+
+De gewone Gen14 is gesloten met incomplete_work. Alle32 aanvragen zijn gemeten
+en afgesloten:1.330.616 tokens en30 tools; geen huidige UNKNOWN. Historisch
+taakverbruik en creditkosten blijven onbekend. Eva schreef zelf een10.732-byte
+tussenvoorstel (voorheen9.240). Schrijfproof en onafhankelijke volumeread zijn exact;
+de aparte native tekstreader verwijdert alleen één terminaleLF, met eigen hash.
+
+Onafhankelijke oorspronkelijke eindreview: INCOMPLETE. Namen, risico's, volgorde
+en terugrol zijn bruikbaar. Bereikbaar afhankelijkheden-/mapping-/registryonderzoek
+blijft onvoldoende. Lokale keys/IP/protocol/fysieke tests/open namen mogen latere
+uitvoeringsvoorwaarden blijven. Geen HA-mutaties of handgeschreven voorstel.
+
+Hetzelfde oude eigen concept is vijfmaal aan het begin en tweemaal aan de staart
+opnieuw gelezen. De algemene checkpointselectie archiveert deze actieve werkpagina's
+ook als onderzoeksbron. Dit is een bewezen bijdragend mechanisme, geen exclusieve
+modelintentieclaim. Herstel nu alleen dit algemene onderscheid: bewezen taakgeschreven,
+versiegebonden werkpagina's deduplicerend zichtbaar houden; gewone onderzoeksdata,
+bronbinding, privacy, stop, actuele resultaten en bestaande admission blijven behouden.
+Eerst echte contextreplay en bronreview; geen blind modelvervolg of nieuwe vergelijking.
+
+Geheel goal blijft ACTIVE;39/48 oorspronkelijk en39/54 uitgebreid ongewijzigd.
+Spraak geparkeerd; Docker Desktop ongemoeid. De HA-migratie wacht op apart akkoord
+op Eva's afgeronde voorstel.
+
+Resultaat: eva2/evidence/product/historical-context-index-ordinary-result-20261013.json.
+Review: eva2/reviews/historical-context-index-ordinary-result-review-20261013.json.
+
 ## Actueel 13 oktober — historische taakcontext lokaal bereikbaar; Eva hervat voorstel
 
 De algemene achtergrondroute archiveert haar exacte historische navigatie-index nu

@@ -1,0 +1,25 @@
+{
+  "contract": "EvaOriginalProposalEndReviewPublication/v1",
+  "status": "INCOMPLETE",
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-original-proposal-end-review.private.json",
+    "sha256": "86cf868930205976d5726f106b0e6d159e2c5abf2311805ecf1ded84263a38e2"
+  },
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-ordinary-result-20261013.json",
+    "sha256": "621aa2c72f7f7fac164cf05d526717a404c40060d99464a4ff64ae30dc7abcea"
+  },
+  "originalCriteriaOnly": true,
+  "nativeStatusPreserved": "failed/incomplete_work",
+  "documentWriteAndIndependentVolumeRead": "PASS",
+  "separateNativeTextRead": "Same content except one terminal LF; raw hashes remain distinct.",
+  "proposalComplete": false,
+  "newProductFunctionCompleted": false,
+  "manualProposal": false,
+  "newInputAuthority": false,
+  "knownCurrentTokens": 1330616,
+  "creditCost": null,
+  "homeAssistantMutations": 0,
+  "conclusion": "The useful saved draft is genuine Eva output. Original reachable research gaps remain; no final proposal or product completion.",
+  "nextCorrection": "Keep provenance-bound pages of the active task-authored artifact readable across checkpoints and deduplicate identical reads; preserve research archive, admission, privacy, stop and proofs."
+}

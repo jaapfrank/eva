@@ -1,0 +1,116 @@
+{
+  "contract": "EvaOrdinaryResearchExecutionResult/v1",
+  "observedAt": "2026-10-12T23:13:34.723754+00:00",
+  "workId": "work:eva-resume:bd1e52e4-fc41-5d0a-a3b5-b0a11ebfee69",
+  "state": "failed",
+  "errorCode": "incomplete_work",
+  "proposalCompleted": false,
+  "newDocumentSave": true,
+  "completeMeasuredResponses": 32,
+  "admittedRequests": 32,
+  "unknownCurrentRequests": 0,
+  "allCurrentStreamsClosed": true,
+  "inputTokens": 1320001,
+  "outputTokens": 10615,
+  "knownTokens": 1330616,
+  "toolCalls": 30,
+  "taskUsage": "partial",
+  "completeHistoricalTaskTokens": null,
+  "creditCost": null,
+  "document": {
+    "actual": {
+      "byte_length": 10732,
+      "mode": "0o600",
+      "mtime_utc": "2026-10-12T23:04:10.274789+00:00",
+      "sha256": "969224f39a40621dc757e0ccf5c220ce987fd80b99e274fbedece7b4a30946d3",
+      "uid": 10001
+    },
+    "before": {
+      "byte_length": 9240,
+      "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732"
+    },
+    "separate_read_receipt": {
+      "actual_equals_read_plus_one_LF": true,
+      "actual_exactly_matches_read": false,
+      "call_id": "call_a081f133e53f4b91ae64f18406198939",
+      "content_bytes": 10731,
+      "content_sha256": "eef70333dba2d7a11ed821c780ff68103b5b73ab29e06a9dc7daa8da9d0fc311",
+      "status": "verified",
+      "step": 176,
+      "tool_name": "eva-workspace-read-text-file"
+    },
+    "task_quality_assessed_by_observer": false,
+    "write_receipt": {
+      "actual_exactly_matches_write": true,
+      "call_id": "call_3273b7df0226499ea73ddcbfb10bf357",
+      "content_bytes": 10732,
+      "content_sha256": "969224f39a40621dc757e0ccf5c220ce987fd80b99e274fbedece7b4a30946d3",
+      "proof_sha256": "8be8821fb6d7c97769310b1cb0e85378182d8f4ccb8142c0e32f765be5afcb68",
+      "status": "verified",
+      "step": 175,
+      "tool_name": "eva-workspace-write-file"
+    }
+  },
+  "workingNotesRevision": 14,
+  "workingNotesOriginalStepIdsPreserved": true,
+  "localReadCount": 19,
+  "workingNoteSaveCount": 7,
+  "localReadStatus": {
+    "verified": 18,
+    "selectionInvalid": 1
+  },
+  "exactRepeatedWorkingDocumentReadSteps": [
+    [
+      150,
+      170
+    ],
+    [
+      151,
+      156,
+      161,
+      168,
+      173
+    ]
+  ],
+  "hostIndexCaptures": 17,
+  "actualHostIndexReaderUses": 2,
+  "newHomeAssistantRequests": 2,
+  "homeAssistantMutations": 0,
+  "contentAssessment": "INCOMPLETE; useful names, risks, sequence and rollback. Reachable dependency and mapping research remains incomplete.",
+  "allowedImplementationUnknowns": [
+    "Local keys/IP/protocol",
+    "Physical compatibility and DP tests",
+    "Open name/location choices"
+  ],
+  "remainingOriginalResearch": [
+    "Relevant available automation/device-ID references and remaining dashboard",
+    "Available registry and individual mapping evidence",
+    "History/recorder coverage or a concrete source-access boundary"
+  ],
+  "workingArtifactContextMechanism": "The same immutable task-authored draft pages are archived after checkpoints and then read again. A contributing mechanism, not an exclusive model-intent claim.",
+  "terminalObservation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-terminal-observation.private.json",
+    "sha256": "f9cb3396ae2eff58a34d2e869d6e4c44233b947f4e78285cc37837138948361a"
+  },
+  "toolObservation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-terminal-tool-observation.private.json",
+    "sha256": "68c9ec46ee14b4639d1193eb140f56d34ee843618cc0bed15aaa14bc4a9706d0"
+  },
+  "workingArtifactLineage": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-working-document-reader-lineage.private.json",
+    "sha256": "3e62790154637b2767ce7a903ca7bc71eec2c7f85c986ac33eb688a4b87a6fa0"
+  },
+  "originalCriteriaReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-original-proposal-end-review.private.json",
+    "sha256": "86cf868930205976d5726f106b0e6d159e2c5abf2311805ecf1ded84263a38e2"
+  },
+  "sourceInstalled": true,
+  "nativeRunning": false,
+  "newProductFunctionCompleted": false,
+  "wholeGoalActive": true,
+  "originalCompletedTasks": "39/48",
+  "expandedCompletedTasks": "39/54",
+  "newComparisonSeries": false,
+  "manualProposal": false,
+  "limitsRolesScopeAndOldFailuresPreserved": true
+}

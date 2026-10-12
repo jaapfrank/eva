@@ -1021,8 +1021,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T22:18:02.697680+00:00",
+        "checkedAt": "2026-10-12T23:19:40.884826+00:00",
         "deliveries": [
+          {
+            "id": "historical-context-index-ordinary-result-20261013",
+            "title": "Echt tussenvoorstel bewaard; eindonderzoek niet afgerond",
+            "date": "2026-10-12T23:13:34.723754+00:00",
+            "state": "failed",
+            "statusLabel": "Niet afgerond",
+            "summary": "Eva breidde haar eigen bestand uit; de herleeslus van het oude werkdocument bleef bestaan.",
+            "result": "32 complete responses · 30 tools · 1.330.616 tokens in deze uitvoering. Historisch totaal en creditkosten onbekend.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-ordinary-result-20261013.json",
+            "userResultComplete": false,
+            "newProductFunctionCompleted": false
+          },
           {
             "id": "research-progress-context-ordinary-result-20261012",
             "title": "Eigen voorstel niet afgerond; opnieuw herlezen en invoergrens",
@@ -5448,7 +5460,7 @@
         "now": {
           "title": "Algemene taakuitvoering herstellen; voorstel nog niet af",
           "state": "in_progress",
-          "phase": "ordinary_proposal_continuation_after_index_install",
+          "phase": "active_working_artifact_context_correction",
           "taskId": "work:eva-resume:bd1e52e4-fc41-5d0a-a3b5-b0a11ebfee69",
           "linkedTaskIds": [
             "TL-001",
@@ -5459,39 +5471,66 @@
           "owner": "/root",
           "executor": "Codex · algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva maakt zelf het gevraagde voorstel via haar gewone achtergrondroute.",
-          "detail": "Exacte Gen14-voortzetting van de bewaarde Gen13-taak. Oude verliezen en verbruik blijven staan; geen migratie vóór akkoord.",
+          "summary": "Eigen werkdocument in de algemene taakcontext behouden; voorstel nog niet af.",
+          "detail": "Eva heeft het bestand uitgebreid van 9.240 naar 10.732 bytes, maar de oorspronkelijke onderzoekopdracht niet afgemaakt. Deze uitvoering gebruikte 32 complete modelresponses en 1.330.616 tokens; geen nieuwe voortzetting gestart.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-ordinary-result-20261012.json",
-          "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-ordinary-result-review-20261012.json",
-          "previousResultReviewSha256": "f44b500d1fd53f17ac92361e88efe425ae4a6ae66a50e79aff516c3fcb4b61cd",
+          "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-ordinary-result-20261013.json",
+          "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/historical-context-index-ordinary-result-review-20261013.json",
+          "previousResultReviewSha256": "72b4d84083e1c63c9cbf73241577164cbc1e23f036cd9f9726644af8742d6009",
           "implementationStatus": "Algemene contextcorrectie geïnstalleerd; kern en werker gezond. Eva werkt aan haar eigen voorstel; afronding nog niet bevestigd.",
-          "currentActivity": "Eva hervat de oorspronkelijke leesopdracht met de geïnstalleerde algemene contextcorrectie. Nieuwe poging gestart; nog geen bevestigd eindvoorstel.",
-          "checkedAt": "2026-10-12T22:55:48.701273+00:00",
+          "currentActivity": "Gerichte broncorrectie en controles voor herlezing van eigen werkdocumenten. Geen nieuwe modeluitvoering gestart.",
+          "checkedAt": "2026-10-12T23:19:40.884826+00:00",
           "remaining": [
-            "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
-            "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."
+            "De algemene correctie op echte bewaarde context controleren, onafhankelijk beoordelen en installeren.",
+            "Eva zelf het oorspronkelijke bereikbare resterende onderzoek en haar voorstel laten afmaken.",
+            "HA-migratie pas na apart akkoord op het afgeronde voorstel."
           ],
-          "nativeRunning": true,
+          "nativeRunning": false,
           "observedUsage": {
-            "phase": "call_started",
-            "completeMeasuredResponses": null,
-            "knownTokens": null,
-            "tools": null,
-            "completeTaskUsage": null,
+            "phase": "failed",
+            "completeMeasuredResponses": 32,
+            "knownTokens": 1330616,
+            "inputTokens": 1320001,
+            "outputTokens": 10615,
+            "tools": 30,
+            "currentExecutionUsageComplete": true,
+            "completeTaskHistoricalUsage": null,
             "creditCost": null
           },
           "currentObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation-final.private.json",
-            "sha256": "2df139a56d60e32097eb7762a4292d4cfb14b4db6e88304fcc11cc33a4af57f0"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/continuation-work-observer-status-10.private.json",
+            "sha256": "f975c624297f3f70f4f15f72a269ddf455c9c4dd263414922bef6c8c5006603c"
           },
           "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/historical-context-index-source-review-20261013.json",
           "sourceReviewSha256": "096f5953306e864c74206b0057f7e021b406248f0929ec37cc0f97951135bfcb",
           "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-installed-20261013.json",
           "sourceEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-source-correction-20261013.json",
           "sourceEvidenceSha256": "69591899278306d194416905c1f9da4bda76ecfd0c672e87bc94384760466f19",
-          "installedEvidenceSha256": "1659447c2fdee982a464434f41206e131006fc4189964ee7e2c551d67174fbdc"
+          "installedEvidenceSha256": "1659447c2fdee982a464434f41206e131006fc4189964ee7e2c551d67174fbdc",
+          "previousObservation": {
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation-final.private.json",
+            "sha256": "2df139a56d60e32097eb7762a4292d4cfb14b4db6e88304fcc11cc33a4af57f0"
+          },
+          "progressObservation": {
+            "revision": 14,
+            "updatedAt": "2026-10-12T23:06:45+00:00",
+            "stepStates": {
+              "inventory": "blocked",
+              "dependencies": "blocked",
+              "proposal": "blocked"
+            },
+            "independentlyVerified": false
+          },
+          "diagnosticObservation": "Eén lokale stacksample toont tijd in de validatie van historische broncontext. Nog geen gekwantificeerde vertragingsoorzaak of snelheidswinst.",
+          "terminalObservation": {
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-terminal-observation.private.json",
+            "sha256": "f9cb3396ae2eff58a34d2e869d6e4c44233b947f4e78285cc37837138948361a"
+          },
+          "originalProposalReview": {
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-original-proposal-end-review.private.json",
+            "sha256": "86cf868930205976d5726f106b0e6d159e2c5abf2311805ecf1ded84263a38e2"
+          }
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -5865,7 +5904,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-12T21:03:10.474387+00:00"
+        "updatedAt": "2026-10-12T23:19:40.884826+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",
