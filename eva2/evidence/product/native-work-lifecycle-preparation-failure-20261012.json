@@ -1,0 +1,42 @@
+{
+  "contract": "EvaNativeWorkLifecyclePreparationFailure/v1",
+  "checked_at": "2026-10-12T03:23:57.998256+00:00",
+  "state": "failed_before_input",
+  "installed_host_route_retained": true,
+  "original_driver_sha256": "d1f5f580c550e557f1929b735082002c9d9cbc3c3d311c9adf7bd3aa36b0ce8e",
+  "original_manifest_sha256": "7f757d60361a93d51e69bca2b96d2ee62f8eee197a038dabbf1f0b2556e97e05",
+  "original_input_review": "eva2/reviews/native-work-strategy-lifecycle-input-review-20261012.json",
+  "original_input_review_sha256": "ee112efbd2979ebd0b00d3e626501ee67a918108ad87628f4035d7a081f479eb",
+  "native_input_reached": false,
+  "work_admitted": false,
+  "transient_container_started": false,
+  "model_requests": 0,
+  "development_variants_run": 0,
+  "independent_final_run": false,
+  "candidate_applied": false,
+  "later_usage_run": false,
+  "product_quality": "unexercised",
+  "full_aide2_complete": false,
+  "whole_goal_complete": false,
+  "failures": [
+    {
+      "code": "PRIVATE_DIRECTORY_MODE_MISMATCH",
+      "before_dispatch_record": true,
+      "corrected": true,
+      "original_receipt_sha256": "dab0106480a583cbdf74944199353591959fc0f4d383ec5387f47ea2fbcb6188"
+    },
+    {
+      "code": "CONTAINER_PRIVILEGE_METADATA_MISMATCH",
+      "before_native_boot": true,
+      "transient_container_removed": true,
+      "original_receipt_sha256": "587c01509c03618103591592ba96fa4539047b2e5aa681209ee6480c5010563b",
+      "future_literal_correction_prepared": true,
+      "future_actual_metadata_check_pending": true
+    }
+  ],
+  "original_dispatch_marker_preserved": true,
+  "original_construction_window_expired": true,
+  "original_entrance_rearmed": false,
+  "credits": "UNKNOWN",
+  "current_work": "Correct the exact future launch literal and verify real metadata without starting a container or sending model input."
+}

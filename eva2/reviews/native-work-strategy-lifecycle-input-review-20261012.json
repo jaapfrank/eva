@@ -1,0 +1,177 @@
+{
+  "contract": "EvaIndependentNativeInputReview/v1",
+  "checkedAt": "2026-10-12T03:13:52.560748Z",
+  "decision": "GO",
+  "openBlockers": [],
+  "scope": "One exact registered WORK_STRATEGY construction episode and its separately gated later episode; existing closed trials and fixed assessment criteria remain unchanged.",
+  "driverManifestSha256": "7f757d60361a93d51e69bca2b96d2ee62f8eee197a038dabbf1f0b2556e97e05",
+  "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872",
+  "bindings": {
+    "driver": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/driver.private.py",
+      "sha256": "d1f5f580c550e557f1929b735082002c9d9cbc3c3d311c9adf7bd3aa36b0ce8e"
+    },
+    "model_free_check": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/check-guard.private.py",
+      "sha256": "8d4ad7ec5238e3d3c33761b12e9dd9f9ae1ff978947f26d7c1adba14dc89b211"
+    },
+    "host_source_freeze": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/lifecycle-host-usage/frozen-source-v3.private.json",
+      "sha256": "274fa8cdd3e6a78c3e2b6c10db9a79006b0297005d87c4cfbda4299e71b35b48"
+    },
+    "host_installation_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/lifecycle-host-usage/installed-v3.private.json",
+      "sha256": "287c23a693e98e3f6d0c24164d7b4e18d120d2f45e730e88fbe6d57d0f74f433"
+    },
+    "producer_source": {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/operations/component_native_work_producer.py",
+      "sha256": "80e42585caa1f255fc91965189899f85206ad763f0a42d754baf4bfe3620217c"
+    },
+    "actual_host_configuration": {
+      "path": "/home/administrator/project/.eva2-artifacts/saved-artifact-apply-20261011/service.private.json",
+      "sha256": "b36253ca737129350952c6a1e70cb655fe8408062a8e10198dede46a24f6b3dc"
+    },
+    "input_refs": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/inputs/input-refs.private.json",
+      "sha256": "541c72a58351862336ceffdba1c66192dedac6c4cb8a11f4cc0aa5c04b6aa07d"
+    },
+    "resources": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/resources.private.json",
+      "sha256": "92ed869d75fd477c7c0aa0c52d7976abe0410027dcc3b79c7c82daed6618dc25"
+    },
+    "runtime_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/runtime-admission.private.json",
+      "sha256": "92a3f04732924fb14e55fba5312b6097c42925ec462c58eacf4070214ac1b04d"
+    },
+    "construction_input": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/inputs/construction-input.private.json",
+      "sha256": "6fa5722529f8470a5cfdc44b2670ab6106f23510f2ee0676d399f880b3f65a27"
+    },
+    "later_input": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/later-input.private.json",
+      "sha256": "946f730b4db3a55591ff34c350bbac18f13323c0848daf3fbfe5cbd9e16fa698",
+      "content_read_by_builder": false
+    },
+    "check_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/guard-check-4.private.json",
+      "sha256": "e98018831898fca8caf98f7f30e5759dab673335f6dc9c8ac0f1acd9d244bf16"
+    },
+    "driverManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/driver-manifest.private.json",
+      "sha256": "7f757d60361a93d51e69bca2b96d2ee62f8eee197a038dabbf1f0b2556e97e05"
+    },
+    "preparationReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/preparation-result.private.json",
+      "sha256": "af9d312dc581e2e44726103c313bfcf03ddb4135844e2174d1078f7f80c182cd"
+    },
+    "hostSourceReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-strategy-lifecycle-host-usage-source-review-20261012.json",
+      "sha256": "ac7c456440d5f36cf2f8f49ea86b2151eb2e6000491cbd1b0f2fae1088313395"
+    },
+    "priorConfigurationInstallationReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-strategy-production-installed-review-20261012.json",
+      "sha256": "67a2b7955f517eb58633462175f83cf46c34e98bfea932239a4af46a0278d7fb"
+    }
+  },
+  "installation": {
+    "decision": "GO",
+    "sourceManifestSha256": "274fa8cdd3e6a78c3e2b6c10db9a79006b0297005d87c4cfbda4299e71b35b48",
+    "loadedHostSources": {
+      "component_application_runtime.py": "731023d7d1dcfa3e0dda72aaf9ae6195ef514fd79c9cdfbac99f7547eeac62b6",
+      "component_work_execution.py": "67ea592a69a38a237f1a534f2fe266cab0596835c28eb65fcc2f601b2e00ff62"
+    },
+    "exactHostSources": 37,
+    "unchangedHostSources": 35,
+    "configurationUnchanged": true,
+    "oneServiceRestart": true,
+    "serviceReady": true,
+    "coreAndWorkerImagesUnchangedAndHealthy": true,
+    "noNativeExecutionInInstallationReceipt": true
+  },
+  "nativeInput": {
+    "construction": "GO_ONCE",
+    "later": "ONLY_AFTER_EXACT_ACCEPT_AND_APPLICATION_GATES",
+    "entry": "The frozen root-only CLI with the exact manifest and host-configuration hashes; an exclusive stage dispatch record precedes execution.",
+    "origin": "Registered technical ordinary admission with honest ownerAuthoredText=false, selfChosenInitiative=false and no foreground contact claim. No fictitious native initiative or pre-DRAFT work-authority.",
+    "actualAuthority": "Normal source journal, typed spec, store admission/claim, lease, current owner binding, original source hash, stop and retention guards remain required at execution. Fixed metadata alone grants no authority.",
+    "constructionActions": [
+      "read_own_component_source",
+      "draft_own_component_improvement",
+      "evaluate_own_component_improvement",
+      "compare_own_component_improvements",
+      "prepare_own_component_release",
+      "save_work_progress"
+    ],
+    "constructionPhysicalBoundary": "Only component actions and progress are exposed; programming/status/close are refused during construction, so extra programming controls are not silently equated with parent model-journal tool calls.",
+    "laterPrerequisites": [
+      "The exact verified PREPARE package from this succeeded construction, with original baseline, candidate and registration.",
+      "Existing independent final accept and actual completed application with the same request/review/task and exact candidate/source projection.",
+      "Existing release/import/build/application receipt verification and current runtime source hash; a root boolean alone is insufficient.",
+      "Original complete construction physical records plus current development/final ledgers, all six counters exact and shared total equal to their sum."
+    ]
+  },
+  "clock": {
+    "constructionParentSeconds": 1200,
+    "constructionActiveSeconds": 150,
+    "laterTypedSpecSeconds": 150,
+    "developmentCredit": "At most one actual monotonic EVALUATE interval started within construction150, credited only after its original committed verified receipt binds real spec/source/DRAFT/call, fixed suite and complete physical child accounting, or the genuine baseline-quality-maximum stop.",
+    "failedStaticReplayTruncatedUnknownCredit": false,
+    "parentDeadlineExtensionOrReset": false,
+    "laterDevelopmentCredit": false,
+    "laterNarrowing": "Before ordinary store admission, typed deadline is narrowed to the earlier of the original deadline and created_at+150; original grant/source remain exact.",
+    "exportClockFields": [
+      "wall_elapsed_seconds",
+      "development_excluded_seconds",
+      "construction_active_seconds"
+    ]
+  },
+  "resources": {
+    "constructionIncludingHelpers": 6,
+    "laterIncludingHelpers": 6,
+    "sharedProviderAttempts": 68,
+    "sharedPhysicalToolsIncludingControlsAndCleanup": 100,
+    "sharedMeasuredInputTokens": 385000,
+    "sharedMeasuredOutputTokens": 15000,
+    "sharedMeasuredCombinedTokens": 400000,
+    "retries": 0,
+    "candidates": 1,
+    "independentFinalAssessments": 1,
+    "applications": 1,
+    "laterEpisodes": 1,
+    "unknownUsageBlocksNewDispatchAndRankableSeal": true,
+    "tokenBound": "Measured stop before further dispatch and acceptance ceiling; no guaranteed cost ceiling inside an already in-flight provider request.",
+    "sharedEnforcement": "Pinned child ledger plus paused parent accounting is checked before child continuation; complete child report is then carried into outer dispatch fences. Later prior accounting is exactly rechecked against original construction records and both actual child ledgers. Existing cleanup reservations are retained.",
+    "roles": "Existing Sol/none contact and Astra/medium work/helper roles, normal profile/grant and source projection checks; no role or grant expansion."
+  },
+  "checks": {
+    "reviewerRanTests": false,
+    "hostV3RetainedTests": 44,
+    "driverModelFreeUniqueUnittest": 1,
+    "driverUnittestSeconds": 0.698,
+    "driverCheckInvocationCount": 4,
+    "preservedFixtureFailures": 3,
+    "fixtureRemoved": true,
+    "nativeExecutionProven": false
+  },
+  "findings": [
+    "V3 source and actual loaded host modules match; original current-source/stop authority, complete usage requirements and separate native/technical-origin dispositions are preserved.",
+    "Final driver and all selected refs match the fixed manifest; the shared-prior summation correction rejects inconsistent totals before later admission.",
+    "One private ordinary transient runner uses the existing factory, store and queue. Preview client/model-profile separation prevents the live worker from claiming unobserved private episodes.",
+    "Fixed input-only fixtures remain separate from protected oracles/scorers; the builder received only references and metadata.",
+    "No paid/provider/native execution was performed by this review; GO is input readiness, not a successful cycle or quality result."
+  ],
+  "limits": {
+    "modelsByReviewer": 0,
+    "nativeDispatchesByReviewer": 0,
+    "testsByReviewer": 0,
+    "dockerOrDatabaseOperationsByReviewer": 0,
+    "qualityGainProven": false,
+    "authenticSelfChosenInitiativeProven": false,
+    "fullAide2Complete": false,
+    "wholeGoalComplete": false,
+    "familyAcceptanceProven": false,
+    "credits": "unknown",
+    "oldFourCallTrialRemainsClosed": true,
+    "oldCriteriaCasesLedgersAndUnknownUnchanged": true
+  }
+}

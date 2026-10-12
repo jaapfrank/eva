@@ -1,0 +1,78 @@
+{
+  "contract": "EvaTechnicalLaunchCorrection/v1",
+  "checkedAt": "2026-10-12T03:29:10.211203+00:00",
+  "state": "source_and_launch_metadata_verified",
+  "technicalOutcomeCompleted": true,
+  "productFunctionCompleted": false,
+  "summary": "De toekomstige proefuitvoerder gebruikt de juiste Docker-parameter; de echte containerinstellingen zijn zonder starten gecontroleerd.",
+  "change": "Exact één argument gewijzigd naar no-new-privileges:true; beoordelingsregels en overige uitvoerderbron behouden.",
+  "evidence": {
+    "futureSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/securityopt-correction/driver-securityopt-future.private.py",
+      "sha256": "3f892a71e734b74997321870970af61661cfcf82c749de05e99c95d8284ed270"
+    },
+    "patch": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/securityopt-correction/securityopt-literal.private.patch",
+      "sha256": "e497281737a9ab55e2157a737821f3b4fdeca260d5b07badec049bcc2d618809"
+    },
+    "metadataCheckSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/securityopt-correction/check-launch-metadata.private.py",
+      "sha256": "561e8afa55b3f0486f8200b928b45f7ec009a821aac84f3ea37a7432bb2ad26c"
+    },
+    "metadataCheckReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/securityopt-correction/metadata-check.private.json",
+      "sha256": "55ded7e7aac3730b433d36171ed16ccd1d0ce692c59050193a76377efb1f5688"
+    },
+    "actualInspect": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/securityopt-correction/metadata-inspect.private.json",
+      "sha256": "6e9b2807258d79f322525e344a2151ea82d97768337a52de3736d91edb6ee161"
+    },
+    "cloneRemoval": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/securityopt-correction/metadata-remove.private.json",
+      "sha256": "704397cb38ea698a0bf730a5bd0e21a3ef8103cab081908c77e6b9e25e442a44"
+    },
+    "originalDriver": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/driver.private.py",
+      "sha256": "d1f5f580c550e557f1929b735082002c9d9cbc3c3d311c9adf7bd3aa36b0ce8e"
+    },
+    "originalManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/driver-manifest.private.json",
+      "sha256": "7f757d60361a93d51e69bca2b96d2ee62f8eee197a038dabbf1f0b2556e97e05"
+    },
+    "originalOnce": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/construction/dispatch-once.json",
+      "sha256": "eea871bc742d9aa81d49e0aae6967fc100fc88fbac0cc9c94f296edbc901b2e7"
+    }
+  },
+  "independentReview": {
+    "path": "eva2/reviews/native-work-strategy-lifecycle-securityopt-review-20261012.json",
+    "sha256": "bf4cf5346186b8a7b30733f0d53a64b72f573d7e5bd291e3868aa5ff79adb670",
+    "decision": "GO for source and launch metadata only"
+  },
+  "preservedFailure": "eva2/evidence/product/native-work-lifecycle-preparation-failure-20261012.json",
+  "facts": {
+    "nativeStartCalls": 0,
+    "modelRequests": 0,
+    "nativeAdmissions": 0,
+    "databaseOperations": 0,
+    "uniqueMetadataChecksPassed": 1,
+    "containerNeverStarted": true,
+    "containerRemoved": true,
+    "oldAttemptClosed": true,
+    "oldAttemptRearmed": false,
+    "originalClockReset": false
+  },
+  "remaining": [
+    "Echte baseline- en kandidaatopdrachten uitvoeren.",
+    "Afzonderlijk resultaat beoordelen; uitsluitend aangetoonde verbetering toepassen.",
+    "Toepassing bij later gewoon werk bewijzen."
+  ],
+  "claims": {
+    "runtimeInstallation": false,
+    "nativeSuccess": false,
+    "qualityGain": false,
+    "fullAide2Completed": false,
+    "wholeGoalComplete": false
+  },
+  "credits": "unknown"
+}

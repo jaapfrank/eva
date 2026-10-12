@@ -1,24 +1,29 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — taakherkomst en verbruik voor zelfverbetering aangesloten
+## Actueel 12 oktober — dashboard bijgewerkt; echte zelfverbetering nog open
 
-Twee bestaande hostmodules geïnstalleerd na 44 gerichte controles en afzonderlijke
-bronreview GO. Exacte bron teruggelezen; dienst gezond. 35 overige hostbronnen,
-runtime-images, configuratie en oorspronkelijke criteria behouden.
-Geen nieuwe handmatige Eva-modelaanvraag of native verbeterproef gestart.
+**Geïnstalleerd:** twee bestaande hostmodules voor taakherkomst en gezamenlijk
+verbruik. 44 gerichte controles en bronreview geslaagd; exacte bron en gezonde
+dienst teruggelezen. Bestaande runtime en gegevens behouden.
 
-**Nu:** de exacte uitvoeropdracht controleren en de echte verbetercyclus starten.
-Uitvoerder: /root/eva1_memory_transfer; review: /root/product_execution_memory_review.
-**Daarna:** werkresultaten beoordelen; uitsluitend onafhankelijk bewezen winst
-toepassen en later gebruiken. Kwaliteitswinst en volledige AIDE² blijven open.
+**Actueel:** de proefstart faalde vóór Eva een opdracht kreeg. De concrete
+Docker-parameter is in de toekomstige uitvoerder gecorrigeerd; de echte
+containerinstellingen zijn zonder starten gecontroleerd en onafhankelijk
+beoordeeld. De container is verwijderd. Oude foutregistratie, uitvoerder,
+manifest, eenmalige start en verstreken klok blijven ongewijzigd.
 
-Geen nieuwe hoofdafronding; 39/48 historische afrondingen en gezinsacceptaties
-behouden. Het gehele goal blijft actief. Geen handeling van Jaap nodig.
-Spraak geparkeerd; geen concurrentenserie. Credits onbekend.
+**Nog afmaken:** echte baseline en kandidaat uitvoeren, onafhankelijk beoordelen,
+alleen bewezen verbetering toepassen en bij later gewoon werk gebruiken.
+Geen variant, kwaliteitswinst of volledige AIDE² bewezen. Geen nieuwe
+hoofdafronding; 39/48 historische afrondingen en gezinsacceptaties behouden.
+Het gehele goal blijft actief. Geen handeling van Jaap nodig; spraak geparkeerd.
+Geen nieuwe concurrentenserie of modelaanvraag voor deze correctie. Credits onbekend.
 
-Dashboardinhoud gecontroleerd op 2026-10-12T03:11:07.686863+00:00.
-Bewijs: eva2/evidence/product/native-work-lifecycle-usage-installed-20261012.json.
-Bronreview: eva2/reviews/native-work-strategy-lifecycle-host-usage-source-review-20261012.json.
+Dashboardinhoud bijgewerkt op 2026-10-12T03:29:10.211203+00:00 en zichtbaar gecontroleerd op http://localhost:44712/.
+Geïnstalleerde aansluiting: eva2/evidence/product/native-work-lifecycle-usage-installed-20261012.json.
+Behouden startfout: eva2/evidence/product/native-work-lifecycle-preparation-failure-20261012.json.
+Correctie: eva2/evidence/product/native-work-lifecycle-launch-correction-20261012.json.
+Review: eva2/reviews/native-work-strategy-lifecycle-securityopt-review-20261012.json.
 
 ## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 
