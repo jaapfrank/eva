@@ -1,6 +1,54 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — ontbrekende beoordelingsmodule geïnstalleerd
+## Actueel 12 oktober — beoordelingsroute gecorrigeerd en geïnstalleerd
+
+Twee bestaande modules zijn geïnstalleerd: de eenmalig gemeten timing bereikt
+de vaste beoordelaar, en een onvolledige referentie stopt kandidaatwerk vóór
+betaalde uitvoering met behoud van gemeten verbruik. Twee gerichte controles
+slagen; bron- en configuratiereview GO. Dienst gezond, één herstart, geen image-update
+of nieuwe modelproef. 36 andere hostmodules, kern/werker en gesloten bewijs behouden.
+
+Dit is een technische correctie, geen bewezen kwaliteitswinst of afgeronde AIDE².
+De voorafgaande proef blijft gesloten en onvolledig: vier uitvoerexports,
+36 geregistreerde aanvragen, 296.798 tokens en 56 tools over deze cyclus.
+Oude scores, klok en verbruik blijven staan; creditkosten/ontwikkelcredits onbekend.
+Twee fouten in de installatiecontrole zijn geregistreerd en gericht afgehandeld
+zonder herinstallatie, extra dienstherstart of rollback.
+
+Vervolg: de bestaande algemene uitvoerder moet gemaakte code zelf uitvoeren en
+werk betrouwbaar afronden; daarna de volledige onafhankelijke verbetercyclus en
+later gebruik aantonen. Geen nieuwe modelproef of concurrentenserie gestart.
+Het volledige projectgoal blijft actief; 39/48 historische afrondingen en
+acceptaties behouden. Spraak geparkeerd. Geen handeling van Jaap nodig.
+
+Dashboardinhoud gecontroleerd: 2026-10-12T06:33:16.584604+00:00.
+Bewijs: eva2/evidence/product/native-work-assessment-interface-installed-20261012.json.
+Review: eva2/reviews/native-work-assessment-interface-installed-review-20261012.json (GO voor exacte installatie en beperkte feitenpublicatie).
+
+## Historisch 12 oktober — proef gestopt; twee beoordelingsfouten herstellen
+
+De hervatting van het bestaande voorstel is gesloten om 06:09 UTC. Vier
+uitvoerexports zijn bewaard, maar de oorspronkelijke kwaliteitsscores zijn
+onvolledig; geen bewezen winnaar, toepassing of later gebruik. De timing stond
+onder meta.timing waar de vaste beoordelaar timing verlangt. Kandidaatwerk werd
+daarna ten onrechte gestart. De broncorrectie stopt dit vóór kandidaatdispatch.
+
+Gemeten over de vier constructie-generaties en ontwikkelwerk: 36 aanvragen,
+296.798 tokens en 56 tools. Creditkosten en ontwikkelcredits onbekend. De ruwe
+null voor childverbruik blijft bewaard; fysiek gemeten verbruik is afzonderlijk
+gereconcilieerd. Oude criteria, fouten, klokken en gesloten uitvoeringen behouden.
+
+Nu: maximaal twee bestaande modules corrigeren, gericht modelvrij controleren,
+onafhankelijk beoordelen en installeren. Geen nieuwe modelproef of concurrentenserie.
+Uitvoerder: /root/eva1_memory_transfer; review: /root/product_execution_memory_review.
+Volledig projectgoal actief; leercyclus/AIDE² nog open; 39/48 historische
+afrondingen en acceptaties behouden. Spraak geparkeerd. Geen handeling van Jaap nodig.
+
+Dashboardinhoud gecontroleerd: 2026-10-12T06:22:06.998567+00:00.
+Bewijs: eva2/evidence/product/native-work-candidate-assessment-after-import-result-20261012.json.
+Review: eva2/reviews/native-work-candidate-assessment-after-import-result-review-20261012.json (exacte openbare publicatie in controle).
+
+## Historisch 12 oktober — ontbrekende beoordelingsmodule geïnstalleerd
 
 De bestaande contracts/delegated_work.py-module ontbrak in de beoordelingshost.
 De werkelijke hostimport is gericht modelvrij gereproduceerd en gecorrigeerd:

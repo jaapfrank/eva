@@ -1,0 +1,112 @@
+{
+  "contract": "EvaIndependentPublicationReview/v1",
+  "checkedAt": "2026-10-12T06:23:45.132839Z",
+  "decision": "GO",
+  "publicationVerdict": "GO",
+  "functionalVerdict": "NO_CONFIRMED_IMPROVEMENT",
+  "nativeInputVerdict": "NO_NEW_INPUT_AUTHORITY",
+  "scope": "Exact public snapshot of closed generation-4 construction and original-record accounting; no new source, installation or execution approval.",
+  "openPublicationBlockers": [],
+  "bindings": {
+    "publicResultPath": "eva2/evidence/product/native-work-candidate-assessment-after-import-result-20261012.json",
+    "publicResultSha256": "cb4e3c6a2ed8f1064136ba547c2904dddbeec8968d7e8170ec507f76721ded54",
+    "originalRecordsDiagnosisSha256": "f757cfd50296a754f1685ba5d0bd0bc864a508b445bd5dbd4fcdf72e41cfc44b",
+    "originalRawNativeSha256": "ff5f93c613990f7ea4c6daab416ea06526114dcb95f9f1bf57e8cc65b926f82c",
+    "originalSealedResultSha256": "e92d585dca35f20c8d6af50e7aa121e65dae1be11920f8c7ea8c8b0a8a905948",
+    "evaluationReceiptSha256": "05ff4a102cfaf806f046916610ce6c72091251d38eafcdba035916d8598cb33f",
+    "childAccountingSha256": "e538de63ccf3319ea6ed50369fca61eca5e24931c4033e1523b8f85d421d9c7f",
+    "boardSnapshotSha256": "6205e8d81741f4279f2b8f9fea3838e9cbf7302dc4fac55672abff7643a3bff8",
+    "documentSnapshotSha256": {
+      "AGENTS.md": "5cac694563240a99df4e76a3539b2a3529d4bdac4f34d46396b31134706b8dfd",
+      "eva2/PROJECTDOEL.md": "d68b913a55b489184da07da13ea73fd533385c354ae254742bf793e2f14e13e6",
+      "eva2/WERKBORD.md": "191f28c6e60aae59df4a1639a9f0dccafe0c5da498bbeef476d9525ba9118a13"
+    }
+  },
+  "confirmed": {
+    "commandReturncodeZeroMeansExportOnly": true,
+    "nativeState": "ambiguous",
+    "nativeResult": null,
+    "developmentExports": 4,
+    "validDevelopmentAssessments": 0,
+    "sourceBoundNativeExecutionExports": 0,
+    "completeUserTasksNotClaimed": true,
+    "constructor": {
+      "provider_attempts": 8,
+      "input_tokens": 105799,
+      "output_tokens": 1671,
+      "physical_tools": 8,
+      "unknown_attempts": 0,
+      "retries": 0
+    },
+    "development": {
+      "provider_attempts": 28,
+      "input_tokens": 184241,
+      "output_tokens": 5087,
+      "physical_tools": 48,
+      "unknown_attempts": 0,
+      "retries": 0
+    },
+    "combined": {
+      "provider_attempts": 36,
+      "input_tokens": 290040,
+      "output_tokens": 6758,
+      "physical_tools": 56,
+      "unknown_attempts": 0,
+      "retries": 0,
+      "total_tokens": 296798
+    },
+    "generation4WithChildren": {
+      "provider_attempts": 29,
+      "input_tokens": 206809,
+      "output_tokens": 5153,
+      "total_tokens": 211962,
+      "physical_tools": 49
+    },
+    "childToolKinds": {
+      "native_action": 27,
+      "native_internal_tool": 1,
+      "native_cleanup": 4,
+      "host_isolated_check": 16
+    },
+    "allFourChildCleanupReturncodesZero": true,
+    "rawNullChildUsagePreservedWithIndependentPhysicalReconciliation": true,
+    "baselineError": "extra_or_missing_fields",
+    "candidateError": "evidence_missing",
+    "metricsAndWinnerRemainNull": true,
+    "hostExitZeroChecks": 16,
+    "hostExitZeroDoesNotProveSemanticOrNativeCompletion": true,
+    "timingUnqualifiedAndNoRetroactiveCredit": true,
+    "independentFinalApplicationAndLaterUseNotStarted": true,
+    "unchangedHistoricalBoardArrays": {
+      "executionTasks": true,
+      "milestones": true,
+      "completions": true
+    },
+    "fullGoalRemainsActive": true,
+    "voiceParked": true
+  },
+  "productFindings": [
+    {
+      "id": "TIMING_EXPORT_INTERFACE_MISMATCH",
+      "status": "proven; prospective source correction only",
+      "detail": "Measured timing is at meta.timing while the unchanged fixed scorer requires artifact_evidence.timing. No criterion or scorer change is authorized by this review."
+    },
+    {
+      "id": "CANDIDATE_AFTER_INCOMPLETE_BASELINE",
+      "status": "proven; prospective source correction only",
+      "detail": "The invalid baseline did not stop candidate production. Its fourteen measured requests and 97846 tokens remain charged and cannot yield a valid original comparison."
+    }
+  ],
+  "publicationSnapshotQualification": {
+    "pendingReviewLabelPreserved": true,
+    "detail": "The exact result records review pending at publication preparation time. This completed review binds that immutable snapshot; no result rewrite or circular hash is required. Board/document hashes describe their observed pre-review snapshots."
+  },
+  "limits": [
+    "This is accurate publication of an incomplete result, not a successful evaluation or four completed tasks.",
+    "The original failed/budget_exceeded child outcomes remain separate from the evaluator-interface failure.",
+    "No native winner, quality gain, independent final, apply, later use, full AIDE², family acceptance, efficiency gain or new project completion is proved.",
+    "Complete usage concerns these thirty-six registered requests; credits and project-lifetime totals remain unknown.",
+    "No scorer, protected final questions, cases, criteria, raw evidence, usage or clocks were changed.",
+    "Reviewer ran no model, action, evaluator, test suite, factory, Docker or DB operation."
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "contract": "EvaNativeWorkCandidateAssessmentResult/v1",
+  "recorded_at": "2026-10-12T06:22:06.998567+00:00",
+  "status": "closed_incomplete_assessment",
+  "technicalOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "semantic_quality_claimed": false,
+  "scope": "Retained ordinary generation-4 continuation and all four closed constructor generations; no new evaluation.",
+  "execution": {
+    "task_id": "work:eva-resume:7141dc25-2705-52c5-a333-8074e52115ec",
+    "native_state": "ambiguous",
+    "native_result": null,
+    "error_code": "internal_error",
+    "error_fingerprint": "dc7a5988b73e4b372ff08d8c3e128283f416f9956b622f157a3c39e0227dddd0",
+    "started_at": "2026-10-12T05:54:37.183398+00:00",
+    "ended_at": "2026-10-12T06:09:34.577777+00:00",
+    "command_returncode": 0,
+    "returncode_means_export_only": true,
+    "closed": true,
+    "development_exports": 4,
+    "valid_development_assessments": 0,
+    "native_source_bound_executions": 0,
+    "completed_user_tasks_not_claimed": true,
+    "all_four_child_cleanup_returncodes": 0,
+    "independent_final_started": false,
+    "application_started": false,
+    "later_use_started": false
+  },
+  "usage": {
+    "constructor": {
+      "provider_attempts": 8,
+      "input_tokens": 105799,
+      "output_tokens": 1671,
+      "physical_tools": 8,
+      "unknown_attempts": 0,
+      "retries": 0
+    },
+    "development": {
+      "provider_attempts": 28,
+      "input_tokens": 184241,
+      "output_tokens": 5087,
+      "physical_tools": 48,
+      "unknown_attempts": 0,
+      "retries": 0
+    },
+    "combined": {
+      "provider_attempts": 36,
+      "input_tokens": 290040,
+      "output_tokens": 6758,
+      "physical_tools": 56,
+      "unknown_attempts": 0,
+      "retries": 0,
+      "total_tokens": 296798
+    },
+    "childToolKinds": {
+      "native_action": 27,
+      "native_internal_tool": 1,
+      "native_cleanup": 4,
+      "host_isolated_check": 16
+    },
+    "requestIdentityDisjointnessConfirmed": true,
+    "childCleanupReservationsConsumed": true,
+    "completeForTheseRegisteredRequests": true,
+    "projectLifetimeUsageOrCreditsNotClaimed": true,
+    "generation4_constructor": {
+      "provider_attempts": 1,
+      "input_tokens": 22568,
+      "output_tokens": 66,
+      "total_tokens": 22634,
+      "physical_tools": 1
+    },
+    "generation4_with_children": {
+      "provider_attempts": 29,
+      "input_tokens": 206809,
+      "output_tokens": 5153,
+      "total_tokens": 211962,
+      "physical_tools": 49
+    },
+    "raw_child_work_usage": null,
+    "reconciliation_source": "Returned verified evaluation receipt and original child physical accounting; original raw null is preserved.",
+    "credits": null,
+    "development_credits": null
+  },
+  "assessment": {
+    "baseline_complete": false,
+    "baseline_error": "extra_or_missing_fields",
+    "candidate_complete": false,
+    "candidate_error": "evidence_missing",
+    "quality_metrics": null,
+    "winner": null,
+    "semantic_improvement_verified": false,
+    "source_bound_native_completion_missing": true,
+    "host_checks": 16,
+    "host_checks_exit_zero": 16,
+    "host_checks_do_not_prove_native_or_semantic_completion": true
+  },
+  "proven_causes": [
+    {
+      "id": "TIMING_EXPORT_INTERFACE_MISMATCH",
+      "detail": "Once-measured timing exists under artifact_evidence.meta.timing; unchanged evaluator requires artifact_evidence.timing."
+    },
+    {
+      "id": "CANDIDATE_AFTER_INCOMPLETE_BASELINE",
+      "detail": "Candidate work was dispatched after an invalid baseline; its 14 requests and 97,846 tokens could not produce a valid comparison."
+    }
+  ],
+  "timing": {
+    "status": "not_qualified_preserved",
+    "exceptionFingerprint": "dc7a5988b73e4b372ff08d8c3e128283f416f9956b622f157a3c39e0227dddd0",
+    "exactFingerprintMessage": "RuntimeError:failed/unknown/static evaluation gives no construction time credit",
+    "evalSpanSeconds": 879.7783300629817,
+    "freshActiveSeconds": 895.539801425999,
+    "cumulativeActiveSeconds": 1022.3544412799529,
+    "excludedDevelopmentSeconds": 0,
+    "noRetroactiveCreditOrClockReset": true
+  },
+  "bindings": {
+    "rawNativeSha256": "ff5f93c613990f7ea4c6daab416ea06526114dcb95f9f1bf57e8cc65b926f82c",
+    "sealedResultSha256": "e92d585dca35f20c8d6af50e7aa121e65dae1be11920f8c7ea8c8b0a8a905948",
+    "commandResultSha256": "53a5c4b8f0e08b8174e7b574b92996f08ac1ff17cb6ea52203efb7472720f57c",
+    "evaluationReceiptSha256": "05ff4a102cfaf806f046916610ce6c72091251d38eafcdba035916d8598cb33f",
+    "executionBindingRef": "21106c68ebdd26969728484fbf1f863f8c6e83a9f4206bde4b1fd38d353a1343",
+    "childAccountingSha256": "e538de63ccf3319ea6ed50369fca61eca5e24931c4033e1523b8f85d421d9c7f",
+    "developmentEvidence": {
+      "baseline": "79c8e21d90228f4665ded97863871356752072f0694cc80880baa899231be33b",
+      "candidate": "94ea14dd44c494ae78982d0590926ce9481c40db8160bb68dd617e83da454538"
+    },
+    "developmentRunBindings": {
+      "baseline": "3a3b8cd0e705cfddd7bfab6e8c5a795c25c1d87f81e2ffa0e12d317f22a61a2c",
+      "candidate": "da1aa370f0207e84337a2e1d65978bd27e892944a8a956df0d49398a085e0a9a"
+    },
+    "fixedScorerSha256": "1eafe321440750d115e43eb7dec820db470abb2a181cd13288fe2f17a484b6b3",
+    "producerSourceSha256": "112da0c456beefa3719643058e32b463dff6dcbc205ceaaf1e39698a71420020",
+    "workExecutionSourceSha256": "67ea592a69a38a237f1a534f2fe266cab0596835c28eb65fcc2f601b2e00ff62"
+  },
+  "independent_original_records_review": {
+    "sha256": "f757cfd50296a754f1685ba5d0bd0bc864a508b445bd5dbd4fcdf72e41cfc44b",
+    "decision": "NO_CONFIRMED_IMPROVEMENT"
+  },
+  "publication_review": {
+    "path": "eva2/reviews/native-work-candidate-assessment-after-import-result-review-20261012.json",
+    "status": "pending"
+  },
+  "remaining": "Correct only the two proven production interfaces, check them with targeted model-free tests, review and install. No new model execution or reset of closed attempts.",
+  "retained": {
+    "same_candidate": true,
+    "criteria_unchanged": true,
+    "closed_records_unchanged": true,
+    "historic_small_completions": "39/48",
+    "owner_acceptances_preserved": true
+  },
+  "goal": "active; full project, learning loop and AIDE² remain open",
+  "owner_action_required": false,
+  "voice": "parked",
+  "competitor_series_started": false
+}

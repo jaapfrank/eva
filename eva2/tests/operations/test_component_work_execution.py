@@ -235,6 +235,38 @@ def test_producer_seals_baseline_before_fresh_assessor_and_uses_existing_scoring
     assert result["semantic_improvement_verified"] is False
 
 
+def test_incomplete_baseline_stops_candidate_and_preserves_measured_usage(work, tmp_path, monkeypatch):
+    work.scorer.write_text("def score(cases, outputs):\n"
+        "    raise ValueError('measured timing boundary absent')\n")
+    for root in work.roots.values():
+        (root / (CANDIDATE + ".json")).unlink()
+    legs = []
+    def produce(**kw):
+        kw["authorize"]()
+        legs.append(kw["leg"])
+        seal(work, BASE)
+    producer, request, evaluator = coordinator(work, tmp_path, monkeypatch, produce)
+    from pathlib import Path
+    ledger = Path(producer.config["settings"]["accounting_root"]) / BINDING["execution_binding_ref"] / "accounting.json"
+    original_ledger = ledger.read_bytes()
+    result = producer.evaluate(request, execution_binding=BINDING,
+        evaluator=evaluator, static_lock=threading.Lock())
+    assert legs == ["baseline"]
+    assert result["development_assessment"]["baseline"] == {
+        "complete": False, "metrics": None, "error": "extra_or_missing_fields"}
+    assert result["development_assessment"]["candidate"]["complete"] is False
+    assert result["candidate_work_not_run"] == "baseline_assessment_incomplete"
+    assert result["execution_binding_ref"] == BINDING["execution_binding_ref"]
+    assert result["installed"] is result["semantic_improvement_verified"] is False
+    usage = result["work_usage"]
+    assert usage["totals"] == {"provider_attempts": 1, "physical_tools": 2,
+        "input_tokens": 31, "output_tokens": 4, "unknown_attempts": 0, "retries": 0}
+    assert usage["receipt"] == {"path": str(ledger),
+        "sha256": hashlib.sha256(original_ledger).hexdigest()}
+    assert ledger.read_bytes() == original_ledger
+    assert all(not (root / (CANDIDATE + ".json")).exists() for root in work.roots.values())
+
+
 def test_parent_stop_after_baseline_prevents_candidate_work(work, tmp_path, monkeypatch):
     stopped = False
     legs = []

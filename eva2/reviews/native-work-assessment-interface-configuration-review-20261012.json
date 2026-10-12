@@ -1,0 +1,59 @@
+{
+  "contract": "EvaIndependentConfigurationProjectionReview/v1",
+  "checkedAt": "2026-10-12T06:27:08.620775Z",
+  "decision": "GO",
+  "configurationInstallationVerdict": "GO_FOR_EXACT_EXISTING_HOST_UPDATE",
+  "nativeInputVerdict": "NO_NEW_INPUT_AUTHORITY",
+  "openBlockers": [],
+  "scope": "Only two existing producer path/hash references and the two already reviewed host modules; no new route, settings, suite or execution.",
+  "bindings": {
+    "configurationProjectionSha256": "49c7c063e6b7280f3f69e9260ceaf8700c1e58ac8973a4565ec27558d5265ba8",
+    "hostInstallPreparationSha256": "7b930e2de4ef0595206e62812f2e045f64da134ea8b48a87e11773362b43df3d",
+    "sourceReviewPath": "eva2/reviews/native-work-assessment-interface-source-review-20261012.json",
+    "sourceReviewSha256": "7962e50dd9ea981504d92bf631cd4f9a24f2bfe5400bf44611a99e60b6139ab0",
+    "sourceManifestSha256": "616a59c811d4ec231f795c25223138cfaf0e47b7e9a0f6027cd007412d6c2bd7",
+    "currentAndPreservedConfigurationSha256": "ae4f78ca54ce2e2639bd062ba12c9400ed2a4ab45f9ff8230351d72b0eeef2ca",
+    "prospectiveConfigurationSha256": "7c8f2582fe77e30cc1eb0c664d6bbfddf90919e9b61618436ee7dfb88e22a6c3",
+    "newPrivateProducerSha256": "6fa358941739757e1027f3da087d5c6a7aa6d4c12e15e6b29c23dc0420337bc9",
+    "preservedOldPrivateProducerSha256": "112da0c456beefa3719643058e32b463dff6dcbc205ceaaf1e39698a71420020",
+    "targetSourceFiles": {
+      "operations/component_native_work_producer.py": "6fa358941739757e1027f3da087d5c6a7aa6d4c12e15e6b29c23dc0420337bc9",
+      "operations/component_work_execution.py": "fb89adc6f9f2f3dfd83e6345ad583d1e424bdefca8691ee753037cc6dc1d5cc3"
+    }
+  },
+  "confirmed": {
+    "twoExistingProducerNodesChanged": true,
+    "exactChangedJsonPointers": [
+      "/work_execution_producers/bootstrap~1delegated_digital_runner.py/producer/producer_file",
+      "/work_execution_producers/bootstrap~1delegated_digital_runner.py/producer/producer_sha256",
+      "/final_component_assessments/assessments/bootstrap~1delegated_digital_runner.py/work_execution/producer/producer_file",
+      "/final_component_assessments/assessments/bootstrap~1delegated_digital_runner.py/work_execution/producer/producer_sha256"
+    ],
+    "allOtherParsedConfigurationValuesEqual": true,
+    "oldConfigurationAndPrivateProducerBytesPreserved": true,
+    "newPrivateProducerMatchesReviewedExactSource": true,
+    "newPrivateProducerRootOwned0600With0700Parent": true,
+    "currentConfigurationStillUnchangedAtReview": true,
+    "hostSourceBaselineCount": 38,
+    "targetHostSourceCount": 2,
+    "otherHostSourcesToPreserve": 36,
+    "closedReferenceCountToPreserve": 10,
+    "plannedServiceRestarts": 1,
+    "imagesToChange": 0,
+    "scorersToChange": 0,
+    "newModelRequests": 0,
+    "newNativeExecutions": 0
+  },
+  "installationConditions": [
+    "Apply exactly the reviewed two host source files, private producer copy and prospective configuration hash using the existing service update.",
+    "Preserve the thirty-six other host modules, runtime images, environment, mounts, networks, source/owner/stop/lease authority, scopes, resources, criteria and all closed references.",
+    "After the single service restart, read back the loaded host module hashes, both producer references/private bytes, configuration hash and readiness.",
+    "No new native input, evaluator replay, score reassessment or closed once-record reset is authorized."
+  ],
+  "limitations": [
+    "Pre-installation exact metadata projection only; actual installed bytes and readiness require their ordinary post-install receipt.",
+    "No native quality gain, four completed tasks, independent final, application, later use, full AIDE² or project completion claim.",
+    "Original failed development scores, time qualification, raw null usage and complete physical reconciliation remain unchanged.",
+    "Reviewer ran no tests, factory, model, native action, Docker or DB operation."
+  ]
+}

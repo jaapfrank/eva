@@ -1,0 +1,102 @@
+{
+  "contract": "EvaInstalledAssessmentInterfaceCorrection/v1",
+  "installed_at": "2026-10-12T06:30:35.031578+00:00",
+  "status": "installed",
+  "technicalOutcomeCompleted": true,
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "semantic_quality_claimed": false,
+  "changes": [
+    "Once-measured timing is exported at the fixed evaluator interface as well as the retained metadata.",
+    "An incomplete baseline returns its error and measured usage without dispatching a paid candidate. Complete low-quality baselines remain comparable."
+  ],
+  "source_files": [
+    {
+      "path": "eva2/src/eva/operations/component_native_work_producer.py",
+      "sha256": "6fa358941739757e1027f3da087d5c6a7aa6d4c12e15e6b29c23dc0420337bc9"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_work_execution.py",
+      "sha256": "fb89adc6f9f2f3dfd83e6345ad583d1e424bdefca8691ee753037cc6dc1d5cc3"
+    }
+  ],
+  "test_files": [
+    {
+      "path": "eva2/tests/operations/test_component_native_work_producer.py",
+      "sha256": "3135b94f42b6ccbce9b78ec7971977808ca01ba47152aa726111cdfec64b7dda"
+    },
+    {
+      "path": "eva2/tests/operations/test_component_work_execution.py",
+      "sha256": "1d150961bf937b0d376407116eec1326e8517936843ce6db365bacbe7dc29f57"
+    }
+  ],
+  "checks": {
+    "unique_targeted_checks_passed": 2,
+    "pytest_summary": "2 passed in 1.27s",
+    "returncode": 0,
+    "tests_sha256": "14c92e0c524c0fcac15531bde5f15cc5b701f2dc4879ca691bd0dfde51bff4c1",
+    "actual_host_import_passed": true,
+    "actual_existing_service_health": 200,
+    "other_host_sources_preserved": 36,
+    "closed_refs_preserved": 10,
+    "core_worker_images_configuration_mounts_preserved": true
+  },
+  "installation": {
+    "host_modules": 2,
+    "producer_private_copy": true,
+    "existing_configuration_producer_references_updated": 2,
+    "other_configuration_values_preserved": true,
+    "old_producer_bytes_preserved": true,
+    "service_restarts": 1,
+    "images_replaced": 0,
+    "rollbacks": 0,
+    "actual_configuration_sha256": "7c8f2582fe77e30cc1eb0c664d6bbfddf90919e9b61618436ee7dfb88e22a6c3",
+    "private_receipt_sha256": "1bf1acdc0b91700a6b98fd23aa140e5e017b73e1956e988857518c5af24f9180"
+  },
+  "operational_check_errors": {
+    "recorded_at": "2026-10-12T06:30:35.031207+00:00",
+    "errors": [
+      {
+        "stage": "post_install_health_check",
+        "cause": "First check used loopback instead of the existing 172.28.0.1 listener. Service was running; correct listener returns ready HTTP200."
+      },
+      {
+        "stage": "post_install_preservation_check",
+        "cause": "Raw Docker mount-array order changed; sorting by actual destination confirms all mount objects are exactly preserved."
+      }
+    ],
+    "first_export_returncodes": [
+      1,
+      1
+    ],
+    "product_or_service_failure": false,
+    "additional_restart": false,
+    "reinstallation": false,
+    "rollback": false,
+    "new_model_requests": 0
+  },
+  "source_review": "eva2/reviews/native-work-assessment-interface-source-review-20261012.json",
+  "configuration_review": "eva2/reviews/native-work-assessment-interface-configuration-review-20261012.json",
+  "installed_review": "eva2/reviews/native-work-assessment-interface-installed-review-20261012.json",
+  "publication_status": "exact installed outcome review pending",
+  "preserved_failed_result": "eva2/evidence/product/native-work-candidate-assessment-after-import-result-20261012.json",
+  "retained_cycle_usage": {
+    "provider_attempts": 36,
+    "input_tokens": 290040,
+    "output_tokens": 6758,
+    "total_tokens": 296798,
+    "physical_tools": 56
+  },
+  "this_correction_usage": {
+    "new_eva_model_requests": 0,
+    "native_executions": 0,
+    "credit_cost": null,
+    "codex_development_credits": null
+  },
+  "remaining": "Full AIDE² cycle, source-bound native task completion, independent final/apply and later use remain unproved; no new execution started.",
+  "goal": "active; full project and learning loop remain open",
+  "historic_small_completions": "39/48",
+  "owner_action_required": false,
+  "voice": "parked",
+  "competitor_series_started": false
+}

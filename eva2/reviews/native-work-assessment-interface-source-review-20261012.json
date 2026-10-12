@@ -1,0 +1,69 @@
+{
+  "contract": "EvaIndependentBoundedSourceReview/v1",
+  "checkedAt": "2026-10-12T06:25:29.407247Z",
+  "decision": "GO",
+  "sourceVerdict": "GO",
+  "installationScopeVerdict": "GO_FOR_EXACT_EXISTING_HOST_UPDATE",
+  "nativeInputVerdict": "NO_NEW_INPUT_AUTHORITY",
+  "sourceManifestSha256": "616a59c811d4ec231f795c25223138cfaf0e47b7e9a0f6027cd007412d6c2bd7",
+  "openBlockers": [],
+  "scope": "The two frozen host-operation corrections for measured timing export and refusal to produce candidate work after an incomplete baseline; existing route only.",
+  "bindings": {
+    "sourceFiles": {
+      "operations/component_native_work_producer.py": "6fa358941739757e1027f3da087d5c6a7aa6d4c12e15e6b29c23dc0420337bc9",
+      "operations/component_work_execution.py": "fb89adc6f9f2f3dfd83e6345ad583d1e424bdefca8691ee753037cc6dc1d5cc3"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_component_native_work_producer.py": "3135b94f42b6ccbce9b78ec7971977808ca01ba47152aa726111cdfec64b7dda",
+      "eva2/tests/operations/test_component_work_execution.py": "1d150961bf937b0d376407116eec1326e8517936843ce6db365bacbe7dc29f57"
+    },
+    "targetedChecksSha256": "14c92e0c524c0fcac15531bde5f15cc5b701f2dc4879ca691bd0dfde51bff4c1",
+    "sourceResultSha256": "5c2d31dc463b757d52168a16ac5e938686d25ba68c7d985310f30b6171bd7252",
+    "patchSha256": "234e8e28a32f568138843877322b2eceec2171ad8cbe284dc2caed4beb1c1277",
+    "testInvocationSha256": "e4b7c3fd4ab4a27aaf9cab557a14568948c138de347791fa3d6590c95b8c8137",
+    "testLogSha256": "124a514f1703f5ced2b62e59160aaaf104083ba388ce061e2ba393b7071a197d",
+    "testJunitSha256": "580a4074b48230ba6f67a1857aaff403284251f818662e0ba4ecd7eb8af33e62",
+    "unchangedFixedScorerSha256": "1eafe321440750d115e43eb7dec820db470abb2a181cd13288fe2f17a484b6b3",
+    "originalResultPublicationReviewSha256": "8f8152d5ce68758a40c048441abce713da174235c561e1b6abca0469aa0dbe79"
+  },
+  "reviewedBehavior": [
+    {
+      "source": "operations/component_native_work_producer.py",
+      "finding": "The same single measured timing object is exported at artifact_evidence.timing and retained at meta.timing. It matches the existing fixed scorer interface; timing is not remeasured or retrospectively inserted into closed evidence."
+    },
+    {
+      "source": "operations/component_work_execution.py",
+      "finding": "A fresh assessor pins the sealed baseline and its assessment identity. A complete=false baseline returns the original incomplete assessment and complete bound physical usage before any candidate production. A complete measured native task loss remains valid evidence and is not turned into an incomplete evaluator result."
+    },
+    {
+      "source": "operations/component_work_execution.py",
+      "finding": "Current original-source authority, immutable producer pin, shared resource checks, unknown-usage refusal, static checks and baseline maximum early-stop remain on the existing route."
+    }
+  ],
+  "validation": {
+    "sourceAndTestRawHashesMatchFrozenManifest": true,
+    "twoTargetedUniqueJUnitCasesPassed": true,
+    "returncode": 0,
+    "durationSecondsReported": 1.27,
+    "testCoverage": [
+      "Timing export uses the same once-measured object and preserves comparable complete native loss.",
+      "An invalid baseline scorer starts no candidate, returns the measured ledger hash and leaves ledger bytes unchanged."
+    ],
+    "closedOriginalReferencesRawHashesPreserved": 10,
+    "reviewerDidNotRunTests": true,
+    "modelNativeDbDockerInvocations": 0
+  },
+  "installationConditions": [
+    "Install precisely the two reviewed host modules in the existing evaluator host; preserve the existing runtime images, scope, grants, source authority and retained rounds.",
+    "Pin the active private producer source and both existing producer path/SHA references to the reviewed 6fa358941739757e1027f3da087d5c6a7aa6d4c12e15e6b29c23dc0420337bc9 bytes; preserve all other configuration settings and file bindings.",
+    "Read back the actual loaded host bytes, pinned producer references and service health after the single existing installation.",
+    "Keep old raw/sealed evidence, child ledger, driver/once records, scorers, inputs, case sets, criteria and resource accounting unchanged. No closed evaluation or dispatch is replayed by this approval."
+  ],
+  "limitations": [
+    "Source and exact host installation readiness only; actual installation has not been independently reviewed here.",
+    "No native quality improvement, new model execution, final assessment, application, later use or complete AIDE² is approved or proved.",
+    "The source-bound native-execution export limitation remains unchanged; broad shell actions are not given invented source provenance.",
+    "The closed original driver still leaves raw child_work_usage null on failed quality qualification; that historical result has separate complete physical reconciliation, not a retroactive score or time credit.",
+    "Development credits and costs remain unknown."
+  ]
+}

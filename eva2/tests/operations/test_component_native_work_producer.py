@@ -437,6 +437,10 @@ def test_baseline_candidate_export_is_consumed_and_missing_result_stays_failed(s
         assert run["status"] == "failed"
         assert run["artifact_evidence"]["files"]["result"]["status"] == "missing"
         assert run["artifact_evidence"]["checks"][0]["exit_code"] == 0
+        timing = run["artifact_evidence"]["timing"]
+        assert timing == run["artifact_evidence"]["meta"]["timing"]
+        assert type(timing["elapsed_ms"]) is int and timing["elapsed_ms"] >= 0
+        assert timing["clock_boundary"] == "admission_start_to_terminal_and_readback_checks"
         return {"completed": 0}
     if consumer is not None:
         result = consumer.assess(report, {}, scorer, [{"case_id": "one"}])

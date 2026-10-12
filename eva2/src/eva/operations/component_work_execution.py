@@ -384,9 +384,14 @@ class NativeComponentWorkProducer:
             assessor = DevelopmentAssessment(self.assessment)
             if assessor.assessment_sha256 != evaluator.assessment.assessment_sha256:
                 raise ValueError("fixed native work assessment binding changed")
-            if assessor.work_evidence.baseline_error is not None:
-                raise ValueError("baseline work evidence is not sealed")
             baseline_score = assessor.assess(report)
+            if baseline_score["baseline"]["complete"] is not True:
+                report["development_assessment"] = baseline_score
+                report["execution_binding_ref"] = binding["execution_binding_ref"]
+                report["candidate_work_not_run"] = "baseline_assessment_incomplete"
+                self._check_shared_usage(binding, settings, construction_usage)
+                report["work_usage"] = self._work_usage(binding, settings)
+                return report
             maximum = self.config.get("baseline_maximum")
             if maximum is not None:
                 if (not isinstance(maximum, dict) or not maximum

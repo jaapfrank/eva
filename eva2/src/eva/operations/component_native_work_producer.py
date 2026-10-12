@@ -1262,12 +1262,14 @@ def _artifacts(settings, identity, case, raw, workspace, run_root, guard, author
             if program is not None and row.get("native_program_source_sha256") == sha(program):
                 executions.append({"step_index": row["step_index"], "source_sha256": sha(program), "action_name": call["name"],
                     "receipt_sha256": canonical_sha256(receipt), "receipt": receipt})
+    timing = {"elapsed_ms": max(0, round((time.monotonic() - raw["timing"]["started_monotonic_seconds"]) * 1000)),
+        "clock_boundary": "admission_start_to_terminal_and_readback_checks"}
     artifact = {"files": files, "checks": checks, "executions": executions, "progress": raw["progress"],
+        "timing": timing,
         "progress_receipts": [{"step_index": r["step_index"], "receipt": r["receipt"]}
             for r in raw["action_receipts"] if r["receipt"]["call"]["name"] == "save_work_progress"],
         "meta": {"origin": raw["origin"], "memory_disposition": raw["memory_disposition"],
-            "timing": {"elapsed_ms": max(0, round((time.monotonic() - raw["timing"]["started_monotonic_seconds"]) * 1000)),
-                "clock_boundary": "admission_start_to_terminal_and_readback_checks"},
+            "timing": timing,
             "memory_projection_excluded": True, "namespace": "component-work-evaluation",
             **({"parent_bindings": deepcopy(settings["parent_bindings"])} if "parent_bindings" in settings else {}),
             **({"runtime_admission_sha256": settings["runtime_admission_sha256"]} if "runtime_admission_sha256" in settings else {}),

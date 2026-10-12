@@ -1,0 +1,78 @@
+{
+  "contract": "EvaIndependentInstalledPublicationReview/v1",
+  "checkedAt": "2026-10-12T06:32:15.774603Z",
+  "decision": "GO",
+  "installationVerdict": "GO",
+  "publicationVerdict": "GO",
+  "nativeInputVerdict": "NO_NEW_INPUT_AUTHORITY",
+  "openBlockers": [],
+  "scope": "Exact installation and factual publication of the two reviewed host assessment-interface corrections; existing service and configuration references only.",
+  "bindings": {
+    "publicInstalledEvidencePath": "eva2/evidence/product/native-work-assessment-interface-installed-20261012.json",
+    "publicInstalledEvidenceSha256": "e0fd764c3fe52d06e45ed6191f9f721f8d9f7f06a93fb6e5911876fae1895ec2",
+    "privateInstalledReceiptSha256": "1bf1acdc0b91700a6b98fd23aa140e5e017b73e1956e988857518c5af24f9180",
+    "sourceManifestSha256": "616a59c811d4ec231f795c25223138cfaf0e47b7e9a0f6027cd007412d6c2bd7",
+    "sourceReviewSha256": "7962e50dd9ea981504d92bf631cd4f9a24f2bfe5400bf44611a99e60b6139ab0",
+    "configurationReviewSha256": "a5656e6f59561228474975a4eeb9e5de9fb54e01ddc0e37ea8267e61d57d2e0a",
+    "configurationProjectionSha256": "49c7c063e6b7280f3f69e9260ceaf8700c1e58ac8973a4565ec27558d5265ba8",
+    "installationPreparationSha256": "7b930e2de4ef0595206e62812f2e045f64da134ea8b48a87e11773362b43df3d",
+    "actualConfigurationSha256": "7c8f2582fe77e30cc1eb0c664d6bbfddf90919e9b61618436ee7dfb88e22a6c3",
+    "privateProducerSha256": "6fa358941739757e1027f3da087d5c6a7aa6d4c12e15e6b29c23dc0420337bc9",
+    "installedSourceFiles": {
+      "component_native_work_producer.py": "6fa358941739757e1027f3da087d5c6a7aa6d4c12e15e6b29c23dc0420337bc9",
+      "component_work_execution.py": "fb89adc6f9f2f3dfd83e6345ad583d1e424bdefca8691ee753037cc6dc1d5cc3"
+    },
+    "preservedFailedResultSha256": "cb4e3c6a2ed8f1064136ba547c2904dddbeec8968d7e8170ec507f76721ded54",
+    "postInstallObservationErrorReceiptSha256": "4daad0bfba585da926e0dec59b90f443c09390b0077453f0145f47a7cdf0406a"
+  },
+  "confirmed": {
+    "exactReviewedHostModulesInstalled": 2,
+    "actualImportOriginsMatchInstalledOverlay": true,
+    "privateProducerAndBothExistingConfigReferencesMatchReviewedCopy": true,
+    "otherParsedConfigurationValuesPreservedByExactReviewedProjection": true,
+    "hostSourceCount": 38,
+    "otherHostSourcesRawHashesPreserved": 36,
+    "closedReferenceRawHashesPreserved": 10,
+    "oldPrivateProducerBytesPreserved": true,
+    "servicePid": 3528436,
+    "serviceActiveRunning": true,
+    "serviceHealthHttpStatus": 200,
+    "serviceHealthStatus": "ready",
+    "serviceRestarts": 1,
+    "coreAndWorkerHealthyRunningWithImagesConfigurationAndMountsPreserved": true,
+    "imagesReplaced": 0,
+    "rollbacks": 0,
+    "newModelRequests": 0,
+    "newNativeExecutions": 0,
+    "retainedCycleUsage": {
+      "provider_attempts": 36,
+      "input_tokens": 290040,
+      "output_tokens": 6758,
+      "total_tokens": 296798,
+      "physical_tools": 56
+    },
+    "failedOriginalResultUnchanged": true
+  },
+  "observationErrors": {
+    "count": 2,
+    "causes": [
+      "Wrong loopback health address before checking the existing listener.",
+      "Raw Docker mount-list order compared instead of mounts by destination."
+    ],
+    "firstExportReturncodes": [
+      1,
+      1
+    ],
+    "correctedReadbackOnly": true,
+    "additionalInstallRestartRollbackOrModel": false
+  },
+  "publicationQualifications": [
+    "technicalOutcomeCompleted refers only to the exact installed interface correction.",
+    "The pending public review label is its immutable preparation snapshot; this external review completes the limited factual review without rewriting evidence.",
+    "Four original exports are not four completed tasks. Original metrics, winner, raw/sealed records, clocks and all measured usage remain unchanged.",
+    "No native quality gain, independent final, application, later use, full AIDE², family acceptance or project completion is proved.",
+    "Whole project goal remains active, 39/48 historical completions and parked speech remain unchanged.",
+    "No new input, evaluator replay, closed-attempt rearm, scorer or criterion change is authorized.",
+    "Reviewer ran no import/factory probe, test suite, model, native action, Docker or DB operation."
+  ]
+}

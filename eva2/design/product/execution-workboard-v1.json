@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T05:44:51.354941+00:00",
+  "lastUpdated": "2026-10-12T06:33:16.584604+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,8 +1021,38 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T07:55:25.600014+02:00",
+        "checkedAt": "2026-10-12T08:33:16.584621+02:00",
         "deliveries": [
+          {
+            "id": "native-work-assessment-interface-installed-20261012",
+            "date": "2026-10-12T06:31:43.392302+00:00",
+            "title": "Beoordelingsroute gecorrigeerd en geïnstalleerd",
+            "state": "installed",
+            "summary": "Timing past op de vaste beoordelaar; een ongeldige referentie start geen betaalde kandidaat meer. Dienst gezond.",
+            "result": "Twee gerichte controles slagen. Twee hostmodules en bestaande versie-verwijzingen aangesloten; één dienstherstart, geen nieuwe modelproef.",
+            "remaining": "Volledige AIDE², onafhankelijke eindbeoordeling en later gebruik zijn nog niet afgerond.",
+            "source": "eva2/evidence/product/native-work-assessment-interface-installed-20261012.json",
+            "review": "eva2/reviews/native-work-assessment-interface-installed-review-20261012.json",
+            "independentReview": "GO voor de exacte bron, configuratie, installatie en feitelijke publicatie. Geen afgeronde AIDE² of bewezen kwaliteitswinst.",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "reviewSha256": "0f602222955ccf22d0eb7752c742037bfd8bc30f5be5008a0b6a39d8c34e7b22"
+          },
+          {
+            "id": "native-work-candidate-assessment-after-import-result-20261012",
+            "date": "2026-10-12T06:22:06.998567+00:00",
+            "title": "Kandidaatbeoordeling gestopt zonder geldige score",
+            "state": "comparison_inconclusive",
+            "summary": "Timingexport wijkt af van de vaste beoordelingsinterface. De kandidaat had na die fout niet meer uitgevoerd mogen worden.",
+            "result": "36 geregistreerde aanvragen, 296.798 tokens en 56 tools. Vier exports; geen bewezen kwaliteitswinst, toepassing of latere hergebruikproef.",
+            "remaining": "Twee bestaande modules worden gericht gecorrigeerd; geen nieuwe betaalde proef gestart.",
+            "source": "eva2/evidence/product/native-work-candidate-assessment-after-import-result-20261012.json",
+            "review": "eva2/reviews/native-work-candidate-assessment-after-import-result-review-20261012.json",
+            "independentReview": "GO voor correcte publicatie van de gesloten mislukte proef; geen kwaliteitsclaim.",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false,
+            "reviewSha256": "8f8152d5ce68758a40c048441abce713da174235c561e1b6abca0469aa0dbe79"
+          },
           {
             "id": "native-work-host-usage-import-closure-installed-20261012",
             "date": "2026-10-12T05:43:18.135742+00:00",
@@ -4944,16 +4974,16 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · echte kandidaatbeoordeling loopt",
+          "title": "Zelfverbetering · beoordelingsroute hersteld; cyclus nog open",
           "state": "in_progress",
-          "phase": "candidate_assessment_after_import_running",
-          "activeExecution": true,
+          "phase": "assessment_interface_installed_reviewed",
+          "activeExecution": false,
           "owner": "/root",
           "executor": "/root",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De onafhankelijke voorbereiding is goedgekeurd. Eva voert de hervatte beoordeling van het bestaande codevoorstel uit; de uitkomst en kwaliteitswinst staan nog niet vast.",
-          "detail": "Dezelfde opdracht en kandidaat zijn hervat na de geïnstalleerde importcorrectie. Alle eerdere pogingen en hun verbruik blijven meetellen. De voorbereiding en onafhankelijke invoercontrole zijn afgerond. Nu draait de echte beoordeling. Daarna alleen bewezen winst toepassen en bij later werk gebruiken.",
-          "source": "eva2/evidence/product/native-work-candidate-assessment-after-import-started-20261012.json",
+          "summary": "Twee correcties zijn geïnstalleerd: timing wordt juist doorgegeven en ongeldige referenties stoppen kandidaatwerk. De dienst is gezond.",
+          "detail": "Twee gerichte controles slagen; 36 overige hostmodules en de kernimages blijven behouden. Er is geen nieuwe modelproef gestart en geen kwaliteitswinst bewezen. De oorspronkelijke mislukte proef en haar verbruik blijven zichtbaar.",
+          "source": "eva2/evidence/product/native-work-assessment-interface-installed-20261012.json",
           "doneWhen": "Eva verbetert haar werkaanpak op echte opdrachten; de onafhankelijke beoordeling bevestigt betere resultaten of minder hulp. Alleen bewezen winst wordt toegepast en bij later gewoon werk gebruikt.",
           "implementationStatus": {
             "evaluationBridgeBuilt": true,
@@ -5050,29 +5080,38 @@
             "candidateAssessmentAfterImportInputReviewPending": false,
             "candidateAssessmentAfterImportDispatched": true,
             "candidateAssessmentAfterImportPreparationCompleted": true,
-            "candidateAssessmentAfterImportInputReview": "GO_ONCE consumed by current execution",
-            "candidateAssessmentAfterImportClosed": false
+            "candidateAssessmentAfterImportInputReview": "GO_ONCE consumed; closed execution",
+            "candidateAssessmentAfterImportClosed": true,
+            "candidateAssessmentAfterImportSucceeded": false,
+            "candidateAssessmentAfterImportResultReviewPending": false,
+            "assessmentInterfaceCorrectionInstalled": true,
+            "candidateAssessmentAfterImportResultReview": "GO voor nauwkeurige publicatie; geen kwaliteit of invoer-GO",
+            "assessmentInterfaceCorrectionBuilt": true,
+            "assessmentInterfaceSourceReview": "GO",
+            "assessmentInterfaceConfigurationReview": "GO",
+            "assessmentInterfaceInstalledReviewPending": false,
+            "assessmentInterfaceInstalledReview": "GO voor exacte installatie en feitelijke publicatie; geen native kwaliteitsclaim of nieuwe invoertoelating"
           },
-          "remaining": "Voorbereiding en onafhankelijke controle afronden; hetzelfde voorstel beoordelen. Alleen bewezen winst toepassen en later gebruiken.",
-          "review": "eva2/reviews/native-work-candidate-assessment-after-import-input-review-20261012.json",
-          "reviewSha256": "d7693ebd0dcac5656c75d50068c8d3dcdc02987449975cf8be572a7bad55c99a",
+          "remaining": "Nog aantonen dat Eva gemaakte code zelf uitvoert, het werk afmaakt en via onafhankelijke eindbeoordeling een verbetering later toepast.",
+          "review": "eva2/reviews/native-work-assessment-interface-installed-review-20261012.json",
+          "reviewSha256": "0f602222955ccf22d0eb7752c742037bfd8bc30f5be5008a0b6a39d8c34e7b22",
           "ordinaryClientInstalledReview": "eva2/reviews/native-work-client-scope-installed-review-20261012.json",
           "ordinaryClientInstalledReviewSha256": "82c031c0899892ea5127adb3b141ed3a566060b534f11a0dbe441e1bc63a186f",
           "preparationReview": "eva2/reviews/native-work-corrected-runtime-preparation-review-20261012.json",
           "preparationReviewSha256": "c27d99d51246b61fb4da749583c4e1752e6c3af653aaca3bc6dfee55fa9f12f5",
           "typedResumeInstalledReview": "eva2/reviews/native-work-typed-resume-installed-review-20261012.json",
-          "resultReview": "eva2/reviews/native-work-host-usage-closure-installed-review-20261012.json",
-          "resultReviewSha256": "aee8ac6212658e3e8c3f67b849d576eedaf4bd78324afa09451a4a74c921cbfe",
+          "resultReview": "eva2/reviews/native-work-assessment-interface-installed-review-20261012.json",
+          "resultReviewSha256": "0f602222955ccf22d0eb7752c742037bfd8bc30f5be5008a0b6a39d8c34e7b22",
           "currentActivity": {
-            "checkedAt": "2026-10-12T07:55:25.600014+02:00",
-            "executionStarted": true,
+            "checkedAt": "2026-10-12T08:33:16.584621+02:00",
+            "executionStarted": false,
             "coordinator": "/root",
             "executor": "/root",
-            "executorTask": "De exact beoordeelde gewone hervatting uitvoeren en dezelfde live opdracht volgen.",
+            "executorTask": "Twee correcties geïnstalleerd en onafhankelijk beoordeeld; dashboard en GitHub publiceren.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "De echte uitkomst onafhankelijk beoordelen zodra het uitvoerbewijs is gesloten.",
-            "newModelRequestsThisPreparation": 0,
-            "note": "Dit is gecontroleerde, opgeslagen voortgang; geen live agenttelemetrie."
+            "reviewerTask": "Exacte geïnstalleerde uitkomst beoordeeld: GO voor de technische correctie, geen bewezen kwaliteitswinst.",
+            "newModelRequestsThisCorrection": 0,
+            "note": "Opgeslagen, gecontroleerde voortgang; geen live agenttelemetrie."
           },
           "preparation": {
             "driverSha256": "3eeac1d0955a92e604b6ccbc01af49b70cfb6df24192c6d80082a64c29d2618b",
@@ -5085,21 +5124,21 @@
           }
         },
         "next": {
-          "title": "Bewezen verbetering toepassen en later gebruiken",
+          "title": "Gemaakte code zelfstandig uitvoeren en afronden",
           "state": "planned",
           "activeExecution": false,
-          "source": "eva2/evidence/product/native-work-strategy-runtime-sources-installed-20261012.json",
-          "summary": "Na onafhankelijke beoordeling uitsluitend aantoonbare winst toepassen en later bij gewoon werk gebruiken.",
-          "detail": "Een aantoonbare verbetering toepassen en bij een volgende opdracht gebruiken. Bij gelijkspel of verlies blijft de huidige werkaanpak staan. Geen nieuwe concurrentenserie."
+          "source": "eva2/evidence/product/native-work-assessment-interface-installed-20261012.json",
+          "summary": "De ontbrekende aansluiting tussen gemaakte code, daadwerkelijke uitvoering en betrouwbaar eindresultaat afronden.",
+          "detail": "Gebruik de bestaande algemene uitvoerder. Behoud de gesloten proef en haar onvolledige scores; geen nieuwe betaalde proef gestart. Daarna alleen geldig onafhankelijk bewezen winst toepassen en later gebruiken."
         },
         "ownerAction": {
           "required": false,
           "summary": "Geen handeling van jou nodig",
           "title": "Geen handeling van jou nodig",
-          "detail": "De echte zelfverbetering en het latere gebruik zijn werk voor Codex. Jouw gezinsbeoordeling blijft afzonderlijk."
+          "detail": "Dit zijn fouten in de technische beoordelingsroute die Codex oplost. Er wordt geen gezinsacceptatie voor je ingevuld."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T07:55:25.600014+02:00",
+        "reviewedAt": "2026-10-12T08:33:16.584621+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5200,8 +5239,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T07:55:25.600014+02:00",
-      "checkedAt": "2026-10-12T07:55:25.600014+02:00",
+      "reviewedAt": "2026-10-12T08:33:16.584621+02:00",
+      "checkedAt": "2026-10-12T08:33:16.584621+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11582,7 +11621,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T07:55:25.600014+02:00",
+      "lastUpdatedAt": "2026-10-12T08:33:16.584621+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -34232,5 +34271,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T05:44:51.354941+00:00"
+  "updatedAt": "2026-10-12T06:33:16.584604+00:00"
 }
