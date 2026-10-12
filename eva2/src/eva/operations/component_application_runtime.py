@@ -136,7 +136,9 @@ def _registered_lifecycle_origin(origin, spec, turn, scope_sha256):
         and origin.get('spec_sha256') == canonical_sha256(spec)
         and origin.get('task_sha256') == hashlib.sha256(spec['task'].encode()).hexdigest()
         and origin.get('project_id') == turn.project_id
-        and turn.project_id == 'component-work-evaluation:' + origin['registration_sha256'] + ':construction')
+        and turn.project_id in (
+            'component-work-evaluation:' + origin['registration_sha256'] + ':construction',
+            'component-work-strategy:' + origin['registration_sha256']))
 
 
 # Executed inside the existing core so database credentials stay there. Only

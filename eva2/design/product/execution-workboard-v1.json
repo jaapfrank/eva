@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T12:43:12.605191+02:00",
+  "lastUpdated": "2026-10-12T13:08:30.817460+02:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T12:43:12.605191+02:00",
+        "checkedAt": "2026-10-12T13:08:30.817460+02:00",
         "deliveries": [
+          {
+            "id": "native-work-project-origin-installed-20261012",
+            "date": "2026-10-12T13:08:30.817460+02:00",
+            "title": "Beoordelingsaansluiting hersteld en geïnstalleerd",
+            "state": "installed",
+            "summary": "De bestaande verbeteropdracht wordt nu onder haar juiste projectnaam herkend. Codevoorstel behouden.",
+            "result": "11 gerichte controles geslaagd; één hostmodule geïnstalleerd; dienst gezond. 0 nieuwe Eva-modelaanvragen.",
+            "remaining": "Verbruik van de gesloten ronde vaststellen; echte beoordeling, toepassing bij bewezen winst en later gebruik open.",
+            "source": "eva2/evidence/product/native-work-project-origin-installed-20261012.json",
+            "review": "eva2/reviews/native-work-project-origin-installed-review-20261012.json",
+            "reviewSha256": "4547396de6538a3f5d4ae2293725991302bd4a633f3ecc792484758538d62956",
+            "independentReview": "GO voor exacte installatie en beperkte feitenpublicatie. Geen kwaliteitswinst of volledige AIDE².",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false
+          },
           {
             "id": "native-work-path-input-repair-result-20261012",
             "date": "2026-10-12T12:43:12.605191+02:00",
@@ -5072,17 +5087,17 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering: codevoorstel gemaakt, beoordeling mislukt",
+          "title": "Zelfverbetering: aansluitingsfout hersteld, voorstel behouden",
           "state": "in_progress",
-          "phase": "assessment_rejection_diagnosis",
+          "phase": "assessment_usage_reconciliation",
           "activeExecution": false,
           "owner": "/root",
-          "executor": "/root",
+          "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva maakte een codevoorstel. De beoordeling faalde met HTTP400; er is geen verbetering toegepast.",
-          "detail": "De ronde is afgesloten. Codex onderzoekt de weigering in de bestaande beoordelingsroute. Vier volledige aanvragen en 44.058 tokens gemeten; gezamenlijk verbruik blijft onbekend. Geen nieuwe uitvoering actief.",
+          "summary": "De geregistreerde verbeteropdracht werd onder een andere projectnaam afgewezen. Die aansluiting is hersteld en geïnstalleerd.",
+          "detail": "De bestaande beoordelingsdienst is gezond. Het codevoorstel blijft bewaard. Codex controleert nu het verbruik van de gesloten ronde om het voorstel daarna gericht te beoordelen; geen nieuwe Eva-proef actief.",
           "doneWhen": "De volledige cyclus levert een onafhankelijk beoordeelde kandidaat; alleen bewezen winst wordt toegepast en daarna bij ander werk gebruikt.",
-          "source": "eva2/evidence/product/native-work-path-input-repair-result-20261012.json",
+          "source": "eva2/evidence/product/native-work-project-origin-installed-20261012.json",
           "previousInstalledCorrection": "eva2/evidence/product/native-program-observation-installed-20261012.json",
           "previousInstalledReview": "eva2/reviews/native-program-observation-installed-review-20261012.json",
           "previousInstalledReviewSha256": "e867786889ad6855a48a709c6c7073b274cdf89a3cd7ca2c4ad8b76a27a5762a",
@@ -5113,23 +5128,31 @@
             "newNativeExecutionStarted": true,
             "currentNativeAssessmentFailed": true,
             "independentFinalCompleted": false,
-            "candidateApplied": false
+            "candidateApplied": false,
+            "projectOriginCorrectionBuilt": true,
+            "projectOriginCorrectionChecksCompleted": true,
+            "projectOriginCorrectionInstalled": true,
+            "projectOriginCorrectionReviewCompleted": true,
+            "exclusiveHistoricalHttp400CauseProven": false,
+            "childUsageReconciled": false
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T12:43:12.605191+02:00",
+            "checkedAt": "2026-10-12T13:08:30.817460+02:00",
             "coordinator": "/root",
-            "coordinatorTask": "Documentbeoordeling en zes taken zichtbaar houden; afgesloten verbeterproef correct publiceren.",
-            "executor": "/root",
-            "executorTask": "Gerichte diagnose van HTTP400 in de bestaande beoordelingsroute; geen Eva-proef actief.",
+            "coordinatorTask": "Exacte correctie geïnstalleerd; normale vervolgroute met bewaard voorstel voorbereiden.",
+            "executor": "/root/eva1_memory_transfer",
+            "executorTask": "Bewaard bewijs controleren op aantoonbare weigering vóór childdispatch; geen nieuwe modelcalls.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Terminalreview afgerond: beperkte feitenpublicatie toegestaan.",
+            "reviewerTask": "Onafhankelijke bron- en installatiereview afgerond: GO voor exact één hostmodule.",
             "modelUsage": "Deze afgesloten ronde: 4 Astra/medium-aanvragen · 44.058 oudertokens · 4 tools. Child en gedeeld totaal onbekend.",
-            "note": "Codevoorstel opgeslagen; beoordeling, toepassing en later gebruik nog open. Geen handeling van Jaap nodig."
+            "note": "Geen handeling van Jaap nodig. Dit is een geïnstalleerde aansluiting; de volledige verbetercyclus blijft open."
           },
           "previousResultReview": "eva2/reviews/native-work-path-input-repair-result-review-20261012.json",
           "previousResultReviewSha256": "e0c04b2b68b74c668592e7ce3471bc0ac053f66373c07273af055220656328ff",
           "taskId": "HUE6.1",
-          "documentReviewSource": "eva2/design/product/human-understanding-engine-integration-20261012.md"
+          "documentReviewSource": "eva2/design/product/human-understanding-engine-integration-20261012.md",
+          "review": "eva2/reviews/native-work-project-origin-installed-review-20261012.json",
+          "reviewSha256": "4547396de6538a3f5d4ae2293725991302bd4a633f3ecc792484758538d62956"
         },
         "next": {
           "title": "Tegenbewijs en verwachtingen laten doorwerken",
@@ -5150,7 +5173,7 @@
           "detail": "Codex maakt de technische kringloop af. Je oorspronkelijke acceptaties blijven behouden; nu geen herhaalproef nodig."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
+        "reviewedAt": "2026-10-12T13:08:30.817460+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -24598,7 +24621,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Codevoorstel is bewaard; de beoordelingsdienst weigert de aanvraag met HTTP400. Codex achterhaalt de concrete aansluiting, waarna alleen bewezen verbetering wordt toegepast en later gebruikt.",
+              "nextAction": "Aansluitingsfout hersteld en geïnstalleerd. Codex controleert het verbruik van de gesloten ronde en gebruikt daarna het bewaarde codevoorstel voor echte beoordeling, toepassing bij bewezen winst en later gebruik.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -24607,7 +24630,9 @@
                 "existingRouteFirst": true,
                 "estimate": "Bestaande bron en bewijs eerst hergebruiken; alleen ontbrekende koppeling bouwen. Concrete uitvoerraming vóór een fysieke proef; creditkosten onbekend.",
                 "activeWorkers": [
-                  "/root"
+                  "/root",
+                  "/root/eva1_memory_transfer",
+                  "/root/product_execution_memory_review"
                 ]
               },
               "ownerInstructions": {
@@ -24616,7 +24641,7 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "currentEvidence": "eva2/evidence/product/native-work-path-input-repair-result-20261012.json"
+              "currentEvidence": "eva2/evidence/product/native-work-project-origin-installed-20261012.json"
             }
           ],
           "latestEvidence": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
@@ -32053,19 +32078,19 @@
       "developmentCredits": "unknown"
     },
     "workStrategyCycleCurrent20261012": {
-      "checkedAt": "2026-10-12T12:43:12.605191+02:00",
-      "state": "construction_closed_assessment_failed",
+      "checkedAt": "2026-10-12T13:08:30.817460+02:00",
+      "state": "project_origin_corrected_installed_usage_reconciliation",
       "nativeParentConfirmedLive": false,
       "activeDriverPids": [],
       "serviceConfigurationSha256": "184cc351ab718b814ebe8f285da4a414784ed6610b3860b95baa61efc2462e82",
-      "reviewSha256": "33ea21c89d2c0e7ca322ac4a68f7a218240e7d5750c7c9b06b9645a6899772de",
+      "reviewSha256": "4547396de6538a3f5d4ae2293725991302bd4a633f3ecc792484758538d62956",
       "criterionChange": false,
       "newComparisonSeries": false,
       "qualityImprovementProven": false,
       "productTaskCompletionChanged": false,
       "runtimeUsage": "4 parent requests / 44058 tokens / 4 tools complete; child/shared UNKNOWN",
       "developmentCredits": "unknown",
-      "source": "eva2/evidence/product/native-work-path-input-repair-result-20261012.json"
+      "source": "eva2/evidence/product/native-work-project-origin-installed-20261012.json"
     }
   },
   "activeTaskId": "AU-008",
@@ -34537,5 +34562,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T12:43:12.605191+02:00"
+  "updatedAt": "2026-10-12T13:08:30.817460+02:00"
 }

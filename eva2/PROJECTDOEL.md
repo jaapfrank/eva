@@ -1,5 +1,29 @@
 # Eva2 — volledige digitale huisgenoot
 
+## Actueel 12 oktober — beoordelingsaansluiting hersteld en geïnstalleerd
+
+De bestaande technische verbeteropdracht gebruikt component-work-strategy:REG;
+de beoordelingscontrole herkende alleen component-work-evaluation:REG:construction.
+Beide exacte bestaande naamvormen zijn nu aangesloten. Actor-, bron-, spec-,
+ingress-, stage-, scope-, stop- en verbruiksvoorwaarden blijven behouden.
+
+Elf gerichte controles slagen; onafhankelijke bron- en installatiereview GO.
+Exact één hostmodule geïnstalleerd, 37 andere hostbronnen en configuratie behouden,
+één dienstherstart en HTTP200. Geen kern-/werkerwijziging of nieuwe Eva-modelaanvraag.
+Dit herstelt een aantoonbare downstreamblokkade; de exclusieve oorspronkelijke
+HTTP400-oorzaak en oude child/shared-usage blijven onbekend. Oude raw/once/usage
+blijven behouden. Geen kwaliteitswinst, toepassing of volledige AIDE² afgerond.
+
+Vervolg: modelvrij bepalen of behouden bewijs nul-childdispatch kan aantonen;
+anders blijft UNKNOWN staan. Gebruik daarna alleen de bestaande normale route
+met het bewaarde voorstel, actuele binding en werkelijk verantwoorde ruimte.
+Geen nieuwe kandidaatgeneratie, gesloten herhaling of concurrentenserie.
+Het volledige goal blijft actief; 39/48 historische en 39/54 totale afrondingen
+behouden. Spraak geparkeerd. Geen handeling van Jaap nodig.
+Bewijs: eva2/evidence/product/native-work-project-origin-installed-20261012.json.
+Review: eva2/reviews/native-work-project-origin-installed-review-20261012.json.
+Dashboardinhoud bijgewerkt: 2026-10-12T13:08:30.817460+02:00.
+
 ## Actueel 12 oktober — Human Understanding Engine verwerkt
 
 Jouw volledige ontwerp is gelezen en als eigenaarvoorstel bewaard. Mijn oordeel:

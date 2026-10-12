@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-12T13:08:30.817460+02:00",
+  "contract": "EvaComponentProjectOriginInstalledPublicReview/v1",
+  "decision": "GO",
+  "evidence": "eva2/evidence/product/native-work-project-origin-installed-20261012.json",
+  "installationReviewSha256": "569c63e9d40bd267e0697eb0da65cfae5305e152a1dd14b4be17a3cb93413974",
+  "nativeInputAllowed": false,
+  "productCompletionAllowed": false,
+  "publicationLimits": {
+    "allowedClaim": "The reproducible rejection of the existing exact registered construction project namespace is corrected and installed in the existing evaluator host.",
+    "childUsageZeroProven": false,
+    "exclusiveHistoricalHttp400CauseConfirmed": false,
+    "nativeBehaviorQualityGainOrFullAideCompletion": false,
+    "oldChildAndSharedUsage": "UNKNOWN",
+    "originalInnerHttp400Exception": "not retained",
+    "sourceAndInstallationDoNotAuthorizeNewInput": true
+  },
+  "scope": "Exact host installation and factual publication only",
+  "sourceReviewSha256": "60251252c24e40cdd2b3bd5e46a3013422b81102dc77b80a554bf1bcb9c373b6"
+}

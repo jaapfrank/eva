@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "creditCost": "unknown",
+    "nativeDispatches": 0,
+    "newEvaModelRequests": 0
+  },
+  "bindings": {
+    "installationReviewSha256": "569c63e9d40bd267e0697eb0da65cfae5305e152a1dd14b4be17a3cb93413974",
+    "privateInstallationReceiptSha256": "ba9c915d57426e03fe70e7b8e6f292387e46cdaa1ed8253c5a91d333ac4eb0a3",
+    "sourceReviewSha256": "60251252c24e40cdd2b3bd5e46a3013422b81102dc77b80a554bf1bcb9c373b6"
+  },
+  "change": "Both existing exact registered construction namespaces are recognized; actor, source, spec, ingress, stage, scope and usage guards remain.",
+  "checkedAt": "2026-10-12T13:08:30.817460+02:00",
+  "closedConstruction": {
+    "childUsage": null,
+    "exclusiveHistoricalCauseProven": false,
+    "oldAttemptRearmed": false,
+    "originalHttp400InnerExceptionRetained": false,
+    "parentInputTokens": 42623,
+    "parentOutputTokens": 1435,
+    "parentRequests": 4,
+    "parentTotalTokens": 44058,
+    "physicalTools": 4,
+    "rawSha256": "0807efed57dbc6221d34731ff018cf244b42004de281bb6720a7c6bb2e42955e",
+    "sharedUsage": "UNKNOWN"
+  },
+  "contract": "EvaComponentProjectOriginInstalledPublic/v1",
+  "installation": {
+    "configurationPreserved": true,
+    "configurationSha256": "184cc351ab718b814ebe8f285da4a414784ed6610b3860b95baa61efc2462e82",
+    "coreWorkerChanges": 0,
+    "hostModulesChanged": 1,
+    "httpHealth": 200,
+    "otherHostModulesPreserved": 37,
+    "serviceRestarts": 1
+  },
+  "next": "Resolve cumulative usage from retained evidence, then use the existing route to assess the preserved proposal; do not regenerate it or start a competitor series.",
+  "result": {
+    "candidateApplied": false,
+    "candidatePreserved": true,
+    "fullAideCycleCompleted": false,
+    "productFunctionCompleted": false,
+    "qualityGainProven": false
+  },
+  "source": {
+    "afterSha256": "be10b22d94826dfdec5c00803567388af25500041abbefa2b70a8e0a1ef3772f",
+    "beforeSha256": "f784232f0a8dbd81e01b41c981c8d885d74527ba8bc3871553483afa6f9aac71",
+    "path": "eva2/src/eva/operations/component_application_runtime.py"
+  },
+  "status": "installed",
+  "tests": {
+    "retainedOriginAfter": true,
+    "retainedOriginBefore": false,
+    "returnCode": 0,
+    "uniquePassed": 11,
+    "wrongContextsRejected": true
+  }
+}

@@ -1,19 +1,24 @@
 from copy import deepcopy
 from types import SimpleNamespace as NS
 import hashlib
+import pytest
 
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.component_application_runtime import _registered_lifecycle_origin, _READINESS
 
 
-def test_technical_zero_contact_requires_exact_original_source_and_spec():
+@pytest.mark.parametrize("project_template", (
+    "component-work-evaluation:{registration}:construction",
+    "component-work-strategy:{registration}",
+))
+def test_technical_zero_contact_requires_exact_original_source_and_spec(project_template):
     source = {"tenant_id":"tenant","installation_id":"installation","principal_id":"owner",
         "conversation_id":"technical-session","message_id":"technical-message"}
     spec = {"source":source,"work_id":"work:technical","owner_principal_id":"owner",
         "principal_binding_id":"binding","source_ingress_sha256":"1"*64,
         "task":"Improve actual work","created_at":"2026-10-12T00:00:00Z"}
     scope = canonical_sha256({k:source[k] for k in ("tenant_id","installation_id","principal_id")})
-    turn = NS(project_id="component-work-evaluation:"+"2"*64+":construction")
+    turn = NS(project_id=project_template.format(registration="2" * 64))
     origin = {"kind":"registered_lifecycle_technical_probe","stage":"construction",
         "registration_sha256":"2"*64,"resources_sha256":"3"*64,
         "runtime_admission_sha256":"4"*64,"input_sha256":"5"*64,"scope_sha256":scope,
@@ -27,12 +32,20 @@ def test_technical_zero_contact_requires_exact_original_source_and_spec():
     assert _registered_lifecycle_origin(origin,spec,turn,scope)
     for key,value in [("spec_sha256","0"*64),("task_sha256","0"*64),
                       ("project_id","ordinary-owner"),("ownerAuthoredText",True),
-                      ("foreground_contact_used",True)]:
+                      ("foreground_contact_used",True),
+                      ("registration_sha256","0"*64),("stage","independent_final")]:
         altered = deepcopy(origin); altered[key] = value
         assert not _registered_lifecycle_origin(altered,spec,turn,scope)
     assert not _registered_lifecycle_origin(None,spec,turn,scope)
     alien = deepcopy(spec); alien["source"]["principal_id"] = "another-person"
     assert not _registered_lifecycle_origin(origin,alien,turn,scope)
+    alien_owner = deepcopy(spec); alien_owner["owner_principal_id"] = "another-person"
+    rehashed_origin = dict(origin, spec_sha256=canonical_sha256(alien_owner))
+    assert not _registered_lifecycle_origin(rehashed_origin,alien_owner,turn,scope)
+    alien_actor = deepcopy(origin); alien_actor["actor"]["principal_id"] = "another-person"
+    assert not _registered_lifecycle_origin(alien_actor,spec,turn,scope)
+    ordinary = NS(project_id=None)
+    assert not _registered_lifecycle_origin(dict(origin,project_id=None),spec,ordinary,scope)
 
 
 def test_actual_core_readiness_program_compiles_without_running():
