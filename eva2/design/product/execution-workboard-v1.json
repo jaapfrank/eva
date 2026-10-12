@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T00:27:19.092259+00:00",
+        "checkedAt": "2026-10-12T00:31:18.203438+00:00",
         "deliveries": [
           {
             "title": "Zelfgekozen verbeterd hulpmiddel toepasbaar",
@@ -4786,13 +4786,13 @@
         "now": {
           "title": "AIDE²: echte werkuitvoering voor agentverbetering",
           "state": "in_progress",
-          "phase": "native_work_strategy_producer",
+          "phase": "native_work_strategy_interface_identified",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De huidige beoordelaar leest verzegeld werkbewijs, maar de actieve verbeterdienst voert agentvarianten nog niet via de bestaande kern/werker uit.",
-          "detail": "De bestaande technische proefproducent hergebruiken en aan dezelfde ontwikkel-/eindbeoordelingsroute aansluiten. Oude gesloten proeven en criteria blijven behouden.",
+          "summary": "De beoordelaar kan bewaard werkbewijs lezen. Nog te bouwen: varianten van Eva’s agentaansturing echt laten uitvoeren via dezelfde kern en werker.",
+          "detail": "De ontbrekende aansluiting is vastgesteld: de bestaande evaluatieaanroep moet haar oorspronkelijke taak, bron en uitvoerbevoegdheid meenemen. De technische producent wordt hergebruikt; de productiecode voor deze aansluiting is nog niet gewijzigd.",
           "source": "eva2/src/eva/operations/component_development.py",
           "doneWhen": "De bestaande verbeterroute kan echte baseline-/kandidaatwerkresultaten met meetbaar verbruik en hulp onafhankelijk beoordelen; alleen een bewezen verbetering komt via de bestaande toepassingsroute verder.",
           "review": null,
@@ -4816,7 +4816,7 @@
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T00:23:58.026721+00:00",
+        "reviewedAt": "2026-10-12T00:31:18.203438+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4893,8 +4893,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-12T00:23:58.026721+00:00",
-      "checkedAt": "2026-10-12T00:27:19.092259+00:00",
+      "reviewedAt": "2026-10-12T00:31:18.203438+00:00",
+      "checkedAt": "2026-10-12T00:31:18.203438+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11269,7 +11269,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T00:27:19.092259+00:00",
+      "lastUpdatedAt": "2026-10-12T00:31:18.203438+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11642,6 +11642,16 @@
         "review": "eva2/reviews/native-reviewed-artifact-installed-review-20261012.json",
         "reviewSha256": "322df9fe04ae05574c5468b0a2c55f02a5e081e36a8517933f8c68a8c030407e",
         "manualEvaModelRequests": 0
+      },
+      "dashboardVerificationNativeWorkStrategyCurrent20261012": {
+        "checkedAt": "2026-10-12T00:31:18.203438+00:00",
+        "route": "http://localhost:44712/",
+        "method": "Live bestaande browserpagina vergeleken met huidige werklijst, actief app-goal en exacte geïnstalleerde bewijs-/reviewhashes. Geen nieuwe runtime- of modelproef.",
+        "lastInstalledEvidence": "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json",
+        "lastInstalledReviewSha256": "322df9fe04ae05574c5468b0a2c55f02a5e081e36a8517933f8c68a8c030407e",
+        "wholeGoal": "active",
+        "productCompletionChanged": false,
+        "newProviderCalls": 0
       }
     },
     "pendingTechnicalReview": {
@@ -33741,5 +33751,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T00:27:19.092259+00:00"
+  "updatedAt": "2026-10-12T00:31:18.203438+00:00"
 }

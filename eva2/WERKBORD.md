@@ -1,4 +1,4 @@
-## Actueel werk — 2026-10-12T00:27:19.092259+00:00
+## Actueel werk — 2026-10-12T00:31:18.203438+00:00
 
 ## Actueel 12 oktober — echte uitvoering voor agentverbetering aansluiten
 
@@ -8,8 +8,13 @@ verbeterdienst heeft geen productie-uitvoering voor baseline/kandidaat van Eva's
 agentaansturing. Hergebruik de bestaande technische producent en normale
 kern/werker. Geen tweede optimalisatieplatform, planner, geheugen of daemon.
 
-Eerst exacte interface en huidige uitvoerroute vaststellen; vervolgens alleen
-de ontbrekende productieaansluiting maken, gericht controleren en installeren.
+De interface is vastgesteld: de oorspronkelijke taak-, bron- en bevoegdheidsbinding
+ontbreekt bij de bestaande evaluatieaanroep. Productiecode hiervoor nog niet gewijzigd.
+Dashboard inhoudelijk gecontroleerd op 2026-10-12T00:31:18.203438+00:00; laatste installatie en
+39/48 oorspronkelijke afrondingen behouden.
+
+Vervolgens alleen de ontbrekende productieaansluiting maken, gericht
+controleren en installeren.
 Kwaliteit en menselijke hulp eerst, snelheid/verbruik apart. De bouwer verandert
 geen onafhankelijke criteria of afgeschermde toetsgegevens.
 
