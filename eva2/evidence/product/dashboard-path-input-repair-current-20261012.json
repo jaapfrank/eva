@@ -1,0 +1,73 @@
+{
+  "contract": "EvaDashboardCurrentWorkEvidence/v1",
+  "recordedAt": "2026-10-12T11:22:12.445290+02:00",
+  "scope": "Actuele dashboardstand bij de bestaande AIDE²-werkroute; geen nieuwe productafronding.",
+  "cause": {
+    "confirmed": "De private proefdriver verbrak de opdracht bij een geweigerd READ/DRAFT-bronpad vóór fysieke uitvoering.",
+    "ordinaryProductionRunnerBugProven": false,
+    "originalThirdToolNameAndPathRecorded": false,
+    "diagnosis": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle/third-action-diagnosis/diagnosis.private.json",
+      "sha256": "5845c4c003803cb16256b7799ad2b48f786eace37cc686d0a098e62365426831"
+    }
+  },
+  "sourceCorrection": {
+    "status": "built_and_checked_not_installed",
+    "result": "De proefroute geeft de bestaande typed inputweigering terug zodat Eva haar aanvraag kan corrigeren; toegestane bron en overige controles blijven gelijk.",
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle/path-input-repair-correction/driver.future.private.py",
+      "sha256": "af17fcf0be6bf8aa16300251d9282fd7dc650abaff088c5be3ee84a2c896c7be"
+    },
+    "manifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle/path-input-repair-correction/frozen-manifest.private.json",
+      "sha256": "ee77c8b4bc50cc07200918d1ecd216046d1d202f9056883d6ff5ef806178f759"
+    },
+    "checks": {
+      "uniquePassed": 4,
+      "result": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle/path-input-repair-correction/source-result.private.json",
+        "sha256": "206bc57a035572abdddbab0c3463b6d7f474ae096f3ba207c5a38d4463a79394"
+      }
+    },
+    "independentSourceReview": "Geen concrete bronblocker gemeld; definitieve toelating voor nieuwe uitvoering nog niet afgegeven.",
+    "runtimeInstallation": false,
+    "nativeBehaviorProven": false
+  },
+  "currentWork": "Aansluiting van deze correctie op de bestaande verbetercyclus afronden; configuratie en resterend verbruik vooraf controleren.",
+  "preparationFailure": {
+    "kind": "incorrect_arithmetic_assertion_before_binding_write",
+    "detail": "De lokale voorbereidingscontrole verwachtte 373.128 resterende tokens; 400.000 - 23.872 is 376.128. De controle stopte vóór het schrijven van nieuwe bindings.",
+    "liveConfigurationChanged": false,
+    "providerRequests": 0,
+    "nativeActions": 0
+  },
+  "closedPriorRound": {
+    "providerAttempts": 3,
+    "inputTokens": 23313,
+    "outputTokens": 559,
+    "totalTokens": 23872,
+    "physicalTools": 2,
+    "source": "eva2/evidence/product/native-work-post-budget-correction-result-20261012.json",
+    "reopened": false
+  },
+  "ownerActionRequired": false,
+  "fullAide2Completed": false,
+  "newProductFunctionCompleted": false,
+  "goalStatus": "active",
+  "credits": "unknown",
+  "liveVerification": {
+    "checkedAt": "2026-10-12T11:23:10.280296+02:00",
+    "route": "http://localhost:44712/",
+    "apiRoute": "http://127.0.0.1:44712/project-state",
+    "apiStatus": 200,
+    "browserObservedAt": "2026-10-12T11:22:23+02:00",
+    "contentUpdatedAt": "2026-10-12T11:22:12.445290+02:00",
+    "observedCurrentTitle": "Zelfverbetering · broncorrectie aansluiten",
+    "observedSourceChecks": "vier gerichte controles slagen",
+    "ownerActionRequired": false,
+    "observedHistoricalCount": "39/48",
+    "updatedByExistingFiveSecondPoll": true,
+    "dashboardServiceRestarted": false,
+    "newModelRequests": 0
+  }
+}

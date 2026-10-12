@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T10:53:09.311684+02:00",
+  "lastUpdated": "2026-10-12T11:22:12.445290+02:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -125,11 +125,11 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Persoonlijkheid en geheugenbasis behouden. De verbeterroute is geïnstalleerd; de ontwikkelronde is gestopt zonder kandidaat. Codex behandelt de uitvoerfout. Volledige AIDE², initiatief en samenhangende gezinsoplevering blijven open.",
+      "summary": "Persoonlijkheid en geheugenbasis behouden. De fout in de verbeterproef is herleid; de broncorrectie is gemaakt en gericht gecontroleerd, nog niet geïnstalleerd. Codex rondt de aansluiting af. Volledige AIDE², initiatief en gezinsoplevering blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · concrete uitvoerfout afhandelen",
-          "detail": "De ontwikkelronde is gesloten zonder kandidaat. Bestaand foutbewijs gericht onderzoeken; geen oude poging opnieuw starten."
+          "title": "Nu · gecontroleerde broncorrectie aansluiten",
+          "detail": "De concrete fout in de proefdriver is herleid en modelvrij gecorrigeerd. Aansluiting en definitieve uitvoerreview worden afgerond; geen handeling van Jaap nodig."
         },
         {
           "title": "Daarna · volledige verbetercyclus afronden",
@@ -1021,8 +1021,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T10:53:09.311684+02:00",
+        "checkedAt": "2026-10-12T11:22:12.445290+02:00",
         "deliveries": [
+          {
+            "id": "path-input-repair-source-20261012",
+            "date": "2026-10-12T11:22:12.445290+02:00",
+            "title": "Fout in verbeterproef herleid; broncorrectie gecontroleerd",
+            "state": "tested",
+            "summary": "De proefdriver geeft een verkeerd bronpad nu terug via Eva’s bestaande aanvraagherstel.",
+            "result": "Vier gerichte controles geslaagd; 0 nieuwe Eva-modelaanvragen. Nog niet geïnstalleerd.",
+            "remaining": "Aansluiting, echte verbetercyclus, onafhankelijke eindbeoordeling en later gebruik blijven open.",
+            "source": "eva2/evidence/product/dashboard-path-input-repair-current-20261012.json",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false
+          },
           {
             "id": "native-work-post-budget-correction-result-20261012",
             "date": "2026-10-12T10:53:09.311684+02:00",
@@ -5033,17 +5045,17 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · uitvoerfout herstellen",
+          "title": "Zelfverbetering · broncorrectie aansluiten",
           "state": "in_progress",
-          "phase": "closed_construction_targeted_diagnosis",
+          "phase": "source_corrected_binding_preparation",
           "activeExecution": false,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De aansluiting is geïnstalleerd. De ontwikkelronde is gestopt zonder kandidaat; Codex onderzoekt de concrete uitvoerfout.",
-          "detail": "Deze ronde: 3 modelaanvragen, 23.872 tokens en 2 uitgevoerde tools. De rapportexport is hersteld zonder opnieuw te draaien. Geen bewezen verbetering of toegepaste kandidaat.",
+          "summary": "De fout in de verbeterproef is herleid. De broncorrectie is gemaakt en vier gerichte controles slagen; aansluiting op de verbetercyclus wordt nu afgerond.",
+          "detail": "De proefdriver stopte de hele opdracht bij een geweigerd bronpad. De correctie gebruikt Eva’s bestaande aanvraagherstel en verruimt geen toegang. Nog niet geïnstalleerd of met een nieuwe Eva-uitvoering aangetoond. De eerdere ronde blijft gesloten: 3 aanvragen, 23.872 tokens, 2 fysieke tools.",
           "doneWhen": "De volledige cyclus levert een onafhankelijk beoordeelde kandidaat; alleen bewezen winst wordt toegepast en daarna bij ander werk gebruikt.",
-          "source": "eva2/evidence/product/native-work-post-budget-correction-result-20261012.json",
+          "source": "eva2/evidence/product/dashboard-path-input-repair-current-20261012.json",
           "previousInstalledCorrection": "eva2/evidence/product/native-program-observation-installed-20261012.json",
           "previousInstalledReview": "eva2/reviews/native-program-observation-installed-review-20261012.json",
           "previousInstalledReviewSha256": "e867786889ad6855a48a709c6c7073b274cdf89a3cd7ca2c4ad8b76a27a5762a",
@@ -5066,38 +5078,43 @@
             "currentNativeExecutionStarted": true,
             "currentNativeExecutionClosed": true,
             "candidateStored": false,
-            "currentNativeFailureCauseConfirmed": false
+            "currentNativeFailureCauseConfirmed": true,
+            "pathInputRepairBuilt": true,
+            "pathInputRepairChecksCompleted": true,
+            "pathInputRepairInstalled": false,
+            "newInputBindingPrepared": false,
+            "newNativeExecutionStarted": false
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T10:53:09.311684+02:00",
+            "checkedAt": "2026-10-12T11:22:12.445290+02:00",
             "coordinator": "/root",
-            "coordinatorTask": "Afgesloten uitkomst publiceren en dashboard feitelijk bijhouden.",
+            "coordinatorTask": "Actuele dashboardstand publiceren en aansluiting van de broncorrectie op de bestaande verbetercyclus afronden.",
             "executor": "/root/eva1_memory_transfer",
-            "executorTask": "De exacte afgewezen toolaanroep uit het bestaande bewijs achterhalen; geen nieuwe modelproef.",
+            "executorTask": "Broncorrectie gereed: vier gerichte controles slagen; geen nieuwe Eva-modelaanvragen.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Werkelijke uitkomst en gemeten verbruik onafhankelijk controleren.",
-            "modelUsage": "Ronde afgesloten: 3 Astra/medium-aanvragen · 23.872 tokens · 2 fysieke tools.",
-            "note": "Geen Eva-uitvoering actief. Codex behandelt de uitvoerfout; oude pogingen blijven gesloten."
+            "reviewerTask": "Broncorrectie beoordeeld zonder concrete blocker; definitieve uitvoerbinding nog beoordelen.",
+            "modelUsage": "Nieuwe diagnose en broncontroles: 0 Eva-modelaanvragen. Vorige ronde: 3 Astra/medium-aanvragen · 23.872 tokens · 2 fysieke tools.",
+            "note": "Geen Eva-proef actief. Codex werkt aan de aansluiting; deze broncorrectie is nog niet geïnstalleerd."
           },
-          "review": "eva2/reviews/native-work-post-budget-correction-result-review-20261012.json",
-          "reviewSha256": "855a39044856d4e408c81e6793d8cb938a622a53e14c3b740aba450a12a04592"
+          "previousResultReview": "eva2/reviews/native-work-post-budget-correction-result-review-20261012.json",
+          "previousResultReviewSha256": "855a39044856d4e408c81e6793d8cb938a622a53e14c3b740aba450a12a04592"
         },
         "next": {
           "title": "Verbetercyclus met bewezen correctie afronden",
           "state": "planned",
           "activeExecution": false,
-          "source": "eva2/evidence/product/native-work-post-budget-correction-result-20261012.json",
-          "summary": "Na herstel van de concrete oorzaak: kandidaat ontwikkelen, onafhankelijk beoordelen en uitsluitend bewezen winst toepassen en later gebruiken.",
-          "detail": "De afgesloten ronde wordt niet opnieuw gestart. De oorspronkelijke kwaliteitseisen blijven staan; geen nieuwe concurrentenserie."
+          "source": "eva2/evidence/product/dashboard-path-input-repair-current-20261012.json",
+          "summary": "Na de aansluiting: de volledige kandidaatontwikkeling en onafhankelijke beoordeling afronden; alleen bewezen winst toepassen en later gebruiken.",
+          "detail": "De broncorrectie is gericht gecontroleerd. Configuratie en resterend verbruik eerst aansluiten. De gesloten oude ronde wordt niet heropend; geen nieuwe concurrentenserie."
         },
         "ownerAction": {
           "required": false,
           "summary": "Geen handeling van jou nodig",
           "title": "Geen handeling van jou nodig",
-          "detail": "Deze technische fout wordt door Codex afgehandeld. Je hoeft geen proef te herhalen."
+          "detail": "Codex rondt de technische aansluiting af. Je hoeft nu geen proef te herhalen."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T10:53:09.311684+02:00",
+        "reviewedAt": "2026-10-12T11:22:12.445290+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5198,8 +5215,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T10:53:09.311684+02:00",
-      "checkedAt": "2026-10-12T10:53:09.311684+02:00",
+      "reviewedAt": "2026-10-12T11:22:12.445290+02:00",
+      "checkedAt": "2026-10-12T11:22:12.445290+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11548,7 +11565,7 @@
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
-            "remaining": "De uitvoerwaarnemer en correcte planningruimte zijn geïnstalleerd. De oude kandidaat blijft niet toegepast; de volledige verbetercyclus, onafhankelijke eindbeoordeling, bewezen winst en later gebruik blijven open. Gezinsacceptatie blijft apart.",
+            "remaining": "De uitvoerwaarnemer en planningruimte zijn geïnstalleerd. De fout in de verbeterproef is herleid; broncorrectie en vier gerichte controles gereed, aansluiting nog open. Volledige verbetercyclus, onafhankelijke eindbeoordeling, bewezen winst en later gebruik blijven open. Gezinsacceptatie blijft apart.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11583,7 +11600,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T10:53:09.311684+02:00",
+      "lastUpdatedAt": "2026-10-12T11:22:12.445290+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -12074,7 +12091,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T10:53:09.311684+02:00",
+      "updatedAt": "2026-10-12T11:22:12.445290+02:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -12107,12 +12124,10 @@
         "mainCompletionChanged": false
       },
       "auditUpdate": {
-        "checkedAt": "2026-10-12T09:24:14.067503+02:00",
-        "reason": "Diagnose afgerond; actuele werktekst bijgewerkt zonder productafronding of oude proef te wijzigen.",
-        "source": "eva2/evidence/product/native-work-completion-cause-diagnosis-20261012.json",
-        "newProductCompletion": false,
-        "ownerActionRequired": false,
-        "independentReview": "Exacte geïnstalleerde waarnemer: GO. Diagnose is geen nieuwe kwaliteitsbeoordeling."
+        "recordedAt": "2026-10-12T11:22:12.445290+02:00",
+        "source": "eva2/evidence/product/dashboard-path-input-repair-current-20261012.json",
+        "type": "current_work_progress",
+        "newProductFunctionCompleted": false
       },
       "dashboardVerificationTypedResumeResult20261012": {
         "checkedAt": "2026-10-12T04:58:33.469754+00:00",
@@ -34277,5 +34292,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T10:53:09.311684+02:00"
+  "updatedAt": "2026-10-12T11:22:12.445290+02:00"
 }

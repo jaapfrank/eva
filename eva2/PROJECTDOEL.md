@@ -1,23 +1,28 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — aansluiting geïnstalleerd; ontwikkelronde gestopt
+## Actueel 12 oktober — fout herleid; broncorrectie gecontroleerd
 
-De bestaande verbeterroute is aangesloten op de actuele installatie. Eén configuratieactivatie,
-één dienstherstart; dienst gezond gecontroleerd. 38 hostbronnen en kern-/werkerimages behouden.
-De verse ontwikkelronde is afgesloten met internal_error, zonder opgeslagen kandidaat of
-bewezen kwaliteitswinst: 3 Astra/medium-aanvragen, 23.872 tokens en 2 fysieke tools.
-De rapportexport is hersteld uit de bestaande gegevens, zonder de uitvoering te herhalen.
+De gesloten verbeteropdracht stopte door de broncontrole van de private proefdriver.
+Een geweigerd READ/DRAFT-pad brak de hele opdracht af vóór fysieke uitvoering.
+Geen bronfout in de gewone productie-uitvoerder bewezen; de exacte derde toolnaam
+en het aangeboden pad zijn niet bewaard.
 
-Nu: de exact afgewezen toolaanroep achterhalen en alleen de bewezen oorzaak herstellen.
-De onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik blijven open.
-Geen oude poging heropenen of nieuwe concurrentenserie. Het volledige projectgoal blijft actief;
-39/48 historische afrondingen en bestaande acceptaties behouden. Spraak geparkeerd.
-Geen handeling van Jaap nodig; creditkosten en ontwikkelcredits onbekend.
+De toekomstige broncorrectie gebruikt de bestaande typed aanvraagweigering en
+herstelroute. Vier gerichte controles slagen; bronreview meldt geen concrete blocker.
+Nog niet geïnstalleerd, geen nieuwe Eva-uitvoering gestart en geen kwaliteitswinst.
+Nu de aansluiting en definitieve uitvoerbinding afronden. Een lokale rekencontrole
+in de voorbereiding stopte vóór bindings of livewijziging; correct resterend
+tokenmaximum is 376.128 na 23.872 van 400.000.
 
-Resultaat: eva2/evidence/product/native-work-post-budget-correction-result-20261012.json.
-Installatie: eva2/evidence/product/native-work-post-budget-correction-installed-20261012.json.
-Review: eva2/reviews/native-work-post-budget-correction-result-review-20261012.json (GO voor veilige feitenpublicatie).
-Dashboardinhoud bijgewerkt: 2026-10-12T10:53:09.311684+02:00.
+De eerdere aansluiting blijft geïnstalleerd en haar ronde gesloten:
+3 Astra/medium-aanvragen, 23.872 tokens, 2 fysieke tools, geen kandidaat.
+Volledige AIDE², onafhankelijke eindbeoordeling, toepassing en later gebruik blijven
+open. Het hele projectgoal blijft actief; bestaande afrondingen en acceptaties
+behouden. Spraak geparkeerd. Geen handeling van Jaap nodig.
+
+Dashboardinhoud bijgewerkt: 2026-10-12T11:22:12.445290+02:00.
+Voortgang: eva2/evidence/product/dashboard-path-input-repair-current-20261012.json.
+Afgesloten ronde: eva2/evidence/product/native-work-post-budget-correction-result-20261012.json.
 
 ## Historisch 12 oktober — eerdere diagnose, later gekwalificeerd door adapterfout
 

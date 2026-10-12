@@ -1,0 +1,68 @@
+{
+  "contract": "EvaIndependentDashboardFactsReview/v1",
+  "checkedAt": "2026-10-12T09:24:21.359311+00:00",
+  "decision": "GO",
+  "openBlockers": [],
+  "scope": "Actuele dashboard-/documentatiefeiten over gecontroleerde toekomstige broncorrectie; uitsluitend publicatie, geen uitvoer- of kwaliteitsgoedkeuring.",
+  "bindings": {
+    "publicFiles": [
+      {
+        "path": "eva2/evidence/product/dashboard-path-input-repair-current-20261012.json",
+        "sha256": "2ff1f55f5af9ba31eea04a73751d80c2dce727b335e89c2be56f0e028cc53a0a"
+      },
+      {
+        "path": "eva2/design/product/execution-workboard-v1.json",
+        "sha256": "fbdc53d84188498d639ed4ac8e656b85bf8d412285e654f58ab2c809d64a352e"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "1f3ac19d7278ef0a654d19fc3d318e64d0cabd0911a4473f7bf66fd77dd50168"
+      },
+      {
+        "path": "eva2/PROJECTDOEL.md",
+        "sha256": "dc65644ba91ab55d9628fa602e63de8ee751f33ba1b44c658cc4bb5da00f3645"
+      },
+      {
+        "path": "eva2/WERKBORD.md",
+        "sha256": "5cc4c6c8382d23448de176121414115533d7ae11be2c17047a031fb37b1bd8f1"
+      }
+    ],
+    "sourceManifestSha256": "ee77c8b4bc50cc07200918d1ecd216046d1d202f9056883d6ff5ef806178f759",
+    "sourceSha256": "af17fcf0be6bf8aa16300251d9282fd7dc650abaff088c5be3ee84a2c896c7be",
+    "targetedSourceResultSha256": "206bc57a035572abdddbab0c3463b6d7f474ae096f3ba207c5a38d4463a79394",
+    "diagnosisSha256": "5845c4c003803cb16256b7799ad2b48f786eace37cc686d0a098e62365426831",
+    "closedPriorResultReviewSha256": "855a39044856d4e408c81e6793d8cb938a622a53e14c3b740aba450a12a04592",
+    "comparisonHead": "326fa58c948ca2e61ee25c9e0672ca9f8faa8001"
+  },
+  "findings": [
+    "Now/next, laatste deliveries en de drie eerste actuele Markdown-secties tonen broncorrectie gecontroleerd maar niet geïnstalleerd; definitieve uitvoerbinding blijft open.",
+    "Vier unieke gerichte sourcechecks zijn bestaande bewijsregistratie. Deze review voert geen tests, modellen of native werk uit.",
+    "De gesloten ronde blijft ambiguous/internal_error zonder kandidaat: 3 complete Astra/medium-aanvragen, 23.872 tokens en 2 fysieke tools. Geen kwaliteitswinst, toepassing, later gebruik of volledige AIDE².",
+    "De diagnose bevestigt de dispatchvrije READ/DRAFT-pathguard. De oorspronkelijke derde toolnaam en path zijn niet bewaard; geen fout in de gewone productie-uitvoerder bewezen.",
+    "De rekencontrole stopte volgens de behouden voorbereidingsmelding vóór nieuwe bindings/livewijziging. 400.000 - 23.872 = 376.128; 361.687 input + 14.441 output geeft dezelfde resterende gecombineerde ruimte.",
+    "De huidige liveVerification registreert API200 en de bestaande tab met inhoudstijd 11:22:12, actuele titel/vier checks/geen eigenaarhandeling; zichtbaarheid is door root waargenomen, niet door deze review herhaald."
+  ],
+  "preservation": {
+    "executionTasksEqualToHead": true,
+    "milestonesEqualToHead": true,
+    "completionsEqualToHead": true,
+    "executionTasksCanonicalSha256": "080b844ba19e8039d9bc40b63e86fe439b0926033dc8cea204a2e2047060b7ad",
+    "milestonesCanonicalSha256": "2ba42c830d0c97cc6590da628d5520e9d97dc8d2c91380b58e9e387ce6505627",
+    "completionsCanonicalSha256": "5d41ad2f06ca191463c651fc2e1c38494f85827affa56f2fb70830c08c3a897d",
+    "historicalSmallTaskCount": "39/48",
+    "originalAcceptancesAndUnknownNotReassessed": true
+  },
+  "reviewerCorrection": "Mijn eerdere bericht bevestigde onjuist 373.128 resterende tokens. De exacte aftrek is 376.128; er is hierdoor geen nieuwe input-GO of resourcebinding afgegeven.",
+  "authorization": {
+    "safeFactsPublication": true,
+    "newNativeInput": false,
+    "installation": false,
+    "qualityGain": false
+  },
+  "newProductFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "wholeProjectGoal": "active",
+  "newModelRequests": 0,
+  "newNativeActions": 0,
+  "creditCosts": "unknown"
+}
