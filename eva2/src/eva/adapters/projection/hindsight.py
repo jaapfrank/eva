@@ -416,9 +416,10 @@ class HindsightMemoryEngine:
         return memory
 
     def _with_private_sources(self, query: RecallCurrentFacts, memory: PresenceMemory) -> PresenceMemory:
-        """Rehydrate selected sources and provisional learning on every cache hit."""
+        """Resolve selected sources and current typed learning on every cache hit."""
         from eva.application.human_understanding import (
-            is_human_understanding_reference, validate_human_understanding_context,
+            MAX_LEARNING_RECORDS, is_human_understanding_reference,
+            validate_human_understanding_context,
         )
         facts = tuple(fact.model_copy(update={"value": {
             key: value for key, value in fact.value.items()
@@ -433,11 +434,17 @@ class HindsightMemoryEngine:
         if self._private_source_resolver is not None and query.audience.kind == "private_person":
             try:
                 sources = self._private_source_resolver(query, tuple(dict.fromkeys(references)))
-                if len(sources) > 3:
-                    raise HindsightProjectionProtocolError("original source count differs")
+                if len(sources) > 3 + MAX_LEARNING_RECORDS:
+                    raise HindsightProjectionProtocolError("original and learning source count differs")
+                principals = self._private_recall_principals(query)
+                ordinary_sources = 0
                 for item in sources:
                     reference = (item["principal_id"], item["source_ref"], item["evidence_ref"])
-                    if (reference not in references or item["project_id"] != query.project_id
+                    learning = is_human_understanding_reference(reference[2])
+                    if not learning:
+                        ordinary_sources += 1
+                    if (ordinary_sources > 3 or (reference not in references and not learning)
+                            or reference[0] not in principals or item["project_id"] != query.project_id
                             or not isinstance(item["text"], str) or not item["text"]
                             or len(item["text"]) > 4096 or type(item["truncated"]) is not bool
                             or not isinstance(item["occurred_at"], str)):
@@ -447,42 +454,62 @@ class HindsightMemoryEngine:
             except Exception:
                 _LOGGER.debug("Original private memory sources unavailable")
                 available = {}
-        enriched, excluded, used_learning = [], dict(memory.recall.excluded_reasons), set()
+        enriched, excluded, used_learning, learning_records = [], dict(memory.recall.excluded_reasons), set(), set()
+
+        def learning_value(reference, source):
+            context = validate_human_understanding_context(
+                None if source is None else source.get("learning_context"),
+                source_ref=reference[1], evidence_ref=reference[2])
+            selected_record = next(item["record"] for item in context["records"]
+                if (item["source_ref"], item["evidence_ref"]) == reference[1:])
+            if selected_record["recorded_at"] != source["occurred_at"]:
+                raise ValueError("learning source time differs")
+            head = context["records"][0]
+            key = (reference[0], head["source_ref"], head["evidence_ref"])
+            records = {(reference[0], item["source_ref"], item["evidence_ref"]) for item in context["records"]}
+            if key in used_learning or len(learning_records | records) > MAX_LEARNING_RECORDS:
+                raise ValueError("learning context duplicate or limit")
+            used_learning.add(key)
+            learning_records.update(records)
+            return {"text":head["record"]["interpretation"], "semantic_trust":"model_inference_unconfirmed",
+                "learning_context":context, "source_observed_at":head["record"]["recorded_at"]}
+
         for fact, reference in zip(facts, references, strict=True):
             learning = is_human_understanding_reference(reference[2])
             source = available.get(reference) if learning else available.pop(reference, None)
             if learning:
                 try:
-                    context = validate_human_understanding_context(
-                        None if source is None else source.get("learning_context"),
-                        source_ref=reference[1], evidence_ref=reference[2])
-                    selected_record = next(item["record"] for item in context["records"]
-                        if (item["source_ref"], item["evidence_ref"]) == reference[1:])
-                    if selected_record["recorded_at"] != source["occurred_at"]:
-                        raise ValueError("learning source time differs")
+                    value = learning_value(reference, source)
                 except (ValueError, TypeError, KeyError):
                     excluded[fact.fact_id] = "learning_source_unavailable"
                     continue
-                if reference in used_learning:
-                    excluded[fact.fact_id] = "duplicate_learning_record"
-                    continue
-                used_learning.add(reference)
                 # Consolidation text never replaces the exact provisional record.
-                fact = fact.model_copy(update={"trust": "host_policy", "value": {
-                    **fact.value, "text": context["records"][0]["record"]["interpretation"],
-                    "semantic_trust": "model_inference_unconfirmed", "learning_context": context,
-                    "source_observed_at": context["records"][0]["record"]["recorded_at"]}})
+                fact = fact.model_copy(update={"trust":"host_policy", "value":{**fact.value, **value}})
             if source is not None and isinstance(fact.value, dict):
-                fact = fact.model_copy(update={"value": {**fact.value, "original_source": source}})
+                fact = fact.model_copy(update={"value":{**fact.value,"original_source":source}})
             enriched.append(fact)
-        if len(enriched) != len(facts):
-            ids = {fact.fact_id for fact in enriched}
-            selected = [item.model_copy(update={"rank": rank}) for rank, item in enumerate(
-                (item for item in memory.recall.selected if item.fact_id in ids), start=1)]
-            recall = memory.recall.model_copy(update={"selected": selected,
-                "excluded_reasons": excluded, "admitted_fact_ids_sha256": canonical_sha256(sorted(ids))})
-        else:
-            recall = memory.recall
+        # These are current host-validated outbox sources, not additional semantic
+        # facts or a second store. Exact typed references remain available even
+        # when Hindsight selected only ordinary conversation facts or nothing.
+        added = []
+        for reference, source in sorted(available.items(), key=lambda row: (row[1]["occurred_at"], row[0]), reverse=True):
+            if not is_human_understanding_reference(reference[2]) or len(enriched) >= query.maximum_facts:
+                continue
+            try:
+                value = learning_value(reference, source)
+            except (ValueError, TypeError, KeyError):
+                continue
+            fact_id = "learning-source:" + canonical_sha256(list(reference))
+            enriched.append(ConfirmedFact(fact_id=fact_id, subject=reference[0], predicate="memory.observation",
+                value={**value,"original_source":source}, source_ref=reference[1], evidence_ref=reference[2],
+                observed_at=value["source_observed_at"], trust="host_policy"))
+            added.append(RecalledFact(rank=1,fact_id=fact_id,source_event_ids=[reference[1]],
+                trust="model_inference_unconfirmed",ranking_reason="current_scoped_learning_source"))
+        ids = {fact.fact_id for fact in enriched}
+        selected = [item.model_copy(update={"rank":rank}) for rank,item in enumerate(
+            [item for item in memory.recall.selected if item.fact_id in ids] + added, start=1)]
+        recall = memory.recall.model_copy(update={"selected":selected,"excluded_reasons":excluded,
+            "admitted_fact_ids_sha256":canonical_sha256(sorted(ids))}) if added or len(enriched) != len(facts) else memory.recall
         return replace(memory, recall=recall, confirmed_facts=tuple(enriched))
 
     @staticmethod

@@ -2005,3 +2005,45 @@ def test_learning_recall_cache_requires_current_chain_and_ignores_consolidated_c
             "other":{"metadata":{**metadata,"evidence_ref":"direct-user-source","trust":"direct_user"},"mentioned_at":NOW}}}
     engine._request = lambda *args, **kwargs: (200, mixed)
     assert engine._recall_response("test-bank", "person-tag", _query(), "query", None, None) == []
+
+
+def test_current_typed_learning_without_semantic_match_is_bounded_and_rechecked(hindsight_server):
+    from datetime import datetime, timezone, timedelta
+    from eva.application.conversation import ConversationTurn
+    from eva.application.human_understanding import build_human_understanding_document, parse_human_understanding_record
+    base_url, state = hindsight_server
+    ordinary = _conversation_document()
+    state.group_recall_response = {"results":[{"id":"ordinary", "text":"Ordinary conversation fact.",
+        "type":"world", "mentioned_at":NOW, "scores":{"final":1.0}, "metadata":{
+            "principal_id":ordinary.principal_id,"source_ref":ordinary.source_ref,
+            "evidence_ref":ordinary.evidence_ref,"privacy_class":ordinary.privacy_class,"trust":ordinary.trust}}]}
+    sources=[]
+    for index in range(8):
+        stamp=(datetime.strptime(NOW,"%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)-timedelta(seconds=10-index)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        turn=ConversationTurn.private(ordinary.tenant_id,ordinary.installation_id,ordinary.principal_id,
+            ordinary.conversation_id,"typed-"+str(index),"Genuine synthetic user source.",stamp)
+        doc=build_human_understanding_document(turn,{"kind":"person_hypothesis","interpretation":"Provisional "+str(index),
+            "uncertainty_reason":"Needs verification.","review_at":None,"outcome":"open", "previous_source_ref":None,"previous_evidence_ref":None})
+        context={"contract":"EvaHumanUnderstandingContext/v1","records":[{"source_ref":doc.source_ref,
+            "evidence_ref":doc.evidence_ref,"record":parse_human_understanding_record(doc.content,evidence_ref=doc.evidence_ref)}]}
+        sources.append({"principal_id":doc.principal_id,"source_ref":doc.source_ref,"evidence_ref":doc.evidence_ref,
+            "project_id":None,"occurred_at":stamp,"text":turn.text,"truncated":False,"learning_context":context})
+    current=[sources[:1]]
+    engine=HindsightMemoryEngine(HindsightProjectionConfig(base_url),private_source_resolver=lambda q,r:tuple(current[0]))
+    first=engine.recall_for_presence_fast(_query())
+    assert len(first.confirmed_facts)==2 and first.confirmed_facts[-1].evidence_ref==sources[0]["evidence_ref"]
+    requests=len(state.requests)
+    current[0]=sources
+    second=engine.recall_for_presence_fast(_query())
+    assert len(state.requests)==requests and len(second.confirmed_facts)==9
+    contexts=[fact.value["learning_context"] for fact in second.confirmed_facts if "learning_context" in fact.value]
+    assert len({(record["source_ref"],record["evidence_ref"]) for context in contexts for record in context["records"]})==8
+    assert all(fact.value["semantic_trust"]=="model_inference_unconfirmed" for fact in second.confirmed_facts[1:])
+    current[0]=[]
+    erased=engine.recall_for_presence_fast(_query())
+    assert len(state.requests)==requests and [fact.fact_id for fact in erased.confirmed_facts]==[first.confirmed_facts[0].fact_id]
+    # An unrelated project/actor cannot acquire the host-resolved learning records.
+    current[0]=[{**sources[0],"project_id":"other"}]
+    assert len(engine.recall_for_presence_fast(_query()).confirmed_facts)==1
+    current[0]=[{**sources[0],"principal_id":"person:other"}]
+    assert len(engine.recall_for_presence_fast(_query()).confirmed_facts)==1

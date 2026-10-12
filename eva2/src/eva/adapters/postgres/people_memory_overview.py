@@ -186,10 +186,17 @@ class PostgresOwnerMemorySources:
         refs = tuple(dict.fromkeys(ref for ref in selected_refs if ref[0] in {owner, alias}))
         source_keys = tuple(dict.fromkeys((ref[0], ref[1]) for ref in refs))[:3]
         refs = tuple(ref for ref in refs if (ref[0], ref[1]) in source_keys)
-        if not refs:
-            return ()
-        return self._read(now=now, limit=3, selected_refs=refs, selected_query=query,
-                          _follow_learning_revisions=follow_revisions)
+        selected = (() if not refs else self._read(now=now, limit=3, selected_refs=refs,
+            selected_query=query, _follow_learning_revisions=follow_revisions))
+        if not follow_revisions or binding is not None:
+            return selected
+        # Typed learning is already retained in this scoped outbox. It must not
+        # depend on Hindsight selecting an extracted or consolidated fact first.
+        recent = self._read(now=now, limit=MAX_LEARNING_RECORDS, selected_refs=(),
+            selected_query=query, _recent_learning=True)
+        seen = {(item["principal_id"], item["source_ref"], item["evidence_ref"]) for item in selected}
+        return selected + tuple(item for item in recent if
+            (item["principal_id"], item["source_ref"], item["evidence_ref"]) not in seen)
 
     def require_learning_query(self, query: RecallCurrentFacts, *, now: datetime) -> None:
         """Authorize a current private learning write without inventing a source."""
@@ -220,9 +227,10 @@ class PostgresOwnerMemorySources:
         sources = self.selected_private_sources(
             query, ((query.principal_id, source_ref, evidence_ref),), now=now,
             follow_revisions=follow_revisions)
-        if len(sources) != 1:
-            return None
-        return sources[0].get("learning_context")
+        matching = [item for item in sources if
+            (item["principal_id"], item["source_ref"], item["evidence_ref"])
+            == (query.principal_id, source_ref, evidence_ref)]
+        return None if len(matching) != 1 else matching[0].get("learning_context")
 
     def _learning_context(self, connection, query: RecallCurrentFacts, *,
                           principal_id: str, source_ref: str, evidence_ref: str,
@@ -339,7 +347,7 @@ class PostgresOwnerMemorySources:
               context_voice=False, exclude_conversation=None, history_query=None,
               selected_refs=None, selected_query: RecallCurrentFacts | None = None,
               _connection=None, _learning_document: bool = False,
-              _follow_learning_revisions: bool = True):
+              _follow_learning_revisions: bool = True, _recent_learning: bool = False):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -471,8 +479,8 @@ class PostgresOwnerMemorySources:
                         ingress.c.payload_sha256.label("ingress_payload_sha256"),
                         ingress.c.occurred_at.label("ingress_occurred_at"),
                     ).where(
-                        sa.tuple_(data["principal_id"].astext, data["source_ref"].astext,
-                                  data["evidence_ref"].astext).in_(selected_refs),
+                        (sa.true() if _recent_learning else sa.tuple_(data["principal_id"].astext,
+                            data["source_ref"].astext, data["evidence_ref"].astext).in_(selected_refs)),
                         data["project_id"].astext.is_not_distinct_from(selected_query.project_id),
                         data["privacy_class"].astext.in_(selected_query.allowed_privacy_classes),
                         data["occurred_at"].astext <= stamp,
@@ -487,7 +495,14 @@ class PostgresOwnerMemorySources:
                         query = query.where(sa.not_(data["evidence_ref"].astext.startswith("observation-binding:")))
                     # Several selected facts can share one original ingress. Choose
                     # one still-admitted source proof per ingress, never a nearby turn.
-                    if _learning_document:
+                    if _recent_learning:
+                        from eva.application.human_understanding import CONTENT_PREFIX
+                        query = query.where(c.phase == "memory_retained", c.status == "completed",
+                            data["trust"].astext == "model_inference_unconfirmed",
+                            data["evidence_ref"].astext.startswith("human-understanding:"),
+                            data["content"].astext.startswith(CONTENT_PREFIX)).order_by(
+                                e.occurred_at.desc(), e.event_id.desc())
+                    elif _learning_document:
                         query = query.where(c.phase == "memory_retained", c.status == "completed").order_by(
                             e.occurred_at.desc(), e.event_id.desc())
                     else:
@@ -521,7 +536,8 @@ class PostgresOwnerMemorySources:
                                 or doc.privacy_class not in selected_query.allowed_privacy_classes
                                 or doc.occurred_at > stamp
                                 or (doc.principal_id == alias and doc.conversation_id != alias)
-                                or (doc.principal_id, doc.source_ref, doc.evidence_ref) not in selected_refs):
+                                or (not _recent_learning and
+                                    (doc.principal_id, doc.source_ref, doc.evidence_ref) not in selected_refs)):
                             raise PeopleMemoryOverviewError("selected private source scope differs")
                         if canonical_sha256(row.ingress_payload) != bytes(row.ingress_payload_sha256).hex():
                             raise PeopleMemoryOverviewError("selected private ingress hash differs")
@@ -560,6 +576,8 @@ class PostgresOwnerMemorySources:
                                 follow_revisions=_follow_learning_revisions)
                             if context is not None:
                                 source["learning_context"] = context
+                            elif _recent_learning:
+                                continue
                         sources.append(source)
                         continue
                     if history_query is not None:
@@ -570,6 +588,8 @@ class PostgresOwnerMemorySources:
                     sources.append(MemorySource(str(row.event_id),
                         row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                         doc.content[:2048], len(doc.content) > 2048, state))
+                if _recent_learning:
+                    return tuple(sources)
                 if selected_refs is not None:
                     order = {key: index for index, key in enumerate(dict.fromkeys(
                         (ref[0], ref[1]) for ref in selected_refs))}

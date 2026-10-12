@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T15:06:10.748202+00:00",
+        "checkedAt": "2026-10-12T15:21:44.010871+00:00",
         "deliveries": [
+          {
+            "id": "hue-learning-recall-correction-installed-20261012",
+            "date": "2026-10-12T15:21:44.010871+00:00",
+            "title": "Leerbronnen nu ook zonder zoekmatch beschikbaar",
+            "state": "installed",
+            "summary": "Drie modules geïnstalleerd; actuele voorlopige verwachtingen en persoonsinterpretaties komen rechtstreeks uit de bestaande broncontrole.",
+            "result": "18 gerichte controles geslaagd. Kern en werker gezond;342 overige Pythonbronnen per image en configuratie/gegevens behouden.",
+            "remaining": "Eén gerichte gewone leercyclusproef: correctie vastleggen en in later antwoord toepassen. Geen volledige HUE- of AIDE²-afronding geclaimd.",
+            "source": "eva2/evidence/product/hue-learning-recall-correction-installed-20261012.json",
+            "review": "eva2/reviews/hue-learning-recall-correction-installed-review-20261012.json",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "independentReview": "GO voor exacte installatie en beperkte feitenpublicatie. Echte herziening en later aangepast antwoord worden afzonderlijk getoetst.",
+            "reviewSha256": "582ac16b6d8ac1dd32c8f337fee1f5e89d4aa2cd4a022d36ac1cc2770493e62b"
+          },
           {
             "id": "hue-learning-ordinary-result-20261012",
             "date": "2026-10-12T15:06:10.717424+00:00",
@@ -5149,7 +5164,7 @@
         "now": {
           "title": "Mensbegrip: een aanname bijstellen en later gebruiken",
           "state": "in_progress",
-          "phase": "typed_human_learning_recall_correction",
+          "phase": "ordinary_learning_recall_followup",
           "taskId": "HUE1.1",
           "linkedTaskIds": [
             "HUE3.1"
@@ -5158,7 +5173,7 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Concreet leerprobleem gevonden: gewone geheugenophaling geeft wel gespreksherinneringen, maar mist de bewaarde leerbronnen. Die aansluiting wordt nu gericht hersteld.",
+          "summary": "Ontbrekend terughaalpad gecorrigeerd en geïnstalleerd. Nu één gerichte leercyclusproef op echte latere toepassing, binnen dezelfde criteria.",
           "detail": "Drie echte beurten HTTP200, maar slechts twee oorspronkelijke HUE-records en geen revisies. Later veranderd gedrag niet bewezen. Bronfix blijft binnen bestaande PG/Hindsight-route; geen extra platform.",
           "doneWhen": "Een later gewoon gesprek gebruikt de gewijzigde afweging, met behouden oorspronkelijke bronnen, onzekerheid en persoonsgrenzen.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
@@ -5193,7 +5208,9 @@
             "reviewerTask": "Gesloten echte proef onafhankelijk beoordelen; geen nieuwe modeluitvoering.",
             "modelUsage": "14 registraties inclusief behouden setupfout;12 volledig gemeten aanvragen,37.034 bekende tokens,2 onvolledige registraties. Volledig totaal en creditkosten onbekend.",
             "note": "Geen handeling van Jaap nodig. Geen nieuwe vergelijkingsserie of spraakwerk."
-          }
+          },
+          "checkedAt": "2026-10-12T15:21:44.010871+00:00",
+          "remaining": "Voorlopige aanname → werkelijk tegenbewijs → herziening → ander antwoord later. HUE1.1/HUE3.1 blijven open totdat die hele route werkt."
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",

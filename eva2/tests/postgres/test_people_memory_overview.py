@@ -1139,6 +1139,9 @@ def test_learning_ordinary_action_outbox_recall_and_later_context(selected_priva
             self.index += 1
             return (ConversationModelResult(None, "scripted", action_call=self.call) if self.index == 1
                     else ConversationModelResult("The provisional record is queued.", "scripted"))
+    engine = HindsightMemoryEngine(HindsightProjectionConfig("http://127.0.0.1:1"),
+        private_source_resolver=lambda query, refs: case.reader.selected_private_sources(query, refs, now=NOW))
+    empty_semantic_selection = HindsightMemoryEngine._empty_presence(case.query)
     docs = []
     for index in range(2):
         stamp = NOW-timedelta(seconds=30-index*10)
@@ -1163,6 +1166,16 @@ def test_learning_ordinary_action_outbox_recall_and_later_context(selected_priva
         event = case.timeline.events(provider._slot(turn, 0))[0]
         assert "interpretation" not in event.payload["data"] and "arguments" not in event.payload["data"]
         docs.append(document)
+        # Hindsight did not select a learning fact. Exact current PG references
+        # must still be visible, including after a later write for the same query.
+        direct = engine._with_private_sources(case.query, empty_semantic_selection)
+        assert len(direct.confirmed_facts) == 1
+        current = direct.confirmed_facts[0].value["learning_context"]["records"][0]
+        assert current["evidence_ref"] == document.evidence_ref
+        assert current["record"]["outcome"] == arguments["outcome"]
+        projected = object.__new__(PydanticConversationModel)._instructions(identity, direct, ())
+        assert document.evidence_ref in projected and document.source_ref in projected
+        assert "previous_source_ref" in projected and "record_human_understanding" in projected
     old_ref = (str(case.owner), docs[0].source_ref, docs[0].evidence_ref)
     sources = case.reader.selected_private_sources(case.query, (old_ref,), now=NOW)
     assert sources[0]["learning_context"]["records"][0]["record"]["interpretation"] == "Changed provisional picture."
@@ -1181,8 +1194,6 @@ def test_learning_ordinary_action_outbox_recall_and_later_context(selected_priva
         selected=[{"rank":1,"fact_id":fact.fact_id,"source_event_ids":[fact.source_ref],
             "trust":"model_inference_unconfirmed","ranking_reason":"semantic_match"}], excluded_reasons={},
         projection_version="hindsight-test",scope_sha256=canonical_sha256(case.query.scope),created_at=case.query.requested_valid_at)
-    engine = HindsightMemoryEngine(HindsightProjectionConfig("http://127.0.0.1:1"),
-        private_source_resolver=lambda query, refs: case.reader.selected_private_sources(query, refs, now=NOW))
     enriched = engine._with_private_sources(case.query, PresenceMemory(recall,(fact,)))
     assert enriched.confirmed_facts[0].value["text"] == "Changed provisional picture."
     instructions = object.__new__(PydanticConversationModel)._instructions(identity, enriched, ())

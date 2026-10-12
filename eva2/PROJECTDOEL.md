@@ -1,6 +1,31 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — ontbrekende leerbronrefs in gewone recall herstellen
+## Actueel 12 oktober — actuele leerbronnen verbonden; echte latere toepassing toetsen
+
+De bewezen ontbrekende terughaalroute is gecorrigeerd en geïnstalleerd in kern
+en taakwerker. De bestaande PostgreSQL-broncontrole levert nu ook actuele typed
+leerrecords als Hindsight geen semantische match geeft. Globaal maximaal acht;
+zelfde persoon/project, bronhash, onzekerheid, retentie, revisies en wisgrenzen
+blijven behouden. Drie modules,18 gerichte controles, onafhankelijke bronreview GO.
+Beide diensten gezond;342 overige Pythonbronnen per image en configuratie behouden.
+Geen tweede geheugen, platform of concurrentenserie.
+
+Nu één noodzakelijke gerichte gewone leercyclusproef op deze causale correctie,
+met dezelfde onafhankelijk afgeschermde criteria voor HUE1.1/HUE3.1. Het oude
+mislukte resultaat en14 registraties/2 UNKNOWN/37.034 bekende tokens blijven exact;
+volledig historisch verbruik en credits onbekend. Nieuwe prospectieve episode:
+maximaal24 fysieke aanvragen inclusief helpers,12 tools en150.000 bekende tokens.
+Dit is geen oude budgetreset of automatische herhaling. Input pas na concrete
+bron-/resource-/criteriabinding. Latere correctie en ander gedrag nog niet bewezen.
+
+39/48 oorspronkelijke en39/54 totale afrondingen blijven staan. Gehele goal actief,
+AIDE² voor Eva2 en uitbreidingen blijft open, spraak geparkeerd. Oorspronkelijk
+Tuya-onderzoek nog niet afgerond; migratie alleen na expliciet eigenaarakkoord.
+
+Bewijs:eva2/evidence/product/hue-learning-recall-correction-installed-20261012.json.
+Bronreview:eva2/reviews/hue-learning-recall-correction-source-review-20261012.json.
+
+## Historisch 12 oktober — ontbrekende leerbronrefs in gewone recall herstellen
 
 De echte driebeurtenproef is afgesloten:3 antwoorden opgeslagen,2 oorspronkelijke
 HUE-records daadwerkelijk behouden, maar0 herzieningen. Gewone recall gaf wel

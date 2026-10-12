@@ -1,0 +1,58 @@
+{
+  "contract": "EvaIndependentHumanLearningRecallInstalledReview/v1",
+  "decision": "GO_LIMITED_INSTALLATION_AND_SAFE_PUBLICATION",
+  "reviewedAt": "2026-10-12T15:23:41.753866+00:00",
+  "publicEvidence": {
+    "path": "eva2/evidence/product/hue-learning-recall-correction-installed-20261012.json",
+    "sha256": "248612680f6bd3a4efcc12ed37342721d8e2e11b060b6ac1cc5d4c530375ae26"
+  },
+  "sourceManifestSha256": "f5f8a3074be24741269571ab480a29617e1e6fea91a127fb993cc7277252a83e",
+  "sourceReview": {
+    "path": "eva2/reviews/hue-learning-recall-correction-source-review-20261012.json",
+    "sha256": "69f722567e4f17a389e437f92a1ab712de5b52f44d96ba1c47bbe356e6e81be6"
+  },
+  "privateReceiptBindings": [
+    {
+      "file": "build-result.private.json",
+      "sha256": "842eb467e7d4fc7590fbc48194570d49e0b83ec1ed389d8574c35487e9ad5099"
+    },
+    {
+      "file": "installation-receipt.private.json",
+      "sha256": "ab1208788507e8568c8950c767b6a1bf371127bd4a9b50a5b620f5f0530c1482"
+    },
+    {
+      "file": "installation-verification.private.json",
+      "sha256": "3803113fe88215fbeee204caed577385ccac047e5cc8c0ebb9b6fb2b9a8a34b9"
+    }
+  ],
+  "installedImages": {
+    "core": "sha256:258cb7499dd4a3710959e5c296f80007d67285a66ea48ef70cdc628c28b43696",
+    "delegated-work-worker": "sha256:f9af006d4b158bc211b380cd4e00cd68892f2391b0d188f83ba276d838de03c8"
+  },
+  "findings": [
+    "The exact three reviewed source changes are installed in both healthy images; 342 other Python sources per image remain byte-identical.",
+    "The retained environment, mounts, process configuration and full source inventory match the existing installation; readyz reports all components ready.",
+    "The single existing image-only updater dispatch and its pre-dispatch import errors and order-sensitive readback comparison are preserved separately.",
+    "The publication distinguishes current typed-reference context plumbing from actual model revision or later learned behaviour."
+  ],
+  "historicalClosedOutcome": {
+    "HUE1_1": "FAIL_THIS_CASE",
+    "HUE3_1": "FAIL_THIS_CASE",
+    "registeredRequests": 14,
+    "completeRequests": 12,
+    "unknownRequests": 2,
+    "knownTokenLowerBound": 37034,
+    "fullTokens": null,
+    "unchanged": true
+  },
+  "limits": {
+    "nativeInputAdmission": false,
+    "learnedBehaviourProven": false,
+    "HUECompletion": false,
+    "fullProjectCompletion": false,
+    "newEvaModelRequestsForThisReview": 0,
+    "testsRepeated": false
+  },
+  "reviewScope": "Exact source/build/install receipts and safe factual publication; no additional runtime probe or native execution.",
+  "blockers": []
+}

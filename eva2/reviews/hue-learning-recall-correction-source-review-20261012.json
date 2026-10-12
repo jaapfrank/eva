@@ -1,0 +1,138 @@
+{
+  "contract": "EvaHueTypedRecallSourceReview/v1",
+  "recordedAt": "2026-10-12T15:15:49.287933+00:00",
+  "decision": "GO",
+  "scope": "Exact three-module source correction and existing targeted evidence; installation may use these hashes. No native-input or learned-behavior approval.",
+  "sourceManifestSha256": "f5f8a3074be24741269571ab480a29617e1e6fea91a127fb993cc7277252a83e",
+  "targetedChecksSha256": "0bdc48ab7a50ae61523073e60dc8b17d9352dd7c9f1aec2fa4dca30000dd3c99",
+  "refs": {
+    "manifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/frozen-source.private.json",
+      "sha256": "f5f8a3074be24741269571ab480a29617e1e6fea91a127fb993cc7277252a83e"
+    },
+    "checks": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/targeted-checks.private.json",
+      "sha256": "0bdc48ab7a50ae61523073e60dc8b17d9352dd7c9f1aec2fa4dca30000dd3c99"
+    },
+    "patch": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/recall-correction.private.patch",
+      "sha256": "d9e5b47f496c155e2d35eae01d8b48abfea8dfbf36b0e184611fd4bbedaba2df"
+    },
+    "diagnosis": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/recall-correction/diagnosis.private.json",
+      "sha256": "49c681db37a9cf84b75489e6d6747a78789f5de8e304b41d197917fba42c563a"
+    },
+    "priorNativeResultReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/hue-learning-ordinary-result-review-20261012.json",
+      "sha256": "ea07d8ae6a8022201798356b879907e0af3027e810cae978eef1296948791fc5"
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/application/human_understanding.py",
+      "sha256": "49827075a5dc813661ffb1ca09677452f3bfd37c8fdaf28689acc37329066448"
+    },
+    {
+      "path": "eva2/src/eva/providers/human_understanding_actions.py",
+      "sha256": "c3c07fff1d9641dd291591a888243490bfa851292007fac71fe0c7b22230247f"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/people_memory_overview.py",
+      "sha256": "afd031faf9aa52ea61c457ff6ad20a590957f6e2098fa272c24b72a38d820558"
+    },
+    {
+      "path": "eva2/src/eva/adapters/projection/hindsight.py",
+      "sha256": "ff31b2c63c86c4001459b07d0ffa7f0b5d4e5ead891c31917f5f91f6f4aafaeb"
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "0ae0e6701dd5ad1ad01f3178405d72e897bd8a2b202f018a76cdbeb6abc5e7fe"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/runtime.py",
+      "sha256": "197300fc0f39e56ef8d9e816ad037a6a37e12b8dc7d8bf571d42277049ef8e0c"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "eva2/tests/postgres/test_people_memory_overview.py",
+      "sha256": "ff96c144060340305761a6fd6e453410e03953afaacafbd74a2d37c6be360ad5"
+    },
+    {
+      "path": "eva2/tests/projection/test_hindsight.py",
+      "sha256": "b26da9255df1037c83d31001ce6bfd2ac9f77f8f72a18e357a242c98180ec187"
+    }
+  ],
+  "changedSourceFiles": [
+    "eva2/src/eva/adapters/model/pydantic_conversation.py",
+    "eva2/src/eva/adapters/postgres/people_memory_overview.py",
+    "eva2/src/eva/adapters/projection/hindsight.py"
+  ],
+  "unchangedPriorSourceFiles": [
+    "eva2/src/eva/application/human_understanding.py",
+    "eva2/src/eva/bootstrap/runtime.py",
+    "eva2/src/eva/providers/human_understanding_actions.py"
+  ],
+  "findings": [
+    {
+      "boundary": "Concrete recall omission",
+      "decision": "PASS",
+      "evidence": "The same PG resolver now supplies current retained typed records even when semantic selection contains no HUE reference. Existing Hindsight projection merges validated contexts into real model instructions."
+    },
+    {
+      "boundary": "Scope and source proof",
+      "decision": "PASS",
+      "evidence": "Current private owner/bridge binding, tenant/installation, exact project including null, retained private document, non-erased ingress, canonical document/ingress/record hashes and chronological same-kind dependencies remain mandatory. Observation-bound selection does not acquire unrelated typed sources."
+    },
+    {
+      "boundary": "Limits and trust",
+      "decision": "PASS",
+      "evidence": "At most three selected ordinary sources plus eight candidate typed sources; merged context counts at most eight unique actor/source/evidence records across chains and respects maximum_facts. Latest heads are deduplicated. Typed content stays model_inference_unconfirmed under host validation; no direct_user promotion."
+    },
+    {
+      "boundary": "Latest versus exact parent",
+      "decision": "PASS",
+      "evidence": "Recall follows validated current successors. Existing write-parent route still uses follow_revisions=False and exact matching reference; no substitution of latest source as historical predecessor."
+    },
+    {
+      "boundary": "Erasure, authority and cache",
+      "decision": "PASS",
+      "evidence": "Cache strips old embedded context and resolves current PG sources again. Erased/pending/unavailable successors block stale chain fallback. Revoked private binding and scope mismatch remain refused. Ordinary write stop enforcement is unchanged and checked in the targeted source set."
+    },
+    {
+      "boundary": "Model instruction",
+      "decision": "PASS",
+      "evidence": "Actual Pydantic context exposes latest source_ref/evidence_ref for same-kind revision using the current user message; uncertainty and non-authority caveats remain explicit."
+    }
+  ],
+  "checks": {
+    "status": "passed",
+    "uniqueChecks": 18,
+    "pureProjectionChecks": 4,
+    "freshDisposablePostgresChecks": 14,
+    "rawLogAndJunitHashesVerified": true,
+    "actualUniqueJUnitPassCount": 18,
+    "rerunByReviewer": false,
+    "crossSeam": "Scripted ordinary action/outbox/current PG source to empty semantic selection to real Pydantic instructions; same query observes later write; erased successor and stopped action fail closed.",
+    "nativeModels": 0,
+    "runtimeDatabaseUsed": false
+  },
+  "limitations": [
+    "Scripted source/context checks do not prove future native model choices, complete request fit, or human/family acceptance.",
+    "Previous three-turn case remains FAIL_THIS_CASE for both HUE1.1 and HUE3.1; previous14 registrations/12 complete/2 UNKNOWN and37034 known tokens remain unchanged.",
+    "This is one targeted existing-route correction, no second store/service, new evaluator, criteria mutation, or comparator series."
+  ],
+  "installation": {
+    "allowedSourceOnly": true,
+    "actualInstallationReviewed": false
+  },
+  "claims": {
+    "HUE1_1Completed": false,
+    "HUE3_1Completed": false,
+    "nativeInputGo": false,
+    "newModelCallsByReviewer": 0,
+    "projectCompleted": false,
+    "creditCost": null
+  },
+  "blockers": []
+}
