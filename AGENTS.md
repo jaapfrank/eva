@@ -12,7 +12,7 @@ en replay controleren de exact opgegeven voorganger. Geen tweede geheugenplatfor
 16 unieke gerichte controles geslaagd met aparte echte PostgreSQL en gescripte
 gespreksuitvoering. Drie proefopzetfouten blijven in de oorspronkelijke logs.
 Onafhankelijke bron-GO; zes exacte modules geïnstalleerd in kern en werker.
-Beide gezond;339 overige Pythonbronnen per image, omgeving, mounts en gegevens
+Beide gezond; 339 overige Pythonbronnen per image, omgeving, mounts en gegevens
 behouden. De eerste updateaanroep miste het bestaande tools-package en faalde
 vóór dispatch; daarna één moduleaanroep en één daadwerkelijke update, geen rollback.
 Nul Eva-modelaanvragen voor bronchecks en installatie; ontwikkelcredits onbekend.
@@ -25,12 +25,15 @@ Geen productieprivégegevens, gesloten proefherhaling of concurrentenserie.
 Echte modelkeuze, Hindsight-retentie, later gedrag en gezinsacceptatie zijn nog
 niet aangetoond; HUE1.1/HUE3.1 en volledige AIDE² blijven open.
 
-Het gehele goal blijft actief.39/48 oorspronkelijke en39/54 totale kleine
+Het gehele goal blijft actief. 39/48 oorspronkelijke en 39/54 totale kleine
 afrondingen behouden. Telegram standaard Eva2, Eva1 alleen /eva1. Het aparte
 Tuya-onderzoek is nog niet afgerond; migratie pas na Jaaps akkoord.
 Spraak geparkeerd; ongebruikte Docker Desktop ongemoeid.
-Bewijs:eva2/evidence/product/hue-learning-connection-installed-20261012.json.
-Bronreview:eva2/reviews/hue-learning-connection-source-review-20261012.json.
+Bewijs: eva2/evidence/product/hue-learning-connection-installed-20261012.json.
+Bronreview: eva2/reviews/hue-learning-connection-source-review-20261012.json.
+Installatiereview: eva2/reviews/hue-learning-connection-installed-review-20261012.json.
+Onafhankelijke GO geldt voor de exacte installatie en beperkte publicatie;
+zij bewijst nog geen echte modelkeuze of latere toepassing.
 
 ## Historisch 12 oktober — Telegram en grote HA-leescontext hersteld en geïnstalleerd
 

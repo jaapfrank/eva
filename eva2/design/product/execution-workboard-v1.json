@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T14:08:49.256499+00:00",
+        "checkedAt": "2026-10-12T14:10:18.268760+00:00",
         "deliveries": [
           {
             "id": "hue-learning-connection-installed-20261012",
@@ -1032,10 +1032,11 @@
             "result": "16 gerichte controles geslaagd. Kern en werker gezond, zes exacte modules geïnstalleerd;339 overige Pythonbronnen per image en configuratie/gegevens behouden.",
             "remaining": "Echte modelkeuze, Hindsight-retentie en later aangepast antwoord moeten nog worden aangetoond. Volledige HUE- en AIDE²-cyclus blijft open.",
             "source": "eva2/evidence/product/hue-learning-connection-installed-20261012.json",
-            "review": "eva2/reviews/hue-learning-connection-source-review-20261012.json",
+            "review": "eva2/reviews/hue-learning-connection-installed-review-20261012.json",
             "technicalOutcomeCompleted": true,
             "productFunctionCompleted": false,
-            "independentReview": "Bron-GO; onafhankelijke controle van installatie en echte latere toepassing volgen."
+            "independentReview": "GO voor exacte installatie en beperkte feitenpublicatie. Echte modelkeuze, Hindsight-retentie en later antwoord nog niet bewezen.",
+            "reviewSha256": "b95c51494724d68fb832d2f3ea6154634054b7f4092ea87eeae7e9bc8b94a2ed"
           },
           {
             "id": "telegram-ha-context-installed-20261012",
@@ -5164,10 +5165,11 @@
             "focusedSelectionPassed": 14,
             "focusedSelectionTestPreparationFailures": 2,
             "independentSourceReview": "GO",
-            "focusedChecksPassed": 16
+            "focusedChecksPassed": 16,
+            "independentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T14:08:49.256499+00:00",
+            "checkedAt": "2026-10-12T14:10:18.268760+00:00",
             "coordinator": "/root",
             "coordinatorTask": "Exacte installatie verifiëren en actuele oplevering publiceren.",
             "executor": "/root/eva1_memory_transfer",
@@ -5552,7 +5554,7 @@
         }
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
-      "checkedAt": "2026-10-12T14:08:49.256499+00:00",
+      "checkedAt": "2026-10-12T14:10:18.268760+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11936,7 +11938,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T14:08:49.256499+00:00",
+      "lastUpdatedAt": "2026-10-12T14:10:18.268760+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
