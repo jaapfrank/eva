@@ -1024,6 +1024,21 @@
         "checkedAt": "2026-10-12T18:32:03.703156+00:00",
         "deliveries": [
           {
+            "id": "retained-page-coverage-ordinary-result-20261012",
+            "date": "2026-10-12T18:59:42.257320+00:00",
+            "title": "Eva’s gewone vervolg opnieuw gestopt op contextgroei",
+            "state": "failed",
+            "summary": "5modelantwoorden en5tools uitgevoerd;geen compleet voorstel.",
+            "result": "253.179 bekende tokens;APIusagepartial,creditkostenonbekend. Exacte stopredeninput_budget_exceeded bewaard.",
+            "remaining": "De vijf nieuwe receipts lokaal meten en de algemene contextoorzaak herstellen vóór verdere modeluitvoering.",
+            "source": "eva2/evidence/product/retained-page-coverage-ordinary-result-20261012.json",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false,
+            "independentReview": "GO uitsluitend voor behouden FAILED-feiten; geen taakafronding of herhaling.",
+            "review": "eva2/reviews/retained-page-coverage-ordinary-result-review-20261012.json",
+            "reviewSha256": "4d3049fda15995a98f35bf607a46c80cc8981e66d86af8fee5854ecd338487eb"
+          },
+          {
             "id": "retained-page-coverage-installed-20261012",
             "date": "2026-10-12T18:49:40.012469+00:00",
             "title": "Algemene selectie van al gelezen informatie geïnstalleerd",
@@ -5255,7 +5270,7 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "ordinary_execution_after_verified_read_selection",
+          "phase": "ordinary_context_failure_diagnosis",
           "taskId": "work:eva-resume:5124cce7-bb98-59d8-8ab1-d7a60ab44b20",
           "linkedTaskIds": [
             "TL-001",
@@ -5266,7 +5281,7 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Algemene contextselectie geïnstalleerd en onafhankelijk goedgekeurd. Eva vervolgt nu zelf de bestaande leesopdracht; eindvoorstel nog open.",
+          "summary": "Eva is opnieuw gestopt op de invoergrens na5modelantwoorden en5tools. Geen eindvoorstel. Alleen de vijf nieuwe receipts worden nu lokaal onderzocht vóór een volgende uitvoering.",
           "detail": "De algemene route deelt herhaalde tekst, maar biedt nog geen houdbare werkcontext bij nieuwe gegevens. Codex onderzoekt uitsluitend de twee nieuwe receipts en herstelt de concrete presentatie/selectieoorzaak; geen nieuwe betaalde herhaling.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
@@ -5315,18 +5330,18 @@
             "retainedPageCoverageIndependentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T18:52:13.411831+00:00",
+            "checkedAt": "2026-10-12T19:01:36.352892+00:00",
             "coordinator": "/root",
-            "coordinatorTask": "Eva voert haar eigen gewone vervolg uit; Codex volgt feitelijke voortgang en resultaat.",
-            "executor": "Eva · gewone bestaande taakroute",
-            "executorTask": "Zevende generatie gestart op dezelfde oorspronkelijke leesopdracht en bewaarde bevindingen; geen Home Assistant-wijzigingen.",
+            "coordinatorTask": "Algemene uitvoering herstellen op de nieuwe feitelijke contextovergang; geen handmatig voorstel of betaalde herhaling.",
+            "executor": "/root/eva1_memory_transfer",
+            "executorTask": "Modelvrije meting van de vijf nieuwe receipts; oorzaak vaststellen en een houdbare algemene contextselectie herstellen.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Bron- en installatiereview GO; beoordeel straks één concrete uitkomst.",
-            "modelUsage": "Nieuwe uitvoering gestart; actuele usage nog niet gerapporteerd. Gen6 behoudt105.564 bekende tokens/partial; eerdere UNKNOWN blijven apart.",
-            "note": "Geen nieuwe vergelijkingsserie of handmatig voorstel. Installatie één update; werkelijke taakafronding en besparing nog niet bewezen."
+            "reviewerTask": "Gen7 FAILED-foutfeiten onafhankelijk bevestigd; volgende concrete algemene correctie afwachten.",
+            "modelUsage": "Gen7:5 complete gemeten responses,5tools,253.179 bekende tokens. APIusage partial;volledig totaal/credits onbekend. Gen6 en eerdere UNKNOWN apart behouden.",
+            "note": "De geïnstalleerde selectie van17dubbele reads is onvoldoende voor volledige taakafronding. Geen functie groen gezet; geen nieuwe native poging gestart."
           },
-          "checkedAt": "2026-10-12T18:52:13.411831+00:00",
-          "remaining": "Algemene contextfout herstellen en Eva's eigen taakafronding aantonen. HUE1.1/HUE3.1 en volledige AIDE² blijven afzonderlijk open."
+          "checkedAt": "2026-10-12T19:01:36.352892+00:00",
+          "remaining": "Houdbare algemene werkcontext en Eva’s eigen onderbouwde taakresultaat. HUE1.1/HUE3.1 en volledige AIDE² blijven open."
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",

@@ -1,6 +1,6 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — algemene contextselectie geïnstalleerd; Eva werkt
+## Actueel 12 oktober — contextselectie geïnstalleerd; gewone taak opnieuw gestopt
 
 Eva moet zelf de oorspronkelijke leesopdracht onderzoeken en haar voorstel maken.
 Codex herstelt de algemene uitvoering en schrijft geen Tuya-voorstel. Eén gerichte
@@ -26,6 +26,7 @@ HUE1.1/HUE3.1 en volledige AIDE² open; geen nieuwe vergelijkingsserie,spraak ge
 Bron:eva2/evidence/product/retained-page-coverage-correction-20261012.json.
 Installatie:eva2/evidence/product/retained-page-coverage-installed-20261012.json.
 Bronreview:eva2/reviews/retained-page-coverage-source-review-20261012.json.\nInstallatiereview:eva2/reviews/retained-page-coverage-installed-review-20261012.json.
+Actuele fout:eva2/evidence/product/retained-page-coverage-ordinary-result-20261012.json.
 Eerdere fout:eva2/evidence/product/retained-context-sharing-ordinary-result-20261012.json.
 
 ## Actueel 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel

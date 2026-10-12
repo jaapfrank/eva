@@ -1,0 +1,96 @@
+{
+  "contract": "EvaRetainedPageCoverageOrdinaryResult/v1",
+  "recordedAt": "2026-10-12T18:59:42.257320+00:00",
+  "status": "failed",
+  "workId": "work:eva-resume:5124cce7-bb98-59d8-8ab1-d7a60ab44b20",
+  "parentWorkId": "work:eva-resume:9a073648-799f-517c-929c-290334de28bc",
+  "generation": 7,
+  "childCallId": "child-call:269f920e-f1d8-4355-8a2c-7e430e7c9b88",
+  "sourceInstallation": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-page-coverage-installed-20261012.json",
+    "sha256": "2657a9f5327457513787de2fb6783f8b01a17020e8b1c2cabcd857ec6bf27b19"
+  },
+  "installationReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/retained-page-coverage-installed-review-20261012.json",
+    "sha256": "757e6022d5221c25e91939146e134aef48d9c73a0630bf3f496453073dcfbbae"
+  },
+  "continuationPreparation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/continuation-preparation.private.json",
+    "sha256": "4a57eb4192f9092f5991c9078dcce2e955d805568801eb0e663c2cac68782eee"
+  },
+  "continuationReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/continuation-receipt.private.json",
+    "sha256": "396309d3a0b5efde6f23ab4ccfb25d2d385040803e1d5fd20fd7381198a0e48b"
+  },
+  "ownerWorkSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/continuation-work-3.private.json",
+    "sha256": "7efc0fc708acf30c13b004e5471bf6e850a52a1aa8f86be24cd234cbb1b96b6d"
+  },
+  "progressSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/continuation-progress-3.private.json",
+    "sha256": "5395487206932f3c9ae0f563fb7091108b1e266d39c31194b85be4614ef84760"
+  },
+  "liveListSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/continuation-live-list-3.private.json",
+    "sha256": "19fcbc907e29b1e3a4cf4da7718f7a1e77aba37cfa0a0305381c61ae3e5b19c8"
+  },
+  "limitedJournalObservation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/gen7-single-observation.private.json",
+    "sha256": "73a3c57154967257e8b67d93bbbc89c9f5a8607a1fb323e275f27b28f0721034"
+  },
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 5,
+    "tool_calls": 5,
+    "input_tokens": 252366,
+    "output_tokens": 813,
+    "total_tokens": 253179,
+    "cost_usd_micros": null
+  },
+  "journalFacts": {
+    "fullyMeasuredResponses": 5,
+    "registeredTools": 5,
+    "inputTokensByResponse": [
+      48075,
+      49849,
+      50291,
+      52831,
+      51320
+    ],
+    "inputTokens": 252366,
+    "outputTokens": 813,
+    "knownTokens": 253179,
+    "inFlightRequestsInObservedChildCall": 0,
+    "taskUsageRemains": "partial",
+    "fullTaskCreditsAndCost": "unknown"
+  },
+  "failure": {
+    "safeCode": "input_budget_exceeded",
+    "source": "preserved owner work failure_description",
+    "errorCode": "budget_exceeded",
+    "fingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd",
+    "confirmedResultAvailable": false
+  },
+  "limitations": [
+    "The limited journal observer did not retrieve the five new tool selectors under its filter; they are not inferred from this observation.",
+    "The observer alone did not identify the budget subtype. input_budget_exceeded is independently retained in the owner work snapshot.",
+    "No complete proposal, provider savings or general function completion demonstrated."
+  ],
+  "retainedCollectorError": "Initial collector compared store UUID with timeline UUID; failed assertion preserved and collector corrected. No product change or provider call for that correction.",
+  "delivery": {
+    "state": "unbound",
+    "description": "Geen automatische Telegram-terugmelding gekoppeld."
+  },
+  "taskOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "manualTuyaProposalWritten": false,
+  "originalReadonlyScopePreservedAsMandate": true,
+  "nextStep": "Model-free causal diagnosis of the five new receipts and actual retained-context transition. Correct general presentation/selection before another native continuation; no identical paid repeat.",
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "newComparisonSeries": false,
+  "newNativeRepeatStarted": false,
+  "codexDevelopmentCredits": "unknown"
+}
