@@ -4,7 +4,10 @@ import json
 
 from eva.adapters.connectors.component_evaluation import configured_component_evaluator
 
-from eva.application.component_development import compare_development_evaluations
+from eva.application.component_development import (
+    WORK_STRATEGY_EVALUATION_PATH, compare_development_evaluations,
+    make_scoped_component_evaluation_binding,
+)
 from eva.application.component_improvements import read_component, draft_component, prepare_component_release, bind_selected_release, read_component_content, draft_component_content
 from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationConflict, ConversationToolDescriptor
 from eva.application.schema_validation import validate_schema_value
@@ -327,14 +330,39 @@ class ComponentImprovementActions:
             if draft_step >= step_index:
                 raise ConversationConflict("evaluation requires an earlier recorded draft")
             draft_receipt = self.pending(turn, step_index=draft_step)
-            if draft_receipt is None or draft_receipt.call.name != DRAFT:
+            if (draft_receipt is None or draft_receipt.call.name != DRAFT
+                    or draft_receipt.output.get("status") != "verified"):
                 raise ConversationConflict("component draft does not exist in this task")
             draft = draft_receipt.output["operation_result"]
             # Revalidate the live source binding; a stale candidate is not rebased silently.
             current = self._revalidate(draft)
             if current["source_sha256"] != draft["source_sha256"]:
                 raise ConversationConflict("installed component changed after draft")
-            value = self.evaluator.evaluate(draft)
+            if (draft["path"] == WORK_STRATEGY_EVALUATION_PATH
+                    and draft["path"] in getattr(self.evaluator, "work_execution_paths", ())):
+                thread_id = self._thread(draft_step)
+                events = self.timeline.events(thread_id)
+                expected = {"call_id": draft_receipt.call.call_id, "name": DRAFT,
+                    "arguments": draft_receipt.call.arguments, "output": draft_receipt.output}
+                if (len(events) != 1 or events[0].thread_id != thread_id
+                        or events[0].event_type != "COMPONENT_ACTION_RECORDED"
+                        or events[0].payload.get("data") != expected
+                        or canonical_sha256(events[0].payload) != events[0].payload_sha256
+                        or draft_receipt.output.get("component_step") != draft_step
+                        or draft.get("draft_step") != draft_step
+                        or draft_receipt.call.arguments.get("path") != draft["path"]):
+                    raise ConversationConflict("scoped component draft event differs")
+                binding = make_scoped_component_evaluation_binding(
+                    task_id=self.spec.work_id, draft_step=draft_step,
+                    evaluation_step=step_index, evaluation_call_id=call.call_id,
+                    spec_sha256=self.spec.sha256, source_ingress_sha256=self.spec.source_ingress_sha256,
+                    draft_thread_id=thread_id, draft_event_payload_sha256=events[0].payload_sha256,
+                    path=draft["path"], baseline_sha256=draft["source_sha256"],
+                    candidate_sha256=draft["candidate_sha256"],
+                    suite_sha256=dict(self.evaluator.suite_bindings).get(draft["path"], self.evaluator.suite_sha256))
+                value = self.evaluator.evaluate(draft, execution_binding=binding)
+            else:
+                value = self.evaluator.evaluate(draft)
             value["evaluation_step"] = step_index
             scope = "isolated_measurement"
         else:

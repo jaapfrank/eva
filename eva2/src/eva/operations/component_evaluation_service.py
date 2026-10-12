@@ -37,7 +37,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite", "work_execution_producers"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -77,7 +77,7 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None, work_execution_producers=None):
         self.evaluator = evaluator
         self.component_suites = component_suites or {}
         if saved_artifact_suite is not None:
@@ -89,6 +89,10 @@ class EvaluationServer(ThreadingHTTPServer):
         self.final_assessments = final_assessments
         self.token = token
         self.allowed_paths = allowed_paths
+        self.work_execution_producers = work_execution_producers or {}
+        if (set(self.work_execution_producers) - set(self.component_suites)
+                or set(self.work_execution_producers) - set(self.allowed_paths)):
+            raise ValueError("native work producers must use registered component suites")
         self.execution_lock = threading.Lock()
         super().__init__(address, EvaluationHandler)
 
@@ -268,7 +272,41 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             return
         self._reply(200, result)
 
+    def _work_authority(self):
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        from eva.operations.component_evaluation import WORK_STRATEGY_PATH
+        producer = self.server.work_execution_producers.get(WORK_STRATEGY_PATH)
+        if producer is None:
+            self._reply(404, {"error": "not_found"})
+            return
+        try:
+            lengths = self.headers.get_all("Content-Length", [])
+            types = self.headers.get_all("Content-Type", [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all("Transfer-Encoding") or len(types) != 1
+                    or types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                raise ValueError()
+            length = int(lengths[0])
+            if not 1 <= length <= 2048:
+                raise ValueError()
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError()
+            result = producer.authorize(json.loads(raw, object_pairs_hook=_object))
+        except (ValueError, TypeError, KeyError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {"error": "work_authority_unconfirmed"})
+            return
+        except Exception:
+            self._reply(500, {"error": "work_authority_unconfirmed"})
+            return
+        self._reply(200, result)
+
     def do_POST(self):
+        if self.path == "/work-authority":
+            self._work_authority()
+            return
         if self.path == "/component-assessment":
             self._final_component()
             return
@@ -285,9 +323,7 @@ class EvaluationHandler(BaseHTTPRequestHandler):
         if not self._authenticated():
             self._reply(401, {"error": "unauthorized"})
             return
-        if not self.server.execution_lock.acquire(blocking=False):
-            self._reply(409, {"error": "busy"})
-            return
+        locked = False
         try:
             try:
                 lengths = self.headers.get_all("Content-Length", [])
@@ -305,32 +341,53 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                 if len(raw) != length:
                     raise ValueError()
                 payload = json.loads(raw, object_pairs_hook=_object)
+                binding = producer = None
                 if procedure:
                     if not isinstance(payload, dict) or set(payload) != {"source", "input_data"}:
                         raise ValueError()
                     request = payload
                 else:
                     package_fields = {"relative_path", "baseline_sha256", "source"}
-                    if (not isinstance(payload, dict) or set(payload) not in (
-                            package_fields, package_fields | {"baseline_source", "source_target"})):
+                    allowed = (package_fields, package_fields | {"baseline_source", "source_target"},
+                               package_fields | {"execution_binding"})
+                    if not isinstance(payload, dict) or set(payload) not in allowed:
                         raise ValueError()
-                    request = CandidateRequest(**payload)
+                    binding = payload.get("execution_binding")
+                    request = CandidateRequest(**{key: value for key, value in payload.items()
+                                                  if key != "execution_binding"})
                     if request.source_target is not None:
                         if (self.server.saved_artifact_suite is None
                                 or request.source_target != self.server.saved_artifact_suite.source_target):
                             raise ValueError()
-                    elif set(payload) != package_fields or request.relative_path not in self.server.allowed_paths:
+                    elif request.relative_path not in self.server.allowed_paths:
                         raise ValueError()
+                    producer = self.server.work_execution_producers.get(request.relative_path)
+                    if (binding is not None) != (producer is not None):
+                        raise ValueError()
+                    if producer is not None:
+                        from eva.operations.component_work_execution import validate_execution_binding
+                        binding = validate_execution_binding(binding)
             except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
                 self._reply(400, {"error": "invalid_request"})
                 return
+            # The native producer uses this lock only for static checks. Keeping
+            # it over native work would block its own existing /run-procedure.
+            if producer is None:
+                locked = self.server.execution_lock.acquire(blocking=False)
+                if not locked:
+                    self._reply(409, {"error": "busy"})
+                    return
             try:
                 if procedure:
                     report = self.server.procedure_executor.execute(**request)
                 else:
                     evaluator = (self.server.saved_artifact_suite if request.source_target is not None
                         else self.server.component_suites.get(request.relative_path, self.server.evaluator))
-                    report = evaluator.evaluate(request)
+                    if producer is not None:
+                        report = producer.evaluate(request, execution_binding=binding,
+                            evaluator=evaluator, static_lock=self.server.execution_lock)
+                    else:
+                        report = evaluator.evaluate(request)
             except ValueError:
                 self._reply(400, {"error": "candidate_rejected"})
                 return
@@ -339,7 +396,8 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                 return
             self._reply(200, report)
         finally:
-            self.server.execution_lock.release()
+            if locked:
+                self.server.execution_lock.release()
 
 
 def main():
@@ -393,11 +451,25 @@ def main():
         evaluation["command"] = tuple(evaluation["command"])
         saved_artifact_suite = ComponentEvaluator(EvaluationConfig(**evaluation),
             assessment=DevelopmentAssessment(value["assessment"]), source_target=value["source_target"])
+    work_producers = {}
+    producer_configs = config.get("work_execution_producers", {})
+    if (not isinstance(producer_configs, dict) or set(producer_configs) - set(component_suites)
+            or producer_configs and applications is None):
+        raise ValueError("native work producer requires an existing suite and application runtime")
+    for path, value in producer_configs.items():
+        from eva.operations.component_work_execution import ComponentWorkRuntime, NativeComponentWorkProducer
+        if not isinstance(value, dict) or set(value) != {"producer", "suite_sha256"}:
+            raise ValueError("invalid registered native work producer")
+        runtime = ComponentWorkRuntime(config["reviewed_component_applications"]["runtime"],
+            path=path, suite_sha256=value["suite_sha256"])
+        work_producers[path] = NativeComponentWorkProducer(value["producer"], runtime=runtime,
+            assessment=suites[path]["assessment"])
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
                           allowed_paths=allowed_paths, procedure_executor=executor,
                           programming_workspaces=programming, reviewed_applications=applications,
                           component_suites=component_suites, final_assessments=final_assessments,
-                          saved_artifact_suite=saved_artifact_suite) as server:
+                          saved_artifact_suite=saved_artifact_suite,
+                          work_execution_producers=work_producers) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)

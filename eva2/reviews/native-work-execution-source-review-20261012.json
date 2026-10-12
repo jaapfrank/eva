@@ -1,0 +1,109 @@
+{
+  "contract": "NativeWorkExecutionSourceReview/v1",
+  "checkedAt": "2026-10-12T00:51:16.040556Z",
+  "decision": "GO",
+  "verdict": "GO",
+  "openBlockers": [],
+  "scope": "Bronkoppeling voor hostgebonden productie van werkbewijs binnen de bestaande component-evaluatieroute. Exact vijf modules; geen concrete productieproducent/configuratie, installatie, native uitvoering of kwaliteitswinst beoordeeld.",
+  "bindings": {
+    "sourceFiles": {
+      "application/component_development.py": "41f8ff63e255a0521ddfeb4bfd522b7ead64448e0436ff35c1b156b6398511ad",
+      "adapters/postgres/component_improvement_actions.py": "d094cb24ffa9111fc5db95188a1088a7cd87062237f983f12875b13251f9d28b",
+      "adapters/connectors/component_evaluation.py": "86d5634d54c816557a2a344865ca3ad6ba4dc09125684c5b7ee4e8bb6b149a18",
+      "operations/component_work_execution.py": "9c85483143ab779e15403b13af942ffb00c1d3203e3acaf82b61653c3c7ae901",
+      "operations/component_evaluation_service.py": "79678d5821883cfebc8021ebd9ce3e555c26b0726def49d6441acb8c83d0a76a"
+    },
+    "testFiles": {
+      "eva2/tests/application/test_component_development.py": "e2234662035f573a6ff7dd6d45ca06f9fade04328446076722ee748017980f1c",
+      "eva2/tests/application/test_saved_component_improvements.py": "6bd191c9900d7fc1eca8c0d6255d41fa85e00090e4bb4e5480abb32331df75a5",
+      "eva2/tests/application/test_scoped_component_evaluation_actions.py": "b1774b204b1cc4732f683b61a6762a5df9697224bb029e9906f9181dcedf10ae",
+      "eva2/tests/application/test_scoped_component_evaluation_binding.py": "182a68447347624ec5c9e5ab30f0e349d1c587f72f63818b04e87464c3aa907d",
+      "eva2/tests/connectors/test_scoped_component_evaluation.py": "fe92ee4b51b1e8fabec6f52941ca444554142e20b03ddbaa7842fbeb9784f346",
+      "eva2/tests/operations/test_component_development_host.py": "2bd532eee2d4c8c486f65eeb61df66552129c7d06f4efbbf2c6314046847496d",
+      "eva2/tests/operations/test_component_development_work_evidence.py": "3649f9d5ec763d4b740d025ccc6d6f56ab5fdca857dcde9a78db9723434c492c",
+      "eva2/tests/operations/test_component_work_execution.py": "e2e0bd892bcd3ae6b6b89247c8379b41da65b9ebfc4220ae137365f472b06a03",
+      "eva2/tests/operations/test_reviewed_component_transport.py": "5b3b620b08398cbb18cce9a03e362efeec8afdb879a2a0da0c0ccf7fbc175eae",
+      "eva2/tests/operations/test_saved_artifact_component_evaluation.py": "872f4828186c7d64603d9ef10d72e700b8e785da812fc4d05f1b85e5e6c8ce98"
+    },
+    "scopedFrozenManifestSha256": "c2d43ae0ce4bc6ebdac7b52b243e5cfe038e86018c5bed04ece195b1f0db9d69",
+    "scopedTargetedChecksSha256": "f3bc3fc7f6dc5f31315fb4e6eab7bb377d4b68c9f5c5b299349597f3c9f0a7fe",
+    "hostBridgeTestsSha256": "7d3fc621286a743a6b95a000560931de902c4cf6970c32e9e9f57f8762adc85c",
+    "hostBridgeTestsLogSha256": "a1e3e6b672b66d121147324cfb01cba2e58dba95f9a5d37df6d38415ece82a64",
+    "reviewCorrectionSha256": "fa348b51830dd96536fc96b901a26aa51657dc3a593b3075fd0f7fad3d3c6cd4",
+    "reviewCorrectionLogSha256": "084a4317ccb7691e3f224ca3d2cc360b07b52f33541e32abd5ed73176e2d4781"
+  },
+  "verified": [
+    "Scoped adapter maakt de binding uit de originele taak/spec/ingress en exact geverifieerd immutable draft-event; het model krijgt geen nieuw mandaat- of scopeargument. Client bindt aangeboden kandidaathash, vaste suite en oorspronkelijke reference-echo; gewone en saved-artifact routes behouden hun bestaande vorm.",
+    "Host herlaadt de originele actieve work/spec, eigenaarsscope, broningress en oorspronkelijke draft. Actuele stop, deadline, retentie en native guard of gewone SourceTurnLoader blijven vereist; geen gefabriceerde eigenaar-INGRESS.",
+    "Aangeboden baseline- en kandidaathash worden vóór producerwerk met exact het oorspronkelijke draft vergeleken; de kandidaatin­houd wordt zelf gehasht en blijft begrensd tot de bestaande literal-body.",
+    "Vaste image/command/assessment-suite en gepinde cases/scorer worden vóór betaald werk gecontroleerd. Niet-voltooide statische controles worden geweigerd vóór baselineproduce.",
+    "Baseline moet verzegeld bestaan vóór verse assessorcompositie. De verse assessment_sha256 wordt direct na baseline opnieuw met de vastgelegde hash vergeleken, vóór kandidaatproduce. De bestaande consumer weigert late adoptie, gewijzigde baseline en onbetrouwbare evidence.",
+    "Native producent werkt buiten de gedeelde statische/procedure-lock. Statische controles blijven geserialiseerd, zodat gewoon procedurehergebruik niet door de eigen evaluate-aanvraag op busy loopt.",
+    "Pinned host-entry levert uitsluitend evidence-seals; returned scores worden geweigerd. Scoring blijft bij de bestaande onafhankelijke consumer. De originele authorizer wordt vóór/na fasen en als callback aan producer doorgegeven."
+  ],
+  "resolvedBlockers": [
+    {
+      "problem": "Geldige draftbinding kon met een andere aangeboden kandidaat worden gecombineerd.",
+      "resolution": "Corecontrole vergelijkt aangeboden baseline/candidate met originele draft en actuele bron vóór producer."
+    },
+    {
+      "problem": "Cached assessment-identiteit controleerde actuele cases/scorer pas na betaald werk.",
+      "resolution": "Filehashes, verse stabiele assessmentidentiteit en complete statische uitkomsten worden vóór baseline gecontroleerd."
+    },
+    {
+      "problem": "Verse assessor kon na baseline een gewijzigde scorer adopteren vóór betaald kandidaatwerk.",
+      "resolution": "Exacte assessment_sha256-vergelijking direct na baseline; gerichte regressie bewijst nul kandidaatwerk bij scorerwijziging."
+    }
+  ],
+  "testEvidence": {
+    "scopedAdapterClient": {
+      "passed": 84,
+      "returncode": 0,
+      "uniqueWithinReceipt": true,
+      "receiptSourceHashesMatchCurrent": true
+    },
+    "hostBridgeAndExistingRegressionBatchBeforeLastCorrection": {
+      "passed": 128,
+      "existingSkipped": 1,
+      "returncode": 0,
+      "logSha256": "a1e3e6b672b66d121147324cfb01cba2e58dba95f9a5d37df6d38415ece82a64"
+    },
+    "postCorrection": {
+      "passed": 2,
+      "returncode": 0,
+      "covers": [
+        "scorer mutation during baseline prevents candidate work",
+        "successful baseline sealing followed by candidate and existing scoring"
+      ],
+      "currentHostSourceSha256": "9c85483143ab779e15403b13af942ffb00c1d3203e3acaf82b61653c3c7ae901"
+    },
+    "qualification": "Afzonderlijke behouden uitvoeringen met mogelijke overlap; geen opgetelde unieke totaalclaim. De laatste broncorrectie is met twee gerichte checks bevestigd. Geen tests door reviewer herhaald."
+  },
+  "deliveryBoundary": {
+    "sourceIntegrationApproved": true,
+    "concreteProductionProducerReviewed": false,
+    "productionConfigurationReviewed": false,
+    "installed": false,
+    "authenticNativeExecutionProven": false,
+    "qualityGainProven": false,
+    "fullLearningCycleCompleted": false,
+    "fullAide2Completed": false,
+    "wholeGoalStatus": "active",
+    "closedFourCallTrialReopened": false,
+    "oldCriteriaOrScoresChanged": false,
+    "remaining": "Concrete normale-factory producer, vaste uitvoerbare productiesuite/configuratie en oorspronkelijke authority/accountingbinding moeten nog worden opgeleverd en gecontroleerd vóór installatie/uitvoering. Oude trialcontrol/ledger blijven gesloten en behouden."
+  },
+  "reviewerActivity": {
+    "filesModified": [
+      "eva2/reviews/native-work-execution-source-review-20261012.json"
+    ],
+    "modelCalls": 0,
+    "nativeProbes": 0,
+    "testsExecuted": 0,
+    "runtimeChanges": 0
+  },
+  "limitations": [
+    "GO geldt uitsluitend voor deze bronkoppeling en exacte hashbinding. De hostproducer-callback is een interface; dit review bewijst niet dat concrete productieuitvoering of volledige verbetercyclus bestaat.",
+    "Nul nieuwe modelcalls in de gelezen testreceipts; ontwikkelcredits en automatische runtimeusage blijven onbekend."
+  ]
+}

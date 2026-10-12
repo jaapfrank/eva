@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-11T23:41:05.032229+00:00",
+  "lastUpdated": "2026-10-12T00:52:04.196211+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T00:31:18.203438+00:00",
+        "checkedAt": "2026-10-12T00:52:04.196211+00:00",
         "deliveries": [
           {
             "title": "Zelfgekozen verbeterd hulpmiddel toepasbaar",
@@ -4784,39 +4784,47 @@
           }
         ],
         "now": {
-          "title": "AIDE²: echte werkuitvoering voor agentverbetering",
+          "title": "AIDE²: echte werkuitvoering aansluiten",
           "state": "in_progress",
-          "phase": "native_work_strategy_interface_identified",
+          "phase": "native_work_strategy_source_reviewed",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De beoordelaar kan bewaard werkbewijs lezen. Nog te bouwen: varianten van Eva’s agentaansturing echt laten uitvoeren via dezelfde kern en werker.",
-          "detail": "De ontbrekende aansluiting is vastgesteld: de bestaande evaluatieaanroep moet haar oorspronkelijke taak, bron en uitvoerbevoegdheid meenemen. De technische producent wordt hergebruikt; de productiecode voor deze aansluiting is nog niet gewijzigd.",
-          "source": "eva2/src/eva/operations/component_development.py",
-          "doneWhen": "De bestaande verbeterroute kan echte baseline-/kandidaatwerkresultaten met meetbaar verbruik en hulp onafhankelijk beoordelen; alleen een bewezen verbetering komt via de bestaande toepassingsroute verder.",
-          "review": null,
-          "reviewSha256": null
+          "summary": "Bron geschreven, gericht getest en beoordeeld; nog niet geïnstalleerd. Concrete werkproducent en productieconfiguratie ontbreken nog.",
+          "detail": "Gebouwd: de bestaande evaluatieaanroep neemt de oorspronkelijke taak en het codevoorstel mee. De host controleert dat de aangeboden bron bij die taak hoort en verwerkt werkbewijs in de bestaande beoordelingsroute. Gericht gecontroleerd: 84 adapter/clientchecks en een aparte hostrun met 128 geslaagde checks en één bestaande skip; geen nieuwe Eva-modelaanvragen. Nog af te maken: de echte werkproducent aansluiten, vaste werkbeoordeling registreren, installeren en baseline/kandidaat daadwerkelijk laten uitvoeren. Daarna een bewezen verbetering toepassen en later gebruiken. De eerdere geslaagde hulpmiddelverbetering blijft behouden; deze nieuwe koppeling bewijst nog geen slimmer gedrag. Bronreview GO voor deze vijf modules. Een wijziging van de beoordelingsregels tijdens baseline stopt kandidaatwerk; twee gerichte checks na die correctie geslaagd.",
+          "source": "eva2/evidence/product/dashboard-native-work-execution-current-20261012.json",
+          "doneWhen": "De geïnstalleerde bestaande verbeterroute voert baseline en kandidaat op echte opdrachten uit, beoordeelt kwaliteit en hulp onafhankelijk en past uitsluitend bewezen verbetering toe; later gebruik wordt afzonderlijk aangetoond.",
+          "review": "eva2/reviews/native-work-execution-source-review-20261012.json",
+          "reviewSha256": "64b41bd3da86232337e45306e3eafe37511f65a97c22487385ebe44f689873c7",
+          "implementationStatus": {
+            "built": true,
+            "targetedChecksPassed": true,
+            "installed": false,
+            "authenticNativeExecutionProven": false,
+            "independentSourceReview": "GO",
+            "fullAide2Completed": false
+          }
         },
         "next": {
-          "title": "Zelfgekozen verbetering later gebruiken",
+          "title": "Werkproducent aansluiten en installeren",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/PROJECTDOEL.md",
-          "summary": "Een authentieke verbetercyclus afronden en de toegepaste wijziging bij een volgende relevante situatie gebruiken.",
-          "detail": "Agentaansturing én code/uitbreidingen blijven onderdeel van het volledige goal; geen concurrentenserie."
+          "summary": "Bestaande kern en werker gebruiken voor echte baseline-/kandidaatopdrachten.",
+          "detail": "Na de bronreview: de concrete werkproducent en vaste beoordeling aansluiten, exact installeren en één relevante verbetercyclus afmaken. Geen nieuwe concurrentenserie."
         },
         "ownerAction": {
           "required": false,
           "title": "Geen handeling van jou nodig",
-          "detail": "Geen handeling nodig. Codex sluit de ontbrekende echte werkuitvoering aan op de bestaande verbeterroute.",
+          "detail": "Codex maakt de productieaansluiting af. Voor deze stap hoef je niets te testen of aan te melden.",
           "steps": [],
           "expected": "Dashboard onderscheidt geïnstalleerd, daadwerkelijk gebruikt en geaccepteerd.",
           "blocksIndependentWork": false,
           "source": "eva2/PROJECTDOEL.md"
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T00:31:18.203438+00:00",
+        "reviewedAt": "2026-10-12T00:52:04.196211+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4893,8 +4901,8 @@
           "javascriptErrors": []
         }
       },
-      "reviewedAt": "2026-10-12T00:31:18.203438+00:00",
-      "checkedAt": "2026-10-12T00:31:18.203438+00:00",
+      "reviewedAt": "2026-10-12T00:52:04.196211+00:00",
+      "checkedAt": "2026-10-12T00:52:04.196211+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11269,7 +11277,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T00:31:18.203438+00:00",
+      "lastUpdatedAt": "2026-10-12T00:52:04.196211+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11652,6 +11660,52 @@
         "wholeGoal": "active",
         "productCompletionChanged": false,
         "newProviderCalls": 0
+      },
+      "dashboardVerificationNativeWorkSourceCurrent20261012": {
+        "checkedAt": "2026-10-12T00:52:04.196211+00:00",
+        "scope": "Actuele bronstatus en laatst geïnstalleerde oplevering; historische acceptaties en taakstatussen ongewijzigd.",
+        "evidencePath": "eva2/evidence/product/dashboard-native-work-execution-current-20261012.json",
+        "wholeGoalStatus": "active",
+        "sourceBuilt": true,
+        "installed": false,
+        "productionProducerConfigured": false,
+        "nativeQualityGainProven": false,
+        "tests": [
+          {
+            "scope": "Bindingshelper, bestaande adapter en client",
+            "passed": 84,
+            "returncode": 0,
+            "receiptSha256": "f3bc3fc7f6dc5f31315fb4e6eab7bb377d4b68c9f5c5b299349597f3c9f0a7fe",
+            "sourceManifestSha256": "c2d43ae0ce4bc6ebdac7b52b243e5cfe038e86018c5bed04ece195b1f0db9d69"
+          },
+          {
+            "scope": "Hostoverdracht en bestaande evaluatorroutes",
+            "passed": 128,
+            "skipped": 1,
+            "returncode": 0,
+            "receiptSha256": "7d3fc621286a743a6b95a000560931de902c4cf6970c32e9e9f57f8762adc85c",
+            "logSha256": "a1e3e6b672b66d121147324cfb01cba2e58dba95f9a5d37df6d38415ece82a64"
+          },
+          {
+            "scope": "Scorerwijziging tijdens baseline weigeren en succesvolle keten behouden",
+            "passed": 2,
+            "returncode": 0,
+            "receiptSha256": "fa348b51830dd96536fc96b901a26aa51657dc3a593b3075fd0f7fad3d3c6cd4",
+            "logSha256": "084a4317ccb7691e3f224ca3d2cc360b07b52f33541e32abd5ed73176e2d4781",
+            "countMeaning": "1 new regression check plus 1 previously passing check; counts not summed as unique total"
+          }
+        ],
+        "historicalTaskValuesPreserved": {
+          "executionTasks": "080b844ba19e8039d9bc40b63e86fe439b0926033dc8cea204a2e2047060b7ad",
+          "milestones": "2ba42c830d0c97cc6590da628d5520e9d97dc8d2c91380b58e9e387ce6505627",
+          "completions": "5d41ad2f06ca191463c651fc2e1c38494f85827affa56f2fb70830c08c3a897d"
+        },
+        "deliveryValuesPreservedSha256": "33ebc9a1dc6dbddc0770b95c1a7a9bde14da95816b816488a90ddba167f794e6",
+        "housemateOutcomeValuesPreservedSha256": "9c49f493f35db4ef02de9cf0145c8480b821803cce3a443b96cc844cfc78a5e3",
+        "newManualEvaModelRequests": 0,
+        "browserReadback": "Verified in existing IAB tab before source-review addition; final rendered readback pending.",
+        "sourceReviewPath": "eva2/reviews/native-work-execution-source-review-20261012.json",
+        "sourceReviewSha256": "64b41bd3da86232337e45306e3eafe37511f65a97c22487385ebe44f689873c7"
       }
     },
     "pendingTechnicalReview": {
@@ -33751,5 +33805,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T00:31:18.203438+00:00"
+  "updatedAt": "2026-10-12T00:52:04.196211+00:00"
 }

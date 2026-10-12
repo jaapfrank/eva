@@ -7,6 +7,39 @@ import re
 from eva.contracts.canonical_json import canonical_sha256
 
 
+
+WORK_STRATEGY_EVALUATION_PATH = "bootstrap/delegated_digital_runner.py"
+
+
+def make_scoped_component_evaluation_binding(*, task_id, draft_step, evaluation_step,
+        evaluation_call_id, spec_sha256, source_ingress_sha256, draft_thread_id,
+        draft_event_payload_sha256, path, baseline_sha256, candidate_sha256, suite_sha256):
+    """Bind an existing scoped action and immutable draft; this hash grants no authority."""
+    if (type(draft_step) is not int or type(evaluation_step) is not int
+            or not 0 <= draft_step < evaluation_step):
+        raise ValueError("invalid scoped component evaluation steps")
+    for value, limit in ((task_id, 256), (evaluation_call_id, 256), (path, 240)):
+        if (not isinstance(value, str) or not 1 <= len(value) <= limit
+                or any(c.isspace() or ord(c) < 32 for c in value)):
+            raise ValueError("invalid scoped component evaluation locator")
+    if (not isinstance(draft_thread_id, str)
+            or not re.fullmatch(r"component-draft:[0-9a-f]{64}", draft_thread_id)):
+        raise ValueError("invalid scoped component draft thread")
+    for value in (spec_sha256, source_ingress_sha256, draft_event_payload_sha256,
+                  baseline_sha256, candidate_sha256, suite_sha256):
+        if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value):
+            raise ValueError("invalid scoped component evaluation hash")
+    locator = {"contract": "EvaScopedComponentEvaluationBinding/v1", "task_id": task_id,
+        "draft_step": draft_step, "evaluation_step": evaluation_step,
+        "evaluation_call_id": evaluation_call_id}
+    reference = canonical_sha256({"binding": locator, "spec_sha256": spec_sha256,
+        "source_ingress_sha256": source_ingress_sha256, "draft_thread_id": draft_thread_id,
+        "draft_event_payload_sha256": draft_event_payload_sha256, "path": path,
+        "baseline_sha256": baseline_sha256, "candidate_sha256": candidate_sha256,
+        "suite_sha256": suite_sha256})
+    return {**locator, "execution_binding_ref": reference}
+
+
 def validate_development_criteria(criteria):
     if (not isinstance(criteria, dict)
             or set(criteria) != {"id", "objective", "metrics", "hard_checks", "case_count_metric"}

@@ -1,25 +1,37 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — echte uitvoering voor agentverbetering aansluiten
+## Actueel 12 oktober — evaluatiekoppeling gebouwd; echte uitvoering nog open
 
-De vorige native hulpmiddeltoepassing is geïnstalleerd. Het actuele concrete gat:
-_WorkEvidence leest uitsluitend bewaarde hostwaarnemingen; de actieve
-verbeterdienst heeft geen productie-uitvoering voor baseline/kandidaat van Eva's
-agentaansturing. Hergebruik de bestaande technische producent en normale
-kern/werker. Geen tweede optimalisatieplatform, planner, geheugen of daemon.
+De bestaande evaluatieaanroep is uitgebreid met haar oorspronkelijke taak- en
+codevoorstelbinding. De host controleert aangeboden bron tegen het oorspronkelijke
+voorstel en houdt de bestaande beoordelingsroute aan. Geen tweede platform,
+planner, geheugen of daemon.
 
-Eerst exacte interface en huidige uitvoerroute vaststellen; vervolgens alleen
-de ontbrekende productieaansluiting maken, gericht controleren en installeren.
-Kwaliteit en menselijke hulp eerst, snelheid/verbruik apart. De bouwer verandert
-geen onafhankelijke criteria of afgeschermde toetsgegevens.
+**Stand:** bron geschreven en gericht getest, nog niet geïnstalleerd.
+84 adapter-/clientchecks slagen; een aparte hostrun heeft 128 geslaagde checks
+en één bestaande skip. De eerste hostrun had een tuplecompatibiliteitsfout;
+gericht gecorrigeerd en het oorspronkelijke foutbewijs behouden.
+Twee gerichte checks na de reviewcorrectie slagen; bronreview GO voor deze
+vijf modules. Geen nieuwe handmatige Eva-modelaanvragen.
 
-De oude vier-call aansturingsproef blijft NO_GO en gesloten: geen reset,
-herhaling, nieuw vergelijkings-ID of brede matrix. Deze werkstart geeft geen
-nieuwe modeluitvoeringstoelating voor een oude gesloten proef.
+**Nog nodig:** de concrete werkproducent en vaste werkbeoordeling aansluiten,
+de exacte bron installeren en echte baseline-/kandidaatopdrachten uitvoeren.
+Een aantoonbare verbetering onafhankelijk beoordelen, toepassen en later gebruiken.
+Bronchecks alleen bewijzen nog geen slimmer gedrag of volledige AIDE².
 
-De authentieke volledige cyclus en later gebruik zijn nog open; oorspronkelijke
-39/48 en gezinsacceptaties blijven behouden. Hele projectgoal actief, spraak
-geparkeerd. Dashboard/GitHub tonen deze werkstart; geen eigenaarhandeling nodig.
+De vorige native hulpmiddeltoepassing blijft geïnstalleerd.
+De oude vier-call proef blijft NO_GO en gesloten; geen herhaling of nieuwe
+concurrentenserie. Oorspronkelijke 39/48 en alle gezinsacceptaties behouden.
+Het gehele projectgoal blijft actief; spraak geparkeerd.
+Geen handeling van Jaap nodig.
+
+Werk dashboard en werkbord bij iedere feitelijke fasewisseling bij: bron gebouwd,
+gericht getest, review afgerond, geïnstalleerd en echt gebruikt. Verhoog de
+inhoudelijke controletijd alleen na een echte statuscontrole; bereikbaarheid of
+automatisch ophalen is geen bewijs van voortgang.
+
+Dashboard gecontroleerd op 2026-10-12T00:52:04.196211+00:00.
+Statusbewijs: eva2/evidence/product/dashboard-native-work-execution-current-20261012.json.
 
 ## Actueel 12 oktober — beoordeeld hulpmiddel uit eigen initiatief geïnstalleerd
 

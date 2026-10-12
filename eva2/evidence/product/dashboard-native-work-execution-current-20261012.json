@@ -1,0 +1,94 @@
+{
+  "contract": "EvaProjectDashboardCurrentSource/v1",
+  "checkedAt": "2026-10-12T00:52:04.196211+00:00",
+  "status": "source_reviewed_not_installed",
+  "meaning": "Bron geschreven, gericht getest en beoordeeld; nog niet geïnstalleerd. Concrete werkproducent en productieconfiguratie ontbreken nog.",
+  "wholeGoalStatus": "active",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/application/component_development.py",
+      "sha256": "41f8ff63e255a0521ddfeb4bfd522b7ead64448e0436ff35c1b156b6398511ad"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
+      "sha256": "d094cb24ffa9111fc5db95188a1088a7cd87062237f983f12875b13251f9d28b"
+    },
+    {
+      "path": "eva2/src/eva/adapters/connectors/component_evaluation.py",
+      "sha256": "86d5634d54c816557a2a344865ca3ad6ba4dc09125684c5b7ee4e8bb6b149a18"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_work_execution.py",
+      "sha256": "9c85483143ab779e15403b13af942ffb00c1d3203e3acaf82b61653c3c7ae901"
+    },
+    {
+      "path": "eva2/src/eva/operations/component_evaluation_service.py",
+      "sha256": "79678d5821883cfebc8021ebd9ce3e555c26b0726def49d6441acb8c83d0a76a"
+    }
+  ],
+  "tests": [
+    {
+      "scope": "Bindingshelper, bestaande adapter en client",
+      "passed": 84,
+      "returncode": 0,
+      "receiptSha256": "f3bc3fc7f6dc5f31315fb4e6eab7bb377d4b68c9f5c5b299349597f3c9f0a7fe",
+      "sourceManifestSha256": "c2d43ae0ce4bc6ebdac7b52b243e5cfe038e86018c5bed04ece195b1f0db9d69"
+    },
+    {
+      "scope": "Hostoverdracht en bestaande evaluatorroutes",
+      "passed": 128,
+      "skipped": 1,
+      "returncode": 0,
+      "receiptSha256": "7d3fc621286a743a6b95a000560931de902c4cf6970c32e9e9f57f8762adc85c",
+      "logSha256": "a1e3e6b672b66d121147324cfb01cba2e58dba95f9a5d37df6d38415ece82a64"
+    },
+    {
+      "scope": "Scorerwijziging tijdens baseline weigeren en succesvolle keten behouden",
+      "passed": 2,
+      "returncode": 0,
+      "receiptSha256": "fa348b51830dd96536fc96b901a26aa51657dc3a593b3075fd0f7fad3d3c6cd4",
+      "logSha256": "084a4317ccb7691e3f224ca3d2cc360b07b52f33541e32abd5ed73176e2d4781",
+      "countMeaning": "1 new regression check plus 1 previously passing check; counts not summed as unique total"
+    }
+  ],
+  "testHistory": {
+    "firstHostRun": {
+      "failed": 9,
+      "passed": 111,
+      "skipped": 1,
+      "receiptSha256": "b6e842f8e106fdba11b631c155a930ae9988e163cbe7e573d77cf7fe30401afb",
+      "cause": "Set difference failed on legacy tuple allowlists; normalized before second run."
+    }
+  },
+  "currentSourceReview": {
+    "verdict": "GO",
+    "path": "eva2/reviews/native-work-execution-source-review-20261012.json",
+    "sha256": "64b41bd3da86232337e45306e3eafe37511f65a97c22487385ebe44f689873c7",
+    "scope": "Five source modules and targeted checks; not production execution or installation."
+  },
+  "installed": false,
+  "productionProducerConfigured": false,
+  "authenticNativeExecutionProven": false,
+  "fullAide2Completed": false,
+  "productFunctionCompleted": false,
+  "lastInstalledEvidence": "eva2/evidence/product/native-reviewed-artifact-installed-20261012.json",
+  "lastInstalledEvidenceSha256": "016dc0f2df64480f71347d41a9d72821c4bff1a550f80a7725032f5ffde90258",
+  "lastInstalledReviewSha256": "322df9fe04ae05574c5468b0a2c55f02a5e081e36a8517933f8c68a8c030407e",
+  "historicalTaskValuesPreserved": {
+    "executionTasks": "080b844ba19e8039d9bc40b63e86fe439b0926033dc8cea204a2e2047060b7ad",
+    "milestones": "2ba42c830d0c97cc6590da628d5520e9d97dc8d2c91380b58e9e387ce6505627",
+    "completions": "5d41ad2f06ca191463c651fc2e1c38494f85827affa56f2fb70830c08c3a897d"
+  },
+  "historicalSmallCompletions": "39/48; no new original completion",
+  "newManualEvaModelRequests": 0,
+  "usageScope": "Source and dashboard work only; automatically running Eva usage not measured. Development credit costs unknown.",
+  "remaining": [
+    "Concrete production work producer",
+    "Register fixed baseline/work assessment",
+    "Install exact reviewed source",
+    "Execute authentic baseline/candidate and independent final evaluation",
+    "Apply proven gain and later reuse"
+  ],
+  "oldClosedTrialPreserved": true,
+  "newCompetitorSeriesStarted": false
+}
