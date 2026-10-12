@@ -1,0 +1,89 @@
+{
+  "contract": "EvaNativeWorkProductionRuntimeSourcesInstalled/v1",
+  "checkedAt": "2026-10-12T01:48:29.308375+00:00",
+  "status": "runtime_sources_installed_host_producer_configuration_pending",
+  "wholeGoalStatus": "active",
+  "scope": "Exacte kern-/werkerbron voor gebonden werkvergelijking en afzonderlijke eindbeoordeling; hostwerkproducent en levende verbetercyclus zijn nog niet geïnstalleerd/aangetoond.",
+  "sourceManifestSha256": "eecd58b9755958075edd01f357f43bc04109334aad7f3f81c7179adcc340d506",
+  "sourceReview": "eva2/reviews/native-work-strategy-runtime-source-review-20261012.json",
+  "sourceReviewSha256": "d92692ae60d4d7af07b59fc1d33c5b0a1c41881ea55e8883e0992071e624ee6b",
+  "installReceiptSha256": "cfa5991e1f51c81d974c17ea48534654d73f9d40db124acc50b906000f5d273d",
+  "actualProfileReceiptSha256": "0885819c095e35c80ae700723b6337f5231be27f79cebbf1a5d62195504fcc0a",
+  "containers": {
+    "core": {
+      "image": "sha256:3d4cf04dfe9260e55839606441aea786db4283ca1a25f8cfc3d27b9faa22a6bd",
+      "health": "healthy",
+      "sourceCount": 342,
+      "unchangedSourceCount": 331,
+      "sourceHashes": {
+        "operations/component_work_execution.py": "7fc6bb95fc0de544a3891a44ac815c32421c639942606d6a495c7b35fa9bfdcf",
+        "operations/component_application_runtime.py": "1c5d85569b323cb21767d6aac1571a33d4732f084855923dbdeb0ae9328065dc",
+        "operations/component_final_assessment.py": "d4d856cc3b72a17dfe1968894b4aa775bef4aaa33516d466f596acddff1ee7a4",
+        "operations/component_evaluation_service.py": "09360e840b1558940f5af60abe2f4f7db590d98156d86b027a26958be0c2f5f4",
+        "bootstrap/delegated_digital_composition.py": "08edd35d44dc7bb2dad94d263d4eb4a5f83d6643211b1f207fce257e9f054ebd",
+        "contracts/delegated_digital_work.py": "ccb6f9f6292b364185d1b1b1f0f3e55060d767e4c2af64ac56441250e9ff05ad",
+        "adapters/connectors/component_evaluation.py": "b1c24dcd53bf96d51d77e934845995747d0239bead8b59c562dfbac98d8cee7c",
+        "adapters/postgres/component_improvement_actions.py": "ebb15227a3cef67ffc190cfbc98a7f5a07f5960f2392db588bb667855767ef6a",
+        "application/component_development.py": "41f8ff63e255a0521ddfeb4bfd522b7ead64448e0436ff35c1b156b6398511ad",
+        "operations/component_evaluation.py": "c17286c4bec620bbb6f6c9adb0c0ea842830d6a26307a7d1a10a074998412fbd",
+        "operations/component_development.py": "95f9f998c1ddd72edc6685a95915daaf8c0abe150ebda91850600c4e4e5f0e35"
+      },
+      "environmentUnchanged": true,
+      "networksUnchanged": true,
+      "mountsRetainedByUpdater": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:984ea13b0ff39fc62bd26f65a7752f8a22f811affa0a6da5b15e82fa097f345f",
+      "health": "healthy",
+      "sourceCount": 342,
+      "unchangedSourceCount": 331,
+      "sourceHashes": {
+        "operations/component_work_execution.py": "7fc6bb95fc0de544a3891a44ac815c32421c639942606d6a495c7b35fa9bfdcf",
+        "operations/component_application_runtime.py": "1c5d85569b323cb21767d6aac1571a33d4732f084855923dbdeb0ae9328065dc",
+        "operations/component_final_assessment.py": "d4d856cc3b72a17dfe1968894b4aa775bef4aaa33516d466f596acddff1ee7a4",
+        "operations/component_evaluation_service.py": "09360e840b1558940f5af60abe2f4f7db590d98156d86b027a26958be0c2f5f4",
+        "bootstrap/delegated_digital_composition.py": "08edd35d44dc7bb2dad94d263d4eb4a5f83d6643211b1f207fce257e9f054ebd",
+        "contracts/delegated_digital_work.py": "ccb6f9f6292b364185d1b1b1f0f3e55060d767e4c2af64ac56441250e9ff05ad",
+        "adapters/connectors/component_evaluation.py": "b1c24dcd53bf96d51d77e934845995747d0239bead8b59c562dfbac98d8cee7c",
+        "adapters/postgres/component_improvement_actions.py": "ebb15227a3cef67ffc190cfbc98a7f5a07f5960f2392db588bb667855767ef6a",
+        "application/component_development.py": "41f8ff63e255a0521ddfeb4bfd522b7ead64448e0436ff35c1b156b6398511ad",
+        "operations/component_evaluation.py": "c17286c4bec620bbb6f6c9adb0c0ea842830d6a26307a7d1a10a074998412fbd",
+        "operations/component_development.py": "95f9f998c1ddd72edc6685a95915daaf8c0abe150ebda91850600c4e4e5f0e35"
+      },
+      "environmentUnchanged": true,
+      "networksUnchanged": true,
+      "mountsRetainedByUpdater": true
+    }
+  },
+  "futureTaskTimeoutSeconds": 1200,
+  "historical300SecondGrantsPreserved": true,
+  "existingModelToolTokenLimitsNotIncreased": true,
+  "actualCoreWorkerProfilesEqual": true,
+  "ordinaryFactoryPreparationMatchesInstalled": true,
+  "nativeMandateOwnerCapabilitiesRetained": true,
+  "derivedProfileReferenceUpdated": true,
+  "checks": {
+    "sourceBundlePass": 138,
+    "subsequentOverlappingFocusedPass": 17,
+    "oneFoolproofCombinedRunClaimed": false,
+    "modelFreeFactoryProbesPassed": true
+  },
+  "preparationFailuresRetained": [
+    "First profile package lacked already-reviewed application helper; complete dependency assembly corrected before live installation.",
+    "Previous failed test receipts and superseded uninstalled builds retained."
+  ],
+  "hostServiceSourceUpdated": false,
+  "hostWorkProducerInstalled": false,
+  "registeredProductionInputsDispatched": false,
+  "qualityGainProven": false,
+  "fullAide2Completed": false,
+  "productFunctionCompleted": false,
+  "newManualEvaModelRequests": 0,
+  "developmentCreditCosts": "unknown",
+  "automaticRuntimeUsage": "not measured",
+  "ownerActionRequired": false,
+  "newCompetitorSeriesStarted": false,
+  "oldClosedTrialsPreserved": true,
+  "historicalSmallCompletions": "39/48 unchanged",
+  "next": "Werkproducent: vaste 150/210 seconde-grenzen en bestaande hostimport/configuratie aansluiten. Daarna één geregistreerde cyclus; alleen bewezen winst toepassen en later gebruiken."
+}

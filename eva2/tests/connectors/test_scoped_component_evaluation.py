@@ -131,3 +131,24 @@ def test_direct_client_constructor_cannot_register_an_unallowed_path():
     with pytest.raises(ValueError, match="work execution paths"):
         ComponentEvaluationClient("http://unused", "unused", ("ordinary.py",), "a" * 64,
             work_execution_paths=(WORK_STRATEGY_EVALUATION_PATH,))
+
+
+def test_native_work_waits_for_original_duration_while_static_route_keeps_default():
+    client, draft, binding, report, _ = setup_client()
+    waits = []
+    client.__class__._post = lambda self, endpoint, payload, **kwargs: (
+        waits.append(kwargs) or deepcopy(report))
+    client.evaluate(draft, execution_binding=binding, remaining_seconds=840.5)
+    client.evaluate(draft, execution_binding=binding)
+    assert waits == [{"timeout_seconds": 840.5}, {}]
+    static, static_draft, _, _, _ = setup_client(registered=False)
+    with pytest.raises(ValueError, match="original component work time"):
+        static.evaluate(static_draft, remaining_seconds=840.5)
+
+
+@pytest.mark.parametrize("remaining", [0, -1, True, "840", float("nan"), float("inf")])
+def test_invalid_native_work_duration_starts_no_transport(remaining):
+    client, draft, binding, _, calls = setup_client()
+    with pytest.raises(ValueError, match="original component work time"):
+        client.evaluate(draft, execution_binding=binding, remaining_seconds=remaining)
+    assert not calls

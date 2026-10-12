@@ -1,0 +1,150 @@
+{
+  "baselineSha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+  "checkedAt": "2026-10-12T01:11:39.172751Z",
+  "contract": "EvaWorkerStrategyProductionRegistrationEvidence/v1",
+  "developmentInputs": {
+    "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/development-inputs.private.json",
+    "sha256": "033d1c99be85ddc9854598703ea7959fd96a260d9c7985af59d403876daf6167"
+  },
+  "limits": {
+    "costs": "UNKNOWN",
+    "familyAcceptance": false,
+    "fullAIDE2": false,
+    "oldFourCallTrial": "closed NO_GO unchanged",
+    "timing": "fixed matched sample descriptive; no general speed/efficiency inference",
+    "wholeGoal": "active"
+  },
+  "missingBeforeInput": [
+    "Add only WORK_STRATEGY_PATH to existing component_suites and work_execution_producers with these immutable criteria/scorer refs.",
+    "Add only WORK_STRATEGY_PATH protocol/HostFinalAssessment to existing final_component_assessments, preserving old protocols/rounds/assessors/publishers/receipt files.",
+    "Keep current source, caller roles and client/provider settings outside bounded strategy literal equivalent across matched legs.",
+    "Bind actual runtime/profile/tool configuration fingerprints and immutable case/task/session/ingress identities before variants; null template values are non-authoritative.",
+    "Verify fixed producer input files/command/registration/scorer/scope/source before every physical paid dispatch; current original parent deadline and stop/retention apply.",
+    "Development original parent needs at least 900 remaining grant/deadline seconds for static plus both legs/export; otherwise NO_DISPATCH, never extend or reset.",
+    "Independent final uses original terminal parent/current authority and exact selected package/job; it cannot reuse development call_started or reopen that task.",
+    "Pin final runtime-admission raw hash in HostFinalAssessment bindings before independent final; final producer uses separate answer-stage authority, not a second queue.",
+    "Reserve ordinary per-case and shared attempts/tools before dispatch including helpers, hostchecks/control/cleanup; enforce complete measured usage after each response and stop unknown/ceiling breach.",
+    "No household memory, procedure designation, real services, network or protected oracles in candidate workspace; exact host-eval isolation marker retained.",
+    "No retry. Perfect baseline with zero help stops before candidate/final/later; tie/loss/unrankable evidence cannot justify application/later.",
+    "Later input once only after strict independent quality gain and byteexact application; preserve baseline and all old closed evidence."
+  ],
+  "path": "bootstrap/delegated_digital_runner.py",
+  "preparation": {
+    "candidateExecutions": 0,
+    "correctionReceiptSha256": "89ce59729306c244052779df4cc5e635c3ab95bdb996ab3135c127e2366198ab",
+    "initialPreparationPreservedSha256": "c7c4fc27e4b6aecc68e3c3af7952c50fd6c9ff7ded7a9d06daf415d9debbd8a3",
+    "isolatedTests": 0,
+    "modelCalls": 0,
+    "nativeCalls": 0,
+    "protectedOldDataRead": false,
+    "scorerSyntheticProtocolChecks": 5,
+    "scorerValidationSha256": "cd5539593644ada3e8f8c65e2713a169669856617cee4cd97d7f88b1339712c9"
+  },
+  "protectedFinal": {
+    "caseCount": 2,
+    "caseSetSha256": "e4b96c6b1cfb95b162bb0ea2b6155ed7a0fa9d140b21c02976a18f9f51929d37",
+    "questionsOrAnswersPublished": false,
+    "scorerSha256": "17286d84d0deb1596d9a6c0d61682d0d1cea0446f37e98294e2d1ff462b51025"
+  },
+  "publicDevelopmentCriteria": {
+    "case_count_metric": "case_count",
+    "hard_checks": {
+      "hard_failures": 0
+    },
+    "id": "eva-production-worker-strategy-quality-20261012",
+    "metrics": [
+      {
+        "direction": "maximize",
+        "kind": "quality",
+        "name": "completed_tasks"
+      },
+      {
+        "direction": "maximize",
+        "kind": "quality",
+        "name": "correct_checks"
+      },
+      {
+        "direction": "maximize",
+        "kind": "quality",
+        "name": "verified_progress_tasks"
+      },
+      {
+        "direction": "minimize",
+        "kind": "quality",
+        "name": "help_count"
+      }
+    ],
+    "objective": "Eén baseline en één begrensde werkinstructie op dezelfde geïsoleerde afmaaktaken. Echte terminale afronding, fysiek resultaat, onafhankelijke codechecks en bruikbare native voortgang zijn kwaliteit. Minder hulp telt alleen zonder resultaatregressie. Tijd en volledig verbruik zijn beschrijvend, geen algemene efficiëntie of intelligentiescore."
+  },
+  "registration": {
+    "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/registration.private.json",
+    "sha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872"
+  },
+  "resources": {
+    "applications": 1,
+    "candidate_development_evaluations": 1,
+    "contract": "EvaWorkerStrategyProductionResources/v1",
+    "costs": "UNKNOWN",
+    "development_tasks_per_leg": 2,
+    "duration": {
+      "construction_ceiling_seconds": 150,
+      "development_parent_minimum_remaining_seconds": 900,
+      "independent_final_parent_minimum_remaining_seconds": 900,
+      "later_ceiling_seconds": 150,
+      "per_multistep_work_ceiling_seconds": 210,
+      "per_simple_work_ceiling_seconds": 150,
+      "wallclock_is_descriptive_not_ranked": true
+    },
+    "early_stop": "Maximum required quality with zero help on both baseline development tasks retains baseline: no candidate/final/later. Tie/loss/incomplete/unknown cannot justify application/later.",
+    "final_tasks_per_leg": 2,
+    "fixed_episode_count": 10,
+    "independent_final_assessments": 1,
+    "later_tasks": 1,
+    "maximum_candidates": 1,
+    "no_new_service_or_household_memory": true,
+    "provider_attempts": {
+      "construction_including_contact_helpers": 6,
+      "later_including_contact_helpers": 6,
+      "multistep_per_episode_including_contact_helpers": 8,
+      "shared_total": 68,
+      "simple_per_episode_including_contact_helpers": 6
+    },
+    "repeats": 0,
+    "retries": 0,
+    "roles": {
+      "contact": {
+        "model": "gpt-6-sol",
+        "reasoning": "none"
+      },
+      "work_and_helpers": {
+        "model": "gpt-6-astra",
+        "reasoning": "medium"
+      }
+    },
+    "separate_from_closed_trial": true,
+    "tokens": {
+      "enforcement": "stop_before_next_dispatch_after_response; acceptance ceiling, not guaranteed in-flight token ceiling",
+      "measurement": "complete_registered_provider_usage_required",
+      "shared_combined": 400000,
+      "shared_input": 385000,
+      "shared_output": 15000
+    },
+    "tools": {
+      "includes_native_tools_host_isolated_checks_controls_and_cleanup": true,
+      "shared_physical_total": 100
+    }
+  },
+  "route": {
+    "application": "existing reviewed publisher and exact selected package",
+    "configurationInstalled": false,
+    "development": "existing ComponentEvaluator/DevelopmentAssessment + pinned host work producer",
+    "final": "existing configured_final_assessments/HostFinalAssessment answer-stage",
+    "nativeAdmission": false
+  },
+  "scopeSha256": "27fdd828734f6792cacfb658e63dcaa5dbfc590eeb6e2b871bf820294a59dd72",
+  "setupManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/setup-manifest.private.json",
+    "sha256": "7b12e1aa42244e127a3129e5373338bc51ec162dbf91ead1f62e6ab2ca4b6d58"
+  },
+  "status": "fixed_criteria_pending_runtime_producer_and_final_admission"
+}

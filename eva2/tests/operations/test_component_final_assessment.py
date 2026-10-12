@@ -321,3 +321,44 @@ def test_public_projection_keeps_scaled_time_and_drops_invalid_numbers(package):
     assert public["input_tokens"] == {"candidate": 4}
     assert public_decision(public, package) == public
     assert canonical_json_bytes(public)
+
+
+def test_registered_answer_work_uses_original_dispatch_job_once(tmp_path,package):
+    entered,release=threading.Event(),threading.Event()
+    calls=[]
+    class Assessor:
+        def __call__(self,*args):
+            return {"decision":"needs_independent_answer_assessment","public":{}}
+        def answer_evidence_ready(self):return True
+        def prepare_answer_work(self,pkg,directory,**binding):
+            calls.append(("prepare",binding))
+            raw=Path(binding["job_snapshot"]["path"]).read_bytes()
+            assert __import__("hashlib").sha256(raw).hexdigest()==binding["job_snapshot"]["sha256"]
+            job=json.loads(raw)
+            assert job["state"]=="answer_assessing" and job["task_id"]==TASK
+            assert pkg==package
+        def complete(self,*args):
+            entered.set()
+            assert release.wait(4)
+            calls.append(("complete",))
+            return {"decision":"reject","public":{}}
+        def authorize_answer_work(self,binding):
+            calls.append(("authorize",binding))
+            return {"verified":True,"execution_binding_ref":binding["execution_binding_ref"],
+                    "parent_deadline":"2099-01-01T00:00:00Z"}
+    with queue(tmp_path,package,assessor=Assessor()) as (q,app,_):
+        review=q.request(package,request_id=REQUEST,task_id=TASK,scope_sha256=SCOPE)["review_id"]
+        assert entered.wait(4)
+        binding={"contract":"EvaIndependentComponentWorkBinding/v1","task_id":TASK,
+            "review_id":review,"registration_sha256":"e"*64,"candidate_package_sha256":review}
+        binding["execution_binding_ref"]=canonical_sha256(binding)
+        assert q.authorize_native_work(binding)["verified"] is True
+        changed={**binding,"task_id":"work:other"}
+        changed["execution_binding_ref"]=canonical_sha256({k:v for k,v in changed.items() if k!="execution_binding_ref"})
+        with pytest.raises(ValueError):q.authorize_native_work(changed)
+        release.set()
+        wait(q,review,"rejected")
+        with pytest.raises(ValueError):q.authorize_native_work(binding)
+        assert len([c for c in calls if c[0]=="prepare"])==1
+        assert len([c for c in calls if c[0]=="complete"])==1
+        assert not app.calls

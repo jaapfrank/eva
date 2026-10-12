@@ -16,6 +16,7 @@ BINDING = {"contract": "EvaScopedComponentEvaluationBinding/v1", "task_id": "wor
            "draft_step": 1, "evaluation_step": 2, "evaluation_call_id": "eval:1",
            "execution_binding_ref": "a" * 64}
 
+PARENT_DEADLINE = "2026-10-12T12:15:00Z"
 
 def post(url, path, body, token="token"):
     request = Request(url + path, data=json.dumps(body).encode(), method="POST",
@@ -90,7 +91,8 @@ def test_original_authority_endpoint_requires_existing_auth_and_no_dispatch_lock
     checked = []
     def authorize(binding):
         checked.append(binding)
-        return {"verified": True, "execution_binding_ref": binding["execution_binding_ref"]}
+        return {"verified": True, "execution_binding_ref": binding["execution_binding_ref"],
+                "parent_deadline": PARENT_DEADLINE}
     with host(NS(authorize=authorize)) as (url, server):
         with pytest.raises(HTTPError) as error:
             post(url, "/work-authority", BINDING, token="different")
@@ -98,7 +100,8 @@ def test_original_authority_endpoint_requires_existing_auth_and_no_dispatch_lock
         server.execution_lock.acquire()
         try:
             assert post(url, "/work-authority", BINDING) == {
-                "verified": True, "execution_binding_ref": BINDING["execution_binding_ref"]}
+                "verified": True, "execution_binding_ref": BINDING["execution_binding_ref"],
+                "parent_deadline": PARENT_DEADLINE}
         finally:
             server.execution_lock.release()
     assert checked == [BINDING]
@@ -128,7 +131,8 @@ def test_runtime_only_accepts_exact_core_attestation():
     def run(argv, **kwargs):
         calls.append((argv, kwargs))
         return NS(returncode=0, stdout=json.dumps({
-            "verified": True, "execution_binding_ref": BINDING["execution_binding_ref"]}))
+            "verified": True, "execution_binding_ref": BINDING["execution_binding_ref"],
+                "parent_deadline": PARENT_DEADLINE}))
     runtime = ComponentWorkRuntime({"core_container": "existing-core", "scope_sha256": "c" * 64},
         path=WORK_STRATEGY_PATH, suite_sha256="d" * 64, run=run)
     assert runtime.verify(BINDING)["verified"]
@@ -168,7 +172,8 @@ def coordinator(work, tmp_path, monkeypatch, produce, *, runtime=None):
         original_assessment.assessment_sha256], separators=(",", ":")).encode()).hexdigest()
     if runtime is None:
         runtime = NS(verify=lambda binding, **kwargs: {"verified": True,
-            "execution_binding_ref": binding["execution_binding_ref"]}, suite_sha256=suite)
+            "execution_binding_ref": binding["execution_binding_ref"],
+                "parent_deadline": PARENT_DEADLINE}, suite_sha256=suite)
     else:
         runtime.suite_sha256 = suite
     evaluator = NS(config=None, assessment=original_assessment)
@@ -188,6 +193,8 @@ def test_producer_seals_baseline_before_fresh_assessor_and_uses_existing_scoring
         (root / (BASE + ".json")).unlink()
     def produce(**kw):
         kw["authorize"]()
+        assert kw["settings"]["parent_deadline"] == PARENT_DEADLINE
+        assert kw["authorize"]()["parent_deadline"] == PARENT_DEADLINE
         order.append(kw["leg"])
         seal(work, BASE if kw["leg"] == "baseline" else CANDIDATE)
     producer, request, evaluator = coordinator(work, tmp_path, monkeypatch, produce)
@@ -206,7 +213,8 @@ def test_parent_stop_after_baseline_prevents_candidate_work(work, tmp_path, monk
     def verify(binding, **kwargs):
         if stopped:
             raise ValueError("parent stopped")
-        return {"verified": True, "execution_binding_ref": binding["execution_binding_ref"]}
+        return {"verified": True, "execution_binding_ref": binding["execution_binding_ref"],
+                "parent_deadline": PARENT_DEADLINE}
     def produce(**kw):
         nonlocal stopped
         legs.append(kw["leg"])
@@ -309,3 +317,122 @@ def test_failed_static_checks_start_no_baseline(work, tmp_path, monkeypatch):
         producer.evaluate(request, execution_binding=BINDING,
             evaluator=evaluator, static_lock=threading.Lock())
     assert not legs
+
+
+@pytest.mark.parametrize("changes", [
+    {"parent_deadline": None}, {"parent_deadline": "2026-10-12T12:15:00+00:00"},
+    {"parent_deadline": "2026-10-12T12:15:00.000Z"},
+    {"parent_deadline": "2026-1-2T12:15:00Z"},
+    {"verified": 1}, {"execution_binding_ref": "f" * 64}, {"new_grant": True},
+])
+def test_original_deadline_attestation_cannot_be_missing_or_extended(changes):
+    value = {"verified": True, "execution_binding_ref": BINDING["execution_binding_ref"],
+             "parent_deadline": PARENT_DEADLINE, **changes}
+    runtime = ComponentWorkRuntime(
+        {"core_container": "existing-core", "scope_sha256": "c" * 64},
+        path=WORK_STRATEGY_PATH, suite_sha256="d" * 64,
+        run=lambda *a, **k: NS(returncode=0, stdout=json.dumps(value)))
+    with pytest.raises((ValueError, TypeError)):
+        runtime.verify(BINDING)
+
+
+def test_configured_deadline_never_replaces_original_task_deadline(work, tmp_path, monkeypatch):
+    observed = []
+    def produce(**kw):
+        observed.append(kw["settings"]["parent_deadline"])
+        seal(work, BASE if kw["leg"] == "baseline" else CANDIDATE)
+    producer, request, evaluator = coordinator(work, tmp_path, monkeypatch, produce)
+    producer.config["settings"]["parent_deadline"] = "2099-01-01T00:00:00Z"
+    producer.evaluate(request, execution_binding=BINDING,
+                      evaluator=evaluator, static_lock=threading.Lock())
+    assert observed == [PARENT_DEADLINE, PARENT_DEADLINE]
+
+
+def test_perfect_reference_stops_before_candidate_work(work, tmp_path, monkeypatch):
+    legs = []
+    def produce(**kw):
+        legs.append(kw["leg"])
+        seal(work, BASE)
+    for root in work.roots.values():
+        (root/(CANDIDATE+".json")).unlink()
+    producer, request, evaluator = coordinator(work, tmp_path, monkeypatch, produce)
+    producer.config["baseline_maximum"] = {"hits":0}
+    result = producer.evaluate(request,execution_binding=BINDING,evaluator=evaluator,
+                              static_lock=threading.Lock())
+    assert legs == ["baseline"]
+    assert result["candidate_work_not_run"] == "baseline_quality_maximum"
+    assert result["development_assessment"]["candidate"]["complete"] is False
+
+
+def test_insufficient_original_time_starts_no_variant(work, tmp_path, monkeypatch):
+    legs=[]
+    producer,request,evaluator=coordinator(work,tmp_path,monkeypatch,lambda **kw:legs.append(kw["leg"]))
+    producer.config["minimum_remaining_seconds"]=900
+    producer.runtime.verify=lambda binding,**kwargs: {
+        "verified":True,"execution_binding_ref":binding["execution_binding_ref"],
+        "parent_deadline":"2000-01-01T00:00:00Z"}
+    with pytest.raises(ValueError,match="insufficient registered work time"):
+        producer.evaluate(request,execution_binding=BINDING,evaluator=evaluator,
+                          static_lock=threading.Lock())
+    assert not legs
+
+
+def test_final_authority_cannot_dispatch_through_development_binding():
+    from eva.operations.component_work_execution import validate_final_work_binding
+    from eva.contracts.canonical_json import canonical_sha256
+    value={"contract":"EvaIndependentComponentWorkBinding/v1","task_id":"work:original",
+        "review_id":"a"*64,"registration_sha256":"b"*64,"candidate_package_sha256":"a"*64}
+    value["execution_binding_ref"]=canonical_sha256(value)
+    assert validate_final_work_binding(value)==value
+    for change in ({"review_id":"c"*64},{"task_id":"work:other"},{"contract":BINDING["contract"]},
+                   {"deadline":"2099-01-01T00:00:00Z"}):
+        with pytest.raises(ValueError):
+            validate_final_work_binding({**value,**change})
+
+
+def test_physical_ledger_unknown_never_becomes_free_work(tmp_path):
+    import os
+    from eva.operations.component_work_execution import _ledger_usage
+    if os.geteuid()!=0:pytest.skip("requires runtime-owned ledger permissions")
+    path=tmp_path/"accounting.json"
+    value={"registration_sha256":"c"*64,"requests":[{"request_id":"one","usage":None}],"tools":[]}
+    path.write_text(json.dumps(value));path.chmod(0o600);os.chown(path,65532,65532)
+    with pytest.raises(ValueError,match="unmeasured physical"):
+        _ledger_usage(path,"c"*64)
+    usage,_=_ledger_usage(path,"c"*64,allow_inflight=True)
+    assert usage["provider_attempts"]==1 and usage["unknown_attempts"]==1
+    value["requests"].append({"request_id":"two","usage":None})
+    path.write_text(json.dumps(value))
+    with pytest.raises(ValueError,match="more than one unfinished"):
+        _ledger_usage(path,"c"*64,allow_inflight=True)
+
+
+def test_shared_final_accounting_includes_original_contact_and_dev(tmp_path):
+    import os
+    from eva.operations.component_work_execution import IndependentComponentWorkProducer
+    if os.geteuid()!=0:pytest.skip("requires runtime-owned ledger permissions")
+    dev="d"*64;final="f"*64
+    (tmp_path/dev).mkdir(mode=0o700)
+    path=tmp_path/dev/"accounting.json"
+    path.write_text(json.dumps({"registration_sha256":"c"*64,
+        "requests":[{"request_id":"dev","usage":{"input_tokens":30,"output_tokens":3,"total_tokens":33}}],
+        "tools":[{}]}));path.chmod(0o600);os.chown(path,65532,65532)
+    parent={"model_usage":{"measurement":"measured","model_attempts":2,"tool_calls":1,
+                            "input_tokens":20,"output_tokens":2},
+            "terminal_usage":{"measurement":"partial","tool_calls":2},
+            "contact_usage":{"measurement":"measured","model_attempts":1,"tool_calls":0,
+                             "input_tokens":10,"output_tokens":1}}
+    producer=IndependentComponentWorkProducer.__new__(IndependentComponentWorkProducer)
+    producer.config={"producer":{"settings":{"accounting_root":str(tmp_path)}},
+        "shared_budget":{"provider_attempts":68,"physical_tools":100,"input_tokens":385000,
+                         "output_tokens":15000,"construction_attempts":6,"later_attempts":6,"final_attempts":28}}
+    producer.runtime=NS(reviewed_work_usage=lambda task:deepcopy(parent))
+    producer.registration_sha256="c"*64
+    value={"development_ref":dev,"binding":{"execution_binding_ref":final,"task_id":"work:original"},
+           "parent_usage":deepcopy(parent)}
+    actual=producer._usage(value,final_may_be_absent=True)
+    assert actual["total"]=={"provider_attempts":4,"physical_tools":3,
+                            "input_tokens":60,"output_tokens":6,"unknown_attempts":0,"retries":0}
+    producer.config["shared_budget"]["construction_attempts"]=2
+    with pytest.raises(ValueError,match="construction allowance"):
+        producer._usage(value,final_may_be_absent=True)

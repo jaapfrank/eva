@@ -161,12 +161,17 @@ def build_digital_profile(settings, provider_bundle):
     # One model response must remain available to return the verified result.
     # Only new tasks receive this envelope; read/resume retains exact old grants.
     runs = min(settings.conversation_maximum_requests, 32)
-    return replace(historical,
+    current = replace(historical,
         maximum_model_runs=runs, maximum_completed_model_responses=runs,
         maximum_tool_calls=max(1, runs - 1),
         maximum_input_tokens=budget.max_input_tokens * runs,
         maximum_output_tokens=budget.max_output_tokens * runs,
         historical_grants=historical.compatible_grants())
+    # A new general-work task may contain several dependent model/tool rounds.
+    # Preserve exact previous envelopes for reading/resuming old work; never
+    # extend an already admitted task or increase its request/token allowance.
+    return replace(current, timeout_seconds=1200,
+                   historical_grants=current.compatible_grants())
 
 
 def build_digital_runner(settings, store, *, provider_bundle=None, household_authority=None):

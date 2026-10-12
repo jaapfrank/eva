@@ -278,7 +278,7 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             return
         from eva.operations.component_evaluation import WORK_STRATEGY_PATH
         producer = self.server.work_execution_producers.get(WORK_STRATEGY_PATH)
-        if producer is None:
+        if producer is None and self.server.final_assessments is None:
             self._reply(404, {"error": "not_found"})
             return
         try:
@@ -294,7 +294,15 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             raw = self.rfile.read(length)
             if len(raw) != length:
                 raise ValueError()
-            result = producer.authorize(json.loads(raw, object_pairs_hook=_object))
+            binding = json.loads(raw, object_pairs_hook=_object)
+            if isinstance(binding, dict) and binding.get("contract") == "EvaIndependentComponentWorkBinding/v1":
+                if self.server.final_assessments is None:
+                    raise ValueError("independent final work unavailable")
+                result = self.server.final_assessments.authorize_native_work(binding)
+            else:
+                if producer is None:
+                    raise ValueError("development work unavailable")
+                result = producer.authorize(binding)
         except (ValueError, TypeError, KeyError, UnicodeError, OSError, OverflowError, RecursionError):
             self._reply(400, {"error": "work_authority_unconfirmed"})
             return

@@ -1,0 +1,145 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "checkedAt": "2026-10-12T01:30:59.112686Z",
+  "decision": "GO",
+  "scope": "Fixed production work-strategy final-answer source bridge and its existing transport/new-task deadline envelope; not concrete producer/configuration installation or native quality.",
+  "sourceManifestSha256": "daed11472f7c49a5403690965fe9513dd5228ed7f2ee42daef51202162095ab5",
+  "openBlockers": [],
+  "bindings": {
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/final-work-source.private.json",
+      "sha256": "daed11472f7c49a5403690965fe9513dd5228ed7f2ee42daef51202162095ab5"
+    },
+    "sourceFiles": {
+      "eva2/src/eva/operations/component_work_execution.py": "90e6ff12af016e58e14fb40ee309c3e4fe7e4dd7c9a841758a1499f5f9c09bdd",
+      "eva2/src/eva/operations/component_application_runtime.py": "1c5d85569b323cb21767d6aac1571a33d4732f084855923dbdeb0ae9328065dc",
+      "eva2/src/eva/operations/component_final_assessment.py": "d4d856cc3b72a17dfe1968894b4aa775bef4aaa33516d466f596acddff1ee7a4",
+      "eva2/src/eva/operations/component_evaluation_service.py": "09360e840b1558940f5af60abe2f4f7db590d98156d86b027a26958be0c2f5f4",
+      "eva2/src/eva/bootstrap/delegated_digital_composition.py": "08edd35d44dc7bb2dad94d263d4eb4a5f83d6643211b1f207fce257e9f054ebd",
+      "eva2/src/eva/contracts/delegated_digital_work.py": "ccb6f9f6292b364185d1b1b1f0f3e55060d767e4c2af64ac56441250e9ff05ad",
+      "eva2/src/eva/adapters/connectors/component_evaluation.py": "b1c24dcd53bf96d51d77e934845995747d0239bead8b59c562dfbac98d8cee7c",
+      "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "ebb15227a3cef67ffc190cfbc98a7f5a07f5960f2392db588bb667855767ef6a"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_component_work_execution.py": "798af25df67d078f21602f05d1b251e77bdbe659a0b87aaa6253b084a49417a2",
+      "eva2/tests/operations/test_component_resume_readiness.py": "1ad289a6b00d5046bd730bbe5b66baf6bd310fbb3a7ec2c11836de219c45d202",
+      "eva2/tests/operations/test_component_final_assessment.py": "bec495d06c59ee3c3e14eb2eaf902545c364ff90a087f13f9f6f188c5c377224",
+      "eva2/tests/bootstrap/test_delegated_digital_composition.py": "79f000116e2b60af5bbdf9b26e92326295aacb5dc85b36a0bef0ad30f014574b",
+      "eva2/tests/contract/test_delegated_digital_work.py": "26c9e25cf0354a7227c07bac400adee413f922039a71b7c833bf2fc2d0b32150"
+    },
+    "testReceipts": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/final-work-source-tests-v1.private.json",
+        "sha256": "45f3a85451ae2ed158f6a3d61acf354fedef2cb536b3aebf3906285e655f7099"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/final-work-source-tests-v2.private.json",
+        "sha256": "af9eebd5d9869f8aa7484e36b7659e78ffdaa74616e8c0590a64ca349096a31d"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/final-work-source-tests-v3.private.json",
+        "sha256": "f17e66a09fdd1a33b3949d12e809728627eca217e2764af7b16edd05ef397af0"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/deadline-bound-transport-tests.private.json",
+        "sha256": "45396564e9deb01cc58d1759e7282150fbc3a96ee185d1f1c6e8b3b4838023e9"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/deadline-bound-transport-correction-tests.private.json",
+        "sha256": "9e9bde78ff271063d69dc278733be52f378c9175c69a06d228719dd31e6a7b6d"
+      }
+    ],
+    "fixedRegistrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872",
+    "fixedSetupManifestSha256": "7b12e1aa42244e127a3129e5373338bc51ec162dbf91ead1f62e6ab2ca4b6d58",
+    "fixedCriteriaRawSha256": "54dadae4310d253cfd73dc92be320e5c9645be6163660bf2fdead3c188eaf951"
+  },
+  "findings": [
+    {
+      "status": "resolved",
+      "boundary": "Current ordinary owner and source",
+      "evidence": "Read-only store.load revalidates original principal/binding and original spec; retained ingress and stop are checked. Native parent uses the existing reviewed_work_current mandate/source guard."
+    },
+    {
+      "status": "resolved",
+      "boundary": "Original terminal work and complete construction accounting",
+      "evidence": "The new independent binding/usage route rejects same-execution continuation rows. Legacy ready_to_apply continuation behavior remains. Construction combines original background and foreground journal usage; native contact absence requires zero actual scoped CONVERSATION_MODEL_ADMITTED records. Unknown contact usage is refused."
+    },
+    {
+      "status": "resolved",
+      "boundary": "Fixed criteria and runtime admission interoperability",
+      "evidence": "The final envelope uses the raw pinned HostFinalAssessment criteria/admission references. Criteria content and bound registration/runtime metadata are rechecked before effects. Canonically saved proof/job/accounting references match their actual file bytes."
+    },
+    {
+      "status": "checked",
+      "boundary": "Queue, selected package, parent and answer-stage authority",
+      "evidence": "Dispatch requires the original answer_assessing job, task, registration, selected package and immutable job snapshot. Each authorization rechecks original authority/deadline and retained admission. There is no fabricated owner INGRESS or second work queue."
+    },
+    {
+      "status": "checked",
+      "boundary": "Shared physical resource accounting",
+      "evidence": "Development ledger, original construction journals and independent-final ledger are combined. Unknown final request usage cannot become zero or final acceptance; one unfinished request is retained only for authority polling. The concrete producer must prevent a second provider dispatch while usage is unresolved and preserve the same accounting for later use."
+    },
+    {
+      "status": "checked",
+      "boundary": "Baseline and source identity",
+      "evidence": "Development keeps original baseline/candidate/draft/suite checks and fresh baseline pin. A fixed baseline-quality maximum can stop candidate work. Final seals retain independent_final stage; they are consumed by the independently fixed final scorer, not relabeled as development."
+    },
+    {
+      "status": "checked",
+      "boundary": "New-task duration and existing grants",
+      "evidence": "The current digital profile admits a new 1200-second envelope with unchanged request/tool/token allowances; exact historical 300-second grants remain accepted. Existing admitted deadlines are not extended. Evaluation HTTP uses the original remaining duration, not a model-selected duration."
+    }
+  ],
+  "verification": {
+    "sourceAndTestHashMatches": true,
+    "receiptAndLogHashMatches": true,
+    "testsNotRerunByReviewer": true,
+    "retainedRuns": [
+      {
+        "name": "final-work-source-tests-v1",
+        "exitCode": 1,
+        "passed": 120,
+        "failed": 13,
+        "seconds": 13.36,
+        "preserved": true
+      },
+      {
+        "name": "final-work-source-tests-v2",
+        "exitCode": 0,
+        "passed": 138,
+        "seconds": 9.67,
+        "sourceChangedDuringRun": [],
+        "logSha256": "1c1848eef60de3a3ebdfcfb8bc83dd94e9b50e05fb76a1d2e2043df2d0790901"
+      },
+      {
+        "name": "final-work-source-tests-v3",
+        "exitCode": 0,
+        "passed": 17,
+        "seconds": 0.62,
+        "scope": "Last native contact-absence readiness delta",
+        "logSha256": "22beac4132b50d6aa5987176b1a47bef7a1f6d8a98865ce468cf3564e8d82404"
+      }
+    ],
+    "aggregateUniqueTestCountClaim": false,
+    "reviewerModelRequests": 0,
+    "reviewerNativeExecutions": 0,
+    "credits": "UNKNOWN"
+  },
+  "conditionsBeforeNativeInput": [
+    "Review and pin the actual host producer and its physical pre-dispatch guards, cleanup accounting and exact export schema.",
+    "Bind actual development/final runtime admission, case identities, scope, profiles and original eligible parent authority before dispatch; pending placeholders provide no authority.",
+    "Use the immutable registration/resources: one baseline and at most one candidate, independent final and later use, shared 68 attempts/100 tools/385000 input/15000 output/400000 combined tokens, zero retries. Token ceilings remain measured stop/acceptance limits, not a guaranteed in-flight token hard cap.",
+    "Keep the existing closed four-call trial, consumed rounds, original records and UNKNOWN unchanged.",
+    "Install only exact reviewed source/configuration with fresh release parity and required existing owner/mandate binding; this review proves no installation."
+  ],
+  "limitations": {
+    "installed": false,
+    "nativeInputAdmitted": false,
+    "nativeQualityGainProven": false,
+    "fullAide2Completed": false,
+    "wholeGoalCompleted": false,
+    "familyAcceptanceProven": false,
+    "protectedCaseContentsDisclosed": false,
+    "oldTrialsReopened": false
+  }
+}

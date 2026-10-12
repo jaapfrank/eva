@@ -1,0 +1,13 @@
+{
+  "contract": "EvaDashboardPublishedContentVerification/v1",
+  "checkedAt": "2026-10-12T01:59:29.930543+00:00",
+  "url": "http://localhost:44712/",
+  "visibleContentChecked": "2026-10-12T01:58:39.932645+00:00",
+  "lastInstalledDelivery": "Kern voor werkverbetering geïnstalleerd · dienst nog open",
+  "currentWork": "Zelfverbetering uitvoerbaar maken",
+  "nextWork": "Verbetering aantonen, toepassen en later gebruiken",
+  "ownerActionRequired": false,
+  "browserReloadVerified": true,
+  "completedFunctionCountChanged": false,
+  "wholeProjectGoal": "active"
+}

@@ -67,3 +67,50 @@ def test_two_successors_or_wrong_scope_do_not_authorize_application():
 def test_actual_core_readiness_program_is_executable_python():
     from eva.operations.component_application_runtime import _READINESS
     compile(_READINESS, "<core-readiness>", "exec")
+
+
+def test_reviewed_binding_keeps_stop_authority_without_child_idle_deadlock():
+    import json
+    from types import SimpleNamespace
+    from eva.operations.component_application_runtime import ComponentApplicationRuntime
+    observed=[]
+    value={"state":"ready","contract":"EvaReviewedComponentWorkAuthority/v1",
+        "task_id":"work:original","scope_sha256":SCOPE,
+        "spec_sha256":"a"*64,"source_ingress_sha256":"b"*64}
+    def run(args,**kwargs):
+        observed.append(json.loads(args[-1]))
+        return SimpleNamespace(returncode=0,stdout=json.dumps(value))
+    runtime=ComponentApplicationRuntime({"core_container":"core","scope_sha256":SCOPE},run=run)
+    assert runtime.reviewed_work_binding("work:original")==value
+    assert observed==[{"task_id":"work:original","scope_sha256":SCOPE,
+                      "require_idle":False,"include_binding":True}]
+    value["state"]="cancelled"
+    assert runtime.reviewed_work_binding("work:original")["state"]=="cancelled"
+
+
+def test_original_usage_unknown_contact_is_not_free_construction():
+    import json
+    from types import SimpleNamespace
+    from eva.operations.component_application_runtime import ComponentApplicationRuntime
+    terminal={"contract":"DelegatedWorkUsage/v1","schema_version":1,"measurement":"partial",
+        "completed_model_responses":2,"tool_calls":2,"input_tokens":20,"output_tokens":2,
+        "total_tokens":22,"cost_usd_micros":None}
+    value={"state":"ready","contract":"EvaReviewedComponentWorkUsage/v1",
+        "task_id":"work:original","scope_sha256":SCOPE,
+        "model_usage":{"measurement":"measured","model_attempts":2,"tool_calls":0,
+                       "input_tokens":20,"output_tokens":2},
+        "terminal_usage":terminal,"terminal_usage_sha256":canonical_sha256(terminal),
+        "contact_disposition":"recorded_original_ingress",
+        "contact_usage":{"measurement":"partial","model_attempts":1,"tool_calls":0,
+                         "input_tokens":1,"output_tokens":1}}
+    runtime=ComponentApplicationRuntime({"core_container":"core","scope_sha256":SCOPE},
+        run=lambda *a,**kw:SimpleNamespace(returncode=0,stdout=json.dumps(value)))
+    with pytest.raises(ValueError,match="contact accounting incomplete"):
+        runtime.reviewed_work_usage("work:original")
+    value["contact_usage"]["measurement"]="measured"
+    assert runtime.reviewed_work_usage("work:original")==value
+    value["contact_usage"]=None
+    with pytest.raises(ValueError,match="contact accounting absent"):
+        runtime.reviewed_work_usage("work:original")
+    value["contact_disposition"]="native_origin_without_foreground"
+    assert runtime.reviewed_work_usage("work:original")==value

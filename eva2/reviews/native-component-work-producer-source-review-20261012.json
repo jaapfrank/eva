@@ -1,0 +1,105 @@
+{
+  "contract": "EvaBoundedIndependentSourceReview/v1",
+  "checkedAt": "2026-10-12T01:55:48.890002+00:00",
+  "decision": "GO",
+  "scope": "Concrete gewone-factory werk-evidenceproducent en exact geregistreerde per-case deadlinecorrectie; bron- en schema-interoperabiliteit.",
+  "sourceManifestSha256": "0acca48955c32abcd37863a3f2d9d3791bf43a03b03094a77517dfd1fa7eeb9b",
+  "openBlockers": [],
+  "bindings": {
+    "sourceFiles": {
+      "eva2/src/eva/operations/component_native_work_producer.py": "80e42585caa1f255fc91965189899f85206ad763f0a42d754baf4bfe3620217c"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_component_native_work_producer.py": "a41c6ed1bd054c768e4f4661ccf8c63ed7142e4aa83107a03a22c30570a9b4c3"
+    },
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-component-work-producer-20261012/deadline-delta/frozen-source.private.json",
+      "sha256": "0acca48955c32abcd37863a3f2d9d3791bf43a03b03094a77517dfd1fa7eeb9b"
+    },
+    "deadlineChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-component-work-producer-20261012/deadline-delta/targeted-checks.private.json",
+      "sha256": "b56b6c6a2a16e5c8ba4dbaace2e4e97c981ae526426c52016185f48fa93a4abd"
+    },
+    "deadlineSourceResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-component-work-producer-20261012/deadline-delta/source-result.private.json",
+      "sha256": "1b74e1bbd6d66d113890d9da7580ce3552b29ff403151fdc59505822c6633108"
+    },
+    "priorSourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-component-work-producer-20261012/frozen-source.private.json",
+      "sha256": "7940fe3e01597e33251f753ab2967471ab15945e51fbe6ea2be9047e4d3bcadb"
+    },
+    "priorChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-component-work-producer-20261012/targeted-checks.private.json",
+      "sha256": "b383256265705e64ac4555f36300efd33c51ff5794e5f8f372510fbe30a6277c"
+    },
+    "resources": {
+      "sha256": "92ed869d75fd477c7c0aa0c52d7976abe0410027dcc3b79c7c82daed6618dc25"
+    },
+    "protectedFinalInputOnlyWrapper": {
+      "sha256": "e77a4340318153d2c3d474e2ca56bced2645ead0c86a988d319647f2b5557165"
+    },
+    "protectedFinalIdentityMetadata": {
+      "sha256": "c3efbe464cfa036ecefb30f416c7de41e0918baa92827b425ae19f33a6214142"
+    },
+    "identityHelperFunctionSha256": "4251a259f4e15e49ca063c7dabbc6d331189c9a5b77a72dd269ed560b9f2f418"
+  },
+  "reviewedBoundaries": [
+    {
+      "source": "eva2/src/eva/operations/component_native_work_producer.py",
+      "line": 590,
+      "finding": "Vooraf gepinde raw resources, provider/duur-combinatie en exacte stage-case-dekking; geen gewijzigde casevragen, criteria of achtste caseveld."
+    },
+    {
+      "source": "eva2/src/eva/operations/component_native_work_producer.py",
+      "line": 758,
+      "finding": "Baseline en kandidaat delen onveranderlijke scope, bronpaar, identities, resourcehash en duurmapping; bestaand accounting kan niet worden gereset."
+    },
+    {
+      "source": "eva2/src/eva/operations/component_native_work_producer.py",
+      "line": 880,
+      "finding": "Gewone toelating behoudt actor/binding/source en onveranderd profielgrant. De nieuwe specdeadline is het minimum van case 150/210 seconden, normaal profiel en oorspronkelijke parentdeadline."
+    },
+    {
+      "source": "eva2/src/eva/operations/component_native_work_producer.py",
+      "line": 933,
+      "finding": "Huidige parent, exacte specdeadline, stop/store-dispatchautoriteit, owner en bron worden vóór fysieke dispatch gecontroleerd."
+    },
+    {
+      "source": "eva2/src/eva/operations/component_native_work_producer.py",
+      "line": 1131,
+      "finding": "Dezelfde gewone build_digital_runner/worker-route met gepinde read-only bron en previewclient; geïsoleerde programming/progress-scope, geen tweede queue of oude trialherarming."
+    }
+  ],
+  "verified": {
+    "workEvidenceAndRawRunBindingsInteroperateWithExistingConsumers": true,
+    "independentFinalRequiresSeparateHostAuthorityAndEnvelope": true,
+    "sameOriginalIdentityHelperAfterDeadlineDelta": true,
+    "isolatedMemoryExclusionDoesNotClaimMemoryProjectionSuccess": true,
+    "terminalLossAndIncompleteEvidenceRemainDistinct": true,
+    "actualReceiptsReadbacksUsageAndCleanupPreserved": true,
+    "sharedPhysicalRequestToolAccountingAndUnknownUsageFailClosed": true,
+    "registeredSimpleCaseSeconds": 150,
+    "registeredMultistepCaseSeconds": 210,
+    "finalDeltaChecksPassed": 11,
+    "priorCurrentChecksPassed": 23,
+    "overlappingSelectionsNotAddedAsUniqueTotal": true,
+    "reviewModelNativeTestCalls": 0
+  },
+  "executionReadiness": {
+    "decision": "NOT_GRANTED_BY_THIS_SOURCE_REVIEW",
+    "remainingConditions": [
+      "Actieve hostvenv/importclosure moet de gewone factory en producent werkelijk kunnen laden: de gemelde ontbrekende SQLAlchemy en 16-moduleclosure zijn nog installatie-/configuratievoorwaarden.",
+      "Pinnen van exact actuele image, bronnen, gewone factoryrelease, previewclient/toolconfig, actor, registration/cases/criteria/resources en afzonderlijke final runtime-admission.",
+      "Finalfase gebruikt de bestaande afzonderlijke queue answer-stage authority en de gepinde onafhankelijke envelope; development authority wordt niet heropend.",
+      "Gezamenlijke construction+development+final+later provider/tools/volledig gemeten usage blijven dezelfde registratie en accounting; onbekende usage weigert verdere dispatch/beoordeling.",
+      "Construction 150 en later 150 seconden blijven hun eigen vaste grenzen ondanks een 1200-seconden parentgrant; geen vrijstelling of historische deadlineverlenging."
+    ]
+  },
+  "limitations": [
+    "GO geldt uitsluitend deze bronintegratie en de gecontroleerde deadlinecorrectie; geen hostinstallatie, native invoer, succesvolle taak, kwaliteitswinst of volledig AIDE2.",
+    "23 eerdere huidige modelvrije checks en 11 deadlinechecks zijn overlappende selecties; geen 34-unieke claim.",
+    "Geen protected eindvragen, antwoorden of scorerinhoud gedeeld met root/bouwer; uitsluitend input-only wrapper- en identityhashes.",
+    "400000 tokens blijft gemeten stop-/acceptatiegrens, geen gegarandeerd maximum binnen een in-flight providerantwoord. Kosten en credits onbekend.",
+    "Oude gesloten vier-call proef, verlies/UNKNOWN, controls, oorspronkelijke criteria en ledgers blijven intact."
+  ]
+}

@@ -100,9 +100,11 @@ def _assessor_protocol(assessor, protocol):
 
 class HostFinalAssessment:
     """Fixed host scorer and private oracles; candidate executes only in isolation."""
-    def __init__(self, config):
+    work_producer = None
+
+    def __init__(self, config, *, runtime=None):
         if (not isinstance(config, dict)
-                or set(config) - {"evaluation", "scorer", "registration", "bindings", "answer_evidence_file", "source_target"}
+                or set(config) - {"evaluation", "scorer", "registration", "bindings", "answer_evidence_file", "source_target", "work_execution"}
                 or not {"evaluation", "scorer", "registration", "bindings"} <= set(config)):
             raise ValueError("invalid independent assessment configuration")
         self.config = json.loads(json.dumps(config))
@@ -117,6 +119,19 @@ class HostFinalAssessment:
         self.evaluator = ComponentEvaluator(EvaluationConfig(**evaluation),
                                            source_target=self.config.get("source_target"))
         self._validate()
+        self.work_producer = None
+        if "work_execution" in config:
+            from eva.operations.component_work_execution import IndependentComponentWorkProducer
+            if runtime is None or not config.get("answer_evidence_file"):
+                raise ValueError("registered answer work requires the existing host runtime")
+            work_config = dict(config["work_execution"])
+            for name in ("criteria","runtime_admission"):
+                if name in work_config or name not in config["bindings"]:
+                    raise ValueError("registered independent work metadata differs")
+                work_config[name] = config["bindings"][name]
+            self.work_producer = IndependentComponentWorkProducer(
+                work_config, runtime=runtime,
+                registration_sha256=self.config["registration"]["sha256"])
 
     def _validate(self):
         if self.config.get("source_target") != self.evaluator.source_target:
@@ -178,7 +193,18 @@ class HostFinalAssessment:
 
     def answer_evidence_ready(self):
         filename = self.config.get("answer_evidence_file")
-        return bool(filename and Path(filename).exists())
+        return bool(filename and (Path(filename).exists() or self.work_producer is not None))
+
+    def prepare_answer_work(self, package, output_root, *, task_id, review_id, job_snapshot):
+        if self.work_producer is not None:
+            self._validate()
+            self.work_producer.activate(package, task_id=task_id, review_id=review_id,
+                output_root=output_root, job_snapshot=job_snapshot)
+
+    def authorize_answer_work(self, binding):
+        if self.work_producer is None:
+            raise ValueError("independent work producer unavailable")
+        return self.work_producer.authorize(binding)
 
     def complete(self, package, output_root):
         self._validate()
@@ -191,6 +217,8 @@ class HostFinalAssessment:
         filename = self.config.get("answer_evidence_file")
         if not filename:
             raise ValueError("no separately admitted answer evidence")
+        if self.work_producer is not None:
+            self.work_producer.execute(package, answer_evidence_file=Path(filename))
         answer = _path(filename)
         binding = {"path": str(answer), "sha256": digest(answer.read_bytes())}
         return self._decide(package, report, output_root, answer_evidence=binding)
@@ -351,6 +379,19 @@ class FinalComponentAssessments:
             if scope_sha256 != self.scope or job is None: raise ValueError("final assessment is unavailable")
             return self._result(job)
 
+    def authorize_native_work(self, binding):
+        from eva.operations.component_work_execution import validate_final_work_binding
+        binding = validate_final_work_binding(binding)
+        with self.condition:
+            job = self.jobs.get(binding["review_id"])
+            if (self.closed or job is None or job["state"] != "answer_assessing"
+                    or job["task_id"] != binding["task_id"]
+                    or job["protocol_sha256"] != binding["registration_sha256"]):
+                raise ValueError("independent answer job is not dispatching")
+            self._queued_package(job)
+            assessor = self._round(job)[1]
+        return assessor.authorize_answer_work(binding)
+
     def _queued_package(self, job):
         _, package = _artifact(job["package"])
         protocol, assessor, _ = self._round(job)
@@ -426,9 +467,18 @@ class FinalComponentAssessments:
                     if ready != "ready": continue
                     package = self._queued_package(job)
                     _, assessor, publisher = self._round(job)
-                    result = (assessor.complete(package, self.root / job["review_id"])
-                              if job["state"] == "answer_assessing"
-                              else assessor(package, self.root / job["review_id"]))
+                    directory = self.root / job["review_id"]
+                    if job["state"] == "answer_assessing":
+                        prepare = getattr(assessor, "prepare_answer_work", None)
+                        if prepare is not None:
+                            snapshot = directory / "answer-job.private.json"
+                            _save(snapshot, job, initial=True)
+                            prepare(package, directory, task_id=job["task_id"],
+                                review_id=job["review_id"], job_snapshot={
+                                    "path":str(snapshot), "sha256":digest(canonical(job))})
+                        result = assessor.complete(package, directory)
+                    else:
+                        result = assessor(package, directory)
                     after_assessment = self.task_state(job["task_id"])
                     with self.condition:
                         job["public"] = result["public"]
@@ -478,7 +528,7 @@ def configured_final_assessments(config, *, applications, runtime_config):
     runtime = ComponentApplicationRuntime(runtime_config)
     if config["scope_sha256"] != runtime.config["scope_sha256"]:
         raise ValueError("final and application source scopes differ")
-    assessors = {path: HostFinalAssessment(value) for path, value in config["assessments"].items()}
+    assessors = {path: HostFinalAssessment(value, runtime=runtime) for path, value in config["assessments"].items()}
     for path, assessor in assessors.items():
         if config["protocols"][path]["registration_sha256"] != assessor.config["registration"]["sha256"]:
             raise ValueError("final protocol and independent registration differ")
@@ -491,7 +541,7 @@ def configured_final_assessments(config, *, applications, runtime_config):
                 or not isinstance(value.get("protocol"), dict)
                 or value["protocol"].get("registration_sha256") != registration):
             raise ValueError("retained independent host round differs")
-        assessor = HostFinalAssessment(value["assessment"])
+        assessor = HostFinalAssessment(value["assessment"], runtime=runtime)
         if assessor.config["registration"]["sha256"] != registration:
             raise ValueError("retained protocol and independent registration differ")
         retained[registration] = {"path": value["path"], "protocol": value["protocol"]}

@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 import hashlib
 import json
+import math
 import os
 import re
 from pathlib import Path
@@ -34,14 +35,14 @@ class ComponentEvaluationClient:
                 or set(self.work_execution_paths) - set(self.allowed_paths)):
             raise ValueError("invalid component work execution paths")
 
-    def _post(self, endpoint, payload, *, limit=160000):
+    def _post(self, endpoint, payload, *, limit=160000, timeout_seconds=None):
         token = Path(self.token_file).read_text().strip()
         if not token or len(token) > 1024 or any(c.isspace() for c in token):
             raise ValueError("component evaluator credential unavailable")
         request = Request(self.url + endpoint, json.dumps(payload, ensure_ascii=False).encode(),
                           headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
                           method="POST")
-        with build_opener(ProxyHandler({}), _NoRedirect()).open(request, timeout=self.timeout_seconds) as response:
+        with build_opener(ProxyHandler({}), _NoRedirect()).open(request, timeout=self.timeout_seconds if timeout_seconds is None else timeout_seconds) as response:
             raw = response.read(limit + 1)
         if len(raw) > limit:
             raise ValueError("component host response exceeds bound")
@@ -89,7 +90,7 @@ class ComponentEvaluationClient:
             raise ValueError("independent round metadata binding differs")
         return result
 
-    def evaluate(self, draft, *, execution_binding=None):
+    def evaluate(self, draft, *, execution_binding=None, remaining_seconds=None):
         path = draft["path"]
         target = draft.get("source_target")
         if target is None:
@@ -135,7 +136,13 @@ class ComponentEvaluationClient:
             payload["execution_binding"] = dict(execution_binding)
         elif execution_binding is not None:
             raise ValueError("component work execution path is not configured")
-        report = self._post("/evaluate", payload)
+        if remaining_seconds is not None:
+            if (not work_execution or type(remaining_seconds) not in (int, float)
+                    or not math.isfinite(remaining_seconds) or remaining_seconds <= 0):
+                raise ValueError("original component work time is unavailable")
+            report = self._post("/evaluate", payload, timeout_seconds=remaining_seconds)
+        else:
+            report = self._post("/evaluate", payload)
         if (report.get("contract") != "EvaIsolatedComponentEvaluation/v1"
                 or report.get("relative_path") != path
                 or report.get("baseline_sha256") != draft["source_sha256"]

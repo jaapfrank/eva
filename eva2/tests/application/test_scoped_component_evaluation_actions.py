@@ -33,7 +33,8 @@ def adapter(path=WORK_STRATEGY_EVALUATION_PATH, *, registered=True):
     origin = SimpleNamespace(model_dump=lambda **kw: {"tenant_id": "tenant", "installation_id": "installation",
         "principal_id": "owner", "conversation_id": "private-conversation", "message_id": "original"})
     component.spec = SimpleNamespace(work_id="original-work", execution_id="original-work",
-        source=origin, sha256="a" * 64, source_ingress_sha256="b" * 64)
+        source=origin, sha256="a" * 64, source_ingress_sha256="b" * 64,
+        deadline="2026-10-12T12:15:00Z", grant=SimpleNamespace(timeout_seconds=1200))
     component.source = source
     component.timeline = Timeline()
     checks = []
@@ -70,6 +71,7 @@ def test_binding_uses_original_draft_event_spec_and_selected_suite_and_replay_is
         draft_event_payload_sha256=event.payload_sha256, path=WORK_STRATEGY_EVALUATION_PATH,
         baseline_sha256="e" * 64, candidate_sha256="f" * 64, suite_sha256="1" * 64)
     assert receipt.output["status"] == "verified"
+    assert calls[0][1]["remaining_seconds"] == 900
     assert checks[-1] == ("authorize", component.source)
     assert sum(kind == "dispatch" for kind, turn in checks) == 1
     assert all(turn is component.source for kind, turn in checks)
@@ -130,3 +132,21 @@ def test_source_changed_after_draft_cannot_be_rebound_and_model_cannot_supply_bi
         component.execute(component.source, ConversationActionCall("eval", EVALUATE,
             {"draft_step": 2, "execution_binding": {"task_id": "forged"}}), step_index=3)
     assert not calls
+
+
+@pytest.mark.parametrize("deadline", ["2026-10-12T11:59:59Z", "2026-10-12T12:00:00Z"])
+def test_expired_original_work_starts_no_host_evaluation(deadline):
+    component, _, calls = adapter()
+    component.spec.deadline = deadline
+    with pytest.raises(ConversationConflict, match="deadline expired"):
+        component.execute(component.source,
+            ConversationActionCall("evaluation-expired", EVALUATE, {"draft_step": 2}), step_index=3)
+    assert not calls
+
+
+def test_transport_wait_cannot_exceed_original_grant():
+    component, _, calls = adapter()
+    component.spec.grant.timeout_seconds = 420
+    component.execute(component.source,
+        ConversationActionCall("evaluation-bounded", EVALUATE, {"draft_step": 2}), step_index=3)
+    assert calls[0][1]["remaining_seconds"] == 420

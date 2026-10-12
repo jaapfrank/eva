@@ -78,6 +78,9 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
     maximum_model_runs: int = Field(ge=1, le=32)
     maximum_completed_model_responses: int = Field(ge=1, le=32)
     maximum_tool_calls: int = Field(ge=1, le=32)
+    # General multi-step work outlives the original five-minute first slice.
+    # Each admitted task still carries one fixed deadline and usage envelope.
+    timeout_seconds: int = Field(ge=1, le=3600)
     # Cumulative input spans bounded model runs; the model still enforces each request.
     maximum_input_tokens: int = Field(ge=1, le=3_200_000)
     maximum_total_tokens: int = Field(ge=1, le=3_300_000)

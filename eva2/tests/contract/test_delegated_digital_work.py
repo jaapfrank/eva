@@ -306,3 +306,23 @@ def test_reviewed_application_descriptors_roundtrip_through_digital_grant(monkey
     changed["capability_ids"] = [*names, "approve_own_component_release"]
     with pytest.raises(ValidationError, match="explicit connector actions"):
         DelegatedDigitalWorkGrant.model_validate(changed)
+
+
+def test_future_digital_task_can_run_longer_without_extending_an_old_spec():
+    old = profile()
+    now = datetime(2026, 9, 23, 12, tzinfo=UTC)
+    args = dict(source=source(), source_ingress_sha256="c"*64, work_id="work:deadline",
+        episode_id="episode:deadline", generation=1, parent_task_id="parent:deadline",
+        owner_principal_id="owner", principal_binding_id="binding:owner",
+        task="Complete several dependent changes", created_at=now)
+    admitted = old.build_spec(**args, deadline=now+timedelta(seconds=300))
+    newer = replace(old, timeout_seconds=1200, historical_grants=(old.grant(),))
+    future = newer.build_spec(**{**args,"work_id":"work:future"},
+                             deadline=now+timedelta(seconds=1200))
+    assert future.grant.timeout_seconds == 1200
+    assert load_delegated_work_spec(admitted.to_payload()).deadline == admitted.deadline
+    assert newer.accepts_grant(admitted.grant)
+    invalid = future.grant.to_payload()
+    invalid["timeout_seconds"] = 3601
+    with pytest.raises(ValidationError):
+        DelegatedDigitalWorkGrant.model_validate(invalid)

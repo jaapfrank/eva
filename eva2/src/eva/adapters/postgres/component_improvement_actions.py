@@ -13,6 +13,7 @@ from eva.application.conversation import ConversationActionCall, ConversationAct
 from eva.application.schema_validation import validate_schema_value
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.timestamps import parse_utc_timestamp
 
 READ = "read_own_component_source"
 DRAFT = "draft_own_component_improvement"
@@ -360,7 +361,13 @@ class ComponentImprovementActions:
                     path=draft["path"], baseline_sha256=draft["source_sha256"],
                     candidate_sha256=draft["candidate_sha256"],
                     suite_sha256=dict(self.evaluator.suite_bindings).get(draft["path"], self.evaluator.suite_sha256))
-                value = self.evaluator.evaluate(draft, execution_binding=binding)
+                remaining = min(
+                    (parse_utc_timestamp(self.spec.deadline) - parse_utc_timestamp(self.clock())).total_seconds(),
+                    self.spec.grant.timeout_seconds)
+                if remaining <= 0:
+                    raise ConversationConflict("original component work deadline expired")
+                value = self.evaluator.evaluate(draft, execution_binding=binding,
+                    remaining_seconds=remaining)
             else:
                 value = self.evaluator.evaluate(draft)
             value["evaluation_step"] = step_index

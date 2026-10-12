@@ -1,0 +1,66 @@
+{
+  "contract": "EvaRuntimeSourceAssemblyReview/v1",
+  "checkedAt": "2026-10-12T01:46:11.202596Z",
+  "decision": "GO",
+  "sourceManifestSha256": "eecd58b9755958075edd01f357f43bc04109334aad7f3f81c7179adcc340d506",
+  "openBlockers": [],
+  "scope": "Exact eleven-file source-only assembly and the fixed final admission-hash forwarding delta; no producer configuration or paid-input admission.",
+  "bindings": {
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/runtime-source-assembly-v2.private.json",
+      "sha256": "eecd58b9755958075edd01f357f43bc04109334aad7f3f81c7179adcc340d506"
+    },
+    "sourceFiles": {
+      "eva2/src/eva/operations/component_work_execution.py": "7fc6bb95fc0de544a3891a44ac815c32421c639942606d6a495c7b35fa9bfdcf",
+      "eva2/src/eva/operations/component_application_runtime.py": "1c5d85569b323cb21767d6aac1571a33d4732f084855923dbdeb0ae9328065dc",
+      "eva2/src/eva/operations/component_final_assessment.py": "d4d856cc3b72a17dfe1968894b4aa775bef4aaa33516d466f596acddff1ee7a4",
+      "eva2/src/eva/operations/component_evaluation_service.py": "09360e840b1558940f5af60abe2f4f7db590d98156d86b027a26958be0c2f5f4",
+      "eva2/src/eva/bootstrap/delegated_digital_composition.py": "08edd35d44dc7bb2dad94d263d4eb4a5f83d6643211b1f207fce257e9f054ebd",
+      "eva2/src/eva/contracts/delegated_digital_work.py": "ccb6f9f6292b364185d1b1b1f0f3e55060d767e4c2af64ac56441250e9ff05ad",
+      "eva2/src/eva/adapters/connectors/component_evaluation.py": "b1c24dcd53bf96d51d77e934845995747d0239bead8b59c562dfbac98d8cee7c",
+      "eva2/src/eva/adapters/postgres/component_improvement_actions.py": "ebb15227a3cef67ffc190cfbc98a7f5a07f5960f2392db588bb667855767ef6a",
+      "eva2/src/eva/application/component_development.py": "41f8ff63e255a0521ddfeb4bfd522b7ead64448e0436ff35c1b156b6398511ad",
+      "eva2/src/eva/operations/component_evaluation.py": "c17286c4bec620bbb6f6c9adb0c0ea842830d6a26307a7d1a10a074998412fbd",
+      "eva2/src/eva/operations/component_development.py": "95f9f998c1ddd72edc6685a95915daaf8c0abe150ebda91850600c4e4e5f0e35"
+    },
+    "priorSourceReview": {
+      "path": "eva2/reviews/native-work-strategy-final-source-review-20261012.json",
+      "sha256": "baab1035d527f7d425bbb1fef8201b447b3b32f3647d063adff6330ee151bedb"
+    },
+    "deltaManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/final-work-source-v2.private.json",
+      "sha256": "899496dea86056d6d0c0f5b09a6623af62d2032f292155978e0ad72cf757842e"
+    },
+    "actualCandidateFactoryProbe": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/configuration-complete/candidate-profile-current-client.private.json",
+      "sha256": "fa2c4133e269f2b8c7c2de0ce7820870f8ba702e9b0c12016ee0fbe0cb646a1a"
+    }
+  },
+  "findings": [
+    "All eleven actual repository source hashes match.",
+    "The only post-review final-work change forwards the already pinned raw runtime_admission SHA into settings for both producer legs.",
+    "The three assembly dependencies are the existing application component-binding helper, evaluator/strategy validator and development evidence consumer; no new criteria or evaluation route.",
+    "The complete ordinary factory probe reports identical core/worker observations and all 59 release source keys; 1200-second new tasks retain four exact historical 300-second grant variants.",
+    "The earlier incomplete-assembly import failure is preserved; this source review claims no live installation or native quality."
+  ],
+  "verification": {
+    "newReviewerTests": 0,
+    "reviewerModelRequests": 0,
+    "reviewerNativeExecutions": 0,
+    "factoryProbeModels": 0,
+    "factoryProbeNative": false,
+    "credits": "UNKNOWN"
+  },
+  "installationConditions": [
+    "Use this exact assembly via the existing updater, preserve original configuration/mounts/data and complete fresh release/mandate parity checks.",
+    "Keep the concrete producer inactive until its separately reviewed per-case duration and physical resource guards and actual fixed runtime-admission are bound."
+  ],
+  "limitations": {
+    "installedVerified": false,
+    "paidInputAdmitted": false,
+    "qualityGainProven": false,
+    "fullAide2Completed": false,
+    "wholeGoalCompleted": false,
+    "oldClosedTrialReopened": false
+  }
+}

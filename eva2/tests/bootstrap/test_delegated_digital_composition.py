@@ -121,7 +121,7 @@ def test_runner_factory_reuses_resource_factory_and_exposes_only_connector_tools
     assert observed["model"]["resource_budget"].max_output_tokens == 1200
     assert observed["model"]["resource_budget"].max_input_tokens == 12000
     assert observed["model"]["timeout_seconds"] == 120.0
-    assert runner.profile.grant().timeout_seconds == 300
+    assert runner.profile.grant().timeout_seconds == 1200
     assert observed["model"]["model"] == settings.conversation_model
     assert observed["model"]["conversation_tools"] == composition.digital_tools(bundle)[0]
     assert observed["owner"]["owner_principal_id"] == UUID(settings.background_principal_id)
@@ -219,7 +219,7 @@ def test_legacy_budget_is_exact_and_bound_to_current_release(variant):
     legacy = current.model_copy(update={"maximum_model_runs": 8,
         "maximum_completed_model_responses": 8, "maximum_tool_calls": 6,
         "maximum_input_tokens": input_tokens, "maximum_output_tokens": output,
-        "maximum_total_tokens": input_tokens + output})
+        "maximum_total_tokens": input_tokens + output, "timeout_seconds":300})
     old_release = canonical_sha256({"profile": DIGITAL_PROFILE_ID, "grant": legacy.to_payload()})
     assert profile.accepts_grant(legacy)
     assert profile.accepts_grant(current)
@@ -239,7 +239,7 @@ def test_input_attempt_budget_tracks_bounded_model_runs_with_response_limit_unch
     assert profile.maximum_response_input_tokens == 12000
     assert profile.maximum_input_tokens == 36000
     assert profile.maximum_model_runs == profile.maximum_completed_model_responses == 3
-    assert profile.maximum_tool_calls == 2 and profile.timeout_seconds == 300
+    assert profile.maximum_tool_calls == 2 and profile.timeout_seconds == 1200
     with pytest.raises(ValueError, match="input budget"):
         replace(profile, maximum_input_tokens=12000)
 
@@ -255,9 +255,13 @@ def test_execution_envelope_uses_host_allowance_without_changing_response_limits
     assert profile.maximum_output_tokens == 1200 * runs
     assert profile.maximum_response_input_tokens == 12000
     assert profile.maximum_response_output_tokens == 1200
-    assert profile.timeout_seconds == 300
-    assert {grant.maximum_tool_calls for grant in profile.historical_grants} == {6}
-    assert {grant.maximum_model_runs for grant in profile.historical_grants} == {min(configured, 8)}
+    assert profile.timeout_seconds == 1200
+    assert all(grant.timeout_seconds == 300 for grant in profile.historical_grants)
+    older = [grant for grant in profile.historical_grants if grant.maximum_tool_calls == 6]
+    assert older and {grant.maximum_model_runs for grant in older} == {min(configured, 8)}
+    previous = profile.historical_grants[0]
+    assert previous.maximum_model_runs == runs
+    assert previous.maximum_tool_calls == max(1,runs-1)
     # No fabricated intermediate grant or response-sized 32-run variant existed.
     if runs > 8:
         current = profile.grant()
@@ -276,12 +280,12 @@ def test_old_household_envelope_remains_readable_but_requires_current_release_fo
     bundle = replace(bundle, conversation_tools=(*bundle.conversation_tools, descriptor),
         external_tools=(*bundle.external_tools, SimpleNamespace(action_names=(descriptor.name,))))
     current = build_digital_profile(settings, bundle)
-    grant = current.historical_grants[variant]
+    grant = [g for g in current.historical_grants if g.maximum_tool_calls == 6][variant]
     legacy = replace(current, maximum_model_runs=grant.maximum_model_runs,
         maximum_completed_model_responses=grant.maximum_completed_model_responses,
         maximum_tool_calls=grant.maximum_tool_calls, maximum_input_tokens=grant.maximum_input_tokens,
         maximum_output_tokens=grant.maximum_output_tokens, maximum_response_input_tokens=None,
-        maximum_response_output_tokens=None, historical_grants=())
+        maximum_response_output_tokens=None, timeout_seconds=grant.timeout_seconds, historical_grants=())
     policy = SimpleNamespace(devices={"assist_satellite.kitchen": "kitchen"}, owner_principal_id="owner",
         principal_binding_id="binding", policy_id="policy", household_policy_id="household-policy",
         household_policy_sha256="c" * 64, tenant_id="tenant", installation_id="installation",
@@ -330,3 +334,17 @@ def test_configured_programming_tools_are_admitted_and_bound_to_release(tmp_path
     config.write_text(json.dumps({"url": "http://127.0.0.1:44720",
         "token_file": str(tmp_path / "token"), "timeout_seconds": 120}))
     assert first.release != build_digital_profile(settings, bundle).release
+
+
+def test_longer_future_tasks_preserve_exact_historical_grants_and_limits():
+    settings, bundle = configuration()
+    current = build_digital_profile(settings, bundle)
+    old = replace(current, timeout_seconds=300, historical_grants=())
+    assert current.timeout_seconds == 1200
+    assert current.accepts_grant(old.grant())
+    assert current.accepts_prior_profile(old.grant(), old.release.worker_profile_release_sha256)
+    assert current.grant().maximum_model_runs == old.grant().maximum_model_runs == 32
+    assert current.grant().maximum_tool_calls == old.grant().maximum_tool_calls == 31
+    assert current.grant().maximum_total_tokens == old.grant().maximum_total_tokens
+    older = [g for g in current.compatible_grants() if g.maximum_model_runs == 8]
+    assert older and all(g.timeout_seconds == 300 for g in older)
