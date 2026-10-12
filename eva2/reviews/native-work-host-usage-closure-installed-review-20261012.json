@@ -1,0 +1,71 @@
+{
+  "contract": "EvaIndependentHostUsageClosureInstalledReview/v1",
+  "checkedAt": "2026-10-12T05:44:15.147936Z",
+  "decision": "GO",
+  "installationDecision": "GO",
+  "publicationDecision": "GO",
+  "nativeInputDecision": "NONE",
+  "scope": "Exact één bestaande contractmodule geïnstalleerd in de bestaande evaluatiehost en eerlijke publicatie van dat technische herstel. Kandidaatbeoordeling en volledige verbetercyclus blijven open.",
+  "openBlockers": [],
+  "bindings": {
+    "publicEvidence": {
+      "path": "eva2/evidence/product/native-work-host-usage-import-closure-installed-20261012.json",
+      "sha256": "0bd1dbfeeeae502ed0244816c91ba8d12ba6ee01edc46a3546b7ff5a9213bce2"
+    },
+    "installedReceiptSha256": "3f60088dfafc844b9c7995f37946557d61327ab23877a04a67e85a747be3d728",
+    "sourceReview": {
+      "path": "eva2/reviews/native-work-host-usage-closure-source-review-20261012.json",
+      "sha256": "602782128a9fe5a9e49ee69b6493d94fd39aa4e44911c5abfe8a6982e02ce1da"
+    },
+    "sourceManifestSha256": "cadfbeb96cf0e71fe3e66e0cc82de0509263853118ec9e2c966fe1c18f6205e0",
+    "pureProjectionReceiptSha256": "918a7cc560dcbf51d3c4aed8c121ce5a1edc105d3db8197523eefc067174c66b",
+    "installedModuleSha256": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+    "unchangedHostConfigurationSha256": "ae4f78ca54ce2e2639bd062ba12c9400ed2a4ab45f9ff8230351d72b0eeef2ca",
+    "retainedFailedGen3RawSha256": "4924838144a0eb5549b64547c98b39063cc349d7813c8ef5b6134ae3bbc024c7",
+    "retainedFailedGen3SealedSha256": "8cc2bf31d615bf4f7f791c3654ae5245bc2a6bb410e53bdcb2c690d0fd92dea1"
+  },
+  "verified": {
+    "exactExistingModule": "contracts/delegated_work.py",
+    "installedSourceDigestMatchesCurrentImageAndFrozenSource": true,
+    "actualHostImportOriginMatchesDestination": true,
+    "existingHostModulesPreserved": 37,
+    "closedEvidenceReferencesPreserved": 13,
+    "currentConfigurationUnchanged": true,
+    "existingModuleCopies": 1,
+    "existingServiceRestarts": 1,
+    "serviceReadyHttp": 200,
+    "newServicePid": "3062735",
+    "coreAndWorkerHealthyExistingImagesUnchanged": true,
+    "imageUpdates": 0,
+    "newModelRequests": 0,
+    "newNativeEvaluations": 0,
+    "sourceBehaviorChanges": 0,
+    "criteriaCasesScorersRolesUsageDeadlineAndOldOnceUnchanged": true
+  },
+  "publicationAssessment": {
+    "technicalOutcomeOnly": true,
+    "noProductFunctionOrFullAide2CompletionClaim": true,
+    "currentMissingImportReproducedAndInstalled": true,
+    "originalInnerExceptionNotLoggedQualificationPreserved": true,
+    "noExclusiveHistoricalCauseOrCompletedEvalClaim": true,
+    "retainedUsage": {
+      "constructorRequests": 7,
+      "inputTokens": 83231,
+      "outputTokens": 1605,
+      "totalTokens": 84836,
+      "nativeTools": 7
+    },
+    "credits": "UNKNOWN",
+    "candidateNotYetAssessedAcceptedAppliedOrLaterUsed": true,
+    "goalActive": true,
+    "voiceParked": true,
+    "noCompetitorSeries": true
+  },
+  "limitations": [
+    "De ene pure projectiecheck bewijst dat de huidige lazy-importblocker is weggenomen; deze review herhaalt die check niet.",
+    "De oorspronkelijke innerexception is niet behouden. Geen exclusieve oorspronkelijke HTTP500oorzaak, native herstel, kwaliteitswinst of volledige AIDE2 volgt uit deze installatie.",
+    "De gesloten gen3-mislukking, alle voorgangers, hun deadlines/usage en dispatchmarkers blijven historische feiten.",
+    "Geen nieuwe native invoer, hervatting, EVAL replay, budgetruimte of gesloten herarm wordt door deze publicatie-GO toegelaten.",
+    "Reviewer las uitsluitend exacte bestaande receipts/sourcebindings en de geïnstalleerde modulehash; geen extra test/factory/Docker/HTTP/database/modeluitvoering of protectedcaselezing."
+  ]
+}

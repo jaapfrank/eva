@@ -1,0 +1,67 @@
+{
+  "contract": "EvaIndependentHostUsageClosureSourceReview/v1",
+  "checkedAt": "2026-10-12T05:42:19.722044Z",
+  "decision": "GO",
+  "installationPlanDecision": "GO",
+  "nativeInputDecision": "NONE",
+  "openBlockers": [],
+  "scope": "Eén bestaande actuele-image contractmodule toevoegen aan de bestaande evaluatiehostoverlay om de noodzakelijke lazy-import voor cumulatieve gebruiksprojectie beschikbaar te maken.",
+  "sourceManifestSha256": "cadfbeb96cf0e71fe3e66e0cc82de0509263853118ec9e2c966fe1c18f6205e0",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/contracts/delegated_work.py",
+      "sha256": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141"
+    }
+  ],
+  "bindings": {
+    "sourceManifestSha256": "cadfbeb96cf0e71fe3e66e0cc82de0509263853118ec9e2c966fe1c18f6205e0",
+    "closureReceiptSha256": "918a7cc560dcbf51d3c4aed8c121ce5a1edc105d3db8197523eefc067174c66b",
+    "pureProjectionScriptSha256": "ffe57badaa087e13798c66c0bc6e2ac02688e2b0449013e44bda421412248098",
+    "pureProjectionLogSha256": "f01b31cc691995a692be431e44307b5a4028333719bbbf0d5a412b1aea9be6d7",
+    "pureProjectionResultSha256": "deaa216f79fd9536672c3c8a5f905e60fa1d8e01f6f0cc89896ec360bafd9d50",
+    "currentHostConfigurationSha256": "ae4f78ca54ce2e2639bd062ba12c9400ed2a4ab45f9ff8230351d72b0eeef2ca",
+    "unchanged37HostSourcesCanonicalSha256": "961318982ff94b8108a353fc3c9ffad2bf0138acf1a3975068d34bde3b67bd7d",
+    "existingRuntimeCoreImage": "sha256:80839f28cc873d39d2b283bdd1c18bb700eeb7d7689cf0359950adddea21f55a",
+    "closedGen3RawSha256": "4924838144a0eb5549b64547c98b39063cc349d7813c8ef5b6134ae3bbc024c7",
+    "closedGen3SealedSha256": "8cc2bf31d615bf4f7f791c3654ae5245bc2a6bb410e53bdcb2c690d0fd92dea1"
+  },
+  "verified": {
+    "onlyOneExistingSourceModuleAdded": true,
+    "exactCurrentImageSourceEqualsRepositoryAndFrozenCopy": true,
+    "baseAndCanonicalJsonDependenciesAlreadyPresentAndEqual": true,
+    "unchanged37ExistingOverlayModulesReadbackHashEqual": true,
+    "13RetainedConfigAndClosedEvidenceHashesEqual": true,
+    "actualHostVenvAndPyPathMissingImportReproduced": true,
+    "missingModule": "eva.contracts.delegated_work",
+    "failureBoundary": "operations/component_application_runtime.py:315",
+    "projectedUsageWireBytes": 615,
+    "projectedUsage": {
+      "requests": 7,
+      "inputTokens": 83231,
+      "outputTokens": 1605,
+      "totalTokens": 84836,
+      "tools": 7
+    },
+    "exactTemporaryModuleProjectionAndExistingSettingsValidationPass": true,
+    "modelFreeFocusedCheckCount": 1,
+    "modelFreeCheckReturncode": 0,
+    "noProductBehaviorConfigCriteriaCasesRolesUsageBudgetDeadlineOrImageChange": true
+  },
+  "installationBoundary": {
+    "onlyModule": "contracts/delegated_work.py",
+    "moduleSha256": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+    "existingHostOverlayOnly": true,
+    "preserveOther37ModulesAndCurrentConfig": true,
+    "existingServiceRestartAndActualImportHealthReadbackRequired": true,
+    "noRuntimeImageUpdateRequired": true,
+    "noOldAttemptMarkerOrUsageReset": true,
+    "noNativeInputAdmittedByThisReview": true
+  },
+  "limitations": [
+    "De werkelijke oude innerexception is niet behouden. Dit bewijst een onvermijdelijke actuele dependencyblocker op de vereiste gebruiksroute; het bewijst niet dat dit exclusief de oorspronkelijke HTTP500 veroorzaakte.",
+    "De 615-byte wire is een zuivere projectie van zeven behouden en volledig gemeten aanvragen, geen nieuwe actuele database-/authorityread.",
+    "De geslaagde tijdelijke importprojectie is bronvoorbereiding, geen uitgevoerde installatie of native evaluatie.",
+    "De oude gen3-uitvoering blijft ambiguous/internal_error en gesloten; geen kandidaatwinst, toepassing, later gebruik of volledige AIDE2 bevestigd.",
+    "Reviewer startte geen test, factory, Docker, HTTP, database, provider of native uitvoering en las geen beschermde eindvragen/scorers/antwoorden."
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "contract": "EvaNativeWorkHostUsageImportClosureInstalled/v1",
+  "installed_at": "2026-10-12T05:43:18.135742+00:00",
+  "status": "installed",
+  "technicalOutcomeCompleted": true,
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "scope": "One missing existing contract module in the current evaluation host; no product-code behavior changes",
+  "source": {
+    "module": "contracts/delegated_work.py",
+    "sha256": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+    "origin": "existing current core image sha256:80839f28cc873d39d2b283bdd1c18bb700eeb7d7689cf0359950adddea21f55a",
+    "repository_matches": true,
+    "unchanged_dependencies": [
+      "contracts/base.py",
+      "contracts/canonical_json.py"
+    ],
+    "existing_host_modules_preserved": 37
+  },
+  "evidence": {
+    "source_freeze_sha256": "cadfbeb96cf0e71fe3e66e0cc82de0509263853118ec9e2c966fe1c18f6205e0",
+    "pure_projection_receipt_sha256": "918a7cc560dcbf51d3c4aed8c121ce5a1edc105d3db8197523eefc067174c66b",
+    "installed_receipt_sha256": "3f60088dfafc844b9c7995f37946557d61327ab23877a04a67e85a747be3d728",
+    "source_review": "eva2/reviews/native-work-host-usage-closure-source-review-20261012.json",
+    "source_review_sha256": "602782128a9fe5a9e49ee69b6493d94fd39aa4e44911c5abfe8a6982e02ce1da"
+  },
+  "checks": {
+    "unique_pure_before_after_projection": 1,
+    "projection_passed": true,
+    "projection_wire_bytes": 615,
+    "actual_installed_host_import_verified": true,
+    "origin_matches_destination": true,
+    "service_ready_http": 200,
+    "service_new_pid": "3062735",
+    "core_and_worker_healthy": true,
+    "old_closed_references_preserved": 13,
+    "host_configuration_sha256_unchanged": "ae4f78ca54ce2e2639bd062ba12c9400ed2a4ab45f9ff8230351d72b0eeef2ca"
+  },
+  "operations": {
+    "existing_module_copies": 1,
+    "service_restarts": 1,
+    "image_updates": 0,
+    "rollbacks": 0,
+    "new_model_requests": 0,
+    "new_native_evaluations": 0
+  },
+  "qualification": "The original inner host exception was not logged. The unavoidable missing import is reproducible on the actual host and fixed; the original static evaluation was not replayed. No exclusive original cause, completed evaluation or quality gain claimed.",
+  "retained_failure_result": "eva2/evidence/product/native-work-candidate-assessment-resume-result-20261012.json",
+  "retained_constructor_usage": {
+    "requests": 7,
+    "input_tokens": 83231,
+    "output_tokens": 1605,
+    "total_tokens": 84836,
+    "native_tools": 7
+  },
+  "credits": "UNKNOWN",
+  "remaining": "Bind a genuine ordinary continuation of the existing candidate within retained cumulative resources. Assess existing candidate, independently judge any gain, apply only proved gain and demonstrate later use.",
+  "goal": "whole project active",
+  "owner_action_required": false,
+  "voice": "parked",
+  "competitor_series_started": false,
+  "installed_review": "pending separate exact publication review"
+}

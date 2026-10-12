@@ -1,6 +1,34 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — hervatte kandidaatbeoordeling afgebroken
+## Actueel 12 oktober — ontbrekende beoordelingsmodule geïnstalleerd
+
+De bestaande contracts/delegated_work.py-module ontbrak in de beoordelingshost.
+De werkelijke hostimport is gericht modelvrij gereproduceerd en gecorrigeerd:
+exact één bronbestand uit de huidige kernimage aangesloten. Eén vóór/na-projectie
+en de echte geïnstalleerde import slagen. Dienst, kern en werker gezond; 37 andere
+hostmodules, configuratie en 13 gesloten bewijsverwijzingen behouden. Bronreview GO;
+afzonderlijke installatiereview GO voor deze beperkte technische publicatie.
+Geen nieuwe code, image-update of modelaanvraag.
+
+De oorspronkelijke innerexception was niet gelogd; de reproduceerbare importblokkade
+is opgelost. Geen bewezen exclusieve oorzaak, afgeronde kandidaatbeoordeling of
+kwaliteitswinst. De drie gesloten pogingen en zeven aanvragen/84.836 tokens blijven
+exact bewaard. Hetzelfde codevoorstel is behouden; geen nieuwe kandidaat.
+
+Nu: het bewaarde voorstel via een gewone hervatting binnen het resterende cumulatieve
+verbruik beoordelen. Alleen onafhankelijk bewezen winst toepassen en later gebruiken.
+Geen gesloten dispatch heractiveren, nieuwe concurrentenserie of gewijzigde criteria.
+Het volledige projectgoal, leercyclus en AIDE² blijven actief; geen hoofdafronding.
+39/48 historische afrondingen en acceptaties behouden; spraak geparkeerd.
+Geen handeling van Jaap nodig; creditkosten en ontwikkelcredits onbekend.
+
+Dashboardinhoud gecontroleerd: 2026-10-12T05:44:51.354941+00:00.
+Bewijs: eva2/evidence/product/native-work-host-usage-import-closure-installed-20261012.json.
+Bronreview: eva2/reviews/native-work-host-usage-closure-source-review-20261012.json.
+Installatiereview: eva2/reviews/native-work-host-usage-closure-installed-review-20261012.json.
+
+
+## Historisch 12 oktober — hervatte kandidaatbeoordeling afgebroken
 
 De exacte hervatting na de geïnstalleerde datumcorrectie is eenmalig uitgevoerd
 en gesloten. Eva hergebruikte het bewaarde codevoorstel; geen nieuwe kandidaat.
@@ -16,13 +44,15 @@ De oude poging, foutgegevens, deadline en verbruik blijven exact bewaard.
 De onafhankelijke invoer-GO is verbruikt; uitkomstreview GO voor nauwkeurige
 publicatie van het mislukte resultaat. Geen functionele GO of nieuwe invoertoelating.
 
-Nu: de concrete evaluatiefout lokaliseren en kleinste bewezen oorzaak corrigeren.
+Nu: de ontbrekende bestaande contracts/delegated_work.py-module in de
+beoordelingsdienst aansluiten. Dezelfde ModuleNotFoundError is met de actuele
+verbruiksmetadata modelvrij gereproduceerd; geen Docker-, HTTP- of modelaanvraag.
 Daarna het bestaande voorstel beoordelen, uitsluitend bewezen winst toepassen en
 bij later werk gebruiken. Het volledige projectgoal, leercyclus en AIDE² blijven actief;
 39/48 historische afrondingen en gezinsacceptaties behouden. Geen hoofdafronding
 of nieuwe concurrentenserie. Spraak geparkeerd; geen handeling van Jaap nodig.
 
-Dashboardinhoud gecontroleerd: 2026-10-12T05:36:54.538544+00:00.
+Dashboardinhoud gecontroleerd: 2026-10-12T05:38:39.677192+00:00.
 Bewijs: eva2/evidence/product/native-work-candidate-assessment-resume-result-20261012.json.
 Invoerreview: eva2/reviews/native-work-candidate-assessment-resume-input-review-20261012.json.
 Uitkomstreview: eva2/reviews/native-work-candidate-assessment-resume-result-review-20261012.json.
