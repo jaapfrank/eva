@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T11:46:06.001367+02:00",
+  "lastUpdated": "2026-10-12T12:43:12.605191+02:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -106,7 +106,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "Maak de geregistreerde verbetercyclus af via de gewone uitvoerder en bestaande beoordeling. Geen nieuwe vergelijkingsserie; spraak geparkeerd.",
+      "priorityDecision": "Maak de ontbrekende beoordelingsaansluiting gericht af. Daarna HUE1.1/HUE3.1 voor de menselijke leercyclus. Geen nieuwe vergelijkingsserie; spraak geparkeerd.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T11:46:06.001367+02:00",
+        "checkedAt": "2026-10-12T12:43:12.605191+02:00",
         "deliveries": [
+          {
+            "id": "native-work-path-input-repair-result-20261012",
+            "date": "2026-10-12T12:43:12.605191+02:00",
+            "title": "Codevoorstel gemaakt · beoordeling mislukt",
+            "state": "failed",
+            "summary": "Bron gelezen, werkplan en codevoorstel bewaard; beoordeling faalt met HTTP400. Geen verbetering toegepast.",
+            "result": "4 volledige modelaanvragen · 44.058 geregistreerde oudertokens · 4 tools. Gedeeld totaal onbekend.",
+            "remaining": "Beoordelingsweigering oplossen; onafhankelijke eindbeoordeling, toepassing en later gebruik open.",
+            "source": "eva2/evidence/product/native-work-path-input-repair-result-20261012.json",
+            "review": "eva2/reviews/native-work-path-input-repair-result-review-20261012.json",
+            "reviewSha256": "e0c04b2b68b74c668592e7ce3471bc0ac053f66373c07273af055220656328ff",
+            "independentReview": "GO uitsluitend voor de terminalfeiten; geen kwaliteitswinst of nieuwe uitvoering.",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false
+          },
           {
             "id": "human-understanding-plan-20261012",
             "date": "2026-10-12T11:46:06.001367+02:00",
@@ -5057,17 +5072,17 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering afronden · mensbegrip ingepland",
+          "title": "Zelfverbetering: codevoorstel gemaakt, beoordeling mislukt",
           "state": "in_progress",
-          "phase": "source_corrected_binding_preparation",
+          "phase": "assessment_rejection_diagnosis",
           "activeExecution": false,
           "owner": "/root",
           "executor": "/root",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De lopende AIDE²-aansluiting wordt afgerond. Jouw Human Understanding Engine is gelezen en vertaald naar zes zichtbare afrondingen.",
-          "detail": "De bestaande AIDE²-uitvoering krijgt een coherente aansluiting tussen client, beoordeling en werkelijk modelprofiel. De broncorrectie is gecontroleerd; er is nog geen nieuwe modeluitvoering of toegepaste kwaliteitswinst. Daarna HUE1.1/HUE3.1: tegenbewijs en echte uitkomsten laten doorwerken.",
+          "summary": "Eva maakte een codevoorstel. De beoordeling faalde met HTTP400; er is geen verbetering toegepast.",
+          "detail": "De ronde is afgesloten. Codex onderzoekt de weigering in de bestaande beoordelingsroute. Vier volledige aanvragen en 44.058 tokens gemeten; gezamenlijk verbruik blijft onbekend. Geen nieuwe uitvoering actief.",
           "doneWhen": "De volledige cyclus levert een onafhankelijk beoordeelde kandidaat; alleen bewezen winst wordt toegepast en daarna bij ander werk gebruikt.",
-          "source": "eva2/evidence/product/dashboard-path-input-repair-current-20261012.json",
+          "source": "eva2/evidence/product/native-work-path-input-repair-result-20261012.json",
           "previousInstalledCorrection": "eva2/evidence/product/native-program-observation-installed-20261012.json",
           "previousInstalledReview": "eva2/reviews/native-program-observation-installed-review-20261012.json",
           "previousInstalledReviewSha256": "e867786889ad6855a48a709c6c7073b274cdf89a3cd7ca2c4ad8b76a27a5762a",
@@ -5089,27 +5104,30 @@
             "fullLifecycleExecuted": false,
             "currentNativeExecutionStarted": true,
             "currentNativeExecutionClosed": true,
-            "candidateStored": false,
-            "currentNativeFailureCauseConfirmed": true,
+            "candidateStored": true,
+            "currentNativeFailureCauseConfirmed": false,
             "pathInputRepairBuilt": true,
             "pathInputRepairChecksCompleted": true,
             "pathInputRepairInstalled": false,
-            "newInputBindingPrepared": false,
-            "newNativeExecutionStarted": false
+            "newInputBindingPrepared": true,
+            "newNativeExecutionStarted": true,
+            "currentNativeAssessmentFailed": true,
+            "independentFinalCompleted": false,
+            "candidateApplied": false
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T11:22:12.445290+02:00",
+            "checkedAt": "2026-10-12T12:43:12.605191+02:00",
             "coordinator": "/root",
-            "coordinatorTask": "Actuele dashboardstand publiceren en aansluiting van de broncorrectie op de bestaande verbetercyclus afronden.",
-            "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Broncorrectie gereed: vier gerichte controles slagen; geen nieuwe Eva-modelaanvragen.",
+            "coordinatorTask": "Documentbeoordeling en zes taken zichtbaar houden; afgesloten verbeterproef correct publiceren.",
+            "executor": "/root",
+            "executorTask": "Gerichte diagnose van HTTP400 in de bestaande beoordelingsroute; geen Eva-proef actief.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Broncorrectie beoordeeld zonder concrete blocker; definitieve uitvoerbinding nog beoordelen.",
-            "modelUsage": "Nieuwe diagnose en broncontroles: 0 Eva-modelaanvragen. Vorige ronde: 3 Astra/medium-aanvragen · 23.872 tokens · 2 fysieke tools.",
-            "note": "Geen Eva-proef actief. Codex werkt aan de aansluiting; deze broncorrectie is nog niet geïnstalleerd."
+            "reviewerTask": "Terminalreview afgerond: beperkte feitenpublicatie toegestaan.",
+            "modelUsage": "Deze afgesloten ronde: 4 Astra/medium-aanvragen · 44.058 oudertokens · 4 tools. Child en gedeeld totaal onbekend.",
+            "note": "Codevoorstel opgeslagen; beoordeling, toepassing en later gebruik nog open. Geen handeling van Jaap nodig."
           },
-          "previousResultReview": "eva2/reviews/native-work-post-budget-correction-result-review-20261012.json",
-          "previousResultReviewSha256": "855a39044856d4e408c81e6793d8cb938a622a53e14c3b740aba450a12a04592",
+          "previousResultReview": "eva2/reviews/native-work-path-input-repair-result-review-20261012.json",
+          "previousResultReviewSha256": "e0c04b2b68b74c668592e7ce3471bc0ac053f66373c07273af055220656328ff",
           "taskId": "HUE6.1",
           "documentReviewSource": "eva2/design/product/human-understanding-engine-integration-20261012.md"
         },
@@ -5132,7 +5150,7 @@
           "detail": "Codex maakt de technische kringloop af. Je oorspronkelijke acceptaties blijven behouden; nu geen herhaalproef nodig."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T12:19:53.756360+02:00",
+        "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5233,8 +5251,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T12:19:53.756360+02:00",
-      "checkedAt": "2026-10-12T12:19:53.756360+02:00",
+      "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
+      "checkedAt": "2026-10-12T12:43:12.605191+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11527,7 +11545,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T12:19:53.756360+02:00",
+        "checkedAt": "2026-10-12T12:43:12.605191+02:00",
         "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Persoonlijkheid en geheugenbasis geaccepteerd; leercyclus, zelfstandig initiatief en volledige zelfverbetering nog open.",
         "note": "Oorspronkelijk 39/48 kleine afrondingen behouden. Jouw ontwerp voegt zes ontbrekende verbindingen toe: nu 39/54 kleine taken afgerond. Dit is geen productpercentage. Het volledige projectgoal en AIDE² blijven open; geaccepteerde resultaten worden niet heropend.",
@@ -11583,7 +11601,7 @@
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
-            "remaining": "HUE6.1: volledige AIDE² voor agentaansturing én code/uitbreidingen, onafhankelijke eindbeoordeling, bewezen winst toepassen en later gebruiken. Broncorrectie gecontroleerd; aansluiting nog niet geactiveerd.",
+            "remaining": "HUE6.1: codevoorstel gemaakt, beoordeling mislukt. Onafhankelijke eindbeoordeling, bewezen winst toepassen en later gebruik blijven open; bestaand code-/hulpmiddelbewijs behouden.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11618,7 +11636,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T12:19:53.756360+02:00",
+      "lastUpdatedAt": "2026-10-12T12:31:30.540790+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -12109,7 +12127,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T12:19:53.756360+02:00",
+      "updatedAt": "2026-10-12T12:43:12.605191+02:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -21633,7 +21651,7 @@
           "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         }
       ],
-      "nextAction": "89 gerichte controles en onafhankelijke bronreview GO. Twee exacte pakketten gebouwd; de verse profielkoppeling is op beide pakketten gelijk en behoudt de capabilitylijst. De bestaande owner-CAS bevestigt de ongewijzigde toelating. Eén updaterproces loopt op de bestaande installatie; geen oude telling, budgetbestand, service of gegevens vervangen.",
+      "nextAction": "De lopende werkaanpakcyclus afronden; een kandidaat apart beoordelen, alleen echte winst toepassen en later gebruiken. Daarna HUE1.1/HUE3.1 verbinden.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Het volledige geïnstalleerde geheel voldoet aan alle eindvoorwaarden van eva2/PROJECTDOEL.md, inclusief latere toepassing van de leercyclus, ontbrekende mogelijkheid realiseren en hergebruiken, AIDE² voor aansturing en code/uitbreidingen, onafhankelijke eindreview en echte gezinsbeoordeling. Deelopleveringen sluiten het projectgoal niet af; oude acceptaties blijven geldig binnen hun oorspronkelijke scope.",
       "continuationRule": "Het volledige projectgoal blijft actief. Werk vanuit de concrete ontbrekende koppeling naar werkend geïnstalleerd gedrag; oorspronkelijke kleine taken en acceptaties blijven behouden.",
@@ -24580,7 +24598,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Rond eerst de lopende AIDE²-aansluiting en onafhankelijke beoordeling af. Gebruik daarna dezelfde route voor mensbegrip en eigen uitbreidingen; geen tweede levensdaemon of concurrentenserie.",
+              "nextAction": "Codevoorstel is bewaard; de beoordelingsdienst weigert de aanvraag met HTTP400. Codex achterhaalt de concrete aansluiting, waarna alleen bewezen verbetering wordt toegepast en later gebruikt.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -24597,7 +24615,8 @@
                 "readyWhen": "Codex maakt deze technische koppeling af. Later gewoon gebruik levert menselijke feedback; nu geen herhaalproef nodig.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "currentEvidence": "eva2/evidence/product/native-work-path-input-repair-result-20261012.json"
             }
           ],
           "latestEvidence": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
@@ -30175,9 +30194,9 @@
           "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       },
-      "lastUpdated": "2026-10-12T12:19:53.756360+02:00",
-      "updatedAt": "2026-10-12T12:19:53.756360+02:00",
-      "checkedAt": "2026-10-12T12:19:53.756360+02:00",
+      "lastUpdated": "2026-10-12T12:43:12.605191+02:00",
+      "updatedAt": "2026-10-12T12:43:12.605191+02:00",
+      "checkedAt": "2026-10-12T12:43:12.605191+02:00",
       "ownerPriority20261010": {
         "authorization": "Latest three direct owner requests in current chat",
         "outcomes": [
@@ -31945,7 +31964,7 @@
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
     },
-    "checkedAt": "2026-10-12T04:06:07.550342+00:00",
+    "checkedAt": "2026-10-12T12:43:12.605191+02:00",
     "reviewedAt": "2026-10-11T23:41:05.032229+00:00",
     "historicalRuntimeBeforeInitiativeOutcomeMemory20261012": {
       "recordedAt": "2026-10-11T20:50:50.682674+00:00",
@@ -32032,6 +32051,21 @@
       "taskNavigationVerified": true,
       "runtimeModelCalls": 0,
       "developmentCredits": "unknown"
+    },
+    "workStrategyCycleCurrent20261012": {
+      "checkedAt": "2026-10-12T12:43:12.605191+02:00",
+      "state": "construction_closed_assessment_failed",
+      "nativeParentConfirmedLive": false,
+      "activeDriverPids": [],
+      "serviceConfigurationSha256": "184cc351ab718b814ebe8f285da4a414784ed6610b3860b95baa61efc2462e82",
+      "reviewSha256": "33ea21c89d2c0e7ca322ac4a68f7a218240e7d5750c7c9b06b9645a6899772de",
+      "criterionChange": false,
+      "newComparisonSeries": false,
+      "qualityImprovementProven": false,
+      "productTaskCompletionChanged": false,
+      "runtimeUsage": "4 parent requests / 44058 tokens / 4 tools complete; child/shared UNKNOWN",
+      "developmentCredits": "unknown",
+      "source": "eva2/evidence/product/native-work-path-input-repair-result-20261012.json"
     }
   },
   "activeTaskId": "AU-008",
@@ -34503,5 +34537,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T12:19:53.756360+02:00"
+  "updatedAt": "2026-10-12T12:43:12.605191+02:00"
 }

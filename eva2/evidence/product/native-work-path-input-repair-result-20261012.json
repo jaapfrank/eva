@@ -1,0 +1,59 @@
+{
+  "contract": "EvaNativeWorkImprovementResult/v1",
+  "checkedAt": "2026-10-12T12:43:12.605191+02:00",
+  "state": "failed",
+  "constructionState": "ambiguous",
+  "nativeError": "internal_error",
+  "assessmentHttpStatus": 400,
+  "exclusiveFailureCauseConfirmed": false,
+  "summary": "Bron gelezen, werkplan en codevoorstel bewaard; beoordeling faalt met HTTP400. Geen verbetering toegepast.",
+  "candidateDraftSaved": true,
+  "candidateSelected": false,
+  "candidateApplied": false,
+  "candidateSha256": "9fd501a863ae1c1801c429adc7c05570fdfc138db78dfd27d9b465eba76e51a2",
+  "qualityImprovementProven": false,
+  "fullAide2Completed": false,
+  "laterUseCompleted": false,
+  "usage": {
+    "parentRequests": 4,
+    "parentInputTokens": 42623,
+    "parentOutputTokens": 1435,
+    "parentTotalTokens": 44058,
+    "parentTools": 4,
+    "parentUsage": "measured",
+    "childUsage": "unknown",
+    "sharedTotalTokens": null,
+    "sharedUsage": "unknown",
+    "creditCosts": "unknown",
+    "developmentCredits": "unknown"
+  },
+  "seconds": {
+    "wall": 97.69871026999317,
+    "evaluation": 14.71645179099869,
+    "evaluationQualified": false
+  },
+  "terminal": {
+    "nativeContainerRemoved": true,
+    "runtimeCommandReturnCode": 0,
+    "hostExportReturnCode": 1,
+    "hostExportError": "attempted EVAL lacks bound complete usage; shared total UNKNOWN",
+    "ordinaryServiceHealthy": true,
+    "serviceConfigurationSha256": "184cc351ab718b814ebe8f285da4a414784ed6610b3860b95baa61efc2462e82"
+  },
+  "preservation": {
+    "originalCriteriaChanged": false,
+    "oldResultsPreserved": true,
+    "newComparisonSeries": false,
+    "repeatedExecution": false,
+    "originalCompletions": 39,
+    "originalTaskCount": 48,
+    "expandedTaskCount": 54,
+    "productCompletionChanged": false
+  },
+  "next": "Gericht modelvrij vaststellen waarom de bestaande beoordelingsdienst de aanvraag weigert. Geen gesloten ronde herhalen.",
+  "ownerActionRequired": false,
+  "rawSha256": "0807efed57dbc6221d34731ff018cf244b42004de281bb6720a7c6bb2e42955e",
+  "review": "eva2/reviews/native-work-path-input-repair-result-review-20261012.json",
+  "reviewSha256": "e0c04b2b68b74c668592e7ce3471bc0ac053f66373c07273af055220656328ff",
+  "reviewScope": "GO uitsluitend voor de terminalfeiten; geen kwaliteitswinst of nieuwe uitvoering."
+}

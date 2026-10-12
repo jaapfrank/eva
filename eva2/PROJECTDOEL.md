@@ -25,7 +25,28 @@ Volledig eigenaarvoorstel: eva2/design/product/human-understanding-engine-owner-
 Het gehele goal blijft actief; spraak geparkeerd. Geen handeling van Jaap nodig.
 Dashboardinhoud bijgewerkt: 2026-10-12T11:46:06.001367+02:00.
 
-## Actueel 12 oktober — fout herleid; broncorrectie gecontroleerd
+## Actueel 12 oktober — codevoorstel bewaard; beoordeling mislukt
+
+De gecontroleerde bron- en uitvoerbinding is aangesloten en de bestaande dienst
+is gezond. Eén echte ontwikkelronde las de bron en bewaarde een werkplan en
+codevoorstel. De beoordelingsaanvraag kreeg HTTP400; de precieze interne
+weigering is niet bewaard. Geen geldige beoordeling, verbeteringstoepassing of
+later gebruik. Deze ronde is afgesloten en wordt niet automatisch herhaald.
+
+Gemeten ouderverbruik: 4 volledige Astra/medium-aanvragen, 42.623 invoer- en
+1.435 uitvoertokens, totaal 44.058, en 4 tools. Childverbruik en het gezamenlijke
+totaal blijven onbekend. Onafhankelijke terminalreview staat feitenpublicatie
+toe; geen kwaliteits- of vervolg-GO. De tijdelijke container is verwijderd,
+de bestaande beoordelingsdienst blijft gezond.
+
+Vervolg: gerichte modelvrije diagnose van de beoordelingsweigering. Het gehele
+projectgoal en HUE1.1–HUE6.1 blijven open; 39/48 oude afrondingen en 39/54 op het
+uitgebreide bord behouden. Geen handeling van Jaap nodig.
+Resultaat: eva2/evidence/product/native-work-path-input-repair-result-20261012.json.
+Review: eva2/reviews/native-work-path-input-repair-result-review-20261012.json.
+Dashboardinhoud bijgewerkt: 2026-10-12T12:43:12.605191+02:00.
+
+## Historisch 12 oktober — fout herleid; broncorrectie gecontroleerd
 
 De gesloten verbeteropdracht stopte door de broncontrole van de private proefdriver.
 Een geweigerd READ/DRAFT-pad brak de hele opdracht af vóór fysieke uitvoering.

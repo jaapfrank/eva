@@ -1,0 +1,151 @@
+{
+  "contract": "EvaIndependentConstructionTerminalReview/v1",
+  "checkedAt": "2026-10-12T10:41:26.142034Z",
+  "decision": "GO_SAFE_TERMINAL_FACTS_ONLY",
+  "executionVerdict": "INCOMPLETE_UNKNOWN_SHARED_USAGE",
+  "qualityVerdict": "UNKNOWN",
+  "nativeInputAllowed": false,
+  "registrationSha256": "0b9cec7770ec51fd0e8c7e06dd55ef0e496e8d56361a4c177718f673e14605c6",
+  "native": {
+    "taskId": "work:eva-chat:b9d47e63-e59a-54b3-86ae-ee08243d8510",
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "errorFingerprint": "a3d700c4451baef8c743d917853a780d084dd25f4e36e8f1a4913e89c33b8e0a",
+    "result": null,
+    "verifiedReceiptCount": 3,
+    "verifiedActions": [
+      "read_own_component_source",
+      "save_work_progress",
+      "draft_own_component_improvement"
+    ],
+    "evaluationAttempted": true,
+    "evaluationCompletedReceiptPresent": false,
+    "draftCandidateSha256": "9fd501a863ae1c1801c429adc7c05570fdfc138db78dfd27d9b465eba76e51a2",
+    "executionBindingRef": "f455a246e95abb1f7e5d4cc891dee28c3125dbf7f5826dede636a35a14534c4f",
+    "candidateConfirmed": false,
+    "packageConfirmed": false,
+    "developmentAssessmentAvailable": false,
+    "independentFinalAvailable": false,
+    "applicationOrLaterUseConfirmed": false,
+    "baselineMaximumPreservationDecisionAvailable": false
+  },
+  "usage": {
+    "parentPhysical": {
+      "measurement": "measured",
+      "providerAttempts": 4,
+      "inputTokens": 42623,
+      "outputTokens": 1435,
+      "totalTokens": 44058,
+      "physicalTools": 4,
+      "unknownAttempts": 0,
+      "allRequests": "gpt-6-astra / medium / work",
+      "rawRequestsAndToolsEqualOriginalLedger": true
+    },
+    "parentJournal": {
+      "measurement": "measured",
+      "modelAttempts": 4,
+      "inputTokens": 42623,
+      "outputTokens": 1435,
+      "toolCalls": 4
+    },
+    "retainedNativeUsageMeasurement": "partial",
+    "retainedNativeUsageNumbersPreserved": true,
+    "childWorkUsage": null,
+    "childProviderAttempts": null,
+    "childTokens": null,
+    "sharedTotalMeasurement": "UNKNOWN",
+    "sharedProviderAttempts": null,
+    "sharedTokens": null,
+    "costsAndCredits": "unknown",
+    "qualification": "The four complete parent requests are a known lower bound. Empty child directories and null raw child usage do not prove zero child dispatch or complete shared usage."
+  },
+  "timing": {
+    "wallSeconds": 97.69871026999317,
+    "constructionActiveSeconds": 97.69871026999317,
+    "evaluationIntervalSeconds": 14.71645179099869,
+    "evaluationQualified": false,
+    "developmentExcludedSeconds": 0.0,
+    "clockNeverReset": true
+  },
+  "terminalExport": {
+    "runtimeCommandReturnCode": 0,
+    "runtimeReturnCodeIsNotNativeSuccess": true,
+    "parentHostReturnCode": 1,
+    "parentHostReturnCodeSource": "authoritative parent tool handle 24907",
+    "hostError": "attempted EVAL lacks bound complete usage; shared total UNKNOWN",
+    "sealedResultPresent": false,
+    "failClosedAccountingRefusal": true,
+    "containerCleanupReturnCode": 0,
+    "originalProgrammingFinallyStarted": false,
+    "originalCleanupValidator": "PASS on retained raw only",
+    "newModelOrToolExecutionForReview": false
+  },
+  "boundedDiagnosis": {
+    "httpStatus": 400,
+    "fingerprintMatchedInput": "HTTPError:HTTP Error 400: Bad Request",
+    "fingerprintMatchMethod": "SHA256 of exact safe exception label; no HTTP replay",
+    "originalHttpBodyRetained": false,
+    "originalInnerExceptionRetained": false,
+    "originalHttp400Branch": "not reconstructable from retained records",
+    "readOnlyValidations": {
+      "workEvidenceConstructor": "PASS; baseline evidence_missing is expected before sealed baseline",
+      "nativeProducerConstructor": "PASS with non-dispatching injected producer",
+      "pinnedProducerSettings": "PASS with original retained parent deadline",
+      "retainedCandidateLiteralOnlyBoundary": "PASS without candidate execution",
+      "parentUsageExport": "PASS",
+      "originalCleanup": "PASS"
+    },
+    "exclusiveCauseEstablished": false,
+    "productCorrectionEstablished": false,
+    "requiredNextEvidence": "Original safe HTTP400 error label/inner rejection metadata, or an exact model-free source/metadata diagnosis. No input or EVAL replay authorized."
+  },
+  "preservation": {
+    "rawAccountingOnceDriverAndManifestHashBound": true,
+    "originalCriteriaCasesRolesGrantsCapsUnchanged": true,
+    "noClosedRearmOrClockReset": true,
+    "noWinnerQualityGainOrFullAideClaim": true,
+    "reviewWritesOnlyThisReceipt": true
+  },
+  "reviewPreparationError": {
+    "kind": "local import environment missing eva",
+    "occurredBeforeValidation": true,
+    "correction": "Same two read-only helper validations used the already available host venv and existing source PYTHONPATH.",
+    "evaModelsNativeActionsOrSourceChanges": 0
+  },
+  "sourceReviewSha256": "0c3894ee5242ef59fdc873ac3b6586bff8f1e65c04997367518362d97c88e35c",
+  "bindings": {
+    "rawNative": {
+      "sha256": "0807efed57dbc6221d34731ff018cf244b42004de281bb6720a7c6bb2e42955e"
+    },
+    "parentAccounting": {
+      "sha256": "de3883f20476af2acceb8a898a02a6dd4ab524cd692cdbde836959f3031e41ab"
+    },
+    "runtimeCommand": {
+      "sha256": "5a15790ecaa312a05d649c4c8ab6fe9b2d54b94af8610e0323868ca29e5b97c0"
+    },
+    "containerCleanup": {
+      "sha256": "76a693cdc636f5dbeff71d1f502d3442b836c0996ac6424b0e7295b7019a2ea9"
+    },
+    "dispatchOnce": {
+      "sha256": "1a350347c246037750689ba26566ffb4cacbdd10e94bf7c34b8d67ed6ca4557d"
+    },
+    "activation": {
+      "sha256": "8e5103a84560863038ca5bb6ce51aa26c934f13267ef73e0e5f3169406b90de0"
+    },
+    "driver": {
+      "sha256": "e05c8dffc3fe5ebd00b96d94957e32f47295aad1109676807edd7ab72a71e821"
+    },
+    "driverManifest": {
+      "sha256": "03068131bc93b0929d1b8cb362b71e3b0ec45ecb4a8494f2874cef00f6ae1fdb"
+    },
+    "configuration": {
+      "sha256": "184cc351ab718b814ebe8f285da4a414784ed6610b3860b95baa61efc2462e82"
+    },
+    "resources": {
+      "sha256": "e9b0148bc851c2753e7e6083ea826893ed4b5195fc02d244ffa5ae59ceab48b9"
+    },
+    "inputReview": {
+      "sha256": "33ea21c89d2c0e7ca322ac4a68f7a218240e7d5750c7c9b06b9645a6899772de"
+    }
+  }
+}

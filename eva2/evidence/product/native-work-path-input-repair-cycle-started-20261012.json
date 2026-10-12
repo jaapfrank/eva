@@ -1,0 +1,25 @@
+{
+  "contract": "EvaWorkStrategyCyclePublication/v1",
+  "checkedAt": "2026-10-12T12:31:30.540790+02:00",
+  "state": "construction_running",
+  "nativeParentConfirmedLive": true,
+  "activeDriverPids": [
+    502533
+  ],
+  "serviceConfigurationSha256": "184cc351ab718b814ebe8f285da4a414784ed6610b3860b95baa61efc2462e82",
+  "reviewSha256": "33ea21c89d2c0e7ca322ac4a68f7a218240e7d5750c7c9b06b9645a6899772de",
+  "criterionChange": false,
+  "newComparisonSeries": false,
+  "qualityImprovementProven": false,
+  "productTaskCompletionChanged": false,
+  "runtimeUsage": "running; terminal usage not yet sealed",
+  "developmentCredits": "unknown",
+  "previousClosedConstruction": {
+    "completeModelAttempts": 3,
+    "registeredTokens": 23872,
+    "physicalTools": 2,
+    "retained": true
+  },
+  "scope": "active construction with existing producer, original task/criteria and remaining registered resources; no product victory claimed",
+  "ownerActionRequired": false
+}
