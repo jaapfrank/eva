@@ -1,0 +1,168 @@
+{
+  "contract": "EvaWorkingArtifactContextInstalled/v1",
+  "recordedAt": "2026-10-12T23:35:36.557838+00:00",
+  "status": "installed",
+  "originalTaskCompleted": false,
+  "newProductFunctionCompleted": false,
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "fd2a3207ebd783539f75b6f86bc8974b087a86fb722a0df22124acd2eb1bdb80"
+    }
+  ],
+  "change": "Keep exact already-read pages of the latest observed task-authored work artifact visible across saved progress checkpoints. Deduplicate identical page ranges; older research remains available via the existing authorized archive.",
+  "proofBoundary": "Verified task write content, exact separate read including one-terminal-LF variant, same ingress and existing validated retained source reader. No invented current document state or external fact.",
+  "existingFacilitiesReused": [
+    "existing receipt presentation and context selection",
+    "existing scoped ConnectorResults reader/archive",
+    "existing ordinary OwnerService continuation",
+    "existing runtime updater"
+  ],
+  "tests": {
+    "uniquePassed": 102,
+    "existingPassed": 97,
+    "newPassed": 5,
+    "newTestFile": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/model/test_authored_artifact_context.py",
+      "sha256": "9f52a775d4bffef4c5f3e430f028d4e5c427fb5404a22f44791e141d1ab1a9da"
+    },
+    "existingXml": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/existing-context-tests.private.xml",
+      "sha256": "ee4b7e3188db8f3e026f2b6919676db703b49a6a8797472561468ea2f5df5e16"
+    },
+    "newChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/authored-artifact-context-tests/targeted-checks.private.json",
+      "sha256": "99776fb8e6bfa3e0ad8babbda15cb37e10e64ade2715c19a7158cb32d231613b"
+    },
+    "preservedSetupErrors": "Two new fixture preparation failures and one offline invocation PYTHONPATH failure retained; no production source failure inferred."
+  },
+  "knownContext": {
+    "actual149": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/complete149-working-artifact-paired-known-phase.private.json",
+      "sha256": "c641d03f07196e1a2c9082442affd11de63f0caac29aa72d2f4bd540d90f08c1"
+    },
+    "actual179": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/measure-complete179-working-artifact.result.private.json",
+      "sha256": "1b726748144ce5ccecdc6bdd95bce68135772fb3a5f6f8864bb0753ec4f06c52"
+    },
+    "baseline179WithFraming": 48884,
+    "candidate179WithFraming": 52289,
+    "candidate179KnownMargin": 13247,
+    "actualRawAndLatestUnchanged": true,
+    "preservedActiveArtifactSteps": [
+      132,
+      173,
+      174
+    ],
+    "actualExistingWriteReadShape": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/measure-existing-write-read-phases.results.private.json",
+      "sha256": "a71244983022dbf7eb634376f8e9d8d992b07fab728130c4789f540e9f14b305"
+    },
+    "actualWrite175KnownWithFraming": 54532,
+    "actualRead176KnownWithFraming": 55061,
+    "negativeSynthetic10732ByteReserveWithFraming": 67330,
+    "negativeSyntheticMargin": -1794,
+    "actualRecallRecentMeasured": false,
+    "actualFullFutureFitProven": false
+  },
+  "build": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/build-result.private.json",
+    "sha256": "cdbf2648ff511a57169c59d78c06d3981709a71d97e26344421e2d0ebc69acc3"
+  },
+  "sourceReview": "eva2/reviews/working-artifact-context-source-review-20261013.json",
+  "sourceReviewPrivate": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/source-review.private.json",
+    "sha256": "86f7b052da21099adaf9fa6168ae579b0c1e87a3b08475e432478b9e272587a7"
+  },
+  "installation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/installation-verification.private.json",
+    "sha256": "904319027817c1a016b3f454f75b869594eb546e570ec3a0b95532976bff3ce0"
+  },
+  "installationDispatch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/installation-dispatch-receipt.private.json",
+    "sha256": "7843b7164cba035fb063c6724310fc8974ee8866bcd7a414c88075444af00d96"
+  },
+  "services": {
+    "core": {
+      "image": "sha256:055b79a220fa6b76aca9f5ed74bb8d6cec49eb1dc8d90c4f4796eca60f91724e",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "fd2a3207ebd783539f75b6f86bc8974b087a86fb722a0df22124acd2eb1bdb80"
+      },
+      "inspectionSha256": "4c2c6897c23091d1af6ceb6df822f9170f047f278acda3cf1694964981461135"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:0641dcbdb6369af842ccb8a128babdaee8d35827a9b1d3101e7efadda48edd41",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "fd2a3207ebd783539f75b6f86bc8974b087a86fb722a0df22124acd2eb1bdb80"
+      },
+      "inspectionSha256": "39ae47a9b276ec7088008cead0fda6f322aaf1e26e4d3327eb7f870f865cadbd"
+    }
+  },
+  "ready": true,
+  "exactUpdateDispatches": 1,
+  "sourceCorrectionModelRequests": 0,
+  "authorityAndData": {
+    "originalGrantRolesAndBudgetUnchanged": true,
+    "noNewModelTool": true,
+    "haMutationDispatches": 0,
+    "moduleChanges": 1,
+    "unchangedPythonSourcesPerImage": 344,
+    "configurationAndMountsPreserved": true,
+    "rawFailureAndUnknownPreserved": true,
+    "taskModelAndAideStrategyUnchanged": true
+  },
+  "ordinaryContinuation": {
+    "workId": "work:eva-resume:52194f7a-5621-5115-a7fb-84ad41c5cd6d",
+    "generation": 15,
+    "parentWorkId": "work:eva-resume:bd1e52e4-fc41-5d0a-a3b5-b0a11ebfee69",
+    "stateAtFirstObservation": "call_started",
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/continuation-preparation.private.json",
+      "sha256": "5be8d6bd7f5c81ab10c02423ad832520365e33d3ed153b11802fec0a2723a2ee"
+    },
+    "binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/continuation-installed-binding.private.json",
+      "sha256": "957079a3a49c12db7c64b2aaba0f8a462cc0ecde534314041bebae5175625a0e"
+    },
+    "dispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/continuation-receipt.private.json",
+      "sha256": "5295b56106cf1d00c054ab67c477b1bfdaf0af241b044adaa87b5c9c479f3c33"
+    },
+    "firstObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/continuation-work-first.private.json",
+      "sha256": "991520d277f882de19d9d6fc9fb2cb02cc7e99ba5b73d36860b54351c4b8651e"
+    },
+    "completeProposal": false
+  },
+  "goal": {
+    "status": "active",
+    "originalSmallTasks": "39/48",
+    "expandedSmallTasks": "39/54",
+    "voice": "parked",
+    "newComparisonSeries": false
+  },
+  "limitations": [
+    "Known offline context is not an actual complete future SDK envelope. The original request admission still governs each native request.",
+    "The conservative random-content future reserve fails and is retained; actual already-executed write/read shapes fit in the known context.",
+    "Gen14 remains incomplete with 1,330,616 fully measured tokens. Original full historical usage and credit costs remain unknown.",
+    "A general context correction is not proof that Eva has completed the original proposal or learned autonomously."
+  ]
+}

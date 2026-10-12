@@ -1329,6 +1329,105 @@ class PydanticConversationModel:
                 "observation_metadata": metadata}
 
     @staticmethod
+    def _working_artifact_page_calls(
+        receipts: tuple[ConversationActionReceipt, ...],
+    ) -> set[str]:
+        """Keep observed pages of Eva's active authored artifact across checkpoints.
+
+        This retains existing receipt bytes, not a new observation or permission.
+        Ordinary research pages continue to use their authorized source archive.
+        """
+        written: dict[tuple[str, str], set[str]] = {}
+        active_source: tuple[str, str] | None = None
+        readers: dict[str, tuple[str, str, int]] = {}
+        for position, receipt in enumerate(receipts):
+            output, arguments = receipt.output, receipt.call.arguments
+            if (output.get("contract") != "EvaConversationActionReceipt/v1"
+                    or output.get("durable") is not True
+                    or output.get("status") != "verified"):
+                continue
+            if receipt.call.name == "use_connector_tool":
+                try:
+                    arguments = json.loads(arguments.get("arguments_json", ""))
+                except (TypeError, ValueError):
+                    continue
+            elif receipt.call.name != "save_workspace_document":
+                continue
+            if not isinstance(arguments, dict):
+                continue
+            path = arguments.get("path")
+            if not isinstance(path, str) or not path:
+                continue
+            proof = output.get("proof")
+            if not isinstance(proof, dict):
+                continue
+            projection = (receipt.model_output or {}).get("ancestor_model_projection")
+            if not isinstance(projection, dict):
+                continue
+            ingress = projection["source"]["source_ingress_sha256"]
+            artifact_source = (path, ingress)
+            content = arguments.get("content")
+            expected, observed = proof.get("expected"), proof.get("observed")
+            if (isinstance(content, str) and isinstance(expected, dict)
+                    and expected == observed and expected.get("path", path) == path
+                    and expected.get("content") == content):
+                # The workspace text reader omits one terminal LF. Retain both
+                # exact representations; never normalize arbitrary whitespace.
+                versions = written.setdefault(artifact_source, set())
+                versions.add(hashlib.sha256(content.encode("utf-8")).hexdigest())
+                if content.endswith("\n"):
+                    versions.add(hashlib.sha256(content[:-1].encode("utf-8")).hexdigest())
+                active_source = artifact_source
+                continue
+            result = output.get("result")
+            evidence = proof.get("evidence")
+            projection = (receipt.model_output or {}).get("ancestor_model_projection")
+            if (not isinstance(result, dict) or set(result) != {"content"}
+                    or not isinstance(result["content"], str)
+                    or not isinstance(evidence, dict) or evidence.get("observation") != result
+                    or hashlib.sha256(result["content"].encode("utf-8")).hexdigest()
+                       not in written.get(artifact_source, ())
+                    or not isinstance(projection, dict)):
+                continue
+            # _receipt_context_selection validates every presentation first.
+            manifest, source = projection["manifest"], projection["source"]
+            reader = manifest["reader"]["tool_id"]
+            readers[reader] = (path, source["source_ingress_sha256"], position)
+
+        eligible: list[tuple[ConversationActionReceipt, tuple[Any, ...], int]] = []
+        for receipt in receipts:
+            output = receipt.output
+            reader = receipt.call.arguments.get("tool_id")
+            origin = readers.get(reader) if isinstance(reader, str) else None
+            projection = (receipt.model_output or {}).get("ancestor_model_projection")
+            if (origin is None or (origin[0], origin[1]) != active_source
+                    or receipt.call.name != "use_connector_tool"
+                    or output.get("status") != "verified"
+                    or output.get("source") != "stored_connector_result"
+                    or not isinstance(projection, dict)
+                    or projection["source"]["source_ingress_sha256"] != origin[1]):
+                continue
+            result = output["result"]
+            pages = result.get("pages") or [result]
+            if any(page.get("found") is not True or not page.get("text")
+                   or page.get("pointer") != "/output/result/content"
+                   for page in pages):
+                continue
+            ranges = tuple((page["pointer"], page["offset"], page["next_offset"],
+                            page["selection_length"], page["text"]) for page in pages)
+            eligible.append((receipt, ranges, origin[2]))
+        if not eligible:
+            return set()
+        # A newer observed artifact version supersedes older pages once its
+        # pages have actually been read. Identical reads stay visible only once.
+        latest_version = max(position for _, _, position in eligible)
+        latest_pages: dict[tuple[Any, ...], str] = {}
+        for receipt, ranges, position in eligible:
+            if position == latest_version:
+                latest_pages[ranges] = receipt.call.call_id
+        return set(latest_pages.values())
+
+    @staticmethod
     def _receipt_context_selection(
         receipts: tuple[ConversationActionReceipt, ...], *, defer_local_reads: bool = False,
     ) -> tuple[tuple[ConversationActionReceipt, ...], str]:
@@ -1349,6 +1448,7 @@ class PydanticConversationModel:
                 for item in value:
                     protect(item)
         protect(baseline_latest)
+        protected.update(PydanticConversationModel._working_artifact_page_calls(receipts))
         snapshots = [(i, saved) for i, receipt in enumerate(receipts)
                      if (saved := PydanticConversationModel._saved_work_progress(receipt)) is not None]
         checkpoint = snapshots[-1] if snapshots else None

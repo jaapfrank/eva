@@ -1,3 +1,26 @@
+## Actueel 13 oktober — eigen werkcontext geïnstalleerd; Eva vervolgt oorspronkelijke opdracht
+
+Eén algemene module houdt bewezen eigen documentpagina's zichtbaar na werknotities;
+identieke pagina's één keer, oudere research via de bestaande bevoegde readers.
+102 gerichte controles en onafhankelijke bronreview GO. Exacte module in kern en
+taakwerker geïnstalleerd;344 overige Pythonbronnen/configuratie/mounts behouden,
+beide gezond en ready. Geen nieuwe tools, grenzen, Tuya-script of handgeschreven voorstel.
+
+De bekende179-receiptfase past:52.289 BPE inclusief framing;13.247 bekende marge.
+Echte bewaarde write/read-vormen passen op54.532/55.061. De conservatieve
+synthetische toekomstige reserve faalt op67.330; dat negatieve bewijs blijft.
+Actuele volledige recall/recent/futurefit is niet bewezen. Bestaande admission blijft.
+
+Eén gewone uitsluitend leesbare voortzetting loopt:work:eva-resume:52194f7a-5621-5115-a7fb-84ad41c5cd6d (Gen15).
+Eva moet haar oorspronkelijke onderbouwde voorstel zelf afmaken, opslaan en apart
+teruglezen. Gen14/32responses/1.330.616 tokens/30tools en INCOMPLETE blijven staan.
+HA-migratie vereist later apart akkoord op Eva's voorstel; nu geen HA-mutaties.
+Volledig goal ACTIVE;39/48 en39/54 onveranderd; HUE/leercyclus/AIDE² blijven open.
+Spraak geparkeerd;geen nieuwe vergelijkingsserie;Docker Desktop ongemoeid.
+
+Installatie:eva2/evidence/product/working-artifact-context-installed-20261013.json.
+Bronreview:eva2/reviews/working-artifact-context-source-review-20261013.json.
+
 ## Actueel 13 oktober — eigen tussenvoorstel bewaard; actieve werkcontext herstellen
 
 De gewone Gen14 is gesloten met incomplete_work. Alle32 aanvragen zijn gemeten

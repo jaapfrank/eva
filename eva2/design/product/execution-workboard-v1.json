@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T18:32:03.703156+00:00",
+  "lastUpdated": "2026-10-12T23:35:36.557838+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,8 +1021,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T23:19:40.884826+00:00",
+        "checkedAt": "2026-10-12T23:35:36.557838+00:00",
         "deliveries": [
+          {
+            "id": "working-artifact-context-installed-20261013",
+            "title": "Eigen werkdocument blijft zichtbaar tijdens zelfstandig werk",
+            "date": "2026-10-12T23:35:36.557838+00:00",
+            "state": "installed",
+            "statusLabel": "Geïnstalleerd",
+            "summary": "Eén algemene contextselectie gecorrigeerd in kern en taakwerker; de oorspronkelijke voorstelopdracht loopt nog.",
+            "result": "102 gerichte controles en onafhankelijke bronreview geslaagd; beide diensten gezond.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/working-artifact-context-installed-20261013.json",
+            "userResultComplete": false,
+            "newProductFunctionCompleted": false
+          },
           {
             "id": "historical-context-index-ordinary-result-20261013",
             "title": "Echt tussenvoorstel bewaard; eindonderzoek niet afgerond",
@@ -5458,56 +5470,55 @@
           }
         ],
         "now": {
-          "title": "Algemene taakuitvoering herstellen; voorstel nog niet af",
-          "state": "in_progress",
-          "phase": "active_working_artifact_context_correction",
-          "taskId": "work:eva-resume:bd1e52e4-fc41-5d0a-a3b5-b0a11ebfee69",
+          "title": "Eva maakt haar eigen voorstel af vanuit bewaarde werkcontext",
+          "state": "active",
+          "phase": "ordinary_proposal_continuation_after_working_artifact_context",
+          "taskId": "work:eva-resume:52194f7a-5621-5115-a7fb-84ad41c5cd6d",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
             "HUE3.1"
           ],
-          "activeExecution": true,
+          "activeExecution": "work:eva-resume:52194f7a-5621-5115-a7fb-84ad41c5cd6d",
           "owner": "/root",
           "executor": "Codex · algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eigen werkdocument in de algemene taakcontext behouden; voorstel nog niet af.",
-          "detail": "Eva heeft het bestand uitgebreid van 9.240 naar 10.732 bytes, maar de oorspronkelijke onderzoekopdracht niet afgemaakt. Deze uitvoering gebruikte 32 complete modelresponses en 1.330.616 tokens; geen nieuwe voortzetting gestart.",
+          "summary": "Algemene contextcorrectie geïnstalleerd; Eva hervat dezelfde uitsluitend leesbare opdracht vanuit haar eigen concept en werknotities.",
+          "detail": "Eigen documentpagina’s blijven één keer zichtbaar na werknotities. Bronreview en102 gerichte controles geslaagd. Voorstel nog niet afgerond; geen HA-migratie uitgevoerd.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
-          "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
+          "source": "/home/administrator/project/Eva2/eva2/evidence/product/working-artifact-context-installed-20261013.json",
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-ordinary-result-20261013.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/historical-context-index-ordinary-result-review-20261013.json",
           "previousResultReviewSha256": "72b4d84083e1c63c9cbf73241577164cbc1e23f036cd9f9726644af8742d6009",
-          "implementationStatus": "Algemene contextcorrectie geïnstalleerd; kern en werker gezond. Eva werkt aan haar eigen voorstel; afronding nog niet bevestigd.",
-          "currentActivity": "Gerichte broncorrectie en controles voor herlezing van eigen werkdocumenten. Geen nieuwe modeluitvoering gestart.",
-          "checkedAt": "2026-10-12T23:19:40.884826+00:00",
+          "implementationStatus": "Geïnstalleerd; echte taakuitkomst nog open",
+          "currentActivity": "Eva onderzoekt zelf de ontbrekende onderbouwing en moet haar eigen voorstel opslaan en apart teruglezen.",
+          "checkedAt": "2026-10-12T23:35:36.557838+00:00",
           "remaining": [
-            "De algemene correctie op echte bewaarde context controleren, onafhankelijk beoordelen en installeren.",
-            "Eva zelf het oorspronkelijke bereikbare resterende onderzoek en haar voorstel laten afmaken.",
-            "HA-migratie pas na apart akkoord op het afgeronde voorstel."
+            "Eva moet het oorspronkelijke onderbouwde voorstel zelf afmaken, opslaan en teruglezen.",
+            "Onafhankelijk beoordelen op de oorspronkelijke gebruikersvraag.",
+            "Pas daarna kan Jaap akkoord geven op werkelijke HA-migratie."
           ],
-          "nativeRunning": false,
+          "nativeRunning": true,
           "observedUsage": {
-            "phase": "failed",
-            "completeMeasuredResponses": 32,
-            "knownTokens": 1330616,
-            "inputTokens": 1320001,
-            "outputTokens": 10615,
-            "tools": 30,
-            "currentExecutionUsageComplete": true,
-            "completeTaskHistoricalUsage": null,
-            "creditCost": null
+            "workId": "work:eva-resume:52194f7a-5621-5115-a7fb-84ad41c5cd6d",
+            "generation": 15,
+            "measurement": "not_yet_reported",
+            "modelAttempts": null,
+            "totalTokens": null,
+            "toolCalls": null,
+            "currentExecutionUsageComplete": false,
+            "creditCosts": null
           },
           "currentObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/continuation-work-observer-status-10.private.json",
-            "sha256": "f975c624297f3f70f4f15f72a269ddf455c9c4dd263414922bef6c8c5006603c"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/continuation-work-first.private.json",
+            "sha256": "991520d277f882de19d9d6fc9fb2cb02cc7e99ba5b73d36860b54351c4b8651e"
           },
-          "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/historical-context-index-source-review-20261013.json",
-          "sourceReviewSha256": "096f5953306e864c74206b0057f7e021b406248f0929ec37cc0f97951135bfcb",
-          "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-installed-20261013.json",
-          "sourceEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-source-correction-20261013.json",
-          "sourceEvidenceSha256": "69591899278306d194416905c1f9da4bda76ecfd0c672e87bc94384760466f19",
-          "installedEvidenceSha256": "1659447c2fdee982a464434f41206e131006fc4189964ee7e2c551d67174fbdc",
+          "sourceReview": "eva2/reviews/working-artifact-context-source-review-20261013.json",
+          "sourceReviewSha256": "1d7298ef959e3128f15e1c6923161c3ca38db01358f23b2c4fe8562848824196",
+          "installedEvidence": "eva2/evidence/product/working-artifact-context-installed-20261013.json",
+          "sourceEvidence": "eva2/evidence/product/working-artifact-context-installed-20261013.json",
+          "sourceEvidenceSha256": "6b665f4c81f7715814f4b5f1035499ff85ca2f39f0ad2f95b7d699ce830b3aaa",
+          "installedEvidenceSha256": "6b665f4c81f7715814f4b5f1035499ff85ca2f39f0ad2f95b7d699ce830b3aaa",
           "previousObservation": {
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation-final.private.json",
             "sha256": "2df139a56d60e32097eb7762a4292d4cfb14b4db6e88304fcc11cc33a4af57f0"
@@ -5530,6 +5541,17 @@
           "originalProposalReview": {
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-original-proposal-end-review.private.json",
             "sha256": "86cf868930205976d5726f106b0e6d159e2c5abf2311805ecf1ded84263a38e2"
+          },
+          "previousObservedUsage": {
+            "phase": "failed",
+            "completeMeasuredResponses": 32,
+            "knownTokens": 1330616,
+            "inputTokens": 1320001,
+            "outputTokens": 10615,
+            "tools": 30,
+            "currentExecutionUsageComplete": true,
+            "completeTaskHistoricalUsage": null,
+            "creditCost": null
           }
         },
         "next": {
@@ -5543,7 +5565,7 @@
           "summary": "Dezelfde leercyclus gebruiken om een vooraf vastgelegde verwachting aan een echte uitkomst en volgende afweging te verbinden.",
           "detail": "De bestaande geheugen-, correctie- en reflectieroutes gebruiken. Geen tweede geheugen of vaste voorbeeldfuncties."
         },
-        "ownerAction": null,
+        "ownerAction": "Nu geen handeling nodig. Eva moet eerst haar eigen onderbouwde voorstel afmaken; daadwerkelijke HA-migratie vereist later apart akkoord.",
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "reviewedAt": "2026-10-12T15:07:36.187047+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
@@ -5904,7 +5926,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-12T23:19:40.884826+00:00"
+        "updatedAt": "2026-10-12T23:35:36.557838+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",
@@ -12291,7 +12313,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T16:30:31.205450+00:00",
+      "lastUpdatedAt": "2026-10-12T23:35:36.557838+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -12782,7 +12804,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T17:35:20.475696+00:00",
+      "updatedAt": "2026-10-12T23:35:36.557838+00:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -35239,5 +35261,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T18:32:03.703156+00:00"
+  "updatedAt": "2026-10-12T23:35:36.557838+00:00"
 }

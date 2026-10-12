@@ -1,0 +1,123 @@
+{
+  "contract": "EvaActiveAuthoredArtifactContextSourceReview/v1",
+  "reviewedAt": "2026-10-12T23:33:06.319824+00:00",
+  "reviewer": "product_execution_memory_review",
+  "verdict": "GO",
+  "scope": "Exact one-module source installation readiness; no native input authority, proposal completion or behavioral-quality verdict.",
+  "bindings": {
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/candidate-pydantic_conversation.private.py",
+      "sha256": "fd2a3207ebd783539f75b6f86bc8974b087a86fb722a0df22124acd2eb1bdb80"
+    },
+    "buildSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/build-source.private.json",
+      "sha256": "5de80cfcc96c207ab2242029e968931d35c5427dc7badb4458bbfd2c424186f3"
+    },
+    "buildResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/build-result.private.json",
+      "sha256": "cdbf2648ff511a57169c59d78c06d3981709a71d97e26344421e2d0ebc69acc3"
+    },
+    "newTests": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/model/test_authored_artifact_context.py",
+      "sha256": "9f52a775d4bffef4c5f3e430f028d4e5c427fb5404a22f44791e141d1ab1a9da"
+    },
+    "targetedChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/authored-artifact-context-tests/targeted-checks.private.json",
+      "sha256": "99776fb8e6bfa3e0ad8babbda15cb37e10e64ade2715c19a7158cb32d231613b"
+    },
+    "existingChecksXml": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/existing-context-tests.private.xml",
+      "sha256": "ee4b7e3188db8f3e026f2b6919676db703b49a6a8797472561468ea2f5df5e16"
+    },
+    "existingChecksLog": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/existing-context-tests.private.log",
+      "sha256": "67db697e4010b548bf2438d2e2fb844f136dfc1aabb6b1451b267e9abd381ed6"
+    },
+    "workingDocumentLineage": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-working-document-reader-lineage.private.json",
+      "sha256": "3e62790154637b2767ce7a903ca7bc71eec2c7f85c986ac33eb688a4b87a6fa0"
+    },
+    "paired149": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/complete149-working-artifact-paired-known-phase.private.json",
+      "sha256": "c641d03f07196e1a2c9082442affd11de63f0caac29aa72d2f4bd540d90f08c1"
+    },
+    "paired179": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/measure-complete179-working-artifact.result.private.json",
+      "sha256": "1b726748144ce5ccecdc6bdd95bce68135772fb3a5f6f8864bb0753ec4f06c52"
+    },
+    "gen14EndReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-original-proposal-end-review.private.json",
+      "sha256": "86cf868930205976d5726f106b0e6d159e2c5abf2311805ecf1ded84263a38e2"
+    }
+  },
+  "buildSourceSha256": "5de80cfcc96c207ab2242029e968931d35c5427dc7badb4458bbfd2c424186f3",
+  "sourceSha256": "fd2a3207ebd783539f75b6f86bc8974b087a86fb722a0df22124acd2eb1bdb80",
+  "findings": [
+    "Written content must equal verified expected/observed proof; content-only proof obtains path from the exact call. A matching independent read allows only exact bytes or removal of one terminal LF.",
+    "Validated reader pages remain tied to the same source ingress, task-authored path and actually observed read version. Latest distinct ranges are protected; exact repeated pages are deduplicated.",
+    "A newer read receipt without its pages does not discard earlier observed pages. Earlier pages retain their original reader/version binding until newer pages are observed.",
+    "Original actor, owner, execution, namespace, source, proof, reader and stop validations are reused; no new external truth, tool, grant or quota is introduced.",
+    "Raw receipts and latest literal anchors are preserved. Errors, UNKNOWN and effect receipts remain protected. Existing complete input admission remains authoritative.",
+    "The correction addresses demonstrated repeated reconstruction of an authored document across checkpoints; exclusive historical cause and future model behavior remain unproven."
+  ],
+  "tests": {
+    "targetedUniquePassed": 5,
+    "existingUniquePassed": 97,
+    "reviewerReruns": 0,
+    "earlierSetupFailuresPreserved": true
+  },
+  "build": {
+    "coreImageId": "sha256:055b79a220fa6b76aca9f5ed74bb8d6cec49eb1dc8d90c4f4796eca60f91724e",
+    "workerImageId": "sha256:0641dcbdb6369af842ccb8a128babdaee8d35827a9b1d3101e7efadda48edd41",
+    "changedPythonModulesPerImage": 1,
+    "otherPythonModulesUnchangedPerImage": 344,
+    "moduleImportsPassed": true,
+    "installationNotYetEstablishedByThisReview": true
+  },
+  "knownMeasurements": {
+    "framingReserveBpe": 256,
+    "receipts149": {
+      "baselineNormalBpe": 57649,
+      "candidateNormalBpe": 59108,
+      "baselinePressureBpe": 48003,
+      "candidatePressureBpe": 51398,
+      "syntheticSaveReadbackBpe": 64389,
+      "syntheticMarginBpe": 1147
+    },
+    "receipts179": {
+      "baselineNormalAndPressureBpe": 48884,
+      "candidateNormalAndPressureBpe": 52289,
+      "knownMarginBpe": 13247,
+      "protectedAuthoredPageSteps": [
+        132,
+        173,
+        174
+      ],
+      "synthetic10732ByteSaveReadbackBpe": 67330,
+      "syntheticMarginBpe": -1794
+    },
+    "rawAndLatestUnchanged": true,
+    "offlineArchiveReadbackActorExecutionStopChecksPassed": true,
+    "dynamicRecallAndRecentContextMeasured": false,
+    "actualFullFitClaim": false,
+    "providerSavingsClaim": false
+  },
+  "limits": [
+    "Gen14 remains FAILED/incomplete_work; its useful intermediate document is not a completed proposal.",
+    "The synthetic future save/readback case exceeds the unchanged input limit. It establishes no fit for future requests and is retained as negative headroom evidence.",
+    "The known current 179-receipt phase fits. A speculative future misfit is not a defect in this source installation; each actual future request remains subject to the complete unchanged admission gate.",
+    "This source review neither creates execution authority nor requires another owner confirmation. A separate ordinary continuation can rely only on the original mandate, actual installed bindings and actual admission.",
+    "No reviewer model, native, DB, factory or test execution was performed."
+  ],
+  "inputGo": false,
+  "taskCompletion": false,
+  "fullAideCompletion": false,
+  "blockingSourceIssues": [],
+  "sourceReviewPrivate": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/source-review.private.json",
+    "sha256": "86f7b052da21099adaf9fa6168ae579b0c1e87a3b08475e432478b9e272587a7"
+  },
+  "publishedAt": "2026-10-12T23:35:36.557838+00:00",
+  "publicationScope": "Independent exact source/build/replay review; installation verification is root-observed, ordinary outcome not yet reviewed",
+  "actualProposalCompletion": false
+}
