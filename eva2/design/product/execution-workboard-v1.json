@@ -1021,8 +1021,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T13:34:20.123313+00:00",
+        "checkedAt": "2026-10-12T14:08:49.256499+00:00",
         "deliveries": [
+          {
+            "id": "hue-learning-connection-installed-20261012",
+            "date": "2026-10-12T14:08:49.256499+00:00",
+            "title": "Tegeninformatie verbonden met later mensbegrip",
+            "state": "installed",
+            "summary": "Gewone leeractie en bestaande geheugenroute aangesloten; oude geheugenmatch krijgt ook de latere herziening.",
+            "result": "16 gerichte controles geslaagd. Kern en werker gezond, zes exacte modules geïnstalleerd;339 overige Pythonbronnen per image en configuratie/gegevens behouden.",
+            "remaining": "Echte modelkeuze, Hindsight-retentie en later aangepast antwoord moeten nog worden aangetoond. Volledige HUE- en AIDE²-cyclus blijft open.",
+            "source": "eva2/evidence/product/hue-learning-connection-installed-20261012.json",
+            "review": "eva2/reviews/hue-learning-connection-source-review-20261012.json",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "independentReview": "Bron-GO; onafhankelijke controle van installatie en echte latere toepassing volgen."
+          },
           {
             "id": "telegram-ha-context-installed-20261012",
             "date": "2026-10-12T13:34:20.123313+00:00",
@@ -5119,7 +5133,7 @@
         "now": {
           "title": "Mensbegrip: een aanname bijstellen en later gebruiken",
           "state": "in_progress",
-          "phase": "human_learning_connection_building",
+          "phase": "human_learning_installed_later_use_check",
           "taskId": "HUE1.1",
           "linkedTaskIds": [
             "HUE3.1"
@@ -5128,8 +5142,8 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Telegramroute en grote HA-leescontext hersteld en geïnstalleerd. Verder met de bestaande koppeling tussen tegenbewijs, persoonsbeeld en later gedrag.",
-          "detail": "Eerste drie HUE-bronbestanden en acht gerichte contractcontroles gereed; de koppeling naar de gewone geheugen-/gespreksroute is nog niet geïnstalleerd.",
+          "summary": "Gewone geheugenkoppeling gebouwd, gecontroleerd en geïnstalleerd. Nu de latere toepassing met echte Hindsight en een echt model afzonderlijk aantonen.",
+          "detail": "Zes exacte modules geïnstalleerd in kern en werker, beide gezond.16 unieke gerichte controles geslaagd; proefopzetfouten behouden. Echte modelkeuze, daadwerkelijke Hindsight-retentie en later gewijzigd antwoord staan nog open.",
           "doneWhen": "Een later gewoon gesprek gebruikt de gewijzigde afweging, met behouden oorspronkelijke bronnen, onzekerheid en persoonsgrenzen.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "eva2/evidence/product/native-work-preserved-proposal-followup-result-20261012.json",
@@ -5137,19 +5151,31 @@
           "previousResultReviewSha256": "a49783a563df83cbc90d26320e1f3752770fd4bb44b4f22c5649fd4b18f0b2cf",
           "implementationStatus": {
             "sourceMappingCompleted": true,
-            "learningConnectionBuilt": false,
-            "learningConnectionInstalled": false,
+            "learningConnectionBuilt": true,
+            "learningConnectionInstalled": true,
             "laterUseProven": false,
             "fullAide2Completed": false,
             "initialSourceCandidateBuilt": true,
-            "initialPureContractChecksPassed": 8
+            "initialPureContractChecksPassed": 8,
+            "lineagePostgresChecksPassed": 10,
+            "lineageProductionDatabaseUsed": false,
+            "ordinaryConnectionSourceWritten": true,
+            "sourceFreezeCompleted": true,
+            "focusedSelectionPassed": 14,
+            "focusedSelectionTestPreparationFailures": 2,
+            "independentSourceReview": "GO",
+            "focusedChecksPassed": 16
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T13:34:20.123313+00:00",
+            "checkedAt": "2026-10-12T14:08:49.256499+00:00",
             "coordinator": "/root",
-            "coordinatorTask": "Bestaande HUE-bronintegratie afmaken in dezelfde geheugenroute.",
-            "executor": "Codex · bron en integratie",
-            "note": "Geen handeling van Jaap nodig. Spraak geparkeerd. Geen nieuwe vergelijkingsserie."
+            "coordinatorTask": "Exacte installatie verifiëren en actuele oplevering publiceren.",
+            "executor": "/root/eva1_memory_transfer",
+            "executorTask": "Bronkandidaat bevroren;16 gerichte controles geslaagd.",
+            "reviewer": "/root/product_execution_memory_review",
+            "reviewerTask": "Geïnstalleerde kandidaat beoordelen; één afzonderlijke gewone latere-gebruiksproef voorbereiden met eigen synthetisch geheugen.",
+            "modelUsage": "0 nieuwe Eva-modelaanvragen voor deze broncontrole en installatie; native proef nog niet gestart.",
+            "note": "Geen handeling van Jaap nodig; spraak geparkeerd. Oude tests en fouten blijven zichtbaar."
           }
         },
         "next": {
@@ -5526,7 +5552,7 @@
         }
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
-      "checkedAt": "2026-10-12T13:34:20.123313+00:00",
+      "checkedAt": "2026-10-12T14:08:49.256499+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11910,7 +11936,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T13:34:20.123313+00:00",
+      "lastUpdatedAt": "2026-10-12T14:08:49.256499+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -32379,6 +32405,12 @@
       "updatedAt": "2026-10-11T23:38:28.027894+00:00",
       "evidencePath": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
       "installedReviewSha256": "e8c8cf5d8b478d7529d8f7f1c53f7754b99a780ecb6bacdfbe7e66b0dd03ad8b"
+    },
+    "goalTurnProgress20261012": {
+      "classification": "progress",
+      "previousAuthoritativeChange": "b5d3af83: exact Home Assistant context correction installed in core and worker; GitHub pushed.",
+      "currentAuthoritativeEvidence": "Ten real PostgreSQL learning-source checks passed with before/after source hashes equal; ordinary route integration remains.",
+      "globalGoalStatus": "active"
     }
   },
   "activeTaskId": "AU-008",
@@ -34850,5 +34882,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T13:34:20.123313+00:00"
+  "updatedAt": "2026-10-12T13:45:21.246856+00:00"
 }

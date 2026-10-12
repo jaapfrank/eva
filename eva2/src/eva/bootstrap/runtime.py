@@ -1815,6 +1815,14 @@ def create_runtime_app() -> FastAPI:
             digital_profile=getattr(delegated_work_service, "digital_profile", None))
         household_work_server = HouseholdWorkServer(engine, scope, work_authority)
         delegated_work_actions = ScopedDelegatedWorkActions(delegated_work_actions, household_work_server)
+    human_understanding_actions = None
+    if dashboard_owner_principal_id is not None:
+        from eva.providers.human_understanding_actions import HumanUnderstandingActions
+        human_understanding_actions = HumanUnderstandingActions(
+            engine, source_reader=lambda: runtime._owner_memory_sources(),
+            submit=lambda document: runtime._cold_path.submit(document))
+    learning_tools = (() if human_understanding_actions is None
+                      else human_understanding_actions.conversation_tools())
     model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,
@@ -1822,6 +1830,7 @@ def create_runtime_app() -> FastAPI:
         resource_budget=settings.runtime_resource_budget,
         conversation_tools=(
             (() if provider_bundle is None else provider_bundle.conversation_tools)
+            + learning_tools
             + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
                 include_research=delegated_research_profile is not None,
                 include_digital=settings.delegated_digital_enabled))
@@ -1894,6 +1903,7 @@ def create_runtime_app() -> FastAPI:
         durable_goal_recipients=settings.durable_goal_recipients,
         external_tools=(
             (() if provider_bundle is None else provider_bundle.external_tools)
+            + (() if human_understanding_actions is None else (human_understanding_actions,))
             + (() if delegated_work_actions is None else (delegated_work_actions,))
         ),
     )
@@ -1908,6 +1918,7 @@ def create_runtime_app() -> FastAPI:
             resource_budget=settings.runtime_resource_budget,
             conversation_tools=(
                 (() if provider_bundle is None else provider_bundle.conversation_tools)
+                + learning_tools
                 + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
                     include_research=delegated_research_profile is not None,
                     include_digital=settings.delegated_digital_enabled))

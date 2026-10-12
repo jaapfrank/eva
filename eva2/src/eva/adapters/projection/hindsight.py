@@ -416,51 +416,74 @@ class HindsightMemoryEngine:
         return memory
 
     def _with_private_sources(self, query: RecallCurrentFacts, memory: PresenceMemory) -> PresenceMemory:
-        """Attach original messages to selected memories, without another model call.
-
-        Extraction and consolidation can lose intent or broaden relative time.
-        The existing private source reader resolves only the selected references
-        with current authority, retention, erasure and exact project checks.
-        """
+        """Rehydrate selected sources and provisional learning on every cache hit."""
+        from eva.application.human_understanding import (
+            is_human_understanding_reference, validate_human_understanding_context,
+        )
         facts = tuple(fact.model_copy(update={"value": {
-            key: value for key, value in fact.value.items() if key != "original_source"
-        }}) if isinstance(fact.value, dict) and "original_source" in fact.value else fact
-            for fact in memory.confirmed_facts)
-        if facts != memory.confirmed_facts:
-            memory = replace(memory, confirmed_facts=facts)
-        if self._private_source_resolver is None or query.audience.kind != "private_person":
-            return memory
+            key: value for key, value in fact.value.items()
+            if key not in {"original_source", "learning_context"}
+        }}) if isinstance(fact.value, dict) else fact for fact in memory.confirmed_facts)
         references = []
         for fact in facts:
             provenance = fact.value.get("reference_provenance", {}) if isinstance(fact.value, dict) else {}
             references.append((fact.subject, provenance.get("source_ref", fact.source_ref),
                                provenance.get("evidence_ref", fact.evidence_ref)))
-        try:
-            sources = self._private_source_resolver(query, tuple(dict.fromkeys(references)))
-            if len(sources) > 3:
-                raise HindsightProjectionProtocolError("original source count differs")
-            available = {}
-            for item in sources:
-                reference = (item["principal_id"], item["source_ref"], item["evidence_ref"])
-                if (reference not in references or item["project_id"] != query.project_id
-                        or not isinstance(item["text"], str) or not item["text"]
-                        or len(item["text"]) > 4096 or type(item["truncated"]) is not bool
-                        or not isinstance(item["occurred_at"], str)):
-                    raise HindsightProjectionProtocolError("original source scope differs")
-                _canonical_timestamp(item["occurred_at"])
-                available[reference] = item
-        except Exception:
-            # Missing original sources do not turn a paraphrase into a quote or
-            # prevent an ordinary reply. No private diagnostic content is logged.
-            _LOGGER.debug("Original private memory sources unavailable")
-            return memory
-        enriched = []
+        available = {}
+        if self._private_source_resolver is not None and query.audience.kind == "private_person":
+            try:
+                sources = self._private_source_resolver(query, tuple(dict.fromkeys(references)))
+                if len(sources) > 3:
+                    raise HindsightProjectionProtocolError("original source count differs")
+                for item in sources:
+                    reference = (item["principal_id"], item["source_ref"], item["evidence_ref"])
+                    if (reference not in references or item["project_id"] != query.project_id
+                            or not isinstance(item["text"], str) or not item["text"]
+                            or len(item["text"]) > 4096 or type(item["truncated"]) is not bool
+                            or not isinstance(item["occurred_at"], str)):
+                        raise HindsightProjectionProtocolError("original source scope differs")
+                    _canonical_timestamp(item["occurred_at"])
+                    available[reference] = item
+            except Exception:
+                _LOGGER.debug("Original private memory sources unavailable")
+                available = {}
+        enriched, excluded, used_learning = [], dict(memory.recall.excluded_reasons), set()
         for fact, reference in zip(facts, references, strict=True):
-            source = available.pop(reference, None)
+            learning = is_human_understanding_reference(reference[2])
+            source = available.get(reference) if learning else available.pop(reference, None)
+            if learning:
+                try:
+                    context = validate_human_understanding_context(
+                        None if source is None else source.get("learning_context"),
+                        source_ref=reference[1], evidence_ref=reference[2])
+                    selected_record = next(item["record"] for item in context["records"]
+                        if (item["source_ref"], item["evidence_ref"]) == reference[1:])
+                    if selected_record["recorded_at"] != source["occurred_at"]:
+                        raise ValueError("learning source time differs")
+                except (ValueError, TypeError, KeyError):
+                    excluded[fact.fact_id] = "learning_source_unavailable"
+                    continue
+                if reference in used_learning:
+                    excluded[fact.fact_id] = "duplicate_learning_record"
+                    continue
+                used_learning.add(reference)
+                # Consolidation text never replaces the exact provisional record.
+                fact = fact.model_copy(update={"trust": "host_policy", "value": {
+                    **fact.value, "text": context["records"][0]["record"]["interpretation"],
+                    "semantic_trust": "model_inference_unconfirmed", "learning_context": context,
+                    "source_observed_at": context["records"][0]["record"]["recorded_at"]}})
             if source is not None and isinstance(fact.value, dict):
                 fact = fact.model_copy(update={"value": {**fact.value, "original_source": source}})
             enriched.append(fact)
-        return replace(memory, confirmed_facts=tuple(enriched))
+        if len(enriched) != len(facts):
+            ids = {fact.fact_id for fact in enriched}
+            selected = [item.model_copy(update={"rank": rank}) for rank, item in enumerate(
+                (item for item in memory.recall.selected if item.fact_id in ids), start=1)]
+            recall = memory.recall.model_copy(update={"selected": selected,
+                "excluded_reasons": excluded, "admitted_fact_ids_sha256": canonical_sha256(sorted(ids))})
+        else:
+            recall = memory.recall
+        return replace(memory, recall=recall, confirmed_facts=tuple(enriched))
 
     @staticmethod
     def _project_partition(installation_id: str, project_id: str) -> str:
@@ -598,11 +621,23 @@ class HindsightMemoryEngine:
             # that every observation is incomplete. Validate every referenced
             # source below; complete observations retain their own authority.
             if copied.get("type") == "observation":
-                source_metadata = self._observation_source_metadata(
-                    copied, source_facts
-                )
+                from eva.application.human_understanding import is_human_understanding_reference
+                source_ids = copied.get("source_fact_ids", [])
+                if not isinstance(source_ids, list) or not all(isinstance(value, str) for value in source_ids):
+                    continue
+                origins = [source.get("metadata", {}) if isinstance(source, dict) else {}
+                           for source in (source_facts.get(source_id) for source_id in source_ids)] if isinstance(source_ids, list) else []
+                learning = [metadata for metadata in origins if isinstance(metadata, dict)
+                            and is_human_understanding_reference(metadata.get("evidence_ref"))]
+                if learning and (len(learning) != len(source_ids) or len({
+                        (metadata.get("source_ref"), metadata.get("evidence_ref"))
+                        for metadata in learning}) != 1):
+                    continue
+                source_metadata = self._observation_source_metadata(copied, source_facts)
                 if source_metadata is not None:
                     copied["_eva_source_metadata"] = source_metadata
+                elif learning:
+                    continue
             enriched.append(copied)
         return enriched
 

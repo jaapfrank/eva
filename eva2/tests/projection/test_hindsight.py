@@ -1966,3 +1966,42 @@ def test_original_private_source_never_crosses_project(hindsight_server):
                                    private_source_resolver=lambda _q, _r: (wrong_source,))
     recalled = engine.recall_for_presence(_query())
     assert all("original_source" not in fact.value for fact in recalled.confirmed_facts)
+
+
+def test_learning_recall_cache_requires_current_chain_and_ignores_consolidated_claim(hindsight_server):
+    from eva.application.conversation import ConversationTurn
+    from eva.application.human_understanding import build_human_understanding_document, parse_human_understanding_record
+    base_url, state = hindsight_server
+    original = _conversation_document()
+    turn = ConversationTurn.private(original.tenant_id, original.installation_id, original.principal_id,
+        original.conversation_id, original.source_ref, "Genuine synthetic user evidence", NOW)
+    doc = build_human_understanding_document(turn, {"kind":"person_hypothesis", "interpretation":"Current provisional understanding.",
+        "uncertainty_reason":"Limited direct evidence.","review_at":None,"outcome":"open",
+        "previous_source_ref":None,"previous_evidence_ref":None})
+    record = parse_human_understanding_record(doc.content, evidence_ref=doc.evidence_ref)
+    context = {"contract":"EvaHumanUnderstandingContext/v1","records":[{
+        "source_ref":doc.source_ref,"evidence_ref":doc.evidence_ref,"record":record}]}
+    metadata = {"principal_id":doc.principal_id,"source_ref":doc.source_ref,"evidence_ref":doc.evidence_ref,
+        "privacy_class":doc.privacy_class,"trust":doc.trust}
+    state.group_recall_response = {"results":[{"id":"learning-fact","text":"Untrusted synthesized claim.",
+        "type":"world","mentioned_at":NOW,"scores":{"final":1.0},"metadata":metadata}]}
+    available = [True]
+    source = {"principal_id":doc.principal_id,"source_ref":doc.source_ref,"evidence_ref":doc.evidence_ref,
+        "project_id":None,"occurred_at":NOW,"text":turn.text,"truncated":False,"learning_context":context}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+        private_source_resolver=lambda _q,_r:(source,) if available[0] else ())
+    first = engine.recall_for_presence_fast(_query())
+    assert first.confirmed_facts[0].value["text"] == "Current provisional understanding."
+    assert first.confirmed_facts[0].value["semantic_trust"] == "model_inference_unconfirmed"
+    requests = len(state.requests)
+    available[0] = False
+    second = engine.recall_for_presence_fast(_query())
+    assert len(state.requests) == requests and second.confirmed_facts == ()
+    assert second.recall.selected == []
+    assert second.recall.excluded_reasons == {first.confirmed_facts[0].fact_id:"learning_source_unavailable"}
+    # Consolidation with unrelated direct-user facts has no typed learning authority.
+    mixed = {"results":[{"id":"mixed","type":"observation","source_fact_ids":["learning","other"]}],
+        "source_facts":{"learning":{"metadata":metadata,"mentioned_at":NOW},
+            "other":{"metadata":{**metadata,"evidence_ref":"direct-user-source","trust":"direct_user"},"mentioned_at":NOW}}}
+    engine._request = lambda *args, **kwargs: (200, mixed)
+    assert engine._recall_response("test-bank", "person-tag", _query(), "query", None, None) == []

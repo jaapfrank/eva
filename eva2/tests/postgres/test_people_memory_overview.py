@@ -933,3 +933,275 @@ def test_selected_private_sources_recheck_current_owner_and_raw_ingress_hash(sel
             bindings.c.principal_binding_id==case.binding).values(status="revoked"))
     with pytest.raises(RuntimeError, match="binding is not current"):
         case.reader.selected_private_sources(case.query, (ref,), now=NOW)
+
+
+def _learning_arguments(**changes):
+    return {"kind": "expectation", "interpretation": "This plan may need revision.",
+        "uncertainty_reason": "The actual outcome is not yet known.",
+        "review_at": "2026-08-27T12:00:00Z", "outcome": "open",
+        "previous_source_ref": None, "previous_evidence_ref": None, **changes}
+
+
+def test_human_understanding_record_is_host_bound_canonical_and_provisional():
+    from eva.application.conversation import ConversationTurn
+    from eva.application.human_understanding import (
+        build_human_understanding_document, parse_human_understanding_record,
+    )
+    turn = ConversationTurn.private("tenant", "installation", "person", "conversation",
+        "message", "I expect to complete this tomorrow.", "2026-08-26T12:00:00Z",
+        project_id="project")
+    document = build_human_understanding_document(turn, _learning_arguments(),
+        retention_until="2026-08-28T12:00:00Z")
+    record = parse_human_understanding_record(document.content, evidence_ref=document.evidence_ref)
+    assert record["source_text_sha256"] == hashlib.sha256(turn.text.encode()).hexdigest()
+    assert record["recorded_at"] == turn.occurred_at
+    assert document.source_ref == turn.message_id and document.project_id == turn.project_id
+    assert document.trust == "model_inference_unconfirmed"
+    assert document.principal_id == turn.principal_id and document.audience == turn.audience
+    assert document == build_human_understanding_document(turn, _learning_arguments(),
+        retention_until="2026-08-28T12:00:00Z")
+    for content, evidence in ((document.content + " ", document.evidence_ref),
+                              (document.content, "human-understanding:" + "0" * 64)):
+        with pytest.raises(ValueError, match="bytes or evidence hash"):
+            parse_human_understanding_record(content, evidence_ref=evidence)
+
+
+@pytest.mark.parametrize("changes", [
+    {"principal_id": "other"}, {"interpretation": "x" * 1601},
+    {"uncertainty_reason": ""}, {"review_at": None},
+    {"review_at": "2026-08-27T12:00:00+00:00"}, {"outcome": "confirmed"},
+    {"previous_source_ref": "source", "previous_evidence_ref": None},
+])
+def test_human_understanding_record_rejects_unbound_or_invalid_model_fields(changes):
+    from eva.application.conversation import ConversationTurn
+    from eva.application.human_understanding import build_human_understanding_document
+    turn = ConversationTurn.private("tenant", "installation", "person", "conversation",
+        "message", "Real user source", "2026-08-26T12:00:00Z")
+    with pytest.raises(ValueError):
+        build_human_understanding_document(turn, _learning_arguments(**changes))
+
+
+def _seed_learning(case, name, *, seconds_ago, previous=None, retained=True,
+                   project="project:current", principal=None, **arguments):
+    from eva.application.conversation import ConversationTurn
+    from eva.application.human_understanding import build_human_understanding_document
+    source_time = NOW - timedelta(seconds=seconds_ago)
+    text = "Actual user source: " + name
+    original, _ref = case.seed(name, text, project=project, principal=principal,
+        ingress_at=source_time, occurred_at=source_time.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    turn = ConversationTurn.private(original.tenant_id, original.installation_id,
+        original.principal_id, original.conversation_id, original.source_ref, text,
+        original.occurred_at, project_id=original.project_id)
+    if previous is not None:
+        arguments.update(previous_source_ref=previous.source_ref,
+                         previous_evidence_ref=previous.evidence_ref)
+    document = build_human_understanding_document(turn, _learning_arguments(**arguments),
+        retention_until="2026-08-28T12:00:00Z")
+    _retain_learning(case, document, retained=retained)
+    return document
+
+
+def _retain_learning(case, document, *, retained=True):
+    job = case.outbox.enqueue(document)
+    if retained:
+        job = case.outbox.begin(job, now=NOW)
+        case.outbox.succeed(job, MemoryRetentionReceipt("bank:learning", document.document_id,
+            hashlib.sha256(document.content.encode()).hexdigest()), now=NOW)
+
+
+def test_learning_source_rehydrates_exact_retained_chain_and_keeps_direct_sources(selected_private_case):
+    case = selected_private_case
+    parent = _seed_learning(case, "expectation", seconds_ago=20)
+    revised = _seed_learning(case, "counterevidence", seconds_ago=10,
+        previous=parent, outcome="refuted", interpretation="Revise the expectation.")
+    context = case.reader.learning_source(case.query, revised.source_ref, revised.evidence_ref, now=NOW)
+    assert context["contract"] == "EvaHumanUnderstandingContext/v1"
+    assert [item["record"]["outcome"] for item in context["records"]] == ["refuted", "open"]
+    assert [item["source_ref"] for item in context["records"]] == [revised.source_ref, parent.source_ref]
+    # The ordinary three-source budget, original layout, and source trust do not change.
+    direct = [case.seed("direct-" + str(i), "Original direct " + str(i)) for i in range(3)]
+    sources = case.reader.selected_private_sources(case.query, tuple(ref for _doc, ref in direct), now=NOW)
+    assert len(sources) == 3 and all("learning_context" not in item for item in sources)
+    assert [item["text"] for item in sources] == ["Original direct " + str(i) for i in range(3)]
+    case.outbox.erase_content(principal_sha256=hashlib.sha256(str(case.owner).encode()).hexdigest(),
+        document_id=parent.document_id, operation_sha256="ab" * 32, erased_at=NOW)
+    assert case.reader.learning_source(case.query, revised.source_ref, revised.evidence_ref, now=NOW) is None
+    result = case.reader.selected_private_sources(case.query,
+        ((str(case.owner), revised.source_ref, revised.evidence_ref),), now=NOW)
+    assert len(result) == 1 and result[0]["text"] == "Actual user source: counterevidence"
+    assert "learning_context" not in result[0]
+
+
+@pytest.mark.parametrize("reason", ["pending", "other_project", "other_person", "kind", "same_time",
+                                    "source_hash", "record_time", "trust"])
+def test_learning_source_refuses_unavailable_or_incoherent_dependencies(selected_private_case, reason):
+    from dataclasses import replace
+    from eva.application.human_understanding import (
+        CONTENT_PREFIX, EVIDENCE_PREFIX, human_understanding_document_id,
+        parse_human_understanding_record,
+    )
+    from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
+    case = selected_private_case
+    parent = _seed_learning(case, "parent", seconds_ago=20,
+        retained=reason != "pending", project="project:other" if reason == "other_project" else "project:current",
+        principal="person:other" if reason == "other_person" else None)
+    # Use a separate source for updates; coincident source time cannot revise the parent.
+    source_time = NOW - timedelta(seconds=20 if reason == "same_time" else 10)
+    original, _ = case.seed("child", "Actual new outcome", ingress_at=source_time,
+        occurred_at=source_time.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    from eva.application.conversation import ConversationTurn
+    from eva.application.human_understanding import build_human_understanding_document
+    turn = ConversationTurn.private(original.tenant_id, original.installation_id,
+        original.principal_id, original.conversation_id, original.source_ref,
+        "Actual new outcome", original.occurred_at, project_id=original.project_id)
+    document = build_human_understanding_document(turn, _learning_arguments(
+        kind="person_hypothesis" if reason == "kind" else "expectation", outcome="refuted",
+        previous_source_ref=parent.source_ref, previous_evidence_ref=parent.evidence_ref))
+    if reason in ("source_hash", "record_time"):
+        record = parse_human_understanding_record(document.content, evidence_ref=document.evidence_ref)
+        record["source_text_sha256" if reason == "source_hash" else "recorded_at"] = (
+            "0" * 64 if reason == "source_hash" else "2026-08-26T11:00:00Z")
+        evidence = EVIDENCE_PREFIX + canonical_sha256(record)
+        document = replace(document, evidence_ref=evidence,
+            content=CONTENT_PREFIX + canonical_json_bytes(record).decode(),
+            document_id=human_understanding_document_id(tenant_id=document.tenant_id,
+                installation_id=document.installation_id, principal_id=document.principal_id,
+                conversation_id=document.conversation_id, source_ref=document.source_ref, evidence_ref=evidence))
+    if reason == "trust":
+        document = replace(document, trust="direct_user")
+    _retain_learning(case, document)
+    assert case.reader.learning_source(case.query, document.source_ref, document.evidence_ref, now=NOW) is None
+
+
+def test_learning_source_keeps_bounded_chain_and_rechecks_owner(selected_private_case):
+    from eva.adapters.postgres.current_catalog import metadata
+    case = selected_private_case
+    documents = []
+    for index in range(9):
+        documents.append(_seed_learning(case, "bounded-" + str(index), seconds_ago=90 - index * 5,
+            previous=documents[-1] if documents else None))
+    assert case.reader.learning_source(case.query, documents[7].source_ref, documents[7].evidence_ref,
+        now=NOW, follow_revisions=False) is not None
+    assert case.reader.learning_source(case.query, documents[8].source_ref, documents[8].evidence_ref,
+        now=NOW) is None
+    bindings = metadata.tables["eva_core.principal_bindings"]
+    with case.engine.begin() as connection:
+        connection.execute(sa.update(bindings).where(bindings.c.tenant_id == case.authority.tenant_id,
+            bindings.c.principal_binding_id == case.binding).values(status="revoked"))
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        case.reader.learning_source(case.query, documents[7].source_ref, documents[7].evidence_ref, now=NOW)
+
+
+def test_learning_old_selection_follows_revision_and_stops_at_erased_successor(selected_private_case):
+    from eva.contracts.canonical_json import canonical_sha256
+    case = selected_private_case
+    parent = _seed_learning(case, "old-person-picture", seconds_ago=30, kind="person_hypothesis", review_at=None,
+        interpretation="Earlier provisional interpretation.")
+    revised = _seed_learning(case, "actual-counterevidence", seconds_ago=20, previous=parent,
+        kind="person_hypothesis", review_at=None, outcome="refuted", interpretation="Revised provisional interpretation.")
+    # Explicit action metadata preserves the relation, not the inference text.
+    data = {"principal_id": parent.principal_id, "project_id": parent.project_id,
+        "source_ref": revised.source_ref, "evidence_ref": revised.evidence_ref,
+        "previous_source_ref": parent.source_ref, "previous_evidence_ref": parent.evidence_ref}
+    case.timeline.create_thread(thread_id="human-understanding-action:" + canonical_sha256(data),
+        checkpoint_id="learning-revision:admitted", occurred_at=NOW-timedelta(seconds=20),
+        data=data, event_type="HUMAN_UNDERSTANDING_ADMITTED", phase="learning_admitted")
+    result = case.reader.learning_source(case.query, parent.source_ref, parent.evidence_ref, now=NOW)
+    assert result["records"][0]["record"]["interpretation"] == "Revised provisional interpretation."
+    assert result["records"][-1]["evidence_ref"] == parent.evidence_ref
+    case.outbox.erase_content(principal_sha256=hashlib.sha256(str(case.owner).encode()).hexdigest(),
+        document_id=revised.document_id, operation_sha256="ac"*32, erased_at=NOW)
+    assert case.reader.learning_source(case.query, parent.source_ref, parent.evidence_ref, now=NOW) is None
+
+
+def test_learning_ordinary_action_outbox_recall_and_later_context(selected_private_case):
+    from eva.application.conversation import (ConversationActionCall, ConversationModelResult,
+        ConversationTurn, IdentityProfile, LivingConversation, ConversationConflict)
+    from eva.application.memory_background import HindsightColdPathWorker
+    from eva.application.human_understanding import build_human_understanding_document
+    from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+    from eva.adapters.projection.hindsight import HindsightMemoryEngine, HindsightProjectionConfig
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.providers.human_understanding_actions import HumanUnderstandingActions, ACTION
+    from dataclasses import replace
+    case = selected_private_case
+    cold = HindsightColdPathWorker(object(), outbox=case.outbox)
+    provider = HumanUnderstandingActions(case.engine, source_reader=lambda: case.reader,
+        submit=cold.submit, clock=lambda: NOW)
+    actions = PostgresConversationActions(case.engine, external_tools=(provider,))
+    identity = IdentityProfile("Eva", "Helpful", ("Preserve uncertainty",))
+    class EmptyMemory:
+        def recall_for_presence(self, query):
+            return HindsightMemoryEngine._empty_presence(query)
+    class ScriptedModel:
+        def __init__(self, call): self.call, self.index = call, 0
+        def generate(self, *args, **kwargs):
+            self.index += 1
+            return (ConversationModelResult(None, "scripted", action_call=self.call) if self.index == 1
+                    else ConversationModelResult("The provisional record is queued.", "scripted"))
+    docs = []
+    for index in range(2):
+        stamp = NOW-timedelta(seconds=30-index*10)
+        original, _ = case.seed("ordinary-learning-"+str(index), "Genuine synthetic user counterinformation " + str(index),
+            ingress_at=stamp, occurred_at=stamp.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        turn = ConversationTurn.private(original.tenant_id, original.installation_id, original.principal_id,
+            original.conversation_id, original.source_ref, "Genuine synthetic user counterinformation " + str(index),
+            original.occurred_at, project_id=original.project_id)
+        arguments = _learning_arguments(kind="person_hypothesis", review_at=None,
+            interpretation="Initial provisional picture." if index == 0 else "Changed provisional picture.",
+            outcome="open" if index == 0 else "refuted",
+            previous_source_ref=None if index == 0 else docs[0].source_ref,
+            previous_evidence_ref=None if index == 0 else docs[0].evidence_ref)
+        call = ConversationActionCall("learning-call-"+str(index), ACTION, arguments)
+        reply = LivingConversation(EmptyMemory(), ScriptedModel(call), identity, actions).respond(turn)
+        assert "queued" in reply.text
+        receipt = provider.pending(turn)
+        assert receipt.call == call and receipt.output["semantic_retention_completed"] is False
+        document = build_human_understanding_document(turn, arguments)
+        _retain_learning(case, document)
+        assert provider.execute(turn, call) == receipt
+        event = case.timeline.events(provider._slot(turn, 0))[0]
+        assert "interpretation" not in event.payload["data"] and "arguments" not in event.payload["data"]
+        docs.append(document)
+    old_ref = (str(case.owner), docs[0].source_ref, docs[0].evidence_ref)
+    sources = case.reader.selected_private_sources(case.query, (old_ref,), now=NOW)
+    assert sources[0]["learning_context"]["records"][0]["record"]["interpretation"] == "Changed provisional picture."
+    # Real recall enrichment is tested with the selected old semantic fact, not a fabricated direct-user fact.
+    from eva.application.memory import PresenceMemory
+    from eva.contracts.memory import MemoryRecall, RecalledFact
+    from eva.contracts.planning import ConfirmedFact
+    from eva.contracts.canonical_json import canonical_sha256
+    fact = ConfirmedFact(fact_id="learning-fact", subject=str(case.owner), predicate="memory.observation",
+        value={"text":"Obsolete consolidation."}, source_ref=docs[0].source_ref,
+        evidence_ref=docs[0].evidence_ref, observed_at=case.query.requested_valid_at, trust="host_policy")
+    recall = MemoryRecall(schema_version=1, contract="MemoryRecall/v1", recall_id=case.query.recall_id,
+        query_purpose=case.query.query_purpose, tenant_id=case.query.tenant_id, principal_id=case.query.principal_id,
+        conversation_id=case.query.conversation_id, project_id=case.query.project_id,
+        requested_valid_at=case.query.requested_valid_at, admitted_fact_ids_sha256=canonical_sha256([fact.fact_id]),
+        selected=[{"rank":1,"fact_id":fact.fact_id,"source_event_ids":[fact.source_ref],
+            "trust":"model_inference_unconfirmed","ranking_reason":"semantic_match"}], excluded_reasons={},
+        projection_version="hindsight-test",scope_sha256=canonical_sha256(case.query.scope),created_at=case.query.requested_valid_at)
+    engine = HindsightMemoryEngine(HindsightProjectionConfig("http://127.0.0.1:1"),
+        private_source_resolver=lambda query, refs: case.reader.selected_private_sources(query, refs, now=NOW))
+    enriched = engine._with_private_sources(case.query, PresenceMemory(recall,(fact,)))
+    assert enriched.confirmed_facts[0].value["text"] == "Changed provisional picture."
+    instructions = object.__new__(PydanticConversationModel)._instructions(identity, enriched, ())
+    assert "Changed provisional picture." in instructions and "refuted" in instructions
+    assert "Obsolete consolidation." not in instructions
+    case.outbox.erase_content(principal_sha256=hashlib.sha256(str(case.owner).encode()).hexdigest(),
+        document_id=docs[1].document_id,operation_sha256="ad"*32,erased_at=NOW)
+    rechecked = engine._with_private_sources(case.query, enriched)
+    assert rechecked.confirmed_facts == () and rechecked.recall.selected == []
+    for changes in ({"principal_id":"someone-else", "audience":MemoryAudience.private_person(principal_id="someone-else")}, {"conversation_id":"household:other"}, {"scope":{"kind":"public"}}):
+        with pytest.raises(RuntimeError,match="scope differs"):
+            case.reader.require_learning_query(replace(case.query, **changes),now=NOW)
+
+    assert case.reader.learning_source(replace(case.query, project_id="another-project"),
+        docs[0].source_ref, docs[0].evidence_ref, now=NOW) is None
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    from eva.adapters.postgres.operational_timeline import external_timeline_scope
+    from eva.application.conversation import ConversationStopped
+    journal = PostgresConversationJournal(case.engine, external_timeline_scope(turn.tenant_id, turn.installation_id, "scope"))
+    journal.request_turn_stop(turn)
+    with pytest.raises(ConversationStopped):
+        provider.execute(turn, call)

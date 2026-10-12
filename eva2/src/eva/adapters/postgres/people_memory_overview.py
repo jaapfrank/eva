@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import nullcontext
 from datetime import UTC, datetime, timedelta
 import hashlib
 import re
@@ -29,6 +30,10 @@ from eva.application.people_memory_overview import (
     PeopleMemoryOverviewError,
 )
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt, RecallCurrentFacts
+from eva.application.human_understanding import (
+    MAX_LEARNING_RECORDS, human_understanding_document_id,
+    is_human_understanding_reference, parse_human_understanding_record,
+)
 from eva.application.memory_audience import TelegramGroupConsentReference
 from eva.application.telegram_group_consent import TelegramGroupConsent
 from eva.application.telegram_pairing import TelegramDynamicBinding
@@ -146,6 +151,7 @@ class PostgresOwnerMemorySources:
     def selected_private_sources(
         self, query: RecallCurrentFacts,
         selected_refs: tuple[tuple[str, str, str], ...], *, now: datetime,
+        follow_revisions: bool = True,
     ) -> tuple[dict[str, object], ...]:
         """Resolve at most three exact original ingresses selected by semantic recall.
 
@@ -182,12 +188,158 @@ class PostgresOwnerMemorySources:
         refs = tuple(ref for ref in refs if (ref[0], ref[1]) in source_keys)
         if not refs:
             return ()
-        return self._read(now=now, limit=3, selected_refs=refs, selected_query=query)
+        return self._read(now=now, limit=3, selected_refs=refs, selected_query=query,
+                          _follow_learning_revisions=follow_revisions)
+
+    def require_learning_query(self, query: RecallCurrentFacts, *, now: datetime) -> None:
+        """Authorize a current private learning write without inventing a source."""
+        owner = str(self._owner)
+        alias = None if self._bindings is None else self._bindings.private_bridge_principal(
+            principal_id=owner, principal_binding_id=self._binding)
+        if (query.tenant_id != self._tenant or query.installation_id != self._installation
+                or query.audience.kind != "private_person"
+                or query.audience.principal_id != query.principal_id
+                or not (query.principal_id == owner or (alias is not None
+                    and query.principal_id == alias and query.conversation_id == alias))
+                or not isinstance(query.conversation_id, str)
+                or query.conversation_id.startswith(("telegram:-", "household:", "initiative-task:"))
+                or query.scope != {"kind": "private"}
+                or (query.project_id is not None and (not isinstance(query.project_id, str)
+                    or not query.project_id.strip() or len(query.project_id) > 200))):
+            raise PeopleMemoryOverviewError("learning private source scope differs")
+        # An empty selection still performs the same current owner/bridge checks
+        # in the read-only snapshot; it never adopts a nearby memory source.
+        self._read(now=now, limit=1, selected_refs=(), selected_query=query)
+
+    def learning_source(self, query: RecallCurrentFacts, source_ref: str,
+                        evidence_ref: str, *, now: datetime,
+                        follow_revisions: bool = True) -> dict[str, object] | None:
+        """Revalidate one exact predecessor through the existing private source route."""
+        if not is_human_understanding_reference(evidence_ref):
+            return None
+        sources = self.selected_private_sources(
+            query, ((query.principal_id, source_ref, evidence_ref),), now=now,
+            follow_revisions=follow_revisions)
+        if len(sources) != 1:
+            return None
+        return sources[0].get("learning_context")
+
+    def _learning_context(self, connection, query: RecallCurrentFacts, *,
+                          principal_id: str, source_ref: str, evidence_ref: str,
+                          now: datetime, follow_revisions: bool = True) -> dict[str, object] | None:
+        """Validate the entire bounded chain in the same current authority snapshot."""
+        selected_reference = (principal_id, source_ref, evidence_ref)
+        records = []
+        seen = set()
+        child = None
+        while source_ref is not None:
+            reference = (principal_id, source_ref, evidence_ref)
+            if reference in seen or len(records) >= MAX_LEARNING_RECORDS:
+                return None
+            seen.add(reference)
+            found = self._read(now=now, limit=1, selected_refs=(reference,),
+                               selected_query=query, _connection=connection,
+                               _learning_document=True)
+            if found is None:
+                return None
+            document, original_text, original_time = found
+            try:
+                record = parse_human_understanding_record(
+                    document.content, evidence_ref=document.evidence_ref)
+                expected_id = human_understanding_document_id(
+                    tenant_id=document.tenant_id, installation_id=document.installation_id,
+                    principal_id=document.principal_id, conversation_id=document.conversation_id,
+                    source_ref=document.source_ref, evidence_ref=document.evidence_ref)
+            except ValueError:
+                return None
+            if (document.trust != "model_inference_unconfirmed"
+                    or document.document_id != expected_id
+                    or record["recorded_at"] != document.occurred_at
+                    or record["recorded_at"] != original_time
+                    or record["source_text_sha256"] != hashlib.sha256(
+                        original_text.encode("utf-8")).hexdigest()
+                    or (child is not None and (record["kind"] != child["kind"]
+                        or record["recorded_at"] >= child["recorded_at"]))):
+                return None
+            records.append({"source_ref": source_ref, "evidence_ref": evidence_ref,
+                            "record": record})
+            child = record
+            source_ref = record["previous_source_ref"]
+            evidence_ref = record["previous_evidence_ref"]
+        context = {"contract": "EvaHumanUnderstandingContext/v1", "records": records}
+        if not follow_revisions:
+            return context
+        # Follow exact typed relations, including metadata that survives erasure.
+        # A pending/erased successor blocks the stale interpretation rather than
+        # silently falling back to an older provisional inference.
+        for _ in range(MAX_LEARNING_RECORDS):
+            head = context["records"][0]
+            references = self._learning_successors(connection, query,
+                principal_id=principal_id, source_ref=head["source_ref"],
+                evidence_ref=head["evidence_ref"], now=now)
+            if references is None:
+                return None
+            if not references:
+                return context
+            successors = []
+            for reference in references:
+                revised = self._learning_context(connection, query,
+                    principal_id=principal_id, source_ref=reference[0], evidence_ref=reference[1],
+                    now=now, follow_revisions=False)
+                if (revised is None or not any((principal_id, item["source_ref"], item["evidence_ref"])
+                        == selected_reference for item in revised["records"])):
+                    return None
+                successors.append(revised)
+            context = max(successors, key=lambda item: (
+                item["records"][0]["record"]["recorded_at"], item["records"][0]["evidence_ref"]))
+        return None
+
+    def _learning_successors(self, connection, query, *, principal_id, source_ref,
+                             evidence_ref, now):
+        from eva.application.human_understanding import CONTENT_PREFIX
+        from eva.contracts.canonical_json import canonical_json_bytes
+        e, c = operational_events.c, operational_checkpoints.c
+        data = e.payload["data"]
+        timeline = PostgresOperationalTimeline(self._engine, self._scope)
+        timeline._scope(connection)
+        # Admission metadata carries no model interpretation. The document path
+        # also covers pre-existing typed sources without an action-admission row.
+        relation = sa.or_(
+            sa.and_(e.event_type == "HUMAN_UNDERSTANDING_ADMITTED",
+                data["previous_source_ref"].astext == source_ref,
+                data["previous_evidence_ref"].astext == evidence_ref),
+            sa.and_(e.event_type == "MEMORY_RETAIN_QUEUED",
+                data["evidence_ref"].astext.startswith("human-understanding:"),
+                data["content"].astext.startswith(CONTENT_PREFIX),
+                data["content"].astext.contains('"previous_source_ref":' + canonical_json_bytes(source_ref).decode(), autoescape=True),
+                data["content"].astext.contains('"previous_evidence_ref":' + canonical_json_bytes(evidence_ref).decode(), autoescape=True)))
+        rows = connection.execute(sa.select(e.thread_id, e.payload, e.payload_sha256).join(
+            operational_checkpoints, sa.and_(c.tenant_id == e.tenant_id,
+                c.installation_id == e.installation_id, c.thread_id == e.thread_id)).where(
+            e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
+            e.sequence == 1, e.occurred_at <= now,
+            data["principal_id"].astext == principal_id,
+            data["project_id"].astext.is_not_distinct_from(query.project_id), relation,
+        ).limit(MAX_LEARNING_RECORDS * 2 + 1)).all()
+        if len(rows) > MAX_LEARNING_RECORDS * 2:
+            return None
+        references = set()
+        for row in rows:
+            if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
+                raise PeopleMemoryOverviewError("learning successor hash differs")
+            value = row.payload["data"]
+            reference = (value.get("source_ref"), value.get("evidence_ref"))
+            if not isinstance(reference[0], str) or not is_human_understanding_reference(reference[1]):
+                return None
+            references.add(reference)
+        return tuple(sorted(references))
 
     def _read(self, *, now: datetime, limit: int, before: str | None = None,
               source_id: str | None = None, context_conversations=None, after=None,
               context_voice=False, exclude_conversation=None, history_query=None,
-              selected_refs=None, selected_query: RecallCurrentFacts | None = None):
+              selected_refs=None, selected_query: RecallCurrentFacts | None = None,
+              _connection=None, _learning_document: bool = False,
+              _follow_learning_revisions: bool = True):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -195,9 +347,12 @@ class PostgresOwnerMemorySources:
         e, c = operational_events.c, operational_checkpoints.c
         data = e.payload["data"]
         audience = data["audience"]
-        with self._engine.connect().execution_options(isolation_level="REPEATABLE READ") as conn:
-            with conn.begin():
-                conn.exec_driver_sql("SET TRANSACTION READ ONLY")
+        connection_context = (self._engine.connect().execution_options(isolation_level="REPEATABLE READ")
+                              if _connection is None else nullcontext(_connection))
+        with connection_context as conn:
+            with (conn.begin() if _connection is None else nullcontext()):
+                if _connection is None:
+                    conn.exec_driver_sql("SET TRANSACTION READ ONLY")
                 # Local dashboard authority and conversation storage have distinct
                 # namespaces on an existing installation. Never infer one from the other.
                 PostgresOperationalTimeline(self._engine, self._authority_scope)._scope(conn)
@@ -332,8 +487,12 @@ class PostgresOwnerMemorySources:
                         query = query.where(sa.not_(data["evidence_ref"].astext.startswith("observation-binding:")))
                     # Several selected facts can share one original ingress. Choose
                     # one still-admitted source proof per ingress, never a nearby turn.
-                    query = query.distinct(ingress.c.event_id).order_by(
-                        ingress.c.event_id, e.occurred_at.desc(), e.event_id.desc())
+                    if _learning_document:
+                        query = query.where(c.phase == "memory_retained", c.status == "completed").order_by(
+                            e.occurred_at.desc(), e.event_id.desc())
+                    else:
+                        query = query.distinct(ingress.c.event_id).order_by(
+                            ingress.c.event_id, e.occurred_at.desc(), e.event_id.desc())
                 if source_id is not None:
                     query = query.where(e.event_id == UUID(source_id))
                 if cursor:
@@ -342,6 +501,8 @@ class PostgresOwnerMemorySources:
                 if selected_refs is None:
                     query = query.order_by(e.occurred_at.desc(), e.event_id.desc())
                 rows = conn.execute(query.limit(limit + 1)).all()
+                if _learning_document and len(rows) != 1:
+                    return None
                 sources = []
                 for row in rows[:limit]:
                     if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
@@ -382,14 +543,24 @@ class PostgresOwnerMemorySources:
                                     or original_binding.get("binding_sha256") != binding):
                                 raise PeopleMemoryOverviewError("selected private source observation binding differs")
                         text = original["text"]
+                        source_time = row.ingress_occurred_at.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+                        if _learning_document:
+                            return doc, text, source_time
                         truncated = len(text) > 4096
                         if truncated:
                             suffix = "\n[Fragment; overige oorspronkelijke tekst niet opgenomen.]"
                             text = text[:4096 - len(suffix)] + suffix
-                        sources.append({"source_ref": doc.source_ref, "evidence_ref": doc.evidence_ref,
+                        source = {"source_ref": doc.source_ref, "evidence_ref": doc.evidence_ref,
                             "principal_id": doc.principal_id, "project_id": doc.project_id,
-                            "occurred_at": row.ingress_occurred_at.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                            "text": text, "truncated": truncated})
+                            "occurred_at": source_time, "text": text, "truncated": truncated}
+                        if is_human_understanding_reference(doc.evidence_ref):
+                            context = self._learning_context(conn, selected_query,
+                                principal_id=doc.principal_id, source_ref=doc.source_ref,
+                                evidence_ref=doc.evidence_ref, now=now,
+                                follow_revisions=_follow_learning_revisions)
+                            if context is not None:
+                                source["learning_context"] = context
+                        sources.append(source)
                         continue
                     if history_query is not None:
                         sources.append((doc, state))

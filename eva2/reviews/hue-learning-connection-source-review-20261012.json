@@ -1,0 +1,92 @@
+{
+  "contract": "EvaIndependentHueLearningSourceReview/v1",
+  "reviewedAt": "2026-10-12T14:04:03.092059+00:00",
+  "decision": "GO",
+  "scope": "Exact six-module HUE1.1/HUE3.1 source and bounded existing check receipts; installation preparation only.",
+  "sourceManifestSha256": "6e69e3f60fc9c889d6aed211a58b69ae3a2c87c243e496ae91f9218543b469b1",
+  "targetedChecksSha256": "3ea8dd3c9e1416d4a086b9308493ac365b639496e4b138adfa7a90fc43002b48",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/application/human_understanding.py",
+      "sha256": "49827075a5dc813661ffb1ca09677452f3bfd37c8fdaf28689acc37329066448"
+    },
+    {
+      "path": "eva2/src/eva/providers/human_understanding_actions.py",
+      "sha256": "c3c07fff1d9641dd291591a888243490bfa851292007fac71fe0c7b22230247f"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/people_memory_overview.py",
+      "sha256": "b759bd97772ab426c5ac56dcab5bc24b1e4e98b23208c16874c9bb464447dadd"
+    },
+    {
+      "path": "eva2/src/eva/adapters/projection/hindsight.py",
+      "sha256": "e5a2a5ea0e10b5732099fba5c7cc71efe087552993c8939132d8c235a009a599"
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "7561741de27786083c1698889ca5eb414af37a6a943fc2a08d407f20755904e9"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/runtime.py",
+      "sha256": "197300fc0f39e56ef8d9e816ad037a6a37e12b8dc7d8bf571d42277049ef8e0c"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "eva2/tests/postgres/test_people_memory_overview.py",
+      "sha256": "1ca591fe36fc1540f488d10776c750254731b9d1f5d13c71effdde265ea011e4"
+    },
+    {
+      "path": "eva2/tests/projection/test_hindsight.py",
+      "sha256": "49bde56597bd172b2b972f133bdeb7f3465b239631efcaa42c7735fdba6db5f7"
+    }
+  ],
+  "checks": {
+    "uniqueFinalPassed": 16,
+    "invocations": [
+      {
+        "returncode": 1,
+        "counts": {
+          "passed": 14,
+          "failed": 2,
+          "skipped": 0
+        }
+      },
+      {
+        "returncode": 1,
+        "counts": {
+          "passed": 1,
+          "failed": 1,
+          "skipped": 0
+        }
+      },
+      {
+        "returncode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    ],
+    "earlierFailuresPreserved": true,
+    "newChecksExecutedByReviewer": 0
+  },
+  "findings": [
+    "Ordinary HUE action binds current verified private owner, original ingress hash, same project, current stop/dispatch authority and exact retained predecessor before writing.",
+    "Action replay preserves exact admission/call/output bindings. Uncertain or unavailable outbox state remains refused; queued does not claim semantic retention.",
+    "Current PG lineage rehydrates canonical model-inference records in one read-only snapshot, verifies complete same-kind time-ordered provenance, and follows newer typed successor for recall while exact-parent validation does not.",
+    "Unavailable, pending, erased, mismatched or overlong successor refuses stale learning. Cache hits revalidate current source and authority.",
+    "Ordinary model context carries newest validated lineage and explicit inference uncertainty; retained consolidation text cannot become direct-user evidence.",
+    "Factory exposes existing HUE action/outbox; no additional authority or external service platform."
+  ],
+  "limitations": [
+    "Scripted ordinary dialogue and disposable PostgreSQL checks establish source/interface behavior. Real three-turn model/Hindsight learning and human acceptance are not yet demonstrated.",
+    "This decision authorizes exact source installation only. Native START requires separately frozen isolated fixture, all-provider measured accounting including Hindsight helpers, and root limits.",
+    "Previous eight contract checks and ten PG checks on an earlier revision are retained separately, not added to this 16-node final total."
+  ],
+  "nativeInputGo": false,
+  "learnedBehaviorClaimed": false,
+  "modelsExecutedByReviewer": 0,
+  "productionDatabaseUsed": false
+}

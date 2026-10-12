@@ -1,0 +1,207 @@
+{
+  "contract": "EvaHumanLearningConnectionInstalled/v1",
+  "checkedAt": "2026-10-12T14:08:49.256499+00:00",
+  "status": "installed",
+  "userOutcome": "Ordinary private conversation can record provisional person interpretations/expectations, revise them from a later real user source, and revalidate latest retained lineage before subsequent model context.",
+  "sources": [
+    {
+      "path": "eva2/src/eva/application/human_understanding.py",
+      "sha256": "49827075a5dc813661ffb1ca09677452f3bfd37c8fdaf28689acc37329066448"
+    },
+    {
+      "path": "eva2/src/eva/providers/human_understanding_actions.py",
+      "sha256": "c3c07fff1d9641dd291591a888243490bfa851292007fac71fe0c7b22230247f"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/people_memory_overview.py",
+      "sha256": "b759bd97772ab426c5ac56dcab5bc24b1e4e98b23208c16874c9bb464447dadd"
+    },
+    {
+      "path": "eva2/src/eva/adapters/projection/hindsight.py",
+      "sha256": "e5a2a5ea0e10b5732099fba5c7cc71efe087552993c8939132d8c235a009a599"
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "7561741de27786083c1698889ca5eb414af37a6a943fc2a08d407f20755904e9"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/runtime.py",
+      "sha256": "197300fc0f39e56ef8d9e816ad037a6a37e12b8dc7d8bf571d42277049ef8e0c"
+    }
+  ],
+  "tests": [
+    {
+      "path": "eva2/tests/postgres/test_people_memory_overview.py",
+      "sha256": "1ca591fe36fc1540f488d10776c750254731b9d1f5d13c71effdde265ea011e4"
+    },
+    {
+      "path": "eva2/tests/projection/test_hindsight.py",
+      "sha256": "49bde56597bd172b2b972f133bdeb7f3465b239631efcaa42c7735fdba6db5f7"
+    }
+  ],
+  "frozenManifestSha256": "6e69e3f60fc9c889d6aed211a58b69ae3a2c87c243e496ae91f9218543b469b1",
+  "focusedChecks": {
+    "uniquePassed": 16,
+    "lastResultPerNode": {
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_rehydrates_exact_retained_chain_and_keeps_direct_sources": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_refuses_unavailable_or_incoherent_dependencies[pending]": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_refuses_unavailable_or_incoherent_dependencies[other_project]": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_refuses_unavailable_or_incoherent_dependencies[other_person]": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_refuses_unavailable_or_incoherent_dependencies[kind]": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_refuses_unavailable_or_incoherent_dependencies[same_time]": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_refuses_unavailable_or_incoherent_dependencies[source_hash]": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_refuses_unavailable_or_incoherent_dependencies[record_time]": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_refuses_unavailable_or_incoherent_dependencies[trust]": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_source_keeps_bounded_chain_and_rechecks_owner": {
+        "status": "passed",
+        "invocation": 2
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_old_selection_follows_revision_and_stops_at_erased_successor": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/postgres/test_people_memory_overview.py::test_learning_ordinary_action_outbox_recall_and_later_context": {
+        "status": "passed",
+        "invocation": 3
+      },
+      "tests/projection/test_hindsight.py::test_learning_recall_cache_requires_current_chain_and_ignores_consolidated_claim": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/projection/test_hindsight.py::test_original_private_source_is_deduplicated_and_revalidated_on_cache_hit": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/projection/test_hindsight.py::test_original_private_source_never_crosses_project": {
+        "status": "passed",
+        "invocation": 1
+      },
+      "tests/bootstrap/test_private_conversation_resources.py::test_shared_resources_preserve_consent_and_reread_private_binding": {
+        "status": "passed",
+        "invocation": 1
+      }
+    },
+    "invocations": [
+      {
+        "invocation": 1,
+        "returncode": 1,
+        "counts": {
+          "passed": 14,
+          "failed": 2,
+          "skipped": 0
+        },
+        "elapsedSeconds": 7.895
+      },
+      {
+        "invocation": 2,
+        "returncode": 1,
+        "counts": {
+          "passed": 1,
+          "failed": 1,
+          "skipped": 0
+        },
+        "elapsedSeconds": 5.049
+      },
+      {
+        "invocation": 3,
+        "returncode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "elapsedSeconds": 4.473
+      }
+    ],
+    "checkReceiptSha256": "3ea8dd3c9e1416d4a086b9308493ac365b639496e4b138adfa7a90fc43002b48",
+    "productionDatabaseUsed": false,
+    "realDisposablePostgresUsed": true,
+    "historicalChecksRetainedSeparately": [
+      "8 initial pure contracts",
+      "10 earlier PG lineage checks on prior revision"
+    ]
+  },
+  "ordinaryRoute": "Existing conversation tool -> existing cold-path memory outbox -> Hindsight recall -> authoritative PG original/current lineage -> ordinary model context; shared recall also used in delegated work.",
+  "trust": "All typed interpretations stay model_inference_unconfirmed; confirmed/refuted describes evaluation of previous interpretation/expectation, not objective person certainty.",
+  "retentionAndAuthority": "Current exact user ingress/person/project/binding, real retained source, privacy/stop checks, source hashes and erasure rechecked. Old semantic/cache match follows latest retained successor; missing/erased successor refuses stale fallback. Writes/replay validate exact specified predecessor.",
+  "deployment": {
+    "checkedAt": "2026-10-12T14:07:08.124192+00:00",
+    "containers": {
+      "core": {
+        "image": "sha256:8519d846dd32c2cd95e88c2b9f573b7ebbc4bc4e8cc3c76534ae8119b5437836",
+        "health": "healthy",
+        "exactChangedModules": true,
+        "retainedOtherPythonSources": true,
+        "retainedSourceInventory": true,
+        "retainedEnvironment": true,
+        "retainedMounts": true,
+        "retainedProcessConfig": true,
+        "unchangedPythonSources": 339
+      },
+      "delegated-work-worker": {
+        "image": "sha256:dabd674849faeafc31e971d337ebefd14956c2384b08de0aae0bc0682696f200",
+        "health": "healthy",
+        "exactChangedModules": true,
+        "retainedOtherPythonSources": true,
+        "retainedSourceInventory": true,
+        "retainedEnvironment": true,
+        "retainedMounts": true,
+        "retainedProcessConfig": true,
+        "unchangedPythonSources": 339
+      }
+    },
+    "preDispatchPreparationError": "Initial direct-file invocation missed tools package; no dispatch or source change. Corrected module invocation performed one update.",
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    }
+  },
+  "sourceReview": "eva2/reviews/hue-learning-connection-source-review-20261012.json",
+  "sourceReviewSha256": "39508cc7b8af0f8827fbf187b657403ee68bd8b8415468341970e2e6e1e78e69",
+  "installedIndependentReview": "pending",
+  "usage": {
+    "newEvaModelRequestsForSourceChecksAndInstallation": 0,
+    "developmentCredits": null,
+    "creditCost": null
+  },
+  "limits": [
+    "Maximum eight typed chain records; unavailable chain is refused, not invented",
+    "Native real Hindsight retention, actual model choice and later adapted answer not yet demonstrated",
+    "No family acceptance, complete HUE1.1/HUE3.1, full AIDE2 or general competitor superiority claimed",
+    "Foreground write action available only for current verified owner/private ingress; delegated work gets shared recall without new write authority"
+  ],
+  "originalTuyaTask": "Not completed by this installation; migration remains conditional on owner approval",
+  "originalCompletedSmallTasks": 39,
+  "originalTotalSmallTasks": 48,
+  "expandedTotalSmallTasks": 54
+}

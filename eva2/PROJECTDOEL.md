@@ -1,6 +1,38 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — Telegram en grote HA-leescontext hersteld en geïnstalleerd
+## Actueel 12 oktober — menselijke leerkoppeling geïnstalleerd; latere toepassing volgt
+
+HUE1.1/HUE3.1 gebruiken nu de gewone gespreksactie, bestaande geheugenuitvoer,
+Hindsight-terughalen en PostgreSQL-broncontrole. Voorlopige persoonsinterpretaties
+en verwachtingen houden oorspronkelijke bron, onzekerheid en latere herziening.
+Een oude geheugen-/cachematch volgt de nieuwste behouden herziening. Een gewiste
+of ontbrekende opvolger weigert terugval naar de oude interpretatie. Schrijven
+en replay controleren de exact opgegeven voorganger. Geen tweede geheugenplatform.
+
+16 unieke gerichte controles geslaagd met aparte echte PostgreSQL en gescripte
+gespreksuitvoering. Drie proefopzetfouten blijven in de oorspronkelijke logs.
+Onafhankelijke bron-GO; zes exacte modules geïnstalleerd in kern en werker.
+Beide gezond;339 overige Pythonbronnen per image, omgeving, mounts en gegevens
+behouden. De eerste updateaanroep miste het bestaande tools-package en faalde
+vóór dispatch; daarna één moduleaanroep en één daadwerkelijke update, geen rollback.
+Nul Eva-modelaanvragen voor bronchecks en installatie; ontwikkelcredits onbekend.
+
+Nu één afzonderlijke gewone driebeurtenproef voorbereiden op deze bevroren versie:
+voorlopige interpretatie/verwachting, echte gebruikerscorrectie/uitkomst, daarna
+een nieuwe sessie met aangepast antwoord. Eigen synthetische persoon, aparte
+database/Hindsight-bank, Astra/medium en vooraf gebonden meting inclusief helpers.
+Geen productieprivégegevens, gesloten proefherhaling of concurrentenserie.
+Echte modelkeuze, Hindsight-retentie, later gedrag en gezinsacceptatie zijn nog
+niet aangetoond; HUE1.1/HUE3.1 en volledige AIDE² blijven open.
+
+Het gehele goal blijft actief.39/48 oorspronkelijke en39/54 totale kleine
+afrondingen behouden. Telegram standaard Eva2, Eva1 alleen /eva1. Het aparte
+Tuya-onderzoek is nog niet afgerond; migratie pas na Jaaps akkoord.
+Spraak geparkeerd; ongebruikte Docker Desktop ongemoeid.
+Bewijs:eva2/evidence/product/hue-learning-connection-installed-20261012.json.
+Bronreview:eva2/reviews/hue-learning-connection-source-review-20261012.json.
+
+## Historisch 12 oktober — Telegram en grote HA-leescontext hersteld en geïnstalleerd
 
 Nieuwe gewone Telegramtekst en foto's gaan naar Eva2; Eva1 alleen met /eva1.
 De routing is geïnstalleerd. Geen automatische Eva1-fallback.
