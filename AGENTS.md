@@ -15,14 +15,17 @@ is opgelost. Geen bewezen exclusieve oorzaak, afgeronde kandidaatbeoordeling of
 kwaliteitswinst. De drie gesloten pogingen en zeven aanvragen/84.836 tokens blijven
 exact bewaard. Hetzelfde codevoorstel is behouden; geen nieuwe kandidaat.
 
-Nu: het bewaarde voorstel via een gewone hervatting binnen het resterende cumulatieve
-verbruik beoordelen. Alleen onafhankelijk bewezen winst toepassen en later gebruiken.
+Nu: twee agents bereiden het vervolg van hetzelfde bewaarde voorstel voor. De ene
+sluit de gewone hervatting aan op de bestaande opdracht en het resterende cumulatieve
+verbruik; de andere controleert de exacte voorbereiding onafhankelijk. De echte
+kandidaatbeoordeling is nog niet gestart. Daarna alleen bewezen winst toepassen en
+later gebruiken.
 Geen gesloten dispatch heractiveren, nieuwe concurrentenserie of gewijzigde criteria.
 Het volledige projectgoal, leercyclus en AIDE² blijven actief; geen hoofdafronding.
 39/48 historische afrondingen en acceptaties behouden; spraak geparkeerd.
 Geen handeling van Jaap nodig; creditkosten en ontwikkelcredits onbekend.
 
-Dashboardinhoud gecontroleerd: 2026-10-12T05:44:51.354941+00:00.
+Dashboardinhoud gecontroleerd: 2026-10-12T05:50:36.498091+00:00.
 Bewijs: eva2/evidence/product/native-work-host-usage-import-closure-installed-20261012.json.
 Bronreview: eva2/reviews/native-work-host-usage-closure-source-review-20261012.json.
 Installatiereview: eva2/reviews/native-work-host-usage-closure-installed-review-20261012.json.

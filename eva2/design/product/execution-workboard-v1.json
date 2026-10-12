@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T05:44:51.354941+00:00",
+        "checkedAt": "2026-10-12T07:50:36.498115+02:00",
         "deliveries": [
           {
             "id": "native-work-host-usage-import-closure-installed-20261012",
@@ -4944,15 +4944,15 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · kandidaatbeoordeling hervatten",
+          "title": "Zelfverbetering · vervolgbeoordeling voorbereiden",
           "state": "in_progress",
-          "phase": "host_usage_import_installed_candidate_assessment_pending",
-          "activeExecution": true,
+          "phase": "candidate_assessment_after_import_resume_preparation",
+          "activeExecution": false,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De ontbrekende beoordelingsmodule is geïnstalleerd en de echte hostimport werkt. Dezelfde kandidaat moet nu worden beoordeeld; nog geen bewezen kwaliteitswinst.",
-          "detail": "De ontbrekende bestaande contractmodule is aangesloten op de beoordelingsdienst, zonder kernimages of productgedrag te wijzigen. 37 andere hostbronnen en alle eerdere pogingen/verbruik behouden; dienst, kern en werker gezond. Nog af te maken: de echte beoordeling van het bewaarde voorstel, onafhankelijke eindbeoordeling, uitsluitend bewezen winst toepassen en later gebruiken. Geen nieuwe concurrentenserie of handeling van jou nodig.",
+          "summary": "Twee agents werken aan het vervolg: één bereidt de hervatting van het bestaande codevoorstel voor, één beoordeelt die voorbereiding onafhankelijk. De kandidaatbeoordeling zelf is nog niet gestart.",
+          "detail": "Hetzelfde bewaarde codevoorstel wordt hergebruikt. De ontbrekende beoordelingsmodule is geïnstalleerd. De uitvoerder sluit het vervolg aan op de bestaande opdracht en het resterende verbruik; de reviewer controleert de exacte voorbereiding. Daarna volgt de echte beoordeling. De drie eerdere pogingen blijven bewaard: zeven modelaanvragen en 84.836 gemeten tokens. Nog geen bewezen kwaliteitswinst, toepassing of later gebruik.",
           "source": "eva2/evidence/product/native-work-host-usage-import-closure-installed-20261012.json",
           "doneWhen": "Eva verbetert haar werkaanpak op echte opdrachten; de onafhankelijke beoordeling bevestigt betere resultaten of minder hulp. Alleen bewezen winst wordt toegepast en bij later gewoon werk gebruikt.",
           "implementationStatus": {
@@ -5045,9 +5045,12 @@
             "candidateAssessmentImportClosureInstalled": true,
             "candidateAssessmentImportClosureSourceReview": "GO",
             "candidateAssessmentImportClosureInstallationReviewPending": false,
-            "candidateAssessmentImportClosureInstallationReview": "GO for exact installed technical dependency; no new input or quality approval"
+            "candidateAssessmentImportClosureInstallationReview": "GO for exact installed technical dependency; no new input or quality approval",
+            "candidateAssessmentAfterImportPreparationInProgress": true,
+            "candidateAssessmentAfterImportInputReviewPending": true,
+            "candidateAssessmentAfterImportDispatched": false
           },
-          "remaining": "Bind a genuine ordinary continuation of the existing candidate within retained cumulative resources. Assess existing candidate, independently judge any gain, apply only proved gain and demonstrate later use.",
+          "remaining": "Voorbereiding en onafhankelijke controle afronden; hetzelfde voorstel beoordelen. Alleen bewezen winst toepassen en later gebruiken.",
           "review": "eva2/reviews/native-work-candidate-assessment-resume-input-review-20261012.json",
           "reviewSha256": "e4eba4d31dfed645b9db7a5497074906b9a8fc3db0187a4086beb8aeecf1ee1f",
           "ordinaryClientInstalledReview": "eva2/reviews/native-work-client-scope-installed-review-20261012.json",
@@ -5056,7 +5059,18 @@
           "preparationReviewSha256": "c27d99d51246b61fb4da749583c4e1752e6c3af653aaca3bc6dfee55fa9f12f5",
           "typedResumeInstalledReview": "eva2/reviews/native-work-typed-resume-installed-review-20261012.json",
           "resultReview": "eva2/reviews/native-work-host-usage-closure-installed-review-20261012.json",
-          "resultReviewSha256": "aee8ac6212658e3e8c3f67b849d576eedaf4bd78324afa09451a4a74c921cbfe"
+          "resultReviewSha256": "aee8ac6212658e3e8c3f67b849d576eedaf4bd78324afa09451a4a74c921cbfe",
+          "currentActivity": {
+            "checkedAt": "2026-10-12T07:50:36.498115+02:00",
+            "executionStarted": false,
+            "coordinator": "/root",
+            "executor": "/root/eva1_memory_transfer",
+            "executorTask": "Het bestaande codevoorstel en resterend cumulatief verbruik aansluiten op de hervatting.",
+            "reviewer": "/root/product_execution_memory_review",
+            "reviewerTask": "Onafhankelijke controle van de exacte voorbereiding vóór uitvoering.",
+            "newModelRequestsThisPreparation": 0,
+            "note": "Dit is gecontroleerde, opgeslagen voortgang; geen live agenttelemetrie."
+          }
         },
         "next": {
           "title": "Bewezen verbetering toepassen en later gebruiken",
@@ -5073,7 +5087,7 @@
           "detail": "De echte zelfverbetering en het latere gebruik zijn werk voor Codex. Jouw gezinsbeoordeling blijft afzonderlijk."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T05:44:51.354941+00:00",
+        "reviewedAt": "2026-10-12T07:50:36.498115+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5172,10 +5186,10 @@
             "fullAide2Completed": false
           }
         },
-        "note": "Opgeslagen projectvoortgang; geen live agentstatus. Gebouwd of beoordeeld betekent niet geïnstalleerd of door jou geaccepteerd."
+        "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T05:44:51.354941+00:00",
-      "checkedAt": "2026-10-12T05:44:51.354941+00:00",
+      "reviewedAt": "2026-10-12T07:50:36.498115+02:00",
+      "checkedAt": "2026-10-12T07:50:36.498115+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11468,7 +11482,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T05:11:38.200903+00:00",
+        "checkedAt": "2026-10-12T07:50:36.498115+02:00",
         "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Persoonlijkheid en geheugenbasis geaccepteerd; leercyclus, zelfstandig initiatief en volledige zelfverbetering nog open.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11556,7 +11570,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T05:44:51.354941+00:00",
+      "lastUpdatedAt": "2026-10-12T07:50:36.498115+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
