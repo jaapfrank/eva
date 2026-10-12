@@ -1,6 +1,26 @@
+## Actueel 12 oktober — werknotities in algemene onderzoekroute geïnstalleerd
+
+Eén bestaande providermodule is na gerichte controles en onafhankelijke bronreview
+in kern en werker geïnstalleerd; beide zijn gezond. De geautoriseerde lokale
+leesindex gebruikt een verliesvrije rijindeling. Na vier lokale reads sinds
+bewaarde voortgang legt Eva zelf bevindingen vast met het bestaande
+save_work_progress; daarna komen de gewone tools terug. Geen Tuya-script,
+nieuwe tools, gewijzigde bevoegdheden of verhoogde verbruiksgrenzen.
+
+Gen11 blijft mislukt met input_budget_exceeded en 1.018.409 bekende tokens.
+Het voorstel en de voortgang zijn daarin niet afgerond. De correctie is geen
+bewijs dat het voorstel nu af is. Vervolg alleen de oorspronkelijke lezende
+opdracht met bewaarde gegevens; uitvoering van migratie vereist apart akkoord.
+Geen nieuwe vergelijking, spraak of handmatig voorstel door Codex.
+Het volledige goal blijft actief; 39/48 oorspronkelijke en 39/54 uitgebreide
+taakafrondingen blijven behouden. Dashboard en GitHub gebruiken deze echte stand.
+
+Bewijs: eva2/evidence/product/research-working-notes-installed-20261012.json.
+Review: eva2/reviews/research-working-notes-source-review-20261012.json.
+
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — bronselectie werkt; eigen voorstel nog niet af
+## Historisch 12 oktober — bronselectie werkt; eigen voorstel nog niet af
 
 Jaaps opdracht blijft dat Eva zelf het onderzoek en voorstel afmaakt. De algemene
 volledige bronbewaring en lokale JSON-selectie zijn geïnstalleerd en daadwerkelijk

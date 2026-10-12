@@ -1,0 +1,65 @@
+{
+  "contract": "EvaResearchWorkingNotesSourceCorrection/v1",
+  "recordedAt": "2026-10-12T21:28:47.764334+00:00",
+  "status": "built_not_installed",
+  "wholeProjectGoal": "active",
+  "userResultComplete": false,
+  "completedProductTasksChanged": false,
+  "problem": "A completed source selection was repeatedly reread without updated findings; the next full model envelope exceeded the existing input budget.",
+  "baselineResult": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json",
+    "sha256": "8e17075064c1f02ed68f0e648a18b9c1a2c54462b639a35806ea4fbbfcef8e7f"
+  },
+  "sourceFreeze": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/frozen-source.private.json",
+    "sha256": "07da2c40e6f79173da673aef91a9e50ac50bda6af4c12b44d311815092796e5b"
+  },
+  "build": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/build-result.private.json",
+    "sha256": "3a6c06a6bcfb4a4fb2007f4b9b14c5a6e2efe775435492ea696cf8214fa804a8"
+  },
+  "changedRoute": "Existing stateless conversation-provider receipt context in the general digital worker.",
+  "changes": [
+    "Lossless column layout for deferred authorized local-read metadata; preserve every call, reader, source version, selector, filter and observed range. Latest result, errors, progress and external-effect receipts retain their existing presentation.",
+    "In an already planned task with save_work_progress offered, after at least four verified pure local reads since the last saved progress and a current local-read result, the next offered tool is the existing work-notes save. The model writes grounded findings; host creates none. After storage the original catalog returns."
+  ],
+  "preserved": [
+    "Original read-only owner task and approval condition",
+    "Provider roles",
+    "Stored source and receipt bytes",
+    "Runtime budgets and quotas",
+    "Current prompt, identity, recalled facts and task status",
+    "No domain-specific migration logic"
+  ],
+  "checks": {
+    "firstRun": {
+      "source": "retained unified exec output chunk76167b",
+      "passed": 48,
+      "failed": 2,
+      "elapsedSeconds": 13.32,
+      "failure": "Two historical assertions parsed the v2 read index as v1 dictionaries."
+    },
+    "targetedRepair": {
+      "source": "retained unified exec output chunkb5c1ea",
+      "passed": 2,
+      "deselected": 48,
+      "elapsedSeconds": 5.22,
+      "repair": "Independent decoder retains original selectors/source/range assertions."
+    },
+    "build": {
+      "services": 2,
+      "changedPythonModulesPerService": 1,
+      "unchangedPythonModulesPerService": 344,
+      "importsPassed": true
+    }
+  },
+  "boundaries": [
+    "Model-free tests establish context preservation and checkpoint routing, not natural findings quality or completed proposal.",
+    "Known-envelope measurement is not the actual future recalled context.",
+    "No new native execution or provider requests in these checks.",
+    "No claimed general superiority or product completion."
+  ],
+  "modelRequests": 0,
+  "nativeActions": 0,
+  "creditCost": null
+}

@@ -1,0 +1,92 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "createdAt": "2026-10-12T21:30:02.267798+00:00",
+  "verdict": "GO",
+  "scope": "Exacte algemene werknotities-/modelcontextbron en beperkte bronpublicatie; installatie van deze ene module toegestaan.",
+  "bindings": {
+    "freeze": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/frozen-source.private.json",
+      "sha256": "07da2c40e6f79173da673aef91a9e50ac50bda6af4c12b44d311815092796e5b"
+    },
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "d3c1ef8634560505c6681ce5e8822edf4a827f1104cef74911a4436c51636d07"
+    },
+    "tests": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/model/test_catalogue_model_view.py",
+      "sha256": "7a01b31baae3e8dd137034820f2f01e5723af41011678fc42bed414d72a9e4a5"
+    },
+    "sourceFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-source-correction-20261012.json",
+      "sha256": "c000baac12aa92dab082dfa5593b4fd63896d6fef8dc97d65259a18892c1e60c"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/build-result.private.json",
+      "sha256": "3a6c06a6bcfb4a4fb2007f4b9b14c5a6e2efe775435492ea696cf8214fa804a8"
+    },
+    "closedGen11Facts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json",
+      "sha256": "8e17075064c1f02ed68f0e648a18b9c1a2c54462b639a35806ea4fbbfcef8e7f"
+    }
+  },
+  "comparedWithApprovedModelSha256": "2a6541a52b9a73252311647807ff9329bdd8ff3c58f28634c3e04af71eae4d26",
+  "findings": [
+    "Causaal passend bij de gesloten gen11-waarneming: herhaald teruglezen zonder nieuwe voortgangsnotities en input_budget_exceeded. Dit motiveert de gerichte aanpak; het bewijst geen volledige oorzaak of toekomstige oplossing.",
+    "De v2-kolomindex verandert uitsluitend presentatie. Iedere call, reader, sourceversie, selector, query/filterwaarde, pointer en waargenomen range blijft reconstrueerbaar. Afzonderlijke ingresses blijven apart; v1 blijft bij kleinere representaties.",
+    "De notitiefase vereist een aangeboden save_work_progress, een eerdere verified save, een nieuwste verified pure lokale read en minstens vier zulke reads sinds die save. Alleen die bestaande tool wordt tijdelijk aangeboden; de inhoud schrijft het model.",
+    "Een verified opslagreceipt reset de teller en herstelt de gewone catalogus. De bestaande progressadapter controleert eigenaar/bron, stap-ID-behoud en replay en meldt task_completion_verified=false; opslag wordt geen taakbewijs.",
+    "Raw receipts, actuele resultaten, fouten/UNKNOWN, progress, bronankers, invoer-/usagegates, stopcontrole, grants en runtimequotas blijven behouden. Geen Tuya-logica, handmatig voorstel, nieuwe externe dispatch of gewijzigd doelcriterium."
+  ],
+  "testEvidence": {
+    "kind": "Reported retained unified exec outputs; no raw pytest log supplied and no reviewer rerun.",
+    "firstRun": {
+      "chunk": "76167b",
+      "passed": 48,
+      "failed": 2,
+      "seconds": 13.32
+    },
+    "targetedRepair": {
+      "chunk": "b5c1ea",
+      "passed": 2,
+      "deselected": 48,
+      "seconds": 5.22
+    },
+    "qualification": "50 unieke nodes slagen over de twee gerapporteerde runs. De twee oude v1-formatassertions gebruiken nu de gelezen onafhankelijke v2-decoder; oorspronkelijke waarden-/bron-/rangeassertions behouden.",
+    "reviewedCoverage": "Exacte indexreconstructie inclusief query/filter/scalar/escaped pointers en meerdere ingresses; modelgeschreven checkpoint en catalogusherstel; korte/ongeplande/niet aangeboden/fout/externe/saved varianten.",
+    "preparationFailure": "Root meldt een transient newline-syntaxfout gecorrigeerd voor de eerste pytest; geen actuele bronfout."
+  },
+  "buildBindings": {
+    "core": {
+      "beforeImage": "sha256:f64e568f6b704f7d66587816ef0188e2668f21e78bcb30aff5576e8fa4ce4a5b",
+      "candidateImage": "sha256:e8a0d4990b5314f05badc68260a7ff3e6d1e4484b01fda5afe835038f5003a8f",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "importsPassed": true
+    },
+    "delegated-work-worker": {
+      "beforeImage": "sha256:ae05ecc6e62c6d8c503c3c1a3e126fb491604fa3026ff127e29da663120c05cb",
+      "candidateImage": "sha256:5ca885a18bfb58faeb4d0fda44c9040bd49cd242c21e96bf9055dc3706a084af",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "importsPassed": true
+    }
+  },
+  "blockers": [],
+  "boundaries": [
+    "GO betreft exacte bron, bijbehorende imagebouw en veilige bronpublicatie; huidige status built_not_installed is behouden.",
+    "Geen natuurlijk geschreven bevindingenkwaliteit, volledig actuele inputfit, providerbesparing, afgerond voorstel of algemene gedragswinst bewezen.",
+    "Deze review geeft geen nieuwe native-invoertoelating of authority; de oude gesloten gen11-uitkomst en oorspronkelijke opdrachtvoorwaarden blijven behouden."
+  ],
+  "sourceInstallationAllowed": true,
+  "publicationAllowed": true,
+  "newInputAuthority": false,
+  "taskCompleted": false,
+  "wholeProjectGoal": "active",
+  "reviewActions": {
+    "fileReads": true,
+    "tests": 0,
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseOperations": 0
+  }
+}

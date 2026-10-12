@@ -1021,8 +1021,21 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T21:03:10.474387+00:00",
+        "checkedAt": "2026-10-12T21:32:47.719279+00:00",
         "deliveries": [
+          {
+            "id": "research-working-notes-installed-20261012",
+            "title": "Algemene onderzoekroute: bevindingen bewaren en kleiner leesoverzicht",
+            "date": "2026-10-12T21:32:47.719279+00:00",
+            "status": "installed",
+            "statusLabel": "Geïnstalleerd",
+            "summary": "Werknotities tijdens langer onderzoek en verliesvrije bronindex zijn geïnstalleerd. Het migratievoorstel is nog niet af.",
+            "detail": "Gerichte bronreview en controles geslaagd; kern en werker gezond. Deze installatie telt niet als nieuwe complete productfunctie.",
+            "evidence": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-installed-20261012.json",
+            "review": "/home/administrator/project/Eva2/eva2/reviews/research-working-notes-source-review-20261012.json",
+            "originalOwnerScopePreserved": true,
+            "userResultComplete": false
+          },
           {
             "id": "structured-stored-source-selection-ordinary-result-20261012",
             "date": "2026-10-12T21:10:18.423190+00:00",
@@ -5398,7 +5411,7 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "ordinary_research_input_context_diagnosis",
+          "phase": "ordinary_research_continuation_preparation",
           "taskId": "work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad",
           "linkedTaskIds": [
             "TL-001",
@@ -5407,18 +5420,18 @@
           ],
           "activeExecution": true,
           "owner": "/root",
-          "executor": "Codex · algemene contextoorzaak herstellen",
+          "executor": "Codex · eigen vervolguitvoering van Eva voorbereiden",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva heeft de gerichte bronselectie uitgevoerd, maar het eindvoorstel niet afgemaakt. De vervolguitvoering stopte op input_budget_exceeded.",
-          "detail": "19 gemeten responses en 19 tools; 1.018.409 bekende tokens. Geen nieuw eindbestand of bijgewerkte voortgang. Er loopt geen nieuwe modeluitvoering.",
+          "summary": "De algemene leesindex en opslag van onderzoeksbevindingen zijn geïnstalleerd. Eva moet het voorstel nog zelf afmaken.",
+          "detail": "Eén module in kern en werker vervangen; beide gezond. Geen nieuwe Eva-modeluitvoering gestart. Het eerdere input_budget_exceeded en onvoltooide voorstel blijven zichtbaar.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/structured-stored-source-selection-ordinary-result-review-20261012.json",
           "previousResultReviewSha256": "d66d4b9e1de90b4186e7c8e6c37637977810d275be76616549de37e790e1f84a",
-          "implementationStatus": "Twee algemene modules geïnstalleerd; kern en werker gezond. Geen volledig voorstel of nieuwe hoofdafronding.",
-          "currentActivity": "Exact bewaarde context en herhaalde lokale reads modelvrij analyseren; eerst de oorzaak herstellen.",
-          "checkedAt": "2026-10-12T21:03:10.474387+00:00",
+          "implementationStatus": "Verliesvrije leesindex en bestaande werknotitie-fase geïnstalleerd; voorstel nog niet af.",
+          "currentActivity": "Dezelfde oorspronkelijke opdracht voorbereiden vanuit het bewaarde werk, met de geïnstalleerde correctie.",
+          "checkedAt": "2026-10-12T21:32:47.719279+00:00",
           "remaining": [
             "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
             "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."

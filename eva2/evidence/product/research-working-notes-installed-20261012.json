@@ -1,0 +1,74 @@
+{
+  "contract": "EvaResearchWorkingNotesInstalled/v1",
+  "installedAt": "2026-10-12T21:32:47.719279+00:00",
+  "status": "installed",
+  "wholeProjectGoal": "active",
+  "userResultComplete": false,
+  "completedProductTasksChanged": false,
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-source-correction-20261012.json",
+    "sha256": "c000baac12aa92dab082dfa5593b4fd63896d6fef8dc97d65259a18892c1e60c"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/research-working-notes-source-review-20261012.json",
+    "sha256": "c9d0fe73b7ac9daee8e0c50850ba5da5e4c9f1a54df318c55c34c97011466a3e"
+  },
+  "sourceFreeze": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/frozen-source.private.json",
+    "sha256": "07da2c40e6f79173da673aef91a9e50ac50bda6af4c12b44d311815092796e5b"
+  },
+  "runtimeVerification": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/installation-verification.private.json",
+    "sha256": "39f656aa4a471050068822cccace7b62279f1d4d489f033dfd49efdbef9a9561"
+  },
+  "services": {
+    "core": {
+      "image": "sha256:e8a0d4990b5314f05badc68260a7ff3e6d1e4484b01fda5afe835038f5003a8f",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "d3c1ef8634560505c6681ce5e8822edf4a827f1104cef74911a4436c51636d07"
+      },
+      "inspectionSha256": "e94efc950718bfc8207c694ed309677e1893aa7d49bbcd852040cbe994335c65"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:5ca885a18bfb58faeb4d0fda44c9040bd49cd242c21e96bf9055dc3706a084af",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "d3c1ef8634560505c6681ce5e8822edf4a827f1104cef74911a4436c51636d07"
+      },
+      "inspectionSha256": "34fe1490df17cdbc803274adda420cc7b8b899b97ddf2b9cf0f0d484416deea5"
+    }
+  },
+  "actualUpdateDispatches": 1,
+  "modelRequests": 0,
+  "nativeActions": 0,
+  "preserved": [
+    "344 other Python sources per service",
+    "Environment, mounts and process configuration",
+    "Data and prior failure evidence",
+    "Original owner task, role and approval conditions",
+    "Existing allowance, quotas and stopping"
+  ],
+  "boundaries": [
+    "This proves installation and model-free context/routing checks, not actual proposal completion or improved research quality.",
+    "No next ordinary continuation has started in this record.",
+    "Credit costs and full historical task usage remain unknown."
+  ],
+  "creditCost": null
+}

@@ -1145,6 +1145,76 @@ class PydanticConversationModel:
 
 
     @staticmethod
+    def _deferred_read_index(sources: list[dict[str, Any]], reads: list[dict[str, Any]]) -> dict[str, Any]:
+        """Share field names and pointers, preserving every authorized read value."""
+        original = {"contract": "EvaDeferredLocalReadsModelIndex/v1",
+                    "action": "use_connector_tool", "sources": sources, "reads": reads}
+        pointers: list[str] = []
+        layouts: list[list[str]] = []
+
+        def pointer_index(pointer: str) -> int:
+            if pointer not in pointers:
+                pointers.append(pointer)
+            return pointers.index(pointer)
+
+        rows = []
+        for read in reads:
+            selections = []
+            for selection in read["selections"]:
+                keys = sorted(selection)
+                if keys not in layouts:
+                    layouts.append(keys)
+                selections.append([layouts.index(keys), *[
+                    pointer_index(selection[key]) if key == "pointer" else selection[key]
+                    for key in keys]])
+            ranges = [[pointer_index(page["pointer"]), page["offset"],
+                       page["next_offset"], page["selection_length"]]
+                      for page in read["ranges"]]
+            rows.append([read["call_id"], read["source_index"], selections, ranges])
+        ingresses = {source["source_ingress_sha256"] for source in sources}
+        columns = ["reader_tool_id", "source_ingress_sha256", "source_version"]
+        shared = {}
+        if len(ingresses) == 1:
+            shared = {"source_ingress_sha256": next(iter(ingresses))}
+            columns.remove("source_ingress_sha256")
+        compact = {"contract": "EvaDeferredLocalReadsModelIndex/v2",
+                   "action": "use_connector_tool", "layout": "columns_v1", **shared,
+                   "source_columns": columns,
+                   "sources": [[source[key] for key in columns] for source in sources],
+                   "pointer_table": pointers, "selection_layouts": layouts,
+                   "range_columns": ["pointer_index", "offset", "next_offset", "selection_length"],
+                   "read_columns": ["call_id", "source_index", "selections", "ranges"],
+                   "reads": rows}
+        # Tiny histories keep the simpler dictionary representation.
+        if len(canonical_json_bytes(compact)) >= len(canonical_json_bytes(original)):
+            return original
+        return compact
+
+    @staticmethod
+    def _research_checkpoint_due(receipts: tuple[ConversationActionReceipt, ...],
+                                 available_actions: tuple[str, ...]) -> bool:
+        """Use the existing working notes before another long stateless read chain."""
+        if "save_work_progress" not in available_actions or not receipts:
+            return False
+
+        def local_read(receipt: ConversationActionReceipt) -> bool:
+            return (receipt.call.name == "use_connector_tool"
+                    and receipt.output.get("status") == "verified"
+                    and receipt.output.get("source") == "stored_connector_result"
+                    and receipt.output.get("external_state_verified") is False)
+
+        if not local_read(receipts[-1]):
+            return False
+        last_checkpoint = next((i for i in range(len(receipts) - 1, -1, -1)
+                                if receipts[i].call.name == "save_work_progress"
+                                and receipts[i].output.get("status") == "verified"), None)
+        # Only an already planned background task uses this checkpoint phase.
+        # A short task, ordinary conversation, error or external effect retains
+        # all its original choices. This changes neither grant nor action quota.
+        return (last_checkpoint is not None
+                and sum(local_read(r) for r in receipts[last_checkpoint + 1:]) >= 4)
+
+    @staticmethod
     def _receipt_context_selection(
         receipts: tuple[ConversationActionReceipt, ...], *, defer_local_reads: bool = False,
     ) -> tuple[tuple[ConversationActionReceipt, ...], str]:
@@ -1262,10 +1332,13 @@ class PydanticConversationModel:
                 "Het nieuwste resultaat, fouten, acties, voortgang en benodigde "
                 "zichtbare bronankers blijven aanwezig. De gedeelde brontabel geeft "
                 "per source_index de reader voor use_connector_tool; arguments_json "
-                "is de JSON van {selections: <selections van deze read>}.\n"
-                + canonical_json_bytes({"contract": "EvaDeferredLocalReadsModelIndex/v1",
-                    "action": "use_connector_tool", "sources": deferred_sources,
-                    "reads": overviews}).decode("utf-8")
+                "is de JSON van {selections: <selections van deze read>}. "
+                "Bij layout columns_v1 volgen leesrijen read_columns en bronrijen "
+                "source_columns. Selectierijen beginnen met hun selection_layouts-index; "
+                "pointerwaarden verwijzen naar pointer_table. Bereiken volgen range_columns. "
+                "Een source_ingress_sha256 op indexniveau geldt voor alle bronrijen.\n"
+                + canonical_json_bytes(PydanticConversationModel._deferred_read_index(
+                    deferred_sources, overviews)).decode("utf-8")
             )
             return selected, note
         note = (
@@ -1799,6 +1872,12 @@ class PydanticConversationModel:
         if read_overview:
             prior_actions = selected_receipts[:-1]
             self_context = (*self_context, read_overview)
+        checkpoint_due = self._research_checkpoint_due(receipts, available_actions)
+        if checkpoint_due:
+            # One model-authored checkpoint, then the ordinary catalog returns.
+            # The host never invents findings, marks the task complete or acts
+            # externally on behalf of this checkpoint.
+            available_actions = ("save_work_progress",)
         # The runtime identifies exact duplicate gateway descriptors that remain
         # accessible through the authorized connector discovery route.
         compact_catalog = (
@@ -1861,6 +1940,17 @@ class PydanticConversationModel:
                     "die resultaten steunen. Herhaal geen voltooide actie. Geef pas "
                     "een eindantwoord als het gevraagde klaar is of een concrete "
                     "belemmering verdere uitvoering verhindert."
+                )
+            if checkpoint_due:
+                instructions += (
+                    "\\nJe hebt meerdere lokale bronselecties gelezen sinds je laatste "
+                    "werknotities. Leg nu met save_work_progress de werkelijk gelezen "
+                    "bevindingen, hun bronverwijzingen, concrete resterende vragen en "
+                    "eerstvolgende opleveractie vast voordat je verder onderzoekt. "
+                    "Behoud alle bestaande stap-ID's. Herhaal niet alleen het plan. "
+                    "Vul ontbrekende feiten niet in en sla geen credentials op. "
+                    "Deze opslag bevestigt werknotities, geen extern effect of "
+                    "taakafronding. Na opslag zijn de gewone tools weer beschikbaar."
                 )
             if omitted:
                 instructions += (

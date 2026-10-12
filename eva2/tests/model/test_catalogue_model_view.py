@@ -569,7 +569,7 @@ def test_actual_input_misfit_defers_only_old_scoped_reads_and_rechecks_sdk_envel
     assert json.loads(outputs[failed.call.call_id]["output"]) == failed.output
     assert high_wire["input"][-2:] == low_wire["input"][-2:]
     selected, note = PydanticConversationModel._receipt_context_selection(receipts, defer_local_reads=True)
-    index = json.loads(note.split("\n", 1)[1])
+    index = expand_deferred_read_index(json.loads(note.split("\n", 1)[1]))
     assert index["contract"] == "EvaDeferredLocalReadsModelIndex/v1"
     assert index["action"] == "use_connector_tool"
     assert selected == (progress, failed, RECEIPT)
@@ -585,6 +585,34 @@ def test_actual_input_misfit_defers_only_old_scoped_reads_and_rechecks_sdk_envel
     assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in receipts]) == original
     assert len(requests) == 2  # Two local MockTransport responses; no provider/external action.
 
+
+
+def expand_deferred_read_index(index):
+    """Independent decoder for the model-only column layout."""
+    if index["contract"] == "EvaDeferredLocalReadsModelIndex/v1":
+        return index
+    assert index["contract"] == "EvaDeferredLocalReadsModelIndex/v2"
+    sources = [dict(zip(index["source_columns"], row, strict=True))
+               for row in index["sources"]]
+    if "source_ingress_sha256" in index:
+        for source in sources:
+            source["source_ingress_sha256"] = index["source_ingress_sha256"]
+    reads = []
+    for row in index["reads"]:
+        read = dict(zip(index["read_columns"], row, strict=True))
+        selections = []
+        for selection in read["selections"]:
+            keys = index["selection_layouts"][selection[0]]
+            selections.append({key: index["pointer_table"][value] if key == "pointer" else value
+                               for key, value in zip(keys, selection[1:], strict=True)})
+        ranges = []
+        for values in read["ranges"]:
+            page = dict(zip(index["range_columns"], values, strict=True))
+            page["pointer"] = index["pointer_table"][page.pop("pointer_index")]
+            ranges.append(page)
+        reads.append({**read, "selections": selections, "ranges": ranges})
+    return {"contract": "EvaDeferredLocalReadsModelIndex/v1",
+            "action": index["action"], "sources": sources, "reads": reads}
 
 def test_pressure_deferral_keeps_latest_literal_anchor_unknown_and_invalid_projections():
     from dataclasses import replace
@@ -640,7 +668,7 @@ def test_pressure_index_groups_small_reads_without_losing_selectors_or_source_ve
     assert PydanticConversationModel._receipt_context_selection(history) == (history, "")
     selected, note = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=True)
     assert selected == (RECEIPT,)
-    index = json.loads(note.split("\n", 1)[1])
+    index = expand_deferred_read_index(json.loads(note.split("\n", 1)[1]))
     assert len(index["sources"]) == 2
     assert [r["source_index"] for r in index["reads"]] == [0, 0, 0, 0, 1]
     assert "Hun tekst is nu niet in deze modelcontext" in note
@@ -662,3 +690,99 @@ def test_pressure_index_groups_small_reads_without_losing_selectors_or_source_ve
     assert reader != other_reader
     assert PydanticConversationModel._receipt_model_views(selected)[-1] == PydanticConversationModel._receipt_model_views(history)[-1]
     assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history]) == raw
+
+
+
+def test_column_read_index_preserves_filters_queries_pointer_escaping_and_multiple_ingresses():
+    sources = [{"reader_tool_id": f"own-reader-{i}", "source_ingress_sha256": str(i) * 64,
+                "source_version": str(i + 2) * 64} for i in range(2)]
+    selections = [
+        {"pointer": "/source/~0~1", "offset": 17, "limit": 64, "query": None,
+         "json_filter": {"field": "/active", "equals": False}},
+        {"pointer": "/source/~0~1", "query": "λ🙂", "offset": 19, "limit": 63},
+        {"pointer": "/source/~0~1", "offset": 20, "limit": 62,
+         "json_filter": {"field": "/missing", "equals": None}},
+    ]
+    reads = [{"call_id": f"read-{i}", "source_index": i % 2, "selections": deepcopy(selections),
+              "ranges": [{"pointer": "/source/~0~1", "offset": 17,
+                          "next_offset": 81, "selection_length": 200}]} for i in range(20)]
+    original = {"contract": "EvaDeferredLocalReadsModelIndex/v1",
+                "action": "use_connector_tool", "sources": sources, "reads": reads}
+    frozen = canonical_json_bytes(original)
+    compact = PydanticConversationModel._deferred_read_index(sources, reads)
+    assert compact["contract"] == "EvaDeferredLocalReadsModelIndex/v2"
+    assert "source_ingress_sha256" not in compact  # Distinct ingress values stay distinct.
+    assert canonical_json_bytes(expand_deferred_read_index(compact)) == frozen
+    assert canonical_json_bytes(original) == frozen
+    assert len(canonical_json_bytes(compact)) < len(frozen)
+
+
+def test_research_checkpoint_uses_model_findings_once_then_restores_catalogue(tmp_path):
+    from eva.adapters.postgres.background_work_progress import progress_descriptor
+    from eva.adapters.model.pydantic_conversation import _descriptor_tool
+    from tests.model.test_pydantic_conversation_model import (
+        _adapter, _generate, TOOL, ScriptedPydanticConversation, ScriptedPhase, ScriptedCall,
+    )
+    page, *_ = _coverage_pages()
+    notes = {"steps": [{"id": "original-step", "title": "Existing task", "state": "working",
+                       "evidence": "Earlier evidence."}], "handoff": "Existing next step."}
+    progress = ConversationActionReceipt(ConversationActionCall("old-progress", "save_work_progress", notes),
+        {"status": "verified", "contract": "EvaWorkProgressSaved/v1", "revision": 1,
+         "progress": notes, "task_completion_verified": False})
+    reads = tuple(page(f"read-{i}", offset=i * 200, limit=100) for i in range(4))
+    new_notes = {**notes, "handoff": "Model-authored findings with the read source reference."}
+    call = ConversationActionCall("new-progress", "save_work_progress", new_notes)
+    scripted = ScriptedPydanticConversation((
+        ScriptedPhase.deferred(ScriptedCall(call.call_id, call.name, call.arguments)),
+        ScriptedPhase.text("Continue the existing task."),
+    ))
+    model = _adapter(tmp_path, scripted)
+    descriptor = progress_descriptor()
+    model._conversation_tools[descriptor.name] = _descriptor_tool(descriptor)
+    model._conversation_tool_descriptors[descriptor.name] = descriptor
+    captured = []
+    run = model._run_pydantic_phase
+    def record(**kwargs):
+        captured.append(kwargs)
+        return run(**kwargs)
+    model._run_pydantic_phase = record
+    history = (progress, *reads)
+    frozen = canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history])
+    available = (TOOL.name, descriptor.name)
+    result = _generate(model, available_actions=available,
+                       prior_actions=history[:-1], completed_action=history[-1])
+    assert result.action_call == call and result.text is None
+    assert [tool["name"] for tool in captured[0]["tools"]] == ["save_work_progress"]
+    assert "Herhaal niet alleen het plan" in captured[0]["instructions"]
+    # Host storage remains the existing tool; only its verified receipt resets the phase.
+    saved = ConversationActionReceipt(call, {"status": "verified", "revision": 2,
+        "progress": new_notes, "task_completion_verified": False})
+    _generate(model, available_actions=available, prior_actions=history, completed_action=saved)
+    assert {tool["name"] for tool in captured[1]["tools"]} == set(available)
+    assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history]) == frozen
+
+
+@pytest.mark.parametrize("change", ["short", "unplanned", "not_offered", "failed", "external", "saved"])
+def test_checkpoint_does_not_interfere_with_short_tasks_errors_or_external_effects(change):
+    page, *_ = _coverage_pages()
+    progress = ConversationActionReceipt(ConversationActionCall("old-progress", "save_work_progress", {}),
+                                         {"status": "verified"})
+    reads = tuple(page(f"read-{i}", offset=i * 200, limit=100) for i in range(4))
+    history = (progress, *reads)
+    available = ("save_work_progress", "use_connector_tool")
+    if change == "short":
+        history = (progress, *reads[:3])
+    elif change == "unplanned":
+        history = reads
+    elif change == "not_offered":
+        available = ("use_connector_tool",)
+    elif change in {"failed", "external"}:
+        from dataclasses import replace
+        last = replace(reads[-1], output={**reads[-1].output,
+            "status": "failed" if change == "failed" else "verified",
+            "source": "stored_connector_result" if change == "failed" else "live_connector",
+            "external_state_verified": change == "external"})
+        history = (*history[:-1], last)
+    else:
+        history = (*history, progress)
+    assert not PydanticConversationModel._research_checkpoint_due(history, available)
