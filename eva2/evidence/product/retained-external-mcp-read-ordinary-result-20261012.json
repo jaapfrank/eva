@@ -1,0 +1,111 @@
+{
+  "contract": "EvaRetainedExternalMcpReadOrdinaryResult/v1",
+  "recordedAt": "2026-10-12T19:47:55.678451+00:00",
+  "status": "failed_input_budget",
+  "workId": "work:eva-resume:52fa14eb-aff4-5622-af52-557f11c15c21",
+  "parentWorkId": "work:eva-resume:28829439-9d4d-527e-ac7a-c592af0a050b",
+  "generation": 9,
+  "callId": "child-call:a62d835a-a6fb-4af3-826d-3a3344d1e71e",
+  "oneOrdinaryDispatch": true,
+  "originalTaskScope": "read_only_until_separate_explicit_post_proposal_approval",
+  "manualTuyaProposalWritten": false,
+  "sourceInstalled": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-external-mcp-read-installed-20261012.json",
+    "sha256": "6e6259bc5f869b8acefc33817342ab57bfd0bd613e34d943fc7515f0a225cf4d"
+  },
+  "installedReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/retained-external-mcp-read-installed-review-20261012.json",
+    "sha256": "5075783c094b8a625d1f4ffe361ccf4429dc6a6a7113289de166818c6dfccfac"
+  },
+  "preparation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/continuation-preparation.private.json",
+    "sha256": "978af99f4b89e628f92eb45236cfd27748cd4535d23226e67167c129bbd2c0eb"
+  },
+  "dispatch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/continuation-dispatch.private.json",
+    "sha256": "aee2b3528129550a88ff891dba1d24a863365f29acf3fa996e66317322a9d9cb"
+  },
+  "receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/continuation-receipt.private.json",
+    "sha256": "e2dee4effde05899417181833474b8b3a19260fca389a69f24d2bc0aa7f7b12b"
+  },
+  "workSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/continuation-work-3.private.json",
+    "sha256": "e245921b39e8e944ef12a21720821424b6e7c869b183a58e34f8aa9f71270d7b"
+  },
+  "progressSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/continuation-progress-3.private.json",
+    "sha256": "d96b53f984baead356ce9b93bb6305ea45b6d201b2d71de6077aa55aa90bbf64"
+  },
+  "liveListSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/continuation-live-list-3.private.json",
+    "sha256": "3abcb59d39019a538c992c82edefe096e5d2333906a948c8aebf761a7cd7b1e3"
+  },
+  "accountingObservation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/gen9-single-observation-terminal.private.json",
+    "sha256": "c8fbcd0e4132326edb512c823cd5a5935a78568dab9f458627c76ef2dd067c1a"
+  },
+  "firstTenNewRetainedReceipts": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-external-mcp-read/installation/gen9-ten-receipts-running.snapshot.private.json",
+    "sha256": "2d20da8835ed7e8508f48cae3f132e67c3fdca8b49196beddf77c56f17f1d19f"
+  },
+  "failure": {
+    "errorCode": "budget_exceeded",
+    "errorFingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd",
+    "failureReportAvailable": true,
+    "reportedReason": "input_budget_exceeded",
+    "cause": "Actual remaining context contributor not yet measured; general full-phase input gate rejected the request."
+  },
+  "usage": {
+    "ownerApiMeasurement": "partial",
+    "completedMeasuredModelResponses": 12,
+    "toolCalls": 12,
+    "knownInputTokens": 593798,
+    "knownOutputTokens": 2265,
+    "knownTotalTokens": 596063,
+    "admittedRequestsObserved": 12,
+    "completedResponseRecordsObserved": 12,
+    "unknownOrInflightRequestsInObservedCall": 0,
+    "allObservedLocalStreamsClosed": true,
+    "inputTokensPerRecordedRequest": [
+      47643,
+      45906,
+      49270,
+      48605,
+      49839,
+      49088,
+      49032,
+      48431,
+      50103,
+      50486,
+      52683,
+      52712
+    ],
+    "fullTaskTotal": null,
+    "creditCosts": null,
+    "codexDevelopmentCredits": "unknown"
+  },
+  "resultAvailable": false,
+  "taskOutcomeCompleted": false,
+  "productFunctionCompleted": false,
+  "savedPartialDocument": {
+    "path": "/var/lib/docker/volumes/eva2-workspace-files/_data/tuya-localtuya-migratievoorstel.md",
+    "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+    "bytes": 9240
+  },
+  "partialDocumentUnchanged": true,
+  "delivery": {
+    "state": "unbound",
+    "description": "Geen automatische Telegram-terugmelding gekoppeld."
+  },
+  "boundedFacts": [
+    "Twelve fully measured locally closed model responses; no observed in-flight or unmeasured response in this call.",
+    "Installed external MCP correction did not yield a complete proposal; later full-phase input budget rejection remains.",
+    "Recorded provider usage is a known lower bound, not full task or credit cost."
+  ],
+  "next": "Model-free reconstruct the exact failing request and fallback before further native/provider execution.",
+  "priorFailedRunsAndUnknownPreserved": true,
+  "newComparisonSeries": false,
+  "wholeProjectGoal": "active",
+  "voice": "parked"
+}

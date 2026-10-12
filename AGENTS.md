@@ -21,10 +21,14 @@ het onderscheid via de bestaande admission/event/reader/proofroute. Vier gericht
 checks en de echte bewaarde receipt65→reader-keten slagen;bronreview GO.
 De correctie is geïnstalleerd;kern/werker gezond,344 overige Pythonbronnen en
 configuratie/gegevens per image gelijk. De modelmodule blijft8f30010.
-Onafhankelijke installatiereview GO. De negende gewone generatie is actief:
-work:eva-resume:52fa14eb-aff4-5622-af52-557f11c15c21.
-Nog geen compleet voorstel bevestigd. Geen externe
-handeling blind herhalen of verdere providerpoging zonder nieuwe causale grond.
+Onafhankelijke installatiereview GO. De negende gewone generatie is gestopt
+op input_budget_exceeded: 12 volledige responses, 12 tools, 596.063 bekende
+tokens. APIusage partial; volledig totaal/credits onbekend. Alle 12 waargenomen
+streams gesloten. Het tussenvoorstel blijft ongewijzigd; geen volledig voorstel.
+Eerst de exacte geweigerde aanvraag en fallback modelvrij reconstrueren. Geen
+nieuwe betaalde poging zonder causale correctie en geen handmatig Tuya-voorstel.
+Werk: work:eva-resume:52fa14eb-aff4-5622-af52-557f11c15c21.
+Uitkomst: eva2/evidence/product/retained-external-mcp-read-ordinary-result-20261012.json.
 
 Het gehele projectgoal blijft actief;39/48 oorspronkelijk en39/54 totaal gelijk.
 HUE1.1/HUE3.1 en volledige AIDE² open;geen nieuwe vergelijkingsserie,spraak geparkeerd.

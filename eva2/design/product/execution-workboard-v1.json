@@ -1024,6 +1024,22 @@
         "checkedAt": "2026-10-12T19:40:14.669921+00:00",
         "deliveries": [
           {
+            "id": "retained-external-mcp-read-ordinary-result-20261012",
+            "date": "2026-10-12T19:47:55.678451+00:00",
+            "title": "Eva’s eigen voorstel nog niet af: vervolg gestopt op contextgrens",
+            "state": "failed",
+            "nativeState": "failed",
+            "summary": "Twaalf modelresponses; geen compleet voorstel bevestigd.",
+            "result": "596.063 bekende tokens en 12 tools; alle waargenomen streams gesloten. Tussenvoorstel behouden.",
+            "remaining": "Gerichte modelvrije contextdiagnose en noodzakelijke algemene correctie.",
+            "source": "eva2/evidence/product/retained-external-mcp-read-ordinary-result-20261012.json",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/retained-external-mcp-read-ordinary-result-review-20261012.json",
+            "reviewSha256": "c84ead9f38095b827a5c261a788c9984cb0da01a5195e0bbc2d7e3b2fcdef0ea",
+            "independentReview": "GO voor veilige feitenpublicatie; geen vervolguitvoering of productafronding."
+          },
+          {
             "id": "retained-external-mcp-read-installed-20261012",
             "date": "2026-10-12T19:40:14.669921+00:00",
             "title": "Externe MCP-resultaten correct behouden en teruglezen geïnstalleerd",
@@ -5318,7 +5334,7 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "ordinary_research_external_mcp_corrected_continuation_running",
+          "phase": "ordinary_research_failed_input_budget_model_free_cause",
           "taskId": "work:eva-resume:52fa14eb-aff4-5622-af52-557f11c15c21",
           "linkedTaskIds": [
             "TL-001",
@@ -5329,8 +5345,8 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva vervolgt zelf de leesopdracht. Algemene context- en MCP-correcties geïnstalleerd en onafhankelijk gecontroleerd;volledig voorstel nog niet bevestigd.",
-          "detail": "Alle66 actioncall-ID’s zijn uniek en de modelselector/phase zelf werkt. De exacte native foutfingerprint verwijst naar de bestaande retained-action-lezer;use_connector_tool werd ten onrechte altijd als lokaal behandeld. Productbron wordt gericht gecorrigeerd;geen handmatig voorstel of providerherhaling.",
+          "summary": "Eva’s vervolg is gestopt op de contextgrens. Geen afgerond voorstel; Codex onderzoekt gericht de resterende oorzaak zonder nieuwe modelpoging.",
+          "detail": "Gen9: 12 complete responses en 12 tools, 596.063 bekende tokens. Volledige context geweigerd; precieze resterende bijdrage wordt modelvrij gemeten. Geen handmatig voorstel.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "eva2/evidence/product/tuya-readonly-preserved-proposal-20261012.json",
@@ -5390,18 +5406,19 @@
             "retainedExternalMcpReadIndependentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T19:40:14.669921+00:00",
+            "checkedAt": "2026-10-12T19:47:55.678451+00:00",
             "coordinator": "/root",
             "coordinatorTask": "Algemene taakuitvoering afronden zodat Eva zelf onderzoekt en het voorstel maakt.",
-            "executor": "Eva2 · bestaande taakwerker",
-            "executorTask": "Oorspronkelijk onderzoek afronden,zelf volledig voorstel opslaan en teruglezen.",
+            "executor": "/root/eva1_memory_transfer",
+            "executorTask": "Laatste receipts en volledige geweigerde aanvraag modelvrij reconstrueren; geen nieuwe betaalde uitvoering.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Exacte bron en installatie beoordeeld:GO. Einduitkomst afzonderlijk afwachten.",
-            "modelUsage": "Gen8:15 complete gemeten responses,15tools,601.277 bekende tokens. APIusage partial;totaal/credits onbekend. Alle15 waargenomen streams gesloten.",
-            "note": "Negende gewone generatie actief;één dispatch na exact gereproduceerde en herstelde oorzaak. Geen HA-wijzigingen of handmatig voorstel."
+            "reviewerTask": "Gesloten gen9-feiten onafhankelijk beoordeeld: GO. Geen nieuwe native uitvoering.",
+            "modelUsage": "Gen9: 12 complete gemeten responses, 12 tools, 596.063 bekende tokens. APIusage partial; totaal/credits onbekend. Alle 12 waargenomen streams gesloten.",
+            "note": "Geen native uitvoering actief. Geen HA-wijzigingen, handmatig voorstel of nieuwe vergelijkingsserie."
           },
-          "checkedAt": "2026-10-12T19:40:14.669921+00:00",
-          "remaining": "Gerichte connectorcorrectie afronden en installeren;dan Eva zelf het voorstel laten afronden via dezelfde gewone opdracht."
+          "checkedAt": "2026-10-12T19:47:55.678451+00:00",
+          "remaining": "Exacte contextoorzaak herstellen; daarna Eva zelf het voorstel laten afmaken via dezelfde gewone route.",
+          "nativeRunning": false
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
