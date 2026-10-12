@@ -1,0 +1,89 @@
+{
+  "contract": "EvaIndependentRetainedPageCoverageSourceReview/v1",
+  "reviewedAt": "2026-10-12T18:48:03.652254+00:00",
+  "decision": "GO",
+  "scope": [
+    "exact_frozen_source_installation",
+    "limited_source_facts_publication"
+  ],
+  "bindings": {
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/frozen-source.private.json",
+      "sha256": "deb45973762492a6336ed2ec6fd97b943c65b2217c3c2e2df5263d5558005bd2"
+    },
+    "patch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/source-and-tests.patch.private.diff",
+      "sha256": "675660128418319f18b779a8e0686d98ae02c64a3e0bfb8a355703e709093021"
+    },
+    "checks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/targeted-checks.private.json",
+      "sha256": "9bd24758c07c11a48b1ef38209be391ee551735104f4e860a3345bc934916438"
+    },
+    "measurement": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/final-source-measurement.private.json",
+      "sha256": "6bf7a44dccf60d52a2efe9ba827b661444399274e555c9a3b74cc63635c47df7"
+    },
+    "publicEvidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-page-coverage-correction-20261012.json",
+      "sha256": "dcb1b4d3e5fbb2ed54583b418481d9b98a6e406eae31738e38a5f2a753d1dacc"
+    },
+    "source": {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "fa4c98a29231f98fc6bddf29670eff0017a1a198666b62c291e335ab2401c223"
+    },
+    "tests": [
+      {
+        "path": "/home/administrator/project/Eva2/eva2/tests/model/test_catalogue_model_view.py",
+        "sha256": "f67c979de1f5573a1996c799a91a8ea4b51eb8335282b71b66a8cddf12cf9a1e"
+      },
+      {
+        "path": "/home/administrator/project/Eva2/eva2/tests/connectors/test_connector_results.py",
+        "sha256": "5415a5550cbeb21bf72e441c629f8a69201f372d971294d1e7350c72c93530b6"
+      }
+    ],
+    "unchangedSources": [
+      {
+        "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/postgres/connector_results.py",
+        "sha256": "e1526c2492e850fa173bb4f3b4610e9f85d27ed8871bf8458e778cbea913a008"
+      },
+      {
+        "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+        "sha256": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+      }
+    ]
+  },
+  "findings": [
+    "Selection precedes phase/SDK rendering and applies only to validated, verified local ancestor reads. Every omitted page has exact full character coverage in earlier kept pages under the same scoped reader, ingress, source version, byte length, pointer and selection length.",
+    "Visible coverage overviews preserve original selectors and reference only earlier kept calls. Gaps, changed versions, unknown/error/unvalidated results and current referenced anchors remain. Latest rendered receipt equality is checked with fallback to the original history.",
+    "Raw call/output/proof, accounting, reader actor/source/retention/stop checks and the existing input gate remain unchanged. No new codec, store, catalogue, grant or task-specific execution was added."
+  ],
+  "verification": {
+    "existingUniquePassingNodes": 7,
+    "execution": "Existing frozen logs/JUnit inspected; reviewer ran no tests, model/provider/native calls or database operations.",
+    "preservedFailures": "Three initial fixture failures and the measurement-export failure remain recorded; only the affected test nodes were rerun by the builder.",
+    "localMeasurement": {
+      "originalReceipts": 46,
+      "keptReceipts": 29,
+      "visibleCoverageOverviews": 17,
+      "knownEnvelopeBpeBefore": 63798,
+      "knownEnvelopeBpeAfter": 55760,
+      "includedFrameReserve": 256,
+      "inputGateLimit": 65536,
+      "knownMargin": 9776
+    },
+    "measurementLimit": "Known partial envelope only: actual current recall, recent messages, corrections, browser context and future budget projection were not measured. This does not establish complete live input fit, provider savings or speed improvement."
+  },
+  "publication": {
+    "decision": "GO",
+    "status": "built_source_not_installed",
+    "limitedFactsAccurate": true,
+    "confirmedTaskCompletion": false,
+    "nativeInputAuthorization": false,
+    "fullActualInputFit": false,
+    "providerSavings": false,
+    "newAuthority": false,
+    "originalReadonlyScopeAndOwnerAgreementBeforeEffectsPreserved": true,
+    "wholeProjectGoalRemainsActive": true
+  },
+  "blockers": []
+}

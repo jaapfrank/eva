@@ -527,9 +527,10 @@ def test_alternating_retained_document_and_ha_pages_remain_visible_on_sdk_wire(t
     assert doc_page["next_offset"] == 8192 and doc_page["has_more"] is True
     assert ha_page["text"] == first_ha.output["result"]["pages"][0]["text"]
     assert ha_page["next_offset"] == 8192 and ha_page["has_more"] is True
-    repeated = outputs[repeat_doc.call.call_id]["result"]
-    assert repeated["model_view_call_id"] == first_doc.call.call_id
-    assert repeated["model_view_reference"] == "/result"
+    assert repeat_doc.call.call_id not in outputs
+    selected, overview = PydanticConversationModel._receipt_context_selection((*receipts, RECEIPT))
+    assert selected == (first_doc, first_ha, RECEIPT)
+    assert repeat_doc.call.call_id in overview and overview in requests[0]["instructions"]
     assert outputs[RECEIPT.call.call_id] == PydanticConversationModel._receipt_model_views((*receipts, RECEIPT))[-1]
     assert _encoded([[r.call.arguments, r.output] for r in (*receipts, RECEIPT)]) == original
     # Invalid local-page shape cannot bypass the original body/manifest validator.

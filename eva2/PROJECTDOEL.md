@@ -1,35 +1,32 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — algemene contextcorrectie geïnstalleerd; Eva voert de opdracht uit
+## Actueel 12 oktober — algemene contextselectie geïnstalleerd; Eva werkt
 
-Het gewone vervolg (generatie6,9a073648-799f-517c-929c-290334de28bc) is nu
-afgesloten met input_budget_exceeded:2 complete responses,2 tools,105.564 bekende
-tokens;usage partial,volledig totaal en credits onbekend. Geen eindvoorstel.
-Onderzoek uitsluitend de twee nieuwe receipts en de werkelijke contextovergang
-modelvrij; corrigeer de gedeelde presentatie/selectie vóór een volgende uitvoering.
-Geen identieke betaalde herhaling of voorstel door Codex.
-Bewijs:eva2/evidence/product/retained-context-sharing-ordinary-result-20261012.json.
+Eva moet zelf de oorspronkelijke leesopdracht onderzoeken en haar voorstel maken.
+Codex herstelt de algemene uitvoering en schrijft geen Tuya-voorstel. Eén gerichte
+modelmodule is geïnstalleerd; zeven checks en onafhankelijke bronreview geslaagd.
+Kern en werker gezond,344 overige Pythonbronnen per image en configuratie/gegevens gelijk.
+Volledig eerder gedekte gevalideerde lokale reads krijgen een exact leesoverzicht;
+unieke informatie, fouten, voortgang, nieuwste resultaat en alle raw/bewijs blijven.
+Geen nieuwe reader,codec,store,tool,grant of grenswijziging.
 
-Twee modules van de bestaande taak-/modelroute zijn exact geïnstalleerd.
-16 gerichte controles en onafhankelijke bronreview geslaagd; kern en werker
-gezond,343 overige Pythonbronnen per image en configuratie/gegevens behouden.
-Oudere gevalideerde lokale passages delen exacte overlappende tekst; oorspronkelijke
-call/output/proof en nieuwste bronankers blijven intact. Geen tool-, grant- of grenswijziging.
+Bekende lokale phase:63.798→55.760 BPE inclusief256 reserve,9.776 bekende marge;
+17 gedekte reads via overzicht,29/46 receipts behouden. Werkelijke recall/recent/
+correcties/browsercontext niet gemeten: geen volledige actuele fit, providerbesparing
+of taakafronding bewezen. De zesde generatie blijft failed/input_budget_exceeded:
+2 complete responses,2 tools,105.564 bekende tokens;usage partial,totalen/credits onbekend.
 
-Lokale bekende context:88.991→61.406 BPE inclusief256 reserve;4.130 bekende marge.
-Recall/recent/browser/correcties waren niet gemeten: geen volledige actuele inputfit,
-providerbesparing of gebruikersafronding bewezen. Beide renderpasses lokaal3,430s.
-Alle eerdere fouten, UNKNOWN en het tussenvoorstel blijven behouden. Ontwikkelcredits onbekend.
+Onafhankelijke installatiereview GO. De zevende gewone generatie is gestart:\nwork:eva-resume:5124cce7-bb98-59d8-8ab1-d7a60ab44b20. Nog geen eindresultaat\nof actuele usage bevestigd. Volg haar eigen voortgang en resultaat; geen herdispatch.
+Alle eerdere fouten, UNKNOWN en het tussenvoorstel blijven behouden. Geen handmatig
+afgemaakt voorstel of identieke betaalde herhaling zonder causale correctie.
+Geen HA-migratie/wijziging vóór apart akkoord op Eva's eigen afgeronde voorstel.
+Gehele projectgoal actief;39/48 oorspronkelijk en39/54 totaal blijven gelijk.
+HUE1.1/HUE3.1 en volledige AIDE² open; geen nieuwe vergelijkingsserie,spraak geparkeerd.
 
-Eva moet zelf de oorspronkelijke lezende onderzoeksopdracht vervolgen en haar voorstel
-opslaan/teruglezen. Codex doet geen Tuya-onderzoek namens Eva en schrijft geen voorstel.
-De gewone bronroute en actuele inputgate blijven leidend. Geen HA-wijziging of migratie
-vóór apart akkoord. Gehele projectgoal actief;39/48 oorspronkelijk en39/54 totaal
-ongewijzigd, volledige HUE/AIDE² open. Geen nieuwe vergelijkingsserie; spraak geparkeerd.
-
-Bron:eva2/evidence/product/retained-context-sharing-correction-20261012.json.
-Installatie:eva2/evidence/product/retained-context-sharing-installed-20261012.json.
-Bronreview:eva2/reviews/retained-context-sharing-source-review-20261012.json.
+Bron:eva2/evidence/product/retained-page-coverage-correction-20261012.json.
+Installatie:eva2/evidence/product/retained-page-coverage-installed-20261012.json.
+Bronreview:eva2/reviews/retained-page-coverage-source-review-20261012.json.\nInstallatiereview:eva2/reviews/retained-page-coverage-installed-review-20261012.json.
+Eerdere fout:eva2/evidence/product/retained-context-sharing-ordinary-result-20261012.json.
 
 ## Actueel 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel
 

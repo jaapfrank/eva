@@ -420,7 +420,9 @@ def test_validated_local_literal_slices_keep_unicode_json_facts_and_newest_on_sd
     assert _generate(model, prior_actions=receipts[:-1], completed_action=RECEIPT).text == "Afgerond."
     wire = {part["call_id"]: json.loads(part["output"]) for part in requests[0]["input"]
             if part.get("type") == "function_call_output"}
-    assert tuple(wire[r.call.call_id] for r in receipts) == views
+    selected, overview = PydanticConversationModel._receipt_context_selection(receipts)
+    assert tuple(wire[r.call.call_id] for r in selected) == PydanticConversationModel._receipt_model_views(selected)
+    assert set(wire) == {r.call.call_id for r in selected}
     assert canonical_json_bytes([[item.call.arguments, item.output] for item in receipts]) == raw
     assert len(canonical_json_bytes(list(views))) < len(canonical_json_bytes(list(
         PydanticConversationModel._receipt_model_views(receipts, _literal_slices=False))))
@@ -429,3 +431,98 @@ def test_validated_local_literal_slices_keep_unicode_json_facts_and_newest_on_sd
     unknown = ConversationActionReceipt(plain.call, {**plain.output, "status": "ambiguous"})
     for untrusted in (failed, unknown, ConversationActionReceipt(plain.call, plain.output)):
         assert PydanticConversationModel._receipt_model_views((untrusted, shorter, RECEIPT))[1] == PydanticConversationModel._receipt_model_views((untrusted, shorter, RECEIPT), _literal_slices=False)[1]
+
+
+def _coverage_pages():
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from tests.connectors.test_connector_results import _retained_document, TURN
+    port, timeline, thread, _, authorize = _retained_document()
+    text = "".join(f'{i:05d} λ🙂漢字\n' for i in range(1600))
+    admission = timeline.rows[thread][0].payload["data"]
+    admission["action_arguments"]["content"] = text
+    proof = timeline.rows[thread][-1].payload["data"]["proof"]
+    proof["expected"]["content"] = proof["observed"]["content"] = text
+    document = port._receipt(TURN, timeline.events(thread), 2)
+    reader = document.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda _: nullcontext()
+    route._timeline = lambda _: timeline
+    route._ensure_running = authorize
+    step = [3]
+    def page(call_id, pointer="/call/arguments/content", offset=0, limit=6500, tool_id=reader):
+        call = ConversationActionCall(call_id, "use_connector_tool", {"tool_id": tool_id,
+            "arguments_json": json.dumps({"pointer": pointer, "offset": offset, "limit": limit, "query": None})})
+        step[0] += 1
+        return route.execute(TURN, call, step_index=step[0])
+    return page, port, timeline, thread, reader
+
+
+def test_covered_local_reads_select_exact_earlier_facts_and_keep_latest_on_sdk_wire(tmp_path, monkeypatch):
+    from tests.model.test_pydantic_conversation_model import _phase_transport_adapter, _generate, RECEIPT
+    page, _, _, _, _ = _coverage_pages()
+    anchor = page("coverage-anchor")
+    covered = page("coverage-shorter", offset=1000, limit=4500)
+    extension = page("coverage-extension", offset=6000, limit=5000)
+    combined = page("coverage-union", offset=1000, limit=8192)
+    pointer = page("different-pointer", pointer="/call/arguments", limit=8192)
+    progress = ConversationActionReceipt(ConversationActionCall("checkpoint", "save_work_progress",
+        {"steps": [{"id": "remaining", "state": "in_progress", "title": "Read verified sources"}]}),
+        {"status": "verified", "steps": [{"id": "remaining", "state": "in_progress"}]})
+    receipts = (anchor, covered, extension, combined, pointer, progress, RECEIPT)
+    original = canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in receipts])
+    selected, overview = PydanticConversationModel._receipt_context_selection(receipts)
+    assert selected == (anchor, extension, pointer, progress, RECEIPT)
+    summaries = json.loads(overview.split("\n", 1)[1])
+    assert [r["call"]["call_id"] for r in summaries] == [covered.call.call_id, combined.call.call_id]
+    assert summaries[0]["call"]["arguments"] == covered.call.arguments
+    assert {r["earlier_call_id"] for r in summaries[1]["coverage"]} == {anchor.call.call_id, extension.call.call_id}
+    # All newly introduced characters remain literal or refer to earlier visible literals.
+    views = PydanticConversationModel._receipt_model_views(selected)
+    expanded = expand_receipt_history(selected, views)
+    assert canonical_json_bytes(list(expanded[:-1])) == canonical_json_bytes([r.output for r in selected[:-1]])
+    assert views[-1] == PydanticConversationModel._receipt_model_views(receipts)[-1]
+    model, _, requests, _ = _phase_transport_adapter(tmp_path, monkeypatch, [("final_answer", ("Afgerond.",))])
+    assert _generate(model, prior_actions=receipts[:-1], completed_action=RECEIPT).text == "Afgerond."
+    wire = {part["call_id"]: json.loads(part["output"]) for part in requests[0]["input"]
+            if part.get("type") == "function_call_output"}
+    assert set(wire) == {r.call.call_id for r in selected}
+    assert tuple(wire[r.call.call_id] for r in selected) == views
+    assert overview in requests[0]["instructions"]
+    assert wire[progress.call.call_id] == progress.output
+    assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in receipts]) == original
+
+
+def test_coverage_keeps_gaps_versions_unknown_and_current_result_and_rejects_false_source():
+    from dataclasses import replace
+    from tests.connectors.test_connector_results import TURN
+    from tests.model.test_pydantic_conversation_model import RECEIPT
+    from eva.adapters.model.contracts import ConversationModelError
+    page, port, timeline, thread, reader = _coverage_pages()
+    anchor = page("retained-anchor")
+    gap = page("uncovered-gap", offset=10000, limit=3000)
+    current = page("current-duplicate", offset=1000, limit=4500)
+    missing = page("missing-selection", pointer="/missing")
+    # Same content and pointer, but another retained action version has another scoped reader.
+    timeline.rows[thread][0].payload["data"]["action_call_id"] = "other-source-version"
+    document = port._receipt(TURN, timeline.events(thread), 2)
+    other_reader = document.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    assert other_reader != reader
+    version = page("other-version", tool_id=other_reader)
+    untrusted = tuple(ConversationActionReceipt(ConversationActionCall("untrusted-" + status, anchor.call.name,
+        anchor.call.arguments), {**anchor.output, "status": status}) for status in ("failed", "ambiguous"))
+    receipts = (anchor, gap, version, missing, *untrusted, current)
+    assert PydanticConversationModel._receipt_context_selection(receipts) == (receipts, "")
+    # A failed or unvalidated page never becomes a coverage anchor.
+    unvalidated = ConversationActionReceipt(anchor.call, anchor.output)
+    assert PydanticConversationModel._receipt_context_selection((unvalidated, current, RECEIPT)) == ((unvalidated, current, RECEIPT), "")
+    # The current receipt may have a same-value reference to an earlier receipt: keep that anchor.
+    repeated = page("repeat-current-version", tool_id=other_reader)
+    anchored = (version, repeated, replace(repeated, call=replace(repeated.call, call_id="latest-reference"), model_output=None))
+    assert PydanticConversationModel._receipt_context_selection(anchored) == (anchored, "")
+    injected = deepcopy(current.model_output)
+    injected["ancestor_model_projection"]["source"]["receipt_sha256"] = "0" * 64
+    with pytest.raises(ConversationModelError, match="differs"):
+        PydanticConversationModel._receipt_context_selection((anchor, replace(current, model_output=injected), RECEIPT))

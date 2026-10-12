@@ -1,0 +1,63 @@
+{
+  "contract": "EvaIndependentRetainedPageCoverageInstalledReview/v1",
+  "reviewedAt": "2026-10-12T18:50:56.185385+00:00",
+  "decision": "GO",
+  "scope": "Exact installed source and limited factual publication only",
+  "bindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/installation-verification.private.json",
+      "sha256": "70631724e7d09b737ac8a4db1d376a4710b3a2f92d9f078d025ec7f1c3f00a4a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/build-result.private.json",
+      "sha256": "dceebc26e12a8ca2a346f6b027799e2db638a37b77307e6ac8362b34653bdcf0"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/installation/installation-dispatch-receipt.private.json",
+      "sha256": "6c23ab03ccef05d4f839574b2bebc1f85a47c92dc4854145e22f109951101d69"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-page-coverage-installed-20261012.json",
+      "sha256": "2657a9f5327457513787de2fb6783f8b01a17020e8b1c2cabcd857ec6bf27b19"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/retained-page-coverage-source-review-20261012.json",
+      "sha256": "c2e3516b95379f068f241ffe075585727e047cd92c687122ee8774fda68b3988"
+    }
+  ],
+  "sourceManifestSha256": "deb45973762492a6336ed2ec6fd97b943c65b2217c3c2e2df5263d5558005bd2",
+  "sourceSha256": "fa4c98a29231f98fc6bddf29670eff0017a1a198666b62c291e335ab2401c223",
+  "services": {
+    "core": {
+      "image": "sha256:5254b0b642a3452fd977989fe3a078a1ba48d73c4346de7b590faa95ce68a52b",
+      "inspectionSha256": "bd914fae18da8b4d01955d75e4cbdc379d2a81f9d099cb6ffd8dc9d96e6abd26",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "healthy": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:75b0b4c6e4599bb88ea93730484405c7d4c6927c8fc970f4ab2946b2d16c43bd",
+      "inspectionSha256": "b4ee0c4f12fe04ce502714d80b442d5a29a2263f94df9351bfaff64c2ccfc749",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "healthy": true
+    }
+  },
+  "findings": [
+    "Existing build inventories contain precisely the reviewed model module change; the other 344 Python sources per image are unchanged. Existing installation receipts bind both exact images and source inventories.",
+    "Retained before/installed inspections independently match environment maps, mounts by destination, process settings and executable/arguments. Both recorded containers are healthy and readyz is ready; one actual updater dispatch is recorded.",
+    "The public evidence accurately limits its claim to installation. Scope/source/reader/proof/accounting/input-gate safeguards remain those approved in the source review; historical failures remain preserved."
+  ],
+  "verification": "Read-only inspection of existing artifacts; no new tests, provider/native calls, database operations, runtime probes or installation.",
+  "actualUpdateDispatches": 1,
+  "providerRequestsForBuildAndInstall": 0,
+  "limitations": {
+    "actualFullInputFitProven": false,
+    "providerSavingsProven": false,
+    "taskOutcomeCompleted": false,
+    "newNativeInputAuthority": false,
+    "newProductFunctionCompleted": false
+  },
+  "wholeProjectGoalRemainsActive": true,
+  "blockers": []
+}

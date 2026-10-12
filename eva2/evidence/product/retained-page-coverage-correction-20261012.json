@@ -1,0 +1,89 @@
+{
+  "contract": "EvaRetainedPageCoverageCorrection/v1",
+  "recordedAt": "2026-10-12T18:42:36.121224+00:00",
+  "status": "built_source_not_installed",
+  "purpose": "Restore general ordinary execution so Eva itself uses retained findings and makes proposals. No domain proposal written by Codex.",
+  "sources": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "fa4c98a29231f98fc6bddf29670eff0017a1a198666b62c291e335ab2401c223"
+    }
+  ],
+  "tests": [
+    {
+      "path": "eva2/tests/model/test_catalogue_model_view.py",
+      "sha256": "f67c979de1f5573a1996c799a91a8ea4b51eb8335282b71b66a8cddf12cf9a1e"
+    },
+    {
+      "path": "eva2/tests/connectors/test_connector_results.py",
+      "sha256": "5415a5550cbeb21bf72e441c629f8a69201f372d971294d1e7350c72c93530b6"
+    }
+  ],
+  "frozenManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/frozen-source.private.json",
+    "sha256": "deb45973762492a6336ed2ec6fd97b943c65b2217c3c2e2df5263d5558005bd2"
+  },
+  "targetedChecks": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/targeted-checks.private.json",
+    "sha256": "9bd24758c07c11a48b1ef38209be391ee551735104f4e860a3345bc934916438"
+  },
+  "measurement": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/final-source-measurement.private.json",
+    "sha256": "6bf7a44dccf60d52a2efe9ba827b661444399274e555c9a3b74cc63635c47df7"
+  },
+  "patch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-page-coverage/source-and-tests.patch.private.diff",
+    "sha256": "675660128418319f18b779a8e0686d98ae02c64a3e0bfb8a355703e709093021"
+  },
+  "changes": [
+    "Before rendering the actual model phase, select out only verified pure local-reader receipts whose exact characters are fully covered by earlier visible reads of the same scoped source version, pointer and ranges.",
+    "Present omitted calls and authorized original selectors with their exact earlier coverage; preserve all raw calls, outputs, projections, proofs and accounting.",
+    "Keep unique or partially covered content, changed versions, errors, UNKNOWN, progress, latest result and reference anchors; no new codec, store, window, tool, grant or cap."
+  ],
+  "checks": {
+    "uniqueFinalChecksPassed": 7,
+    "latestWireUnchanged": true,
+    "originalRawCallOutputProjectionUnchanged": true,
+    "retainedFactsExactlyReconstructed": true
+  },
+  "localMeasurement": {
+    "originalReceipts": 46,
+    "retainedReceipts": 29,
+    "coveredReadOverviews": 17,
+    "overviewBytes": 11443,
+    "knownEnvelopeBeforeBpeIncludingFraming": 63798,
+    "knownEnvelopeAfterBpeIncludingFraming": 55760,
+    "existingFramingReserve": 256,
+    "existingPerResponseInputLimit": 65536,
+    "knownMargin": 9776,
+    "renderMilliseconds": {
+      "candidate_phase": 1027,
+      "current_phase": 1762,
+      "selection": 895
+    },
+    "boundary": "local canonical known phase envelope and o200k_base BPE; no provider usage or savings claim",
+    "actualRecallRecentBrowserCorrectionsMeasured": false
+  },
+  "retainedErrors": [
+    "Synthetic extension page below existing 8192-byte projection threshold; enlarged that fixture only.",
+    "Negative source-version fixture made a read through its old reader after changing retained call identity; moved that read before the change.",
+    "Existing Unicode test had a below-threshold page; assert actual selected wire, without assuming it must be omitted."
+  ],
+  "usage": {
+    "evaModelRequestsDuringChecks": 0,
+    "nativeActionsDuringChecks": 0,
+    "databaseWritesDuringChecks": 0,
+    "codexDevelopmentCredits": "unknown"
+  },
+  "limitations": [
+    "Known local envelope omits actual recall, recent messages, corrections and browser state. No guaranteed full future input fit.",
+    "No provider savings, completed proposal, new product function or overall quality advantage yet demonstrated.",
+    "All previous failures, usage UNKNOWN, partial proposal and source/install evidence remain preserved."
+  ],
+  "runtimeInstalled": false,
+  "nativeContinuationStarted": false,
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "newComparisonSeries": false,
+  "manualTuyaProposalWritten": false
+}

@@ -1143,6 +1143,104 @@ class PydanticConversationModel:
             ).hexdigest(), slice_source)
         return tuple(views)
 
+
+    @staticmethod
+    def _receipt_context_selection(
+        receipts: tuple[ConversationActionReceipt, ...],
+    ) -> tuple[tuple[ConversationActionReceipt, ...], str]:
+        """Keep facts, but render fully covered local reads as explicit overviews."""
+        if len(receipts) < 2:
+            return receipts, ""
+        baseline_latest = PydanticConversationModel._receipt_model_views(
+            receipts, _literal_slices=False)[-1]
+        protected: set[str] = set()
+        def protect(value: Any) -> None:
+            if isinstance(value, dict):
+                call_id = value.get("model_view_call_id")
+                if isinstance(call_id, str):
+                    protected.add(call_id)
+                for item in value.values():
+                    protect(item)
+            elif isinstance(value, list):
+                for item in value:
+                    protect(item)
+        protect(baseline_latest)
+        coverage: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
+        selected, overviews = [], []
+        for position, receipt in enumerate(receipts):
+            projection = (receipt.model_output or {}).get("ancestor_model_projection")
+            if (position == len(receipts) - 1 or receipt.call.call_id in protected
+                    or receipt.call.name != "use_connector_tool"
+                    or receipt.output.get("status") != "verified"
+                    or receipt.output.get("source") != "stored_connector_result"
+                    or projection is None):
+                selected.append(receipt)
+                continue
+            # Reuse the exact original body/reader/proof validation. The read-only
+            # model projection does not constitute a new external observation.
+            PydanticConversationModel._receipt_presentation(receipt, ancestor=True)
+            result = receipt.output["result"]
+            pages = result.get("pages") or [result]
+            reader = receipt.call.arguments["tool_id"]
+            ingress = projection["source"]["source_ingress_sha256"]
+            fully_covered, references = True, []
+            for page in pages:
+                group = (reader, ingress, page["sha256"], page["byte_length"],
+                         page["pointer"], page["selection_length"])
+                cursor, end, text = page["offset"], page["next_offset"], page["text"]
+                if page.get("found") is not True or not text:
+                    fully_covered = False
+                    break
+                while cursor < end:
+                    previous = [item for item in coverage.get(group, ())
+                                if item["begin"] <= cursor < item["end"]]
+                    if not previous:
+                        fully_covered = False
+                        break
+                    earlier = max(previous, key=lambda item: item["end"])
+                    stop = min(end, earlier["end"])
+                    if (text[cursor - page["offset"]:stop - page["offset"]]
+                            != earlier["text"][cursor - earlier["begin"]:stop - earlier["begin"]]):
+                        fully_covered = False
+                        break
+                    references.append({"earlier_call_id": earlier["call_id"],
+                        "pointer": page["pointer"], "offset": cursor, "next_offset": stop})
+                    cursor = stop
+                if not fully_covered:
+                    break
+            if fully_covered:
+                overviews.append({"call": {"call_id": receipt.call.call_id,
+                    "name": receipt.call.name, "arguments": receipt.call.arguments},
+                    "status": "verified", "model_context": "fully_covered_by_earlier_scoped_read",
+                    "coverage": references})
+                continue
+            selected.append(receipt)
+            for page in pages:
+                group = (reader, ingress, page["sha256"], page["byte_length"],
+                         page["pointer"], page["selection_length"])
+                coverage.setdefault(group, []).append({"begin": page["offset"],
+                    "end": page["next_offset"], "text": page["text"],
+                    "call_id": receipt.call.call_id})
+        if not overviews:
+            return receipts, ""
+        selected = tuple(selected)
+        # Keep the current result and its literal reference anchors byte-identical.
+        if PydanticConversationModel._receipt_model_views(
+                selected, _literal_slices=False)[-1] != baseline_latest:
+            return receipts, ""
+        note = (
+            "Modelcontextselectie: onderstaande geverifieerde lokale leesreceipts "
+            "zijn alleen als leesoverzicht opgenomen. Hun volledige geselecteerde "
+            "tekens staan al in eerdere zichtbare inhoud van exact dezelfde bewaarde "
+            "bronversie, pointer en bereiken. Dit is geen nieuwe waarneming of wissen "
+            "van bewijs. De oorspronkelijke reader en selectors staan bij elke call; "
+            "gebruik de eerdere inhoud of die bevoegde lokale reader indien nodig. "
+            "Unieke inhoud, echte fouten, voortgang en het nieuwste resultaat blijven "
+            "aanwezig. Raw receipts en hun bewijs zijn ongewijzigd.\n"
+            + canonical_json_bytes(overviews).decode("utf-8")
+        )
+        return selected, note
+
     @staticmethod
     def _phase_admission_body(
         *,
@@ -1656,6 +1754,10 @@ class PydanticConversationModel:
         receipts = prior_actions + (() if completed_action is None else (completed_action,))
         if len({receipt.call.call_id for receipt in receipts}) != len(receipts):
             raise ValueError("conversation action history contains duplicate call IDs")
+        selected_receipts, read_overview = self._receipt_context_selection(receipts)
+        if read_overview:
+            prior_actions = selected_receipts[:-1]
+            self_context = (*self_context, read_overview)
         # The runtime identifies exact duplicate gateway descriptors that remain
         # accessible through the authorized connector discovery route.
         compact_catalog = (
