@@ -53,3 +53,15 @@ De voorgestelde 90% geheugen, betere Brier-score en 70% initiatiefnut zijn ontwi
 Eerst de lopende AIDE²-aansluiting afmaken. Daarna HUE1.1 en HUE3.1 als één menselijke leercyclus verbinden; HUE2.1 en HUE4.1 gebruiken die kringloop voor patroon en gesprek. HUE5.1 sluit initiatief erop aan. HUE6.1 gebruikt gedurende deze stappen dezelfde bestaande verbeterroute; geen parallel platform.
 
 Iedere taak vraagt eerst hergebruik van aanwezige bron en bewijs, daarna alleen de ontbrekende verbinding. De oorspronkelijke 39 van 48 kleine afrondingen blijven exact behouden. Het uitgebreide werkbord bevat 54 kleine taken, waarvan 39 afgerond; dit is geen percentage van productkwaliteit. M3.3, geheugenacceptaties en L3.4–L3.7 worden niet heropend. Het volledige projectgoal blijft actief. Spraak blijft geparkeerd.
+
+## Eerstvolgende bouwuitkomst na de gesloten verbeterproef
+
+De gewone vervolgbeoordeling van het bewaarde codevoorstel is gesloten zonder geldige gezamenlijke uitkomst; één modelaanvraag mist complete usage. Er is niets toegepast. Dezelfde proef wordt niet opnieuw gestart. HUE6.1 blijft open.
+
+HUE1.1 en de afhankelijke HUE3.1 vormen nu één gebruikersuitkomst: Eva bewaart een voorlopige persoonsinterpretatie of verwachting, koppelt later echte tegeninformatie of een uitkomst en gebruikt de herziene afweging bij een volgende relevante situatie. Oude bronnen en onzekerheid blijven zichtbaar.
+
+Gerichte bronanalyse bevestigt dat het [geheugencontract](../../src/eva/contracts/memory.py) al herkomst, tijd, voorlopige inferenties en correcties bevat. De [normale gesprekproducer](../../src/eva/bootstrap/runtime.py) bewaart echte gebruikersbronnen; het [Hindsight-geheugen](../../src/eva/adapters/projection/hindsight.py) verwerkt correcties en houdt syntheses onbevestigd. De duurzame getypeerde relatie tussen eerdere interpretatie, afzonderlijke tegenbron of uitkomst en herziene afweging ontbreekt in de onderzochte gewone route.
+
+Bouw alleen die verbinding via bestaande gespreksacties, geheugenuitvoer en recall. Controleer vóór edits hoe gekoppelde bronverwijzingen Hindsight-consolidatie overleven. Alleen instructietekst toevoegen bewijst die verbinding niet. Een echte uitkomst komt uit een oorspronkelijke gebruikersbron of gecontroleerd uitvoerresultaat, nooit uit Eva's eigen eerdere antwoord.
+
+Eindvoorwaarde: bij een later gesprek beïnvloedt echte correctie of uitkomst de nieuwe afweging; oorspronkelijke verwachting, tegenbron en persoonsscope zijn terug te lezen. Dit is nog te bouwen en geen nieuwe geaccepteerde functie.

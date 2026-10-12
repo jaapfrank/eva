@@ -1,14 +1,21 @@
 {
   "activity": {
     "creditCost": "unknown",
-    "newEvaModelRequests": null,
+    "newEvaModelRequests": 16,
     "newNativeDispatches": 1,
     "requiredModelFreeFactoryProjections": 1,
-    "measurementInProgress": true,
-    "confirmedLivePid": 887974,
-    "execSessionId": 21849
+    "measurementInProgress": false,
+    "confirmedLivePid": null,
+    "execSessionId": 21849,
+    "completeUsageRequests": 15,
+    "knownTokensLowerBound": 120429,
+    "countsAreObservedSnapshot": true,
+    "registeredToolsIncludingControls": 21,
+    "terminalExitCode": 1,
+    "incompleteUsageRequests": 1,
+    "totalTokens": null
   },
-  "checkedAt": "2026-10-12T13:55:12.404387+02:00",
+  "checkedAt": "2026-10-12T14:16:59.895639+02:00",
   "contract": "EvaPreservedProposalFollowupPreparationPublic/v1",
   "currentResult": {
     "candidateApplied": false,
@@ -16,14 +23,16 @@
     "fullAideCycleCompleted": false,
     "nativeFollowupStarted": true,
     "projectOriginCorrectionInstalled": true,
-    "uniqueTargetedChecksPassed": 11
+    "uniqueTargetedChecksPassed": 11,
+    "nativeFollowupClosed": true,
+    "independentFinalCompleted": false
   },
   "forwardPreparation": {
     "competitorSeriesAllowed": false,
     "decisionSha256": "3bccebe5726368e1c4d84655ef500f8a510e5e1f1d81f31a9c45058a16192639",
     "exactPreparationAndInputReviewPending": false,
     "freshTechnicalEpisodeIdsRequired": true,
-    "nativeInputAllowed": true,
+    "nativeInputAllowed": false,
     "newCandidateGenerationAllowed": false,
     "notHistoricalRemainingBudget": true,
     "originalCriteriaCasesAndModelRolesPreserved": true,
@@ -42,7 +51,8 @@
       "finalInputBindingReviewSha256": "0bd0e81ced967258345d6b7e302332a00afffe42dc9ecbeea9876838971c7b5e"
     },
     "exactInputReviewSha256": "16bf0b85b9d5da7dc79143cc0d510dac1542a0e442905588c5fad0bf290985b4",
-    "actualActivationSha256": "be7e06f1a60c3ab4d27a741789d4a2a5850c334cd8e80f4d3e581ffed0af28b5"
+    "actualActivationSha256": "be7e06f1a60c3ab4d27a741789d4a2a5850c334cd8e80f4d3e581ffed0af28b5",
+    "oneTimeInputAuthorizationConsumed": true
   },
   "fullGoalActive": true,
   "outcome": "Evaluate exact preserved code proposal, independently assess only valid selection, apply proven gain, then later use.",
@@ -55,7 +65,7 @@
     "oldRawOnceAndTimersPreserved": true
   },
   "productCompletionsChanged": false,
-  "state": "native_assessment_running",
+  "state": "native_assessment_closed_without_valid_result",
   "taskId": "HUE6.1",
   "team": {
     "builder": "/root/eva1_memory_transfer",
@@ -67,5 +77,18 @@
     "Two wrong identity-helper call shapes corrected using exact signature.",
     "Pretty config exceeded existing loader size; identical compact representation prepared.",
     "Reviewer found accidental fixture-bound substring edit in unexecuted driver; builder restoring original bound."
-  ]
+  ],
+  "terminalEvidence": {
+    "receiptSha256": "fe3029f2bc572dcb8fc0a8ed2b62f2bc4db9db769ee17abadfe7873d7adc3ce4",
+    "reviewPending": false,
+    "baselineFailureType": "ComponentWorkProductionError",
+    "observedChildTerminalCode": "timed_out",
+    "causeNotYetEstablished": true,
+    "oldRoundPreserved": true,
+    "review": "eva2/reviews/native-work-preserved-proposal-followup-result-review-20261012.json",
+    "reviewSha256": "a49783a563df83cbc90d26320e1f3752770fd4bb44b4f22c5649fd4b18f0b2cf",
+    "result": "eva2/evidence/product/native-work-preserved-proposal-followup-result-20261012.json",
+    "resultSha256": "8417bc4445857e65984868a2c0cf33c0e1578eb12715264a0f41eb493c05701e",
+    "containersClosed": true
+  }
 }

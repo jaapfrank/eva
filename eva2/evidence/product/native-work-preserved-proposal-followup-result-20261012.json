@@ -1,0 +1,68 @@
+{
+  "contract": "EvaPreservedProposalFollowupTerminalPublic/v1",
+  "checkedAt": "2026-10-12T12:11:24.895129+00:00",
+  "taskId": "HUE6.1",
+  "state": "closed_without_valid_comparison",
+  "wholeGoalActive": true,
+  "ownerActionRequired": false,
+  "candidateSha256": "9fd501a863ae1c1801c429adc7c05570fdfc138db78dfd27d9b465eba76e51a2",
+  "baselineSha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+  "originalCasesCriteriaAndModelRolesPreserved": true,
+  "oneNativeParentStarted": true,
+  "oneTimeInputAuthorizationConsumed": true,
+  "terminalExitCode": 1,
+  "parent": {
+    "requestsStarted": 4,
+    "requestsWithCompleteUsage": 4,
+    "knownInputTokens": 48574,
+    "knownOutputTokens": 1285,
+    "knownTokensLowerBound": 49859,
+    "incompleteUsageRequests": 0,
+    "registeredToolsIncludingControls": 4
+  },
+  "development": {
+    "requestsStarted": 12,
+    "requestsWithCompleteUsage": 11,
+    "knownInputTokens": 68745,
+    "knownOutputTokens": 1825,
+    "knownTokensLowerBound": 70570,
+    "incompleteUsageRequests": 1,
+    "registeredToolsIncludingControls": 17
+  },
+  "combined": {
+    "requestsStarted": 16,
+    "requestsWithCompleteUsage": 15,
+    "knownInputTokens": 117319,
+    "knownOutputTokens": 3110,
+    "knownTokensLowerBound": 120429,
+    "incompleteUsageRequests": 1,
+    "registeredToolsIncludingControls": 21
+  },
+  "totalTokens": null,
+  "creditCosts": "unknown",
+  "candidateAssessed": false,
+  "independentFinalCompleted": false,
+  "candidateApplied": false,
+  "laterUseProven": false,
+  "fullAide2Completed": false,
+  "observedChildTerminalCodes": [
+    "budget_exceeded",
+    "timed_out"
+  ],
+  "underlyingSourceCauseEstablished": false,
+  "parentWallSeconds": 542.6596568509704,
+  "developmentIntervalQualifiedForClockExclusion": false,
+  "developmentClockExcludedSeconds": 0,
+  "containersCleanupReceiptsSucceeded": true,
+  "repeatPermitted": false,
+  "historicalUnknownAndClosedRoundsPreserved": true,
+  "evidenceSha256": {
+    "terminal": "fe3029f2bc572dcb8fc0a8ed2b62f2bc4db9db769ee17abadfe7873d7adc3ce4",
+    "parentRaw": "0686a227f5ec704e5d3ec6d8434505f234450f59fd2832f9edd9d3d1176c53de",
+    "parentAccounting": "299edccce6abc7ff2159674ccd1fc1636a0b3c1514b55bd00ec344736727d123",
+    "developmentAccounting": "508a2c593f79e903171912d9925649575df6c1de3bf1cba9599c643e9d844d1b",
+    "baselineFailure": "1c6e971d20900c79af282b2d2147428599ba0ed9ba360a9eb73201eff07a1c7d"
+  },
+  "reviewPending": true,
+  "nextProductWork": "HUE1.1/HUE3.1: connect provisional interpretation, counterevidence and actual outcomes to later behavior using existing memory."
+}

@@ -1,38 +1,31 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — behouden voorstel gericht beoordelen
+## Actueel 12 oktober — voorstelbeoordeling gesloten; geen toepassing
 
-De naamvormcorrectie is geïnstalleerd. Het exacte bewaarde codevoorstel blijft
-behouden; de bestaande registratie is nog beschikbaar. Historische child- en
-gezamenlijke usage blijven UNKNOWN ondanks actuele nul-contacttelling, omdat
-de volledige verwijderingshistorie niet bewaard is. Geen historische nulclaim.
+Eén gewone vervolguitvoering is daadwerkelijk uitgevoerd en gesloten, exit1.
+De referentietaken eindigden met budget_exceeded en timed_out; de tweede
+modelaanvraagregistratie bevat één aanvraag zonder complete usage.
+Er is geen geldige gezamenlijke beoordeling, kandidaatselectie, toepassing of
+later gebruik. De bronoorzaak is nog niet vastgesteld. Geen automatische herstart.
 
-Eén noodzakelijke afzonderlijke vervolgopdracht wordt voorbereid binnen het
-actieve afmaakmandaat: dezelfde kandidaat, oorspronkelijke cases, criteria en
-modelrollen; eigen vooraf begrensde boekhouding en verse technische episode-IDs.
-De toegewezen toekomstige ruimte is geen restbudgetclaim voor de oude ronde.
-Oude registraties, klokken, reserveringen en verliesbewijs blijven behouden.
-De definitieve bron-/runtime-/invoerreview moet vóór dispatch kloppen.
-De nieuwe gewone uitvoering meet eigen verbruik. Geen kandidaatgeneratie
-of concurrentenserie; de oude UNKNOWN blijft behouden.
+Gemeten: 4 volledige ouderaanvragen/49.859 tokens; ontwikkeling12 aanvragen,
+11 met volledige usage en70.570 bekende tokens. Samen16 aanvragen,15 volledig,
+bekende ondergrens120.429 tokens,21 geregistreerde tools inclusief controles.
+Volledig tokenverbruik en creditkosten onbekend; oude UNKNOWN/klokken behouden.
 
-De actuele installatiekoppeling en verse eindidentiteiten zijn voorbereid.
-Eén noodzakelijke modelvrije profielprojectie bevestigt bron en configuratie;
-de compacte hostconfiguratie bewaart dezelfde inhoud. Voorbereidingsfouten
-zijn vóór dispatch gecorrigeerd en blijven zichtbaar. De definitieve driver-
-en invoerreview is geslaagd; de nieuwe uitvoering loopt, kwaliteitswinst nog open.
+De onafhankelijke terminalreview staat beperkte feitenpublicatie toe. Geen nieuwe
+invoertoelating of productafronding. Jouw Human Understanding Engine blijft
+verwerkt in het volledige goal en zes zichtbare taken. Daarna HUE1.1/HUE3.1:
+tegenbewijs en echte latere uitkomsten verbinden aan veranderd gedrag.
+Geen nieuwe kandidaatgeneratie, concurrentenserie of spraakwerk.
+39/48 oorspronkelijke en39/54 totale afrondingen blijven behouden.
+Het gehele projectgoal blijft actief; geen handeling van Jaap nodig.
 
-Onafhankelijke slotreview GO: exacte compacte configuratie geïnstalleerd,
-één dienstherstart, HTTP200 en nieuwe registratie available. Eén construction
-is nu daadwerkelijk gestart; proces 887974 bevestigd actief. Geen einduitkomst
-of kandidaat toegepast. Root volgt dezelfde uitvoering; geen automatische herstart.
-Review: 16bf0b85b9d5da7dc79143cc0d510dac1542a0e442905588c5fad0bf290985b4.
-Beoordeling, alleen bewezen toepassing en later gebruik blijven open.
-Het gehele goal blijft actief; 39/48 oude en 39/54 totale afrondingen behouden.
-Spraak geparkeerd; geen handeling van Jaap nodig.
-Actuele voorbereiding: eva2/evidence/product/native-work-preserved-proposal-followup-preparation-20261012.json.
-Geïnstalleerde correctie: eva2/evidence/product/native-work-project-origin-installed-20261012.json.
-Dashboardinhoud bijgewerkt: 2026-10-12T13:55:12.404387+02:00.
+Resultaat: eva2/evidence/product/native-work-preserved-proposal-followup-result-20261012.json.
+Review: eva2/reviews/native-work-preserved-proposal-followup-result-review-20261012.json.
+Nu HUE1.1 bouwen met HUE3.1 als afhankelijke vervolgstap; bronanalyse gereed.
+Ontwerpbeoordeling: eva2/design/product/human-understanding-engine-integration-20261012.md.
+Dashboardinhoud bijgewerkt: 2026-10-12T14:16:59.895639+02:00.
 
 ## Actueel 12 oktober — beoordelingsaansluiting hersteld en geïnstalleerd
 

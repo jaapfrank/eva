@@ -1,0 +1,30 @@
+{
+  "contract": "EvaPreservedProposalTerminalReviewPublic/v1",
+  "reviewedAt": "2026-10-12T14:16:59.895639+02:00",
+  "result": "GO_SAFE_TERMINAL_FACTS_ONLY",
+  "reviewer": "/root/product_execution_memory_review",
+  "resultPath": "eva2/evidence/product/native-work-preserved-proposal-followup-result-20261012.json",
+  "resultSha256": "8417bc4445857e65984868a2c0cf33c0e1578eb12715264a0f41eb493c05701e",
+  "privateTerminalReviewSha256": "001dfb468187a43ba83e66cc14aeb533de712aedb9ecfc122b4d0204cab93efe",
+  "confirmed": {
+    "requestsStarted": 16,
+    "requestsWithCompleteUsage": 15,
+    "knownTokensLowerBound": 120429,
+    "incompleteUsageRequests": 1,
+    "registeredToolsIncludingControls": 21,
+    "containersClosed": true,
+    "candidateApplied": false,
+    "validComparison": false,
+    "independentFinalCompleted": false,
+    "laterUseProven": false,
+    "fullAide2Completed": false
+  },
+  "limitations": [
+    "Observed budget_exceeded and timed_out do not establish the underlying source cause.",
+    "Complete combined usage and credit costs remain unknown.",
+    "The result snapshot was written before this review; its reviewPending flag records that earlier state."
+  ],
+  "newInputAuthorized": false,
+  "repeatAuthorized": false,
+  "reviewAllowsProductCompletionClaim": false
+}
