@@ -1,0 +1,36 @@
+{
+  "contract": "EvaComponentClientScopeInstalledPublic/v1",
+  "checkedAt": "2026-10-12T04:06:07.550342+00:00",
+  "state": "installed",
+  "technicalOutcomeCompleted": true,
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "cause": "De client gebruikte de registratiehash waar de bestaande persoonscope was vereist.",
+  "ordinaryClientCorrectionInstalled": true,
+  "readOnlySourceAndActualRoundTransportPassed": true,
+  "coreAndWorkerHealthy": true,
+  "newModelRequestsForCorrection": 0,
+  "closedConstructionMeasuredTokens": 4987,
+  "candidateConfirmed": false,
+  "previewConfiguration": "corrected candidate prepared; runtime fingerprints and pins remain to bind before future input",
+  "sourceReview": {
+    "path": "eva2/reviews/native-work-client-scope-source-review-20261012.json",
+    "sha256": "7c2224ac8c91b53445c2e23fd472f3524b1a5eb780d632f3d59fe8816140c1a5",
+    "decision": "GO"
+  },
+  "independentInstalledReview": {
+    "decision": "GO",
+    "path": "eva2/reviews/native-work-client-scope-installed-review-20261012.json",
+    "sha256": "82c031c0899892ea5127adb3b141ed3a566060b534f11a0dbe441e1bc63a186f"
+  },
+  "installationReceiptSha256": "8ebed88bde6190bbb9132aec9e20525297cd5baf43c505143614cfcae00ddb1e",
+  "diagnosisReceiptSha256": "dfb71c516b60f5ec52c6490c658f49f099971065d14389d5352eda7beeaedb41",
+  "imagesCodeEnvironmentMountsNetworkAndDataRetained": true,
+  "restartCounts": {
+    "core": 1,
+    "worker": 1
+  },
+  "verificationOrderMistakeRetained": true,
+  "oldResultsAndUsageRetained": true,
+  "credits": "unknown"
+}

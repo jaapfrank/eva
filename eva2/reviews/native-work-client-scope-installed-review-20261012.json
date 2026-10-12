@@ -1,0 +1,71 @@
+{
+  "contract": "EvaIndependentComponentClientScopeInstalledReview/v1",
+  "checkedAt": "2026-10-12T04:06:15.237280+00:00",
+  "decision": "GO",
+  "openBlockers": [],
+  "scope": "Exact installed ordinary client actor-scope correction and existing read-only round_status transport in core and worker; no new execution admission.",
+  "bindings": {
+    "installation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/client-scope-correction/installed.private.json",
+      "sha256": "8ebed88bde6190bbb9132aec9e20525297cd5baf43c505143614cfcae00ddb1e"
+    },
+    "sourceReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-client-scope-source-review-20261012.json",
+      "sha256": "7c2224ac8c91b53445c2e23fd472f3524b1a5eb780d632f3d59fe8816140c1a5"
+    },
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/client-scope-correction/preparation.private.json",
+      "sha256": "19775e87a5181e999e7bde9ab62314e3bbb384622ba95f23b3f29ecbaa112310"
+    },
+    "actualClient": {
+      "path": "/home/administrator/project/.eva2-artifacts/component-evaluation-20260924/client.private.json",
+      "sha256": "626e38c7cb4d29804af69cc10a95f86cd61f9c50b5f2717c98647dd443896427"
+    },
+    "preservedConstructionResultReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-strategy-construction-result-review-20261012.json",
+      "sha256": "17e906efc8f3c810daa32d1b23b3194225bf926bee8fdc7d1ff7f9662387eab2"
+    }
+  },
+  "verified": {
+    "actualClientSha256": "626e38c7cb4d29804af69cc10a95f86cd61f9c50b5f2717c98647dd443896427",
+    "actualReadonlyBindFileInodeModeOwnerDeviceNlinkPreserved": true,
+    "bothActualContainerClientReadbacksMatch": true,
+    "bothActualSourceReadbacksMatchFixedBaseline": true,
+    "bothReadOnlyHttpRoundStatusResultsMatch": {
+      "contract": "EvaComponentImprovementRound/v1",
+      "path": "bootstrap/delegated_digital_runner.py",
+      "scope_sha256": "27fdd828734f6792cacfb658e63dcaa5dbfc590eeb6e2b871bf820294a59dd72",
+      "registration_sha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872",
+      "baseline_sha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+      "source_target_sha256": null,
+      "state": "available",
+      "independent_final": true,
+      "installed": false
+    },
+    "bothServicesRunningHealthy": true,
+    "retainedContainerIdsImagesEnvMountsByDestinationHostConfigNetworkNames": true,
+    "restartCounts": {
+      "core": 1,
+      "worker": 1
+    },
+    "installationRepeated": false
+  },
+  "verificationPreparationError": {
+    "cause": "First verifier compared Mounts list order; per-destination mount comparison corrected the observation.",
+    "failureReceiptRetained": true,
+    "additionalInstallationOrRestart": false
+  },
+  "limits": {
+    "oldConstructionStateAmbiguousAnd4987TokensPreserved": true,
+    "oldResultReviewUnchanged": true,
+    "newModelRequests": 0,
+    "newNativeInput": false,
+    "newFactoryTestModelDockerOrDbRunByReviewer": false,
+    "previewCandidateStillOnlyPrepared": true,
+    "futureRuntimePinsAndActualFactoryProfileBinding": "open",
+    "nativeInputGo": "NOT_GRANTED",
+    "readOnlyRoundInstalledFalsePreserved": true,
+    "qualityGainOrFullAide2OrWholeGoalClaimed": false,
+    "credits": "unknown"
+  }
+}

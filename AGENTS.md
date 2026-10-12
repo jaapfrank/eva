@@ -1,24 +1,27 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — echte verbeteropdracht uitgevoerd; eerste toolfout open
+## Actueel 12 oktober — bronlezen in gewone verbeterroute hersteld
 
-De gedeelde zelfverbeteringsuitvoerder is geïnstalleerd en onafhankelijk toegelaten.
-Eva heeft de oorspronkelijke technische verbeteropdracht werkelijk ontvangen.
-De poging eindigde bij de eerste bronleesaanroep met internal_error; geen kandidaat
-of kwaliteitswinst bevestigd. Eén Astra/medium-aanvraag, 4.987 gemeten tokens,
-één toolaanroep, 18,28 seconden uitvoering. De eigen container is afgesloten.
+De concrete fout is modelvrij gereproduceerd: gewone en proefclient verwisselden
+registratiehash en persoonscope. De gewone client is na onafhankelijke bronreview
+gecorrigeerd met één configuratiewaarde. In de draaiende kern en werker slagen
+bronlezen en de echte read-only opvraag van de verbeterregistratie. Beide gezond;
+images, overige instellingen, mounts, netwerken en gegevens behouden.
+Eén herstart per betrokken dienst, geen nieuwe modelaanvraag.
+Afzonderlijke controle van de werkelijke installatie: GO.
 
-**Nu:** de concrete bronleesfout modelvrij onderzoeken en gericht oplossen.
-**Daarna:** de bestaande verbetercyclus afmaken, onafhankelijk beoordelen en alleen
-bewezen winst later gebruiken. Geen nieuwe vergelijkingsserie of voorbeeldfunctie.
-Oude opstartfouten blijven behouden. De laatste bestandsmoduscorrectie veranderde
-geen logbytes en verbruikte geen modelaanvraag.
+**Nu:** dezelfde verbeteropdracht coherent aansluiten op de gecorrigeerde client.
+De proefclient is voorbereid; afgeleide uitvoerbindingen moeten nog aansluiten.
+**Daarna:** Eva zelf laten vergelijken, onafhankelijk beoordelen en alleen bewezen
+winst toepassen en bij later gewoon werk gebruiken.
 
-Het volledige goal blijft actief, inclusief leercyclus en AIDE². Geen nieuwe
-hoofdafronding; 39/48 historische afrondingen en gezinsacceptaties behouden.
-Geen handeling van Jaap nodig. Spraak geparkeerd. Credits onbekend.
-Dashboard bijgewerkt op 2026-10-12T03:53:27.411713+00:00.
-Bewijs: eva2/evidence/product/native-work-strategy-construction-result-20261012.json.
+De afgesloten mislukte opdracht (één Astra/medium-aanvraag, 4.987 tokens) en oude
+foutbewijzen blijven behouden. Geen kandidaat, kwaliteitswinst of hoofdafronding
+geclaimd. Het volledige goal blijft actief, inclusief leercyclus en AIDE².
+39/48 historische afrondingen en gezinsacceptaties behouden. Geen handeling van
+Jaap nodig. Spraak geparkeerd; geen concurrentenserie. Credits onbekend.
+Dashboard bijgewerkt op 2026-10-12T04:06:07.550342+00:00.
+Bewijs: eva2/evidence/product/native-work-client-scope-installed-20261012.json.
 
 ## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 
