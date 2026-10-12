@@ -9,6 +9,7 @@ import base64
 from datetime import UTC, datetime
 from functools import lru_cache
 import hashlib
+import bisect
 import json
 import logging
 import os
@@ -855,7 +856,7 @@ class PydanticConversationModel:
 
     @staticmethod
     def _receipt_model_views(
-        receipts: tuple[ConversationActionReceipt, ...],
+        receipts: tuple[ConversationActionReceipt, ...], *, _literal_slices: bool = True,
     ) -> tuple[dict[str, Any], ...]:
         """Reference exact earlier values in this request, never external context."""
         call_ids = [receipt.call.call_id for receipt in receipts]
@@ -866,9 +867,27 @@ class PydanticConversationModel:
         )
         if len(set(call_ids)) != len(call_ids):
             return local_views
+        # Preserve the current newest rendering and every literal it references.
+        # The first pass uses only the existing exact-value deduplication.
+        protected: set[str] = set()
+        if _literal_slices and receipts:
+            newest = PydanticConversationModel._receipt_model_views(
+                receipts, _literal_slices=False)[-1]
+            def protect(value: Any) -> None:
+                if isinstance(value, dict):
+                    call_id = value.get("model_view_call_id")
+                    if isinstance(call_id, str):
+                        protected.add(call_id)
+                    for item in value.values():
+                        protect(item)
+                elif isinstance(value, list):
+                    for item in value:
+                        protect(item)
+            protect(newest)
         # Index only literal retained values in earlier verified outputs. References
         # may not point forward, into another person's history, or to another reference.
         literals: dict[str, tuple[bytes, dict[str, Any]]] = {}
+        slice_literals: dict[str, tuple[bytes, dict[str, Any]]] = {}
 
         def compress(value: Any, path: str, anchors: set[str]) -> Any:
             if any(path == anchor or path.startswith(anchor + "/")
@@ -934,17 +953,17 @@ class PydanticConversationModel:
             }
             return view if len(canonical_json_bytes(view)) < len(canonical_json_bytes(value)) else value
 
-        def retain(value: Any, path: str, call_id: str, receipt_sha: str) -> bool:
+        def retain(value: Any, path: str, call_id: str, receipt_sha: str, slice_source: bool) -> bool:
             if isinstance(value, dict) and "model_view_reference" in value:
                 return False
             literal = True
             if isinstance(value, dict):
                 for key, item in value.items():
                     pointer = key.replace("~", "~0").replace("/", "~1")
-                    literal = retain(item, f"{path}/{pointer}", call_id, receipt_sha) and literal
+                    literal = retain(item, f"{path}/{pointer}", call_id, receipt_sha, slice_source) and literal
             elif isinstance(value, list):
                 for index, item in enumerate(value):
-                    literal = retain(item, f"{path}/{index}", call_id, receipt_sha) and literal
+                    literal = retain(item, f"{path}/{index}", call_id, receipt_sha, slice_source) and literal
             if literal and path and isinstance(value, (dict, list, str)):
                 encoded = canonical_json_bytes(value)
                 digest = hashlib.sha256(encoded).hexdigest()
@@ -956,13 +975,130 @@ class PydanticConversationModel:
                 }
                 if len(canonical_json_bytes(reference)) < len(encoded):
                     literals.setdefault(digest, (encoded, reference))
+                    if slice_source and isinstance(value, str):
+                        slice_literals.setdefault(digest, (encoded, reference))
             return literal
+
+        def literal_slice_view(value: Any) -> Any:
+            """Encode exact overlap with visible earlier strings, in Unicode characters."""
+            if isinstance(value, (dict, list, str)):
+                encoded = canonical_json_bytes(value)
+                found = literals.get(hashlib.sha256(encoded).hexdigest())
+                if found is not None and found[0] == encoded:
+                    # Exact-value deduplication is cheaper and keeps literal anchors.
+                    return value
+            if isinstance(value, dict):
+                if "model_view_reference" in value or "model_view_encoding" in value:
+                    return value
+                return {key: literal_slice_view(item)
+                        if key == "text" or isinstance(item, (dict, list)) else item
+                        for key, item in value.items()}
+            if isinstance(value, list):
+                return [literal_slice_view(item) for item in value]
+            if not isinstance(value, str):
+                return value
+
+            def overlap(left: str, right: str) -> tuple[int, int, int]:
+                best = (0, 0, 0)
+                # Seeds only find candidates; the whole matched span is compared.
+                # Missing a shorter overlap leaves its exact text literal.
+                for position in range(0, len(right) - 63, 64):
+                    if best[1] <= position and position + 64 <= best[1] + best[2]:
+                        continue
+                    seed = right[position:position + 64]
+                    found = left.find(seed)
+                    while found >= 0:
+                        source_start, target_start = found, position
+                        while (source_start and target_start
+                               and left[source_start - 1] == right[target_start - 1]):
+                            source_start -= 1
+                            target_start -= 1
+                        end = 64
+                        while (found + end < len(left) and position + end < len(right)
+                               and left[found + end] == right[position + end]):
+                            end += 1
+                        size = found + end - source_start
+                        if size > best[2]:
+                            best = (source_start, target_start, size)
+                        found = left.find(seed, found + 1)
+                return best
+
+            def boundaries(text: str) -> list[int]:
+                points = [0]
+                for character in text:
+                    points.append(points[-1] + len(json.dumps(character, ensure_ascii=False)[1:-1]))
+                return points
+
+            best = value
+            for encoded, reference in slice_literals.values():
+                previous = json.loads(encoded)
+                if not isinstance(previous, str):
+                    continue
+                for mode in ("literal_string_slice_v1", "json_escape_string_slice_v1",
+                             "json_unescape_string_slice_v1"):
+                    prior = json.dumps(previous, ensure_ascii=False)[1:-1] if mode == "json_escape_string_slice_v1" else previous
+                    target = json.dumps(value, ensure_ascii=False)[1:-1] if mode == "json_unescape_string_slice_v1" else value
+                    start, target_start, size = overlap(prior, target)
+                    if not size:
+                        continue
+                    end, target_end = start + size, target_start + size
+                    if mode == "json_escape_string_slice_v1":
+                        points = boundaries(previous)
+                        source_start = bisect.bisect_left(points, start)
+                        source_end = bisect.bisect_right(points, end) - 1
+                        target_start += points[source_start] - start
+                        target_end -= end - points[source_end]
+                    elif mode == "json_unescape_string_slice_v1":
+                        points = boundaries(value)
+                        logical_start = bisect.bisect_left(points, target_start)
+                        logical_end = bisect.bisect_right(points, target_end) - 1
+                        source_start = start + points[logical_start] - target_start
+                        source_end = end - (target_end - points[logical_end])
+                        target_start, target_end = logical_start, logical_end
+                    else:
+                        source_start, source_end = start, end
+                    if target_start >= target_end:
+                        continue
+                    text = value[target_start:target_end]
+                    literal = previous[source_start:source_end]
+                    if mode == "json_escape_string_slice_v1":
+                        literal = json.dumps(literal, ensure_ascii=False)[1:-1]
+                    elif mode == "json_unescape_string_slice_v1":
+                        try:
+                            literal = json.loads('"' + literal + '"')
+                        except ValueError:
+                            continue
+                    if literal != text:
+                        continue
+                    # The earlier call/pointer already belongs to this validated
+                    # request. Raw receipt/source hashes remain bound server-side.
+                    fragment = {"model_view_call_id": reference["model_view_call_id"],
+                        "model_view_reference": reference["model_view_reference"],
+                        "model_view_fragment_encoding": mode,
+                        "start": source_start, "characters": source_end - source_start,
+                        "fragment_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest()}
+                    parts = ([value[:target_start]] if target_start else []) + [fragment]
+                    if target_end < len(value):
+                        parts.append(value[target_end:])
+                    candidate = {"model_view_encoding": "json_string_fragments_v1", "parts": parts,
+                        "string_sha256": hashlib.sha256(value.encode("utf-8")).hexdigest()}
+                    if len(canonical_json_bytes(candidate)) < len(canonical_json_bytes(best)):
+                        best = candidate
+            return best
 
         views = []
         for receipt, local in zip(receipts, local_views, strict=True):
             if receipt.output.get("status") != "verified":
                 views.append(local)
                 continue
+            slice_source = bool(receipt.call.name == "use_connector_tool"
+                and local.get("source") == "stored_connector_result" and receipt.model_output
+                and "ancestor_model_projection" in receipt.model_output)
+            if (_literal_slices and receipt is not receipts[-1]
+                    and receipt.call.call_id not in protected and slice_source):
+                # Presentation already verified the source, exact manifest and page
+                # contract. Index only earlier literal text; never an opaque reader.
+                local = literal_slice_view(local)
             proof = local.get("proof")
             original_proof = receipt.output.get("proof")
             observation = proof.get("observed") if isinstance(proof, dict) else None
@@ -1004,7 +1140,7 @@ class PydanticConversationModel:
             views.append(viewed)
             retain(viewed, "", receipt.call.call_id, hashlib.sha256(
                 canonical_json_bytes(receipt.output)
-            ).hexdigest())
+            ).hexdigest(), slice_source)
         return tuple(views)
 
     @staticmethod

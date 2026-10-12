@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T17:19:17.384113+00:00",
+  "lastUpdated": "2026-10-12T18:08:01.427718+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T17:35:20.475696+00:00",
+        "checkedAt": "2026-10-12T18:08:01.427718+00:00",
         "deliveries": [
+          {
+            "id": "retained-context-sharing-installed-20261012",
+            "date": "2026-10-12T18:06:56.244379+00:00",
+            "title": "Herhaalde tekst in taakcontext compacter behouden",
+            "state": "installed",
+            "installed": true,
+            "summary": "Algemene uitvoerroute gecorrigeerd;16 gerichte checks en bronreview geslaagd. Kern en werker gezond.",
+            "result": "Exacte twee modules geïnstalleerd;343 andere Pythonbronnen per image en configuratie behouden. Bekende context lokaal89k→61k; werkelijke vervolguitkomst nog open.",
+            "remaining": "Eva moet zelf de bestaande opdracht afmaken; geen bewezen providerbesparing of nieuwe hoofdafronding.",
+            "source": "eva2/evidence/product/retained-context-sharing-installed-20261012.json",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/retained-context-sharing-installed-review-20261012.json",
+            "reviewSha256": "122f4c14fa11d405033b4aad832da887ae0a3e9b7595d34a314e9e765ab405bb",
+            "independentReview": "GO voor exacte installatie; echte taakuitkomst nog open."
+          },
           {
             "id": "tuya-retained-receipts-installed-20261012",
             "title": "Onnodig herhalen van grote toolresultaten gecorrigeerd",
@@ -5208,8 +5224,8 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "tuya_retained_context_input_gate_diagnosis",
-          "taskId": "work:eva-resume:20b1278c-cd1c-57c8-984d-cca4c3002e7d",
+          "phase": "eva_ordinary_proposal_continuation_running",
+          "taskId": "work:eva-resume:9a073648-799f-517c-929c-290334de28bc",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
@@ -5219,7 +5235,7 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva moet zelf onderzoek en voorstellen afronden. De bewaarde taakcontext groeit nog te veel; er is geen nieuwe gebruikersfunctie afgerond.",
+          "summary": "Correctie geïnstalleerd en onafhankelijk gecontroleerd. Eva vervolgt nu zelf de oorspronkelijke lezende onderzoeksopdracht; eindresultaat nog open.",
           "detail": "De concrete contextfout wordt modelvrij hersteld in de bestaande algemene uitvoerroute. Tuya/LocalTuya is uitsluitend de al gevraagde opdracht waarmee Eva's eigen uitvoering zichtbaar wordt; Codex schrijft het voorstel niet en bouwt geen vaste Tuya-functie.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
@@ -5253,20 +5269,26 @@
             "retainedReceiptProjectionChecksPassed": 9,
             "retainedReceiptProjectionIndependentInstalledReview": "GO",
             "retainedReadSemanticsInstalled": true,
-            "retainedReadSemanticsChecksPassed": 7
+            "retainedReadSemanticsChecksPassed": 7,
+            "retainedContextSharingBuilt": true,
+            "retainedContextSharingChecksPassed": 16,
+            "retainedContextSharingIndependentSourceReview": "GO",
+            "retainedContextSharingInstalled": true,
+            "retainedContextSharingNativeResultProven": false,
+            "retainedContextSharingIndependentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T17:35:20.475696+00:00",
+            "checkedAt": "2026-10-12T18:08:01.427718+00:00",
             "coordinator": "/root",
-            "coordinatorTask": "Algemene uitvoerkwaliteit herstellen; geen onderzoek of voorstel namens Eva schrijven.",
+            "coordinatorTask": "Eva’s eigen vervolguitvoering volgen en het echte resultaat bewaren; geen handmatig voorstel schrijven.",
             "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Exacte bewaarde context lokaal meten en redundantie verwijderen met behoud van bruikbare feiten en bronverwijzingen.",
+            "executorTask": "Broncorrectie afgerond en geïnstalleerd; Eva voert de bestaande onderzoeksopdracht uit.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Geïnstalleerde correctie beoordeeld; volgende concrete broncorrectie pas beoordelen als die er is.",
-            "modelUsage": "Vijfde poging: taakusage unmeasured; volledig providerverbruik en credits onbekend. Eerdere 442.765 en 926.383 bekende tokens blijven afzonderlijk staan.",
-            "note": "Geen betaalde onderzoeksuitvoering actief. Tussenvoorstel en foutbewijs behouden. Geen nieuwe hoofdtaak afgerond; geen HA-migratie of naamswijziging."
+            "reviewerTask": "Onafhankelijke bron- en installatiereview GO. Einduitkomst afzonderlijk controleren zodra beschikbaar.",
+            "modelUsage": "Zesde generatie call_started; verbruik nog niet afgesloten. Eerdere442.765/926.383 bekende tokens en vijfde unmeasured blijven afzonderlijk behouden.",
+            "note": "Eén gewone voortzetting na de causale correctie. Geen nieuwe vergelijkingsserie of hoofdafronding. HA blijft ongewijzigd tot akkoord op het voorstel."
           },
-          "checkedAt": "2026-10-12T17:35:20.475696+00:00",
+          "checkedAt": "2026-10-12T18:08:01.427718+00:00",
           "remaining": "Algemene contextfout herstellen en Eva's eigen taakafronding aantonen. HUE1.1/HUE3.1 en volledige AIDE² blijven afzonderlijk open."
         },
         "next": {
@@ -5641,7 +5663,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-12T17:35:20.475696+00:00"
+        "updatedAt": "2026-10-12T18:08:01.427718+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",
@@ -34976,5 +34998,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T17:35:20.475696+00:00"
+  "updatedAt": "2026-10-12T18:08:01.427718+00:00"
 }

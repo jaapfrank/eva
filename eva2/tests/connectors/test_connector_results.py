@@ -538,3 +538,23 @@ def test_alternating_retained_document_and_ha_pages_remain_visible_on_sdk_wire(t
     from eva.adapters.model.contracts import ConversationModelError
     with pytest.raises(ConversationModelError, match="differs"):
         PydanticConversationModel._receipt_presentation(replace(first_doc, model_output=injected), ancestor=True)
+
+
+def test_compact_ancestor_reader_metadata_keeps_source_flags_and_exact_raw_reader():
+    from eva.adapters.postgres.connector_results import ancestor_action_presentation, selection_schema
+    port, timeline, thread, _, authorize = _retained_ha()
+    projected = port._receipt(TURN, timeline.events(thread), 1)
+    original = _encoded([[e.event_type, e.payload] for e in timeline.events(thread)])
+    arguments, model = ancestor_action_presentation(projected, projected.model_output["ancestor_model_projection"])
+    assert arguments == projected.call.arguments
+    assert model["status"] == "verified"
+    assert model["source_response"] == {key: projected.output["result"][key] for key in model["source_response"]}
+    assert model["source_receipt_sha256"] == hashlib.sha256(_encoded(projected.output)).hexdigest()
+    assert "model_projection" not in model and "guidance" not in model
+    reader = model["retained_action_body"]["reader"]
+    assert reader["action"] == "use_connector_tool" and reader["arguments_schema"] == selection_schema()
+    assert "arguments_json" not in reader and "instructions" not in reader
+    page = ConnectorResults(timeline, TURN, authorize).read(reader["tool_id"],
+        {"pointer": "/output", "offset": 0, "limit": 80, "query": None})
+    assert page["text"] == _encoded(projected.output).decode()[:80]
+    assert _encoded([[e.event_type, e.payload] for e in timeline.events(thread)]) == original

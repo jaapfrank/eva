@@ -1,0 +1,86 @@
+{
+  "contract": "EvaRetainedContextSharingCorrection/v1",
+  "recordedAt": "2026-10-12T18:03:01.998137+00:00",
+  "status": "built_source_not_installed",
+  "purpose": "Eva herself must use retained findings and complete ordinary research and proposals. This corrects shared task-context rendering; no hand-written domain proposal or new domain feature.",
+  "sources": [
+    {
+      "frozen_path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/frozen-v2/eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "eeb260b3da6ccdea14c13b7d882d50c31ae48ec82a730d57a18d5a044f1a9e4f"
+    },
+    {
+      "frozen_path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/frozen-v2/eva2/src/eva/adapters/postgres/connector_results.py",
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "e1526c2492e850fa173bb4f3b4610e9f85d27ed8871bf8458e778cbea913a008"
+    }
+  ],
+  "tests": [
+    {
+      "frozen_path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/frozen-v2/eva2/tests/model/test_catalogue_model_view.py",
+      "path": "eva2/tests/model/test_catalogue_model_view.py",
+      "sha256": "39a4d31fed9c67554f9dfd91846b1f8790755b89f5375ac8eaad7d2f48914460"
+    },
+    {
+      "frozen_path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/frozen-v2/eva2/tests/connectors/test_connector_results.py",
+      "path": "eva2/tests/connectors/test_connector_results.py",
+      "sha256": "1a367c964eb2931fe0a91fe673fc1a63722bc3091a9f2e524cacfd334ec24b19"
+    }
+  ],
+  "frozenManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/frozen-source-v2.private.json",
+    "sha256": "81ec49a68add5d2d8a9db8b895e37feb4c96d0b92c6911f26786460faf1851ba"
+  },
+  "targetedChecks": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/targeted-checks-v2.private.json",
+    "sha256": "b5e7419374e28bc9c6c77f0150d5bbaf937c77723795cfac1f6dd22fd96a8c14"
+  },
+  "measurement": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/final-render-measurement-v2.private.json",
+    "sha256": "10641cbb46db9592bbcf5208e9c14e96070571a210b3c32a7f9bb15e10748c26"
+  },
+  "changes": [
+    "Share exact literal and JSON-escaped/unescaped overlaps only for validated older local pages in the same request; preserve exact whole-value sharing and literal fallback.",
+    "Retain full original call, output and source proofs server-side; protect latest receipt and its referenced anchors.",
+    "Compact redundant presentation metadata after existing actor, execution, source, hash and stop validation; no grant, tool-catalogue or input-cap change."
+  ],
+  "checks": {
+    "uniqueFinalChecksPassed": 16,
+    "localPagesExactlyReconstructed": 28,
+    "latestReceiptUnchanged": true,
+    "originalCallOutputProofBytesUnchanged": true
+  },
+  "localMeasurement": {
+    "knownEnvelopeBeforeBpeIncludingFraming": 88991,
+    "knownEnvelopeAfterBpeIncludingFraming": 61406,
+    "existingFramingReserve": 256,
+    "existingPerResponseInputLimit": 65536,
+    "knownMargin": 4130,
+    "retainedReceipts": 44,
+    "candidateRenderNanoseconds": 3429614658,
+    "actualRecallRecentBrowserCorrectionsMeasured": false
+  },
+  "retainedErrors": [
+    "Initial two focused checks failed: sharing precedence and a test fixture without required validated projection; causes corrected and final checks rerun.",
+    "Initial frozen manifest had an incorrect patch locator; original bytes retained, v2 binds the actual diff.",
+    "Non-string model-view reference could break the protected-anchor scan; type guard added and six existing malformed-reference cases checked.",
+    "Earlier measurement-script import and numeric serialization errors retained."
+  ],
+  "usage": {
+    "providerRequestsDuringTheseChecks": 0,
+    "nativeActionsDuringTheseChecks": 0,
+    "databaseWritesDuringTheseChecks": 0,
+    "codexDevelopmentCredits": "unknown"
+  },
+  "limitations": [
+    "Local known-envelope measurement omits actual recall, recent turns, browser context and task corrections. It is not an exact full future request or a guaranteed input-gate pass.",
+    "No native task completion, provider-token savings, overall efficiency, user-function closure or competitor advantage demonstrated.",
+    "Original task failures, partial proposal, usage UNKNOWN and earlier source/install evidence remain preserved."
+  ],
+  "runtimeInstalled": false,
+  "nativeContinuationStarted": false,
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "newComparisonSeries": false,
+  "manualTuyaProposalWritten": false
+}

@@ -140,6 +140,18 @@ def expand_receipt_history(receipts, views):
             for part in value["model_view_reference"][1:].split("/"):
                 key = part.replace("~1", "/").replace("~0", "~")
                 target = target[int(key)] if isinstance(target, list) else target[key]
+            mode = value.get("model_view_fragment_encoding")
+            if mode in {"literal_string_slice_v1", "json_escape_string_slice_v1", "json_unescape_string_slice_v1"}:
+                assert isinstance(target, str)  # A literal anchor, never another reference.
+                start, count = value["start"], value["characters"]
+                assert type(start) is int and type(count) is int and 0 <= start < start + count <= len(target)
+                fragment = target[start:start + count]
+                if mode == "json_escape_string_slice_v1":
+                    fragment = json.dumps(fragment, ensure_ascii=False)[1:-1]
+                elif mode == "json_unescape_string_slice_v1":
+                    fragment = json.loads('"' + fragment + '"')
+                assert hashlib.sha256(fragment.encode("utf-8")).hexdigest() == value["fragment_sha256"]
+                return fragment
             target = resolve(target, root)
             if value.get("model_view_fragment_encoding") == "json_escape_content_v1":
                 assert hashlib.sha256(canonical_json_bytes(target)).hexdigest() == value["value_sha256"]
@@ -261,7 +273,8 @@ def test_local_proof_anchors_and_catalogue_encoding_hash_remain_literal_across_r
 
 @pytest.mark.parametrize("value", [[], {}, 5, None, False, "not-a-pointer"])
 def test_unknown_provider_reference_fields_stay_literal_and_cannot_break_history(value):
-    output = {"status": "verified", "result": {"model_view_reference": value, "content": "Provider data." * 100}}
+    output = {"status": "verified", "result": {"model_view_reference": value,
+              "model_view_call_id": value, "content": "Provider data." * 100}}
     assert PydanticConversationModel._receipt_model_views((action("read", output),))[0] == output
 
 
@@ -342,3 +355,77 @@ def test_household_inventory_uncertainty_or_larger_reference_stays_literal(chang
         original["inventory"] = {}
         original["proof"]["evidence"]["observation"] = {}
     assert PydanticConversationModel._receipt_model_view(original) == original
+
+
+def test_validated_local_literal_slices_keep_unicode_json_facts_and_newest_on_sdk_wire(tmp_path, monkeypatch):
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from tests.connectors.test_connector_results import _retained_document, TURN, _encoded
+    from tests.model.test_pydantic_conversation_model import _phase_transport_adapter, _generate, RECEIPT
+
+    port, timeline, thread, _, authorize = _retained_document()
+    text = "".join(f'Line {i:04d} λ🙂 "quote {i}" C:\\path\n' for i in range(800))
+    admission = timeline.rows[thread][0].payload["data"]
+    admission["action_arguments"]["content"] = text
+    proof = timeline.rows[thread][-1].payload["data"]["proof"]
+    proof["expected"]["content"] = proof["observed"]["content"] = text
+    document = port._receipt(TURN, timeline.events(thread), 2)
+    reader = document.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda _: nullcontext()
+    route._timeline = lambda _: timeline
+    route._ensure_running = authorize
+
+    def page(call_id, pointer, offset, limit, step):
+        call = ConversationActionCall(call_id, "use_connector_tool", {"tool_id": reader,
+            "arguments_json": json.dumps({"pointer": pointer, "offset": offset, "limit": limit, "query": None})})
+        return route.execute(TURN, call, step_index=step)
+
+    plain = page("literal-anchor", "/call/arguments/content", 0, 6000, 3)
+    shorter = page("shorter-slice", "/call/arguments/content", 500, 4500, 4)
+    longer = page("longer-slice", "/call/arguments/content", 0, 8192, 5)
+    escaped = page("escaped-slice", "/call/arguments", 0, 8192, 6)
+    receipts = (plain, shorter, longer, escaped, RECEIPT)
+    raw = canonical_json_bytes([[item.call.arguments, item.output] for item in receipts])
+    views = PydanticConversationModel._receipt_model_views(receipts)
+    expanded = expand_receipt_history(receipts, views)
+    assert canonical_json_bytes(list(expanded[:-1])) == canonical_json_bytes([r.output for r in receipts[:-1]])
+    assert views[-1] == PydanticConversationModel._receipt_model_views(receipts, _literal_slices=False)[-1]
+    encodings = set()
+    def check_references(value, position, indexed):
+        if isinstance(value, dict):
+            if value.get("model_view_fragment_encoding") in {
+                    "literal_string_slice_v1", "json_escape_string_slice_v1", "json_unescape_string_slice_v1"}:
+                assert indexed[value["model_view_call_id"]] < position
+                encodings.add(value["model_view_fragment_encoding"])
+            for item in value.values():
+                check_references(item, position, indexed)
+        elif isinstance(value, list):
+            for item in value:
+                check_references(item, position, indexed)
+    indexed = {r.call.call_id: i for i, r in enumerate(receipts)}
+    for i, view in enumerate(views):
+        check_references(view, i, indexed)
+    assert {"literal_string_slice_v1", "json_escape_string_slice_v1"} <= encodings
+    # A selected escaped JSON page can also supply the exact shorter plaintext.
+    reverse = (escaped, longer, RECEIPT)
+    reverse_views = PydanticConversationModel._receipt_model_views(reverse)
+    assert canonical_json_bytes(list(expand_receipt_history(reverse, reverse_views)[:-1])) == canonical_json_bytes([r.output for r in reverse[:-1]])
+    for i, view in enumerate(reverse_views):
+        check_references(view, i, {r.call.call_id: j for j, r in enumerate(reverse)})
+    assert "json_unescape_string_slice_v1" in encodings
+    model, _, requests, _ = _phase_transport_adapter(tmp_path, monkeypatch, [("final_answer", ("Afgerond.",))])
+    assert _generate(model, prior_actions=receipts[:-1], completed_action=RECEIPT).text == "Afgerond."
+    wire = {part["call_id"]: json.loads(part["output"]) for part in requests[0]["input"]
+            if part.get("type") == "function_call_output"}
+    assert tuple(wire[r.call.call_id] for r in receipts) == views
+    assert canonical_json_bytes([[item.call.arguments, item.output] for item in receipts]) == raw
+    assert len(canonical_json_bytes(list(views))) < len(canonical_json_bytes(list(
+        PydanticConversationModel._receipt_model_views(receipts, _literal_slices=False))))
+    # Unverified output and unvalidated pages cannot supply a slice anchor.
+    failed = ConversationActionReceipt(plain.call, {**plain.output, "status": "failed"})
+    unknown = ConversationActionReceipt(plain.call, {**plain.output, "status": "ambiguous"})
+    for untrusted in (failed, unknown, ConversationActionReceipt(plain.call, plain.output)):
+        assert PydanticConversationModel._receipt_model_views((untrusted, shorter, RECEIPT))[1] == PydanticConversationModel._receipt_model_views((untrusted, shorter, RECEIPT), _literal_slices=False)[1]

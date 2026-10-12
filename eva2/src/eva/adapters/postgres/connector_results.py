@@ -167,11 +167,15 @@ def ancestor_action_presentation(receipt, projection):
     output = {key: receipt.output[key] for key in (
         "contract", "durable", "status", "source", "operation_kind", "external_state_verified")
         if key in receipt.output}
-    output.update(retained_action_body=manifest,
-        model_projection={"contract": projection["contract"], "source": source},
-        guidance="Older completed action: original call/output/proof bytes are retained, not a new observation. "
-                 "Read /call/arguments or /output with this local reader when details are needed. "
-                 "Do not repeat the external action to recover context.")
+    # The full manifest/source above remains the validation and raw-read boundary.
+    # The older model view need not repeat its audit fields or reader instructions.
+    reader = {key: value for key, value in manifest["reader"].items()
+              if key not in {"arguments_json", "instructions"}}
+    model_manifest = {key: value for key, value in manifest.items()
+                      if key not in {"has_more", "preview", "preview_omitted"}}
+    output.update(retained_action_body={**model_manifest, "reader": reader},
+        model_view_encoding="retained_ancestor_action_body_v1",
+        source_receipt_sha256=source["receipt_sha256"])
     for key in ("result", "inventory"):
         observation = receipt.output.get(key)
         if isinstance(observation, dict):

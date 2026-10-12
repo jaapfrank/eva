@@ -1,0 +1,159 @@
+{
+  "contract": "EvaIndependentRetainedContextSourceReview/v1",
+  "recordedAt": "2026-10-12T18:04:06.181440+00:00",
+  "decision": "GO",
+  "scope": "Exact two-module renderer source and limited source-facts publication. Installation may use only these reviewed bytes; no native-input or task-completion decision.",
+  "sourceManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/frozen-source-v2.private.json",
+    "sha256": "81ec49a68add5d2d8a9db8b895e37feb4c96d0b92c6911f26786460faf1851ba"
+  },
+  "sourceManifestSha256": "81ec49a68add5d2d8a9db8b895e37feb4c96d0b92c6911f26786460faf1851ba",
+  "patch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/source-and-tests-v2.patch.private.diff",
+    "sha256": "e14c97fb15c8044c21e3077faf782921b77ce93daa2e13cdb1ffe5bb57872d2b"
+  },
+  "sources": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "eeb260b3da6ccdea14c13b7d882d50c31ae48ec82a730d57a18d5a044f1a9e4f"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "e1526c2492e850fa173bb4f3b4610e9f85d27ed8871bf8458e778cbea913a008"
+    }
+  ],
+  "tests": [
+    {
+      "path": "eva2/tests/model/test_catalogue_model_view.py",
+      "sha256": "39a4d31fed9c67554f9dfd91846b1f8790755b89f5375ac8eaad7d2f48914460"
+    },
+    {
+      "path": "eva2/tests/connectors/test_connector_results.py",
+      "sha256": "1a367c964eb2931fe0a91fe673fc1a63722bc3091a9f2e524cacfd334ec24b19"
+    }
+  ],
+  "unchangedExternalRoute": [
+    {
+      "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+    }
+  ],
+  "technicalFindings": {
+    "generalRoute": "Existing ordinary task renderer and ConnectorResults reader are used. No domain-specific executor, manually completed Tuya proposal, new memory or evaluation platform.",
+    "validatedSources": "Slice sources are verified older local-reader pages whose existing ancestor projection validates the original receipt, source/proof hashes, manifest, reader and page bounds.",
+    "exactSharing": "Exact whole-value sharing runs first. New literal and JSON escape/unescape slices reference only earlier visible literal strings in the same request; whole matched spans are compared exactly and fragments/final strings have hashes.",
+    "reconstruction": "Recorded SDK-wire/pure checks independently expand Unicode and escaped/unescaped fragments. Recorded retained-44 measurement reconstructs all 28 original local page results exactly.",
+    "latestAnchors": "Newest receipt rendering and the earlier literals it references are protected from the new slice transformation.",
+    "rawProof": "Original call/output/proof bytes and the full server-side reader manifest remain unchanged. Only older model presentation drops redundant audit/instruction fields after existing validation.",
+    "authorityAndUncertainty": "Existing actor/source/ingress/execution/stop/reader checks remain; failed, ambiguous and unconfirmed history cannot supply or consume verified references. Invalid non-string call-ID fields remain literal without breaking the protected-anchor scan.",
+    "contextGate": "No grant, capability catalogue, profile, response-input limit or current gate changed."
+  },
+  "targetedChecks": {
+    "binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/targeted-checks-v2.private.json",
+      "sha256": "b5e7419374e28bc9c6c77f0150d5bbaf937c77723795cfac1f6dd22fd96a8c14"
+    },
+    "junit": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/targeted-final-v2.private.xml",
+      "sha256": "00f8039c0a9a2cf013c483f5f00e36561727f982bb64dae48d80da9ad54c61ed"
+    },
+    "log": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/targeted-final-v2.private.log",
+      "sha256": "1b47cc254fa2cdef36eca9696588dfd522295f0206802e78e88b46f421cdf18a"
+    },
+    "finalUniquePassed": 16,
+    "finalExitCode": 0,
+    "basis": "Reviewed exact source/diff, frozen-copy and preserved-input hashes, JUnit/log and measurement script/result; no reviewer rerun.",
+    "earlierFailuresPreserved": true
+  },
+  "measurement": {
+    "binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/final-render-measurement-v2.private.json",
+      "sha256": "10641cbb46db9592bbcf5208e9c14e96070571a210b3c32a7f9bb15e10748c26"
+    },
+    "retainedReceipts": 44,
+    "exactlyReconstructedLocalPages": 28,
+    "knownBeforeBpeIncludingReserve": 88991,
+    "knownCandidateBpeIncludingReserve": 61406,
+    "framingReserve": 256,
+    "existingInputLimit": 65536,
+    "knownMargin": 4130,
+    "candidateTwoRenderPassesNanoseconds": 3429614658,
+    "limitations": [
+      "Local serialization/BPE reconstruction; not provider-token usage or savings.",
+      "Recall, recent messages, browser context and corrections are empty in this measurement.",
+      "Script budget context uses used=0 and remaining_wall_seconds=1200; the reconstruction is not the byte-exact full current generation-5 request.",
+      "Actual additions may exceed the measured margin. The existing native inputgate remains mandatory.",
+      "No native task-quality, completion or overall efficiency conclusion."
+    ]
+  },
+  "publication": {
+    "decision": "GO",
+    "evidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-context-sharing-correction-20261012.json",
+      "sha256": "cee6a1ef9aef519352a5a551f6f14ab71130d079abb9c380cf865de38d37e5b7"
+    },
+    "status": "built_source_not_installed",
+    "meaning": "The source candidate exists and focused checks passed. This review makes no installed-runtime or actual-image claim.",
+    "currentUsageUnknownPreserved": true,
+    "historicalErrorsPreserved": true
+  },
+  "resolvedPreparationDefects": [
+    "Initial exact-sharing precedence and unvalidated reverse-JSON fixture errors remain recorded.",
+    "Original ef91 patch locator incorrectly referenced a test file; v2 points to and hashes the actual diff.",
+    "The new protected-anchor scan now type-checks call IDs; six existing malformed-reference forms pass.",
+    "Measurement import and canonical-float-export failures remain recorded."
+  ],
+  "preservation": {
+    "inputs": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/retained-44.snapshot.private.json",
+        "sha256": "47e314e7781f93a682d27179b3c0d4df4cd7ba811fe7b514467bc055d3e6895f"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/gen5-context-metadata.private.json",
+        "sha256": "0dc3a9623c05171fa608ab2ecf99b2dc714e11ffbeecead2c4940d0f3359363d"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/current-descriptors.private.json",
+        "sha256": "d7590676c2d4523f5efc083bd2efcd51e66430006def496aa0c593c37741b9c9"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/pydantic_conversation.py.before.private",
+        "sha256": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/connector_results.py.before.private",
+        "sha256": "dc4e7dbdf5a8b9f1278df016a520eddb6bf64956e9cf4ee2ca15416d582efce5"
+      },
+      {
+        "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+        "sha256": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+      }
+    ],
+    "previousManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-fragment-diagnosis/render-correction/frozen-source.private.json",
+      "sha256": "ef91b9dc0e20c768c06257233bfd215e18a80e27ddbb3ded9a6bf1e2f40cb91f"
+    }
+  },
+  "limits": {
+    "newInputAuthority": false,
+    "newComparisonSeries": false,
+    "nativeContinuationGO": false,
+    "runtimeInstalledClaim": false,
+    "providerSavingsProven": false,
+    "taskCompletionProven": false,
+    "fullAIDE2Completion": false,
+    "projectGoalStatus": "active",
+    "task": "Original readonly proposal task remains. No HA migration or rename before owner agreement; future keys and physical checks remain execution conditions."
+  },
+  "reviewActions": {
+    "providerRequests": 0,
+    "nativeRuns": 0,
+    "databaseReads": 0,
+    "databaseWrites": 0,
+    "testsRerun": 0,
+    "productionEdits": 0
+  },
+  "blockers": []
+}

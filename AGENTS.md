@@ -1,5 +1,28 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Actueel 12 oktober — algemene contextcorrectie geïnstalleerd; Eva voert de opdracht uit
+
+Twee modules van de bestaande taak-/modelroute zijn exact geïnstalleerd.
+16 gerichte controles en onafhankelijke bronreview geslaagd; kern en werker
+gezond,343 overige Pythonbronnen per image en configuratie/gegevens behouden.
+Oudere gevalideerde lokale passages delen exacte overlappende tekst; oorspronkelijke
+call/output/proof en nieuwste bronankers blijven intact. Geen tool-, grant- of grenswijziging.
+
+Lokale bekende context:88.991→61.406 BPE inclusief256 reserve;4.130 bekende marge.
+Recall/recent/browser/correcties waren niet gemeten: geen volledige actuele inputfit,
+providerbesparing of gebruikersafronding bewezen. Beide renderpasses lokaal3,430s.
+Alle eerdere fouten, UNKNOWN en het tussenvoorstel blijven behouden. Ontwikkelcredits onbekend.
+
+Eva moet zelf de oorspronkelijke lezende onderzoeksopdracht vervolgen en haar voorstel
+opslaan/teruglezen. Codex doet geen Tuya-onderzoek namens Eva en schrijft geen voorstel.
+De gewone bronroute en actuele inputgate blijven leidend. Geen HA-wijziging of migratie
+vóór apart akkoord. Gehele projectgoal actief;39/48 oorspronkelijk en39/54 totaal
+ongewijzigd, volledige HUE/AIDE² open. Geen nieuwe vergelijkingsserie; spraak geparkeerd.
+
+Bron:eva2/evidence/product/retained-context-sharing-correction-20261012.json.
+Installatie:eva2/evidence/product/retained-context-sharing-installed-20261012.json.
+Bronreview:eva2/reviews/retained-context-sharing-source-review-20261012.json.
+
 ## Actueel 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel
 
 Jaap verduidelijkt: Codex moet Eva goed laten werken zodat Eva zelf onderzoek en

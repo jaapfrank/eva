@@ -1,0 +1,110 @@
+{
+  "contract": "EvaIndependentRetainedContextInstalledReview/v1",
+  "recordedAt": "2026-10-12T18:07:02.573251+00:00",
+  "decision": "GO",
+  "scope": "Exact installed two-module retained-context renderer and limited installed-facts publication only.",
+  "publicEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-context-sharing-installed-20261012.json",
+    "sha256": "c28c64e7a918896893f192a345f192a5a893d082f9f7f26c44fbec769990e83c"
+  },
+  "installationVerification": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/installation-verification.private.json",
+    "sha256": "107f1e566ce8508e447a3241cf2a4872c5e38269b046f49123285639861f3de9"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/retained-context-sharing-source-review-20261012.json",
+    "sha256": "d0b5f927a561edd87e22701c7eaba213f6660b98eda5014462c14d1ce7d11867"
+  },
+  "sourceEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-context-sharing-correction-20261012.json",
+    "sha256": "cee6a1ef9aef519352a5a551f6f14ab71130d079abb9c380cf865de38d37e5b7"
+  },
+  "build": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/build-result.private.json",
+    "sha256": "34dba986a72a98025350e7a99b0de5eb1538fe0b190b16378e78d928ecfc5e6f"
+  },
+  "installationDispatch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/installation-dispatch-receipt.private.json",
+    "sha256": "0602af4e816dcba00ad706082ee2484b8665cab05717c9b2922931d5d593380f"
+  },
+  "checkedServices": {
+    "core": {
+      "image": "sha256:672757b79d95302248de62077698c8351dfad8dff1fd71009049246871b97609",
+      "before": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/core-before.private.json",
+        "sha256": "bf60d7962478bea68cefb200c4128a2cab6a8d96583d3b57fabef3054f822a82"
+      },
+      "installed": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/core-installed.private.json",
+        "sha256": "a5356ebce639ca2166f1ed7e75dc71eaeae399e139c47f03f17d44d30e53ee3d"
+      },
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "eeb260b3da6ccdea14c13b7d882d50c31ae48ec82a730d57a18d5a044f1a9e4f",
+        "adapters/postgres/connector_results.py": "e1526c2492e850fa173bb4f3b4610e9f85d27ed8871bf8458e778cbea913a008"
+      },
+      "changedPythonSources": 2,
+      "unchangedPythonSources": 343,
+      "healthy": true,
+      "environmentMapEqual": true,
+      "mountsByDestinationEqual": true,
+      "processConfigurationEqual": true,
+      "networkNamesEqual": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:e345227e0504cc52fe7f53c71652dc5d2aabd006907d4c33183702647e5eb50d",
+      "before": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/delegated-work-worker-before.private.json",
+        "sha256": "3591d97fc5637f4a488027665d6f78a92155823a26e63c406ef70b4a2d9334fe"
+      },
+      "installed": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-context-sharing/installation/delegated-work-worker-installed.private.json",
+        "sha256": "0d0ffba55afc693710aeea3bb29b4b853efe94bdaae0b6df397077268929d532"
+      },
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "eeb260b3da6ccdea14c13b7d882d50c31ae48ec82a730d57a18d5a044f1a9e4f",
+        "adapters/postgres/connector_results.py": "e1526c2492e850fa173bb4f3b4610e9f85d27ed8871bf8458e778cbea913a008"
+      },
+      "changedPythonSources": 2,
+      "unchangedPythonSources": 343,
+      "healthy": true,
+      "environmentMapEqual": true,
+      "mountsByDestinationEqual": true,
+      "processConfigurationEqual": true,
+      "networkNamesEqual": true
+    }
+  },
+  "actualUpdaterDispatches": 1,
+  "readyzReady": true,
+  "findings": [
+    "Installed core and worker images match the existing updater receipt, build and reviewed source hashes.",
+    "Two Python modules changed; the remaining 343 Python sources per image match the previous inventory.",
+    "Retained environment, mounts by destination, process settings and network names match the saved before/installed inspections.",
+    "The public claims are limited to installation. Actual full input fit, provider savings and useful task completion remain unproven."
+  ],
+  "preservedPreviousFailure": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/tuya-retained-proposal-input-gate-result-20261012.json",
+    "sha256": "810543d8bfd220e668156297ec82c2e7a5b50d8a1ab1665d898f4f2083e97676"
+  },
+  "limits": {
+    "nativeInputGO": false,
+    "newAuthorityGranted": false,
+    "providerSavingsProven": false,
+    "actualFullInputFitProven": false,
+    "taskOutcomeCompleted": false,
+    "fullAIDE2Completed": false,
+    "manualDomainProposalDelivered": false,
+    "migrationOrRenameAuthorized": false,
+    "ordinaryWork": "Eva remains responsible for the original readonly proposal. Any ordinary continuation uses existing human authority and the real unchanged inputgate; this installation review grants no new scope.",
+    "wholeProjectGoal": "active"
+  },
+  "reviewMethod": {
+    "existingReceiptsAndInspectionsOnly": true,
+    "liveProbes": 0,
+    "testsRerun": 0,
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseReads": 0,
+    "installActions": 0
+  },
+  "blockers": []
+}
