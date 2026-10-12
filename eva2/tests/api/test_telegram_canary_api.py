@@ -149,6 +149,38 @@ def test_private_canary_derives_principal_server_side() -> None:
     assert response.json()["provider"] == "test-model"
 
 
+def test_photo_analysis_reaches_core_without_becoming_user_testimony() -> None:
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    runtime = _Runtime()
+    payload = _payload(text="Het apparaat registreert het wel.")
+    payload["media_context"] = {"source_ref": "telegram:7:1", "media_sha256": "a" * 64,
+        "media_type": "image/jpeg", "description": "Een Tuya-event op het scherm."}
+    response = TestClient(create_app(runtime)).post("/internal/v1/telegram/canary/respond", json=payload)
+    assert response.status_code == 200
+    turn = runtime.turns[0]
+    assert turn.text == payload["text"]
+    assert "Tuya-event" in turn.grounded_text
+    ingress = PostgresConversationJournal._ingress_data(turn)
+    assert ingress["text"] == payload["text"]
+    assert ingress["media_context_sha256"] == turn.media_context.context_sha256
+    assert "Tuya-event" not in json.dumps(ingress)
+    assert runtime.after[0].text == payload["text"]
+
+
+@pytest.mark.parametrize("changes", [
+    {"source_ref": "telegram:8:1"}, {"media_sha256": "bad"},
+    {"description": ""}, {"media_type": "application/octet-stream"},
+])
+def test_photo_analysis_rejects_wrong_binding_and_invalid_source(changes) -> None:
+    runtime = _Runtime()
+    payload = _payload()
+    payload["media_context"] = {"source_ref": "telegram:7:1", "media_sha256": "a" * 64,
+        "media_type": "image/jpeg", "description": "Fixture", **changes}
+    response = TestClient(create_app(runtime)).post("/internal/v1/telegram/canary/respond", json=payload)
+    assert response.status_code == 422
+    assert not runtime.turns
+
+
 def test_private_canary_handles_owner_work_command_before_model_or_stream() -> None:
     class CommandRuntime(_Runtime):
         def respond_telegram_delegated_work(

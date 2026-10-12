@@ -68,6 +68,10 @@ class ScheduledOwnerWork:
     def _turn(data):
         source = dict(data["source"])
         source.pop("audience")
+        media = source.pop("media_context", None)
+        if media is not None:
+            from eva.application.conversation_media import ConversationMediaContext
+            source["media_context"] = ConversationMediaContext(**media)
         binding = source.pop("observation_binding")
         return ConversationTurn.private(**source, observation_binding=(
             None if binding is None else ConversationObservationBinding(**binding)))

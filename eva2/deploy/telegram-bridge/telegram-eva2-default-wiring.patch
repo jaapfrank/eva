@@ -1,0 +1,199 @@
+--- a/src/integrations/telegram.js
++++ b/src/integrations/telegram.js
+@@ -67,6 +67,7 @@
+ import {
+   archivedTelegramDialogueRoute,
+   telegramDialogueRoute,
++  eva1TelegramPrompt,
+ } from '../telegramdialogue.js';
+ import {
+   askEva2Canary,
+@@ -76,6 +77,8 @@
+   labelEva2TelegramFailure,
+   labelEva2TelegramReply,
+ } from './eva2canary.js';
++
++import { analyseEva2Photo } from './eva2media.js';
+ 
+ const execFile = promisify(execFileCb);
+ let bot = null;
+@@ -205,11 +208,8 @@
+     meta: {
+       inbound: true,
+       fromTelegramId: String(fromTelegramId),
+-      dialogueRoute: typeof ctx.message.text === 'string'
+-        ? (eva2CanaryPrompt(ctx.message.text, {
+-          chatId: ctx.chat.id, fromId: ctx.from.id,
+-          defaultPrivateIds: config.eva2DefaultPrivateIds,
+-        }) !== null ? 'eva2' : 'eva1') : null,
++      dialogueRoute: eva1TelegramPrompt(telegramMessageContent(ctx.message)) !== null
++        ? 'eva1' : 'eva2',
+     },
+   });
+   if (ctx.message.reply_to_message) {
+@@ -2401,6 +2401,58 @@
+   };
+ }
+ 
++async function respondWithEva2(ctx, mediaContext = null) {
++  const archivedMessage = telegramMessage(ctx.chat.id, ctx.message.message_id);
++  try {
++    const draftSink = createEva2DraftSink({
++      chatId: ctx.chat.id, draftId: ctx.message.message_id,
++      sendDraft: bot?.api?.raw?.sendMessageDraft?.bind(bot.api.raw),
++    });
++    const answer = await askEva2Canary({
++      baseUrl: config.eva2CanaryUrl, chatId: ctx.chat.id,
++      messageId: ctx.message.message_id, fromId: ctx.from.id,
++      text: telegramMessageContent(ctx.message), archivedMessage, mediaContext,
++      telegramDate: ctx.message.date,
++      onDraft: draftSink ? draftSink.map(labelEva2TelegramReply) : null,
++      onReceipt: draftSink ? (text) => draftSink.receipt(text) : null,
++    });
++    if (!answer) throw new Error('Bericht hoort niet bij Eva2');
++    await sendTelegramText(ctx.chat.id, labelEva2TelegramReply(answer.text), {
++      replyToMessageId: ctx.message.message_id,
++      dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary'),
++    });
++  } catch (error) {
++    await sendTelegramText(ctx.chat.id, labelEva2TelegramFailure(errMsg(error).slice(0, 160)), {
++      replyToMessageId: ctx.message.message_id,
++      dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary-error'),
++    });
++  }
++}
++
++async function respondWithEva2Photo(ctx, file) {
++  try {
++    const archived = telegramMessage(ctx.chat.id, ctx.message.message_id);
++    let mediaContext = archived.meta?.eva2MediaContext || null;
++    if (!mediaContext) {
++      const buffer = await downloadTelegramFile(ctx, file.file_id);
++      mediaContext = await analyseEva2Photo({
++        buffer, contentType: file.mime_type || 'image/jpeg',
++        sourceRef: 'telegram:' + ctx.chat.id + ':' + ctx.message.message_id,
++        caption: ctx.message.caption || '',
++        complete: chatComplete, imageMessage: imageMsg,
++      });
++      archiveTelegramMessage({ chatId: ctx.chat.id, messageId: ctx.message.message_id,
++        meta: { ...archived.meta, eva2MediaContext: mediaContext } });
++    }
++    await respondWithEva2(ctx, mediaContext);
++  } catch (error) {
++    await sendTelegramText(ctx.chat.id, labelEva2TelegramFailure(errMsg(error).slice(0, 160)), {
++      replyToMessageId: ctx.message.message_id,
++      dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary-error'),
++    });
++  }
++}
++
+ export async function startTelegram() {
+   if (!config.telegramToken) {
+     logTimeline('system', 'Telegram staat uit (geen TELEGRAM_BOT_TOKEN in .env). Chatten kan via het dashboard; maak een bot via @BotFather voor Telegram.');
+@@ -2603,41 +2655,16 @@
+     stamp('prep_ms', tPrep);
+     try {
+       const archivedMessage = telegramMessage(ctx.chat.id, ctx.message.message_id);
+-      if (eva2CanaryPrompt(ctx.message.text, { archivedMessage }) !== null) {
+-        const tCanary = performance.now();
+-        try {
+-          const draftSink = createEva2DraftSink({
+-            chatId: ctx.chat.id,
+-            draftId: ctx.message.message_id,
+-            sendDraft: bot?.api?.raw?.sendMessageDraft?.bind(bot.api.raw),
+-          });
+-          const answer = await askEva2Canary({
+-            baseUrl: config.eva2CanaryUrl,
+-            chatId: ctx.chat.id,
+-            messageId: ctx.message.message_id,
+-            fromId: ctx.from.id,
+-            text: ctx.message.text,
+-            archivedMessage,
+-            telegramDate: ctx.message.date,
+-            onDraft: draftSink ? draftSink.map(labelEva2TelegramReply) : null,
+-            onReceipt: draftSink ? (text) => draftSink.receipt(text) : null,
+-          });
+-          await sendTelegramText(ctx.chat.id, labelEva2TelegramReply(answer.text), {
+-            replyToMessageId: ctx.message.message_id,
+-            dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary'),
+-          });
+-          latency.eva2_canary = true;
+-          stamp('eva2_canary_ms', tCanary);
+-        } catch (error) {
+-          await sendTelegramText(
+-            ctx.chat.id,
+-            labelEva2TelegramFailure(errMsg(error).slice(0, 160)),
+-            {
+-              replyToMessageId: ctx.message.message_id,
+-              dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary-error'),
+-            },
+-          );
+-        }
++      if (archivedTelegramDialogueRoute(archivedMessage) === 'eva2') {
++        await respondWithEva2(ctx);
++        latency.eva2_canary = true;
++        return;
++      }
++      if (eva1TelegramPrompt(ctx.message.text) === null) {
++        await sendTelegramText(ctx.chat.id, 'Eva2: Dit oude bericht wordt niet opnieuw door Eva1 verwerkt. Stuur je vraag opnieuw, of gebruik /eva1 voor Eva1.', {
++          replyToMessageId: ctx.message.message_id,
++          dedupeKey: inboundReplyDedupeKey(ctx, 'legacy-route-stopped'),
++        });
+         return;
+       }
+       if (await resumePreparedTelegramTurn(ctx, naam)) {
+@@ -2645,7 +2672,7 @@
+         return;
+       }
+       const turnAuthority = beginTelegramUnderstanding(ctx, naam);
+-      let tekst = ctx.message.text;
++      let tekst = eva1TelegramPrompt(ctx.message.text) || 'Hallo';
+       const tReplyContext = performance.now();
+       const replied = await describeRepliedMessage(ctx) || await describeRecentPhotoReference(ctx, {
+         force: isShortPhotoFollowup(ctx.message.text),
+@@ -2690,6 +2717,11 @@
+     upsertPerson(naam, { telegram_id: ctx.from.id });
+     const stop = typing(ctx);
+     try {
++      if (archivedTelegramDialogueRoute(telegramMessage(ctx.chat.id, ctx.message.message_id)) === 'eva2') {
++        await respondWithEva2Photo(ctx, ctx.message.photo.at(-1));
++        return;
++      }
++      if (eva1TelegramPrompt(ctx.message.caption) === null) return;
+       if (await resumePreparedTelegramTurn(ctx, naam)) return;
+       const photos = ctx.message.photo;
+       const buf = await downloadTelegramFile(ctx, photos[photos.length - 1].file_id);
+@@ -2750,6 +2782,18 @@
+ 
+   bot.on(['message:video', 'message:document'], async (ctx) => {
+     if (!allowed(ctx.from.id)) return;
++    if (archivedTelegramDialogueRoute(telegramMessage(ctx.chat.id, ctx.message.message_id)) === 'eva2') {
++      if (['image/jpeg', 'image/png', 'image/webp'].includes(ctx.message.document?.mime_type)) {
++        await respondWithEva2Photo(ctx, ctx.message.document);
++      } else {
++        await sendTelegramText(ctx.chat.id, 'Eva2: Ik kan dit bestandstype via Telegram nog niet verwerken. Stuur de relevante tekst of een foto; ik schakel niet over naar Eva1.', {
++          replyToMessageId: ctx.message.message_id,
++          dedupeKey: inboundReplyDedupeKey(ctx, 'unsupported-media'),
++        });
++      }
++      return;
++    }
++    if (eva1TelegramPrompt(ctx.message.caption) === null) return;
+     const video = ctx.message.video || (ctx.message.document?.mime_type?.startsWith('video/') ? ctx.message.document : null);
+     if (!video) return;
+ 
+@@ -2813,9 +2857,11 @@
+   });
+   logTimeline('system', 'Telegram verbonden. Eva is bereikbaar op je telefoon 📱');
+ 
+-  registerMessenger(sendToFamily, reconcileSupersededToFamily);
+-  registerPhotoSender(sendPhotoToFamily);
+-  registerVoiceSender(sendVoiceToFamily);
++  // Eva1 stays opt-in. Its autonomous notifications must not enter Eva2's chat.
++  // Preserve delivery reconciliation; Eva2 uses the direct transport below.
++  registerMessenger(null, reconcileSupersededToFamily);
++  registerPhotoSender(null);
++  registerVoiceSender(null);
+ }
+ 
+ export function telegramPollingOptions() {

@@ -7,6 +7,7 @@ import { askEva2Canary } from '../../deploy/telegram-bridge/src/integrations/eva
 
 test('default route applies only to selected private text, with explicit commands retained', () => {
   const options = { chatId: 7, fromId: 7, defaultPrivateIds: '7,8' };
+  options.defaultRoute = 'legacy';
   assert.equal(eva2IncomingTelegramPrompt(' Hello ', options), 'Hello');
   assert.equal(eva2IncomingTelegramPrompt('Hello', { ...options, chatId: -7 }), null);
   assert.equal(eva2IncomingTelegramPrompt('Hello', { ...options, fromId: 8 }), null);
@@ -16,6 +17,15 @@ test('default route applies only to selected private text, with explicit command
   assert.equal(eva2IncomingTelegramPrompt('/eva2@EvaBot Hello', options), 'Hello');
   assert.equal(eva2IncomingTelegramPrompt('/eva2 Hello', { ...options, chatId: -7 }), 'Hello');
   assert.throws(() => eva2IncomingTelegramPrompt('Hello', { ...options, defaultPrivateIds: '7,bad' }), /invalid/);
+});
+
+test('new messages use Eva2; only the exact eva1 command selects the old conversation', () => {
+  assert.equal(eva2IncomingTelegramPrompt('Hello'), 'Hello');
+  assert.equal(eva2IncomingTelegramPrompt('Hello', { chatId: 8, fromId: 8 }), 'Hello');
+  assert.equal(eva2IncomingTelegramPrompt('/eva1 Hello'), null);
+  assert.equal(eva2IncomingTelegramPrompt('/eva1@EvaBot Hello'), null);
+  assert.equal(eva2IncomingTelegramPrompt('/eva10 Hello'), '/eva10 Hello');
+  assert.equal(eva2IncomingTelegramPrompt('/share -7'), '/share -7');
 });
 
 test('historical inference and archived route remain fixed across configuration changes', () => {

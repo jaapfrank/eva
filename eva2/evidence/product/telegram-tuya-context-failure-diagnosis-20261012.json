@@ -1,0 +1,199 @@
+{
+  "contract": "EvaTelegramContextFailureDiagnosis/v1",
+  "status": "cause_proven_read_only",
+  "date": "2026-10-12",
+  "sourceTaskId": "work:eva-chat:0a32f212-fff4-5a63-a626-a0a461b0e66b",
+  "taskStatus": {
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "completedAt": "2026-10-12T12:43:52Z",
+    "errorFingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd"
+  },
+  "provenCause": {
+    "exceptionType": "_InputBudgetError",
+    "message": "conversation request exceeds the runtime input budget",
+    "fingerprintMatchesExactTypeAndMessage": true,
+    "boundary": "local canonical-envelope BPE check before the eighth background model admission",
+    "runtimeInputTokenLimit": 65536,
+    "eighthBackgroundModelAdmissionPresent": false,
+    "runnerClassification": "internal_error"
+  },
+  "retainedUsage": {
+    "backgroundCompletedResponses": 7,
+    "eachResponseMeasurement": "measured",
+    "inputTokens": 167780,
+    "outputTokens": 850,
+    "knownTokens": 168630,
+    "journalToolCalls": 7,
+    "lastCompletedResponseInputTokens": 47786,
+    "storedTerminalUsageMeasurement": "partial",
+    "completeLifetimeCostKnown": false
+  },
+  "retainedActions": {
+    "savedProgressReceipts": 1,
+    "externalReadReceipts": 6,
+    "externalActionNames": {
+      "home_assistant_request": 5,
+      "read_home_assistant_inventory": 1
+    },
+    "allSixExternalTerminalEvents": "STATE_VERIFIED",
+    "claim": "Retained successful read receipts; these events do not establish any changed external state or completed migration."
+  },
+  "contextHandling": {
+    "losslessDuplicateCompactionExecuted": true,
+    "externalReceiptOriginalBytes": 261348,
+    "externalReceiptModelViewBytes": 132876,
+    "externalReceiptModelViewBpe": 41340,
+    "sevenReceiptOnlyAdmissionBytes": 168772,
+    "sevenReceiptOnlyAdmissionBpe": 55288,
+    "receiptOnlyMeasurementBoundary": "Canonical phase envelope with empty prompt/instructions and no tools; excludes framing reserve and actual task/context/catalog. Not the full failed request.",
+    "selectionBoundary": "generate trims older recent_messages only; current input, identity, recalled facts, active work and completed action receipts remain",
+    "catalogCompaction": "Digital build_digital_runner passes conversation_tools without discoverable_action_names, so the constructor default set is empty. The compact_catalog predicate is false for this digital task even before the first receipt. The foreground factory sets discoverable names; compact_catalog additionally requires no prior/completed receipts.",
+    "catalogFullEnvelopeSizeMeasured": false
+  },
+  "lastInventory": {
+    "section": "automations",
+    "items": 17,
+    "inventoryBytes": 6204,
+    "durableReceiptBytes": 12832,
+    "modelViewBytes": 6843,
+    "modelViewBpe": 1784,
+    "itemArrayBytes": 5727,
+    "configurationCoverage": false
+  },
+  "largestContributors": {
+    "apiObservationBytesByStep": {
+      "1": 32168,
+      "2": 17288,
+      "3": 9638,
+      "4": 48294,
+      "5": 16155
+    },
+    "storedPayloadShape": "API selected response is JSON text/preview inside the receipt, retained through all subsequent requests. Five broad reads dominate; last inventory is smaller.",
+    "configurationEntryPageRows": [
+      50,
+      26
+    ],
+    "tuyaOrLocalTuyaDomainRowsInThosePages": [
+      0,
+      2
+    ],
+    "step4PreviewAlreadyIncomplete": true,
+    "relevanceLimit": "Counts demonstrate broad data and accumulation, not permission to discard source facts or evidence."
+  },
+  "storedResultsBoundary": {
+    "currentInlineThresholdBytes": 65536,
+    "currentTransportBoundBytes": 2097152,
+    "allFiveApiObservationsBelowCurrentInlineThreshold": true,
+    "homeAssistantRouteUsesCapturedCall": false,
+    "homeAssistantRouteHasSupportsStoredResults": false,
+    "existingReader": "ConnectorResults.read/read_recorded, via use_connector_tool; source-bound stored bytes, JSON pointer/search/batch, no external connector invocation",
+    "thresholdChangeAloneWouldReachThisTask": false
+  },
+  "counterfactualSizeOnly": {
+    "observedExecution": false,
+    "proposedInlineThresholdBytes": 8192,
+    "eligibleApiSteps": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "ineligibleInventoryStep": 6,
+    "method": "Apply existing manifest serializer to retained observation bytes with a clearly hypothetical fixed-length binding, replace result and matching proof observation only, then use the existing model-view/envelope functions. No records changed or connector dispatched.",
+    "sevenReceiptModelViewBytes": 33642,
+    "sevenReceiptModelViewBpe": 9716,
+    "sevenReceiptOnlyAdmissionBytes": 43708,
+    "sevenReceiptOnlyAdmissionBpe": 12234,
+    "receiptOnlyBpeReduction": 43054,
+    "fullFailedRequestWouldFitProven": false
+  },
+  "smallestCorrectionProposal": {
+    "requiresSeparateImplementationAuthorization": true,
+    "primary": "Connect the Home Assistant API response path to the existing retained-result capture/manifest route and use a separate bounded model-inline threshold. Keep transport/receipt limits, original proof, current actor/stop/retention and no-repeat-write checks. Stored selections reuse the existing local reader. No new executor.",
+    "catalogAlternative": "Digital model must first receive the exact trusted discoverable gateway names; continuation compaction must preserve discovery/use actions and already admitted receipts. Catalog savings and whether this alone fits are not yet measured.",
+    "failureClassification": "Expose the existing local input-budget refusal as a bounded budget/context failure instead of generic internal_error; do not increase the limit."
+  },
+  "sourceLocations": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "line": 712,
+      "purpose": "lossless receipt views"
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "line": 1457,
+      "purpose": "catalog predicate; recent-message selection follows"
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "line": 2438,
+      "purpose": "exact local input-budget exception"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_composition.py",
+      "line": 222,
+      "purpose": "digital model does not configure discoverable names"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "line": 708,
+      "purpose": "terminal error classification"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "line": 79,
+      "purpose": "current manifest threshold; existing reader"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "line": 563,
+      "purpose": "capture only for supporting providers"
+    },
+    {
+      "path": "eva2/src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 221,
+      "purpose": "actual HA API response route"
+    }
+  ],
+  "verification": {
+    "specificTaskReadOnlyDatabaseTransaction": true,
+    "pureRetainedReceiptReconstruction": "passed",
+    "modelViewCanonicalSerialization": "passed",
+    "sourceEdits": 0,
+    "newEvaModelRequests": 0,
+    "newExternalActionDispatches": 0,
+    "restarts": 0,
+    "resumes": 0,
+    "testsRun": 0,
+    "credits": "unknown",
+    "protectedCasesRead": false,
+    "hueFilesUnchanged": true
+  },
+  "latestOwnerRequestedResume": {
+    "sourceTaskId": "work:eva-resume:31b819c8-920b-572e-807a-d1176296c891",
+    "generation": 2,
+    "completedAt": "2026-10-12T13:01:46Z",
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "errorFingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd",
+    "sameExactInputBudgetException": true,
+    "sameOriginalIngressAndExecution": true,
+    "retainedSpecSha256": "b252350860e803e39c4423093bb5fa233d4ded6483cbd7bd39d33c33d982f1ac",
+    "ownBackgroundModelAdmittedEvents": 0,
+    "ownBackgroundModelRecordedEvents": 0,
+    "newExternalToolThreadEventsSinceResumeAdmission": 0,
+    "storedTerminalUsage": {
+      "measurement": "unmeasured",
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null,
+      "tool_calls": null,
+      "completed_model_responses": null,
+      "cost_usd_micros": null
+    },
+    "conclusion": "The same retained action context hits the local envelope budget before the first model admission of this resume. No new provider response or external tool dispatch is observed. Null terminal usage remains unchanged; this read does not reopen or repair the task.",
+    "verification": "Exact task spec/terminal row and its derived background journal identity, plus its source/principal-bound external action threads, read in scoped read-only transactions."
+  }
+}

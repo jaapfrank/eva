@@ -16,6 +16,7 @@ from typing import Callable, Iterator, Literal, Protocol
 
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
+from eva.application.conversation_media import ConversationMediaContext
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.identity import IdentityPack
 
@@ -409,6 +410,8 @@ class ConversationTurn:
     audience: MemoryAudience
     project_id: str | None = None
     observation_binding: ConversationObservationBinding | None = None
+    media_context: ConversationMediaContext | None = None
+    media_context_sha256: str | None = None
 
     def __post_init__(self) -> None:
         if not all(
@@ -425,6 +428,19 @@ class ConversationTurn:
             raise ValueError("conversation turn text is empty or too large")
         if self.audience.principal_id != self.principal_id:
             raise ValueError("conversation turn audience principal differs")
+        if self.media_context is not None and (
+            self.audience.kind != "private_person"
+            or self.media_context.source_ref != self.message_id
+        ):
+            raise ValueError("media context is not bound to this private turn")
+        if self.media_context_sha256 is not None and (
+            self.audience.kind != "private_person"
+            or not isinstance(self.media_context_sha256, str)
+            or _SHA256.fullmatch(self.media_context_sha256) is None
+            or (self.media_context is not None
+                and self.media_context.context_sha256 != self.media_context_sha256)
+        ):
+            raise ValueError("media context digest is invalid")
         if self.audience.kind == "household":
             prefix = f"household:{self.audience.household_id}:conversation:"
             if (not self.conversation_id.startswith(prefix)
@@ -466,6 +482,8 @@ class ConversationTurn:
         *,
         project_id: str | None = None,
         observation_binding: ConversationObservationBinding | None = None,
+        media_context: ConversationMediaContext | None = None,
+        media_context_sha256: str | None = None,
     ) -> "ConversationTurn":
         """Construct an explicitly private turn for non-group connectors/tests."""
 
@@ -480,15 +498,18 @@ class ConversationTurn:
             audience=MemoryAudience.private_person(principal_id=principal_id),
             project_id=project_id,
             observation_binding=observation_binding,
+            media_context=media_context,
+            media_context_sha256=media_context_sha256,
         )
 
     @property
     def grounded_text(self) -> str:
-        if self.observation_binding is None:
-            return self.text
-        return (
-            f"{self.observation_binding.model_context}\nGebruikersbericht: {self.text}"
-        )
+        context = []
+        if self.observation_binding is not None:
+            context.append(self.observation_binding.model_context)
+        if self.media_context is not None:
+            context.append(self.media_context.model_context)
+        return ("\n".join(context) + f"\nGebruikersbericht: {self.text}") if context else self.text
 
 
 @dataclass(frozen=True, slots=True)

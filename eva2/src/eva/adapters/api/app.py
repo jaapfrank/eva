@@ -118,6 +118,7 @@ _TELEGRAM_CANARY_KEYS = {
     "tenant_id",
     "text",
 }
+_TELEGRAM_CANARY_OPTIONAL_KEYS = {"media_context"}
 _RETAIN_OPTIONAL_KEYS = {"project_id"}
 
 _TURN_REQUIRED_KEYS = {
@@ -1207,7 +1208,8 @@ def create_app(
         payload: dict[str, Any], background_tasks: BackgroundTasks, request: Request
     ) -> Any:
         try:
-            if set(payload) != _TELEGRAM_CANARY_KEYS:
+            if (not _TELEGRAM_CANARY_KEYS <= set(payload)
+                    or set(payload) - _TELEGRAM_CANARY_KEYS - _TELEGRAM_CANARY_OPTIONAL_KEYS):
                 raise ValueError("Telegram canary request differs")
             telegram_user_id = payload["telegram_user_id"]
             chat_id = payload["chat_id"]
@@ -1270,6 +1272,15 @@ def create_app(
                     "text": text,
                 }
             )
+            if payload.get("media_context") is not None:
+                from dataclasses import replace
+                from eva.application.conversation_media import ConversationMediaContext
+                media = payload["media_context"]
+                if (not isinstance(media, dict) or set(media) != {
+                    "source_ref", "media_sha256", "media_type", "description"
+                }):
+                    raise ValueError("Telegram media context differs")
+                turn = replace(turn, media_context=ConversationMediaContext(**media))
             runtime.admit_turn_audience(turn)
             delegated_reply = None
             delegated = getattr(runtime, "respond_telegram_delegated_work", None)

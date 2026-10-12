@@ -1,0 +1,143 @@
+{
+  "activity": {
+    "database": 0,
+    "docker": 0,
+    "factory": 0,
+    "models": 0,
+    "native": 0,
+    "source_edits": 0,
+    "tests": 0
+  },
+  "checkedAt": "2026-10-12T12:53:03.752186+00:00",
+  "contract": "EvaTelegramEva2OnlySourceReview/v1",
+  "coreSourceFiles": [
+    {
+      "path": "eva2/src/eva/application/conversation_media.py",
+      "sha256": "921ed4e4cb922e9d7302df6b4c6a59b1b80dbfeda7471edfc24b3999f287c971"
+    },
+    {
+      "path": "eva2/src/eva/application/conversation.py",
+      "sha256": "c596de090994479124d8cef11936820e2b461c4d7b173e58274c5d1d48193265"
+    },
+    {
+      "path": "eva2/src/eva/adapters/api/app.py",
+      "sha256": "3a0117d919a3aab2261d28f8281b2ec5f0bf580457171a32e009da8b34e8b65e"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/conversation_journal.py",
+      "sha256": "d110007bad77f978551d05c2ff1b033bc45ff01e71886e3c62ea22a4ca39991c"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/scheduled_work.py",
+      "sha256": "465dabf85586b1069e02302e8dd81f5afa607775854172e4a91f1000a661abd2"
+    },
+    {
+      "path": "eva2/src/eva/providers/mcp_autonomy.py",
+      "sha256": "2ad62966331b87e1f6014d603aa8e52f0fb22c1a35152826318732975f486f41"
+    }
+  ],
+  "decision": "GO",
+  "findings": {
+    "digest_only_ingress_replay_roundtrip_fixed": true,
+    "eva1_requires_exact_explicit_command": true,
+    "eva2_direct_transport_kept_independent_of_legacy_registry": true,
+    "eva2_failure_never_invokes_legacy_agent": true,
+    "historical_archived_route_preserved": true,
+    "host_candidate_helpers_exact_repository_copies": true,
+    "invalid_or_mismatching_media_digest_refused": true,
+    "legacy_background_text_photo_voice_registry_disabled": true,
+    "legacy_reconciliation_callback_preserved": true,
+    "media_analysis_separate_from_user_text_and_labeled_uncertain": true,
+    "media_context_requires_private_turn_and_exact_source_ref": true,
+    "new_inputs_default_to_eva2": true,
+    "photo_and_image_document_without_caption_keep_eva2": true,
+    "resolved_blocker": "The original SourceTurnLoader omitted media identity; it now reloads the digest from retained ingress and checks exact original payload equality.",
+    "same_message_actor_response_bindings_and_deduplication_preserved": true,
+    "scheduled_media_reconstruction_typed": true
+  },
+  "full_aide2_completed": false,
+  "hostSourceFiles": [
+    {
+      "path": "eva2/deploy/telegram-bridge/src/telegramdialogue.js",
+      "sha256": "01d0305d2d85fa63d6229521cad25da621be6ac70bc943c0f9fb86f993eaf86c"
+    },
+    {
+      "path": "eva2/deploy/telegram-bridge/src/integrations/eva2canary.js",
+      "sha256": "3e51f435788113e388327ee5482e05fc636d5fe68d0838864ff42175979ab378"
+    },
+    {
+      "path": "eva2/deploy/telegram-bridge/src/integrations/eva2media.js",
+      "sha256": "2b311b87ce155b4b1193cf864d70c8519e424d0464076e06c79b5d653f3f4a16"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-eva2-only-20261012/candidate/src/integrations/telegram.js",
+      "sha256": "da6220c703d78623196b9ffbc9aa137869fa8e84c300e906c214844522efb94a"
+    }
+  ],
+  "hostWiringPatch": {
+    "path": "eva2/deploy/telegram-bridge/telegram-eva2-default-wiring.patch",
+    "sha256": "5a325dc3e725b995464f82f18d5eb8beedf1fb4e1240860bf6cd4eb5d0fd8c5d"
+  },
+  "limitations": [
+    "GO concerns the hash-bound source set; build and installed-image contents require their own exact installation evidence.",
+    "Photo/JPEG/PNG/WebP document input supported; video and other documents receive an explicit unsupported response without Eva1 fallback.",
+    "Disabling the legacy registered sender callbacks also disables explicit Eva1 outbound message/media tools; direct eva1 conversational replies remain on the ordinary separate reply route.",
+    "Synthetic/fake transport results do not prove actual image understanding, native task completion, family acceptance or quality gain.",
+    "No HUE source review, model dispatch, native-input authority or full AIDE completion is granted."
+  ],
+  "live_installation_verified": false,
+  "new_native_trial_authorized": false,
+  "quality_gain_claimed": false,
+  "scope": "Exact Telegram default routing and media source-boundary source only",
+  "testSources": [
+    {
+      "path": "eva2/tests/api/test_telegram_canary_api.py",
+      "sha256": "6c64dcb0f06c7d8a89f48d5f9dbf5d24ac0f273fdff4a57399f336a18f9d88c1"
+    },
+    {
+      "path": "eva2/tests/postgres/test_mcp_autonomy_source.py",
+      "sha256": "39d2553f2b094bf0ca224cbd26630d704acdfc84664e04bdbf6891acf6984484"
+    },
+    {
+      "path": "eva2/tests/support/telegram_default_private.test.mjs",
+      "sha256": "c008d5829c7853de260003d83b9241e70a3a09f412612d0df21e3ffdd6ca8759"
+    },
+    {
+      "path": "eva2/tests/support/telegram_eva2_media.test.mjs",
+      "sha256": "909173deb6b509314e5c6fa67595fecda1092baeef432661d8393b55d48347ff"
+    },
+    {
+      "path": "eva2/tests/support/telegram_eva2_only_ingress.test.mjs",
+      "sha256": "2eb80d73b4bda905b8b04f6be4bb6bb8be6ae2f5ec5f0a8c59fbcff277bc1684"
+    }
+  ],
+  "validation": {
+    "actual_host_handler_fixture": {
+      "nodes": 1,
+      "scope": "real handler with fake media/core/Telegram transports; explicit eva1 agent branch instrumented",
+      "status": "passed_reported_by_source_owner"
+    },
+    "core_targeted_checks": {
+      "raw_log_reference": "Not supplied at this source-review snapshot; no independent rerun.",
+      "scope": "canary, conversation, real SourceTurnLoader with synthetic retained timeline",
+      "status": "passed_reported_by_source_owner",
+      "unique_nodes": 48
+    },
+    "postgres_fixture_execution_claimed": false,
+    "reviewer_tests_or_provider_calls": 0,
+    "route_media_unit_results": {
+      "rawResults": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/telegram-eva2-only-20261012/telegram_default_private.test.mjs.result.txt",
+          "sha256": "6bbd5f03e1313ef9bbe9edd431f3dab1a390ca01183a8d1a846b3d90b1f62663"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/telegram-eva2-only-20261012/telegram_eva2_media.test.mjs.result.txt",
+          "sha256": "1901d5332dcc25cc9d3839fc324fd70da63f7348a810e08a0545e4b1098a32ef"
+        }
+      ],
+      "status": "passed",
+      "unique_nodes": 7
+    }
+  }
+}

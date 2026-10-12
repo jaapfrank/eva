@@ -1,4 +1,5 @@
 const EVA2_COMMAND = /^\/eva2(?:@\w+)?(?:\s+|$)/iu;
+const EVA1_COMMAND = /^\/eva1(?:@\w+)?(?:\s+|$)/iu;
 const TELEGRAM_DIALOGUE_ROUTES = new Set(['eva1', 'eva2']);
 
 function telegramTurnKey(row) {
@@ -27,9 +28,15 @@ export function eva2TelegramPrompt(text) {
   return value.replace(EVA2_COMMAND, '').trim();
 }
 
+export function eva1TelegramPrompt(text) {
+  const value = String(text || '');
+  return EVA1_COMMAND.test(value) ? value.replace(EVA1_COMMAND, '').trim() : null;
+}
+
 /** Select new private text only; historical archive inference stays unchanged. */
 export function eva2IncomingTelegramPrompt(text, {
   chatId, fromId, defaultPrivateIds = '', archivedMessage = null,
+  defaultRoute = 'eva2',
 } = {}) {
   const explicit = eva2TelegramPrompt(text);
   if (archivedMessage) {
@@ -37,9 +44,14 @@ export function eva2IncomingTelegramPrompt(text, {
       throw new Error('Telegram dialogue route does not match its archived input');
     }
     return archivedTelegramDialogueRoute(archivedMessage) === 'eva2'
-      ? (explicit ?? text.trim()) : null;
+      ? (explicit ?? (text.trim() || (archivedMessage.kind === 'photo' || archivedMessage.kind === 'document'
+        ? 'Bekijk de aangeleverde foto.' : ''))) : null;
   }
+  if (eva1TelegramPrompt(text) !== null) return null;
   if (explicit !== null) return explicit;
+  if (defaultRoute === 'eva2') {
+    return typeof text === 'string' && text.trim() ? text.trim() : null;
+  }
   if (typeof text !== 'string' || !text.trim() || text.trimStart().startsWith('/')) return null;
   if (!Number.isSafeInteger(chatId) || chatId < 1 || chatId !== fromId) return null;
   if (typeof defaultPrivateIds !== 'string' || !defaultPrivateIds.trim()) return null;

@@ -699,6 +699,11 @@ class PostgresConversationJournal(PostgresScopedRole):
             "principal_id": turn.principal_id,
             "text": turn.text,
         }
+        media_digest = (turn.media_context.context_sha256
+                        if turn.media_context is not None else turn.media_context_sha256)
+        if media_digest is not None:
+            # Bind replay without storing derived analysis as user testimony.
+            data["media_context_sha256"] = media_digest
         if turn.conversation_id.startswith("initiative-task:"):
             data["origin"] = "eva_initiative"
         if turn.project_id is not None:

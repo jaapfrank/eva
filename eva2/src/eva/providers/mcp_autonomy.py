@@ -97,6 +97,7 @@ class _SourceTurnLoader:
                 source["conversation_id"], source["message_id"], data["text"],
                 event.occurred_at.astimezone(UTC).isoformat().replace("+00:00", "Z"),
                 project_id=data.get("project_id"), observation_binding=binding,
+                media_context_sha256=data.get("media_context_sha256"),
             )
             if PostgresConversationJournal._ingress_data(turn) != data:
                 raise ValueError("stored ingress fields differ")

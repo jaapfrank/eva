@@ -28,7 +28,13 @@ const bot = new Bot('123:test-only', { botInfo: {
 } });
 globalThis.__ingressBot = bot;
 const moduleUrl = pathToFileURL(path.join(hostRoot, 'src/integrations/telegram.js')).href;
-registerHooks({ load(url, context, nextLoad) {
+registerHooks({ resolve(specifier, context, nextResolve) {
+  if (specifier === './eva2media.js' && process.env.EVA_TELEGRAM_CANDIDATE_ROOT) {
+    return { url: pathToFileURL(path.join(process.env.EVA_TELEGRAM_CANDIDATE_ROOT,
+      'src/integrations/eva2media.js')).href, shortCircuit: true };
+  }
+  return nextResolve(specifier, context);
+}, load(url, context, nextLoad) {
   const loaded = nextLoad(url, context);
   let source = String(loaded.source);
   if (process.env.EVA_TELEGRAM_CANDIDATE_ROOT && url.startsWith('file:')) {

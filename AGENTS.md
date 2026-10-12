@@ -1,5 +1,30 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Actueel 12 oktober — Telegram standaard Eva2; Tuya-context wordt hersteld
+
+Jaaps actuele afspraak: alle nieuwe gewone Telegramtekst en foto's gaan naar Eva2.
+Eva1 is alleen expliciet bereikbaar met /eva1. Automatische Eva1-fallback en
+ongevraagde geregistreerde Eva1-Telegrammeldingen zijn uitgezet.
+
+Exact vier hostmodules, zes kernmodules en vijf werkermodules geïnstalleerd.
+48 gerichte Pythonchecks en negen Nodechecks slagen; fake transport en
+synthetische bronregistratie bewijzen geen antwoordkwaliteit. Diensten gezond,
+Telegramstart in de bestaande systeemtijdlijn bevestigd. Gegevens/mounts behouden.
+Video en overige bestanden melden een expliciete Eva2-beperking.
+
+De afzonderlijke Tuya-migratieverkenning en haar hervatting blijven niet afgerond:
+de volgende aanvraag strandt lokaal op grote behouden HA-leesresultaten, vóór
+een nieuwe modeladmission. Nu eerst deze concrete contextoverdracht herstellen met
+bestaande opslag/reader, zonder oude resultaten te wissen, API-acties te herhalen
+of budgetten simpelweg te verhogen. Migratie blijft afhankelijk van Jaaps akkoord.
+Daarna het reeds gestarte HUE1.1/HUE3.1 voortzetten. Het hele goal blijft actief,
+39/48 oorspronkelijke en 39/54 totale afrondingen behouden; spraak geparkeerd.
+Geen nieuwe concurrentenserie of handeling van Jaap nodig.
+
+Bewijs: eva2/evidence/product/telegram-eva2-only-installed-20261012.json.
+Review: eva2/reviews/telegram-eva2-only-installed-review-20261012.json.
+Diagnose: eva2/evidence/product/telegram-tuya-context-failure-diagnosis-20261012.json.
+
 ## Actueel 12 oktober — voorstelbeoordeling gesloten; geen toepassing
 
 Eén gewone vervolguitvoering is daadwerkelijk uitgevoerd en gesloten, exit1.

@@ -1,0 +1,140 @@
+{
+  "contract": "EvaTelegramEva2OnlyDelivery/v1",
+  "recordedAt": "2026-10-12T13:08:46.393412+00:00",
+  "result": "installed",
+  "scope": "New ordinary Telegram text and photos use Eva2. Eva1 is selected only by the exact /eva1 command. Legacy registered unsolicited Telegram callbacks are disabled.",
+  "host": {
+    "changedFiles": {
+      "src/telegramdialogue.js": "01d0305d2d85fa63d6229521cad25da621be6ac70bc943c0f9fb86f993eaf86c",
+      "src/integrations/eva2canary.js": "3e51f435788113e388327ee5482e05fc636d5fe68d0838864ff42175979ab378",
+      "src/integrations/telegram.js": "da6220c703d78623196b9ffbc9aa137869fa8e84c300e906c214844522efb94a",
+      "src/integrations/eva2media.js": "2b311b87ce155b4b1193cf864d70c8519e424d0464076e06c79b5d653f3f4a16"
+    },
+    "serviceActive": true,
+    "restartCount": 1,
+    "oldFilesRetainedPrivately": true
+  },
+  "images": {
+    "core": {
+      "before": "sha256:80839f28cc873d39d2b283bdd1c18bb700eeb7d7689cf0359950adddea21f55a",
+      "image": "sha256:809d906cb6caf716d349cce5707a1df8ba77c72f9f6546160af5500a819d9010",
+      "modules": {
+        "application/conversation_media.py": "921ed4e4cb922e9d7302df6b4c6a59b1b80dbfeda7471edfc24b3999f287c971",
+        "application/conversation.py": "c596de090994479124d8cef11936820e2b461c4d7b173e58274c5d1d48193265",
+        "adapters/postgres/conversation_journal.py": "d110007bad77f978551d05c2ff1b033bc45ff01e71886e3c62ea22a4ca39991c",
+        "adapters/postgres/scheduled_work.py": "465dabf85586b1069e02302e8dd81f5afa607775854172e4a91f1000a661abd2",
+        "providers/mcp_autonomy.py": "2ad62966331b87e1f6014d603aa8e52f0fb22c1a35152826318732975f486f41",
+        "adapters/api/app.py": "3a0117d919a3aab2261d28f8281b2ec5f0bf580457171a32e009da8b34e8b65e"
+      },
+      "unchangedPythonSources": 337,
+      "importCheck": true
+    },
+    "delegated-work-worker": {
+      "before": "sha256:6e15c592a9283264e10539a84688e1630be09d6f44c5acf1411cd18df645c9fa",
+      "image": "sha256:4359d7c6a31716680dfdda8f27c80e1d54a79f967249331c25a6ba579b7231e2",
+      "modules": {
+        "application/conversation_media.py": "921ed4e4cb922e9d7302df6b4c6a59b1b80dbfeda7471edfc24b3999f287c971",
+        "application/conversation.py": "c596de090994479124d8cef11936820e2b461c4d7b173e58274c5d1d48193265",
+        "adapters/postgres/conversation_journal.py": "d110007bad77f978551d05c2ff1b033bc45ff01e71886e3c62ea22a4ca39991c",
+        "adapters/postgres/scheduled_work.py": "465dabf85586b1069e02302e8dd81f5afa607775854172e4a91f1000a661abd2",
+        "providers/mcp_autonomy.py": "2ad62966331b87e1f6014d603aa8e52f0fb22c1a35152826318732975f486f41"
+      },
+      "unchangedPythonSources": 338,
+      "importCheck": true
+    }
+  },
+  "runtime": {
+    "containers": {
+      "core": {
+        "image": "sha256:809d906cb6caf716d349cce5707a1df8ba77c72f9f6546160af5500a819d9010",
+        "health": "healthy",
+        "exactChangedModules": true,
+        "retainedMounts": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:4359d7c6a31716680dfdda8f27c80e1d54a79f967249331c25a6ba579b7231e2",
+        "health": "healthy",
+        "exactChangedModules": true,
+        "retainedMounts": true
+      }
+    },
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    },
+    "projectDashboardCurrentTask": "telegram-eva2-default",
+    "hostServiceActive": true,
+    "telegramStarted": false,
+    "hostErrorLineCount": 0
+  },
+  "telegramStartup": {
+    "connectedSinceRestart": true,
+    "startFailureCountSinceRestart": 0,
+    "pollingErrorCountSinceRestart": 0,
+    "logSource": "Bottie SQLite system timeline",
+    "checkedAt": "2026-10-12T13:02:06.366141+00:00"
+  },
+  "checks": {
+    "pythonPassed": 48,
+    "nodePassed": 9,
+    "providerRequests": 0,
+    "realTelegramTestExchanges": 0,
+    "boundary": "Python and Node checks use synthetic timeline and fake transport, including the actual host handler and an instrumented legacy branch; no model quality or complete native task claim.",
+    "pythonRawLogAvailable": false,
+    "reportedPythonToolOutputSession": 59285,
+    "installedActualHostHandlerPassed": true,
+    "installedActualHostHandlerLogSha256": "c80677dd1be34bf7db6838ba7e4b7d05b6d1183b2098cce5978a7a37a3277d5f"
+  },
+  "preserved": {
+    "originalTextAndCaption": true,
+    "messageReplyBinding": true,
+    "historicalArchiveRoutes": true,
+    "privacyAudienceChecks": true,
+    "existingDataAndMounts": true,
+    "noAutomaticEva1Fallback": true,
+    "hueNotInstalledByThisUpdate": true,
+    "voiceParked": true,
+    "globalGoalActive": true,
+    "noRollback": true
+  },
+  "media": {
+    "supported": [
+      "photo",
+      "JPEG image document",
+      "PNG image document",
+      "WebP image document"
+    ],
+    "analysisModel": "gpt-6-astra",
+    "analysisEffort": "medium",
+    "unsupported": "Video and other documents receive an explicit Eva2 limitation; they never fall back to Eva1.",
+    "derivedObservationNotUserText": true
+  },
+  "independentSourceReview": "eva2/reviews/telegram-eva2-only-source-review-20261012.json",
+  "independentInstalledReview": "eva2/reviews/telegram-eva2-only-installed-review-20261012.json",
+  "remaining": [
+    "Owner experience after the installed route change is separate from source/fixture checks.",
+    "The separate Tuya investigation and its resume failed before model admission because retained read-result context exceeded the runtime input budget. That work is not completed by this routing update.",
+    "Full HUE learning cycle and AIDE² remain open; no complete housemate outcome is marked finished by this correction."
+  ],
+  "usage": {
+    "newManualEvaModelRequests": 0,
+    "newCompetitorTrials": 0,
+    "developmentCredits": null
+  },
+  "preparationFailures": [
+    "First worker candidate import included the core API module, which did not match that worker; caught before installation. Worker now retains its API module.",
+    "Initial source review found a missing media digest in restored ingress; corrected and checked before installation.",
+    "Two model-free lease-read preparations used the wrong DB driver/table qualification before update dispatch; no installation or task execution occurred in those reads."
+  ],
+  "privateEvidenceRoot": "/home/administrator/project/.eva2-artifacts/telegram-eva2-only-20261012",
+  "realRouteObservation": {
+    "source": "Owner-provided Telegram messages at 15:01 and 15:02",
+    "plainTextDefaultEva2Observed": true,
+    "originalMessageRepliesObserved": true,
+    "photoAfterInstallationObserved": false,
+    "workCompletionClaim": false
+  }
+}

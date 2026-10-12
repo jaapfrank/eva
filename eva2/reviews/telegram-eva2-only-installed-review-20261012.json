@@ -1,0 +1,113 @@
+{
+  "activity": {
+    "database": 0,
+    "docker": 0,
+    "environmentValuesReadOrExported": false,
+    "evaModelCalls": 0,
+    "factory": 0,
+    "nativeDispatches": 0,
+    "privateMessagesReadOrExported": false,
+    "tests": 0
+  },
+  "bindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-eva2-only-20261012/build-final.private.json",
+      "sha256": "ae36d95399fe5a68c89f71372fec69230b98b777466805a43f79188a66709b1a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-eva2-only-20261012/installation-receipt.private.json",
+      "sha256": "d85f1b3d99f238fa67118180acdd87f30fc838d3139ad22e118ffacc1564e3c0"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-eva2-only-20261012/host-installation-receipt.private.json",
+      "sha256": "fdf40001e27a53fd28f861dad038f3d2f49cfb17087afd3e150cce726b2a1a1f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-eva2-only-20261012/installation-verification.private.json",
+      "sha256": "b7a60d4165600f04d9bfd4e3f7e52c1848193af8703978a88d2bf93c976b6114"
+    }
+  ],
+  "checkedAt": "2026-10-12T13:00:22.649400+00:00",
+  "contract": "EvaTelegramEva2OnlyInstalledReview/v1",
+  "decision": "GO_LIMITED_INSTALLATION_FACTS",
+  "facts": {
+    "core": {
+      "exactReviewedModuleCount": 6,
+      "health": "healthy",
+      "image": "sha256:809d906cb6caf716d349cce5707a1df8ba77c72f9f6546160af5500a819d9010",
+      "importCheck": true,
+      "otherPythonSourcesPreserved": 337,
+      "reviewedModuleHashes": {
+        "adapters/api/app.py": "3a0117d919a3aab2261d28f8281b2ec5f0bf580457171a32e009da8b34e8b65e",
+        "adapters/postgres/conversation_journal.py": "d110007bad77f978551d05c2ff1b033bc45ff01e71886e3c62ea22a4ca39991c",
+        "adapters/postgres/scheduled_work.py": "465dabf85586b1069e02302e8dd81f5afa607775854172e4a91f1000a661abd2",
+        "application/conversation.py": "c596de090994479124d8cef11936820e2b461c4d7b173e58274c5d1d48193265",
+        "application/conversation_media.py": "921ed4e4cb922e9d7302df6b4c6a59b1b80dbfeda7471edfc24b3999f287c971",
+        "providers/mcp_autonomy.py": "2ad62966331b87e1f6014d603aa8e52f0fb22c1a35152826318732975f486f41"
+      }
+    },
+    "host": {
+      "active": true,
+      "exactReviewedModuleCount": 4,
+      "explicitRestarts": 1,
+      "reviewedModuleHashes": {
+        "src/integrations/eva2canary.js": "3e51f435788113e388327ee5482e05fc636d5fe68d0838864ff42175979ab378",
+        "src/integrations/eva2media.js": "2b311b87ce155b4b1193cf864d70c8519e424d0464076e06c79b5d653f3f4a16",
+        "src/integrations/telegram.js": "da6220c703d78623196b9ffbc9aa137869fa8e84c300e906c214844522efb94a",
+        "src/telegramdialogue.js": "01d0305d2d85fa63d6229521cad25da621be6ac70bc943c0f9fb86f993eaf86c"
+      },
+      "rollbackApplied": false,
+      "serviceState": [
+        "1388668",
+        "active"
+      ]
+    },
+    "hostErrorLineCount": 0,
+    "noHueModulesAddedOrChangedInThisInstallation": true,
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    },
+    "retainedMountsConfirmedByOriginalVerification": true,
+    "telegramStartedInOriginalVerification": false,
+    "worker": {
+      "apiUnchangedWorkerHasNoTelegramHttpIngress": true,
+      "exactReviewedModuleCount": 5,
+      "health": "healthy",
+      "image": "sha256:4359d7c6a31716680dfdda8f27c80e1d54a79f967249331c25a6ba579b7231e2",
+      "importCheck": true,
+      "otherPythonSourcesPreserved": 338,
+      "reviewedModuleHashes": {
+        "adapters/postgres/conversation_journal.py": "d110007bad77f978551d05c2ff1b033bc45ff01e71886e3c62ea22a4ca39991c",
+        "adapters/postgres/scheduled_work.py": "465dabf85586b1069e02302e8dd81f5afa607775854172e4a91f1000a661abd2",
+        "application/conversation.py": "c596de090994479124d8cef11936820e2b461c4d7b173e58274c5d1d48193265",
+        "application/conversation_media.py": "921ed4e4cb922e9d7302df6b4c6a59b1b80dbfeda7471edfc24b3999f287c971",
+        "providers/mcp_autonomy.py": "2ad62966331b87e1f6014d603aa8e52f0fb22c1a35152826318732975f486f41"
+      }
+    }
+  },
+  "fullAide2Completed": false,
+  "limitations": [
+    "Installation and health are supported by the four exact receipts; no new live probe was performed.",
+    "Original verification has telegramStarted=false. Telegram polling startup and actual conversation/media behavior are not established by this snapshot.",
+    "Fake media/core/Telegram tests and an instrumented explicit eva1 branch do not prove live model or legacy-agent behavior.",
+    "No HUE runtime integration, task-quality gain, full AIDE completion or new native-input approval is granted."
+  ],
+  "nativeQualityGainClaimed": false,
+  "newNativeInputAllowed": false,
+  "sourceReview": {
+    "path": "eva2/reviews/telegram-eva2-only-source-review-20261012.json",
+    "sha256": "d33a4581defe2b8b15e43cc1d80fadc600eea548bb10af09f38e61dd186cfded"
+  },
+  "tests": {
+    "nodeEvidence": "Existing source-owner outputs including actual host-handler fixture; prior seven route/media raw logs remain bound by source review.",
+    "nodePassedReported": 9,
+    "pythonEvidence": "Existing source-owner tool output 59285; raw 5.95s pytest log not saved.",
+    "pythonPassedReported": 48,
+    "reviewerReranTests": false,
+    "syntheticRetainedTimelineNotActualPostgresFixture": true
+  }
+}
