@@ -1,6 +1,26 @@
-## Actueel werk — 2026-10-12T03:05:12.177797+00:00
+## Actueel werk — 2026-10-12T03:11:07.686863+00:00
 
-## Actueel 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
+## Actueel 12 oktober — taakherkomst en verbruik voor zelfverbetering aangesloten
+
+Twee bestaande hostmodules geïnstalleerd na 44 gerichte controles en afzonderlijke
+bronreview GO. Exacte bron teruggelezen; dienst gezond. 35 overige hostbronnen,
+runtime-images, configuratie en oorspronkelijke criteria behouden.
+Geen nieuwe handmatige Eva-modelaanvraag of native verbeterproef gestart.
+
+**Nu:** de exacte uitvoeropdracht controleren en de echte verbetercyclus starten.
+Uitvoerder: /root/eva1_memory_transfer; review: /root/product_execution_memory_review.
+**Daarna:** werkresultaten beoordelen; uitsluitend onafhankelijk bewezen winst
+toepassen en later gebruiken. Kwaliteitswinst en volledige AIDE² blijven open.
+
+Geen nieuwe hoofdafronding; 39/48 historische afrondingen en gezinsacceptaties
+behouden. Het gehele goal blijft actief. Geen handeling van Jaap nodig.
+Spraak geparkeerd; geen concurrentenserie. Credits onbekend.
+
+Dashboardinhoud gecontroleerd op 2026-10-12T03:11:07.686863+00:00.
+Bewijs: eva2/evidence/product/native-work-lifecycle-usage-installed-20261012.json.
+Bronreview: eva2/reviews/native-work-strategy-lifecycle-host-usage-source-review-20261012.json.
+
+## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 
 De bestaande beoordelingsdienst en gewone kern/werker zijn aangesloten op de
 geregistreerde verbetering van de werkaanpak. 37 exacte hostbronnen geïnstalleerd;

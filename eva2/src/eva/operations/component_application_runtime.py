@@ -42,9 +42,42 @@ def _execution_completion_state(rows, task_id, scope_sha256, identity_sha256):
         current = children[0]
 
 
+def _registered_lifecycle_origin(origin, spec, turn, scope_sha256):
+    """Recognize a pre-admission technical record, never a fictitious initiative."""
+    import hashlib
+    from eva.contracts.canonical_json import canonical_sha256
+    if not isinstance(origin, dict):
+        return False
+    if (origin.get('kind') != 'registered_lifecycle_technical_probe'
+            or origin.get('stage') != 'construction'
+            or any(origin.get(k) is not False for k in (
+                'ownerAuthoredText', 'selfChosenInitiative', 'foreground_contact_used'))):
+        return False
+    for key in ('registration_sha256', 'resources_sha256', 'runtime_admission_sha256',
+                'input_sha256', 'scope_sha256'):
+        value = origin.get(key)
+        if not isinstance(value, str) or len(value) != 64 or any(c not in '0123456789abcdef' for c in value):
+            return False
+    source = spec['source']
+    actor = origin.get('actor', {})
+    identity = origin.get('identity', {})
+    return (origin['scope_sha256'] == scope_sha256
+        and canonical_sha256({k: source[k] for k in ('tenant_id', 'installation_id', 'principal_id')}) == scope_sha256
+        and all(actor.get(k) == source[k] for k in ('tenant_id', 'installation_id', 'principal_id'))
+        and actor.get('principal_id') == spec['owner_principal_id']
+        and actor.get('principal_binding_id') == spec['principal_binding_id']
+        and identity.get('task_id') == spec['work_id']
+        and all(identity.get(k) == source[k] for k in ('conversation_id', 'message_id'))
+        and identity.get('source_ingress_sha256') == spec['source_ingress_sha256']
+        and origin.get('spec_sha256') == canonical_sha256(spec)
+        and origin.get('task_sha256') == hashlib.sha256(spec['task'].encode()).hexdigest()
+        and origin.get('project_id') == turn.project_id
+        and turn.project_id == 'component-work-evaluation:' + origin['registration_sha256'] + ':construction')
+
+
 # Executed inside the existing core so database credentials stay there. Only
 # status, stop and lock metadata are read; no conversation content is returned.
-_READINESS = inspect.getsource(_execution_completion_state) + r'''
+_READINESS = inspect.getsource(_execution_completion_state) + inspect.getsource(_registered_lifecycle_origin) + r'''
 import json,sys,sqlalchemy as sa
 from uuid import UUID
 from eva.bootstrap.runtime import RuntimeSettings
@@ -62,8 +95,12 @@ try:
   if original is None:raise ValueError('application task is unavailable')
   rows=c.execute(sa.select(work.c.work_id,work.c.state,work.c.stop_requested_at,work.c.spec_payload).where(work.c.spec_payload['execution_id'].astext==original['execution_id'])).mappings().all()
   state=_execution_completion_state(rows,request['task_id'],request['scope_sha256'],canonical_sha256)
-  if (request.get('include_binding') or request.get('include_usage')) and len(rows)!=1:
+  if (request.get('include_binding') or request.get('include_usage') or request.get('include_active_usage')) and len(rows)!=1:
    raise ValueError('registered independent work requires one original attempt')
+  if request.get('include_active_usage'):
+   if rows[0]['state']!='call_started' or rows[0]['stop_requested_at'] is not None:
+    raise ValueError('construction is not a current active call')
+   state='ready'
   source_turn=None
   if state=='ready' and original.get('contract')=='DelegatedInitiativeDigitalWork/v1':
    from eva.providers.procedure_reference_actions import ProcedureReferenceProviderFactory
@@ -75,7 +112,7 @@ try:
    leased=c.scalar(sa.select(sa.func.count()).select_from(work).where(work.c.lease_owner.is_not(None),work.c.lease_expires_at>sa.func.now()))
    locks=c.scalar(sa.text("SELECT count(*) FROM pg_locks WHERE locktype='advisory' AND granted AND database=(SELECT oid FROM pg_database WHERE datname=current_database()) AND pid<>pg_backend_pid()"))
    state='waiting' if leased or locks else 'ready'
- if state=='ready' and (request.get('include_binding') or request.get('include_usage')) and source_turn is None:
+ if state=='ready' and (request.get('include_binding') or request.get('include_usage') or request.get('include_active_usage')) and source_turn is None:
   from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
   from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
   from eva.providers.mcp_autonomy import _SourceTurnLoader
@@ -84,6 +121,9 @@ try:
   store=PostgresDelegatedWorkStore(e,TimelineScope(UUID(str(s.dashboard_tenant_id)),UUID(str(s.dashboard_installation_id))))
   loaded=store.load(request['task_id'],owner_principal_id=UUID(original['owner_principal_id']),principal_binding_id=UUID(original['principal_binding_id']))
   if loaded.spec.sha256!=canonical_sha256(original):raise ValueError('reviewed original spec differs')
+  if request.get('include_active_usage'):
+   from eva.adapters.postgres.delegated_work import DelegatedWorkCall
+   store.authorize_tool_dispatch(DelegatedWorkCall(loaded.spec.work_id,loaded.storage_episode_id,loaded.call_id,loaded.spec))
   actual_scope=external_timeline_scope(original['source']['tenant_id'],original['source']['installation_id'],'reviewed source scope required')
   journal=PostgresConversationJournal(e,actual_scope)
   source_turn=_SourceTurnLoader(e,SimpleNamespace(scope=actual_scope,authorize_turn=journal.ensure_running))(original['source'])
@@ -101,7 +141,7 @@ try:
   payload.update(contract='EvaReviewedComponentWorkAuthority/v1',task_id=request['task_id'],
    scope_sha256=request['scope_sha256'],spec_sha256=canonical_sha256(original),
    source_ingress_sha256=original['source_ingress_sha256'])
- if request.get('include_usage'):
+ if request.get('include_usage') or request.get('include_active_usage'):
   if state!='ready':raise ValueError('original work is not terminal and current')
   from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
   from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
@@ -124,15 +164,29 @@ try:
     *(contact_data[key].astext==item for key,item in contact_identity.items())))
   native_without_contact=(original.get('contract')=='DelegatedInitiativeDigitalWork/v1'
    and contact_usage.measurement=='unmeasured' and contact_admissions==0)
-  with e.begin() as c:
-   scope._scope(c)
-   row=c.execute(sa.select(work.c.usage_payload,work.c.usage_sha256).where(work.c.work_id==request['task_id'])).one()
-  if row.usage_payload is None or bytes(row.usage_sha256).hex()!=canonical_sha256(row.usage_payload):
-   raise ValueError('original terminal usage is not retained')
+  technical_without_contact=False
+  if contact_usage.measurement=='unmeasured' and contact_admissions==0:
+   import hashlib
+   marker='work-memory:'+hashlib.sha256(request['task_id'].encode()).hexdigest()
+   marker_events=scope.events(marker)
+   if len(marker_events)==1 and marker_events[0].event_type=='HOST_EVALUATION_MEMORY_EXCLUDED':
+    data=marker_events[0].payload.get('data',{})
+    technical_without_contact=(data.get('disposition')=='host_evaluation_excluded'
+     and _registered_lifecycle_origin(data.get('origin'),original,source_turn,request['scope_sha256']))
+  disposition=('native_origin_without_foreground' if native_without_contact else
+   'registered_technical_origin_without_foreground' if technical_without_contact else 'recorded_original_ingress')
   payload.update(contract='EvaReviewedComponentWorkUsage/v1',task_id=request['task_id'],scope_sha256=request['scope_sha256'],
-   model_usage=model_usage.to_wire(),terminal_usage=row.usage_payload,terminal_usage_sha256=canonical_sha256(row.usage_payload),
-   contact_usage=None if native_without_contact else contact_usage.to_wire(),
-   contact_disposition='native_origin_without_foreground' if native_without_contact else 'recorded_original_ingress')
+    model_usage=model_usage.to_wire(),contact_usage=None if native_without_contact or technical_without_contact else contact_usage.to_wire(),
+    contact_disposition=disposition)
+  if request.get('include_active_usage'):
+   payload.update(contract='EvaActiveComponentWorkUsage/v1',spec_sha256=canonical_sha256(original),source_ingress_sha256=original['source_ingress_sha256'])
+  else:
+   with e.begin() as c:
+    scope._scope(c)
+    row=c.execute(sa.select(work.c.usage_payload,work.c.usage_sha256).where(work.c.work_id==request['task_id'])).one()
+   if row.usage_payload is None or bytes(row.usage_sha256).hex()!=canonical_sha256(row.usage_payload):
+    raise ValueError('original terminal usage is not retained')
+   payload.update(terminal_usage=row.usage_payload,terminal_usage_sha256=canonical_sha256(row.usage_payload))
  print(json.dumps(payload))
 finally:e.dispose()
 '''
@@ -167,7 +221,10 @@ class ComponentApplicationRuntime:
     def reviewed_work_usage(self, task_id):
         return self._state(task_id, require_idle=False, include_usage=True)
 
-    def _state(self, task_id, *, require_idle, include_binding=False, include_usage=False):
+    def active_work_usage(self, task_id):
+        return self._state(task_id, require_idle=False, include_active_usage=True)
+
+    def _state(self, task_id, *, require_idle, include_binding=False, include_usage=False, include_active_usage=False):
         if not isinstance(task_id, str) or not 1 <= len(task_id) <= 192 or "\x00" in task_id:
             raise ValueError("invalid application task")
         request = {"task_id": task_id, "scope_sha256": self.config["scope_sha256"]}
@@ -177,6 +234,8 @@ class ComponentApplicationRuntime:
             request["include_binding"] = True
         if include_usage:
             request["include_usage"] = True
+        if include_active_usage:
+            request["include_active_usage"] = True
         result = self.run(["docker", "exec", "-i", self.config["core_container"], "python", "-",
                           json.dumps(request)],
                          input=_READINESS, text=True, capture_output=True, timeout=30)
@@ -185,25 +244,34 @@ class ComponentApplicationRuntime:
         payload = json.loads(result.stdout)
         if not isinstance(payload, dict) or payload.get("state") not in {"ready", "waiting", "cancelled"}:
             raise ValueError("application task readiness invalid")
-        if include_usage:
+        if include_usage or include_active_usage:
             from eva.application.conversation import ConversationModelUsage
             from eva.contracts.delegated_work import DelegatedWorkUsage
             from eva.contracts.canonical_json import canonical_sha256
             expected = {"state", "contract", "task_id", "scope_sha256", "model_usage",
                         "terminal_usage", "terminal_usage_sha256","contact_usage","contact_disposition"}
+            if include_active_usage:
+                expected -= {"terminal_usage", "terminal_usage_sha256"}
+                expected |= {"spec_sha256", "source_ingress_sha256"}
             if (set(payload) != expected or payload["state"] != "ready"
-                    or payload["contract"] != "EvaReviewedComponentWorkUsage/v1"
+                    or payload["contract"] != ("EvaActiveComponentWorkUsage/v1" if include_active_usage else "EvaReviewedComponentWorkUsage/v1")
                     or payload["task_id"] != task_id
                     or payload["scope_sha256"] != self.config["scope_sha256"]
-                    or canonical_sha256(payload["terminal_usage"]) != payload["terminal_usage_sha256"]):
+                    or (not include_active_usage and canonical_sha256(payload["terminal_usage"]) != payload["terminal_usage_sha256"])):
                 raise ValueError("reviewed original usage binding differs")
             if payload["contact_usage"] is None:
-                if payload["contact_disposition"] != "native_origin_without_foreground":
+                if payload["contact_disposition"] not in {"native_origin_without_foreground", "registered_technical_origin_without_foreground"}:
                     raise ValueError("original contact accounting absent")
             elif (payload["contact_disposition"] != "recorded_original_ingress"
                     or ConversationModelUsage.from_wire(payload["contact_usage"]).measurement != "measured"):
                 raise ValueError("original contact accounting incomplete")
             model = ConversationModelUsage.from_wire(payload["model_usage"])
+            if include_active_usage:
+                if (model.measurement != "measured" or model.model_attempts < 1
+                        or any(not isinstance(payload[k],str) or not re.fullmatch(r"[0-9a-f]{64}",payload[k])
+                               for k in ("spec_sha256","source_ingress_sha256"))):
+                    raise ValueError("active construction usage is incomplete")
+                return payload
             terminal = DelegatedWorkUsage.model_validate(payload["terminal_usage"])
             if (model.measurement != "measured" or terminal.measurement == "unmeasured"
                     or any(getattr(terminal,k) is None for k in

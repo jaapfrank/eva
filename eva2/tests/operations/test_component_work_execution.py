@@ -164,7 +164,28 @@ def coordinator(work, tmp_path, monkeypatch, produce, *, runtime=None):
     source.write_text("# trusted test producer\\n")
     source.chmod(0o600)
     config = {"producer_file": str(source),
-              "producer_sha256": hashlib.sha256(source.read_bytes()).hexdigest(), "settings": {}}
+              "producer_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+              "settings": {"accounting_root": str(tmp_path / "physical-accounting"),
+                           "limits": {"total_tool_calls": 100, "total_tokens": 400000}}}
+    import os
+    if os.geteuid() != 0:
+        pytest.skip("requires runtime-owned ledger permissions")
+    accounting = tmp_path / "physical-accounting" / BINDING["execution_binding_ref"]
+    accounting.mkdir(parents=True)
+    ledger = accounting / "accounting.json"
+    ledger.write_text(json.dumps({"registration_sha256": "c" * 64,
+        "requests": [{"request_id": "child-measured", "usage": {
+            "input_tokens": 31, "output_tokens": 4, "total_tokens": 35}}],
+        "tools": [{}, {}]}))
+    ledger.chmod(0o600)
+    os.chown(ledger, 65532, 65532)
+    resources = tmp_path / "resources.json"
+    resources.write_text(json.dumps({"tokens": {"shared_input": 385000,
+        "shared_output": 15000, "shared_combined": 400000},
+        "tools": {"shared_physical_total": 100}}))
+    resources.chmod(0o400)
+    config["settings"].update(resources_file=str(resources),
+        resources_sha256=hashlib.sha256(resources.read_bytes()).hexdigest())
     report = deepcopy(work.report)
     report.update(image_id="image", command_sha256="command")
     original_assessment = work.assessor()
@@ -176,6 +197,13 @@ def coordinator(work, tmp_path, monkeypatch, produce, *, runtime=None):
                 "parent_deadline": PARENT_DEADLINE}, suite_sha256=suite)
     else:
         runtime.suite_sha256 = suite
+    from eva.application.conversation import ConversationModelUsage
+    if not hasattr(runtime, "active_work_usage"):
+        runtime.active_work_usage = lambda task: {
+            "model_usage": ConversationModelUsage.measured(model_attempts=2, tool_calls=3,
+                input_tokens=120, output_tokens=15).to_wire(),
+            "contact_usage": None,
+            "contact_disposition": "registered_technical_origin_without_foreground"}
     evaluator = NS(config=None, assessment=original_assessment)
     monkeypatch.setattr("eva.operations.component_work_execution.ComponentEvaluator",
         lambda config: NS(evaluate=lambda request: deepcopy(report)))
@@ -361,6 +389,8 @@ def test_perfect_reference_stops_before_candidate_work(work, tmp_path, monkeypat
                               static_lock=threading.Lock())
     assert legs == ["baseline"]
     assert result["candidate_work_not_run"] == "baseline_quality_maximum"
+    assert result["work_usage"]["totals"]["input_tokens"] == 31
+    assert result["work_usage"]["totals"]["physical_tools"] == 2
     assert result["development_assessment"]["candidate"]["complete"] is False
 
 
@@ -436,3 +466,99 @@ def test_shared_final_accounting_includes_original_contact_and_dev(tmp_path):
     producer.config["shared_budget"]["construction_attempts"]=2
     with pytest.raises(ValueError,match="construction allowance"):
         producer._usage(value,final_may_be_absent=True)
+
+
+def test_shared_child_limits_include_prior_construction_and_contact():
+    from eva.application.conversation import ConversationModelUsage
+    from eva.operations.component_work_execution import _construction_remaining_settings
+    settings = {"limits": {"total_tool_calls": 100, "total_tokens": 400000,
+        "total_provider_attempts": 28}}
+    parent = {
+        "model_usage": ConversationModelUsage.measured(model_attempts=3, tool_calls=7,
+            input_tokens=200, output_tokens=20).to_wire(),
+        "contact_usage": ConversationModelUsage.measured(model_attempts=1, tool_calls=1,
+            input_tokens=30, output_tokens=2).to_wire(),
+        "contact_disposition": "recorded_original_ingress"}
+    bounded = _construction_remaining_settings(settings, parent)
+    assert bounded["limits"] == {"total_tool_calls": 92, "total_tokens": 399748,
+        "total_provider_attempts": 28}
+    assert settings["limits"]["total_tool_calls"] == 100
+    parent["model_usage"] = ConversationModelUsage.partial(model_attempts=4,
+        tool_calls=7, input_tokens=200, output_tokens=20).to_wire()
+    with pytest.raises(ValueError, match="unmeasured construction"):
+        _construction_remaining_settings(settings, parent)
+
+
+def test_construction_change_during_child_blocks_further_dispatch(work, tmp_path, monkeypatch):
+    legs = []
+    producer, request, evaluator = coordinator(work, tmp_path, monkeypatch,
+        lambda **kw: legs.append(kw["leg"]))
+    original = producer.runtime.active_work_usage(BINDING["task_id"])
+    calls = 0
+    def usage(task):
+        nonlocal calls
+        calls += 1
+        value = deepcopy(original)
+        if calls > 1:
+            value["model_usage"]["input_tokens"] += 1
+        return value
+    producer.runtime.active_work_usage = usage
+    def produce(**kw):
+        kw["authorize"]()
+        legs.append(kw["leg"])
+    producer.produce = produce
+    with pytest.raises(ValueError, match="construction changed"):
+        producer.evaluate(request, execution_binding=BINDING,
+            evaluator=evaluator, static_lock=threading.Lock())
+    assert legs == []
+
+
+def test_development_report_binds_complete_physical_child_usage(work, tmp_path, monkeypatch):
+    def produce(**kw):
+        seal(work, BASE if kw["leg"] == "baseline" else CANDIDATE)
+    producer, request, evaluator = coordinator(work, tmp_path, monkeypatch, produce)
+    result = producer.evaluate(request, execution_binding=BINDING,
+        evaluator=evaluator, static_lock=threading.Lock())
+    usage = result["work_usage"]
+    assert usage["contract"] == "EvaDevelopmentWorkUsage/v1"
+    assert usage["registration_sha256"] == "c" * 64
+    assert usage["execution_binding_ref"] == BINDING["execution_binding_ref"]
+    assert usage["totals"] == {"provider_attempts": 1, "physical_tools": 2,
+        "input_tokens": 31, "output_tokens": 4, "unknown_attempts": 0, "retries": 0}
+    from pathlib import Path
+    assert hashlib.sha256(Path(usage["receipt"]["path"]).read_bytes()).hexdigest() == usage["receipt"]["sha256"]
+
+
+def test_development_cannot_report_unknown_child_usage_as_zero(work, tmp_path, monkeypatch):
+    def produce(**kw):
+        seal(work, BASE if kw["leg"] == "baseline" else CANDIDATE)
+    producer, request, evaluator = coordinator(work, tmp_path, monkeypatch, produce)
+    from pathlib import Path
+    ledger = Path(producer.config["settings"]["accounting_root"]) / BINDING["execution_binding_ref"] / "accounting.json"
+    value = json.loads(ledger.read_text())
+    value["requests"][0]["usage"] = None
+    ledger.write_text(json.dumps(value))
+    with pytest.raises(ValueError, match="unmeasured physical accounting"):
+        producer.evaluate(request, execution_binding=BINDING,
+            evaluator=evaluator, static_lock=threading.Lock())
+
+
+@pytest.mark.parametrize("input_tokens,output_tokens", [
+    (385001, 0), (0, 15001), (384880, 0), (0, 14985)])
+def test_child_split_token_overrun_stops_before_next_dispatch(
+        work, tmp_path, monkeypatch, input_tokens, output_tokens):
+    from pathlib import Path
+    dispatched = []
+    def produce(**kw):
+        path = Path(kw["settings"]["accounting_root"]) / BINDING["execution_binding_ref"] / "accounting.json"
+        value = json.loads(path.read_text())
+        value["requests"][0]["usage"] = {"input_tokens": input_tokens,
+            "output_tokens": output_tokens, "total_tokens": input_tokens + output_tokens}
+        path.write_text(json.dumps(value))
+        kw["authorize"]()
+        dispatched.append(kw["leg"])
+    producer, request, evaluator = coordinator(work, tmp_path, monkeypatch, produce)
+    with pytest.raises(ValueError, match="construction and child budget exceeded"):
+        producer.evaluate(request, execution_binding=BINDING,
+            evaluator=evaluator, static_lock=threading.Lock())
+    assert not dispatched

@@ -1,0 +1,27 @@
+{
+  "contract": "EvaNativeWorkLifecycleUsageInstalled/v1",
+  "checked_at": "2026-10-12T03:11:07.686863+00:00",
+  "state": "installed",
+  "private_receipt_sha256": "287c23a693e98e3f6d0c24164d7b4e18d120d2f45e730e88fbe6d57d0f74f433",
+  "source_manifest_sha256": "274fa8cdd3e6a78c3e2b6c10db9a79006b0297005d87c4cfbda4299e71b35b48",
+  "source_review": "eva2/reviews/native-work-strategy-lifecycle-host-usage-source-review-20261012.json",
+  "source_review_sha256": "ac7c456440d5f36cf2f8f49ea86b2151eb2e6000491cbd1b0f2fae1088313395",
+  "source_count": 37,
+  "changed_sources": {
+    "eva/operations/component_application_runtime.py": "731023d7d1dcfa3e0dda72aaf9ae6195ef514fd79c9cdfbac99f7547eeac62b6",
+    "eva/operations/component_work_execution.py": "67ea592a69a38a237f1a534f2fe266cab0596835c28eb65fcc2f601b2e00ff62"
+  },
+  "unchanged_sources": 35,
+  "service_health": {
+    "status": "ready"
+  },
+  "runtime_images_changed": false,
+  "configuration_changed": false,
+  "native_execution_started": false,
+  "manual_model_requests": 0,
+  "product_function_completed": false,
+  "full_aide2_completed": false,
+  "whole_goal_complete": false,
+  "remaining": "Exact lifecycle driver review, then actual registered improvement work and final evaluation; apply/later only for a strict gain.",
+  "credits": "UNKNOWN"
+}

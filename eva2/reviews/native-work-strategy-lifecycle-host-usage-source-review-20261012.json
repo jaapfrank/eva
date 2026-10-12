@@ -1,0 +1,60 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "checkedAt": "2026-10-12T03:09:06.428710Z",
+  "decision": "GO",
+  "scope": "Exact revision-3 lifecycle usage change in two existing host operations; installation only.",
+  "sourceManifestSha256": "274fa8cdd3e6a78c3e2b6c10db9a79006b0297005d87c4cfbda4299e71b35b48",
+  "openBlockers": [],
+  "bindings": {
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/lifecycle-host-usage/frozen-source-v3.private.json",
+      "sha256": "274fa8cdd3e6a78c3e2b6c10db9a79006b0297005d87c4cfbda4299e71b35b48"
+    },
+    "sourceFiles": {
+      "eva2/src/eva/operations/component_application_runtime.py": "731023d7d1dcfa3e0dda72aaf9ae6195ef514fd79c9cdfbac99f7547eeac62b6",
+      "eva2/src/eva/operations/component_work_execution.py": "67ea592a69a38a237f1a534f2fe266cab0596835c28eb65fcc2f601b2e00ff62"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_component_work_execution.py": "18c08277fa393a793d1353b52ce15bb0945deefeedf54bbed827cc70c9026ff1",
+      "eva2/tests/operations/test_component_lifecycle_usage.py": "b3a16722be40cd9596091861cf71e1682b1a9adfd295fa1c22f67ab61adffff7"
+    },
+    "testReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/lifecycle-host-usage/targeted-tests-v3.private.json",
+      "sha256": "9fb69c70334736a5e6de835befc0334d8c1739e113cd177f66cf70f806663932",
+      "returncode": 0,
+      "passed": 44,
+      "elapsedSeconds": 3.77
+    }
+  },
+  "findings": [
+    "Active construction usage is read through the original current work/source/owner and original call authorization; incomplete accounting is refused.",
+    "Technical no-foreground accounting is distinct from native initiative origin and requires the exact retained pre-admission origin marker plus zero original scoped contact admissions.",
+    "Existing development settings subtract measured construction/contact use; current parent authority, deadline and unchanged usage are checked during child work.",
+    "Child accounting plus the constant parent usage is checked against the pinned separate input/output/combined and physical-tool limits before continuing; unknown completed usage is refused.",
+    "Complete child usage with the raw ledger reference is returned for both the normal assessment and the genuine baseline-quality-maximum stop.",
+    "Conservative token equality stops unfinished authorization; exact equality remains valid for a completed report. No new provider permission or deadline extension is introduced."
+  ],
+  "installationConditions": [
+    "Install only the two bound host modules; preserve current images, configuration, criteria, source/runtime bindings and retained old records.",
+    "Confirm exact loaded host-source hashes and normal service readiness after the single existing-service update before any native input."
+  ],
+  "nativeInput": {
+    "decision": "NOT_READY",
+    "reason": "Separate exact frozen lifecycle-driver review and postinstall receipt remain required.",
+    "remainingBindings": [
+      "Original immutable input/resources/runtime refs; actual source/admission/journal/lease and stop authority; construction/later stage deadlines; once-only dispatch and all shared physical accounting including controls/cleanup."
+    ],
+    "toolBoundary": "This source reads original model-journal tool calls for parent usage. The separate driver must bind any extra physical parent controls to the same shared physical ledger before dispatch; journal and physical totals are not silently equated."
+  },
+  "limits": {
+    "manualModelRequestsByReviewer": 0,
+    "reviewerExecutedTests": 0,
+    "nativeExecutionReviewedOrStarted": false,
+    "installedClaim": false,
+    "qualityGainClaim": false,
+    "fullAide2Claim": false,
+    "wholeGoalComplete": false,
+    "oldClosedFourCallTrialUnchanged": true,
+    "revision1And2Preserved": true
+  }
+}

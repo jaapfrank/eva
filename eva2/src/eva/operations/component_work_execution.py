@@ -203,6 +203,37 @@ class ComponentWorkRuntime:
         return _verified_work_authority(json.loads(result.stdout), binding)
 
 
+    def active_work_usage(self, task_id):
+        from eva.operations.component_application_runtime import ComponentApplicationRuntime
+        return ComponentApplicationRuntime(self.config, run=self.run).active_work_usage(task_id)
+
+
+def _construction_remaining_settings(settings, usage):
+    """The paused constructor has already spent part of the same work budget."""
+    from eva.application.conversation import ConversationModelUsage
+    model = ConversationModelUsage.from_wire(usage['model_usage'])
+    if model.measurement != 'measured' or model.model_attempts < 1:
+        raise ValueError('unmeasured construction prevents development work')
+    contact = usage.get('contact_usage')
+    if contact is None:
+        if usage.get('contact_disposition') not in {
+                'native_origin_without_foreground', 'registered_technical_origin_without_foreground'}:
+            raise ValueError('original contact accounting absent')
+        counts = (model,)
+    else:
+        contact = ConversationModelUsage.from_wire(contact)
+        if contact.measurement != 'measured':
+            raise ValueError('original contact accounting incomplete')
+        counts = (model, contact)
+    result = deepcopy(settings)
+    limits = result['limits']
+    limits['total_tool_calls'] -= sum(v.tool_calls for v in counts)
+    limits['total_tokens'] -= sum(v.input_tokens + v.output_tokens for v in counts)
+    if limits['total_tool_calls'] < 1 or limits['total_tokens'] < 1:
+        raise ValueError('shared construction/development budget exhausted')
+    return result
+
+
 def _private_source(path, expected_sha256):
     path = Path(path)
     metadata = path.lstat()
@@ -252,6 +283,42 @@ class NativeComponentWorkProducer:
             "candidate_sha256": hashlib.sha256(request.source.encode()).hexdigest()}
         return _verified_work_authority(self.runtime.verify(binding, **offered), binding)
 
+    def _check_shared_usage(self, binding, settings, construction_usage, *, allow_unfinished=False):
+        resources = json.loads(_private_source(
+            settings["resources_file"], settings["resources_sha256"]).read_bytes())
+        registration = self.assessment["work_evidence"]["registration_sha256"]
+        root = Path(settings["accounting_root"])
+        if not root.is_absolute() or root.resolve() != root:
+            raise ValueError("registered accounting root differs")
+        child, _ = _ledger_usage(
+            root / binding["execution_binding_ref"] / "accounting.json", registration,
+            allow_absent=allow_unfinished, allow_inflight=allow_unfinished)
+        input_tokens, output_tokens, tools = child["input_tokens"], child["output_tokens"], child["physical_tools"]
+        for parent in (construction_usage["model_usage"], construction_usage.get("contact_usage")):
+            if parent is not None:
+                input_tokens += parent["input_tokens"]
+                output_tokens += parent["output_tokens"]
+                tools += parent["tool_calls"]
+        limits = resources["tokens"]
+        token_totals = (input_tokens, output_tokens, input_tokens + output_tokens)
+        token_limits = (limits["shared_input"], limits["shared_output"], limits["shared_combined"])
+        exhausted = any(actual >= ceiling if allow_unfinished else actual > ceiling
+                        for actual, ceiling in zip(token_totals, token_limits))
+        if exhausted or tools > resources["tools"]["shared_physical_total"]:
+            raise ValueError("registered construction and child budget exceeded")
+
+    def _work_usage(self, binding, settings):
+        root = Path(settings["accounting_root"])
+        if not root.is_absolute() or root.resolve() != root:
+            raise ValueError("registered accounting root differs")
+        registration = self.assessment["work_evidence"]["registration_sha256"]
+        totals, receipt = _ledger_usage(
+            root / binding["execution_binding_ref"] / "accounting.json", registration)
+        return {"contract": "EvaDevelopmentWorkUsage/v1",
+                "registration_sha256": registration,
+                "execution_binding_ref": binding["execution_binding_ref"],
+                "totals": totals, "receipt": receipt}
+
     def evaluate(self, request, *, execution_binding, evaluator, static_lock):
         from eva.operations.component_development import DevelopmentAssessment
         binding = validate_execution_binding(execution_binding)
@@ -297,10 +364,15 @@ class NativeComponentWorkProducer:
                 raise ValueError("fixed native work assessment binding changed")
             self.authorize(binding, request=request)
             require_remaining()
+            construction_usage = self.runtime.active_work_usage(binding['task_id'])
+            settings = _construction_remaining_settings(settings, construction_usage)
             def authorizer():
                 current = self.authorize(binding, request=request)
                 if current["parent_deadline"] != authority["parent_deadline"]:
                     raise ValueError("original component work deadline changed")
+                if self.runtime.active_work_usage(binding['task_id']) != construction_usage:
+                    raise ValueError('construction changed during development work')
+                self._check_shared_usage(binding, settings, construction_usage, allow_unfinished=True)
                 return current
             baseline = self.produce(
                 leg="baseline", request=request, execution_binding=deepcopy(binding),
@@ -325,6 +397,8 @@ class NativeComponentWorkProducer:
                     report["development_assessment"] = baseline_score
                     report["execution_binding_ref"] = binding["execution_binding_ref"]
                     report["candidate_work_not_run"] = "baseline_quality_maximum"
+                    self._check_shared_usage(binding, settings, construction_usage)
+                    report["work_usage"] = self._work_usage(binding, settings)
                     return report
             self.authorize(binding, request=request)
             candidate = self.produce(
@@ -336,6 +410,8 @@ class NativeComponentWorkProducer:
             self.authorize(binding, request=request)
             report["development_assessment"] = assessor.assess(report)
             report["execution_binding_ref"] = binding["execution_binding_ref"]
+            self._check_shared_usage(binding, settings, construction_usage)
+            report["work_usage"] = self._work_usage(binding, settings)
             return report
         finally:
             self.lock.release()
@@ -459,7 +535,8 @@ class IndependentComponentWorkProducer:
                 if type(contact.get(source)) is not int or contact[source] < 0:
                     raise ValueError("original contact usage is incomplete")
                 construction[target] += contact[source]
-        elif parent.get("contact_disposition") != "native_origin_without_foreground":
+        elif parent.get("contact_disposition") not in {
+                "native_origin_without_foreground", "registered_technical_origin_without_foreground"}:
             raise ValueError("original contact accounting absent")
         budget = self.config["shared_budget"]
         if construction["provider_attempts"] > budget["construction_attempts"]:
