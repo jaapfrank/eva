@@ -8,9 +8,15 @@ beide feitelijke uitvoerprofielen gelijk aan voorbereiding. Bestaande images,
 instellingen, mounts, netwerken, gegevens en eerdere beoordelingen behouden.
 Kern, werker en dienst gezond. Onafhankelijke bron-, configuratie- en installatiereview GO. Geen nieuwe handmatige Eva-modelaanvraag voor deze aansluiting.
 
-**Nu:** één echte verbetercyclus afmaken: werkresultaten vergelijken, onafhankelijk
-beoordelen, uitsluitend bewezen winst toepassen en later gebruiken. De volledige
-leercyclus en AIDE² zijn nog niet afgerond. Geen nieuwe hoofdafronding geclaimd.
+**Nu:** de echte verbeteropdracht aansluiten op de gewone uitvoerder en dezelfde
+beoordelingsroute. Uitvoerder: /root/eva1_memory_transfer; afzonderlijke review:
+/root/product_execution_memory_review. De oorspronkelijke parentduur en de
+begrensde constructiefase blijven apart gebonden. Nog geen native verbeterproef
+gestart en geen nieuwe handmatige Eva-modelaanvraag voor deze stap.
+
+**Daarna:** Eva maakt en vergelijkt zelf één kandidaat; uitsluitend onafhankelijk
+bewezen winst toepassen en later gebruiken. De volledige leercyclus en AIDE² zijn
+nog niet afgerond. Geen nieuwe hoofdafronding geclaimd.
 
 De fout in de verificatie van mountvolgorde is gericht hersteld door mounts per
 bestemming te vergelijken. Geen runtimewijziging, herinstallatie of rollback daarvoor.
@@ -19,7 +25,7 @@ De oude voorbereidingsfouten en mislukte proef blijven bewaard.
 actief. Geen handeling van Jaap nodig; spraak geparkeerd; geen concurrentenserie.
 Ontwikkelcredits en automatisch runtimeverbruik blijven onbekend.
 
-Dashboardinhoud gecontroleerd op 2026-10-12T02:30:37.184260+00:00.
+Dashboardinhoud gecontroleerd op 2026-10-12T02:42:14.491347+00:00.
 Bewijs: eva2/evidence/product/native-work-strategy-host-installed-20261012.json.
 Configuratiereview: eva2/reviews/native-work-strategy-production-configuration-review-20261012.json.
 

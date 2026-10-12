@@ -1,0 +1,40 @@
+{
+  "contract": "EvaDashboardWorkStatus/v1",
+  "checkedAt": "2026-10-12T02:42:14.491347+00:00",
+  "previousContentReviewAt": "2026-10-12T02:30:37.184260+00:00",
+  "installedEvidence": "eva2/evidence/product/native-work-strategy-host-installed-20261012.json",
+  "installedEvidenceSha256": "2d1aca55b8daa3f9f2771d43e8d3211076a8b182a8f1bc8fcffc3f10d2881d8e",
+  "phase": "native_improvement_cycle_input_binding",
+  "executor": "/root/eva1_memory_transfer",
+  "reviewer": "/root/product_execution_memory_review",
+  "installationReview": "GO",
+  "nativeExecutionStarted": false,
+  "manualEvaModelRequestsInThisStep": 0,
+  "newMainCompletion": false,
+  "currentWork": "Connect the actual improvement task to the ordinary admission and existing evaluator, preserving separate original parent and construction-stage timing.",
+  "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872",
+  "constructionInputSha256": "6fa5722529f8470a5cfdc44b2670ab6106f23510f2ee0676d399f880b3f65a27",
+  "laterInputSha256": "946f730b4db3a55591ff34c350bbac18f13323c0848daf3fbfe5cbd9e16fa698",
+  "remaining": [
+    "Freeze and review the actual lifecycle driver and task binding",
+    "Eva develops and compares through the existing component tools",
+    "Independent final assessment; apply only measured improvement; later use"
+  ],
+  "ownerActionRequired": false,
+  "wholeProjectGoalActive": true,
+  "fullLearningCycleComplete": false,
+  "fullAide2Complete": false,
+  "historicalSmallTaskCompletions": "39/48 unchanged",
+  "voiceParked": true,
+  "newCompetitorSeries": false,
+  "developmentCredits": "unknown",
+  "browserVerification": {
+    "verifiedAt": "2026-10-12T02:42:44.507720+00:00",
+    "url": "http://localhost:44712/",
+    "visibleReviewedAt": "12-10-2026, 04:42:14",
+    "lastDelivery": "Beoordelingsdienst voor zelfverbetering aangesloten",
+    "currentWork": "Zelfverbetering · echte verbeteropdracht aansluiten",
+    "ownerAction": "Geen handeling van jou nodig",
+    "sameSourceVisible": true
+  }
+}
