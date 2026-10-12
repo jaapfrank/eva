@@ -1,0 +1,162 @@
+{
+  "bindings": {
+    "activation_plan": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-round-sealed/existing-service-activation-plan-v3.private.json",
+      "sha256": "07e8519ab0b4c8baf4403bdb80856207dd952704a5b274e48a470aad912f639d"
+    },
+    "configuration": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-round-sealed/service.workspace-aligned.private.json",
+      "sha256": "f092ca38ca5c32ec48d754b0af12d30d117bdd72a65d5330586d21d40607f0a0"
+    },
+    "configuration_manifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-round-sealed/configuration-bindings-manifest-v3.private.json",
+      "sha256": "03866c47d93c9e1f85f8136d2a6c203cfdf61f3a559693c0b1702621dd7ce88e"
+    },
+    "corrected_constructor_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle-input-binding/corrected-config-constructor-checks.private.json",
+      "sha256": "6b50bdde73a395ac2ae858b84e1b88c9d2f61473f3fffd10c8ebf2d919274b09"
+    },
+    "criteria_sha256": "54dadae4310d253cfd73dc92be320e5c9645be6163660bf2fdead3c188eaf951",
+    "development_assessment_sha256": "fa4f6f34900dd2c3d14a5057c51abc143ead2709e6929bd32dbbc6f531bb2068",
+    "development_cases_sha256": "cf8d8493e472ee23c1f52bfd46a79ef45528da5b21d7dcdefa05e72898335796",
+    "development_final_input_metadata": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-input-binding/input-manifest.private.json",
+      "sha256": "c56a8a4ccd65c67ab6a8f2a96901fd66da6a2988b42e9b03eb0717772ac4a777"
+    },
+    "development_suite_sha256": "252559ea2d71cb3eb4ffbe44ccff7a9dd01bd68448710a5ff5d47af5e65e8f0b",
+    "driver": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle/driver.private.py",
+      "sha256": "f133ef6915ba04679dd317b96a5ea5202f9d79b28462774f434862b22c68f934"
+    },
+    "driver_checks": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle/preparation-checks.private.json",
+      "sha256": "423eec5908224a02050976804dfe12cfc55e68d56bc3bb7871ca00e8453b2eb4"
+    },
+    "driver_manifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle/driver-manifest.private.json",
+      "sha256": "704bb4dd13b840bd9471eb662719dacc0f69a0b00edfd1a8d6d3328ddeaf558c"
+    },
+    "driver_preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle/preparation.private.json",
+      "sha256": "d86fdbab807e13d56a998437019a274331b2449a40e11e47bd2cf1344b3e39cb"
+    },
+    "exact_lifecycle_binding_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle-input-binding/exact-lifecycle-binding-checks.private.json",
+      "sha256": "55e8b70ddbb2c433ad22ef7ce7629742b38fbacc6b10f8794da763098d1b1069"
+    },
+    "factory_projection": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-round-sealed/factory-projection-result.private.json",
+      "sha256": "d0e85123456230794f72534fe41187571ac81ce146e62e8486bfc8593e10eca5"
+    },
+    "first_constructor_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle-input-binding/sealed-config-constructor-checks.private.json",
+      "sha256": "c1fce3be0ddaec8c14bfdc257fae35a004ebb48752044ad691e98522343f4334"
+    },
+    "input_refs": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-lifecycle-input-binding/input-refs.private.json",
+      "sha256": "6376189dae94e4a91b2c5dc88456791aa544c855a212eb52b51a960164d6d452"
+    },
+    "producer": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/producer.private.py",
+      "sha256": "a5c8a6b47dc1b34313c8e56995368760502b7cceaffe4ff91c8472b952587818"
+    },
+    "protected_final_cases_sha256": "e4b96c6b1cfb95b162bb0ea2b6155ed7a0fa9d140b21c02976a18f9f51929d37",
+    "quality_scorer_sha256": "1eafe321440750d115e43eb7dec820db470abb2a181cd13288fe2f17a484b6b3",
+    "registration": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-round-preparation/registration.template.private.json",
+      "sha256": "d175064aa0fa97c986406c20164881bea9226bdb469f4081478efe1ff3cef8c4"
+    },
+    "resources": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/candidate-assessment-resume/resources.prospective.private.json",
+      "sha256": "32945c9f9e38e572b3bb21447dab904a2877e0782e43cb0fd4b459cc29cdfa9a"
+    },
+    "runtime_admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/post-budget-correction-round-preparation/runtime-admission.bound.private.json",
+      "sha256": "9acd05e64653ef745a1807ae581159eb861c3a424e42679ad964e07ba2c58ef8"
+    }
+  },
+  "budget": {
+    "historical_closed_application_preserved": {
+      "physical_tools": 56,
+      "provider_attempts": 36,
+      "total_tokens": 296798
+    },
+    "new_actual_usage_must_be_added_to_history_without_rewriting_it": true,
+    "phase_maxima_are_not_separate_guaranteed_allocations": true,
+    "retries": 0,
+    "shared_combined_tokens": 400000,
+    "shared_input_tokens": 385000,
+    "shared_output_tokens": 15000,
+    "shared_physical_tools": 100,
+    "shared_provider_attempts": 68,
+    "token_limit_is_measured_stop_and_acceptance_not_guaranteed_inflight_cap": true,
+    "unknown_usage_blocks_further_dispatch_and_rankable_result": true
+  },
+  "checkedAt": "2026-10-12T08:34:31.123423+00:00",
+  "configurationActivation": {
+    "before_sha256": "533900b469eb9556aa62ddcc9c65147a1935bf031502d58659a1321150712cd4",
+    "candidate_sha256": "f092ca38ca5c32ec48d754b0af12d30d117bdd72a65d5330586d21d40607f0a0",
+    "existing_service_only": true,
+    "images_grants_profiles_mounts_data_and_unrelated_config_preserved": true,
+    "maximum_restarts": 1,
+    "verdict": "GO"
+  },
+  "constructionInput": {
+    "activation_preconditions": [
+      "Actual existing service loads exact f092ca38 configuration and retained reviewed host sources; health ready before input.",
+      "Current registered round is available and original scope/owner/binding/stop/lease remains valid.",
+      "Exact frozen driver f133ef69 and manifest704bb4dd; construction dispatch-once absent before single exclusive dispatch."
+    ],
+    "active_seconds": 246,
+    "case_id": "production-construction-worker-strategy",
+    "closed_originals_not_rearmed": true,
+    "input_sha256": "49357ce99b14b4cf72dd1d3f19aad7b30bfde071f5dc9b9882e5e535f0a1a14e",
+    "new_foreground_contact_not_fabricated_as_zero": true,
+    "one_candidate_only": true,
+    "ordinary_technical_origin": true,
+    "owner_authored_text": false,
+    "parent_deadline_seconds": 1200,
+    "provider_attempts_including_any_contact_helpers": 14,
+    "registration_sha256": "d175064aa0fa97c986406c20164881bea9226bdb469f4081478efe1ff3cef8c4",
+    "self_chosen_initiative": false,
+    "stage": "construction",
+    "verdict": "GO_ONCE_AFTER_EXACT_ACTIVATION"
+  },
+  "contract": "EvaIndependentWorkStrategyProductPreparationReview/v1",
+  "decision": "GO",
+  "findings": [
+    "Existing load_config, DevelopmentAssessment, ComponentEvaluator, ComponentWorkRuntime, NativeComponentWorkProducer, HostFinalAssessment/IndependentComponentWorkProducer and active/retained publisher constructors validate without server/queue/lifespan/scoring.",
+    "All old active assessor/protocol/publisher objects and earlier retained entries remain exact; only required path metadata added for retained e17.",
+    "Development/final input objects, fixed criteria and scorers remain unchanged; new outer registration/identities/evidence roots do not reuse old work.",
+    "Workspace/receipt settings align with the unchanged existing programming service; output/accounting/evidence remain separate.",
+    "Existing narrow SAVE permits only content-null artifact from last verified COMPARE/PREPARE component_step.",
+    "Complete child consumption is copied independently before clock-quality decision; missing/UNKNOWN after EVAL is not zero.",
+    "Construction uses actual ordinary source journal/admission/spec/lease/owner/stop; no invented ingress or initiative authorship."
+  ],
+  "laterInput": {
+    "deadline_seconds": 150,
+    "input_sha256": "6bbb1651023afa6338ed1c47a19b14e24145d5ee5f316408f5ed371d15e147dc",
+    "provider_attempts_including_contact_helpers": 6,
+    "requires": "Same actual selected package, independent accept, actual installed candidate source, current scope/stop and complete cross-stage usage proof.",
+    "verdict": "NOT_ADMITTED_BY_THIS_REVIEW"
+  },
+  "limitations": {
+    "baseline_evidence_missing_before_first_work_is_expected": true,
+    "developer_credits": "unknown",
+    "final_or_apply_or_later_input_not_admitted": true,
+    "format_only_parent_deadline_placeholder_has_no_authority": true,
+    "full_AIDE2_completed": false,
+    "installation_not_yet_claimed_by_this_preparation_review": true,
+    "native_quality_gain_claimed": false,
+    "no_model_native_test_factory_or_database_execution_by_reviewer": true,
+    "protected_final_questions_fixtures_or_answers_disclosed": false
+  },
+  "openBlockers": [],
+  "preservedPreparationErrors": [
+    "Assembler omitted retained e17 path; original311db kept.",
+    "Prospective workspace/receipt roots did not match existing service; v2 kept and exact four-leaf v3 correction checked.",
+    "Reviewer first constructor command omitted existing tools PYTHONPATH and failed before constructors; corrected command used actual existing host paths.",
+    "Builder earlier preparation error and discarded pre-workspace manifest remain retained."
+  ],
+  "scope": "Exact prospective configuration activation and one fresh ordinary construction under registration d175; no retrospective result or quality revision."
+}

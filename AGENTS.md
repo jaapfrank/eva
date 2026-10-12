@@ -1,33 +1,23 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel vervolg 12 oktober — planningruimte gecorrigeerd en geïnstalleerd
+## Actueel 12 oktober — aansluiting geïnstalleerd; ontwikkelronde gestopt
 
-Een concrete adapterfout is bevestigd: Eva zag in de verbeterproef 25/27 resterende
-aanvragen terwijl er werkelijk nog één over was. Alleen de bestaande native
-producerprojectie is gecorrigeerd. Zij toont de fysieke case-/gedeelde ruimte,
-inclusief helpers; UNKNOWN blijft onbekend. Alleen gecombineerde tokenruimte is
-bekend, geen verzonnen aparte uitvoerquota. Gewone uitvoerder, grant, strategie,
-oorspronkelijke criteria en grenzen zijn ongewijzigd.
+De bestaande verbeterroute is aangesloten op de actuele installatie. Eén configuratieactivatie,
+één dienstherstart; dienst gezond gecontroleerd. 38 hostbronnen en kern-/werkerimages behouden.
+De verse ontwikkelronde is afgesloten met internal_error, zonder opgeslagen kandidaat of
+bewezen kwaliteitswinst: 3 Astra/medium-aanvragen, 23.872 tokens en 2 fysieke tools.
+De rapportexport is hersteld uit de bestaande gegevens, zonder de uitvoering te herhalen.
 
-Eén gerichte modelvrije controle geslaagd. Exacte bron geïnstalleerd in de bestaande
-hostservice met één herstart; health200. De overige 37 hostbronnen, kern/werker,
-configuratie en gesloten bewijs blijven behouden. Onafhankelijke bron-, interface- en installatiereview GO. Nul nieuwe Eva-modelaanvragen of native episodes.
+Nu: de exact afgewezen toolaanroep achterhalen en alleen de bewezen oorzaak herstellen.
+De onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik blijven open.
+Geen oude poging heropenen of nieuwe concurrentenserie. Het volledige projectgoal blijft actief;
+39/48 historische afrondingen en bestaande acceptaties behouden. Spraak geparkeerd.
+Geen handeling van Jaap nodig; creditkosten en ontwikkelcredits onbekend.
 
-De eerdere strategie-inferentie wordt door deze adapterfout gekwalificeerd:
-de oude grensfouten en bewijsbytes blijven staan; geen bewezen enige oorzaak,
-kwaliteitswinst of hoofdafronding. De oude kandidaat blijft niet toegepast.
-De aansluiting op de werkelijke installatie en de ongewijzigde proefgevallen is
-voorbereid. De nieuwe configuratie is nog niet geactiveerd; één volledige uitvoerroute
-wordt afgerond en onafhankelijk beoordeeld. Nog geen nieuwe Eva-modeluitvoering.
-Alleen bewezen winst toepassen en later gebruiken; oude pogingen blijven gesloten.
-Geen nieuwe concurrentenserie. Voortgang: eva2/evidence/product/dashboard-improvement-round-progress-20261012.json.
-
-Het volledige projectgoal blijft actief. 39/48 historische afrondingen en
-acceptaties behouden. Volledige AIDE² en gezinsacceptatie blijven open.
-Spraak geparkeerd; geen handeling van Jaap nodig.
-Resultaat: eva2/evidence/product/native-budget-context-correction-installed-20261012.json.
-Review: eva2/reviews/native-budget-context-correction-installed-review-20261012.json.
-Dashboardinhoud bijgewerkt: 2026-10-12T10:18:04.780014+02:00.
+Resultaat: eva2/evidence/product/native-work-post-budget-correction-result-20261012.json.
+Installatie: eva2/evidence/product/native-work-post-budget-correction-installed-20261012.json.
+Review: eva2/reviews/native-work-post-budget-correction-result-review-20261012.json (GO voor veilige feitenpublicatie).
+Dashboardinhoud bijgewerkt: 2026-10-12T10:53:09.311684+02:00.
 
 ## Historisch 12 oktober — eerdere diagnose, later gekwalificeerd door adapterfout
 

@@ -1,0 +1,92 @@
+{
+  "contract": "EvaWorkStrategyProductRoundResult/v1",
+  "checkedAt": "2026-10-12T10:53:09.311684+02:00",
+  "status": "closed_without_candidate",
+  "installationSnapshot": "eva2/evidence/product/native-work-post-budget-correction-installed-20261012.json",
+  "installedConfigurationSha256": "f092ca38ca5c32ec48d754b0af12d30d117bdd72a65d5330586d21d40607f0a0",
+  "activationReceiptSha256": "dbe30eec0366181f577d343d8def267f42345979152171b6a0db919cd166612e",
+  "sourceReview": "eva2/reviews/native-work-post-budget-correction-input-review-20261012.json",
+  "sourceReviewSha256": "752aa2824e750a55f2e3c7b692d94e6198b5fb4e9876db6a727bb0e0955426fe",
+  "nativeExecution": {
+    "stage": "construction",
+    "terminal": true,
+    "runtimeDisposition": "ambiguous",
+    "nativeResult": null,
+    "errorCode": "internal_error",
+    "candidateStored": false,
+    "developmentDispatched": false,
+    "finalAssessmentDispatched": false,
+    "candidateApplied": false,
+    "laterUseExecuted": false,
+    "elapsedSeconds": 64.27417558501475,
+    "clockReset": false,
+    "usage": {
+      "input_tokens": 23313,
+      "measurement": "measured",
+      "output_tokens": 559,
+      "provider_attempts": 3,
+      "request_ids": [
+        "d314ea23-d40d-4f05-b7f7-378fcf62bb6b",
+        "75e34b3a-e464-402d-a9b2-e8c77dcf9387",
+        "aef47f11-30a0-456d-bf84-8a0542051982"
+      ],
+      "roles": [
+        {
+          "attempts": 3,
+          "model": "gpt-6-astra",
+          "reasoning_effort": "medium",
+          "role": "work"
+        }
+      ],
+      "total_tokens": 23872,
+      "unknown_attempts": 0
+    },
+    "physicalToolCount": 2,
+    "journalToolCount": 3,
+    "journalIsNotPhysicalDispatch": true,
+    "readbacks": {
+      "candidate.py": "missing",
+      "main.py": "missing",
+      "result.json": "missing"
+    },
+    "rawSha256": "e64a4c9b7e7d22ec2a083fef8e6c69e424deb566a289051f5e0beecc0e2034da",
+    "sealedResultSha256": "8dbf630b173a62f2dcf3883a9ef67510e80418c5ad8f6fe597ad5888aedb33a2",
+    "recoveryReceiptSha256": "6e0f95eb75ad4c12ff3bdc5c84ada68f91a8ad3cf860a1275183d863444d67a6",
+    "containerCleanupReturnCode": 0,
+    "retries": 0
+  },
+  "exportFailure": {
+    "driverError": "KeyError: call",
+    "cause": "Exporter assumed physical_tools[].call.name; actual record stores physical_tools[].name.",
+    "exportOnlyRecovered": true,
+    "nativeReplayed": false,
+    "originalFilesModified": false
+  },
+  "installation": {
+    "existingServiceOnly": true,
+    "lastObservedHealth": 200,
+    "restartCount": 1,
+    "hostSourcesPreserved": 38,
+    "coreWorkerImagesChanged": false,
+    "automaticRollback": false
+  },
+  "strategyHistoryOnly": {
+    "priorRequests": 36,
+    "priorTokens": 296798,
+    "priorPhysicalTools": 56,
+    "includingThisRoundRequests": 39,
+    "includingThisRoundTokens": 320670,
+    "includingThisRoundPhysicalTools": 58,
+    "wholeProjectTotal": false
+  },
+  "productFunctionCompleted": false,
+  "qualityGainProven": false,
+  "fullAide2Completed": false,
+  "wholeProjectGoal": "active",
+  "speech": "parked",
+  "newCompetitorComparison": false,
+  "ownerActionRequired": false,
+  "creditCost": "unknown",
+  "developerCredits": "unknown",
+  "next": "Diagnose the exact failing call from retained construction evidence; correct only a proven cause. Do not replay this closed episode or change final criteria."
+}

@@ -1,0 +1,43 @@
+{
+  "contract": "EvaWorkStrategyProductRoundActivation/v1",
+  "checkedAt": "2026-10-12T10:38:59.801660+02:00",
+  "status": "installed_native_execution_in_progress",
+  "installedAt": "2026-10-12T08:36:27.825602+00:00",
+  "sourceReview": "eva2/reviews/native-work-post-budget-correction-input-review-20261012.json",
+  "sourceReviewSha256": "752aa2824e750a55f2e3c7b692d94e6198b5fb4e9876db6a727bb0e0955426fe",
+  "installedConfigurationSha256": "f092ca38ca5c32ec48d754b0af12d30d117bdd72a65d5330586d21d40607f0a0",
+  "activationReceiptSha256": "dbe30eec0366181f577d343d8def267f42345979152171b6a0db919cd166612e",
+  "driverSha256": "f133ef6915ba04679dd317b96a5ea5202f9d79b28462774f434862b22c68f934",
+  "driverManifestSha256": "704bb4dd13b840bd9471eb662719dacc0f69a0b00edfd1a8d6d3328ddeaf558c",
+  "nativeExecution": {
+    "stage": "construction",
+    "started": true,
+    "liveExecHandle": 20432,
+    "result": "not_yet_available",
+    "modelUsage": "ongoing_not_sealed"
+  },
+  "installation": {
+    "existingServiceOnly": true,
+    "health": 200,
+    "restartCount": 1,
+    "hostSourcesPreserved": 38,
+    "coreWorkerImagesChanged": false,
+    "automaticRollback": false
+  },
+  "preparationCorrections": {
+    "missingRetainedPathCorrected": true,
+    "workspaceReceiptAlignedWithExistingHost": true,
+    "originalInvalidConfigurationsKept": true,
+    "modelRequestsDuringPreparation": 0,
+    "startupObservationRefusedThenSameProcessReady": true
+  },
+  "productFunctionCompleted": false,
+  "candidateApplied": false,
+  "qualityGainProven": false,
+  "fullAide2Completed": false,
+  "wholeProjectGoal": "active",
+  "speech": "parked",
+  "newCompetitorComparison": false,
+  "ownerActionRequired": false,
+  "developerCredits": "unknown"
+}

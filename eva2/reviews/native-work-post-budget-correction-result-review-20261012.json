@@ -1,0 +1,80 @@
+{
+  "contract": "EvaIndependentWorkStrategyResultPublicationReview/v1",
+  "checkedAt": "2026-10-12T08:56:57.937855+00:00",
+  "decision": "GO",
+  "scope": "Exacte veilige feitenpublicatie van de afgesloten constructie en het herstel van haar export; geen kwaliteitsoordeel of nieuwe invoertoelating.",
+  "openBlockers": [],
+  "bindings": {
+    "publicResult": {
+      "path": "eva2/evidence/product/native-work-post-budget-correction-result-20261012.json",
+      "sha256": "cd187df737774c900a7daab1dcf1f3797a3c43ee26561f5a0bd782fb43ae952a"
+    },
+    "registrationSha256": "d175064aa0fa97c986406c20164881bea9226bdb469f4081478efe1ff3cef8c4",
+    "inputReview": {
+      "path": "eva2/reviews/native-work-post-budget-correction-input-review-20261012.json",
+      "sha256": "752aa2824e750a55f2e3c7b692d94e6198b5fb4e9876db6a727bb0e0955426fe"
+    },
+    "installedConfigurationSha256": "f092ca38ca5c32ec48d754b0af12d30d117bdd72a65d5330586d21d40607f0a0",
+    "activationReceiptSha256": "dbe30eec0366181f577d343d8def267f42345979152171b6a0db919cd166612e",
+    "rawSha256": "e64a4c9b7e7d22ec2a083fef8e6c69e424deb566a289051f5e0beecc0e2034da",
+    "sealedResultSha256": "8dbf630b173a62f2dcf3883a9ef67510e80418c5ad8f6fe597ad5888aedb33a2",
+    "exportRecoveryReceiptSha256": "6e0f95eb75ad4c12ff3bdc5c84ada68f91a8ad3cf860a1275183d863444d67a6",
+    "containerCleanupReceiptSha256": "b5da58410a08e92579b2815a1f0b9a25a61608889e6cb418cd7d1470338c4ccf",
+    "originalObservationReviewSha256": "eecd9a04a9f7f1e0b284d7e3221c9843a9287c9d61507b150a42071f1227acbf",
+    "exportOnlySourceReviewSha256": "4177601c56883d813c9d4ac18bce2b08ae0bc08817f7ce195348aa0fd80849be",
+    "exportOnlyScriptSha256": "eb34abc611a2d0a70567f4c8a25fcdf4b3bfcac73d60a4b3cb6a1b1051b16ebd"
+  },
+  "verifiedFacts": {
+    "nativeDisposition": "ambiguous",
+    "nativeErrorCode": "internal_error",
+    "nativeResult": null,
+    "candidateConfirmed": false,
+    "completePhysicalUsage": {
+      "providerAttempts": 3,
+      "inputTokens": 23313,
+      "outputTokens": 559,
+      "totalTokens": 23872,
+      "unknownAttempts": 0,
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium",
+      "role": "work",
+      "physicalTools": 2
+    },
+    "journalTools": 3,
+    "journalAndPhysicalToolCountsKeptSeparate": true,
+    "storedWorkPartialUsageKeptSeparate": true,
+    "activeSeconds": 64.27417558501475,
+    "clockReset": false,
+    "rawChildWorkUsage": null,
+    "developmentProviderDispatches": 0,
+    "developmentNonDispatchEvidence": "Geen EVAL in de oorspronkelijke fysieke actievelden of actiereceipts, geen EVAL-klokinterval en lege nieuwe development-/final-evidentiemappen; nul is niet uit de ruwe null afgeleid.",
+    "finalAssessmentDispatched": false,
+    "candidateApplied": false,
+    "laterUseExecuted": false,
+    "programResultAndCandidateReadbacks": "missing",
+    "physicalCleanupReturnCode": 0,
+    "exportFailure": "KeyError: call door onjuiste aanname over physical_tools[].call.name; de oorspronkelijke records hebben physical_tools[].name.",
+    "exportRecovery": "Eenmalige lokale normalisatie van exact gepinde bestaande records met twee exclusieve exports; geen nieuwe native-, model-, programma-, controle- of toelatingsactie.",
+    "originalRawOnceClockAndAccountingPreserved": true,
+    "installation": "Eén bestaande serviceconfiguratie-activatie en herstart, health 200; 38 hostbronnen en kern-/werkerimages behouden."
+  },
+  "qualifications": [
+    "De mislukte native constructie en de afzonderlijke exportfout blijven verschillende feiten. De exportreparatie bevestigt geen kandidaat of geslaagde ontwikkeling.",
+    "De veilige fingerprint matcht RuntimeError:only exact registered source is allowed in de bevroren driver. Zonder de oorspronkelijke derde call/path is geen exclusieve productoorzaak of passende guardverruiming bewezen.",
+    "De historische 36/296798/56 plus deze 3/23872/2 geven uitsluitend strategiegeschiedenis 39 aanvragen, 320670 tokens en 58 fysieke tools; geen projecttotaal of creditkosten.",
+    "Oorspronkelijke criteria, afgeschermde eindgevallen, oude exports en gesloten uitvoeringen blijven behouden. Er is geen nieuwe scorer- of modeluitvoering door deze review."
+  ],
+  "authorization": {
+    "safePublication": true,
+    "newNativeInput": false,
+    "finalQualityAssessment": false,
+    "application": false,
+    "laterUse": false
+  },
+  "qualityGainProven": false,
+  "fullAide2Completed": false,
+  "productFunctionCompleted": false,
+  "wholeProjectGoal": "active",
+  "creditCost": "unknown",
+  "developerCredits": "unknown"
+}
