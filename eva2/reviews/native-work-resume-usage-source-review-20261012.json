@@ -1,0 +1,54 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "checkedAt": "2026-10-12T04:38:43.632653Z",
+  "decision": "GO",
+  "scope": "Alleen bevroren generic-helperbron voor unieke typedresume-keten en cumulatieve werkusage; geen driver-, installatie- of native-invoertoelating.",
+  "openBlockers": [],
+  "sourceManifestSha256": "e4b4e4105a25594279173696565a21cf27b4f5ebf7c3a55b5ec420db4da96965",
+  "bindings": {
+    "sourceFiles": {
+      "eva2/src/eva/operations/component_application_runtime.py": "f784232f0a8dbd81e01b41c981c8d885d74527ba8bc3871553483afa6f9aac71"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_component_resume_readiness.py": "519c231212b23d03516d8ae1f7621440f7ed3bad94c4916cd3b8234c735b1fc5",
+      "eva2/tests/operations/test_component_lifecycle_usage.py": "7ad15c0a1378153fa8adfaf0a564585eb2548c1943a08928d7a61b2e523997f9"
+    },
+    "targetedChecksSha256": "87dd2b4d559970e1f74837e0393cb3d95e56923f8feeef5383d027e30b4d4fe6",
+    "sourceDiffSha256": "c54b52dadbda78a79dcdf9d1bd79c15749ef0c624f10d0611692c65f7300e7e8"
+  },
+  "findings": [
+    "Een unieke root-tot-leafketen behoudt task, source, ingresshash, grant, owner/binding, audience, episode en execution; generation moet exact opvolgen. Nieuwe profielhash en eigen deadline zijn geen wijziging van oude records.",
+    "Stop op een behouden ketenlid wint; strikte authority/usage verwerpt dubbele, ontbrekende en niet-meegenomen ketenleden. Retentie en huidige ownerbinding blijven vereist.",
+    "Actieve usage vereist de gevraagde actuele call_started-leaf en echte store-authorize_tool_dispatch; terminal packagebinding blijft aan de gevraagde oorspronkelijke spec gekoppeld.",
+    "Elke echte BackgroundModelJournal wordt eenmaal gelezen; oorspronkelijke contactjournal en technische originmarker worden eenmaal op de root gelezen. Een onbekende ancestor wordt geweigerd en nooit als nul opgenomen.",
+    "Bestaande terminale usagehashes en numerieke tokenvelden worden gecontroleerd. Aggregatie behoudt partial en onbekende kosten; geen bestaande journal/spec/deadline/usage wordt herschreven.",
+    "De concrete operational_events-import verwijst naar operational_timeline, overeenkomstig de echte Journal-API."
+  ],
+  "validation": {
+    "uniqueChecksPassed": 38,
+    "qualification": "30 individuele PASS-statussen uit de eerste terminalprogress, gekoppeld aan stabiele collectvolgorde; die opdracht eindigde rc1 met behouden JUnit-permissiefout. Acht aanvullende unieke gevallen hebben JUnit-PASS in latere gerichte uitvoeringen. Geen claim dat één volledige 38-case opdracht rc0 eindigde.",
+    "retainedFailures": [
+      "JUnit-exportpermissie",
+      "synthetische None-engine-fixture",
+      "onjuiste operational_events-import"
+    ],
+    "observedJunitPassUnion": 8,
+    "hashBindingsIndependentlyChecked": true,
+    "runtimeDatabaseUsed": false,
+    "newTestsRunByReviewer": 0,
+    "modelsOrNativeRunsByReviewer": 0
+  },
+  "installationConditions": [
+    "Installeer uitsluitend de exact gebonden hostmodule via de bestaande route; overige hostbronnen/config/criteria/queues behouden.",
+    "Bind de werkelijk geladen hostmodulehash in de afzonderlijke driver- en installatieontvangstbewijzen."
+  ],
+  "limits": {
+    "installationConfirmed": false,
+    "nativeInputAdmitted": false,
+    "nativeResumeProven": false,
+    "qualityGainProven": false,
+    "fullAIDE2Completed": false,
+    "wholeGoalCompleted": false,
+    "credits": "unknown"
+  }
+}

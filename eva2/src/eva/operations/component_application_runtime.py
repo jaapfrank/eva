@@ -6,9 +6,11 @@ import inspect
 import re
 import subprocess
 
-def _execution_completion_state(rows, task_id, scope_sha256, identity_sha256):
-    """A typed same-execution resume may finish retained work; a stop still wins."""
+def _execution_chain(rows, task_id, scope_sha256, identity_sha256, *, strict=False):
+    """Select the unique retained root-to-leaf chain, including ancestors."""
     by_id = {row["work_id"]: row for row in rows}
+    if len(by_id) != len(rows):
+        raise ValueError("application continuation has duplicate work")
     original = by_id.get(task_id)
     if original is None:
         raise ValueError("application task is unavailable")
@@ -17,29 +19,91 @@ def _execution_completion_state(rows, task_id, scope_sha256, identity_sha256):
     identity = {key: source[key] for key in ("tenant_id", "installation_id", "principal_id")}
     if identity_sha256(identity) != scope_sha256:
         raise ValueError("application source differs")
-    current, visited = original, set()
+    current, ancestors = original, set()
+    fields = ("execution_id", "source", "source_ingress_sha256", "grant",
+              "owner_principal_id", "principal_binding_id", "audience", "episode_id", "contract", "task")
+    def follows(child, parent):
+        return (type(child.get("generation")) is int
+                and type(parent.get("generation")) is int
+                and child["generation"] == parent["generation"] + 1
+                and all(child.get(key) == parent.get(key) == spec.get(key) for key in fields))
+    while current["spec_payload"].get("parent_task_id") in by_id:
+        if current["work_id"] in ancestors:
+            raise ValueError("application continuation cycle")
+        ancestors.add(current["work_id"])
+        parent = by_id[current["spec_payload"]["parent_task_id"]]
+        if not follows(current["spec_payload"], parent["spec_payload"]):
+            raise ValueError("application continuation authority differs")
+        current = parent
+    if type(current["spec_payload"].get("generation")) is not int or current["spec_payload"]["generation"] != 1:
+        raise ValueError("application continuation root is missing")
+    chain, visited = [], set()
     while True:
         if current["work_id"] in visited:
             raise ValueError("application continuation cycle")
         visited.add(current["work_id"])
+        chain.append(current)
         if current["stop_requested_at"] is not None or current["state"] == "stopped":
-            return "cancelled"
+            return chain
         children = []
         for row in rows:
             child = row["spec_payload"]
             if child.get("parent_task_id") != current["work_id"]:
                 continue
-            if (child.get("generation") != current["spec_payload"]["generation"] + 1
-                    or any(child.get(key) != spec.get(key) for key in (
-                        "execution_id", "source", "source_ingress_sha256", "grant",
-                        "owner_principal_id", "principal_binding_id", "audience", "episode_id"))):
+            if not follows(child, current["spec_payload"]):
                 continue
             children.append(row)
         if len(children) > 1:
             raise ValueError("application continuation is ambiguous")
         if not children:
-            return "ready" if current["state"] in {"succeeded", "verified"} else "waiting"
+            if task_id not in visited or (strict and len(visited) != len(rows)):
+                raise ValueError("application continuation is not one validated chain")
+            return chain
         current = children[0]
+
+
+def _execution_completion_state(rows, task_id, scope_sha256, identity_sha256):
+    """A typed same-execution resume may finish retained work; a stop still wins."""
+    chain = _execution_chain(rows, task_id, scope_sha256, identity_sha256)
+    if any(row["stop_requested_at"] is not None or row["state"] == "stopped" for row in chain):
+        return "cancelled"
+    return "ready" if chain[-1]["state"] in {"succeeded", "verified"} else "waiting"
+
+
+def _execution_usage(chain, journal, source_turn, *, active=False):
+    """Read each real work journal once; retain unknown and old terminal payloads."""
+    from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
+    from eva.application.conversation import ConversationModelUsage
+    from eva.contracts.canonical_json import canonical_sha256
+    from eva.contracts.delegated_work import DelegatedWorkUsage
+    usages, terminal = [], []
+    for index, row in enumerate(chain):
+        usage = BackgroundModelJournal(journal, source_turn, work_id=row["work_id"]).model_usage(source_turn)
+        if usage.measurement != "measured":
+            raise ValueError("execution journal usage is incomplete")
+        usages.append(usage)
+        if active and index == len(chain) - 1:
+            continue
+        payload, digest = row["usage_payload"], row["usage_sha256"]
+        if payload is None or digest is None or bytes(digest).hex() != canonical_sha256(payload):
+            raise ValueError("execution terminal usage is not retained")
+        retained = DelegatedWorkUsage.model_validate(payload)
+        if (retained.measurement == "unmeasured"
+                or any(getattr(retained, k) is None for k in
+                       ("completed_model_responses", "tool_calls", "input_tokens", "output_tokens", "total_tokens"))
+                or retained.input_tokens != usage.input_tokens or retained.output_tokens != usage.output_tokens):
+            raise ValueError("execution terminal usage is incomplete or differs")
+        terminal.append(retained)
+    model = ConversationModelUsage.aggregate(tuple(usages))
+    if active:
+        return model, None
+    fields = ("completed_model_responses", "tool_calls", "input_tokens", "output_tokens", "total_tokens", "cost_usd_micros")
+    totals = {key: (sum(getattr(value, key) for value in terminal)
+                    if all(getattr(value, key) is not None for value in terminal) else None)
+              for key in fields}
+    retained = DelegatedWorkUsage(contract="DelegatedWorkUsage/v1", schema_version=1,
+        measurement="measured" if all(value.measurement == "measured" for value in terminal) else "partial", **totals)
+    return model, retained.model_dump(mode="json")
 
 
 def _registered_lifecycle_origin(origin, spec, turn, scope_sha256):
@@ -77,7 +141,8 @@ def _registered_lifecycle_origin(origin, spec, turn, scope_sha256):
 
 # Executed inside the existing core so database credentials stay there. Only
 # status, stop and lock metadata are read; no conversation content is returned.
-_READINESS = inspect.getsource(_execution_completion_state) + inspect.getsource(_registered_lifecycle_origin) + r'''
+_READINESS = (inspect.getsource(_execution_chain) + inspect.getsource(_execution_completion_state)
+              + inspect.getsource(_execution_usage) + inspect.getsource(_registered_lifecycle_origin)) + r'''
 import json,sys,sqlalchemy as sa
 from uuid import UUID
 from eva.bootstrap.runtime import RuntimeSettings
@@ -93,12 +158,16 @@ try:
   scope._scope(c)
   original=c.execute(sa.select(work.c.spec_payload).where(work.c.work_id==request['task_id'])).scalar_one_or_none()
   if original is None:raise ValueError('application task is unavailable')
-  rows=c.execute(sa.select(work.c.work_id,work.c.state,work.c.stop_requested_at,work.c.spec_payload).where(work.c.spec_payload['execution_id'].astext==original['execution_id'])).mappings().all()
+  rows=c.execute(sa.select(work.c.work_id,work.c.state,work.c.stop_requested_at,work.c.spec_payload,work.c.retention_until,work.c.usage_payload,work.c.usage_sha256).where(work.c.spec_payload['execution_id'].astext==original['execution_id'])).mappings().all()
   state=_execution_completion_state(rows,request['task_id'],request['scope_sha256'],canonical_sha256)
-  if (request.get('include_binding') or request.get('include_usage') or request.get('include_active_usage')) and len(rows)!=1:
-   raise ValueError('registered independent work requires one original attempt')
+  chain=_execution_chain(rows,request['task_id'],request['scope_sha256'],canonical_sha256,
+   strict=bool(request.get('include_binding') or request.get('include_usage') or request.get('include_active_usage')))
+  root,leaf=chain[0]['spec_payload'],chain[-1]
+  if request.get('include_binding') or request.get('include_usage') or request.get('include_active_usage'):
+   from datetime import UTC,datetime
+   if any(row['retention_until'] is None or row['retention_until']<=datetime.now(UTC) for row in chain):state='cancelled'
   if request.get('include_active_usage'):
-   if rows[0]['state']!='call_started' or rows[0]['stop_requested_at'] is not None:
+   if state=='cancelled' or leaf['work_id']!=request['task_id'] or leaf['state']!='call_started':
     raise ValueError('construction is not a current active call')
    state='ready'
   source_turn=None
@@ -119,25 +188,27 @@ try:
   from eva.adapters.postgres.operational_timeline import external_timeline_scope
   from types import SimpleNamespace
   store=PostgresDelegatedWorkStore(e,TimelineScope(UUID(str(s.dashboard_tenant_id)),UUID(str(s.dashboard_installation_id))))
-  loaded=store.load(request['task_id'],owner_principal_id=UUID(original['owner_principal_id']),principal_binding_id=UUID(original['principal_binding_id']))
-  if loaded.spec.sha256!=canonical_sha256(original):raise ValueError('reviewed original spec differs')
+  loaded_by_id={}
+  for row in chain:
+   loaded=store.load(row['work_id'],owner_principal_id=UUID(root['owner_principal_id']),principal_binding_id=UUID(root['principal_binding_id']))
+   if loaded.spec.sha256!=canonical_sha256(row['spec_payload']):raise ValueError('reviewed retained spec differs')
+   if loaded.state!=row['state'] or loaded.stop_requested_at is not None:raise ValueError('reviewed work changed or stopped')
+   if loaded.retention_until<=datetime.now(UTC):raise ValueError('reviewed work retention expired')
+   loaded_by_id[row['work_id']]=loaded
+  loaded=loaded_by_id[leaf['work_id']]
   if request.get('include_active_usage'):
    from eva.adapters.postgres.delegated_work import DelegatedWorkCall
    store.authorize_tool_dispatch(DelegatedWorkCall(loaded.spec.work_id,loaded.storage_episode_id,loaded.call_id,loaded.spec))
-  actual_scope=external_timeline_scope(original['source']['tenant_id'],original['source']['installation_id'],'reviewed source scope required')
+  actual_scope=external_timeline_scope(root['source']['tenant_id'],root['source']['installation_id'],'reviewed source scope required')
   journal=PostgresConversationJournal(e,actual_scope)
-  source_turn=_SourceTurnLoader(e,SimpleNamespace(scope=actual_scope,authorize_turn=journal.ensure_running))(original['source'])
-  if canonical_sha256(PostgresConversationJournal._ingress_data(source_turn))!=original['source_ingress_sha256']:
+  source_turn=_SourceTurnLoader(e,SimpleNamespace(scope=actual_scope,authorize_turn=journal.ensure_running))(root['source'])
+  if canonical_sha256(PostgresConversationJournal._ingress_data(source_turn))!=root['source_ingress_sha256']:
    raise ValueError('reviewed source ingress differs')
   from eva.adapters.postgres.operational_timeline import external_timeline_scope
   PostgresConversationJournal(e,external_timeline_scope(source_turn.tenant_id,source_turn.installation_id,'reviewed source scope required')).ensure_running(source_turn)
  payload={'state':state}
  if request.get('include_binding'):
   from datetime import UTC,datetime
-  with e.begin() as c:
-   scope._scope(c)
-   retained=c.execute(sa.select(work.c.retention_until).where(work.c.work_id==request['task_id'])).scalar_one_or_none()
-  if retained is None or retained<=datetime.now(UTC):payload['state']='cancelled'
   payload.update(contract='EvaReviewedComponentWorkAuthority/v1',task_id=request['task_id'],
    scope_sha256=request['scope_sha256'],spec_sha256=canonical_sha256(original),
    source_ingress_sha256=original['source_ingress_sha256'])
@@ -147,12 +218,12 @@ try:
   from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
   from eva.adapters.postgres.operational_timeline import external_timeline_scope
   if source_turn is None:raise ValueError('original source authority unavailable')
-  if canonical_sha256(PostgresConversationJournal._ingress_data(source_turn))!=original['source_ingress_sha256']:
+  if canonical_sha256(PostgresConversationJournal._ingress_data(source_turn))!=root['source_ingress_sha256']:
    raise ValueError('original accounting ingress differs')
   journal=PostgresConversationJournal(e,external_timeline_scope(source_turn.tenant_id,source_turn.installation_id,'original accounting scope required'))
-  model_usage=BackgroundModelJournal(journal,source_turn,work_id=request['task_id']).model_usage(source_turn)
+  model_usage,terminal_usage=_execution_usage(chain,journal,source_turn,active=bool(request.get('include_active_usage')))
   contact_usage=journal.model_usage(source_turn)
-  from eva.adapters.postgres.current_catalog import operational_events
+  from eva.adapters.postgres.operational_timeline import operational_events
   contact_identity=journal._stop_identity(source_turn.principal_id,source_turn.conversation_id,source_turn.message_id)
   with e.begin() as c:
    journal._scope(c)
@@ -162,31 +233,26 @@ try:
     operational_events.c.installation_id==journal._scope_value.installation_id,
     operational_events.c.event_type=='CONVERSATION_MODEL_ADMITTED',
     *(contact_data[key].astext==item for key,item in contact_identity.items())))
-  native_without_contact=(original.get('contract')=='DelegatedInitiativeDigitalWork/v1'
+  native_without_contact=(root.get('contract')=='DelegatedInitiativeDigitalWork/v1'
    and contact_usage.measurement=='unmeasured' and contact_admissions==0)
   technical_without_contact=False
   if contact_usage.measurement=='unmeasured' and contact_admissions==0:
    import hashlib
-   marker='work-memory:'+hashlib.sha256(request['task_id'].encode()).hexdigest()
+   marker='work-memory:'+hashlib.sha256(chain[0]['work_id'].encode()).hexdigest()
    marker_events=scope.events(marker)
    if len(marker_events)==1 and marker_events[0].event_type=='HOST_EVALUATION_MEMORY_EXCLUDED':
     data=marker_events[0].payload.get('data',{})
     technical_without_contact=(data.get('disposition')=='host_evaluation_excluded'
-     and _registered_lifecycle_origin(data.get('origin'),original,source_turn,request['scope_sha256']))
+      and _registered_lifecycle_origin(data.get('origin'),root,source_turn,request['scope_sha256']))
   disposition=('native_origin_without_foreground' if native_without_contact else
    'registered_technical_origin_without_foreground' if technical_without_contact else 'recorded_original_ingress')
   payload.update(contract='EvaReviewedComponentWorkUsage/v1',task_id=request['task_id'],scope_sha256=request['scope_sha256'],
     model_usage=model_usage.to_wire(),contact_usage=None if native_without_contact or technical_without_contact else contact_usage.to_wire(),
     contact_disposition=disposition)
   if request.get('include_active_usage'):
-   payload.update(contract='EvaActiveComponentWorkUsage/v1',spec_sha256=canonical_sha256(original),source_ingress_sha256=original['source_ingress_sha256'])
+    payload.update(contract='EvaActiveComponentWorkUsage/v1',spec_sha256=canonical_sha256(leaf['spec_payload']),source_ingress_sha256=root['source_ingress_sha256'])
   else:
-   with e.begin() as c:
-    scope._scope(c)
-    row=c.execute(sa.select(work.c.usage_payload,work.c.usage_sha256).where(work.c.work_id==request['task_id'])).one()
-   if row.usage_payload is None or bytes(row.usage_sha256).hex()!=canonical_sha256(row.usage_payload):
-    raise ValueError('original terminal usage is not retained')
-   payload.update(terminal_usage=row.usage_payload,terminal_usage_sha256=canonical_sha256(row.usage_payload))
+    payload.update(terminal_usage=terminal_usage,terminal_usage_sha256=canonical_sha256(terminal_usage))
  print(json.dumps(payload))
 finally:e.dispose()
 '''

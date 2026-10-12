@@ -1,0 +1,42 @@
+{
+  "contract": "EvaProductSourceResult/v1",
+  "checkedAt": "2026-10-12T04:42:01.470378+00:00",
+  "title": "Hervatting en cumulatief verbruik aangesloten in bron",
+  "state": "built",
+  "installed": false,
+  "nativeExecutionStarted": false,
+  "fullAide2Completed": false,
+  "source": {
+    "path": "eva2/src/eva/operations/component_application_runtime.py",
+    "sha256": "f784232f0a8dbd81e01b41c981c8d885d74527ba8bc3871553483afa6f9aac71"
+  },
+  "behavior": [
+    "Een geldige reeks hervattingen behoudt de oorspronkelijke taak- en pakketbinding.",
+    "Actuele uitvoerbevoegdheid wordt op de laatste poging gecontroleerd.",
+    "Elke eerdere modelregistratie en oorspronkelijk contact worden eenmaal meegeteld.",
+    "Stoppen, onvolledig verbruik en ongeldige herkomst blijven blokkerend."
+  ],
+  "checks": {
+    "uniqueChecksPassed": 38,
+    "qualification": "30 individual PASS statuses from initial terminal progress, mapped to stable collection order; initial invocation rc1 and XML export permission failure retained. Eight newly executed core/journal cases have individual JUnit PASS. No successful node rerun.",
+    "noSingle38CaseExitZeroClaim": true,
+    "evaModelCalls": 0,
+    "nativeRuntimeDatabaseUsed": false
+  },
+  "review": {
+    "path": "eva2/reviews/native-work-resume-usage-source-review-20261012.json",
+    "sha256": "328b7069d65b50cd7c84c60cd3695e21f72647bb28e5f437a265ae892fd8cf75",
+    "decision": "GO for exact source only"
+  },
+  "preserved": {
+    "original_failed_attempt_tokens": 4987,
+    "old_terminal_records_unmodified": true,
+    "original_result_and_unknowns_retained": true
+  },
+  "remaining": [
+    "Eén installatie in de bestaande beoordelingsdienst.",
+    "Gewone verbeteropdracht hervatten met bestaande pakketopslag.",
+    "Onafhankelijk betere resultaten aantonen; alleen bewezen winst toepassen en later gebruiken."
+  ],
+  "credits": "UNKNOWN"
+}

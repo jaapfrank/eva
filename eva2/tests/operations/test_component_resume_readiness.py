@@ -114,3 +114,48 @@ def test_original_usage_unknown_contact_is_not_free_construction():
         runtime.reviewed_work_usage("work:original")
     value["contact_disposition"]="native_origin_without_foreground"
     assert runtime.reviewed_work_usage("work:original")==value
+
+
+def test_requested_resume_includes_ancestors_and_preserves_new_profile_deadline():
+    from eva.operations.component_application_runtime import _execution_chain
+    original = row("work:original", "ambiguous")
+    child = row("work:resume", "succeeded", parent="work:original", generation=2)
+    original["spec_payload"].update(task="same task", deadline="2026-10-12T01:00:00Z",
+                                    model_profile_release_sha256="old")
+    child["spec_payload"].update(task="same task", deadline="2026-10-12T02:00:00Z",
+                                 model_profile_release_sha256="new")
+    before = deepcopy([original, child])
+    assert _execution_chain([child, original], "work:resume", SCOPE,
+                            canonical_sha256, strict=True) == [original, child]
+    assert _execution_completion_state([child, original], "work:resume", SCOPE,
+                                       canonical_sha256) == "ready"
+    assert [original, child] == before
+    with pytest.raises(ValueError, match="root is missing"):
+        _execution_chain([child], "work:resume", SCOPE, canonical_sha256, strict=True)
+    original["stop_requested_at"] = "stop"
+    assert _execution_completion_state([original, child], "work:resume", SCOPE,
+                                       canonical_sha256) == "cancelled"
+
+
+@pytest.mark.parametrize("field", ["task", "source", "source_ingress_sha256", "grant",
+                                  "owner_principal_id", "principal_binding_id",
+                                  "episode_id", "execution_id", "audience"])
+def test_requested_leaf_cannot_adopt_changed_ancestor_authority(field):
+    from eva.operations.component_application_runtime import _execution_chain
+    original = row("work:original", "ambiguous")
+    child = row("work:resume", "succeeded", parent="work:original", generation=2)
+    original["spec_payload"][field] = "changed"
+    with pytest.raises(ValueError, match="authority differs"):
+        _execution_chain([original, child], "work:resume", SCOPE, canonical_sha256, strict=True)
+
+
+def test_strict_execution_chain_refuses_duplicate_or_unaccounted_branch():
+    from eva.operations.component_application_runtime import _execution_chain
+    original = row("work:original", "succeeded")
+    with pytest.raises(ValueError, match="duplicate"):
+        _execution_chain([original, original], "work:original", SCOPE,
+                         canonical_sha256, strict=True)
+    alien = row("work:alien", "succeeded", parent="absent", generation=2)
+    with pytest.raises(ValueError, match="one validated chain"):
+        _execution_chain([original, alien], "work:original", SCOPE,
+                         canonical_sha256, strict=True)
