@@ -1,0 +1,48 @@
+{
+  "contract": "EvaOrdinaryExecutionStart/v1",
+  "createdAt": "2026-10-12T20:49:48.289944+00:00",
+  "workId": "work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad",
+  "parentWorkId": "work:eva-resume:6ef4db15-655d-57e9-b1aa-37a5e9b3825b",
+  "generation": 11,
+  "stateAtSnapshot": "admitted",
+  "oneDispatch": true,
+  "binding": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/continuation-installed-binding.private.json",
+    "sha256": "391f1f2b89662bcefe0fc9b55db254009f01ce9a079ec03bb8b7613535a6ca61"
+  },
+  "receipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/continuation-receipt.private.json",
+    "sha256": "c4f3655cab0c34d53159e4db16f0db6b3f5ac02b33b47ba30563e0813ab29732"
+  },
+  "ownerSnapshot": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/continuation-work-admitted.private.json",
+    "sha256": "ee6c8ce966ddaab5efe55ab8610d730bae8b3e621b623cf30e1358fc58756e85"
+  },
+  "knownPhaseMeasurement": {
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/known-current-phase.measurement.private.json",
+      "sha256": "a6de977234082ac79c488ce39fd3f6152c55fd4134dd5a87e57cf4c29828c49c"
+    },
+    "withoutPressureFallbackBpe": 111137,
+    "withExistingPressureFallbackBpe": 56248,
+    "knownMarginBpe": 9288,
+    "limitBpe": 65536,
+    "dynamicContextMeasured": false,
+    "actualNativeAdmissionProven": false
+  },
+  "scope": "Original read-only research and Eva-authored proposal. No HA migration/configuration/renaming before separate owner approval.",
+  "newComparison": false,
+  "manualDomainProposal": false,
+  "wholeProjectGoal": "active",
+  "productFunctionCompleted": false,
+  "completeProposalProven": false,
+  "deliveryToTelegramProven": false,
+  "newUsageAtAdmission": null,
+  "creditCost": null,
+  "preservedCounts": {
+    "originalCompleted": 39,
+    "originalTotal": 48,
+    "expandedCompleted": 39,
+    "expandedTotal": 54
+  }
+}

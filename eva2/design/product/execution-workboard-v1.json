@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T19:40:14.669921+00:00",
+        "checkedAt": "2026-10-12T20:49:48.289944+00:00",
         "deliveries": [
           {
             "id": "structured-stored-source-selection-installed-20261012",
@@ -5382,8 +5382,8 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "ordinary_research_full_source_selection_installed",
-          "taskId": "work:eva-resume:6ef4db15-655d-57e9-b1aa-37a5e9b3825b",
+          "phase": "ordinary_research_full_source_selection_continuation",
+          "taskId": "work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
@@ -5391,9 +5391,9 @@
           ],
           "activeExecution": true,
           "owner": "/root",
-          "executor": "Codex · bron en integratie",
+          "executor": "Eva · bestaande algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Algemene bronbewaring en lokale selectie zijn geïnstalleerd. Eva moet het eindvoorstel nog zelf afronden.",
+          "summary": "Eva vervolgt zelf het onderzoek vanuit de bewaarde bevindingen. Het eindvoorstel is nog niet bevestigd.",
           "detail": "De vorige uitvoering bleef incomplete_work. Grote brongegevens kunnen nu éénmaal worden bewaard en lokaal gefilterd; controles van de eigen uitvoerroute blijven van het uiteindelijke voorstel gescheiden.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
@@ -5401,13 +5401,13 @@
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/retained-read-context-index-ordinary-result-review-20261012.json",
           "previousResultReviewSha256": "53799372a10e8bc4a54db5a3be787b6e836b5732b5cbac24acf52889bc520ac2",
           "implementationStatus": "Twee algemene modules geïnstalleerd; kern en werker gezond. Geen volledig voorstel of nieuwe hoofdafronding.",
-          "currentActivity": "Eerst de huidige bekende taakcontext controleren op invoerruimte; daarna uitsluitend Eva zelf gericht laten verdergaan. Geen automatische herhaling.",
-          "checkedAt": "2026-10-12T20:44:24.079199+00:00",
+          "currentActivity": "Eén gewone voortzetting toegelaten na de geïnstalleerde bronselectiecorrectie; gericht volgen of Eva het voorstel zelf opslaat en terugleest.",
+          "checkedAt": "2026-10-12T20:49:48.289944+00:00",
           "remaining": [
             "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
             "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."
           ],
-          "nativeRunning": false
+          "nativeRunning": true
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -5781,7 +5781,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-12T19:40:14.669921+00:00"
+        "updatedAt": "2026-10-12T20:49:48.289944+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",

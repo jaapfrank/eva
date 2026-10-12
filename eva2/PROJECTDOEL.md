@@ -9,12 +9,16 @@ tokens. API-verbruik blijft partial; volledig taakverbruik en creditkosten onbek
 De huidige voortgang is revision3 met inventaris/afhankelijkheden working en
 voorstel blocked. Het9240B tussenbestand is ongewijzigd; geen eindresultaat of
 extra hoofdafronding. Geen input- of deadlinefout in deze uitvoering.
-Bronselectie wordt nu gericht onderzocht: grote HA-API-antwoorden worden vóór
-bewaren gepagineerd; volledige lokale selectie is daardoor niet vanzelf beschikbaar.
+De bewezen oorzaak was bronverlies: grote HA-API-antwoorden werden vóór
+bewaren gepagineerd; Eva had niet de volledige bron voor lokale selectie.
 De algemene bronbewaring en lokale JSON-selectie zijn nu geïnstalleerd na
 onafhankelijke bronreview en15 gerichte controles. Twee modules per image veranderd,
 343 andere Pythonbronnen behouden; kern en werker gezond. Geen volledige oude
-bronbytes uit hashes reconstrueren. Bekende huidige invoerruimte eerst controleren.
+bronbytes uit hashes reconstrueren. De bekende 104-receipt-context past met de
+bestaande pressurefallback: 56.248 BPE, 9.288 bekende marge. Dynamische context
+blijft apart onbekend; de echte invoercontrole blijft actief. Eén gewone voortzetting
+is toegelaten: work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad.
+Eva maakt zelf het voorstel; nog geen eindresultaat of Telegramaflevering bevestigd.
 Installatiebewijs:eva2/evidence/product/structured-stored-source-selection-installed-20261012.json.
 Geen automatische herhaling, handmatig voorstel, vergelijking of spraakwerk.
 Geen HA-wijziging vóór apart expliciet akkoord op Eva's uiteindelijke voorstel.
