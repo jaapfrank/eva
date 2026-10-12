@@ -1,4 +1,4 @@
-## Actueel werk — 2026-10-12T02:42:14.491347+00:00
+## Actueel werk — 2026-10-12T03:05:12.177797+00:00
 
 ## Actueel 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 
@@ -8,11 +8,13 @@ beide feitelijke uitvoerprofielen gelijk aan voorbereiding. Bestaande images,
 instellingen, mounts, netwerken, gegevens en eerdere beoordelingen behouden.
 Kern, werker en dienst gezond. Onafhankelijke bron-, configuratie- en installatiereview GO. Geen nieuwe handmatige Eva-modelaanvraag voor deze aansluiting.
 
-**Nu:** de echte verbeteropdracht aansluiten op de gewone uitvoerder en dezelfde
-beoordelingsroute. Uitvoerder: /root/eva1_memory_transfer; afzonderlijke review:
-/root/product_execution_memory_review. De oorspronkelijke parentduur en de
-begrensde constructiefase blijven apart gebonden. Nog geen native verbeterproef
-gestart en geen nieuwe handmatige Eva-modelaanvraag voor deze stap.
+**Nu:** de echte verbeteropdracht is gebonden. Twee aanvullende hostmodules
+voor taakherkomst en gezamenlijk verbruik zijn gebouwd; 44 gerichte controles
+slagen. Afzonderlijke review van de exacte bron en uitvoeropdracht loopt.
+Deze aanvulling is nog niet geïnstalleerd; de eerdere beoordelingsdienst wel.
+Uitvoerder: /root/eva1_memory_transfer; review: /root/product_execution_memory_review.
+Nog geen native verbeterproef gestart of nieuwe handmatige Eva-modelaanvraag.
+De oorspronkelijke parentduur en begrensde constructiefase blijven apart gebonden.
 
 **Daarna:** Eva maakt en vergelijkt zelf één kandidaat; uitsluitend onafhankelijk
 bewezen winst toepassen en later gebruiken. De volledige leercyclus en AIDE² zijn
@@ -25,7 +27,8 @@ De oude voorbereidingsfouten en mislukte proef blijven bewaard.
 actief. Geen handeling van Jaap nodig; spraak geparkeerd; geen concurrentenserie.
 Ontwikkelcredits en automatisch runtimeverbruik blijven onbekend.
 
-Dashboardinhoud gecontroleerd op 2026-10-12T02:42:14.491347+00:00.
+Dashboardinhoud gecontroleerd op 2026-10-12T03:05:12.177797+00:00.
+Actuele bron: eva2/evidence/product/native-work-lifecycle-usage-source-20261012.json.
 Bewijs: eva2/evidence/product/native-work-strategy-host-installed-20261012.json.
 Configuratiereview: eva2/reviews/native-work-strategy-production-configuration-review-20261012.json.
 

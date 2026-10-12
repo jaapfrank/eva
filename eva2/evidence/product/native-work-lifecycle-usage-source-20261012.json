@@ -1,0 +1,37 @@
+{
+  "contract": "EvaNativeWorkLifecycleUsageSource/v1",
+  "checked_at": "2026-10-12T03:05:12.177797+00:00",
+  "state": "built_not_installed",
+  "source_manifest_sha256": "274fa8cdd3e6a78c3e2b6c10db9a79006b0297005d87c4cfbda4299e71b35b48",
+  "changed_host_modules": [
+    "eva.operations.component_application_runtime",
+    "eva.operations.component_work_execution"
+  ],
+  "targeted_tests": {
+    "passed": 44,
+    "failed": 0,
+    "model_requests": 0
+  },
+  "independent_review": "pending_exact_driver_and_source",
+  "native_execution_started": false,
+  "product_function_completed": false,
+  "changes": [
+    "Original technical work identity distinguished from household initiative",
+    "Measured construction and child usage share existing ceilings before dispatch",
+    "Complete child accounting returned in actual evaluation report"
+  ],
+  "preserved": [
+    "Existing provider and parent task route",
+    "Fixed development and hidden final criteria",
+    "Installed configuration and runtime images",
+    "Prior incomplete/UNKNOWN evidence"
+  ],
+  "credits": "UNKNOWN",
+  "dashboard_verified": {
+    "at": "2026-10-12T03:05:59.721021+00:00",
+    "url": "http://localhost:44712/",
+    "work_title": "Zelfverbetering \u00b7 verbeteropdracht en verbruik aansluiten",
+    "latest_delivery": "Beoordelingsdienst voor zelfverbetering aangesloten",
+    "owner_action_required": false
+  }
+}

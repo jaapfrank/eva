@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T02:42:14.491347+00:00",
+        "checkedAt": "2026-10-12T03:05:12.177797+00:00",
         "deliveries": [
           {
             "title": "Beoordelingsdienst voor zelfverbetering aangesloten",
@@ -4816,16 +4816,16 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · echte verbeteropdracht aansluiten",
+          "title": "Zelfverbetering · verbeteropdracht en verbruik aansluiten",
           "state": "in_progress",
-          "phase": "native_improvement_cycle_input_binding",
+          "phase": "native_improvement_cycle_source_review",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De beoordelingsroute is geïnstalleerd. De uitvoerder sluit nu Eva’s echte verbeteropdracht aan op dezelfde taak- en beoordelingsroute.",
-          "detail": "Nog geen verbeterproef gestart. Nu: de echte verbeteropdracht en haar fasebewaking aansluiten. Daarna maakt Eva zelf één kandidaat en vergelijkt echte werkresultaten. De afzonderlijke eindbeoordeling bepaalt of die wordt toegepast en later gebruikt.",
-          "source": "eva2/evidence/product/dashboard-native-work-lifecycle-current-20261012.json",
+          "summary": "De echte verbeteropdracht is gebonden. De aansluiting voor taakherkomst en gezamenlijk verbruik is gebouwd; de gerichte controles slagen.",
+          "detail": "Nu: afzonderlijke review van de twee gewijzigde hostmodules en de echte uitvoeropdracht. De eerdere beoordelingsdienst blijft geïnstalleerd. De nieuwe koppeling is nog niet geïnstalleerd en de verbeterproef is nog niet gestart.",
+          "source": "eva2/evidence/product/native-work-lifecycle-usage-source-20261012.json",
           "doneWhen": "Eva verbetert haar werkaanpak op echte opdrachten; de onafhankelijke beoordeling bevestigt betere resultaten of minder hulp. Alleen bewezen winst wordt toegepast en bij later gewoon werk gebruikt.",
           "implementationStatus": {
             "evaluationBridgeBuilt": true,
@@ -4853,9 +4853,13 @@
             "independentInstallationReview": "GO",
             "lifecycleInputBound": true,
             "lifecycleDriverReviewed": false,
-            "nativeExecutionStarted": false
+            "nativeExecutionStarted": false,
+            "lifecycleUsageSourceBuilt": true,
+            "lifecycleUsageSourceTested": true,
+            "lifecycleUsageSourceInstalled": false,
+            "lifecycleUsageSourceReviewPending": true
           },
-          "remaining": "Verbeteropdracht aansluiten en gericht beoordelen; daarna echte verbetering en later gebruik uitvoeren.",
+          "remaining": "Gerichte review afronden, twee hostmodules installeren en Eva één echte verbetercyclus laten uitvoeren.",
           "review": "eva2/reviews/native-work-strategy-production-installed-review-20261012.json",
           "reviewSha256": "67a2b7955f517eb58633462175f83cf46c34e98bfea932239a4af46a0278d7fb"
         },
@@ -4874,7 +4878,7 @@
           "detail": "Codex maakt de geregistreerde verbetercyclus af; jouw beoordeling van het gezinservaringsresultaat blijft afzonderlijk."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T02:42:14.491347+00:00",
+        "reviewedAt": "2026-10-12T03:05:12.177797+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -4974,8 +4978,8 @@
           }
         }
       },
-      "reviewedAt": "2026-10-12T02:42:14.491347+00:00",
-      "checkedAt": "2026-10-12T02:42:14.491347+00:00",
+      "reviewedAt": "2026-10-12T03:05:12.177797+00:00",
+      "checkedAt": "2026-10-12T03:05:12.177797+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11353,7 +11357,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T02:42:14.491347+00:00",
+      "lastUpdatedAt": "2026-10-12T03:05:12.177797+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11814,6 +11818,13 @@
         "checkedAt": "2026-10-12T02:42:14.491347+00:00",
         "browserVerificationPending": false,
         "browserVerifiedAt": "2026-10-12T02:42:44.507720+00:00"
+      },
+      "dashboardVerificationNativeLifecycleUsage20261012": {
+        "source": "eva2/evidence/product/native-work-lifecycle-usage-source-20261012.json",
+        "checkedAt": "2026-10-12T03:05:12.177797+00:00",
+        "browserVerificationPending": false,
+        "browserVerifiedAt": "2026-10-12T03:05:59.721021+00:00",
+        "visibleState": "native_improvement_cycle_source_review"
       }
     },
     "pendingTechnicalReview": {
