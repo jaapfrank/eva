@@ -117,6 +117,114 @@ def test_small_output_shape_and_no_capture_limit_are_unchanged():
         asyncio.run(adapter.execute(command))
 
 
+def _retained_ha():
+    """A previously verified response, with no provider available for replay."""
+    timeline = Timeline()
+    stopped = [False]
+    def authorize(turn):
+        assert turn == TURN
+        if stopped[0]:
+            raise ConversationConflict("owner stopped")
+    port = PostgresExternalConversationTools(None,
+        SimpleNamespace(action_names=("home_assistant_request",)), SimpleNamespace())
+    port._timeline = lambda _: timeline
+    port._ensure_running = authorize
+    thread = port._thread_id(TURN, "home_assistant_request", 1)
+    observation = {"response_json": json.dumps(["value-" + str(i) for i in range(4000)]),
+                   "truncated": False, "external_state_verified": False}
+    admission = {"action_name": "home_assistant_request", "action_call_id": "retained-read",
+        "action_arguments": {"method": "GET"}, "step_index": 1,
+        "conversation_id": TURN.conversation_id, "principal_id": TURN.principal_id,
+        "source_message_id": TURN.message_id, "receipt_output": {"external_state_verified": False},
+        "observation_output_key": "result"}
+    timeline.rows[thread] = [
+        SimpleNamespace(event_type="TOOL_REQUEST_ADMITTED", payload={"data": admission}),
+        SimpleNamespace(event_type="STATE_VERIFIED", payload={"data": {"proof": {
+            "expected": {}, "observed": {}, "evidence": {
+                "source": "home_assistant_api_response", "observation": observation}}}})]
+    return port, timeline, thread, stopped, authorize
+
+
+def test_retained_ha_projection_resume_and_local_reader_preserve_raw_proof():
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel, _InputBudgetError
+    from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
+    port, timeline, thread, _, authorize = _retained_ha()
+    old = _encoded([e.payload for e in timeline.rows[thread]])
+    original = port._receipt(TURN, timeline.events(thread), 1, project=False)
+    projected = port._receipt(TURN, timeline.events(thread), 1)
+    assert projected.output == original.output
+    assert projected.model_output["model_projection"]["source_receipt_sha256"] == canonical_sha256(original.output)
+    assert projected.model_output["model_projection"]["source_proof_sha256"] == canonical_sha256(original.output["proof"])
+    assert _encoded([e.payload for e in timeline.rows[thread]]) == old
+    rows_before = _encoded({k: [e.payload for e in v] for k, v in timeline.rows.items()})
+    # Fresh adapter reconstruction is the same route used by pending() on resume.
+    assert port._receipt(TURN, timeline.events(thread), 1).model_output == projected.model_output
+    assert _encoded({k: [e.payload for e in v] for k, v in timeline.rows.items()}) == rows_before
+    model = object.__new__(PydanticConversationModel)
+    model._resource_budget = SimpleNamespace(max_input_tokens=4000)
+    model._endpoint = "https://chatgpt.com/backend-api/codex/responses"
+    body = lambda receipt: model._phase_admission_body(prompt="", instructions="",
+                                                      completed_action=receipt)
+    with pytest.raises(_InputBudgetError):
+        model._admit_request(body(original), autonomous=False)
+    model._admit_request(body(projected), autonomous=False)
+    assert len(canonical_json_bytes(list(model._receipt_model_views((projected,))))) < 8192
+    # Use the actual existing local-reader action, never an external provider.
+    route = PostgresExternalConversationTools(None,
+        SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda _: nullcontext()
+    route._timeline = lambda _: timeline
+    route._ensure_running = authorize
+    reader = projected.model_output["result"]["reader"]["tool_id"]
+    args = {"pointer": "/response_json", "offset": 0, "limit": 40, "query": None}
+    call = ConversationActionCall("local-page", "use_connector_tool",
+        {"tool_id": reader, "arguments_json": json.dumps(args)})
+    receipt = route.execute(TURN, call, step_index=2)
+    assert receipt.output["result"]["text"] == original.output["result"]["response_json"][:40]
+    assert receipt.output["external_state_verified"] is False
+    assert route.execute(TURN, call, step_index=2) == receipt
+    assert _encoded([e.payload for e in timeline.rows[thread]]) == old
+
+
+def test_retained_ha_projection_rejects_changed_scope_source_and_injected_view():
+    from eva.adapters.model.contracts import ConversationModelError
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    port, timeline, thread, stopped, authorize = _retained_ha()
+    projected = port._receipt(TURN, timeline.events(thread), 1)
+    reader = projected.model_output["result"]["reader"]["tool_id"]
+    args = {"pointer": "/response_json", "offset": 0, "limit": 40, "query": None}
+    capture = ConnectorResults(timeline, TURN, authorize)
+    other = ConnectorResults(timeline, replace(TURN, principal_id="other",
+        audience=replace(TURN.audience, principal_id="other", audience_id="person:other")), lambda _: None)
+    with pytest.raises(ConversationConflict):
+        other.read(reader, args)
+    changed_ingress = ConnectorResults(timeline, replace(TURN, text="different ingress"), lambda _: None)
+    with pytest.raises(ConversationConflict, match="source is malformed"):
+        changed_ingress.read(reader, args)
+    stopped[0] = True
+    with pytest.raises(ConversationConflict, match="stopped"):
+        capture.read(reader, args)
+    stopped[0] = False
+    admission = timeline.rows[thread][0].payload["data"]
+    admission["execution_namespace"] = "another-task"
+    with pytest.raises(ConversationConflict, match="namespace"):
+        capture.read(reader, args)
+    del admission["execution_namespace"]
+    observation = timeline.rows[thread][-1].payload["data"]["proof"]["evidence"]["observation"]
+    before = observation["response_json"]
+    observation["response_json"] = "changed"
+    with pytest.raises(ConversationConflict, match="proof differs"):
+        capture.read(reader, args)
+    observation["response_json"] = before
+    view = {**projected.model_output, "status": "failed"}
+    with pytest.raises(ConversationModelError, match="differs"):
+        PydanticConversationModel._receipt_model_views((replace(projected, model_output=view),))
+    del timeline.rows[thread]
+    with pytest.raises(ConversationConflict, match="absent"):
+        capture.read(reader, args)
+
+
 def test_invalid_provider_output_cannot_be_sealed_or_recovered_as_verified():
     adapter, command, calls, capture = setup({"text":"wrong schema"})
     adapter._verified_output_schemas[command.tool_name] = {

@@ -703,12 +703,13 @@ class DelegatedDigitalRunner:
                 usage=usage.to_payload(), completed_at=self.clock().strftime("%Y-%m-%dT%H:%M:%SZ"))
             return ToolFreeChildOutcome("succeeded", result, usage, False, None)
         except Exception as error:
+            from eva.adapters.model.pydantic_conversation import _InputBudgetError
             if journal is not None and source is not None:
                 with suppress(Exception):
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
             status = ("cancelled" if cancellation_event is not None and cancellation_event.is_set()
                 else "timed_out" if isinstance(error, ConversationModelDeadlineExceeded) or self.clock() >= deadline
-                else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached))
+                else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached, _InputBudgetError))
                 else "incomplete_work" if isinstance(error, _UnfinishedWorkPlan)
                 else "provider_unavailable" if type(error) is McpGatewayUnavailable
                 else "internal_error")
@@ -719,6 +720,9 @@ class DelegatedDigitalRunner:
                            and actions is not None
                            and any(_has_completed_tool_evidence([receipt]) for receipt in actions.receipts)))
                       and len(reply.text.encode("utf-8")) <= 65_536 else None)
+            if status == "budget_exceeded" and isinstance(error, _InputBudgetError):
+                report = ("input_budget_exceeded: De behouden taakcontext past niet binnen "
+                          "de invoergrens. De opdracht is niet afgerond.")
             return ToolFreeChildOutcome(status, None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest(),
                 failure_report=report)

@@ -1,6 +1,35 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — Telegram standaard Eva2; Tuya-context wordt hersteld
+## Actueel 12 oktober — Telegram en grote HA-leescontext hersteld en geïnstalleerd
+
+Nieuwe gewone Telegramtekst en foto's gaan naar Eva2; Eva1 alleen met /eva1.
+De routing is geïnstalleerd. Geen automatische Eva1-fallback.
+
+De Tuya-verkenning en hervatting faalden vóór nieuwe modelinvoer op te grote
+behouden HA-leesresultaten. De exacte vijf-modulecorrectie is nu geïnstalleerd:
+grote geverifieerde resultaten krijgen een compacte modelweergave met de
+bestaande lokale reader. Raw resultaat en bewijs blijven behouden; bron,
+persoon, ingang, bewaartermijn en stoppen blijven gecontroleerd.
+Een lokale invoerfout meldt budget_exceeded in plaats van generic internal_error.
+
+10 unieke gerichte controles geslaagd en onafhankelijke bron-GO. Kern en werker
+gezond; exacte vijf modules, 338 overige bronnen per image en configuratie/mounts
+behouden. Geen nieuwe handmatige Eva-modelaanvraag of externe HA-actie voor deze
+correctie. De oorspronkelijke Tuya-taken blijven niet afgerond; echte hervatting
+en een compleet migratievoorstel zijn hiermee nog niet aangetoond.
+Migratie blijft afhankelijk van Jaaps akkoord; geen sensornamen gewijzigd.
+
+Verder met HUE1.1/HUE3.1: drie eerste bronbestanden en acht contractcontroles
+gereed, gewone geheugen-/gespreksintegratie nog niet geïnstalleerd.
+Het volledige goal blijft actief. 39/48 oorspronkelijke en 39/54 totale
+afrondingen behouden; geen nieuwe concurrentenserie. Spraak blijft geparkeerd.
+Geen technische handeling van Jaap nodig om dit bouwvervolg te starten.
+
+Bewijs: eva2/evidence/product/telegram-ha-context-installed-20261012.json.
+Bronreview: eva2/reviews/telegram-ha-context-source-review-20261012.json.
+Installatiereview: eva2/reviews/telegram-ha-context-installed-review-20261012.json.
+
+## Historisch 12 oktober — Telegram standaard Eva2; contextcorrectie nog in uitvoering
 
 Jaaps actuele afspraak: alle nieuwe gewone Telegramtekst en foto's gaan naar Eva2.
 Eva1 is alleen expliciet bereikbaar met /eva1. Automatische Eva1-fallback en

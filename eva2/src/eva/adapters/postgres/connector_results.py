@@ -15,8 +15,11 @@ from eva.contracts.canonical_json import canonical_sha256
 
 READER_PREFIX = "eva-stored-result:"
 _BOUND = 65536
+MODEL_INLINE_BOUND = 8192
 _TRANSPORT_BOUND = 2097152
 _current = ContextVar("connector_result_capture", default=None)
+SOURCE_RESPONSE_FIELDS = ("success", "http_status", "truncated", "selection_error",
+                          "request_sent", "response_sha256", "external_state_verified")
 
 
 class ConnectorSelectionError(ConversationConflict):
@@ -125,7 +128,78 @@ class ConnectorResults:
         if (len(raw) != seal.get("length") or len(raw) > _TRANSPORT_BOUND
                 or hashlib.sha256(raw).hexdigest() != seal.get("sha256")):
             raise ConversationConflict("stored connector result hash differs")
+        binding = events[0].payload["data"]
+        if "retained_source" in binding and raw != self._retained_bytes(binding["retained_source"]):
+            raise ConversationConflict("stored result differs from retained action source")
         return raw, seal["sha256"]
+
+    def _retained_bytes(self, source):
+        """Recheck the original proof, not a new external observation."""
+        from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        if (not isinstance(source, dict) or set(source) != {
+                "thread_id", "call_id", "step_index", "observation_key", "receipt_sha256", "proof_sha256",
+                "source_ingress_sha256"}
+                or type(source.get("step_index")) is not int or source["step_index"] < 0
+                or source.get("observation_key") not in {"result", "inventory"}
+                or source.get("source_ingress_sha256") != canonical_sha256(
+                    PostgresConversationJournal._ingress_data(self.turn))):
+            raise ConversationConflict("retained read source is malformed")
+        self.authorize(self.turn)
+        events = self.timeline.events(source["thread_id"])
+        if not events or events[-1].event_type != "STATE_VERIFIED":
+            raise ConversationConflict("retained read proof is absent")
+        self.timeline.load(source["thread_id"])
+        admission = events[0].payload["data"]
+        if (admission.get("action_name") not in {"home_assistant_request", "read_home_assistant_inventory"}
+                or admission.get("execution_namespace") != background_execution_namespace(self.turn)
+                or admission.get("action_call_id") != source["call_id"]):
+            raise ConversationConflict("retained read namespace or call differs")
+        port = object.__new__(PostgresExternalConversationTools)
+        port._action_names = (admission["action_name"],)
+        if source["thread_id"] != port._thread_id(self.turn, admission["action_name"], source["step_index"]):
+            raise ConversationConflict("retained read thread differs")
+        receipt = port._receipt(self.turn, events, source["step_index"], project=False)
+        proof = receipt.output.get("proof")
+        observation = receipt.output.get(source["observation_key"])
+        if (canonical_sha256(receipt.output) != source["receipt_sha256"]
+                or canonical_sha256(proof) != source["proof_sha256"]
+                or not isinstance(observation, dict)
+                or proof.get("evidence", {}).get("observation") != observation):
+            raise ConversationConflict("retained read receipt or proof differs")
+        return _encoded(observation)
+
+    def retained_model_view(self, receipt, thread_id, *, step_index, observation_key):
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        source = {"thread_id": thread_id, "call_id": receipt.call.call_id,
+                  "step_index": step_index, "observation_key": observation_key,
+                  "receipt_sha256": canonical_sha256(receipt.output),
+                  "proof_sha256": canonical_sha256(receipt.output["proof"]),
+                  "source_ingress_sha256": canonical_sha256(PostgresConversationJournal._ingress_data(self.turn))}
+        # Compare the caller's raw output with the actual retained observation
+        # before making any capture or offering a reader.
+        raw = self._retained_bytes(source)
+        if raw != _encoded(receipt.output[observation_key]):
+            raise ConversationConflict("retained read presentation differs")
+        binding = {"owner": self.owner, "operation": thread_id,
+                   "retained_source": source}
+        self._store(binding, json.loads(raw))
+        # Use the same manifest/reader; its key binds the exact retained source.
+        identifier = canonical_sha256(binding)
+        manifest = self._manifest(identifier, json.loads(raw))
+        manifest["source_output_truncated"] = receipt.output[observation_key].get("truncated") is True
+        manifest["source_response"] = {key: receipt.output[observation_key][key]
+            for key in SOURCE_RESPONSE_FIELDS if key in receipt.output[observation_key]}
+        proof = receipt.output["proof"]
+        reference = {"model_view_reference": "/" + observation_key,
+            "observation_sha256": canonical_sha256(receipt.output[observation_key]),
+            "durable_proof_sha256": source["proof_sha256"]}
+        return {**receipt.output, observation_key: manifest,
+                "proof": {**proof, "evidence": {**proof["evidence"], "observation": reference}},
+                "model_projection": {"contract": "EvaRetainedActionModelView/v1",
+                    "source_receipt_sha256": source["receipt_sha256"],
+                    "source_proof_sha256": source["proof_sha256"],
+                    "observation_key": observation_key}}
 
     def call(self, command, phase, call):
         self.authorize(self.turn)
@@ -138,25 +212,48 @@ class ConnectorResults:
             occurred_at=datetime.now(UTC).replace(microsecond=0), data=binding, event_type="CONNECTOR_CAPTURE_STARTED",
             phase="capture_started", operation_id=command.operation_id)
         output = call()
+        self._store(binding, output, started_state=state)
+        return output
+
+    def _store(self, binding, output, *, started_state=None):
+        self.authorize(self.turn)
+        identifier = canonical_sha256(binding)
+        thread = "connector-result:" + identifier
+        if self.timeline.events(thread) and started_state is None:
+            if self._bytes(identifier)[0] != _encoded(output):
+                raise ConversationConflict("captured result differs from retained bytes")
+            return
         raw = _encoded(output)
         if len(raw) > _TRANSPORT_BOUND:
             raise ConversationConflict("connector result exceeds existing transport bound")
+        # The started capture also makes an interrupted copy fail closed.
+        if started_state is not None:
+            state = started_state
+        elif not self.timeline.events(thread):
+            state = self.timeline.create_thread(thread_id=thread, checkpoint_id=thread+":started",
+                occurred_at=datetime.now(UTC).replace(microsecond=0), data=binding,
+                event_type="CONNECTOR_CAPTURE_STARTED", phase="capture_started",
+                operation_id=binding["operation"])
+        else:
+            state = self.timeline.load(thread)
         # Each existing timeline event remains smaller than the model-result cap.
         for index, offset in enumerate(range(0, len(raw), 32768)):
             state = self.timeline.transition(thread_id=thread, expected_revision=state.revision,
                 checkpoint_id=thread+":chunk:"+str(index), phase="capturing", status="active",
                 event_type="CONNECTOR_CAPTURE_CHUNK", occurred_at=datetime.now(UTC).replace(microsecond=0),
-                operation_id=command.operation_id,
+                operation_id=binding["operation"],
                 data={"index": index, "bytes": base64.b64encode(raw[offset:offset+32768]).decode()})
         self.timeline.transition(thread_id=thread, expected_revision=state.revision,
             checkpoint_id=thread+":sealed", phase="captured", status="completed",
             event_type="CONNECTOR_CAPTURE_SEALED", occurred_at=datetime.now(UTC).replace(microsecond=0),
-            operation_id=command.operation_id,
+            operation_id=binding["operation"],
             data={"length": len(raw), "sha256": hashlib.sha256(raw).hexdigest()})
-        return output
 
     def manifest(self, command, phase, output):
         identifier = canonical_sha256(self._binding(command, phase))
+        return self._manifest(identifier, output)
+
+    def _manifest(self, identifier, output):
         raw, digest = self._bytes(identifier)
         if raw != _encoded(output):
             raise ConversationConflict("captured connector result differs from returned output")

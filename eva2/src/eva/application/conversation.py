@@ -645,9 +645,13 @@ class ConversationToolPreparation:
 class ConversationActionReceipt:
     call: ConversationActionCall
     output: dict[str, JsonValue]
+    # Host-only presentation; durable journals and completion use output.
+    model_output: dict[str, JsonValue] | None = field(default=None, compare=False, repr=False)
 
     def __post_init__(self) -> None:
         validate_json_value(self.output)
+        if self.model_output is not None:
+            validate_json_value(self.model_output)
 
 
 @dataclass(frozen=True, slots=True)

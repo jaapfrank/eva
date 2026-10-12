@@ -1,0 +1,111 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "reviewedAt": "2026-10-12T13:27:33.872440+00:00",
+  "decision": "GO",
+  "scope": "Exact five-module retained Home Assistant model-presentation and safe local input-budget failure correction; source installation only.",
+  "sourceManifestSha256": "a55dfb3151c506d7ff1b73543e6eba97d6b7f72a95c505fb9589f9d55930a8de",
+  "evidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-tuya-context-correction-20261012/frozen-source.private.json",
+      "sha256": "a55dfb3151c506d7ff1b73543e6eba97d6b7f72a95c505fb9589f9d55930a8de"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-tuya-context-correction-20261012/targeted-checks.private.json",
+      "sha256": "ce09c54b9a86291d14e3fbf584ebf47626ffa73e3210df8a5b0f70e1d9cff912"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-tuya-context-correction-20261012/source.patch",
+      "sha256": "d77eb38cefed9ecb4e77ee0ed0aadf592800fc2b3894900f54ba4672358f594e"
+    },
+    {
+      "path": "eva2/evidence/product/telegram-tuya-context-failure-diagnosis-20261012.json",
+      "sha256": "927db62af5d662eba6cbe46a025220d4cbb33a08ce2fa87573eb173c878970b3"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/application/conversation.py",
+      "sha256": "5fe0e792061655a10d67af29df0def2363bb0b29b3ba6390daf6dd69ed7996e4",
+      "baseSha256": "c596de090994479124d8cef11936820e2b461c4d7b173e58274c5d1d48193265"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "c5e879df0f074ccb03b2fe0d2636c46e98e8fbde5e5c17190b2e3f03214e054a",
+      "baseSha256": "64a5f9696b1105c2960df2f67281b58018e51a7a59a7ae684ab47dd2a2003fd0"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "c6585c84d2f237132c4eda2cbff5a667425f04d46f34aa175925a81c2a24f636",
+      "baseSha256": "56639febdc5f23a3506e850f67374a9c8e094be70c9077baa0bd96d8b534ddf4"
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "faeefb72af723aec9b1b18de8f57942cf9f848f6e9860af17939bcff50417b33",
+      "baseSha256": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050"
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "3b4da4c6ef7321eb84620eab0c05fb5d09de19ea63f0a76cee763ad3efb7e42b",
+      "baseSha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "eva2/tests/connectors/test_connector_results.py",
+      "sha256": "a665ecfd0f6754f5e8ff80d2938e101bcd860f5ecb0937a7264979eaece9fa88",
+      "baseSha256": "8d6886a678c7d3be49b7a852de1345ba08a4dcaa808ccacd17921b6f9231e07d"
+    },
+    {
+      "path": "eva2/tests/application/test_delegated_digital_runner.py",
+      "sha256": "be855c3f41922697d3a03120ecc2f7a9062b7f2c1f45e2d1d126cf7f90045e16",
+      "baseSha256": "e5d94423e0d7756924683fd555f626fdf4cbad2d03f22d6955cc268feb0f381b"
+    }
+  ],
+  "findings": [
+    {
+      "result": "PASS",
+      "boundary": "Raw evidence and model presentation",
+      "detail": "ConversationActionReceipt.output and original durable proof/events remain the source. Optional model_output is a host presentation, used by the model adapter and excluded from receipt equality. The adapter validates raw receipt/proof/observation hashes, original response and truncation metadata, and a smaller exact projection."
+    },
+    {
+      "result": "PASS",
+      "boundary": "Retained source and local access",
+      "detail": "Capture and each local reader revalidate the original verified action thread, actor/message scope, ingress digest, execution namespace, call/step, complete timeline, and proof/receipt hashes. Current authorization and stop checks remain. Missing, changed or incomplete sources are refused."
+    },
+    {
+      "result": "PASS",
+      "boundary": "Existing connector interface",
+      "detail": "Large verified Home Assistant request/inventory receipts use the existing ConnectorResults manifest and bounded use_connector_tool reader. No Home Assistant invocation is repeated by capture or selection. Existing stored-result capability is required. A complete stored copy means the exact retained observation object, not a new external observation."
+    },
+    {
+      "result": "PASS",
+      "boundary": "Budget and failure truth",
+      "detail": "The 8192-byte presentation threshold does not increase the existing input, receipt, transport, grant or task budgets. Local _InputBudgetError produces the existing budget_exceeded outcome, safe fixed input_budget_exceeded failure report, unchanged fingerprint and measured usage; no successful result or retry is invented."
+    }
+  ],
+  "validation": {
+    "targetedChecksSha256": "ce09c54b9a86291d14e3fbf584ebf47626ffa73e3210df8a5b0f70e1d9cff912",
+    "uniqueChecksPassed": 10,
+    "executionHistory": "Initial invocation: 9 passed and 1 test-assertion failure. Only the affected assertion was corrected from tuple to list, then that node passed. Failed output is retained; no source changes between invocations.",
+    "evidenceVerification": "All five source and two changed test hashes, patch, invocation receipts, logs and JUnit files matched; JUnit outcomes corroborate ten unique passed nodes.",
+    "coverage": "Synthetic retained source/replay and actual local reader interface, scope/source/stop/hash rejection, existing capture behavior and pre-provider input-budget refusal.",
+    "reviewerTestsRun": 0,
+    "evaModelCalls": 0,
+    "nativeActions": 0,
+    "runtimeDatabaseUsed": false
+  },
+  "limitations": [
+    "No installation or live task resume was evaluated by this source review.",
+    "Future full-request fit, native completion, migration success and behavioral quality remain unproved.",
+    "Original failed tasks, partial/unknown usage and raw proof bytes remain historical evidence.",
+    "Synthetic timeline tests do not establish production Postgres transaction behavior or a new external read."
+  ],
+  "authorization": {
+    "exactSourceInstallation": true,
+    "newModelInput": false,
+    "nativeResume": false,
+    "qualityGain": false,
+    "fullAIDE2": false
+  },
+  "blockers": []
+}

@@ -787,13 +787,58 @@ class PydanticConversationModel:
                 else baseline)
 
     @staticmethod
+    def _receipt_presentation(receipt: ConversationActionReceipt) -> dict[str, Any]:
+        view = receipt.model_output
+        if view is None:
+            return receipt.output
+        from eva.adapters.postgres.connector_results import _encoded, READER_PREFIX, SOURCE_RESPONSE_FIELDS
+        output = receipt.output
+        metadata = view.get("model_projection")
+        proof = output.get("proof")
+        key = metadata.get("observation_key") if isinstance(metadata, dict) else None
+        observation = output.get(key) if key in {"result", "inventory"} else None
+        manifest = view.get(key) if key in {"result", "inventory"} else None
+        if (output.get("contract") != "EvaConversationActionReceipt/v1"
+                or output.get("durable") is not True or output.get("status") != "verified"
+                or receipt.call.name not in {"home_assistant_request", "read_home_assistant_inventory"}
+                or not isinstance(proof, dict) or not isinstance(observation, dict)
+                or proof.get("evidence", {}).get("observation") != observation
+                or not isinstance(manifest, dict)
+                or manifest.get("contract") != "EvaStoredConnectorResult/v1"
+                or manifest.get("stored_complete") is not True
+                or manifest.get("external_state_verified") is not False
+                or manifest.get("sha256") != hashlib.sha256(_encoded(observation)).hexdigest()
+                or manifest.get("byte_length") != len(_encoded(observation))
+                or manifest.get("source_output_truncated") != (observation.get("truncated") is True)
+                or manifest.get("source_response") != {key: observation[key]
+                    for key in SOURCE_RESPONSE_FIELDS if key in observation}
+                or not isinstance(manifest.get("reader"), dict)
+                or manifest["reader"].get("action") != "use_connector_tool"
+                or not str(manifest["reader"].get("tool_id", "")).startswith(READER_PREFIX)):
+            raise ConversationModelError("retained action model projection is invalid")
+        expected_metadata = {"contract": "EvaRetainedActionModelView/v1",
+            "source_receipt_sha256": hashlib.sha256(canonical_json_bytes(output)).hexdigest(),
+            "source_proof_sha256": hashlib.sha256(canonical_json_bytes(proof)).hexdigest(),
+            "observation_key": key}
+        reference = {"model_view_reference": "/" + key,
+            "observation_sha256": hashlib.sha256(canonical_json_bytes(observation)).hexdigest(),
+            "durable_proof_sha256": expected_metadata["source_proof_sha256"]}
+        expected = {**output, key: manifest,
+            "proof": {**proof, "evidence": {**proof["evidence"], "observation": reference}},
+            "model_projection": expected_metadata}
+        if view != expected or len(canonical_json_bytes(view)) >= len(canonical_json_bytes(output)):
+            raise ConversationModelError("retained action model projection differs from original receipt")
+        return view
+
+    @staticmethod
     def _receipt_model_views(
         receipts: tuple[ConversationActionReceipt, ...],
     ) -> tuple[dict[str, Any], ...]:
         """Reference exact earlier values in this request, never external context."""
         call_ids = [receipt.call.call_id for receipt in receipts]
         local_views = tuple(
-            PydanticConversationModel._receipt_model_view(receipt.output)
+            PydanticConversationModel._receipt_model_view(
+                PydanticConversationModel._receipt_presentation(receipt))
             for receipt in receipts
         )
         if len(set(call_ids)) != len(call_ids):

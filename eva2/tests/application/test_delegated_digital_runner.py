@@ -529,6 +529,22 @@ def test_budget_failure_keeps_only_a_returned_final_reply(overrun_on_final):
     assert outcome.usage.input_tokens > spec.grant.maximum_input_tokens
 
 
+def test_local_input_budget_refusal_is_bounded_failure_without_new_model_or_tool():
+    from eva.adapters.model.pydantic_conversation import _InputBudgetError
+    _, spec, _, tools, journal, runner, _ = fixture()
+    class RefusedModel:
+        def generate(self, *args, **kwargs):
+            raise _InputBudgetError("conversation request exceeds the runtime input budget")
+    runner.model = RefusedModel()
+    outcome = asyncio.run(runner.run(spec, call_id="call:input-budget"))
+    assert outcome.status == "budget_exceeded" and outcome.result is None
+    assert outcome.failure_report.startswith("input_budget_exceeded:")
+    assert outcome.error_fingerprint == hashlib.sha256(
+        b"_InputBudgetError:conversation request exceeds the runtime input budget").hexdigest()
+    assert tools.calls == [] and journal.usages == []
+    assert outcome.retryable is False
+
+
 def test_cancelled_final_reply_is_not_released_as_failure_report():
     _, spec, store, tools, _, runner, _ = fixture()
     tools.release.set()

@@ -1,0 +1,125 @@
+{
+  "contract": "EvaRetainedHomeAssistantContextInstalled/v1",
+  "recordedAt": "2026-10-12T13:32:43.074583+00:00",
+  "result": "installed",
+  "scope": "Large verified Home Assistant read observations use the existing stored-result manifest and local reader during new work and retained resume; raw evidence remains unchanged.",
+  "sourceReview": {
+    "path": "eva2/reviews/telegram-ha-context-source-review-20261012.json",
+    "sha256": "061129315ea855b980a5f634e3d01e789d4038dbf206a05e269b82f00fd6904f",
+    "decision": "GO"
+  },
+  "images": {
+    "core": {
+      "before": "sha256:809d906cb6caf716d349cce5707a1df8ba77c72f9f6546160af5500a819d9010",
+      "image": "sha256:7e2923803b1fc0eacebb0c5f796ee0e6883419035d1718e9b9593f01a60fcdb4",
+      "modules": {
+        "application/conversation.py": "5fe0e792061655a10d67af29df0def2363bb0b29b3ba6390daf6dd69ed7996e4",
+        "adapters/postgres/external_conversation_tools.py": "c5e879df0f074ccb03b2fe0d2636c46e98e8fbde5e5c17190b2e3f03214e054a",
+        "adapters/postgres/connector_results.py": "c6585c84d2f237132c4eda2cbff5a667425f04d46f34aa175925a81c2a24f636",
+        "adapters/model/pydantic_conversation.py": "faeefb72af723aec9b1b18de8f57942cf9f848f6e9860af17939bcff50417b33",
+        "bootstrap/delegated_digital_runner.py": "3b4da4c6ef7321eb84620eab0c05fb5d09de19ea63f0a76cee763ad3efb7e42b"
+      },
+      "unchangedPythonSources": 338,
+      "importCheck": true
+    },
+    "delegated-work-worker": {
+      "before": "sha256:4359d7c6a31716680dfdda8f27c80e1d54a79f967249331c25a6ba579b7231e2",
+      "image": "sha256:0890255015a8ad511e848e96d462c247267db1f8eba5a35ba63e8859284ae684",
+      "modules": {
+        "application/conversation.py": "5fe0e792061655a10d67af29df0def2363bb0b29b3ba6390daf6dd69ed7996e4",
+        "adapters/postgres/external_conversation_tools.py": "c5e879df0f074ccb03b2fe0d2636c46e98e8fbde5e5c17190b2e3f03214e054a",
+        "adapters/postgres/connector_results.py": "c6585c84d2f237132c4eda2cbff5a667425f04d46f34aa175925a81c2a24f636",
+        "adapters/model/pydantic_conversation.py": "faeefb72af723aec9b1b18de8f57942cf9f848f6e9860af17939bcff50417b33",
+        "bootstrap/delegated_digital_runner.py": "3b4da4c6ef7321eb84620eab0c05fb5d09de19ea63f0a76cee763ad3efb7e42b"
+      },
+      "unchangedPythonSources": 338,
+      "importCheck": true
+    }
+  },
+  "runtime": {
+    "checkedAt": "2026-10-12T13:31:25.886529+00:00",
+    "containers": {
+      "core": {
+        "image": "sha256:7e2923803b1fc0eacebb0c5f796ee0e6883419035d1718e9b9593f01a60fcdb4",
+        "health": "healthy",
+        "exactChangedModules": true,
+        "retainedOtherPythonSources": true,
+        "retainedSourceInventory": true,
+        "retainedMounts": true,
+        "retainedEnvironment": true,
+        "retainedProcessConfig": true,
+        "unchangedPythonSources": 338
+      },
+      "delegated-work-worker": {
+        "image": "sha256:0890255015a8ad511e848e96d462c247267db1f8eba5a35ba63e8859284ae684",
+        "health": "healthy",
+        "exactChangedModules": true,
+        "retainedOtherPythonSources": true,
+        "retainedSourceInventory": true,
+        "retainedMounts": true,
+        "retainedEnvironment": true,
+        "retainedProcessConfig": true,
+        "unchangedPythonSources": 338
+      }
+    },
+    "verificationPreparationCorrections": [
+      "Initial verifier compared five-file build overlay with complete runtime inventory and environment list order. No deployment failure; verifier now compares original image inventory and environment key/value mappings."
+    ],
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    }
+  },
+  "behavior": {
+    "rawReceiptAndProofPreserved": true,
+    "boundedModelPresentationThresholdBytes": 8192,
+    "existingReader": "use_connector_tool via ConnectorResults",
+    "localStoredSelectionRepeatsExternalCall": false,
+    "currentSourceActorIngressNamespaceRetentionAndStopRevalidated": true,
+    "alreadyTruncatedExternalObservationsRemainMarkedTruncated": true,
+    "inputBudgetFailureClassification": "budget_exceeded / input_budget_exceeded",
+    "inputTransportGrantAndTaskLimitsRaised": false
+  },
+  "checks": {
+    "uniquePassed": 10,
+    "boundary": "Synthetic retained-source/replay, real local reader interface, source/scope/hash/stop refusals and pre-provider input budget classification. No live task resume.",
+    "firstInvocation": "9 passed; one tuple/list assertion mismatch. Only the assertion was corrected; that affected node passed. Original failure retained.",
+    "runtimeImagesAndSourcesVerified": true
+  },
+  "usage": {
+    "newManualEvaModelRequests": 0,
+    "newExternalHomeAssistantActions": 0,
+    "newCompetitorTrials": 0,
+    "developmentCredits": null
+  },
+  "preserved": {
+    "failedWorkIds": [
+      "work:eva-chat:0a32f212-fff4-5a63-a626-a0a461b0e66b",
+      "work:eva-resume:31b819c8-920b-572e-807a-d1176296c891"
+    ],
+    "originalFailedTaskStatesAndUsage": true,
+    "existingTelegramEva2DefaultRouting": true,
+    "dataAndMounts": true,
+    "hueSourceNotInstalledByThisUpdate": true,
+    "voiceParked": true,
+    "wholeProjectGoalActive": true,
+    "rollback": false
+  },
+  "remaining": [
+    "The original Tuya research and its second generation are still not completed. This update does not create or reopen a task.",
+    "A full live resumed request fitting and research completion are not established by synthetic/source tests.",
+    "No migration or sensor rename was executed; the owner requested approval before migration.",
+    "Full HUE learning cycle and AIDE² remain open."
+  ],
+  "evidenceSha256": {
+    "/home/administrator/project/.eva2-artifacts/telegram-tuya-context-correction-20261012/frozen-source.private.json": "a55dfb3151c506d7ff1b73543e6eba97d6b7f72a95c505fb9589f9d55930a8de",
+    "/home/administrator/project/.eva2-artifacts/telegram-tuya-context-correction-20261012/targeted-checks.private.json": "ce09c54b9a86291d14e3fbf584ebf47626ffa73e3210df8a5b0f70e1d9cff912",
+    "/home/administrator/project/.eva2-artifacts/telegram-tuya-context-correction-20261012/source.patch": "d77eb38cefed9ecb4e77ee0ed0aadf592800fc2b3894900f54ba4672358f594e",
+    "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/build-result.private.json": "7786e64b154619f713f6887bcf10d11b6b98cc956c2656893448b745170a054b",
+    "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/installation-receipt.private.json": "fc6ea18eb582bffea9f628ab8e45a95978922dee09827cbfc70ccdd8f334364e",
+    "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/installation-verification.private.json": "2e889aa9827df1ac023804e4cfb3c13b003128e7b9f65e067af6fa6c05405b78"
+  }
+}

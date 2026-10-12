@@ -1,0 +1,82 @@
+{
+  "contract": "EvaIndependentInstalledPublicationReview/v1",
+  "reviewedAt": "2026-10-12T13:33:39.670705+00:00",
+  "decision": "GO",
+  "scope": "Exact five-module core/worker source installation and the limited frozen facts publication.",
+  "sourceReview": {
+    "path": "eva2/reviews/telegram-ha-context-source-review-20261012.json",
+    "sha256": "061129315ea855b980a5f634e3d01e789d4038dbf206a05e269b82f00fd6904f",
+    "decision": "GO"
+  },
+  "bindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/build-result.private.json",
+      "sha256": "7786e64b154619f713f6887bcf10d11b6b98cc956c2656893448b745170a054b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/installation-receipt.private.json",
+      "sha256": "fc6ea18eb582bffea9f628ab8e45a95978922dee09827cbfc70ccdd8f334364e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/installation-verification.private.json",
+      "sha256": "2e889aa9827df1ac023804e4cfb3c13b003128e7b9f65e067af6fa6c05405b78"
+    },
+    {
+      "path": "eva2/evidence/product/telegram-ha-context-installed-20261012.json",
+      "sha256": "4ac11ab2e9ddb2d6132422851d4538619c4b4384f09405774c3435ab0252fd62"
+    },
+    {
+      "path": "eva2/reviews/telegram-ha-context-source-review-20261012.json",
+      "sha256": "061129315ea855b980a5f634e3d01e789d4038dbf206a05e269b82f00fd6904f"
+    }
+  ],
+  "installed": {
+    "coreImage": "sha256:7e2923803b1fc0eacebb0c5f796ee0e6883419035d1718e9b9593f01a60fcdb4",
+    "workerImage": "sha256:0890255015a8ad511e848e96d462c247267db1f8eba5a35ba63e8859284ae684",
+    "exactSourceModules": {
+      "application/conversation.py": "5fe0e792061655a10d67af29df0def2363bb0b29b3ba6390daf6dd69ed7996e4",
+      "adapters/postgres/external_conversation_tools.py": "c5e879df0f074ccb03b2fe0d2636c46e98e8fbde5e5c17190b2e3f03214e054a",
+      "adapters/postgres/connector_results.py": "c6585c84d2f237132c4eda2cbff5a667425f04d46f34aa175925a81c2a24f636",
+      "adapters/model/pydantic_conversation.py": "faeefb72af723aec9b1b18de8f57942cf9f848f6e9860af17939bcff50417b33",
+      "bootstrap/delegated_digital_runner.py": "3b4da4c6ef7321eb84620eab0c05fb5d09de19ea63f0a76cee763ad3efb7e42b"
+    },
+    "unchangedPythonSourcesPerImage": 338,
+    "healthyCoreAndWorker": true,
+    "readyzReady": true,
+    "mountsEnvironmentProcessConfigurationRetained": true,
+    "method": "Existing build/update and completed installation-verifier receipts read back; no repeated live probe."
+  },
+  "publication": {
+    "path": "eva2/evidence/product/telegram-ha-context-installed-20261012.json",
+    "sha256": "4ac11ab2e9ddb2d6132422851d4538619c4b4384f09405774c3435ab0252fd62",
+    "factsMatchExactReceipts": true,
+    "uniqueTargetedChecksPassed": 10,
+    "originalTestAssertionFailureRetained": true,
+    "verificationPreparationErrorRetained": "Initial verifier compared a five-file overlay against the full runtime inventory and ordered environment lists. Corrected verification used original-image inventory and environment key/value mappings; no second deployment was claimed.",
+    "originalFailedWorkAndUsageRemainSeparate": true,
+    "originalTaskStillNotCompleted": true,
+    "fullResumedRequestFitClaimed": false,
+    "nativeResearchCompletionClaimed": false,
+    "migrationOrSensorRenameClaimed": false,
+    "hueOrVoiceIncludedInUpdate": false,
+    "wholeProjectCompletionClaimed": false
+  },
+  "limits": [
+    "This GO concerns the exact technical installation and safe facts publication.",
+    "The retained observation copy and local reader are not a fresh Home Assistant observation.",
+    "No live resume, native quality improvement, complete request fit or task completion is established.",
+    "The old failed task states, partial/unknown usage and original proof bytes retain their meaning.",
+    "New native/model input is outside this review."
+  ],
+  "reviewerActions": {
+    "tests": 0,
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseReads": 0,
+    "factoryOrDockerProbes": 0
+  },
+  "newInputGo": false,
+  "qualityGainGo": false,
+  "fullAIDE2Go": false,
+  "blockers": []
+}

@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T13:09:15.761900+00:00",
+  "lastUpdated": "2026-10-12",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T13:09:15.761900+00:00",
+        "checkedAt": "2026-10-12T13:34:20.123313+00:00",
         "deliveries": [
+          {
+            "id": "telegram-ha-context-installed-20261012",
+            "date": "2026-10-12T13:34:20.123313+00:00",
+            "title": "Grote HA-leesresultaten vullen de modelcontext niet meer",
+            "state": "installed",
+            "summary": "Bestaande resultaatopslag aangesloten: compacte verwijzing naar grote leesresultaten, details gericht ophalen.",
+            "result": "10 unieke controles geslaagd; vijf modules in kern en werker geïnstalleerd. Beide gezond; bestaande gegevens en configuratie behouden.",
+            "remaining": "Het oorspronkelijke Tuya-onderzoek is nog niet afgerond. Echte hervatting en het volledige migratievoorstel zijn niet door deze broncontroles bewezen.",
+            "source": "eva2/evidence/product/telegram-ha-context-installed-20261012.json",
+            "review": "eva2/reviews/telegram-ha-context-installed-review-20261012.json",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "reviewSha256": "3f5383533200e9c3aae69cebc92f3a183c6e785129ba061f9655dfa7b3f3a7eb",
+            "independentReview": "GO voor exacte installatie en beperkte feitenpublicatie. Geen echte hervatting of voltooid Tuya-onderzoek bewezen."
+          },
           {
             "id": "telegram-eva2-only-installed-20261012",
             "date": "2026-10-12T13:09:15.761900+00:00",
@@ -1030,7 +1045,7 @@
             "state": "installed",
             "summary": "Tekst en foto’s gaan naar Eva2; Eva1 alleen met /eva1. Ongevraagde Eva1-meldingen uitgezet.",
             "result": "48 gerichte Pythonchecks en 9 Nodechecks geslaagd. Host, kern en werker geïnstalleerd en gezond; Telegram meldt verbonden. Geen nieuwe handmatige Eva-modelaanvragen.",
-            "remaining": "Het aparte Tuya-onderzoek loopt vast op groeiende leescontext. Dat wordt nu hersteld. Video en overige bestanden melden hun beperking via Eva2.",
+            "remaining": "Het aparte Tuya-onderzoek bleef niet afgerond; de aangetoonde contextoorzaak is vervolgens gericht hersteld en geïnstalleerd. Video en overige bestanden melden hun beperking via Eva2.",
             "source": "eva2/evidence/product/telegram-eva2-only-installed-20261012.json",
             "review": "eva2/reviews/telegram-eva2-only-installed-review-20261012.json",
             "reviewSha256": "cef7bd57a7a41c811b5b72251b89d49502b1ac60df002600cd41cd20b48f1287",
@@ -5102,15 +5117,40 @@
           }
         ],
         "now": {
-          "taskId": "telegram-tuya-context-repair",
-          "title": "Onderzoek laten afronden zonder volle leescontext",
+          "title": "Mensbegrip: een aanname bijstellen en later gebruiken",
           "state": "in_progress",
-          "phase": "building",
+          "phase": "human_learning_connection_building",
+          "taskId": "HUE1.1",
+          "linkedTaskIds": [
+            "HUE3.1"
+          ],
           "activeExecution": true,
-          "owner": "Codex",
-          "currentActivity": "Oorzaak van mislukte Tuya-opdracht en hervatting bewezen: vijf grote HA-leesresultaten vullen de invoer. Bestaande resultaatopslag en lokale reader worden aangesloten.",
-          "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
-          "ownerAction": null
+          "owner": "/root",
+          "executor": "Codex · bron en integratie",
+          "reviewer": "/root/product_execution_memory_review",
+          "summary": "Telegramroute en grote HA-leescontext hersteld en geïnstalleerd. Verder met de bestaande koppeling tussen tegenbewijs, persoonsbeeld en later gedrag.",
+          "detail": "Eerste drie HUE-bronbestanden en acht gerichte contractcontroles gereed; de koppeling naar de gewone geheugen-/gespreksroute is nog niet geïnstalleerd.",
+          "doneWhen": "Een later gewoon gesprek gebruikt de gewijzigde afweging, met behouden oorspronkelijke bronnen, onzekerheid en persoonsgrenzen.",
+          "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
+          "previousResult": "eva2/evidence/product/native-work-preserved-proposal-followup-result-20261012.json",
+          "previousResultReview": "eva2/reviews/native-work-preserved-proposal-followup-result-review-20261012.json",
+          "previousResultReviewSha256": "a49783a563df83cbc90d26320e1f3752770fd4bb44b4f22c5649fd4b18f0b2cf",
+          "implementationStatus": {
+            "sourceMappingCompleted": true,
+            "learningConnectionBuilt": false,
+            "learningConnectionInstalled": false,
+            "laterUseProven": false,
+            "fullAide2Completed": false,
+            "initialSourceCandidateBuilt": true,
+            "initialPureContractChecksPassed": 8
+          },
+          "currentActivity": {
+            "checkedAt": "2026-10-12T13:34:20.123313+00:00",
+            "coordinator": "/root",
+            "coordinatorTask": "Bestaande HUE-bronintegratie afmaken in dezelfde geheugenroute.",
+            "executor": "Codex · bron en integratie",
+            "note": "Geen handeling van Jaap nodig. Spraak geparkeerd. Geen nieuwe vergelijkingsserie."
+          }
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -5472,10 +5512,21 @@
             "modelUsage": "Bronanalyse: geen nieuwe Eva-modelaanvragen. Vorige proef:16 aanvragen,15 compleet; ten minste120.429 tokens, totaal onbekend.",
             "note": "Geen handeling van Jaap nodig. Spraak blijft geparkeerd."
           }
+        },
+        "telegramContextRepairBeforeInstalled20261012": {
+          "taskId": "telegram-tuya-context-repair",
+          "title": "Onderzoek laten afronden zonder volle leescontext",
+          "state": "in_progress",
+          "phase": "building",
+          "activeExecution": true,
+          "owner": "Codex",
+          "currentActivity": "Oorzaak van mislukte Tuya-opdracht en hervatting bewezen: vijf grote HA-leesresultaten vullen de invoer. Bestaande resultaatopslag en lokale reader worden aangesloten.",
+          "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
+          "ownerAction": null
         }
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
-      "checkedAt": "2026-10-12T14:16:59.895639+02:00",
+      "checkedAt": "2026-10-12T13:34:20.123313+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11859,7 +11910,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T13:09:15.761900+00:00",
+      "lastUpdatedAt": "2026-10-12T13:34:20.123313+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -15789,42 +15840,28 @@
       "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-11T23:36:35.858243+00:00",
-      "image": "sha256:530ebe6655017bb3a14fce3d1004277a7db4a9c86abe3bd92769c2a9a5f68740",
-      "coreImage": "sha256:530ebe6655017bb3a14fce3d1004277a7db4a9c86abe3bd92769c2a9a5f68740",
-      "workerImage": "sha256:ed8239c535b67c459ae8cf759bc3e5948b5a221ca824c7a5c36b8e82583ee862",
+      "recordedAt": "2026-10-12T13:34:20.123313+00:00",
+      "image": "sha256:7e2923803b1fc0eacebb0c5f796ee0e6883419035d1718e9b9593f01a60fcdb4",
+      "coreImage": "sha256:7e2923803b1fc0eacebb0c5f796ee0e6883419035d1718e9b9593f01a60fcdb4",
+      "workerImage": "sha256:0890255015a8ad511e848e96d462c247267db1f8eba5a35ba63e8859284ae684",
       "core": "/eva2-managed-b-slot3-core",
       "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "readyStatus": true,
       "repositoryHeadFullyInstalled": false,
-      "reviewedSourceIdentity": "native initiative private work-outcome memory exact four modules",
+      "reviewedSourceIdentity": "Exact five-module retained Home Assistant model context correction",
       "retainedSourceItems": {
-        "core": 336,
-        "worker": 336
+        "core": 338,
+        "worker": 338
       },
-      "evidence": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
-      "meaning": "Gezonde geïnstalleerde geheugenovergang; geen authentieke nieuwe initiatiefuitkomst of volledige productafronding.",
-      "composeOverride": "/home/administrator/project/.eva2-artifacts/initiative-outcome-memory-20261012/build/candidate.compose.private.json",
-      "sourceBase": {
-        "core": "sha256:04a956f0548b16898960893624ccf44fce7525e4786351788839d7d4ddb43a4b",
-        "delegated-work-worker": "sha256:ed70f755881bafff9682733cbf197df4ad2d455a65a519b3c8f241f77a50edec"
-      },
-      "freshProfileParityVerified": true,
+      "evidence": "eva2/evidence/product/telegram-ha-context-installed-20261012.json",
+      "evidencePath": "eva2/evidence/product/telegram-ha-context-installed-20261012.json",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/candidate.compose.private.json",
       "configurationEnvironmentMountsRetained": true,
-      "freshFullProfileParityVerified": true,
-      "freshFullProfile": {
-        "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
-        "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
-        "worker_program_sha256": "e8f74c8a38236e6f680c3495e2a2c8506e36f46e635ae088942a9cc3eac1b95f",
-        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
-        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
-      },
-      "installedReview": "eva2/reviews/native-initiative-outcome-memory-installed-review-20261012.json",
-      "updatedAt": "2026-10-11T23:38:28.027894+00:00",
-      "evidencePath": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
-      "installedReviewSha256": "e8c8cf5d8b478d7529d8f7f1c53f7754b99a780ecb6bacdfbe7e66b0dd03ad8b"
+      "installedReview": "eva2/reviews/telegram-ha-context-installed-review-20261012.json",
+      "meaning": "Geïnstalleerde contextcorrectie en gezonde diensten; geen afgerond Tuya-migratievoorstel of volledige HUE-functie.",
+      "installedReviewSha256": "3f5383533200e9c3aae69cebc92f3a183c6e785129ba061f9655dfa7b3f3a7eb"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -32304,6 +32341,44 @@
       "currentExecutionKnownTokensLowerBound": 120429,
       "currentExecutionClosed": true,
       "terminalReviewCompleted": true
+    },
+    "historicalRuntimeBeforeHaContextInstalled20261012": {
+      "recordedAt": "2026-10-11T23:36:35.858243+00:00",
+      "image": "sha256:530ebe6655017bb3a14fce3d1004277a7db4a9c86abe3bd92769c2a9a5f68740",
+      "coreImage": "sha256:530ebe6655017bb3a14fce3d1004277a7db4a9c86abe3bd92769c2a9a5f68740",
+      "workerImage": "sha256:ed8239c535b67c459ae8cf759bc3e5948b5a221ca824c7a5c36b8e82583ee862",
+      "core": "/eva2-managed-b-slot3-core",
+      "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
+      "coreHealth": "healthy",
+      "workerHealth": "healthy",
+      "readyStatus": true,
+      "repositoryHeadFullyInstalled": false,
+      "reviewedSourceIdentity": "native initiative private work-outcome memory exact four modules",
+      "retainedSourceItems": {
+        "core": 336,
+        "worker": 336
+      },
+      "evidence": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
+      "meaning": "Gezonde geïnstalleerde geheugenovergang; geen authentieke nieuwe initiatiefuitkomst of volledige productafronding.",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/initiative-outcome-memory-20261012/build/candidate.compose.private.json",
+      "sourceBase": {
+        "core": "sha256:04a956f0548b16898960893624ccf44fce7525e4786351788839d7d4ddb43a4b",
+        "delegated-work-worker": "sha256:ed70f755881bafff9682733cbf197df4ad2d455a65a519b3c8f241f77a50edec"
+      },
+      "freshProfileParityVerified": true,
+      "configurationEnvironmentMountsRetained": true,
+      "freshFullProfileParityVerified": true,
+      "freshFullProfile": {
+        "worker_profile_release_sha256": "f1a96320372c4d4b740e27f3ea5c1ad00078144664f1b57aaaa4095cac26b7e7",
+        "model_profile_release_sha256": "977772bd8ef5753291e6d78097a51a5cb523fb2c13b6f9d40e1d733d658a3443",
+        "worker_program_sha256": "e8f74c8a38236e6f680c3495e2a2c8506e36f46e635ae088942a9cc3eac1b95f",
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+      },
+      "installedReview": "eva2/reviews/native-initiative-outcome-memory-installed-review-20261012.json",
+      "updatedAt": "2026-10-11T23:38:28.027894+00:00",
+      "evidencePath": "eva2/evidence/product/native-initiative-outcome-memory-installed-20261012.json",
+      "installedReviewSha256": "e8c8cf5d8b478d7529d8f7f1c53f7754b99a780ecb6bacdfbe7e66b0dd03ad8b"
     }
   },
   "activeTaskId": "AU-008",
@@ -34775,5 +34850,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T13:09:15.761900+00:00"
+  "updatedAt": "2026-10-12T13:34:20.123313+00:00"
 }
