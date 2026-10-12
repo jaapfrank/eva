@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T16:53:06.961231+00:00",
+        "checkedAt": "2026-10-12T17:35:20.475696+00:00",
         "deliveries": [
           {
             "id": "tuya-retained-receipts-installed-20261012",
@@ -5206,7 +5206,7 @@
           }
         ],
         "now": {
-          "title": "Taakcontext herstellen; Tuya-voorstel nog niet afgerond",
+          "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
           "phase": "tuya_retained_context_input_gate_diagnosis",
           "taskId": "work:eva-resume:20b1278c-cd1c-57c8-984d-cca4c3002e7d",
@@ -5219,9 +5219,9 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De correctie is geïnstalleerd. De hervatting stopte op te grote opgebouwde taakcontext; er is nog geen eindvoorstel.",
-          "detail": "Geen nieuwe betaalde hervatting gestart. Bestaande 44 acties en gelezen feiten worden lokaal gecontroleerd op herhaalde inhoud; de oorspronkelijke invoergrens en bewijsregistratie blijven behouden.",
-          "doneWhen": "Eva levert het complete, bewaarde Tuya/LocalTuya-voorstel met echte bron- en afhankelijkheidsdekking op. Uitvoering wacht op Jaaps akkoord.",
+          "summary": "Eva moet zelf onderzoek en voorstellen afronden. De bewaarde taakcontext groeit nog te veel; er is geen nieuwe gebruikersfunctie afgerond.",
+          "detail": "De concrete contextfout wordt modelvrij hersteld in de bestaande algemene uitvoerroute. Tuya/LocalTuya is uitsluitend de al gevraagde opdracht waarmee Eva's eigen uitvoering zichtbaar wordt; Codex schrijft het voorstel niet en bouwt geen vaste Tuya-functie.",
+          "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "eva2/evidence/product/tuya-readonly-preserved-proposal-20261012.json",
           "previousResultReview": "eva2/reviews/tuya-retained-receipt-source-review-20261012.json",
@@ -5256,18 +5256,18 @@
             "retainedReadSemanticsChecksPassed": 7
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T17:19:17.384113+00:00",
+            "checkedAt": "2026-10-12T17:35:20.475696+00:00",
             "coordinator": "/root",
-            "coordinatorTask": "Het echte eindvoorstel, bewaard bestand en oorspronkelijke leesbevoegdheid controleren.",
+            "coordinatorTask": "Algemene uitvoerkwaliteit herstellen; geen onderzoek of voorstel namens Eva schrijven.",
             "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Exacte bewaarde taakcontext lokaal controleren; herhaalde inhoud compacter aanbieden met behoud van feiten.",
+            "executorTask": "Exacte bewaarde context lokaal meten en redundantie verwijderen met behoud van bruikbare feiten en bronverwijzingen.",
             "reviewer": "/root/product_execution_memory_review",
             "reviewerTask": "Geïnstalleerde correctie beoordeeld; volgende concrete broncorrectie pas beoordelen als die er is.",
             "modelUsage": "Vijfde poging: taakusage unmeasured; volledig providerverbruik en credits onbekend. Eerdere 442.765 en 926.383 bekende tokens blijven afzonderlijk staan.",
-            "note": "Geen onderzoeksuitvoering actief. Tussenvoorstel behouden. Nog geen complete Tuya/LocalTuya-oplevering; geen HA-migratie of naamswijziging."
+            "note": "Geen betaalde onderzoeksuitvoering actief. Tussenvoorstel en foutbewijs behouden. Geen nieuwe hoofdtaak afgerond; geen HA-migratie of naamswijziging."
           },
-          "checkedAt": "2026-10-12T17:19:17.384113+00:00",
-          "remaining": "Een compleet Tuya/LocalTuya-voorstel opleveren. Echte latere toepassing van gewijzigde verwachtingen en volledige AIDE² blijven apart open."
+          "checkedAt": "2026-10-12T17:35:20.475696+00:00",
+          "remaining": "Algemene contextfout herstellen en Eva's eigen taakafronding aantonen. HUE1.1/HUE3.1 en volledige AIDE² blijven afzonderlijk open."
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -5640,10 +5640,11 @@
           "currentActivity": "Oorzaak van mislukte Tuya-opdracht en hervatting bewezen: vijf grote HA-leesresultaten vullen de invoer. Bestaande resultaatopslag en lokale reader worden aangesloten.",
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
-        }
+        },
+        "updatedAt": "2026-10-12T17:35:20.475696+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
-      "checkedAt": "2026-10-12T14:10:18.268760+00:00",
+      "checkedAt": "2026-10-12T17:35:20.475696+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -12518,7 +12519,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T16:53:06.961231+00:00",
+      "updatedAt": "2026-10-12T17:35:20.475696+00:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -34975,5 +34976,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T17:19:17.384113+00:00"
+  "updatedAt": "2026-10-12T17:35:20.475696+00:00"
 }

@@ -1,6 +1,17 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — Tuya-tussenvoorstel behouden; onnodige contextgroei corrigeren
+## Actueel 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel
+
+Jaap verduidelijkt: Codex moet Eva goed laten werken zodat Eva zelf onderzoek en
+voorstellen kan maken. Codex schrijft het Tuya-voorstel niet en bouwt geen vaste
+Tuya-functie. Herstel uitsluitend de bewezen algemene context-/herhaaloorzaak in
+de bestaande taakroute. Behoud eerdere bevindingen en bruikbare leessemantiek;
+een gewone voortzetting dient daarna als bewijs van Eva's eigen uitvoering.
+Geen nieuwe betaalde poging vóór de causale correctie. Het bestaande tussenvoorstel
+is geen afgeronde functie. Geen HA-migratie of wijziging vóór apart eigenaarakkoord.
+Het gehele projectgoal blijft actief; geen nieuwe bouwtaken of vergelijkingsserie.
+
+## Historische stand 12 oktober — Tuya-tussenvoorstel behouden; contextgroei
 
 Actuele correctie voor leessemantiek is geïnstalleerd: één bronmodule, zeven
 gerichte geslaagde checks, onafhankelijke bron- en installatiereview; kern en
