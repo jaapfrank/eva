@@ -1,27 +1,28 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — zelfverbetering: hervatting en verbruik aansluiten
+## Actueel 12 oktober — zelfverbetering: hervatcode geïnstalleerd
 
-**Geïnstalleerd:** bronlezen in de gewone verbeterroute. Kern en werker gezond;
-werkelijke bron en juiste verbeterregistratie teruggelezen, onafhankelijke review GO.
+**Geïnstalleerd:** bronlezen en hervatting/cumulatief verbruik in de bestaande
+verbeterroute. De exacte hervatmodule en aansluitende configuratie zijn teruggelezen;
+beoordelingsdienst, kern en werker gezond. Eén hostherstart. Bron/configreview GO;
+afzonderlijke installatiereview wordt afgerond. De eerste gezondheidscontrole was
+te vroeg na de herstart; daarna ready bevestigd zonder opnieuw installeren.
 
-**Voorbereid, niet geïnstalleerd:** werkelijke gewone en proefuitvoerprofielen
-berekend met de gecorrigeerde client. Twaalf configuratieverwijzingen en twee
-toelatingsverwijzingen voorbereid. Onafhankelijke review van deze voorbereiding is GO.
+**Nu:** dezelfde verbeteropdracht voortzetten. De oorspronkelijke mislukte poging
+en 4.987 tokens blijven behouden. De bestaande verplichte pakketopslag is toegelaten.
+Zeven nieuwe constructieaanvragen plus de eerdere één zijn prospectief gebonden:
+cumulatief maximaal acht, eerder zes. Gemeenschappelijk 68 aanvragen/400.000 tokens/
+100 tools, oorspronkelijke vraag, criteria, rollen en verborgen gevallen behouden.
+Geen nieuwe modeluitvoering gestart of kandidaat bevestigd door deze installatie.
 
-**Nu:** de hervatcode is gebouwd, nog niet geïnstalleerd. Laatste gerichte controles
-en aansluiting van bestaande pakketopslag worden afgerond. Dezelfde opdracht,
-eerdere mislukte poging en 4.987 tokens blijven behouden en worden eenmaal meegeteld.
-**Daarna:** de goedgekeurde verwijzingen installeren, Eva zelf één kandidaat laten
-vergelijken en onafhankelijk beoordelen; uitsluitend bewezen winst toepassen en
-bij later gewoon werk gebruiken.
+**Daarna:** kandidaat werkelijk vergelijken en onafhankelijk beoordelen. Uitsluitend
+bewezen winst toepassen en later gewoon gebruiken. Het hele goal, leercyclus en AIDE²
+blijven open; geen nieuwe hoofdafronding. 39/48 historische afrondingen en eerdere
+gezinsacceptaties blijven behouden. Geen handeling van Jaap nodig; spraak geparkeerd;
+geen concurrentenserie. Creditkosten onbekend.
 
-Geen nieuwe Eva-modelaanvraag voor deze voorbereiding. Geen kandidaat of nieuwe
-hoofdafronding geclaimd. Het volledige goal blijft actief, inclusief leercyclus en
-AIDE². De 39/48 historische afrondingen en gezinsacceptaties blijven behouden.
-Geen handeling van Jaap nodig. Spraak geparkeerd; geen concurrentenserie.
-Credits onbekend. Dashboardinhoud bijgewerkt: 2026-10-12T04:35:24.649164+00:00.
-Bewijs: eva2/evidence/product/native-work-corrected-runtime-prepared-20261012.json.
+Dashboardinhoud gecontroleerd: 2026-10-12T04:47:11.146247+00:00.
+Bewijs: eva2/evidence/product/native-work-typed-resume-installed-20261012.json.
 
 ## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 

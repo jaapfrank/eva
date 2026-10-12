@@ -1,0 +1,70 @@
+{
+  "contract": "EvaIndependentPreparationReview/v1",
+  "checkedAt": "2026-10-12T04:44:21.941661Z",
+  "decision": "GO",
+  "scope": "Gecombineerde bron/configuratievoorbereiding voor één bestaande hostupdate; geen actuele installatiebevestiging of native-invoertoelating.",
+  "sourceManifestSha256": "956892b22236a3f1f1c1d0ed5dbab9885c43eb0b7a17b81ef257723d60758cb0",
+  "openBlockers": [],
+  "bindings": {
+    "driverSha256": "33ea662084a2a128b93169f8cbac031a2d8eefa04ed6c787cdca2315297a570f",
+    "prospectiveHostConfigurationSha256": "bf2d9246456e3e32dd38284ea414a7170b390039e776e681612ca2ee74a6dd78",
+    "installedHostConfigurationBeforeSha256": "e435f882155dee2e4eca19b21724d33fba6c5a07cd1096c7eb073cf9ec78d99f",
+    "prospectiveAllocationSha256": "75d4a183717432f293baaf7404f5a1be534af51a346da0f9d7e30bdcbb4e57ed",
+    "prospectiveResourcesSha256": "96ad611d15033dac08c99efef83c2dee2d0554ec2e86fdc8ef139ccd8d697771",
+    "originalResourcesSha256": "92ed869d75fd477c7c0aa0c52d7976abe0410027dcc3b79c7c82daed6618dc25",
+    "runtimeAdmissionSha256": "d0eef1c19af7fcff73b5c79bf13f7cd7cc6799e02446db4998a38aa1e6e942c7",
+    "genericHelperSourceReviewSha256": "328b7069d65b50cd7c84c60cd3695e21f72647bb28e5f437a265ae892fd8cf75",
+    "requiredHostSources": {
+      "component_application_runtime.py": "f784232f0a8dbd81e01b41c981c8d885d74527ba8bc3871553483afa6f9aac71",
+      "component_work_execution.py": "67ea592a69a38a237f1a534f2fe266cab0596835c28eb65fcc2f601b2e00ff62"
+    },
+    "retainedPredecessor": {
+      "raw": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/raw-native.json",
+        "sha256": "bb6ea7b649d11607caf83d573b857faf6007a158313a66edb2ee4c1acf9ae23e"
+      },
+      "sealed": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/sealed-result.json",
+        "sha256": "7d2564552ac92017d88daa9ac5ef01a9ec5e77726452e9dfd585e00a67c64218"
+      },
+      "task_id": "work:eva-chat:01b7184a-a2b1-5c3c-9281-ad9a802feb7f"
+    },
+    "inputRefsSha256": "541c72a58351862336ceffdba1c66192dedac6c4cb8a11f4cc0aa5c04b6aa07d",
+    "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872"
+  },
+  "verifiedPreparation": {
+    "combinedHostConfigurationChangedLeaves": 17,
+    "configurationChanges": "De eerder beoordeelde twaalf profiel/admission/clientpinnen, vier producer-resourcepad/hashvelden en de expliciete finale constructiegrens zes naar acht. Alle overige parsed configuratievelden, criteria, cases, scorerrefs, protocollen en publishers gelijk.",
+    "resourceChange": "Uitsluitend construction_including_contact_helpers zes naar acht; oorspronkelijke resourcebytes behouden.",
+    "resumeInterface": "De gewone factory levert r.store.scope.installation_id voor dezelfde uuid5-namespace. OwnerService.execute ontvangt request_key en een actuele canonieke controltijd via dataclasses.replace; self.turn en de retained source blijven oorspronkelijk. De ingresshashformule bevat occurred_at niet.",
+    "resumeAuthority": "Admission vereist dezelfde source/ingress/task/episode/grant/execution, exacte gen+1 en oorspronkelijke parent. Oude call/deadline/terminalproof blijft apart; geen nieuwe INGRESS of directe admission-journalfabricatie.",
+    "requestCardinality": "READ/DRAFT/EVAL/COMPARE/PREPARE/SAVE/final vraagt minimaal zeven nieuwe responses. input_case maakt vóór runtime_config al een runtime-kopie met providerlimiet zeven; de gewone producer bindt Journal.maximum_model_requests daaraan.",
+    "saveAuthority": "Alleen content=null met exact component_step van de laatst verified COMPARE/PREPARE wordt toegelaten. De bestaande resolver, actor/source-grant en gewone dispatchguard voeren de write uit.",
+    "clockAccounting": "De behouden 18.275491245964076 actieve seconden tellen vooraf mee in 150. Alleen één exact verified eigen EVALUATE met volledige workassessment/usage krijgt het bestaande gebonden childtijdinterval; geen reset van oude timer of grant.",
+    "cumulativeAccounting": "Oude één aanvraag, 4909 input/78 output en één tool tellen in gedeelde counters. Nieuw maximaal zeven, construction cumulatief maximaal acht; globale grenzen 68 requests/385000 input/15000 output/400000 gecombineerd/100 tools en zero retries behouden.",
+    "nativeOriginClaimed": false,
+    "closedPredecessorHashesMatch": true,
+    "privateEpisodeDirectoryMode": "0700/root",
+    "privatePreparedFilesMode": "0600/root/nonsymlink/nlink1",
+    "constructionDispatchOncePresent": false
+  },
+  "reviewCorrections": [
+    "Eerder minimum van zes nieuwe requests was onvolledig: bestaande bron verplicht SAVE na PREPARE.",
+    "De tijdelijke journal-zes-bevinding is ingetrokken: regel 47 bevat reeds de runtime-casekopie zeven. Geen nieuwe patch of uitvoering hiervoor."
+  ],
+  "installationConditions": [
+    "Eén bestaande hostupdate met alleen component_application_runtime.py f784232f… en exact bf2d9246… configuratie; overige hostbronnen, beelden, mounts, netwerken, providers, queues en oudere regels behouden.",
+    "Werkelijk geladen module/config en servicegereedheid in aparte installatiereadback binden voordat native-invoer beoordeeld wordt.",
+    "Gebruik alleen de exact gebonden construction-driver/manifest; later blijft construction-only Entry.admit weigeren en heeft hiermee geen GO."
+  ],
+  "limits": {
+    "installed": false,
+    "nativeInputGo": false,
+    "newReviewerFactoryOrTests": 0,
+    "modelCallsByReviewer": 0,
+    "qualityGainProven": false,
+    "fullAIDE2Completed": false,
+    "wholeGoalCompleted": false,
+    "credits": "unknown"
+  }
+}

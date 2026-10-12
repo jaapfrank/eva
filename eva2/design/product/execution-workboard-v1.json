@@ -1021,8 +1021,19 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T04:35:24.649164+00:00",
+        "checkedAt": "2026-10-12T04:47:11.146247+00:00",
         "deliveries": [
+          {
+            "id": "native-work-typed-resume-installed-20261012",
+            "date": "2026-10-12T04:47:11.146247+00:00",
+            "title": "Hervatcode voor zelfverbetering geïnstalleerd",
+            "state": "installed",
+            "summary": "De beoordelingsdienst kan vervolgwerk en cumulatief verbruik van dezelfde opdracht verwerken. Dienst, kern en werker zijn gezond.",
+            "result": "De hervatmodule en aansluitende configuratie zijn geïnstalleerd. Oude poging en verbruik blijven bewaard; de pakketopslag is aangesloten. Dit is technische ondersteuning van de verbetercyclus.",
+            "remaining": "Nog geen nieuwe verbeterkandidaat, kwaliteitswinst, toepassing of latere gebruiksproef aangetoond.",
+            "source": "eva2/evidence/product/native-work-typed-resume-installed-20261012.json",
+            "review": "eva2/reviews/native-work-typed-resume-source-review-20261012.json"
+          },
           {
             "id": "native-work-corrected-runtime-prepared-20261012",
             "title": "Uitvoerprofielen voor gecorrigeerde verbeteropdracht berekend",
@@ -4876,16 +4887,16 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · hervatting en verbruik aansluiten",
+          "title": "Zelfverbetering · verbeteropdracht hervatten",
           "state": "in_progress",
-          "phase": "native_improvement_cycle_resume_accounting",
+          "phase": "native_improvement_cycle_resume_ready",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Hervatcode wordt afgerond. De voorbereiding is beoordeeld; de aanvulling is nog niet geïnstalleerd.",
-          "detail": "Bronlezen is geïnstalleerd. De gecorrigeerde configuratievoorbereiding is onafhankelijk beoordeeld. De hervatcode verbindt vervolgwerk met de eerdere poging en telt verbruik eenmaal op. De laatste gerichte controles en aansluiting van pakketopslag worden afgerond. Nog geen nieuwe Eva-modeluitvoering of verbeterkandidaat.",
-          "source": "eva2/evidence/product/native-work-corrected-runtime-prepared-20261012.json",
+          "summary": "Hervatcode is geïnstalleerd. Nu de gewone verbeteropdracht voortzetten; nog geen nieuwe kandidaat bevestigd.",
+          "detail": "Dezelfde opdracht blijft verbonden met de eerdere poging en haar verbruik. De bestaande pakketopslag is toegelaten. Installatie is teruggelezen; afzonderlijke review wordt afgerond voordat Eva de opdracht voortzet. De onafhankelijke kwaliteitsbeoordeling en later gebruik blijven open.",
+          "source": "eva2/evidence/product/native-work-typed-resume-installed-20261012.json",
           "doneWhen": "Eva verbetert haar werkaanpak op echte opdrachten; de onafhankelijke beoordeling bevestigt betere resultaten of minder hulp. Alleen bewezen winst wordt toegepast en bij later gewoon werk gebruikt.",
           "implementationStatus": {
             "evaluationBridgeBuilt": true,
@@ -4936,21 +4947,23 @@
             "ordinarySourceReadCorrectionInstalled": true,
             "actualReadOnlySourceAndRoundPassed": true,
             "previewClientCorrectedPrepared": true,
-            "correctedRuntimeBindingPending": true,
+            "correctedRuntimeBindingPending": false,
             "newNativeCandidateConfirmed": false,
             "ordinaryClientInstalledReview": "GO",
             "ordinaryClientInstalledReviewPending": false,
             "correctedRuntimeProjectionInProgress": false,
             "correctedRuntimeProjectionCompleted": true,
             "correctedRuntimeReferencesPrepared": true,
-            "correctedRuntimeReferencesInstalled": false,
+            "correctedRuntimeReferencesInstalled": true,
             "correctedRuntimePreparationReviewPending": false,
-            "ordinaryResumeAccountingConnected": false,
+            "ordinaryResumeAccountingConnected": true,
             "newNativeExecutionStarted": false,
             "correctedRuntimePreparationReview": "GO voor exacte modelvrije configuratievoorbereiding; geen native uitvoering.",
             "ordinaryResumeAccountingBuilt": true,
-            "ordinaryResumeAccountingInstalled": false,
-            "ordinaryResumeAccountingReviewPending": true
+            "ordinaryResumeAccountingInstalled": true,
+            "ordinaryResumeAccountingReviewPending": false,
+            "typedResumeInstallationReviewPending": true,
+            "typedResumeSourceReview": "GO"
           },
           "remaining": "Hervatting en cumulatief verbruik aansluiten; goedgekeurde verwijzingen installeren. Daarna de kandidaat daadwerkelijk vergelijken en onafhankelijk beoordelen; uitsluitend bewezen winst toepassen en later gebruiken.",
           "review": "eva2/reviews/native-work-client-scope-source-review-20261012.json",
@@ -4977,7 +4990,7 @@
           "detail": "De echte zelfverbetering en het latere gebruik zijn werk voor Codex. Jouw gezinsbeoordeling blijft afzonderlijk."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T04:35:24.649164+00:00",
+        "reviewedAt": "2026-10-12T04:47:11.146247+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5078,8 +5091,8 @@
         },
         "note": "Opgeslagen projectvoortgang; geen live agentstatus. Gebouwd of beoordeeld betekent niet geïnstalleerd of door jou geaccepteerd."
       },
-      "reviewedAt": "2026-10-12T04:35:24.649164+00:00",
-      "checkedAt": "2026-10-12T04:35:24.649164+00:00",
+      "reviewedAt": "2026-10-12T04:47:11.146247+00:00",
+      "checkedAt": "2026-10-12T04:47:11.146247+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11372,7 +11385,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T04:35:24.649164+00:00",
+        "checkedAt": "2026-10-12T04:47:11.146247+00:00",
         "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Persoonlijkheid en geheugenbasis geaccepteerd; leercyclus, zelfstandig initiatief en volledige zelfverbetering nog open.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11428,7 +11441,7 @@
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
-            "remaining": "Hervatting en cumulatief verbruik aansluiten; goedgekeurde verwijzingen installeren. Daarna de kandidaat daadwerkelijk vergelijken en onafhankelijk beoordelen; uitsluitend bewezen winst toepassen en later gebruiken. De volledige leercyclus en gezinsacceptatie blijven open.",
+            "remaining": "Verbeteropdracht hervatten, kandidaat werkelijk vergelijken en onafhankelijk beoordelen. Alleen bewezen winst toepassen en later gebruiken. De volledige leercyclus en gezinsacceptatie blijven open.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",

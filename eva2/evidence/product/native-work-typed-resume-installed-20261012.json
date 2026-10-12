@@ -1,0 +1,57 @@
+{
+  "contract": "EvaProductInstallationResult/v1",
+  "checkedAt": "2026-10-12T04:47:11.146247+00:00",
+  "state": "installed",
+  "title": "Hervatcode voor zelfverbetering geïnstalleerd",
+  "installed": true,
+  "usedInNewNativeCycle": false,
+  "fullAide2Completed": false,
+  "source": {
+    "path": "eva2/src/eva/operations/component_application_runtime.py",
+    "sha256": "f784232f0a8dbd81e01b41c981c8d885d74527ba8bc3871553483afa6f9aac71"
+  },
+  "configuration_sha256": "bf2d9246456e3e32dd38284ea414a7170b390039e776e681612ca2ee74a6dd78",
+  "sourceReview": {
+    "path": "eva2/reviews/native-work-typed-resume-source-review-20261012.json",
+    "sha256": "30c0b3a2d1d45d783ee0f9841df7e24db670499b8ca0db9efdad75749537c1bf",
+    "decision": "GO"
+  },
+  "installationReview": {
+    "status": "pending"
+  },
+  "health": {
+    "component_service": "ready",
+    "core": "healthy",
+    "worker": "healthy"
+  },
+  "preservation": {
+    "other_host_sources": 36,
+    "core_and_worker_images_configuration_mounts_data": true,
+    "closed_original_attempt_and_4987_tokens": true,
+    "existing_acceptances": true
+  },
+  "prospectiveExecution": {
+    "fresh_model_limit": 7,
+    "cumulative_construction_limit": 8,
+    "original_limit": 6,
+    "allocation_reason": "Mandatory existing package save was missing from the construction catalog. Seven actual constructor requests plus one measured previous failure are bound before use.",
+    "shared_limit": 68,
+    "shared_tokens_limit": 400000,
+    "shared_tools_limit": 100,
+    "original_question_source_quality_criteria_and_hidden_cases_unchanged": true,
+    "newNativeCycleStarted": false
+  },
+  "measured": {
+    "newManualEvaModelRequests": 0,
+    "hostRestarts": 1,
+    "reinstallations": 0,
+    "rollback": false
+  },
+  "earlyCheckFailure": "Health read immediately after restart was premature; ready confirmed after startup without another mutation.",
+  "remaining": [
+    "Afzonderlijke installatiereview en één gewone taak-hervatting.",
+    "Echte kandidaatvergelijking en onafhankelijke eindbeoordeling.",
+    "Uitsluitend bewezen winst toepassen en later gebruiken."
+  ],
+  "credits": "UNKNOWN"
+}
