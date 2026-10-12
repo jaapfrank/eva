@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T20:49:48.289944+00:00",
+        "checkedAt": "2026-10-12T21:03:10.474387+00:00",
         "deliveries": [
+          {
+            "id": "structured-stored-source-selection-ordinary-result-20261012",
+            "date": "2026-10-12T21:10:18.423190+00:00",
+            "title": "Eva gebruikt volledige bronselectie; eigen voorstel nog niet afgerond",
+            "state": "failed",
+            "installed": true,
+            "summary": "Eén volledige bron en lokale selectie van de 22 relevante records bevestigd. De uitvoering stopte daarna op te grote modelinvoer; er is geen eindvoorstel.",
+            "result": "19 gemeten responses, 19 tools, 1.018.409 bekende tokens. Vijf lokale reads bevatten reeds gedekte inhoud. Tussenbestand en voortgang ongewijzigd.",
+            "remaining": "Algemene contextgroei en herlezen zonder bewaarde bevindingen herstellen; Eva moet zelf het voorstel afmaken.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false,
+            "review": "/home/administrator/project/Eva2/eva2/reviews/structured-stored-source-selection-ordinary-result-review-20261012.json",
+            "reviewSha256": "d66d4b9e1de90b4186e7c8e6c37637977810d275be76616549de37e790e1f84a",
+            "independentReview": true
+          },
           {
             "id": "structured-stored-source-selection-installed-20261012",
             "date": "2026-10-12T20:44:24.079199+00:00",
@@ -5382,7 +5398,7 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "ordinary_research_full_source_selection_continuation",
+          "phase": "ordinary_research_input_context_diagnosis",
           "taskId": "work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad",
           "linkedTaskIds": [
             "TL-001",
@@ -5391,23 +5407,35 @@
           ],
           "activeExecution": true,
           "owner": "/root",
-          "executor": "Eva · bestaande algemene taakroute",
+          "executor": "Codex · algemene contextoorzaak herstellen",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva vervolgt zelf het onderzoek vanuit de bewaarde bevindingen. Het eindvoorstel is nog niet bevestigd.",
-          "detail": "De vorige uitvoering bleef incomplete_work. Grote brongegevens kunnen nu éénmaal worden bewaard en lokaal gefilterd; controles van de eigen uitvoerroute blijven van het uiteindelijke voorstel gescheiden.",
+          "summary": "Eva heeft de gerichte bronselectie uitgevoerd, maar het eindvoorstel niet afgemaakt. De vervolguitvoering stopte op input_budget_exceeded.",
+          "detail": "19 gemeten responses en 19 tools; 1.018.409 bekende tokens. Geen nieuw eindbestand of bijgewerkte voortgang. Er loopt geen nieuwe modeluitvoering.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/retained-read-context-index-ordinary-result-20261012.json",
-          "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/retained-read-context-index-ordinary-result-review-20261012.json",
-          "previousResultReviewSha256": "53799372a10e8bc4a54db5a3be787b6e836b5732b5cbac24acf52889bc520ac2",
+          "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json",
+          "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/structured-stored-source-selection-ordinary-result-review-20261012.json",
+          "previousResultReviewSha256": "d66d4b9e1de90b4186e7c8e6c37637977810d275be76616549de37e790e1f84a",
           "implementationStatus": "Twee algemene modules geïnstalleerd; kern en werker gezond. Geen volledig voorstel of nieuwe hoofdafronding.",
-          "currentActivity": "Eén gewone voortzetting toegelaten na de geïnstalleerde bronselectiecorrectie; gericht volgen of Eva het voorstel zelf opslaat en terugleest.",
-          "checkedAt": "2026-10-12T20:49:48.289944+00:00",
+          "currentActivity": "Exact bewaarde context en herhaalde lokale reads modelvrij analyseren; eerst de oorzaak herstellen.",
+          "checkedAt": "2026-10-12T21:03:10.474387+00:00",
           "remaining": [
             "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
             "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."
           ],
-          "nativeRunning": true
+          "nativeRunning": false,
+          "observedUsage": {
+            "knownTokens": 1018409,
+            "measuredRequests": 19,
+            "tools": 19,
+            "phase": "terminal",
+            "fullTaskTotalKnown": false,
+            "creditCost": null
+          },
+          "currentObservation": {
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/gen11-current-observation.private.json",
+            "sha256": "e2d457f3573b44935ee93a37dea2612a4099d75e4fc9295de124d7b88932e874"
+          }
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -5781,7 +5809,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-12T20:49:48.289944+00:00"
+        "updatedAt": "2026-10-12T21:03:10.474387+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",

@@ -1,0 +1,63 @@
+{
+  "contract": "EvaIndependentResultPublicationReview/v1",
+  "createdAt": "2026-10-12T21:08:07.072765+00:00",
+  "verdict": "GO",
+  "scope": "Uitsluitend veilige feitenpublicatie van de gesloten gewone generatie 11.",
+  "bindings": {
+    "public_result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json",
+      "sha256": "8e17075064c1f02ed68f0e648a18b9c1a2c54462b639a35806ea4fbbfcef8e7f"
+    },
+    "terminal_observation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/gen11-terminal-observation.private.json",
+      "sha256": "bf470b496a651aee0b47e514b6b157d467407f8c034ceedc45017c77c477d7ae"
+    },
+    "accounting": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/gen11-terminal-accounting.private.json",
+      "sha256": "962d4c984f4aa0ec589cf9c69c4e482b315e4737badae54b63daaf4b0e8192c3"
+    },
+    "owner_work": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/continuation-work-observer-status-3.private.json",
+      "sha256": "a8a84599ecb850d8d15fabfc285b119e11bc9dd63b20c79ba06aab219ed1d39e"
+    },
+    "owner_progress": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/continuation-progress-observer-status-3.private.json",
+      "sha256": "3d4057992dad15effaf87ad598519f804e1c33f73647af3312bc3bdcbb2b9f8f"
+    },
+    "receipts": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/gen11-terminal-receipts.snapshot.private.json",
+      "sha256": "2ea2d18cb4ca8f7ac08f1f1a9edd0bcedbd2c352e49ce57844e603678516afb2"
+    },
+    "start_facts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-start-20261012.json",
+      "sha256": "c6e9eb6aa2bfdc9b9d68379b26e875ff8f06ccebeaa595fe80070c079c7a98d4"
+    }
+  },
+  "workId": "work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad",
+  "findings": [
+    "Owner-readback bevestigt failed/budget_exceeded met exact subtype input_budget_exceeded; geen bevestigd werkresultaat en delivery unbound.",
+    "19 complete en gemeten aanvragen, 0 onbekend/in-flight binnen deze call, alle lokale streams gesloten: 1.013.705 input + 4.704 output = 1.018.409 bekende tokens en 19 tools.",
+    "De gewone route gebruikte een HA-bronaanvraag en 18 lokale reads. De volledig bewaarde bron bevat 2.465 items/1.804.073 bytes; de exacte filterselectie van 22 items is in twee aansluitende pagina's volledig teruggelezen.",
+    "Vijf lokale calls herlazen volledig gedekte tekst; een daarvan herhaalde exact dezelfde selectie. Twee verschillende filters leverden dezelfde gelezen tekst; hun verschillende selectors en hashes blijven behouden.",
+    "Geen nieuw opgeslagen voorstel of voortgangsrevisie: het bestaande document blijft 9.240 bytes met dezelfde SHA256; revisie 3 hoort bij generatie 10. Geen afgerond voorstel of gebruikersoplevering bevestigd."
+  ],
+  "limits": [
+    "Volledige bronretentie en aangetoonde selectie bewijzen geen volledige inventaris, afhankelijkheidsanalyse of voorstelafronding. De gedeeltelijk gelezen grote disabled-selectie wordt niet als volledig onderzocht beschouwd.",
+    "API-usage blijft partial; volledig taak-/historisch totaal en credits blijven onbekend, ondanks volledig gemeten huidige call.",
+    "Repetitietelling betreft uitsluitend deze bewaarde generatie. Geen historische nieuwheid of modelintentie afgeleid; geen volledige SDK-context beschikbaar en geen precieze oorzaak van de contextgroei vastgesteld.",
+    "Geen efficientie-, providerbesparings-, migratie-, configuratiewijzigings- of volledige productclaim. Oorspronkelijke readonlyvoorwaarden en oude bewijsbytes behouden."
+  ],
+  "blockers": [],
+  "publicationAllowed": true,
+  "taskCompleted": false,
+  "newInputAuthority": false,
+  "wholeProjectGoal": "active",
+  "reviewActions": {
+    "existingFilesReadOnly": true,
+    "newModelRequests": 0,
+    "nativeRuns": 0,
+    "tests": 0,
+    "databaseOperations": 0
+  },
+  "reviewPreparationError": "Eerste schrijfpoging geweigerd door PowerShell-quoting voordat WSL of bestandswrites werden uitgevoerd; uitsluitend quoting gecorrigeerd."
+}

@@ -1,0 +1,68 @@
+{
+  "contract": "EvaOrdinaryExecutionResult/v1",
+  "createdAt": "2026-10-12T21:04:12.710477+00:00",
+  "workId": "work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad",
+  "generation": 11,
+  "parentWorkId": "work:eva-resume:6ef4db15-655d-57e9-b1aa-37a5e9b3825b",
+  "state": "failed",
+  "errorCode": "budget_exceeded",
+  "failureSubtype": "input_budget_exceeded",
+  "errorFingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd",
+  "terminalObservation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/gen11-terminal-observation.private.json",
+    "sha256": "bf470b496a651aee0b47e514b6b157d467407f8c034ceedc45017c77c477d7ae"
+  },
+  "ownerWork": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/continuation-work-root-current-2.private.json",
+    "sha256": "a8a84599ecb850d8d15fabfc285b119e11bc9dd63b20c79ba06aab219ed1d39e"
+  },
+  "start": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-start-20261012.json",
+    "sha256": "c6e9eb6aa2bfdc9b9d68379b26e875ff8f06ccebeaa595fe80070c079c7a98d4"
+  },
+  "knownUsage": {
+    "admittedRequests": 19,
+    "completeResponses": 19,
+    "measuredResponses": 19,
+    "unknownOrInflight": 0,
+    "inputTokens": 1013705,
+    "outputTokens": 4704,
+    "totalTokens": 1018409,
+    "toolCalls": 19,
+    "streamsClosed": true,
+    "apiMeasurement": "partial",
+    "fullTaskTotalKnown": false,
+    "creditCost": null
+  },
+  "confirmedSourceSelection": {
+    "sourceItems": 2465,
+    "fullSourceBytes": 1804073,
+    "matchedItems": 22,
+    "haApiCalls": 1,
+    "localReads": 18,
+    "remainingNonRelevantPagesNotFetched": true,
+    "generalNativeReaderUseProven": true
+  },
+  "unchangedProposal": {
+    "bytes": 9240,
+    "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+    "progressRevision": 3,
+    "progressSourceGeneration": 10,
+    "saveProgressCalls": 0,
+    "complete": false
+  },
+  "observedRepetition": "Five local reads covered existing content, one exact repeated selection; two distinct filters yielded the same already-read source text. Original selectors and query/filter hashes preserved in private terminal observation.",
+  "scope": "Original readonly HA research, no migration/rename/configuration changes.",
+  "telegramDeliveryProven": false,
+  "efficiencyAdvantageProven": false,
+  "productFunctionCompleted": false,
+  "nativeRetryStarted": false,
+  "next": "Model-free diagnosis of context growth and repeated reads before any causal correction and paid continuation.",
+  "wholeProjectGoal": "active",
+  "preservedCounts": {
+    "originalCompleted": 39,
+    "originalTotal": 48,
+    "expandedCompleted": 39,
+    "expandedTotal": 54
+  }
+}

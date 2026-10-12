@@ -1,6 +1,32 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — Eva bewaart bevindingen; eigen eindvoorstel nog niet af
+## Actueel 12 oktober — bronselectie werkt; eigen voorstel nog niet af
+
+Jaaps opdracht blijft dat Eva zelf het onderzoek en voorstel afmaakt. De algemene
+volledige bronbewaring en lokale JSON-selectie zijn geïnstalleerd en daadwerkelijk
+gebruikt: één bron met 2.465 records (1.804.073 bytes), 22 relevante records lokaal
+geselecteerd. Geen handmatig Tuya-voorstel of vaste voorbeeldfunctie gebouwd.
+
+Generatie11 eindigde daarna op input_budget_exceeded. 19 complete gemeten responses,
+19 tools en 1.018.409 bekende tokens; APIusage partial, volledig taakverbruik en
+creditkosten onbekend. Vijf lokale reads bevatten al gedekte inhoud; één exacte
+selectie is herhaald. Er is geen nieuwe save_work_progress: revision3/generatie10
+en het 9.240-byte tussenbestand blijven ongewijzigd. Geen eindvoorstel,
+Telegramaflevering, efficiëntievoordeel of extra hoofdafronding aangetoond.
+
+Geen native vervolg gestart. Eerst de concrete contextgroei modelvrij afbakenen:
+de bekende 123-receipt-fallback meet 62.941 BPE met slechts 2.595 bekende marge;
+niet-bewaarde recall/gesprekscontext is niet daarin gemeten. Bronnen, bewijs,
+privacy, acties, oude fouten en grenzen blijven behouden. Herstel uitsluitend
+een aangetoonde algemene oorzaak vóór verdere betaalde uitvoering.
+Geen HA-wijziging vóór apart akkoord op Eva's afgeronde voorstel.
+Het hele goal blijft actief; 39/48 oorspronkelijk en 39/54 uitgebreid onveranderd.
+Spraak geparkeerd; geen nieuwe vergelijkingsserie.
+
+Bewijs: eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json.
+Review: eva2/reviews/structured-stored-source-selection-ordinary-result-review-20261012.json.
+
+## Historische stand 12 oktober — generatie10 en broncorrectie
 
 Jaaps opdracht blijft: Eva moet zelf onderzoeken en haar voorstel opleveren.
 Codex schrijft geen Tuya-voorstel of voorbeeldfunctie. Generatie10 is gesloten
@@ -25,7 +51,7 @@ Geen HA-wijziging vóór apart expliciet akkoord op Eva's uiteindelijke voorstel
 Geheel goal actief;39/48 oorspronkelijk en39/54 uitgebreid blijven onveranderd.
 Bewijs:eva2/evidence/product/retained-read-context-index-ordinary-result-20261012.json.
 
-## Actueel 12 oktober — Eva maakt zelf het voorstel; algemene contextcorrectie
+## Historische stand 12 oktober — generatie9 en contextcorrectie
 
 Eva onderzoekt de oorspronkelijke leesopdracht en schrijft zelf het onderbouwde
 voorstel. Codex herstelt de algemene uitvoering en schrijft geen Tuya-voorstel
