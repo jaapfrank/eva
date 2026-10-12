@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T05:29:42.043474+00:00",
+  "lastUpdated": "2026-10-12T05:36:54.538544+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -128,8 +128,8 @@
       "summary": "Persoonlijkheid en geheugenbasis behouden. Bronlezen, hervatting en de klokcorrectie voor zelfverbetering zijn geïnstalleerd. Eva heeft een voorstel opgeslagen; geslaagde beoordeling, bewezen winst en volledige AIDE² blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · kandidaatbeoordeling loopt",
-          "detail": "Eva’s hervatte verbeteropdracht loopt op de actuele geïnstalleerde bron. Hetzelfde codevoorstel wordt beoordeeld; eerdere poging en verbruik blijven meetellen."
+          "title": "Nu · fout in kandidaatbeoordeling oplossen",
+          "detail": "De oude datumfout is gepasseerd, maar de beoordelingsdienst geeft HTTP500. Geen echte vergelijkingsopdrachten gestart; fout wordt gericht onderzocht."
         },
         {
           "title": "Daarna · verbetering aantonen en gebruiken",
@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T05:29:42.043474+00:00",
+        "checkedAt": "2026-10-12T05:36:54.538544+00:00",
         "deliveries": [
+          {
+            "id": "native-work-candidate-assessment-resume-result-20261012",
+            "date": "2026-10-12T05:32:28.346716+00:00",
+            "title": "Kandidaatbeoordeling afgebroken",
+            "state": "failed",
+            "summary": "De datumovergang is gepasseerd. Beoordelingsdienst antwoordde HTTP500 vóór childwerk; geen bewezen verbetering.",
+            "result": "1 nieuwe aanvraag, 22.635 tokens en 1 native tool. Met eerdere pogingen: 7 aanvragen en 84.836 tokens. Nul childmodelaanvragen bewezen; creditkosten onbekend.",
+            "remaining": "Codex onderzoekt de evaluatiefout; beoordeling, toepassing en later gebruik blijven open.",
+            "source": "eva2/evidence/product/native-work-candidate-assessment-resume-result-20261012.json",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/native-work-candidate-assessment-resume-result-review-20261012.json",
+            "reviewSha256": "b3215028e405afc29854c8c127bba44e87b2ba20fb1efbe387d5736af2003c70",
+            "independentReview": "GO voor weergave van de mislukte uitkomst. Geen geslaagde beoordeling, kwaliteitswinst of nieuwe invoertoelating."
+          },
           {
             "id": "native-work-component-evaluation-clock-installed-20261012",
             "date": "2026-10-12T05:08:48.575667+00:00",
@@ -4914,16 +4929,16 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · kandidaat beoordelen",
+          "title": "Zelfverbetering · fout in beoordeling oplossen",
           "state": "in_progress",
-          "phase": "candidate_assessment_resume_running",
+          "phase": "candidate_assessment_failure_diagnosis",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva’s hervatte verbeteropdracht loopt op de actuele geïnstalleerde bron. Hetzelfde codevoorstel wordt beoordeeld; eerdere poging en verbruik blijven meetellen.",
-          "detail": "De onafhankelijke invoerreview en de aansluiting van de actuele beoordelingsdienst zijn geslaagd. Eén echte hervatting is gestart, met het bestaande codevoorstel. De werkroute beoordeelt eerst de huidige aanpak en alleen waar nodig de kandidaat op dezelfde opdrachten. Geen nieuwe kandidaat of concurrentenserie. Beoordeling, bewezen winst toepassen en later gebruik zijn nog niet afgerond.",
-          "source": "eva2/reviews/native-work-candidate-assessment-resume-input-review-20261012.json",
+          "summary": "De oude datumfout is gepasseerd, maar de beoordelingsdienst geeft HTTP500. Geen echte vergelijkingsopdrachten gestart; fout wordt gericht onderzocht.",
+          "detail": "Eén hervatting met hetzelfde voorstel: de HTTPaanroep bereikt nu de beoordelingsdienst, maar die antwoordt HTTP500 vóór het starten van baseline- of kandidaatwerk. Nieuw één complete Astra/medium-aanvraag en één native tool: 22.635 tokens. Met alle eerdere pogingen zeven aanvragen en 84.836 tokens; nul childmodelaanvragen bewezen. Geen geslaagde beoordeling of toepassing. De precieze hostfout wordt modelvrij onderzocht; geen gesloten uitvoering opnieuw gestart.",
+          "source": "eva2/evidence/product/native-work-candidate-assessment-resume-result-20261012.json",
           "doneWhen": "Eva verbetert haar werkaanpak op echte opdrachten; de onafhankelijke beoordeling bevestigt betere resultaten of minder hulp. Alleen bewezen winst wordt toegepast en bij later gewoon werk gebruikt.",
           "implementationStatus": {
             "evaluationBridgeBuilt": true,
@@ -5006,9 +5021,13 @@
             "correctedProgramFutureBindingPrepared": true,
             "candidateAssessmentResumeReviewPending": false,
             "candidateAssessmentResumeDispatched": true,
-            "candidateAssessmentResumeInputReview": "GO_ONCE"
+            "candidateAssessmentResumeInputReview": "GO_ONCE",
+            "candidateAssessmentResumeClosed": true,
+            "candidateAssessmentResumeSucceeded": false,
+            "candidateAssessmentResultReviewPending": false,
+            "candidateAssessmentResultReview": "GO for accurate failure publication; no functional approval or new dispatch"
           },
-          "remaining": "Exacte vervolgopdracht onafhankelijk controleren, kandidaat werkelijk beoordelen en uitsluitend bewezen winst toepassen en later gebruiken.",
+          "remaining": "De bewezen evaluatiefout gericht corrigeren; daarna de bewaarde kandidaat volgens bestaande afspraken beoordelen. Alleen bewezen winst toepassen en later gebruiken.",
           "review": "eva2/reviews/native-work-candidate-assessment-resume-input-review-20261012.json",
           "reviewSha256": "e4eba4d31dfed645b9db7a5497074906b9a8fc3db0187a4086beb8aeecf1ee1f",
           "ordinaryClientInstalledReview": "eva2/reviews/native-work-client-scope-installed-review-20261012.json",
@@ -5016,8 +5035,8 @@
           "preparationReview": "eva2/reviews/native-work-corrected-runtime-preparation-review-20261012.json",
           "preparationReviewSha256": "c27d99d51246b61fb4da749583c4e1752e6c3af653aaca3bc6dfee55fa9f12f5",
           "typedResumeInstalledReview": "eva2/reviews/native-work-typed-resume-installed-review-20261012.json",
-          "resultReview": "eva2/reviews/native-work-component-evaluation-clock-installed-review-20261012.json",
-          "resultReviewSha256": "bebdb5dc9d713fcaa954cc9f9d2ea6513b0c90e6711bc317569ffa1fa148c826"
+          "resultReview": "eva2/reviews/native-work-candidate-assessment-resume-result-review-20261012.json",
+          "resultReviewSha256": "b3215028e405afc29854c8c127bba44e87b2ba20fb1efbe387d5736af2003c70"
         },
         "next": {
           "title": "Bewezen verbetering toepassen en later gebruiken",
@@ -5034,7 +5053,7 @@
           "detail": "De echte zelfverbetering en het latere gebruik zijn werk voor Codex. Jouw gezinsbeoordeling blijft afzonderlijk."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T05:29:42.043474+00:00",
+        "reviewedAt": "2026-10-12T05:36:54.538544+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5135,8 +5154,8 @@
         },
         "note": "Opgeslagen projectvoortgang; geen live agentstatus. Gebouwd of beoordeeld betekent niet geïnstalleerd of door jou geaccepteerd."
       },
-      "reviewedAt": "2026-10-12T05:29:42.043474+00:00",
-      "checkedAt": "2026-10-12T05:29:42.043474+00:00",
+      "reviewedAt": "2026-10-12T05:36:54.538544+00:00",
+      "checkedAt": "2026-10-12T05:36:54.538544+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11517,7 +11536,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T05:29:42.043474+00:00",
+      "lastUpdatedAt": "2026-10-12T05:36:54.538544+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -12008,7 +12027,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T05:29:42.043474+00:00",
+      "updatedAt": "2026-10-12T05:36:54.538544+00:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -34167,5 +34186,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T05:29:42.043474+00:00"
+  "updatedAt": "2026-10-12T05:36:54.538544+00:00"
 }

@@ -1,6 +1,34 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — typefout in verbeterbeoordeling geïnstalleerd
+## Actueel 12 oktober — hervatte kandidaatbeoordeling afgebroken
+
+De exacte hervatting na de geïnstalleerde datumcorrectie is eenmalig uitgevoerd
+en gesloten. Eva hergebruikte het bewaarde codevoorstel; geen nieuwe kandidaat.
+De datumfout is gepasseerd; de beoordelingsdienst gaf HTTP500 vóór childwerk.
+Geen afgeronde beoordeling, kwaliteitswinst, toepassing of later gebruik. De exacte
+hostfout wordt gericht modelvrij
+onderzocht; de gesloten dispatch wordt niet opnieuw geactiveerd.
+
+Nieuw gemeten: één complete Astra/medium-aanvraag, 22.635 tokens en één tool.
+Met beide eerdere gesloten pogingen: zeven aanvragen, 84.836 bekende constructietokens
+en zeven native tools. Nul childmodelaanvragen bewezen; creditkosten onbekend.
+De oude poging, foutgegevens, deadline en verbruik blijven exact bewaard.
+De onafhankelijke invoer-GO is verbruikt; uitkomstreview GO voor nauwkeurige
+publicatie van het mislukte resultaat. Geen functionele GO of nieuwe invoertoelating.
+
+Nu: de concrete evaluatiefout lokaliseren en kleinste bewezen oorzaak corrigeren.
+Daarna het bestaande voorstel beoordelen, uitsluitend bewezen winst toepassen en
+bij later werk gebruiken. Het volledige projectgoal, leercyclus en AIDE² blijven actief;
+39/48 historische afrondingen en gezinsacceptaties behouden. Geen hoofdafronding
+of nieuwe concurrentenserie. Spraak geparkeerd; geen handeling van Jaap nodig.
+
+Dashboardinhoud gecontroleerd: 2026-10-12T05:36:54.538544+00:00.
+Bewijs: eva2/evidence/product/native-work-candidate-assessment-resume-result-20261012.json.
+Invoerreview: eva2/reviews/native-work-candidate-assessment-resume-input-review-20261012.json.
+Uitkomstreview: eva2/reviews/native-work-candidate-assessment-resume-result-review-20261012.json.
+
+
+## Historisch 12 oktober — typefout in verbeterbeoordeling geïnstalleerd
 
 **Laatst opgeleverd:** de bewezen datumtypefout in de bestaande verbeterroute is
 gecorrigeerd en geïnstalleerd. Exact één module in gezonde kern en werker;

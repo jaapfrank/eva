@@ -1,0 +1,96 @@
+{
+  "contract": "EvaIndependentClosedCandidateAssessmentPublicationReview/v1",
+  "checkedAt": "2026-10-12T05:36:03.847076Z",
+  "decision": "GO",
+  "scope": "Exacte publicatie van de gesloten gen3-hervatting met mislukte evaluatie; geen functionele GO of nieuwe invoertoelating.",
+  "functionalOutcome": "NOT_COMPLETED",
+  "nativeInputDecision": "NONE",
+  "openPublicationBlockers": [],
+  "bindings": {
+    "publicResult": {
+      "path": "eva2/evidence/product/native-work-candidate-assessment-resume-result-20261012.json",
+      "sha256": "bc5b61e1cd3f79db86430d64bcbb47cbc3c3e2f0493614d0a749d679bd1ad4bc"
+    },
+    "rawSha256": "4924838144a0eb5549b64547c98b39063cc349d7813c8ef5b6134ae3bbc024c7",
+    "sealedResultSha256": "8cc2bf31d615bf4f7f791c3654ae5245bc2a6bb410e53bdcb2c690d0fd92dea1",
+    "physicalAccountingSha256": "f40c09d6bbdd874d9e67651e090f944a7de8f2327c0bf29c98a70bd25ed673f6",
+    "cleanupSha256": "1cf57936aeca88d2bd47a08df9622777b4337c39045081128897993a1f58c4d5",
+    "commandResultSha256": "517e9d35eea7ed317db4bb92f96bf521a269ed347c174121688eb6016f447cb4",
+    "technicalDiagnosisSha256": "1c05a574354c2e42b8ec4e1a7ab5fa83c2172d3bae75de6d4eb074dcf18e981f",
+    "consumedInputReviewSha256": "e4eba4d31dfed645b9db7a5497074906b9a8fc3db0187a4086beb8aeecf1ee1f",
+    "currentPublicationFiles": {
+      "AGENTS.md": "d1559ffb34df8d9d2ed0a72a57be4ab4f9dcf136f0c645ef6c04aa3a4823218f",
+      "eva2/PROJECTDOEL.md": "b5891cc1323a68e70f8767fe592cad2d10f0c42b0757e1f70b416e8609653f4a",
+      "eva2/WERKBORD.md": "f30dfa314a481b57640d6491c59f1e909bc52e0f995c13f45ba0dc1676fc03e7",
+      "eva2/design/product/execution-workboard-v1.json": "abbbf05707734a43a44e6c784febedf803848b53469e949c33e29a1228567c89"
+    }
+  },
+  "verifiedFacts": {
+    "oneOrdinaryGeneration3DispatchClosed": true,
+    "nativeState": "ambiguous",
+    "errorCode": "internal_error",
+    "errorFingerprint": "fbd1043c3a2a0b07ef53ec2398ff17d1897773350cb309313f4ccf0c7934654e",
+    "transportFailure": "HTTPError:HTTP Error 500: Internal Server Error",
+    "previousDatetimeBarrierPassed": true,
+    "completedEvalReceipt": false,
+    "retainedCandidateSha256": "c17ba3c457de62199e5441335bfee900511c21aa5a04bb03c315cfeecefc7704",
+    "noNewDraftOrCandidate": true,
+    "candidateIndependentScore": null,
+    "candidateAccepted": false,
+    "applied": false,
+    "laterUsed": false,
+    "newMeasuredUsage": {
+      "providerRequests": 1,
+      "inputTokens": 22569,
+      "outputTokens": 66,
+      "totalTokens": 22635,
+      "nativeTools": 1,
+      "role": "Astra/medium"
+    },
+    "cumulativeMeasuredConstructorUsage": {
+      "providerRequests": 7,
+      "inputTokens": 83231,
+      "outputTokens": 1605,
+      "totalTokens": 84836,
+      "nativeTools": 7
+    },
+    "childProviderRequests": 0,
+    "childNativeTools": 0,
+    "childLaunches": 0,
+    "rawChildWorkUsagePreserved": null,
+    "commandWallSeconds": 32.7124863829813,
+    "runtimeExportWallSeconds": 30.91692171798786,
+    "cumulativeConstructionActiveSeconds": 126.81463985395385,
+    "evalSpanSeconds": 13.180749355000444,
+    "evalSpanQualifiedForExclusion": false,
+    "originalProgrammingNotStarted": true,
+    "transientCleanupReturncode": 0,
+    "creditsAndDevelopmentCredits": "UNKNOWN"
+  },
+  "childAccountingQualification": {
+    "zeroProvedByPinnedSourceOrderAndEmptyRegisteredRoots": true,
+    "completedChildAccountingReceiptExists": false,
+    "publicCompleteChildAccountingFlagMeaning": "Bewezen nul-childdispatch voor deze gesloten route; geen compleet kindledger of afgeronde kindrun.",
+    "proof": "Per-binding output/accountingdirs en once zijn verplicht vóór _launch. Geen entries bestaan onder beide exacte geregistreerde rootmappen; de gepinde bron verwijdert die bewijzen niet. SDK/tooltransport wordt vooraf fysiek geregistreerd.",
+    "nullNotInterpretedAsZeroOnItsOwn": true
+  },
+  "publicationAssessment": {
+    "resultAndCurrentMdBoardAgreeWithClosedFailureAndKnownUsage": true,
+    "exactHostExceptionRemainsUnknown": true,
+    "smallestProvenProductCorrection": null,
+    "noHiddenCaseScoreOrWinnerClaim": true,
+    "wholeGoalLearningCycleAndFullAide2RemainActive": true,
+    "noNewProductFunctionCompleted": true,
+    "historicalExecutionTasksMilestonesCompletionsEqualHead": true,
+    "historical39Of48AndAcceptancesPreserved": true,
+    "voiceParked": true,
+    "oldRawSealsCountersAndUnknownPreserved": true,
+    "noNewBudgetInputRetryOrRearmAuthorizedByPublication": true
+  },
+  "limitations": [
+    "De bekende constructieusage en begrensd bewezen nul-childdispatch zijn afzonderlijk van een ontbrekend EVAL-rapport geregistreerd.",
+    "HTTP500 lokaliseert de nieuwe fout bij de bestaande evaluatiehost. De precieze hostexception en passende productcorrectie volgen niet uit de behouden HTTPfingerprint alleen.",
+    "Geen ontwikkeling/eindbeoordeling/toepassing/later gebruik of volledige AIDE2 is bevestigd.",
+    "Review deed uitsluitend bestaande bron- en bewijslezing; geen model, EVAL-replay, native uitvoering, test, factory, database of beschermde beoordelingsinhoud."
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "contract": "EvaNativeWorkCandidateAssessmentResumeResult/v1",
+  "recorded_at": "2026-10-12T05:32:28.346716+00:00",
+  "status": "evaluation_failed_candidate_unassessed",
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "semantic_quality_claimed": false,
+  "execution": {
+    "task_id": "work:eva-resume:b00270d8-da50-50e6-85a2-cdda5ded8c09",
+    "generation": 3,
+    "execution_id": "work:eva-chat:01b7184a-a2b1-5c3c-9281-ad9a802feb7f",
+    "predecessor_task_id": "work:eva-resume:cb993da3-f4d9-556a-970c-43e0ff77d012",
+    "native_state": "ambiguous",
+    "error_code": "internal_error",
+    "error_fingerprint": "fbd1043c3a2a0b07ef53ec2398ff17d1897773350cb309313f4ccf0c7934654e",
+    "same_candidate_retained": true,
+    "candidate_sha256": "c17ba3c457de62199e5441335bfee900511c21aa5a04bb03c315cfeecefc7704",
+    "verified_result": false,
+    "development_outcome": "not_confirmed",
+    "independent_final_outcome": "not_run_or_confirmed",
+    "applied": false,
+    "later_use": false,
+    "dispatch_once_consumed": true,
+    "auto_repeat": false,
+    "failure_transport": {
+      "response": "HTTP500",
+      "fingerprint_matches": "HTTPError:HTTP Error 500: Internal Server Error",
+      "exact_host_exception": "UNKNOWN"
+    }
+  },
+  "usage": {
+    "new_constructor": {
+      "input_tokens": 22569,
+      "measurement": "measured",
+      "output_tokens": 66,
+      "provider_attempts": 1,
+      "request_ids": [
+        "79d3a010-26ef-43df-b966-9d5b8bc34e21"
+      ],
+      "roles": [
+        {
+          "attempts": 1,
+          "model": "gpt-6-astra",
+          "reasoning_effort": "medium",
+          "role": "work"
+        }
+      ],
+      "total_tokens": 22635,
+      "unknown_attempts": 0
+    },
+    "new_constructor_tools": 1,
+    "retained_prior_constructor": {
+      "input_tokens": 60662,
+      "output_tokens": 1539,
+      "physical_tools": 6,
+      "provider_attempts": 6
+    },
+    "cumulative_constructor": {
+      "input_tokens": 83231,
+      "output_tokens": 1605,
+      "physical_tools": 7,
+      "provider_attempts": 7,
+      "total_tokens": 84836
+    },
+    "child_work_usage": null,
+    "complete_child_accounting_confirmed": true,
+    "credits": "UNKNOWN",
+    "development_credits": "UNKNOWN",
+    "child_dispatch_verified": {
+      "provider_attempts": 0,
+      "physical_child_tools": 0,
+      "raw_child_work_usage_remains": null,
+      "no_completed_child_run": true,
+      "proof": "Configured producer persists distinct output/accounting binding directories and once before launch; those existing roots remain empty, and no code path removes them. No child launch/SDK dispatch occurred."
+    },
+    "measurement": "complete_constructor_usage_and_zero_child_dispatch_proved; credit costs UNKNOWN"
+  },
+  "timing": {
+    "clock_never_reset": true,
+    "construction_active_seconds": 126.81463985395385,
+    "development_excluded_seconds": 0.0,
+    "development_inflight": false,
+    "intervals": [
+      {
+        "elapsed_seconds": 13.180749355000444,
+        "end": 514163.512861147,
+        "proof": {
+          "baseline_sha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+          "binding": {
+            "contract": "EvaScopedComponentEvaluationBinding/v1",
+            "draft_step": 3,
+            "evaluation_call_id": "call_0c4f5025a4194c33a499dbe6816abb04",
+            "evaluation_step": 4,
+            "execution_binding_ref": "b04b4840bd9a6dcfe6ce645af662e45353754fc3fbe13e50748d0135e498afe6",
+            "task_id": "work:eva-resume:b00270d8-da50-50e6-85a2-cdda5ded8c09"
+          },
+          "candidate_sha256": "c17ba3c457de62199e5441335bfee900511c21aa5a04bb03c315cfeecefc7704",
+          "draft_event_payload_sha256": "a25ce840ab16ec52536e2f06f98b61f7fe1620abee8281ce890aa164d582137a",
+          "draft_thread_id": "component-draft:4d64bd2fbdec046ea9d598ec8eb786e20703c157976ea3acf4d20f6d6919d10b"
+        },
+        "qualified": false,
+        "start": 514150.332111792
+      }
+    ],
+    "wall_elapsed_seconds": 30.91692171798786
+  },
+  "clock_type_correction": "proved passed: EVAL transport received HTTP500 rather than previous datetime parsing failure",
+  "independent_input_review": {
+    "path": "eva2/reviews/native-work-candidate-assessment-resume-input-review-20261012.json",
+    "sha256": "e4eba4d31dfed645b9db7a5497074906b9a8fc3db0187a4086beb8aeecf1ee1f",
+    "go_once_consumed": true
+  },
+  "source_result": {
+    "sha256": "8cc2bf31d615bf4f7f791c3654ae5245bc2a6bb410e53bdcb2c690d0fd92dea1",
+    "retained_privately": true
+  },
+  "source_raw": {
+    "sha256": "4924838144a0eb5549b64547c98b39063cc349d7813c8ef5b6134ae3bbc024c7",
+    "retained_privately": true
+  },
+  "command_result": {
+    "sha256": "517e9d35eea7ed317db4bb92f96bf521a269ed347c174121688eb6016f447cb4",
+    "retained_privately": true
+  },
+  "cause": "HTTP500 within the existing evaluation host before child launch. Exact host exception under targeted model-free diagnosis.",
+  "review": "pending exact outcome publication",
+  "remaining": "Complete the existing candidate assessment, independent final outcome, application only on proved gain, and later use. Preserve this failed execution and all previous usage.",
+  "scope": {
+    "whole_project_goal": "active",
+    "historical_small_completions": "39/48 preserved",
+    "voice": "parked",
+    "competitor_series_started": false,
+    "owner_action_required": false
+  }
+}
