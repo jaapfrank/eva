@@ -1,0 +1,32 @@
+{
+  "contract": "EvaCandidateAssessmentAfterImportCurrent/v1",
+  "checkedAt": "2026-10-12T05:55:25.599992+00:00",
+  "state": "running",
+  "scope": "Genuine ordinary continuation of the same retained code candidate after installed host import correction.",
+  "driverSha256": "3eeac1d0955a92e604b6ccbc01af49b70cfb6df24192c6d80082a64c29d2618b",
+  "manifestSha256": "0aa3af16482aca64df6b6bd044b8653b7b176814fb3a33351233073ad9898615",
+  "preparationSha256": "054c53d47e5df7cc5744d0a6ff2d60cfe9fd784c2dc8f883d36cac04e5ebc037",
+  "inputReview": "eva2/reviews/native-work-candidate-assessment-after-import-input-review-20261012.json",
+  "inputReviewSha256": "d7693ebd0dcac5656c75d50068c8d3dcdc02987449975cf8be572a7bad55c99a",
+  "independentInputDecision": "GO_ONCE",
+  "ordinaryExecutionStartedAt": "2026-10-12T05:54:37.183398+00:00",
+  "liveHandleVerified": true,
+  "priorClosedAttempts": 3,
+  "priorMeasured": {
+    "providerRequests": 7,
+    "inputTokens": 83231,
+    "outputTokens": 1605,
+    "totalTokens": 84836,
+    "nativeTools": 7
+  },
+  "currentUsage": "Pending terminal accounting; not estimated",
+  "creditCosts": "UNKNOWN",
+  "outcomeProven": false,
+  "qualityImprovementProven": false,
+  "applicationProven": false,
+  "laterUseProven": false,
+  "fullAide2Completed": false,
+  "remaining": "Complete the existing candidate assessment, independently judge any gain, apply only a proved gain and demonstrate later use.",
+  "noOwnerActionRequired": true,
+  "voiceParked": true
+}

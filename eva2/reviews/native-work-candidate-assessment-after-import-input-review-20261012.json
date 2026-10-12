@@ -1,0 +1,95 @@
+{
+  "contract": "EvaIndependentAfterImportCandidateResumeInputReview/v1",
+  "checkedAt": "2026-10-12T05:53:40.835335Z",
+  "decision": "GO",
+  "nativeInputDecision": "GO_ONCE",
+  "openBlockers": [],
+  "scope": "Uitsluitend de exacte gewone generatie3 naar generatie4 hervatting van de behouden kandidaat na het geïnstalleerde hostimportherstel. Geen nieuwe kandidaat, configuratie, begroting, eindcriteria of brede vergelijking.",
+  "bindings": {
+    "driverSha256": "3eeac1d0955a92e604b6ccbc01af49b70cfb6df24192c6d80082a64c29d2618b",
+    "driverManifestSha256": "0aa3af16482aca64df6b6bd044b8653b7b176814fb3a33351233073ad9898615",
+    "driverPreparationSha256": "054c53d47e5df7cc5744d0a6ff2d60cfe9fd784c2dc8f883d36cac04e5ebc037",
+    "driverDeltaSha256": "b9ee8a553b8cf7ab7f859a5657cc4f3be81bd47cb93e0abbefe5ea2eb0bd01cd",
+    "pureGuardResultSha256": "279675a2b589624f4ffe3b1ef4687d5caa401a18d2a3da22907194174ce17962",
+    "pureGuardLogSha256": "d83023c25306a75126c8e27a7ccbbba299c4607f9aa83f4dbdcd249b4cbbccf3",
+    "installedClosureReviewSha256": "aee8ac6212658e3e8c3f67b849d576eedaf4bd78324afa09451a4a74c921cbfe",
+    "installedClosureReceiptSha256": "3f60088dfafc844b9c7995f37946557d61327ab23877a04a67e85a747be3d728",
+    "installedClosureModuleSha256": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+    "resourcesSha256": "32945c9f9e38e572b3bb21447dab904a2877e0782e43cb0fd4b459cc29cdfa9a",
+    "runtimeAdmissionSha256": "bbe5e902eb5e1cd46739ca76e3823feea6b9e2f32c282dfa036af8bc62a7ea61",
+    "unchangedHostConfigurationSha256": "ae4f78ca54ce2e2639bd062ba12c9400ed2a4ab45f9ff8230351d72b0eeef2ca",
+    "unchangedOriginalProspectiveAllocationSha256": "81165e91b6a686dfed2f623a9d14b66c96cc89233774f1c739375e1135d70fa5",
+    "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872",
+    "currentWorkerProgramSha256": "cbffeafb4b3f23a8c1da01fa552a474be6123cb8d73266338f669d4278de1c35",
+    "retainedCandidateSha256": "c17ba3c457de62199e5441335bfee900511c21aa5a04bb03c315cfeecefc7704",
+    "retainedBaselineSha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412"
+  },
+  "verifiedPreparation": {
+    "privateRootAndInputModesCorrect": true,
+    "exactFrozenDriverDiffRead": true,
+    "threeClosedAncestorsCountedOnce": true,
+    "13ClosedReferenceHashesPreserved": true,
+    "38InstalledHostSourcesEqualPinnedInventory": true,
+    "currentServiceConfigurationEqualsPreviouslyInstalledPin": true,
+    "installedClosureReviewGoAndModuleDigestEqual": true,
+    "newExclusiveDispatchMarkerAbsent": true,
+    "onePureGuardCheckPassedWithoutRerunByReviewer": true,
+    "noConfigInstallOrFactoryProbeRequiredByThisReview": true,
+    "actorSourceIngressExecutionEpisodeGrantTaskCriteriaCasesScorersRolesPreserved": true,
+    "ordinaryResumeUsesActualNamespaceGeneration4AndFreshCanonicalControlTime": true,
+    "oldDeadlinesRecordsMarkersCountersNotOverwritten": true,
+    "exactHistoricalDraft3FromGeneration2Retained": true,
+    "allNewDraftEffectsDenied": true,
+    "newEvalStep4MustBindExactRetainedDraftAndNewLeafCall": true
+  },
+  "resourceBoundary": {
+    "retainedActualUsage": {
+      "providerRequests": 7,
+      "inputTokens": 83231,
+      "outputTokens": 1605,
+      "totalTokens": 84836,
+      "nativeTools": 7,
+      "activeSeconds": 126.81463985395385
+    },
+    "freshMaximum": {
+      "providerRequests": 7,
+      "activeSeconds": 119.08307828201214
+    },
+    "freshDurationDerivation": "150 minus the closed generation3 wall span 30.91692171798786 seconds",
+    "cumulativeMaximum": {
+      "providerRequests": 14,
+      "activeSeconds": 246
+    },
+    "previousFailedEvalSpanSeconds": 13.180749355000444,
+    "previousFailedEvalGetsDevelopmentTimeCredit": false,
+    "globalUnchanged": {
+      "providerRequests": 68,
+      "inputTokens": 385000,
+      "outputTokens": 15000,
+      "combinedTokens": 400000,
+      "physicalTools": 100,
+      "retries": 0
+    },
+    "ordinaryNewGenerationDeadlineSeconds": 1200,
+    "remainingMandatoryModelResponsesMinimum": 5,
+    "allowanceSupportsRemainingChainWithoutPromiseOfSuccess": true,
+    "unknownUsageBlocksFurtherDispatch": true,
+    "tokenQualification": "Gemeten gedeelde acceptatie-/stopgrens vóór volgende dispatch; geen gegarandeerde limiet binnen een lopende providerrespons."
+  },
+  "goOnceBoundary": {
+    "onlyExactConstructionEntryAndStartCommandFromPinnedPreparation": true,
+    "onlyOneOrdinaryGeneration4ResumeFromClosedGeneration3": true,
+    "noLaterStageAdmitted": true,
+    "noOldAttemptRearmOrClosedCallReplay": true,
+    "loaded38HostSourceGuardAndCurrentConfigRuntimePinsRequiredBeforeOnce": true,
+    "currentOwnerSourceRetentionStopLeafLeaseAndDeadlineRecheckedBeforeEffects": true,
+    "freshAndCumulativeLimitsRemainSeparateAndFailClosed": true
+  },
+  "limitations": [
+    "De huidige ontbrekende hostimport is reproduceerbaar gecorrigeerd; de niet-gelogde oorspronkelijke innerexception blijft geen bewezen exclusieve HTTP500oorzaak.",
+    "Dit is eenmalige technische invoertoelating, geen afgeronde kandidaatbeoordeling, onafhankelijke einduitkomst, toepassing, later gebruik, kwaliteitswinst of volledige AIDE2.",
+    "De drie vorige echte mislukkingen en al hun verbruik blijven gesloten historische feiten.",
+    "De bestaande gewone nieuwe generatie krijgt haar normale deadline; geen oudere deadline of timer wordt aangepast.",
+    "Reviewer deed alleen bron-/metadata-/hashlezing en schreef dit reviewbestand; geen test, importprobe, factory, Docker, database, model of native dispatch, geen beschermde beoordelingsinhoud."
+  ]
+}

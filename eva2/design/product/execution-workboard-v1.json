@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T07:50:36.498115+02:00",
+        "checkedAt": "2026-10-12T07:55:25.600014+02:00",
         "deliveries": [
           {
             "id": "native-work-host-usage-import-closure-installed-20261012",
@@ -4944,16 +4944,16 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · vervolgbeoordeling voorbereiden",
+          "title": "Zelfverbetering · echte kandidaatbeoordeling loopt",
           "state": "in_progress",
-          "phase": "candidate_assessment_after_import_resume_preparation",
-          "activeExecution": false,
+          "phase": "candidate_assessment_after_import_running",
+          "activeExecution": true,
           "owner": "/root",
-          "executor": "/root/eva1_memory_transfer",
+          "executor": "/root",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Twee agents werken aan het vervolg: één bereidt de hervatting van het bestaande codevoorstel voor, één beoordeelt die voorbereiding onafhankelijk. De kandidaatbeoordeling zelf is nog niet gestart.",
-          "detail": "Hetzelfde bewaarde codevoorstel wordt hergebruikt. De ontbrekende beoordelingsmodule is geïnstalleerd. De uitvoerder sluit het vervolg aan op de bestaande opdracht en het resterende verbruik; de reviewer controleert de exacte voorbereiding. Daarna volgt de echte beoordeling. De drie eerdere pogingen blijven bewaard: zeven modelaanvragen en 84.836 gemeten tokens. Nog geen bewezen kwaliteitswinst, toepassing of later gebruik.",
-          "source": "eva2/evidence/product/native-work-host-usage-import-closure-installed-20261012.json",
+          "summary": "De onafhankelijke voorbereiding is goedgekeurd. Eva voert de hervatte beoordeling van het bestaande codevoorstel uit; de uitkomst en kwaliteitswinst staan nog niet vast.",
+          "detail": "Dezelfde opdracht en kandidaat zijn hervat na de geïnstalleerde importcorrectie. Alle eerdere pogingen en hun verbruik blijven meetellen. De voorbereiding en onafhankelijke invoercontrole zijn afgerond. Nu draait de echte beoordeling. Daarna alleen bewezen winst toepassen en bij later werk gebruiken.",
+          "source": "eva2/evidence/product/native-work-candidate-assessment-after-import-started-20261012.json",
           "doneWhen": "Eva verbetert haar werkaanpak op echte opdrachten; de onafhankelijke beoordeling bevestigt betere resultaten of minder hulp. Alleen bewezen winst wordt toegepast en bij later gewoon werk gebruikt.",
           "implementationStatus": {
             "evaluationBridgeBuilt": true,
@@ -5046,13 +5046,16 @@
             "candidateAssessmentImportClosureSourceReview": "GO",
             "candidateAssessmentImportClosureInstallationReviewPending": false,
             "candidateAssessmentImportClosureInstallationReview": "GO for exact installed technical dependency; no new input or quality approval",
-            "candidateAssessmentAfterImportPreparationInProgress": true,
-            "candidateAssessmentAfterImportInputReviewPending": true,
-            "candidateAssessmentAfterImportDispatched": false
+            "candidateAssessmentAfterImportPreparationInProgress": false,
+            "candidateAssessmentAfterImportInputReviewPending": false,
+            "candidateAssessmentAfterImportDispatched": true,
+            "candidateAssessmentAfterImportPreparationCompleted": true,
+            "candidateAssessmentAfterImportInputReview": "GO_ONCE consumed by current execution",
+            "candidateAssessmentAfterImportClosed": false
           },
           "remaining": "Voorbereiding en onafhankelijke controle afronden; hetzelfde voorstel beoordelen. Alleen bewezen winst toepassen en later gebruiken.",
-          "review": "eva2/reviews/native-work-candidate-assessment-resume-input-review-20261012.json",
-          "reviewSha256": "e4eba4d31dfed645b9db7a5497074906b9a8fc3db0187a4086beb8aeecf1ee1f",
+          "review": "eva2/reviews/native-work-candidate-assessment-after-import-input-review-20261012.json",
+          "reviewSha256": "d7693ebd0dcac5656c75d50068c8d3dcdc02987449975cf8be572a7bad55c99a",
           "ordinaryClientInstalledReview": "eva2/reviews/native-work-client-scope-installed-review-20261012.json",
           "ordinaryClientInstalledReviewSha256": "82c031c0899892ea5127adb3b141ed3a566060b534f11a0dbe441e1bc63a186f",
           "preparationReview": "eva2/reviews/native-work-corrected-runtime-preparation-review-20261012.json",
@@ -5061,15 +5064,24 @@
           "resultReview": "eva2/reviews/native-work-host-usage-closure-installed-review-20261012.json",
           "resultReviewSha256": "aee8ac6212658e3e8c3f67b849d576eedaf4bd78324afa09451a4a74c921cbfe",
           "currentActivity": {
-            "checkedAt": "2026-10-12T07:50:36.498115+02:00",
-            "executionStarted": false,
+            "checkedAt": "2026-10-12T07:55:25.600014+02:00",
+            "executionStarted": true,
             "coordinator": "/root",
-            "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Het bestaande codevoorstel en resterend cumulatief verbruik aansluiten op de hervatting.",
+            "executor": "/root",
+            "executorTask": "De exact beoordeelde gewone hervatting uitvoeren en dezelfde live opdracht volgen.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Onafhankelijke controle van de exacte voorbereiding vóór uitvoering.",
+            "reviewerTask": "De echte uitkomst onafhankelijk beoordelen zodra het uitvoerbewijs is gesloten.",
             "newModelRequestsThisPreparation": 0,
             "note": "Dit is gecontroleerde, opgeslagen voortgang; geen live agenttelemetrie."
+          },
+          "preparation": {
+            "driverSha256": "3eeac1d0955a92e604b6ccbc01af49b70cfb6df24192c6d80082a64c29d2618b",
+            "manifestSha256": "0aa3af16482aca64df6b6bd044b8653b7b176814fb3a33351233073ad9898615",
+            "receiptSha256": "054c53d47e5df7cc5744d0a6ff2d60cfe9fd784c2dc8f883d36cac04e5ebc037",
+            "check": "PASS; één gerichte modelvrije controle",
+            "newModelRequests": 0,
+            "sameCandidate": true,
+            "closedAttemptsPreserved": 3
           }
         },
         "next": {
@@ -5087,7 +5099,7 @@
           "detail": "De echte zelfverbetering en het latere gebruik zijn werk voor Codex. Jouw gezinsbeoordeling blijft afzonderlijk."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T07:50:36.498115+02:00",
+        "reviewedAt": "2026-10-12T07:55:25.600014+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5188,8 +5200,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T07:50:36.498115+02:00",
-      "checkedAt": "2026-10-12T07:50:36.498115+02:00",
+      "reviewedAt": "2026-10-12T07:55:25.600014+02:00",
+      "checkedAt": "2026-10-12T07:55:25.600014+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11570,7 +11582,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T07:50:36.498115+02:00",
+      "lastUpdatedAt": "2026-10-12T07:55:25.600014+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
