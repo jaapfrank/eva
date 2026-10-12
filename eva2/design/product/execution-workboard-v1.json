@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T06:45:11.397762+00:00",
+  "lastUpdated": "2026-10-12T09:54:29.039336+02:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -125,11 +125,11 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Persoonlijkheid en geheugenbasis behouden. Uitvoerbewijs voor zelfverbetering is gecorrigeerd, geïnstalleerd en onafhankelijk beoordeeld. Werkelijke taakafronding en volledige AIDE², initiatief en gezinsoplevering blijven open.",
+      "summary": "Persoonlijkheid en geheugenbasis behouden. De planningruimte in de verbeterproef is gecorrigeerd, geïnstalleerd en onafhankelijk beoordeeld. Volledige AIDE², initiatief en gezinsoplevering blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · volledige AIDE²-cyclus afmaken",
-          "detail": "De uitvoerwaarnemer is geïnstalleerd en beoordeeld. De drie mislukte ontwikkeltaken stopten bij hun proefgrens van 8, 8 en 6 aanvragen. Die kandidaat wordt niet toegepast. De gewone beoordelingsroute geeft onvolledige resultaten al terug aan Eva. Geen nieuwe uitvoerder nodig. Vervolg: de werkaanpak verbeteren, onafhankelijk beoordelen en uitsluitend bewezen winst toepassen en later gebruiken. Geen oude proef herstarten."
+          "title": "Nu · volledige verbetercyclus aansluiten",
+          "detail": "De onjuiste planningruimte in de verbeterproef is gecorrigeerd en geïnstalleerd. Nu de bestaande volledige verbetercyclus aansluiten en onafhankelijk beoordelen."
         },
         {
           "title": "Daarna · volledige verbetercyclus afronden",
@@ -1021,8 +1021,23 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T09:24:14.067503+02:00",
+        "checkedAt": "2026-10-12T09:54:29.039336+02:00",
         "deliveries": [
+          {
+            "id": "native-budget-context-correction-installed-20261012",
+            "date": "2026-10-12T09:48:36.005693+02:00",
+            "title": "Werkelijke planningruimte voor zelfverbetering gecorrigeerd",
+            "state": "installed",
+            "summary": "Eva ziet in de verbeterproef nu de werkelijk beschikbare aanvraagruimte, inclusief helpers. Correctie geïnstalleerd; dienst gezond.",
+            "result": "Eén gerichte modelvrije controle geslaagd. Eén dienstherstart; nul nieuwe Eva-modelaanvragen.",
+            "remaining": "Volledige AIDE², onafhankelijke eindbeoordeling van de kandidaat, bewezen winst toepassen en later gebruik blijven open.",
+            "source": "eva2/evidence/product/native-budget-context-correction-installed-20261012.json",
+            "independentReview": "GO voor exacte bron, gerichte controle, interface en installatie. Geen gedragswinst of nieuwe hoofdafronding.",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/native-budget-context-correction-installed-review-20261012.json",
+            "reviewSha256": "9cfc71df622e1323775cf1421fd94205de9b6dba4f316560335293c85bd06b4e"
+          },
           {
             "id": "native-program-observation-installed-20261012",
             "date": "2026-10-12T09:05:51.362508+02:00",
@@ -4989,17 +5004,17 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · volledige verbetercyclus afmaken",
+          "title": "Zelfverbetering · verbetercyclus aansluiten",
           "state": "in_progress",
-          "phase": "full_aide2_cycle_preparation",
+          "phase": "post_budget_correction_round_binding",
           "activeExecution": false,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De uitvoerwaarnemer is geïnstalleerd en beoordeeld. De drie mislukte ontwikkeltaken stopten bij hun proefgrens van 8, 8 en 6 aanvragen. Die kandidaat wordt niet toegepast.",
-          "detail": "De gewone beoordelingsroute geeft onvolledige resultaten al terug aan Eva. Geen nieuwe uitvoerder nodig. Vervolg: de werkaanpak verbeteren, onafhankelijk beoordelen en uitsluitend bewezen winst toepassen en later gebruiken. Geen oude proef herstarten.",
-          "doneWhen": "Een volledige verbetercyclus voor de werkaanpak levert een onafhankelijk beoordeelde uitkomst op; alleen bewezen winst wordt toegepast en later werkelijk gebruikt.",
-          "source": "eva2/evidence/product/native-work-completion-cause-diagnosis-20261012.json",
+          "summary": "De onjuiste planningruimte in de verbeterproef is gecorrigeerd en geïnstalleerd. Nu de bestaande volledige verbetercyclus aansluiten en onafhankelijk beoordelen.",
+          "detail": "Eva zag eerder 25/27 resterende aanvragen terwijl er werkelijk nog één over was. Correctie geïnstalleerd en onafhankelijk beoordeeld; één gerichte controle geslaagd. Nu technische rondebinding en afzonderlijke inputvoorbereiding via bestaande route; nog geen nieuwe modelproef.",
+          "doneWhen": "De volledige cyclus levert een onafhankelijk beoordeelde kandidaat; alleen bewezen winst wordt toegepast en daarna bij ander werk gebruikt.",
+          "source": "eva2/evidence/product/native-budget-context-correction-installed-20261012.json",
           "previousInstalledCorrection": "eva2/evidence/product/native-program-observation-installed-20261012.json",
           "previousInstalledReview": "eva2/reviews/native-program-observation-installed-review-20261012.json",
           "previousInstalledReviewSha256": "e867786889ad6855a48a709c6c7073b274cdf89a3cd7ca2c4ad8b76a27a5762a",
@@ -5009,26 +5024,32 @@
             "observerCorrectionReviewCompleted": true,
             "fullAide2Completed": false,
             "workCompletionCauseConfirmed": true,
-            "ordinaryRunnerBugProven": false
+            "ordinaryRunnerBugProven": false,
+            "budgetContextMismatchConfirmed": true,
+            "budgetContextCorrectionInstalled": true,
+            "budgetContextCorrectionChecksCompleted": true,
+            "budgetContextCorrectionReviewCompleted": true
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T09:24:14.067503+02:00",
+            "checkedAt": "2026-10-12T09:54:29.039336+02:00",
             "coordinator": "/root",
             "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Gerichte diagnose afgerond; geen lopende uitvoering.",
+            "executorTask": "Bestaande technische suite-/previewclient-/runtimebinding aansluiten in eigen private map; geen nieuwe native uitvoering.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Gebundelde waarnemercorrectie beoordeeld; geen nieuwe eindbeoordeling gestart.",
+            "reviewerTask": "Afzonderlijke input-only wrappers met ongewijzigde criteria en afgeschermde eindgevallen voorbereiden; geen nieuwe invoer-GO.",
             "newModelRequestsThisFollowup": 0,
-            "note": "Gecontroleerde opgeslagen voortgang. Er draait nu geen betaalde Eva-proef.",
-            "coordinatorTask": "Vervolg van de bestaande volledige AIDE²-cyclus voorbereiden op basis van de vastgestelde afrondingsfout."
-          }
+            "note": "Correctie onafhankelijk GO. Twee niet-overlappende voorbereidingen lopen; nul nieuwe Eva-modelaanvragen.",
+            "coordinatorTask": "Gecontroleerde oplevering publiceren en bestaande rondeaansluiting coördineren."
+          },
+          "review": "eva2/reviews/native-budget-context-correction-installed-review-20261012.json",
+          "reviewSha256": "9cfc71df622e1323775cf1421fd94205de9b6dba4f316560335293c85bd06b4e"
         },
         "next": {
           "title": "Volledige verbetercyclus en later gebruik afmaken",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/evidence/product/native-work-assessment-interface-installed-20261012.json",
-          "summary": "Na correcte uitvoering alleen geldig onafhankelijk bewezen verbeteringen toepassen en later hergebruiken.",
+          "summary": "De volledige werkaanpak verbeteren met de bestaande ronde-, beoordelings- en toepassingsroute; uitsluitend bewezen winst toepassen en later gebruiken.",
           "detail": "De oorspronkelijke mislukte proef en haar verbruik blijven staan. Geen nieuwe concurrentenserie; geen automatisch heropenen of verbreden."
         },
         "ownerAction": {
@@ -5038,7 +5059,7 @@
           "detail": "Geen handeling van jou nodig. De ontwikkelkandidaat is afgewezen; Codex werkt de bestaande volledige verbetercyclus af. Gezinsacceptatie blijft een afzonderlijk oordeel."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T09:24:14.067503+02:00",
+        "reviewedAt": "2026-10-12T09:54:29.039336+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5139,8 +5160,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T09:24:14.067503+02:00",
-      "checkedAt": "2026-10-12T09:24:14.067503+02:00",
+      "reviewedAt": "2026-10-12T09:54:29.039336+02:00",
+      "checkedAt": "2026-10-12T09:54:29.039336+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11433,7 +11454,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T09:24:14.067503+02:00",
+        "checkedAt": "2026-10-12T09:54:29.039336+02:00",
         "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Persoonlijkheid en geheugenbasis geaccepteerd; leercyclus, zelfstandig initiatief en volledige zelfverbetering nog open.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11489,7 +11510,7 @@
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
-            "remaining": "De uitvoerwaarnemer is geïnstalleerd en beoordeeld. Drie ontwikkeltaken bereikten hun vaste proefgrens vóór volledige afronding; de kandidaat is niet toegepast. Geen bronfout in de gewone uitvoerder bewezen. Volledige AIDE² voor agentaansturing, bewezen verbetering, later gebruik en gezinsacceptatie blijven open.",
+            "remaining": "De uitvoerwaarnemer en correcte planningruimte zijn geïnstalleerd. De oude kandidaat blijft niet toegepast; de volledige verbetercyclus, onafhankelijke eindbeoordeling, bewezen winst en later gebruik blijven open. Gezinsacceptatie blijft apart.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11518,12 +11539,13 @@
               "eva2/evidence/product/native-work-typed-resume-construction-result-20261012.json",
               "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json",
               "eva2/evidence/product/native-program-observation-installed-20261012.json",
-              "eva2/evidence/product/native-work-completion-cause-diagnosis-20261012.json"
+              "eva2/evidence/product/native-work-completion-cause-diagnosis-20261012.json",
+              "eva2/evidence/product/native-budget-context-correction-installed-20261012.json"
             ]
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T09:24:14.067503+02:00",
+      "lastUpdatedAt": "2026-10-12T09:54:29.039336+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -12014,7 +12036,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T09:24:14.067503+02:00",
+      "updatedAt": "2026-10-12T09:54:29.039336+02:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -12085,6 +12107,19 @@
         "fullAide2Completed": false,
         "wholeGoalStatus": "active",
         "newEvaModelRequests": 0
+      },
+      "dashboardVerificationBudgetContextInstalled20261012": {
+        "checkedAt": "2026-10-12T09:52:33.226363+02:00",
+        "method": "Real browser refresh and visible .board-freshness/.delivery-kanban text",
+        "url": "http://localhost:44712/",
+        "visibleContentCheckedAt": "2026-10-12T09:50:27.445984+02:00",
+        "latestDelivery": "Werkelijke planningruimte voor zelfverbetering gecorrigeerd",
+        "deliveryInstalledAt": "2026-10-12T09:48:36.005693+02:00",
+        "currentWork": "Zelfverbetering · verbetercyclus aansluiten",
+        "nextWork": "Volledige verbetercyclus en later gebruik afmaken",
+        "ownerActionRequired": false,
+        "fullAide2Completed": false,
+        "mainStatusesUnchanged": true
       }
     },
     "pendingTechnicalReview": {
@@ -34184,5 +34219,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T06:45:11.397762+00:00"
+  "updatedAt": "2026-10-12T09:54:29.039336+02:00"
 }

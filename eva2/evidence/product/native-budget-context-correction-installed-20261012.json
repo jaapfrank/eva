@@ -1,0 +1,85 @@
+{
+  "contract": "eva2-native-budget-context-correction-installed-v1",
+  "recordedAt": "2026-10-12T09:50:27.445984+02:00",
+  "status": "installed_independent_review_pending",
+  "problem": {
+    "ordinaryDisplayedModelLimit": 32,
+    "registeredCaseModelLimits": [
+      8,
+      6
+    ],
+    "remainingBeforeLastRequestDisplayed": [
+      25,
+      27
+    ],
+    "remainingBeforeLastRequestActual": [
+      1,
+      1
+    ],
+    "cause": "Native producer enforced registered physical limits while ordinary budget context showed the broader grant."
+  },
+  "change": "Temporary producer projection uses the same case/shared physical request ledger and predicate as enforcement, including helpers. Ordinary runner, grant, strategy, criteria and limits are unchanged.",
+  "evidence": {
+    "frozenSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/frozen-source.private.json",
+      "sha256": "cfba8799db715c34a1a997c08f47d2c63a0d81840c7856f7272718ac6d9812e1"
+    },
+    "sourceResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/source-result.private.json",
+      "sha256": "d5808176de7bc010a50f3b280140244fc6820e70e1500313555ab4d199d6728d"
+    },
+    "targetedChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/targeted-checks.private.json",
+      "sha256": "6a5e8e967998a1513b0c28fe75f591f71b31a8e2973d1175e81ab0a6a3d791c0"
+    },
+    "installation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/install-result.private.json",
+      "sha256": "f4c8a203bc0be694f882a4518f70bd06a3a3224530a303743f95838099c2eff4"
+    },
+    "producerSha256": "a5c8a6b47dc1b34313c8e56995368760502b7cceaffe4ff91c8472b952587818",
+    "testSha256": "ef35b19ebfe4141a1041a5a5bbbec34ad29635827631663b05f233097739e6d8",
+    "checksPassed": 1,
+    "modelFreeCheckSeconds": 1.78,
+    "ordinaryRunnerSha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412"
+  },
+  "installation": {
+    "serviceRestarts": 1,
+    "health": {
+      "http_status": 200,
+      "payload": {
+        "status": "ready"
+      }
+    },
+    "otherHostSourcesPreserved": true,
+    "coreWorkerPreserved": true,
+    "configurationRestPreserved": true,
+    "closedReferencesPreserved": true,
+    "actualImportOriginCorrect": true
+  },
+  "priorDiagnosisQualification": {
+    "path": "eva2/evidence/product/native-work-completion-cause-diagnosis-20261012.json",
+    "sha256": "3ab76b34baebae5b5a611694f02725740a04cd52e7fdb00f8f84c38e7115e475",
+    "note": "Its recorded cap failures remain unchanged. The inference that the strategy alone failed to reserve completion room is qualified by this newly proved adapter display mismatch. No sole-cause or behavioural improvement is proved."
+  },
+  "hardConditions": {
+    "unknownUsageRemainsUnknown": true,
+    "separateSharedOutputQuota": null,
+    "sharedTokenLimitKind": "combined_only",
+    "noInFlightCostGuarantee": true,
+    "criteriaAndCapsPreserved": true,
+    "oldClosedEpisodesPreserved": true
+  },
+  "usage": {
+    "newEvaModelRequests": 0,
+    "newNativeEpisodes": 0,
+    "uniqueModelFreeTestNodes": 1,
+    "codexDevelopmentCredits": "unknown",
+    "creditCosts": "unknown"
+  },
+  "productFunctionCompleted": false,
+  "fullAide2Completed": false,
+  "qualityImprovementProved": false,
+  "wholeGoalCompleted": false,
+  "newInputAuthority": false,
+  "next": "Complete one appropriate product improvement round through the existing route with preserved development/final criteria, independent final assessment, proved improvement application and later use. No competitor series or old episode rearm."
+}

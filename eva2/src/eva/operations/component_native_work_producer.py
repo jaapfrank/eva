@@ -409,6 +409,79 @@ class PhysicalAccounting:
         self.authorization_checks.append({"identity":dict(_ACTIVE.get()),"kind":kind,**evidence})
         return evidence
 
+
+    @staticmethod
+    def _case_requests(rows, context):
+        return [row for row in rows if row["identity"]["source_sha256"] == context["source_sha256"]
+                and row["identity"]["case_id"] == context["case_id"]]
+
+    def budget_context(self, original, grant, actual, *, calls, dispatches, **options):
+        """Display the same physical case/shared limits, without changing a grant."""
+        context = _ACTIVE.get()
+        require(context is not None, "physical budget context has no registered case")
+        with self._ledger() as state:
+            key = ":".join((context["leg"], context["stage"], context["case_id"]))
+            require(key in state["started_cases"], "physical budget context precedes case admission")
+            rows = state["requests"]
+            case_rows = self._case_requests(rows, context)
+            unknown = sum(row["usage"] is None for row in rows)
+            for row in rows:
+                value = row["usage"]
+                if value is not None:
+                    require(isinstance(value, dict) and set(value) == {"input_tokens", "output_tokens", "total_tokens"}
+                        and all(type(v) is int and v >= 0 for v in value.values())
+                        and value["total_tokens"] == value["input_tokens"] + value["output_tokens"],
+                        "physical budget usage is incoherent")
+            measured = not unknown
+            case_input = sum(row["usage"]["input_tokens"] for row in case_rows if row["usage"] is not None)
+            case_output = sum(row["usage"]["output_tokens"] for row in case_rows if row["usage"] is not None)
+            total_input = sum(row["usage"]["input_tokens"] for row in rows if row["usage"] is not None)
+            total_output = sum(row["usage"]["output_tokens"] for row in rows if row["usage"] is not None)
+            remaining_tokens = max(0, self.policy["total_tokens"] - total_input - total_output)
+            case_limit = self.policy["case_provider_limits"][context["case_id"]]
+            shared_remaining = max(0, self.policy["total_provider_attempts"] - len(rows))
+            model_ceiling = min(grant.maximum_model_runs, case_limit, len(case_rows) + shared_remaining)
+            if measured and not remaining_tokens:
+                model_ceiling = min(model_ceiling, len(case_rows))
+            case_tools = sum(row["identity"] == context for row in state["tools"])
+            pending_cleanup = sum(row["remaining"] for row in state["cleanup_reservations"])
+            existing_cleanup = any(row["identity"] == context for row in state["cleanup_reservations"])
+            # Reserve the ordinary programming cleanup before displaying generic
+            # next-tool capacity, just as the physical programming fence does.
+            tool_room = max(0, self.policy["total_tool_calls"] - len(state["tools"])
+                - pending_cleanup - (0 if existing_cleanup else 2))
+            if not measured or not remaining_tokens:
+                tool_room = 0
+            projected_grant = SimpleNamespace(maximum_model_runs=model_ceiling,
+                maximum_input_tokens=min(grant.maximum_input_tokens, case_input + remaining_tokens),
+                maximum_output_tokens=min(grant.maximum_output_tokens, case_output + remaining_tokens),
+                maximum_tool_calls=min(grant.maximum_tool_calls, case_tools + tool_room))
+            projected_usage = SimpleNamespace(measurement="measured" if measured else "unmeasured",
+                model_attempts=len(case_rows), input_tokens=case_input if measured else None,
+                output_tokens=case_output if measured else None)
+            # This policy binds combined shared tokens, not a separate remaining
+            # output quota after construction. Do not invent that split.
+            options["response_output_tokens"] = None
+            if not measured:
+                options["response_input_tokens"] = None
+            elif options.get("response_input_tokens") is not None:
+                options["response_input_tokens"] = min(options["response_input_tokens"],
+                    max(0, projected_grant.maximum_input_tokens - case_input))
+            physical = {"measurement": projected_usage.measurement,
+                "case_provider_attempts": len(case_rows), "case_provider_limit": case_limit,
+                "shared_provider_attempts": len(rows), "shared_provider_limit": self.policy["total_provider_attempts"],
+                "remaining_provider_attempts": max(0, model_ceiling - len(case_rows)) if measured else None,
+                "shared_input_tokens": total_input if measured else None,
+                "shared_output_tokens": total_output if measured else None,
+                "shared_remaining_combined_tokens": remaining_tokens if measured else None,
+                "shared_token_limit_kind": "combined_only", "shared_remaining_output_tokens": None,
+                "physical_tools": len(state["tools"]), "cleanup_reserved": pending_cleanup,
+                "unknown_attempts": unknown}
+        text = original(projected_grant, projected_usage, calls=case_tools,
+            dispatches=case_tools, **options)
+        return text + " Host-registered physical budget (helpers share these limits): " + json.dumps(
+            physical, sort_keys=True, separators=(",", ":"))
+
     def reserve_model(self, request_id, body):
         context = _ACTIVE.get()
         if context is None:
@@ -442,8 +515,7 @@ class PhysicalAccounting:
                 raise ComponentWorkProductionError("unmeasured physical attempt; retry/continuation blocked")
             if any(row["request_id"] == request_id for row in rows):
                 raise ComponentWorkProductionError("physical request identity replay")
-            case_rows = [row for row in rows if row["identity"]["source_sha256"] == context["source_sha256"]
-                         and row["identity"]["case_id"] == context["case_id"]]
+            case_rows = self._case_requests(rows, context)
             if len(rows) >= self.policy["total_provider_attempts"] or len(case_rows) >= self.policy["case_provider_limits"][context["case_id"]]:
                 raise ComponentWorkProductionError("shared/case provider allowance exhausted")
             consumed = sum(row["usage"]["total_tokens"] for row in rows)
@@ -546,6 +618,7 @@ class PhysicalAccounting:
         original_programming = ProgrammingWorkspaceClient.request
         original_close = ProgrammingWorkspaceClient.close
         original_finally = ProgrammingActions.close
+        original_budget_context = digital._remaining_budget_context
 
         class ObservedBody(httpx2.AsyncByteStream):
             def __init__(self, body, request_id):
@@ -637,6 +710,9 @@ class PhysicalAccounting:
             result = original_finally(programming)
             guard.observe_programming_finally(programming.session_key, programming.started)
             return result
+        def budget_context(grant, actual, **options):
+            return guard.budget_context(original_budget_context, grant, actual, **options)
+        digital._remaining_budget_context = budget_context
         codex._CodexTransport.__init__ = init
         models.open_research_response = research
         digital.BackgroundConnectorActions.execute_step = actions
@@ -644,7 +720,8 @@ class PhysicalAccounting:
         ProgrammingWorkspaceClient.request=programming
         ProgrammingWorkspaceClient.close=closed
         ProgrammingActions.close=finally_closed
-        self._restore = lambda: (setattr(codex._CodexTransport,"__init__",original_init),
+        self._restore = lambda: (setattr(digital,"_remaining_budget_context",original_budget_context),
+            setattr(codex._CodexTransport,"__init__",original_init),
             setattr(models,"open_research_response",original_research),setattr(digital.BackgroundConnectorActions,"execute_step",original_actions),setattr(digital.BackgroundConnectorActions,"__init__",original_catalog),setattr(ProgrammingWorkspaceClient,"request",original_programming),setattr(ProgrammingWorkspaceClient,"close",original_close),setattr(ProgrammingActions,"close",original_finally))
 
     def close(self):

@@ -754,3 +754,75 @@ def test_native_execution_observer_refuses_uncertain_or_mutated_chains():
     _observe(observer, _observer_exit(17, 0), 3)
     _observe(observer, _observer_exit(18, 0), 4)
     assert p._native_program_executions(_observer_raw(observer), source_sha) == []
+
+
+def test_registered_physical_budget_context_replaces_grant_display_without_dispatch(setup, tmp_path):
+    from eva.bootstrap.delegated_digital_runner import _remaining_budget_context
+    s = setup
+    # A narrow shared fixture budget exercises the same min/fence as production.
+    # These are synthetic accounting reservations, never provider requests.
+    s.policy["total_provider_attempts"] = 6
+    guard = accounting(s, tmp_path)
+    grant = SimpleNamespace(maximum_model_runs=32, maximum_input_tokens=1000,
+        maximum_output_tokens=1000, maximum_tool_calls=31)
+    grant_before = dict(vars(grant))
+    journal = SimpleNamespace(measurement="measured", model_attempts=5,
+        input_tokens=10, output_tokens=5)
+    def parse(text):
+        ordinary, _ = json.JSONDecoder().raw_decode(text.split(": ", 1)[1])
+        physical = json.loads(text.split("Host-registered physical budget (helpers share these limits): ", 1)[1]) if "Host-registered physical budget" in text else None
+        return ordinary, physical
+    with guard.case(s.identity):
+        guard.start_case_once(s.identity)
+        for i in range(5):
+            body = {"model": "gpt-6-astra", "reasoning": {"effort": "medium"}}
+            if i == 0:
+                body["tools"] = [{"search_context_size": "low", "type": "web_search"}]
+            guard.reserve_model("context-" + str(i), body)
+            guard.complete_model("context-" + str(i), SimpleNamespace(input_tokens=2, output_tokens=1, total_tokens=3))
+        before, _ = parse(_remaining_budget_context(grant, journal, calls=0, dispatches=0))
+        assert before["limits"]["model_runs"] == 32 and before["remaining"]["model_runs"] == 27
+        original_bytes = (guard.root / "accounting.json").read_bytes()
+        context, physical = parse(guard.budget_context(_remaining_budget_context, grant, journal,
+            calls=0, dispatches=0, remaining_wall_seconds=42, response_input_tokens=100, response_output_tokens=100))
+        assert context["limits"]["model_runs"] == 6 and context["remaining"]["model_runs"] == 1
+        assert context["used"]["model_runs"] == 5 and context["used"]["input_tokens"] == 10
+        assert physical["case_provider_attempts"] == physical["shared_provider_attempts"] == 5
+        assert context["remaining"]["wall_seconds"] == 42
+        assert context["limits"]["output_tokens_per_response"] is None
+        assert physical["shared_remaining_output_tokens"] is None and physical["shared_token_limit_kind"] == "combined_only"
+        assert (guard.root / "accounting.json").read_bytes() == original_bytes
+        with guard._ledger() as state:
+            assert sum(row["role"] == "helper" for row in state["requests"]) == 1
+    candidate = {**p._case_identity(s.settings, s.assessment["work_evidence"], "candidate",
+        s.case, stage="development"), "source_sha256": p.sha(s.candidate)}
+    with guard.case(candidate):
+        guard.start_case_once(candidate)
+        guard.reserve_model("context-inflight", {"model": "gpt-6-astra", "reasoning": {"effort": "medium"}})
+    with guard.case(s.identity):
+        original_bytes = (guard.root / "accounting.json").read_bytes()
+        context, physical = parse(guard.budget_context(_remaining_budget_context, grant, journal,
+            calls=0, dispatches=0, response_input_tokens=100, response_output_tokens=100))
+        assert context["measurement"] == "unmeasured"
+        assert context["remaining"]["model_runs"] is None
+        assert context["remaining"]["input_tokens"] is context["remaining"]["output_tokens"] is None
+        assert context["used"]["input_tokens"] is context["used"]["output_tokens"] is None
+        assert physical["unknown_attempts"] == 1 and physical["remaining_provider_attempts"] is None
+        assert physical["shared_input_tokens"] is physical["shared_output_tokens"] is None
+        assert (guard.root / "accounting.json").read_bytes() == original_bytes
+        with pytest.raises(p.ComponentWorkProductionError, match="unmeasured"):
+            guard.reserve_model("context-no-unknown-send", {"model": "gpt-6-astra", "reasoning": {"effort": "medium"}})
+    with guard.case(candidate):
+        guard.complete_model("context-inflight", SimpleNamespace(input_tokens=2, output_tokens=1, total_tokens=3))
+    with guard.case(s.identity):
+        original_bytes = (guard.root / "accounting.json").read_bytes()
+        context, physical = parse(guard.budget_context(_remaining_budget_context, grant, journal,
+            calls=0, dispatches=0))
+        assert context["limits"]["model_runs"] == 5 and context["remaining"]["model_runs"] == 0
+        assert physical["case_provider_limit"] == 6 and physical["shared_provider_limit"] == 6
+        assert physical["case_provider_attempts"] == 5 and physical["shared_provider_attempts"] == 6
+        assert physical["shared_input_tokens"] == 12 and physical["shared_output_tokens"] == 6
+        with pytest.raises(p.ComponentWorkProductionError, match="allowance exhausted"):
+            guard.reserve_model("context-no-shared-send", {"model": "gpt-6-astra", "reasoning": {"effort": "medium"}})
+        assert (guard.root / "accounting.json").read_bytes() == original_bytes
+    assert vars(grant) == grant_before and journal.model_attempts == 5

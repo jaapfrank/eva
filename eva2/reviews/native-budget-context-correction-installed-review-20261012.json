@@ -1,0 +1,138 @@
+{
+  "bindings": {
+    "hostConfigurationAfterSha256": "533900b469eb9556aa62ddcc9c65147a1935bf031502d58659a1321150712cd4",
+    "hostConfigurationBeforeSha256": "43874046640254e041af33a5cea2f9df366c8e874373755024e3d8759966c6bd",
+    "inactiveProspectiveSetupManifestSha256": "9f0cc1d60e9b5674a1ae82833787ba55fd3c5175dac8caa25e9ff774f2599c78",
+    "installation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/install-result.private.json",
+      "sha256": "f4c8a203bc0be694f882a4518f70bd06a3a3224530a303743f95838099c2eff4"
+    },
+    "installationBefore": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/install-before.private.json",
+      "sha256": "09315d6bcbd46cbb62adb1c4e97962ba197e6aa4e97cdafb3b87b4d9c897a995"
+    },
+    "ordinaryRunnerSha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+    "priorDiagnosisSha256": "3ab76b34baebae5b5a611694f02725740a04cd52e7fdb00f8f84c38e7115e475",
+    "publicEvidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/native-budget-context-correction-installed-20261012.json",
+      "sha256": "205b534a174625c2783597a1d9c2fe21b1cfc7be05533aa42e26fbea49ec4a69"
+    },
+    "sourceFiles": {
+      "eva2/src/eva/operations/component_native_work_producer.py": "a5c8a6b47dc1b34313c8e56995368760502b7cceaffe4ff91c8472b952587818"
+    },
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/frozen-source.private.json",
+      "sha256": "cfba8799db715c34a1a997c08f47d2c63a0d81840c7856f7272718ac6d9812e1"
+    },
+    "sourceManifestSha256": "cfba8799db715c34a1a997c08f47d2c63a0d81840c7856f7272718ac6d9812e1",
+    "sourcePatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/source.patch",
+      "sha256": "c69d9e47fa3d2b1dd01093ebe8ce883fdcaf7f414b1e0aec04af80f2ac43fd71"
+    },
+    "sourceResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/source-result.private.json",
+      "sha256": "d5808176de7bc010a50f3b280140244fc6820e70e1500313555ab4d199d6728d"
+    },
+    "targetedChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-budget-context-correction/targeted-checks.private.json",
+      "sha256": "6a5e8e967998a1513b0c28fe75f591f71b31a8e2973d1175e81ab0a6a3d791c0"
+    },
+    "testFiles": {
+      "eva2/tests/operations/test_component_native_work_producer.py": "ef35b19ebfe4141a1041a5a5bbbec34ad29635827631663b05f233097739e6d8"
+    },
+    "testJunitSha256": "5b013b569327ff28de3ce4f246dd89bf62d4628b5d4e661263d2b22a868afb70"
+  },
+  "contract": "EvaIndependentNativeBudgetContextCorrectionInstalledReview/v1",
+  "decision": "GO",
+  "decisions": {
+    "fullAide2": "OPEN",
+    "installation": "GO",
+    "newNativeInput": "NOT_GRANTED",
+    "publication": "GO",
+    "qualityGain": "NOT_PROVED",
+    "source": "GO",
+    "wholeGoal": "OPEN"
+  },
+  "installationFindings": {
+    "actualHostImportOriginCorrectFromReceipt": true,
+    "changedHostModules": 1,
+    "closedBuilderRefsRawHashMatches": 24,
+    "closedInstallationRefsRawHashMatches": 10,
+    "configurationLeafDeltas": [
+      "/work_execution_producers/bootstrap~1delegated_digital_runner.py/producer/producer_file",
+      "/work_execution_producers/bootstrap~1delegated_digital_runner.py/producer/producer_sha256",
+      "/final_component_assessments/assessments/bootstrap~1delegated_digital_runner.py/work_execution/producer/producer_file",
+      "/final_component_assessments/assessments/bootstrap~1delegated_digital_runner.py/work_execution/producer/producer_sha256"
+    ],
+    "configurationRestSemanticallyExact": true,
+    "coreWorkerPreservedAndHealthyFromReceipt": true,
+    "countsAreSeparateSetsNotSummedAsUnique": true,
+    "existingServiceRestarts": 1,
+    "healthFromExactInstallationReceipt": {
+      "http_status": 200,
+      "payload": {
+        "status": "ready"
+      }
+    },
+    "noIndependentFactoryDockerHealthRepeat": true,
+    "otherHostSourcesRawHashMatches": 37,
+    "prospectiveRoundTemplatesByteUnchanged": true,
+    "repositoryHostAndImmutableProducerRawHashesMatch": true
+  },
+  "limitations": [
+    "This GO approves only this exact technical source/install/publication slice.",
+    "Separate global input/output split, unknown-usage guard and measured-after-response ceilings remain existing constraints; no guaranteed in-flight token-cost cap.",
+    "All prior failed/ambiguous closed episodes, raw observations and usage remain historical evidence.",
+    "The prospective new product round remains inactive and needs exact source/runtime/admission/publisher/config and input review."
+  ],
+  "openBlockers": [],
+  "publicationFindings": {
+    "noNewInputOrQualityOrMainGoalClaim": true,
+    "noOldScoreClockStatusLedgerRevision": true,
+    "priorInferenceQualified": "Previous registered-cap failures and unfinished work remain unchanged. The newly proven broader-grant display mismatch limits inference that strategy alone failed to reserve completion room; exclusive causality and improved future behaviour remain unproved.",
+    "publicEvidenceImmutablePendingSnapshot": true,
+    "sourceAndInstallationOnly": true,
+    "unknownDevelopmentCreditsAndCostsRetained": true
+  },
+  "reviewedAt": "2026-10-12T07:53:04.573203+00:00",
+  "scope": "Exact producer budget-context source correction, one model-free regression node, existing host installation and bounded factual publication.",
+  "sourceFindings": [
+    {
+      "finding": "Display and reserve_model now use identical current-case request predicate, matching source_sha256 and case_id. All physical helper rows are included; projected model room is capped by ordinary grant, case allowance and shared allowance.",
+      "line": 414,
+      "source": "eva2/src/eva/operations/component_native_work_producer.py"
+    },
+    {
+      "finding": "UNKNOWN or any unfinished request makes provider/token remaining values null and measurement unmeasured. Existing enforcement still rejects a subsequent provider request; no zero-usage substitution.",
+      "line": 427,
+      "source": "eva2/src/eva/operations/component_native_work_producer.py"
+    },
+    {
+      "finding": "Combined shared token room is displayed as combined_only. response_output_tokens and shared_remaining_output_tokens are null. Ordinary per-case grant output space is not an attestation of remaining global output split; existing separate host split-dispatch accounting remains unchanged.",
+      "line": 461,
+      "source": "eva2/src/eva/operations/component_native_work_producer.py"
+    },
+    {
+      "finding": "Temporary context hook is installed and restored with the existing PhysicalAccounting install/close lifecycle. It changes display proxies, not retained specs, grants, runner code, strategy literal, fixed criteria, case caps or dispatch policy.",
+      "line": 713,
+      "source": "eva2/src/eva/operations/component_native_work_producer.py"
+    }
+  ],
+  "usage": {
+    "codexDevelopmentCredits": "unknown",
+    "creditCosts": "unknown",
+    "newReviewerEvaModelRequests": 0,
+    "newReviewerNativeRuns": 0,
+    "recordedCorrectionEvaModelRequests": 0,
+    "recordedCorrectionNativeRuns": 0
+  },
+  "validation": {
+    "coverage": "Original displayed32/remaining27 vs physical6/remaining1, one physically counted synthetic helper, unknown/inflight nulls and next-send refusal, shared exhaustion and byte-identical accounting/grant.",
+    "coverageLimit": "One grouped synthetic node; no real native behaviour, latency, efficiency, cleanup-hook exercise or quality gain follows from it.",
+    "junitPassAndHashesIndependentlyChecked": true,
+    "newReviewerTests": 0,
+    "recordedCommandReturnCode": 0,
+    "recordedPytestSeconds": 1.78,
+    "recordedUniqueTestNodes": 1
+  }
+}

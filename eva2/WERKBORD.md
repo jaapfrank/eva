@@ -1,4 +1,31 @@
-## Actueel vervolg 12 oktober — stopoorzaak bekend; kandidaat niet toegepast
+## Actueel vervolg 12 oktober — planningruimte gecorrigeerd en geïnstalleerd
+
+Een concrete adapterfout is bevestigd: Eva zag in de verbeterproef 25/27 resterende
+aanvragen terwijl er werkelijk nog één over was. Alleen de bestaande native
+producerprojectie is gecorrigeerd. Zij toont de fysieke case-/gedeelde ruimte,
+inclusief helpers; UNKNOWN blijft onbekend. Alleen gecombineerde tokenruimte is
+bekend, geen verzonnen aparte uitvoerquota. Gewone uitvoerder, grant, strategie,
+oorspronkelijke criteria en grenzen zijn ongewijzigd.
+
+Eén gerichte modelvrije controle geslaagd. Exacte bron geïnstalleerd in de bestaande
+hostservice met één herstart; health200. De overige 37 hostbronnen, kern/werker,
+configuratie en gesloten bewijs blijven behouden. Onafhankelijke bron-, interface- en installatiereview GO. Nul nieuwe Eva-modelaanvragen of native episodes.
+
+De eerdere strategie-inferentie wordt door deze adapterfout gekwalificeerd:
+de oude grensfouten en bewijsbytes blijven staan; geen bewezen enige oorzaak,
+kwaliteitswinst of hoofdafronding. De oude kandidaat blijft niet toegepast.
+Nu één passende productronde via de bestaande verbeterroute aansluiten, met
+dezelfde criteria en onafhankelijke eindbeoordeling; alleen bewezen winst toepassen
+en later gebruiken. Geen oude proef heropenen of nieuwe concurrentenserie.
+
+Het volledige projectgoal blijft actief. 39/48 historische afrondingen en
+acceptaties behouden. Volledige AIDE² en gezinsacceptatie blijven open.
+Spraak geparkeerd; geen handeling van Jaap nodig.
+Resultaat: eva2/evidence/product/native-budget-context-correction-installed-20261012.json.
+Review: eva2/reviews/native-budget-context-correction-installed-review-20261012.json.
+Dashboardinhoud bijgewerkt: 2026-10-12T09:54:29.039336+02:00.
+
+## Historisch 12 oktober — eerdere diagnose, later gekwalificeerd door adapterfout
 
 De uitvoerwaarnemer is geïnstalleerd en onafhankelijk beoordeeld. De drie
 onvoltooide ontwikkeltaken bereikten hun vaste proefgrens van 8, 8 en 6 aanvragen.
