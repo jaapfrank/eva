@@ -1,4 +1,29 @@
-## Actueel 12 oktober — algemene uitvoering gecorrigeerd; eigen voorstel blijft open
+## Actueel 13 oktober — voorstel niet af; contextoorzaak gericht herstellen
+
+De gewone generatie13 is gesloten met input_budget_exceeded. Alle10 aanvragen
+hebben complete usage:549.014 bekende tokens en10 tools. Eva bewaart revision7
+van haar werknotities, maar heeft geen nieuw voorstel opgeslagen of eindresultaat
+teruggelezen. Het eerdere9.240-byte tussenbestand blijft ongewijzigd. Vier
+leesselecties zijn exact herhaald. Historisch totaal en creditkosten blijven onbekend.
+
+De geïnstalleerde broncorrectie houdt gewone tools beschikbaar en bewaart oude
+bevindingen; zij bleek onvoldoende voor deze uitvoering. Geen efficiëntiewinst,
+productafronding of nieuwe voortzetting claimen. Onafhankelijke review staat alleen
+publicatie van deze feiten toe. Het bestaande gehele goal blijft actief,
+39/48 oorspronkelijk en39/54 uitgebreid blijven ongewijzigd.
+
+Nu de bewezen contextdruk gericht herstellen: oude succesvolle pure bronlezingen
+vóór werkelijk opgeslagen bevindingen via hun bestaande bevoegde bronreaders
+beschikbaar houden. Eerst de volledige149-receiptcontext en ruimte voor een werkelijk
+opgeslagen voorstel/teruglezing controleren. Geen blind nieuw modelvervolg,
+handgeschreven Tuya-voorstel, extra vergelijkingsserie of spraakwerk. Fouten,
+UNKNOWN, externe effecten, oorspronkelijke bronnen en privacy blijven behouden.
+HA-migratie gebeurt pas na apart akkoord op het door Eva afgeronde voorstel.
+
+Resultaat:eva2/evidence/product/research-progress-context-ordinary-result-20261012.json.
+Review:eva2/reviews/research-progress-context-ordinary-result-review-20261012.json.
+
+## Historisch 12 oktober — algemene uitvoering gecorrigeerd; eigen voorstel blijft open
 
 Generatie12 is gesloten met input_budget_exceeded:15 complete gemeten responses,
 15 tools en795.700 bekende tokens. Volledig historisch taakverbruik en creditkosten

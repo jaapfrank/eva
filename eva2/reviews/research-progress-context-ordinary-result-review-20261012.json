@@ -1,0 +1,101 @@
+{
+  "contract": "EvaIndependentOrdinaryTerminalPublicationReview/v1",
+  "reviewedAt": "2026-10-12T22:20:55.975396+00:00",
+  "verdict": "GO",
+  "scope": "Exacte beperkte feitenpublicatie van gesloten Gen13; geen uitvoer-, installatie- of invoertoelating.",
+  "bindings": {
+    "publicResult": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-ordinary-result-20261012.json",
+      "sha256": "7b5b0c8c929e8e64e5e89377e717a602f00a622b3e066d0bc80c75284ef45cd6"
+    },
+    "terminalObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation-final.private.json",
+      "sha256": "2df139a56d60e32097eb7762a4292d4cfb14b4db6e88304fcc11cc33a4af57f0"
+    },
+    "predeclaredOriginalCriteria": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/end-review/original-readonly-proposal-end-criteria.private.json",
+      "sha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444"
+    },
+    "accounting": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-accounting.private.json",
+      "sha256": "b0c133c262a44d858e27444e042f2d30394035f131dd6c158937708e7571df68"
+    },
+    "ownerTerminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/continuation-work-observer-status-2.private.json",
+      "sha256": "ace4c5402c4df015e148bc54cc287f41c9d2d0f6d0f66d3ef62a4f239884e6c8"
+    },
+    "ownerProgress": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/continuation-progress-observer-status-2.private.json",
+      "sha256": "f95d3e5f700ab767b91f74c1fcdb53a4d7b593ca2cfeb748ffd54d7d45e0e5a1"
+    },
+    "retainedLocalReceipts": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-receipts.private.json",
+      "sha256": "d793e3d8b3bf44b4abcb60e50ac8629eab2ea6add540c0bd9d9b03347c519770"
+    },
+    "documentObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-document.private.json",
+      "sha256": "bbc83b09420d9aee67e5647bb56b9c0b1e3f53ad8cb0c417ed1f4b115384326e"
+    },
+    "preservedObserverBeforeAliasCorrection": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation.private.json",
+      "sha256": "a71a2aeb04e74d11bc9659d94285e9287a9de135f3a347b3a50bdc9cc7ea9f3c"
+    }
+  },
+  "originalTaskVerdict": "INCOMPLETE",
+  "confirmed": {
+    "workId": "work:eva-resume:36d06219-cec5-5a7b-a144-fd01e54de3ef",
+    "state": "failed",
+    "failureReason": "input_budget_exceeded",
+    "failureFingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd",
+    "admittedCompleteMeasuredRequests": 10,
+    "inputTokens": 546835,
+    "outputTokens": 2179,
+    "knownTokens": 549014,
+    "toolCalls": 10,
+    "allCurrentStreamsClosed": true,
+    "currentUnknownOrInflight": 0,
+    "localReads": 9,
+    "savedWorkingNoteCount": 1,
+    "workingNotesRevision": 7,
+    "originalStepStates": {
+      "inventory": "working",
+      "dependencies": "working",
+      "proposal": "working"
+    },
+    "exactRepeatedSelectionSteps": [
+      140,
+      143,
+      145,
+      147
+    ],
+    "proposalFileBytes": 9240,
+    "proposalFileSha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+    "proposalFileUnchanged": true,
+    "newProposalSave": false,
+    "finalProposalReadback": false,
+    "nativeConfirmedResult": false,
+    "delivery": "unbound"
+  },
+  "limitations": [
+    "De actuele tien aanvragen zijn volledig gemeten; de gewone taakusage blijft partial. Volledig historisch totaal en creditkosten blijven onbekend.",
+    "De afzonderlijke ruwe interne receipt voor stap142 ontbreekt in deze export. De actuele OwnerAPI-voortgang en accountingmetadata bevestigen een opgeslagen rev7; dit is modelgeschreven voortgang, geen onafhankelijke taakafronding.",
+    "De oorspronkelijke eindvoorwaarden vereisen een concreet Eva-geschreven voorstel en afzonderlijke teruglezing. Het ongewijzigde tussenbestand en working-notities bewijzen die niet.",
+    "De herhaalde selecties zijn bewezen; modelintentie, algemene kwaliteit, werkzaamheid en oorzaak achter de invoerdruk worden hiermee niet vastgesteld.",
+    "Het oude observerbestand met de metadata-aliasfout blijft behouden; de gecorrigeerde chronologische metadata verandert geen ruwe uitvoering of accounting.",
+    "De bestaande broninstallatie wordt hier niet opnieuw beoordeeld. Geen nieuwe native fit, besparing, productafronding of eigenaaracceptatie bewezen."
+  ],
+  "publicationSafe": true,
+  "publicPendingSnapshotPreserved": true,
+  "historicalUnknownsPreserved": true,
+  "originalCriteriaUnchanged": true,
+  "newInputAuthority": false,
+  "newComparisonSeries": false,
+  "manualProposal": false,
+  "reviewerActions": {
+    "existingFilesReadOnly": true,
+    "newTests": 0,
+    "modelRequests": 0,
+    "nativeActions": 0,
+    "databaseWrites": 0
+  }
+}
