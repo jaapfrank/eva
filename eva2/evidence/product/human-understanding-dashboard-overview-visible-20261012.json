@@ -1,0 +1,35 @@
+{
+  "contract": "EvaHumanUnderstandingOverviewPublication/v1",
+  "checkedAt": "2026-10-12T12:19:53.756360+02:00",
+  "taskIds": [
+    "HUE1.1",
+    "HUE2.1",
+    "HUE3.1",
+    "HUE4.1",
+    "HUE5.1",
+    "HUE6.1"
+  ],
+  "source": "existing workboard and owner integration design",
+  "visibleStatusCounts": {
+    "planned": 5,
+    "in_progress": 1,
+    "completed": 0
+  },
+  "productTaskCompletionChanged": false,
+  "productionBuild": "passed and served on existing dashboard; old asset files retained",
+  "browserVerified": true,
+  "taskNavigationVerified": true,
+  "runtimeModelCalls": 0,
+  "developmentCredits": "unknown",
+  "ownerProposal": "eva2/design/product/human-understanding-engine-owner-proposal-20261011.txt",
+  "integrationDesign": "eva2/design/product/human-understanding-engine-integration-20261012.md",
+  "originalClosuresPreserved": "39 of original48;39 of54 expanded tasks",
+  "goalStatus": "active; complete project not delivered",
+  "scope": "visible assessment and six existing HUE tasks; no new Eva functionality",
+  "sourceHashes": {
+    "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx": "589916be5c293ee9b5953160a7cf9f9a623d6ec0ba75fe5f41265ee29d0d4297",
+    "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css": "4b5b41d0f303d344f02fa7883b3d24c66d9263c2f05868f1c4e0bbbd78876706"
+  },
+  "preparationFailure": "First administrator build could not replace root-owned assets; successful root build kept old assets and replaced index, no service restart",
+  "screenshot": "C:/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/human-understanding-overview-visible-20261012.png"
+}

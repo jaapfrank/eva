@@ -138,6 +138,25 @@ function Roadmap({ phases, tasks, searching }) {
 }
 
 const componentIcons = { 'answer-stream':'↗', conversation:'☏', memory:'◈', initiative:'✦', tools:'⚒', voice:'♪', projects:'▤', browser:'▣', installation:'⟳' };
+function HumanUnderstandingOverview({ project, onWork }) {
+  const design = project.deliveryPlan?.humanUnderstandingEngine;
+  if (!design) return null;
+  const remaining = (project.deliveryPlan.implementationSlices || []).flatMap(slice => slice.remainingTasks || []);
+  const tasks = (design.taskIds || []).map(id => remaining.find(task => task.id === id)).filter(Boolean);
+  return <section className="hue-overview" aria-labelledby="hue-overview-title">
+    <header><div><h2 id="hue-overview-title">Jouw ontwerp · Human Understanding Engine</h2>
+      <p>Eva moet verwachtingen met echte uitkomsten vergelijken en daardoor haar latere gedrag aanpassen. Je ontwerp is verwerkt in deze zes bestaande taken.</p>
+    </div><button className="board-link" onClick={onWork}>Bekijk de taken per onderdeel →</button></header>
+    <ul className="hue-task-list">{tasks.map(task => {
+      const state = task.status === 'completed' ? 'completed' : task.status === 'in_progress' ? 'in_progress' : 'open';
+      const label = state === 'completed' ? 'Afgerond' : state === 'in_progress' ? 'In uitvoering' : task.status === 'blocked' ? 'Open · geblokkeerd' : 'Nog open';
+      return <li className={`hue-task ${state}`} key={task.id} data-hue-task-id={task.id} data-hue-status={task.status}>
+        <div><span className="hue-task-id">{task.id}</span><strong>{task.title}</strong></div>
+        <span className="hue-task-status">{label}</span>
+      </li>;
+    })}</ul>
+  </section>;
+}
 function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onComparison, onRefresh, refreshing }) {
   const overview = project.deliveryOverview;
   if (!overview) return <p role="alert">Het actuele opleveroverzicht ontbreekt.</p>;
@@ -167,6 +186,7 @@ function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onCompar
       {(stale || freshness !== 'current') && <span>Dit is de laatst vastgelegde stand; huidig werk kan inmiddels veranderd zijn.</span>}
       <button className="board-link" onClick={onRefresh} disabled={refreshing}>{refreshing ? 'Ophalen…' : 'Nu verversen'}</button>
     </div>
+    <HumanUnderstandingOverview project={project} onWork={onWork}/>
     <section className="delivery-kanban" aria-label="Projectwerkbord">
       <article className="board-lane delivered"><h2><span aria-hidden="true">✓</span> Laatst opgeleverd</h2>{latest ? <><small>{formatDeliveryDate(latest.date)} · {latest.state === 'accepted' ? 'door jou geaccepteerd' : 'geïnstalleerd'}</small><h3>{latest.title}</h3><p className="lane-summary">{latest.summary || latest.result}</p><details><summary>Resultaat, open punten en bewijs</summary><p>{latest.result}</p><p>{latest.remaining}</p><small>{latest.source}</small></details></> : <p>Geen geïnstalleerde oplevering vastgelegd.</p>}</article>
       <article className="board-lane doing"><h2><span aria-hidden="true">●</span> Laatst gemeld werk</h2><small>{stale || freshness !== 'current' ? 'Huidige uitvoering niet bevestigd' : overview.now.state}</small><h3>{overview.now.title}</h3><p className="lane-summary">{overview.now.summary || overview.now.detail}</p><details><summary>Werk en eindvoorwaarde</summary><p>{overview.now.detail}</p><p><b>Klaar wanneer:</b> {overview.now.doneWhen}</p></details></article>

@@ -5065,7 +5065,7 @@
           "executor": "/root",
           "reviewer": "/root/product_execution_memory_review",
           "summary": "De lopende AIDE²-aansluiting wordt afgerond. Jouw Human Understanding Engine is gelezen en vertaald naar zes zichtbare afrondingen.",
-          "detail": "De broncorrectie is gecontroleerd; de definitieve uitvoerbinding wordt voorbereid. Nog geen nieuwe Eva-uitvoering of kwaliteitswinst. Daarna tegenbewijs en verwachting-uitkomst in het bestaande geheugen verbinden.",
+          "detail": "De bestaande AIDE²-uitvoering krijgt een coherente aansluiting tussen client, beoordeling en werkelijk modelprofiel. De broncorrectie is gecontroleerd; er is nog geen nieuwe modeluitvoering of toegepaste kwaliteitswinst. Daarna HUE1.1/HUE3.1: tegenbewijs en echte uitkomsten laten doorwerken.",
           "doneWhen": "De volledige cyclus levert een onafhankelijk beoordeelde kandidaat; alleen bewezen winst wordt toegepast en daarna bij ander werk gebruikt.",
           "source": "eva2/evidence/product/dashboard-path-input-repair-current-20261012.json",
           "previousInstalledCorrection": "eva2/evidence/product/native-program-observation-installed-20261012.json",
@@ -5132,7 +5132,7 @@
           "detail": "Codex maakt de technische kringloop af. Je oorspronkelijke acceptaties blijven behouden; nu geen herhaalproef nodig."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T11:46:06.001367+02:00",
+        "reviewedAt": "2026-10-12T12:19:53.756360+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5233,8 +5233,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T11:46:06.001367+02:00",
-      "checkedAt": "2026-10-12T11:46:06.001367+02:00",
+      "reviewedAt": "2026-10-12T12:19:53.756360+02:00",
+      "checkedAt": "2026-10-12T12:19:53.756360+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11527,7 +11527,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T11:46:06.001367+02:00",
+        "checkedAt": "2026-10-12T12:19:53.756360+02:00",
         "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Persoonlijkheid en geheugenbasis geaccepteerd; leercyclus, zelfstandig initiatief en volledige zelfverbetering nog open.",
         "note": "Oorspronkelijk 39/48 kleine afrondingen behouden. Jouw ontwerp voegt zes ontbrekende verbindingen toe: nu 39/54 kleine taken afgerond. Dit is geen productpercentage. Het volledige projectgoal en AIDE² blijven open; geaccepteerde resultaten worden niet heropend.",
@@ -11618,7 +11618,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T11:46:06.001367+02:00",
+      "lastUpdatedAt": "2026-10-12T12:19:53.756360+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -12109,7 +12109,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T11:46:06.001367+02:00",
+      "updatedAt": "2026-10-12T12:19:53.756360+02:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -30175,9 +30175,9 @@
           "independentClosureReview": "eva2/reviews/l3-reusable-cycle-closure-review-20261007.json"
         }
       },
-      "lastUpdated": "2026-10-12T11:46:06.001367+02:00",
-      "updatedAt": "2026-10-12T11:46:06.001367+02:00",
-      "checkedAt": "2026-10-12T11:46:06.001367+02:00",
+      "lastUpdated": "2026-10-12T12:19:53.756360+02:00",
+      "updatedAt": "2026-10-12T12:19:53.756360+02:00",
+      "checkedAt": "2026-10-12T12:19:53.756360+02:00",
       "ownerPriority20261010": {
         "authorization": "Latest three direct owner requests in current chat",
         "outcomes": [
@@ -30413,7 +30413,10 @@
         "memoryRoute": "existing PostgreSQL/Hindsight",
         "modelRoute": "Sol/none simple contact; Astra/medium or higher for work",
         "newPlatform": false,
-        "ownerActionRequired": false
+        "ownerActionRequired": false,
+        "overviewVisible": true,
+        "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
+        "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt."
       }
     },
     "dashboardClarityCorrection20260922": {
@@ -32006,6 +32009,29 @@
       "nativeReceiptSha256": "7c377ff4fdd300fb5f7b8ec5b45ed2b804af786d2d296522779d0a20a2c2833c",
       "authenticNewInitiativeUsed": false,
       "fullLearningCycleCompleted": false
+    },
+    "humanUnderstandingOverviewVerification": {
+      "checkedAt": "2026-10-12T12:19:53.756360+02:00",
+      "taskIds": [
+        "HUE1.1",
+        "HUE2.1",
+        "HUE3.1",
+        "HUE4.1",
+        "HUE5.1",
+        "HUE6.1"
+      ],
+      "source": "existing workboard and owner integration design",
+      "visibleStatusCounts": {
+        "planned": 5,
+        "in_progress": 1,
+        "completed": 0
+      },
+      "productTaskCompletionChanged": false,
+      "productionBuild": "passed and served on existing dashboard; old asset files retained",
+      "browserVerified": true,
+      "taskNavigationVerified": true,
+      "runtimeModelCalls": 0,
+      "developmentCredits": "unknown"
     }
   },
   "activeTaskId": "AU-008",
@@ -34477,5 +34503,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T11:46:06.001367+02:00"
+  "updatedAt": "2026-10-12T12:19:53.756360+02:00"
 }

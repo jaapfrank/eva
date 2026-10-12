@@ -256,3 +256,21 @@
 @media(max-width:1100px){.comparison-outcomes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.comparison-outcomes,.comparison-competitors{grid-template-columns:1fr}.comparison-results{padding:15px}}
 .comparison-history-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.comparison-history-metrics article{min-width:0}.comparison-history-metrics p,.comparison-history-metrics li{font-size:12px;overflow-wrap:anywhere}@media(max-width:700px){.comparison-history-metrics{grid-template-columns:1fr}}
+
+.hue-overview{background:#fff;border:1px solid #dce3d8;border-radius:14px;padding:22px;margin:22px 0}
+.hue-overview>header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.hue-overview h2{font-size:20px;line-height:1.35;margin:0;letter-spacing:-.4px}
+.hue-overview header p{font-size:13px;max-width:760px;margin:8px 0 0;color:#52635a}
+.hue-overview header button{flex-shrink:0}
+.hue-task-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;margin:18px 0 0;padding:0}
+.hue-task{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;border:1px solid #e3e8df;border-left:3px solid #aa3030;border-radius:8px;padding:12px;background:#fffafa}
+.hue-task.in_progress{border-left-color:#9a6b19;background:#fff9ed}
+.hue-task.completed{border-left-color:#276632;background:#f1f8ef}
+.hue-task-id{display:block;font-size:11px;color:#637168;margin-bottom:3px}
+.hue-task strong{display:block;font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+.hue-task-status{font-size:11px;font-weight:650;white-space:nowrap;color:#aa3030}
+.hue-task.in_progress .hue-task-status{color:#875c13}
+.hue-task.completed .hue-task-status{color:#276632}
+@media(max-width:1100px){.hue-overview>header{flex-direction:column;gap:10px}}
+@media(max-width:800px){.hue-task-list{grid-template-columns:1fr}}
+@media(max-width:600px){.hue-overview{padding:16px}.hue-overview h2{font-size:18px}.hue-task{gap:8px;padding:10px}}
