@@ -1,0 +1,102 @@
+{
+  "contract": "EvaIndependentInstallationAndInputReview/v1",
+  "checkedAt": "2026-10-12T04:49:38.786551Z",
+  "decision": "GO",
+  "installationDecision": "GO",
+  "nativeInputDecision": "GO_ONCE",
+  "openBlockers": [],
+  "scope": "Exact geïnstalleerde hosthelper/config en één nog ongebruikte gewone typedresume-constructioningang. Geen laterinput-, kwaliteitswinst-, fullAIDE²- of hoofddoelafronding.",
+  "bindings": {
+    "sourceReviewSha256": "30c0b3a2d1d45d783ee0f9841df7e24db670499b8ca0db9efdad75749537c1bf",
+    "genericHelperSourceReviewSha256": "328b7069d65b50cd7c84c60cd3695e21f72647bb28e5f437a265ae892fd8cf75",
+    "installationBeforeSha256": "2ffaf76d6de42c93cdda3e48076356a2a9a751e139205f04b29b835b1ba2b2fd",
+    "installationReceiptSha256": "c2058248611cd5292f59820b6609aaba3979ffaddd829f7b64ba62d3bef9eaf4",
+    "loadedImportReceiptSha256": "a71c516956213cd29bb818c8e7f626d3d3a18671f17dd9fc41b89ad67ef3e75d",
+    "driverManifestSha256": "956892b22236a3f1f1c1d0ed5dbab9885c43eb0b7a17b81ef257723d60758cb0",
+    "driverSha256": "33ea662084a2a128b93169f8cbac031a2d8eefa04ed6c787cdca2315297a570f",
+    "actualHostConfigurationSha256": "bf2d9246456e3e32dd38284ea414a7170b390039e776e681612ca2ee74a6dd78",
+    "actualHelperSha256": "f784232f0a8dbd81e01b41c981c8d885d74527ba8bc3871553483afa6f9aac71",
+    "workExecutionSha256": "67ea592a69a38a237f1a534f2fe266cab0596835c28eb65fcc2f601b2e00ff62",
+    "allocationSha256": "75d4a183717432f293baaf7404f5a1be534af51a346da0f9d7e30bdcbb4e57ed",
+    "resourcesSha256": "96ad611d15033dac08c99efef83c2dee2d0554ec2e86fdc8ef139ccd8d697771",
+    "runtimeAdmissionSha256": "d0eef1c19af7fcff73b5c79bf13f7cd7cc6799e02446db4998a38aa1e6e942c7",
+    "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872",
+    "closedPredecessor": {
+      "raw": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/raw-native.json",
+        "sha256": "bb6ea7b649d11607caf83d573b857faf6007a158313a66edb2ee4c1acf9ae23e"
+      },
+      "sealed": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/sealed-result.json",
+        "sha256": "7d2564552ac92017d88daa9ac5ef01a9ec5e77726452e9dfd585e00a67c64218"
+      },
+      "task_id": "work:eva-chat:01b7184a-a2b1-5c3c-9281-ad9a802feb7f"
+    }
+  },
+  "independentReadback": {
+    "hostFiles": 37,
+    "changedHostFiles": [
+      "eva/operations/component_application_runtime.py"
+    ],
+    "otherHostFilesPreserved": 36,
+    "actualHelperImportPath": "/home/administrator/project/.eva2-artifacts/agent-strategy-20261011/strategy-host-source/eva/operations/component_application_runtime.py",
+    "actualConfigurationHashMatches": true,
+    "previousHelperAndConfigurationPreserved": true,
+    "servicePid": 2769018,
+    "serviceState": "active/running",
+    "systemdAutomaticRestarts": 0,
+    "explicitHostRestartsPerReceipt": 1,
+    "serviceHealthHttpPerReceipt": 200,
+    "serviceHealthPerReceipt": "ready",
+    "coreAndWorkerCurrentHealth": "healthy/running",
+    "coreAndWorkerImagesPreserved": true,
+    "coreAndWorkerConfigHashPreserved": true,
+    "configurationHashShape": "SHA256(canonical Docker Config), zoals het oorspronkelijke before-bewijs",
+    "mountsComparedByDestinationAndPreserved": true,
+    "networkNamesPreserved": true,
+    "reviewerFactoryOrTestsRun": 0,
+    "reviewerModelOrAdmissionCalls": 0
+  },
+  "inputAuthorization": {
+    "decision": "GO_ONCE",
+    "stage": "construction",
+    "manifestSha256": "956892b22236a3f1f1c1d0ed5dbab9885c43eb0b7a17b81ef257723d60758cb0",
+    "dispatchOnceAbsentAtReview": true,
+    "typedResumeOnly": true,
+    "newIngressAuthorized": false,
+    "freshProviderAttemptCeiling": 7,
+    "cumulativeConstructionAttemptCeiling": 8,
+    "retainedPriorUsage": {
+      "provider_attempts": 1,
+      "physical_tools": 1,
+      "input_tokens": 4909,
+      "output_tokens": 78,
+      "active_seconds": 18.275491245964076
+    },
+    "cumulativeActiveSeconds": 150,
+    "newOrdinaryGenerationSeconds": 1200,
+    "globalProviderAttempts": 68,
+    "globalPhysicalTools": 100,
+    "globalInputTokenStopAndAcceptanceCeiling": 385000,
+    "globalOutputTokenStopAndAcceptanceCeiling": 15000,
+    "globalCombinedTokenStopAndAcceptanceCeiling": 400000,
+    "guaranteedInFlightTokenMaximumClaimed": false,
+    "retries": 0,
+    "candidateLimit": 1,
+    "sourceActorGrantStopRetentionAndCurrentLeaseRecheckedBeforeEffects": true,
+    "oldAttemptOrOnceReopened": false,
+    "laterInputAuthorized": false
+  },
+  "preservedLimitations": [
+    "De zes-naar-acht constructieallocation is expliciet prospectief vastgelegd; oorspronkelijke zes-budgetbytes en afgesloten foutbewijs blijven behouden.",
+    "Eerste healthread direct na expliciete restart kreeg connection refused; dezelfde service werd gereed zonder tweede installatie/restart.",
+    "De eerste onafhankelijke metadataweergave gebruikte producent-normalisatie tegenover een Docker-Config-only baseline en een andere mountrepresentatie. Vergelijking in de oorspronkelijke hashvorm en per Destination bevestigt behoud; er was geen runtimecorrectie.",
+    "Native uitvoering, kandidaatresultaat, eindbeoordeling en toepassing zijn nog niet uitgevoerd of bewezen door deze GO."
+  ],
+  "limits": {
+    "qualityGainProven": false,
+    "fullAIDE2Completed": false,
+    "wholeGoalCompleted": false,
+    "credits": "unknown"
+  }
+}

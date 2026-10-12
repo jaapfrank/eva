@@ -1,0 +1,85 @@
+{
+  "contract": "EvaComponentEvaluationClockInstalled/v1",
+  "checkedAt": "2026-10-12T05:08:48.575667+00:00",
+  "state": "installed",
+  "scope": "One adapter clock type correction in the existing core and worker; no native replay.",
+  "cause": {
+    "originalErrorFingerprint": "4769ed3a55b55f4e7d15a98e7b5c15f088efe4f1281df5985c30eb95b45569b0",
+    "exactModelFreeReproduction": true,
+    "failureBeforeHttpProducer": true,
+    "diagnosisSha256": "9a4f418f832530a6cb26985de320c8bb0ea164f2898c77fd26b3631f80b33b3f",
+    "originalFailedResult": "eva2/evidence/product/native-work-typed-resume-construction-result-20261012.json"
+  },
+  "source": {
+    "path": "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
+    "sha256": "6d7461d652987a54ac356c27efa152514869d1e52862e5d73f1292ca934637c2",
+    "review": "eva2/reviews/native-work-component-evaluation-clock-source-review-20261012.json",
+    "reviewSha256": "ff4a9fc08970c011a494f6848d58b53d1e8078a984ea04b0f1b05fd0d3ceca88",
+    "reviewDecision": "GO",
+    "targetedUniquePassNodes": 18,
+    "targetedCheckReceiptSha256": "b4db1fdd0d0afe400743cd486dc408e395707f79a231f5009b1cf60ab2aa811c",
+    "deadlineGrantCandidateCriteriaUnchanged": true,
+    "datetimeAndLegacyStringClockSupported": true
+  },
+  "installation": {
+    "receiptSha256": "a6e20fcf3fc98c756931784757e069eebefbc834c293c5c8cc0076db3f35bb84",
+    "containers": {
+      "core": {
+        "image": "sha256:80839f28cc873d39d2b283bdd1c18bb700eeb7d7689cf0359950adddea21f55a",
+        "health": "healthy",
+        "sourceCount": 342,
+        "unchangedSources": 341,
+        "sourceHash": "6d7461d652987a54ac356c27efa152514869d1e52862e5d73f1292ca934637c2",
+        "environmentValuesRetained": true,
+        "commandUserHealthcheckRetained": true,
+        "hostnameIsNewContainerId": true,
+        "mountsAndNetworksRetained": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:6e15c592a9283264e10539a84688e1630be09d6f44c5acf1411cd18df645c9fa",
+        "health": "healthy",
+        "sourceCount": 342,
+        "unchangedSources": 341,
+        "sourceHash": "6d7461d652987a54ac356c27efa152514869d1e52862e5d73f1292ca934637c2",
+        "environmentValuesRetained": true,
+        "commandUserHealthcheckRetained": true,
+        "hostnameIsNewContainerId": true,
+        "mountsAndNetworksRetained": true
+      }
+    },
+    "oneExistingImageUpdate": true,
+    "existingUpdater": "eva2/tools/installation_runtime_update.py",
+    "newWorkerProgramSha256": "cbffeafb4b3f23a8c1da01fa552a474be6123cb8d73266338f669d4278de1c35",
+    "otherReleaseFieldsRetained": true,
+    "ownerMandateUnchanged": true,
+    "sourceCountPerImage": 342,
+    "unchangedSourceCountPerImage": 341,
+    "noRollbackOrSecondInstall": true
+  },
+  "retainedPreparationFailures": {
+    "networkNoneFactoryCouldNotReachExistingCatalog": true,
+    "sameBuiltCandidateFactoryReadOnExistingNetworksSucceeded": true,
+    "verificationMistookEnvOrderAndAutoHostnameForConfigurationChanges": true,
+    "targetedReadbackCorrectedWithoutRuntimeMutation": true
+  },
+  "usage": {
+    "newEvaModelRequestsForCorrection": 0,
+    "newNativeComparison": false,
+    "closedConstructionNewTokens": 57214,
+    "closedConstructionCumulativeTokens": 62201,
+    "developmentCreditCosts": null
+  },
+  "result": {
+    "technicalSourceCorrectionInstalled": true,
+    "nativeEvaluationSuccessProven": false,
+    "candidateQualityImprovementProven": false,
+    "candidateApplied": false,
+    "laterUseProven": false,
+    "fullAide2Completed": false,
+    "newMainProductOutcomeCompleted": false,
+    "wholeProjectGoal": "active",
+    "ownerActionRequired": false
+  },
+  "next": "Align future retained-work/runtime bindings to the actual corrected program before further native input; evaluate the retained candidate and apply only independently proved improvement. Do not rearm the closed one-shot dispatch.",
+  "independentInstalledReview": "pending"
+}

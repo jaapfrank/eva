@@ -1,0 +1,103 @@
+{
+  "contract": "EvaComponentEvaluationClockInstalledReview/v1",
+  "checkedAt": "2026-10-12T05:10:51.606317+00:00",
+  "decision": "GO",
+  "openBlockers": [],
+  "scope": "Exact installed clock correction in the existing core and worker, and truthful bounded publication. No new native input, evaluation success or quality claim.",
+  "bindings": {
+    "publicEvidencePath": "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json",
+    "publicEvidenceSha256": "e5ef30182e99d472deef5a6d8d9ada2f76a48aa4c8a1e015b31067e298e22f77",
+    "installedReceiptSha256": "a6e20fcf3fc98c756931784757e069eebefbc834c293c5c8cc0076db3f35bb84",
+    "buildReceiptSha256": "3549d3007f6045ea473dd71de9b9803571c3f50a63cf76b9bf670fef45a89752",
+    "updateReceiptSha256": "255d50b247c1013ac9ce958af8fc76d7fddbc1b070689064f5e518ddd09f7e32",
+    "factoryProfilesSha256": "7964bc200c54e1a3e9ad2eeaf7e18ced26ad8bf127a0a59a0f341e250ebc4f3f",
+    "sourceReviewSha256": "ff4a9fc08970c011a494f6848d58b53d1e8078a984ea04b0f1b05fd0d3ceca88",
+    "sourceManifestSha256": "5f82f51007fdbc15ef009ad57d5f3c82ec2cebef2cd06f3b0ae5fb97fe2999ba",
+    "technicalDiagnosisSha256": "9a4f418f832530a6cb26985de320c8bb0ea164f2898c77fd26b3631f80b33b3f",
+    "boardSha256": "fb5f2495118b2d430c5a54f77f40bfcb78d44c83b564f764188d9c4f1b12cb87",
+    "documentSha256": {
+      "AGENTS.md": "bdb6a0fa56590ef31fae4e901e9b4c75657a0e3ff7c23f5e874fc0a13bf58e79",
+      "eva2/PROJECTDOEL.md": "c4ecc431f4fc138391fd2ba5aac8b860e6a9a217b9c60aab35ec358494983591",
+      "eva2/WERKBORD.md": "b00ddc0f05f9019dda85fb27dcd8b101432b5c58a34a5c04704f19409cb3d568"
+    }
+  },
+  "installation": {
+    "decision": "GO",
+    "containers": {
+      "core": {
+        "image": "sha256:80839f28cc873d39d2b283bdd1c18bb700eeb7d7689cf0359950adddea21f55a",
+        "health": "healthy",
+        "sourceCount": 342,
+        "changedSourceCount": 1,
+        "unchangedSourceCount": 341,
+        "moduleSha256": "6d7461d652987a54ac356c27efa152514869d1e52862e5d73f1292ca934637c2",
+        "beforeSourceInventorySha256": "1697c3ac89b3a8377d31f7838b2256066a8c191d70970ee1b33aa2c9d212ec8d",
+        "candidateSourceInventorySha256": "ac03b15b1660a5ddd38c4533e1943ef29219693dfc1c1f9e2533b12e75d60a1d",
+        "beforeContainerReadbackSha256": "aada29a472b5d9d079128ebcdf447958eab72e7e8b64b1b601bf69b83a0beff7",
+        "afterContainerReadbackSha256": "2beb36468e455779df82e78d2f382f4467d375555b91ccdf4eed3715c15d5dff",
+        "environmentValuesRetained": true,
+        "commandUserHealthcheckRetained": true,
+        "mountsAndNetworksRetained": true,
+        "hostConfigurationRetainedSemantically": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:6e15c592a9283264e10539a84688e1630be09d6f44c5acf1411cd18df645c9fa",
+        "health": "healthy",
+        "sourceCount": 342,
+        "changedSourceCount": 1,
+        "unchangedSourceCount": 341,
+        "moduleSha256": "6d7461d652987a54ac356c27efa152514869d1e52862e5d73f1292ca934637c2",
+        "beforeSourceInventorySha256": "d75d66d595d34f94f2d296ce7e5ba87f9cd4d9f3e97d1328acc17b3ff4978d08",
+        "candidateSourceInventorySha256": "bcb231df710aebe17d2997285b88a0c4ca9fe9fc6ada29ce3d4fc7769f8425d8",
+        "beforeContainerReadbackSha256": "30b825d94b0caba99537353580edd3befb4dee743785da1875bc4e93cfd47e1a",
+        "afterContainerReadbackSha256": "80eda6c0d224e5853a222fa93fe906682ad97ea83d9dfd23aba2abf5c0f15a3a",
+        "environmentValuesRetained": true,
+        "commandUserHealthcheckRetained": true,
+        "mountsAndNetworksRetained": true,
+        "hostConfigurationRetainedSemantically": true
+      }
+    },
+    "workerProgramSha256": "cbffeafb4b3f23a8c1da01fa552a474be6123cb8d73266338f669d4278de1c35",
+    "onlyChangedReleaseField": "worker_program_sha256",
+    "workerProfileModelEngineSchemaCapabilitiesAndTimeoutRetained": true,
+    "ownerMandateChangeRequired": false,
+    "configOrMandateModifiedForDerivedProgram": false,
+    "sourceMountReplacementAbsent": true,
+    "existingUpdaterStatus": "running_with_retained_mounts",
+    "oneUpdateWithoutRollback": true
+  },
+  "publication": {
+    "decision": "GO",
+    "causeConfirmedBeforeHttpProducer": true,
+    "closedExecutionRetained": true,
+    "freshClosedTokens": 57214,
+    "cumulativeClosedTokens": 62201,
+    "originalExecutionTasksMilestonesAndCompletionsEqualToHEAD": true,
+    "historicalClosures": "39/48 retained",
+    "fullGoalActive": true,
+    "qualityImprovementProven": false,
+    "fullAide2Completed": false,
+    "newMainProductOutcomeCompleted": false,
+    "futureProgramBindingsExplicitlyOpenBeforeInput": true,
+    "installedReviewPendingFieldRepresentsPublicationBeforeThisSeparateReview": true
+  },
+  "retainedPreparationFailures": [
+    "The first candidate factory on network=none could not reach the existing catalog; the same built image was then read on the two existing networks, with zero model/tool/action dispatch.",
+    "Root first compared environment/mount list order and automatic container hostname as configuration changes. Existing readbacks prove equal environment values and mounts by destination; only regenerated Compose/image labels and automatic identity changed. No second update or rollback."
+  ],
+  "verification": {
+    "newReviewerProbes": 0,
+    "newReviewerFactoryCalls": 0,
+    "testsRerun": 0,
+    "modelCalls": 0,
+    "evaluationReplay": false,
+    "protectedCasesScorersOrAnswersRead": false,
+    "independentlyComparedExistingSourceInventoriesAndContainerReadbacks": true
+  },
+  "limitations": [
+    "The closed constructor remains ambiguous/internal_error and is not an accepted evaluated candidate.",
+    "Host/work metadata with the old program pin stays historical; prospective coherent source/profile/admission binding is still required before any further native input.",
+    "No native-input authority, resume, one-shot rearm or paid work is granted by this installation/publication review.",
+    "No full AIDE², later-use, family acceptance, cost or efficiency advantage is established. Development credits remain unknown."
+  ]
+}

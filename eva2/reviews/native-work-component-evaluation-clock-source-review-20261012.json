@@ -1,0 +1,82 @@
+{
+  "contract": "EvaBoundedComponentEvaluationClockSourceReview/v1",
+  "checkedAt": "2026-10-12T05:03:20.196616+00:00",
+  "decision": "GO",
+  "openBlockers": [],
+  "scope": "Exact one-module source correction and one bounded image update for both current core and worker; no new native-input authority or quality claim.",
+  "sourceManifestSha256": "5f82f51007fdbc15ef009ad57d5f3c82ec2cebef2cd06f3b0ae5fb97fe2999ba",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
+      "sha256": "6d7461d652987a54ac356c27efa152514869d1e52862e5d73f1292ca934637c2"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "eva2/tests/application/test_scoped_component_evaluation_actions.py",
+      "sha256": "3a82ce78a5c482961e66b0a61d1bc96d94068ee4532d665e4b6128b4d7154d58"
+    }
+  ],
+  "bindings": {
+    "targetedChecksSha256": "b4db1fdd0d0afe400743cd486dc408e395707f79a231f5009b1cf60ab2aa811c",
+    "targetedLogSha256": "547576df32cd58eeba723416cefd20fb9ef0ebfc0d0d27137f0893344c94db7b",
+    "targetedXmlSha256": "ed2c3849d5e7ef9bda8ca9d0da2e10d1d5a611f97f19b3aad732df89f5a56304",
+    "diffSha256": "7907a18985013723a5e9222833afb74fc0b420cd2b2ac12ab568bca58127ca1c",
+    "implementerOriginalFaultReproductionSha256": "f70c0292dd21a028bc8f2bf0ab2a610267886edefe73b04bb370b268001b040e",
+    "independentDiagnosisSha256": "9a4f418f832530a6cb26985de320c8bb0ea164f2898c77fd26b3631f80b33b3f",
+    "originalAdapterSha256": "ebb15227a3cef67ffc190cfbc98a7f5a07f5960f2392db588bb667855767ef6a",
+    "closedRawNativeSha256": "2efe5418715bc2f3b0dea9e2614866eaf53b127ca01d7e2f1b99d20a92408da4",
+    "closedSealedResultSha256": "61a087b3e59cf1882d81984c55ff6362cb7e2395d012dc39c0d35fd42cc8e19e"
+  },
+  "findings": [
+    {
+      "status": "confirmed",
+      "finding": "Original EVAL failed before ComponentEvaluationClient.evaluate/_post because the datetime callback was passed to datetime.strptime. The existing parser reproduces the exact original TypeError fingerprint 4769ed3a55b55f4e7d15a98e7b5c15f088efe4f1281df5985c30eb95b45569b0."
+    },
+    {
+      "status": "resolved_in_exact_source",
+      "finding": "The correction reads the clock once, parses only text callbacks and subtracts a real UTC datetime directly. The original deadline and grant cap, nonpositive-duration refusal, draft/source/suite bindings and ordinary routes remain intact."
+    },
+    {
+      "status": "verified",
+      "finding": "Reversing the exact correction reconstructs the original failed-version module SHA256. No unrelated source delta is included."
+    },
+    {
+      "status": "verified",
+      "finding": "Eighteen unique existing/parameterized unit cases have successful JUnit outcomes; both datetime and string clocks, expired deadline refusal, grant cap, replay, source/stop and static/saved route compatibility are covered. Reviewer did not rerun tests."
+    }
+  ],
+  "tests": {
+    "uniquePassed": 18,
+    "returncode": 0,
+    "pytestSeconds": 0.9,
+    "commandWallSeconds": 1.3647858510375954,
+    "reviewerTestsRun": 0,
+    "runtimeDatabaseUsed": false,
+    "nativeRuns": 0,
+    "modelCalls": 0
+  },
+  "installationConditions": [
+    "Replace only this exact adapter module in the current core and worker images using the existing updater; verify identical current release/profile hashes on both.",
+    "Keep existing configuration, data, mounts, network, owner mandate, criteria, budgets and all closed attempt records intact."
+  ],
+  "publicationReview": {
+    "decision": "GO_FOR_CLOSED_OUTCOME_FACTS",
+    "resultPath": "eva2/evidence/product/native-work-typed-resume-construction-result-20261012.json",
+    "resultSha256": "139bcead99f0934dc99438f77435e7600f0e8ee05dbf11afbdcece26c59ce42f",
+    "boardSha256": "2dcdb28c989c6a32b41cb3cff6653cd31c06adbf42e98d25d280a792f3c32c59",
+    "documentSha256": {
+      "AGENTS.md": "bda59ff66d5620b0b4bf2887b1ecb6e5e5294b8c68fc605fae30298b8f4b7063",
+      "eva2/PROJECTDOEL.md": "0f2e2e73e0cc043e88387594f1aedd5d0d765fdde1fadee8ad347a151fc64ef5",
+      "eva2/WERKBORD.md": "e3650ba42aed4173b3337b651d18c73e7a9e945926e6ee096a1202c03606eed0"
+    },
+    "historicalTasksMilestonesCompletionsPreserved": true,
+    "causeKnownOnlyBySeparateLaterDiagnosis": true
+  },
+  "limitations": [
+    "This is source and bounded-installation GO, not installation readback, evaluation success, an accepted candidate, quality improvement or full AIDE².",
+    "No EVAL replay or new model/native admission is authorized by this review.",
+    "Five new complete work-model requests used 57,214 tokens and five physical tools; including the preserved parent, six requests used 62,201 tokens and six tools. Credits remain unknown.",
+    "The retained draft passes the literal-only candidate boundary; it has no completed evaluation, final verdict, applied package or proven later use."
+  ]
+}

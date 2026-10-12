@@ -1,5 +1,6 @@
 """Scoped adapters use their real saved draft, current action and unchanged guards."""
 from copy import deepcopy
+from datetime import UTC, datetime
 from types import SimpleNamespace
 
 import pytest
@@ -27,7 +28,8 @@ class Timeline:
         return event
 
 
-def adapter(path=WORK_STRATEGY_EVALUATION_PATH, *, registered=True):
+def adapter(path=WORK_STRATEGY_EVALUATION_PATH, *, registered=True,
+            clock_value=datetime(2026, 10, 12, 12, tzinfo=UTC)):
     component = ComponentImprovementActions.__new__(ComponentImprovementActions)
     source = SimpleNamespace(tenant_id="tenant", installation_id="installation", principal_id="owner")
     origin = SimpleNamespace(model_dump=lambda **kw: {"tenant_id": "tenant", "installation_id": "installation",
@@ -40,7 +42,7 @@ def adapter(path=WORK_STRATEGY_EVALUATION_PATH, *, registered=True):
     checks = []
     component.authorize = lambda turn: checks.append(("authorize", turn))
     component.dispatch = lambda turn: checks.append(("dispatch", turn))
-    component.clock = lambda: "2026-10-12T12:00:00Z"
+    component.clock = lambda: clock_value
     component.action_names = (DRAFT, EVALUATE)
     component._source = lambda p: ({"path": p, "source_sha256": "e" * 64}, None)
     draft = {"path": path, "source_sha256": "e" * 64, "candidate_sha256": "f" * 64,
@@ -59,8 +61,9 @@ def adapter(path=WORK_STRATEGY_EVALUATION_PATH, *, registered=True):
     return component, checks, calls
 
 
-def test_binding_uses_original_draft_event_spec_and_selected_suite_and_replay_is_free():
-    component, checks, calls = adapter()
+@pytest.mark.parametrize("clock_value", [datetime(2026, 10, 12, 12, tzinfo=UTC), "2026-10-12T12:00:00Z"])
+def test_binding_uses_original_draft_event_spec_and_selected_suite_and_replay_is_free(clock_value):
+    component, checks, calls = adapter(clock_value=clock_value)
     call = ConversationActionCall("evaluation-original", EVALUATE, {"draft_step": 2})
     event = component.timeline.events(component._thread(2))[0]
     receipt = component.execute(component.source, call, step_index=3)
@@ -135,8 +138,9 @@ def test_source_changed_after_draft_cannot_be_rebound_and_model_cannot_supply_bi
 
 
 @pytest.mark.parametrize("deadline", ["2026-10-12T11:59:59Z", "2026-10-12T12:00:00Z"])
-def test_expired_original_work_starts_no_host_evaluation(deadline):
-    component, _, calls = adapter()
+@pytest.mark.parametrize("clock_value", [datetime(2026, 10, 12, 12, tzinfo=UTC), "2026-10-12T12:00:00Z"])
+def test_expired_original_work_starts_no_host_evaluation(deadline, clock_value):
+    component, _, calls = adapter(clock_value=clock_value)
     component.spec.deadline = deadline
     with pytest.raises(ConversationConflict, match="deadline expired"):
         component.execute(component.source,

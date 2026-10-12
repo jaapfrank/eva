@@ -1,0 +1,103 @@
+{
+  "contract": "EvaNativeWorkTypedResumeConstructionResult/v1",
+  "checkedAt": "2026-10-12T04:57:23.460607+00:00",
+  "scope": "Same retained technical improvement task resumed once; not owner initiative, no comparator series.",
+  "installation": {
+    "installed": true,
+    "evidence": "eva2/evidence/product/native-work-typed-resume-installed-20261012.json",
+    "independentReview": "eva2/reviews/native-work-typed-resume-installed-review-20261012.json",
+    "independentReviewDecision": "GO for exact installation; GO_ONCE construction now consumed"
+  },
+  "execution": {
+    "taskId": "work:eva-resume:cb993da3-f4d9-556a-970c-43e0ff77d012",
+    "resumesTaskId": "work:eva-chat:01b7184a-a2b1-5c3c-9281-ad9a802feb7f",
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "errorFingerprint": "4769ed3a55b55f4e7d15a98e7b5c15f088efe4f1281df5985c30eb95b45569b0",
+    "failureReportAvailable": false,
+    "driverExportReturnCode": 0,
+    "driverExportSuccessIsTaskSuccess": false,
+    "sourceReadConfirmed": true,
+    "draftSaved": true,
+    "candidateSha256": "c17ba3c457de62199e5441335bfee900511c21aa5a04bb03c315cfeecefc7704",
+    "evaluationCompleted": false,
+    "evaluationFailureCause": "Clock type mismatch before HTTP: parse_utc_timestamp received the ordinary datetime clock.",
+    "comparisonCompleted": false,
+    "independentFinalCompleted": false,
+    "packageSaved": false,
+    "applied": false,
+    "laterUseProven": false
+  },
+  "measuredUsage": {
+    "fresh": {
+      "input_tokens": 55753,
+      "measurement": "measured",
+      "output_tokens": 1461,
+      "provider_attempts": 5,
+      "request_ids": [
+        "38ac0b10-cfd0-440a-8fc9-7989011e7436",
+        "0db34727-e0ae-42fd-912b-1fe2b36f0bf3",
+        "a1bbfc15-e68f-4768-a49a-215aa5de191c",
+        "589c3076-d96f-4151-aa90-6c300fc14826",
+        "add939cb-76a4-4907-ad36-0681a876ad4e"
+      ],
+      "roles": [
+        {
+          "attempts": 5,
+          "model": "gpt-6-astra",
+          "reasoning_effort": "medium",
+          "role": "work"
+        }
+      ],
+      "total_tokens": 57214,
+      "unknown_attempts": 0
+    },
+    "cumulativeIncludingClosedParent": {
+      "input_tokens": 60662,
+      "output_tokens": 1539,
+      "physical_tools": 6,
+      "provider_attempts": 6,
+      "total_tokens": 62201
+    },
+    "freshPhysicalTools": 5,
+    "activeConstructorSecondsIncludingParent": 95.89771813596599,
+    "freshWallSeconds": 77.62222689000191,
+    "qualifiedChildIntervals": 0,
+    "excludedSeconds": 0,
+    "creditCosts": null,
+    "developmentCredits": null
+  },
+  "bindings": {
+    "rawSha256": "2efe5418715bc2f3b0dea9e2614866eaf53b127ca01d7e2f1b99d20a92408da4",
+    "sealedResultSha256": "61a087b3e59cf1882d81984c55ff6362cb7e2395d012dc39c0d35fd42cc8e19e",
+    "originalEvidenceRetained": true,
+    "originalCriteriaAndHiddenCasesUnchanged": true,
+    "constructionProspectiveCap": 8,
+    "previousCap": 6,
+    "sharedProviderCap": 68,
+    "sharedTotalTokenCap": 400000,
+    "sharedToolCap": 100,
+    "closedInputNotRearmed": true
+  },
+  "product": {
+    "newMainOutcomeCompleted": false,
+    "fullAide2Completed": false,
+    "qualityImprovementProven": false,
+    "wholeProjectGoal": "active",
+    "historicalSmallClosures": "39/48 retained",
+    "ownerActionRequired": false
+  },
+  "next": "Align future retained-work/runtime bindings to the actual corrected program before further native input; evaluate the retained candidate and apply only independently proved improvement. Do not rearm the closed one-shot dispatch.",
+  "independentResultReview": "GO for safe limited publication; no successful evaluation or quality claim",
+  "diagnosis": {
+    "checkedAt": "2026-10-12T05:01:32.649891+00:00",
+    "errorLabel": "TypeError:strptime() argument 1 must be str, not datetime.datetime",
+    "fingerprintMatchesRetainedFailure": true,
+    "failureBeforeHttpProducer": true,
+    "seam": "eva2/src/eva/adapters/postgres/component_improvement_actions.py:365",
+    "sourceFixInstalled": true,
+    "candidateLiteralOnlyCheckPassed": true,
+    "diagnosisSha256": "9a4f418f832530a6cb26985de320c8bb0ea164f2898c77fd26b3631f80b33b3f",
+    "correctionEvidence": "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json"
+  }
+}

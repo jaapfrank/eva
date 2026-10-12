@@ -1,28 +1,35 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — zelfverbetering: hervatcode geïnstalleerd
+## Actueel 12 oktober — typefout in verbeterbeoordeling geïnstalleerd
 
-**Geïnstalleerd:** bronlezen en hervatting/cumulatief verbruik in de bestaande
-verbeterroute. De exacte hervatmodule en aansluitende configuratie zijn teruggelezen;
-beoordelingsdienst, kern en werker gezond. Eén hostherstart. Bron/configreview GO;
-afzonderlijke installatiereview wordt afgerond. De eerste gezondheidscontrole was
-te vroeg na de herstart; daarna ready bevestigd zonder opnieuw installeren.
+**Laatst opgeleverd:** de bewezen datumtypefout in de bestaande verbeterroute is
+gecorrigeerd en geïnstalleerd. Exact één module in gezonde kern en werker;
+18 gerichte controles en onafhankelijke bronreview GO. 341 andere Python-bronnen
+per image, instellingen, mounts, netwerken en gegevens behouden. Eén image-update;
+geen rollback, tweede installatie of nieuwe modelaanvraag voor deze correctie.
 
-**Nu:** dezelfde verbeteropdracht voortzetten. De oorspronkelijke mislukte poging
-en 4.987 tokens blijven behouden. De bestaande verplichte pakketopslag is toegelaten.
-Zeven nieuwe constructieaanvragen plus de eerdere één zijn prospectief gebonden:
-cumulatief maximaal acht, eerder zes. Gemeenschappelijk 68 aanvragen/400.000 tokens/
-100 tools, oorspronkelijke vraag, criteria, rollen en verborgen gevallen behouden.
-Geen nieuwe modeluitvoering gestart of kandidaat bevestigd door deze installatie.
+**Werkelijke eerdere uitkomst:** Eva las haar bron en bewaarde één codevoorstel.
+De evaluatie faalde vóór HTTP/producer op datetime als tekst parsen. De modelvrije
+foutreproductie matcht exact de oorspronkelijke fingerprint. Die mislukte uitvoering
+blijft gesloten: vijf nieuwe aanvragen/57.214 tokens; inclusief ouder zes aanvragen/
+62.201 tokens. Geen geslaagde beoordeling, kwaliteitswinst, toepassing of later
+gebruik. Oude verbruik-, datum- en foutgegevens blijven behouden.
 
-**Daarna:** kandidaat werkelijk vergelijken en onafhankelijk beoordelen. Uitsluitend
-bewezen winst toepassen en later gewoon gebruiken. Het hele goal, leercyclus en AIDE²
-blijven open; geen nieuwe hoofdafronding. 39/48 historische afrondingen en eerdere
-gezinsacceptaties blijven behouden. Geen handeling van Jaap nodig; spraak geparkeerd;
-geen concurrentenserie. Creditkosten onbekend.
+**Nu:** de actuele programmavingerafdruk vóór vervolginput coherent aansluiten en
+de bestaande kandidaat beoordelen. Alleen onafhankelijk bewezen winst toepassen
+en bij later gewoon werk gebruiken. Gesloten dispatch niet opnieuw activeren.
+De correctie verandert alleen de afgeleide programmavingerafdruk; overige
+releasevelden, mandaat, grants, criteria en verborgen gevallen blijven gelijk.
 
-Dashboardinhoud gecontroleerd: 2026-10-12T04:47:11.146247+00:00.
-Bewijs: eva2/evidence/product/native-work-typed-resume-installed-20261012.json.
+Het volledige projectgoal, leercyclus en AIDE² blijven actief en open.
+39/48 historische afrondingen en gezinsacceptaties behouden; geen hoofdafronding.
+Geen handeling van Jaap nodig; spraak geparkeerd; geen concurrentenserie.
+Creditkosten en ontwikkelcredits onbekend. Onafhankelijke installatiereview GO.
+
+Dashboardinhoud gecontroleerd: 2026-10-12T05:11:38.200903+00:00.
+Bewijs: eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json.
+Bronreview: eva2/reviews/native-work-component-evaluation-clock-source-review-20261012.json.
+Installatiereview: eva2/reviews/native-work-component-evaluation-clock-installed-review-20261012.json.
 
 ## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 

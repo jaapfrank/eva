@@ -17,7 +17,9 @@
     "decision": "GO"
   },
   "installationReview": {
-    "status": "pending"
+    "status": "GO",
+    "path": "eva2/reviews/native-work-typed-resume-installed-review-20261012.json",
+    "sha256": "31e856d32f39998472264ee115a0766625f8fcf94ee8e6875329c1808f7f181b"
   },
   "health": {
     "component_service": "ready",

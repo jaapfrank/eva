@@ -361,8 +361,11 @@ class ComponentImprovementActions:
                     path=draft["path"], baseline_sha256=draft["source_sha256"],
                     candidate_sha256=draft["candidate_sha256"],
                     suite_sha256=dict(self.evaluator.suite_bindings).get(draft["path"], self.evaluator.suite_sha256))
+                now = self.clock()
+                if isinstance(now, str):
+                    now = parse_utc_timestamp(now)
                 remaining = min(
-                    (parse_utc_timestamp(self.spec.deadline) - parse_utc_timestamp(self.clock())).total_seconds(),
+                    (parse_utc_timestamp(self.spec.deadline) - now).total_seconds(),
                     self.spec.grant.timeout_seconds)
                 if remaining <= 0:
                     raise ConversationConflict("original component work deadline expired")

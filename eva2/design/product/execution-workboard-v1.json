@@ -125,11 +125,11 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Een eigen hulpmiddel is verbeterd en later gebruikt. Bronlezen voor zelfverbetering is geïnstalleerd. De uitvoerprofielen zijn nu voorbereid; hervatting, volledige verbetercyclus en latere toepassing blijven open.",
+      "summary": "Persoonlijkheid en geheugenbasis behouden. Bronlezen, hervatting en de klokcorrectie voor zelfverbetering zijn geïnstalleerd. Eva heeft een voorstel opgeslagen; geslaagde beoordeling, bewezen winst en volledige AIDE² blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · dezelfde verbeteropdracht hervatten",
-          "detail": "De uitvoerprofielen zijn berekend. Nog nodig: de afgebroken verbeteropdracht hervatten en haar eerdere verbruik blijven meetellen."
+          "title": "Nu · bestaande kandidaat beoordelen",
+          "detail": "Eén module vervangen in gezonde kern en werker; 18 gerichte controles en onafhankelijke bronreview geslaagd. Afgesloten mislukte uitvoering en 62.201 cumulatieve tokens blijven staan. De nieuwe programmavingerafdruk moet vóór vervolginput coherent worden gebonden. Nog geen geslaagde beoordeling, kwaliteitswinst, toepassing of later gebruik."
         },
         {
           "title": "Daarna · verbetering aantonen en gebruiken",
@@ -1021,8 +1021,35 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T04:47:11.146247+00:00",
+        "checkedAt": "2026-10-12T05:11:38.200903+00:00",
         "deliveries": [
+          {
+            "id": "native-work-component-evaluation-clock-installed-20261012",
+            "date": "2026-10-12T05:08:48.575667+00:00",
+            "title": "Typefout in verbeterbeoordeling verholpen",
+            "state": "installed",
+            "summary": "De datumovergang is gecorrigeerd in kern en werker. Beide diensten gezond; 18 gerichte controles geslaagd.",
+            "result": "Exact één bronmodule vervangen. Instellingen en gegevens behouden; geen nieuwe modelaanvragen of herhaalde uitvoering voor deze correctie.",
+            "remaining": "De volledige verbetercyclus is nog open: actuele uitvoerbinding, beoordeling, bewezen winst toepassen en later gebruiken.",
+            "source": "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json",
+            "review": "eva2/reviews/native-work-component-evaluation-clock-installed-review-20261012.json",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "reviewSha256": "bebdb5dc9d713fcaa954cc9f9d2ea6513b0c90e6711bc317569ffa1fa148c826",
+            "independentReview": "GO voor exacte geïnstalleerde bron en beperkte feitenpublicatie; geen bewezen kwaliteitswinst."
+          },
+          {
+            "id": "native-work-typed-resume-construction-result-20261012",
+            "date": "2026-10-12T04:57:23.460607+00:00",
+            "title": "Codevoorstel opgeslagen · beoordeling vastgelopen",
+            "state": "failed",
+            "summary": "Bron gelezen en voorstel bewaard. Evaluatie stopte met internal_error; geen bewezen verbetering.",
+            "result": "5 nieuwe complete Astra/medium-aanvragen, 57.214 tokens en 5 tools. Met de gesloten eerdere poging: 6 aanvragen, 62.201 tokens en 6 tools. Creditkosten onbekend.",
+            "remaining": "Evaluatieovergang herstellen; onafhankelijke beoordeling, toepassing en later gebruik blijven open. Geen handeling van jou nodig.",
+            "source": "eva2/evidence/product/native-work-typed-resume-construction-result-20261012.json",
+            "technicalOutcomeCompleted": false,
+            "productFunctionCompleted": false
+          },
           {
             "id": "native-work-typed-resume-installed-20261012",
             "date": "2026-10-12T04:47:11.146247+00:00",
@@ -1030,9 +1057,9 @@
             "state": "installed",
             "summary": "De beoordelingsdienst kan vervolgwerk en cumulatief verbruik van dezelfde opdracht verwerken. Dienst, kern en werker zijn gezond.",
             "result": "De hervatmodule en aansluitende configuratie zijn geïnstalleerd. Oude poging en verbruik blijven bewaard; de pakketopslag is aangesloten. Dit is technische ondersteuning van de verbetercyclus.",
-            "remaining": "Nog geen nieuwe verbeterkandidaat, kwaliteitswinst, toepassing of latere gebruiksproef aangetoond.",
+            "remaining": "De hervatte opdracht heeft een codevoorstel opgeslagen, maar de beoordeling is afgebroken. Volledige verbetercyclus en latere toepassing blijven open.",
             "source": "eva2/evidence/product/native-work-typed-resume-installed-20261012.json",
-            "review": "eva2/reviews/native-work-typed-resume-source-review-20261012.json"
+            "review": "eva2/reviews/native-work-typed-resume-installed-review-20261012.json"
           },
           {
             "id": "native-work-corrected-runtime-prepared-20261012",
@@ -4887,16 +4914,16 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · verbeteropdracht hervatten",
+          "title": "Zelfverbetering · kandidaat beoordelen",
           "state": "in_progress",
-          "phase": "native_improvement_cycle_resume_ready",
+          "phase": "candidate_assessment_binding_preparation",
           "activeExecution": true,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Hervatcode is geïnstalleerd. Nu de gewone verbeteropdracht voortzetten; nog geen nieuwe kandidaat bevestigd.",
-          "detail": "Dezelfde opdracht blijft verbonden met de eerdere poging en haar verbruik. De bestaande pakketopslag is toegelaten. Installatie is teruggelezen; afzonderlijke review wordt afgerond voordat Eva de opdracht voortzet. De onafhankelijke kwaliteitsbeoordeling en later gebruik blijven open.",
-          "source": "eva2/evidence/product/native-work-typed-resume-installed-20261012.json",
+          "summary": "De bewezen typefout is gecorrigeerd en geïnstalleerd. Nu de bestaande kandidaat met de herstelde uitvoerroute beoordelen.",
+          "detail": "Eén module vervangen in gezonde kern en werker; 18 gerichte controles en onafhankelijke bron- en installatiereview geslaagd. Afgesloten mislukte uitvoering en 62.201 cumulatieve tokens blijven staan. De nieuwe programmavingerafdruk moet vóór vervolginput coherent worden gebonden. Nog geen geslaagde beoordeling, kwaliteitswinst, toepassing of later gebruik.",
+          "source": "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json",
           "doneWhen": "Eva verbetert haar werkaanpak op echte opdrachten; de onafhankelijke beoordeling bevestigt betere resultaten of minder hulp. Alleen bewezen winst wordt toegepast en bij later gewoon werk gebruikt.",
           "implementationStatus": {
             "evaluationBridgeBuilt": true,
@@ -4940,15 +4967,15 @@
             "sharedProducerLaunchCorrectionBuilt": true,
             "sharedProducerLaunchCorrectionInstalled": true,
             "nativeExecutionClosed": true,
-            "nativeCandidateConfirmed": false,
+            "nativeCandidateConfirmed": true,
             "constructionResultReviewPending": false,
-            "constructionResultReview": "NO_GO: geen kandidaat bevestigd; veilige feitenpublicatie GO",
+            "constructionResultReview": "GO for safe limited publication; failed execution retained",
             "functionalCauseKnown": true,
             "ordinarySourceReadCorrectionInstalled": true,
             "actualReadOnlySourceAndRoundPassed": true,
             "previewClientCorrectedPrepared": true,
             "correctedRuntimeBindingPending": false,
-            "newNativeCandidateConfirmed": false,
+            "newNativeCandidateConfirmed": true,
             "ordinaryClientInstalledReview": "GO",
             "ordinaryClientInstalledReviewPending": false,
             "correctedRuntimeProjectionInProgress": false,
@@ -4957,30 +4984,43 @@
             "correctedRuntimeReferencesInstalled": true,
             "correctedRuntimePreparationReviewPending": false,
             "ordinaryResumeAccountingConnected": true,
-            "newNativeExecutionStarted": false,
+            "newNativeExecutionStarted": true,
             "correctedRuntimePreparationReview": "GO voor exacte modelvrije configuratievoorbereiding; geen native uitvoering.",
             "ordinaryResumeAccountingBuilt": true,
             "ordinaryResumeAccountingInstalled": true,
             "ordinaryResumeAccountingReviewPending": false,
-            "typedResumeInstallationReviewPending": true,
-            "typedResumeSourceReview": "GO"
+            "typedResumeInstallationReviewPending": false,
+            "typedResumeSourceReview": "GO",
+            "typedResumeInstallationReview": "GO",
+            "typedResumeInputReview": "GO_ONCE consumed; closed dispatch retained",
+            "newNativeExecutionClosed": true,
+            "newNativeEvaluationCompleted": false,
+            "newNativeQualityImprovementProven": false,
+            "currentEvaluationFailureCauseKnown": true,
+            "evaluationClockCorrectionBuilt": true,
+            "evaluationClockCorrectionInstalled": true,
+            "evaluationClockSourceReview": "GO",
+            "correctedProgramFutureBindingPending": true,
+            "evaluationClockInstallationReview": "GO for exact source installation and limited publication",
+            "evaluationClockInstallationReviewPending": false
           },
-          "remaining": "Hervatting en cumulatief verbruik aansluiten; goedgekeurde verwijzingen installeren. Daarna de kandidaat daadwerkelijk vergelijken en onafhankelijk beoordelen; uitsluitend bewezen winst toepassen en later gebruiken.",
-          "review": "eva2/reviews/native-work-client-scope-source-review-20261012.json",
-          "reviewSha256": "7c2224ac8c91b53445c2e23fd472f3524b1a5eb780d632f3d59fe8816140c1a5",
-          "resultReview": "eva2/reviews/native-work-strategy-construction-result-review-20261012.json",
-          "resultReviewSha256": "17e906efc8f3c810daa32d1b23b3194225bf926bee8fdc7d1ff7f9662387eab2",
+          "remaining": "Actuele uitvoerbinding coherent aansluiten en kandidaat beoordelen. Alleen onafhankelijk bewezen winst toepassen en bij later gewoon werk gebruiken.",
+          "review": "eva2/reviews/native-work-component-evaluation-clock-source-review-20261012.json",
+          "reviewSha256": "ff4a9fc08970c011a494f6848d58b53d1e8078a984ea04b0f1b05fd0d3ceca88",
           "ordinaryClientInstalledReview": "eva2/reviews/native-work-client-scope-installed-review-20261012.json",
           "ordinaryClientInstalledReviewSha256": "82c031c0899892ea5127adb3b141ed3a566060b534f11a0dbe441e1bc63a186f",
           "preparationReview": "eva2/reviews/native-work-corrected-runtime-preparation-review-20261012.json",
-          "preparationReviewSha256": "c27d99d51246b61fb4da749583c4e1752e6c3af653aaca3bc6dfee55fa9f12f5"
+          "preparationReviewSha256": "c27d99d51246b61fb4da749583c4e1752e6c3af653aaca3bc6dfee55fa9f12f5",
+          "typedResumeInstalledReview": "eva2/reviews/native-work-typed-resume-installed-review-20261012.json",
+          "resultReview": "eva2/reviews/native-work-component-evaluation-clock-installed-review-20261012.json",
+          "resultReviewSha256": "bebdb5dc9d713fcaa954cc9f9d2ea6513b0c90e6711bc317569ffa1fa148c826"
         },
         "next": {
-          "title": "Verbetering aantonen, toepassen en later gebruiken",
+          "title": "Bewezen verbetering toepassen en later gebruiken",
           "state": "planned",
           "activeExecution": false,
           "source": "eva2/evidence/product/native-work-strategy-runtime-sources-installed-20261012.json",
-          "summary": "Eva verbetert haar werkaanpak en gebruikt uitsluitend onafhankelijk bewezen winst later bij gewoon werk.",
+          "summary": "Na onafhankelijke beoordeling uitsluitend aantoonbare winst toepassen en later bij gewoon werk gebruiken.",
           "detail": "Een aantoonbare verbetering toepassen en bij een volgende opdracht gebruiken. Bij gelijkspel of verlies blijft de huidige werkaanpak staan. Geen nieuwe concurrentenserie."
         },
         "ownerAction": {
@@ -4990,7 +5030,7 @@
           "detail": "De echte zelfverbetering en het latere gebruik zijn werk voor Codex. Jouw gezinsbeoordeling blijft afzonderlijk."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T04:47:11.146247+00:00",
+        "reviewedAt": "2026-10-12T05:11:38.200903+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5091,8 +5131,8 @@
         },
         "note": "Opgeslagen projectvoortgang; geen live agentstatus. Gebouwd of beoordeeld betekent niet geïnstalleerd of door jou geaccepteerd."
       },
-      "reviewedAt": "2026-10-12T04:47:11.146247+00:00",
-      "checkedAt": "2026-10-12T04:47:11.146247+00:00",
+      "reviewedAt": "2026-10-12T05:11:38.200903+00:00",
+      "checkedAt": "2026-10-12T05:11:38.200903+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11385,7 +11425,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T04:47:11.146247+00:00",
+        "checkedAt": "2026-10-12T05:11:38.200903+00:00",
         "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Persoonlijkheid en geheugenbasis geaccepteerd; leercyclus, zelfstandig initiatief en volledige zelfverbetering nog open.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11441,7 +11481,7 @@
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
-            "remaining": "Verbeteropdracht hervatten, kandidaat werkelijk vergelijken en onafhankelijk beoordelen. Alleen bewezen winst toepassen en later gebruiken. De volledige leercyclus en gezinsacceptatie blijven open.",
+            "remaining": "Actuele uitvoerbinding coherent aansluiten en kandidaat beoordelen. Alleen onafhankelijk bewezen winst toepassen en bij later gewoon werk gebruiken. Volledige leercyclus en gezinsacceptatie blijven open.",
             "evidencePaths": [
               "eva2/evidence/product/p2-published-results-20261006.json",
               "eva2/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -11466,12 +11506,14 @@
               "eva2/evidence/product/native-work-strategy-runtime-sources-installed-20261012.json",
               "eva2/evidence/product/native-work-strategy-configuration-prepared-20261012.json",
               "eva2/evidence/product/native-work-strategy-host-installed-20261012.json",
-              "eva2/evidence/product/native-work-corrected-runtime-prepared-20261012.json"
+              "eva2/evidence/product/native-work-corrected-runtime-prepared-20261012.json",
+              "eva2/evidence/product/native-work-typed-resume-construction-result-20261012.json",
+              "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json"
             ]
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T04:17:50.564979+00:00",
+      "lastUpdatedAt": "2026-10-12T05:11:38.200903+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -11962,7 +12004,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T04:17:50.564979+00:00",
+      "updatedAt": "2026-10-12T05:11:38.200903+00:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -11995,10 +12037,33 @@
         "mainCompletionChanged": false
       },
       "auditUpdate": {
-        "checkedAt": "2026-10-12T04:35:24.649164+00:00",
-        "reason": "Actual source preparation review completed; resumed accounting source built but not installed. Visible phase corrected after owner question.",
+        "checkedAt": "2026-10-12T05:11:38.200903+00:00",
+        "reason": "Actual one-module clock correction installed in healthy current core and worker. Failed construction preserved; no full cycle or main completion claimed.",
+        "source": "eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json",
         "newProductCompletion": false,
-        "ownerActionRequired": false
+        "ownerActionRequired": false,
+        "independentReview": "eva2/reviews/native-work-component-evaluation-clock-installed-review-20261012.json"
+      },
+      "dashboardVerificationTypedResumeResult20261012": {
+        "checkedAt": "2026-10-12T04:58:33.469754+00:00",
+        "url": "http://localhost:44712/",
+        "method": "Browser Nu verversen, visible board-freshness and delivery-kanban",
+        "displayedContentCheckedAt": "12-10-2026, 06:57:23",
+        "latestInstalledVisible": "Hervatcode voor zelfverbetering geïnstalleerd",
+        "currentWorkVisible": "Zelfverbetering · beoordeling van codevoorstel herstellen",
+        "ownerActionRequired": false,
+        "storedProgressNotLiveAgentStatus": true
+      },
+      "dashboardVerificationClockInstalled20261012": {
+        "checkedAt": "2026-10-12T05:09:37.029268+00:00",
+        "url": "http://localhost:44712/",
+        "method": "Nu verversen, visible freshness and delivery-kanban",
+        "displayedContentCheckedAt": "12-10-2026, 07:08:48",
+        "latestInstalledVisible": "Typefout in verbeterbeoordeling verholpen",
+        "currentWorkVisible": "Zelfverbetering · kandidaat beoordelen",
+        "nextVisible": "Bewezen verbetering toepassen en later gebruiken",
+        "ownerActionRequired": false,
+        "fullCycleClaimed": false
       }
     },
     "pendingTechnicalReview": {
