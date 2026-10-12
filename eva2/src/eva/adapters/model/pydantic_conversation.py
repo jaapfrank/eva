@@ -604,6 +604,7 @@ class PydanticConversationModel:
     """One stateless Eva generation after Hindsight has recalled context."""
 
     journals_provider_requests = True
+    supports_context_archive = True
 
     def __init__(
         self,
@@ -618,6 +619,7 @@ class PydanticConversationModel:
         conversation_tools: tuple[ConversationToolDescriptor, ...] = (),
         model_backend: Model | None = None,
         discoverable_action_names: tuple[str, ...] = (),
+        context_archive=None,
     ) -> None:
         if not model.strip():
             raise ValueError("conversation model is required")
@@ -644,6 +646,7 @@ class PydanticConversationModel:
         self._reasoning_effort = reasoning_effort
         self._resource_budget = resource_budget
         self._model_backend = model_backend
+        self._context_archive = context_archive
         self._discoverable_action_names = frozenset(discoverable_action_names)
         self._conversation_tool_descriptors = {
             descriptor.name: descriptor for descriptor in conversation_tools
@@ -1237,6 +1240,95 @@ class PydanticConversationModel:
         return revision, frozenset(ids)
 
     @staticmethod
+    def _checkpoint_source_read(receipt: ConversationActionReceipt) -> dict[str, Any] | None:
+        """Index an old proven read through its unchanged scoped source reader."""
+        output, arguments = receipt.output, receipt.call.arguments
+        if (output.get("contract") != "EvaConversationActionReceipt/v1"
+                or output.get("durable") is not True or output.get("status") != "verified"
+                or output.get("external_state_verified") is True):
+            return None
+        if receipt.call.name == "home_assistant_request":
+            # These exact commands already back the read-only HA inventory.
+            # GET on a WebSocket request alone says nothing about its effects.
+            if arguments.get("method") != "GET":
+                return None
+            if arguments.get("transport") == "rest":
+                if not str(arguments.get("path", "")).startswith("/api/"):
+                    return None
+            elif arguments.get("transport") == "websocket":
+                try:
+                    command = json.loads(arguments.get("body_json", ""))
+                except (TypeError, ValueError):
+                    return None
+                if (not isinstance(command, dict) or command.get("type") not in {
+                    "get_states", "get_config", "config_entries/get",
+                    "config/area_registry/list", "config/device_registry/list",
+                    "config/entity_registry/list", "hacs/repositories/list",
+                    # The upstream handlers return saved config/entries; their
+                    # save/update/remove commands remain separate and excluded.
+                    "lovelace/config", "lovelace/dashboards/list",
+                    "config/entity_registry/get_entries",
+                }):
+                    return None
+            else:
+                return None
+            key = "result"
+            if not isinstance(output.get(key), dict) or output[key].get("success") is not True:
+                return None
+        elif receipt.call.name == "read_home_assistant_inventory":
+            key = "inventory"
+        else:
+            return None
+        observation, proof = output.get(key), output.get("proof")
+        if (not isinstance(observation, dict) or not isinstance(proof, dict)
+                or proof.get("evidence", {}).get("observation") != observation
+                or observation.get("external_state_verified") is True
+                or any(observation.get(k) for k in ("error", "errors", "selection_error"))):
+            return None
+        if key == "inventory":
+            coverage = observation.get("coverage")
+            if (isinstance(coverage, dict) and coverage.get("complete") is False
+                    or observation.get("missing")):
+                return None
+            for row in observation.get("automations", ()):
+                if (not isinstance(row, dict)
+                        or row.get("configuration_read") is False
+                        or isinstance(row.get("coverage"), dict) and row["coverage"].get("complete") is False
+                        or row.get("reason")):
+                    return None
+        view = receipt.model_output or {}
+        body_projection = view.get("ancestor_model_projection")
+        if body_projection is not None:
+            PydanticConversationModel._receipt_presentation(receipt, ancestor=True)
+            manifest = body_projection["manifest"]
+            reader, pointer = manifest["reader"]["tool_id"], "/output/" + key
+            source = body_projection["source"]
+            receipt_hash, proof_hash = source["receipt_sha256"], source["proof_sha256"]
+        elif "model_projection" in view:
+            # Small results without a complete authorized reader stay literal.
+            PydanticConversationModel._receipt_presentation(receipt)
+            manifest = view[key]
+            reader, pointer = manifest["reader"]["tool_id"], ""
+            source = view["model_projection"]
+            receipt_hash = source["source_receipt_sha256"]
+            proof_hash = source["source_proof_sha256"]
+        else:
+            return None
+        from eva.adapters.postgres.connector_results import SOURCE_RESPONSE_FIELDS
+        metadata = {k: observation[k] for k in SOURCE_RESPONSE_FIELDS if k in observation}
+        for k in ("total", "next_offset", "missing", "coverage", "requested",
+                  "configurations_read", "configurations_requested"):
+            if k in observation:
+                metadata[k] = observation[k]
+        return {"call": {"call_id": receipt.call.call_id, "name": receipt.call.name,
+                         "arguments": arguments}, "status": "verified",
+                "read_only_observation": True, "task_completion_verified": False,
+                "source_receipt_sha256": receipt_hash, "source_proof_sha256": proof_hash,
+                "reader_tool_id": reader, "pointer": pointer,
+                "source_version": manifest["sha256"], "byte_length": manifest["byte_length"],
+                "observation_metadata": metadata}
+
+    @staticmethod
     def _receipt_context_selection(
         receipts: tuple[ConversationActionReceipt, ...], *, defer_local_reads: bool = False,
     ) -> tuple[tuple[ConversationActionReceipt, ...], str]:
@@ -1270,6 +1362,7 @@ class PydanticConversationModel:
                 checkpoint = None
         coverage: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
         selected, overviews, deferred_reads, superseded_progress = [], [], [], []
+        checkpoint_sources: list[dict[str, Any]] = []
         deferred_sources: list[dict[str, Any]] = []
         source_indices: dict[tuple[str, str, str], int] = {}
         for position, receipt in enumerate(receipts):
@@ -1280,6 +1373,11 @@ class PydanticConversationModel:
                 superseded_progress.append({"call_id": receipt.call.call_id,
                     "revision": saved[0], "replaced_by": receipts[checkpoint[0]].call.call_id,
                     "progress": receipt.call.arguments})
+                continue
+            if (checkpoint is not None and position < checkpoint[0]
+                    and position < len(receipts) - 1 and receipt.call.call_id not in protected
+                    and (source_read := PydanticConversationModel._checkpoint_source_read(receipt)) is not None):
+                checkpoint_sources.append(source_read)
                 continue
             if (position == len(receipts) - 1 or receipt.call.call_id in protected
                     or receipt.call.name != "use_connector_tool"
@@ -1356,15 +1454,25 @@ class PydanticConversationModel:
                 coverage.setdefault(group, []).append({"begin": page["offset"],
                     "end": page["next_offset"], "text": page["text"],
                     "call_id": receipt.call.call_id})
-        if not overviews and not deferred_reads and not superseded_progress:
+        if not overviews and not deferred_reads and not superseded_progress and not checkpoint_sources:
             return receipts, ""
         selected = tuple(selected)
         # Keep the current result and its literal reference anchors byte-identical.
         if PydanticConversationModel._receipt_model_views(
                 selected, _literal_slices=False)[-1] != baseline_latest:
             return receipts, ""
-        if defer_local_reads or deferred_reads or superseded_progress:
+        if defer_local_reads or deferred_reads or superseded_progress or checkpoint_sources:
             index = PydanticConversationModel._deferred_read_index(deferred_sources, deferred_reads)
+            if checkpoint is not None:
+                index["saved_work_progress"] = {
+                    "call_id": receipts[checkpoint[0]].call.call_id,
+                    "revision": checkpoint[1][0],
+                }
+            if checkpoint_sources:
+                columns = list(checkpoint_sources[0])
+                index["checkpoint_source_read_columns"] = columns
+                index["checkpoint_source_reads"] = [
+                    [entry[key] for key in columns] for entry in checkpoint_sources]
             if superseded_progress:
                 index["superseded_work_progress"] = superseded_progress
             if overviews:
@@ -1387,6 +1495,14 @@ class PydanticConversationModel:
                 "pointerwaarden verwijzen naar pointer_table. Bereiken volgen range_columns. "
                 "Een source_ingress_sha256 op indexniveau geldt voor alle bronrijen. "
                 "covered_local_reads verwijst naar inhoud die elders zichtbaar blijft. "
+                "checkpoint_source_reads bevat rijen volgens checkpoint_source_read_columns "
+                "van eerdere succesvolle pure HA-lezingen "
+                "vóór opgeslagen bevindingen: call bevat de originele aanvraag; "
+                "reader_tool_id en pointer lezen het bewaarde antwoord via use_connector_tool "
+                "met arguments_json={pointer,offset,limit,query:null}. De bronversie, "
+                "bewijs-hashes en oorspronkelijke onvolledigheidsvlaggen blijven zichtbaar. "
+                "Deze historische lezingen zijn geen actuele waarneming of taakafronding; "
+                "gebruik bewaarde bevindingen en haal alleen ontbrekende feiten gericht op. "
                 "superseded_work_progress bewaart oudere volledige werkplannen één "
                 "keer onder progress; replaced_by geeft de nieuwere actuele weergave. "
                 "Oudere bevindingen blijven dus leesbaar, ook bij een verwijzing naar "
@@ -1892,6 +2008,67 @@ class PydanticConversationModel:
             timing=timing,
         )
 
+    def with_context_archive(self, archive):
+        """Bind a task's authorization callback without mutating the shared model."""
+        from copy import copy
+        model = copy(self)
+        model._context_archive = archive
+        return model
+
+    @staticmethod
+    def _archive_read_overview(turn, overview, archive):
+        """Archive only this host's validated historical navigation index."""
+        if not overview or archive is None:
+            return overview
+        _, separator, encoded = overview.partition("\n")
+        if not separator:
+            return overview
+        index = json.loads(encoded)
+        checkpoint = index.get("saved_work_progress")
+        if (index.get("contract") not in {"EvaDeferredLocalReadsModelIndex/v1",
+                                          "EvaDeferredLocalReadsModelIndex/v2"}
+                or not isinstance(checkpoint, dict)
+                or not isinstance(checkpoint.get("call_id"), str)
+                or type(checkpoint.get("revision")) is not int):
+            return overview
+        raw = canonical_json_bytes(index)
+        manifest = archive(turn, index)
+        digest = hashlib.sha256(raw).hexdigest()
+        reader = manifest.get("reader", {}) if isinstance(manifest, dict) else {}
+        if (not isinstance(manifest, dict)
+                or manifest.get("contract") != "EvaStoredConnectorResult/v1"
+                or manifest.get("stored_complete") is not True
+                or manifest.get("external_state_verified") is not False
+                or manifest.get("sha256") != digest
+                or manifest.get("byte_length") != len(raw)
+                or reader.get("action") != "use_connector_tool"
+                or not re.fullmatch(r"eva-stored-result:[0-9a-f]{64}:" + digest,
+                                    reader.get("tool_id", ""))):
+            raise ConversationModelError("historical context archive binding differs")
+        # The seal proves this exact metadata copy, never the external facts.
+        compact = {key: manifest[key] for key in
+                   ("contract", "stored_complete", "sha256", "byte_length",
+                    "external_state_verified", "reader")}
+        note = (
+            "Historisch bronleesoverzicht lokaal bewaard na werkelijk opgeslagen "
+            "werknotities. Gebruik de actuele bevindingen en voortgang die zichtbaar "
+            "blijven. Haal alleen ontbrekende oude gegevens gericht terug met "
+            "use_connector_tool en onderstaande reader. JSON-pointers: /sources, "
+            "/reads, /pointer_table, /selection_layouts, /read_columns, "
+            "/source_columns, /checkpoint_source_reads, /checkpoint_source_read_columns, "
+            "/superseded_work_progress, /covered_local_reads. Gebruik pointer naar "
+            "een rij of veld; offset/limit tellen tekens, query zoekt exact. "
+            "Rijen volgen hun kolomnamen; selection_layouts en pointer_table duiden "
+            "selecties. Bronreaders uit dit overzicht controleren de oorspronkelijke "
+            "feiten opnieuw zonder externe handelingen te herhalen. Oudere "
+            "werknotities zijn geen bronbewijs. Deze opslag is een exacte historische "
+            "indexkopie, geen actuele waarneming, taakafronding of extra toestemming. "
+            "Fouten, onzekerheid, effecten, huidige resultaten en bronankers blijven "
+            "zichtbaar. Verzin ontbrekende inhoud niet.\n"
+            + canonical_json_bytes(compact).decode("utf-8")
+        )
+        return note if len(note.encode("utf-8")) < len(overview.encode("utf-8")) else overview
+
     def generate(
         self,
         turn: ConversationTurn,
@@ -1903,6 +2080,7 @@ class PydanticConversationModel:
         completed_action: ConversationActionReceipt | None = None,
         prior_actions: tuple[ConversationActionReceipt, ...] = (),
         self_context: tuple[str, ...] = (),
+        context_archive=None,
     ) -> ConversationModelResult:
         if turn.audience.kind == "household":
             self_context = (*self_context,
@@ -1922,9 +2100,13 @@ class PydanticConversationModel:
         receipts = prior_actions + (() if completed_action is None else (completed_action,))
         if len({receipt.call.call_id for receipt in receipts}) != len(receipts):
             raise ValueError("conversation action history contains duplicate call IDs")
+        archive = context_archive if context_archive is not None else self._context_archive
+        if "use_connector_tool" not in available_actions:
+            archive = None
         original_self_context = self_context
         selected_receipts, read_overview = self._receipt_context_selection(receipts)
         if read_overview:
+            read_overview = self._archive_read_overview(turn, read_overview, archive)
             prior_actions = selected_receipts[:-1]
             self_context = (*self_context, read_overview)
         checkpoint_due = self._research_checkpoint_due(receipts, available_actions)
@@ -2025,6 +2207,7 @@ class PydanticConversationModel:
                         receipts, defer_local_reads=True)
                     if overview and len(deferred) < len(prior_actions) + 1:
                         prior_actions = deferred[:-1]
+                        overview = self._archive_read_overview(turn, overview, archive)
                         self_context = (*original_self_context, overview)
                         continue
                 # Keep the latest exchange intact: a short confirmation must not

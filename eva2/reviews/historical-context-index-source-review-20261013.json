@@ -1,0 +1,149 @@
+{
+  "contract": "EvaIndependentHistoricalContextIndexSourceReview/v1",
+  "recordedAt": "2026-10-12T22:52:52.332656+00:00",
+  "verdict": "GO",
+  "scope": "Exact source installation readiness and safe source-built publication; no native fit or task completion verdict.",
+  "bindings": {
+    "publicSourceFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-source-correction-20261013.json",
+      "sha256": "69591899278306d194416905c1f9da4bda76ecfd0c672e87bc94384760466f19"
+    },
+    "frozenSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-frozen-source.private.json",
+      "sha256": "0a4e9080cc02388f6ae873e3afdf1fa92d05883b84f1f2f24a9fd2802fadba6a"
+    },
+    "buildSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/build-source.private.json",
+      "sha256": "011ce55e1198e28f9e2155b180acc9c8d987885cd06105cfd1a65b423293c237"
+    },
+    "buildResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/build-result.private.json",
+      "sha256": "690b088c0944e7d84cdb008ac163bcf745ce159418352fee709e653e112b2829"
+    },
+    "measurement": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-cause-diagnosis/gen13-complete149-structural-v2-paired-known-phase.private.json",
+      "sha256": "69cc13fa5e2bc3aba4386abde99c5f275c557cdfa4d5ddbc0b474dbd1dfa2950"
+    },
+    "installedBaselineRunner": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/installed-baseline-runner.private.py",
+      "sha256": "a3006b3134c71cee3b3c2899944a0111d75f8b137fa8848d855fb463f35c69d5"
+    },
+    "sourceFiles": [
+      {
+        "source": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-pydantic_conversation.py",
+        "sha256": "a5749ba437ecc8d000de6d09037ccb345fddc13422a0a33e3c6f0a2016bc0f40"
+      },
+      {
+        "source": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-external_conversation_tools.py",
+        "sha256": "a22eb53197a1f84cbca14fe7d3ed5fe3927b3465d427396b3a144a03e261a70a"
+      },
+      {
+        "source": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-delegated_digital_runner.py",
+        "sha256": "98b1842a01b6b544a2764d030bbf6cd17ff96ede77eeaf5a134c02b7f387a5aa"
+      },
+      {
+        "source": "eva2/tests/model/test_catalogue_model_view.py",
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-test_catalogue_model_view.py",
+        "sha256": "eddfeb141b9848edf2a2e54ca371323890cb925d43f6c30c197e2cfbf0e23207"
+      }
+    ],
+    "testLogs": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/source-tests.raw.private.txt",
+        "sha256": "90a8d3d066551a3b2a0bebe324c434abf1efdcd3b91d1b14c41cd2136da090e8"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/corrected-fixture-and-sdk-tests.raw.private.txt",
+        "sha256": "cb7c33c9630964bae7538340fb42161c7c4336d0b4fc81578fcda2026242cf8a"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/ordinary-runner-tests.raw.private.txt",
+        "sha256": "4639a16b5a96a49c7b6608a419c9f3a8755107e84fe62ec67027548c760aa8ab"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/installed-baseline-fixture-tests.raw.private.txt",
+        "sha256": "103665a90f3bbcd30678ce776a3434b5047f48c85fa1f482556d83d84f75a20b"
+      }
+    ]
+  },
+  "findings": [
+    "Only successful verified read observations before a real saved checkpoint are eligible. Negative or incomplete inventory/configuration observations, errors, UNKNOWN, effects, current/latest results and required literal anchors remain visible.",
+    "The immutable archive preserves the exact generated navigation index, including original historical progress contents and selectors/proof hashes. Its manifest is metadata, not independent evidence or a semantic summary.",
+    "Existing ConnectorResults capture, chunk/hash seal and scoped reader retain owner, actor, source, execution, configuration and stop validation. Original indexed observations still require original proof validation on readback.",
+    "The ordinary delegated runner uses an execution-scoped shallow model copy. Task authorization runs before and after archive access; no public tool, external dispatch, grant or quota is introduced. Protected _TaskModel AST is unchanged.",
+    "Exact candidate images change only the three approved modules. Imports pass and 342 other Python sources per image are unchanged. Build readiness is not installed or learned behavior."
+  ],
+  "tests": {
+    "contextAndProtectedModelUniquePass": 129,
+    "evidence": "127 initial passing checks plus two focused passing checks; empty-script fixture failure preserved. SDK evidence uses MockTransport, not real provider/native requests.",
+    "additionalOrdinaryRunner": {
+      "candidatePass": 109,
+      "candidateFail": 2,
+      "installedBaselinePass": 3,
+      "installedBaselineFail": 2,
+      "qualification": "Identical two legacy grant-fixture nodes fail on the exact installed baseline; both raw logs preserved. No all-green runner-suite claim."
+    },
+    "reviewerReranTests": false
+  },
+  "build": {
+    "core": {
+      "beforeImage": "sha256:062a501b576127039f2641fbf30581b871a3182c5e3f212bc5c49d6a0245089a",
+      "candidateImage": "sha256:b99295fd6050e1c30428e43ef7dac369d6e30018ac51812e04d305d4ec77c95d",
+      "changedPythonSources": 3,
+      "unchangedPythonSources": 342,
+      "importsPassed": true
+    },
+    "delegated-work-worker": {
+      "beforeImage": "sha256:45a6ae6b57388e898462e30d7e559ddcbb3359b35c875d71d9cbaed8f0023abd",
+      "candidateImage": "sha256:972856230949e2157a9e4dc9da34ff3f3905d2e1e717be89cd6acb640dd9600f",
+      "changedPythonSources": 3,
+      "unchangedPythonSources": 342,
+      "importsPassed": true
+    }
+  },
+  "measurement": {
+    "retainedReceipts": 149,
+    "knownNormalBpe": {
+      "installed": 75138,
+      "candidate": 57649
+    },
+    "knownPressureBpe": {
+      "installed": 65279,
+      "candidate": 48003
+    },
+    "sameSyntheticSaveReadbackReserveBpe": 12991,
+    "candidateWithSyntheticReserveBpe": 60994,
+    "knownMarginBpe": 4542,
+    "immutableIndexBytes": 40204,
+    "immutableIndexSha256": "ef108a72709867f3c563cc0cb4eb31ad3e827d42aac2f824c6d2df127f3d592b",
+    "exactIndexReadback": true,
+    "rawAndLatestUnchanged": true,
+    "qualification": "Offline known envelope and synthetic/in-memory archive checks only. Actual recall/recent context and full current SDK envelope remain unknown; no native fit, provider savings or quality advantage."
+  },
+  "boundaries": {
+    "safeSourcePublication": true,
+    "exactSourceInstallationReady": true,
+    "originalReadonlyOwnerMandatePreserved": true,
+    "ordinaryContinuation": "One original owner-authorized readonly continuation may follow actual installation verification and unchanged full runtime input/authority gate. No new comparison, access, budget or automatic retry authority is created.",
+    "taskCompleted": false,
+    "proposalConfirmed": false,
+    "ownerMigrationApproval": false,
+    "nativeFitProven": false,
+    "newInputAuthority": false,
+    "historicalFailuresUsageUnknownAndClosedArtifactsPreserved": true,
+    "reviewerModelRequests": 0,
+    "reviewerNativeExecutions": 0,
+    "reviewerDatabaseWork": 0
+  },
+  "readTypePrimarySources": [
+    "https://raw.githubusercontent.com/home-assistant/core/dev/homeassistant/components/lovelace/websocket.py",
+    "https://raw.githubusercontent.com/home-assistant/core/dev/homeassistant/components/config/entity_registry.py",
+    "https://raw.githubusercontent.com/home-assistant/core/dev/homeassistant/helpers/collection.py",
+    "https://raw.githubusercontent.com/home-assistant/core/dev/homeassistant/components/lovelace/__init__.py"
+  ],
+  "reviewPreparationError": "Inventory path comparison initially included an extra eva/ prefix; assertion stopped before writing. Corrected exact relative-key comparison passes; source/build unchanged.",
+  "blockers": []
+}

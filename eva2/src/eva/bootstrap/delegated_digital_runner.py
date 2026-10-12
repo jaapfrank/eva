@@ -261,6 +261,18 @@ class BackgroundConnectorActions:
                 and receipt.output.get("status") == "selection_invalid"
                 and receipt.output.get("external_state_verified") is False)
 
+    def archive_model_context(self, turn, index):
+        # Recheck the running task grant/cancellation before this host-only copy.
+        self._authorize(turn)
+        route = self._by_name.get("use_connector_tool")
+        archive = getattr(route, "archive_model_context", None)
+        if ("use_connector_tool" not in self._allowed or archive is None
+                or not route.available_for(turn)):
+            raise ConversationConflict("historical context reader is not admitted")
+        manifest = archive(turn, index)
+        self._authorize(turn)
+        return manifest
+
     def active_context(self, turn):
         self._authorize(turn)
         return tuple(item for tool in self._tools if tool.available_for(turn)
@@ -617,7 +629,9 @@ class DelegatedDigitalRunner:
             from eva.adapters.postgres.work_corrections import work_corrections
             corrections = tuple(work_corrections(self.store._engine, spec))
             task_memory = _TaskMemory(self.memory, source, spec.task, corrections)
-            task_model = _TaskModel(self.model, spec.task, self.browser_context,
+            scoped_model = (self.model.with_context_archive(actions.archive_model_context)
+                            if getattr(self.model, "supports_context_archive", False) else self.model)
+            task_model = _TaskModel(scoped_model, spec.task, self.browser_context,
                                     corrections=corrections,
                                     attempt_work_id=spec.work_id,
                                     budget_context=lambda: _remaining_budget_context(spec.grant, latest_usage,

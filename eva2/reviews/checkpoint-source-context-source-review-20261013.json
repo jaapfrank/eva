@@ -1,0 +1,102 @@
+{
+  "contract": "EvaIndependentCheckpointSourceContextSourceReview/v1",
+  "reviewedAt": "2026-10-12T22:30:03.291059+00:00",
+  "verdict": "NO_GO",
+  "scope": "Exact source/build installation and limited source facts; no native input authority.",
+  "bindings": {
+    "publicSourceFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/checkpoint-source-context-correction-20261013.json",
+      "sha256": "6147ef09dc136f1345b4d6173e81fb0f4b71970075ea5f611101e51fa3738dcd"
+    },
+    "freeze": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/frozen-source.private.json",
+      "sha256": "1d7e0815e323ae53971f9c35e92032d39fd8544b222f451023beff8d75b5bcda"
+    },
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/pydantic_conversation.py",
+      "sha256": "3e1fecb8c9098f9b79234df86f3945a1dadd0681c5d2bd93796cdc0f4be2b5b8"
+    },
+    "test": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/test_catalogue_model_view.py",
+      "sha256": "0f5eddef741faf9ebbbde09ceb1536e66948c49279ba159ec81ae1387d399c24"
+    },
+    "buildManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/build-source.private.json",
+      "sha256": "18839725bf909ea99557bb3380abfbe4e7975ac04e25ff672ac3a3510ffa48b0"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/build-result.private.json",
+      "sha256": "b2406458153c9a580402a2fb13483c0bf1c284369823273fd6f3cf231257d103"
+    },
+    "testsStdout": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/tests.stdout.private.log",
+      "sha256": "0a179e874b7d8f84a4371e7cb17c316bbe15a524c7fe64fcda60a6e39326126e"
+    },
+    "testsStderr": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/tests.stderr.private.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "baselineProvider": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/pydantic_conversation.py.frozen.private",
+      "sha256": "9dc84c50fe855a10c126495faabbc9a32eb9832bbbd8c5a09926cceb3e14e300"
+    }
+  },
+  "blockers": [
+    {
+      "code": "negative_typed_inventory_observation_hidden",
+      "sourceFunction": "PydanticConversationModel._checkpoint_source_read",
+      "finding": "The typed inventory branch accepts a verified read receipt with failed automation rows. Existing HomeAssistantAdminAdapter.automation_details_many returns configuration_read=false, coverage.complete=false and reason=configuration_unavailable on read failure. These are nested under automations, so the new top-level error check misses them. Deferral removes the visible failure and its automation identity; index metadata retains configurations_read but omits requested.",
+      "evidence": {
+        "path": "eva2/src/eva/adapters/connectors/home_assistant_admin.py",
+        "lines": [
+          315,
+          319,
+          329,
+          339
+        ]
+      },
+      "minimalCorrection": "Keep typed inventory receipts with these existing negative/incomplete automation rows literal. Preserve requested alongside configurations_read in indexed successful inventory metadata. Use one focused regression for this branch."
+    }
+  ],
+  "confirmedBoundaries": [
+    "REST GET and the seven exact existing WebSocket read types are classified conservatively; WebSocket method GET alone does not qualify.",
+    "Ordinary HTTP/WS success=false, top-level errors, unknown status, effects, missing reader and post-checkpoint/latest reads remain literal.",
+    "Existing retained projection/receipt/proof/source-reader checks are reused; source reader authorization and stop checks are unchanged.",
+    "Checkpoint validity, latest literal anchors, raw history, actor/grant/budget/source scope and ordinary catalogue/gate logic remain unchanged."
+  ],
+  "build": {
+    "core": {
+      "beforeImage": "sha256:062a501b576127039f2641fbf30581b871a3182c5e3f212bc5c49d6a0245089a",
+      "candidateImage": "sha256:4eb97560003052533536372e86a5644469fa3276f5001a462209ccf6861faf29",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "importsPassed": true
+    },
+    "delegated-work-worker": {
+      "beforeImage": "sha256:45a6ae6b57388e898462e30d7e559ddcbb3359b35c875d71d9cbaed8f0023abd",
+      "candidateImage": "sha256:f35260954397a40ac30d0d35252b55e50296af750eb335fdca6359c1ce529dbd",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "importsPassed": true
+    }
+  },
+  "checks": {
+    "reportedAndRawLogConfirmedPassed": 80,
+    "failed": 0,
+    "seconds": 20.5,
+    "reviewerReruns": 0,
+    "coverageLimitation": "The added negatives do not cover nested typed inventory failure rows."
+  },
+  "publicationVerdict": "HOLD for the claim that all failed observations remain visible; built-not-installed and no-fit/no-completion limits are otherwise accurate.",
+  "nativeFit": "unknown",
+  "nativeBehaviorBenefit": "unproven",
+  "newInputAuthority": false,
+  "reviewerActions": {
+    "existingFilesReadOnly": true,
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseWrites": 0,
+    "newTests": 0
+  },
+  "originalCriteriaRolesBudgetsAndReadonlyOwnerApprovalBoundaryUnchanged": true
+}

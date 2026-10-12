@@ -109,6 +109,37 @@ class PostgresExternalConversationTools:
             return False
         return True
 
+    def archive_model_context(self, turn: ConversationTurn, index: dict) -> dict:
+        """Host-only metadata copy using the existing scoped immutable reader."""
+        from types import SimpleNamespace
+        from eva.adapters.postgres.connector_results import ConnectorResults
+        from eva.contracts.canonical_json import canonical_sha256
+        if ("use_connector_tool" not in self.action_names
+                or not getattr(self._provider, "supports_stored_results", False)):
+            raise ConversationConflict("historical context reader is unavailable")
+        checkpoint = index.get("saved_work_progress")
+        if (index.get("contract") not in {"EvaDeferredLocalReadsModelIndex/v1",
+                                         "EvaDeferredLocalReadsModelIndex/v2"}
+                or not isinstance(checkpoint, dict)
+                or not isinstance(checkpoint.get("call_id"), str)
+                or not checkpoint["call_id"]
+                or type(checkpoint.get("revision")) is not int
+                or checkpoint["revision"] < 1):
+            raise ConversationConflict("historical context checkpoint is invalid")
+        self._ensure_running(turn)
+        digest = canonical_sha256(index)
+        command = SimpleNamespace(
+            operation_id="model-context-index:" + digest,
+            tool_configuration_sha256=self._configuration_sha256,
+            tool_name="host_historical_context_index",
+            arguments={"checkpoint": checkpoint, "index_sha256": digest})
+        capture = ConnectorResults(self._timeline(turn), turn, self._ensure_running)
+        with self._execution_lock("model-context-index:" + capture.owner + ":" + digest):
+            output = capture.call(command, "historical_context_index_v1", lambda: index)
+            manifest = capture.manifest(command, "historical_context_index_v1", output)
+        manifest.update(preview="", preview_omitted=True)
+        return manifest
+
     def active_context(self, turn: ConversationTurn) -> tuple[str, ...]:
         provider_context = getattr(self._planner, "active_context", None)
         if provider_context is None:

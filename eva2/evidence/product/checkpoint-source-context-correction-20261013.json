@@ -1,0 +1,59 @@
+{
+  "contract": "EvaCheckpointSourceContextCorrection/v1",
+  "recorded_at": "2026-10-12T22:28:08.189894+00:00",
+  "status": "built_not_installed",
+  "user_result": "Eva herself must complete the ordinary readonly proposal; no final proposal yet",
+  "source_files": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "3e1fecb8c9098f9b79234df86f3945a1dadd0681c5d2bd93796cdc0f4be2b5b8",
+      "frozen": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/pydantic_conversation.py"
+    },
+    {
+      "path": "eva2/tests/model/test_catalogue_model_view.py",
+      "sha256": "0f5eddef741faf9ebbbde09ceb1536e66948c49279ba159ec81ae1387d399c24",
+      "frozen": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/test_catalogue_model_view.py"
+    }
+  ],
+  "references": {
+    "freeze": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/frozen-source.private.json",
+      "sha256": "1d7e0815e323ae53971f9c35e92032d39fd8544b222f451023beff8d75b5bcda"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/build-result.private.json",
+      "sha256": "b2406458153c9a580402a2fb13483c0bf1c284369823273fd6f3cf231257d103"
+    },
+    "test_stdout": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/tests.stdout.private.log",
+      "sha256": "0a179e874b7d8f84a4371e7cb17c316bbe15a524c7fe64fcda60a6e39326126e"
+    },
+    "test_stderr": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/tests.stderr.private.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "changes": [
+    "Old successful proven pure HA read observations before actually saved findings use their unchanged authorized source reader.",
+    "Conservative exact existing WS read types, REST GET and typed inventory only; WebSocket GET alone does not establish read-only behavior.",
+    "Original request, observation status/metadata, source version, source receipt/proof hashes and reader remain indexed.",
+    "Errors including verified success=false, UNKNOWN, effects, current evidence and needed literal anchors remain visible.",
+    "Raw histories, grants, actors, task scope, model roles and resource limits unchanged."
+  ],
+  "tests": {
+    "passed": 80,
+    "failed": 0,
+    "new_checks": 20,
+    "native_model_requests": 0
+  },
+  "runtime": {
+    "installed": false,
+    "unchanged_other_python_sources_per_image": 344
+  },
+  "limitations": [
+    "Complete live phase context not yet measured; no future fit, task success, native efficiency or final proposal claim.",
+    "No new product completion; 39/48 original and39/54 expanded unchanged.",
+    "Actual HA migration still requires separate approval of Eva-authored final proposal."
+  ],
+  "credit_cost": null
+}

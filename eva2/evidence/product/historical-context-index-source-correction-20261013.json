@@ -1,0 +1,77 @@
+{
+  "contract": "EvaHistoricalContextIndexSourceCorrection/v1",
+  "recordedAt": "2026-10-12T22:48:06.825810+00:00",
+  "status": "source_built_not_installed",
+  "originalTaskCompleted": false,
+  "modelRequests": 0,
+  "nativeExecutions": 0,
+  "sourceFiles": [
+    {
+      "source": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-pydantic_conversation.py",
+      "sha256": "a5749ba437ecc8d000de6d09037ccb345fddc13422a0a33e3c6f0a2016bc0f40"
+    },
+    {
+      "source": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-external_conversation_tools.py",
+      "sha256": "a22eb53197a1f84cbca14fe7d3ed5fe3927b3465d427396b3a144a03e261a70a"
+    },
+    {
+      "source": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-delegated_digital_runner.py",
+      "sha256": "98b1842a01b6b544a2764d030bbf6cd17ff96ede77eeaf5a134c02b7f387a5aa"
+    },
+    {
+      "source": "eva2/tests/model/test_catalogue_model_view.py",
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/final-test_catalogue_model_view.py",
+      "sha256": "eddfeb141b9848edf2a2e54ca371323890cb925d43f6c30c197e2cfbf0e23207"
+    }
+  ],
+  "existingFacilitiesReused": [
+    "ConnectorResults immutable timeline chunks/seal/scoped reader",
+    "existing use_connector_tool authorization",
+    "saved_work_progress current findings",
+    "ordinary delegated task model and action route"
+  ],
+  "change": "Host-only exact navigation index copied after valid saved checkpoint; current receipt, findings, errors, UNKNOWN, effects and literal anchors retained. Each task receives a model copy with its own grant/stop callback. _TaskModel protected class unchanged.",
+  "privacyAndAuthority": "Capture binds tenant/install/principal/audience/conversation/message/execution/configuration/checkpoint/indexSHA. Archive seal proves metadata copy; source fact readers revalidate original proofs. No new model tool, external action, grants, limits or Tuya code.",
+  "tests": {
+    "uniquePassed": 129,
+    "firstRunPassed": 127,
+    "firstRunFailed": 1,
+    "failure": "Local fixture had zero scripted phases; no provider/native request. Fixed only fixture; same check and added real SDK envelope check pass.",
+    "focusedRepairAndSdkPassed": 2,
+    "workStrategyBoundary": "Existing unchanged AIDE work strategy boundary tests passed."
+  },
+  "measurement": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-cause-diagnosis/gen13-complete149-structural-v2-paired-known-phase.private.json",
+    "sha256": "69cc13fa5e2bc3aba4386abde99c5f275c557cdfa4d5ddbc0b474dbd1dfa2950",
+    "receipts": 149,
+    "normalBpe": {
+      "installed": 75138,
+      "candidate": 57649
+    },
+    "pressureBpe": {
+      "installed": 65279,
+      "candidate": 48003
+    },
+    "sameSaveReadbackReserveBpe": 12991,
+    "candidateWithReserveBpe": 60994,
+    "knownMarginBpe": 4542,
+    "indexBytes": 40204,
+    "indexBpe": {
+      "inline": 16275,
+      "manifest": 1149
+    },
+    "exactReadback": true,
+    "rawLatestUnchanged": true,
+    "unknown": "Actual current recall/recent/full envelope unknown; no native fit, semantic proposal quality or completion claim."
+  },
+  "originalScope": "Read-only Tuya→LocalTuya proposal by Eva; no migration, rename, restart or HA configuration changes. No manual proposal.",
+  "retainedFailure": "Gen13 closed: 10 requests, 549014 known tokens, 10 tools, budget_exceeded; old 9240-byte document unchanged.",
+  "buildSource": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/build-source.private.json",
+    "sha256": "011ce55e1198e28f9e2155b180acc9c8d987885cd06105cfd1a65b423293c237"
+  },
+  "goal": "Whole project active; original 39/48 and expanded39/54 unchanged; voice parked; no comparison series."
+}

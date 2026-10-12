@@ -5448,7 +5448,7 @@
         "now": {
           "title": "Algemene taakuitvoering herstellen; voorstel nog niet af",
           "state": "in_progress",
-          "phase": "ordinary_research_loop_context_failure_diagnosis",
+          "phase": "historical_context_index_installing",
           "taskId": "work:eva-resume:36d06219-cec5-5a7b-a144-fd01e54de3ef",
           "linkedTaskIds": [
             "TL-001",
@@ -5466,9 +5466,9 @@
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-ordinary-result-20261012.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-ordinary-result-review-20261012.json",
           "previousResultReviewSha256": "f44b500d1fd53f17ac92361e88efe425ae4a6ae66a50e79aff516c3fcb4b61cd",
-          "implementationStatus": "Gewone tools blijven beschikbaar; oude werknotities letterlijk éénmaal en verwerkte bronpagina’s via hun readers. Geïnstalleerd, kern en werker gezond.",
-          "currentActivity": "Oude succesvolle pure bronlezingen via bestaande readers beschikbaar houden; eerst volledige taakcontext en ruimte voor voorstel/teruglezing controleren. Geen nieuwe modeluitvoering.",
-          "checkedAt": "2026-10-12T22:24:36.225838+00:00",
+          "implementationStatus": "Broncorrectie gecontroleerd; installatie loopt. Het voorstel is nog niet af.",
+          "currentActivity": "Bronreview geslaagd. Exacte correctie wordt in kern en werker geïnstalleerd; daarna hervat Eva haar oorspronkelijke leesopdracht.",
+          "checkedAt": "2026-10-12T22:54:06.527372+00:00",
           "remaining": [
             "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
             "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."
@@ -5486,9 +5486,11 @@
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation-final.private.json",
             "sha256": "2df139a56d60e32097eb7762a4292d4cfb14b4db6e88304fcc11cc33a4af57f0"
           },
-          "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-source-review-20261012.json",
-          "sourceReviewSha256": "e67f1d52cff1411d28a8ba194ef0a5ad6ed5574f5645974f57bdf11bea489dfd",
-          "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-installed-20261012.json"
+          "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/historical-context-index-source-review-20261013.json",
+          "sourceReviewSha256": "096f5953306e864c74206b0057f7e021b406248f0929ec37cc0f97951135bfcb",
+          "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-installed-20261012.json",
+          "sourceEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-source-correction-20261013.json",
+          "sourceEvidenceSha256": "69591899278306d194416905c1f9da4bda76ecfd0c672e87bc94384760466f19"
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",

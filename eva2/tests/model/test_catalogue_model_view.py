@@ -867,3 +867,282 @@ def test_saved_findings_preserve_current_literal_reference_anchor():
     selected, _ = PydanticConversationModel._receipt_context_selection(history)
     assert first in selected and selected[-1] == current
     assert PydanticConversationModel._receipt_model_views(selected, _literal_slices=False)[-1] == baseline
+
+
+def _checkpoint_ha_read(*, transport="rest", method="GET", command=None, success=True,
+                        inventory=False):
+    from tests.connectors.test_connector_results import _retained_ha, TURN
+    port, timeline, thread, stopped, authorize = _retained_ha()
+    admission = timeline.rows[thread][0].payload["data"]
+    admission["action_arguments"] = {"transport": transport, "method": method,
+        "path": "/api/states" if transport == "rest" else "",
+        "body_json": json.dumps({"type": command or "get_states"}),
+        "response_pointer": "", "offset": 0, "limit": 50}
+    observation = timeline.rows[thread][-1].payload["data"]["proof"]["evidence"]["observation"]
+    observation["success"] = success
+    if inventory:
+        port._action_names = ("read_home_assistant_inventory",)
+        new_thread = port._thread_id(TURN, "read_home_assistant_inventory", 1)
+        timeline.rows[new_thread] = timeline.rows.pop(thread)
+        thread = new_thread
+        admission["action_name"] = "read_home_assistant_inventory"
+        admission["observation_output_key"] = "inventory"
+        admission["action_arguments"] = {"section": "entities", "offset": 0}
+        del observation["success"]
+    receipt = port._receipt(TURN, timeline.events(thread), 1)
+    return receipt, port, timeline, thread, stopped, authorize
+
+
+@pytest.mark.parametrize("kind", ["rest", "inventory", "get_states", "get_config",
+    "config_entries/get", "config/area_registry/list", "config/device_registry/list",
+    "config/entity_registry/list", "hacs/repositories/list",
+    "lovelace/config", "lovelace/dashboards/list", "config/entity_registry/get_entries"])
+def test_saved_checkpoint_indexes_only_successful_explicit_ha_reads(kind):
+    from tests.connectors.test_connector_results import ConnectorResults, TURN
+    receipt, _, timeline, _, stopped, authorize = _checkpoint_ha_read(
+        transport="rest" if kind in {"rest", "inventory"} else "websocket",
+        command=kind, inventory=kind == "inventory")
+    checkpoint = _working_note("saved-findings", 1, "Actual findings from retained-read.")
+    history = (receipt, checkpoint)
+    raw = canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history])
+    selected, note = PydanticConversationModel._receipt_context_selection(history)
+    assert selected == (checkpoint,)
+    index = json.loads(note.split("\n", 1)[1])
+    assert len(index["checkpoint_source_reads"]) == 1
+    entry = dict(zip(index["checkpoint_source_read_columns"],
+                     index["checkpoint_source_reads"][0], strict=True))
+    assert entry["call"] == {"call_id": receipt.call.call_id, "name": receipt.call.name,
+                            "arguments": receipt.call.arguments}
+    assert entry["task_completion_verified"] is False
+    assert entry["source_receipt_sha256"] == hashlib.sha256(canonical_json_bytes(receipt.output)).hexdigest()
+    assert entry["source_proof_sha256"] == hashlib.sha256(canonical_json_bytes(receipt.output["proof"])).hexdigest()
+    # Retrieve real retained bytes, with no HA provider or external replay.
+    capture = ConnectorResults(timeline, TURN, authorize)
+    page = capture.read(entry["reader_tool_id"], {"pointer": entry["pointer"] + "/response_json",
+        "offset": 0, "limit": 100, "query": None})
+    key = "inventory" if kind == "inventory" else "result"
+    assert page["text"] == receipt.output[key]["response_json"][:100]
+    assert entry["source_version"] == page["sha256"]
+    stopped[0] = True
+    from eva.application.conversation import ConversationConflict
+    with pytest.raises(ConversationConflict, match="stopped"):
+        capture.read(entry["reader_tool_id"], {"pointer": entry["pointer"],
+            "offset": 0, "limit": 100, "query": None})
+    assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history]) == raw
+
+
+@pytest.mark.parametrize("change", ["failed_response", "post", "ws_write", "ws_unknown",
+    "unknown", "effect", "no_reader", "bad_proof", "after_checkpoint", "no_checkpoint"])
+def test_checkpoint_archive_keeps_errors_effects_unclassified_and_new_reads(change):
+    from dataclasses import replace
+    receipt, *_ = _checkpoint_ha_read(
+        success=change != "failed_response", method="POST" if change == "post" else "GET",
+        transport="websocket" if change in {"ws_write", "ws_unknown"} else "rest",
+        command="call_service" if change == "ws_write" else "future/unknown")
+    if change in {"unknown", "effect", "no_reader", "bad_proof"}:
+        output = deepcopy(receipt.output)
+        if change == "unknown": output["status"] = "ambiguous"
+        elif change == "effect": output["external_state_verified"] = True
+        elif change == "bad_proof": output["proof"]["evidence"]["observation"] = {}
+        receipt = replace(receipt, output=output, model_output=None)
+    checkpoint = _working_note("saved-findings", 1, "Already saved findings.")
+    history = ((checkpoint, receipt) if change == "after_checkpoint" else
+               (receipt,) if change == "no_checkpoint" else (receipt, checkpoint))
+    assert PydanticConversationModel._receipt_context_selection(history) == (history, "")
+
+
+def test_checkpoint_archive_keeps_latest_source_and_rejects_tampered_projection():
+    from dataclasses import replace
+    from eva.adapters.model.contracts import ConversationModelError
+    read, *_ = _checkpoint_ha_read()
+    checkpoint = _working_note("saved-findings", 1, "Saved findings.")
+    history = (checkpoint, read)
+    assert PydanticConversationModel._receipt_context_selection(history) == (history, "")
+    injected = deepcopy(read.model_output)
+    injected["ancestor_model_projection"]["source"]["receipt_sha256"] = "0" * 64
+    with pytest.raises(ConversationModelError, match="differs"):
+        PydanticConversationModel._receipt_context_selection(
+            (replace(read, model_output=injected), checkpoint))
+
+
+@pytest.mark.parametrize("failure", ["configuration_unavailable", "configuration_output_limit",
+    "incomplete_coverage", "missing_source", "partial_requested"])
+def test_checkpoint_source_archive_keeps_inventory_read_failures_literal(failure):
+    from tests.connectors.test_connector_results import TURN
+    _, port, timeline, thread, _, _ = _checkpoint_ha_read(inventory=True)
+    observation = timeline.rows[thread][-1].payload["data"]["proof"]["evidence"]["observation"]
+    observation["requested"] = 2
+    observation["configurations_read"] = 1
+    if failure == "configuration_unavailable":
+        observation["automations"] = [{"automation_id": "original-id", "configuration_read": False,
+            "coverage": {"complete": False}, "reason": failure}]
+    elif failure == "configuration_output_limit":
+        observation["automations"] = [{"automation_id": "original-id", "configuration_read": True,
+            "coverage": {"complete": False}, "reason": failure}]
+    elif failure == "incomplete_coverage":
+        observation["coverage"] = {"complete": False}
+    elif failure == "missing_source":
+        observation["missing"] = ["original-id"]
+    else:
+        observation["automations"] = [{"automation_id": "original-id", "configuration_read": False}]
+    read = port._receipt(TURN, timeline.events(thread), 1)
+    checkpoint = _working_note("saved-findings", 1, "Read may be incomplete.")
+    assert PydanticConversationModel._receipt_context_selection((read, checkpoint)) == ((read, checkpoint), "")
+
+
+def _context_archive_route(timeline, authorize):
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    route = PostgresExternalConversationTools(None,
+        SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True),
+        configuration_sha256="9" * 64)
+    route._timeline = lambda turn: timeline
+    route._execution_lock = lambda key: nullcontext()
+    route._ensure_running = authorize
+    return route
+
+
+def test_historical_index_archive_exact_readback_keeps_current_context_and_raw_history():
+    from tests.connectors.test_connector_results import ConnectorResults, TURN
+    read, _, timeline, _, stopped, authorize = _checkpoint_ha_read()
+    old = _working_note("old-notes", 1, "Long earlier findings. " * 900)
+    current = _working_note("current-notes", 2, "Current findings; complete the requested proposal.")
+    history = (old, read, current)
+    raw = canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history])
+    selected, overview = PydanticConversationModel._receipt_context_selection(history)
+    index = json.loads(overview.split("\n", 1)[1])
+    route = _context_archive_route(timeline, authorize)
+    note = PydanticConversationModel._archive_read_overview(TURN, overview, route.archive_model_context)
+    manifest = json.loads(note.split("\n", 1)[1])
+    assert len(note.encode()) < len(overview.encode()) / 4
+    assert manifest["external_state_verified"] is False
+    assert "preview" not in manifest and "Long earlier findings." not in note
+    capture = ConnectorResults(timeline, TURN, authorize)
+    page = capture.read(manifest["reader"]["tool_id"],
+        {"pointer": "/superseded_work_progress/0/progress/steps/0/evidence",
+         "offset": 0, "limit": 8192, "query": None})
+    assert page["text"] == old.call.arguments["steps"][0]["evidence"][:8192]
+    identifier = manifest["reader"]["tool_id"].split(":")[1]
+    assert capture._bytes(identifier)[0] == canonical_json_bytes(index)
+    rows_before = deepcopy(timeline.rows)
+    assert route.archive_model_context(TURN, index)["sha256"] == manifest["sha256"]
+    assert timeline.rows == rows_before
+    assert selected == (current,)
+    assert PydanticConversationModel._receipt_model_views(selected, _literal_slices=False)[-1] == (
+        PydanticConversationModel._receipt_model_views(history, _literal_slices=False)[-1])
+    assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in history]) == raw
+    stopped[0] = True
+    from eva.application.conversation import ConversationConflict
+    with pytest.raises(ConversationConflict, match="stopped"):
+        route.archive_model_context(TURN, index)
+    with pytest.raises(ConversationConflict, match="stopped"):
+        capture.read(manifest["reader"]["tool_id"],
+            {"pointer": "", "offset": 0, "limit": 10, "query": None})
+
+
+@pytest.mark.parametrize("field", ["sha256", "byte_length", "reader", "external_state_verified"])
+def test_context_archive_rejects_wrong_manifest_binding(field):
+    from tests.connectors.test_connector_results import TURN
+    from eva.adapters.model.contracts import ConversationModelError
+    read, _, timeline, _, _, authorize = _checkpoint_ha_read()
+    history = (_working_note("older", 1, "Old facts. " * 500), read,
+               _working_note("saved", 2, "Current facts."))
+    _, overview = PydanticConversationModel._receipt_context_selection(history)
+    route = _context_archive_route(timeline, authorize)
+    def forged(turn, index):
+        manifest = route.archive_model_context(turn, index)
+        manifest[field] = {"tool_id": "wrong", "action": "use_connector_tool"} if field == "reader" else (
+            1 if field == "byte_length" else True if field == "external_state_verified" else "0" * 64)
+        return manifest
+    with pytest.raises(ConversationModelError, match="binding differs"):
+        PydanticConversationModel._archive_read_overview(TURN, overview, forged)
+
+
+def test_historical_index_uses_existing_owner_and_execution_reader_boundaries():
+    from dataclasses import replace
+    from tests.connectors.test_connector_results import ConnectorResults, TURN
+    from eva.application.conversation import ConversationConflict
+    from eva.application.background_execution import background_execution, BackgroundExecutionScope
+    read, _, timeline, _, _, authorize = _checkpoint_ha_read()
+    _, overview = PydanticConversationModel._receipt_context_selection((
+        _working_note("older", 1, "Old findings. " * 500), read,
+        _working_note("saved", 2, "Current findings.")))
+    route = _context_archive_route(timeline, authorize)
+    note = PydanticConversationModel._archive_read_overview(TURN, overview, route.archive_model_context)
+    reader = json.loads(note.split("\n", 1)[1])["reader"]["tool_id"]
+    arguments = {"pointer": "", "offset": 0, "limit": 100, "query": None}
+    other = replace(TURN, principal_id="another",
+                    audience=replace(TURN.audience, principal_id="another", audience_id="person:another"))
+    with pytest.raises(ConversationConflict, match="owner"):
+        ConnectorResults(timeline, other, lambda turn: None).read(reader, arguments)
+    with background_execution(BackgroundExecutionScope(TURN, "different-execution", lambda turn: None)):
+        with pytest.raises(ConversationConflict, match="owner"):
+            ConnectorResults(timeline, TURN, lambda turn: None).read(reader, arguments)
+
+
+def test_background_context_archive_rechecks_task_grant_without_external_dispatch():
+    from tests.connectors.test_connector_results import TURN
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions
+    from eva.application.conversation import ConversationConflict
+    read, _, timeline, _, _, authorize = _checkpoint_ha_read()
+    route = _context_archive_route(timeline, authorize)
+    _, overview = PydanticConversationModel._receipt_context_selection((
+        _working_note("older", 1, "Old findings. " * 500), read,
+        _working_note("saved", 2, "Current findings.")))
+    index = json.loads(overview.split("\n", 1)[1])
+    stop = [False]
+    def task_authorize(turn):
+        assert turn == TURN
+        if stop[0]: raise ConversationConflict("task cancelled")
+    actions = BackgroundConnectorActions((route,), ("use_connector_tool",), task_authorize, 6)
+    assert actions.archive_model_context(TURN, index)["stored_complete"] is True
+    assert (actions.calls, actions.dispatches, actions.receipts) == (0, 0, [])
+    stop[0] = True
+    before = deepcopy(timeline.rows)
+    with pytest.raises(ConversationConflict, match="cancelled"):
+        actions.archive_model_context(TURN, index)
+    assert timeline.rows == before
+
+
+def test_task_scoped_archive_does_not_mutate_shared_model(tmp_path):
+    from tests.model.test_pydantic_conversation_model import _adapter, ScriptedPydanticConversation, ScriptedPhase
+    model = _adapter(tmp_path, ScriptedPydanticConversation((ScriptedPhase.text("unused"),)))
+    first, second = lambda *args: "first", lambda *args: "second"
+    a, b = model.with_context_archive(first), model.with_context_archive(second)
+    assert model._context_archive is None
+    assert a._context_archive is first and b._context_archive is second
+    assert a._resource_budget is model._resource_budget
+    assert a._model_backend is model._model_backend
+
+
+def test_actual_sdk_envelope_uses_scoped_archive_without_removing_latest_receipt(tmp_path, monkeypatch):
+    from dataclasses import replace
+    from tests.connectors.test_connector_results import TURN
+    from tests.model.test_pydantic_conversation_model import (
+        _phase_transport_adapter, _identity, _memory, TOOL)
+    from eva.adapters.model.pydantic_conversation import _descriptor_tool
+    model, _, requests, _ = _phase_transport_adapter(tmp_path, monkeypatch,
+        [("final_answer", ("Resultaat.",))])
+    descriptor = replace(TOOL, name="use_connector_tool")
+    model._conversation_tools[descriptor.name] = _descriptor_tool(descriptor)
+    model._conversation_tool_descriptors[descriptor.name] = descriptor
+    read, _, timeline, _, _, authorize = _checkpoint_ha_read()
+    route = _context_archive_route(timeline, authorize)
+    history = (_working_note("older", 1, "Old findings. " * 500), read,
+               _working_note("saved", 2, "Current facts to finish the proposal."))
+    scoped = model.with_context_archive(route.archive_model_context)
+    result = scoped.generate(TURN, _identity(), _memory(), (),
+        available_actions=("use_connector_tool",),
+        prior_actions=history[:-1], completed_action=history[-1])
+    assert result.text == "Resultaat." and len(requests) == 1
+    wire = requests[0]
+    assert "Historisch bronleesoverzicht lokaal bewaard" in wire["instructions"]
+    assert "Old findings. " * 10 not in wire["instructions"]
+    outputs = {item["call_id"]: json.loads(item["output"]) for item in wire["input"]
+               if item.get("type") == "function_call_output"}
+    assert set(outputs) == {"saved"}
+    assert outputs["saved"] == PydanticConversationModel._receipt_model_views(
+        history, _literal_slices=False)[-1]
+    assert model._context_archive is None
