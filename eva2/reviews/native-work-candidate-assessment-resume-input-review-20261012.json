@@ -1,0 +1,93 @@
+{
+  "contract": "EvaIndependentCandidateAssessmentResumeInputReview/v1",
+  "checkedAt": "2026-10-12T05:28:40.498313Z",
+  "decision": "GO",
+  "installationDecision": "GO",
+  "nativeInputDecision": "GO_ONCE",
+  "scope": "Exacte normale gen2 naar gen3 hervatting van de ene behouden werkaanpakkandidaat na de bewezen en geïnstalleerde evaluatieklokcorrectie. Geen nieuwe kandidaat, vergelijkingsserie, eindcriteria of productafronding.",
+  "openBlockers": [],
+  "bindings": {
+    "rootPreparationSha256": "81165e91b6a686dfed2f623a9d14b66c96cc89233774f1c739375e1135d70fa5",
+    "driverManifestSha256": "a3bb19f09339097d4ff1879aa10381c5c3d2b5683c52e315ce2b533b7a2e3f82",
+    "driverSha256": "6b4f0591f26cb47fec893a7aee797340dbd05047ee67f8210403422956aa56f8",
+    "driverPreparationSha256": "7376b535120891c1e131a75267adc74ace2005f44b70a334a3957409701016c5",
+    "installedReceiptSha256": "a3717577a8164f88b42baac9f86827d11ff94c8a285fc7a8c42bc4221b7d31c1",
+    "hostConfigurationSha256": "ae4f78ca54ce2e2639bd062ba12c9400ed2a4ab45f9ff8230351d72b0eeef2ca",
+    "previousHostConfigurationSha256": "bf2d9246456e3e32dd38284ea414a7170b390039e776e681612ca2ee74a6dd78",
+    "resourcesSha256": "32945c9f9e38e572b3bb21447dab904a2877e0782e43cb0fd4b459cc29cdfa9a",
+    "runtimeAdmissionSha256": "bbe5e902eb5e1cd46739ca76e3823feea6b9e2f32c282dfa036af8bc62a7ea61",
+    "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872",
+    "retainedCandidateSha256": "c17ba3c457de62199e5441335bfee900511c21aa5a04bb03c315cfeecefc7704",
+    "baselineSha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+    "currentWorkerProgramSha256": "cbffeafb4b3f23a8c1da01fa552a474be6123cb8d73266338f669d4278de1c35",
+    "runtimeConfigurationFingerprintSha256": "1382e6cd0a2aff2d03f61cb54f05aa4b703cf4c345a0d05fa8f53050e715f0fa",
+    "coreImage": "sha256:80839f28cc873d39d2b283bdd1c18bb700eeb7d7689cf0359950adddea21f55a",
+    "workerImage": "sha256:6e15c592a9283264e10539a84688e1630be09d6f44c5acf1411cd18df645c9fa"
+  },
+  "checked": {
+    "exactFrozenFilesAndEightRetainedClosedHashes": true,
+    "newExclusiveDispatchMarkerAbsentAtReview": true,
+    "currentServiceFileMatchesInstalledReceiptAndProspectiveConfig": true,
+    "serviceActiveAndReadyHttp200": true,
+    "existingCoreAndWorkerHealthyImagesUnchanged": true,
+    "oneHostRestartAndInitialReadinessConnectionRefusalRetained": true,
+    "configurationDeltaMatchesDeclared17Leaves": true,
+    "criteriaScorerProtocolsCasesActorRolesGrantsUnchanged": true,
+    "resourceDeltaOnlyExplicitProspectiveCumulativeConstructionLimits": true,
+    "originalAdmissionFinalIdentitiesUnchanged": true,
+    "ordinaryResumeUsesCurrentNamespaceAndSeparateCanonicalControlTime": true,
+    "originalSourceIngressEpisodeExecutionTaskGrantAndClosedDeadlinesPreserved": true,
+    "priorGenerationsMeasuredExactlyOnce": true,
+    "newDraftEffectsDeniedAndExactHistoricalDraft3Recovered": true,
+    "newEvalBoundToCurrentLeafAndExactDraft3Step4ReceiptEventThreadCandidate": true,
+    "currentOwnerSourceStopDeadlineDispatchChecksRemainRequired": true
+  },
+  "resourceQualification": {
+    "retainedUsage": {
+      "providerRequests": 6,
+      "inputTokens": 60662,
+      "outputTokens": 1539,
+      "totalTokens": 62201,
+      "physicalTools": 6,
+      "activeSeconds": 95.89771813596599
+    },
+    "prospectiveFreshConstruction": {
+      "providerRequestsMaximum": 8,
+      "activeSecondsMaximum": 150
+    },
+    "prospectiveCumulativeConstruction": {
+      "providerRequestsMaximum": 14,
+      "activeSecondsMaximum": 246
+    },
+    "ordinaryNewGenerationDeadlineSeconds": 1200,
+    "sharedUnchanged": {
+      "providerRequestsMaximum": 68,
+      "inputTokensMaximum": 385000,
+      "outputTokensMaximum": 15000,
+      "combinedTokensMaximum": 400000,
+      "physicalToolsMaximum": 100,
+      "retries": 0
+    },
+    "allocationRevisionExplicit": true,
+    "closedAttemptTimersCountersAndRawBytesNotReset": true,
+    "tokenCeilingQualification": "Volledig gemeten acceptatie-/stopgrens vóór volgende dispatch; geen gegarandeerde bovengrens binnen één lopende providerrespons. Onbekend verbruik weigert verdere invoer.",
+    "feasibility": "De resterende verplichte EVAL/COMPARE/PREPARE/SAVE/eindantwoordketen vraagt minimaal vijf nieuwe modelresponsen. De vooraf gebonden acht nieuwe pogingen geven daarvoor ruimte; succes of beschikbare credits is niet bewezen."
+  },
+  "goOnceBoundary": {
+    "onlyExactManifestAndDriver": true,
+    "onlyConstructionStage": true,
+    "onlyOneNormalGeneration3ResumeOfRetainedGeneration2": true,
+    "noNewDraftOrCandidate": true,
+    "noClosedCallReplayRearmOrOldMarkerOverwrite": true,
+    "driverMustRecheckPinnedLoadedHostSourcesCurrentConfigProgramResourcesAdmissionAndOriginalAuthorityBeforeDispatch": true,
+    "failClosedOnChangedBindingsStopExpiredAuthorityUnknownUsageOrReachedLimits": true,
+    "laterUseNotAdmittedByThisReview": true
+  },
+  "limitations": [
+    "Dit GO bewijst uitsluitend de gecontroleerde installatie en technisch uitvoerbare, eenmalige gebonden ingang; nog geen voltooide ontwikkeling, onafhankelijke eindbeoordeling, toepassing, latere bruikbaarheid of volledige AIDE2.",
+    "De eerdere twee echte mislukkingen en al hun verbruik blijven gesloten historische feiten.",
+    "De nieuwe numerieke constructieruimte is expliciet prospectief aangepast; zij wordt niet als ongewijzigde eerdere fasebegroting gepubliceerd.",
+    "De eerdere directe opstartherlezing gaf ConnectionRefused; dezelfde ene herstarte service werd daarna ready zonder tweede installatie of herstart.",
+    "Deze review startte geen factory, test, database, Dockeractie, EVAL, model of native ingang. De installatie-/voorbereidingsontvangsten zijn gelezen en exact gebonden."
+  ]
+}

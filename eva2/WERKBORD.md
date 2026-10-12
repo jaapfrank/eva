@@ -1,4 +1,4 @@
-## Actueel werk — 2026-10-12T05:11:38.200903+00:00
+## Actueel werk — 2026-10-12T05:29:42.043474+00:00
 
 ## Actueel 12 oktober — typefout in verbeterbeoordeling geïnstalleerd
 
@@ -15,7 +15,8 @@ blijft gesloten: vijf nieuwe aanvragen/57.214 tokens; inclusief ouder zes aanvra
 62.201 tokens. Geen geslaagde beoordeling, kwaliteitswinst, toepassing of later
 gebruik. Oude verbruik-, datum- en foutgegevens blijven behouden.
 
-**Nu:** de actuele programmavingerafdruk vóór vervolginput coherent aansluiten en
+**Nu:** de actuele programmavingerafdruk en vervolgopdracht zijn aangesloten;
+onafhankelijke invoerreview GO_ONCE, de echte hervatting is gestart om
 de bestaande kandidaat beoordelen. Alleen onafhankelijk bewezen winst toepassen
 en bij later gewoon werk gebruiken. Gesloten dispatch niet opnieuw activeren.
 De correctie verandert alleen de afgeleide programmavingerafdruk; overige
@@ -26,7 +27,7 @@ Het volledige projectgoal, leercyclus en AIDE² blijven actief en open.
 Geen handeling van Jaap nodig; spraak geparkeerd; geen concurrentenserie.
 Creditkosten en ontwikkelcredits onbekend. Onafhankelijke installatiereview GO.
 
-Dashboardinhoud gecontroleerd: 2026-10-12T05:11:38.200903+00:00.
+Dashboardinhoud gecontroleerd: 2026-10-12T05:29:42.043474+00:00.
 Bewijs: eva2/evidence/product/native-work-component-evaluation-clock-installed-20261012.json.
 Bronreview: eva2/reviews/native-work-component-evaluation-clock-source-review-20261012.json.
 Installatiereview: eva2/reviews/native-work-component-evaluation-clock-installed-review-20261012.json.
