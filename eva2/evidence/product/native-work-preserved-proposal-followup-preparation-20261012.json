@@ -1,26 +1,29 @@
 {
   "activity": {
     "creditCost": "unknown",
-    "newEvaModelRequests": 0,
-    "newNativeDispatches": 0,
-    "requiredModelFreeFactoryProjections": 1
+    "newEvaModelRequests": null,
+    "newNativeDispatches": 1,
+    "requiredModelFreeFactoryProjections": 1,
+    "measurementInProgress": true,
+    "confirmedLivePid": 887974,
+    "execSessionId": 21849
   },
-  "checkedAt": "2026-10-12T13:48:09.285553+02:00",
+  "checkedAt": "2026-10-12T13:55:12.404387+02:00",
   "contract": "EvaPreservedProposalFollowupPreparationPublic/v1",
   "currentResult": {
     "candidateApplied": false,
     "candidatePreservedSha256": "9fd501a863ae1c1801c429adc7c05570fdfc138db78dfd27d9b465eba76e51a2",
     "fullAideCycleCompleted": false,
-    "nativeFollowupStarted": false,
+    "nativeFollowupStarted": true,
     "projectOriginCorrectionInstalled": true,
     "uniqueTargetedChecksPassed": 11
   },
   "forwardPreparation": {
     "competitorSeriesAllowed": false,
     "decisionSha256": "3bccebe5726368e1c4d84655ef500f8a510e5e1f1d81f31a9c45058a16192639",
-    "exactPreparationAndInputReviewPending": true,
+    "exactPreparationAndInputReviewPending": false,
     "freshTechnicalEpisodeIdsRequired": true,
-    "nativeInputAllowed": false,
+    "nativeInputAllowed": true,
     "newCandidateGenerationAllowed": false,
     "notHistoricalRemainingBudget": true,
     "originalCriteriaCasesAndModelRolesPreserved": true,
@@ -30,14 +33,16 @@
     "actualRuntimeProjectionCompleted": true,
     "originalCasesAndScorerPreserved": true,
     "newRuntimeBindingsPrepared": true,
-    "configurationActivated": false,
+    "configurationActivated": true,
     "independentFinalInputsRebound": true,
     "runtimeBindingEvidence": {
       "configurationSha256": "506940d78f79667e9ad496f76cd3be206052ef23cdf31a809dd3430cdb5ffd01",
       "factoryProjectionSha256": "b06d779841dc13070b891d6462e6a258121e9fcdd50e641fd6ee0172dcf3721b",
       "runtimeAdmissionSha256": "96805e0a4f302498121f05606a7c3e2507efc15a7fe5ce07e7f953b07bc8ec52",
       "finalInputBindingReviewSha256": "0bd0e81ced967258345d6b7e302332a00afffe42dc9ecbeea9876838971c7b5e"
-    }
+    },
+    "exactInputReviewSha256": "16bf0b85b9d5da7dc79143cc0d510dac1542a0e442905588c5fad0bf290985b4",
+    "actualActivationSha256": "be7e06f1a60c3ab4d27a741789d4a2a5850c334cd8e80f4d3e581ffed0af28b5"
   },
   "fullGoalActive": true,
   "outcome": "Evaluate exact preserved code proposal, independently assess only valid selection, apply proven gain, then later use.",
@@ -50,7 +55,7 @@
     "oldRawOnceAndTimersPreserved": true
   },
   "productCompletionsChanged": false,
-  "state": "runtime_bound_in_review",
+  "state": "native_assessment_running",
   "taskId": "HUE6.1",
   "team": {
     "builder": "/root/eva1_memory_transfer",

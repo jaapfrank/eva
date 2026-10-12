@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T13:48:09.285553+02:00",
+  "lastUpdated": "2026-10-12T13:55:12.404387+02:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -5089,13 +5089,13 @@
         "now": {
           "title": "Zelfverbetering: bewaard codevoorstel gericht beoordelen",
           "state": "in_progress",
-          "phase": "preserved_proposal_runtime_review",
-          "activeExecution": false,
+          "phase": "preserved_proposal_native_assessment",
+          "activeExecution": true,
           "owner": "/root",
-          "executor": "/root/eva1_memory_transfer",
+          "executor": "Eva2 · gewone uitvoerder",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Het bestaande voorstel en de oorspronkelijke kwaliteitscriteria zijn gekoppeld aan de huidige installatie. De volledige koppeling wordt onafhankelijk gecontroleerd.",
-          "detail": "Nog geen nieuwe uitvoering of toegepaste kandidaat. Voorbereidingsfouten zijn vóór uitvoering gecorrigeerd; de review controleert de definitieve versie. De eerdere onbekende verbruiksregistratie blijft behouden.",
+          "summary": "Eva beoordeelt nu het bestaande codevoorstel via haar gewone uitvoerder. De actuele configuratie is geïnstalleerd en onafhankelijk gecontroleerd.",
+          "detail": "Eén uitvoering is bevestigd actief. Bestaande versie en voorstel worden op dezelfde taken beoordeeld. Nog geen eindresultaat, toegepaste kandidaat of volledige AIDE²-afronding.",
           "doneWhen": "De volledige cyclus levert een onafhankelijk beoordeelde kandidaat; alleen bewezen winst wordt toegepast en daarna bij ander werk gebruikt.",
           "source": "eva2/evidence/product/native-work-preserved-proposal-followup-preparation-20261012.json",
           "previousInstalledCorrection": "eva2/evidence/product/native-work-project-origin-installed-20261012.json",
@@ -5115,9 +5115,9 @@
             "inputBindingsPrepared": true,
             "currentRuntimeBindingsPrepared": true,
             "prospectiveConfigurationPrepared": true,
-            "prospectiveConfigurationActivated": false,
+            "prospectiveConfigurationActivated": true,
             "fullLifecycleExecuted": false,
-            "currentNativeExecutionStarted": false,
+            "currentNativeExecutionStarted": true,
             "currentNativeExecutionClosed": false,
             "candidateStored": true,
             "currentNativeFailureCauseConfirmed": false,
@@ -5125,7 +5125,7 @@
             "pathInputRepairChecksCompleted": true,
             "pathInputRepairInstalled": false,
             "newInputBindingPrepared": true,
-            "newNativeExecutionStarted": false,
+            "newNativeExecutionStarted": true,
             "currentNativeAssessmentFailed": false,
             "independentFinalCompleted": false,
             "candidateApplied": false,
@@ -5139,15 +5139,15 @@
             "independentFinalInputBindingPrepared": true
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T13:48:09.285553+02:00",
+            "checkedAt": "2026-10-12T13:55:12.404387+02:00",
             "coordinator": "/root",
-            "coordinatorTask": "Actuele installatiekoppeling afmaken en na onafhankelijke controle één gewone beoordeling uitvoeren.",
-            "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Definitieve uitvoerder aan de actuele installatiekoppeling verbinden; exact het bewaarde voorstel gebruiken.",
+            "coordinatorTask": "De bevestigde uitvoering volgen en alleen na geldige selectie de bestaande onafhankelijke eindbeoordeling en toepassing vervolgen.",
+            "executor": "Eva2 · gewone uitvoerder",
+            "executorTask": "De bestaande versie en het exacte bewaarde voorstel op dezelfde taken beoordelen.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "De volledige definitieve bron-, invoer-, installatie- en verbruikskoppeling onafhankelijk beoordelen.",
-            "modelUsage": "Nieuwe voorbereiding: 0 Eva-modelaanvragen. Eerdere ouderaanvragen: 7 en 67.930 tokens; eerder gezamenlijk totaal onbekend.",
-            "note": "Broncorrectie geïnstalleerd; voorstel behouden. Volledige verbetercyclus nog open. Geen handeling van Jaap nodig."
+            "reviewerTask": "De einduitkomst en volledigheid van de registratie onafhankelijk controleren zodra deze beschikbaar zijn.",
+            "modelUsage": "De huidige uitvoering loopt; de volledige meting volgt. Eerdere 7 ouderaanvragen/67.930 tokens blijven behouden; eerder gezamenlijk totaal onbekend.",
+            "note": "Geen handeling van Jaap nodig. Nog geen kandidaat toegepast."
           },
           "previousResultReview": "eva2/reviews/native-work-path-input-repair-result-review-20261012.json",
           "previousResultReviewSha256": "e0c04b2b68b74c668592e7ce3471bc0ac053f66373c07273af055220656328ff",
@@ -5210,7 +5210,7 @@
           "detail": "Codex maakt de technische kringloop af. Je oorspronkelijke acceptaties blijven behouden; nu geen herhaalproef nodig."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T13:48:09.285553+02:00",
+        "reviewedAt": "2026-10-12T13:55:12.404387+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -11696,7 +11696,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T13:48:09.285553+02:00",
+      "lastUpdatedAt": "2026-10-12T13:55:12.404387+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -24658,7 +24658,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Aansluitingsfout geïnstalleerd. Eén afzonderlijke gewone vervolgopdracht met eigen verbruiksregistratie voorbereiden en onafhankelijk controleren; precies het bestaande codevoorstel beoordelen. Oude onbekende totalen blijven zichtbaar.",
+              "nextAction": "De bevestigde gewone beoordeling volgen. Alleen bij echte selectie doorgaan met onafhankelijke eindbeoordeling, toepassing en later gebruik; geen kandidaatgeneratie of concurrentenserie.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -32115,11 +32115,13 @@
       "developmentCredits": "unknown"
     },
     "workStrategyCycleCurrent20261012": {
-      "checkedAt": "2026-10-12T13:48:09.285553+02:00",
-      "state": "preserved_proposal_runtime_review",
-      "nativeParentConfirmedLive": false,
-      "activeDriverPids": [],
-      "serviceConfigurationSha256": "184cc351ab718b814ebe8f285da4a414784ed6610b3860b95baa61efc2462e82",
+      "checkedAt": "2026-10-12T13:55:12.404387+02:00",
+      "state": "preserved_proposal_native_assessment",
+      "nativeParentConfirmedLive": true,
+      "activeDriverPids": [
+        887974
+      ],
+      "serviceConfigurationSha256": "506940d78f79667e9ad496f76cd3be206052ef23cdf31a809dd3430cdb5ffd01",
       "reviewSha256": "4547396de6538a3f5d4ae2293725991302bd4a633f3ecc792484758538d62956",
       "criterionChange": false,
       "newComparisonSeries": false,
@@ -32130,7 +32132,9 @@
       "source": "eva2/evidence/product/native-work-preserved-proposal-followup-preparation-20261012.json",
       "pastChildAndSharedUsage": "UNKNOWN",
       "newModelRequestsThisPreparation": 0,
-      "prospectiveConfigurationSha256": "506940d78f79667e9ad496f76cd3be206052ef23cdf31a809dd3430cdb5ffd01"
+      "prospectiveConfigurationSha256": "506940d78f79667e9ad496f76cd3be206052ef23cdf31a809dd3430cdb5ffd01",
+      "execSessionId": 21849,
+      "currentExecutionUsage": "in_progress"
     }
   },
   "activeTaskId": "AU-008",
@@ -34602,5 +34606,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T13:48:09.285553+02:00"
+  "updatedAt": "2026-10-12T13:55:12.404387+02:00"
 }
