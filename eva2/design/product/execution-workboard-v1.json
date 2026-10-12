@@ -1021,8 +1021,24 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T18:32:03.703156+00:00",
+        "checkedAt": "2026-10-12T19:17:29.537743+00:00",
         "deliveries": [
+          {
+            "id": "retained-local-read-working-context-installed-20261012",
+            "date": "2026-10-12T19:17:29.537743+00:00",
+            "title": "Algemene terugvalroute voor volle werkcontext geïnstalleerd",
+            "state": "installed",
+            "installed": true,
+            "summary": "Na echte invoerweigering blijven oudere lokale leesgegevens gericht opvraagbaar. Laatste resultaat, fouten, acties en voortgang blijven zichtbaar.",
+            "result": "Eén modelmodule;7 gerichte checks;bron- en installatiereview GO. Kern/werker gezond;344 overige Pythonbronnen per image gelijk.",
+            "remaining": "Eva’s eigen volledige opgeslagen voorstel en resultaat via haar gewone taakroute. Native invoerfit en tokenbesparing nog onbewezen.",
+            "source": "eva2/evidence/product/retained-local-read-working-context-installed-20261012.json",
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "review": "eva2/reviews/retained-local-read-working-context-installed-review-20261012.json",
+            "reviewSha256": "65dadd95bce10936f63bd3a429e9e2a6fee96337e511ea5ef780892093171d04",
+            "independentReview": "GO uitsluitend voor exacte installatie en beperkte publicatie."
+          },
           {
             "id": "retained-page-coverage-ordinary-result-20261012",
             "date": "2026-10-12T18:59:42.257320+00:00",
@@ -5270,7 +5286,7 @@
         "now": {
           "title": "Eva's algemene taakuitvoering herstellen",
           "state": "in_progress",
-          "phase": "ordinary_context_failure_diagnosis",
+          "phase": "ordinary_research_corrected_continuation_scheduled",
           "taskId": "work:eva-resume:5124cce7-bb98-59d8-8ab1-d7a60ab44b20",
           "linkedTaskIds": [
             "TL-001",
@@ -5281,8 +5297,8 @@
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva is opnieuw gestopt op de invoergrens na5modelantwoorden en5tools. Geen eindvoorstel. Alleen de vijf nieuwe receipts worden nu lokaal onderzocht vóór een volgende uitvoering.",
-          "detail": "De algemene route deelt herhaalde tekst, maar biedt nog geen houdbare werkcontext bij nieuwe gegevens. Codex onderzoekt uitsluitend de twee nieuwe receipts en herstelt de concrete presentatie/selectieoorzaak; geen nieuwe betaalde herhaling.",
+          "summary": "Algemene contextcorrectie geïnstalleerd en onafhankelijk goedgekeurd. Eén gewone voortzetting bij Eva ingepland; nieuw werkresultaat nog niet bevestigd.",
+          "detail": "Vijf nieuwe bevindingen maakten de eerdere werkcontext te groot. Na echte invoerweigering blijven oudere pure lokale uitlezingen gericht opvraagbaar via hun bestaande bronversie en bereik. Het laatste resultaat, fouten, acties en voortgang blijven zichtbaar. Geen handmatig Tuya-voorstel.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "eva2/evidence/product/tuya-readonly-preserved-proposal-20261012.json",
@@ -5327,21 +5343,27 @@
             "retainedPageCoverageIndependentSourceReview": "GO",
             "retainedPageCoverageInstalled": true,
             "retainedPageCoverageNativeResultProven": false,
-            "retainedPageCoverageIndependentInstalledReview": "GO"
+            "retainedPageCoverageIndependentInstalledReview": "GO",
+            "retainedLocalReadWorkingContextBuilt": true,
+            "retainedLocalReadWorkingContextChecksPassed": 7,
+            "retainedLocalReadWorkingContextIndependentSourceReview": "GO",
+            "retainedLocalReadWorkingContextInstalled": true,
+            "retainedLocalReadWorkingContextNativeResultProven": false,
+            "retainedLocalReadWorkingContextIndependentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T19:01:36.352892+00:00",
+            "checkedAt": "2026-10-12T19:17:29.537743+00:00",
             "coordinator": "/root",
-            "coordinatorTask": "Algemene uitvoering herstellen op de nieuwe feitelijke contextovergang; geen handmatig voorstel of betaalde herhaling.",
-            "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Modelvrije meting van de vijf nieuwe receipts; oorzaak vaststellen en een houdbare algemene contextselectie herstellen.",
+            "coordinatorTask": "Algemene taakuitvoering afronden zodat Eva zelf onderzoekt en het voorstel maakt.",
+            "executor": "Eva2 · bestaande taakwerker",
+            "executorTask": "Oorspronkelijk lezend onderzoek vervolgen, eigen compleet voorstel opslaan en teruglezen.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Gen7 FAILED-foutfeiten onafhankelijk bevestigd; volgende concrete algemene correctie afwachten.",
+            "reviewerTask": "Bron en exacte installatie beoordeeld:GO. Eindresultaat nog afwachten.",
             "modelUsage": "Gen7:5 complete gemeten responses,5tools,253.179 bekende tokens. APIusage partial;volledig totaal/credits onbekend. Gen6 en eerdere UNKNOWN apart behouden.",
-            "note": "De geïnstalleerde selectie van17dubbele reads is onvoldoende voor volledige taakafronding. Geen functie groen gezet; geen nieuwe native poging gestart."
+            "note": "Eén revise_digital geaccepteerd. Geen handmatig voorstel of nieuwe vergelijkingsserie; geen nieuw resultaat bevestigd."
           },
-          "checkedAt": "2026-10-12T19:01:36.352892+00:00",
-          "remaining": "Houdbare algemene werkcontext en Eva’s eigen onderbouwde taakresultaat. HUE1.1/HUE3.1 en volledige AIDE² blijven open."
+          "checkedAt": "2026-10-12T19:17:29.537743+00:00",
+          "remaining": "Eva’s eigen volledige, opgeslagen en teruggelezen voorstel via de gewone taakroute. Actuele volledige invoerfit en taakafronding nog onbewezen."
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -5715,7 +5737,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-12T18:32:03.703156+00:00"
+        "updatedAt": "2026-10-12T19:17:29.537743+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",

@@ -1,35 +1,37 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — contextselectie geïnstalleerd; gewone taak opnieuw gestopt
+## Actueel 12 oktober — werkcontext gecorrigeerd; Eva maakt zelf het voorstel
 
-Eva moet zelf de oorspronkelijke leesopdracht onderzoeken en haar voorstel maken.
-Codex herstelt de algemene uitvoering en schrijft geen Tuya-voorstel. Eén gerichte
-modelmodule is geïnstalleerd; zeven checks en onafhankelijke bronreview geslaagd.
-Kern en werker gezond,344 overige Pythonbronnen per image en configuratie/gegevens gelijk.
-Volledig eerder gedekte gevalideerde lokale reads krijgen een exact leesoverzicht;
-unieke informatie, fouten, voortgang, nieuwste resultaat en alle raw/bewijs blijven.
-Geen nieuwe reader,codec,store,tool,grant of grenswijziging.
+De algemene modelroute is gecorrigeerd en geïnstalleerd. Alleen na een echte
+invoerweigering worden oudere gevalideerde pure lokale leesresultaten als exact
+bron-/bereikoverzicht aangeboden; hun tekst is dan expliciet niet in de modelcontext.
+Nieuwste resultaat, benodigde ankers, fouten/UNKNOWN, acties en voortgang blijven.
+Originele gegevens, bewijs, reader, mandaat en invoergrens veranderen niet.
+Eén modelmodule, zeven gerichte checks en bronreview GO; kern en werker gezond,
+344 andere Pythonbronnen per image en configuratie/gegevens gelijk.
+Onafhankelijke installatiereview GO; één gewone voortzetting geaccepteerd via
+revise_digital. Nog geen nieuw werkresultaat bevestigd.
 
-Bekende lokale phase:63.798→55.760 BPE inclusief256 reserve,9.776 bekende marge;
-17 gedekte reads via overzicht,29/46 receipts behouden. Werkelijke recall/recent/
-correcties/browsercontext niet gemeten: geen volledige actuele fit, providerbesparing
-of taakafronding bewezen. De zesde generatie blijft failed/input_budget_exceeded:
-2 complete responses,2 tools,105.564 bekende tokens;usage partial,totalen/credits onbekend.
+De zevende generatie is failed/input_budget_exceeded: vijf volledig gemeten
+modelresponses, vijf tools en 253.179 bekende tokens; taakusage partial, totaal en
+credits onbekend. De vijf nieuwe receipts maakten de bekende lokale phase groter:
+55.760→63.094 BPE. De nieuwe terugvalroute brengt die bekende phase naar 41.045,
+maar actuele volledige invoerfit, besparing en een compleet voorstel zijn onbewezen.
+Eerdere fouten, UNKNOWN en het tussenvoorstel blijven bewaard.
 
-Onafhankelijke installatiereview GO. De zevende gewone generatie is gestart:\nwork:eva-resume:5124cce7-bb98-59d8-8ab1-d7a60ab44b20. Nog geen eindresultaat\nof actuele usage bevestigd. Volg haar eigen voortgang en resultaat; geen herdispatch.
-Alle eerdere fouten, UNKNOWN en het tussenvoorstel blijven behouden. Geen handmatig
-afgemaakt voorstel of identieke betaalde herhaling zonder causale correctie.
-Geen HA-migratie/wijziging vóór apart akkoord op Eva's eigen afgeronde voorstel.
-Gehele projectgoal actief;39/48 oorspronkelijk en39/54 totaal blijven gelijk.
-HUE1.1/HUE3.1 en volledige AIDE² open; geen nieuwe vergelijkingsserie,spraak geparkeerd.
+Eva moet zelf de oorspronkelijke leesopdracht onderzoeken, het volledige voorstel
+opslaan en teruglezen. Codex schrijft geen Tuya-voorstel of vaste Tuya-functie.
+Geen HA-wijziging of migratie vóór apart akkoord op Eva's afgeronde voorstel.
+Het gehele projectgoal blijft actief;39/48 oorspronkelijk en39/54 totaal gelijk.
+HUE1.1/HUE3.1 en volledige AIDE² open;geen nieuwe vergelijkingsserie,spraak geparkeerd.
 
-Bron:eva2/evidence/product/retained-page-coverage-correction-20261012.json.
-Installatie:eva2/evidence/product/retained-page-coverage-installed-20261012.json.
-Bronreview:eva2/reviews/retained-page-coverage-source-review-20261012.json.\nInstallatiereview:eva2/reviews/retained-page-coverage-installed-review-20261012.json.
-Actuele fout:eva2/evidence/product/retained-page-coverage-ordinary-result-20261012.json.
-Eerdere fout:eva2/evidence/product/retained-context-sharing-ordinary-result-20261012.json.
+Bron:eva2/evidence/product/retained-local-read-working-context-correction-20261012.json.
+Installatie:eva2/evidence/product/retained-local-read-working-context-installed-20261012.json.
+Bronreview:eva2/reviews/retained-local-read-working-context-source-review-20261012.json.
+Installatiereview:eva2/reviews/retained-local-read-working-context-installed-review-20261012.json.
+Behouden fout:eva2/evidence/product/retained-page-coverage-ordinary-result-20261012.json.
 
-## Actueel 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel
+## Eigenaarbesluit 12 oktober — algemene taakuitvoering, geen handmatig Tuya-voorstel
 
 Jaap verduidelijkt: Codex moet Eva goed laten werken zodat Eva zelf onderzoek en
 voorstellen kan maken. Codex schrijft het Tuya-voorstel niet en bouwt geen vaste

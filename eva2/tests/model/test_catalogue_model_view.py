@@ -526,3 +526,78 @@ def test_coverage_keeps_gaps_versions_unknown_and_current_result_and_rejects_fal
     injected["ancestor_model_projection"]["source"]["receipt_sha256"] = "0" * 64
     with pytest.raises(ConversationModelError, match="differs"):
         PydanticConversationModel._receipt_context_selection((anchor, replace(current, model_output=injected), RECEIPT))
+
+
+def test_actual_input_misfit_defers_only_old_scoped_reads_and_rechecks_sdk_envelope(tmp_path, monkeypatch):
+    from tests.model.test_pydantic_conversation_model import _phase_transport_adapter, _generate, _runtime_budget, RECEIPT
+    from eva.adapters.model.pydantic_conversation import _input_tokenizer, _INPUT_FRAMING_RESERVE_TOKENS
+    page, _, _, _, _ = _coverage_pages()
+    first = page("older-local-first", limit=8192)
+    second = page("older-local-next", offset=8192, limit=6500)
+    progress = ConversationActionReceipt(ConversationActionCall("active-plan", "save_work_progress",
+        {"steps": [{"id": "verify", "state": "in_progress", "title": "Check retained evidence"}]}),
+        {"status": "verified", "steps": [{"id": "verify", "state": "in_progress"}]})
+    failed = ConversationActionReceipt(ConversationActionCall("failed-read", first.call.name, first.call.arguments),
+        {**first.output, "status": "failed"})
+    receipts = (first, second, progress, failed, RECEIPT)
+    original = canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in receipts])
+    assert PydanticConversationModel._receipt_context_selection(receipts) == (receipts, "")
+    model, _, requests, _ = _phase_transport_adapter(tmp_path, monkeypatch, [("final_answer", ("Afgerond.",))])
+    model._resource_budget = _runtime_budget(max_input_tokens=65536)
+    admissions = []
+    original_admit = model._admit_request
+    def record(body, **kwargs):
+        admissions.append(body)
+        return original_admit(body, **kwargs)
+    model._admit_request = record
+    assert _generate(model, prior_actions=receipts[:-1], completed_action=RECEIPT).text == "Afgerond."
+    high_wire = requests[-1]
+    count = lambda body: len(_input_tokenizer().encode_ordinary(canonical_json_bytes(body).decode())) + _INPUT_FRAMING_RESERVE_TOKENS
+    limit = count(admissions[0]) - 1
+    budget = _runtime_budget(max_input_tokens=limit)
+    model._resource_budget = budget
+    admissions.clear()
+    assert _generate(model, prior_actions=receipts[:-1], completed_action=RECEIPT).text == "Afgerond."
+    assert count(admissions[0]) > limit and count(admissions[1]) <= limit
+    low_wire = requests[-1]
+    assert "wegens invoerruimte" not in high_wire["instructions"]
+    assert "wegens invoerruimte" in low_wire["instructions"]
+    assert "Hun tekst is nu niet in deze modelcontext" in low_wire["instructions"]
+    outputs = {p["call_id"]: p for p in low_wire["input"] if p.get("type") == "function_call_output"}
+    assert set(outputs) == {progress.call.call_id, failed.call.call_id, RECEIPT.call.call_id}
+    assert json.loads(outputs[progress.call.call_id]["output"]) == progress.output
+    assert json.loads(outputs[failed.call.call_id]["output"]) == failed.output
+    assert high_wire["input"][-2:] == low_wire["input"][-2:]
+    selected, note = PydanticConversationModel._receipt_context_selection(receipts, defer_local_reads=True)
+    summaries = json.loads(note.split("\n", 1)[1])
+    assert selected == (progress, failed, RECEIPT)
+    for summary, old in zip(summaries, (first, second), strict=True):
+        assert summary["call"]["arguments"] == old.call.arguments
+        assert summary["source_version"] == old.output["result"]["sha256"]
+        assert summary["ranges"] == [{k: old.output["result"][k] for k in ("pointer", "offset", "next_offset", "selection_length")}]
+    assert model._resource_budget is budget and budget.max_input_tokens == limit
+    assert canonical_json_bytes([[r.call.arguments, r.output, r.model_output] for r in receipts]) == original
+    assert len(requests) == 2  # Two local MockTransport responses; no provider/external action.
+
+
+def test_pressure_deferral_keeps_latest_literal_anchor_unknown_and_invalid_projections():
+    from dataclasses import replace
+    from tests.model.test_pydantic_conversation_model import RECEIPT
+    from eva.adapters.model.contracts import ConversationModelError
+    page, _, _, _, _ = _coverage_pages()
+    anchor = page("latest-needed-anchor")
+    other = page("other-source-range", offset=9000, limit=6500)
+    latest = page("latest-same-content")
+    unknown = ConversationActionReceipt(ConversationActionCall("unknown-result", other.call.name, other.call.arguments),
+        {**other.output, "status": "ambiguous"})
+    unvalidated = ConversationActionReceipt(ConversationActionCall("no-host-projection", other.call.name, other.call.arguments), other.output)
+    history = (anchor, other, unknown, unvalidated, latest)
+    baseline = PydanticConversationModel._receipt_model_views(history, _literal_slices=False)[-1]
+    selected, note = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=True)
+    assert selected == (anchor, unknown, unvalidated, latest)
+    assert PydanticConversationModel._receipt_model_views(selected, _literal_slices=False)[-1] == baseline
+    assert other.call.call_id in note
+    injected = deepcopy(other.model_output)
+    injected["ancestor_model_projection"]["source"]["receipt_sha256"] = "0" * 64
+    with pytest.raises(ConversationModelError, match="differs"):
+        PydanticConversationModel._receipt_context_selection((replace(other, model_output=injected), RECEIPT), defer_local_reads=True)

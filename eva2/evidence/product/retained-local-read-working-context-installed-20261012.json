@@ -1,0 +1,77 @@
+{
+  "contract": "EvaRetainedLocalReadWorkingContextInstalled/v1",
+  "recordedAt": "2026-10-12T19:15:27.399147+00:00",
+  "status": "installed",
+  "sourceEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-local-read-working-context-correction-20261012.json",
+    "sha256": "8e45a492e61ce351a31b61c06436cc763cf6e51d5cda8f0ee17dfd00b8ac91dd"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/retained-local-read-working-context-source-review-20261012.json",
+    "sha256": "3af451be94ec7490bf80022e8292604ab01f30a4f308b52ac0dadb7fb0b89507"
+  },
+  "build": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/build-result.private.json",
+    "sha256": "99e8acfdf23fd2e08961a678a389b1388ff6bb4b8cfbc4229b8cd30e4cc49526"
+  },
+  "installation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/installation-verification.private.json",
+    "sha256": "01db46fd5e3b05e919dedc3544d76830957435d90cdb89befeb5a1735f51dfcb"
+  },
+  "dispatch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/installation-dispatch-receipt.private.json",
+    "sha256": "72afa88880acae6f991fb451c43f93812f9ee496ca970c497295ad91354bcb8d"
+  },
+  "services": {
+    "core": {
+      "image": "sha256:17e348ac39a0d5c6dbc5ddb6f16f1291abba3515a9ecce5cb8297fc15a54174d",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca"
+      },
+      "inspectionSha256": "f7e33bbbc8deea54dc821605c7f48b3856dbc7e5fb208cdbc4dafda736969f8d"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:95b4f91f530d6fe8477f35f136da1b5be4322733df7ada6d8e0b5090a70c030c",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca"
+      },
+      "inspectionSha256": "42de2c0c1042ce8e1767b1eee23b53ea0decb86af065198ecc405afb3d216dd7"
+    }
+  },
+  "ready": true,
+  "actualRuntimeUpdates": 1,
+  "providerRequestsForBuildAndInstall": 0,
+  "codexDevelopmentCredits": "unknown",
+  "nativeContinuationStarted": false,
+  "taskOutcomeCompleted": false,
+  "providerSavingsProven": false,
+  "actualFullInputFitProven": false,
+  "productFunctionCompleted": false,
+  "scope": "General model-context fallback after actual full-phase input misfit. Older validated pure local reads remain accessible via exact existing authorized readers/source versions/ranges. Latest results, UNKNOWN/errors, effect receipts and task progress remain. Eva itself researches and writes proposals; original readonly grant unchanged.",
+  "preservedPreviousFailure": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-page-coverage-ordinary-result-20261012.json",
+    "sha256": "fdac0cf3abcde3f583d3dcadd3282b1995fc653cdcd414b952e16be8bcb8ced4"
+  },
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "newComparisonSeries": false,
+  "manualTuyaProposalWritten": false
+}

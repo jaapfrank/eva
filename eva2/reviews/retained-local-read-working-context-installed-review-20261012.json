@@ -1,0 +1,63 @@
+{
+  "contract": "EvaIndependentRetainedLocalReadWorkingContextInstalledReview/v1",
+  "reviewedAt": "2026-10-12T19:16:20.051683+00:00",
+  "decision": "GO",
+  "scope": "Exact source installation and safe limited factual publication",
+  "bindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/build-result.private.json",
+      "sha256": "99e8acfdf23fd2e08961a678a389b1388ff6bb4b8cfbc4229b8cd30e4cc49526"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/installation-verification.private.json",
+      "sha256": "01db46fd5e3b05e919dedc3544d76830957435d90cdb89befeb5a1735f51dfcb"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/retained-local-read-working-context/installation/installation-dispatch-receipt.private.json",
+      "sha256": "72afa88880acae6f991fb451c43f93812f9ee496ca970c497295ad91354bcb8d"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-local-read-working-context-installed-20261012.json",
+      "sha256": "88bba2162cd47584df597ece5683d4db42032076feb39789f6601b6f082655da"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/retained-local-read-working-context-source-review-20261012.json",
+      "sha256": "3af451be94ec7490bf80022e8292604ab01f30a4f308b52ac0dadb7fb0b89507"
+    }
+  ],
+  "frozenSourceManifestSha256": "ce26599ab3dc15097f9c2630a98c713f041e3799af0084f789b0c1fe0f042ec6",
+  "sourceSha256": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca",
+  "services": {
+    "core": {
+      "image": "sha256:17e348ac39a0d5c6dbc5ddb6f16f1291abba3515a9ecce5cb8297fc15a54174d",
+      "inspectionSha256": "f7e33bbbc8deea54dc821605c7f48b3856dbc7e5fb208cdbc4dafda736969f8d",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "healthy": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:95b4f91f530d6fe8477f35f136da1b5be4322733df7ada6d8e0b5090a70c030c",
+      "inspectionSha256": "42de2c0c1042ce8e1767b1eee23b53ea0decb86af065198ecc405afb3d216dd7",
+      "changedPythonSources": 1,
+      "unchangedPythonSources": 344,
+      "healthy": true
+    }
+  },
+  "findings": [
+    "Both existing build inventories contain only the reviewed model-module change; 344 other Python modules per image remain equal. Actual installed-image and source-inventory receipts bind the same candidate images and module.",
+    "Retained before/installed inspections match environment maps, mounts by destination, process settings and executable arguments. One actual updater dispatch is recorded; both containers are healthy and readyz is ready.",
+    "The public artifact accurately limits its claim to installation of the reviewed full-input-misfit fallback. Original readonly scope, gate, raw evidence/accounting and earlier failures remain preserved."
+  ],
+  "actualUpdateDispatches": 1,
+  "providerRequestsForBuildAndInstall": 0,
+  "limitations": {
+    "actualFullInputFitProven": false,
+    "taskOutcomeCompleted": false,
+    "providerSavingsProven": false,
+    "productFunctionCompleted": false,
+    "newExecutionAuthorityGrantedByReview": false
+  },
+  "reviewOperations": "Existing artifact reads only; no test, runtime probe, provider/native call, database operation or installation.",
+  "wholeProjectGoalRemainsActive": true,
+  "blockers": []
+}

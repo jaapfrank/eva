@@ -1,0 +1,101 @@
+{
+  "contract": "EvaRetainedLocalReadWorkingContextCorrection/v1",
+  "recordedAt": "2026-10-12T19:10:17.499251+00:00",
+  "status": "built_source_not_installed",
+  "purpose": "Keep general ordinary task execution usable as new findings arrive. Eva itself researches and writes proposals, not Codex.",
+  "sources": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca"
+    }
+  ],
+  "tests": [
+    {
+      "path": "eva2/tests/model/test_catalogue_model_view.py",
+      "sha256": "f5d6d71d6ca4686242ae40f5ab5261988dc51cb542372278dc4fa700eed8cdac"
+    }
+  ],
+  "frozenManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/frozen-source.private.json",
+    "sha256": "ce26599ab3dc15097f9c2630a98c713f041e3799af0084f789b0c1fe0f042ec6"
+  },
+  "targetedChecks": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/targeted-checks.private.json",
+    "sha256": "82e0488cc62d3f72040fadcdc006785ad2e03f49da2dc0e5553894f05fe83543"
+  },
+  "measurement": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/final-source-measurement.private.json",
+    "sha256": "fdb076e55754a7187f5d5d2f466163e9a8fa0649f677ff39662209d251c41ccd"
+  },
+  "diagnosis": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/causal-diagnosis.private.json",
+    "sha256": "7f5c749d1cea1318ed83f507bd06cacde97a400c74a28d0c409d843f03d1879d"
+  },
+  "patch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/source-and-tests.patch.private.diff",
+    "sha256": "477662ea94209d656f7f792309cf79e72e1bd82690cfd9d1097c053fcb87a639"
+  },
+  "causalFacts": {
+    "newRetainedReceipts": 5,
+    "totalRetainedReceipts": 51,
+    "knownPhaseBeforeNewReceipts": 55760,
+    "knownPhaseAfterNewReceipts": 63094,
+    "knownGrowth": 7334,
+    "knownMarginBeforeCorrection": 2442,
+    "latestReadItselfBounded": true,
+    "actualFailureSource": "preserved input_budget_exceeded in ordinary owner work snapshot"
+  },
+  "changes": [
+    "Normal fitting requests retain their existing unique visible content and lossless duplicate selection.",
+    "Only after the actual full-phase input gate rejects a request, move older validated verified pure local reads to explicit existing authorized reader/source-version/pointer/range overviews. Their text is explicitly absent from this model request and may be retrieved when needed.",
+    "Recheck the same full-phase gate before any provider request. Preserve latest result and anchors, errors/UNKNOWN, action/effect receipts, task progress, raw source data, proofs, accounting, grants, profile and caps."
+  ],
+  "checks": {
+    "uniqueFinalChecksPassed": 7,
+    "coverage": [
+      "Actual full-envelope gate fails first, typed fallback then passes same original gate before local MockTransport. No fallback with adequate envelope.",
+      "Original raw/latest/effect/progress/failed/UNKNOWN receipts and needed literal anchors stay; exact original readers/sourceversions/ranges accessible.",
+      "Hash/source/execution/actor/stop/erasure refusal and no-provider oversized-request gate preserved."
+    ],
+    "latestWireUnchanged": true,
+    "rawCallOutputProjectionUnchanged": true
+  },
+  "localMeasurement": {
+    "sourceReceipts": 51,
+    "deferredLocalReads": 27,
+    "retainedReceipts": 24,
+    "knownPhaseBeforeBpeIncludingReserve": 63094,
+    "knownPhaseAfterBpeIncludingReserve": 41045,
+    "framingReserve": 256,
+    "existingInputLimit": 65536,
+    "knownMargin": 24491,
+    "renderMilliseconds": {
+      "current_context_selection_and_phase": 2069,
+      "fallback_phase": 713,
+      "fallback_selection": 826
+    },
+    "boundary": "Same locally reconstructed known canonical phase, o200k_base BPE plus256 framing; no provider savings or actual full future-fit claim",
+    "actualRecallRecentCorrectionsBrowserMeasured": false
+  },
+  "retainedErrors": [
+    "Only initial high-budget fixture100000→original supported65536. Six original green nodes not repeated; failed actual-gate SDK node passed after fixture repair. Product source unchanged across both.",
+    "Earlier collector filters did not retrieve the new receipts; exact source-thread/step binding then retrieved the five original receipts. Earlier zero-hit observation remains."
+  ],
+  "usage": {
+    "evaModelRequestsDuringChecks": 0,
+    "nativeActionsDuringChecks": 0,
+    "databaseWritesDuringChecks": 0,
+    "codexDevelopmentCredits": "unknown"
+  },
+  "limitations": [
+    "This is source-level fallback behavior and a known local envelope, not confirmed full fit of a future actual task or native completion.",
+    "No completed proposal, provider-token savings, new function closure or competitor advantage proven.",
+    "Earlier source corrections, task failures, partial proposal, usage and UNKNOWN remain preserved."
+  ],
+  "runtimeInstalled": false,
+  "nativeContinuationStarted": false,
+  "wholeProjectGoal": "active",
+  "voice": "parked",
+  "newComparisonSeries": false,
+  "manualTuyaProposalWritten": false
+}

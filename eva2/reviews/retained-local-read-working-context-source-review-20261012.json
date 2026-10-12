@@ -1,0 +1,77 @@
+{
+  "contract": "EvaIndependentRetainedLocalReadWorkingContextSourceReview/v1",
+  "reviewedAt": "2026-10-12T19:13:54.332103+00:00",
+  "decision": "GO",
+  "scope": [
+    "exact_frozen_source_installation",
+    "limited_source_facts_publication"
+  ],
+  "bindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/frozen-source.private.json",
+      "sha256": "ce26599ab3dc15097f9c2630a98c713f041e3799af0084f789b0c1fe0f042ec6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/targeted-checks.private.json",
+      "sha256": "82e0488cc62d3f72040fadcdc006785ad2e03f49da2dc0e5553894f05fe83543"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/source-and-tests.patch.private.diff",
+      "sha256": "477662ea94209d656f7f792309cf79e72e1bd82690cfd9d1097c053fcb87a639"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/gen7-budget-transition/final-source-measurement.private.json",
+      "sha256": "fdb076e55754a7187f5d5d2f466163e9a8fa0649f677ff39662209d251c41ccd"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/retained-local-read-working-context-correction-20261012.json",
+      "sha256": "8e45a492e61ce351a31b61c06436cc763cf6e51d5cda8f0ee17dfd00b8ac91dd"
+    }
+  ],
+  "source": {
+    "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/model/pydantic_conversation.py",
+    "sha256": "8f30010ea7eac98c235c060865ee94fc34088fe7eeab2a9fc6fa9bcb43b3e0ca"
+  },
+  "test": {
+    "path": "/home/administrator/project/Eva2/eva2/tests/model/test_catalogue_model_view.py",
+    "sha256": "f5d6d71d6ca4686242ae40f5ab5261988dc51cb542372278dc4fa700eed8cdac"
+  },
+  "unchangedSources": [
+    {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "e1526c2492e850fa173bb4f3b4610e9f85d27ed8871bf8458e778cbea913a008"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+    }
+  ],
+  "findings": [
+    "The new deferral is attempted once only after _InputBudgetError from the complete phase envelope. Normal fitting requests retain the existing selection. The fallback rebuilds instructions and history and must pass the same full input gate before the existing provider phase; that phase also retains its admission check.",
+    "Only older verified, host-projected pure stored local reads pass through the unchanged original receipt/reader/proof validation to deferral. Their exact reader arguments, source ingress/version and pointer/character ranges remain visible; the note explicitly states that their text is absent and must not be invented.",
+    "Latest results and their needed reference anchors, progress, effect/action receipts, failed/UNKNOWN and unvalidated receipts remain. Latest rendered equality is checked with fallback to the original history. Existing actor/source/retention/erasure/stop guards, raw/proof/accounting, identity and input caps are unchanged."
+  ],
+  "existingChecks": {
+    "uniquePassingNodes": 7,
+    "basis": "Frozen logs and JUnit inspected; first run six PASS and one fixture failure, then only that affected node PASS after fixture100000-to65536 repair. Earlier evidence retained; no reviewer rerun."
+  },
+  "knownLocalMeasurement": {
+    "sourceReceipts": 51,
+    "retainedReceipts": 24,
+    "explicitlyDeferredLocalReads": 27,
+    "beforeBpeIncluding256Reserve": 63094,
+    "afterBpeIncluding256Reserve": 41045,
+    "unchangedInputLimit": 65536,
+    "knownMargin": 24491,
+    "actualRecallRecentCorrectionsBrowserMeasured": false
+  },
+  "limitations": [
+    "This supports the source fallback and accurate limited publication, not complete actual future input fit, native task completion, provider savings or speed superiority.",
+    "The original gen7 failure and all earlier partial/UNKNOWN usage remain unchanged. This review grants no new input authority, scope expansion, criterion/cap change or automatic continuation."
+  ],
+  "publicEvidenceDecision": "GO",
+  "publicStatus": "built_source_not_installed",
+  "reviewOperations": "Read-only source, diff and existing artifact inspection; no tests, provider/native calls or database operations.",
+  "wholeProjectGoalRemainsActive": true,
+  "blockers": []
+}

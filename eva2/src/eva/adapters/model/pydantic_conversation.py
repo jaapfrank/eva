@@ -1146,9 +1146,9 @@ class PydanticConversationModel:
 
     @staticmethod
     def _receipt_context_selection(
-        receipts: tuple[ConversationActionReceipt, ...],
+        receipts: tuple[ConversationActionReceipt, ...], *, defer_local_reads: bool = False,
     ) -> tuple[tuple[ConversationActionReceipt, ...], str]:
-        """Keep facts, but render fully covered local reads as explicit overviews."""
+        """Select covered reads; input pressure may defer exact authorized local reads."""
         if len(receipts) < 2:
             return receipts, ""
         baseline_latest = PydanticConversationModel._receipt_model_views(
@@ -1183,6 +1183,19 @@ class PydanticConversationModel:
             pages = result.get("pages") or [result]
             reader = receipt.call.arguments["tool_id"]
             ingress = projection["source"]["source_ingress_sha256"]
+            if defer_local_reads:
+                if any(page.get("found") is not True or not page["text"] for page in pages):
+                    selected.append(receipt)
+                    continue
+                overviews.append({"call": {"call_id": receipt.call.call_id,
+                    "name": receipt.call.name, "arguments": receipt.call.arguments},
+                    "status": "verified",
+                    "model_context": "earlier_local_read_deferred_to_existing_authorized_reader",
+                    "source_ingress_sha256": ingress, "source_version": pages[0]["sha256"],
+                    "ranges": [{"pointer": page["pointer"], "offset": page["offset"],
+                        "next_offset": page["next_offset"], "selection_length": page["selection_length"]}
+                        for page in pages]})
+                continue
             fully_covered, references = True, []
             for page in pages:
                 group = (reader, ingress, page["sha256"], page["byte_length"],
@@ -1228,6 +1241,19 @@ class PydanticConversationModel:
         if PydanticConversationModel._receipt_model_views(
                 selected, _literal_slices=False)[-1] != baseline_latest:
             return receipts, ""
+        if defer_local_reads:
+            note = (
+                "Modelcontextselectie wegens invoerruimte: onderstaande eerdere "
+                "geverifieerde pure lokale leesresultaten staan als bronleesoverzicht "
+                "in deze aanvraag. Hun tekst is nu niet in deze modelcontext. "
+                "Gebruik uitsluitend hun bestaande geautoriseerde reader en zichtbare "
+                "bronversie, pointer en bereik als die feiten nodig zijn; verzin ze niet. "
+                "Dit wist geen geschiedenis of bewijs en is geen nieuwe waarneming. "
+                "Het nieuwste resultaat, fouten, acties, voortgang en benodigde "
+                "zichtbare bronankers blijven aanwezig.\n"
+                + canonical_json_bytes(overviews).decode("utf-8")
+            )
+            return selected, note
         note = (
             "Modelcontextselectie: onderstaande geverifieerde lokale leesreceipts "
             "zijn alleen als leesoverzicht opgenomen. Hun volledige geselecteerde "
@@ -1754,6 +1780,7 @@ class PydanticConversationModel:
         receipts = prior_actions + (() if completed_action is None else (completed_action,))
         if len({receipt.call.call_id for receipt in receipts}) != len(receipts):
             raise ValueError("conversation action history contains duplicate call IDs")
+        original_self_context = self_context
         selected_receipts, read_overview = self._receipt_context_selection(receipts)
         if read_overview:
             prior_actions = selected_receipts[:-1]
@@ -1796,6 +1823,7 @@ class PydanticConversationModel:
         minimum_recent = (2 if protected_start is None else
                           max(2, len(selected_recent) - protected_start))
         omitted = False
+        local_reads_deferred = False
         while True:
             instructions = self._instructions(
                 identity, memory, selected_recent,
@@ -1834,9 +1862,19 @@ class PydanticConversationModel:
                 ), autonomous=False)
                 break
             except _InputBudgetError:
+                # Only an actual full-envelope misfit may move older validated
+                # pure local reads to their existing authorized source readers.
+                if not local_reads_deferred:
+                    local_reads_deferred = True
+                    deferred, overview = self._receipt_context_selection(
+                        receipts, defer_local_reads=True)
+                    if overview and len(deferred) < len(prior_actions) + 1:
+                        prior_actions = deferred[:-1]
+                        self_context = (*original_self_context, overview)
+                        continue
                 # Keep the latest exchange intact: a short confirmation must not
                 # lose the proposal it refers to. Never trim identity, current
-                # input, recalled facts, active work or a completed tool receipt.
+                # input, recalled facts, active work or the latest tool receipt.
                 if len(selected_recent) <= minimum_recent:
                     raise
                 selected_recent = selected_recent[1:]
