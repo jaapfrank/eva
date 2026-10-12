@@ -1,24 +1,24 @@
 # EVA 2 — projectvisie en opleverafspraken
 
-## Actueel 12 oktober — gedeelde uitvoerder gericht herstellen
+## Actueel 12 oktober — echte verbeteropdracht uitgevoerd; eerste toolfout open
 
-De taakherkomst-/verbruikaansluiting blijft geïnstalleerd. De eerdere proefstart
-faalde vóór Eva modelinvoer kreeg; foutbewijs en gesloten poging blijven behouden.
+De gedeelde zelfverbeteringsuitvoerder is geïnstalleerd en onafhankelijk toegelaten.
+Eva heeft de oorspronkelijke technische verbeteropdracht werkelijk ontvangen.
+De poging eindigde bij de eerste bronleesaanroep met internal_error; geen kandidaat
+of kwaliteitswinst bevestigd. Eén Astra/medium-aanvraag, 4.987 gemeten tokens,
+één toolaanroep, 18,28 seconden uitvoering. De eigen container is afgesloten.
 
-Dezelfde bewezen Docker-parametermismatch is nu ook in de gedeelde producer
-gevonden en met één literalcorrectie hersteld. 35 gerichte controles slagen,
-inclusief doorgaan bij juiste metadata en weigeren bij zwakkere instellingen.
-De correctie is geïnstalleerd na bron-/configuratiereview. Exacte producer en
-twee configuratieverwijzingen teruggelezen; dienst ready, 36 overige hostbronnen
-en beide runtime-images behouden. Geen Eva-modelaanvraag.
+**Nu:** de concrete bronleesfout modelvrij onderzoeken en gericht oplossen.
+**Daarna:** de bestaande verbetercyclus afmaken, onafhankelijk beoordelen en alleen
+bewezen winst later gebruiken. Geen nieuwe vergelijkingsserie of voorbeeldfunctie.
+Oude opstartfouten blijven behouden. De laatste bestandsmoduscorrectie veranderde
+geen logbytes en verbruikte geen modelaanvraag.
 
-**Nu:** de exacte invoercontrole afronden en Eva haar eigen kandidaat laten
-bouwen en vergelijken via de bestaande verbetercyclus. **Daarna:** onafhankelijk beoordelen, alleen bewezen winst toepassen
-en bij later gewoon werk gebruiken. Geen kwaliteitswinst of hoofdafronding bewezen.
-
-Het gehele goal blijft actief; 39/48 historische afrondingen en gezinsacceptaties
-behouden. Geen handeling van Jaap nodig. Spraak geparkeerd; geen concurrentenserie.
-Dashboard bijgewerkt op 2026-10-12T03:41:06.167076+00:00. Ontwikkelcredits onbekend.
+Het volledige goal blijft actief, inclusief leercyclus en AIDE². Geen nieuwe
+hoofdafronding; 39/48 historische afrondingen en gezinsacceptaties behouden.
+Geen handeling van Jaap nodig. Spraak geparkeerd. Credits onbekend.
+Dashboard bijgewerkt op 2026-10-12T03:53:27.411713+00:00.
+Bewijs: eva2/evidence/product/native-work-strategy-construction-result-20261012.json.
 
 ## Historisch 12 oktober — beoordelingsdienst voor zelfverbetering aangesloten
 

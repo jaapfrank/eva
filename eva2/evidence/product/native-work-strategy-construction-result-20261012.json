@@ -1,0 +1,69 @@
+{
+  "contract": "EvaNativeWorkStrategyConstructionResult/v1",
+  "checkedAt": "2026-10-12T03:53:27.411713+00:00",
+  "state": "failed",
+  "installedSharedExecutor": true,
+  "productFunctionCompleted": false,
+  "actualNativeInputReached": true,
+  "actualModelRequests": 1,
+  "usage": {
+    "input_tokens": 4909,
+    "measurement": "measured",
+    "output_tokens": 78,
+    "provider_attempts": 1,
+    "request_ids": [
+      "cf0ba2c0-2d3b-455c-a4a7-d67a77329492"
+    ],
+    "roles": [
+      {
+        "attempts": 1,
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium",
+        "role": "work"
+      }
+    ],
+    "total_tokens": 4987,
+    "unknown_attempts": 0
+  },
+  "sharedUsage": {
+    "input_tokens": 4909,
+    "output_tokens": 78,
+    "physical_tools": 1,
+    "provider_attempts": 1
+  },
+  "wallSeconds": 18.275491245964076,
+  "nativeState": "ambiguous",
+  "errorCode": "internal_error",
+  "errorFingerprint": "cc3b7b2a94ba3ffeaa815f5129d1428daed9690516e21c2e69d2bc6b367177d9",
+  "firstRequestedTool": "read_own_component_source",
+  "actionReceiptConfirmed": false,
+  "candidateConfirmed": false,
+  "qualityGainProven": false,
+  "fullAide2Completed": false,
+  "containerCleanupReturncode": 0,
+  "retries": 0,
+  "credits": "unknown",
+  "independentResultReview": {
+    "decision": "NO_GO",
+    "publication": "GO_FOR_QUALIFIED_FACTS",
+    "path": "eva2/reviews/native-work-strategy-construction-result-review-20261012.json",
+    "sha256": "17e906efc8f3c810daa32d1b23b3194225bf926bee8fdc7d1ff7f9662387eab2"
+  },
+  "rawResult": {
+    "sha256": "bb6ea7b649d11607caf83d573b857faf6007a158313a66edb2ee4c1acf9ae23e"
+  },
+  "sealedResult": {
+    "sha256": "7d2564552ac92017d88daa9ac5ef01a9ec5e77726452e9dfd585e00a67c64218"
+  },
+  "inputReview": "eva2/reviews/native-work-strategy-recovery-followup-input-review-20261012.json",
+  "priorZeroModelPreparationFailuresRetained": true,
+  "originalCaseCriteriaAndModelsPreserved": true,
+  "limitations": [
+    "Een uitgevoerde verbeteropdracht bewijst geen verbetering.",
+    "De precieze eerste toolfout wordt modelvrij onderzocht.",
+    "Gezinsacceptatie en hoofdafrondingen zijn niet gewijzigd."
+  ],
+  "exactFunctionalCause": "unknown",
+  "hostProcessReturncode": 0,
+  "runtimeCommandReturncode": 0
+}

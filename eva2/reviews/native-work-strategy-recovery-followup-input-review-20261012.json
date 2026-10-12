@@ -1,0 +1,137 @@
+{
+  "contract": "EvaIndependentWorkStrategyRecoveryFollowupInputReview/v1",
+  "checkedAt": "2026-10-12T03:48:42.788721+00:00",
+  "decision": "GO",
+  "openBlockers": [],
+  "constructionAdmission": "GO_ONCE",
+  "scope": "Separate cause-directed followup for the same original never-admitted construction input; no new case, criteria, roles, profile, resources, or product installation.",
+  "bindings": {
+    "driver": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/recovery-followup-driver.private.py",
+      "sha256": "37573d21c16d040a6e9da955ed579a8461af3631f70854f13706ac162d53a3ea"
+    },
+    "driverManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/driver-manifest.private.json",
+      "sha256": "b45da7b608c1036de04ba3161ddf0933e6f4506134f438a6d4515b9aa2470801"
+    },
+    "sourceResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/source-result.private.json",
+      "sha256": "dd9ee470ae16fa173238b0deccb76006608d0782abd30ea4d8287f2411c2c5de"
+    },
+    "actualPrivateReaderGuard": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/actual-guard-check.private.json",
+      "sha256": "4fbb0802123b922f892433402cfb726c505a6f4cc727b6381800a6fdcd12d221"
+    },
+    "actualGuardScript": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/check-actual-private-guard.private.py",
+      "sha256": "6d26ab535f63bf45fc8cf043ff0bb98951d7786ca5a07568dabba66c881735cd"
+    },
+    "modeCorrection": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-episode/pre-input-private-log-mode-correction.private.json",
+      "sha256": "5d6398c8660912c85507eeb155d2dc46bd62694839ceda0ba9f30810f88574b7"
+    },
+    "preservedPriorReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-strategy-recovery-input-review-20261012.json",
+      "sha256": "635234084066b854654bf521208aef4d9272eb1e4225f28e69eab368e2a4ec84"
+    },
+    "unchangedProducerInstallation": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/producer-launch-correction/installed.private.json",
+      "sha256": "73b463bff30c76708c448dccc884ca3fc8a9a230ed5297e6538ad58581d74ed3"
+    },
+    "closedRecoveryCompletion": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-episode/root-construction-completion.private.json",
+      "sha256": "bd838a110cab438153d4efc0aee98dd93092a48a18f8e84c14ea1c2f2fbdda14"
+    },
+    "closedRecoveryStderr": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-episode/root-construction-stderr.private.log",
+      "sha256": "bbd39d05287b20dc56243233f9d122725a0f9b134668d924c13d4cd241e7a78a"
+    },
+    "inputRefs": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/inputs/input-refs.private.json",
+      "sha256": "541c72a58351862336ceffdba1c66192dedac6c4cb8a11f4cc0aa5c04b6aa07d"
+    },
+    "constructionInput": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/inputs/construction-input.private.json",
+      "sha256": "6fa5722529f8470a5cfdc44b2670ab6106f23510f2ee0676d399f880b3f65a27"
+    },
+    "resources": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/resources.private.json",
+      "sha256": "92ed869d75fd477c7c0aa0c52d7976abe0410027dcc3b79c7c82daed6618dc25"
+    },
+    "runtimeAdmission": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/registration/runtime-admission.private.json",
+      "sha256": "92a3f04732924fb14e55fba5312b6097c42925ec462c58eacf4070214ac1b04d"
+    },
+    "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872"
+  },
+  "preparationFailure": {
+    "occurredAt": "2026-10-12T03:43:34.935091+00:00",
+    "returncode": 1,
+    "cause": "Original retained stderr log was mode0644; actual read_private correctly required0400 or0600 and refused it.",
+    "reviewMiss": "Prior reviewer checked preserved hashes but missed this reader-mode precondition; prior review remains immutable history.",
+    "correction": "Only that root-owned single-link file narrowed0644 to0600; original bytes/SHA unchanged.",
+    "dockerCreateOrStartReached": false,
+    "admissionOrModelInputReached": false,
+    "chargedModelInput": 0,
+    "evaQualityLossInferred": false,
+    "oldOnceClockAndFailureRetained": true
+  },
+  "independentChecks": {
+    "sourceDelta": "Exactly one output-root literal from recovery-episode to recovery-followup; all other driver bytes identical.",
+    "criticalManifestReferencesMatchActualBytes": true,
+    "inputRegistrationResourcesRuntimeLimitsAndAuthorityUnchanged": true,
+    "actualGuardInvocations": 1,
+    "actualGuardReturncode": 0,
+    "actualReader": "component_native_work_producer.read_private",
+    "actualGuardChecksCurrentSettingsAndOriginalIdentity": true,
+    "currentTenOriginalReaderUidModeNlinkAndHashesVerified": true,
+    "preservedOriginalAndRecoveryArtifacts": 13,
+    "originalAndRecoveryNativeAndAccountingStillEmpty": true,
+    "newFollowupOnceAbsentAtReview": true,
+    "followupRootOwner": 0,
+    "followupRootMode": "0700",
+    "exactEmptyWorkspaceProofUnchanged": true
+  },
+  "admission": {
+    "construction": "GO_ONCE",
+    "episode": "Separate recovery-followup output root with prospective exclusive once marker; both earlier episodes remain closed and immutable.",
+    "sameOriginalInputCaseCriteriaRolesAndBudget": true,
+    "basis": "Necessary cause-directed start after a verified before-start launch defect; original input was never admitted or delivered to a model.",
+    "ordinaryAdmissionRequired": "Original source journal, typed spec, actual owner binding, ordinary queue claim and current lease/stop/retention checks remain required immediately before dispatch.",
+    "constructionProviderAttemptsIncludingHelpers": 6,
+    "constructionActiveSeconds": 150,
+    "originalParentSeconds": 1200,
+    "developmentTimeCredit": "At most one own real EVALUATE span after the original verified receipt proves exact spec/source/DRAFT/call/path/suite/baseline/candidate/ref and complete child evidence; no failed, replayed, static-only, truncated or unknown exclusion.",
+    "constructionToolScope": "Five component actions and save_work_progress; no programming or procedure expansion.",
+    "workspaceReuse": "Only construction may reuse the exact pinned empty original workspace after fresh provenance, inode, ownership, content and old-record checks; later keeps ordinary workspace refusal.",
+    "later": "CONDITIONAL_ON_EXACT_INDEPENDENT_ACCEPT_AND_ACTUAL_APPLY",
+    "laterConditions": "Same registered later input, exact accepted package and actual application/source projection, original current authority, one 150-second ordinary task, and complete shared accounting before every dispatch.",
+    "laterProviderAttemptsIncludingHelpers": 6,
+    "providerRetries": 0
+  },
+  "resources": {
+    "sharedProviderAttempts": 68,
+    "sharedPhysicalTools": 100,
+    "sharedMeasuredInputTokens": 385000,
+    "sharedMeasuredOutputTokens": 15000,
+    "sharedMeasuredCombinedTokens": 400000,
+    "unknownUsageBlocksFurtherDispatchAndRankableSeal": true,
+    "inFlightTokenCeilingGuaranteed": false,
+    "credits": "unknown"
+  },
+  "limits": {
+    "oldOriginalAndRecoveryEpisodesClosed": true,
+    "oldOnceOrClockRearmed": false,
+    "ordinaryCurrentOwnerSourceJournalLeaseStopRetentionFreshChecksRemainRequired": true,
+    "laterConditionalOnIndependentAcceptActualApplyExactSourceAndSharedAccounting": true,
+    "newFactoryDbDockerModelOrNativeExecutionByReviewer": false,
+    "actualGuardDoesNotDispatchOrAdmit": true,
+    "oldFourCallTrialReopened": false,
+    "protectedQuestionsOrScorerDisclosed": false,
+    "qualityGainProven": false,
+    "authenticSelfChosenInitiativeProven": false,
+    "fullAide2Completed": false,
+    "wholeGoalComplete": false,
+    "credits": "unknown"
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "contract": "EvaIndependentWorkStrategyConstructionResultReview/v1",
+  "checkedAt": "2026-10-12T03:54:47.706763+00:00",
+  "decision": "NO_GO",
+  "reviewStatus": "completed",
+  "outcome": "CONSTRUCTION_NOT_CONFIRMED",
+  "publicationVerdict": "GO_FOR_THE_QUALIFIED_FACTS_IN_THIS_REVIEW",
+  "scope": "Only the closed actual construction output, original input provenance, measured usage, failure evidence and cleanup of the single admitted recovery-followup.",
+  "bindings": {
+    "priorInputReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/native-work-strategy-recovery-followup-input-review-20261012.json",
+      "sha256": "ded06ff086be410d0f0b015040e376bf0c5a3f6d896133b7f16e505fea80f052"
+    },
+    "driverManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/driver-manifest.private.json",
+      "sha256": "b45da7b608c1036de04ba3161ddf0933e6f4506134f438a6d4515b9aa2470801"
+    },
+    "driver": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/recovery-followup-driver.private.py",
+      "sha256": "37573d21c16d040a6e9da955ed579a8461af3631f70854f13706ac162d53a3ea"
+    },
+    "sealedResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/sealed-result.json",
+      "sha256": "7d2564552ac92017d88daa9ac5ef01a9ec5e77726452e9dfd585e00a67c64218"
+    },
+    "rawNative": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/raw-native.json",
+      "sha256": "bb6ea7b649d11607caf83d573b857faf6007a158313a66edb2ee4c1acf9ae23e"
+    },
+    "admission": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/admission.json",
+      "sha256": "31eda6e2b51abb5b8f36ed011f3cb449288ab0c9003bd42c43d1c2e61e84a5f5"
+    },
+    "accounting": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/accounting/accounting.json",
+      "sha256": "dc5852ed41772e713a301853df2610a7470ab8d54cda45379fd22d97cbf1cf95"
+    },
+    "runtimeCommand": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/runtime-command.json",
+      "sha256": "f19ebda7d4ae8f7de2cb60183e7ddc22c9883cc8d91479091231d2b9d3d27cb5"
+    },
+    "containerCleanup": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/container-cleanup.json",
+      "sha256": "562499873c7d6e6d0ec31618e058a506196b0874ff121b011d79efe1578db4ff"
+    },
+    "hostCompletion": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/root-construction-completion.private.json",
+      "sha256": "10cb1c453e3840ed189f530d6e119ce8729035b2c9eb4db236b442cbd4ae9529"
+    },
+    "hostStderr": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/root-construction-stderr.private.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "dispatchOnce": {
+      "path": "/home/administrator/project/.eva2-artifacts/native-work-strategy-production-20261012/native-lifecycle/recovery-followup/construction/dispatch-once.json",
+      "sha256": "941878cdcbbcbeaecf382ed1a694229d9127e9e90edcd06023434c6b6e2e669f"
+    },
+    "registrationSha256": "e17afc394178f1cbcc7d29ce784dfe5af1659cdd82218637eff770c403677872"
+  },
+  "nativeFacts": {
+    "nativeState": "ambiguous",
+    "nativeResult": null,
+    "storedErrorCode": "internal_error",
+    "storedErrorFingerprint": "cc3b7b2a94ba3ffeaa815f5129d1428daed9690516e21c2e69d2bc6b367177d9",
+    "foregroundContactUsed": false,
+    "technicalProbeOwnerAuthored": false,
+    "selfChosenInitiative": false,
+    "claimCount": 1,
+    "completedAt": "2026-10-12 03:52:20+00:00",
+    "lastPhysicalTool": "read_own_component_source",
+    "physicalToolDispatches": 1,
+    "successfulActionReceipts": 0,
+    "candidateSha256": null,
+    "candidateSourceValidation": null,
+    "candidateMainAndResultReadbacks": "missing",
+    "programmingStarted": false,
+    "progress": null,
+    "childDevelopmentUsage": null,
+    "independentFinalRunConfirmed": false,
+    "applicationOrLaterUseConfirmed": false,
+    "constructionActiveSeconds": 18.275491245964076,
+    "developmentExcludedSeconds": 0.0
+  },
+  "whyNoCandidate": [
+    "The first model response was measured and dispatched read_own_component_source, but no successful action receipt was retained.",
+    "The task terminated ambiguous/internal_error with no native result; the ledger contains no candidate SHA or source-validation record and the candidate readback is missing.",
+    "No evidence confirms a draft, development comparison, independent final assessment, application or later use."
+  ],
+  "usage": {
+    "providerAttempts": 1,
+    "role": "work",
+    "model": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "inputTokens": 4909,
+    "outputTokens": 78,
+    "totalTokens": 4987,
+    "physicalTools": 1,
+    "unknownAttempts": 0,
+    "providerRetries": 0,
+    "measurementBoundary": "Complete measured physical request and journal usage for this admitted construction episode.",
+    "storedWorkMeasurement": "partial",
+    "completePhysicalUsage": true,
+    "credits": "unknown"
+  },
+  "cleanup": {
+    "hostProcessReturncode": 0,
+    "nativeRuntimeCommandReturncode": 0,
+    "containerRemovalReturncode": 0,
+    "programmingFinallyStarted": false,
+    "successfulProcessExitIsTaskSuccess": false,
+    "note": "The root prompt said terminal rc1; actual followup host and runtime receipts both contain rc0. Native ambiguous/internal_error is preserved independently."
+  },
+  "causeAndCorrection": {
+    "provenBoundary": "Internal failure during or following the first source-read tool dispatch; no successful tool receipt is present.",
+    "exactExceptionTypeMessageOrStackExported": false,
+    "functionalProductCause": "UNKNOWN",
+    "functionalProductCorrectionProven": false,
+    "smallestNextStep": "Resolve the preserved error fingerprint to the original tool-transition exception using existing diagnostic evidence before selecting a cause-directed code correction. This review does not authorize another execution.",
+    "noBudgetOrDeadlineCauseProven": true
+  },
+  "independentChecks": {
+    "sealedRawAndLedgerHashBindingsMatch": true,
+    "nativeRawAndAdmissionCopiesByteIdentical": true,
+    "physicalRequestJournalAndSealUsageMatch": true,
+    "requestToolRawAndSealIdentityMatch": true,
+    "programmingFinallyReceiptBoundToOriginalIdentityAndSession": true,
+    "cleanupReceiptSuccessful": true,
+    "noNewExecutionTestFactoryDockerDbOrModelByReviewer": true,
+    "noProtectedCaseOrScorerRead": true
+  },
+  "limitations": {
+    "winnerClaimed": false,
+    "baselineOrCandidateQualityRanked": false,
+    "generalAgentQualityLossInferredFromUnknownInternalCause": false,
+    "oldPreAdmissionFailuresReclassifiedAsEvaQualityLoss": false,
+    "oldTrialsOrOnceReopened": false,
+    "fullAide2Completed": false,
+    "wholeGoalComplete": false
+  }
+}
