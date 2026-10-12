@@ -1,4 +1,25 @@
-## Actueel werk — 2026-10-12T00:23:58.026721+00:00
+## Actueel werk — 2026-10-12T00:27:19.092259+00:00
+
+## Actueel 12 oktober — echte uitvoering voor agentverbetering aansluiten
+
+De vorige native hulpmiddeltoepassing is geïnstalleerd. Het actuele concrete gat:
+_WorkEvidence leest uitsluitend bewaarde hostwaarnemingen; de actieve
+verbeterdienst heeft geen productie-uitvoering voor baseline/kandidaat van Eva's
+agentaansturing. Hergebruik de bestaande technische producent en normale
+kern/werker. Geen tweede optimalisatieplatform, planner, geheugen of daemon.
+
+Eerst exacte interface en huidige uitvoerroute vaststellen; vervolgens alleen
+de ontbrekende productieaansluiting maken, gericht controleren en installeren.
+Kwaliteit en menselijke hulp eerst, snelheid/verbruik apart. De bouwer verandert
+geen onafhankelijke criteria of afgeschermde toetsgegevens.
+
+De oude vier-call aansturingsproef blijft NO_GO en gesloten: geen reset,
+herhaling, nieuw vergelijkings-ID of brede matrix. Deze werkstart geeft geen
+nieuwe modeluitvoeringstoelating voor een oude gesloten proef.
+
+De authentieke volledige cyclus en later gebruik zijn nog open; oorspronkelijke
+39/48 en gezinsacceptaties blijven behouden. Hele projectgoal actief, spraak
+geparkeerd. Dashboard/GitHub tonen deze werkstart; geen eigenaarhandeling nodig.
 
 ## Actueel 12 oktober — beoordeeld hulpmiddel uit eigen initiatief geïnstalleerd
 
