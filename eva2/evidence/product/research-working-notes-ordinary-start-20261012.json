@@ -1,0 +1,50 @@
+{
+  "contract": "EvaResearchWorkingNotesOrdinaryStart/v1",
+  "recordedAt": "2026-10-12T21:35:09.060179+00:00",
+  "status": "running",
+  "workId": "work:eva-resume:98d0ce93-a124-5d21-bd0b-747e2926b346",
+  "generation": 12,
+  "parentWorkId": "work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad",
+  "dispatches": 1,
+  "purpose": "Eva itself completes the original read-only research proposal. Codex supplies no proposal.",
+  "installed": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-installed-20261012.json",
+    "sha256": "1a9832a8772ec120eee1c0a2375d3daa2ea23efedfea5c8fbd72e8ca560466b6"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/research-working-notes-source-review-20261012.json",
+    "sha256": "c9d0fe73b7ac9daee8e0c50850ba5da5e4c9f1a54df318c55c34c97011466a3e"
+  },
+  "preparation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/continuation-preparation.private.json",
+    "sha256": "4a6a52db87ce0dab2831671eff6e83f1ede1afec3ca710ed2365b8d7be8c8e8d"
+  },
+  "installedBinding": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/continuation-installed-binding.private.json",
+    "sha256": "5f8e775d45d916dc35a6e8eaefa0f877def75cf7a8a16766a230de8b5e3a0958"
+  },
+  "actualDispatchReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/continuation-receipt.private.json",
+    "sha256": "d30f3f54b69a927658847e1e48837b5c1c6260cdff9f302a88402afe32469772"
+  },
+  "ownerStart": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/continuation-work-start.private.json",
+    "sha256": "ea0f07a6e982d92af0c4e98380e0939761f01bfa029010acc7e7faee2c5c647b"
+  },
+  "knownPhaseMeasurement": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-working-notes/installation/gen11-current-source-known-phase.measurement.private.json",
+    "sha256": "b0d867466b9452409a744c39f8e0335ac37c23b65fb2a33ce9b1a1d6bf3e69ee"
+  },
+  "boundaries": [
+    "Start is not completed research or a new product outcome.",
+    "Frozen known phase does not include current recalled/recent context or future model findings.",
+    "Unchanged actual full-envelope gate and original task allowances still apply."
+  ],
+  "preserved": [
+    "Prior gen11 failure and all older UNKNOWN",
+    "Original question, sources, plan, document and approval condition",
+    "Provider roles and runtime allowances"
+  ],
+  "proposalComplete": false,
+  "creditCost": null
+}

@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T21:32:47.719279+00:00",
+        "checkedAt": "2026-10-12T21:35:09.060179+00:00",
         "deliveries": [
           {
             "id": "research-working-notes-installed-20261012",
@@ -5409,10 +5409,10 @@
           }
         ],
         "now": {
-          "title": "Eva's algemene taakuitvoering herstellen",
+          "title": "Eva maakt zelf het bestaande onderzoeksvoorstel af",
           "state": "in_progress",
-          "phase": "ordinary_research_continuation_preparation",
-          "taskId": "work:eva-resume:4976e84f-60a8-5de8-9511-22058697ffad",
+          "phase": "ordinary_research_continuation_running",
+          "taskId": "work:eva-resume:98d0ce93-a124-5d21-bd0b-747e2926b346",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
@@ -5420,34 +5420,31 @@
           ],
           "activeExecution": true,
           "owner": "/root",
-          "executor": "Codex · eigen vervolguitvoering van Eva voorbereiden",
+          "executor": "Eva · Astra/medium",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De algemene leesindex en opslag van onderzoeksbevindingen zijn geïnstalleerd. Eva moet het voorstel nog zelf afmaken.",
-          "detail": "Eén module in kern en werker vervangen; beide gezond. Geen nieuwe Eva-modeluitvoering gestart. Het eerdere input_budget_exceeded en onvoltooide voorstel blijven zichtbaar.",
+          "summary": "Eva's eigen vervolguitvoering is gestart met de geïnstalleerde werknotitie- en contextcorrectie.",
+          "detail": "Eén gewone vervolgopdracht, dezelfde leesbevoegdheid en oorspronkelijke voorwaarden. Geen handmatig Tuya-voorstel door Codex.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/structured-stored-source-selection-ordinary-result-20261012.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/structured-stored-source-selection-ordinary-result-review-20261012.json",
           "previousResultReviewSha256": "d66d4b9e1de90b4186e7c8e6c37637977810d275be76616549de37e790e1f84a",
           "implementationStatus": "Verliesvrije leesindex en bestaande werknotitie-fase geïnstalleerd; voorstel nog niet af.",
-          "currentActivity": "Dezelfde oorspronkelijke opdracht voorbereiden vanuit het bewaarde werk, met de geïnstalleerde correctie.",
-          "checkedAt": "2026-10-12T21:32:47.719279+00:00",
+          "currentActivity": "Eva onderzoekt, bewaart bevindingen en moet haar eindvoorstel zelf opslaan en teruglezen.",
+          "checkedAt": "2026-10-12T21:35:09.060179+00:00",
           "remaining": [
             "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
             "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."
           ],
-          "nativeRunning": false,
+          "nativeRunning": true,
           "observedUsage": {
-            "knownTokens": 1018409,
-            "measuredRequests": 19,
-            "tools": 19,
-            "phase": "terminal",
-            "fullTaskTotalKnown": false,
+            "phase": "running",
+            "measurement": "pending",
             "creditCost": null
           },
           "currentObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/structured-source-selection/installation/gen11-current-observation.private.json",
-            "sha256": "e2d457f3573b44935ee93a37dea2612a4099d75e4fc9295de124d7b88932e874"
+            "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-working-notes-ordinary-start-20261012.json",
+            "sha256": "7b92b2b0dbc9e3ae5ea6be769eb90f14b9b9a878860fa0279c55faf7f874f137"
           }
         },
         "next": {
