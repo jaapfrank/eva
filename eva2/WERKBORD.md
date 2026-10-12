@@ -1,3 +1,28 @@
+## Actueel 12 oktober — Human Understanding Engine verwerkt
+
+Jouw volledige ontwerp is gelezen en als eigenaarvoorstel bewaard. Mijn oordeel:
+de verwachting-uitkomst-feedbackkringloop is de belangrijkste ontbrekende
+verbinding. Bestaande persoonsfeiten, correcties, Hindsight, stijlspiegel,
+initiatiefgeschiedenis en verbeterroute worden hergebruikt.
+
+Zes zichtbare afrondingen: HUE1.1 persoonsbeeld met tegenbewijs; HUE2.1 patroon
+later gebruiken; HUE3.1 verwachting met echte uitkomst vergelijken; HUE4.1 sociale
+feedback bij een nieuw gesprek; HUE5.1 leren van echt initiatief; HUE6.1 droom/AIDE²
+voor mensbegrip, agentaansturing, code en uitbreidingen. Dit zijn ontbrekende
+verbindingen binnen de vier productuitkomsten, geen zes nieuwe hoofdonderdelen.
+Nu eerst de lopende AIDE²-aansluiting afmaken; daarna HUE1.1 en HUE3.1 verbinden.
+
+Oorspronkelijke 39/48 afrondingen exact behouden; inclusief de zes nieuwe taken
+staat het werkbord op 39/54. Geen nieuwe productafronding of gezinsacceptatie.
+Geen tweede geheugen, SQLite-migratie, Qwen-vervanging of permanente daemon.
+PostgreSQL/Hindsight en afgesproken providerrollen blijven het vertrekpunt.
+Voorgestelde percentages zijn geen behaalde resultaten of nieuwe proefmatrix.
+
+Ontwerp en oordeel: eva2/design/product/human-understanding-engine-integration-20261012.md.
+Volledig eigenaarvoorstel: eva2/design/product/human-understanding-engine-owner-proposal-20261011.txt.
+Het gehele goal blijft actief; spraak geparkeerd. Geen handeling van Jaap nodig.
+Dashboardinhoud bijgewerkt: 2026-10-12T11:46:06.001367+02:00.
+
 ## Actueel 12 oktober — fout herleid; broncorrectie gecontroleerd
 
 De gesloten verbeteropdracht stopte door de broncontrole van de private proefdriver.

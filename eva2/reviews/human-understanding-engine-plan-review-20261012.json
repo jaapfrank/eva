@@ -1,0 +1,76 @@
+{
+  "contract": "EvaIndependentPlanIntegrationReview/v1",
+  "checkedAt": "2026-10-12T09:52:52.443453+00:00",
+  "decision": "GO",
+  "scope": "Exacte HUE-planintegratie en veilige feitenpublicatie; geen bron-, runtime-, kwaliteits- of fysieke invoertoelating.",
+  "openBlockers": [],
+  "bindings": {
+    "comparisonBase": "9fa23c9c",
+    "files": {
+      "eva2/design/product/human-understanding-engine-owner-proposal-20261011.txt": "69f1f4712e65d909339ae73339612c029ac59854177688316c00545017a3ea0c",
+      "eva2/design/product/human-understanding-engine-integration-20261012.md": "fd58cc45979b326acc2a817c043b9d98dd9d8382ee7ee98a5f847e5bbed4460d",
+      "AGENTS.md": "a21c9207737109fbda4091f40b4e6f05def9cc6f725e31f6d2814e53f8e59edd",
+      "eva2/PROJECTDOEL.md": "636e121194582e11e5f8e3df10e9f85f9242a446a220d76721a3e41d2fc1c944",
+      "eva2/WERKBORD.md": "83aa541ee9d0c2f71fbae0b4604a4008c821dfde6682b62a414633d69b280d56",
+      "eva2/design/product/execution-workboard-v1.json": "ff290fc78905ce81505c896bc936a8444ca7f1d420334a949b13ae09a4ad2690",
+      "eva2/evidence/product/human-understanding-engine-plan-integrated-20261012.json": "0db3b383d2f44e1532517c24670b9c7d6a732077d5eaa3a569f00a1ccf85b431"
+    },
+    "externalGoal": {
+      "path": "/mnt/c/Users/jaapf/.codex/attachments/36ce6909-bc80-479f-81f1-2154560c75b3/goal-objective.md",
+      "sha256": "f5cc7a0f176bcc645e3296bad5a4dfa1dd226925037dd25d7da01d2c3aef2adc"
+    },
+    "beforeBoardSha256": "fbdc53d84188498d639ed4ac8e656b85bf8d412285e654f58ab2c809d64a352e",
+    "originalTaskObjectsWithPlacementCanonicalSha256": "642a4f107715e8378d2d0912587a6dfe3837a887d158ddb0fb4025796e0855fa"
+  },
+  "preservation": {
+    "originalTaskObjectsAndPlacementUnchanged": true,
+    "originalTaskCount": 48,
+    "originalCompletedCount": 39,
+    "appendedTaskIds": [
+      "HUE1.1",
+      "HUE2.1",
+      "HUE3.1",
+      "HUE4.1",
+      "HUE5.1",
+      "HUE6.1"
+    ],
+    "expandedTaskCount": 54,
+    "expandedCompletedCount": 39,
+    "executionTasksMilestonesCompletionsUnchanged": true,
+    "all438PreviousDeliveriesPreserved": true,
+    "originalCriteriaAcceptancesAndUnknownPreserved": true
+  },
+  "findings": [
+    "Het volledige eigenaarvoorstel is bewaard; de integratie onderscheidt voorgestelde verantwoordelijkheden en doelen van bestaande interfaces, bevoegdheden en bewezen resultaten.",
+    "De zes HUE-taken sluiten aan op bestaande M1/M3/I1/L3-verantwoordelijkheden. PostgreSQL, Hindsight, persoonsgrenzen en de bestaande uitvoer-/beoordelingsroute blijven uitgangspunt; geen tweede platform of daemon is toegevoegd.",
+    "SQLite, Qwen, waarschijnlijkheden en voorgestelde percentages zijn geen geïnstalleerde techniek of behaalde kwaliteit. De ontbrekende verwachting-uitkomstkoppeling is een ontwerpbeoordeling binnen de onderzochte routes.",
+    "AGENTS, PROJECTDOEL, WERKBORD, dashboard en externe goal beschrijven dezelfde open uitbreiding. De gecorrigeerde WERKBORD-kopvolgorde behoudt de historische tekst.",
+    "Er is geen nieuwe afgeronde producttaak, gezinsacceptatie of kwaliteitswinst gepubliceerd. Het volledige doel blijft actief en spraak blijft geparkeerd."
+  ],
+  "supportingMetadata": {
+    "eva2/src/eva/contracts/memory.py": "ffcec8ae52874cea85622d81f4eec010759d4f476acf8a1734cbe9e8138ec51f",
+    "eva2/src/eva/adapters/projection/hindsight.py": "b0fa3a1bffe6f7f358ae81f530b099d817ad43c3e5653471171361903ce8d720",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "3c7cf3e8d05481f924f5c7056abd8c5704fd6037f932b7d5224dc47452245050",
+    "eva2/src/eva/adapters/postgres/sensory_events.py": "ad6c2821ca440651e03ca5ac18562df5a005ab571068af32d527b619c53f5603",
+    "eva2/evidence/product/learning-feedback-source-native-result-20261011.json": "01ad27bc287cf353035b1ba54941daeb9c3768836c9f2c9d721e63108ff982bc",
+    "eva2/evidence/product/native-initiative-digital-installed-20261011.json": "c40cd9e7573f4caae278777755ff10518111e9eae1658a311676619cd5ef3808",
+    "eva2/evidence/product/native-work-completion-cause-diagnosis-20261012.json": "3ab76b34baebae5b5a611694f02725740a04cd52e7fdb00f8f84c38e7115e475"
+  },
+  "dashboardObservation": {
+    "source": "Root-observatie in exact gebonden publiek bewijs; niet opnieuw uitgevoerd door reviewer.",
+    "visibleExpandedCount": "39/54",
+    "sixHueTasksVisible": true,
+    "screenshotSha256": "c5f1592ebd5a30f915d4399fef16e0d787636aeea71aca6652f455c85b665c46"
+  },
+  "limits": {
+    "nativeInputAllowed": false,
+    "qualityGainProven": false,
+    "fullAideCompleted": false,
+    "wholeGoalCompleted": false,
+    "newModelRequests": 0,
+    "runtimeChanged": false,
+    "protectedFinalCasesReadOrSharedForThisReview": false,
+    "newTestsOrBrowserChecks": 0,
+    "credits": "unknown"
+  }
+}

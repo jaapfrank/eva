@@ -1,0 +1,54 @@
+{
+  "contract": "human_understanding_plan_integration.v1",
+  "recordedAt": "2026-10-12T11:46:06.001367+02:00",
+  "ownerSource": {
+    "path": "eva2/design/product/human-understanding-engine-owner-proposal-20261011.txt",
+    "sha256": "69f1f4712e65d909339ae73339612c029ac59854177688316c00545017a3ea0c",
+    "bytes": 12220,
+    "readInFull": true
+  },
+  "assessment": "eva2/design/product/human-understanding-engine-integration-20261012.md",
+  "beforeBoardSha256": "fbdc53d84188498d639ed4ac8e656b85bf8d412285e654f58ab2c809d64a352e",
+  "afterBoardSha256": "ff290fc78905ce81505c896bc936a8444ca7f1d420334a949b13ae09a4ad2690",
+  "taskIds": [
+    "HUE1.1",
+    "HUE2.1",
+    "HUE3.1",
+    "HUE4.1",
+    "HUE5.1",
+    "HUE6.1"
+  ],
+  "originalTasksUnchanged": true,
+  "originalTaskCount": 48,
+  "originalCompletedCount": 39,
+  "expandedTaskCount": 54,
+  "expandedCompletedCount": 39,
+  "productFunctionCompleted": false,
+  "newEvaModelRequests": 0,
+  "runtimeChanged": false,
+  "goalStatus": "active",
+  "voiceParked": true,
+  "creditCosts": "unknown",
+  "existingEvidence": [
+    "eva2/evidence/product/learning-feedback-source-native-result-20261011.json",
+    "eva2/evidence/product/native-initiative-digital-installed-20261011.json",
+    "eva2/evidence/product/native-work-completion-cause-diagnosis-20261012.json"
+  ],
+  "dashboardVerification": {
+    "url": "http://localhost:44712/",
+    "visibleUpdatedAt": "2026-10-12T11:46:06.001367+02:00",
+    "visibleTaskIds": [
+      "HUE1.1",
+      "HUE2.1",
+      "HUE3.1",
+      "HUE4.1",
+      "HUE5.1",
+      "HUE6.1"
+    ],
+    "visibleCompleted": 39,
+    "visibleOpen": 15,
+    "taskDetailExpandedAndRead": true,
+    "screenshotSha256": "c5f1592ebd5a30f915d4399fef16e0d787636aeea71aca6652f455c85b665c46",
+    "automaticPropagationObserved": true
+  }
+}
