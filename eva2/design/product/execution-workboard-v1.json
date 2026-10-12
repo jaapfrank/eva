@@ -5448,8 +5448,8 @@
         "now": {
           "title": "Algemene taakuitvoering herstellen; voorstel nog niet af",
           "state": "in_progress",
-          "phase": "historical_context_index_installing",
-          "taskId": "work:eva-resume:36d06219-cec5-5a7b-a144-fd01e54de3ef",
+          "phase": "ordinary_proposal_continuation_after_index_install",
+          "taskId": "work:eva-resume:bd1e52e4-fc41-5d0a-a3b5-b0a11ebfee69",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
@@ -5459,26 +5459,26 @@
           "owner": "/root",
           "executor": "Codex · algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva heeft werknotities bijgewerkt, maar het voorstel niet opgeleverd.",
-          "detail": "Generatie13 gestopt op input_budget_exceeded:10responses/10tools/549.014bekende tokens. Vier exact herhaalde selecties; tussenbestand ongewijzigd.",
+          "summary": "Eva maakt zelf het gevraagde voorstel via haar gewone achtergrondroute.",
+          "detail": "Exacte Gen14-voortzetting van de bewaarde Gen13-taak. Oude verliezen en verbruik blijven staan; geen migratie vóór akkoord.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-ordinary-result-20261012.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/research-progress-context-ordinary-result-review-20261012.json",
           "previousResultReviewSha256": "f44b500d1fd53f17ac92361e88efe425ae4a6ae66a50e79aff516c3fcb4b61cd",
-          "implementationStatus": "Broncorrectie gecontroleerd; installatie loopt. Het voorstel is nog niet af.",
-          "currentActivity": "Bronreview geslaagd. Exacte correctie wordt in kern en werker geïnstalleerd; daarna hervat Eva haar oorspronkelijke leesopdracht.",
-          "checkedAt": "2026-10-12T22:54:06.527372+00:00",
+          "implementationStatus": "Algemene contextcorrectie geïnstalleerd; kern en werker gezond. Eva werkt aan haar eigen voorstel; afronding nog niet bevestigd.",
+          "currentActivity": "Eva hervat de oorspronkelijke leesopdracht met de geïnstalleerde algemene contextcorrectie. Nieuwe poging gestart; nog geen bevestigd eindvoorstel.",
+          "checkedAt": "2026-10-12T22:55:48.701273+00:00",
           "remaining": [
             "Eva moet relevante brongegevens gericht selecteren en haar eindvoorstel opslaan en teruglezen.",
             "Voor de oorspronkelijke migratie blijft apart expliciet akkoord op dat voorstel nodig."
           ],
-          "nativeRunning": false,
+          "nativeRunning": true,
           "observedUsage": {
-            "phase": "failed",
-            "completeMeasuredResponses": 10,
-            "knownTokens": 549014,
-            "tools": 10,
+            "phase": "call_started",
+            "completeMeasuredResponses": null,
+            "knownTokens": null,
+            "tools": null,
             "completeTaskUsage": null,
             "creditCost": null
           },
@@ -5488,9 +5488,10 @@
           },
           "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/historical-context-index-source-review-20261013.json",
           "sourceReviewSha256": "096f5953306e864c74206b0057f7e021b406248f0929ec37cc0f97951135bfcb",
-          "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/research-progress-context-installed-20261012.json",
+          "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-installed-20261013.json",
           "sourceEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-source-correction-20261013.json",
-          "sourceEvidenceSha256": "69591899278306d194416905c1f9da4bda76ecfd0c672e87bc94384760466f19"
+          "sourceEvidenceSha256": "69591899278306d194416905c1f9da4bda76ecfd0c672e87bc94384760466f19",
+          "installedEvidenceSha256": "1659447c2fdee982a464434f41206e131006fc4189964ee7e2c551d67174fbdc"
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",

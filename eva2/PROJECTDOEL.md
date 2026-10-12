@@ -1,3 +1,34 @@
+## Actueel 13 oktober — historische taakcontext lokaal bereikbaar; Eva hervat voorstel
+
+De algemene achtergrondroute archiveert haar exacte historische navigatie-index nu
+via bestaande ConnectorResults-opslag en use_connector_tool. Actuele bevindingen,
+laatste resultaten, fouten, UNKNOWN, effecten en bronankers blijven zichtbaar.
+Oudere bronnen en werknotities blijven gericht terugleesbaar; de archiefseal bewijst
+een exacte metadatakopie, geen externe waarheid. Geen Tuya-specifieke scripts of
+handmatig voorstel, nieuwe tools, verruimde bevoegdheden of verhoogde grenzen.
+
+129 context-/AIDE-controles geslaagd; 109 aanvullende runnercontroles geslaagd.
+Twee bestaande legacygrantfixtures falen identiek op de exact geïnstalleerde
+referentie en blijven vermeld. _TaskModel en de AIDE-werkstrategieregels blijven
+ongewijzigd. De bekende 149-receiptcontext daalt 65.279→48.003 BPE; met dezelfde
+save/readbackreserve 60.994. Actuele volledige invoer en voorstelkwaliteit zijn
+daarmee niet bewezen. Oude Gen13-fout en 549.014 bekende tokens blijven behouden.
+
+Exact drie gewijzigde modules in kern en werker geïnstalleerd; 342 andere
+Python-bronnen per image, configuratie en mounts behouden. Beide gezond en ready.
+Onafhankelijke bronreview GO. Eén gewone uitsluitend leesbare Gen14-voortzetting
+loopt: work:eva-resume:bd1e52e4-fc41-5d0a-a3b5-b0a11ebfee69. Eva moet zelf
+het oorspronkelijke onderbouwde voorstel opslaan en apart teruglezen; nog niet af.
+Een daadwerkelijke HA-migratie blijft afhankelijk van akkoord op dat voorstel.
+
+Het volledige projectgoal blijft ACTIVE; 39/48 oorspronkelijk en 39/54 uitgebreid
+onveranderd. Leercyclus/HUE/AIDE² en overige echte productuitkomsten blijven open.
+Spraak geparkeerd; geen nieuwe vergelijkingsserie; Docker Desktop ongemoeid.
+
+Bron: eva2/evidence/product/historical-context-index-source-correction-20261013.json.
+Review: eva2/reviews/historical-context-index-source-review-20261013.json.
+Installatie: eva2/evidence/product/historical-context-index-installed-20261013.json.
+
 ## Actueel 13 oktober — voorstel niet af; contextoorzaak gericht herstellen
 
 De gewone generatie13 is gesloten met input_budget_exceeded. Alle10 aanvragen

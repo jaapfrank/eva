@@ -1,0 +1,64 @@
+{
+  "contract": "EvaHistoricalContextIndexInstalled/v1",
+  "recordedAt": "2026-10-12T22:54:31.307139+00:00",
+  "installed": true,
+  "ordinaryTaskCompleted": false,
+  "updateDispatches": 1,
+  "newModelRequestsByThisInstallation": 0,
+  "sourceEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-index-source-correction-20261013.json",
+    "sha256": "69591899278306d194416905c1f9da4bda76ecfd0c672e87bc94384760466f19"
+  },
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/historical-context-index-source-review-20261013.json",
+    "sha256": "096f5953306e864c74206b0057f7e021b406248f0929ec37cc0f97951135bfcb"
+  },
+  "runtimeVerification": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/installation-verification.private.json",
+    "sha256": "af0f89a00820f62bea542ca3eb582b15a1a7503f0c7ff683a9aa6759d2123773"
+  },
+  "services": {
+    "core": {
+      "image": "sha256:b99295fd6050e1c30428e43ef7dac369d6e30018ac51812e04d305d4ec77c95d",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 342,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "a5749ba437ecc8d000de6d09037ccb345fddc13422a0a33e3c6f0a2016bc0f40",
+        "adapters/postgres/external_conversation_tools.py": "a22eb53197a1f84cbca14fe7d3ed5fe3927b3465d427396b3a144a03e261a70a",
+        "bootstrap/delegated_digital_runner.py": "98b1842a01b6b544a2764d030bbf6cd17ff96ede77eeaf5a134c02b7f387a5aa"
+      },
+      "inspectionSha256": "ff2200688a8be28971f2f4a5366a3cf38ae9757212544826f02862c0d3c03814"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:972856230949e2157a9e4dc9da34ff3f3905d2e1e717be89cd6acb640dd9600f",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 342,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "a5749ba437ecc8d000de6d09037ccb345fddc13422a0a33e3c6f0a2016bc0f40",
+        "adapters/postgres/external_conversation_tools.py": "a22eb53197a1f84cbca14fe7d3ed5fe3927b3465d427396b3a144a03e261a70a",
+        "bootstrap/delegated_digital_runner.py": "98b1842a01b6b544a2764d030bbf6cd17ff96ede77eeaf5a134c02b7f387a5aa"
+      },
+      "inspectionSha256": "edf6d1052e248c4cdc9b32fd7df71e55a324a37b9d41dc3000da713714efe38a"
+    }
+  },
+  "ready": true,
+  "knownImprovement": "149-receipt known pressure phase 65279→48003 BPE; same save/readback reserve60994. Exact historical index remains reachable; current raw/proof/latest retained.",
+  "unknown": "Actual new task outcome/provider usage/quality unknown until ordinary execution. No completion, efficiency or competition claim.",
+  "retainedFailures": "Gen13 closed budget_exceeded/10responses/549014known tokens/10tools; partial9240-byte document unchanged. Two legacy runner fixtures fail identically on exact installed baseline; not introduced by correction.",
+  "scope": "General background execution. No Tuya-specific scripts/manual proposal, HA effects, new grants, model roles, limit changes or comparison series.",
+  "goal": "Whole project ACTIVE; original39/48 expanded39/54 unchanged; voice parked; WSL Docker only."
+}
