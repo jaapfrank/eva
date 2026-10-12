@@ -14,16 +14,18 @@ configuratie en gesloten bewijs blijven behouden. Onafhankelijke bron-, interfac
 De eerdere strategie-inferentie wordt door deze adapterfout gekwalificeerd:
 de oude grensfouten en bewijsbytes blijven staan; geen bewezen enige oorzaak,
 kwaliteitswinst of hoofdafronding. De oude kandidaat blijft niet toegepast.
-Nu één passende productronde via de bestaande verbeterroute aansluiten, met
-dezelfde criteria en onafhankelijke eindbeoordeling; alleen bewezen winst toepassen
-en later gebruiken. Geen oude proef heropenen of nieuwe concurrentenserie.
+De aansluiting op de werkelijke installatie en de ongewijzigde proefgevallen is
+voorbereid. De nieuwe configuratie is nog niet geactiveerd; één volledige uitvoerroute
+wordt afgerond en onafhankelijk beoordeeld. Nog geen nieuwe Eva-modeluitvoering.
+Alleen bewezen winst toepassen en later gebruiken; oude pogingen blijven gesloten.
+Geen nieuwe concurrentenserie. Voortgang: eva2/evidence/product/dashboard-improvement-round-progress-20261012.json.
 
 Het volledige projectgoal blijft actief. 39/48 historische afrondingen en
 acceptaties behouden. Volledige AIDE² en gezinsacceptatie blijven open.
 Spraak geparkeerd; geen handeling van Jaap nodig.
 Resultaat: eva2/evidence/product/native-budget-context-correction-installed-20261012.json.
 Review: eva2/reviews/native-budget-context-correction-installed-review-20261012.json.
-Dashboardinhoud bijgewerkt: 2026-10-12T09:54:29.039336+02:00.
+Dashboardinhoud bijgewerkt: 2026-10-12T10:18:04.780014+02:00.
 
 ## Historisch 12 oktober — eerdere diagnose, later gekwalificeerd door adapterfout
 

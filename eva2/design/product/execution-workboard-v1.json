@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T09:54:29.039336+02:00",
+  "lastUpdated": "2026-10-12T10:18:04.780014+02:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -125,11 +125,11 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Persoonlijkheid en geheugenbasis behouden. De planningruimte in de verbeterproef is gecorrigeerd, geïnstalleerd en onafhankelijk beoordeeld. Volledige AIDE², initiatief en gezinsoplevering blijven open.",
+      "summary": "Persoonlijkheid en geheugenbasis behouden. Laatst geïnstalleerd: juiste planningruimte voor zelfverbetering. De aansluiting voor de volledige verbetercyclus is voorbereid; uitvoering, bewezen winst, initiatief en gezinsoplevering blijven open.",
       "nextOutcomes": [
         {
-          "title": "Nu · volledige verbetercyclus aansluiten",
-          "detail": "De onjuiste planningruimte in de verbeterproef is gecorrigeerd en geïnstalleerd. Nu de bestaande volledige verbetercyclus aansluiten en onafhankelijk beoordelen."
+          "title": "Nu · volledige verbetercyclus uitvoeren",
+          "detail": "Aansluiting voorbereid. De bestaande ontwikkel-, beoordelings- en toepassingsroute afmaken en onafhankelijk controleren; nog geen nieuwe modeluitvoering gestart."
         },
         {
           "title": "Daarna · volledige verbetercyclus afronden",
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T09:54:29.039336+02:00",
+        "checkedAt": "2026-10-12T10:18:04.780014+02:00",
         "deliveries": [
           {
             "id": "native-budget-context-correction-installed-20261012",
@@ -5004,17 +5004,17 @@
           }
         ],
         "now": {
-          "title": "Zelfverbetering · verbetercyclus aansluiten",
+          "title": "Zelfverbetering · uitvoering voorbereiden",
           "state": "in_progress",
-          "phase": "post_budget_correction_round_binding",
+          "phase": "post_budget_correction_lifecycle_preparation",
           "activeExecution": false,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De onjuiste planningruimte in de verbeterproef is gecorrigeerd en geïnstalleerd. Nu de bestaande volledige verbetercyclus aansluiten en onafhankelijk beoordelen.",
-          "detail": "Eva zag eerder 25/27 resterende aanvragen terwijl er werkelijk nog één over was. Correctie geïnstalleerd en onafhankelijk beoordeeld; één gerichte controle geslaagd. Nu technische rondebinding en afzonderlijke inputvoorbereiding via bestaande route; nog geen nieuwe modelproef.",
+          "summary": "De aansluiting op de huidige Eva-installatie en de ongewijzigde proefgevallen zijn voorbereid. Nu de volledige uitvoering afronden en onafhankelijk controleren.",
+          "detail": "De nieuwe configuratie is voorbereid maar nog niet geactiveerd. De uitvoerder maakt de bestaande cyclus af: ontwikkelen, onafhankelijk beoordelen, alleen bewezen winst toepassen en later gebruiken. Er is nog geen nieuwe Eva-modelproef gestart.",
           "doneWhen": "De volledige cyclus levert een onafhankelijk beoordeelde kandidaat; alleen bewezen winst wordt toegepast en daarna bij ander werk gebruikt.",
-          "source": "eva2/evidence/product/native-budget-context-correction-installed-20261012.json",
+          "source": "eva2/evidence/product/dashboard-improvement-round-progress-20261012.json",
           "previousInstalledCorrection": "eva2/evidence/product/native-program-observation-installed-20261012.json",
           "previousInstalledReview": "eva2/reviews/native-program-observation-installed-review-20261012.json",
           "previousInstalledReviewSha256": "e867786889ad6855a48a709c6c7073b274cdf89a3cd7ca2c4ad8b76a27a5762a",
@@ -5028,18 +5028,23 @@
             "budgetContextMismatchConfirmed": true,
             "budgetContextCorrectionInstalled": true,
             "budgetContextCorrectionChecksCompleted": true,
-            "budgetContextCorrectionReviewCompleted": true
+            "budgetContextCorrectionReviewCompleted": true,
+            "inputBindingsPrepared": true,
+            "currentRuntimeBindingsPrepared": true,
+            "prospectiveConfigurationPrepared": true,
+            "prospectiveConfigurationActivated": false,
+            "fullLifecycleExecuted": false
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T09:54:29.039336+02:00",
+            "checkedAt": "2026-10-12T10:18:04.780014+02:00",
             "coordinator": "/root",
+            "coordinatorTask": "Aansluiting op de actuele installatie vastgelegd; dashboard en GitHub bijwerken. Daarna de beoordeelde uitvoering aansluiten.",
             "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Bestaande technische suite-/previewclient-/runtimebinding aansluiten in eigen private map; geen nieuwe native uitvoering.",
+            "executorTask": "Eén volledige uitvoerroute voorbereiden: ontwikkeling, eindbeoordeling, toepassing en later gebruik; geen nieuwe uitvoerder of heropening van oude pogingen.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Afzonderlijke input-only wrappers met ongewijzigde criteria en afgeschermde eindgevallen voorbereiden; geen nieuwe invoer-GO.",
+            "reviewerTask": "Ongewijzigde invoer en complete aansluiting onafhankelijk controleren; eindgevallen blijven afgeschermd.",
             "newModelRequestsThisFollowup": 0,
-            "note": "Correctie onafhankelijk GO. Twee niet-overlappende voorbereidingen lopen; nul nieuwe Eva-modelaanvragen.",
-            "coordinatorTask": "Gecontroleerde oplevering publiceren en bestaande rondeaansluiting coördineren."
+            "note": "Voorbereiding loopt. Nog geen nieuwe Eva-modeluitvoering of productafronding."
           },
           "review": "eva2/reviews/native-budget-context-correction-installed-review-20261012.json",
           "reviewSha256": "9cfc71df622e1323775cf1421fd94205de9b6dba4f316560335293c85bd06b4e"
@@ -5056,10 +5061,10 @@
           "required": false,
           "summary": "Geen handeling van jou nodig",
           "title": "Geen handeling van jou nodig",
-          "detail": "Geen handeling van jou nodig. De ontwikkelkandidaat is afgewezen; Codex werkt de bestaande volledige verbetercyclus af. Gezinsacceptatie blijft een afzonderlijk oordeel."
+          "detail": "Codex rondt de bestaande verbetercyclus af. Nu hoef je niets te testen of goed te keuren; gezinsbeoordeling blijft afzonderlijk."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T09:54:29.039336+02:00",
+        "reviewedAt": "2026-10-12T10:18:04.780014+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5160,8 +5165,8 @@
         },
         "note": "Laatst gecontroleerde projectvoortgang. Voorbereiding, uitvoering, installatie en volledige productafronding staan afzonderlijk; geen live agentstatus."
       },
-      "reviewedAt": "2026-10-12T09:54:29.039336+02:00",
-      "checkedAt": "2026-10-12T09:54:29.039336+02:00",
+      "reviewedAt": "2026-10-12T10:18:04.780014+02:00",
+      "checkedAt": "2026-10-12T10:18:04.780014+02:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -11454,7 +11459,7 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T09:54:29.039336+02:00",
+        "checkedAt": "2026-10-12T10:18:04.780014+02:00",
         "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Persoonlijkheid en geheugenbasis geaccepteerd; leercyclus, zelfstandig initiatief en volledige zelfverbetering nog open.",
         "note": "De 39/48 teller gaat over de oorspronkelijke kleine taken, niet over voltooiing van het huidige projectgoal. De volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen blijven verplicht. Deelopleveringen sluiten het goal niet af. Spraak geparkeerd; geen nieuwe vergelijkingsserie.",
@@ -11545,7 +11550,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T09:54:29.039336+02:00",
+      "lastUpdatedAt": "2026-10-12T10:18:04.780014+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -12036,7 +12041,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T09:54:29.039336+02:00",
+      "updatedAt": "2026-10-12T10:18:04.780014+02:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -12120,6 +12125,18 @@
         "ownerActionRequired": false,
         "fullAide2Completed": false,
         "mainStatusesUnchanged": true
+      },
+      "dashboardVerificationImprovementRoundProgress20261012": {
+        "checkedAt": "2026-10-12T10:18:04.780014+02:00",
+        "source": "eva2/evidence/product/dashboard-improvement-round-progress-20261012.json",
+        "liveUiVerified": true,
+        "sourceHashesVerified": true,
+        "newProductOutcomeCompleted": false,
+        "liveUiCheckedAt": "2026-10-12T10:18:33.691802+02:00",
+        "url": "http://localhost:44712/",
+        "visibleFreshness": "12-10-2026, 10:18:04",
+        "visibleWork": "Zelfverbetering · uitvoering voorbereiden",
+        "latestInstalledDeliveryUnchanged": true
       }
     },
     "pendingTechnicalReview": {
@@ -34219,5 +34236,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T09:54:29.039336+02:00"
+  "updatedAt": "2026-10-12T10:18:04.780014+02:00"
 }

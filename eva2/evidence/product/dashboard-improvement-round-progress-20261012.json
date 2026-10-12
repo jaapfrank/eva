@@ -1,0 +1,31 @@
+{
+  "contract": "EvaProjectDashboardProgress/v1",
+  "checkedAt": "2026-10-12T10:18:04.780014+02:00",
+  "status": "prepared_not_activated",
+  "wholeProjectGoal": "active",
+  "installedCorrection": "eva2/evidence/product/native-budget-context-correction-installed-20261012.json",
+  "preparation": {
+    "inputWrappers": "Original case objects unchanged; technical registration binding updated by independent evaluator.",
+    "runtime": "Metadata observed from actual installed images; no lifespan, model request or native work.",
+    "configuration": "All 43 dynamic bindings filled; no pending placeholder. Not installed or activated.",
+    "driver": "Fresh complete lifecycle driver being prepared in private scope.",
+    "review": "Complete configuration, input and driver review pending."
+  },
+  "sourceHashes": {
+    "inputManifest": "c56a8a4ccd65c67ab6a8f2a96901fd66da6a2988b42e9b03eb0717772ac4a777",
+    "configurationManifest": "5834455c24bae7a1cfe2f3f9c0c3f80b9d41c6a93e3be5e580fa4ea8ca878816",
+    "prospectiveConfiguration": "311dbceb4bbc00fe856697bf1cc23c0f534cfa6cc3c21c109b12949cbfcf8589",
+    "technicalRuntimeManifest": "157f75e49dee6cf71aa82a5a882b2ea0fad26189db247ed6b6179712f281712b",
+    "actualFactoryProjection": "d0e85123456230794f72534fe41187571ac81ce146e62e8486bfc8593e10eca5"
+  },
+  "newEvaModelRequests": 0,
+  "nativeExecutionStarted": false,
+  "candidateApplied": false,
+  "newProductOutcomeCompleted": false,
+  "historicalSmallTasksCompleted": 39,
+  "historicalSmallTasksTotal": 48,
+  "ownerActionRequired": false,
+  "speech": "parked",
+  "competitorComparisonStarted": false,
+  "developmentCredits": "unknown"
+}
