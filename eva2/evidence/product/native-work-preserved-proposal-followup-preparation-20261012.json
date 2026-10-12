@@ -2,9 +2,10 @@
   "activity": {
     "creditCost": "unknown",
     "newEvaModelRequests": 0,
-    "newNativeDispatches": 0
+    "newNativeDispatches": 0,
+    "requiredModelFreeFactoryProjections": 1
   },
-  "checkedAt": "2026-10-12T13:27:01.288111+02:00",
+  "checkedAt": "2026-10-12T13:48:09.285553+02:00",
   "contract": "EvaPreservedProposalFollowupPreparationPublic/v1",
   "currentResult": {
     "candidateApplied": false,
@@ -25,7 +26,18 @@
     "originalCriteriaCasesAndModelRolesPreserved": true,
     "separateProspectiveRequestCeiling": 61,
     "separateProspectiveTokenCeiling": 332070,
-    "separateProspectiveToolCeiling": 94
+    "separateProspectiveToolCeiling": 94,
+    "actualRuntimeProjectionCompleted": true,
+    "originalCasesAndScorerPreserved": true,
+    "newRuntimeBindingsPrepared": true,
+    "configurationActivated": false,
+    "independentFinalInputsRebound": true,
+    "runtimeBindingEvidence": {
+      "configurationSha256": "506940d78f79667e9ad496f76cd3be206052ef23cdf31a809dd3430cdb5ffd01",
+      "factoryProjectionSha256": "b06d779841dc13070b891d6462e6a258121e9fcdd50e641fd6ee0172dcf3721b",
+      "runtimeAdmissionSha256": "96805e0a4f302498121f05606a7c3e2507efc15a7fe5ce07e7f953b07bc8ec52",
+      "finalInputBindingReviewSha256": "0bd0e81ced967258345d6b7e302332a00afffe42dc9ecbeea9876838971c7b5e"
+    }
   },
   "fullGoalActive": true,
   "outcome": "Evaluate exact preserved code proposal, independently assess only valid selection, apply proven gain, then later use.",
@@ -38,11 +50,17 @@
     "oldRawOnceAndTimersPreserved": true
   },
   "productCompletionsChanged": false,
-  "state": "preparing",
+  "state": "runtime_bound_in_review",
   "taskId": "HUE6.1",
   "team": {
     "builder": "/root/eva1_memory_transfer",
     "coordinator": "/root",
     "reviewer": "/root/product_execution_memory_review"
-  }
+  },
+  "preparationErrors": [
+    "Importpath and new empty evidence roots corrected before validation.",
+    "Two wrong identity-helper call shapes corrected using exact signature.",
+    "Pretty config exceeded existing loader size; identical compact representation prepared.",
+    "Reviewer found accidental fixture-bound substring edit in unexecuted driver; builder restoring original bound."
+  ]
 }

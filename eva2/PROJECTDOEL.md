@@ -15,13 +15,19 @@ Oude registraties, klokken, reserveringen en verliesbewijs blijven behouden.
 De definitieve bron-/runtime-/invoerreview moet vóór dispatch kloppen.
 Nog geen nieuwe Eva-modelaanvragen, kandidaatgeneratie of concurrentenserie.
 
+De actuele installatiekoppeling en verse eindidentiteiten zijn voorbereid.
+Eén noodzakelijke modelvrije profielprojectie bevestigt bron en configuratie;
+de compacte hostconfiguratie bewaart dezelfde inhoud. Voorbereidingsfouten
+zijn vóór dispatch gecorrigeerd en blijven zichtbaar. De definitieve driver-
+en invoerreview loopt; nog geen nieuwe native uitvoering of kwaliteitswinst.
+
 Eén uitvoerder en één reviewer werken aan die voorbereiding; root coördineert.
 Beoordeling, alleen bewezen toepassing en later gebruik blijven open.
 Het gehele goal blijft actief; 39/48 oude en 39/54 totale afrondingen behouden.
 Spraak geparkeerd; geen handeling van Jaap nodig.
 Actuele voorbereiding: eva2/evidence/product/native-work-preserved-proposal-followup-preparation-20261012.json.
 Geïnstalleerde correctie: eva2/evidence/product/native-work-project-origin-installed-20261012.json.
-Dashboardinhoud bijgewerkt: 2026-10-12T13:27:01.288111+02:00.
+Dashboardinhoud bijgewerkt: 2026-10-12T13:48:09.285553+02:00.
 
 ## Actueel 12 oktober — beoordelingsaansluiting hersteld en geïnstalleerd
 

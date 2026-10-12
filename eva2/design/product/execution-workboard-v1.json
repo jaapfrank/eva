@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12T13:27:01.288111+02:00",
+  "lastUpdated": "2026-10-12T13:48:09.285553+02:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -5089,19 +5089,73 @@
         "now": {
           "title": "Zelfverbetering: bewaard codevoorstel gericht beoordelen",
           "state": "in_progress",
-          "phase": "preserved_proposal_followup_preparation",
+          "phase": "preserved_proposal_runtime_review",
           "activeExecution": false,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Aansluitingsfout is hersteld en geïnstalleerd. Twee agents bereiden de beoordeling van het bewaarde voorstel voor en controleren de aansluiting.",
-          "detail": "De oude ronde blijft gesloten met onbekend gezamenlijk verbruik. Een afzonderlijke vervolgopdracht krijgt eigen boekhouding; zij hergebruikt exact het voorstel en de kwaliteitscriteria. Voorbereiding en review lopen; nog geen nieuwe Eva-modelaanvragen of native uitvoering.",
+          "summary": "Het bestaande voorstel en de oorspronkelijke kwaliteitscriteria zijn gekoppeld aan de huidige installatie. De volledige koppeling wordt onafhankelijk gecontroleerd.",
+          "detail": "Nog geen nieuwe uitvoering of toegepaste kandidaat. Voorbereidingsfouten zijn vóór uitvoering gecorrigeerd; de review controleert de definitieve versie. De eerdere onbekende verbruiksregistratie blijft behouden.",
           "doneWhen": "De volledige cyclus levert een onafhankelijk beoordeelde kandidaat; alleen bewezen winst wordt toegepast en daarna bij ander werk gebruikt.",
           "source": "eva2/evidence/product/native-work-preserved-proposal-followup-preparation-20261012.json",
           "previousInstalledCorrection": "eva2/evidence/product/native-work-project-origin-installed-20261012.json",
           "previousInstalledReview": "eva2/reviews/native-program-observation-installed-review-20261012.json",
           "previousInstalledReviewSha256": "e867786889ad6855a48a709c6c7073b274cdf89a3cd7ca2c4ad8b76a27a5762a",
           "implementationStatus": {
+            "observerCorrectionInstalled": true,
+            "observerCorrectionChecksCompleted": true,
+            "observerCorrectionReviewCompleted": true,
+            "fullAide2Completed": false,
+            "workCompletionCauseConfirmed": true,
+            "ordinaryRunnerBugProven": false,
+            "budgetContextMismatchConfirmed": true,
+            "budgetContextCorrectionInstalled": true,
+            "budgetContextCorrectionChecksCompleted": true,
+            "budgetContextCorrectionReviewCompleted": true,
+            "inputBindingsPrepared": true,
+            "currentRuntimeBindingsPrepared": true,
+            "prospectiveConfigurationPrepared": true,
+            "prospectiveConfigurationActivated": false,
+            "fullLifecycleExecuted": false,
+            "currentNativeExecutionStarted": false,
+            "currentNativeExecutionClosed": false,
+            "candidateStored": true,
+            "currentNativeFailureCauseConfirmed": false,
+            "pathInputRepairBuilt": true,
+            "pathInputRepairChecksCompleted": true,
+            "pathInputRepairInstalled": false,
+            "newInputBindingPrepared": true,
+            "newNativeExecutionStarted": false,
+            "currentNativeAssessmentFailed": false,
+            "independentFinalCompleted": false,
+            "candidateApplied": false,
+            "projectOriginCorrectionBuilt": true,
+            "projectOriginCorrectionChecksCompleted": true,
+            "projectOriginCorrectionInstalled": true,
+            "projectOriginCorrectionReviewCompleted": true,
+            "exclusiveHistoricalHttp400CauseProven": false,
+            "childUsageReconciled": false,
+            "newRuntimeBindingsPrepared": true,
+            "independentFinalInputBindingPrepared": true
+          },
+          "currentActivity": {
+            "checkedAt": "2026-10-12T13:48:09.285553+02:00",
+            "coordinator": "/root",
+            "coordinatorTask": "Actuele installatiekoppeling afmaken en na onafhankelijke controle één gewone beoordeling uitvoeren.",
+            "executor": "/root/eva1_memory_transfer",
+            "executorTask": "Definitieve uitvoerder aan de actuele installatiekoppeling verbinden; exact het bewaarde voorstel gebruiken.",
+            "reviewer": "/root/product_execution_memory_review",
+            "reviewerTask": "De volledige definitieve bron-, invoer-, installatie- en verbruikskoppeling onafhankelijk beoordelen.",
+            "modelUsage": "Nieuwe voorbereiding: 0 Eva-modelaanvragen. Eerdere ouderaanvragen: 7 en 67.930 tokens; eerder gezamenlijk totaal onbekend.",
+            "note": "Broncorrectie geïnstalleerd; voorstel behouden. Volledige verbetercyclus nog open. Geen handeling van Jaap nodig."
+          },
+          "previousResultReview": "eva2/reviews/native-work-path-input-repair-result-review-20261012.json",
+          "previousResultReviewSha256": "e0c04b2b68b74c668592e7ce3471bc0ac053f66373c07273af055220656328ff",
+          "taskId": "HUE6.1",
+          "documentReviewSource": "eva2/design/product/human-understanding-engine-integration-20261012.md",
+          "review": "eva2/reviews/native-work-project-origin-installed-review-20261012.json",
+          "reviewSha256": "4547396de6538a3f5d4ae2293725991302bd4a633f3ecc792484758538d62956",
+          "implementationStatusBeforeForwardPreparation": {
             "observerCorrectionInstalled": true,
             "observerCorrectionChecksCompleted": true,
             "observerCorrectionReviewCompleted": true,
@@ -5135,24 +5189,7 @@
             "projectOriginCorrectionReviewCompleted": true,
             "exclusiveHistoricalHttp400CauseProven": false,
             "childUsageReconciled": false
-          },
-          "currentActivity": {
-            "checkedAt": "2026-10-12T13:24:48.018952+02:00",
-            "coordinator": "/root",
-            "coordinatorTask": "Eén normale beoordeling van het bewaarde voorstel voorbereiden, met behoud van oude fout- en verbruiksregistratie.",
-            "executor": "/root/eva1_memory_transfer",
-            "executorTask": "Exacte bron-, invoer-, runtime- en verbruiksbinding van één vervolgopdracht klaarzetten; geen nieuwe kandidaat maken.",
-            "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Vervolgbesluit en vervolgens exacte voorbereiding onafhankelijk beoordelen.",
-            "modelUsage": "Deze afgesloten ronde: 4 Astra/medium-aanvragen · 44.058 oudertokens · 4 tools. Child en gedeeld totaal onbekend.",
-            "note": "Broncorrectie geïnstalleerd; voorstel behouden. Volledige verbetercyclus nog open. Geen handeling van Jaap nodig."
-          },
-          "previousResultReview": "eva2/reviews/native-work-path-input-repair-result-review-20261012.json",
-          "previousResultReviewSha256": "e0c04b2b68b74c668592e7ce3471bc0ac053f66373c07273af055220656328ff",
-          "taskId": "HUE6.1",
-          "documentReviewSource": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "review": "eva2/reviews/native-work-project-origin-installed-review-20261012.json",
-          "reviewSha256": "4547396de6538a3f5d4ae2293725991302bd4a633f3ecc792484758538d62956"
+          }
         },
         "next": {
           "title": "Tegenbewijs en verwachtingen laten doorwerken",
@@ -5173,7 +5210,7 @@
           "detail": "Codex maakt de technische kringloop af. Je oorspronkelijke acceptaties blijven behouden; nu geen herhaalproef nodig."
         },
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T13:08:30.817460+02:00",
+        "reviewedAt": "2026-10-12T13:48:09.285553+02:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -11659,7 +11696,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T12:31:30.540790+02:00",
+      "lastUpdatedAt": "2026-10-12T13:48:09.285553+02:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -32078,8 +32115,8 @@
       "developmentCredits": "unknown"
     },
     "workStrategyCycleCurrent20261012": {
-      "checkedAt": "2026-10-12T13:27:01.288111+02:00",
-      "state": "preserved_proposal_followup_preparation",
+      "checkedAt": "2026-10-12T13:48:09.285553+02:00",
+      "state": "preserved_proposal_runtime_review",
       "nativeParentConfirmedLive": false,
       "activeDriverPids": [],
       "serviceConfigurationSha256": "184cc351ab718b814ebe8f285da4a414784ed6610b3860b95baa61efc2462e82",
@@ -32092,7 +32129,8 @@
       "developmentCredits": "unknown",
       "source": "eva2/evidence/product/native-work-preserved-proposal-followup-preparation-20261012.json",
       "pastChildAndSharedUsage": "UNKNOWN",
-      "newModelRequestsThisPreparation": 0
+      "newModelRequestsThisPreparation": 0,
+      "prospectiveConfigurationSha256": "506940d78f79667e9ad496f76cd3be206052ef23cdf31a809dd3430cdb5ffd01"
     }
   },
   "activeTaskId": "AU-008",
@@ -34564,5 +34602,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T13:27:01.288111+02:00"
+  "updatedAt": "2026-10-12T13:48:09.285553+02:00"
 }
