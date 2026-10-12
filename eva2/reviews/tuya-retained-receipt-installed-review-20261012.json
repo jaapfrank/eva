@@ -1,0 +1,96 @@
+{
+  "contract": "EvaIndependentInstalledPublicationReview/v1",
+  "recorded_at": "2026-10-12T16:46:36.529735+00:00",
+  "decision": "GO",
+  "scope": "Exact three-module installation and safe facts publication; no native task-result or new-input approval.",
+  "bindings": {
+    "source_review": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/tuya-retained-receipt-source-review-20261012.json",
+      "sha256": "c35cf2041e687a889b4a6803e2b5df91ba92fc2fa21314610a30dcb65502c6ce"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ordinary-task-followup/retained-receipt-correction/build-result.private.json",
+      "sha256": "fc4297853d1dba4ac1ccf87a0aa5df0d6748d3bad0add3266ce5d52ec4906b90"
+    },
+    "installation_dispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ordinary-task-followup/retained-receipt-correction/installation-dispatch-receipt.private.json",
+      "sha256": "73c3c3a73273b5791bdd08f3a4a1cd4fa863fe5fdec77ba4fd0e9de63afb3b48"
+    },
+    "installation_verification": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ordinary-task-followup/retained-receipt-correction/installation-verification.private.json",
+      "sha256": "92767f182997c2cdb0e5f3f31c3c353d86aae74e1bcf6f24f3e22dcc62ff175a"
+    },
+    "public_evidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/tuya-retained-receipt-projection-installed-20261012.json",
+      "sha256": "30a1aa8432b3f432c44aef01fc887ded952cc04580f88ff812cd9bd3b4d40d3e"
+    },
+    "ordinary_correction_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ordinary-task-followup/retained-receipt-correction/continuation-receipt.private.json",
+      "sha256": "f182d48d0a0e796b0bc5e67d3ad504dd37e094c5fbfe031d012495feae33db31"
+    }
+  },
+  "services": {
+    "core": {
+      "image": "sha256:1b63aa328db5850105b8e5e27fb67159f48bfda53b4bad65c885fe7784de73d3",
+      "exact_modules": {
+        "adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
+        "adapters/postgres/connector_results.py": "7484c41f0bef2a7994ed5cd1b6b15be03efd16ac3e661116d4c4c583254abd4d",
+        "adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+      },
+      "unchanged_python_sources": 342,
+      "healthy": true,
+      "environment_map_preserved": true,
+      "mounts_by_destination_preserved": true,
+      "normalized_hostconfig_preserved": true,
+      "process_configuration_preserved": true,
+      "network_names_preserved": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:cbcb77f97aaf998c0fe2cc17f984d6bfe850d0fa373dd46c4215f120e0db131d",
+      "exact_modules": {
+        "adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
+        "adapters/postgres/connector_results.py": "7484c41f0bef2a7994ed5cd1b6b15be03efd16ac3e661116d4c4c583254abd4d",
+        "adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+      },
+      "unchanged_python_sources": 342,
+      "healthy": true,
+      "environment_map_preserved": true,
+      "mounts_by_destination_preserved": true,
+      "normalized_hostconfig_preserved": true,
+      "process_configuration_preserved": true,
+      "network_names_preserved": true
+    }
+  },
+  "inspection_bindings": {
+    "core": {
+      "before_sha256": "91e62343a8cfea3e90c35bffb4847693bbb483829d8ab39149d2100cb650b96d",
+      "installed_sha256": "c1f266637216ba978965e32f286ec9e5380cee1cf292f9e6a2df5247a8fa200a"
+    },
+    "delegated-work-worker": {
+      "before_sha256": "768c35957a74c42023173a048aa79b3adea38297a0c6158a738d972ac32fe0a5",
+      "installed_sha256": "15fc21350f217cc6c47f21520107dd8267179697a4b8ab6f9dd3771daa23f68f"
+    }
+  },
+  "actual_update_dispatches": 1,
+  "readyz": {
+    "database": "ready",
+    "detail": null,
+    "memory_projection": "ready",
+    "model_provider": "ready",
+    "ready": true
+  },
+  "installation_model_requests": 0,
+  "validation": "Read retained build inventories, before/installed container inspections, updater receipt and verification; exact source-review hashes and public embedded receipt match. No Docker/runtime/factory/test/model calls repeated.",
+  "reviewer_check_qualification": "Raw HostConfig list equality initially rejected Binds/Mounts ordering; normalized comparison proves the same bindings and all other HostConfig fields. No runtime mutation or reinstall.",
+  "publication_findings": [
+    "Nine previously bound model-free checks and the local receipt-only BPE measurement remain appropriately limited; no native completion or provider-savings claim.",
+    "The prior gen3 partial proposal, incomplete_work state and partial 14-response/442765-token/13-tool usage remain preserved.",
+    "The revise_digital receipt proves correction_saved scheduling metadata only. Existing human task and mandate must support ordinary continuation; source/installation GO is not independent new authority."
+  ],
+  "blockers": [],
+  "limits": [
+    "No final readonly-research acceptance yet; await the exact completed proposal and retained evidence.",
+    "No migration/renaming approval, new comparison/native-input GO, full-AIDE/HUE completion or quality claim.",
+    "Credit cost and historical complete all-provider usage remain unknown."
+  ]
+}

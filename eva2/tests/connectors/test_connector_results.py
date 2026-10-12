@@ -331,3 +331,142 @@ def test_batch_count_boundaries_and_missing_search_are_explicit(count):
     assert len(result["pages"]) == count and result["selected_characters"] == 0
     assert all(not page["found"] and not page["has_more"] for page in result["pages"])
     assert len(calls) == 1
+
+
+def _retained_document():
+    port, timeline, _, stopped, authorize = _retained_ha()
+    port._action_names = ("save_workspace_document",)
+    thread = port._thread_id(TURN, "save_workspace_document", 2)
+    arguments = {"path": "/proof-state/note.md", "content": "Retained document text. " * 2000}
+    admission = {"action_name": "save_workspace_document", "action_call_id": "saved-document",
+        "action_arguments": arguments, "step_index": 2,
+        "conversation_id": TURN.conversation_id, "principal_id": TURN.principal_id,
+        "source_message_id": TURN.message_id, "receipt_output": {"operation_kind": "document_write"}}
+    expected = {"path": arguments["path"], "content": arguments["content"]}
+    timeline.rows[thread] = [
+        SimpleNamespace(event_type="TOOL_REQUEST_ADMITTED", payload={"data": admission}),
+        SimpleNamespace(event_type="STATE_VERIFIED", payload={"data": {"proof": {
+            "expected": expected, "observed": dict(expected)}}})]
+    return port, timeline, thread, stopped, authorize
+
+
+def test_ancestor_action_body_bounds_old_document_arguments_and_keeps_latest_exact():
+    from eva.application.conversation import ConversationActionReceipt
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel, _input_tokenizer
+    from eva.contracts.canonical_json import canonical_json_bytes
+    port, timeline, thread, _, authorize = _retained_document()
+    original = port._receipt(TURN, timeline.events(thread), 2, project=False)
+    old_source = _encoded([event.payload for event in timeline.events(thread)])
+    projected = port._receipt(TURN, timeline.events(thread), 2)
+    assert projected.call == original.call and projected.output == original.output
+    newer = ConversationActionReceipt(ConversationActionCall("newest", "read_home_assistant_inventory", {}),
+        {"status": "verified", "inventory": {"complete": True, "value": "latest exact"}})
+    view = PydanticConversationModel._phase_admission_body(prompt="", instructions="", prior_actions=(projected,), completed_action=newer)
+    full = PydanticConversationModel._phase_admission_body(prompt="", instructions="", prior_actions=(original,), completed_action=newer)
+    assert view["input"][-1] == full["input"][-1]
+    old_arguments = json.loads(view["input"][1]["arguments"])
+    assert old_arguments["model_view_encoding"] == "retained_action_arguments_v1"
+    assert json.loads(view["input"][2]["output"])["status"] == "verified"
+    assert PydanticConversationModel._receipt_arguments(projected) == original.call.arguments
+    assert PydanticConversationModel._receipt_presentation(projected) == original.output
+    reader = projected.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    capture = ConnectorResults(timeline, TURN, authorize)
+    page = capture.read(reader, {"pointer": "/call/arguments/content", "offset": 0, "limit": 40, "query": None})
+    assert page["text"] == original.call.arguments["content"][:40]
+    proof = capture.read(reader, {"pointer": "/output/proof/observed/content", "offset": 0, "limit": 40, "query": None})
+    assert proof["text"] == page["text"]
+    assert _encoded([event.payload for event in timeline.events(thread)]) == old_source
+    rows_before = _encoded({key: [e.payload for e in rows] for key, rows in timeline.rows.items()})
+    assert port._receipt(TURN, timeline.events(thread), 2).model_output == projected.model_output
+    assert _encoded({key: [e.payload for e in rows] for key, rows in timeline.rows.items()}) == rows_before
+    tokenizer = _input_tokenizer()
+    assert len(tokenizer.encode_ordinary(canonical_json_bytes(view).decode())) < len(
+        tokenizer.encode_ordinary(canonical_json_bytes(full).decode())) // 4
+    # A failure is never projected merely because its body is large.
+    failed = replace(original, output={**original.output, "status": "failed"})
+    assert port._body_presentation(TURN, failed, 2) is failed
+
+
+def test_ancestor_action_body_rechecks_actor_execution_source_hash_and_stop():
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.adapters.model.contracts import ConversationModelError
+    port, timeline, thread, stopped, authorize = _retained_document()
+    projected = port._receipt(TURN, timeline.events(thread), 2)
+    reader = projected.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    arguments = {"pointer": "/output", "offset": 0, "limit": 20, "query": None}
+    capture = ConnectorResults(timeline, TURN, authorize)
+    other_turn = replace(TURN, principal_id="other", audience=replace(TURN.audience,
+        principal_id="other", audience_id="person:other"))
+    with pytest.raises(ConversationConflict):
+        ConnectorResults(timeline, other_turn, lambda _: None).read(reader, arguments)
+    with pytest.raises(ConversationConflict, match="source is malformed"):
+        ConnectorResults(timeline, replace(TURN, text="changed"), lambda _: None).read(reader, arguments)
+    timeline.rows[thread][0].payload["data"]["execution_namespace"] = "wrong"
+    with pytest.raises(ConversationConflict, match="namespace"):
+        capture.read(reader, arguments)
+    del timeline.rows[thread][0].payload["data"]["execution_namespace"]
+    timeline.rows[thread][-1].payload["data"]["proof"]["observed"]["content"] = "changed"
+    with pytest.raises(ConversationConflict, match="proof differs"):
+        capture.read(reader, arguments)
+    timeline.rows[thread][-1].payload["data"]["proof"]["observed"]["content"] = projected.call.arguments["content"]
+    stopped[0] = True
+    with pytest.raises(ConversationConflict, match="stopped"):
+        capture.read(reader, arguments)
+    stopped[0] = False
+    injected = json.loads(_encoded(projected.model_output))
+    injected["ancestor_model_projection"]["source"]["receipt_sha256"] = "0" * 64
+    with pytest.raises(ConversationModelError, match="differs"):
+        PydanticConversationModel._receipt_model_views((replace(projected, model_output=injected),))
+    del timeline.rows[thread]
+    with pytest.raises(ConversationConflict, match="absent"):
+        capture.read(reader, arguments)
+
+
+def test_ancestor_local_selection_stays_readable_without_external_dispatch():
+    port, timeline, thread, _, authorize = _retained_ha()
+    original = port._receipt(TURN, timeline.events(thread), 1, project=False)
+    projected = port._receipt(TURN, timeline.events(thread), 1)
+    route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda _: nullcontext()
+    route._timeline = lambda _: timeline
+    route._ensure_running = authorize
+    reader = projected.model_output["result"]["reader"]["tool_id"]
+    call = ConversationActionCall("large-local-page", "use_connector_tool", {"tool_id": reader,
+        "arguments_json": json.dumps({"pointer": "/response_json", "offset": 0, "limit": 8192, "query": None})})
+    selected = route.execute(TURN, call, step_index=2)
+    assert selected.output["result"]["text"] == original.output["result"]["response_json"][:8192]
+    assert "ancestor_model_projection" in selected.model_output
+    body_reader = selected.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    page = ConnectorResults(timeline, TURN, authorize).read(body_reader,
+        {"pointer": "/output/result/text", "offset": 0, "limit": 30, "query": None})
+    assert page["text"] == selected.output["result"]["text"][:30]
+    assert route.execute(TURN, call, step_index=2) == selected
+
+
+def test_ancestor_presentation_reaches_sdk_wire_without_rewriting_newest_receipt(tmp_path, monkeypatch):
+    from eva.application.conversation import ConversationActionReceipt
+    from eva.adapters.model.pydantic_conversation import _input_tokenizer
+    from eva.contracts.canonical_json import canonical_json_bytes
+    from tests.model.test_pydantic_conversation_model import _phase_transport_adapter, _generate, RECEIPT
+    port, timeline, thread, _, _ = _retained_document()
+    original = port._receipt(TURN, timeline.events(thread), 2, project=False)
+    projected = port._receipt(TURN, timeline.events(thread), 2)
+    before = _encoded([original.call.arguments, original.output, RECEIPT.output])
+    payloads = []
+    for older in (original, projected):
+        model, _, requests, _ = _phase_transport_adapter(
+            tmp_path, monkeypatch, [("final_answer", ("Afgerond.",))])
+        assert _generate(model, prior_actions=(older,), completed_action=RECEIPT).text == "Afgerond."
+        assert len(requests) == 1
+        payloads.append(requests[0])
+    full, bounded = payloads
+    assert bounded["input"][-2:] == full["input"][-2:]
+    call = next(part for part in bounded["input"] if part.get("call_id") == original.call.call_id and part["type"] == "function_call")
+    assert call["name"] == original.call.name
+    assert json.loads(call["arguments"])["model_view_encoding"] == "retained_action_arguments_v1"
+    assert _encoded([original.call.arguments, original.output, RECEIPT.output]) == before
+    tokenizer = _input_tokenizer()
+    full_bytes, bounded_bytes = (canonical_json_bytes(payload) for payload in payloads)
+    assert len(bounded_bytes) < len(full_bytes) // 4
+    assert len(tokenizer.encode_ordinary(bounded_bytes.decode())) < len(tokenizer.encode_ordinary(full_bytes.decode())) // 4

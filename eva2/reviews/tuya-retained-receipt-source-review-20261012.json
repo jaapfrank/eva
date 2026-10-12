@@ -1,0 +1,119 @@
+{
+  "contract": "EvaIndependentSourcePublicationReview/v1",
+  "recorded_at": "2026-10-12T16:41:32.178148+00:00",
+  "decision": "GO",
+  "sourceDecision": "GO",
+  "publicationDecision": "GO",
+  "scope": "Exact three-module retained-receipt presentation correction and preserved gen3 facts publication; source approval for installation only.",
+  "bindings": {
+    "source_manifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-receipt-correction/frozen-source.private.json",
+      "sha256": "58283339dd135178e0f44c21fa623fc7bb2bbb0e2746630813229aff8cc1c7d5"
+    },
+    "targeted_checks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-receipt-correction/targeted-checks.private.json",
+      "sha256": "5726d8e3475594ce18005123a6a67d65c50e7326bd702d47bab32bd96fbab0fc"
+    },
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-receipt-correction/preparation.private.json",
+      "sha256": "3bdca54ad0055f5aea033adf913d14e05b9f0b352bfed5d7a8ab2ed01ca11762"
+    },
+    "patch": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-receipt-correction/source.patch",
+      "sha256": "58e7f42d1d04922383b2b8aa7e31616e0a1815c5ce24e31e76ff910fddcf401f"
+    },
+    "measurement": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-receipt-correction/retained-projection-measurement.private.json",
+      "sha256": "71d83d0c231e952b43006e5bedd68f9e145bb1ec4cda47708da443ff57202347"
+    },
+    "retained_snapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-receipt-correction/retained-receipts.snapshot.private.json",
+      "sha256": "b64f29e38e101c9fba246a14d65a150e1c4e70ee042893d5bb185184c603f6fb"
+    },
+    "public_result": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/tuya-readonly-preserved-proposal-20261012.json",
+      "sha256": "bf6a288cc14444c66f191e1a1ac3c812c8c6aae2c76c46f4d250fb8d9a4ee62b"
+    }
+  },
+  "sourceFiles": [
+    {
+      "before_sha256": "0ae0e6701dd5ad1ad01f3178405d72e897bd8a2b202f018a76cdbeb6abc5e7fe",
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd"
+    },
+    {
+      "before_sha256": "c6585c84d2f237132c4eda2cbff5a667425f04d46f34aa175925a81c2a24f636",
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "7484c41f0bef2a7994ed5cd1b6b15be03efd16ac3e661116d4c4c583254abd4d"
+    },
+    {
+      "before_sha256": "c5e879df0f074ccb03b2fe0d2636c46e98e8fbde5e5c17190b2e3f03214e054a",
+      "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+    }
+  ],
+  "testFiles": [
+    {
+      "before_sha256": "a665ecfd0f6754f5e8ff80d2938e101bcd860f5ecb0937a7264979eaece9fa88",
+      "path": "eva2/tests/connectors/test_connector_results.py",
+      "sha256": "9cbed9b84b3b5ab369d6da84ffc18bddb9a21cb9875d816537c941b4f376d413"
+    }
+  ],
+  "findings": [
+    "Original call arguments, receipt.output and proof remain intact. Only older large verified HA, document and local-selection bodies receive a host-owned reference; newest retains the existing presentation, and failed or UNKNOWN receipts are not converted.",
+    "Capture and every local reader access validate retained thread/step/call, actor/source identity, execution namespace, current source-ingress and stop authorization, and exact receipt/proof/content hashes. A captured copy is explicitly not a new external observation.",
+    "The ordinary completed-action SDK path uses the compact ancestor arguments/output. Missing latest completed_action still fails before wire admission. Existing worker action history, rather than foreground discovery catalog, is the causal boundary.",
+    "Bound fake-timeline/MockTransport checks cover raw preservation, local readback/replay, changed owner/execution/ingress/hash/stop rejection and actual SDK wire rendering; no native completion or installed-runtime proof is inferred."
+  ],
+  "checks": {
+    "unique_passed": 9,
+    "invocation_returncodes": [
+      0,
+      0
+    ],
+    "junit_log_receipt_hashes_verified": true,
+    "reviewer_tests_repeated": 0,
+    "database_fixture_used": false,
+    "retained_development_errors": [
+      "Missing latest receipt in the first measurement fixture; no source correction needed.",
+      "Nonroot inspection of a root-private snapshot denied; original tool output retained."
+    ]
+  },
+  "local_measurement": {
+    "receipts": 20,
+    "old_bytes": 146864,
+    "candidate_bytes": 59550,
+    "old_bpe": 43854,
+    "candidate_bpe": 18902,
+    "newest_identical_in_all_measured_phases": true,
+    "qualification": "Receipt-only local serialization; prospective manifests were computed in memory. Excludes task/instructions/catalog/framing and is not exact provider attribution or demonstrated provider savings."
+  },
+  "preserved_gen3": {
+    "work_id": "work:eva-resume:e8abf461-52b7-5732-a254-4bda7a1e8ff2",
+    "state": "failed",
+    "error": "incomplete_work",
+    "result_available": false,
+    "proposal_bytes": 9240,
+    "proposal_sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+    "save_step": 18,
+    "save_thread": "tool:external-tool:e352c27dd9be6de1eed061a512ab2126",
+    "state_verified_event_sha256": "1e4ec48365161bf27ae6cd517a5a30256c71a8f912a21b417d373a26196ae381",
+    "proposal_classification": "Substantial partial proposal; stored bytes match independent gateway readback and the actual retained document. Available research coverage and original-entry handoff remain incomplete. Unavailable LAN secrets or future physical tests alone are not readonly-research failure.",
+    "usage_measurement": "partial",
+    "complete_registered_responses": 14,
+    "registered_tools": 13,
+    "known_input_tokens": 438144,
+    "known_output_tokens": 4621,
+    "known_total_tokens": 442765,
+    "complete_all_provider_total": null,
+    "credit_cost": null,
+    "retained_actions_readonly_for_HA": true,
+    "historical_status_usage_and_proposal_unchanged": true
+  },
+  "blockers": [],
+  "limitations": [
+    "No installation claim from this source review.",
+    "No new native-input authorization, resume, comparison or model request.",
+    "No completed research, HUE/full-AIDE completion, quality improvement or provider-efficiency claim."
+  ]
+}

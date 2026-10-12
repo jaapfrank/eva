@@ -88,6 +88,66 @@ def bounded_result(command, phase, output):
     return capture.manifest(command, phase, output)
 
 
+def retained_action_body(receipt):
+    return {"call": {"call_id": receipt.call.call_id, "name": receipt.call.name,
+                     "arguments": receipt.call.arguments}, "output": receipt.output}
+
+
+def ancestor_action_presentation(receipt, projection):
+    """Validate a host-produced rendering against the untouched receipt bytes."""
+    body = retained_action_body(receipt)
+    manifest = projection.get("manifest") if isinstance(projection, dict) else None
+    source = projection.get("source") if isinstance(projection, dict) else None
+    if (not isinstance(projection, dict) or set(projection) != {"contract", "source", "manifest"}
+            or projection["contract"] != "EvaRetainedActionBodyModelView/v1"
+            or not isinstance(source, dict) or set(source) != {
+                "thread_id", "call_id", "step_index", "observation_key", "receipt_sha256",
+                "proof_sha256", "source_ingress_sha256"}
+            or source["observation_key"] != "action_body"
+            or source["call_id"] != receipt.call.call_id
+            or type(source["step_index"]) is not int or source["step_index"] < 0
+            or source["receipt_sha256"] != canonical_sha256(receipt.output)
+            or source["proof_sha256"] != canonical_sha256(receipt.output.get("proof"))
+            or not re.fullmatch(r"[0-9a-f]{64}", str(source["source_ingress_sha256"]))
+            or receipt.output.get("status") != "verified"
+            or not isinstance(manifest, dict)
+            or manifest.get("contract") != "EvaStoredConnectorResult/v1"
+            or manifest.get("stored_complete") is not True
+            or manifest.get("external_state_verified") is not False
+            or manifest.get("sha256") != hashlib.sha256(_encoded(body)).hexdigest()
+            or manifest.get("byte_length") != len(_encoded(body))
+            or manifest.get("preview") != "" or manifest.get("preview_omitted") is not True
+            or not isinstance(manifest.get("reader"), dict)
+            or not re.fullmatch(re.escape(READER_PREFIX)+r"[0-9a-f]{64}:"+manifest["sha256"],
+                                str(manifest["reader"].get("tool_id", "")))
+            or manifest["reader"].get("action") != "use_connector_tool"
+            or manifest["reader"].get("arguments_schema") != selection_schema()):
+        raise ConversationConflict("retained action body projection differs")
+    identifier = manifest["reader"]["tool_id"][len(READER_PREFIX):].split(":", 1)[0]
+    helper = object.__new__(ConnectorResults)
+    helper._bytes = lambda _: (_encoded(body), manifest["sha256"])
+    expected = helper._manifest(identifier, body)
+    expected.update(preview="", preview_omitted=True)
+    if manifest != expected:
+        raise ConversationConflict("retained action body manifest differs")
+    arguments = {"model_view_encoding": "retained_action_arguments_v1",
+        "original_arguments_sha256": canonical_sha256(receipt.call.arguments),
+        "reader_tool_id": manifest["reader"]["tool_id"], "pointer": "/call/arguments"}
+    output = {key: receipt.output[key] for key in (
+        "contract", "durable", "status", "source", "operation_kind", "external_state_verified")
+        if key in receipt.output}
+    output.update(retained_action_body=manifest,
+        model_projection={"contract": projection["contract"], "source": source},
+        guidance="Older completed action: original call/output/proof bytes are retained, not a new observation. "
+                 "Read /call/arguments or /output with this local reader when details are needed. "
+                 "Do not repeat the external action to recover context.")
+    for key in ("result", "inventory"):
+        observation = receipt.output.get(key)
+        if isinstance(observation, dict):
+            output["source_response"] = {k: observation[k] for k in SOURCE_RESPONSE_FIELDS if k in observation}
+    return arguments, output
+
+
 class ConnectorResults:
     def __init__(self, timeline, turn, authorize):
         self.timeline, self.turn, self.authorize = timeline, turn, authorize
@@ -141,12 +201,14 @@ class ConnectorResults:
                 "thread_id", "call_id", "step_index", "observation_key", "receipt_sha256", "proof_sha256",
                 "source_ingress_sha256"}
                 or type(source.get("step_index")) is not int or source["step_index"] < 0
-                or source.get("observation_key") not in {"result", "inventory"}
+                or source.get("observation_key") not in {"result", "inventory", "action_body"}
                 or source.get("source_ingress_sha256") != canonical_sha256(
                     PostgresConversationJournal._ingress_data(self.turn))):
             raise ConversationConflict("retained read source is malformed")
         self.authorize(self.turn)
         events = self.timeline.events(source["thread_id"])
+        if source["observation_key"] == "action_body":
+            return self._retained_action_bytes(source, events)
         if not events or events[-1].event_type != "STATE_VERIFIED":
             raise ConversationConflict("retained read proof is absent")
         self.timeline.load(source["thread_id"])
@@ -168,6 +230,65 @@ class ConnectorResults:
                 or proof.get("evidence", {}).get("observation") != observation):
             raise ConversationConflict("retained read receipt or proof differs")
         return _encoded(observation)
+
+    def _retained_action_bytes(self, source, events):
+        from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+        from eva.application.conversation import ConversationActionCall, ConversationActionReceipt
+        if not events:
+            raise ConversationConflict("retained action proof is absent")
+        self.timeline.load(source["thread_id"])
+        admission = events[0].payload["data"]
+        name = admission.get("action_name")
+        port = object.__new__(PostgresExternalConversationTools)
+        port._action_names = (name,)
+        if (source["thread_id"] != port._thread_id(self.turn, name, source["step_index"])
+                or admission.get("step_index", 0) != source["step_index"]
+                or admission.get("action_call_id") != source["call_id"]):
+            raise ConversationConflict("retained action thread or call differs")
+        if name == "use_connector_tool":
+            if (len(events) != 2 or events[0].event_type != "CONNECTOR_SELECTION_ADMITTED"
+                    or events[-1].event_type != "CONNECTOR_SELECTION_COMPLETED"
+                    or admission.get("owner") != self.owner):
+                raise ConversationConflict("retained local selection differs")
+            call = ConversationActionCall(source["call_id"], name, admission["action_arguments"])
+            receipt = ConversationActionReceipt(call, events[-1].payload["data"]["receipt_output"])
+            from eva.providers.mcp_discovery import _arguments
+            reader, arguments = _arguments(call)
+            if (receipt.output.get("status") != "verified"
+                    or receipt.output.get("source") != "stored_connector_result"
+                    or receipt.output.get("result") != self.read(reader, arguments)):
+                raise ConversationConflict("retained local selection source differs")
+        else:
+            if (name not in {"home_assistant_request", "read_home_assistant_inventory", "save_workspace_document"}
+                    or events[0].event_type != "TOOL_REQUEST_ADMITTED"
+                    or events[-1].event_type != "STATE_VERIFIED"
+                    or admission.get("execution_namespace") != background_execution_namespace(self.turn)):
+                raise ConversationConflict("retained action namespace or proof differs")
+            receipt = port._receipt(self.turn, events, source["step_index"], project=False)
+        if (receipt.output.get("status") != "verified"
+                or canonical_sha256(receipt.output) != source["receipt_sha256"]
+                or canonical_sha256(receipt.output.get("proof")) != source["proof_sha256"]):
+            raise ConversationConflict("retained action receipt or proof differs")
+        return _encoded(retained_action_body(receipt))
+
+    def retained_body_model_view(self, receipt, thread_id, *, step_index):
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        source = {"thread_id": thread_id, "call_id": receipt.call.call_id,
+            "step_index": step_index, "observation_key": "action_body",
+            "receipt_sha256": canonical_sha256(receipt.output),
+            "proof_sha256": canonical_sha256(receipt.output.get("proof")),
+            "source_ingress_sha256": canonical_sha256(PostgresConversationJournal._ingress_data(self.turn))}
+        raw = self._retained_bytes(source)
+        if raw != _encoded(retained_action_body(receipt)):
+            raise ConversationConflict("retained action presentation differs")
+        binding = {"owner": self.owner, "operation": thread_id, "retained_source": source}
+        self._store(binding, json.loads(raw))
+        manifest = self._manifest(canonical_sha256(binding), json.loads(raw))
+        # Older bodies are reachable without repeating even a preview of content.
+        manifest.update(preview="", preview_omitted=True)
+        projection = {"contract": "EvaRetainedActionBodyModelView/v1", "source": source, "manifest": manifest}
+        ancestor_action_presentation(receipt, projection)
+        return projection
 
     def retained_model_view(self, receipt, thread_id, *, step_index, observation_key):
         from eva.adapters.postgres.conversation_journal import PostgresConversationJournal

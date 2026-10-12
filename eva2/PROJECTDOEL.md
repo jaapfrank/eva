@@ -1,13 +1,29 @@
 # Eva2 — volledige digitale huisgenoot
 
-## Actueel 12 oktober — oorspronkelijke Tuya-opdracht hervat; leercorrectie geïnstalleerd
+## Actueel 12 oktober — Tuya-tussenvoorstel behouden; onnodige contextgroei corrigeren
 
-Het Tuya/LocalTuya-verzoek is via de bestaande eigenaarroute hervat nadat de
-bewezen te grote HA-modelcontext is gecorrigeerd. De nieuwe derde generatie
-gebruikt de oorspronkelijke uitsluitend-lezende opdracht en bewaarde resultaten.
-Nu het concrete voorstel afmaken; geen migratie, herstart of naamwijziging vóór
-Jaaps expliciete akkoord. De twee eerdere mislukte taken en hun verbruik blijven
-behouden. Deze gewone gebruikersopdracht is geen nieuwe vergelijkingsserie.
+De derde gewone Tuya/LocalTuya-poging heeft22 entiteiten onderzocht en een
+echt opgeslagen, onafhankelijk teruggelezen tussenvoorstel van9.240 bytes.
+Zij eindigde met incomplete_work: de configuratie-/afhankelijkheidsdekking is
+nog onvoldoende.14 complete geregistreerde modelresponses,13 tools en442.765
+bekende tokens; taakusage partial, volledig totaal en credits onbekend.
+De twee eerdere fouten, deze poging en het document blijven behouden.
+
+De input groeide door herhaling van eerdere toolreceipts. De bestaande
+modelprojectie is nu gericht gecorrigeerd en geïnstalleerd: originele call/output/
+proof blijft lokaal beschikbaar, oudere omvangrijke verified bodies gaan compact
+naar het model, nieuwste en fouten/UNKNOWN blijven behouden. Drie modules,
+negen gerichte checks, onafhankelijke bron-GO; kern/werker gezond,342 overige
+Pythonbronnen en configuratie behouden. Zelfde20 receipts lokaal43.854→18.902BPE;
+dit sluit task/instructies/catalogus/framing uit en bewijst geen providerbesparing.
+
+Eén gericht gewoon vervolg loopt via bestaande revise_digital en planning:
+vierde generatie64afb3c3-c192-5351-8c1c-3bb969cb4d66, oorspronkelijke taak,
+source/actor/execution/grant behouden. Maak uitsluitend het ontbrekende onderzoek
+af vanuit bewaard voorstel en configuraties. Geen volledige herinventarisatie
+of vergelijkingsserie. Sleutels, IP/protocol en fysieke tests mogen expliciete
+latere uitvoeringsvoorwaarden zijn; geen migratie, herstart of naamwijziging
+vóór Jaaps expliciete akkoord. Geen voorbeeldfunctie of nieuwe bouwtaak.
 
 De gewone leerproef bevestigt nu huidige bronrefs en één echte persoonsherziening.
 De verwachtingherziening werd afgewezen op review_at=null; de meetopzet stopte
@@ -31,6 +47,7 @@ Tuya-voorbeeld en vul geen vergelijkingsdekking met extra proeven.
 Bewijs:eva2/evidence/product/hue-learning-recall-ordinary-result-20261012.json.
 Installatie:eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json.
 Bronreview:eva2/reviews/hue-expectation-lifecycle-source-review-20261012.json.
+Toolprojectie:eva2/evidence/product/tuya-retained-receipt-projection-installed-20261012.json.
 
 ## Historisch 12 oktober — actuele leerbronnen verbonden; echte latere toepassing toetsen
 

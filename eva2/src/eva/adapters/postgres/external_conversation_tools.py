@@ -199,7 +199,8 @@ class PostgresExternalConversationTools:
             if events[0].event_type != "CONNECTOR_SELECTION_ADMITTED" or self._event_data(events[0]) != admission:
                 raise ConversationConflict("external tool replay differs")
             if events[-1].event_type == "CONNECTOR_SELECTION_COMPLETED":
-                return ConversationActionReceipt(call, self._event_data(events[-1])["receipt_output"])
+                return self._body_presentation(turn, ConversationActionReceipt(
+                    call, self._event_data(events[-1])["receipt_output"]), step_index)
             if len(events) != 1:
                 raise ConversationConflict("stored connector selection history differs")
         else:
@@ -226,7 +227,7 @@ class PostgresExternalConversationTools:
             data={"receipt_output": receipt_output}, event_type="CONNECTOR_SELECTION_COMPLETED",
             phase="selection_completed", status="completed",
             operation_id=self._operation_id(turn, call.name, step_index))
-        return ConversationActionReceipt(call, receipt_output)
+        return self._body_presentation(turn, ConversationActionReceipt(call, receipt_output), step_index)
 
     def _execute(
         self, turn: ConversationTurn, call: ConversationActionCall,
@@ -467,8 +468,24 @@ class PostgresExternalConversationTools:
                 view = capture.retained_model_view(receipt,
                     self._thread_id(turn, str(action_name), step_index),
                     step_index=step_index, observation_key=observation_output_key)
-                return ConversationActionReceipt(receipt.call, receipt.output, model_output=view)
-        return receipt
+                receipt = ConversationActionReceipt(receipt.call, receipt.output, model_output=view)
+        return self._body_presentation(turn, receipt, step_index) if project else receipt
+
+    def _body_presentation(self, turn, receipt, step_index):
+        from eva.adapters.postgres.connector_results import (
+            ConnectorResults, MODEL_INLINE_BOUND, _encoded, retained_action_body,
+        )
+        if (receipt.output.get("status") != "verified"
+                or receipt.call.name not in {"home_assistant_request", "read_home_assistant_inventory",
+                                             "save_workspace_document", "use_connector_tool"}
+                or len(_encoded(retained_action_body(receipt))) <= MODEL_INLINE_BOUND):
+            return receipt
+        self._ensure_running(turn)
+        capture = ConnectorResults(self._timeline(turn), turn, self._ensure_running)
+        projection = capture.retained_body_model_view(receipt,
+            self._thread_id(turn, receipt.call.name, step_index), step_index=step_index)
+        return ConversationActionReceipt(receipt.call, receipt.output,
+            model_output={**(receipt.model_output or {}), "ancestor_model_projection": projection})
 
     def _request_from_admission(
         self,

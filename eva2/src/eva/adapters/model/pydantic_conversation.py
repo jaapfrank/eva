@@ -51,6 +51,7 @@ from eva.application.background_execution import background_model_output_limit, 
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
+    ConversationConflict,
     ConversationModelResult,
     ConversationModelTiming,
     ConversationModelUsage,
@@ -787,10 +788,21 @@ class PydanticConversationModel:
                 else baseline)
 
     @staticmethod
-    def _receipt_presentation(receipt: ConversationActionReceipt) -> dict[str, Any]:
+    def _receipt_presentation(receipt: ConversationActionReceipt, *, ancestor: bool = False) -> dict[str, Any]:
         view = receipt.model_output
         if view is None:
             return receipt.output
+        if "ancestor_model_projection" in view:
+            from eva.adapters.postgres.connector_results import ancestor_action_presentation
+            try:
+                _, output_view = ancestor_action_presentation(receipt, view["ancestor_model_projection"])
+            except (ConversationConflict, TypeError, ValueError) as error:
+                raise ConversationModelError("retained action body projection differs") from error
+            if ancestor:
+                return output_view
+            view = {key: value for key, value in view.items() if key != "ancestor_model_projection"}
+            if not view:
+                return receipt.output
         from eva.adapters.postgres.connector_results import _encoded, READER_PREFIX, SOURCE_RESPONSE_FIELDS
         output = receipt.output
         metadata = view.get("model_projection")
@@ -831,6 +843,17 @@ class PydanticConversationModel:
         return view
 
     @staticmethod
+    def _receipt_arguments(receipt: ConversationActionReceipt, *, ancestor: bool = False):
+        if ancestor and receipt.model_output and "ancestor_model_projection" in receipt.model_output:
+            from eva.adapters.postgres.connector_results import ancestor_action_presentation
+            try:
+                arguments, _ = ancestor_action_presentation(receipt, receipt.model_output["ancestor_model_projection"])
+            except (ConversationConflict, TypeError, ValueError) as error:
+                raise ConversationModelError("retained action body projection differs") from error
+            return arguments
+        return receipt.call.arguments
+
+    @staticmethod
     def _receipt_model_views(
         receipts: tuple[ConversationActionReceipt, ...],
     ) -> tuple[dict[str, Any], ...]:
@@ -838,8 +861,8 @@ class PydanticConversationModel:
         call_ids = [receipt.call.call_id for receipt in receipts]
         local_views = tuple(
             PydanticConversationModel._receipt_model_view(
-                PydanticConversationModel._receipt_presentation(receipt))
-            for receipt in receipts
+                PydanticConversationModel._receipt_presentation(receipt, ancestor=index < len(receipts) - 1))
+            for index, receipt in enumerate(receipts)
         )
         if len(set(call_ids)) != len(call_ids):
             return local_views
@@ -999,14 +1022,14 @@ class PydanticConversationModel:
             {"content": prompt, "role": "user", "type": "message"}
         ]
         receipts = prior_actions + (() if completed_action is None else (completed_action,))
-        for receipt, viewed in zip(
+        for index, (receipt, viewed) in enumerate(zip(
             receipts, PydanticConversationModel._receipt_model_views(receipts), strict=True
-        ):
+        )):
             admission_input.extend(
                 (
                     {
                         "arguments": canonical_json_bytes(
-                            receipt.call.arguments
+                            PydanticConversationModel._receipt_arguments(receipt, ancestor=index < len(receipts) - 1)
                         )
                         .decode("utf-8")
                         .rstrip("\n"),
@@ -1155,7 +1178,7 @@ class PydanticConversationModel:
                     previous = receipt.call
                     message_history.extend([
                         ModelResponse(parts=[ToolCallPart(
-                            previous.name, previous.arguments, previous.call_id,
+                            previous.name, self._receipt_arguments(receipt, ancestor=True), previous.call_id,
                         )]),
                         ModelRequest(parts=[ToolReturnPart(
                             previous.name, viewed, previous.call_id,

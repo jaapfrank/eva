@@ -1,0 +1,65 @@
+{
+  "contract": "EvaOrdinaryReadonlyProposalResult/v1",
+  "recorded_at": "2026-10-12T16:31:20.829307+00:00",
+  "work_id": "work:eva-resume:e8abf461-52b7-5732-a254-4bda7a1e8ff2",
+  "parent_work_id": "work:eva-resume:31b819c8-920b-572e-807a-d1176296c891",
+  "generation": 3,
+  "route": "existing owner work/resume; original actor, task, source and execution retained",
+  "state": "failed",
+  "error": "incomplete_work",
+  "error_fingerprint": "00b36797c8d248812b83afbe4c699e356138bc5cf93c5b719b5c3c144a7ef73b",
+  "result_available": false,
+  "proposal": {
+    "saved_and_independently_read_back": true,
+    "bytes": 9240,
+    "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+    "classification": "partial proposal, not completed research",
+    "identified_entities": 22,
+    "physical_devices": 9,
+    "cloud_scenes": 3,
+    "ha_changes": 0,
+    "migration_requires_explicit_owner_approval": true
+  },
+  "usage": {
+    "measurement": "partial",
+    "complete_registered_model_responses": 14,
+    "registered_tools": 13,
+    "known_input_tokens": 438144,
+    "known_output_tokens": 4621,
+    "known_total_tokens": 442765,
+    "complete_all_provider_total": null,
+    "credit_cost": null
+  },
+  "missing_research": [
+    "Complete available entity-registry/disabled-entity coverage",
+    "Process retained configurations and discover remaining automation/dashboard dependencies",
+    "Scripts, templates, scenes, helpers, groups, device-ID and history references",
+    "Per-device mapping and support evidence available through current access"
+  ],
+  "future_execution_conditions_not_research_failure": [
+    "Unavailable LAN keys, IP and protocol",
+    "Offline device and physical tests",
+    "Location or renaming choices genuinely requiring owner input"
+  ],
+  "input_diagnosis": {
+    "actual_worker_not_foreground_catalog": true,
+    "large_verified_HA_observations_retained": true,
+    "older_action_receipts_repeated_in_each_model_input": true,
+    "receipt_only_local_bpe_start7": 13154,
+    "receipt_only_local_bpe_end20": 43854,
+    "receipt_only_local_bpe_across14_prefixes": 400441,
+    "measurement_limit": "Local serialization BPE excludes prompt, instructions, toolcatalog and framing; not exact provider attribution or a measured savings claim."
+  },
+  "private_bindings": {
+    "current-task-readback.private.json": "9dc4968ea667bb67d54b7f03cb321dd3c36a02cfaa651fb6362dbe046ad62dbd",
+    "resume-receipt.private.json": "8edbe10703aa45b6150504db1eb3197eeea7e1a33d5e802b79bca204cfe36b6d",
+    "live-progress-2.private.json": "7d5954bb58658f70685f971835bd9c44096c35272fdfdcdcd3dd5a5740377665",
+    "input-cost-diagnosis/read-input-cost-complete.private.json": "5501d8a03eb1f08cea302170bca66131d2160e34c7d9d0c3e2dc42baf72e589a",
+    "owner-document-copy.private.json": "2e9a500f4f3cd3a831db20fd0c4807b9ca274040a1d24dcdefeffc8367ab10ab"
+  },
+  "prior_failures_retained": true,
+  "new_comparison_runs": 0,
+  "new_model_inputs_after_terminal": 0,
+  "completed_new_product_function": false,
+  "next": "Correct existing retained receipt projection, then finish missing research from the actual preserved proposal and tools; no full inventory repetition."
+}

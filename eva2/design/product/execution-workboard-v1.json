@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-12",
+  "lastUpdated": "2026-10-12T16:47:32.126955+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,8 +1021,22 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-12T16:12:37.839929+00:00",
+        "checkedAt": "2026-10-12T16:47:32.126955+00:00",
         "deliveries": [
+          {
+            "id": "tuya-retained-receipts-installed-20261012",
+            "title": "Onnodig herhalen van grote toolresultaten gecorrigeerd",
+            "state": "installed",
+            "installed": true,
+            "technicalOutcomeCompleted": true,
+            "productFunctionCompleted": false,
+            "recordedAt": "2026-10-12T16:44:03.899285+00:00",
+            "summary": "Oudere omvangrijke verified call/result/proof compact en exact terugleesbaar; nieuwste/fouten/UNKNOWN behouden. Negen gerichte checks, twee gezonde diensten. Volledig Tuya-voorstel wordt nog afgemaakt.",
+            "evidence": "eva2/evidence/product/tuya-retained-receipt-projection-installed-20261012.json",
+            "evidenceSha256": "30a1aa8432b3f432c44aef01fc887ded952cc04580f88ff812cd9bd3b4d40d3e",
+            "review": "eva2/reviews/tuya-retained-receipt-installed-review-20261012.json",
+            "reviewSha256": "c4d9adc1fa2c0235867f53a8e4691920d659c6d3a919ed434e205667d5672439"
+          },
           {
             "id": "hue-expectation-lifecycle-installed-20261012",
             "date": "2026-10-12T16:12:37.839929+00:00",
@@ -5192,24 +5206,26 @@
           }
         ],
         "now": {
-          "title": "Tuya-onderzoek hervat; leercorrectie geïnstalleerd",
+          "title": "Tuya-onderzoek afmaken vanuit behouden voorstel",
           "state": "in_progress",
-          "phase": "tuya_readonly_resume_running",
-          "taskId": "HUE1.1",
+          "phase": "tuya_retained_proposal_continuation",
+          "taskId": "work:eva-resume:64afb3c3-c192-5351-8c1c-3bb969cb4d66",
           "linkedTaskIds": [
+            "TL-001",
+            "HUE1.1",
             "HUE3.1"
           ],
           "activeExecution": true,
           "owner": "/root",
           "executor": "Codex · bron en integratie",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Jouw oorspronkelijke Tuya-verzoek draait opnieuw via de gewone taakroute, na de gerichte correctie voor grote HA-resultaten.",
-          "detail": "Geen migratie of naamwijziging vóór akkoord. De leercorrectie is in kern en werker geïnstalleerd: een bevestigde of weerlegde verwachting kan zonder toekomstige reviewdatum worden bijgewerkt. De eerdere proef bewijst één persoonsrevisie; latere toepassing blijft open.",
-          "doneWhen": "Een later gewoon gesprek gebruikt de gewijzigde afweging, met behouden oorspronkelijke bronnen, onzekerheid en persoonsgrenzen.",
+          "summary": "Correctie geïnstalleerd: oude grote receipts compact, originele details gericht terugleesbaar. Eva vervolgt het oorspronkelijke readonlyonderzoek.",
+          "detail": "Zelfde twintig receipts lokaal43.854→18.902BPE, nieuwste intact; geen gemeten providerbesparing. Negen gerichte checks en bronreview GO, kern/werker gezond. Geen migratie of naamwijziging vóór akkoord.",
+          "doneWhen": "Eva levert het complete, bewaarde Tuya/LocalTuya-voorstel met echte bron- en afhankelijkheidsdekking op. Uitvoering wacht op Jaaps akkoord.",
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "previousResult": "eva2/evidence/product/native-work-preserved-proposal-followup-result-20261012.json",
-          "previousResultReview": "eva2/reviews/native-work-preserved-proposal-followup-result-review-20261012.json",
-          "previousResultReviewSha256": "a49783a563df83cbc90d26320e1f3752770fd4bb44b4f22c5649fd4b18f0b2cf",
+          "previousResult": "eva2/evidence/product/tuya-readonly-preserved-proposal-20261012.json",
+          "previousResultReview": "eva2/reviews/tuya-retained-receipt-source-review-20261012.json",
+          "previousResultReviewSha256": "c35cf2041e687a889b4a6803e2b5df91ba92fc2fa21314610a30dcb65502c6ce",
           "implementationStatus": {
             "sourceMappingCompleted": true,
             "learningConnectionBuilt": true,
@@ -5232,20 +5248,23 @@
             "recallCorrectionIndependentInstalledReview": "GO",
             "expectationLifecycleCorrectionInstalled": true,
             "expectationLifecycleChecksPassed": 12,
-            "expectationLifecycleIndependentInstalledReview": "GO"
+            "expectationLifecycleIndependentInstalledReview": "GO",
+            "retainedReceiptProjectionInstalled": true,
+            "retainedReceiptProjectionChecksPassed": 9,
+            "retainedReceiptProjectionIndependentInstalledReview": "GO"
           },
           "currentActivity": {
-            "checkedAt": "2026-10-12T16:09:18.149003+00:00",
+            "checkedAt": "2026-10-12T16:45:37.178705+00:00",
             "coordinator": "/root",
-            "coordinatorTask": "Oorspronkelijke gebruikersopdracht afronden via de gewone digitale taakroute.",
-            "executor": "/root",
-            "executorTask": "Bestaande Tuya-onderzoekstaak volgen en het echte voorstel controleren.",
+            "coordinatorTask": "Normale vervolgopdracht volgen; geen volledige herinventarisatie of nieuwe vergelijkingsserie.",
+            "executor": "Eva2 · gewone Astra/medium-taakwerker",
+            "executorTask": "Uitsluitend de ontbrekende onderzoeksdelen afmaken, bewaard voorstel bijwerken en teruglezen.",
             "reviewer": "/root/product_execution_memory_review",
-            "reviewerTask": "Exact geïnstalleerde leercorrectie en beperkte resultatenpublicatie beoordelen.",
-            "modelUsage": "Tuya: één gewone hervatting gestart; verbruik volgt uit de bestaande taakregistratie. De gesloten leerproef blijft13/12/1UNKNOWN/43.715 bekend, geen extra leerproef gestart.",
-            "note": "Geen handeling van Jaap nodig tijdens het onderzoek. Migratie zelf wacht op expliciet akkoord."
+            "reviewerTask": "Geïnstalleerde bron onafhankelijk GO; wacht op definitief bewaard onderzoeksvoorstel.",
+            "modelUsage": "Vierde gewone poging daadwerkelijk call_started. Eerder14 complete responses/442.765 bekende tokens blijven apart staan; het nieuwe eindverbruik is nog niet bekend.",
+            "note": "22 entiteiten en tussenvoorstel behouden. Geen nieuwe Eva-input sinds de derde uitkomst. Migratie en naamswijziging wachten op akkoord."
           },
-          "checkedAt": "2026-10-12T16:09:18.149003+00:00",
+          "checkedAt": "2026-10-12T16:45:37.178705+00:00",
           "remaining": "Een compleet Tuya/LocalTuya-voorstel opleveren. Echte latere toepassing van gewijzigde verwachtingen en volledige AIDE² blijven apart open."
         },
         "next": {
@@ -12006,7 +12025,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-12T14:10:18.268760+00:00",
+      "lastUpdatedAt": "2026-10-12T16:30:31.205450+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -12497,7 +12516,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-12T14:16:59.895639+02:00",
+      "updatedAt": "2026-10-12T16:45:37.178705+00:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -15936,28 +15955,29 @@
       "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-12T16:13:11.993953+00:00",
-      "image": "sha256:c5d406e7248aafc3d400848ba321fa2206573cd7d73446c2036c0f414d796b02",
-      "coreImage": "sha256:c5d406e7248aafc3d400848ba321fa2206573cd7d73446c2036c0f414d796b02",
-      "workerImage": "sha256:e803554d66c3f202a54186c351ab3d31f3bdad8a576eebb55d3f2e0aadc66af9",
+      "recordedAt": "2026-10-12T16:44:03.899285+00:00",
+      "image": "sha256:1b63aa328db5850105b8e5e27fb67159f48bfda53b4bad65c885fe7784de73d3",
+      "coreImage": "sha256:1b63aa328db5850105b8e5e27fb67159f48bfda53b4bad65c885fe7784de73d3",
+      "workerImage": "sha256:cbcb77f97aaf998c0fe2cc17f984d6bfe850d0fa373dd46c4215f120e0db131d",
       "core": "/eva2-managed-b-slot3-core",
       "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
-      "readyStatus": true,
+      "readyStatus": "ready",
       "repositoryHeadFullyInstalled": false,
-      "reviewedSourceIdentity": "Exact two-module terminal expectation lifecycle correction over retained HUE recall and HA context corrections",
-      "retainedSourceItems": {
-        "core": 343,
-        "worker": 343
+      "reviewedSourceIdentity": {
+        "eva2/src/eva/adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
+        "eva2/src/eva/adapters/postgres/connector_results.py": "7484c41f0bef2a7994ed5cd1b6b15be03efd16ac3e661116d4c4c583254abd4d",
+        "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
       },
-      "evidence": "eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json",
-      "evidencePath": "eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json",
-      "composeOverride": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/expectation-lifecycle-correction/candidate.compose.private.json",
+      "retainedSourceItems": 342,
+      "evidence": "eva2/evidence/product/tuya-retained-receipt-projection-installed-20261012.json",
+      "evidencePath": "eva2/evidence/product/tuya-retained-receipt-projection-installed-20261012.json",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ordinary-task-followup/retained-receipt-correction/candidate.compose.private.json",
       "configurationEnvironmentMountsRetained": true,
-      "installedReview": "eva2/reviews/hue-expectation-lifecycle-installed-review-20261012.json",
-      "meaning": "Geïnstalleerde leercorrectie en gezonde diensten. Oorspronkelijk Tuya-onderzoek opnieuw actief; compleet voorstel en volledige HUE/AIDE² nog niet bevestigd.",
-      "installedReviewSha256": "e355852f687f43314d04f4878c9dc9167b1cb270b9b91657f5bd0f79e46510ac"
+      "installedReview": "eva2/reviews/tuya-retained-receipt-installed-review-20261012.json",
+      "meaning": "Gerichte projectie van grote oudere receipts geïnstalleerd in kern en werker. Gewone Tuya/LocalTuya-vervolgopdracht uitsluitend lezend, geen voltooide migratie.",
+      "installedReviewSha256": "c4d9adc1fa2c0235867f53a8e4691920d659c6d3a919ed434e205667d5672439"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -34952,5 +34972,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-12T13:45:21.246856+00:00"
+  "updatedAt": "2026-10-12T16:47:32.126955+00:00"
 }

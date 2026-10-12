@@ -1,0 +1,110 @@
+{
+  "contract": "EvaInstalledRetainedReceiptProjectionResult/v1",
+  "recorded_at": "2026-10-12T16:44:03.899285+00:00",
+  "source_files": [
+    {
+      "before_sha256": "0ae0e6701dd5ad1ad01f3178405d72e897bd8a2b202f018a76cdbeb6abc5e7fe",
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd"
+    },
+    {
+      "before_sha256": "c6585c84d2f237132c4eda2cbff5a667425f04d46f34aa175925a81c2a24f636",
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "7484c41f0bef2a7994ed5cd1b6b15be03efd16ac3e661116d4c4c583254abd4d"
+    },
+    {
+      "before_sha256": "c5e879df0f074ccb03b2fe0d2636c46e98e8fbde5e5c17190b2e3f03214e054a",
+      "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+    }
+  ],
+  "source_manifest_sha256": "58283339dd135178e0f44c21fa623fc7bb2bbb0e2746630813229aff8cc1c7d5",
+  "source_review": "eva2/reviews/tuya-retained-receipt-source-review-20261012.json",
+  "source_review_sha256": "c35cf2041e687a889b4a6803e2b5df91ba92fc2fa21314610a30dcb65502c6ce",
+  "source_decision": "GO",
+  "targeted_checks": {
+    "unique_passed": 9,
+    "new_model_requests": 0,
+    "new_native_provider_actions": 0,
+    "production_database_test_writes": 0,
+    "receipt_sha256": "5726d8e3475594ce18005123a6a67d65c50e7326bd702d47bab32bd96fbab0fc"
+  },
+  "same_retained20_receipts_local_measurement": {
+    "old_bytes": 146864,
+    "candidate_bytes": 59550,
+    "old_bpe": 43854,
+    "candidate_bpe": 18902,
+    "newest_identical": true,
+    "raw_call_output_proof_preserved": true,
+    "measurement_boundary": "Receipt-only local phase envelope; excludes task/instructions/catalog/framing and real provider attribution. No provider savings claim."
+  },
+  "installation": {
+    "contract": "EvaInstalledRetainedReceiptProjection/v1",
+    "checkedAt": "2026-10-12T16:42:30.952770+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:1b63aa328db5850105b8e5e27fb67159f48bfda53b4bad65c885fe7784de73d3",
+        "checks": {
+          "exactImage": true,
+          "healthy": true,
+          "exactPythonInventory": true,
+          "sameMounts": true,
+          "sameEnvironment": true,
+          "sameProcessConfiguration": true
+        },
+        "unchangedPythonSources": 342,
+        "exactModules": {
+          "adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
+          "adapters/postgres/connector_results.py": "7484c41f0bef2a7994ed5cd1b6b15be03efd16ac3e661116d4c4c583254abd4d",
+          "adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+        },
+        "inspectionSha256": "c1f266637216ba978965e32f286ec9e5380cee1cf292f9e6a2df5247a8fa200a"
+      },
+      "delegated-work-worker": {
+        "image": "sha256:cbcb77f97aaf998c0fe2cc17f984d6bfe850d0fa373dd46c4215f120e0db131d",
+        "checks": {
+          "exactImage": true,
+          "healthy": true,
+          "exactPythonInventory": true,
+          "sameMounts": true,
+          "sameEnvironment": true,
+          "sameProcessConfiguration": true
+        },
+        "unchangedPythonSources": 342,
+        "exactModules": {
+          "adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
+          "adapters/postgres/connector_results.py": "7484c41f0bef2a7994ed5cd1b6b15be03efd16ac3e661116d4c4c583254abd4d",
+          "adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+        },
+        "inspectionSha256": "15fc21350f217cc6c47f21520107dd8267179697a4b8ab6f9dd3771daa23f68f"
+      }
+    },
+    "actualUpdateDispatches": 1,
+    "modelRequests": 0,
+    "sourceReviewSha256": "c35cf2041e687a889b4a6803e2b5df91ba92fc2fa21314610a30dcb65502c6ce",
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    }
+  },
+  "build_sha256": "fc4297853d1dba4ac1ccf87a0aa5df0d6748d3bad0add3266ce5d52ec4906b90",
+  "installation_receipt_sha256": "73c3c3a73273b5791bdd08f3a4a1cd4fa863fe5fdec77ba4fd0e9de63afb3b48",
+  "installation_verification_sha256": "92767f182997c2cdb0e5f3f31c3c353d86aae74e1bcf6f24f3e22dcc62ff175a",
+  "existing_updater_reused": true,
+  "schema_or_storage_platform_changes": false,
+  "prior_result": "eva2/evidence/product/tuya-readonly-preserved-proposal-20261012.json",
+  "previous_failures_preserved": true,
+  "ordinary_continuation": {
+    "status": "correction_saved_scheduled",
+    "receipt_sha256": "f182d48d0a0e796b0bc5e67d3ad504dd37e094c5fbfe031d012495feae33db31",
+    "original_task_unchanged": true,
+    "new_comparison_runs": 0,
+    "scope": "original readonly Tuya/LocalTuya proposal; migration and renaming only after explicit owner approval"
+  },
+  "native_task_success": null,
+  "full_project_completed": false,
+  "credit_cost": null
+}
