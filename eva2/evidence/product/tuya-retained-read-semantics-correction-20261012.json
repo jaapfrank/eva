@@ -1,0 +1,67 @@
+{
+  "contract": "EvaRetainedReadSemanticsCorrection/v1",
+  "recorded_at": "2026-10-12T17:05:58.186409+00:00",
+  "status": "built_source_not_installed",
+  "original_readonly_task_preserved": true,
+  "changes": [
+    "Small call arguments preserve meaningful request paths and selectors.",
+    "Only large saved-document content uses a hash-bound reader reference.",
+    "Already bounded local pages preserve text and next_offset in later model requests; exact duplicates use existing in-context references."
+  ],
+  "source_binding": {
+    "manifest_sha256": "f7ffe81bd025e14cd4755ad2b7bdf574dc922133125dd42c2f02a7057730bbeb",
+    "changed_module": "eva2/src/eva/adapters/postgres/connector_results.py",
+    "module_sha256": "dc4e7dbdf5a8b9f1278df016a520eddb6bf64956e9cf4ee2ca15416d582efce5",
+    "model_module_unchanged": true,
+    "external_route_module_unchanged": true,
+    "original_build_manifest_sha256": "74bc9fa566014d6fc7dbf38baf809fdadd79e9703223e3c64982556f38a6f538"
+  },
+  "checks": {
+    "unique_passed": 7,
+    "models": 0,
+    "native_actions": 0,
+    "database_reads": 0,
+    "database_writes": 0,
+    "binding_sha256": "5c7bdad1649616b4612b3b7dee378b4687257f7f5faca089908bdad01d56a3ab",
+    "actual_sdk_mock_transport": true,
+    "both_alternating_pages_visible": true,
+    "repeated_page_deduplicated": true,
+    "raw_and_latest_receipt_unchanged": true,
+    "test_edit_fault": {
+      "unintended_assertions_in_existing_nodes": 4,
+      "affected_existing_nodes": 2,
+      "repaired": true,
+      "repair_checks_passed": 2,
+      "original_five_node_bodies_unchanged": true,
+      "runtime_changed_by_repair": false,
+      "original_evidence_preserved": true
+    }
+  },
+  "local_serialization_measurement": {
+    "same_existing_receipts": 20,
+    "before_bpe": 43854,
+    "candidate_bpe": 28426,
+    "before_bytes": 146864,
+    "candidate_bytes": 88583,
+    "includes_task_instructions_catalog_provider": false,
+    "provider_savings_proven": false,
+    "binding_sha256": "cf9b6c5dab0de5ce99807e041767ec895c54918d1d7539e88ae3a0c7900d348c"
+  },
+  "prior_attempt": {
+    "work_id": "work:eva-resume:64afb3c3-c192-5351-8c1c-3bb969cb4d66",
+    "state": "stopped",
+    "known_tokens": 926383,
+    "complete_total": null,
+    "credit_cost": null,
+    "result_available": false,
+    "result_path": "eva2/evidence/product/tuya-retained-proposal-continuation-stopped-20261012.json"
+  },
+  "continuation_prepared": {
+    "binding_sha256": "50375adf3d0eae4fe97514f4ef235780dcf2e2a539f7fff12a94b7630d3c1792",
+    "input_started": false,
+    "scope_expanded": false
+  },
+  "task_completion_proven": false,
+  "migration_completed": false,
+  "full_project_goal_status": "active"
+}

@@ -2,10 +2,20 @@
 
 ## Actueel 12 oktober — Tuya-tussenvoorstel behouden; onnodige contextgroei corrigeren
 
-De derde gewone Tuya/LocalTuya-poging heeft22 entiteiten onderzocht en een
-echt opgeslagen, onafhankelijk teruggelezen tussenvoorstel van9.240 bytes.
+Actuele correctie voor leessemantiek is geïnstalleerd: één bronmodule, zeven
+gerichte geslaagde checks, onafhankelijke bron- en installatiereview; kern en
+werker gezond en 344 overige Pythonbronnen behouden. De vijfde gewone hervatting
+stopte op input_budget_exceeded: opgebouwde context past niet binnen de invoergrens.
+Taakusage unmeasured; geen voltooid voorstel of bewezen besparing. Eerst exact
+bewaarde context lokaal analyseren en herhaalde inhoud lossless compacter aanbieden;
+geen grensverhoging, nieuwe betaalde poging of nieuwe taak om deze fout te omzeilen.
+Het hele projectgoal blijft actief.
+
+
+De derde gewone Tuya/LocalTuya-poging heeft 22 entiteiten onderzocht en een
+echt opgeslagen, onafhankelijk teruggelezen tussenvoorstel van 9.240 bytes.
 Zij eindigde met incomplete_work: de configuratie-/afhankelijkheidsdekking is
-nog onvoldoende.14 complete geregistreerde modelresponses,13 tools en442.765
+nog onvoldoende. 14 complete geregistreerde modelresponses, 13 tools en 442.765
 bekende tokens; taakusage partial, volledig totaal en credits onbekend.
 De twee eerdere fouten, deze poging en het document blijven behouden.
 
@@ -13,17 +23,31 @@ De input groeide door herhaling van eerdere toolreceipts. De bestaande
 modelprojectie is nu gericht gecorrigeerd en geïnstalleerd: originele call/output/
 proof blijft lokaal beschikbaar, oudere omvangrijke verified bodies gaan compact
 naar het model, nieuwste en fouten/UNKNOWN blijven behouden. Drie modules,
-negen gerichte checks, onafhankelijke bron-GO; kern/werker gezond,342 overige
-Pythonbronnen en configuratie behouden. Zelfde20 receipts lokaal43.854→18.902BPE;
+negen gerichte checks, onafhankelijke bron-GO; kern/werker gezond, 342 overige
+Pythonbronnen en configuratie behouden. Zelfde 20 receipts lokaal 43.854→18.902BPE;
 dit sluit task/instructies/catalogus/framing uit en bewijst geen providerbesparing.
 
-Eén gericht gewoon vervolg loopt via bestaande revise_digital en planning:
-vierde generatie64afb3c3-c192-5351-8c1c-3bb969cb4d66, oorspronkelijke taak,
-source/actor/execution/grant behouden. Maak uitsluitend het ontbrekende onderzoek
-af vanuit bewaard voorstel en configuraties. Geen volledige herinventarisatie
-of vergelijkingsserie. Sleutels, IP/protocol en fysieke tests mogen expliciete
-latere uitvoeringsvoorwaarden zijn; geen migratie, herstart of naamwijziging
-vóór Jaaps expliciete akkoord. Geen voorbeeldfunctie of nieuwe bouwtaak.
+Het gerichte gewone vervolg (vierde generatie 64afb3c3-c192-5351-8c1c-3bb969cb4d66)
+is gestopt. Het deed 24 lokale use_connector_tool-terugleesacties zonder eindvoorstel:
+25 registraties, 24 volledig gemeten en 1 pending op de bron-snapshot; 926.383 bekende
+tokens, terminale taakusage partial. Volledig verbruik en credits onbekend. De
+kleinere lokale presentatie bewijst dus geen providerbesparing of werkverbetering.
+
+Concreet bronverlies: de projectie vervangt ook kleine oorspronkelijke HA-paden
+en readerselectors door opaque hashes. Daardoor is niet zichtbaar wat eerder is
+opgehaald. Herstel die semantiek en de zichtbaarheid van reeds begrensde lokale passages.
+Kleine argumenten blijven exact zichtbaar; alleen grote documentinhoud wordt
+hashgebonden bereikbaar gemaakt. Gelezen passages blijven in dezelfde modelcontext
+beschikbaar en exacte duplicaten gebruiken de bestaande lokale verwijzingen. Path/toolmetadata,
+nieuwste, raw/proof, actor/source/stop blijven behouden. Geen nieuw betaald vervolg
+of volledige herinventarisatie voordat die oorzaak gericht is gecorrigeerd.
+
+Oorspronkelijke opdracht/criteria/source/actor/execution/grant, oude mislukkingen
+en het echte tussenvoorstel blijven behouden. De echte documenttoolpath is
+/proof-state/tuya-localtuya-migratievoorstel.md; kortere alias niet aangetoond.
+Sleutels, IP/protocol en fysieke tests mogen latere uitvoeringsvoorwaarden zijn.
+Geen migratie, herstart of naamwijziging vóór Jaaps expliciete akkoord.
+Gehele projectgoal actief; dit is geen nieuwe vergelijkingsserie of bouwtaak.
 
 De gewone leerproef bevestigt nu huidige bronrefs en één echte persoonsherziening.
 De verwachtingherziening werd afgewezen op review_at=null; de meetopzet stopte

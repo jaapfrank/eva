@@ -1,0 +1,58 @@
+{
+  "contract": "EvaIndependentFactualPublicationReview/v1",
+  "recorded_at": "2026-10-12T17:20:20.701972+00:00",
+  "decision": "GO",
+  "scope": "Exact generation-5 terminal API result and safe factual publication only.",
+  "publicEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/tuya-retained-proposal-input-gate-result-20261012.json",
+    "sha256": "810543d8bfd220e668156297ec82c2e7a5b50d8a1ab1665d898f4f2083e97676"
+  },
+  "workReadback": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/continuation-work-1.private.json",
+    "sha256": "209953bdb799cfa025e999351195cf61e85deb16cf2e5fc0372ae26927961dd5"
+  },
+  "observed": {
+    "workId": "work:eva-resume:20b1278c-cd1c-57c8-984d-cca4c3002e7d",
+    "generation": 5,
+    "state": "failed",
+    "resultAvailable": false,
+    "errorCode": "budget_exceeded",
+    "errorFingerprint": "08e998d5a43fea8cfb45e5d78b8ed978c056359ef13688c856eb64d8839e58bd",
+    "reportedReason": "input_budget_exceeded: retained task context does not fit the input envelope",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "unmeasured",
+      "completed_model_responses": null,
+      "tool_calls": null,
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null,
+      "cost_usd_micros": null
+    },
+    "completeProviderTotal": null,
+    "creditCost": null
+  },
+  "qualifications": [
+    "The input-context rejection is reported by the retained ordinary failure description; this review does not establish its full causal decomposition.",
+    "Unmeasured counters and all null totals remain unknown. No zero model, token, tool or credit-cost conclusion is drawn.",
+    "The separately reviewed source installation remains a technical success; it does not establish a useful continuation, finished proposal or provider savings.",
+    "Original readonly scope is retained. Migration or rename remains outside this publication and still requires owner approval."
+  ],
+  "limits": {
+    "taskCompletionProven": false,
+    "providerSavingsProven": false,
+    "fullAIDE2Completed": false,
+    "newInputAuthority": false,
+    "newBudgetOrRetryAuthorized": false,
+    "projectGoalStatus": "active"
+  },
+  "reviewActions": {
+    "modelRequests": 0,
+    "nativeRuns": 0,
+    "databaseReads": 0,
+    "liveAPIProbes": 0,
+    "testsRerun": 0
+  },
+  "blockers": []
+}

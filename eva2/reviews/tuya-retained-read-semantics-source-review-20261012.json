@@ -1,0 +1,142 @@
+{
+  "contract": "EvaIndependentSourcePublicationReview/v1",
+  "recorded_at": "2026-10-12T17:12:23.938980+00:00",
+  "decision": "GO",
+  "scope": "Exact retained-read presentation source, repaired focused test bundle, already-built images and limited factual publication; permits installation of these exact source bytes only.",
+  "sourceManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/frozen-source.local-pages-test-repaired.private.json",
+    "sha256": "f7ffe81bd025e14cd4755ad2b7bdf574dc922133125dd42c2f02a7057730bbeb"
+  },
+  "sourceManifestSha256": "f7ffe81bd025e14cd4755ad2b7bdf574dc922133125dd42c2f02a7057730bbeb",
+  "source": {
+    "changedModule": {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "dc4e7dbdf5a8b9f1278df016a520eddb6bf64956e9cf4ee2ca15416d582efce5"
+    },
+    "unchangedModules": [
+      {
+        "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "sha256": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd"
+      },
+      {
+        "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+        "sha256": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+      }
+    ],
+    "testSha256": "3212633e258d8af750ccfc21a0e1b7d66651b6cd561b5122f571a204a6859d02",
+    "smallArguments": "Small original HA paths and reader selectors remain literal.",
+    "largeDocumentContent": "Only direct saved-document content above 8192 UTF-8 bytes is replaced by its content hash/length and existing reader pointer; other call fields remain literal.",
+    "localPages": "Only verified stored_connector_result local-reader pages pass through after complete original ancestor-projection validation, exact reader/body binding and existing 65536-byte/8192-character page bounds.",
+    "rawProofLatest": "Original call/output/proof and latest presentation remain unchanged.",
+    "authority": "Actor, retained source/ingress, execution, receipt/proof hash and current stop checks remain in the existing capture/reader route.",
+    "deduplication": "Existing exact context deduplication retains one literal result and a reference for an identical repeated page."
+  },
+  "checks": {
+    "binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/targeted-checks.local-pages-test-repaired.private.json",
+      "sha256": "5c7bdad1649616b4612b3b7dee378b4687257f7f5faca089908bdad01d56a3ab"
+    },
+    "uniquePassed": 7,
+    "originalFive": {
+      "binding": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/targeted-checks.local-pages.private.json",
+        "sha256": "d6782552c1715d79bacfdc4ab400dccc35b54763326f7c21f031582de90fa552"
+      },
+      "junit": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/targeted-local-pages-1.private.xml",
+        "sha256": "9fe783b5f513071deb8fd366cd3749e407736c979f29b8155524cf15dbe0c2ab"
+      },
+      "passed": 5,
+      "reusedWithoutRerun": true
+    },
+    "testRepair": {
+      "patch": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/test-extraneous-assertions-repair.patch",
+        "sha256": "f3cffbc23df8b10d35d030f793f3d94dcbd69ede4840d690ebfa81ed167769a6"
+      },
+      "junit": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/targeted-test-repair-1.private.xml",
+        "sha256": "952db9123a5b4cf3c455f0fb7f0d6e48f782c79517c71015fb4f839c49f94abc"
+      },
+      "passed": 2,
+      "removedAccidentalAssertions": 4,
+      "changedFunctions": 2,
+      "otherFunctionASTsUnchanged": 17,
+      "runtimeChanged": false
+    },
+    "sdkWire": "Existing MockTransport regression shows alternating document/HA page text, next_offset and exact duplicate references remain visible; raw/latest are equal.",
+    "reviewerRanTests": false,
+    "newEvaModelRequests": 0,
+    "newNativeRuns": 0,
+    "newDatabaseReads": 0,
+    "newDatabaseWrites": 0
+  },
+  "build": {
+    "binding": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/build-result.private.json",
+      "sha256": "a60cfff0847f81e07add20a0ac34d282c79230b74d2001367026e51ac4375c4c"
+    },
+    "originalBuildManifestSha256": "74bc9fa566014d6fc7dbf38baf809fdadd79e9703223e3c64982556f38a6f538",
+    "repairedManifestRuntimeEqualToBuild": true,
+    "coreImage": "sha256:26c7efde8fe708fca5f6cea1a2e7b8c29d6963b38d22f88ed26e5e0d5b59e25a",
+    "workerImage": "sha256:4e512dcd9b4bd5c33c1c471128cb0d943c681b3669cc724eb97871faf656287e",
+    "changedPythonSourcesPerImage": 1,
+    "unchangedPythonSourcesPerImage": 344,
+    "reportedImportsPassed": true,
+    "installationClaimed": false
+  },
+  "causality": {
+    "proven": "Previous ancestor projection hid small meaningful arguments and re-wrapped previously read bounded pages after the next action. The new wire preserves these observations.",
+    "limit": "Repeated zero-offset reads are observed; the intended reasoning and exclusive cause of all cost or failure are not proven.",
+    "existingProgress": "Existing progress/evidence handoffs can preserve durable findings; no second memory or new task-specific executor was added."
+  },
+  "publication": {
+    "decision": "GO",
+    "sourceBuiltEvidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/tuya-retained-read-semantics-correction-20261012.json",
+      "sha256": "073bc1daa6635dcbb7782512637d06417e264c98afa2fe40107b90f358c3a840"
+    },
+    "stoppedGen4Evidence": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/tuya-retained-proposal-continuation-stopped-20261012.json",
+      "sha256": "d60a7ba9d8868250a40ff6f8596f245043b56b9efba5254797a22744d6a5dfbc"
+    },
+    "currentSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ordinary-task-followup/gen4-input-snapshot/diagnosis.private.json",
+      "sha256": "39d949fa6df4720c81df12c7261cb9682924c7f3f389b2957b4c9e8ad31125ed"
+    },
+    "afterStop": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ordinary-task-followup/retained-receipt-correction/continuation-after-stop.private.json",
+      "sha256": "9057a9c3998ec4b5e633368e3755432bef2c4a8b4bead1e2d38d30ab7a20f173"
+    },
+    "registeredRequests": 25,
+    "fullyMeasuredRequests": 24,
+    "pendingUnknownRequests": 1,
+    "knownInputTokens": 922045,
+    "knownOutputTokens": 4338,
+    "knownTotalTokens": 926383,
+    "toolCalls": 24,
+    "completeProviderTotal": null,
+    "creditCost": null,
+    "workState": "stopped",
+    "resultAvailable": false,
+    "aggregateReportQualification": "Raw usage_report.completed_model_responses=25 is preserved separately from the actual snapshot: 24 fully measured requests and one pending/unknown.",
+    "localMeasurement": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/retained-local-pages-measurement.private.json",
+      "sha256": "cf9b6c5dab0de5ce99807e041767ec895c54918d1d7539e88ae3a0c7900d348c"
+    },
+    "localMeasurementLimit": "Receipt-only serialization of the same 20 retained receipts: 146864 to 88583 bytes and 43854 to 28426 local BPE; excludes task/catalog/SDK/provider framing and proves no provider savings.",
+    "historicalEvidencePreserved": true,
+    "testPreparationFaultDisclosed": true
+  },
+  "limits": {
+    "nativeInputGO": false,
+    "newAuthorityGranted": false,
+    "taskCompletionProven": false,
+    "providerSavingsProven": false,
+    "migrationOrRenameAuthorized": false,
+    "fullAIDEOrProjectCompletion": false,
+    "originalTask": "Readonly Tuya-to-LocalTuya proposal remains the task. Keys, physical checks and execution prerequisites may be future conditions; migration or rename still requires owner agreement.",
+    "futureContinuation": "The prepared ordinary instruction is separate from this source/publication decision; exact installation must precede its use within existing authority."
+  },
+  "blockers": []
+}

@@ -1,0 +1,99 @@
+{
+  "contract": "EvaIndependentInstalledPublicationReview/v1",
+  "recorded_at": "2026-10-12T17:15:11.225786+00:00",
+  "decision": "GO",
+  "scope": "Exact retained-read semantics installation and limited factual publication only.",
+  "sourceReview": {
+    "path": "/home/administrator/project/Eva2/eva2/reviews/tuya-retained-read-semantics-source-review-20261012.json",
+    "sha256": "64ee6b0c4e613bc116f703b3fb3d935e21d4cded083db50cca485e3c58d83904"
+  },
+  "installationVerification": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/installation-verification.private.json",
+    "sha256": "ef271c893a153633b1aeec2b7cc40e7a70b6beea98e368f5821ec21234602ef0"
+  },
+  "installationDispatch": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/installation-dispatch-receipt.private.json",
+    "sha256": "c753ebe7933e00abdf7be9a2df7888d22b4c7f0ab2efbbac4d2150742dfdd3e3"
+  },
+  "publicEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/tuya-retained-read-semantics-installed-20261012.json",
+    "sha256": "41042cf9a6cb62047679ab453dffa4a481e58fbd564f7161d1c439c8759ac29f"
+  },
+  "actualImages": {
+    "core": "sha256:26c7efde8fe708fca5f6cea1a2e7b8c29d6963b38d22f88ed26e5e0d5b59e25a",
+    "delegated-work-worker": "sha256:4e512dcd9b4bd5c33c1c471128cb0d943c681b3669cc724eb97871faf656287e"
+  },
+  "inspectionBindings": {
+    "core": {
+      "before": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/core-before.private.json",
+        "sha256": "ff3144b72e5aa7d80945589e11aa6c436d82e304b1e4eecfda7f2107f9d7ca75"
+      },
+      "installed": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/core-installed.private.json",
+        "sha256": "fbf602a9c02425a5be1585234b008cc306760feb12fc7c2747185732e2a7e82f"
+      },
+      "healthy": true,
+      "sameEnvironmentMap": true,
+      "sameMountsByDestination": true,
+      "sameProcessConfiguration": true,
+      "sameNetworkNames": true
+    },
+    "delegated-work-worker": {
+      "before": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/delegated-work-worker-before.private.json",
+        "sha256": "22fdeb1cad298a01e9b0b7459a4393fa9e9a6e98bf432a8e8bc925bb648e3966"
+      },
+      "installed": {
+        "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/delegated-work-worker-installed.private.json",
+        "sha256": "6f181a3c823301ef08f3166a41b1f979612239dd2536cd8d8b4dcd225f54a58e"
+      },
+      "healthy": true,
+      "sameEnvironmentMap": true,
+      "sameMountsByDestination": true,
+      "sameProcessConfiguration": true,
+      "sameNetworkNames": true
+    }
+  },
+  "checks": {
+    "changedPythonSourcesPerImage": 1,
+    "unchangedPythonSourcesPerImage": 344,
+    "changedModuleSha256": "dc4e7dbdf5a8b9f1278df016a520eddb6bf64956e9cf4ee2ca15416d582efce5",
+    "modelAndExternalRouteModulesMatchSourceReview": true,
+    "actualUpdaterDispatches": 1,
+    "bothHealthy": true,
+    "readyzReady": true,
+    "publicInstallationObjectEqualsPrivateVerification": true,
+    "reviewBasis": "Existing before/installed inspections, updater receipt and source/build verification; no repeated test or live probe.",
+    "testsRerun": 0,
+    "reviewerModelRequests": 0,
+    "reviewerNativeRuns": 0,
+    "reviewerDatabaseReads": 0
+  },
+  "ordinaryContinuation": {
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/continuation-receipt.private.json",
+      "sha256": "1409d1ab18fc60001f74102e2a046c8ade5b76700d6915ed95a4075e82bd6b28"
+    },
+    "preparation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/continuation-preparation.private.json",
+      "sha256": "50375adf3d0eae4fe97514f4ef235780dcf2e2a539f7fff12a94b7630d3c1792"
+    },
+    "operation": "revise_digital",
+    "status": "correction_saved",
+    "meaning": "One correction was saved on the existing ordinary work route. This receipt proves queueing, not a completed research result.",
+    "originalTaskAndSourceScopePreserved": true,
+    "outcomeReviewedHere": false
+  },
+  "publicationLimits": {
+    "taskCompletionProven": false,
+    "providerSavingsProven": false,
+    "fullAIDE2Completed": false,
+    "newInputAuthorityGrantedByReview": false,
+    "newComparisonAuthorized": false,
+    "migrationOrRenameAuthorized": false,
+    "projectGoalStatus": "active",
+    "historicalUnknownUsagePreserved": true
+  },
+  "blockers": []
+}

@@ -130,9 +130,40 @@ def ancestor_action_presentation(receipt, projection):
     expected.update(preview="", preview_omitted=True)
     if manifest != expected:
         raise ConversationConflict("retained action body manifest differs")
-    arguments = {"model_view_encoding": "retained_action_arguments_v1",
-        "original_arguments_sha256": canonical_sha256(receipt.call.arguments),
-        "reader_tool_id": manifest["reader"]["tool_id"], "pointer": "/call/arguments"}
+    # Keep the semantic request and selector visible. Only a large document
+    # content field needs a retained-byte reference; raw call arguments stay intact.
+    arguments = receipt.call.arguments
+    content = arguments.get("content")
+    if (receipt.call.name == "save_workspace_document" and isinstance(content, str)
+            and len(content.encode("utf-8")) > MODEL_INLINE_BOUND):
+        content_bytes = content.encode("utf-8")
+        arguments = {**arguments, "content": {
+            "model_view_encoding": "retained_document_content_v1",
+            "original_content_sha256": hashlib.sha256(content_bytes).hexdigest(),
+            "byte_length": len(content_bytes),
+            "reader_tool_id": manifest["reader"]["tool_id"],
+            "pointer": "/call/arguments/content"}}
+    if receipt.call.name == "use_connector_tool" and receipt.output.get("source") == "stored_connector_result":
+        # A local page is already bounded. Keep its text and next offset visible;
+        # wrapping it again would force the model to reread what it just read.
+        from eva.providers.mcp_discovery import _arguments
+        reader, _ = _arguments(receipt.call)
+        match = re.fullmatch(re.escape(READER_PREFIX) + r"[0-9a-f]{64}:([0-9a-f]{64})", reader)
+        result = receipt.output.get("result")
+        pages = ([result] if isinstance(result, dict) and result.get("contract") == "EvaStoredConnectorPage/v1"
+                 else result.get("pages") if isinstance(result, dict) and result.get("contract") == "EvaStoredConnectorPages/v1" else None)
+        if (match is None or not isinstance(pages, list) or not 1 <= len(pages) <= 8
+                or receipt.output.get("external_state_verified") is not False
+                or result.get("sha256") != match[1] or result.get("external_state_verified") is not False
+                or len(_encoded(receipt.output)) > _BOUND
+                or any(not isinstance(page, dict) or page.get("contract") != "EvaStoredConnectorPage/v1"
+                       or page.get("sha256") != match[1] or page.get("external_state_verified") is not False
+                       or not isinstance(page.get("text"), str)
+                       or type(page.get("next_offset")) is not int or type(page.get("offset")) is not int
+                       or page["next_offset"] != page["offset"] + len(page["text"]) for page in pages)
+                or sum(len(page["text"]) for page in pages) > 8192):
+            raise ConversationConflict("retained local page contract or bound differs")
+        return arguments, receipt.output
     output = {key: receipt.output[key] for key in (
         "contract", "durable", "status", "source", "operation_kind", "external_state_verified")
         if key in receipt.output}

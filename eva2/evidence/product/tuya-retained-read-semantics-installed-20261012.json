@@ -1,0 +1,79 @@
+{
+  "contract": "EvaInstalledRetainedReadSemanticsCorrection/v1",
+  "recorded_at": "2026-10-12T17:14:03.519922+00:00",
+  "status": "installed",
+  "source_evidence": "eva2/evidence/product/tuya-retained-read-semantics-correction-20261012.json",
+  "source_evidence_sha256": "073bc1daa6635dcbb7782512637d06417e264c98afa2fe40107b90f358c3a840",
+  "source_review": "eva2/reviews/tuya-retained-read-semantics-source-review-20261012.json",
+  "source_review_sha256": "64ee6b0c4e613bc116f703b3fb3d935e21d4cded083db50cca485e3c58d83904",
+  "installation": {
+    "contract": "EvaInstalledRetainedReceiptProjection/v1",
+    "checkedAt": "2026-10-12T17:13:25.566620+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:26c7efde8fe708fca5f6cea1a2e7b8c29d6963b38d22f88ed26e5e0d5b59e25a",
+        "checks": {
+          "exactImage": true,
+          "healthy": true,
+          "exactPythonInventory": true,
+          "sameMounts": true,
+          "sameEnvironment": true,
+          "sameProcessConfiguration": true
+        },
+        "unchangedPythonSources": 344,
+        "exactModules": {
+          "adapters/postgres/connector_results.py": "dc4e7dbdf5a8b9f1278df016a520eddb6bf64956e9cf4ee2ca15416d582efce5",
+          "adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
+          "adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+        },
+        "inspectionSha256": "fbf602a9c02425a5be1585234b008cc306760feb12fc7c2747185732e2a7e82f"
+      },
+      "delegated-work-worker": {
+        "image": "sha256:4e512dcd9b4bd5c33c1c471128cb0d943c681b3669cc724eb97871faf656287e",
+        "checks": {
+          "exactImage": true,
+          "healthy": true,
+          "exactPythonInventory": true,
+          "sameMounts": true,
+          "sameEnvironment": true,
+          "sameProcessConfiguration": true
+        },
+        "unchangedPythonSources": 344,
+        "exactModules": {
+          "adapters/postgres/connector_results.py": "dc4e7dbdf5a8b9f1278df016a520eddb6bf64956e9cf4ee2ca15416d582efce5",
+          "adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
+          "adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+        },
+        "inspectionSha256": "6f181a3c823301ef08f3166a41b1f979612239dd2536cd8d8b4dcd225f54a58e"
+      }
+    },
+    "actualUpdateDispatches": 1,
+    "modelRequests": 0,
+    "sourceReviewSha256": "64ee6b0c4e613bc116f703b3fb3d935e21d4cded083db50cca485e3c58d83904",
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    }
+  },
+  "installation_binding_sha256": "ef271c893a153633b1aeec2b7cc40e7a70b6beea98e368f5821ec21234602ef0",
+  "original_scope_unchanged": true,
+  "data_and_other_source_code_preserved": true,
+  "actual_update_dispatches": 1,
+  "new_paid_comparison": false,
+  "ordinary_continuation": {
+    "status": "correction_saved",
+    "source_work_id": "work:eva-resume:64afb3c3-c192-5351-8c1c-3bb969cb4d66",
+    "dispatches": 1,
+    "receipt_sha256": "1409d1ab18fc60001f74102e2a046c8ade5b76700d6915ed95a4075e82bd6b28",
+    "preparation_sha256": "50375adf3d0eae4fe97514f4ef235780dcf2e2a539f7fff12a94b7630d3c1792",
+    "model_result_available": false,
+    "scope": "original_readonly_proposal_no_ha_migration_or_rename_before_approval"
+  },
+  "task_completion_proven": false,
+  "provider_savings_proven": false,
+  "full_aide2_completed": false,
+  "project_goal_status": "active"
+}

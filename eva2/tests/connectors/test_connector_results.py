@@ -337,7 +337,7 @@ def _retained_document():
     port, timeline, _, stopped, authorize = _retained_ha()
     port._action_names = ("save_workspace_document",)
     thread = port._thread_id(TURN, "save_workspace_document", 2)
-    arguments = {"path": "/proof-state/note.md", "content": "Retained document text. " * 2000}
+    arguments = {"path": "/proof-state/note.md", "content": "Retained document text. " * 2000, "component_step": None}
     admission = {"action_name": "save_workspace_document", "action_call_id": "saved-document",
         "action_arguments": arguments, "step_index": 2,
         "conversation_id": TURN.conversation_id, "principal_id": TURN.principal_id,
@@ -365,7 +365,13 @@ def test_ancestor_action_body_bounds_old_document_arguments_and_keeps_latest_exa
     full = PydanticConversationModel._phase_admission_body(prompt="", instructions="", prior_actions=(original,), completed_action=newer)
     assert view["input"][-1] == full["input"][-1]
     old_arguments = json.loads(view["input"][1]["arguments"])
-    assert old_arguments["model_view_encoding"] == "retained_action_arguments_v1"
+    assert old_arguments["path"] == original.call.arguments["path"]
+    assert old_arguments["component_step"] is None
+    content_view = old_arguments["content"]
+    assert content_view["model_view_encoding"] == "retained_document_content_v1"
+    assert content_view["byte_length"] == len(original.call.arguments["content"].encode("utf-8"))
+    assert content_view["original_content_sha256"] == hashlib.sha256(original.call.arguments["content"].encode("utf-8")).hexdigest()
+    assert content_view["pointer"] == "/call/arguments/content"
     assert json.loads(view["input"][2]["output"])["status"] == "verified"
     assert PydanticConversationModel._receipt_arguments(projected) == original.call.arguments
     assert PydanticConversationModel._receipt_presentation(projected) == original.output
@@ -423,9 +429,13 @@ def test_ancestor_action_body_rechecks_actor_execution_source_hash_and_stop():
 
 
 def test_ancestor_local_selection_stays_readable_without_external_dispatch():
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
     port, timeline, thread, _, authorize = _retained_ha()
+    timeline.rows[thread][0].payload["data"]["action_arguments"] = {"method": "GET", "path": "/api/config"}
     original = port._receipt(TURN, timeline.events(thread), 1, project=False)
     projected = port._receipt(TURN, timeline.events(thread), 1)
+    assert _encoded(PydanticConversationModel._receipt_arguments(projected, ancestor=True)) == _encoded(original.call.arguments)
+    assert PydanticConversationModel._receipt_arguments(projected, ancestor=True)["path"] == "/api/config"
     route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
         SimpleNamespace(supports_stored_results=True))
     route._execution_lock = lambda _: nullcontext()
@@ -437,6 +447,8 @@ def test_ancestor_local_selection_stays_readable_without_external_dispatch():
     selected = route.execute(TURN, call, step_index=2)
     assert selected.output["result"]["text"] == original.output["result"]["response_json"][:8192]
     assert "ancestor_model_projection" in selected.model_output
+    assert _encoded(PydanticConversationModel._receipt_arguments(selected, ancestor=True)) == _encoded(call.arguments)
+    assert PydanticConversationModel._receipt_arguments(selected, ancestor=True)["arguments_json"] == call.arguments["arguments_json"]
     body_reader = selected.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
     page = ConnectorResults(timeline, TURN, authorize).read(body_reader,
         {"pointer": "/output/result/text", "offset": 0, "limit": 30, "query": None})
@@ -464,9 +476,65 @@ def test_ancestor_presentation_reaches_sdk_wire_without_rewriting_newest_receipt
     assert bounded["input"][-2:] == full["input"][-2:]
     call = next(part for part in bounded["input"] if part.get("call_id") == original.call.call_id and part["type"] == "function_call")
     assert call["name"] == original.call.name
-    assert json.loads(call["arguments"])["model_view_encoding"] == "retained_action_arguments_v1"
+    rendered_arguments = json.loads(call["arguments"])
+    assert rendered_arguments["path"] == original.call.arguments["path"]
+    assert rendered_arguments["component_step"] is None
+    assert rendered_arguments["content"]["model_view_encoding"] == "retained_document_content_v1"
     assert _encoded([original.call.arguments, original.output, RECEIPT.output]) == before
     tokenizer = _input_tokenizer()
     full_bytes, bounded_bytes = (canonical_json_bytes(payload) for payload in payloads)
     assert len(bounded_bytes) < len(full_bytes) // 4
     assert len(tokenizer.encode_ordinary(bounded_bytes.decode())) < len(tokenizer.encode_ordinary(full_bytes.decode())) // 4
+
+
+def test_alternating_retained_document_and_ha_pages_remain_visible_on_sdk_wire(tmp_path, monkeypatch):
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from tests.model.test_pydantic_conversation_model import _phase_transport_adapter, _generate, RECEIPT
+    doc_port, timeline, doc_thread, _, authorize = _retained_document()
+    ha_port, ha_timeline, ha_thread, _, _ = _retained_ha()
+    timeline.rows.update(ha_timeline.rows)
+    ha_port._timeline = lambda _: timeline
+    doc = doc_port._receipt(TURN, timeline.events(doc_thread), 2)
+    ha = ha_port._receipt(TURN, timeline.events(ha_thread), 1)
+    route = PostgresExternalConversationTools(None, SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda _: nullcontext()
+    route._timeline = lambda _: timeline
+    route._ensure_running = authorize
+    doc_reader = doc.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    ha_reader = ha.model_output["result"]["reader"]["tool_id"]
+    def read(call_id, reader, pointer, step, batch=False):
+        selection = {"pointer": pointer, "offset": 0, "limit": 8192, "query": None}
+        args = {"selections": [selection]} if batch else selection
+        call = ConversationActionCall(call_id, "use_connector_tool", {"tool_id": reader, "arguments_json": json.dumps(args)})
+        return route.execute(TURN, call, step_index=step)
+    first_doc = read("first-doc-page", doc_reader, "/call/arguments/content", 3)
+    first_ha = read("first-ha-page", ha_reader, "/response_json", 4, batch=True)
+    repeat_doc = read("repeat-doc-page", doc_reader, "/call/arguments/content", 5)
+    receipts = (first_doc, first_ha, repeat_doc)
+    original = _encoded([[r.call.arguments, r.output] for r in (*receipts, RECEIPT)])
+    # These large pages each acquired a host body projection, validated before passthrough.
+    assert all("ancestor_model_projection" in r.model_output for r in receipts)
+    assert PydanticConversationModel._receipt_presentation(first_doc, ancestor=True) == first_doc.output
+    assert PydanticConversationModel._receipt_presentation(first_ha, ancestor=True) == first_ha.output
+    model, _, requests, _ = _phase_transport_adapter(tmp_path, monkeypatch, [("final_answer", ("Afgerond.",))])
+    assert _generate(model, prior_actions=receipts, completed_action=RECEIPT).text == "Afgerond."
+    outputs = {part["call_id"]: json.loads(part["output"]) for part in requests[0]["input"]
+               if part.get("type") == "function_call_output"}
+    doc_page = outputs[first_doc.call.call_id]["result"]
+    ha_page = outputs[first_ha.call.call_id]["result"]["pages"][0]
+    assert doc_page["text"] == first_doc.output["result"]["text"]
+    assert doc_page["next_offset"] == 8192 and doc_page["has_more"] is True
+    assert ha_page["text"] == first_ha.output["result"]["pages"][0]["text"]
+    assert ha_page["next_offset"] == 8192 and ha_page["has_more"] is True
+    repeated = outputs[repeat_doc.call.call_id]["result"]
+    assert repeated["model_view_call_id"] == first_doc.call.call_id
+    assert repeated["model_view_reference"] == "/result"
+    assert outputs[RECEIPT.call.call_id] == PydanticConversationModel._receipt_model_views((*receipts, RECEIPT))[-1]
+    assert _encoded([[r.call.arguments, r.output] for r in (*receipts, RECEIPT)]) == original
+    # Invalid local-page shape cannot bypass the original body/manifest validator.
+    injected = json.loads(_encoded(first_doc.model_output))
+    injected["ancestor_model_projection"]["source"]["receipt_sha256"] = "0" * 64
+    from eva.adapters.model.contracts import ConversationModelError
+    with pytest.raises(ConversationModelError, match="differs"):
+        PydanticConversationModel._receipt_presentation(replace(first_doc, model_output=injected), ancestor=True)

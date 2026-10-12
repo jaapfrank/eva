@@ -1,0 +1,63 @@
+{
+  "contract": "EvaOrdinaryRetainedProposalStoppedResult/v1",
+  "recorded_at": "2026-10-12T16:55:29.344001+00:00",
+  "work_id": "work:eva-resume:64afb3c3-c192-5351-8c1c-3bb969cb4d66",
+  "parent_work_id": "work:eva-resume:e8abf461-52b7-5732-a254-4bda7a1e8ff2",
+  "generation": 4,
+  "state": "stopped",
+  "stop_requested": true,
+  "original_task_unchanged": true,
+  "result_available": false,
+  "usage_report": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 25,
+    "tool_calls": 24,
+    "input_tokens": 922045,
+    "output_tokens": 4338,
+    "total_tokens": 926383,
+    "cost_usd_micros": null
+  },
+  "snapshot": {
+    "at": "2026-10-12T16:48:44Z",
+    "registered_model_requests": 25,
+    "fully_measured_model_requests": 24,
+    "pending_unknown_requests": 1,
+    "known_input_tokens": 922045,
+    "known_output_tokens": 4338,
+    "known_total_tokens": 926383,
+    "registered_model_tools": 24,
+    "all_new_actions": "use_connector_tool",
+    "source_sha256": "39d949fa6df4720c81df12c7261cb9682924c7f3f389b2957b4c9e8ad31125ed",
+    "complete_provider_total": null,
+    "credit_cost": null
+  },
+  "actual_semantic_defect": {
+    "small_original_arguments_hidden": true,
+    "original_small_argument_bytes_range": [
+      102,
+      586
+    ],
+    "large_document_argument_bytes": 9391,
+    "defect": "Large action-body threshold triggered replacement of every older call argument, including small meaningful HA paths and local-reader selectors.",
+    "causal_limit": "Proven source information loss and plausible extra-reader mechanism; not a proven exclusive explanation of all provider cost or model intent."
+  },
+  "proposal_preserved": {
+    "classification": "partial",
+    "bytes": 9240,
+    "sha256": "5bb4dd44c7ea0d71bbd2d9af1c086004393208e82334ca4eed889f2e1604c732",
+    "original_tool_path": "/proof-state/tuya-localtuya-migratievoorstel.md",
+    "shorter_alias_proven": false
+  },
+  "after_stop_binding": "9057a9c3998ec4b5e633368e3755432bef2c4a8b4bead1e2d38d30ab7a20f173",
+  "new_model_input_after_stop": 0,
+  "migration_completed": false,
+  "ha_mutation_evidence": false,
+  "scope": "No migration or rename before explicit owner approval",
+  "technical_source_installation_remains": true,
+  "provider_savings_proven": false,
+  "task_completion_proven": false,
+  "project_goal_status": "active",
+  "next": "Restore meaningful small arguments and evaluate whether observation ageing causes a reread loop before further paid input."
+}
