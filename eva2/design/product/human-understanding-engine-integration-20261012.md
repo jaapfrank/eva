@@ -12,9 +12,9 @@ Het ontwerp is een goede functionele richting, maar geen direct toepasbare imple
 
 | Vermogen | Hergebruiken | Nog af te maken |
 | --- | --- | --- |
-| Persoonsmodel | Getypeerde bron, tijd, privacy en model_inference_unconfirmed; correctie, vervanging en intrekking | Tegenbewijs koppelen en een voorlopige interpretatie bij later gedrag zichtbaar bijstellen |
+| Persoonsmodel | Getypeerde bron, tijd, privacy en model_inference_unconfirmed; correctie, vervanging en intrekking | HUE1.1 afgerond: tegenbewijs herziet voorlopige interpretatie en volgend relevant antwoord |
 | Patronen | Hindsight-synthese, persoonsobservaties en tijdlijn | HUE2.1 afgerond: later gebruik van meerdere ervaringen met herkenbare bronnen en zichtbaar tegenvoorbeeld |
-| Verwachtingen | Bestaand persoonsgeheugen en rustige reflectie | Vooraf verwachting vastleggen, later echte uitkomst verbinden en volgende afweging veranderen |
+| Verwachtingen | Bestaand persoonsgeheugen en rustige reflectie | HUE3.1 afgerond: verwachting gekoppeld aan echte gemelde uitkomst en volgende afweging |
 | Sociale context | Stijlspiegel en bestaande gewone feedbackroute | HUE4.1 afgerond: gewenste hulp bij ander onderwerp toegepast; behoefte blijft een vraag |
 | Initiatief | Initiatiefgeschiedenis, algemene werkuitvoering en privéresultaatroute | Authentieke voltooiing, ontvangerreactie en daarop aangepast later initiatief samen aantonen |
 | Leren en droommodus | Bestaande codevoorstellen, varianten, geïsoleerde beoordeling en toepassing | Agentaansturing en code of uitbreiding door de hele kringloop laten gaan, inclusief later gebruik |
@@ -78,3 +78,5 @@ HUE2.1 en HUE4.1 zijn volgens hun oorspronkelijke criteria onafhankelijk PASS en
 - [Onafhankelijke beoordeling](../../reviews/hue-pattern-social-later-use-installed-review-20261013.json).
 
 HUE5.1 blijft open voor een echte reactie op bestaande eigen bijdrage en later aangepast initiatief. De technische feedbackroute bestaat al; een geforceerde nieuwe bijdrage of tweede feedbackplatform is niet nodig.
+
+HUE5.1 registratiecontrole:7zelfgekozen initiatieven,3afgeronde eigen bijdragen,0gekoppelde ontvangerreacties. De route is aanwezig; echte feedback kan niet worden ingevuld door Codex. HUE6.1 gaat intussen zelfstandig verder, zonder nieuwe vergelijkingsserie.

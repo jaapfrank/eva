@@ -22,10 +22,11 @@ Native observaties blijven afzonderlijke gebeurtenissen; geen native geconsolide
 multibronrecord-, algemene privacy-, efficiëntie- of gezinsacceptatieclaim.
 
 Oorspronkelijke39/48 behouden; uitgebreid bord43/54. Volledig goal ACTIVE.
-Vervolg HUE5.1: bestaande eigen bijdrage en echte reactie in volgende initiatief-
-afweging. De technische route bestaat; eerst werkelijke registratie binden,
-geen nieuwe voorbeeldfunctie of geforceerde bijdrage. Daarna HUE6.1/AIDE² voor
-agentaansturing én code/uitbreidingen. Spraak geparkeerd, Docker Desktop ongemoeid.
+HUE5.1: de technische route bestaat. Huidige registratie telt7zelfgekozen
+initiatieven/3afgeronde eigen bijdragen, maar0gekoppelde ontvangerreacties. Echte
+feedback bij gewoon gebruik ontbreekt; niets verzinnen of geforceerd uitvoeren.
+Dit blokkeert ander werk niet. Vervolg HUE6.1/AIDE² voor agentaansturing én
+code/uitbreidingen via de bestaande route. Spraak geparkeerd, Docker Desktop ongemoeid.
 Resultaat: eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json.
 Review: eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json.
 
