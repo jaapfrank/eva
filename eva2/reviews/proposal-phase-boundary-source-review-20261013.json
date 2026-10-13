@@ -1,0 +1,23 @@
+{
+  "contract": "EvaCurrentDeliveryPhaseSourceReviewPublication/v1",
+  "verdict": "GO_SOURCE_BUILD_INSTALL_ONLY",
+  "privateSourceReviewSha256": "3fff25e007651b949f9e61f25bb224efb464ffaa1e4ade4b049fe92b36ab537c",
+  "sourceSha256": "7ba6e33ca70cc24aaa601dc00c0194256b98b9957fcde75ff5007e8c457e6161",
+  "scope": "Only bounded pure strategy literal; no executable/authority/evaluation-rule change.",
+  "tests": {
+    "candidate": "141 passed, 2 failed",
+    "matchingExactBaseline": "141 passed, same 2 failed",
+    "sourceBoundary": "PASS",
+    "failures": [
+      "Historical fixture expects old budget_exceeded but succeeds under retained profile.",
+      "Historical profile variant0 rejects incompatible grant before runner strategy."
+    ],
+    "failuresPreserved": true,
+    "noTestsChanged": true,
+    "testLogsPrivate": true
+  },
+  "result": "eva2/evidence/product/proposal-phase-boundary-installed-20261013.json",
+  "resultSha256": "6389bdef30044214e754ce7a12c4a623f4c9f2f3f93db5d4a6a29dc682b08578",
+  "generalBehaviorImprovement": "pending ordinary native completion",
+  "newInputAuthority": false
+}

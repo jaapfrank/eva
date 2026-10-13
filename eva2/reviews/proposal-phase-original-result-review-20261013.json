@@ -1,0 +1,26 @@
+{
+  "contract": "EvaOriginalProposalContentReviewPublication/v1",
+  "reviewedAt": "2026-10-13T03:06:57.351319+00:00",
+  "verdict": "PASS_CONTENT_ONLY",
+  "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+  "privateReviewSha256": "402763f6f9edd7747805242b7c4af54cbdaa94edc5a52f74b1116a4ef47d88a4",
+  "result": "eva2/evidence/product/proposal-phase-original-result-20261013.json",
+  "resultSha256": "df5e6a2d6e5de45eab05534357ee52b9019dfcc10821d5a7eea142a331cd3819",
+  "separateVerdicts": {
+    "originalProposalContent": "PASS",
+    "nativeWorkStatus": "FAILED/incomplete_work; preserved",
+    "savedArtifact": "Verified durable SAVE296; exact call content, expected/observed proof, volume and frozen copy agree at14736 bytes.",
+    "independentReadback": "Verified durable READ297; same text, with exactly one terminal LF removed. Readback is14735 bytes/SHA80ee69b9f60f2100b8acbba4c488749439cb4287c0ad145bbb05151b51660565, not the write hash.",
+    "deliveryOnOriginalIngress": "UNBOUND / not demonstrated",
+    "ownerApproval": "NOT demonstrated; required before any implementation",
+    "migrationOrHaChanges": "None in this bound execution",
+    "wholeUsageAndCredits": "UNKNOWN; current call measured, owner API remains partial and historical UNKNOWN/helper-cost limits remain"
+  },
+  "publicSafeConclusion": "Eva has authored and verifiably saved/read a useful conditional readonly migration proposal under the original criteria. Native Gen22 remains failed/incomplete_work, with no confirmed result delivery or implementation approval. This supports content PASS only; no HA migration, full audit, universal compatibility, efficiency gain or full project completion is proved.",
+  "limitations": [
+    "Remaining local access, mappings and relevant configuration must be settled or devices excluded before implementation.",
+    "No full current/future native input fit, costs, general superiority or household acceptance claim.",
+    "No historical failure, UNKNOWN, raw evidence, original criterion or task state was rewritten."
+  ],
+  "newInputAuthority": false
+}

@@ -1,0 +1,80 @@
+{
+  "contract": "EvaCurrentDeliveryPhaseInstalled/v1",
+  "checkedAt": "2026-10-13T03:16:24.801551+00:00",
+  "status": "installed",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "baselineSha256": "4e9c8f775dbb587967be9943c1ef7f17c4cb70f09ed2e2fdb9a194a4860e05b3",
+      "sha256": "7ba6e33ca70cc24aaa601dc00c0194256b98b9957fcde75ff5007e8c457e6161",
+      "scope": "Only pure _TaskModel._work_strategy literal"
+    }
+  ],
+  "generalChange": "Bind progress completion/blockers to the current requested delivery phase. Retain later implementation conditions in conditional proposals; preserve real missing research and required later approval.",
+  "codeGatesCriteriaRolesGrantsAndOtherSourcesUnchanged": true,
+  "independentSourceReviewSha256": "3fff25e007651b949f9e61f25bb224efb464ffaa1e4ade4b049fe92b36ab537c",
+  "services": {
+    "core": {
+      "image": "sha256:02a4cd768bc13f1e8b257579bedf466d55a1e99ddcbbc4f6876aed75428727a9",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "bootstrap/delegated_digital_runner.py": "7ba6e33ca70cc24aaa601dc00c0194256b98b9957fcde75ff5007e8c457e6161"
+      },
+      "inspectionSha256": "b4789e5b484c02a392c1df7bc9e42571fc554b6f8eb73e05002a8f01a37f3bc8"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:cf2c44866895c8ba094a550c5ac47f9d9aad17a1fafd4bcb7e2899987a2f3bc0",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "bootstrap/delegated_digital_runner.py": "7ba6e33ca70cc24aaa601dc00c0194256b98b9957fcde75ff5007e8c457e6161"
+      },
+      "inspectionSha256": "691799c98dbf1bd6a2bcf5f85b90ddf04a674f4e51147cd5439aabdb23111067"
+    }
+  },
+  "installationVerificationSha256": "d8751a6053a1f6e1bfe0a891679919be70b61a96a77ab1f4e3d86729d0ceeb79",
+  "actualRuntimeUpdates": 1,
+  "ready": true,
+  "tests": {
+    "candidate": "141 passed, 2 failed",
+    "matchingExactBaseline": "141 passed, same 2 failed",
+    "sourceBoundary": "PASS",
+    "failures": [
+      "Historical fixture expects old budget_exceeded but succeeds under retained profile.",
+      "Historical profile variant0 rejects incompatible grant before runner strategy."
+    ],
+    "failuresPreserved": true,
+    "noTestsChanged": true,
+    "testLogsPrivate": true
+  },
+  "preparationFailure": "Reused wrapper selected preceding-generation image manifest. Equality guard stopped before build/runtime changes. One path literal per wrapper was then bound to exact current installed manifest; original wrapper bytes preserved.",
+  "modelRequestsForCodeBuildInstall": 0,
+  "ordinaryContinuation": {
+    "generation": 23,
+    "workId": "work:eva-resume:4177703f-ddf0-5879-b739-f3d583baf42e",
+    "parentWorkId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
+    "created": true,
+    "resumeReceiptSha256": "8930ad950531a21ce6e696b6b7b54ed770ba4afe942009ec7f094be079aac612",
+    "newInstruction": false,
+    "criteriaGrantChanged": false,
+    "actualEndResult": "pending"
+  },
+  "pastNativeFailedAndUnknownPreserved": true,
+  "newComparisonSeries": false,
+  "wholeProjectComplete": false
+}

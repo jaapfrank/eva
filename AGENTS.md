@@ -1,4 +1,33 @@
-## Actueel 13 oktober — providerfout gesloten; Eva vervolgt vanaf eigen bevindingen
+## Actueel 13 oktober — Eva schreef bruikbaar voorstel; algemene opleverfase gecorrigeerd
+
+De oorspronkelijke inhoudelijke review van Gen22 is PASS: Eva schreef zelf een
+bruikbaar voorwaardelijk readonly voorstel en las het apart terug. 14.736 bytes,
+SHA33c1204d; teruglezing mist alleen één terminale LF. Geen HA-mutatie of akkoord
+voor uitvoering. Gen22 blijft native FAILED/incomplete_work en levering UNBOUND.
+Acht volledig gemeten/gesloten aanvragen, 411.642 tokens, zeven tools; huidige
+UNKNOWN/inflight nul. APIpartial, oude UNKNOWN en onbekende credits blijven staan.
+
+De algemene uitvoerder hield de afhankelijkheidsstap blocked omdat controles
+vóór latere migratie nog nodig zijn. Die behoren niet tot de huidige voorstel-
+oplevering. Alleen de algemene strategieliteral is gecorrigeerd en geïnstalleerd:
+runner7ba6e33c in gezonde kern/werker, 344 overige bronnen per image, configuratie,
+mounts, mandaat, oorspronkelijke criteria/modelrollen en echte blocked-gates gelijk.
+141 controles slagen; twee identieke bestaande baselinefouten zijn bewaard, geen
+testregels gewijzigd. Onafhankelijke bronreview GO. Eén update, geen rollback.
+De hergebruikte wrapper wees eerst naar een oude imagemap; de gelijkheidscontrole
+stopte vóór bouwen/installeren. Alleen die manifestbinding gericht gecorrigeerd.
+
+Eén gewone voortzetting Gen23 vanuit Eva's eigen voorstel en werknotities loopt:
+work:eva-resume:4177703f-ddf0-5879-b739-f3d583baf42e. Geen nieuw voorstel van Codex,
+nieuwe instructie, vergelijkingsserie of wijziging van criteria/grant. Eva moet zelf
+haar huidige opleverfase afsluiten en het echte resultaat terugbrengen. Gedragswinst
+wacht op dat eindbewijs. Volledig goal ACTIVE; 39/48 en 39/54 onveranderd. HUE,
+leercyclus en AIDE² blijven open; spraak geparkeerd, Docker Desktop ongemoeid.
+Resultaat: eva2/evidence/product/proposal-phase-original-result-20261013.json.
+Installatie: eva2/evidence/product/proposal-phase-boundary-installed-20261013.json.
+Review: eva2/reviews/proposal-phase-boundary-source-review-20261013.json.
+
+## Historisch 13 oktober — providerfout gesloten; Eva vervolgt vanaf eigen bevindingen
 
 De geïnstalleerde algemene contextcorrectie blijft behouden. Gen21 las acht
 verdere automatiseringsconfiguraties volledig, maar schreef geen nieuw voorstel.

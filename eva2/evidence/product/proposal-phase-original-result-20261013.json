@@ -1,0 +1,52 @@
+{
+  "contract": "EvaOriginalProposalCurrentPhaseResult/v1",
+  "checkedAt": "2026-10-13T03:11:46.792773+00:00",
+  "workId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
+  "generation": 22,
+  "nativeStatus": "failed",
+  "nativeError": "incomplete_work",
+  "nativeResultAvailable": false,
+  "originalContentVerdict": "PASS",
+  "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+  "independentPrivateReviewSha256": "402763f6f9edd7747805242b7c4af54cbdaa94edc5a52f74b1116a4ef47d88a4",
+  "document": {
+    "path": "/proof-state/tuya-localtuya-migratievoorstel.md",
+    "bytes": 14736,
+    "sha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+    "savedByEva": true,
+    "writeStep": 296,
+    "separateReadStep": 297,
+    "readBytes": 14735,
+    "readSha256": "80ee69b9f60f2100b8acbba4c488749439cb4287c0ad145bbb05151b51660565",
+    "readEquality": "same text; precisely one terminal LF absent"
+  },
+  "progress": {
+    "revision": 35,
+    "inventory": "done",
+    "dependencies": "blocked",
+    "proposal": "done",
+    "modelReportedOnly": true
+  },
+  "currentCallAccounting": {
+    "admitted": 8,
+    "measured": 8,
+    "streamsClosed": 8,
+    "currentUnknown": 0,
+    "inflight": 0,
+    "inputTokens": 405801,
+    "outputTokens": 5841,
+    "totalTokens": 411642,
+    "tools": 7,
+    "ownerApiMeasurement": "partial",
+    "creditCosts": null,
+    "historicalUnknownPreserved": true
+  },
+  "nativeCause": "Current dependencies step marked blocked; runner rejects returned answer with unfinished plan. No new provider/input-budget failure.",
+  "scopeConclusion": "Useful conditional readonly proposal meets original content criteria. Remaining implementation access/mapping/physical conditions are preserved; implementation needs later owner approval.",
+  "deliveryOnOriginalIngress": "UNBOUND",
+  "haChanges": 0,
+  "newComparisonSeries": false,
+  "wholeProjectComplete": false,
+  "newInputAuthority": false,
+  "terminalPrivateEvidenceSha256": "c88bf7ecfc80c710467be72c086d695804f3a7a661485e7a73af8af3403d309c"
+}

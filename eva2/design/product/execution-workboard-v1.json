@@ -5549,77 +5549,92 @@
         "now": {
           "title": "Eva maakt haar oorspronkelijke voorstel zelf af",
           "state": "in_progress",
-          "phase": "eva_continuing_after_provider_readiness",
-          "taskId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
+          "phase": "eva_closing_current_proposal_phase",
+          "taskId": "work:eva-resume:4177703f-ddf0-5879-b739-f3d583baf42e",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
             "HUE3.1"
           ],
-          "activeExecution": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
+          "activeExecution": "work:eva-resume:4177703f-ddf0-5879-b739-f3d583baf42e",
           "owner": "/root",
           "executor": "Eva · gewone algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Algemene contextcorrectie geïnstalleerd. Gen21 las nieuwe bronnen maar stopte in de providerstream; voorstel nog niet af. Eva vervolgt nu vanaf de bewaarde werknotities.",
-          "detail": "Het nieuwe document wordt onder de oorspronkelijke voorwaarden beoordeeld. Codex verhelpt de concrete vervolgcontext; geen handgeschreven voorstel, ongewijzigde herhaling of HA-mutatie.",
+          "summary": "Eva heeft zelf een bruikbaar voorwaardelijk voorstel opgeslagen en teruggelezen. De inhoudelijke beoordeling is geslaagd; de uitvoerder hield latere migratievoorwaarden als blokkade van deze voorstelopdracht vast.",
+          "detail": "De algemene werkstrategie wordt gecorrigeerd: huidige oplevering en uitvoering na later akkoord onderscheiden. Geen handgeschreven voorstel, nieuwe vergelijkingsserie of HA-wijziging.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-strategy-installed-20261013.json",
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/working-source-sections-ordinary-result-20261013.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/working-source-sections-ordinary-result-review-20261013.json",
           "previousResultReviewSha256": "9e34412371c2de088859aecb07e78bc1f94fbb62434a427477343be1276b2afa",
-          "implementationStatus": "Kern en taakwerker bevatten de twee exact beoordeelde modules; beide gezond en ready.",
-          "currentActivity": "Dezelfde provider antwoordt weer in één kleine gecontroleerde aanvraag. Eva vervolgt haar oorspronkelijke voorstel vanuit bewaarde nieuwe configuratiebevindingen en werknotities.",
-          "checkedAt": "2026-10-13T02:54:15.004637+00:00",
+          "implementationStatus": "general_phase_strategy_installed",
+          "currentActivity": "De algemene opleverfasecorrectie is geïnstalleerd. Eva vervolgt vanuit haar eigen opgeslagen voorstel om haar huidige voorstelopdracht af te sluiten; eindresultaat/levering nog niet waargenomen.",
+          "checkedAt": "2026-10-13T03:16:24.801551+00:00",
           "remaining": [
-            "Het werkelijke nieuwe voorstel onafhankelijk beoordelen onder de oorspronkelijke voorwaarden.",
-            "De aangetoonde invoerfout in de algemene vervolgroute oplossen en Eva zelf de uitkomst laten afronden.",
-            "HA-migratie gebeurt pas na apart akkoord op het voorstel."
+            "Eva moet zelf de huidige voorstelopdracht met juiste voortgang afronden.",
+            "Werkelijk resultaat en beschikbare opleverroute controleren."
           ],
           "nativeRunning": true,
           "observedUsage": {
-            "workId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
-            "generation": 22,
+            "workId": "work:eva-resume:4177703f-ddf0-5879-b739-f3d583baf42e",
+            "generation": 23,
             "measurement": "unknown_until_observed",
             "modelRequests": null,
             "totalTokens": null,
             "creditCosts": null
           },
           "currentObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-terminal-observation.private.json",
-            "sha256": "bb366199f12696bddf212a680ac116daad192c44a58c7aa4303d9dcae1f8b6a2"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen22-owner-status3.private.json",
+            "sha256": "d60f02b2b0a4895a1f247dcd9ec0b0efd36b6cfaca62afc21e8580817c25fe38",
+            "state": "failed",
+            "errorCode": "incomplete_work"
           },
-          "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/historical-execution-context-source-review-20261013.json",
-          "sourceReviewSha256": "f744929ed20603df7eab9ccf9cd97943192bf29ddf44f73227ac3b309c8030b9",
-          "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-execution-context-installed-20261013.json",
+          "sourceReview": "eva2/reviews/proposal-phase-boundary-source-review-20261013.json",
+          "sourceReviewSha256": "03e47f3f54581fb64d5537a9a83d5243dcbea24f4778249aa383247e277cea6b",
+          "installedEvidence": "eva2/evidence/product/proposal-phase-boundary-installed-20261013.json",
           "sourceEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/post-read-context-installed-20261013.json",
           "sourceEvidenceSha256": "5ad0e52d7de9144bcf6e2219c540b23d6bb53704cd1626061a59da0ae668f41b",
-          "installedEvidenceSha256": "5ad0e52d7de9144bcf6e2219c540b23d6bb53704cd1626061a59da0ae668f41b",
+          "installedEvidenceSha256": "6389bdef30044214e754ce7a12c4a623f4c9f2f3f93db5d4a6a29dc682b08578",
           "previousObservation": {
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation-final.private.json",
             "sha256": "2df139a56d60e32097eb7762a4292d4cfb14b4db6e88304fcc11cc33a4af57f0"
           },
           "progressObservation": {
-            "revision": 31,
-            "independentlyVerified": false,
-            "origin": "Gen20_saved_work_notes_not_final_result"
+            "revision": 35,
+            "steps": [
+              {
+                "id": "inventory",
+                "state": "done"
+              },
+              {
+                "id": "dependencies",
+                "state": "blocked"
+              },
+              {
+                "id": "proposal",
+                "state": "done"
+              }
+            ],
+            "modelReportedOnly": true
           },
           "previousObservedUsage": {
-            "workId": "work:eva-resume:868d61d4-6b0c-5901-aeea-cc44be2af09e",
-            "generation": 21,
-            "measurement": "terminal_accounting_known_lower_bound",
-            "admittedRequests": 16,
-            "completedMeasuredResponses": 15,
-            "failedUnmeasuredResponses": 1,
+            "workId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
+            "generation": 22,
+            "measurement": "terminal_accounting_measured",
+            "admittedRequests": 8,
+            "completedMeasuredResponses": 8,
             "pendingRequests": 0,
-            "currentUnknownRequests": 1,
-            "inputTokens": 759306,
-            "outputTokens": 2976,
-            "knownTokens": 762282,
-            "tools": 15,
+            "currentUnknownRequests": 0,
+            "inputTokens": 405801,
+            "outputTokens": 5841,
+            "knownTokens": 411642,
+            "totalTokens": 411642,
+            "tools": 7,
             "creditCosts": null,
-            "wholeTotalConfirmed": false
+            "wholeTotalConfirmed": true,
+            "historicalUnknownPreserved": true
           },
-          "pendingSourceSha256": null,
+          "pendingSourceSha256": "7ba6e33ca70cc24aaa601dc00c0194256b98b9957fcde75ff5007e8c457e6161",
           "pendingKnownContextCheck": {
             "status": "known281_pass",
             "source": {
@@ -5632,7 +5647,7 @@
             "wholeProposalConfirmed": false,
             "currentModelRequests": 0
           },
-          "updatedAt": "2026-10-13T02:54:15.004637+00:00",
+          "updatedAt": "2026-10-13T03:16:24.801551+00:00",
           "previousTerminalObservations": {
             "terminalObservation": {
               "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",
@@ -5657,8 +5672,10 @@
             }
           },
           "accountingObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-terminal-observation.private.json",
-            "sha256": "bb366199f12696bddf212a680ac116daad192c44a58c7aa4303d9dcae1f8b6a2"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen22-terminal-accounting.private.json",
+            "sha256": "53f484275a827b876c7fb164ff74f9c9fd3346796e6da23026b4294a7bdf096b",
+            "observedAt": "2026-10-13T03:00:27.081002+00:00",
+            "state": "failed"
           },
           "ownerActionNeeded": false,
           "previousProgressObservation": {
@@ -5710,20 +5727,30 @@
           },
           "previousInstalledReview": "eva2/reviews/research-material-context-installed-review-20261013.json",
           "previousInstalledReviewSha256": "8d3d69437bef04a8afdfbcf17edef4c0b8d996337c844148b448af29ca1eb7d1",
-          "installedReview": "/home/administrator/project/Eva2/eva2/reviews/historical-execution-context-source-review-20261013.json",
-          "installedReviewSha256": "4ce03885620b8e89544bbd01989a42de7e31b1336675e51e28b071575f7953b6",
+          "installedReview": "eva2/reviews/proposal-phase-boundary-source-review-20261013.json",
+          "installedReviewSha256": "03e47f3f54581fb64d5537a9a83d5243dcbea24f4778249aa383247e277cea6b",
           "currentActivityOwner": "Eva",
-          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-ordinary-result-20261013.json",
-          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/historical-context-ordinary-result-review-20261013.json",
+          "currentResultEvidence": "eva2/evidence/product/proposal-phase-original-result-20261013.json",
+          "currentResultReview": "eva2/reviews/proposal-phase-original-result-review-20261013.json",
           "currentReadback": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen19-current-document-readback.private.json",
-            "sha256": "91f1356e502e99de4b3c6dae8e9682425bbd5196c2da4d29554c0cac0ee874e1",
-            "separateEvaAction": true,
-            "currentArtifactBytesExactExceptOneTerminalLF": true
+            "workId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
+            "generation": 22,
+            "documentPath": "/proof-state/tuya-localtuya-migratievoorstel.md",
+            "bytes": 14736,
+            "sha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+            "saveStep": 296,
+            "independentReadbackStep": 297,
+            "stateVerified": true,
+            "readbackMatchesWithSingleTerminalLfNormalization": true,
+            "contentAssessment": "pending_original_criteria_review",
+            "nativeCompletion": "not yet observed",
+            "proofPath": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen22-current2-document-proof.private.json",
+            "proofSha256": "a2be693ab019d03074fe6f727fffeb78558a97f488ee32cc126f33d071b110cf"
           },
           "ordinaryResumeEvidence": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen22-ordinary-resume-receipt.private.json",
-            "sha256": "b04866f1fd72a5561c0220533038b408c62591392042fd3f7e130c86a7d5709e"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/proposal-phase-boundary-v1/ordinary-resume-receipt.private.json",
+            "sha256": "8930ad950531a21ce6e696b6b7b54ed770ba4afe942009ec7f094be079aac612",
+            "generation": 23
           },
           "priorCorrectionEndpointFailure": {
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/continuation-receipt.private.json",
@@ -5740,17 +5767,23 @@
             "largerRevisedArtifactAndDynamicFit": "UNKNOWN"
           },
           "actualArtifactObservation": {
-            "bytes": 11961,
-            "sha256": "561346867e1f620516fce322d58d6b3c766b7b7fa5195ea0656cf1f1ff185e41",
-            "savedByEva": true,
-            "separateEvaRead": true,
-            "terminalLFNormalization": true,
-            "originalContentVerdict": "INCOMPLETE",
-            "nativeState": "ambiguous",
-            "nativeError": "internal_error"
+            "workId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
+            "generation": 22,
+            "documentPath": "/proof-state/tuya-localtuya-migratievoorstel.md",
+            "bytes": 14736,
+            "sha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+            "saveStep": 296,
+            "independentReadbackStep": 297,
+            "stateVerified": true,
+            "readbackMatchesWithSingleTerminalLfNormalization": true,
+            "contentAssessment": "PASS_ORIGINAL_CONTENT_ONLY",
+            "nativeCompletion": "failed",
+            "proofPath": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen22-current2-document-proof.private.json",
+            "proofSha256": "a2be693ab019d03074fe6f727fffeb78558a97f488ee32cc126f33d071b110cf",
+            "nativeErrorCode": "incomplete_work"
           },
-          "currentResultEvidenceSha256": "47e6b6f06c2ddf268de37a0ff3bb18252311a666b4551d130854fa981807999b",
-          "currentResultReviewSha256": "11ce0649bebcd468152d3977807aae33f8c83c0a53a8a4ab333c605035d882c1",
+          "currentResultEvidenceSha256": "df5e6a2d6e5de45eab05534357ee52b9019dfcc10821d5a7eea142a331cd3819",
+          "currentResultReviewSha256": "c5ab9ad8a66b8c4e8340c2ee214944386936fcd2f746e12e27a77ea042f32c36",
           "pendingImplementation": {
             "providerSha256": "cc1ece369fbaa9c3bfe7301009492e9343096c2b293ce05179ef54c7a8046d7a",
             "connectorResultsSha256": "cbc847a013e2a38895338c7e940a1cd7e10d6d10a62f913a98939910b8053716",
@@ -5774,6 +5807,16 @@
             "requests": 1,
             "knownTokens": 25,
             "oldFailureReason": "UNKNOWN"
+          },
+          "previousArtifactObservation": {
+            "bytes": 11961,
+            "sha256": "561346867e1f620516fce322d58d6b3c766b7b7fa5195ea0656cf1f1ff185e41",
+            "savedByEva": true,
+            "separateEvaRead": true,
+            "terminalLFNormalization": true,
+            "originalContentVerdict": "INCOMPLETE",
+            "nativeState": "ambiguous",
+            "nativeError": "internal_error"
           }
         },
         "next": {
