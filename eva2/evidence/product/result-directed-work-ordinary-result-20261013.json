@@ -1,0 +1,63 @@
+{
+  "contract": "EvaOrdinaryWorkResult/v1",
+  "workId": "work:eva-resume:51cdd3a1-abfd-5041-819c-8b99350125dc",
+  "parentWorkId": "work:eva-resume:0fb9c284-50a7-5851-97ce-61fed6c99498",
+  "generation": 18,
+  "checkedAt": "2026-10-13T01:16:50.082462+00:00",
+  "state": "failed",
+  "errorCode": "input_budget_exceeded",
+  "nativeErrorCode": "budget_exceeded",
+  "originalTaskCompleted": false,
+  "newProductFunctionCompleted": false,
+  "currentExecutionUsageComplete": true,
+  "knownMeasuredUsage": {
+    "input_tokens": 53924,
+    "model_attempts": 1,
+    "output_tokens": 3554,
+    "tool_calls": 1,
+    "total_tokens": 57478
+  },
+  "currentUnknownRequests": 0,
+  "ownerApiUsageMeasurement": "partial",
+  "historicalTotalTokens": null,
+  "creditCosts": null,
+  "elapsedSeconds": 207.0,
+  "originalDeadlineReached": false,
+  "document": {
+    "byte_length": 12868,
+    "sha256": "89a97ad45b1b78654b6218090977f5cf882b7a59f98a668da8cbf578515f5dd1",
+    "previous_byte_length": 10732,
+    "previous_sha256": "969224f39a40621dc757e0ccf5c220ce987fd80b99e274fbedece7b4a30946d3",
+    "newWriteReceipts": 1,
+    "saveVerified": true,
+    "separateEvaReadbackCalls": 0,
+    "independentVolumeReadVerified": true
+  },
+  "homeAssistantChangesObserved": 0,
+  "independentReview": "INCOMPLETE",
+  "findings": [
+    "Eva itself incorporated confirmed device mappings, registry naming, indirect groups and recorder metadata into the requested proposal.",
+    "The next request failed the local input gate before a second provider admission; task request/tool allocation was not exhausted.",
+    "Accessible dashboard and dependency observations remain unsynthesized; original proposal delivery and fresh Eva readback remain open.",
+    "The exact refused envelope was not retained; no specific duplicate is claimed as the exclusive cause."
+  ],
+  "references": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/gen18-terminal-observation.private.json",
+      "sha256": "84a5684c697340bd9e72ad69c358df358427340426cfe5d7069f27477278da83"
+    },
+    "originalReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/gen18-original-proposal-end-review.private.json",
+      "sha256": "3ede4cc31bb0b31f0e4a8baeee2c682e87de596d66ed8b696c5a93ae9349e921"
+    },
+    "document": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/gen18-terminal-document.private.json",
+      "sha256": "470f4f9d25e842a6d3794893c86e5cda5383acc0576df47b0801db2ffe3c401b"
+    },
+    "accounting": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/gen18-terminal-accounting.private.json",
+      "sha256": "34ee23397583722eca31dffd73dba6293058546fb70f13b3e39bcbc43e463679"
+    }
+  },
+  "next": "Correct the concrete post-write context misfit using existing scoped history; only Eva completes and reads back the original proposal. No comparison series."
+}

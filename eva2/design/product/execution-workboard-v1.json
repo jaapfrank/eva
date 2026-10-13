@@ -1024,6 +1024,14 @@
         "checkedAt": "2026-10-13T01:03:23.746179+00:00",
         "deliveries": [
           {
+            "title": "Eva heeft het oorspronkelijke voorstel zelf bijgewerkt",
+            "state": "incomplete",
+            "summary": "Nieuwe inhoud duurzaam opgeslagen. Contextfout vóór vervolgcall; onafhankelijke eindreview nog INCOMPLETE. Geen volledige functie afgerond.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-ordinary-result-20261013.json",
+            "checkedAt": "2026-10-13T01:16:50.082462+00:00",
+            "newProductFunctionCompleted": false
+          },
+          {
             "title": "Algemene resultaatgerichte werkstrategie geïnstalleerd",
             "state": "installed",
             "summary": "Eva krijgt prioriteit om beschikbare bevindingen in het gevraagde document te verwerken. Werkelijke taakafronding nog open.",
@@ -5523,45 +5531,50 @@
           }
         ],
         "now": {
-          "title": "Eva werkt aan haar eigen voorstel",
+          "title": "Eva heeft haar voorstel bijgewerkt; afronding nog open",
           "state": "in_progress",
-          "phase": "result_directed_ordinary_work",
+          "phase": "post_artifact_write_admission_repair",
           "taskId": "work:eva-resume:51cdd3a1-abfd-5041-819c-8b99350125dc",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
             "HUE3.1"
           ],
-          "activeExecution": "Gen18 · gewone oorspronkelijke leesbare voorstelopdracht",
+          "activeExecution": null,
           "owner": "/root",
           "executor": "Eva · gewone algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De resultaatgerichte werkstrategie is geïnstalleerd. Eva verwerkt nu haar bevindingen in het bestaande gevraagde voorstel; afronding nog niet bevestigd.",
+          "summary": "Het voorstel is door Eva zelf opgeslagen met nieuwe mappings en afhankelijkheden. De volgende context paste niet binnen de invoergrens; teruglezing en eindoplevering zijn nog niet gelukt.",
           "detail": "Alleen de algemene werkstrategie is veranderd. Geen Tuya-script of door Codex geschreven voorstel. Het oorspronkelijke voorstel en afzonderlijke migratiegoedkeuring blijven leidend.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-strategy-installed-20261013.json",
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/working-source-sections-ordinary-result-20261013.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/working-source-sections-ordinary-result-review-20261013.json",
           "previousResultReviewSha256": "9e34412371c2de088859aecb07e78bc1f94fbb62434a427477343be1276b2afa",
-          "implementationStatus": "Werkstrategie geïnstalleerd; Eva’s werkelijke voorsteluitkomst nog open",
-          "currentActivity": "Eva werkt zelf verder met haar bestaande document en bevestigde bevindingen. Eerst opslaan en teruglezen, daarna alleen noodzakelijke resterende vragen.",
-          "checkedAt": "2026-10-13T01:03:23.746179+00:00",
+          "implementationStatus": "Resultaatgerichte werkstrategie geïnstalleerd; eerste echte documentupdate bevestigd door volumeread, taskreceiptbinding wordt gecontroleerd.",
+          "currentActivity": "De bestaande vervolgcontext herstellen na de echte documentupdate; geen nieuwe vergelijking of handgeschreven voorstel.",
+          "checkedAt": "2026-10-13T01:08:55.559269+00:00",
           "remaining": [
             "Eva verwerkt beschikbare brongegevens tot het oorspronkelijke complete voorstel, bewaart dit en leest het terug.",
             "Beoordeel het werkelijk door Eva gemaakte resultaat onder de oorspronkelijke voorwaarden.",
             "HA-migratie gebeurt pas na apart akkoord op dat voorstel."
           ],
-          "nativeRunning": true,
+          "nativeRunning": false,
           "observedUsage": {
             "workId": "work:eva-resume:51cdd3a1-abfd-5041-819c-8b99350125dc",
             "generation": 18,
-            "measurement": "not_yet_observed",
-            "knownTokens": null,
+            "measurement": "terminal_accounting_verified",
+            "completeMeasuredResponses": 1,
+            "inputTokens": 53924,
+            "outputTokens": 3554,
+            "knownTokens": 57478,
+            "tools": 1,
+            "currentUnknownRequests": 0,
             "creditCosts": null
           },
           "currentObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/continuation-work-first.private.json",
-            "sha256": "7c70e05e0ba0143e5d7130f743d1f2579a51b011fb4cc2ccea6bb2a7c8ae5d49"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/continuation-work-status3.private.json",
+            "sha256": "ee88b91aee3d8da53ae4f8844ef2a87b7670c6e14799aa7772fc6aa512ecc4c8"
           },
           "sourceReview": "eva2/reviews/result-directed-work-strategy-source-review-20261013.json",
           "sourceReviewSha256": "a246030d21b5b6c69a64913e24346bc58589890b2a86d50e31b7bb0ce3c3be85",
@@ -5590,7 +5603,8 @@
                 "state": "blocked"
               }
             ],
-            "independentlyVerified": false
+            "independentlyVerified": false,
+            "origin": "inherited_from_closed_Gen17_not_current_completion"
           },
           "previousObservedUsage": {
             "workId": "work:eva-resume:0fb9c284-50a7-5851-97ce-61fed6c99498",
@@ -5620,7 +5634,7 @@
             "actualRecallAndFutureFit": "UNKNOWN",
             "currentModelRequests": 0
           },
-          "updatedAt": "2026-10-13T01:03:23.746179+00:00",
+          "updatedAt": "2026-10-13T01:16:50.082462+00:00",
           "previousTerminalObservations": {
             "terminalObservation": {
               "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",
@@ -5644,7 +5658,10 @@
               "revision": 20
             }
           },
-          "accountingObservation": null,
+          "accountingObservation": {
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/gen18-terminal-observation.private.json",
+            "sha256": "84a5684c697340bd9e72ad69c358df358427340426cfe5d7069f27477278da83"
+          },
           "ownerActionNeeded": false,
           "previousProgressObservation": {
             "revision": 24,
@@ -5696,7 +5713,16 @@
           "previousInstalledReview": "eva2/reviews/research-material-context-installed-review-20261013.json",
           "previousInstalledReviewSha256": "8d3d69437bef04a8afdfbcf17edef4c0b8d996337c844148b448af29ca1eb7d1",
           "installedReview": null,
-          "installedReviewSha256": null
+          "installedReviewSha256": null,
+          "currentActivityOwner": "Codex",
+          "currentResultEvidence": {
+            "path": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-ordinary-result-20261013.json",
+            "sha256": "4c8a7f320f937e4c221dcfa0fbb2625a1d812dd3eb1e9ad64634245da0bb8494"
+          },
+          "currentResultReview": {
+            "path": "/home/administrator/project/Eva2/eva2/reviews/result-directed-work-ordinary-result-review-20261013.json",
+            "sha256": "4aa3248cbf7f0a9d54b495109f7d0b9157dc3aad88ae620965a1d7dfebd80667"
+          }
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -6070,7 +6096,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-13T01:03:23.746179+00:00"
+        "updatedAt": "2026-10-13T01:08:55.559269+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
       "checkedAt": "2026-10-12T17:35:20.475696+00:00",

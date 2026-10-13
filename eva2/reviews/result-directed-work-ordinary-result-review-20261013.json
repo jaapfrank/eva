@@ -1,0 +1,25 @@
+{
+  "contract": "EvaPublishedOriginalProposalReview/v1",
+  "checkedAt": "2026-10-13T01:16:50.082462+00:00",
+  "verdict": "INCOMPLETE",
+  "generation": 18,
+  "originalCriteriaChanged": false,
+  "separateVerdicts": {
+    "content": "INCOMPLETE but substantively improved useful intermediate",
+    "physicalStorage": "VERIFIED",
+    "independentObserverVolumeRead": "VERIFIED",
+    "subsequentEvaToolReadback": "NOT_OBSERVED",
+    "nativeCompletion": "FAILED",
+    "originalResultDelivery": "UNBOUND"
+  },
+  "artifactSha256": "89a97ad45b1b78654b6218090977f5cf882b7a59f98a668da8cbf578515f5dd1",
+  "privateIndependentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/gen18-original-proposal-end-review.private.json",
+    "sha256": "3ede4cc31bb0b31f0e4a8baeee2c682e87de596d66ed8b696c5a93ae9349e921"
+  },
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-ordinary-result-20261013.json",
+    "sha256": "4c8a7f320f937e4c221dcfa0fbb2625a1d812dd3eb1e9ad64634245da0bb8494"
+  },
+  "scope": "Independent original-content review published without private household contents. No full function or owner acceptance."
+}

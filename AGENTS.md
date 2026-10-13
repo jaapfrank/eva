@@ -1,4 +1,24 @@
-## Actueel 13 oktober — kleine gelezen passages bruikbaar houden; Eva schrijft haar eigen voorstel
+## Actueel 13 oktober — Eva schrijft zelf; vervolgcontext nog herstellen
+
+Gen18 is gesloten na één echte, geverifieerde documentwrite door Eva. Het voorstel
+is 12.868 bytes; call, bewijs en onafhankelijke volumeteruglezing zijn gelijk.
+Nieuwe mappings, registrygegevens, groepen en statistiek zijn verwerkt.
+Onafhankelijke oorspronkelijke eindreview: INCOMPLETE; beschikbare dashboard- en
+afhankelijkheidsgegevens, afzonderlijke Eva-teruglezing en eindoplevering blijven open.
+Eén volledig gemeten en gesloten aanvraag, één tool, 57.478 tokens; huidige UNKNOWN0.
+De volgende aanvraag werd lokaal geweigerd vóór modeldispatch wegens invoergrootte;
+het taakbudget en de deadline waren niet uitgeput. Exact geweigerde context onbekend.
+
+Herstel gericht de bestaande contextopbouw na de nieuwe write. Geen blinde herhaling,
+handgeschreven voorstel, nieuwe vergelijkingsserie of gewijzigde criteria/grant/rollen.
+Alleen Eva maakt het voorstel af. Geen HA-mutatie; migratie pas na apart akkoord.
+Volledig goal ACTIVE; 39/48 en 39/54 onveranderd. HUE/leercyclus/AIDE² open.
+Spraak geparkeerd; ongebruikte Docker Desktop ongemoeid.
+
+Resultaat: eva2/evidence/product/result-directed-work-ordinary-result-20261013.json.
+Review: eva2/reviews/result-directed-work-ordinary-result-review-20261013.json.
+
+## Historisch 13 oktober — kleine gelezen passages bruikbaar houden; Eva schrijft haar eigen voorstel
 
 Providercf713 is na onafhankelijke bron-/bouwGO in kern en taakwerker geïnstalleerd.
 Eén gewijzigde module,344 andere Pythonbronnen perimage en mounts/configuratie behouden;
