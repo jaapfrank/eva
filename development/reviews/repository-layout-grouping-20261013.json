@@ -1,0 +1,28 @@
+{
+  "contract": "EvaRepositoryLayoutReview/v1",
+  "verdict": "GO",
+  "reviewedAt": "2026-10-13T12:14:54.168343+00:00",
+  "scope": "Administrative repository grouping, source locator coherence and exact preservation; not product completion or a full installer release.",
+  "independentReviewHashes": [
+    "462b9b9e23aad441dedc57df81fb6f805f24be8dc718e708bb716c8e76abe62d",
+    "8472e308a5b1f64765e2147b4ebcc8e93a380dc4ce5e1f017f956abb8844ffa8",
+    "07d00160b181aa9e455f38037778869750d2acaf94385f94ad02b957e13d3842"
+  ],
+  "preservationManifestSha256": "2235b06a0a07490898a4a74d5943443dd8d74a4704f782fdedf0284f5d1f8ead",
+  "confirmed": {
+    "baselineFiles": 5052,
+    "exactArchivedOriginals": 369,
+    "closedJsonFilesUnchanged": 2209,
+    "productTaskCriteriaAndAcceptancesUnchanged": true,
+    "originalTaskCount": 54,
+    "completedProductTasks": 43,
+    "prospectiveCuratorExistingInputCoverageComplete": true,
+    "prospectiveSourcePinsCurrent": true
+  },
+  "retainedLimitations": {
+    "historicalUnavailableReleaseInputs": 9,
+    "existingArchitectureFindings": 110
+  },
+  "newProductFunctions": 0,
+  "newProviderRequests": 0
+}

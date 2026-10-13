@@ -49,7 +49,7 @@ and config entry backup. Never count this network setup as hardware acceptance.
 For a local transport test without house effects:
 
 ```
-sudo unshare --net python3 tools/verify_household_voice_ingress.py --nginx /opt/eva2/voice-ingress/nginx
+sudo unshare --net python3 src/tools/verify_household_voice_ingress.py --nginx /opt/eva2/voice-ingress/nginx
 ```
 
 This runs actual nginx and HTTP in a separate network namespace and tests the

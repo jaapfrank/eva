@@ -69,16 +69,18 @@ Thumbs.db
 /experiments/react-admin-dashboard-v1/project-dist/
 
 # Archived local caches and owner-private captures are never published.
-/backup/local-generated/
+/development/archive/local-generated/
 **/.playwright-mcp/
 **/.pytest-secret-*
 **/secrets/**
-/backup/eva1/test/workspace-relocation-private-proof.py
-/backup/eva1/test/workspace-relocation-private-worker.py
-/tools/project-dashboard/project-dist/
+/development/archive/eva1/test/workspace-relocation-private-proof.py
+/development/archive/eva1/test/workspace-relocation-private-worker.py
+/development/tools/project-dashboard/project-dist/
 
 # Archived dependency caches retain the original exclusion policy.
-/backup/history/eva2/experiments/distroless-core-v1/wheelhouse/*.whl
-/backup/history/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk
-/backup/history/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
-/backup/history/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl
+/development/archive/history/eva2/experiments/distroless-core-v1/wheelhouse/*.whl
+/development/archive/history/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk
+/development/archive/history/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
+/development/archive/history/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl
+
+/%SystemDrive%/

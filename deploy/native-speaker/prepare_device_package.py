@@ -70,7 +70,7 @@ def main(args):
     # Preserve the reviewed local Voice Kit vendor instead of resolving a
     # floating external source from the historical device configuration.
     config["external_components"] = copy.deepcopy(pinned["external_components"])
-    config["external_components"][0]["source"]["path"] = str(build / "vendor/components")
+    config["external_components"][0]["source"]["path"] = str(build / "src/vendor/components")
     base.write_text(yaml_util.dump(config, show_secrets=True))
     overlay = build / "device.yaml"
     prepare_overlay(template / "firmware/woonkamer.yaml", overlay, base, build / "components")

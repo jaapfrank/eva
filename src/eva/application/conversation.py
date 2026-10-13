@@ -485,7 +485,7 @@ class ConversationTurn:
         media_context: ConversationMediaContext | None = None,
         media_context_sha256: str | None = None,
     ) -> "ConversationTurn":
-        """Construct an explicitly private turn for non-group connectors/tests."""
+        """Construct an explicitly private turn for non-group src/connectors/tests."""
 
         return cls(
             tenant_id=tenant_id,

@@ -35,6 +35,6 @@ the dashboard build, its project-state source or the model provider.
 
 Streaming responses flush filtered upstream headers immediately, before any body
 chunk. This lets the existing input receipt arrive while Eva is generating the
-answer. Verify with `node --test tests/api/test_local_owner_streaming.mjs`
+answer. Verify with `node --test development/tests/api/test_local_owner_streaming.mjs`
 from the repository root. A flushed status does not prove a completed answer;
 conversation clients still require the final saved-reply stream record.

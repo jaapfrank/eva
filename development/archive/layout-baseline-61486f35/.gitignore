@@ -1,0 +1,84 @@
+# Dependencies, generated output and local runtime state
+node_modules/
+dist/
+coverage/
+.nyc_output/
+data/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.log
+*.pid
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+.venv/
+venv/
+
+# Environment files and backups may contain credentials. Keep only templates.
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+!**/.env.example
+!deploy/living-core/runtime.env.example
+!deploy/living-core/hindsight.env.example
+
+# Runtime secrets must remain local; only the templates above are traceable.
+deploy/living-core/secrets/
+deploy/living-core/secrets/**
+
+# Private keys, certificates and exported credential bundles
+*.key
+*.pem
+*.ppk
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_rsa.*
+*_rsa
+*_rsa.*
+*_ed25519
+*_ed25519.*
+
+# Local editor, operating-system and scratch artefacts
+*.swp
+*.swo
+*~
+*:Zone.Identifier
+.DS_Store
+Thumbs.db
+/scratch_*
+/_*.cjs
+/eva_brain/replay/LOCK_*.md
+/eva_brain/replay/out_*.txt
+
+# Sealed experiment artifacts are materialized locally from checked manifests.
+/experiments/distroless-core-v1/wheelhouse/*.whl
+/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk
+/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
+/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl
+/build/
+/deploy/voice-session/vendor/
+
+/experiments/react-admin-dashboard-v1/project-dist/
+
+# Archived local caches and owner-private captures are never published.
+/backup/local-generated/
+**/.playwright-mcp/
+**/.pytest-secret-*
+**/secrets/**
+/backup/eva1/test/workspace-relocation-private-proof.py
+/backup/eva1/test/workspace-relocation-private-worker.py
+/tools/project-dashboard/project-dist/
+
+# Archived dependency caches retain the original exclusion policy.
+/backup/history/eva2/experiments/distroless-core-v1/wheelhouse/*.whl
+/backup/history/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk
+/backup/history/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
+/backup/history/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl

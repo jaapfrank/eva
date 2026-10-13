@@ -2,18 +2,21 @@
 
 ## Leidende bronnen
 
-Lees PROJECTDOEL.md voor het volledige huisgenootgoal, ARCHITECTUUR.md voor de
-actuele modulegrenzen en design/product/execution-workboard-v1.json voor nu/hierna.
-WERKBORD.md en het dashboard worden uit dat ene werkbord weergegeven.
-Backup is historische referentie, geen stapel aanvullende uitvoeropdrachten.
+Lees development/docs/PROJECTDOEL.md voor het volledige huisgenootgoal, development/docs/ARCHITECTUUR.md voor de
+actuele modulegrenzen en development/design/product/execution-workboard-v1.json voor nu/hierna.
+development/docs/WERKBORD.md en het dashboard worden uit dat ene werkbord weergegeven.
+development/archive is historische referentie, geen stapel aanvullende uitvoeropdrachten.
 
 ## Huidige opdracht
 
-De rootreorganisatie is vastgelegd op codex/eva2-root voor publicatie naar main.
-Vervolg eerst het volledige opgeslagen resultaat naar de oorspronkelijke ontvanger;
-volg daarna de afmaakvolgorde in het werkbord.
-Eva2 staat in src/eva; de repositoryroot is de werkdirectory. Eva1 staat uitsluitend
-als vergelijkingsreferentie in backup/eva1. Geen Eva1-ontwikkeling of tweede route.
+De repository heeft drie hoofdmappen: src voor code, deploy voor installatie,
+development voor documentatie/tests/proeven/archief. Branch codex/eva-layout.
+De groepering, gekoppelde paden en historische bytes zijn gecontroleerd; geen
+productfunctie is door deze administratieve oplevering afgerond.
+Daarna eerst het volledige opgeslagen resultaat naar de oorspronkelijke ontvanger;
+volg vervolgens dezelfde productafmaakvolgorde. Geen nieuwe vergelijkingsserie.
+Eva2 staat in src/eva. Eva1 is uitsluitend historische vergelijkingsreferentie in
+development/archive/eva1; geen ontwikkeling of tweede route.
 
 ## Uitvoeren
 
@@ -46,8 +49,8 @@ Desktop blijft ongemoeid. Het hele projectgoal sluit pas bij de voorwaarden in P
 
 ## Archief en paden
 
-backup/history bevat oude plannen/experimenten; backup/migration-baseline de exacte
-bytes van operationele bestanden vóór padnormalisatie. backup/migration-manifest.json
+development/archive/history bevat oude plannen/experimenten; development/archive/migration-baseline de exacte
+bytes van operationele bestanden vóór padnormalisatie. development/archive/migration-manifest.json
 legt oorspronkelijke paden en hashes vast. Oude bewijs-/reviewrecords blijven ongewijzigd
 in evidence en reviews omdat actieve bron-/reviewbindingen die gebruiken. Een oud pad
 in bewijs is herkomst, geen actuele startopdracht. Geen symlink of importalias naar Eva1.

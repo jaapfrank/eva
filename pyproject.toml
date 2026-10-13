@@ -28,7 +28,7 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["eva*"]
+include = ["eva*", "tools*", "connector_sdk*"]
 
 [tool.setuptools.package-data]
 "eva.voice_service" = ["client.html"]
@@ -42,9 +42,9 @@ include = ["eva*"]
 
 [tool.eva2]
 target-python = "3.12.14"
-dependency-lock = "requirements.lock"
-tranche-4d-dependency-lock = "requirements-4d.lock"
+dependency-lock = "deploy/requirements.lock"
+tranche-4d-dependency-lock = "deploy/requirements-4d.lock"
 tranche-4d-dependency-extra = "tranche-4d"
-tranche-4d-dependency-source-binding = "release/4d-dependency-source-binding.json"
-platform-lock = "release/platform-lock.json"
+tranche-4d-dependency-source-binding = "deploy/release/4d-dependency-source-binding.json"
+platform-lock = "deploy/release/platform-lock.json"
 design-status = "selected_not_implemented"

@@ -127,4 +127,4 @@ receipt, stop and mute require physical trials. Owner acceptance remains open.
 Related historical evidence: `voice-household-livekit-candidate-2026-09-10.json`,
 `VB-001-speaker-install-package-2026-09-09.json`,
 `voice-polite-work-receipt-2026-09-22.json`, and
-`voice-local-access-2026-09-22.json` under `evidence/product/`.
+`voice-local-access-2026-09-22.json` under `development/evidence/product/`.

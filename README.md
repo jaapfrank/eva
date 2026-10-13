@@ -1,22 +1,22 @@
 # Eva2
 
-A digital housemate that knows people, takes useful initiative, completes work and
-learns to add capabilities when needed. The active application is **src/eva** in
-this repository root. Current branch: **codex/eva2-root**.
+A digital housemate that knows people, takes initiative, completes work and learns
+to create capabilities when needed. This repository is Eva2; commands run here.
 
-| Read | Purpose |
+| Directory | Contents |
 | --- | --- |
-| [PROJECTDOEL.md](PROJECTDOEL.md) | Owner goal and complete delivery conditions |
-| [ARCHITECTUUR.md](ARCHITECTUUR.md) | Current modules, interfaces and actual gaps |
-| [WERKBORD.md](WERKBORD.md) | Current work and remaining existing tasks |
-| [docs/project-reassessment-20261013.md](docs/project-reassessment-20261013.md) | Reassessment and retain/archive decisions |
-| [backup/README.md](backup/README.md) | Historical source and migration provenance |
+| `src/` | Application, optional connectors and runtime helpers |
+| `deploy/` | Installation, migrations, schemas and locked dependencies |
+| `development/` | Documentation, tests, benchmarks, project dashboard and archives |
 
-Run commands from this root. The Python package uses pyproject.toml and the existing
-locked dependencies. Optional integrations live in connectors, connector_sdk and deploy;
-the project dashboard is a developer tool in tools/project-dashboard.
+Start with the [project goal](development/docs/PROJECTDOEL.md),
+[architecture](development/docs/ARCHITECTUUR.md) and
+[current workboard](development/docs/WERKBORD.md).
+The [repository reassessment](development/docs/project-reassessment-20261013.md)
+records actual gaps and retain/archive decisions.
 
-The existing WSL container installation remains separate from source checkout.
-Archived Eva1 code is not imported by Eva2. Historic proof and review records remain
-immutable; they do not define today's work. No general superiority over other agents
-has been established. See the workboard for measured results and remaining gaps.
+The Python application uses `src/eva` and `pyproject.toml`. The installer entrypoint
+is `start-installer.py`. Eva1 exists only in `development/archive/eva1` as a historical
+comparison reference. Existing WSL runtime data and pinned container images are
+separate from this source tree. Historical results remain unchanged; no general
+superiority over other agents has been established.

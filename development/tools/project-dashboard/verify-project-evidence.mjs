@@ -1,0 +1,67 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {applyReviewedCapabilities, applyVoiceTurnEvidence} from './project-server.mjs';
+const audit=JSON.parse(readFileSync(new URL('./capability-audit.json',import.meta.url)));
+delete audit.findings.find(x=>x.id==='initiative').latestObservation;
+const board={audit:{initiativeDeliveryAU008:{built:true,tested:true,live:true,ownerAccepted:false,liveCapabilityCount:8}}};
+const make=()=>({capabilities:audit.findings.map(f=>({id:f.id,title:f.id,accepted:'partial',outcomes:[]}))});
+const project=make(); applyReviewedCapabilities(project,board,audit);
+assert.equal(project.capabilities.length,9);
+const memory=project.capabilities.find(x=>x.id==='memory');
+for(const stage of ['built','tested','live','accepted'])assert.equal(memory[stage],'yes');
+const edited=make();edited.capabilities.find(x=>x.id==='memory').title='Broader future ambition changed';
+applyReviewedCapabilities(edited,board,audit);
+assert.equal(edited.capabilities.find(x=>x.id==='memory').accepted,'yes','unrelated summary changes must preserve named accepted delivery');
+assert.equal(project.capabilities.find(x=>x.id==='initiative').accepted,'no');
+board.audit.initiativeDeliveryAU008.live=false;
+const unavailable=make();applyReviewedCapabilities(unavailable,board,audit);
+assert.notEqual(unavailable.capabilities.find(x=>x.id==='initiative').live,'yes');
+assert.equal(unavailable.capabilities.find(x=>x.id==='memory').accepted,'yes');
+console.log('Scoped evidence, retained acceptance and updated live route: passed');
+
+board.audit.au008GeneralResearch20260910={status:'live',sourceCommit:'af9a049',remaining:'Native resultaat nog open',ownerAccepted:false,technicalChecks:'tested',image:'research-image',evidencePath:'research-proof'};
+const research=make();applyReviewedCapabilities(research,board,audit);
+assert.match(research.capabilities.find(x=>x.id==='initiative').visibleResult,/Algemeen publiek onderzoek is live/);
+assert.equal(research.capabilities.find(x=>x.id==='initiative').accepted,'no');
+
+// Live images and successful preparation must not upgrade the owner lifecycle.
+board.audit.au002Delivery = {providerRepairCandidateImage:'candidate', liveImage:'old-live', pendingSourceChange:'Reparatie getest; kandidaat gereed', next:'Gewone chatroute beproeven', sourceChecks:'Gerichte tests geslaagd', ownerAccepted:false};
+const preparation=make();applyReviewedCapabilities(preparation,board,audit);
+const work=preparation.capabilities.find(x=>x.id==='projects');
+assert.match(work.userOutcomeStatus,/live gebruikersroute nog open/);
+assert.equal(work.visibleResult,'Reparatie getest; kandidaat gereed');
+assert.notEqual(work.live,'yes');
+assert.equal(work.accepted,'no');
+assert.match(work.historyNote,/mislukte/);
+board.audit.au002Delivery={...board.audit.au002Delivery,userOutcomeStatus:'Nieuwe voortgang uit bron',currentWork:'Bijgewerkt resultaat',remaining:'Nieuwe proef nodig',live:false,tested:true};
+const updatedWork=make();applyReviewedCapabilities(updatedWork,board,audit);
+const updated=updatedWork.capabilities.find(x=>x.id==='projects');
+assert.equal(updated.userOutcomeStatus,'Nieuwe voortgang uit bron');
+assert.equal(updated.visibleResult,'Bijgewerkt resultaat');
+assert.equal(updated.gap,'Nieuwe proef nodig');
+assert.equal(updated.live,'no');
+assert.equal(updated.tested,'yes');
+assert.equal(updated.accepted,'no');
+console.log('AU-002 audit updates, historical failure and lifecycle boundary: passed');
+
+assert.equal(updated.states.live, updated.live);
+assert.equal(updated.states.tested, updated.tested);
+assert.equal(updated.detail.includes('Nieuwe proef nodig'), true);
+assert.equal(updated.detail.includes('Betrouwbare gebruikersroute en hervatten'), false);
+const observedAudit=structuredClone(audit);
+observedAudit.findings.find(x=>x.id==='initiative').latestObservation={checkedAt:'2026-09-11T07:00:00Z',userOutcomeStatus:'Bijdrage geleverd; beoordeling open',visibleResult:'Checklist opgeslagen',remaining:'Jaap beoordeelt de bijdrage',evidenceSummary:'Readback geslaagd',evidencePath:'dated-readback.json'};
+const observed=make();applyReviewedCapabilities(observed,board,observedAudit);
+const initiativeObserved=observed.capabilities.find(x=>x.id==='initiative');
+assert.equal(initiativeObserved.userOutcomeStatus,'Bijdrage geleverd; beoordeling open');
+assert.equal(initiativeObserved.currentWork,'Checklist opgeslagen Jaap beoordeelt de bijdrage');
+assert.equal(initiativeObserved.accepted,'no');
+assert.equal(initiativeObserved.evidence.includes('dated-readback.json'),true);
+console.log('Dated initiative result and consistent technical states: passed');
+
+const turnProject=make();applyReviewedCapabilities(turnProject,board,audit);
+applyVoiceTurnEvidence(turnProject,{browserProof:{passed:true,speechEndToAudioMs:18611,speechEndToFinalMs:81605},limits:['No physical listening acceptance']});
+const turn=turnProject.capabilities.find(row=>row.id==='voice');
+assert.match(turn.visibleResult,/18,611 s/);
+assert.match(turn.gap,/te lang/);
+assert.equal(turn.accepted,'no');
+console.log('Explicit first-part voice proof retains latency and acceptance limits: passed');

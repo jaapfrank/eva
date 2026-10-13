@@ -697,7 +697,7 @@ class McpGatewayToolAdapter:
             {
                 "id": rpc_id,
                 "jsonrpc": "2.0",
-                "method": "tools/call",
+                "method": "src/tools/call",
                 "params": {"arguments": arguments, "name": tool_name},
             },
         )

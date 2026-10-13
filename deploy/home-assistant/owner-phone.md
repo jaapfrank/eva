@@ -4,7 +4,7 @@ The existing household conversation integration remains separate and enabled.
 The installed option adds an HA admin panel that also requires the existing
 Eva owner dashboard token. The household integration token never opens it.
 
-Build: `python tools/build_ha_phone_panel.py /new/output/eva2_voice` materializes
+Build: `python src/tools/build_ha_phone_panel.py /new/output/eva2_voice` materializes
 all component files, the existing laptop UI as an HA web component, and verified
 LiveKit client 2.22.3. It records each output hash in phone-build.json.
 

@@ -110,7 +110,7 @@ def run_installer_wizard(
 
     parser = argparse.ArgumentParser(prog="eva-installer")
     parser.add_argument(
-        "--platform-lock", type=Path, default=Path("release/platform-lock.json")
+        "--platform-lock", type=Path, default=Path("deploy/release/platform-lock.json")
     )
     parser.add_argument("--host", type=_loopback_host, default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)

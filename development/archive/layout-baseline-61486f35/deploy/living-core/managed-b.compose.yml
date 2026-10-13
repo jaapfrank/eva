@@ -1,0 +1,558 @@
+# Future explicit Telegram-first B manifest.  This is a rendered-manifest
+# contract only: it does not authorize adoption, recreate, or traffic cutover.
+services:
+  postgres:
+    image: ${EVA_POSTGRES_IMAGE:?set the immutable scanned PostgreSQL/pgvector image reference}
+    pull_policy: never
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${EVA_STACK_POSTGRES_DATABASE:-eva2}
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      POSTGRES_PASSWORD_FILE: /run/eva2/postgres-password
+      POSTGRES_USER: postgres
+    volumes:
+      - type: bind
+        source: ${EVA_POSTGRES_PASSWORD_FILE_HOST:?set a root-owned mode-0600 PostgreSQL password file}
+        target: /run/eva2/postgres-password
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          pg_isready -U postgres -d "$${POSTGRES_DB}" &&
+          psql -U postgres -d "$${POSTGRES_DB}" -Atc 'SELECT 1' | grep -qx 1
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  hindsight-postgres:
+    image: ${EVA_HINDSIGHT_POSTGRES_IMAGE:?set the immutable scanned Hindsight PostgreSQL/pgvector image reference}
+    pull_policy: never
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${EVA_STACK_HINDSIGHT_POSTGRES_DATABASE:-hindsight}
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      POSTGRES_PASSWORD_FILE: /run/eva2/hindsight-postgres-password
+      POSTGRES_USER: postgres
+    volumes:
+      - type: bind
+        source: ${EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST:?set a root-owned mode-0600 Hindsight PostgreSQL password file}
+        target: /run/eva2/hindsight-postgres-password
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: hindsight-postgres-data
+        target: /var/lib/postgresql/data
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          pg_isready -U postgres -d "$${POSTGRES_DB}" &&
+          psql -U postgres -d "$${POSTGRES_DB}" -Atc 'SELECT 1' | grep -qx 1
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  schema-installer:
+    profiles: ["schema-install"]
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    restart: "no"
+    user: "65532:65532"
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=16m
+    entrypoint: ["/usr/local/bin/python"]
+    command: ["-m", "eva.operations.install_schema"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DASHBOARD_ACCESS_TOKEN_FILE: /run/secrets/dashboard_access_token
+      EVA_DASHBOARD_INSTALLATION_ID: ${EVA_DASHBOARD_INSTALLATION_ID:?set the dashboard installation scope}
+      EVA_DASHBOARD_PRINCIPAL_BINDING_ID: ${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}
+      EVA_DASHBOARD_RELEASE_SHA256: ${EVA_DASHBOARD_RELEASE_SHA256:?set the immutable dashboard release sha256}
+      EVA_DASHBOARD_TENANT_ID: ${EVA_DASHBOARD_TENANT_ID:?set the dashboard tenant scope}
+      EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST:?set a runtime-owned dashboard access token file}
+        target: /run/secrets/dashboard_access_token
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      postgres:
+        condition: service_healthy
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  model-access-lease:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    user: "1000:65532"
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    entrypoint: ["/usr/local/bin/python"]
+    command:
+      - -m
+      - eva.operations.model_credentials
+      - --source
+      - /run/eva/codex-owner/auth.json
+      - --target
+      - /run/eva/model-lease/auth.json
+    volumes:
+      - type: bind
+        source: ${EVA_CODEX_AUTH_DIR:?set the sole Codex authority directory}
+        target: /run/eva/codex-owner
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_MODEL_ACCESS_LEASE_DIR:?set the runtime-owned Eva model lease directory}
+        target: /run/eva/model-lease
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=4m
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  hindsight-access-lease:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    user: "1000:1000"
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - /usr/local/bin/python
+        - -c
+        - >-
+          from pathlib import Path;
+          from eva.operations.model_credentials import check_codex_consumer_auth;
+          check_codex_consumer_auth(Path('/run/eva/hindsight-access/auth.json'))
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 2s
+    entrypoint: ["/usr/local/bin/python"]
+    command:
+      - -m
+      - eva.operations.model_credentials
+      - --format
+      - codex-consumer
+      - --source
+      - /run/eva/codex-owner/auth.json
+      - --target
+      - /run/eva/hindsight-access/auth.json
+    volumes:
+      - type: bind
+        source: ${EVA_CODEX_AUTH_DIR:?set the sole Codex authority directory}
+        target: /run/eva/codex-owner
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_HINDSIGHT_ACCESS_DIR:?set the runtime-owned Hindsight access directory}
+        target: /run/eva/hindsight-access
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=4m
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  hindsight:
+    image: ${EVA_HINDSIGHT_IMAGE:?set the immutable scanned Hindsight API image reference}
+    pull_policy: never
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    read_only: true
+    cap_drop: ["ALL"]
+    environment:
+      # Both local model repositories are already sealed into the image.  Keep
+      # Hugging Face/Transformers offline so a cold start neither reaches the
+      # network nor tries to annotate the read-only baked cache.
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HUB_OFFLINE: "1"
+      HINDSIGHT_API_DATABASE_URL_FILE: /run/secrets/hindsight_database_dsn
+      HINDSIGHT_ENABLE_CP: "false"
+      HINDSIGHT_API_LLM_PROVIDER: openai-codex
+      HINDSIGHT_API_LLM_MODEL: gpt-5.6-luna
+      HINDSIGHT_API_LLM_REASONING_EFFORT: low
+      # Provider connectivity is checked by an explicit bounded operation after
+      # readiness. Do not let Hindsight's upstream five-minute verification
+      # call hold the local database and memory API hostage during a cold boot.
+      HINDSIGHT_API_SKIP_LLM_VERIFICATION: "true"
+      # Existing Eva2 memories use Hindsight's local 384-dimensional vectors.
+      # Changing provider here would make the restored memory database unusable.
+      HINDSIGHT_API_EMBEDDINGS_PROVIDER: local
+      HINDSIGHT_API_RERANKER_MAX_CANDIDATES_LOW: "32"
+      HINDSIGHT_API_WORKER_ID: eva2-hindsight-memory
+      TZ: UTC
+      TRANSFORMERS_OFFLINE: "1"
+    volumes:
+      - type: bind
+        source: ${EVA_HINDSIGHT_ACCESS_DIR:?set the runtime-owned Hindsight access directory}
+        target: /home/hindsight/.codex
+        read_only: true
+        bind:
+          create_host_path: false
+      # The rotating auth directory stays read-only; Codex only writes its flock.
+      - type: bind
+        source: ${EVA_HINDSIGHT_ACCESS_DIR:?set the runtime-owned Hindsight access directory}/auth.lock
+        target: /home/hindsight/.codex/auth.lock
+        read_only: false
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST:?set a Hindsight-runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/hindsight_database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      hindsight-access-lease:
+        condition: service_healthy
+      hindsight-postgres:
+        condition: service_healthy
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=64m
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import json,urllib.request;
+          assert json.load(urllib.request.urlopen('http://127.0.0.1:8888/health',timeout=2))['status']=='healthy'
+      interval: 5s
+      timeout: 3s
+      retries: 24
+      start_period: 20s
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  core:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    container_name: ${EVA_STACK_CORE_CONTAINER:?set the sealed core container name}
+    user: "65532:65532"
+    restart: unless-stopped
+    entrypoint: ["/usr/local/bin/python"]
+    command:
+      - -m
+      - uvicorn
+      - eva.bootstrap.runtime:create_runtime_app
+      - --factory
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8080"
+      - --no-access-log
+    environment:
+      # Staging stays idle; the quiescent cutover helper explicitly activates it.
+      EVA_BACKGROUND_WORK_ENABLED: ${EVA_BACKGROUND_WORK_ENABLED:-false}
+      EVA_COLD_PATH_IDLE_SECONDS: ${EVA_COLD_PATH_IDLE_SECONDS:-300}
+      EVA_CONVERSATION_AUTH_FILE: /run/eva/model-lease/auth.json
+      EVA_CONVERSATION_MODEL: ${EVA_CONVERSATION_MODEL:-gpt-5.4-mini}
+      EVA_CONVERSATION_REASONING_EFFORT: ${EVA_CONVERSATION_REASONING_EFFORT:-medium}
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DASHBOARD_ACCESS_TOKEN_FILE: /run/secrets/dashboard_access_token
+      EVA_DASHBOARD_INSTALLATION_ID: ${EVA_DASHBOARD_INSTALLATION_ID:?set the dashboard installation scope}
+      EVA_DASHBOARD_PRINCIPAL_BINDING_ID: ${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}
+      EVA_DASHBOARD_TENANT_ID: ${EVA_DASHBOARD_TENANT_ID:?set the dashboard tenant scope}
+      EVA_DELEGATED_WORK_ENABLED: ${EVA_DELEGATED_WORK_ENABLED:-false}
+      # Admission is separate from the worker's provider configuration.  A
+      # prepared but inactive/dummy worker must never make the conversation
+      # core promise durable work that nobody can execute.
+      EVA_DURABLE_GOAL_PROVIDER: ${EVA_DURABLE_GOAL_ADMISSION_PROVIDER:-}
+      EVA_DURABLE_GOAL_RECIPIENTS: ${EVA_DURABLE_GOAL_ADMISSION_RECIPIENTS:-}
+      EVA_FILE_BATCH_ROOT: /var/lib/eva/work
+      EVA_FANOUT_ALLOW_INSECURE_HTTP: ${EVA_FANOUT_ALLOW_INSECURE_HTTP:?set the sealed fanout transport policy}
+      EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON: ${EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON:?set the sealed fanout endpoint map}
+      EVA_HINDSIGHT_BANK_NAMESPACE: ${EVA_HINDSIGHT_BANK_NAMESPACE:?set the sealed Hindsight bank namespace}
+      EVA_HINDSIGHT_RECALL_BUDGET: ${EVA_HINDSIGHT_RECALL_BUDGET:-low}
+      EVA_HINDSIGHT_RECALL_MAX_TOKENS: ${EVA_HINDSIGHT_RECALL_MAX_TOKENS:-2048}
+      EVA_HINDSIGHT_RECALL_NODE_BUDGET: ${EVA_HINDSIGHT_RECALL_NODE_BUDGET:-40}
+      EVA_HINDSIGHT_URL: http://hindsight:8888
+      EVA_HOME_ASSISTANT_TOKEN_FILE: /run/secrets/home_assistant_token
+      EVA_HOME_ASSISTANT_URL: ${EVA_HOME_ASSISTANT_URL:?set the Home Assistant URL}
+      EVA_HOME_ASSISTANT_EFFECTS_ENABLED: ${EVA_HOME_ASSISTANT_EFFECTS_ENABLED:-false}
+      EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST: ${EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST:-}
+      EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST: ${EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST:-}
+      EVA_IDENTITY_DESCRIPTION: ${EVA_IDENTITY_DESCRIPTION:-Je bent een warme, nuchtere en capabele digitale huisgenoot.}
+      EVA_IDENTITY_NAME: ${EVA_IDENTITY_NAME:-Eva}
+      EVA_IDENTITY_PACK_FILE: /run/eva/identity/current.json
+      EVA_IDENTITY_PACK_TRUST_FILE: /run/eva/identity/trust.json
+      EVA_PERSONAL_INTEREST_LEASE_SECONDS: ${EVA_PERSONAL_INTEREST_LEASE_SECONDS:-90}
+      EVA_PORTABLE_RESTORE_AUTHORITY_FILE: /var/lib/eva/restore-authority/current.json
+      EVA_RUNTIME_RESOURCE_BUDGET_FILE: /run/eva/runtime-budget/current.json
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+      EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE: /run/secrets/telegram_principal_bindings
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_HOME_ASSISTANT_TOKEN_FILE_HOST:?set a runtime-owned Home Assistant token file}
+        target: /run/secrets/home_assistant_token
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST:?set a runtime-owned dashboard access token file}
+        target: /run/secrets/dashboard_access_token
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_IDENTITY_PACK_FILE_HOST:?set a verified current IdentityPack file}
+        target: /run/eva/identity/current.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_IDENTITY_PACK_TRUST_FILE_HOST:?set the IdentityPack public trust binding}
+        target: /run/eva/identity/trust.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST:?set the confirmed runtime resource budget file}
+        target: /run/eva/runtime-budget/current.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST:?set a runtime-owned Telegram binding file}
+        target: /run/secrets/telegram_principal_bindings
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_MODEL_ACCESS_LEASE_DIR:?set the runtime-owned Eva model lease directory}
+        target: /run/eva/model-lease
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: work-data
+        target: /var/lib/eva/work
+      - type: bind
+        source: ${EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST:?set the private restore authority directory}
+        target: /var/lib/eva/restore-authority
+        bind:
+          create_host_path: false
+    depends_on:
+      postgres:
+        condition: service_healthy
+      hindsight:
+        condition: service_healthy
+      model-access-lease:
+        condition: service_started
+    ports:
+      - ${EVA_STACK_BIND_ADDRESS:-127.0.0.1}:${EVA_STACK_CORE_PORT:-44674}:8080
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=32m
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  durable-goal-worker:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=8m
+    entrypoint: ["/usr/local/bin/python"]
+    command: ["-m", "eva.operations.durable_goal_worker"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DURABLE_GOAL_ALLOW_INSECURE_HTTP: ${EVA_DURABLE_GOAL_ALLOW_INSECURE_HTTP:-false}
+      EVA_DURABLE_GOAL_POLL_SECONDS: ${EVA_DURABLE_GOAL_POLL_SECONDS:-2}
+      EVA_DURABLE_GOAL_PROVIDER: ${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}
+      EVA_DURABLE_GOAL_PROVIDER_URL: ${EVA_DURABLE_GOAL_PROVIDER_URL:?set the evidence/work/delivery provider URL}
+      EVA_DURABLE_GOAL_TIMEOUT_SECONDS: ${EVA_DURABLE_GOAL_TIMEOUT_SECONDS:-5}
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      core:
+        condition: service_healthy
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  delegated-work-worker:
+    profiles: ["delegated-work"]
+    image: ${EVA_DELEGATED_WORK_IMAGE:-eva2/delegated-work-disabled@sha256:0000000000000000000000000000000000000000000000000000000000000000}
+    pull_policy: never
+    restart: unless-stopped
+    user: "65532:65532"
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=32m
+    entrypoint: ["/usr/local/bin/python"]
+    command: ["-m", "eva.bootstrap.delegated_work_service"]
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/python", "-m", "eva.bootstrap.delegated_work_service", "--check"]
+      interval: 10s
+      timeout: 10s
+      retries: 6
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DELEGATED_WORKER_ID: ${EVA_DELEGATED_WORKER_ID:-eva2-delegated-work}
+      EVA_DELEGATED_WORK_POLL_SECONDS: ${EVA_DELEGATED_WORK_POLL_SECONDS:-0.25}
+      EVA_DASHBOARD_TENANT_ID: ${EVA_DASHBOARD_TENANT_ID:-}
+      EVA_DASHBOARD_INSTALLATION_ID: ${EVA_DASHBOARD_INSTALLATION_ID:-}
+      EVA_MODEL_ACCESS_LEASE_FILE: /run/eva/model-lease/auth.json
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_MODEL_ACCESS_LEASE_DIR:?set the runtime-owned Eva model lease directory}
+        target: /run/eva/model-lease
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      core:
+        condition: service_healthy
+      model-access-lease:
+        condition: service_started
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  telegram-ingress:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    restart: unless-stopped
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=8m
+    entrypoint: ["/usr/local/bin/python"]
+    command: ["-m", "eva.bootstrap.telegram_ingress"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_LIVING_CORE_URL: http://core:8080
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+      EVA_TELEGRAM_BOT_TOKEN_FILE: /run/secrets/telegram_bot_token
+      EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE: /run/secrets/telegram_principal_bindings
+      EVA_TELEGRAM_PAIRING_SECRET_FILE: /run/secrets/telegram_pairing_secret
+      EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID: ${EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID:-}
+      EVA_DELEGATED_WORK_OWNER_BINDING_ID: ${EVA_DELEGATED_WORK_OWNER_BINDING_ID:-}
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TELEGRAM_BOT_TOKEN_FILE_HOST:?set a runtime-owned Telegram token file}
+        target: /run/secrets/telegram_bot_token
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST:?set a runtime-owned Telegram binding file}
+        target: /run/secrets/telegram_principal_bindings
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST:?set a runtime-owned Telegram pairing secret file}
+        target: /run/secrets/telegram_pairing_secret
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      core:
+        condition: service_healthy
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+volumes:
+  postgres-data:
+    name: ${EVA_STACK_POSTGRES_VOLUME:?set the sealed PostgreSQL volume name}
+    labels:
+      eva2.component: operational-truth
+  hindsight-postgres-data:
+    name: ${EVA_STACK_HINDSIGHT_POSTGRES_VOLUME:?set the sealed Hindsight PostgreSQL volume name}
+    labels:
+      eva2.component: semantic-memory
+  work-data:
+    name: ${EVA_STACK_WORK_VOLUME:?set the sealed workspace volume name}
+    labels:
+      eva2.component: bounded-workspace

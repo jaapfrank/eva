@@ -1,0 +1,397 @@
+{
+  "canonicalProfile": "EvaCanonicalJSON/v1",
+  "contract": "EvaPortableRecordSchemaManifest/v1",
+  "schemaVersion": 1,
+  "schemas": [
+    {
+      "canonicalByteLength": 1911,
+      "exportOrdinal": 1,
+      "recordContract": "EvaCanonicalRecord/eva_core.tenants/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/001-core-tenants-v1.schema.json",
+      "record_schema_sha256": "19d23fa1ee6c798b97ef16b13f00e0a85d1e064f04b2343e22f7d532d6f0f87b",
+      "sourceDefinitionSha256": "1688a7752c6592586c07f3773b2f551da7513818faec7cea391722c4f350ce76",
+      "table": "eva_core.tenants",
+      "transformSpecSha256": "78f22833cfd78bbff728e133f4e8e23e52d8b9af99d90abe7aae688ac1ed0dfe"
+    },
+    {
+      "canonicalByteLength": 3462,
+      "exportOrdinal": 2,
+      "recordContract": "EvaCanonicalRecord/eva_core.installations/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/002-core-installations-v1.schema.json",
+      "record_schema_sha256": "a69ae2db2cdff021b604f75bae30d2ee3f6cbf6e4dfe7f65df8fe8f214c11253",
+      "sourceDefinitionSha256": "bdf2473cdcafb6f97315663b0ba049e53baa69357715cdeeecb326776762e2b0",
+      "table": "eva_core.installations",
+      "transformSpecSha256": "6e0de1edc65ae02784cb187cb05bf862a1032d30ff92e2043b3fee056dd52ea7"
+    },
+    {
+      "canonicalByteLength": 3187,
+      "exportOrdinal": 3,
+      "recordContract": "EvaCanonicalRecord/eva_core.identity_pack_versions/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/003-core-identity-pack-versions-v1.schema.json",
+      "record_schema_sha256": "e4ea419251b2239a281a2e0955d02de8437bc2012a07b33ca3d346ef5f5c7dbc",
+      "sourceDefinitionSha256": "c142fb7df7e8eb0ac217feb93796b13c8f470efa6d8b4eddda208da9d4ef9a2f",
+      "table": "eva_core.identity_pack_versions",
+      "transformSpecSha256": "89ea423cfc964283ff3c853ce4c24663559b0be6f2c7a97e0d123b403202a500"
+    },
+    {
+      "canonicalByteLength": 3312,
+      "exportOrdinal": 4,
+      "recordContract": "EvaCanonicalRecord/eva_core.policy_pack_versions/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/004-core-policy-pack-versions-v1.schema.json",
+      "record_schema_sha256": "2a303782e8aa5f1cfecc8ed69ac305728722b64ae99517f8ddbe3639454bebdc",
+      "sourceDefinitionSha256": "86171f229ae936d162c45e4163f68085100f6669a11095cf4f7cded7829f908d",
+      "table": "eva_core.policy_pack_versions",
+      "transformSpecSha256": "e886e9b1b3380472036172fa8ba594cc002dcda2ee8f72bc764a41c348175064"
+    },
+    {
+      "canonicalByteLength": 2440,
+      "exportOrdinal": 5,
+      "recordContract": "EvaCanonicalRecord/eva_core.principals/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/005-core-principals-v1.schema.json",
+      "record_schema_sha256": "9e04f446c9270a78b0e818876549f0234e30c701dc4c3832e2e142a4f6fd1613",
+      "sourceDefinitionSha256": "31450270f30cbb68c0feda1a05cf85c587646d05622792467d7998d78cdb27b3",
+      "table": "eva_core.principals",
+      "transformSpecSha256": "7718c7b2c1a5b0744a8c07b4a07d5c06478ae018f0c9b48067d02e39bf4f8d3f"
+    },
+    {
+      "canonicalByteLength": 2965,
+      "exportOrdinal": 6,
+      "recordContract": "EvaCanonicalRecord/eva_core.principal_bindings/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/006-core-principal-bindings-v1.schema.json",
+      "record_schema_sha256": "53d26620e975b45d56b0a37f974901ea9db793b7abfd7d87902dd21428c2c53c",
+      "sourceDefinitionSha256": "afe4b2e34e8cfc03e5f58c688f734fca7579cc124f34850c9a29823d73b0d692",
+      "table": "eva_core.principal_bindings",
+      "transformSpecSha256": "f152c482e3ce5d294b0ee058568f85134fddd38d23adfdfaf69a0f687254252b"
+    },
+    {
+      "canonicalByteLength": 4839,
+      "exportOrdinal": 7,
+      "recordContract": "EvaCanonicalRecord/eva_core.relationships/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/007-core-relationships-v1.schema.json",
+      "record_schema_sha256": "eef30c97ebcedd2012fac016238dd623a0bd9503af1d1af9cec09ab8caa398c8",
+      "sourceDefinitionSha256": "6ceb4683114c07de7f444e848f1f6aeb17ae76a7175b65eb73391adbf35e71b6",
+      "table": "eva_core.relationships",
+      "transformSpecSha256": "1d376b678f6df59955c56ec7428a287b4a6a764a26befe67bf403fa68c173fa9"
+    },
+    {
+      "canonicalByteLength": 3229,
+      "exportOrdinal": 8,
+      "recordContract": "EvaCanonicalRecord/eva_core.conversations/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/008-core-conversations-v1.schema.json",
+      "record_schema_sha256": "dbc79eb3a8cd921fcb71d4a55393b9606cc0c97a33b7ee7fd067a4c14610da29",
+      "sourceDefinitionSha256": "b394d30bf5e223ea39c67c1c9bb47dc1728de07b01894dbc0cc52e8173085a4f",
+      "table": "eva_core.conversations",
+      "transformSpecSha256": "d9a4789e88bef34ef1ae9868a1d779a1751b8b6fdfbee3876f22d385ee2ffca9"
+    },
+    {
+      "canonicalByteLength": 4720,
+      "exportOrdinal": 9,
+      "recordContract": "EvaCanonicalRecord/eva_core.messages/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/009-core-messages-v1.schema.json",
+      "record_schema_sha256": "448e474946dcf92b71c1695dd9ca3c09a3bfa34e2360763126e28bf6306eaa3c",
+      "sourceDefinitionSha256": "43b237248bcf6ae6c76a1ea2cf80e40a7955db67b2a81d228abd35a5d7ed9a03",
+      "table": "eva_core.messages",
+      "transformSpecSha256": "e70f0888951550553a4c28704f483c8943cf891da27ceafb04aeac5e5cd9df9e"
+    },
+    {
+      "canonicalByteLength": 6007,
+      "exportOrdinal": 10,
+      "recordContract": "EvaCanonicalRecord/eva_core.ingress_requests/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/010-core-ingress-requests-v1.schema.json",
+      "record_schema_sha256": "4de287e437d206bc4924bf9845c8bc089b304c74940ddfb46e8b20be3a1ee59c",
+      "sourceDefinitionSha256": "e1e0e00b6f1e1ef79b57ccb0c506f095a4279fd1727496064a4972324460291e",
+      "table": "eva_core.ingress_requests",
+      "transformSpecSha256": "0d46f6c9e387181cdae32d82b0b99864c894b29a00c512d640c3bfa5f07d05ea"
+    },
+    {
+      "canonicalByteLength": 3847,
+      "exportOrdinal": 11,
+      "recordContract": "EvaCanonicalRecord/eva_core.episodes/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/011-core-episodes-v1.schema.json",
+      "record_schema_sha256": "0633869e943f79dc94b7a729c1206e8ccc674bc36fd5d9ff006df48d1f620431",
+      "sourceDefinitionSha256": "f8d799c134de2f30e43de06695d0c8f4ebfa3660a96118a6b9d118027f5f5c87",
+      "table": "eva_core.episodes",
+      "transformSpecSha256": "9ca979d0eac97c594ca4449733503869cc34a0a36c4af9a95d4060b7da4a8792"
+    },
+    {
+      "canonicalByteLength": 3835,
+      "exportOrdinal": 12,
+      "recordContract": "EvaCanonicalRecord/eva_core.episode_generations/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/012-core-episode-generations-v1.schema.json",
+      "record_schema_sha256": "052d117dae70cd3932d3ab9353bf50d5f6307d76e33542543ab0d0e7cd9e35f2",
+      "sourceDefinitionSha256": "68081e21131444a4d2a990fa824aca0a8ae139595269b5016dcd32c91e942c7d",
+      "table": "eva_core.episode_generations",
+      "transformSpecSha256": "3bb27555bd3fa3b2232ea76e8ca2e61dece7514b09ee02ac9081ebdfeb28d7cd"
+    },
+    {
+      "canonicalByteLength": 4257,
+      "exportOrdinal": 13,
+      "recordContract": "EvaCanonicalRecord/eva_core.episode_events/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/013-core-episode-events-v1.schema.json",
+      "record_schema_sha256": "3cddafbe7ddc6b4e5378115b762f7837bc18060e58c28b1772e51889b9ef039d",
+      "sourceDefinitionSha256": "6d37408ddd6962c1be49962821788bb4708ae91dd677a7a4e1ee2dde8080db8b",
+      "table": "eva_core.episode_events",
+      "transformSpecSha256": "ebe00b70cb984e5e3c99729fb4debcae456aa4a56c3e47d63ad8d0cf368858a5"
+    },
+    {
+      "canonicalByteLength": 3072,
+      "exportOrdinal": 14,
+      "recordContract": "EvaCanonicalRecord/eva_core.episode_outcomes/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/014-core-episode-outcomes-v1.schema.json",
+      "record_schema_sha256": "27fd16c29daee579c0352e7d3a8a5046fe1249f9150592f6fbb0855abcac0d1a",
+      "sourceDefinitionSha256": "c6078fd4a17719cb1a32fbbb792421f0ab369a3112a7214ca2bb9ddcf7da3aae",
+      "table": "eva_core.episode_outcomes",
+      "transformSpecSha256": "abaab7331929956398f0caa991cbbb5eecb280ca4f7727e2c48a9fd8614d6bbe"
+    },
+    {
+      "canonicalByteLength": 3879,
+      "exportOrdinal": 15,
+      "recordContract": "EvaCanonicalRecord/eva_core.commitments/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/015-core-commitments-v1.schema.json",
+      "record_schema_sha256": "254229ce3e898673334ceea4cf947f8359c28eec6ed01419d7da4a60485dbb07",
+      "sourceDefinitionSha256": "ad51f6f3900472d5a4ac6fdf619060f9007eb5320bf020e2d3692380015429d6",
+      "table": "eva_core.commitments",
+      "transformSpecSha256": "cd12f3dd28c18e8c64a843ca6937f1c37043be4cf998c24c9ba7678d29fc95dd"
+    },
+    {
+      "canonicalByteLength": 4427,
+      "exportOrdinal": 16,
+      "recordContract": "EvaCanonicalRecord/eva_core.consent_grants/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/016-core-consent-grants-v1.schema.json",
+      "record_schema_sha256": "6c02bec7db2bb170f5d7f4dcdb52c05d9cbdc3982058214168ff181984ff7756",
+      "sourceDefinitionSha256": "47865cffcf66b828c8281387e26f3712c669b7d0142d85f95678595ab54db711",
+      "table": "eva_core.consent_grants",
+      "transformSpecSha256": "b6058acb1422b8004c417eaf81fbb02a07577106e1dcd70c93754ce3140a27b0"
+    },
+    {
+      "canonicalByteLength": 7901,
+      "exportOrdinal": 17,
+      "recordContract": "EvaCanonicalRecord/eva_core.model_attempts/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/017-core-model-attempts-v1.schema.json",
+      "record_schema_sha256": "24648c9d55946e958e69b5c437ee7e39bb4d1fe1ec37e3e2aedfba7b17555fac",
+      "sourceDefinitionSha256": "45a6e7f5a850c065379db0682882ef7d55ccb6e4f956fbbeff564ece9f53a6e0",
+      "table": "eva_core.model_attempts",
+      "transformSpecSha256": "3361282e49f11c84f06ba56d4baa608d26ed2d0b4d6069ac67159a661159a05a"
+    },
+    {
+      "canonicalByteLength": 3663,
+      "exportOrdinal": 18,
+      "recordContract": "EvaCanonicalRecord/eva_core.plans/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/018-core-plans-v1.schema.json",
+      "record_schema_sha256": "4749dbdb7b8359979a0ad10e9a5a0df213bf069fdb3354ac15b009d2c371d3b7",
+      "sourceDefinitionSha256": "3b8298887f4b2877b33389481153c0fa3eec35662a1987e063896228ab40b389",
+      "table": "eva_core.plans",
+      "transformSpecSha256": "627a2639c870c99ac078b26002764e4e788ddc3f0c3f290f738980be3b846813"
+    },
+    {
+      "canonicalByteLength": 4315,
+      "exportOrdinal": 19,
+      "recordContract": "EvaCanonicalRecord/eva_core.plan_steps/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/019-core-plan-steps-v1.schema.json",
+      "record_schema_sha256": "17bb159d1c0946d89dee17fdcb80acc5af858b4590ece02c41422fc9686b1f93",
+      "sourceDefinitionSha256": "cb0a1d37a09f573ab7d1420695b8e8b434fbf194b5f1500afd1d6702a0ca2a22",
+      "table": "eva_core.plan_steps",
+      "transformSpecSha256": "54b3cd894b37874912dc92a57e805a32503a79fb523a6ebfbb073c2b4033f0a3"
+    },
+    {
+      "canonicalByteLength": 3990,
+      "exportOrdinal": 20,
+      "recordContract": "EvaCanonicalRecord/eva_core.attention_items/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/020-core-attention-items-v1.schema.json",
+      "record_schema_sha256": "97266ae6213ab47fb0a9bcc456f54ee7595abba859de4904a35d7dbddf3e04ca",
+      "sourceDefinitionSha256": "d594e380b325f4f06e4c4ccc7b33b0ec51c23e97cc44f8b59727eb3d8add461a",
+      "table": "eva_core.attention_items",
+      "transformSpecSha256": "65df25645387a9e0c89226105ce035d7fe0230427923dcc682d6ebb29716e396"
+    },
+    {
+      "canonicalByteLength": 6896,
+      "exportOrdinal": 21,
+      "recordContract": "EvaCanonicalRecord/eva_core.connector_bindings/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/021-core-connector-bindings-v1.schema.json",
+      "record_schema_sha256": "c84bd71f5dfc2b4fbd9e6e5c2256a9fab9d15b9d4988085a34238f29c65786eb",
+      "sourceDefinitionSha256": "a2984b888d7664f82d4fd5f42972e3f1ec0168161df4ee896486735cfbddb5f3",
+      "table": "eva_core.connector_bindings",
+      "transformSpecSha256": "13bb70dba59447984641a487a33bf30d8e461a3c288027053b5a00b13285453f"
+    },
+    {
+      "canonicalByteLength": 3905,
+      "exportOrdinal": 22,
+      "recordContract": "EvaCanonicalRecord/eva_core.capability_manifests/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/022-core-capability-manifests-v1.schema.json",
+      "record_schema_sha256": "ba1631d5f253ebb68dd2fd04c0a11ab561683d4b977a98794f304639e8543360",
+      "sourceDefinitionSha256": "c79a5936aafba5fc7cad315ad8f61f2eef038eb94d69f6d1cce7585e0c5ab4a0",
+      "table": "eva_core.capability_manifests",
+      "transformSpecSha256": "0e0435db042f257a1495170c2c0018c1edbdd7603f2045d2e6106332afc9299e"
+    },
+    {
+      "canonicalByteLength": 4250,
+      "exportOrdinal": 23,
+      "recordContract": "EvaCanonicalRecord/eva_core.capability_activations/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/023-core-capability-activations-v1.schema.json",
+      "record_schema_sha256": "3b875717811e3ac8b37461f66651c7acf0905f3f84189ec7e8340e59ac53ef55",
+      "sourceDefinitionSha256": "a733c7ea9b0f869f4827efb2931325899a01731385305959e4bd6ead3c780809",
+      "table": "eva_core.capability_activations",
+      "transformSpecSha256": "de5253774f4a317f4e459e339682768588e2b2da179f85f9b4c0469ff77a8007"
+    },
+    {
+      "canonicalByteLength": 4424,
+      "exportOrdinal": 24,
+      "recordContract": "EvaCanonicalRecord/eva_effects.read_intents/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/024-effects-read-intents-v1.schema.json",
+      "record_schema_sha256": "a2b62b1c6506a236cd9e1c62d33ff86cc10746d164606c43d826ef11a0d55810",
+      "sourceDefinitionSha256": "45819d774f724f2b4b0de3a655910b6ff8ef5fcef74b71b31259b575883d4b44",
+      "table": "eva_effects.read_intents",
+      "transformSpecSha256": "1f3e3f220be263e3b1e179b5b4a621e0d88eeb2a351d98c34f6a19f1a20f696b"
+    },
+    {
+      "canonicalByteLength": 7125,
+      "exportOrdinal": 25,
+      "recordContract": "EvaCanonicalRecord/eva_effects.read_attempts/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/025-effects-read-attempts-v1.schema.json",
+      "record_schema_sha256": "ec99e1556b920f5db44a7e9da16b8f400f0134a1cd663aece5b04d2cc96e1bdd",
+      "sourceDefinitionSha256": "7d2699ce1d7e99cb46a61b3b376a241873227e0502f77fa5063f1fee136b4314",
+      "table": "eva_effects.read_attempts",
+      "transformSpecSha256": "7680a9da03067dd2ff9c799487473c9ef33f2e78292da3fa66b4c8495b8af982"
+    },
+    {
+      "canonicalByteLength": 3649,
+      "exportOrdinal": 26,
+      "recordContract": "EvaCanonicalRecord/eva_effects.read_observations/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/026-effects-read-observations-v1.schema.json",
+      "record_schema_sha256": "9a7252edd34ef97e4451a9800d4f947fffcb4e045d372ba1be46bc8b94928f88",
+      "sourceDefinitionSha256": "968e790fd4fe24fcbf2eda53191f4ca7eb8b2bd303ef885e83ea10bb73b66b98",
+      "table": "eva_effects.read_observations",
+      "transformSpecSha256": "d07fa872d6cfdb5f845b041127808aeb36d41812064bafbc164c22178082619e"
+    },
+    {
+      "canonicalByteLength": 5097,
+      "exportOrdinal": 27,
+      "recordContract": "EvaCanonicalRecord/eva_effects.effect_intents/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/027-effects-effect-intents-v1.schema.json",
+      "record_schema_sha256": "0bce3ee6ac1e6a2df9410fc8593e90f326b42f4e9a4ed8f4f77dd244f7c66349",
+      "sourceDefinitionSha256": "676b60413c84c1511ed74a5b86aa37720bbd529a17b62c2253f028eb8a1d228d",
+      "table": "eva_effects.effect_intents",
+      "transformSpecSha256": "faccb6bb64ad966e027f7e98afb8a51ddabbbbc41aafcecbd1e1eb2db8643028"
+    },
+    {
+      "canonicalByteLength": 8883,
+      "exportOrdinal": 28,
+      "recordContract": "EvaCanonicalRecord/eva_effects.effect_attempts/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/028-effects-effect-attempts-v1.schema.json",
+      "record_schema_sha256": "ae5b62a1aedbc08b242592699037145382369181bfb8cb27d47ef01f167d35e5",
+      "sourceDefinitionSha256": "4c6e16bfabc4e4613dfc0a6358dfec55daf43e7e9a1c6f011bd2ebae300c3308",
+      "table": "eva_effects.effect_attempts",
+      "transformSpecSha256": "680265585f255351e8f6dd2211d1bbbed9b110ac2ec2b4f3f37d8cc4e478199c"
+    },
+    {
+      "canonicalByteLength": 3527,
+      "exportOrdinal": 29,
+      "recordContract": "EvaCanonicalRecord/eva_effects.effect_receipts/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/029-effects-effect-receipts-v1.schema.json",
+      "record_schema_sha256": "9827a9cb5816c92ea4d2a5d530709b1cc688bf052f3467b4ec3c00f48e19b137",
+      "sourceDefinitionSha256": "c7f712562e85612dfaa5e725233225abbb9390dd47aafefc2d356091cc479fdf",
+      "table": "eva_effects.effect_receipts",
+      "transformSpecSha256": "1773426c9f14fb8cc3039365f393c808d0b778b2ffecbe069933cd4921dd58c6"
+    },
+    {
+      "canonicalByteLength": 3597,
+      "exportOrdinal": 30,
+      "recordContract": "EvaCanonicalRecord/eva_effects.effect_readbacks/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/030-effects-effect-readbacks-v1.schema.json",
+      "record_schema_sha256": "eeb471cfea8b8506d404f6980b0815b9877a91e75a0c4ed7450321b7eaaeb221",
+      "sourceDefinitionSha256": "6572258c05921f8ada2b6cd2bfa434fc40db51990b27bee13e0fd550d558ada0",
+      "table": "eva_effects.effect_readbacks",
+      "transformSpecSha256": "d7aeaccbea6892ccbd650930f9553353f69f94a89d1ee798f5db8b85f61c5418"
+    },
+    {
+      "canonicalByteLength": 6347,
+      "exportOrdinal": 31,
+      "recordContract": "EvaCanonicalRecord/eva_effects.deliveries/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/031-effects-deliveries-v1.schema.json",
+      "record_schema_sha256": "d98cdd9eb877acefb24985f9365b4385cc7d7bf2d899a9d531339989a12b4e54",
+      "sourceDefinitionSha256": "9ed38febfc145db3297d5447ce7e8ed49c968ec962add3ebab5e8518359c32db",
+      "table": "eva_effects.deliveries",
+      "transformSpecSha256": "48199a208321860ed4d6cb216ded26279a99423d68bb0f45a69e3aa5d455f59d"
+    },
+    {
+      "canonicalByteLength": 4688,
+      "exportOrdinal": 32,
+      "recordContract": "EvaCanonicalRecord/eva_effects.circuit_breakers/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/032-effects-circuit-breakers-v1.schema.json",
+      "record_schema_sha256": "aaeb609ac7bccb5e8985271a39921d9883fe1dc5254db7ec763e4c22de53fa4c",
+      "sourceDefinitionSha256": "dbbe97cbf344348e3bcc25a214b81dc85716bde432d9a99717919f1d91ccfed6",
+      "table": "eva_effects.circuit_breakers",
+      "transformSpecSha256": "fe2275c4b6604bf5b991c4157638bb8522948372f01f8d4ae634e01b5f4d5dfb"
+    },
+    {
+      "canonicalByteLength": 5203,
+      "exportOrdinal": 33,
+      "recordContract": "EvaCanonicalRecord/eva_memory.source_events/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/033-memory-source-events-v1.schema.json",
+      "record_schema_sha256": "a63509500d9757b795bd0d67b84c19ce462734c9f487766f8e5a27c9da265e30",
+      "sourceDefinitionSha256": "7cd5d404cc3bfc4dc10cd8281a1b625529be29a1c8fe7524def3acbf05c06c44",
+      "table": "eva_memory.source_events",
+      "transformSpecSha256": "8d926224f0ae4a771ab6a81b0f6fcaa69dacaba1404a694c88c9014938518a84"
+    },
+    {
+      "canonicalByteLength": 5110,
+      "exportOrdinal": 34,
+      "recordContract": "EvaCanonicalRecord/eva_memory.fact_assertions/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/034-memory-fact-assertions-v1.schema.json",
+      "record_schema_sha256": "b0d4953e73ca07c735ace206d511b97978c9224bcf8953d8adc18479c6250a0b",
+      "sourceDefinitionSha256": "853d56c9520969ae6519e35b871a45d361f8e7f2b9bd9a45d0756aef262cf96a",
+      "table": "eva_memory.fact_assertions",
+      "transformSpecSha256": "193d79f756ad3543ee9365e97edab01b9322f27d259006d28209b5b54a019f4f"
+    },
+    {
+      "canonicalByteLength": 3356,
+      "exportOrdinal": 35,
+      "recordContract": "EvaCanonicalRecord/eva_memory.current_facts/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/035-memory-current-facts-v1.schema.json",
+      "record_schema_sha256": "43799039c8110b08d83cb0531c30055e4c3bf7b7597ca67ad830683147221386",
+      "sourceDefinitionSha256": "411885a7a327ec81c35f84abb7226ee5ef13f02adde6f5aa94a0e909d9d796d2",
+      "table": "eva_memory.current_facts",
+      "transformSpecSha256": "9566bc6494029fdb6966b5dd334660bae02026e267d34e219aad28ae9163e22c"
+    },
+    {
+      "canonicalByteLength": 7614,
+      "exportOrdinal": 36,
+      "recordContract": "EvaCanonicalRecord/eva_memory.erasure_tombstones/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/036-memory-erasure-tombstones-v1.schema.json",
+      "record_schema_sha256": "7b8a01b589ef8f62f1247e1c3ef98404f1b3813b208e979fee100fe7c0e35cc5",
+      "sourceDefinitionSha256": "7ff142e305d56ffef82d1ac168d831fa5aa3364726ac84b00816b1d392de0000",
+      "table": "eva_memory.erasure_tombstones",
+      "transformSpecSha256": "8da36f626d074b0f8feda4f31609fcf05cec47cc3d039a9c95d121965072dacd"
+    },
+    {
+      "canonicalByteLength": 3868,
+      "exportOrdinal": 37,
+      "recordContract": "EvaCanonicalRecord/eva_evidence.evidence_envelopes/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/037-evidence-evidence-envelopes-v1.schema.json",
+      "record_schema_sha256": "b73c03b660e1872b8f7442f59ca4983f613f7cfc4383e6a024514bd0d34aa228",
+      "sourceDefinitionSha256": "eb0f42c6e39d115b5da04f917b45b031d9c8601cbf2759294e2533044198aeba",
+      "table": "eva_evidence.evidence_envelopes",
+      "transformSpecSha256": "4b03fc159d49c3f556385d81bab3e063a06c1cab0af6b8e2adcd72f11a78f213"
+    },
+    {
+      "canonicalByteLength": 2790,
+      "exportOrdinal": 38,
+      "recordContract": "EvaCanonicalRecord/eva_evidence.evidence_links/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/038-evidence-evidence-links-v1.schema.json",
+      "record_schema_sha256": "9fcb7f1c7ce8e44559b5aeb710032f88b283fd0c10ed2628f092e1b22a8618a8",
+      "sourceDefinitionSha256": "d4a03b124ec34c243019487ad179e6f1bca859340423da1b9e2c7bfe972b641d",
+      "table": "eva_evidence.evidence_links",
+      "transformSpecSha256": "f7558b54d757818ff7057e18b903eeddaa9e4ff7047b048db4424082433354db"
+    },
+    {
+      "canonicalByteLength": 4423,
+      "exportOrdinal": 39,
+      "recordContract": "EvaCanonicalRecord/eva_evidence.object_refs/v1",
+      "recordSchemaRelativePath": "deploy/schemas/portable/records/039-evidence-object-refs-v1.schema.json",
+      "record_schema_sha256": "512b8fbd6663381a7b348a13453776491817d7a14981f34063cc24a47a202728",
+      "sourceDefinitionSha256": "61c6745b4b444db15a37ce9eee7bf869e86af5a45e6818a6e78b00d3be2c708b",
+      "table": "eva_evidence.object_refs",
+      "transformSpecSha256": "c907d75d80b0aad60c8ebe572dc4f6c282192f8f8882db7f9c3dee77311c3b9d"
+    }
+  ]
+}

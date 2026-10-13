@@ -98,7 +98,7 @@ project_journal_identity (64hex), binary_sha256, client_sha256 and root/journal
 {dev,ino}. Startup checks these against opened no-follow FDs and actual bytes.
 The SHA256 of the exact configuration bytes appears in each tool description.
 Host registration must include that description in its actual catalog binding;
-this fixture confirms tools/list exposure, not production catalog propagation.
+this fixture confirms src/tools/list exposure, not production catalog propagation.
 The metadata proves identity matching, not fresh journal genesis. Host lifecycle
 must separately establish a new approved project journal and preserve it.
 

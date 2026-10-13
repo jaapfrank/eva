@@ -84,7 +84,7 @@ class PostgresDurableGoalStore:
         return tuple((thread, self._document_claim(thread)) for thread in threads)
 
     def claim_document_slot(self, slot_id: str, payload: dict, *, at: datetime) -> dict:
-        """One immutable assignment per host slot, no release/reset/reuse path."""
+        """One immutable assignment per host slot, no deploy/release/reset/reuse path."""
         thread = "document-slot:" + canonical_sha256({"slot_id": slot_id})
         try:
             self._timeline.create_thread(thread_id=thread,

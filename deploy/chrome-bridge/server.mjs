@@ -49,8 +49,8 @@ export async function serve(config) {
       let result;
       if(msg.method==='initialize')result={protocolVersion:'2025-03-26',capabilities:{tools:{}},serverInfo:{name:'eva-shared-chrome',version:'1.0.0'}};
       else if(msg.method==='ping')result={};
-      else if(msg.method==='tools/list')result={tools:gate.catalog()};
-      else if(msg.method==='tools/call') {
+      else if(msg.method==='src/tools/list')result={tools:gate.catalog()};
+      else if(msg.method==='src/tools/call') {
         const epoch=gate.epoch;
         // Only the request that started the action can revoke it on transport loss.
         const ownsAction=gate.mode==='eva' && !gate.pending;

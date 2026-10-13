@@ -45,7 +45,10 @@
     "source_config_sha256": "94c281fca6a73172bee78e8b0d7df6258c764cc4689cf9d0191c2bdf5a8c744a",
     "candidate_compile_seconds": 277.7,
     "recovery_compile_seconds": 234.3,
-    "compile_exit_codes": [0, 0],
+    "compile_exit_codes": [
+      0,
+      0
+    ],
     "candidate_ota_sha256": "78db7bc9b84c422b997da39d77dbbe8d2468459938e88775d5dcc87b1848d761",
     "candidate_factory_sha256": "53875d055df90b6803a8bd6c4bd4e903ce7ee6eeb3c76a2355498a9a18194ffe",
     "recovery_ota_sha256": "b8855f6b2e877040af5170216b10be77f233145e5f817a153a6d2df0cb6f87d6",
@@ -57,9 +60,18 @@
   },
   "verification": {
     "packaged_distinct_tests_passed": 60,
-    "files": ["tests/voice_service/test_work_receipt.py", "tests/voice_service/test_agent.py", "tests/voice_service/test_speaker_session.py", "tests/voice_service/test_speaker_audio.py"],
+    "files": [
+      "development/tests/voice_service/test_work_receipt.py",
+      "development/tests/voice_service/test_agent.py",
+      "development/tests/voice_service/test_speaker_session.py",
+      "development/tests/voice_service/test_speaker_audio.py"
+    ],
     "execution": "Network-disabled, read-only containers using packaged source. First run: 57 passed, one missing identity fixture and two missing OpenSSL fixture errors. Identity fixture restored: five speaker tests passed, including the previously failed case. Exact two remaining TLS cases passed with a host OpenSSL executable and matching libraries supplied only to those test containers; runtime image unchanged.",
-    "preparer_guards": ["existing output rejected", "wrong household device rejected without creating output", "output inside product checkout rejected without creating output"],
+    "preparer_guards": [
+      "existing output rejected",
+      "wrong household device rejected without creating output",
+      "output inside product checkout rejected without creating output"
+    ],
     "limitations": "No actual microphone, playback, device session, firmware flash or hardware recovery. Rebuilt recovery binaries do not replace an original full-flash backup."
   },
   "preparation_corrections": [
@@ -67,5 +79,5 @@
     "Initial generated credential used hexadecimal; ESPHome validation rejected it before compilation. Corrected to required 32-byte base64url and rebuilt in a new private output directory.",
     "Initial image build context encountered root-owned Python bytecode from helper import. Used isolated source-only context excluding bytecode; preparer now disables bytecode output."
   ],
-  "next_boundary": "Independent review, coordinator-controlled server activation and scoped network provisioning, then device-specific physical USB identification/full-flash backup/recovery verification before any flash."
+  "next_boundary": "Independent review, coordinator-controlled server activation and scoped network provisioning, then device-specific physical USB identification/full-flash development/archive/recovery verification before any flash."
 }

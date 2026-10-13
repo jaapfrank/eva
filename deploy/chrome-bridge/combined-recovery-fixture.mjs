@@ -56,7 +56,7 @@ function call(name,args={}) {
       }); res.on('error',()=>resolve({lost:true}));
     });
     req.setTimeout(20000,()=>req.destroy()); req.on('error',()=>resolve({lost:true}));
-    req.end(JSON.stringify({jsonrpc:'2.0',id:++serial,method:'tools/call',params:{name,arguments:args}}));
+    req.end(JSON.stringify({jsonrpc:'2.0',id:++serial,method:'src/tools/call',params:{name,arguments:args}}));
   });
 }
 async function snapshot() {

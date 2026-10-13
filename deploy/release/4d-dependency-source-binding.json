@@ -1,0 +1,183 @@
+{
+  "compatibilityPath": "deploy/release/4d-dependency-source-binding.json",
+  "contract": "Eva2RuntimeDependencySourceBinding/v1",
+  "decisionDate": "2026-09-09",
+  "dependencies": {
+    "certifi": {
+      "reason": "transitive dependency of pinned tiktoken",
+      "selectedWheel": {
+        "byteLength": 136983,
+        "filename": "certifi-2026.7.22-py3-none-any.whl",
+        "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775"
+      },
+      "version": "2026.7.22"
+    },
+    "charset-normalizer": {
+      "reason": "transitive dependency of pinned tiktoken",
+      "selectedWheel": {
+        "byteLength": 248801,
+        "filename": "charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "b9af956078716df40d985fb0dfeb2c2120c5ca92ba4ff4b388acfd01cdc14d08"
+      },
+      "version": "3.5.1"
+    },
+    "genai-prices": {
+      "reason": "transitive price catalog required by pydantic-ai-slim",
+      "selectedWheel": {
+        "byteLength": 116330,
+        "filename": "genai_prices-0.1.5-py3-none-any.whl",
+        "sha256": "5215706950decd833ce3527a9e1e745ad0dbdd35ce1b33ac1f7167699640b82a"
+      },
+      "version": "0.1.5"
+    },
+    "openai": {
+      "reason": "official model-provider transport",
+      "selectedWheel": {
+        "byteLength": 1699841,
+        "filename": "openai-3.6.0-py3-none-any.whl",
+        "sha256": "508e2158bf971687f953b62e44b02f207792c815aac306816386d7ba34d37f5f"
+      },
+      "version": "3.6.0"
+    },
+    "pydantic-ai-slim": {
+      "reason": "maintained typed model and agent runtime",
+      "selectedWheel": {
+        "byteLength": 1552945,
+        "filename": "pydantic_ai_slim-2.37.0-py3-none-any.whl",
+        "sha256": "439973ce2dae1e64631b05b803743fe44b3b1791514b16488c005b1ca4f2b3e7"
+      },
+      "version": "2.37.0"
+    },
+    "pydantic-graph": {
+      "reason": "transitive typed graph runtime required by pydantic-ai-slim",
+      "selectedWheel": {
+        "byteLength": 52701,
+        "filename": "pydantic_graph-2.37.0-py3-none-any.whl",
+        "sha256": "7b07237264b92f57aa06b1686315005e320099106534fc20da4081873f68c31f"
+      },
+      "version": "2.37.0"
+    },
+    "pynacl": {
+      "reason": "direct encrypted-object import",
+      "selectedWheel": {
+        "byteLength": 1437614,
+        "filename": "pynacl-1.6.2-cp38-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "8a66d6fb6ae7661c58995f9c6435bda2b1e68b54b598a6a10247bfcdadac996c"
+      },
+      "version": "1.6.2"
+    },
+    "regex": {
+      "reason": "transitive dependency of pinned tiktoken",
+      "selectedWheel": {
+        "byteLength": 801965,
+        "filename": "regex-2026.9.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "665207e41bacd435db001099eeab44103197c2c1a729d73ade74688a905ed4ce"
+      },
+      "version": "2026.9.3"
+    },
+    "requests": {
+      "reason": "transitive dependency of pinned tiktoken",
+      "selectedWheel": {
+        "byteLength": 73075,
+        "filename": "requests-2.34.2-py3-none-any.whl",
+        "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0"
+      },
+      "version": "2.34.2"
+    },
+    "tiktoken": {
+      "reason": "local input-envelope token accounting",
+      "selectedWheel": {
+        "byteLength": 1204197,
+        "filename": "tiktoken-0.14.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "sha256": "7896eea257fe497a2b7134474d909156c6744ce8da35bce88011a960e008aa0d"
+      },
+      "version": "0.14.0"
+    },
+    "urllib3": {
+      "reason": "transitive dependency of pinned tiktoken",
+      "selectedWheel": {
+        "byteLength": 131087,
+        "filename": "urllib3-2.7.0-py3-none-any.whl",
+        "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897"
+      },
+      "version": "2.7.0"
+    },
+    "websockets": {
+      "reason": "direct Home Assistant event-stream import",
+      "selectedWheel": {
+        "byteLength": 220150,
+        "filename": "websockets-17.0.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "sha256": "f47b0815af3948ec6a440b3afa02f05b18cc0939549e91b5c677b5d9c2c8472a"
+      },
+      "version": "17.0.1"
+    }
+  },
+  "historicalBaseline": {
+    "installedByCurrentBuild": false,
+    "packageCount": 38,
+    "requirementsLockPath": "deploy/requirements.lock",
+    "requirementsLockSha256": "89555d14acd8bceb8786dfa8539af29672899e8259e6a2b5352e27ef9219e8dc"
+  },
+  "licenseAndSbomRequirements": {
+    "separatePyNaClAndLibsodiumRowsRequired": true,
+    "status": "must_match_44_selected_distributions"
+  },
+  "nonClaims": [
+    "The historical filename is retained for build compatibility and does not mean DBOS remains installed.",
+    "These bytes are candidate inputs until the complete release authority, image build, scan, runtime proof and A/B gate are green.",
+    "No live Eva route, database, secret or container is changed by this binding."
+  ],
+  "pyprojectAdoption": {
+    "directRuntimeAdded": [
+      "PyNaCl==1.6.2",
+      "openai==3.6.0",
+      "websockets==17.0.1",
+      "tiktoken==0.14.0"
+    ],
+    "directRuntimeRemoved": [
+      "dbos==2.30.0"
+    ],
+    "directRuntimeUpdated": [
+      "cryptography==46.0.5 -> cryptography==50.0.1",
+      "pydantic-ai-slim==2.32.1 -> pydantic-ai-slim==2.37.0"
+    ],
+    "optionalDependencyGroups": [],
+    "path": "pyproject.toml",
+    "sha256": "d3835afa96949dac756d85ffbe0caa87fdd5377d9603d7158f36edf5fb600281"
+  },
+  "removedDistributions": [
+    "dbos",
+    "python-dateutil",
+    "pyyaml",
+    "six"
+  ],
+  "standaloneLock": {
+    "indexDirectivesAllowed": false,
+    "packageCount": 44,
+    "path": "deploy/requirements-4d.lock",
+    "requirementsIncludesAllowed": false,
+    "sdistInstallationAllowed": false,
+    "sha256": "036e2463be9fea6b3adb8528e8e0288b0985f65f958d4abdbf371c21d828693e",
+    "unhashedRequirementsAllowed": false,
+    "urlRequirementsAllowed": false
+  },
+  "status": "sealed_offline_inputs_not_release",
+  "targetRuntime": [
+    "python",
+    "tier1"
+  ],
+  "wheelhouseInstallProtocol": {
+    "cleanEnvironment": true,
+    "requiredPostInstallChecks": [
+      "pip check before installer removal",
+      "runtime import",
+      "pip and wheel distributions absent",
+      "DBOS distribution absent"
+    ],
+    "selectedManifestEncoding": "canonical JSON array of [filename,sha256] pairs sorted by filename",
+    "selectedManifestSha256": "b251b8950ca4d701fb3187e4389e3c7ccf3154f1a0bdca4ac64a2003413c00a0",
+    "sourceCoverageAuthority": "deploy/release/managed-b-wheel-coverage-4d-amd64-v1.json",
+    "status": "networkless_hash_locked_only_binary",
+    "wheelCount": 44
+  }
+}

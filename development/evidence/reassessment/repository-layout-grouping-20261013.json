@@ -1,0 +1,38 @@
+{
+  "contract": "EvaRepositoryLayoutResult/v1",
+  "checkedAt": "2026-10-13T12:08:47.012615+00:00",
+  "baselineCommit": "61486f3524a38de0830f4ba01e9901b292217cb8",
+  "branch": "codex/eva-layout",
+  "rootDirectories": [
+    "src",
+    "deploy",
+    "development"
+  ],
+  "originalFiles": 5052,
+  "closedJsonFilesByteExact": 2209,
+  "productTasks": {
+    "total": 54,
+    "completed": 43,
+    "criteriaAndAcceptancesUnchanged": true
+  },
+  "verification": {
+    "focusedTestsPassed": 118,
+    "architectureFindingsBefore": 110,
+    "architectureFindingsAfter": 110,
+    "sourceBindingsPassed": 10,
+    "livePortsHttp200": [
+      44710,
+      44711,
+      44712
+    ],
+    "runtimeImagesRebuilt": false
+  },
+  "limitations": [
+    "Nine release-input references were already unavailable before this grouping; no complete new installer release is claimed.",
+    "This is repository organization, not a new Eva product function."
+  ],
+  "evaModelRequests": 0,
+  "comparisonRuns": 0,
+  "developmentCreditCost": null,
+  "preservationManifest": "development/archive/layout-migration-20261013.json"
+}

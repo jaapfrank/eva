@@ -1,0 +1,34 @@
+services:
+  durable-goal-worker:
+    profiles: ["durable-goals"]
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    restart: unless-stopped
+    # The image healthcheck probes the HTTP core on port 8080. This worker has
+    # no HTTP listener; process liveness and restart count are its health
+    # signals, so inheriting the core check would mark a healthy worker red.
+    healthcheck:
+      disable: true
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=8m
+    command: ["python", "-m", "eva.operations.durable_goal_worker"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DURABLE_GOAL_ALLOW_INSECURE_HTTP: ${EVA_DURABLE_GOAL_ALLOW_INSECURE_HTTP:-false}
+      EVA_DURABLE_GOAL_POLL_SECONDS: ${EVA_DURABLE_GOAL_POLL_SECONDS:-2}
+      EVA_DURABLE_GOAL_PROVIDER: ${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}
+      EVA_DURABLE_GOAL_PROVIDER_URL: ${EVA_DURABLE_GOAL_PROVIDER_URL:?set the evidence/work/delivery provider URL}
+      EVA_DURABLE_GOAL_TIMEOUT_SECONDS: ${EVA_DURABLE_GOAL_TIMEOUT_SECONDS:-5}
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false

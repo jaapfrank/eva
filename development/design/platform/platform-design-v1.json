@@ -1,0 +1,193 @@
+{
+  "contract": "Eva2PlatformDesign/v1",
+  "status": "selected_not_implemented",
+  "claimScope": "design_only",
+  "packageBoundaryPolicy": "development/design/architecture/package-boundaries-v1.json",
+  "packageBoundaryContract": "Eva2PackageBoundaries/v1",
+  "trustedDecisionCore": "living_core",
+  "embeddedLibraries": [
+    {
+      "id": "dbos",
+      "version": "2.30.0",
+      "hostProcess": "living_core",
+      "authority": "durable_execution_only",
+      "canonicalEvaDataAllowed": false
+    }
+  ],
+  "processes": [
+    {
+      "id": "living_core",
+      "kind": "python_service",
+      "decisionAuthority": true,
+      "owns": [
+        "identity",
+        "presence",
+        "attention",
+        "episodes",
+        "commitments",
+        "policy",
+        "reply_binding"
+      ],
+      "forbidden": [
+        "provider_secret_bytes",
+        "connector_effect_execution",
+        "dbos_internal_state_as_business_authority"
+      ]
+    },
+    {
+      "id": "model_adapter",
+      "kind": "isolated_python_service",
+      "decisionAuthority": false,
+      "owns": [
+        "purpose_scoped_model_transport"
+      ],
+      "forbidden": [
+        "tools",
+        "sessions",
+        "memory",
+        "effects",
+        "identity",
+        "database",
+        "persistent_credentials"
+      ]
+    },
+    {
+      "id": "postgresql",
+      "kind": "state_service",
+      "decisionAuthority": false,
+      "owns": [
+        "eva_schema_storage",
+        "dbos_schema_storage"
+      ],
+      "forbidden": [
+        "business_policy",
+        "raw_large_media"
+      ]
+    },
+    {
+      "id": "connector_supervisor",
+      "kind": "isolated_service",
+      "decisionAuthority": false,
+      "owns": [
+        "worker_identity",
+        "worker_lifecycle",
+        "worker_sandbox",
+        "worker_protocol"
+      ],
+      "forbidden": [
+        "domain_decisions",
+        "model_context",
+        "credentials_at_rest"
+      ]
+    },
+    {
+      "id": "credential_broker",
+      "kind": "isolated_service",
+      "decisionAuthority": false,
+      "owns": [
+        "encrypted_secret_bytes",
+        "operation_scoped_credential_materialization"
+      ],
+      "forbidden": [
+        "conversation_content",
+        "memory",
+        "plans",
+        "effect_acceptance"
+      ]
+    },
+    {
+      "id": "connector_worker",
+      "kind": "short_lived_sandbox",
+      "decisionAuthority": false,
+      "owns": [
+        "one_manifest",
+        "one_operation",
+        "temporary_minimal_secret"
+      ],
+      "forbidden": [
+        "database",
+        "model",
+        "full_identity",
+        "general_memory",
+        "other_accounts",
+        "host_environment"
+      ]
+    },
+    {
+      "id": "egress_proxy",
+      "kind": "isolated_network_service",
+      "decisionAuthority": false,
+      "owns": [
+        "dns_resolution",
+        "allowlisted_provider_connections"
+      ],
+      "forbidden": [
+        "credentials",
+        "domain_state",
+        "retry_decisions"
+      ]
+    },
+    {
+      "id": "object_store",
+      "kind": "isolated_state_service",
+      "decisionAuthority": false,
+      "owns": [
+        "encrypted_immutable_objects"
+      ],
+      "forbidden": [
+        "identity_authority",
+        "search_authority",
+        "business_policy"
+      ]
+    },
+    {
+      "id": "telemetry_collector",
+      "kind": "isolated_observability_service",
+      "decisionAuthority": false,
+      "owns": [
+        "bounded_local_telemetry"
+      ],
+      "forbidden": [
+        "business_state",
+        "raw_content",
+        "secrets",
+        "effect_acceptance",
+        "eva_schema_write"
+      ]
+    },
+    {
+      "id": "eva_cli",
+      "kind": "standalone_host_binary_target",
+      "decisionAuthority": false,
+      "owns": [
+        "lifecycle_command_orchestration"
+      ],
+      "forbidden": [
+        "conversation_logic",
+        "planning_logic",
+        "effect_logic",
+        "persistent_runtime_credentials"
+      ]
+    }
+  ],
+  "modulesInsideLivingCore": [
+    {
+      "id": "effect_gateway",
+      "authority": "effect_intent_attempt_fence_receipt_readback_and_breaker_policy"
+    }
+  ],
+  "noGo": [
+    "a second process has decisionAuthority true",
+    "DBOS or a connector owns canonical Eva business data",
+    "a worker can reach PostgreSQL or the model adapter",
+    "a resource has no explicit owner and consumer set",
+    "a non-Tier-1 target is represented as supported"
+  ],
+  "claims": {
+    "processesExist": false,
+    "processIsolationProven": false,
+    "installerExists": false,
+    "runtimeSupported": false,
+    "crossOsExecutionProven": false
+  }
+}

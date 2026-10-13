@@ -137,7 +137,7 @@ geen eigenaaracceptatie.
 De gateway kreeg na de herstart adres 172.30.0.4, terwijl de oude proxy uitsluitend
 172.30.0.2 toeliet. De exacte service-DNS-controle voorkomt deze adresafhankelijkheid
 zonder toegang tot het hele subnet toe te staan. De eigen gezondheidscontrole
-gebruikt `http://127.0.0.1:45164/healthz`, controleert de hostsocket met tools/list
+gebruikt `http://127.0.0.1:45164/healthz`, controleert de hostsocket met src/tools/list
 en vraagt geen tabdeling of browseractie. De oude geërfde corecheck op poort8080
 was ongeschikt voor deze proxy.
 

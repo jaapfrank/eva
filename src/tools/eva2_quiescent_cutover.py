@@ -1,0 +1,1875 @@
+"""Lossless, quiescent cutover between the two retained managed-B slots.
+
+The ordinary canary switch deliberately does not touch data.  Retained slots,
+however, own separate PostgreSQL volumes.  This operator therefore stops all
+user ingress, quiesces both database writers, copies and attests both logical
+databases, and only then changes Eva1's explicit ``/eva2`` route.  The same
+operation works in the opposite direction, so rollback first copies every new
+write back instead of silently returning to stale state.
+"""
+
+from __future__ import annotations
+
+import argparse
+from collections.abc import Iterable
+from dataclasses import dataclass
+from datetime import UTC, datetime
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import sqlite3
+import stat
+import subprocess
+import tempfile
+import time
+from typing import Any, Protocol
+from urllib import error, request
+
+from tools.eva2_canary_cutover import (
+    EVA1_PATHS,
+    _atomic_dropin,
+    _read_exact_dropin,
+    canonical_dropin,
+)
+from eva.operations.logical_restore_authority import logical_restore_preparation_sql
+
+
+DOCKER = "/usr/bin/docker"
+SYSTEMCTL = "/usr/bin/systemctl"
+SERVICE = "eva.service"
+DROPIN = Path("/etc/systemd/system/eva.service.d/30-eva2-current-candidate.conf")
+LOCK = Path("/run/lock/eva2-quiescent-cutover.lock")
+WORK_PARENT = Path("/var/lib/eva2/quiescent-cutover")
+EVA1_DATABASE = Path("/home/administrator/project/Bottie/data/eva.db")
+EVA1_BACKUPS = Path("/var/lib/eva2/eva1-cutover-backups")
+MANIFEST = (
+    Path(__file__).resolve().parents[2] / "deploy/living-core/managed-b.compose.yml"
+)
+PROACTIVE_MANIFEST = MANIFEST.with_name("telegram-proactive.compose.yml")
+CONNECTOR_MANIFEST = MANIFEST.with_name("mcp-gateway.compose.yml")
+VOICE_MANIFEST = MANIFEST.with_name("dashboard-voice.compose.yml")
+HOUSEHOLD_VOICE_MANIFEST = MANIFEST.with_name("household-voice.compose.yml")
+CONNECTOR_TARGET = "/run/eva/connectors/mcp"
+CONNECTOR_FLAG = "EVA_MCP_GATEWAY_ENABLED"
+PROACTIVE_FLAG = "EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED"
+BACKGROUND_FLAG = "EVA_BACKGROUND_WORK_ENABLED"
+DELEGATED_FLAG = "EVA_DELEGATED_WORK_ENABLED"
+PROACTIVE_TOKEN_TARGET = "/run/secrets/telegram_bot_token"
+
+_SCHEMA_HEAD_SCRIPT = (
+    "from eva.operations.install_schema import _HEAD_REVISION; "
+    "print(_HEAD_REVISION)"
+)
+_SCHEMA_DOWNGRADE_SCRIPT = (
+    "import sys; "
+    "from alembic import command; "
+    "from alembic.config import Config; "
+    "from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn; "
+    "from eva.adapters.credentials.runtime_files import read_runtime_secret_file; "
+    "dsn=sqlalchemy_postgres_dsn(read_runtime_secret_file("
+    "'/run/secrets/database_dsn',setting_name='EVA_DATABASE_DSN_FILE')); "
+    "config=Config('/opt/eva/deploy/alembic.ini'); "
+    "config.set_main_option('sqlalchemy.url',dsn.replace('%','%%')); "
+    "command.downgrade(config,sys.argv[1])"
+)
+
+_COUNT_SQL = """
+SELECT stats.schemaname || '.' || stats.relname || '=' ||
+       (xpath('/row/c/text()', query_to_xml(
+           format('SELECT count(*) AS c FROM %I.%I', stats.schemaname, stats.relname),
+           false, true, ''
+       )))[1]::text
+FROM pg_stat_user_tables AS stats
+JOIN pg_class AS relation ON relation.oid = stats.relid
+WHERE relation.relkind IN ('r', 'p')
+ORDER BY stats.schemaname, stats.relname
+"""
+
+
+class QuiescentCutoverError(RuntimeError):
+    """The retained-slot cutover stopped closed or restored its prior route."""
+
+
+@dataclass(frozen=True, slots=True)
+class SlotSpec:
+    number: int
+    project: str
+    port: int
+    environment: Path
+    core: str
+    hindsight: str
+    operational_postgres: str
+    memory_postgres: str
+    operational_volume: str
+    memory_volume: str
+    dashboard_token: Path
+
+    @property
+    def delegated_worker(self) -> str:
+        return f"{self.project}-delegated-work-worker-1"
+
+    @property
+    def url(self) -> str:
+        return f"http://127.0.0.1:{self.port}"
+
+
+def _slot(number: int) -> SlotSpec:
+    if number not in {3, 4}:
+        raise QuiescentCutoverError("only retained managed-B slots 3 and 4 are allowed")
+    project = f"eva2-managed-b-slot{number}"
+    return SlotSpec(
+        number=number,
+        project=project,
+        port=44707 + number,
+        environment=Path(f"/var/lib/eva2/managed-b-slot{number}/candidate.env"),
+        core=f"{project}-core",
+        hindsight=f"{project}-hindsight-1",
+        operational_postgres=f"{project}-postgres-1",
+        memory_postgres=f"{project}-hindsight-postgres-1",
+        operational_volume=f"{project}-operational",
+        memory_volume=f"{project}-memory",
+        dashboard_token=Path(
+            f"/var/lib/eva2/managed-b-slot{number}/secrets/dashboard-token"
+        ),
+    )
+
+
+@dataclass(frozen=True, slots=True)
+class DatabaseAttestation:
+    counts: dict[str, int]
+    count_digest: str
+    schema_digest: str
+    data_digest: str
+
+
+@dataclass(frozen=True, slots=True)
+class DatabaseSnapshot:
+    operational_dump: Path
+    memory_dump: Path
+    operational_dump_sha256: str
+    memory_dump_sha256: str
+    operational_dump_bytes: int
+    memory_dump_bytes: int
+    operational: DatabaseAttestation
+    memory: DatabaseAttestation
+
+
+class CutoverBackend(Protocol):
+    def preflight(self, source: SlotSpec, target: SlotSpec, dropin: Path) -> bytes: ...
+
+    def stop_eva1(self) -> None: ...
+
+    def backup_eva1(self, source: SlotSpec, target: SlotSpec) -> dict[str, object]: ...
+
+    def stop_writers(self, slot: SlotSpec) -> None: ...
+
+    def start_writers(self, slot: SlotSpec) -> None: ...
+
+    def snapshot(
+        self, slot: SlotSpec, workspace: Path, label: str
+    ) -> DatabaseSnapshot: ...
+
+    def restore(self, slot: SlotSpec, snapshot: DatabaseSnapshot) -> None: ...
+
+    def migrate_schema(self, source: SlotSpec, target: SlotSpec) -> None: ...
+
+    def verify_runtime(self, slot: SlotSpec) -> None: ...
+
+    def write_route(self, dropin: Path, content: bytes) -> None: ...
+
+    def start_eva1(self, slot: SlotSpec) -> dict[str, int]: ...
+
+    def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool: ...
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        while chunk := source.read(1024 * 1024):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _count_digest(counts: dict[str, int]) -> str:
+    return hashlib.sha256(
+        json.dumps(counts, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+
+
+def _dump_content_digest(lines: Iterable[bytes]) -> str:
+    line_digests: list[bytes] = []
+    for line in lines:
+        # PostgreSQL 17+ emits a fresh anti-injection key on every dump.  It is
+        # transport framing, not database content.
+        if line.startswith((b"\\restrict ", b"\\unrestrict ")):
+            continue
+        line_digests.append(hashlib.sha256(line).digest())
+    digest = hashlib.sha256()
+    for line_digest in sorted(line_digests):
+        digest.update(line_digest)
+    return digest.hexdigest()
+
+
+def _sanitize(value: str) -> str:
+    value = re.sub(r"postgres(?:ql)?://[^\s'\"]+", "postgresql://<redacted>", value)
+    value = re.sub(r"\bsk-[A-Za-z0-9_-]{12,}\b", "<redacted>", value)
+    value = re.sub(r"\b\d{8,12}:[A-Za-z0-9_-]{20,}\b", "<redacted>", value)
+    return " ".join(value.split())[-1200:]
+
+
+def _shared_database_consumers(
+    *,
+    retained_core: str,
+    inspected: Iterable[dict[str, Any]],
+) -> list[str]:
+    """Return running sibling containers that mount the retained core database."""
+
+    documents = list(inspected)
+    core = next(
+        (
+            document
+            for document in documents
+            if str(document.get("Name", "")).lstrip("/") == retained_core
+        ),
+        None,
+    )
+    if core is None:
+        raise QuiescentCutoverError("retained slot core inspection is missing")
+    sources = {
+        str(mount.get("Source", ""))
+        for mount in core.get("Mounts", [])
+        if mount.get("Destination") == "/run/secrets/database_dsn"
+        and mount.get("Source")
+    }
+    if len(sources) != 1:
+        raise QuiescentCutoverError("retained slot database mount is invalid")
+    source = next(iter(sources))
+    consumers: list[str] = []
+    for document in documents:
+        name = str(document.get("Name", "")).lstrip("/")
+        if not name or name == retained_core:
+            continue
+        if document.get("State", {}).get("Running") is not True:
+            continue
+        if any(
+            mount.get("Destination") == "/run/secrets/database_dsn"
+            and mount.get("Source") == source
+            for mount in document.get("Mounts", [])
+        ):
+            consumers.append(name)
+    return sorted(consumers)
+
+
+class SystemBackend:
+    """Strict local implementation for the two retained host slots."""
+
+    def __init__(self, *, owner_uid: int = 0, activate_dashboard_voice: bool = False) -> None:
+        self.owner_uid = owner_uid
+        self.activate_dashboard_voice = activate_dashboard_voice
+        self._voice_activation_slot: int | None = None
+
+    @staticmethod
+    def _run(
+        command: list[str],
+        *,
+        timeout: int = 180,
+        extra_env: dict[str, str] | None = None,
+    ) -> str:
+        process_environment = {
+            "HOME": "/root",
+            "LC_ALL": "C",
+            "PATH": os.environ["PATH"],
+        }
+        if extra_env:
+            process_environment.update(extra_env)
+        try:
+            completed = subprocess.run(
+                command,
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                env=process_environment,
+            )
+        except subprocess.CalledProcessError as exc:
+            diagnostic = _sanitize("\n".join((exc.stdout or "", exc.stderr or "")))
+            raise QuiescentCutoverError(
+                f"command failed closed: {command[-1]}: {diagnostic or 'no diagnostic'}"
+            ) from exc
+        except (OSError, subprocess.SubprocessError) as exc:
+            raise QuiescentCutoverError(
+                f"command failed closed: {command[-1]}"
+            ) from exc
+        return completed.stdout
+
+    @staticmethod
+    def _is_running(container: str) -> bool:
+        completed = subprocess.run(
+            [DOCKER, "inspect", "--format", "{{.State.Running}}", container],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=20,
+        )
+        return completed.returncode == 0 and completed.stdout.strip() == "true"
+
+    @staticmethod
+    def _private_file(path: Path, *, mode: int, uid: int) -> None:
+        try:
+            metadata = os.lstat(path)
+        except OSError as exc:
+            raise QuiescentCutoverError(
+                "required private file is inaccessible"
+            ) from exc
+        if (
+            not stat.S_ISREG(metadata.st_mode)
+            or stat.S_ISLNK(metadata.st_mode)
+            or metadata.st_nlink != 1
+            or stat.S_IMODE(metadata.st_mode) != mode
+            or metadata.st_uid != uid
+        ):
+            raise QuiescentCutoverError("required private file metadata is unsafe")
+
+    @staticmethod
+    def _environment(path: Path) -> dict[str, str]:
+        SystemBackend._private_file(path, mode=0o600, uid=0)
+        values: dict[str, str] = {}
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line or line.startswith("#"):
+                continue
+            key, separator, value = line.partition("=")
+            if not separator or not key or key in values:
+                raise QuiescentCutoverError("managed-B environment is malformed")
+            values[key] = value
+        return values
+
+    @staticmethod
+    def _inspect(container: str) -> dict[str, Any]:
+        try:
+            document = json.loads(SystemBackend._run([DOCKER, "inspect", container]))
+        except (ValueError, TypeError) as exc:
+            raise QuiescentCutoverError("Docker inspection was invalid") from exc
+        if not isinstance(document, list) or len(document) != 1:
+            raise QuiescentCutoverError(
+                "Docker inspection did not identify one container"
+            )
+        return document[0]
+
+    @staticmethod
+    def _inspect_all() -> list[dict[str, Any]]:
+        names = SystemBackend._run(
+            [DOCKER, "ps", "-a", "--format", "{{.Names}}"]
+        ).splitlines()
+        if not names:
+            return []
+        try:
+            documents = json.loads(SystemBackend._run([DOCKER, "inspect", *names]))
+        except (ValueError, TypeError) as exc:
+            raise QuiescentCutoverError("Docker inspection was invalid") from exc
+        if not isinstance(documents, list) or any(
+            not isinstance(document, dict) for document in documents
+        ):
+            raise QuiescentCutoverError("Docker inspection was invalid")
+        return documents
+
+    @classmethod
+    def _connector_settings(cls, environment: dict[str, str]) -> dict[str, str] | None:
+        """Validate one fixed optional overlay without releasing its credential."""
+        flag = environment.get(CONNECTOR_FLAG, "false")
+        if flag not in {"true", "false"}:
+            raise QuiescentCutoverError("connector flag is invalid")
+        values = {key: value for key, value in environment.items()
+                  if key.startswith(("EVA_MCP_", "EVA_BROWSER_")) and key != CONNECTOR_FLAG}
+        if flag == "false":
+            if any(values.values()):
+                raise QuiescentCutoverError("disabled connector has active configuration")
+            return None
+        required = {"URL", "ACCESS_DIR_HOST", "NETWORK_NAME", "ALLOW_PLAIN_HTTP",
+                    "PRINCIPAL_SHA256_ALLOWLIST", "CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "IMAGE_ID", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"}
+        from tools.managed_b_render import (
+            BROWSER_ENVIRONMENT_KEYS, MCP_AUTONOMY_ENVIRONMENT_KEYS,
+            browser_environment, mcp_autonomy_environment,
+        )
+        required_keys = {"EVA_MCP_GATEWAY_" + key for key in required}
+        autonomy_hash_keys = {"EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256",
+                              "EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256"}
+        guard_keys = {"EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE", "EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256"}
+        managed_hash_key = "EVA_MCP_GATEWAY_MANAGED_ENDPOINTS_SHA256"
+        browser_hash_key = "EVA_BROWSER_CONTROL_TOKEN_SHA256"
+        initiative_hash_key = "EVA_MCP_GATEWAY_INITIATIVE_MANDATE_SHA256"
+        allowed_keys = (required_keys | set(MCP_AUTONOMY_ENVIRONMENT_KEYS)
+                        | set(BROWSER_ENVIRONMENT_KEYS) | autonomy_hash_keys
+                        | guard_keys | {managed_hash_key, browser_hash_key, initiative_hash_key})
+        if (not required_keys.issubset(values) or not set(values).issubset(allowed_keys)
+                or not all(values[key] for key in required_keys)):
+            raise QuiescentCutoverError("connector configuration is incomplete")
+        try:
+            autonomy = mcp_autonomy_environment(values)
+            browser = browser_environment(values)
+        except RuntimeError as exc:
+            raise QuiescentCutoverError("connector autonomy configuration is invalid") from exc
+        browser_enabled = bool(browser["EVA_BROWSER_CONTROL_URL"])
+        if browser_enabled != bool(values.get(browser_hash_key)):
+            raise QuiescentCutoverError("browser control digest differs from activation")
+        if browser_enabled and re.fullmatch(r"[0-9a-f]{64}", values[browser_hash_key]) is None:
+            raise QuiescentCutoverError("browser control digest is invalid")
+        autonomy_enabled = bool(autonomy["EVA_MCP_AUTONOMY_MANDATE_FILE"])
+        managed_enabled = bool(autonomy["EVA_MCP_MANAGED_ENDPOINTS_FILE"])
+        if managed_enabled != bool(values.get(managed_hash_key)):
+            raise QuiescentCutoverError("managed connector endpoints digest differs from activation")
+        if (autonomy_enabled and any(not values.get(key) for key in autonomy_hash_keys)
+                or not autonomy_enabled and any(values.get(key) for key in autonomy_hash_keys)):
+            raise QuiescentCutoverError("connector autonomy digest pair differs from activation")
+        if (autonomy_enabled and any(not values.get(key) for key in guard_keys)
+                or not autonomy_enabled and any(values.get(key) for key in guard_keys)):
+            raise QuiescentCutoverError("connector guard receipt pair differs from activation")
+        digests = ["CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"]
+        if autonomy_enabled:
+            digests.extend(("AUTONOMY_MANDATE_SHA256", "REGISTRATION_TOKEN_SHA256", "GUARD_RECEIPT_SHA256"))
+        if values.get(initiative_hash_key):
+            if not autonomy_enabled:
+                raise QuiescentCutoverError("initiative mandate requires connector autonomy")
+            digests.append("INITIATIVE_MANDATE_SHA256")
+        if managed_enabled:
+            digests.append("MANAGED_ENDPOINTS_SHA256")
+        for key in digests:
+            if re.fullmatch(r"[0-9a-f]{64}", values["EVA_MCP_GATEWAY_" + key]) is None:
+                raise QuiescentCutoverError("connector digest is invalid")
+        principals = values["EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST"].split(",")
+        if any(re.fullmatch(r"[0-9a-f]{64}", value) is None for value in principals):
+            raise QuiescentCutoverError("connector owner allowlist is invalid")
+        if (values["EVA_MCP_GATEWAY_URL"] != "http://eva2-mcp-gateway:4444"
+                or values["EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP"] != "true"
+                or re.fullmatch(r"sha256:[0-9a-f]{64}", values["EVA_MCP_GATEWAY_IMAGE_ID"]) is None):
+            raise QuiescentCutoverError("local connector gateway URL, transport or image is invalid")
+        for path, key in ((CONNECTOR_MANIFEST, "OVERLAY_SHA256"),
+                          (MANIFEST, "BASE_MANIFEST_SHA256"),
+                          (PROACTIVE_MANIFEST, "DELIVERY_OVERLAY_SHA256")):
+            if hashlib.sha256(path.read_bytes()).hexdigest() != values["EVA_MCP_GATEWAY_" + key]:
+                raise QuiescentCutoverError("connector Compose template digest differs")
+        directory = Path(values["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"])
+        if not directory.is_absolute() or directory.resolve(strict=True) != directory:
+            raise QuiescentCutoverError("connector access directory is not canonical")
+        metadata = directory.stat()
+        if not stat.S_ISDIR(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o700 or metadata.st_uid != 65532:
+            raise QuiescentCutoverError("connector access directory metadata is unsafe")
+        files = [("token", "EVA_MCP_GATEWAY_TOKEN_SHA256"),
+                 ("catalog.json", "EVA_MCP_GATEWAY_CATALOG_SHA256")]
+        if autonomy_enabled:
+            files.extend((("mandate.json", "EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256"),
+                          ("registration-token", "EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256")))
+        if managed_enabled:
+            files.append(("managed-endpoints.json", "EVA_MCP_GATEWAY_MANAGED_ENDPOINTS_SHA256"))
+        if browser_enabled:
+            files.append(("browser-control-token", browser_hash_key))
+        if values.get(initiative_hash_key):
+            files.append(("initiative-mandate.json", initiative_hash_key))
+        if {item.name for item in directory.iterdir()} != {name for name, _ in files}:
+            raise QuiescentCutoverError("connector directory contains unexpected files")
+        for name, key in files:
+            path = directory / name
+            cls._private_file(path, mode=0o600, uid=65532)
+            if hashlib.sha256(path.read_bytes()).hexdigest() != values[key]:
+                raise QuiescentCutoverError("connector credential or catalog digest differs")
+        network = values["EVA_MCP_GATEWAY_NETWORK_NAME"]
+        if re.fullmatch(r"eva2-[a-z0-9][a-z0-9_-]{0,62}", network) is None:
+            raise QuiescentCutoverError("connector network name is invalid")
+        try:
+            networks = json.loads(cls._run([DOCKER, "network", "inspect", network]))
+        except (ValueError, TypeError) as exc:
+            raise QuiescentCutoverError("connector network inspection is invalid") from exc
+        if (not isinstance(networks, list) or len(networks) != 1
+                or not isinstance(networks[0], dict) or networks[0].get("Name") != network
+                or networks[0].get("Internal") is not True):
+            raise QuiescentCutoverError("connector network must be the reviewed internal network")
+        gateway = cls._inspect("eva2-mcp-gateway")
+        membership = gateway.get("NetworkSettings", {}).get("Networks", {}).get(network, {})
+        network_id = networks[0].get("Id")
+        gateway_id = gateway.get("Id")
+        if (not network_id or not gateway_id or gateway.get("Name") != "/eva2-mcp-gateway"
+                or gateway.get("State", {}).get("Running") is not True
+                or gateway.get("Image") != values["EVA_MCP_GATEWAY_IMAGE_ID"]
+                or membership.get("NetworkID") != network_id
+                or "eva2-mcp-gateway" not in (membership.get("Aliases") or [])
+                or gateway_id not in networks[0].get("Containers", {})):
+            raise QuiescentCutoverError("connector gateway image or network membership differs")
+        if autonomy_enabled:
+            cls._verify_connector_guard(gateway, values)
+        return values
+
+    @classmethod
+    def _verify_connector_guard(cls, gateway: dict[str, Any], settings: dict[str, str]) -> None:
+        """Read the actual guarded transport before making autonomy available."""
+        targets = {"/app/mcpgateway/services/gateway_service.py",
+                   "/app/mcpgateway/services/tool_service.py", "/app/mcpgateway/eva_mcp_pinning.py"}
+        try:
+            path = Path(settings["EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE"])
+            if not path.is_absolute() or path.resolve(strict=True) != path:
+                raise ValueError("receipt path")
+            cls._private_file(path, mode=0o600, uid=0)
+            raw = path.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != settings["EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256"]:
+                raise ValueError("receipt digest")
+            receipt = json.loads(raw)
+            if (receipt.get("contract") != "EvaMcpTransportGuard/v1"
+                    or receipt.get("upstreamImage") != gateway.get("Image")
+                    or receipt.get("upstreamImage") != settings["EVA_MCP_GATEWAY_IMAGE_ID"]):
+                raise ValueError("guard image binding")
+            compose = receipt["composeFiles"]
+            environment_file = receipt["environmentFile"]
+            if (not isinstance(compose, list) or len(compose) != 3 or len(set(compose)) != 3
+                    or set(receipt["inputSha256"]) != {*compose, environment_file}):
+                raise ValueError("guard Compose input set")
+            for filename, digest in receipt["inputSha256"].items():
+                source = Path(filename)
+                if (not source.is_absolute() or source.resolve(strict=True) != source
+                        or not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest() != digest):
+                    raise ValueError("guard Compose input digest")
+            prefix = ["/usr/bin/docker", "compose", "--project-name", "eva2-workspace-provider",
+                      "--env-file", environment_file]
+            for filename in compose[:2]:
+                prefix.extend(("--file", filename))
+            suffix = ["up", "--detach", "--no-deps", "gateway"]
+            if (receipt["recreateCommand"] != [*prefix, "--file", compose[2], *suffix]
+                    or receipt["rollback"] != {"requiresAutonomyDisabled": True, "command": [*prefix, *suffix]}):
+                raise ValueError("guard recreate route")
+            files = receipt["files"]
+            if not isinstance(files, list) or len(files) != 3 or {row["target"] for row in files} != targets:
+                raise ValueError("guard source set")
+            actual_mounts = [m for m in gateway.get("Mounts", [])
+                             if str(m.get("Destination", "")).startswith("/app/mcpgateway")]
+            if len(actual_mounts) != 3:
+                raise ValueError("guard mount count")
+            for row in files:
+                source = Path(row["source"])
+                if (not source.is_absolute() or source.resolve(strict=True) != source
+                        or hashlib.sha256(source.read_bytes()).hexdigest() != row["sha256"]):
+                    raise ValueError("guard source digest")
+                matches = [m for m in actual_mounts if m.get("Destination") == row["target"]]
+                if (len(matches) != 1 or matches[0].get("Source") != str(source)
+                        or matches[0].get("Type") != "bind" or matches[0].get("RW") is not False):
+                    raise ValueError("guard source mount")
+            policies = [row.partition("=")[2] for row in gateway.get("Config", {}).get("Env", [])
+                        if row.startswith("EVA_MCP_PINNING_POLICY=")]
+            if len(policies) != 1 or policies[0] != receipt["policy"] or not isinstance(json.loads(policies[0]), dict):
+                raise ValueError("guard runtime policy")
+            overlay = json.loads(Path(compose[2]).read_text())["services"]["gateway"]
+            expected_mounts = [{"type": "bind", "source": row["source"], "target": row["target"],
+                                "read_only": True, "bind": {"create_host_path": False}} for row in files]
+            if (overlay["environment"] != {"EVA_MCP_PINNING_POLICY": receipt["policy"]}
+                    or sorted(overlay["volumes"], key=lambda m: m["target"]) != expected_mounts):
+                raise ValueError("guard overlay bindings")
+            script = ("import hashlib,json;from pathlib import Path;"
+                      "print(json.dumps({p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in "
+                      + repr(sorted(targets)) + "}))")
+            observed = json.loads(cls._run([DOCKER, "exec", "eva2-mcp-gateway",
+                                           "/app/.venv/bin/python", "-c", script], timeout=15))
+            if observed != {row["target"]: row["sha256"] for row in files}:
+                raise ValueError("guard installed file digest")
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+            raise QuiescentCutoverError("connector transport guard is absent or differs") from exc
+
+    @staticmethod
+    def _verify_connector(inspected: dict[str, Any], settings: dict[str, str] | None) -> None:
+        mounts = [m for m in inspected.get("Mounts", [])
+                  if str(m.get("Destination", "")).startswith("/run/eva/connectors")]
+        environment = dict(row.split("=", 1) for row in inspected.get("Config", {}).get("Env", []) if "=" in row)
+        actual = {key: value for key, value in environment.items()
+                  if key.startswith(("EVA_MCP_", "EVA_BROWSER_"))}
+        if settings is None:
+            if mounts or actual:
+                raise QuiescentCutoverError("staged or disabled core exposes connector access")
+            return
+        from tools.managed_b_render import (
+            BROWSER_ENVIRONMENT_KEYS, MCP_AUTONOMY_ENVIRONMENT_KEYS, mcp_gateway_environment,
+        )
+        expected = mcp_gateway_environment(settings)
+        # Already-running older images omit these disabled optional variables.
+        for key in (*MCP_AUTONOMY_ENVIRONMENT_KEYS, *BROWSER_ENVIRONMENT_KEYS):
+            if expected[key] == "":
+                actual.setdefault(key, "")
+        if (actual != expected or len(mounts) != 1 or mounts[0].get("Type") != "bind"
+                or mounts[0].get("Source") != settings["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"]
+                or mounts[0].get("Destination") != CONNECTOR_TARGET or mounts[0].get("RW") is not False):
+            raise QuiescentCutoverError("activated connector environment or mount differs")
+        if settings["EVA_MCP_GATEWAY_NETWORK_NAME"] not in inspected.get("NetworkSettings", {}).get("Networks", {}):
+            raise QuiescentCutoverError("activated connector network differs")
+
+    def _verify_connector_render(self, slot: SlotSpec, settings: dict[str, str]) -> dict[str, str]:
+        from tools.managed_b_render import validate_mcp_gateway_render
+        environment = self._environment(slot.environment)
+        hashes = {str(path): hashlib.sha256(path.read_bytes()).hexdigest()
+                  for path in (MANIFEST, PROACTIVE_MANIFEST, CONNECTOR_MANIFEST, slot.environment)}
+        command = [DOCKER, "compose", "--env-file", str(slot.environment),
+                   "--project-name", slot.project, "--profile", "*", "--file", str(MANIFEST)]
+        if self._proactive_token(environment) is not None:
+            command.extend(["--file", str(PROACTIVE_MANIFEST)])
+        try:
+            baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env={**environment, BACKGROUND_FLAG: "true"}))
+            activated = json.loads(self._run([*command, "--file", str(CONNECTOR_MANIFEST),
+                                             "config", "--format", "json"], extra_env={**environment, BACKGROUND_FLAG: "true"}))
+            for graph in (baseline, activated):
+                self._verify_rendered_background(graph, enabled=True)
+            result = validate_mcp_gateway_render(baseline, activated, settings)
+        except (ValueError, RuntimeError) as exc:
+            raise QuiescentCutoverError("connector Compose render failed closed") from exc
+        if any(hashlib.sha256(Path(path).read_bytes()).hexdigest() != digest for path, digest in hashes.items()):
+            raise QuiescentCutoverError("connector render inputs changed during verification")
+        return {**result, "overlaySha256": hashes[str(CONNECTOR_MANIFEST)],
+                "environmentSha256": hashes[str(slot.environment)],
+                "baseManifestSha256": hashes[str(MANIFEST)],
+                "deliveryOverlaySha256": hashes[str(PROACTIVE_MANIFEST)],
+                "backgroundWorkEnabled": "true"}
+
+    @classmethod
+    def _voice_settings(cls, environment: dict[str, str]) -> dict[str, str] | None:
+        return cls._media_voice_settings(environment, household=False)
+
+    @classmethod
+    def _household_voice_settings(cls, environment):
+        return cls._media_voice_settings(environment, household=True)
+
+    @classmethod
+    def _media_voice_settings(cls, environment, *, household):
+        prefix = "EVA_HOUSEHOLD_VOICE_" if household else "EVA_DASHBOARD_VOICE_"
+        manifest = HOUSEHOLD_VOICE_MANIFEST if household else VOICE_MANIFEST
+        keys = {"POLICY_DIR_HOST", "POLICY_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256",
+                "DELIVERY_OVERLAY_SHA256", "CONNECTOR_OVERLAY_SHA256"}
+        if household:
+            keys.add("TOKEN_SHA256")
+        flag = environment.get(prefix + "ENABLED", "false")
+        values = {k: v for k, v in environment.items()
+                  if k.startswith(prefix) and k != prefix + "ENABLED"}
+        if flag == "false" and not values:
+            return None
+        if (flag != "true" or set(values) != {prefix + key for key in keys}
+                or values[prefix + "OVERLAY_SHA256"] != _sha256_file(manifest)):
+            raise QuiescentCutoverError("voice configuration or overlay differs")
+        if re.fullmatch(r"[0-9a-f]{64}", values[prefix + "POLICY_SHA256"]) is None:
+            raise QuiescentCutoverError("voice policy digest is invalid")
+        for path, key in ((MANIFEST, "BASE_MANIFEST_SHA256"),
+                          (PROACTIVE_MANIFEST, "DELIVERY_OVERLAY_SHA256"),
+                          (CONNECTOR_MANIFEST, "CONNECTOR_OVERLAY_SHA256")):
+            if _sha256_file(path) != values[prefix + key]:
+                raise QuiescentCutoverError("voice baseline manifest differs")
+        directory = Path(values[prefix + "POLICY_DIR_HOST"])
+        try:
+            if not directory.is_absolute() or directory.resolve(strict=True) != directory:
+                raise ValueError("noncanonical directory")
+            metadata = directory.stat()
+            if (not stat.S_ISDIR(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o700
+                    or metadata.st_uid != 65532):
+                raise ValueError("unsafe directory")
+            names = {item.name for item in directory.iterdir()}
+            allowed = {"current.json", "token"} if household else {"current.json"}
+            if not names <= allowed:
+                raise ValueError("unexpected policy directory contents")
+            # Empty means revoked. Keep the directory mount so removal survives restart.
+            if household and "current.json" in names and "token" not in names:
+                raise ValueError("missing integration token")
+            if household and "token" in names:
+                token = directory / "token"
+                cls._private_file(token, mode=0o600, uid=65532)
+                if not 0 < token.stat().st_size <= 4097 or _sha256_file(token) != values[prefix + "TOKEN_SHA256"]:
+                    raise ValueError("integration token changed after admission")
+            if "current.json" in names:
+                policy = directory / "current.json"
+                cls._private_file(policy, mode=0o600, uid=65532)
+                if not 0 < policy.stat().st_size <= 65536:
+                    raise ValueError("policy size")
+                if _sha256_file(policy) != values[prefix + "POLICY_SHA256"]:
+                    raise ValueError("policy changed after admission")
+        except (OSError, ValueError) as exc:
+            raise QuiescentCutoverError("voice policy directory is unsafe") from exc
+        return values
+
+    @staticmethod
+    def _verify_voice(inspected: dict[str, Any], settings: dict[str, str] | None,
+                      *, household: bool = False) -> None:
+        prefix = "EVA_HOUSEHOLD_VOICE_" if household else "EVA_DASHBOARD_VOICE_"
+        target = "/run/eva/household-voice" if household else "/run/eva/voice"
+        mounts = [m for m in inspected.get("Mounts", [])
+                  if str(m.get("Destination", "")).startswith(target)]
+        environment = dict(row.split("=", 1) for row in inspected.get("Config", {}).get("Env", []) if "=" in row)
+        actual = {k: v for k, v in environment.items() if k.startswith(prefix)}
+        if settings is None:
+            if mounts or actual:
+                raise QuiescentCutoverError("staged or disabled core exposes voice access")
+            return
+        expected = {prefix + "POLICY_FILE": target + "/current.json"}
+        if household:
+            expected[prefix + "TOKEN_FILE"] = target + "/token"
+        if (actual != expected
+                or len(mounts) != 1 or mounts[0].get("Type") != "bind"
+                or mounts[0].get("Source") != settings[prefix + "POLICY_DIR_HOST"]
+                or mounts[0].get("Destination") != target or mounts[0].get("RW") is not False):
+            raise QuiescentCutoverError("activated voice environment or mount differs")
+
+    def _verify_voice_render(self, slot: SlotSpec, settings: dict[str, str],
+                             *, household: bool = False) -> dict[str, str]:
+        from tools.managed_b_render import validate_dashboard_voice_render, validate_household_voice_render
+        manifest = HOUSEHOLD_VOICE_MANIFEST if household else VOICE_MANIFEST
+        environment = self._environment(slot.environment)
+        paths = [MANIFEST, manifest, slot.environment]
+        command = [DOCKER, "compose", "--env-file", str(slot.environment),
+                   "--project-name", slot.project, "--profile", "*", "--file", str(MANIFEST)]
+        for enabled, path in ((self._proactive_token(environment) is not None, PROACTIVE_MANIFEST),
+                              (self._connector_settings(environment) is not None, CONNECTOR_MANIFEST),
+                              (household and self._voice_settings(environment) is not None, VOICE_MANIFEST)):
+            if enabled:
+                paths.append(path)
+                command.extend(["--file", str(path)])
+        hashes = {str(path): _sha256_file(path) for path in paths}
+        try:
+            baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env={**environment, BACKGROUND_FLAG: "true"}))
+            activated = json.loads(self._run([*command, "--file", str(manifest),
+                                             "config", "--format", "json"], extra_env={**environment, BACKGROUND_FLAG: "true"}))
+            validate = validate_household_voice_render if household else validate_dashboard_voice_render
+            for graph in (baseline, activated):
+                self._verify_rendered_background(graph, enabled=True)
+            result = validate(baseline, activated, settings)
+        except (ValueError, RuntimeError) as exc:
+            raise QuiescentCutoverError("voice Compose render failed closed") from exc
+        if any(_sha256_file(Path(path)) != digest for path, digest in hashes.items()):
+            raise QuiescentCutoverError("voice render inputs changed during verification")
+        return {**result, "backgroundWorkEnabled": "true"}
+
+    def _verify_slot(self, slot: SlotSpec, *, source: bool) -> dict[str, str]:
+        environment = self._environment(slot.environment)
+        delegated = self._delegated_work_image(environment)
+        self._proactive_token(environment)
+        connector = self._connector_settings(environment)
+        voice = self._voice_settings(environment)
+        household_voice = self._household_voice_settings(environment)
+        if voice is not None:
+            self._verify_voice_render(slot, voice)
+        if household_voice is not None:
+            self._verify_voice_render(slot, household_voice, household=True)
+        if connector is not None:
+            self._verify_connector_render(slot, connector)
+        expected = {
+            "EVA_STACK_CORE_CONTAINER": slot.core,
+            "EVA_STACK_CORE_PORT": str(slot.port),
+            "EVA_STACK_POSTGRES_VOLUME": slot.operational_volume,
+            "EVA_STACK_HINDSIGHT_POSTGRES_VOLUME": slot.memory_volume,
+        }
+        if any(environment.get(key) != value for key, value in expected.items()):
+            raise QuiescentCutoverError(
+                "retained slot environment differs from its identity"
+            )
+        containers = {
+            "core": slot.core,
+            "hindsight": slot.hindsight,
+            "postgres": slot.operational_postgres,
+            "hindsight-postgres": slot.memory_postgres,
+        }
+        inspected = {
+            service: self._inspect(name) for service, name in containers.items()
+        }
+        for service, document in inspected.items():
+            labels = document.get("Config", {}).get("Labels", {})
+            if (
+                labels.get("com.docker.compose.project") != slot.project
+                or labels.get("com.docker.compose.service") != service
+            ):
+                raise QuiescentCutoverError("retained slot container identity differs")
+        running_services = set(
+            self._run(
+                [
+                    DOCKER,
+                    "ps",
+                    "--filter",
+                    f"label=com.docker.compose.project={slot.project}",
+                    "--format",
+                    '{{.Label "com.docker.compose.service"}}',
+                ]
+            ).splitlines()
+        )
+        allowed_running = {
+            "core",
+            "hindsight",
+            "hindsight-access-lease",
+            "hindsight-postgres",
+            "model-access-lease",
+            "postgres",
+        }
+        if source and delegated is not None:
+            self._verify_delegated_worker(slot, environment)
+            allowed_running.add("delegated-work-worker")
+        if not running_services <= allowed_running:
+            raise QuiescentCutoverError(
+                "retained slot has another active database writer"
+            )
+        for service, volume in (
+            ("postgres", slot.operational_volume),
+            ("hindsight-postgres", slot.memory_volume),
+        ):
+            mounts = {
+                (item.get("Name"), item.get("Destination"))
+                for item in inspected[service].get("Mounts", [])
+                if item.get("Type") == "volume"
+            }
+            if (volume, "/var/lib/postgresql/data") not in mounts:
+                raise QuiescentCutoverError("retained slot database volume differs")
+            if inspected[service].get("State", {}).get("Running") is not True:
+                raise QuiescentCutoverError("retained slot database is not running")
+        if source and inspected["core"].get("State", {}).get("Running") is not True:
+            raise QuiescentCutoverError("active retained slot core is not running")
+        if source:
+            self._verify_connector(inspected["core"], connector)
+            self._verify_voice(inspected["core"], voice)
+            self._verify_voice(inspected["core"], household_voice, household=True)
+        self._private_file(slot.dashboard_token, mode=0o600, uid=65532)
+        return environment
+
+    @staticmethod
+    def _verify_voice_continuity(source: dict[str, str], target: dict[str, str],
+                                 *, activate_dashboard_voice: bool = False) -> None:
+        """A core replacement must retain admitted voice channels and revocations."""
+        for prefix in ("EVA_DASHBOARD_VOICE_", "EVA_HOUSEHOLD_VOICE_"):
+            left_enabled = source.get(prefix + "ENABLED", "false")
+            right_enabled = target.get(prefix + "ENABLED", "false")
+            if (activate_dashboard_voice and prefix == "EVA_DASHBOARD_VOICE_"
+                    and left_enabled == "false" and right_enabled == "true"):
+                if any(k.startswith(prefix) and k != prefix + "ENABLED" for k in source):
+                    raise QuiescentCutoverError("voice continuity: source has prior authority")
+                from eva.bootstrap.dashboard_voice import DashboardVoicePolicy
+                try:
+                    policy = DashboardVoicePolicy.model_validate_json(
+                        (Path(target[prefix + "POLICY_DIR_HOST"]) / "current.json").read_bytes())
+                    now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+                    if not (policy.state == "enabled" and policy.effective_at <= now < policy.expires_at):
+                        raise ValueError("inactive grant")
+                except (OSError, ValueError, KeyError) as exc:
+                    raise QuiescentCutoverError("voice activation requires a current grant") from exc
+                continue
+            if left_enabled != right_enabled:
+                raise QuiescentCutoverError("voice continuity: enabled channel differs")
+            if left_enabled != "true":
+                continue
+            path_key = prefix + "POLICY_DIR_HOST"
+            left = {k: v for k, v in source.items() if k.startswith(prefix) and k != path_key}
+            right = {k: v for k, v in target.items() if k.startswith(prefix) and k != path_key}
+            if left != right:
+                raise QuiescentCutoverError("voice continuity: admitted policy differs")
+            # Slot validation already checks private paths, owners and file hashes.
+            # Missing files are meaningful revocations, even with unchanged pins.
+            names = ("current.json", "token") if "HOUSEHOLD" in prefix else ("current.json",)
+            for name in names:
+                a, b = Path(source[path_key]) / name, Path(target[path_key]) / name
+                if a.exists() != b.exists() or (a.exists() and a.read_bytes() != b.read_bytes()):
+                    raise QuiescentCutoverError("voice continuity: authority or revocation differs")
+
+    def preflight(self, source: SlotSpec, target: SlotSpec, dropin: Path) -> bytes:
+        if os.geteuid() != 0:
+            raise QuiescentCutoverError("quiescent cutover requires root authority")
+        if source.number == target.number:
+            raise QuiescentCutoverError("source and target slots must differ")
+        previous = _read_exact_dropin(dropin, source.url, owner_uid=self.owner_uid)
+        source_environment = self._verify_slot(source, source=True)
+        target_environment = self._verify_slot(target, source=False)
+        self._verify_voice_continuity(source_environment, target_environment,
+                                      activate_dashboard_voice=self.activate_dashboard_voice)
+        self._voice_activation_slot = (target.number if self.activate_dashboard_voice
+            and source_environment.get("EVA_DASHBOARD_VOICE_ENABLED", "false") == "false"
+            and target_environment.get("EVA_DASHBOARD_VOICE_ENABLED") == "true" else None)
+        inspected = self._inspect_all()
+        for slot in (source, target):
+            consumers = _shared_database_consumers(
+                retained_core=slot.core,
+                inspected=inspected,
+            )
+            if slot == source and self._delegated_work_image(source_environment) is not None:
+                consumers = [name for name in consumers if name != slot.delegated_worker]
+            if consumers:
+                raise QuiescentCutoverError(
+                    "another retained-slot database consumer is still running"
+                )
+        for key in ("EVA_POSTGRES_IMAGE", "EVA_HINDSIGHT_POSTGRES_IMAGE"):
+            if source_environment.get(key) != target_environment.get(key):
+                raise QuiescentCutoverError("retained slot database images differ")
+        active = self._run(
+            [SYSTEMCTL, "show", SERVICE, "--property=Environment", "--value"]
+        )
+        if f"EVA2_CANARY_URL={source.url}" not in active.split():
+            raise QuiescentCutoverError("Eva1 did not load the expected source slot")
+        if not self._ready(source):
+            raise QuiescentCutoverError("active retained slot is not ready")
+        return previous
+
+    def stop_eva1(self) -> None:
+        self._run([SYSTEMCTL, "stop", SERVICE], timeout=90)
+        if (
+            subprocess.run(
+                [SYSTEMCTL, "is-active", "--quiet", SERVICE], check=False, timeout=10
+            ).returncode
+            == 0
+        ):
+            raise QuiescentCutoverError("Eva1 remained active during quiescence")
+
+    def backup_eva1(self, source: SlotSpec, target: SlotSpec) -> dict[str, object]:
+        self._private_file(EVA1_DATABASE, mode=0o600, uid=1000)
+        EVA1_BACKUPS.mkdir(mode=0o700, parents=True, exist_ok=True)
+        os.chmod(EVA1_BACKUPS, 0o700)
+        timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+        destination = EVA1_BACKUPS / (
+            f"eva1-before-slot{source.number}-to-slot{target.number}-{timestamp}.db"
+        )
+        descriptor = os.open(destination, os.O_CREAT | os.O_EXCL | os.O_RDWR, 0o600)
+        os.close(descriptor)
+        try:
+            with sqlite3.connect(f"file:{EVA1_DATABASE}?mode=ro", uri=True) as live:
+                with sqlite3.connect(destination) as backup:
+                    live.backup(backup)
+                    result = backup.execute("PRAGMA quick_check").fetchone()
+            if result != ("ok",):
+                raise QuiescentCutoverError("Eva1 safety backup failed quick_check")
+            with destination.open("rb") as handle:
+                os.fsync(handle.fileno())
+        except Exception:
+            destination.unlink(missing_ok=True)
+            raise
+        return {
+            "bytes": destination.stat().st_size,
+            "filename": destination.name,
+            "quickCheck": "ok",
+            "sha256": _sha256_file(destination),
+        }
+
+    def stop_writers(self, slot: SlotSpec) -> None:
+        writers = (slot.core, slot.delegated_worker, slot.hindsight)
+        for container in writers:
+            if self._is_running(container):
+                self._run([DOCKER, "stop", "--time", "30", container], timeout=60)
+        if any(self._is_running(item) for item in writers):
+            raise QuiescentCutoverError("retained slot writers did not stop")
+
+    @staticmethod
+    def _wait_container(container: str, *, timeout: int = 90) -> None:
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            document = SystemBackend._inspect(container)
+            state = document.get("State", {})
+            health = state.get("Health", {}).get("Status")
+            if state.get("Running") is True and health in {None, "healthy"}:
+                return
+            if state.get("Status") in {"dead", "exited"}:
+                raise QuiescentCutoverError("retained slot service exited")
+            time.sleep(1)
+        raise QuiescentCutoverError("retained slot service did not become healthy")
+
+    @classmethod
+    def _proactive_token(cls, environment: dict[str, str]) -> Path | None:
+        """Explicit slot policy; token presence alone never enables delivery."""
+        enabled = environment.get(PROACTIVE_FLAG, "false")
+        if enabled not in {"true", "false"}:
+            raise QuiescentCutoverError("proactive delivery flag must be true or false")
+        if enabled == "false":
+            return None
+        value = environment.get("EVA_TELEGRAM_BOT_TOKEN_FILE_HOST", "")
+        path = Path(value)
+        if not value or not path.is_absolute() or path.resolve() != path:
+            raise QuiescentCutoverError("proactive token path is not canonical absolute")
+        cls._private_file(path, mode=0o600, uid=65532)
+        # Match runtime token admission before stopping ingress or writers.
+        # File ownership/presence alone also accepts old probe-only contents.
+        try:
+            with path.open("rb") as stream:
+                raw = stream.read(4097)
+            token = raw.decode("utf-8").strip()
+        except (OSError, UnicodeError):
+            raise QuiescentCutoverError("proactive token content is unreadable") from None
+        if len(raw) > 4096 or ":" not in token or any(c.isspace() for c in token):
+            raise QuiescentCutoverError("proactive token content is invalid")
+        return path
+
+    @staticmethod
+    def _verify_proactive_mount(document: dict[str, Any], token: Path | None) -> None:
+        configured = [
+            entry for entry in document.get("Config", {}).get("Env", [])
+            if entry.startswith("EVA_TELEGRAM_BOT_TOKEN_FILE=")
+        ]
+        mounts = [
+            mount for mount in document.get("Mounts", [])
+            if mount.get("Destination") == PROACTIVE_TOKEN_TARGET
+        ]
+        if token is None:
+            if configured or mounts:
+                raise QuiescentCutoverError("disabled proactive delivery retained token access")
+            return
+        if (
+            configured != [f"EVA_TELEGRAM_BOT_TOKEN_FILE={PROACTIVE_TOKEN_TARGET}"]
+            or len(mounts) != 1
+            or mounts[0].get("Type") != "bind"
+            or mounts[0].get("Source") != str(token)
+            or mounts[0].get("RW") is not False
+        ):
+            raise QuiescentCutoverError("proactive delivery token mount differs")
+
+    @staticmethod
+    def _verify_rendered_background(graph: dict[str, Any], *, enabled: bool) -> None:
+        if graph.get("services", {}).get("core", {}).get("environment", {}).get(BACKGROUND_FLAG) != str(enabled).lower():
+            raise QuiescentCutoverError("rendered core background work setting differs")
+
+    @staticmethod
+    def _verify_background_setting(inspected: dict[str, Any], *, enabled: bool) -> None:
+        # This checks deployment configuration. Legacy images may ignore it;
+        # only a candidate worker/data probe establishes runtime isolation.
+        values = [row for row in inspected.get("Config", {}).get("Env", [])
+                  if row.startswith(BACKGROUND_FLAG + "=")]
+        if values != [BACKGROUND_FLAG + "=" + str(enabled).lower()]:
+            raise QuiescentCutoverError("core background work setting differs")
+
+    @staticmethod
+    def _delegated_work_image(environment: dict[str, str]) -> str | None:
+        enabled = environment.get(DELEGATED_FLAG, "false")
+        if enabled not in {"true", "false"}:
+            raise QuiescentCutoverError("delegated work flag must be true or false")
+        if enabled == "false":
+            return None
+        image = environment.get("EVA_DELEGATED_WORK_IMAGE", "")
+        if (re.fullmatch(r"(?:[^\s@]+@)?sha256:[0-9a-f]{64}", image) is None
+                or image != environment.get("EVA_LIVING_CORE_IMAGE")):
+            raise QuiescentCutoverError("delegated work requires the exact core image")
+        for worker_key, owner_key in (
+            ("EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID", "EVA_RUNTIME_PRINCIPAL_ID"),
+            ("EVA_DELEGATED_WORK_OWNER_BINDING_ID", "EVA_DASHBOARD_PRINCIPAL_BINDING_ID"),
+        ):
+            if not environment.get(owner_key) or environment.get(worker_key) != environment[owner_key]:
+                raise QuiescentCutoverError("delegated work owner authority differs")
+        return image
+
+    @staticmethod
+    def _verify_delegated_setting(document: dict[str, Any], *, enabled: bool) -> None:
+        values = [row.partition("=")[2] for row in document.get("Config", {}).get("Env", [])
+                  if row.startswith(DELEGATED_FLAG + "=")]
+        # Legacy disabled source images predate this opt-in flag.
+        if values != [str(enabled).lower()] and (enabled or values):
+            raise QuiescentCutoverError("core delegated work setting differs")
+
+    def _verify_delegated_worker(self, slot: SlotSpec, environment: dict[str, str]) -> None:
+        image = self._delegated_work_image(environment)
+        document = self._inspect(slot.delegated_worker)
+        config = document.get("Config", {})
+        labels = config.get("Labels", {})
+        mounts = document.get("Mounts", [])
+        expected_mounts = {
+            "/run/secrets/database_dsn": environment.get("EVA_DATABASE_DSN_FILE_HOST"),
+            "/run/eva/model-lease": environment.get("EVA_MODEL_ACCESS_LEASE_DIR"),
+        }
+        if (image is None or document.get("Image") != image.rsplit("@", 1)[-1]
+                or labels.get("com.docker.compose.project") != slot.project
+                or labels.get("com.docker.compose.service") != "delegated-work-worker"
+                or config.get("User") != "65532:65532"
+                or config.get("Entrypoint") != ["/usr/local/bin/python"]
+                or config.get("Cmd") != ["-m", "eva.bootstrap.delegated_work_service"]
+                or document.get("State", {}).get("Running") is not True
+                or document.get("State", {}).get("Health", {}).get("Status") != "healthy"
+                or len(mounts) != len(expected_mounts)
+                or any(m.get("Type") != "bind" or m.get("RW") is not False
+                       or m.get("Source") != expected_mounts.get(m.get("Destination")) for m in mounts)
+                or {m.get("Destination") for m in mounts} != set(expected_mounts)):
+            raise QuiescentCutoverError("delegated worker image, identity, health or mounts differ")
+
+    def start_writers(self, slot: SlotSpec) -> None:
+        """Stage without outgoing credentials; disable supported background workers."""
+        environment = self._environment(slot.environment)
+        self._delegated_work_image(environment)
+        if self._is_running(slot.delegated_worker):
+            raise QuiescentCutoverError("staged slot has an active delegated worker")
+        self._proactive_token(environment)
+        self._connector_settings(environment)
+        self._voice_settings(environment)
+        self._household_voice_settings(environment)
+        compose = [
+            DOCKER,
+            "compose",
+            "--env-file",
+            str(slot.environment),
+            "--project-name",
+            slot.project,
+            "--file",
+            str(MANIFEST),
+        ]
+        start = ["up", "--detach", "--no-deps"]
+        self._run([*compose, *start, "hindsight"], extra_env={BACKGROUND_FLAG: "false", DELEGATED_FLAG: "false"})
+        self._wait_container(slot.hindsight)
+        self._run([*compose, *start, "core"], extra_env={BACKGROUND_FLAG: "false", DELEGATED_FLAG: "false"})
+        self._wait_container(slot.core)
+        expected = environment.get("EVA_LIVING_CORE_IMAGE", "").rsplit("@", 1)[-1]
+        inspected = self._inspect(slot.core)
+        if inspected.get("Image") != expected:
+            raise QuiescentCutoverError(
+                "retained slot core image differs from its environment"
+            )
+        self._verify_proactive_mount(inspected, None)
+        self._verify_connector(inspected, None)
+        self._verify_voice(inspected, None)
+        self._verify_voice(inspected, None, household=True)
+        self._verify_background_setting(inspected, enabled=False)
+        self._verify_delegated_setting(inspected, enabled=False)
+
+    def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool:
+        """Activate background work and credentials after runtime and route checks.
+
+        The core is recreated with active workers and any reviewed outgoing overlays.
+        Any failure from this commit point may have external effects: the caller
+        must stop the target and preserve its new durable state during rollback.
+        """
+        environment = self._environment(slot.environment)
+        delegated = self._delegated_work_image(environment)
+        token = self._proactive_token(environment)
+        connector = self._connector_settings(environment)
+        voice = self._voice_settings(environment)
+        household_voice = self._household_voice_settings(environment)
+        _read_exact_dropin(dropin, slot.url, owner_uid=self.owner_uid)
+        loaded = self._run([SYSTEMCTL, "show", SERVICE, "--property=Environment", "--value"])
+        if f"EVA2_CANARY_URL={slot.url}" not in loaded.split() or not self._ready(slot):
+            raise QuiescentCutoverError("proactive activation requires the ready active route")
+        ingress = self._run([SYSTEMCTL, "show", SERVICE, "--property=ActiveState", "--value"])
+        if ingress.strip() != "inactive":
+            raise QuiescentCutoverError("proactive activation requires quiescent ingress")
+        staged = self._inspect(slot.core)
+        expected = environment.get("EVA_LIVING_CORE_IMAGE", "").rsplit("@", 1)[-1]
+        if staged.get("Image") != expected:
+            raise QuiescentCutoverError("proactive activation candidate image differs")
+        self._verify_proactive_mount(staged, None)
+        self._verify_connector(staged, None)
+        self._verify_voice(staged, None)
+        self._verify_voice(staged, None, household=True)
+        self._verify_background_setting(staged, enabled=False)
+        self._verify_delegated_setting(staged, enabled=False)
+        if self._is_running(slot.delegated_worker):
+            raise QuiescentCutoverError("delegated worker ran before target activation")
+        overlays = []
+        if token is not None:
+            overlays.extend(["--file", str(PROACTIVE_MANIFEST)])
+        if connector is not None:
+            overlays.extend(["--file", str(CONNECTOR_MANIFEST)])
+        if voice is not None:
+            overlays.extend(["--file", str(VOICE_MANIFEST)])
+        if household_voice is not None:
+            overlays.extend(["--file", str(HOUSEHOLD_VOICE_MANIFEST)])
+        self._run([
+            DOCKER, "compose", "--env-file", str(slot.environment),
+            "--project-name", slot.project, "--file", str(MANIFEST),
+            *overlays, "up", "--detach", "--no-deps", "core",
+        ], extra_env={BACKGROUND_FLAG: "true", DELEGATED_FLAG: str(delegated is not None).lower()})
+        self._wait_container(slot.core)
+        activated = self._inspect(slot.core)
+        if activated.get("Image") != expected:
+            raise QuiescentCutoverError("proactive activation core image differs")
+        self._verify_proactive_mount(activated, token)
+        self._verify_connector(activated, connector)
+        self._verify_voice(activated, voice)
+        self._verify_voice(activated, household_voice, household=True)
+        self._verify_background_setting(activated, enabled=True)
+        self._verify_delegated_setting(activated, enabled=delegated is not None)
+        if delegated is not None:
+            self._run([
+                DOCKER, "compose", "--env-file", str(slot.environment),
+                "--project-name", slot.project, "--file", str(MANIFEST),
+                "--profile", "delegated-work", "up", "--detach", "--no-deps",
+                "delegated-work-worker",
+            ], extra_env={BACKGROUND_FLAG: "true", DELEGATED_FLAG: "true"})
+            self._wait_container(slot.delegated_worker)
+            self._verify_delegated_worker(slot, environment)
+        if self._household_voice_settings(environment) != household_voice:
+            raise QuiescentCutoverError("household voice activation binding changed")
+        if self._environment(slot.environment) != environment or self._voice_settings(environment) != voice:
+            raise QuiescentCutoverError("voice activation binding changed during recreation")
+        self.verify_runtime(slot)
+        self._verify_new_voice_readiness(slot)
+        return token is not None
+
+    @staticmethod
+    def _schema_installer_command(slot: SlotSpec) -> list[str]:
+        return [
+            DOCKER,
+            "compose",
+            "--env-file",
+            str(slot.environment),
+            "--project-name",
+            slot.project,
+            "--file",
+            str(MANIFEST),
+            "--profile",
+            "schema-install",
+            "run",
+            "--rm",
+            "schema-installer",
+        ]
+
+    @classmethod
+    def _image_schema_head(cls, image: str) -> str:
+        output = cls._run(
+            [
+                DOCKER,
+                "run",
+                "--rm",
+                "--network",
+                "none",
+                "--read-only",
+                "--cap-drop",
+                "ALL",
+                "--security-opt",
+                "no-new-privileges:true",
+                "--entrypoint",
+                "/usr/local/bin/python",
+                image,
+                "-c",
+                _SCHEMA_HEAD_SCRIPT,
+            ]
+        ).strip()
+        if not re.fullmatch(r"[a-z0-9_]{8,96}", output):
+            raise QuiescentCutoverError("candidate image schema head is invalid")
+        return output
+
+    @classmethod
+    def _database_revision(cls, slot: SlotSpec) -> str:
+        output = cls._run(
+            [
+                DOCKER,
+                "exec",
+                "-u",
+                "postgres",
+                slot.operational_postgres,
+                "/usr/bin/psql",
+                "-X",
+                "-v",
+                "ON_ERROR_STOP=1",
+                "-U",
+                "postgres",
+                "-d",
+                "eva2",
+                "-Atc",
+                "SELECT version_num FROM public.eva_alembic_version;",
+            ]
+        ).strip()
+        if not re.fullmatch(r"[a-z0-9_]{8,96}", output):
+            raise QuiescentCutoverError("restored database schema head is invalid")
+        return output
+
+    def _downgrade_to_target_head(
+        self,
+        *,
+        source: SlotSpec,
+        target: SlotSpec,
+        source_image: str,
+        target_head: str,
+    ) -> None:
+        command = [
+            DOCKER,
+            "compose",
+            "--env-file",
+            str(target.environment),
+            "--project-name",
+            target.project,
+            "--file",
+            str(MANIFEST),
+            "--profile",
+            "schema-install",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--entrypoint",
+            "/usr/local/bin/python",
+            "schema-installer",
+            "-c",
+            _SCHEMA_DOWNGRADE_SCRIPT,
+            target_head,
+        ]
+        self._run(
+            command,
+            timeout=300,
+            extra_env={"EVA_LIVING_CORE_IMAGE": source_image},
+        )
+
+    def migrate_schema(self, source: SlotSpec, target: SlotSpec) -> None:
+        """Upgrade normally or losslessly downgrade one retained release."""
+
+        if self._is_running(target.core) or self._is_running(target.hindsight):
+            raise QuiescentCutoverError(
+                "schema migration requires stopped target writers"
+            )
+        installer = self._schema_installer_command(target)
+        try:
+            self._run(installer, timeout=300)
+            return
+        except QuiescentCutoverError as exc:
+            if "database has an unknown Eva schema revision" not in str(exc):
+                raise
+
+        source_environment = self._environment(source.environment)
+        target_environment = self._environment(target.environment)
+        source_image = source_environment.get("EVA_LIVING_CORE_IMAGE", "")
+        target_image = target_environment.get("EVA_LIVING_CORE_IMAGE", "")
+        if not source_image or not target_image or source_image == target_image:
+            raise QuiescentCutoverError(
+                "schema rollback images are missing or identical"
+            )
+        source_head = self._image_schema_head(source_image)
+        target_head = self._image_schema_head(target_image)
+        database_head = self._database_revision(target)
+        if database_head != source_head or target_head == source_head:
+            raise QuiescentCutoverError(
+                "restored schema cannot be attributed to the source release"
+            )
+        self._downgrade_to_target_head(
+            source=source,
+            target=target,
+            source_image=source_image,
+            target_head=target_head,
+        )
+        self._run(installer, timeout=300)
+
+    @staticmethod
+    def _database_counts(container: str, database: str) -> dict[str, int]:
+        output = SystemBackend._run(
+            [
+                DOCKER,
+                "exec",
+                "-u",
+                "postgres",
+                container,
+                "/usr/bin/psql",
+                "-X",
+                "-v",
+                "ON_ERROR_STOP=1",
+                "-U",
+                "postgres",
+                "-d",
+                database,
+                "-Atc",
+                _COUNT_SQL,
+            ]
+        )
+        counts: dict[str, int] = {}
+        for line in output.splitlines():
+            name, separator, raw = line.partition("=")
+            if not separator or not name or name in counts or not raw.isdigit():
+                raise QuiescentCutoverError("database count output was invalid")
+            counts[name] = int(raw)
+        if not counts:
+            raise QuiescentCutoverError("database count output was empty")
+        return counts
+
+    @staticmethod
+    def _hash_dump(container: str, database: str, mode: str) -> str:
+        if mode not in {"schema", "data"}:
+            raise ValueError("invalid dump fingerprint mode")
+        arguments = [
+            DOCKER,
+            "exec",
+            "-u",
+            "postgres",
+            container,
+            "/usr/bin/pg_dump",
+            "-U",
+            "postgres",
+            "-d",
+            database,
+            "--no-owner",
+            "--no-privileges",
+            "--schema-only" if mode == "schema" else "--data-only",
+        ]
+        if mode == "data":
+            arguments.append("--column-inserts")
+        try:
+            process = subprocess.Popen(
+                arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
+            assert process.stdout is not None
+            digest = _dump_content_digest(process.stdout)
+            _, stderr = process.communicate(timeout=300)
+        except (OSError, subprocess.SubprocessError) as exc:
+            raise QuiescentCutoverError("database fingerprint failed") from exc
+        if process.returncode != 0:
+            raise QuiescentCutoverError(
+                f"database fingerprint failed: {_sanitize(stderr.decode(errors='replace'))}"
+            )
+        return digest
+
+    @classmethod
+    def _attest(cls, container: str, database: str) -> DatabaseAttestation:
+        counts = cls._database_counts(container, database)
+        return DatabaseAttestation(
+            counts=counts,
+            count_digest=_count_digest(counts),
+            schema_digest=cls._hash_dump(container, database, "schema"),
+            data_digest=cls._hash_dump(container, database, "data"),
+        )
+
+    @staticmethod
+    def _write_dump(
+        container: str, database: str, path: Path, *, portable: bool
+    ) -> None:
+        descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+        try:
+            with os.fdopen(descriptor, "wb", closefd=False) as output:
+                command = [
+                    DOCKER,
+                    "exec",
+                    "-u",
+                    "postgres",
+                    container,
+                    "/usr/bin/pg_dump",
+                    "-U",
+                    "postgres",
+                    "-d",
+                    database,
+                    "--format=custom",
+                ]
+                if portable:
+                    command.extend(("--no-owner", "--no-privileges"))
+                completed = subprocess.run(
+                    command,
+                    check=False,
+                    stdout=output,
+                    stderr=subprocess.PIPE,
+                    timeout=300,
+                )
+                output.flush()
+                os.fsync(output.fileno())
+            if completed.returncode != 0:
+                raise QuiescentCutoverError(
+                    f"database snapshot failed: {_sanitize(completed.stderr.decode(errors='replace'))}"
+                )
+        except Exception:
+            path.unlink(missing_ok=True)
+            raise
+        finally:
+            os.close(descriptor)
+
+    def _require_stopped_database_writers(self, slot: SlotSpec) -> None:
+        # Recheck at the operation boundary, not just during initial preflight.
+        # This also catches a separately managed document worker sharing the DSN.
+        if any(self._is_running(name) for name in
+               (slot.core, slot.delegated_worker, slot.hindsight)):
+            raise QuiescentCutoverError("database operation requires stopped writers")
+        if _shared_database_consumers(retained_core=slot.core, inspected=self._inspect_all()):
+            raise QuiescentCutoverError("database operation has an active shared database consumer")
+
+    def snapshot(self, slot: SlotSpec, workspace: Path, label: str) -> DatabaseSnapshot:
+        self._require_stopped_database_writers(slot)
+        operational_before = self._attest(slot.operational_postgres, "eva2")
+        memory_before = self._attest(slot.memory_postgres, "hindsight")
+        operational_dump = workspace / f"{label}-operational.dump"
+        memory_dump = workspace / f"{label}-memory.dump"
+        self._write_dump(
+            slot.operational_postgres, "eva2", operational_dump, portable=False
+        )
+        self._write_dump(slot.memory_postgres, "hindsight", memory_dump, portable=True)
+        operational_after = self._attest(slot.operational_postgres, "eva2")
+        memory_after = self._attest(slot.memory_postgres, "hindsight")
+        if operational_before != operational_after or memory_before != memory_after:
+            raise QuiescentCutoverError("quiescent source changed during its snapshot")
+        return DatabaseSnapshot(
+            operational_dump=operational_dump,
+            memory_dump=memory_dump,
+            operational_dump_sha256=_sha256_file(operational_dump),
+            memory_dump_sha256=_sha256_file(memory_dump),
+            operational_dump_bytes=operational_dump.stat().st_size,
+            memory_dump_bytes=memory_dump.stat().st_size,
+            operational=operational_before,
+            memory=memory_before,
+        )
+
+    @staticmethod
+    def _recreate_database(container: str, database: str) -> None:
+        SystemBackend._run(
+            [
+                DOCKER,
+                "exec",
+                "-u",
+                "postgres",
+                container,
+                "sh",
+                "-ec",
+                'dropdb -U postgres --if-exists --force "$1"; createdb -U postgres "$1"',
+                "database",
+                database,
+            ]
+        )
+
+    @staticmethod
+    def _restore_dump(
+        container: str, database: str, path: Path, *, portable: bool
+    ) -> None:
+        arguments = [] if not portable else ["--no-owner", "--no-privileges"]
+        try:
+            with path.open("rb") as source:
+                completed = subprocess.run(
+                    [
+                        DOCKER,
+                        "exec",
+                        "-i",
+                        "-u",
+                        "postgres",
+                        container,
+                        "/usr/bin/pg_restore",
+                        "--exit-on-error",
+                        *arguments,
+                        "-U",
+                        "postgres",
+                        "-d",
+                        database,
+                    ],
+                    check=False,
+                    stdin=source,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    timeout=300,
+                )
+        except (OSError, subprocess.SubprocessError) as exc:
+            raise QuiescentCutoverError("database restoration failed") from exc
+        if completed.returncode != 0:
+            raise QuiescentCutoverError(
+                f"database restoration failed: {_sanitize(completed.stderr.decode(errors='replace'))}"
+            )
+
+    def restore(self, slot: SlotSpec, snapshot: DatabaseSnapshot) -> None:
+        self._require_stopped_database_writers(slot)
+        self._recreate_database(slot.operational_postgres, "eva2")
+        self._run(
+            [
+                DOCKER,
+                "exec",
+                "-u",
+                "postgres",
+                slot.operational_postgres,
+                "/usr/bin/psql",
+                "-X",
+                "-v",
+                "ON_ERROR_STOP=1",
+                "-U",
+                "postgres",
+                "-d",
+                "eva2",
+                "-c",
+                logical_restore_preparation_sql(),
+            ]
+        )
+        self._restore_dump(
+            slot.operational_postgres,
+            "eva2",
+            snapshot.operational_dump,
+            portable=False,
+        )
+        self._recreate_database(slot.memory_postgres, "hindsight")
+        self._restore_dump(
+            slot.memory_postgres,
+            "hindsight",
+            snapshot.memory_dump,
+            portable=True,
+        )
+        operational = self._attest(slot.operational_postgres, "eva2")
+        memory = self._attest(slot.memory_postgres, "hindsight")
+        differences: list[str] = []
+        for name, restored, expected in (
+            ("operational", operational, snapshot.operational),
+            ("memory", memory, snapshot.memory),
+        ):
+            if restored.counts != expected.counts:
+                differences.append(f"{name}-counts")
+            if restored.schema_digest != expected.schema_digest:
+                differences.append(f"{name}-schema")
+            if restored.data_digest != expected.data_digest:
+                differences.append(f"{name}-data")
+        if differences:
+            raise QuiescentCutoverError(
+                "restored database content differs from its source: "
+                + ",".join(differences)
+            )
+
+    @staticmethod
+    def _ready(slot: SlotSpec) -> bool:
+        try:
+            with request.urlopen(f"{slot.url}/readyz", timeout=5) as response:
+                document = json.load(response)
+            return response.status == 200 and document.get("ready") is True
+        except (OSError, ValueError, error.URLError):
+            return False
+
+    def verify_runtime(self, slot: SlotSpec) -> None:
+        deadline = time.monotonic() + 90
+        while time.monotonic() < deadline:
+            if self._ready(slot):
+                break
+            time.sleep(1)
+        else:
+            raise QuiescentCutoverError("restored target did not become ready")
+        token = slot.dashboard_token.read_text(encoding="utf-8").strip()
+        if len(token) < 32 or any(character.isspace() for character in token):
+            raise QuiescentCutoverError("retained target dashboard token is invalid")
+        url = f"{slot.url}/internal/v1/dashboard/workboard"
+        authenticated = request.Request(
+            url, headers={"Authorization": f"Bearer {token}"}, method="GET"
+        )
+        try:
+            with request.urlopen(authenticated, timeout=10) as response:
+                if response.status != 200:
+                    raise QuiescentCutoverError("retained target rejected its owner")
+        except error.URLError as exc:
+            raise QuiescentCutoverError(
+                "retained target owner route is unavailable"
+            ) from exc
+        try:
+            request.urlopen(request.Request(url, method="GET"), timeout=10)
+        except error.HTTPError as exc:
+            if exc.code == 401:
+                return
+            raise QuiescentCutoverError(
+                "retained target anonymous status differs"
+            ) from exc
+        except error.URLError as exc:
+            raise QuiescentCutoverError(
+                "retained target anonymous route unavailable"
+            ) from exc
+        raise QuiescentCutoverError("retained target accepted anonymous access")
+
+    def _verify_new_voice_readiness(self, slot: SlotSpec) -> None:
+        # Staging deliberately has no voice mount. Check the newly activated
+        # grant only after active recreation, while user ingress is still shut.
+        token = slot.dashboard_token.read_text(encoding="utf-8").strip() if self._voice_activation_slot == slot.number else ""
+        if self._voice_activation_slot == slot.number:
+            voice_request = request.Request(
+                f"{slot.url}/internal/v1/voice-session/ready",
+                headers={"Authorization": f"Bearer {token}"}, method="GET")
+            try:
+                with request.urlopen(voice_request, timeout=10) as response:
+                    if response.status != 200 or json.load(response).get("contract") != "EvaVoiceSessionReady/v1":
+                        raise ValueError("voice readiness differs")
+            except (OSError, ValueError) as exc:
+                raise QuiescentCutoverError("new voice channel is not ready") from exc
+
+    def write_route(self, dropin: Path, content: bytes) -> None:
+        _atomic_dropin(dropin, content, owner_uid=self.owner_uid)
+        self._run([SYSTEMCTL, "daemon-reload"])
+
+    def start_eva1(self, slot: SlotSpec) -> dict[str, int]:
+        self._run([SYSTEMCTL, "start", SERVICE], timeout=90)
+        environment = self._run(
+            [SYSTEMCTL, "show", SERVICE, "--property=Environment", "--value"]
+        )
+        if f"EVA2_CANARY_URL={slot.url}" not in environment.split():
+            raise QuiescentCutoverError("Eva1 did not load the requested retained slot")
+        statuses: dict[str, int] = {}
+        deadline = time.monotonic() + 60
+        while time.monotonic() < deadline:
+            statuses = {}
+            for path in EVA1_PATHS:
+                try:
+                    with request.urlopen(
+                        f"http://127.0.0.1:3210{path}", timeout=12
+                    ) as response:
+                        statuses[path] = response.status
+                except OSError:
+                    statuses[path] = 0
+            if statuses == {path: 200 for path in EVA1_PATHS} and self._ready(slot):
+                return statuses
+            time.sleep(1)
+        raise QuiescentCutoverError(
+            "Eva1 did not become healthy on the retained target"
+        )
+
+
+def _snapshot_receipt(snapshot: DatabaseSnapshot) -> dict[str, object]:
+    return {
+        "memory": {
+            "countDigest": snapshot.memory.count_digest,
+            "dataDigest": snapshot.memory.data_digest,
+            "dumpBytes": snapshot.memory_dump_bytes,
+            "dumpSha256": snapshot.memory_dump_sha256,
+            "schemaDigest": snapshot.memory.schema_digest,
+            "tableCount": len(snapshot.memory.counts),
+        },
+        "operational": {
+            "countDigest": snapshot.operational.count_digest,
+            "dataDigest": snapshot.operational.data_digest,
+            "dumpBytes": snapshot.operational_dump_bytes,
+            "dumpSha256": snapshot.operational_dump_sha256,
+            "schemaDigest": snapshot.operational.schema_digest,
+            "tableCount": len(snapshot.operational.counts),
+        },
+    }
+
+
+def quiescent_cutover(
+    *,
+    source_slot: int,
+    target_slot: int,
+    backend: CutoverBackend,
+    dropin: Path = DROPIN,
+    workspace: Path,
+) -> dict[str, object]:
+    """Synchronize and switch once, restoring fresh target writes on failure."""
+
+    source = _slot(source_slot)
+    target = _slot(target_slot)
+    if source.number == target.number:
+        raise QuiescentCutoverError("source and target slots must differ")
+    previous = backend.preflight(source, target, dropin)
+    replacement = canonical_dropin(target.url)
+    eva1_stop_attempted = False
+    source_stop_attempted = False
+    target_started = False
+    route_write_attempted = False
+    eva1_start_attempted = False
+    snapshot: DatabaseSnapshot | None = None
+    backup: dict[str, object] | None = None
+    try:
+        eva1_stop_attempted = True
+        backend.stop_eva1()
+        backup = backend.backup_eva1(source, target)
+        source_stop_attempted = True
+        backend.stop_writers(source)
+        backend.stop_writers(target)
+        snapshot = backend.snapshot(source, workspace, "forward")
+        backend.restore(target, snapshot)
+        backend.migrate_schema(source, target)
+        target_started = True
+        backend.start_writers(target)
+        backend.verify_runtime(target)
+        route_write_attempted = True
+        backend.write_route(dropin, replacement)
+        delivery_enabled = backend.activate_delivery(target, dropin)
+        eva1_start_attempted = True
+        statuses = backend.start_eva1(target)
+    except Exception as error:
+        rollback_error: Exception | None = None
+        try:
+            if eva1_start_attempted:
+                backend.stop_eva1()
+            if target_started:
+                backend.stop_writers(target)
+                # Background memory and decision workers may commit before
+                # ingress is restarted, including during a partial core start.
+                # Preserve those writes and receipts on the reverse path too.
+                reverse = backend.snapshot(target, workspace, "automatic-rollback")
+                backend.restore(source, reverse)
+            if source_stop_attempted:
+                backend.start_writers(source)
+                backend.verify_runtime(source)
+            if route_write_attempted:
+                backend.write_route(dropin, previous)
+            if eva1_stop_attempted:
+                if source_stop_attempted:
+                    backend.activate_delivery(source, dropin)
+                backend.start_eva1(source)
+        except Exception as exc:  # preserve recovery files for manual repair
+            rollback_error = exc
+        if rollback_error is not None:
+            raise QuiescentCutoverError(
+                "quiescent cutover and automatic lossless rollback both failed"
+            ) from rollback_error
+        if isinstance(error, QuiescentCutoverError):
+            raise
+        raise QuiescentCutoverError(
+            "quiescent cutover failed and was rolled back"
+        ) from error
+    if snapshot is None or backup is None:
+        raise QuiescentCutoverError("quiescent cutover did not produce its evidence")
+    return {
+        "contract": "Eva2QuiescentCutoverReceipt/v1",
+        "eva1Backup": backup,
+        "eva1HttpStatuses": statuses,
+        "issuedAt": datetime.now(UTC).isoformat(),
+        "previousDropinSha256": hashlib.sha256(previous).hexdigest(),
+        "sourcePort": source.port,
+        "sourceWritersStopped": True,
+        "status": "switched",
+        "synchronizedDatabases": _snapshot_receipt(snapshot),
+        "targetPort": target.port,
+        "targetReady": True,
+        "proactiveDeliveryEnabled": delivery_enabled,
+        "proactiveCredentialWithheldDuringStaging": True,
+        "backgroundWorkConfiguredDuringStaging": False,
+        "backgroundWorkConfiguredAfterActivation": True,
+        "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    }
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Losslessly synchronize and switch retained Eva2 managed-B slots"
+    )
+    parser.add_argument("--source-slot", type=int, required=True, choices=(3, 4))
+    parser.add_argument("--target-slot", type=int, required=True, choices=(3, 4))
+    parser.add_argument("--dropin", type=Path, default=DROPIN)
+    parser.add_argument("--activate-dashboard-voice", action="store_true",
+                        help="explicitly admit a first owner dashboard voice grant")
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--preflight-only", action="store_true")
+    mode.add_argument("--execute", action="store_true")
+    arguments = parser.parse_args(argv)
+    LOCK.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
+    lock_descriptor = os.open(LOCK, os.O_CREAT | os.O_RDWR, 0o600)
+    workspace: Path | None = None
+    success = False
+    retain_workspace = False
+    try:
+        try:
+            fcntl.flock(lock_descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print(
+                json.dumps({"error": "another cutover is active", "status": "failed"})
+            )
+            return 2
+        backend = SystemBackend(activate_dashboard_voice=arguments.activate_dashboard_voice)
+        if arguments.preflight_only:
+            source = _slot(arguments.source_slot)
+            target = _slot(arguments.target_slot)
+            previous = backend.preflight(source, target, arguments.dropin)
+            receipt = {
+                "contract": "Eva2QuiescentCutoverPreflight/v1",
+                "currentDropinSha256": hashlib.sha256(previous).hexdigest(),
+                "sourcePort": source.port,
+                "status": "preflight_passed",
+                "targetPort": target.port,
+            }
+        else:
+            WORK_PARENT.mkdir(mode=0o700, parents=True, exist_ok=True)
+            workspace = Path(tempfile.mkdtemp(prefix="run-", dir=WORK_PARENT))
+            os.chmod(workspace, 0o700)
+            receipt = quiescent_cutover(
+                source_slot=arguments.source_slot,
+                target_slot=arguments.target_slot,
+                backend=backend,
+                dropin=arguments.dropin,
+                workspace=workspace,
+            )
+        receipt["dashboardVoiceFirstActivation"] = backend._voice_activation_slot is not None
+        success = True
+    except QuiescentCutoverError as exc:
+        retain_workspace = "rollback both failed" in str(exc) or (
+            "automatic lossless rollback both failed" in str(exc)
+        )
+        print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
+        return 2
+    finally:
+        if workspace is not None and (success or not retain_workspace):
+            shutil.rmtree(workspace)
+        os.close(lock_descriptor)
+    print(json.dumps(receipt, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+__all__ = [
+    "CutoverBackend",
+    "DatabaseAttestation",
+    "DatabaseSnapshot",
+    "QuiescentCutoverError",
+    "SlotSpec",
+    "SystemBackend",
+    "main",
+    "quiescent_cutover",
+]

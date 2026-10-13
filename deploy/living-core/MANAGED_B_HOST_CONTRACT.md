@@ -100,7 +100,7 @@ en terugrol op de echte B blijven afzonderlijke gates.
 ## Herstartbewijs zonder zelfonderbreking
 
 Een actieve Codex- of Eva-sessie mag nooit haar eigen WSL- of hostherstart
-aanroepen. `tools/managed_b_reboot_probe.py arm` maakt vóór een door de
+aanroepen. `src/tools/managed_b_reboot_probe.py arm` maakt vóór een door de
 operator gestarte herstart één private `0600`-snapshot met de Windows-,
 WSL-kernel- en systemd-identiteit en een synthetisch duurzaam gesprek. Het
 programma bevat zelf geen reboot- of terminate-opdracht.

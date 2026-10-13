@@ -2,6 +2,9 @@
 """Open the packaged installer using its pinned interpreter."""
 from pathlib import Path
 
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 from tools.launch_packaged_installer import main
 
 

@@ -110,8 +110,8 @@ A real HTTP test uses the native aiohttp HA client, uvicorn/FastAPI and isolated
 PostgreSQL: cancel a pending response, answer the next question, and separately
 cancel a raw HTTP connection without sending an interrupt POST. The responder is
 a controlled test coroutine, not Eva's model, HA STT/TTS or acoustic hardware.
-Run `pytest -q tests/postgres/test_operational_timeline.py tests/api/test_native_voice.py
-tests/operations/test_ha_voice_native_client.py` in the locked runtime test
+Run `pytest -q development/tests/postgres/test_operational_timeline.py development/tests/api/test_native_voice.py
+development/tests/operations/test_ha_voice_native_client.py` in the locked runtime test
 environment plus HA's `aiohttp==3.14.3` test dependencies. No model call is needed.
 
 ## Household memory candidate

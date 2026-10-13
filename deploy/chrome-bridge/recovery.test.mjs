@@ -62,7 +62,7 @@ test('isolated real browser: transport loss, address change and bridge crash rev
     let body='';res.on('data',c=>body+=c);res.on('end',()=>{try{resolve({status:res.statusCode,...JSON.parse(body)});}catch{resolve({status:res.statusCode});}});res.on('error',()=>resolve({lost:true}));
    });
    req.on('error',()=>resolve({lost:true}));
-   req.end(JSON.stringify({jsonrpc:'2.0',id:++serial,method:'tools/call',params:{name,arguments:args}}));
+   req.end(JSON.stringify({jsonrpc:'2.0',id:++serial,method:'src/tools/call',params:{name,arguments:args}}));
   });
   return {result,abort:()=>req.destroy()};
  }

@@ -16,12 +16,11 @@ LABEL io.eva2.source-commit=${SOURCE_COMMIT} \
       io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH} \
       io.eva2.source-refresh="git-archive-v1"
 
-COPY requirements-4d.lock ./requirements-4d.lock
+COPY deploy/requirements-4d.lock ./deploy/requirements-4d.lock
 COPY wheelhouse ./wheelhouse
 COPY pyproject.toml ./pyproject.toml
 COPY src ./src
-COPY connector_sdk ./connector_sdk
-RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock \
+RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r deploy/requirements-4d.lock \
     && python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation . \
     && python -c "from eva.providers.bundled import bundled_provider_factories; factories=bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway' for factory in factories)" \
     && python -m pip check \
@@ -29,9 +28,9 @@ RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-l
     && python -c "import importlib.util; assert importlib.util.find_spec('pip') is None; assert importlib.util.find_spec('wheel') is None" \
     && rm -rf ./build ./wheelhouse ./*.egg-info ./src/*.egg-info
 
-COPY alembic.ini ./alembic.ini
-COPY migrations ./migrations
-COPY schemas ./schemas
+COPY deploy/alembic.ini ./deploy/alembic.ini
+COPY deploy/migrations ./deploy/migrations
+COPY deploy/schemas ./deploy/schemas
 
 FROM docker.io/library/python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 AS runtime_libs
 

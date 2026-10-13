@@ -1,0 +1,74 @@
+{
+  "contract": "Eva2SignaturePolicy/v1",
+  "status": "format_selected_keys_and_signatures_absent",
+  "signatureEnvelopeSchema": "deploy/release/formats/eva-signature-envelope-v1.schema.json",
+  "algorithm": "Ed25519",
+  "digestAlgorithm": "sha256",
+  "domainSeparationPrefix": "Eva2ReleaseSignature/v1\\u0000",
+  "signedMessageRecipe": {
+    "subjectBytes": "EvaCanonicalJSON/v1 of the complete subject with its signatures field omitted",
+    "subjectSha256": "sha256(subjectBytes)",
+    "messageBytes": "ASCII Eva2ReleaseSignature/v1 followed by one 0x00 byte, then EvaCanonicalJSON/v1 of the complete signature envelope with signatureBase64 omitted; the envelope field spells the separator as printable \\u0000",
+    "envelopeBinds": [
+      "scope",
+      "subjectId",
+      "subjectSha256",
+      "algorithm",
+      "domainSeparationPrefix",
+      "keyId",
+      "trustRootVersion",
+      "signedAt",
+      "expiresAt",
+      "provenanceSha256"
+    ]
+  },
+  "offlineVerificationRequiredBeforeExtractionOrStart": true,
+  "trustRootSlot": "deploy/release/trust-root-slot.json",
+  "scopePolicies": [
+    {
+      "scope": "release",
+      "minimumValidSignatures": 1,
+      "keyRole": "release_signer"
+    },
+    {
+      "scope": "image",
+      "minimumValidSignatures": 1,
+      "keyRole": "release_signer"
+    },
+    {
+      "scope": "connector_artifact",
+      "minimumValidSignatures": 1,
+      "keyRole": "connector_artifact_signer"
+    },
+    {
+      "scope": "connector_promotion",
+      "minimumValidSignatures": 1,
+      "keyRole": "connector_promotion_signer"
+    },
+    {
+      "scope": "revocation_list",
+      "minimumValidSignatures": 1,
+      "keyRole": "offline_root"
+    }
+  ],
+  "multisignaturePolicy": {
+    "minimumThreshold": 1,
+    "additionalValidSignaturesAllowed": true,
+    "thresholdAuthority": "signed_trust_root"
+  },
+  "keySeparationRequired": [
+    [
+      "connector_artifact_signer",
+      "connector_promotion_signer"
+    ],
+    [
+      "release_signer",
+      "offline_root"
+    ]
+  ],
+  "claims": {
+    "keysProvisioned": false,
+    "signaturesExist": false,
+    "offlineVerificationRun": false
+  }
+}

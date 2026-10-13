@@ -231,7 +231,7 @@ def prepare_logical_restore_roles(database_dsn: str) -> LogicalRestoreRoleReceip
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="eva-install-schema")
     parser.add_argument(
-        "--alembic-ini", type=Path, default=Path("/opt/eva/alembic.ini")
+        "--alembic-ini", type=Path, default=Path("/opt/eva/deploy/alembic.ini")
     )
     parser.add_argument("--prepare-logical-restore-roles", action="store_true")
     return parser

@@ -191,7 +191,7 @@ def _raw_tool_output(
         {
             "id": "contextforge-proof-inspection",
             "jsonrpc": "2.0",
-            "method": "tools/call",
+            "method": "src/tools/call",
             "params": {"arguments": arguments, "name": tool_name},
         },
         token,
@@ -237,7 +237,7 @@ def _migrate_empty_postgres(engine: sa.Engine, dsn: str) -> None:
         if relations:
             raise RuntimeError("durable proof database is not empty")
     root = Path(__file__).resolve().parents[2]
-    config = AlembicConfig(str(root / "alembic.ini"))
+    config = AlembicConfig(str(root / "deploy/alembic.ini"))
     config.set_main_option("sqlalchemy.url", dsn.replace("%", "%%"))
     alembic_command.upgrade(config, "4b_0000_core_namespace")
     with engine.begin() as connection:

@@ -13,7 +13,7 @@ ASSETS = (
 )
 
 def main():
-    output = Path(__file__).parent / "vendor"
+    output = Path(__file__).parent / "src/vendor"
     output.mkdir(exist_ok=True)
     for url, algorithm, expected, member, name in ASSETS:
         with urlopen(url, timeout=60) as response:

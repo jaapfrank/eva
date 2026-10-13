@@ -43,7 +43,7 @@ Bij een volgende bronwijziging bouw je opnieuw, zonder de vuile werkmap mee te
 nemen:
 
 ```bash
-PYTHONPATH=src:. python3 tools/build_telegram_test_image.py <exacte-40-teken-gitcommit>
+PYTHONPATH=src:. python3 src/tools/build_telegram_test_image.py <exacte-40-teken-gitcommit>
 ```
 
 Kopieer uitsluitend de `image`-waarde uit de JSON-receipt naar de private
@@ -64,7 +64,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 
    ```bash
    cd /home/administrator/project/Bottie-candidates/v2/eva2
-   PYTHONPATH=src:. python3 tools/discover_telegram_test_accounts.py
+   PYTHONPATH=src:. python3 src/tools/discover_telegram_test_accounts.py
    ```
 
    Plak de nieuwe BotFather-testtoken alleen bij de verborgen prompt. De twee
@@ -78,7 +78,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 
    ```bash
    cd /home/administrator/project/Bottie-candidates/v2/eva2
-   sudo env PYTHONPATH=src:. python3 tools/prepare_telegram_test_config.py \
+   sudo env PYTHONPATH=src:. python3 src/tools/prepare_telegram_test_config.py \
      --owner-telegram-user-id <NUMERIEK_ID_VAN_ACCOUNT_A> \
      --owner-principal-id test:persoon-a \
      --member <NUMERIEK_ID_VAN_ACCOUNT_B>=test:persoon-b
@@ -93,7 +93,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
    geen container of Telegram-poller.
 
    ```bash
-   sudo env PYTHONPATH=src:. python3 tools/admit_telegram_test_group.py \
+   sudo env PYTHONPATH=src:. python3 src/tools/admit_telegram_test_group.py \
      --marker EVA2-TEST-GROUP-3fj7Qz8Nw2Ka \
      --grant-to <NUMERIEK_ID_VAN_ACCOUNT_A> \
      --grant-to <NUMERIEK_ID_VAN_ACCOUNT_B>
@@ -130,7 +130,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 
     ```bash
     cd /home/administrator/project/Bottie-candidates/v2/eva2
-    sudo env PYTHONPATH=src:. python3 tools/capture_telegram_test_receipt.py \
+    sudo env PYTHONPATH=src:. python3 src/tools/capture_telegram_test_receipt.py \
       --output /var/tmp/eva2-telegram-native-test-receipt-2026-08-26.json
     ```
 
@@ -157,7 +157,7 @@ SHA-256-digest staan. De opdracht start niets en toont geen tokenwaarde:
 
 ```bash
 sudo env PYTHONPATH=src:<PAD_NAAR_DE_GEPINDE_RUNTIMEPACKAGES> \
-  python3 tools/prepare_telegram_conversation_test.py \
+  python3 src/tools/prepare_telegram_conversation_test.py \
   --model-access-file <ACCESS_ONLY_MODELFILE> \
   --hindsight-access-file <ACCESS_ONLY_HINDSIGHT_AUTH_JSON> \
   --identity-file <ONDERTEKEND_IDENTITYPACK> \

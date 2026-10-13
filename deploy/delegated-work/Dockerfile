@@ -7,10 +7,10 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
 
 WORKDIR /opt/eva
 
-COPY requirements-delegated-work.lock ./requirements-delegated-work.lock
+COPY deploy/requirements-delegated-work.lock ./requirements-delegated-work.lock
 COPY wheelhouse ./wheelhouse
 RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: \
-    --find-links=./wheelhouse --require-hashes -r requirements-delegated-work.lock \
+    --find-links=./wheelhouse --require-hashes -r deploy/requirements-delegated-work.lock \
     && python -m pip check
 
 FROM cgr.dev/chainguard/python@sha256:ee37f5e4fb445732409626797dccb6f2a6337872def2bab48729ee61b335fa77

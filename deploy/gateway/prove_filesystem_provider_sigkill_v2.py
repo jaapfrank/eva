@@ -151,7 +151,7 @@ def _migrate(engine: sa.Engine, url: sa.URL) -> None:
         )
         if relations:
             raise RuntimeError("filesystem crash proof database is not empty")
-    config = AlembicConfig("/opt/eva/alembic.ini")
+    config = AlembicConfig("/opt/eva/deploy/alembic.ini")
     rendered_url = url.render_as_string(hide_password=False).replace("%", "%%")
     config.set_main_option("sqlalchemy.url", rendered_url)
     alembic_command.upgrade(config, "4b_0000_core_namespace")

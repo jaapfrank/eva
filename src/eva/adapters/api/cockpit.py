@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-_EVIDENCE_INDEX = "release/eva-cockpit-evidence-index-v1.json"
+_EVIDENCE_INDEX = "deploy/release/eva-cockpit-evidence-index-v1.json"
 
 
 def _evidence(anchor: str) -> str:

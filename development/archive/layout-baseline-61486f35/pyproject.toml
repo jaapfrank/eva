@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools==84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eva2-living-core"
+version = "0.0.0"
+description = "Eva 2 Living Core validation build"
+requires-python = "==3.12.14"
+license = "LicenseRef-Proprietary"
+dependencies = [
+  "alembic==1.19.1",
+  "cryptography==50.0.1",
+  "fastapi==0.141.1",
+  "openai==3.6.0",
+  "psycopg[binary]==3.3.4",
+  "PyNaCl==1.6.2",
+  "pydantic==2.12.5",
+  "pydantic-ai-slim==2.37.0",
+  "SQLAlchemy==2.0.52",
+  "tiktoken==0.14.0",
+  "uvicorn==0.41.0",
+  "websockets==17.0.1",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["eva*"]
+
+[tool.setuptools.package-data]
+"eva.voice_service" = ["client.html"]
+"eva.adapters.model" = ["tokenizer_data/*"]
+"eva.adapters.api" = [
+  "dashboard_static/*.html",
+  "dashboard_static/*.json",
+  "dashboard_static/assets/*.css",
+  "dashboard_static/assets/*.js",
+]
+
+[tool.eva2]
+target-python = "3.12.14"
+dependency-lock = "requirements.lock"
+tranche-4d-dependency-lock = "requirements-4d.lock"
+tranche-4d-dependency-extra = "tranche-4d"
+tranche-4d-dependency-source-binding = "release/4d-dependency-source-binding.json"
+platform-lock = "release/platform-lock.json"
+design-status = "selected_not_implemented"

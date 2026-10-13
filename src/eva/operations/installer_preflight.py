@@ -303,7 +303,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--platform-lock",
         type=Path,
-        default=Path("release/platform-lock.json"),
+        default=Path("deploy/release/platform-lock.json"),
         help="alleen-lezen pad naar de gepinde platformlock",
     )
     return parser

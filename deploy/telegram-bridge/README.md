@@ -19,10 +19,10 @@ replayed Eva1 messages. The core authenticates the original sender and retrieves
 its own conversation; host Eva1 history is never forwarded as Eva2 context.
 There is no automatic Eva1 fallback after uncertain Eva2 processing.
 
-Run `node --test tests/support/telegram_default_private.test.mjs
-tests/support/telegram_draft_lane.test.mjs` from the Eva2 checkout. The actual
+Run `node --test development/tests/support/telegram_default_private.test.mjs
+development/tests/support/telegram_draft_lane.test.mjs` from the Eva2 checkout. The actual
 host composition test needs `EVA_TELEGRAM_HOST_ROOT` pointing to the host checkout:
-`node --test tests/support/telegram_default_private_ingress.test.mjs`.
+`node --test development/tests/support/telegram_default_private_ingress.test.mjs`.
 `EVA_TELEGRAM_CANDIDATE_ROOT` optionally selects reviewed candidate source for
 the five changed host files. Only model/Telegram transport is replaced there;
 archive, middleware, polling, drafts and reply binding use the host implementation.

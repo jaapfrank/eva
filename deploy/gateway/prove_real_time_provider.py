@@ -91,7 +91,7 @@ def _raw_tool_output(
         {
             "id": "real-time-proof-inspection",
             "jsonrpc": "2.0",
-            "method": "tools/call",
+            "method": "src/tools/call",
             "params": {"arguments": arguments, "name": name},
         },
         token,
@@ -211,7 +211,7 @@ def _migrate(engine: sa.Engine, url: sa.URL) -> None:
         )
         if relations:
             raise RuntimeError("real provider proof database is not empty")
-    config = AlembicConfig("/opt/eva/alembic.ini")
+    config = AlembicConfig("/opt/eva/deploy/alembic.ini")
     config.set_main_option("sqlalchemy.url", url.render_as_string(hide_password=False).replace("%", "%%"))
     alembic_command.upgrade(config, "4b_0000_core_namespace")
     with engine.begin() as connection:

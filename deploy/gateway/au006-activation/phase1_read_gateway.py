@@ -14,7 +14,7 @@ for i in range(12):
  except Exception:
   if i==11:raise
   time.sleep(.5)
-metadata=rpc('tools/list',{})['result']
+metadata=rpc('src/tools/list',{})['result']
 token=read_runtime_secret_file(os.environ['EVA_MCP_REGISTRATION_TOKEN_FILE'],setting_name='EVA_MCP_REGISTRATION_TOKEN_FILE')
 client=ContextForgeRegistrationClient(McpRegistrationConfig(os.environ['EVA_MCP_GATEWAY_URL'],token,allow_plain_http=True,visibility='private'))
 gateways=client._rows(client._request('GET','/gateways?include_pagination=false&limit=0'))
