@@ -1,0 +1,33 @@
+{
+  "contract": "eva.aide.development-outcome.v1",
+  "recordedAt": "2026-10-13T23:16:42.391162+00:00",
+  "taskId": "HUE6.1",
+  "completed": false,
+  "installedCandidate": false,
+  "development": {
+    "candidateCorrectChecks": 4,
+    "referenceCorrectChecks": 0,
+    "candidateCompletedTasks": 0,
+    "referenceCompletedTasks": 0
+  },
+  "usage": {
+    "modelRequests": 14,
+    "tools": 28,
+    "inputTokens": 109007,
+    "outputTokens": 3076,
+    "totalTokens": 112083
+  },
+  "cumulativeSelectedExperimentTokens": 428783,
+  "creditCost": null,
+  "parentFailure": {
+    "code": "local_context_budget_overrun",
+    "actualTokens": 30695,
+    "reservedTokens": 30000,
+    "storageProofBytes": 54952
+  },
+  "independentReviewSha256": "3ee5843b9a660689ea33540a4e1f15997153fee7087084acb4c3edd06ecd98ed",
+  "historicalPartialJournalPreserved": true,
+  "finalEvaluationExecuted": false,
+  "cleanupRemaining": 0,
+  "nextAction": "De ontwikkelbeoordeling is afgesloten: kandidaat 4 correcte controles, referentie 0; bij beide is geen volledige taak bewezen. De ouderafsluiting liep vast door onnodig herhaalde opgeslagen code in de context. Herstel die overdracht en hergebruik de opgeslagen kandidaat en resultaten zonder de ontwikkelproef te herhalen. Onafhankelijke eindbeoordeling, toepassing en later gebruik blijven open. Geen eigenaarhandeling."
+}

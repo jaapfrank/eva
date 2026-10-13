@@ -1,3 +1,19 @@
+## Actuele uitvoering 14 oktober — ontwikkelresultaat behouden, afsluiting herstellen
+
+De bestaande AIDE-kandidaat haalt vier correcte controles tegenover nul bij de
+referentie. Beide hebben volgens de vaste beoordeling nul volledig bewezen taken.
+De ontwikkeluitvoeringen zijn afgerond; de kandidaat en het pakket zijn opgeslagen.
+De ouderafsluiting is onzeker: de opslagreceipt stuurde de code onnodig opnieuw
+naar het model en overschreed het lokale deelbudget met 695 tokens. Geen
+onafhankelijke eindbeoordeling, toepassing of HUE6-afronding.
+
+Werkelijk nieuw verbruik: 14 modelaanvragen, 112.083 tokens en 28 tools. Volledig
+fysiek gemeten; het oorspronkelijke gedeeltelijke journal blijft bewaard. Alle
+tijdelijke middelen zijn afgesloten. Herstel alleen de receiptprojectie en een
+legitieme afsluitende voortzetting; herhaal niet het afgeronde ontwikkelpaar.
+Geen eigenaarhandeling, nieuwe kandidaat, concurrentenserie of spraakwerk.
+43/54 blijft staan. Bewijs: development/evidence/product/aide-development-outcome-20261014.json.
+
 ## Actuele uitvoering 14 oktober — bestaande AIDE²-cyclus afronden
 
 De gewone reflectie van 13 oktober is volgens de providerlog afgerond zonder
