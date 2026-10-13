@@ -97,7 +97,8 @@ def _resumed_readiness(monkeypatch, *, active=False, contact=False):
     for spec, state, usage in [(root, "ambiguous", terminal(4909, 78, 1, 1)),
                                (leaf, "call_started" if active else "succeeded",
                                 None if active else terminal(20, 2, 2, 1))]:
-        rows.append({"work_id": spec["work_id"], "state": state, "stop_requested_at": None,
+        rows.append({"work_id": spec["work_id"], "call_id": "actual-" + spec["work_id"],
+            "state": state, "stop_requested_at": None,
             "spec_payload": spec, "retention_until": now + timedelta(days=2),
             "usage_payload": usage,
             "usage_sha256": None if usage is None else bytes.fromhex(canonical_sha256(usage))})
@@ -183,9 +184,11 @@ def _resumed_readiness(monkeypatch, *, active=False, contact=False):
             assert reference == source
             return turn
     monkeypatch.setitem(sys.modules, "eva.providers.mcp_autonomy", NS(_SourceTurnLoader=SourceLoader))
-    def execute(mode, task_id):
+    def execute(mode, task_id, physical_usage=None):
         requested[0] = task_id
         request = {"task_id": task_id, "scope_sha256": scope_hash, "require_idle": False, mode: True}
+        if physical_usage is not None:
+            request["physical_usage"] = physical_usage
         monkeypatch.setattr(sys, "argv", ["readiness", json.dumps(request)])
         output = StringIO()
         with redirect_stdout(output):
@@ -284,3 +287,163 @@ def test_active_resume_still_requires_actual_leaf_dispatch_authority(monkeypatch
     with pytest.raises(DelegatedWorkConflict, match="leaf lease or deadline"):
         f.execute("include_active_usage", f.leaf["work_id"])
     assert f.reads == []
+
+
+def _failed_physical_ancestor(f, *, actual_counts=False):
+    from eva.application.conversation import ConversationModelUsage
+    request_id = f.keys[0] + ":failed"
+    f.events[f.keys[0]].extend([
+        NS(event_type="CONVERSATION_MODEL_ADMITTED", data={"request_id": request_id}),
+        NS(event_type="CONVERSATION_MODEL_RECORDED", data={"request_id": request_id,
+            "usage": ConversationModelUsage.unmeasured().to_wire(), "outcome": "failed",
+            "local_stream_closed": True})])
+    row = f.rows[0]
+    row["usage_payload"]["completed_model_responses"] = 2
+    if actual_counts:
+        # Exact retained partial counters and scoped request outcome shape.
+        row["usage_payload"] = {"completed_model_responses": 2,
+            "contract": "DelegatedWorkUsage/v1", "cost_usd_micros": None,
+            "input_tokens": 5577, "measurement": "partial", "output_tokens": 389,
+            "schema_version": 1, "tool_calls": 6, "total_tokens": 5966}
+        f.events[f.keys[0]][1].data.update(outcome="succeeded", local_stream_closed=True,
+            usage=ConversationModelUsage.measured(tool_calls=1, input_tokens=5577,
+                output_tokens=389).to_wire())
+    row["usage_sha256"] = bytes.fromhex(canonical_sha256(row["usage_payload"]))
+    snapshot = {key: row[key] for key in ("work_id", "state", "call_id", "usage_payload")}
+    snapshot.update(spec_sha256=canonical_sha256(row["spec_payload"]),
+                    usage_sha256=row["usage_sha256"].hex())
+    events = sorted(({"event_type": e.event_type, "data": e.data}
+                     for e in f.events[f.keys[0]]),
+                    key=lambda e: (e["data"]["request_id"], e["event_type"]))
+    scope = canonical_sha256({key: getattr(f.turn, key) for key in
+                             ("tenant_id", "installation_id", "principal_id")})
+    physical = []
+    counts = ([("provider-known", 5577, 389), ("provider-failed", 24606, 123)]
+              if actual_counts else [("provider-known", 4909, 78), ("provider-failed", 30, 2)])
+    for physical_id, inputs, outputs in counts:
+        physical.append({"request_id": physical_id,
+            "identity": {"task_id": row["work_id"], "scope_sha256": scope,
+                "source_ingress_sha256": f.root["source_ingress_sha256"],
+                "conversation_id": f.turn.conversation_id, "message_id": f.turn.message_id},
+            "model": "gpt-6-astra", "role": "work", "reasoning_effort": "medium",
+            "runtime_projection": {"release": {"model_profile_release_sha256": "a" * 64}},
+            "request_body_sha256": "b" * 64,
+            "usage": {"input_tokens": inputs, "output_tokens": outputs,
+                      "total_tokens": inputs + outputs}})
+    return {"work_id": row["work_id"], "snapshot_sha256": canonical_sha256(snapshot),
+        "journal_sha256": canonical_sha256(events), "model": "gpt-6-astra",
+        "role": "work", "reasoning_effort": "medium",
+        "request_bindings": [
+            {"journal_request_id": f.keys[0] + ":0", "physical_request_id": "provider-known", "response_tool_calls": 1},
+            {"journal_request_id": request_id, "physical_request_id": "provider-failed", "response_tool_calls": 0}],
+        "requests": physical}
+
+
+def test_physical_ancestor_supplement_counts_once_without_rewriting_history(monkeypatch):
+    f = _resumed_readiness(monkeypatch)
+    supplement = _failed_physical_ancestor(f)
+    before = deepcopy((f.rows, f.events))
+    with pytest.raises(ValueError, match="journal usage is incomplete"):
+        f.execute("include_usage", f.root["work_id"])
+    result = f.execute("include_usage", f.root["work_id"], [supplement])
+    assert result["model_usage"] == {"measurement": "measured", "model_attempts": 4,
+        "tool_calls": 2, "input_tokens": 4959, "output_tokens": 82}
+    assert result["terminal_usage"]["measurement"] == "partial"
+    assert result["terminal_usage"]["completed_model_responses"] == 4
+    assert result["terminal_usage"]["total_tokens"] == 5041
+    assert result["terminal_usage"]["cost_usd_micros"] is None
+    assert (f.rows, f.events) == before
+    assert not f.dispatches
+
+
+@pytest.mark.parametrize("corruption", [
+    "snapshot", "journal", "duplicate", "missing", "mapping", "actor", "source",
+    "model", "role", "release", "known", "failed_outcome", "leaf", "active",
+])
+def test_physical_ancestor_supplement_refuses_unbound_or_success_rescue(monkeypatch, corruption):
+    f = _resumed_readiness(monkeypatch, active=corruption == "active")
+    supplement = _failed_physical_ancestor(f)
+    if corruption in {"snapshot", "journal"}:
+        supplement[corruption + "_sha256"] = "0" * 64
+    elif corruption == "duplicate":
+        supplement["requests"].append(deepcopy(supplement["requests"][0]))
+    elif corruption == "missing":
+        supplement["requests"].pop()
+    elif corruption == "mapping":
+        supplement["request_bindings"][1]["journal_request_id"] = f.keys[0] + ":0"
+    elif corruption == "actor":
+        supplement["requests"][1]["identity"]["scope_sha256"] = "0" * 64
+    elif corruption == "source":
+        supplement["requests"][1]["identity"]["source_ingress_sha256"] = "0" * 64
+    elif corruption in {"model", "role"}:
+        supplement["requests"][1][corruption] = "different"
+    elif corruption == "release":
+        supplement["requests"][1]["runtime_projection"]["release"]["model_profile_release_sha256"] = "0" * 64
+    elif corruption == "known":
+        supplement["requests"][0]["usage"] = {"input_tokens": 4910, "output_tokens": 78, "total_tokens": 4988}
+    elif corruption == "failed_outcome":
+        f.events[f.keys[0]][-1].data["outcome"] = "succeeded"
+        events = sorted(({"event_type": e.event_type, "data": e.data} for e in f.events[f.keys[0]]),
+                        key=lambda e: (e["data"]["request_id"], e["event_type"]))
+        supplement["journal_sha256"] = canonical_sha256(events)
+    elif corruption == "leaf":
+        supplement["work_id"] = f.leaf["work_id"]
+    mode = "include_active_usage" if corruption == "active" else "include_usage"
+    with pytest.raises(ValueError, match="physical usage"):
+        f.execute(mode, f.leaf["work_id"], [supplement])
+
+
+def test_trusted_physical_reference_is_hash_bound_and_rechecked(tmp_path, monkeypatch):
+    import json
+    from eva.operations.component_application_runtime import ComponentApplicationRuntime
+    from eva.operations.component_work_execution import ComponentWorkRuntime
+    f = _resumed_readiness(monkeypatch)
+    supplement = _failed_physical_ancestor(f)
+    ledger = tmp_path / "ledger.json"
+    ledger.write_text(json.dumps({"requests": supplement.pop("requests")}))
+    supplement["ledger"] = {"path": str(ledger), "sha256": hashlib.sha256(ledger.read_bytes()).hexdigest()}
+    attestation = tmp_path / "attestation.json"
+    attestation.write_text(json.dumps({"contract": "EvaPhysicalAncestorUsage/v1", "ancestors": [supplement]}))
+    config = {"core_container": "synthetic-core", "scope_sha256": "a" * 64,
+        "physical_usage_attestation": {"path": str(attestation),
+            "sha256": hashlib.sha256(attestation.read_bytes()).hexdigest()}}
+    runtime = ComponentApplicationRuntime(config, run=lambda *a, **kw: pytest.fail("must fail before core"))
+    worker = ComponentWorkRuntime(config, path="bootstrap/delegated_digital_runner.py", suite_sha256="b" * 64)
+    assert worker.config == config
+    ledger.write_text("{}")
+    with pytest.raises(ValueError, match="evidence bytes differ"):
+        runtime.reviewed_work_usage("work:synthetic")
+
+
+@pytest.mark.parametrize("retained_count", [2, 1, 3])
+def test_actual_partial_response_count_and_physical_tokens(monkeypatch, retained_count):
+    f = _resumed_readiness(monkeypatch)
+    supplement = _failed_physical_ancestor(f, actual_counts=True)
+    row = f.rows[0]
+    row["usage_payload"]["completed_model_responses"] = retained_count
+    row["usage_sha256"] = bytes.fromhex(canonical_sha256(row["usage_payload"]))
+    snapshot = {key: row[key] for key in ("work_id", "state", "call_id", "usage_payload")}
+    snapshot.update(spec_sha256=canonical_sha256(row["spec_payload"]),
+                    usage_sha256=row["usage_sha256"].hex())
+    supplement["snapshot_sha256"] = canonical_sha256(snapshot)
+    before = deepcopy((f.rows, f.events))
+    if retained_count != 2:
+        with pytest.raises(ValueError, match="retained known totals differ"):
+            f.execute("include_usage", f.root["work_id"], [supplement])
+    else:
+        result = f.execute("include_usage", f.root["work_id"], [supplement])
+        assert result["model_usage"]["input_tokens"] == 30183 + 20
+        assert result["model_usage"]["output_tokens"] == 512 + 2
+        assert result["model_usage"]["model_attempts"] == 4
+        assert result["terminal_usage"]["tool_calls"] == 6 + 1
+        assert result["terminal_usage"]["completed_model_responses"] == 4
+    assert (f.rows, f.events) == before
+
+def test_unrelated_physical_attestation_preserves_measured_chain(monkeypatch):
+    f = _resumed_readiness(monkeypatch)
+    original = f.execute("include_usage", f.root["work_id"])
+    unrelated = {"work_id": "work:other-closed-execution"}
+    assert f.execute("include_usage", f.root["work_id"], [unrelated]) == original
+    f.events[f.keys[0]].pop()
+    with pytest.raises(ValueError, match="journal usage is incomplete"):
+        f.execute("include_usage", f.root["work_id"], [unrelated])

@@ -13,6 +13,11 @@ tijdelijke middelen zijn afgesloten. Herstel alleen de receiptprojectie en een
 legitieme afsluitende voortzetting; herhaal niet het afgeronde ontwikkelpaar.
 Geen eigenaarhandeling, nieuwe kandidaat, concurrentenserie of spraakwerk.
 43/54 blijft staan. Bewijs: development/evidence/product/aide-development-outcome-20261014.json.
+De gebruiksaanvulling is daarna in de bestaande evaluator geïnstalleerd; oude
+gedeeltelijke registraties en onzekere taakstatus blijven staan. 4.321 bestaande
+queuebestanden zijn behouden; kern en werker zijn niet vervangen. De legitieme
+opvolger en eindbeoordeling zijn nog niet uitgevoerd. Geen nieuwe modelaanvraag.
+Bewijs: development/evidence/product/aide-usage-supplement-installed-20261014.json.
 
 ## Actuele uitvoering 14 oktober — bestaande AIDE²-cyclus afronden
 

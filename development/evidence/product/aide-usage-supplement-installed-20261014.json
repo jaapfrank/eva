@@ -1,0 +1,20 @@
+{
+  "configurationSha256": "357f5ec957890097f6ac9fcc9909ad9be0e3d7b914eff2fcba19b76bb1869d49",
+  "contract": "EvaPhysicalUsageSupplementInstalled/v1",
+  "coreUpdated": false,
+  "modelCalls": 0,
+  "newTaskCompletion": false,
+  "preservedQueueFiles": 4321,
+  "queueBytesPreserved": true,
+  "recordedAt": "2026-10-13T23:32:53.916554+00:00",
+  "sourceInstallGoSha256": "e0f0aa5c421c440ccea3cec7c81a8eafebadb2ecb76930f1d485de6bbee4e920",
+  "sourceSha256": "2d8fdee7f9c65a7177653befb49a1aa00f77cb8d5c3897d642451d6bbab80e18",
+  "workerUpdated": false,
+  "evaluatorHealth": "ready",
+  "purpose": "Retain complete independently attested physical usage across a genuinely completed typed successor without rewriting failed work history.",
+  "originalParentStillAmbiguous": true,
+  "historicalPartialJournalRetained": true,
+  "nativeSuccessorExecuted": false,
+  "independentFinalExecuted": false,
+  "candidateApplied": false
+}

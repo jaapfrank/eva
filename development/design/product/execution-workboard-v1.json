@@ -660,7 +660,7 @@
       "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
       "status": "in_progress",
       "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-      "nextAction": "De ontwikkelbeoordeling is afgesloten: kandidaat 4 correcte controles, referentie 0; bij beide is geen volledige taak bewezen. De ouderafsluiting liep vast door onnodig herhaalde opgeslagen code in de context. Herstel die overdracht en hergebruik de opgeslagen kandidaat en resultaten zonder de ontwikkelproef te herhalen. Onafhankelijke eindbeoordeling, toepassing en later gebruik blijven open. Geen eigenaarhandeling.",
+      "nextAction": "De overdracht van opgeslagen code en het meenemen van gemeten verbruik zijn gecorrigeerd; de evaluatorcorrectie is geïnstalleerd. Alleen de ontbrekende afsluitende modelreactie hervatten met de bestaande zes resultaten, daarna dezelfde onafhankelijke eindbeoordeling. Geen herhaling van het ontwikkelpaar. Kandidaat nog niet toegepast; HUE6 blijft open. Geen eigenaarhandeling.",
       "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
       "area": "self-improvement and learning",
       "countedAsProductTask": true
@@ -832,7 +832,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T23:16:42.391162+00:00",
+  "lastUpdated": "2026-10-13T23:33:55.110051+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "HUE6.1",
@@ -841,7 +841,7 @@
     "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
     "status": "in_progress",
     "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-    "nextAction": "De ontwikkelbeoordeling is afgesloten: kandidaat 4 correcte controles, referentie 0; bij beide is geen volledige taak bewezen. De ouderafsluiting liep vast door onnodig herhaalde opgeslagen code in de context. Herstel die overdracht en hergebruik de opgeslagen kandidaat en resultaten zonder de ontwikkelproef te herhalen. Onafhankelijke eindbeoordeling, toepassing en later gebruik blijven open. Geen eigenaarhandeling.",
+    "nextAction": "De overdracht van opgeslagen code en het meenemen van gemeten verbruik zijn gecorrigeerd; de evaluatorcorrectie is geïnstalleerd. Alleen de ontbrekende afsluitende modelreactie hervatten met de bestaande zes resultaten, daarna dezelfde onafhankelijke eindbeoordeling. Geen herhaling van het ontwikkelpaar. Kandidaat nog niet toegepast; HUE6 blijft open. Geen eigenaarhandeling.",
     "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
     "area": "self-improvement and learning",
     "countedAsProductTask": true
@@ -3216,7 +3216,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-                "nextAction": "De ontwikkelbeoordeling is afgesloten: kandidaat 4 correcte controles, referentie 0; bij beide is geen volledige taak bewezen. De ouderafsluiting liep vast door onnodig herhaalde opgeslagen code in de context. Herstel die overdracht en hergebruik de opgeslagen kandidaat en resultaten zonder de ontwikkelproef te herhalen. Onafhankelijke eindbeoordeling, toepassing en later gebruik blijven open. Geen eigenaarhandeling.",
+                "nextAction": "De overdracht van opgeslagen code en het meenemen van gemeten verbruik zijn gecorrigeerd; de evaluatorcorrectie is geïnstalleerd. Alleen de ontbrekende afsluitende modelreactie hervatten met de bestaande zes resultaten, daarna dezelfde onafhankelijke eindbeoordeling. Geen herhaling van het ontwikkelpaar. Kandidaat nog niet toegepast; HUE6 blijft open. Geen eigenaarhandeling.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -3648,7 +3648,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De ontwikkelbeoordeling is afgesloten: kandidaat 4 correcte controles, referentie 0; bij beide is geen volledige taak bewezen. De ouderafsluiting liep vast door onnodig herhaalde opgeslagen code in de context. Herstel die overdracht en hergebruik de opgeslagen kandidaat en resultaten zonder de ontwikkelproef te herhalen. Onafhankelijke eindbeoordeling, toepassing en later gebruik blijven open. Geen eigenaarhandeling.",
+        "nextAction": "De overdracht van opgeslagen code en het meenemen van gemeten verbruik zijn gecorrigeerd; de evaluatorcorrectie is geïnstalleerd. Alleen de ontbrekende afsluitende modelreactie hervatten met de bestaande zes resultaten, daarna dezelfde onafhankelijke eindbeoordeling. Geen herhaling van het ontwikkelpaar. Kandidaat nog niet toegepast; HUE6 blijft open. Geen eigenaarhandeling.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -4902,7 +4902,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "De ontwikkelbeoordeling is afgesloten: kandidaat 4 correcte controles, referentie 0; bij beide is geen volledige taak bewezen. De ouderafsluiting liep vast door onnodig herhaalde opgeslagen code in de context. Herstel die overdracht en hergebruik de opgeslagen kandidaat en resultaten zonder de ontwikkelproef te herhalen. Onafhankelijke eindbeoordeling, toepassing en later gebruik blijven open. Geen eigenaarhandeling.",
+              "nextAction": "De overdracht van opgeslagen code en het meenemen van gemeten verbruik zijn gecorrigeerd; de evaluatorcorrectie is geïnstalleerd. Alleen de ontbrekende afsluitende modelreactie hervatten met de bestaande zes resultaten, daarna dezelfde onafhankelijke eindbeoordeling. Geen herhaling van het ontwikkelpaar. Kandidaat nog niet toegepast; HUE6 blijft open. Geen eigenaarhandeling.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -5335,7 +5335,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De ontwikkelbeoordeling is afgesloten: kandidaat 4 correcte controles, referentie 0; bij beide is geen volledige taak bewezen. De ouderafsluiting liep vast door onnodig herhaalde opgeslagen code in de context. Herstel die overdracht en hergebruik de opgeslagen kandidaat en resultaten zonder de ontwikkelproef te herhalen. Onafhankelijke eindbeoordeling, toepassing en later gebruik blijven open. Geen eigenaarhandeling.",
+      "nextAction": "De overdracht van opgeslagen code en het meenemen van gemeten verbruik zijn gecorrigeerd; de evaluatorcorrectie is geïnstalleerd. Alleen de ontbrekende afsluitende modelreactie hervatten met de bestaande zes resultaten, daarna dezelfde onafhankelijke eindbeoordeling. Geen herhaling van het ontwikkelpaar. Kandidaat nog niet toegepast; HUE6 blijft open. Geen eigenaarhandeling.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -6000,8 +6000,34 @@
       "independentFinal": "waiting_not_executed",
       "application": "not_applied",
       "cleanupRemaining": 0,
-      "closureReviewSha256": "3ee5843b9a660689ea33540a4e1f15997153fee7087084acb4c3edd06ecd98ed"
+      "closureReviewSha256": "3ee5843b9a660689ea33540a4e1f15997153fee7087084acb4c3edd06ecd98ed",
+      "terminalContinuationPlanned": {
+        "maximumTokens": 13500,
+        "maximumInputTokens": 13000,
+        "maximumOutputTokens": 500,
+        "modelRequests": 1,
+        "physicalActions": 0,
+        "sameExistingSixReceipts": true,
+        "developmentRepeated": false,
+        "newOverallTokenCeiling": 270000,
+        "prospectiveRequestCeiling": 33,
+        "unusedOriginalGlobalRequestReserveUsed": 1,
+        "originalGlobalRequestCeiling": 68,
+        "old32RequestAllocationPreserved": true
+      }
+    },
+    "aideUsageSupplementInstalled20261014": {
+      "installed": true,
+      "evaluatorHealth": "ready",
+      "sourceSha256": "2d8fdee7f9c65a7177653befb49a1aa00f77cb8d5c3897d642451d6bbab80e18",
+      "configurationSha256": "357f5ec957890097f6ac9fcc9909ad9be0e3d7b914eff2fcba19b76bb1869d49",
+      "preservedQueueFiles": 4321,
+      "coreUpdated": false,
+      "workerUpdated": false,
+      "newEvaModelRequests": 0,
+      "completionChanged": false,
+      "evidence": "development/evidence/product/aide-usage-supplement-installed-20261014.json"
     }
   },
-  "updatedAt": "2026-10-13T23:16:42.391162+00:00"
+  "updatedAt": "2026-10-13T23:33:55.110051+00:00"
 }
