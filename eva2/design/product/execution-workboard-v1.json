@@ -125,7 +125,7 @@
         "evidence": "eva2/evidence/product/p2-publication-installed-20261006.json",
         "newProviderCalls": 0
       },
-      "summary": "Human Understanding Engine verwerkt: zes concrete afrondingen voor persoonsbeeld, patronen, verwachtingen, sociale feedback, initiatief en droom/AIDE². Lopende zelfverbetering eerst afmaken.",
+      "summary": "HUE1.1 en HUE3.1 afgerond: correctie en verwachtinguitkomst veranderen later advies. Nu 41/54 kleine taken afgerond; patroon, sociale feedback, initiatief en volledige AIDE² blijven open.",
       "nextOutcomes": [
         {
           "title": "Nu · volledige zelfverbetering afronden",
@@ -1021,8 +1021,21 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-13T04:24:23.354958+00:00",
+        "checkedAt": "2026-10-13T04:45:29.187509+00:00",
         "deliveries": [
+          {
+            "title": "Eva past mensbegrip toe na tegenbewijs en een echte uitkomst",
+            "state": "installed",
+            "summary": "HUE1.1 en HUE3.1 afgerond: de geïnstalleerde leerroute gebruikt de bijgestelde ervaring in een nieuw gesprek. Onafhankelijke PASS;16 complete aanvragen,58.874 tokens,4 acties.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/hue-learning-later-use-result-20261013.json",
+            "checkedAt": "2026-10-13T04:45:29.187509+00:00",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "HUE1.1",
+              "HUE3.1"
+            ],
+            "reinstalled": false
+          },
           {
             "title": "Eva levert haar eigen migratievoorstel op en sluit de opdracht af",
             "state": "installed",
@@ -5575,25 +5588,25 @@
           }
         ],
         "now": {
-          "title": "Mensbegrip: leren van een correctie en later anders helpen",
-          "state": "in_progress",
-          "phase": "ordinary_later_use_preparation",
+          "title": "Eva leert van een correctie en gebruikt die later",
+          "state": "completed",
+          "phase": "ordinary_later_use_completed",
           "taskId": "HUE1.1",
           "linkedTaskIds": [
             "HUE3.1"
           ],
-          "activeExecution": false,
+          "activeExecution": "hue-ordinary-learning-followup-20261013-one",
           "nativeRunning": false,
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De leerverbinding is al geïnstalleerd. Nu controleren of een echte correctie en uitkomst Eva’s advies in een nieuw gesprek veranderen.",
-          "detail": "Eén gerichte gewone leercyclus met bestaande code. De meetroute wacht nu op reeds gestarte geheugenverwerking vóór de volgende beurt; geen nieuw geheugen of vergelijkingsserie. Oude gesloten fouten en onbekend verbruik blijven staan.",
+          "summary": "Eva stelt een aanname en verwachting bij op echte tegeninformatie. In een nieuw gesprek helpt zij op basis van die gecorrigeerde ervaring.",
+          "detail": "Drie gewone beurten, vier door Eva gekozen geheugenacties, nieuw gesprek zonder recente geschiedenis. Beide oorspronkelijke leertaken slagen. De code was al geïnstalleerd; geen tweede geheugen of nieuwe installatie.",
           "doneWhen": "Voorlopige persoonsinterpretatie en verwachting worden met echte tegeninformatie herzien; een later gesprek zonder recente gesprekshistorie gebruikt de juiste bijgestelde afweging.",
           "implementationStatus": {
             "learningConnectionBuilt": true,
             "learningConnectionInstalled": true,
-            "laterUseProven": false,
+            "laterUseProven": true,
             "fullAide2Completed": false
           },
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
@@ -5607,10 +5620,48 @@
             "models": "Astra/medium",
             "creditCosts": null
           },
-          "currentActivity": "Eigen geïsoleerde proef voorbereiden op de huidige geïnstalleerde bron; daarna onafhankelijke controle en één gewone uitvoering.",
+          "currentActivity": "HUE1.1 en HUE3.1 onafhankelijk afgerond; dezelfde geïnstalleerde leerroute is gebruikt. Volgende uitkomst: patroon en sociale feedback later toepassen.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-13T04:24:23.354958+00:00",
-          "updatedAt": "2026-10-13T04:24:23.354958+00:00"
+          "checkedAt": "2026-10-13T04:45:29.187509+00:00",
+          "updatedAt": "2026-10-13T04:24:23.354958+00:00",
+          "preparationReview": {
+            "verdict": "GO",
+            "sourceSha256": "193b65aa8d2cded0b2b57ef71c420a4a9e59ae65776b0af99b587f90bcffaaf9",
+            "reviewSha256": "e60788e963681d8b6252ec703cce7678adc1b8812a2fba899415c15b41a1849b",
+            "cause": "De oude proefhelper controleerde succes vóór stop; een gestopte ledger kon daardoor onterecht heropenen. Alleen de nieuwe meetkopie wordt gecorrigeerd.",
+            "modelRequests": 0,
+            "followupReviewSha256": "3dd122b94cca114a518df6100e414acb0d9b2e40dc4646076904756b2a24f0e6",
+            "correctedScriptSha256": "5ee457ee75158476953f832518a84b3941d5f766495059ad65bc1e7a957ea77a"
+          },
+          "rootLaunch": {
+            "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/root-launch.private.json",
+            "sha256": "036bbb15cb0ae4d31774a8f9921ac65571bdf8deaf95198273e1baa615b1bdcd"
+          },
+          "observedUsage": {
+            "measurement": "completed_provider_accounting",
+            "physicalRequestsIncludingHelpers": 16,
+            "foregroundRequests": 7,
+            "helperRequests": 9,
+            "inputTokens": 55249,
+            "outputTokens": 3625,
+            "totalTokens": 58874,
+            "tools": 4,
+            "currentUnknown": 0,
+            "inflight": 0,
+            "elapsedSeconds": 164.19908609089907,
+            "creditCosts": null,
+            "historicalUnknownPreserved": true
+          },
+          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/hue-learning-later-use-result-20261013.json",
+          "currentResultEvidenceSha256": "a996cd3e7155e4dd6e4de3c70775b43c4b43fc74b937ea4722bc7db062a4cf5d",
+          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/hue-learning-later-use-review-20261013.json",
+          "currentResultReviewSha256": "0cfec200746c68ea8713533af1f0f1ed9a326ae89ddec8d6ae372e7ef5f1a778",
+          "independentTaskVerdicts": {
+            "HUE1.1": "PASS",
+            "HUE3.1": "PASS"
+          },
+          "remaining": [],
+          "scopeLimit": "Beperkte technische leercyclus; geen volledige gezinsacceptatie of AIDE²-afronding."
         },
         "next": {
           "title": "Leren bij patroon en sociale feedback toepassen",
@@ -5623,7 +5674,7 @@
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
           "summary": "Dezelfde menselijke leercyclus gebruiken voor relevante patronen en communicatie; geen tweede geheugen."
         },
-        "ownerAction": "Geen handeling nodig. Eva moet zelf leren en haar werk afronden. Een daadwerkelijke HA-migratie volgt alleen na het daarvoor gevraagde aparte akkoord.",
+        "ownerAction": "Geen handeling nodig voor deze twee leertaken. Je kunt Eva in gewone gesprekken corrigeren; haar ervaring kan bij later advies doorwerken. Echte gezinsacceptatie van het volledige geheel volgt afzonderlijk.",
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "reviewedAt": "2026-10-12T15:07:36.187047+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
@@ -6024,7 +6075,7 @@
         }
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
-      "checkedAt": "2026-10-13T04:24:23.354958+00:00",
+      "checkedAt": "2026-10-13T04:45:29.187509+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -12317,17 +12368,17 @@
         "historicalHeadlineBeforeXD11": "XD07: beide voeren de opdracht niet uit; geen winnaar"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-12T12:43:12.605191+02:00",
+        "checkedAt": "2026-10-13T04:45:29.187509+00:00",
         "basis": "Geaccepteerde persoonlijkheid en geheugenbasis behouden. Hulpmiddelverbetering en later gebruik zijn beperkt echt aangetoond. De volledige AIDE²-cyclus voor de werkaanpak en authentiek initiatief blijven open.",
         "headline": "Volledig projectgoal actief. Persoonlijkheid en geheugenbasis geaccepteerd; leercyclus, zelfstandig initiatief en volledige zelfverbetering nog open.",
-        "note": "Oorspronkelijk 39/48 kleine afrondingen behouden. Jouw ontwerp voegt zes ontbrekende verbindingen toe: nu 39/54 kleine taken afgerond. Dit is geen productpercentage. Het volledige projectgoal en AIDE² blijven open; geaccepteerde resultaten worden niet heropend.",
+        "note": "Oorspronkelijke39/48 afrondingen behouden. Twee toegevoegde leertaken afgerond: nu41/54 kleine taken. Dit is geen productpercentage; het volledige goal blijft actief.",
         "rows": [
           {
             "name": "Persoonlijkheid",
             "state": "observed",
             "label": "Door jou geaccepteerd · M3.3",
             "result": "Warmte, eigen oordeel en stijl in gewoon gebruik: jouw acceptatie van 5 oktober blijft staan. Dit is de M3-scope; geen bewijs van algemene voorsprong.",
-            "remaining": "M3.3 blijft geaccepteerd. HUE1.1 en HUE4.1 voegen bijgesteld persoonsbegrip en sociale feedback toe; volledige gezinsacceptatie blijft F2.",
+            "remaining": "M3.3 blijft geaccepteerd; HUE1.1 is technisch afgerond. HUE4.1 sociale feedback en volledige gezinsacceptatie blijven open.",
             "evidencePaths": [
               "eva2/evidence/product/m3-personality-owner-accepted-20261005.json"
             ]
@@ -12335,9 +12386,9 @@
           {
             "name": "Geheugen",
             "state": "incomplete",
-            "label": "Geheugenbasis geaccepteerd · leercyclus open",
-            "result": "Geaccepteerde geheugenbasis en Eva1-import behouden. Werkuitkomsten en feedback worden opgeslagen. Bij een nieuwe opdracht in een andere sessie paste Eva de eerdere norm én vorm toe zonder herhaling: 8 over, 1 tekort tegen de norm van 9, drie korte bullets met vervolgstap. Werkelijk bestand apart teruggelezen; beide oude bestanden ongewijzigd. Installatie en beperkte toepassing onafhankelijk beoordeeld.",
-            "remaining": "HUE2.1 en HUE3.1: patronen en verwachtingen moeten met echte latere uitkomsten Eva’s gedrag veranderen. Geaccepteerd geheugen en eerdere beperkte toepassing behouden; 96 niet gekoppelde persoonsregels blijven apart.",
+            "label": "Geheugenbasis geaccepteerd · correctie en uitkomst toegepast",
+            "result": "Geaccepteerde geheugenbasis en Eva1-import behouden. Werkuitkomsten en feedback worden opgeslagen. Bij een nieuwe opdracht in een andere sessie paste Eva de eerdere norm én vorm toe zonder herhaling: 8 over, 1 tekort tegen de norm van 9, drie korte bullets met vervolgstap. Werkelijk bestand apart teruggelezen; beide oude bestanden ongewijzigd. Installatie en beperkte toepassing onafhankelijk beoordeeld. HUE1.1/HUE3.1: persoonsaanname en verwachting herzien, vervolgens gebruikt in een nieuw gesprek zonder recente historie; onafhankelijk beoordeeld.",
+            "remaining": "HUE2.1: onderbouwde patronen later gebruiken. HUE4.1: sociale feedback in een nieuw gesprek toepassen. Echte gezinsacceptatie van het volledige mensbegrip blijft afzonderlijk.",
             "evidencePaths": [
               "eva2/design/product/execution-workboard-v1.json",
               "eva2/evidence/product/p2-published-results-20261006.json",
@@ -12350,7 +12401,9 @@
               "eva2/evidence/product/learning-cycle-memory-access-installed-20261011.json",
               "eva2/evidence/product/learning-feedback-source-native-result-20261011.json",
               "eva2/reviews/learning-feedback-source-native-final-review-20261011.json",
-              "eva2/evidence/product/learning-feedback-source-installed-20261011.json"
+              "eva2/evidence/product/learning-feedback-source-installed-20261011.json",
+              "eva2/evidence/product/hue-learning-later-use-result-20261013.json",
+              "eva2/reviews/hue-learning-later-use-review-20261013.json"
             ]
           },
           {
@@ -12899,7 +12952,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-13T04:24:23.354958+00:00",
+      "updatedAt": "2026-10-13T04:45:29.187509+00:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -22411,7 +22464,7 @@
           "scope": "Actuele volledige projectscope; oorspronkelijke taakafrondingen blijven als deelbewijs behouden."
         }
       ],
-      "nextAction": "De lopende werkaanpakcyclus afronden; een kandidaat apart beoordelen, alleen echte winst toepassen en later gebruiken. Daarna HUE1.1/HUE3.1 verbinden.",
+      "nextAction": "HUE2.1/HUE4.1: bestaande leercyclus gebruiken bij een onderbouwd patroon en sociale feedback in een nieuw gesprek. Geen tweede geheugen of nieuwe vergelijkingsserie.",
       "effortNotice": "Previous S/M/L are provisional full-slice estimates, not remaining-work estimates. At dispatch re-estimate only the demonstrated gap; verification-only or already-satisfied work is not a new build. Credits unknown.",
       "completionRule": "Het volledige geïnstalleerde geheel voldoet aan alle eindvoorwaarden van eva2/PROJECTDOEL.md, inclusief latere toepassing van de leercyclus, ontbrekende mogelijkheid realiseren en hergebruiken, AIDE² voor aansturing en code/uitbreidingen, onafhankelijke eindreview en echte gezinsbeoordeling. Deelopleveringen sluiten het projectgoal niet af; oude acceptaties blijven geldig binnen hun oorspronkelijke scope.",
       "continuationRule": "Het volledige projectgoal blijft actief. Werk vanuit de concrete ontbrekende koppeling naar werkend geïnstalleerd gedrag; oorspronkelijke kleine taken en acceptaties blijven behouden.",
@@ -23341,11 +23394,11 @@
             {
               "id": "HUE3.1",
               "title": "Verwachting later met echte uitkomst vergelijken",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva legt vooraf een verwachting met bron, onzekerheid en controlemoment vast. Een latere echte uitkomst wordt als bevestigd, weerlegd of onbekend gekoppeld en verandert haar volgende afweging.",
-              "nextAction": "Bestaande geïnstalleerde leerroute eenmaal gebruiken: voorlopige aanname, echte correctie/uitkomst en later advies in een nieuw gesprek. Alleen de meetroute voor afronding van reeds gestarte helpers is gewijzigd.",
+              "nextAction": "Afgerond: oorspronkelijke criteria onafhankelijk geslaagd in gewone gespreksroute. Bestaande geïnstalleerde code gebruikt; geen handeling of herhaalproef nodig.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -23353,17 +23406,19 @@
                 "outcome": "Eva legt vooraf een verwachting met bron, onzekerheid en controlemoment vast. Een latere echte uitkomst wordt als bevestigd, weerlegd of onbekend gekoppeld en verandert haar volgende afweging.",
                 "existingRouteFirst": true,
                 "estimate": "Eén noodzakelijke geïsoleerde episode: 3 beurten, maximaal 24 fysieke aanvragen inclusief helpers, 12 tools en 150.000 geregistreerde tokens. Creditkosten onbekend.",
-                "activeWorkers": [
-                  "/root/eva1_memory_transfer",
-                  "/root/product_execution_memory_review"
-                ]
+                "activeWorkers": []
               },
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex maakt deze technische koppeling af. Later gewoon gebruik levert menselijke feedback; nu geen herhaalproef nodig.",
+                "availableNow": true,
+                "readyWhen": "Afgerond en geïnstalleerd. Gewoon gebruik kan aanvullende gezinsfeedback geven; dit is geen open technische blokkade.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-10-13T04:45:29.187509+00:00",
+              "evidencePaths": [
+                "eva2/evidence/product/hue-learning-later-use-result-20261013.json",
+                "eva2/reviews/hue-learning-later-use-review-20261013.json"
+              ]
             }
           ],
           "latestEvidence": "eva2/evidence/product/m1-continuity-owner-accepted-20261001.json",
@@ -23603,11 +23658,11 @@
             {
               "id": "HUE1.1",
               "title": "Persoonsbeeld na tegenbewijs bijstellen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Een persoonsgebonden hypothese heeft herkomst, onzekerheid en tegenbewijs. Een latere correctie verandert de hypothese en het volgende relevante antwoord; de oude aanname wordt geen feit bij een andere persoon.",
-              "nextAction": "Bestaande geïnstalleerde leerroute eenmaal gebruiken: voorlopige aanname, echte correctie/uitkomst en later advies in een nieuw gesprek. Alleen de meetroute voor afronding van reeds gestarte helpers is gewijzigd.",
+              "nextAction": "Afgerond: oorspronkelijke criteria onafhankelijk geslaagd in gewone gespreksroute. Bestaande geïnstalleerde code gebruikt; geen handeling of herhaalproef nodig.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -23615,17 +23670,19 @@
                 "outcome": "Een persoonsgebonden hypothese heeft herkomst, onzekerheid en tegenbewijs. Een latere correctie verandert de hypothese en het volgende relevante antwoord; de oude aanname wordt geen feit bij een andere persoon.",
                 "existingRouteFirst": true,
                 "estimate": "Eén noodzakelijke geïsoleerde episode: 3 beurten, maximaal 24 fysieke aanvragen inclusief helpers, 12 tools en 150.000 geregistreerde tokens. Creditkosten onbekend.",
-                "activeWorkers": [
-                  "/root/eva1_memory_transfer",
-                  "/root/product_execution_memory_review"
-                ]
+                "activeWorkers": []
               },
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex maakt deze technische koppeling af. Later gewoon gebruik levert menselijke feedback; nu geen herhaalproef nodig.",
+                "availableNow": true,
+                "readyWhen": "Afgerond en geïnstalleerd. Gewoon gebruik kan aanvullende gezinsfeedback geven; dit is geen open technische blokkade.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-10-13T04:45:29.187509+00:00",
+              "evidencePaths": [
+                "eva2/evidence/product/hue-learning-later-use-result-20261013.json",
+                "eva2/reviews/hue-learning-later-use-review-20261013.json"
+              ]
             },
             {
               "id": "HUE4.1",
@@ -31205,8 +31262,11 @@
         "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
         "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt.",
         "currentTaskId": "HUE1.1",
-        "currentTaskPhase": "source_mapping_completed_implementation_pending",
-        "lastUpdatedAt": "2026-10-12T14:16:59.895639+02:00"
+        "currentTaskPhase": "HUE1.1_HUE3.1_completed_later_use",
+        "lastUpdatedAt": "2026-10-13T04:45:29.187509+00:00",
+        "learningConnectionInstalled": true,
+        "laterUseProven": true,
+        "expandedCompletedTaskCount": 41
       }
     },
     "dashboardClarityCorrection20260922": {
@@ -35362,6 +35422,6 @@
       ]
     }
   },
-  "updatedAt": "2026-10-13T04:24:23.354958+00:00",
-  "lastUpdatedAt": "2026-10-13T04:24:23.354958+00:00"
+  "updatedAt": "2026-10-13T04:45:29.187509+00:00",
+  "lastUpdatedAt": "2026-10-13T04:45:29.187509+00:00"
 }

@@ -1,4 +1,26 @@
-## Actueel 13 oktober — menselijke leercyclus bij later gebruik afronden
+## Actueel 13 oktober — HUE1.1 en HUE3.1 afgerond: later ander advies
+
+De bestaande geïnstalleerde leerroute is eenmaal gewoon gebruikt op dezelfde
+ongewijzigde oorspronkelijke driebeurtencriteria. Eva bewaart een voorlopige
+persoonsinterpretatie en verwachting, herziet beide met echte gemelde tegeninformatie
+en uitkomst, en gebruikt dit bij een nieuw gesprek zonder recente historie.
+Het latere advies verandert en kwalificeert de ervaring; beide onafhankelijke
+HUE-oordelen PASS. Codex vulde geen herinnering, uitkomst of antwoord in.
+
+16 complete aanvragen:7 foreground/9 helpers, alle Astra/medium;58.874 tokens
+(55.249in/3.625out),4 acties, huidige modelUNKNOWN0/inflight0. Vier eigen resources
+verwijderd. Helper-parentACKfalse en latere disconnected-stop blijven afzonderlijk;
+oude27 geregistreerde/24 complete/3 UNKNOWN en80.749 bekende tokens blijven.
+Een synthetische private persoon/project bewijst geen algemene privacygarantie,
+gezinsacceptatie of volledige AIDE². Geen herinstallatie: code was al geïnstalleerd.
+
+Oorspronkelijke39/48 blijven; uitgebreid bord nu41/54 door precies deze twee taken.
+Volledig goal ACTIVE. Vervolg HUE2.1/HUE4.1 via bestaande leerroute, daarna initiatief
+en AIDE²; geen nieuwe vergelijkingsserie. Spraak geparkeerd, Docker Desktop ongemoeid.
+Resultaat: eva2/evidence/product/hue-learning-later-use-result-20261013.json.
+Review: eva2/reviews/hue-learning-later-use-review-20261013.json.
+
+## Historische voorbereiding 13 oktober — menselijke leercyclus bij later gebruik afronden
 
 De HUE-correctie-, bronrecall- en verwachtingrevisieroute zijn al geïnstalleerd.
 De ontbrekende uitkomst is later aangepast advies in een nieuwe conversatie.

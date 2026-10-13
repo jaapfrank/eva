@@ -4,7 +4,7 @@ Eva moet niet alleen informatie bewaren, maar verwachtingen vormen, uitkomsten h
 
 ## Mijn oordeel
 
-Ik neem de kringloop over: waarneming → voorlopige interpretatie → verwachting → handelen of wachten → echte uitkomst en feedback → bijstellen → later anders handelen. De expliciete verwachting-uitkomstverbinding is inmiddels gebouwd en geïnstalleerd. Het resterende bewijs is haar toepassing in een volgend gesprek: opgeslagen reflecties alleen tonen niet aan dat Eva slimmer helpt.
+Ik neem de kringloop over: waarneming → voorlopige interpretatie → verwachting → handelen of wachten → echte uitkomst en feedback → bijstellen → later anders handelen. De expliciete verwachting-uitkomstverbinding is inmiddels gebouwd en geïnstalleerd. HUE1.1 en HUE3.1 zijn nu onafhankelijk afgerond: een nieuw gesprek gebruikt de met tegeninformatie herziene afweging. Opslag alleen was daarvoor onvoldoende.
 
 Het ontwerp is een goede functionele richting, maar geen direct toepasbare implementatiebeschrijving van deze repository. Brainstem, ANIMA, SOUL.md en de vier voorbeeldvelden beschrijven voorgestelde verantwoordelijkheden. Hun namen bewijzen geen aanwezige interfaces. Het aangeleverde document eindigt bij de inleiding van zes bouwfasen; de concrete afrondingsvolgorde staat hieronder.
 
@@ -63,3 +63,9 @@ De vorige gewone episode heeft een persoonscorrectie opgeslagen, maar stopte vó
 HUE1.1 en HUE3.1 blijven open tot een later gewoon gesprek met lege recente geschiedenis de herziene persoonsinterpretatie en echte verwachtinguitkomst gebruikt. De oorspronkelijke bronnen, onzekerheid, verwijzingen en persoonsscope moeten terug te lezen zijn. Eén noodzakelijke episode gebruikt de oorspronkelijke criteria: drie beurten, maximaal 24 fysieke aanvragen inclusief helpers, 12 tools en 150.000 geregistreerde tokens; alle inhoudelijke aanvragen Astra/medium. Creditkosten blijven onbekend.
 
 De algemene taakafronding is daarnaast geïnstalleerd en door Eva gebruikt om haar eigen onderbouwde voorstel af te ronden. Die afzonderlijke uitkomst bewijst niet de menselijke leercyclus of volledige AIDE². Het volledige projectgoal blijft actief; er is nu geen handeling van Jaap nodig.
+
+## Oplevering 13 oktober — correctie én later veranderd gedrag
+
+HUE1.1 en HUE3.1 zijn afgerond op de oorspronkelijke criteria. Eva bewaart beide voorlopige records, herziet ze met echte gemelde tegeninformatie en uitkomst, en past in een nieuw gesprek haar advies aan zonder recente gesprekshistorie. [Resultaat](../../evidence/product/hue-learning-later-use-result-20261013.json) en [onafhankelijke beoordeling](../../reviews/hue-learning-later-use-review-20261013.json) leggen scope en bewijs vast. De code was al geïnstalleerd; de proef gebruikte die exacte bron.
+
+16 volledige aanvragen inclusief negen geheugenhelpers, 58.874 tokens en vier acties. Oude UNKNOWN en de afzonderlijke ontbrekende helper-afsluitACK blijven zichtbaar. Een synthetische private episode vervangt geen gezinsacceptatie of algemene privacygarantie. Nu 41/54 kleine taken afgerond; oorspronkelijke 39/48 behouden. Volgende bestaande uitkomst: HUE2.1/HUE4.1 voor patroon en sociale feedback, via dezelfde leerroute. Het volledige goal en AIDE² blijven open.

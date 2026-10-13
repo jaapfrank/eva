@@ -1,0 +1,42 @@
+{
+  "contract": "EvaHumanLearningLaterUsePublishedReview/v1",
+  "publishedAt": "2026-10-13T04:45:29.187509+00:00",
+  "verdict": "PASS",
+  "scope": "Two original HUE tasks in the frozen three-turn private case; whole goal remains active",
+  "taskVerdicts": {
+    "HUE1.1": {
+      "verdict": "PASS",
+      "doneWhenSatisfied": true,
+      "covered": "Provisional person hypothesis preserves source/uncertainty, actual counterinformation creates a same-kind linked successor, and the next relevant ordinary answer changes while retaining qualification and private-person scope.",
+      "necessaryCriteriaResults": [
+        true,
+        true,
+        true
+      ],
+      "boundary": "One synthetic private person was exercised. This is not a new multi-person behavioral privacy guarantee or household acceptance."
+    },
+    "HUE3.1": {
+      "verdict": "PASS",
+      "doneWhenSatisfied": true,
+      "covered": "Prospective expectation has source/uncertainty/review time; later user-reported outcome explicitly refutes it with paired provenance and changes the next ordinary answer without certainty/authority promotion.",
+      "necessaryCriteriaResults": [
+        true,
+        true,
+        true
+      ],
+      "boundary": "The outcome is the synthetic user report, not an independent physical observation."
+    }
+  },
+  "sourceIndependentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/independent-terminal-review.private.json",
+    "sha256": "0738c8169adeec3e11bc595f59c0204b764058e85b70ebe13acc899123ebf989"
+  },
+  "publishedResult": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/hue-learning-later-use-result-20261013.json",
+    "sha256": "a996cd3e7155e4dd6e4de3c70775b43c4b43fc74b937ea4722bc7db062a4cf5d"
+  },
+  "currentUsageComplete": true,
+  "helperAcknowledgementAndOldUnknownPreserved": true,
+  "familyAcceptance": false,
+  "wholeGoalCompleted": false
+}

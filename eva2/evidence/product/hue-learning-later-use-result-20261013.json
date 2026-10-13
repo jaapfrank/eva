@@ -1,0 +1,145 @@
+{
+  "contract": "EvaHumanLearningLaterUseResult/v1",
+  "publishedAt": "2026-10-13T04:45:29.187509+00:00",
+  "status": "completed_existing_installed_learning_route",
+  "taskIds": [
+    "HUE1.1",
+    "HUE3.1"
+  ],
+  "caseId": "hue-ordinary-learning-20261012-one",
+  "episodeId": "hue-ordinary-learning-followup-20261013-one",
+  "criteriaSha256": "f70436a5db70f7f5574a31282c5f427536c63069d1505d1a8dfe0b90d9f3f547",
+  "taskVerdicts": {
+    "HUE1.1": {
+      "verdict": "PASS",
+      "doneWhenSatisfied": true,
+      "covered": "Provisional person hypothesis preserves source/uncertainty, actual counterinformation creates a same-kind linked successor, and the next relevant ordinary answer changes while retaining qualification and private-person scope.",
+      "necessaryCriteriaResults": [
+        true,
+        true,
+        true
+      ],
+      "boundary": "One synthetic private person was exercised. This is not a new multi-person behavioral privacy guarantee or household acceptance."
+    },
+    "HUE3.1": {
+      "verdict": "PASS",
+      "doneWhenSatisfied": true,
+      "covered": "Prospective expectation has source/uncertainty/review time; later user-reported outcome explicitly refutes it with paired provenance and changes the next ordinary answer without certainty/authority promotion.",
+      "necessaryCriteriaResults": [
+        true,
+        true,
+        true
+      ],
+      "boundary": "The outcome is the synthetic user report, not an independent physical observation."
+    }
+  },
+  "userResult": "A provisional interpretation and expectation are revised using the original user correction and reported outcome. In a new conversation with empty recent history, Eva uses the corrected experience and qualifies it as one experience, not a fixed trait.",
+  "implementation": {
+    "existingRouteReused": true,
+    "alreadyInstalled": true,
+    "reinstallationRequired": false,
+    "newProductModules": 0,
+    "normalFactory": "eva.bootstrap.runtime.create_runtime_app",
+    "normalTurnRoute": "/internal/v1/turns/respond",
+    "storage": "existing PostgreSQL/Hindsight",
+    "coreImage": "sha256:12db66bdca6e22b6690aa52f624658a82b76da8898097c4ae1ef4c4443a5b7ec",
+    "installedLifecycleEvidence": "eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json",
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/frozen-source.private.json",
+      "sha256": "2a0abdc193baa015ea22ff094927360d38bd4bc964cb8a69f5230eb4a9035a63"
+    }
+  },
+  "observed": {
+    "ordinaryTurns": 3,
+    "newConversationFinalTurn": true,
+    "emptyRecentHistoryFinalTurn": true,
+    "initialTypedRecords": 2,
+    "sameKindRevisions": 2,
+    "modelGeneratedActions": 4,
+    "independentlyCommittedLaterReply": true,
+    "laterUseIndependentlyAssessed": true
+  },
+  "usage": {
+    "measurement": "all_registered_responses_complete",
+    "physicalRequestsIncludingHelpers": 16,
+    "foreground": 7,
+    "helpers": 9,
+    "allModels": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "inputTokens": 55249,
+    "outputTokens": 3625,
+    "totalTokens": 58874,
+    "tools": 4,
+    "currentUnknownModelRequests": 0,
+    "inflight": 0,
+    "elapsedSeconds": 164.19908609089907,
+    "creditCosts": null,
+    "developmentCredits": null
+  },
+  "provenance": {
+    "terminalResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/native-usage/case-result.private.json",
+      "sha256": "15827f6111b098393d2479c0e73cc05b92756e459f8c97e3583d10a72ff5bc75"
+    },
+    "independentReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/independent-terminal-review.private.json",
+      "sha256": "0738c8169adeec3e11bc595f59c0204b764058e85b70ebe13acc899123ebf989"
+    },
+    "criteria": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-connection-20261012/ordinary-learning-criteria-both-kinds.private.json",
+      "sha256": "f70436a5db70f7f5574a31282c5f427536c63069d1505d1a8dfe0b90d9f3f547"
+    },
+    "inputReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/input-review.private.json",
+      "sha256": "a545f5c193411ddb1290cbcf2bf5625a010ecb6cce2d5fd8794df0a251f648b1"
+    },
+    "readinessReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/readiness-input-GO.v2.private.json",
+      "sha256": "3dd122b94cca114a518df6100e414acb0d9b2e40dc4646076904756b2a24f0e6"
+    },
+    "rootStart": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/root-start.private.json",
+      "sha256": "16d70564786a21ec60dd1c3bc8086957b3f15b3cbb0a13bbfe6178c0c863575c"
+    },
+    "physicalClosure": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/resource-closure.private.json",
+      "sha256": "fae186bbb8e283512c09ec1e03e59e805b1467cfb01baea507eb53e918570289"
+    },
+    "helperClosed": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-learning-followup-20261013-one/native-usage/helper-closed.private.json",
+      "sha256": "a8da69e0c8087b8e8b1287de19dcc03d04315f5a5b1a31e7b38cbf28ff7c8ae9"
+    }
+  },
+  "closure": {
+    "ownResourcesRemoved": 4,
+    "parentModelUsageComplete": true,
+    "helperParentAcknowledged": false,
+    "helperLaterStop": "parent disconnected; accounting unknown",
+    "helperAcknowledgementSeparateFromMeasuredProviderUsage": true,
+    "productionDataTouched": false,
+    "sharedNetworkRemoved": false
+  },
+  "preservedHistory": {
+    "scope": "Only explicitly named retained HUE episodes, not complete project history",
+    "oldRegisteredRequests": 27,
+    "oldCompleteMeasuredRequests": 24,
+    "oldUnknownRequests": 3,
+    "oldKnownTokenLowerBound": 80749,
+    "namedKnownTokenLowerBoundIncludingCurrent": 139623,
+    "fullHistoryTokens": null,
+    "oldOnceResultsCriteriaUnchanged": true
+  },
+  "preparationCorrections": {
+    "betweenTurnResponseSettlement": "Only already registered responses settle before new input; no extra helper trigger",
+    "stoppedLedgerOrdering": "Stop and stop_requested checked before success/reopening",
+    "schemaDriverPrefix": "Fresh isolated DSN restored to existing postgresql+psycopg driver; initial failed preparation reached no model or actor seed",
+    "oldFailureReceiptsPreserved": true
+  },
+  "limitations": [
+    "One synthetic private person and one fixed project; no new household acceptance or general multi-person privacy guarantee.",
+    "Reported outcome is synthetic user feedback, not independent physical observation.",
+    "Installed learning ability is exercised; automatic discovery of every useful hypothesis is not established.",
+    "No general quality, speed or efficiency superiority and no new comparison series.",
+    "Patterns, social feedback, initiative feedback, full AIDE² and whole-project acceptance remain open."
+  ]
+}
