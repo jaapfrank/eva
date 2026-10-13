@@ -5601,22 +5601,27 @@
           }
         ],
         "now": {
-          "title": "Volledige droomcyclus en AIDE² afmaken",
+          "title": "Eva levert haar afgeronde voorstel terug",
           "state": "in_progress",
-          "phase": "existing_aide_completion_source_binding",
-          "taskId": "HUE6.1",
+          "phase": "original_proposal_return_route_repair",
+          "taskId": "L2.2",
           "owner": "/root",
           "executor": "/root/eva1_memory_transfer",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Bestaande verbeterroute voor agentaansturing én code/uitbreiding gebruiken. Concrete resterende fout en toepassing bij later gebruik afmaken.",
-          "currentActivity": "Eén gerichte bronvoorbereiding van bestaande verbeteringroute en afgesloten fout. HUE2.1/HUE4.1 afgerond; initiatief-feedbackroute bestaat, echte gekoppelde ontvangerreactie ontbreekt. Geen nieuwe vergelijking, proef, providercall of algemene herbouw.",
-          "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
+          "summary": "Het voorstel is door Eva afgerond; bij technisch hervatten is de oorspronkelijke Telegram-retourbinding verloren gegaan. De bestaande afleverroute herstellen zonder het onderzoek opnieuw te doen.",
+          "currentActivity": "De gewone afleverqueue krijgt de bestaande vertrouwde retourbinding uit dezelfde hervattingsketen. Onafhankelijke controle bewaakt de juiste ontvanger en voorkomt dubbele levering. AIDE²-voorbereiding is bewaard, nog niet geactiveerd; eerst deze volledige gebruikersuitkomst afmaken.",
+          "doneWhen": "Eva’s bestaande afgeronde voorstel wordt via de gewone Telegram-afleverroute naar de oorspronkelijke geverifieerde ontvanger teruggebracht, zonder nieuwe onderzoekscall of dubbele levering.",
           "ownerActionNeeded": false,
           "modelRequestsThisStep": 0,
           "creditCosts": null,
           "previousGoalTurn": "PROGRESS: HUE2.1 en HUE4.1 afgerond en geïnstalleerd;43/54.",
-          "checkedAt": "2026-10-13T05:30:31.542429+00:00"
+          "checkedAt": "2026-10-13T05:55:06.394333+00:00",
+          "activeReview": true,
+          "reviewer": "/root/product_execution_memory_review",
+          "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+          "existingProductOutcome": "Zelfstandig werk en ontwikkeling",
+          "maintenanceRepair": true
         },
         "next": {
           "title": "Echte reactie op eigen bijdrage later toepassen",
@@ -25043,7 +25048,13 @@
               "owner": "Codex",
               "latestEvidence": "eva2/evidence/product/l2-autonomous-weekend-20260929.json",
               "completedAt": "2026-09-29T11:12:52.855058+00:00",
-              "result": "Autonoom vervolg na procesherstart en correctie: één definitief document en één terugmelding; websiteverbetering geïnstalleerd, onafhankelijke review GO. Eigenaaracceptatie open."
+              "result": "Autonoom vervolg na procesherstart en correctie: één definitief document en één terugmelding; websiteverbetering geïnstalleerd, onafhankelijke review GO. Eigenaaracceptatie open.",
+              "maintenanceRepair": {
+                "state": "in_progress",
+                "scope": "Original Telegram destination after technical owner-dashboard resume",
+                "historicalAcceptancePreserved": true,
+                "ownerActionRequired": false
+              }
             }
           ],
           "completedAt": "2026-09-30T14:15:43.982769+00:00",
@@ -25394,11 +25405,11 @@
             {
               "id": "HUE6.1",
               "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
-              "status": "in_progress",
+              "status": "planned",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Gericht het bestaande agentaansturing-/codeverbeterpad en bewaarde afgesloten fout onderzoeken. Geen oude run heropenen; alleen een aantoonbare resterende oorzaak corrigeren en de gewone volledige verbetercyclus afmaken.",
+              "nextAction": "De voorbereidende huidige-bronbinding is bewaard, niet geactiveerd. Eerst de oorspronkelijke voorstelretour afmaken; daarna de bestaande AIDE²-cyclus met werkelijk actuele bron verbinden.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -25406,9 +25417,7 @@
                 "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
                 "existingRouteFirst": true,
                 "estimate": "Bestaande bron en bewijs eerst hergebruiken; alleen ontbrekende koppeling bouwen. Concrete uitvoerraming vóór een fysieke proef; creditkosten onbekend.",
-                "activeWorkers": [
-                  "/root/eva1_memory_transfer"
-                ]
+                "activeWorkers": []
               },
               "ownerInstructions": {
                 "availableNow": false,
@@ -32966,6 +32975,43 @@
       "meaning": "Gezonde kern en werker met behoud van leessemantiek. Vijfde hervatting stopte op te grote taakcontext; geen eindvoorstel en geen nieuwe betaalde poging.",
       "installedReviewSha256": "77b3fc8c86a4780734340967a25db02638220a0d4313464066831caf552d2750",
       "independentSourceReview": "eva2/reviews/tuya-retained-read-semantics-source-review-20261012.json"
+    },
+    "aideCurrentPreparation20261013": {
+      "checkedAt": "2026-10-13T05:44:58.957340+00:00",
+      "taskId": "HUE6.1",
+      "sourceDefect": "installed runner differs from old baseline; ordinary client work suite differs from host development suite",
+      "sourceAuditSha256": "0706850ac583925ad02b668ceb847db4edf7604b6dab76dd22b1d2082aa29a61",
+      "currentBaselineSha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
+      "liveFactoryMetadataSha256": "f9da0817a2b14daedda957ffa4c52dcbb5fab77e2f630db8a8e402bb4b983df4",
+      "modelRequests": 0,
+      "candidateAuthored": false,
+      "installedCorrection": false,
+      "oldClosedResultsPreserved": true,
+      "metadataExportFailure": "An incorrect metadata field caused AttributeError before dispatch; corrected export preserved separately.",
+      "wholeGoal": "active",
+      "state": "prepared_not_activated",
+      "nativeInputStarted": false,
+      "pendingReason": "Complete ordinary proposal return before freezing the next current-baseline improvement execution; core source will change.",
+      "previewFactoryMetadataSha256": "3fcf6bea35bd774d504d48a3676e44424d1db5eb4d01792b86792439aaa40dcc"
+    },
+    "originalProposalReturnRepair20261013": {
+      "checkedAt": "2026-10-13T05:55:06.394333+00:00",
+      "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+      "outcome": "Restore original trusted private Telegram completion after technical resume; reuse Eva-authored completed proposal.",
+      "lineageEvidenceSha256": "fd937eae0a46e290653816a45c4cba82825b56c37bb86d0e1aa98b59223f7442",
+      "originalGenerationsWithDestination": [
+        1,
+        2
+      ],
+      "completedGeneration": 26,
+      "intermediateDestinationLost": true,
+      "proposalSucceeded": true,
+      "deliveryAcknowledged": false,
+      "modelRequests": 0,
+      "databaseWritesDuringDiagnosis": 0,
+      "sourceMetadataExportFailurePreserved": true,
+      "noNewSmallTask": true,
+      "wholeGoal": "active"
     }
   },
   "activeTaskId": "AU-008",
