@@ -1,0 +1,13 @@
+{
+  "contract": "EvaIndependentPublicationReview/v1",
+  "decision": "GO",
+  "scope": "Only current closed native usage reconciliation. No native input GO, quality winner or product completion.",
+  "evidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/aide-current-closed-usage-reconciliation-20261013.json",
+    "sha256": "b5a7ba6d25eeaddc6a0a6248b6587074a5dc3ae60ae186f55d48c13e6622de53"
+  },
+  "independentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/child-dispatch-independent-review/independent-reconciliation-review.private.json",
+    "sha256": "3a742c0da012c2adaf198ccd67887b5479a576331dd4f920caec2ae4c306d3ee"
+  }
+}

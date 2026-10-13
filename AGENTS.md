@@ -1,3 +1,31 @@
+## Actueel 13 oktober — huidig verbruik gereconcilieerd; hetzelfde voorstel hervatten
+
+Onafhankelijke control-flow-review bewijst dat de oude statische broncontrole vóór
+iedere native achtergrondproef moet weigeren. Voor deze twee gesloten huidige
+pogingen is het native verbruik daarom volledig:9 aanvragen,7 tools,100.294 invoer-
+en1.822 uitvoertokens,102.116 totaal; native child0. Oude raw/null/UNKNOWN-bytes en
+andere historische UNKNOWN blijven ongewijzigd. Exacte innerlijke HTTP400-reden
+blijft onbekend. Dit is afzonderlijk addendum, geen nagemaakte oude uitvoerreceipt.
+
+De gewone hervatroute behoudt execution/source en herstelt READ0/1, voortgang2 en
+Eva's geverifieerde DRAFT3 zonder herhaalde effecten of nieuw voorstel. Het vervolg
+wordt daarop aangesloten met actuele factory/suite/bronbinding en oorspronkelijke
+cumulatieve grenzen:5 constructieaanvragen,53,358 actieve seconden over; gedeeld
+59 aanvragen,93 tools,297.884 tokens over. Geen nieuwe allocation of heropening.
+Nog geen native vervolg gestart, kandidaat toegepast of kwaliteitswinst bewezen.
+43/54 behouden; HUE6.1 en het volledige goal ACTIVE. Alle productwerk betreft Eva2.
+Bewijs: eva2/evidence/product/aide-current-closed-usage-reconciliation-20261013.json.
+Review: eva2/reviews/aide-current-closed-usage-reconciliation-review-20261013.json.
+
+## Actueel 13 oktober — Eva2 vervangt Eva1
+
+Eigenaarbesluit: Eva1 is een aflopende referentie en wordt uitsluitend voor
+vergelijking gebruikt. Voeg geen functies of reparaties aan Eva1 toe. Eva2 is
+de vervanger en krijgt alle productontwikkeling, uitvoering en zelfverbetering.
+De agentnaam eva1_memory_transfer is historisch: diens huidige opdracht betreft
+alleen Eva2. Bestaande Eva1-bronnen en vergelijkingsresultaten blijven behouden;
+geen nieuwe vergelijkingsserie of Eva1-onderhoud door dit besluit.
+
 ## Actueel 13 oktober — bronversie in verbeterbeoordeling gelijkgetrokken
 
 Eva heeft haar kandidaat zelf gemaakt. De vaste evaluatieimage bevatte echter

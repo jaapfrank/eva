@@ -5614,16 +5614,16 @@
         "now": {
           "title": "Droomcyclus en AIDE² afmaken",
           "state": "in_progress",
-          "phase": "aide_static_baseline_installed",
+          "phase": "aide_same_draft_resume_preparation",
           "taskId": "HUE6.1",
           "owner": "/root",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Eva maakte zelf haar verbeterkandidaat. De beoordelingsroute gebruikte een oude bronversie; die aansluiting is hersteld en geïnstalleerd. Geen bewezen betere kandidaat of afgeronde AIDE²-cyclus.",
-          "currentActivity": "Versiecorrectie geïnstalleerd en onafhankelijk gecontroleerd. Resterend voor HUE6.1: werkelijke kwaliteitsbeoordeling, toepassen uitsluitend bij bewezen winst en later gebruik. Oud volledig proefverbruik blijft onbekend; gesloten proeven worden niet heropend.",
+          "summary": "Eva’s eigen verbeterkandidaat is bewaard. De bronversie in de beoordeling is hersteld. Het actuele mislukte-proefverbruik is onafhankelijk vastgesteld; nog geen bewezen kwaliteitswinst.",
+          "currentActivity": "Hetzelfde opgeslagen voorstel via de bestaande hervatroute verder beoordelen; geen nieuw voorstel schrijven of tweede platform bouwen. Actuele bron-/invoerbinding voorbereiden.",
           "doneWhen": "De bestaande droom/AIDE²-route verbetert agentaansturing én code of uitbreiding, met onafhankelijke beoordeling, toepassing uitsluitend bij bewezen winst en later werkelijk gebruik.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-13T09:36:20.410662+00:00",
+          "checkedAt": "2026-10-13T09:59:45.350293+00:00",
           "previousUserResult": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
           "modelRequestsThisStep": 9,
           "creditCosts": null,
@@ -5634,8 +5634,8 @@
           "registeredTokensSoFar": 102116,
           "registeredToolsSoFar": 7,
           "measurementsAreInterim": false,
-          "registeredTokensScope": "known_parent_usage_only",
-          "fullSharedTrialUsage": "UNKNOWN"
+          "registeredTokensScope": "complete_scoped_current_native_usage",
+          "fullSharedTrialUsage": "RECONCILED: 102116 tokens, 9 requests, 7 tools; native child zero"
         },
         "next": {
           "title": "Leren van een echte reactie op eigen bijdrage",
@@ -33240,6 +33240,67 @@
       "installationSha256": "bdadfdb819923e6f21cc199c9c893019ebc403cfae652b6882d54ac660a122e9",
       "reviewPath": "eva2/reviews/aide-static-baseline-version-correction-installed-review-20261013.json",
       "independentReviewSha256": "61c61568b0b1d0e733b162101722683c345246ad4b3fbd9f8ab26d858e7aa353"
+    },
+    "eva1ReferenceOnlyOwnerDecision20261013": {
+      "status": "owner_decision",
+      "decidedAt": "2026-10-13T09:52:31.852020+00:00",
+      "summary": "Eva2 is de vervanger. Eva1 alleen als vergelijkingsreferentie; geen nieuwe functies of reparaties aan Eva1.",
+      "eva1ProductDevelopment": false,
+      "eva2ProductDevelopment": true,
+      "historicalAgentName": "eva1_memory_transfer",
+      "actualAgentScope": "Eva2 verbetercyclus; geen Eva1-codewijzigingen",
+      "newComparisonSeries": false
+    },
+    "aideCurrentClosedUsageReconciliation20261013": {
+      "contract": "EvaAideClosedUsageReconciliation/v1",
+      "status": "independently_reviewed_reconciliation",
+      "createdAt": "2026-10-13T09:59:45.350293+00:00",
+      "taskId": "HUE6.1",
+      "scope": "Two closed current construction attempts and their one failed EVAL; earlier historical UNKNOWN unchanged.",
+      "parentRequests": 9,
+      "parentPhysicalTools": 7,
+      "inputTokens": 100294,
+      "outputTokens": 1822,
+      "totalTokens": 102116,
+      "nativeChildRequests": 0,
+      "nativeChildTools": 0,
+      "nativeChildTokens": 0,
+      "fullScopedNativeUsageKnown": true,
+      "childZeroEvidence": "Historical fixed baseline check must refuse before either native child produce call.",
+      "exactHistoricalHttp400InnerReason": "UNKNOWN",
+      "historicalRawAndLedgerUnchanged": true,
+      "historicalRawChildUsageStillNull": true,
+      "activeConstructionSeconds": 192.642024819972,
+      "remainingOriginalAllocation": {
+        "construction_active_seconds": 53.357975180028006,
+        "construction_requests": 5,
+        "shared_combined_tokens": 297884,
+        "shared_input_tokens": 284706,
+        "shared_output_tokens": 13178,
+        "shared_requests": 59,
+        "shared_tools": 93
+      },
+      "newAllocation": false,
+      "newModelRequestsForReconciliation": 0,
+      "candidateApplied": false,
+      "qualityGainProven": false,
+      "aideCycleComplete": false,
+      "smallTasksCompleted": 43,
+      "smallTasksTotal": 54,
+      "developerCreditCosts": null,
+      "nativeInputGo": false,
+      "independentReview": {
+        "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/child-dispatch-independent-review/independent-reconciliation-review.private.json",
+        "sha256": "3a742c0da012c2adaf198ccd67887b5479a576331dd4f920caec2ae4c306d3ee"
+      },
+      "parentUsageProof": {
+        "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/child-dispatch-root-usage/retained-parent-usage.private.json",
+        "sha256": "d4b68bbadd1f1225897a1cc99d39789b31d053e6e7049af94e9dc7342789d0e4"
+      },
+      "zeroDispatchProof": {
+        "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/child-dispatch-dominance-proof/closed-http400-native-child-dispatch-zero.private.json",
+        "sha256": "bb64c699b786dead0926bd9cce13d6adf0b8547ac28e7104dc13c42a7fc6f965"
+      }
     }
   },
   "activeTaskId": "AU-008",
