@@ -11,9 +11,13 @@ exact geweigerde aanvraag en dynamische toekomstige fit blijven onbekend.
 
 Gen19 blijft gesloten met vijf gemeten aanvragen/vijf tools/277.947 tokens en
 geen nieuwe write. Eva las haar eigen huidige document afzonderlijk terug;
-het oorspronkelijke voorstel is nog onvoltooid. Eerst de noodzakelijke volgende
-opslagstap lokaal controleren, dan één gerichte gewone voortzetting vanuit de
-exact gesloten ouder onder bestaande eigenaarroute, grant, rollen en criteria.
+het oorspronkelijke voorstel is nog onvoltooid. De noodzakelijke volgende opslag-/terugleesstap past in de synthetische
+bestaande hostprojectie voor dezelfde documentinhoud; grotere nieuwe tekst en
+dynamische context blijven onbekend. De bijstuurroute startte niets na zestien
+eerdere correcties. Daarna is één gewone hervatting zonder nieuwe instructie
+aangenomen: Gen20 work:eva-resume:8669795c-e1c6-5559-84d3-afd944450878.
+Alle zestien correcties, voortgang, oorspronkelijke taak, grant en rollen blijven
+behouden. Werkelijk eindresultaat en verbruik wachten op terminalbewijs.
 Geen blind vervolg, handgeschreven voorstel of nieuwe vergelijkingsserie.
 Geen HA-mutatie of migratie vóór afzonderlijk akkoord.
 Volledig goal ACTIVE; 39/48 en 39/54 behouden; HUE/leercyclus/AIDE² open.
