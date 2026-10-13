@@ -9,10 +9,12 @@ Bewaarde260-fase: baseline67.093BPE geweigerd;kandidaat63.677,met teruggeplaatst
 leesinhoud65.401/marge135 toegestaan. Alleen bekende context;actuele/futurefit UNKNOWN.
 Gen18's echte bijgewerkte voorstel blijft onvoltooid met oorspronkelijke eindreview.
 
-Eén noodzakelijke gewone voortzetting vanaf gesloten Gen18 loopt binnen het
-expliciete mandaat: zorg dat Eva zelf het oorspronkelijke voorstel afmaakt.
-Gen19:work:eva-resume:b6234012-7f1d-5b06-ada4-40673d426e1e.
-Nog geen teruglezing,daadwerkelijke afronding of nieuwe gebruiksacceptatie bevestigd.
+Gen19 is gesloten met dezelfde lokale inputmisfit na echte afzonderlijke
+Eva-teruglezing van haar bijgewerkte voorstel. Vijf volledig gemeten/gesloten
+aanvragen,vijf tools,277.947 tokens;huidige UNKNOWN0. Geen nieuwe write/progress.
+Het12868-byte document blijft exact; oorspronkelijke inhoudelijke eindreview INCOMPLETE.
+Herstel eerst de concrete drukcontext op alle behouden vervolgfasen,zonder nieuwe
+modelcall of blind hervatten. Resultaat:eva2/evidence/product/post-write-context-ordinary-result-20261013.json.
 BronGO verleent geen nieuwe invoertoestemming; bestaande eigenaarroute/grant beslist.
 Geen handgeschreven voorstel,HA-mutatie,blind vervolg of nieuwe vergelijkingsserie.
 Migratie pas na apart akkoord. Volledig goal ACTIVE;39/48 en39/54 onveranderd.

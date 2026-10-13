@@ -1,0 +1,62 @@
+{
+  "contract": "EvaOrdinaryWorkResult/v1",
+  "checkedAt": "2026-10-13T01:36:35.823386+00:00",
+  "generation": 19,
+  "workId": "work:eva-resume:b6234012-7f1d-5b06-ada4-40673d426e1e",
+  "state": "failed",
+  "errorCode": "input_budget_exceeded",
+  "nativeErrorCode": "budget_exceeded",
+  "originalTaskCompleted": false,
+  "newProductFunctionCompleted": false,
+  "currentExecutionUsageComplete": true,
+  "knownMeasuredUsage": {
+    "model_attempts": 5,
+    "tool_calls": 5,
+    "input_tokens": 277072,
+    "output_tokens": 875,
+    "total_tokens": 277947
+  },
+  "currentUnknownRequests": 0,
+  "ownerApiUsageMeasurement": "partial",
+  "historicalTotalTokens": null,
+  "creditCosts": null,
+  "document": {
+    "byte_length": 12868,
+    "sha256": "89a97ad45b1b78654b6218090977f5cf882b7a59f98a668da8cbf578515f5dd1",
+    "unchangedFromGen18": true,
+    "newWriteReceipts": 0,
+    "separateEvaReadback": true,
+    "exactReadbackExceptOneTerminalLF": true
+  },
+  "homeAssistantChangesObserved": 0,
+  "findings": [
+    "Eva actually read back her updated saved document; the first correction supported this real continuation.",
+    "Four additional local reader calls followed; no further save or progress. The next request failed the local input gate before another model admission.",
+    "Original content remains incomplete under the retained independent Gen18 review; no completion or final delivery."
+  ],
+  "references": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen19-terminal-observation.private.json",
+      "sha256": "b32ab95c21b0978989672dfc9d431e557d4a562d67bce2da5d4fc8f3b85fd61c"
+    },
+    "accounting": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen19-terminal-accounting.private.json",
+      "sha256": "c872d1ea4d9393e056fd5c40822146133edab41a6cf62ca0769f6dfb0958013d"
+    },
+    "readback": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen19-current-document-readback.private.json",
+      "sha256": "91f1356e502e99de4b3c6dae8e9682425bbd5196c2da4d29554c0cac0ee874e1"
+    },
+    "document": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen19-terminal-document.private.json",
+      "sha256": "0a540a840e2ba6c8df746a9c248025caf7a285736f00d5645cee9cba05d2bd55"
+    },
+    "retainedOriginalContentReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/gen18-original-proposal-end-review.private.json",
+      "sha256": "3ede4cc31bb0b31f0e4a8baeee2c682e87de596d66ed8b696c5a93ae9349e921"
+    }
+  },
+  "retainedContentReview": "INCOMPLETE on unchanged exact document bytes, not relabeled as a new endreview",
+  "exactRefusedEnvelope": "UNKNOWN",
+  "next": "Correct the concrete pressure retention of already-read local document pages; no blind retry or manual proposal."
+}
