@@ -1,0 +1,537 @@
+{
+  "contract": "EvaCapabilityAudit/v2",
+  "checkedAt": "2026-09-11T07:13:00Z",
+  "runtimeImage": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+  "runtimeRevision": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+  "meaning": "Iedere rij beoordeelt uitsluitend de genoemde oplevering. Gedateerde liveproeven en persoonlijke acceptatie blijven behouden. Actuele bereikbaarheid en niet herhaalde regressieproeven staan afzonderlijk; bredere ambities bepalen de status van deze oplevering niet.",
+  "findings": [
+    {
+      "id": "answer-stream",
+      "intendedOutcome": "Een gewone Telegramvraag krijgt een geleidelijk zichtbaar en volledig eindantwoord.",
+      "visibleResult": "Jaap stelde na de reparatie en hernieuwde aanmelding een nieuwe Telegramvraag en bevestigt dat streaming werkt.",
+      "resultBasis": "Eigenaaracceptatie · 21 sep",
+      "gap": "Afgerond en door Jaap geaccepteerd.",
+      "gapKind": "Afgerond",
+      "states": {
+        "built": "yes",
+        "tested": "yes",
+        "live": "yes",
+        "accepted": "yes"
+      },
+      "stageLabels": {
+        "built": "Gebouwd",
+        "tested": "Reparatie getest",
+        "live": "21 sep bevestigd",
+        "accepted": "Geaccepteerd"
+      },
+      "stageNotes": {
+        "built": "Gebouwd. Bewijs geldt uitsluitend voor CO-007 · antwoord opbouwen in Telegram. ",
+        "tested": "8 sep. Bewijs geldt uitsluitend voor CO-007 · antwoord opbouwen in Telegram. ",
+        "live": "Codefix live; modelaanmelding hersteld; Jaap bevestigt de actuele Telegramstream.",
+        "accepted": "Jaap: Ik heb de nieuwe vraag gesteld en streaming werkt. Acceptatie betreft Antwoordstream; Gesprekken volgt afzonderlijk."
+      },
+      "sources": [
+        {
+          "path": "evidence/product/CO-007-live-answer-stream-2026-09-08.json",
+          "sha256": "8ffe6f77e707fcdb4a2a99eb7d0151b24808654f11ea4912f5d4deedc61b1e31"
+        },
+        {
+          "path": "evidence/product/telegram-pending-repair-2026-09-21.json",
+          "sha256": "afbeeeeeb50f0c4e5d58cd04a19eb33a7c9ba544521cd3a436a5f3cf0ec2928f"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "CO-007 · antwoord opbouwen in Telegram",
+      "historyNote": ""
+    },
+    {
+      "id": "conversation",
+      "intendedOutcome": "RT-001 · gewone privégesprekken. Langdurige continuïteit, gezinskwaliteit en actuele regressieproef.",
+      "visibleResult": "Actuele privégesprekproef geslaagd: eigen advies, correctie en samenhang in drie beurten.",
+      "resultBasis": "Live eigenaarroute · 21 september",
+      "gap": "GS-01: jouw oordeel over warmte en natuurlijkheid. Breder gezinsgebruik en langdurige continuïteit blijven open.",
+      "gapKind": "Bredere ambitie",
+      "states": {
+        "built": "yes",
+        "tested": "yes",
+        "live": "yes",
+        "accepted": "partial"
+      },
+      "stageLabels": {
+        "built": "Gebouwd",
+        "tested": "Privéproef",
+        "live": "Bewezen",
+        "accepted": "Positief, beperkt"
+      },
+      "stageNotes": {
+        "built": "Gebouwd. Bewijs geldt uitsluitend voor RT-001 · gewone privégesprekken. ",
+        "tested": "Drie fictieve beurten op de actuele live kern; geen herstart- of gezinsproef.",
+        "live": "Eigenaar-HTTP-route op 21 september beproefd; Telegramstream vandaag afzonderlijk door Jaap geaccepteerd.",
+        "accepted": "Positief, beperkt. Bewijs geldt uitsluitend voor RT-001 · gewone privégesprekken. "
+      },
+      "sources": [
+        {
+          "path": "PROJECT_STATUS.md",
+          "sha256": "d9d08072890b0811b30dd4a21a0d7740e8272cc9412152ccfbf665a9b10235c3"
+        },
+        {
+          "path": "evidence/product/CO-007-live-answer-stream-2026-09-08.json",
+          "sha256": "8ffe6f77e707fcdb4a2a99eb7d0151b24808654f11ea4912f5d4deedc61b1e31"
+        },
+        {
+          "path": "evidence/product/conversation-current-check-2026-09-21.json",
+          "sha256": "b50f5f2c86a870c1aade2708141bf38f238c72d872b986384c58c8ada5f1e03a"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "RT-001 · gewone privégesprekken",
+      "historyNote": ""
+    },
+    {
+      "id": "memory",
+      "intendedOutcome": "CO-008 / GE-01 · voorkeur onthouden, wijzigen en toepassen. Langetermijn- en gezinskwaliteit, plus historische opslagfouten, blijven vervolgwerk.",
+      "visibleResult": "Afgerond: blauw → groen toegepast in nieuw advies; technische review GO.",
+      "resultBasis": "Jouw acceptatie · 10 sep",
+      "gap": "Langetermijn- en gezinskwaliteit, plus historische opslagfouten, blijven vervolgwerk.",
+      "gapKind": "Bredere ambitie",
+      "states": {
+        "built": "yes",
+        "tested": "yes",
+        "live": "yes",
+        "accepted": "yes"
+      },
+      "stageLabels": {
+        "built": "Afgerond",
+        "tested": "Geslaagd",
+        "live": "Bewezen",
+        "accepted": "Geaccepteerd"
+      },
+      "stageNotes": {
+        "built": "Afgerond. Bewijs geldt uitsluitend voor CO-008 / GE-01 · voorkeur onthouden, wijzigen en toepassen. ",
+        "tested": "Geslaagd. Bewijs geldt uitsluitend voor CO-008 / GE-01 · voorkeur onthouden, wijzigen en toepassen. ",
+        "live": "Bewezen. Bewijs geldt uitsluitend voor CO-008 / GE-01 · voorkeur onthouden, wijzigen en toepassen. Live bewijs is gedateerd; een nieuwe kernversie is niet automatisch opnieuw beproefd.",
+        "accepted": "Geaccepteerd. Bewijs geldt uitsluitend voor CO-008 / GE-01 · voorkeur onthouden, wijzigen en toepassen. "
+      },
+      "sources": [
+        {
+          "path": "evidence/product/CO-008-automatic-personal-memory-2026-09-10.json",
+          "sha256": "7518bc6cd321c0bf81a5a9ef587ce3a21470ebdd5bc7b818e7b0d085165d9fad"
+        },
+        {
+          "path": "evidence/product/CO-006-autonomous-memory-2026-09-08.json",
+          "sha256": "59dc1cddc23ae6354ece4d08646093f9c8715513ce7d2c4bdefbccedc7390e09"
+        },
+        {
+          "path": "evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json",
+          "sha256": "9e83709426d618a87d39a30400b2e148e55810e9ea8eafb4cda89f0a2b541ecc"
+        },
+        {
+          "path": "reviews/CO-008-automatic-memory-ddb0267.md",
+          "sha256": "38dc1f094e79e52f9e5e085e5b40e3fee3bfa5d97f21f65d97f5e16d113ea6e0"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "CO-008 / GE-01 · voorkeurgeheugen",
+      "historyNote": ""
+    },
+    {
+      "id": "initiative",
+      "intendedOutcome": "AU-008 · acht toegelaten kosteloze taakroutes. Een echte nieuwe eigen bijdrage; onderzoek en overige taakroutes nog aansluiten.",
+      "visibleResult": "Blokkade hersteld. Eva rondde vanzelf een nieuwe beoordeling af en koos stilte zonder nieuwe nuttige aanleiding. Bestaande bijdragen behouden.",
+      "resultBasis": "Normale cyclus en duurzame teruglezing · 21 september",
+      "gap": "IN-02: jouw oordeel over nut en passendheid. Breder initiatief en gezinskwaliteit blijven apart open.",
+      "gapKind": "Resultaat nog open",
+      "states": {
+        "built": "yes",
+        "tested": "yes",
+        "live": "yes",
+        "accepted": "no"
+      },
+      "stageLabels": {
+        "built": "8 routes",
+        "tested": "Gericht getest",
+        "live": "10 sep live",
+        "accepted": "Geen bijdrage"
+      },
+      "stageNotes": {
+        "built": "8 routes. Bewijs geldt uitsluitend voor AU-008 · acht toegelaten kosteloze taakroutes. ",
+        "tested": "Gericht getest. Bewijs geldt uitsluitend voor AU-008 · acht toegelaten kosteloze taakroutes. ",
+        "live": "10 sep live. Bewijs geldt uitsluitend voor AU-008 · acht toegelaten kosteloze taakroutes. Live bewijs is gedateerd; een nieuwe kernversie is niet automatisch opnieuw beproefd.",
+        "accepted": "Geen bijdrage. Bewijs geldt uitsluitend voor AU-008 · acht toegelaten kosteloze taakroutes. "
+      },
+      "sources": [
+        {
+          "path": "evidence/product/AU-005-owner-execution-2026-09-09.json",
+          "sha256": "64c2cc646c4c0304629dab4593291739eee33ff0ab8b18dc90f4eb30691638f4"
+        },
+        {
+          "path": "evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json",
+          "sha256": "a1cc789498661c35de6593134c4e412dc15a808ad5a63882da3afa326f491f43"
+        },
+        {
+          "path": "design/product/execution-workboard-v1.json",
+          "sha256": "fc135547e3bbce5d1b2ce85ec640d4f33fbd6b32e1d441366896978031385f7f"
+        },
+        {
+          "path": "../.eva2-artifacts/au008-costless-initiative-20260910/owner-binding-live-imports.json",
+          "sha256": "44b7a8a614361e19e556eb43d008ce7c5e09b5cb76d26ace1fdf68b56f1b6467"
+        },
+        {
+          "path": "../.eva2-artifacts/au008-costless-initiative-20260910/owner-binding-cutover.stdout",
+          "sha256": "9d2b71970902d907d1926d8a6a57c55952df002a0051fd227153aae778d9fe4a"
+        },
+        {
+          "path": "evidence/product/AU-007-private-initiative-2026-09-10.json",
+          "sha256": "0e370cf585809cf3fab134684c0fedc576ccbc0d7839a950abf1110e5cd92516"
+        },
+        {
+          "path": "tools/project-dashboard/morning-readback-2026-09-11.json",
+          "sha256": "2b279f95f8adbaf6f5d17d030c55cc0d315508dcc6d56a8b909630090acfeaa4"
+        },
+        {
+          "path": "evidence/product/initiative-recovery-2026-09-21.json",
+          "sha256": "5b64487a1c2acc04df8dae17144c31b9c8480754c7325d778ecf0ad531a6e80a"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "AU-008 · acht toegelaten kosteloze taakroutes",
+      "historyNote": "AU-007-kaart: door jou “op zich wel bruikbaar” gevonden.",
+      "links": [
+        {
+          "title": "Open nieuwe storingschecklist",
+          "url": "/results/au008-storingschecklist.html"
+        },
+        {
+          "title": "Eerdere AU-007-kaart",
+          "url": "/results/au007-beoordelingskaart.html"
+        }
+      ],
+      "latestObservation": {
+        "checkedAt": "2026-09-12",
+        "userOutcomeStatus": "Eigen bijdrage teruggelezen; jouw oordeel open",
+        "visibleResult": "Eva koos en voltooide zelf API-toegang is niet hetzelfde als toestemming. Het bestaande bestand is onafhankelijk teruggelezen; IN-02 bevat de volledige tekst.",
+        "remaining": "Alleen Jaaps IN-02-oordeel over nut en passendheid is open. AU-008 is technisch afgerond en live; herhaald gezinsnut en brede zelfstandigheid zijn niet hiermee bewezen.",
+        "evidenceSummary": "Live API en browser12sep16:52UTC tonen laatste beoordeling met budgetwacht en bestaande afgeronde bijdrage. Geen nieuwe modelaanroepen of gegevensmutaties.",
+        "evidencePath": "evidence/product/AU-008-current-review-delivery-2026-09-12.json"
+      },
+      "observationHistory": [
+        {
+          "checkedAt": "2026-09-11T07:13:00Z",
+          "userOutcomeStatus": "Eerste checklist geleverd; jouw beoordeling nog open",
+          "visibleResult": "Op 11 sep om 02:48 een zelfgekozen algemene storingschecklist opgeslagen en teruggelezen. Geen huisgegevens opgehaald of internetonderzoek verricht.",
+          "remaining": "Jouw beoordeling van de checklist en verdere initiatiefkwaliteit. Private beoordelingen: reset werkte; 1 bijdrage en 3 keer stilte. Sinds 11 sep 06:50 weer 4/4 gebruikt (controle 09:13); dit telt niet alle modelcalls.",
+          "evidenceSummary": "Normale private cyclus koos de bijdrage om 00:42:32 UTC; bestand geschreven en teruggelezen om 00:47:58 UTC, eindantwoord 00:48:05 UTC (02:48 Nederlandse tijd). Bestandhash gelijk aan STATE_VERIFIED. Read-only gecontroleerd om 07:13 UTC; geen menselijke acceptatie.",
+          "evidencePath": "tools/project-dashboard/morning-readback-2026-09-11.json"
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "intendedOutcome": "AU-001 · documenten vergelijken en bewaren. Nieuwe diensten zonder ontwikkelhulp; persoonlijke accounts en bredere combinatietaken.",
+      "visibleResult": "Twee notities vergeleken en advies opgeslagen. Op 12 september ook een nieuwe CPython-endpoint bij GitMCP aangesloten en gebruikt: uitleg in één gewone beurt opgeslagen en teruggelezen, zonder ontwikkelaarshervatting.",
+      "resultBasis": "AU-001 liveproef en TL-003 ononderbroken proef met onafhankelijke GO",
+      "gap": "Onbekende aanbieders en protocollen, persoonlijke accounts en bredere combinatietaken blijven afzonderlijk te bewijzen. Jaaps beoordeling van het resultaat staat open.",
+      "gapKind": "Bredere ambitie",
+      "states": {
+        "built": "yes",
+        "tested": "yes",
+        "live": "yes",
+        "accepted": "no"
+      },
+      "stageLabels": {
+        "built": "Gebouwd",
+        "tested": "Echte opdracht",
+        "live": "9 sep bewezen",
+        "accepted": "Nog open"
+      },
+      "stageNotes": {
+        "built": "Gebouwd. Bewijs geldt uitsluitend voor AU-001 · documenten vergelijken en bewaren. ",
+        "tested": "Eén HTTP-ingang en eindantwoord, zeven gekoppelde toolstappen, exact bestand teruggelezen; onafhankelijke GO.",
+        "live": "TL-003-proef op 12 september via de gewone eigenaar-HTTP-route op image542597; geen code- of budgetwijziging tijdens de proef.",
+        "accepted": "Nog open. Bewijs geldt uitsluitend voor AU-001 · documenten vergelijken en bewaren. "
+      },
+      "sources": [
+        {
+          "path": "evidence/product/AU-001-completion-2026-09-09.json",
+          "sha256": "85fee5f4f210710a55448579285a951211e44e08c6b70428bd38028dac486439"
+        },
+        {
+          "path": "evidence/product/TL-002-completion-2026-09-08.json",
+          "sha256": "00e8c8c816b7ee49bb4d1d0a0dcd96423af97e46080939121e743ad59a92fdda"
+        },
+        {
+          "path": "evidence/product/TL-003-completion-2026-09-10.json",
+          "sha256": "f9d5bb7e3637392c6b8945bc89d3095fdd0af8eade706a46cac1fd5a30f2b2e6"
+        },
+        {
+          "path": "evidence/product/TL-003-unassisted-2026-09-12.json",
+          "sha256": "b8eca32a92b337ade0645233e498b97286823e0b40f80b84fd5e82c248c2b835"
+        },
+        {
+          "path": "evidence/product/TL-003-unassisted-review-2026-09-12.json",
+          "sha256": "142ca560a6ead4c1b550a1991fb15a4806768c74e03672f36a43483fa0aeac82"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "AU-001 documenten vergelijken; TL-003 één nieuwe repository-endpoint bij bekende GitMCP-aanbieder",
+      "historyNote": "De proef van 10 september vereiste ontwikkelhulp en blijft historisch bewijs. De afzonderlijke proef van 12 september slaagde zonder hulp tijdens de beurt; bestaande conversatie, bekende aanbieder, geen code-uitvoering of algemene voorsprong.",
+      "links": [
+        {
+          "title": "Lees Eva’s Python-uitleg",
+          "url": "/results/tl003-contextmanager"
+        }
+      ]
+    },
+    {
+      "id": "voice",
+      "intendedOutcome": "LiveKit · laptopspraak; telefoon en VoicePE als vervolg. Echte microfoon/echo, vloeiendheid en jouw oordeel. Telefoonpaneel en nieuwe VoicePE-route nog niet live.",
+      "visibleResult": "Windows-browser: synthetische spraak → Eva → hoorbaar antwoord geslaagd (10,5 s).",
+      "resultBasis": "Synthetische spraakproef 10 sep; binding/readiness 11 sep 00:25",
+      "gap": "Fysieke microfoon/echo, vloeiendheid en jouw oordeel. Telefoon/VoicePE-installatie wacht op HA-beheer en een herstelkopie.",
+      "gapKind": "Apparaten en acceptatie",
+      "states": {
+        "built": "yes",
+        "tested": "yes",
+        "live": "yes",
+        "accepted": "no"
+      },
+      "stageLabels": {
+        "built": "Laptop gebouwd",
+        "tested": "Synthetisch",
+        "live": "Laptop live",
+        "accepted": "Fysiek nog open"
+      },
+      "stageNotes": {
+        "built": "Laptop gebouwd. Bewijs geldt uitsluitend voor LiveKit · laptopspraak; telefoon en VoicePE als vervolg. ",
+        "tested": "Echte Windows-browser met synthetische spraak, HA-STT, werkelijke Eva-kern en TTS: geslaagd, 10485ms tot audio. Geen fysieke microfoon of menselijke acceptatie.",
+        "live": "Spraakbinding na AU-002: kern 54c3/81d43061 op 44710, media 57ae/efa32d5 op 44716; geauthenticeerde readiness bevestigd 11 sep 00:25 Nederlandse tijd. De synthetische browserproef is van vóór deze kernwissel en niet herhaald. Telefoonpaneel niet geïnstalleerd; VoicePE niet geflasht.",
+        "accepted": "Fysiek nog open. Bewijs geldt uitsluitend voor LiveKit · laptopspraak; telefoon en VoicePE als vervolg. "
+      },
+      "sources": [
+        {
+          "path": "evidence/product/VB-001-native-continuation-accepted-2026-09-09.json",
+          "sha256": "54a4de2008c24adbd4ec8ae2d1c088fd899000521258097880b0b9bc81a47d4a"
+        },
+        {
+          "path": "design/product/execution-workboard-v1.json",
+          "sha256": "c419c604f3ea7e5bd62078fefb67537b718cbccfa9273270d8f7f623e698512a"
+        },
+        {
+          "path": "evidence/product/voice-livekit-integration-2026-09-10.json",
+          "sha256": "a2b75dfe7fc44abe56703d0f8a24f14e8fa4881ce4b9c751deee1b46e58e67c7"
+        },
+        {
+          "path": "evidence/product/voice-phone-relay-candidate-2026-09-10.json",
+          "sha256": "6c3a3bd745739e8c9fbd33b9475dddc75e9a0d6d95251952f9c4d914470844ea"
+        },
+        {
+          "path": "evidence/product/voice-phone-token-refresh-2026-09-10.json",
+          "sha256": "156333c366ddb555c5ab8b079c87ede9ea8b4ae88515f5eec210cf0a2663591c"
+        },
+        {
+          "path": "evidence/product/voice-household-livekit-candidate-2026-09-10.json",
+          "sha256": "f661f20b862895225a773036df760ca7f947606454128a84e800c525185fe383"
+        },
+        {
+          "path": "../.eva2-artifacts/voice-livekit-20260910/browser_core_audio_probe.json",
+          "sha256": "5ea45fba31836de9c434417b4c449ab46a4de111834735a7f752af1afdb4270c"
+        },
+        {
+          "path": "../.eva2-artifacts/voice-livekit-20260910/browser_spoken_audio_probe.json",
+          "sha256": "9f4e1656551afd5e948e002eb378f0e063ef8ed7c71a74fc30b2ec4c52e120dc"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "LiveKit · laptopspraak via de echte Eva-kern",
+      "historyNote": "Telefoonpaneel en VoicePE-kandidaat gereed voor installatievoorbereiding, niet fysiek opgeleverd. SP-01/02 blijven geaccepteerd.",
+      "links": [
+        {
+          "title": "Open laptopspraak",
+          "url": "http://localhost:44716/"
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "intendedOutcome": "AU-002 · hulpwerk starten, volgen en stoppen. Betrouwbare gebruikersroute en hervatten; daarna een volledig meerdaags project.",
+      "visibleResult": "Duurzame hulpagent gebouwd; laatste gewone start/stopproef mislukte.",
+      "resultBasis": "AU-002-bewijs · 10 sep",
+      "gap": "Betrouwbare gebruikersroute en hervatten; daarna een volledig meerdaags project.",
+      "gapKind": "Mislukte proef",
+      "states": {
+        "built": "yes",
+        "tested": "partial",
+        "live": "partial",
+        "accepted": "no"
+      },
+      "stageLabels": {
+        "built": "Gebouwd",
+        "tested": "Stop mislukt",
+        "live": "Route beproefd",
+        "accepted": "Nog open"
+      },
+      "stageNotes": {
+        "built": "Gebouwd. Bewijs geldt uitsluitend voor AU-002 · hulpwerk starten, volgen en stoppen. ",
+        "tested": "Stop mislukt. Bewijs geldt uitsluitend voor AU-002 · hulpwerk starten, volgen en stoppen. ",
+        "live": "Route beproefd. Bewijs geldt uitsluitend voor AU-002 · hulpwerk starten, volgen en stoppen. Live bewijs is gedateerd; een nieuwe kernversie is niet automatisch opnieuw beproefd.",
+        "accepted": "Nog open. Bewijs geldt uitsluitend voor AU-002 · hulpwerk starten, volgen en stoppen. "
+      },
+      "sources": [
+        {
+          "path": "../.eva2-artifacts/au002-owner-work-20260910/owner-pause-checkpoint.json",
+          "sha256": "4d3f14ce36f63a00775a9f039d155a724025ad05d280f63e2fd16aba84703ddb"
+        },
+        {
+          "path": "../.eva2-artifacts/au002-owner-work-20260910/final-owner-flow/start-stop-http-receipt.json",
+          "sha256": "c05eb5b631d03e3430d9ec1e78a522e1cec05a78e7deda4fcd70517c8b90ed5e"
+        },
+        {
+          "path": "../.eva2-artifacts/au002-owner-work-20260910/final-owner-flow/start-stop-response.private.json",
+          "sha256": "12373104dfce7d33d84a296665541309f031784ed6c25515bc5b22ac9c08ff0e"
+        },
+        {
+          "path": "design/product/execution-workboard-v1.json",
+          "sha256": "c419c604f3ea7e5bd62078fefb67537b718cbccfa9273270d8f7f623e698512a"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "AU-002 · hulpwerk starten, volgen en stoppen",
+      "historyNote": ""
+    },
+    {
+      "id": "browser",
+      "intendedOutcome": "Eva bedient één expliciet gedeeld Chrome-tabblad; de eigenaar kan lopende bediening overnemen en toegang intrekken.",
+      "visibleResult": "De gewone Eva-route opent en sluit een paneel in een aparte Windows-Chrome-proefbrowser. Overname onderbreekt een lopende klik; extra acties en toegang na intrekken worden geweigerd. Na teruggeven leest Eva de gewijzigde pagina opnieuw. Transportverlies stopt de lopende actie; herstel vereist nieuwe toegang en een verse paginawaarneming.",
+      "resultBasis": "Gewone Eva-route · aparte Windows Chrome · 12 sep",
+      "gap": "Laatste eigenaarproef in jouw expliciet opnieuw geselecteerde Chrome-tabblad: zichtbare actie en overnemen tijdens een lopende klik. De exacte oorzaak van de eerdere persoonlijke klikweigering is niet vastgesteld.",
+      "gapKind": "Laatste eigenaarproef open",
+      "states": {
+        "built": "yes",
+        "tested": "yes",
+        "live": "yes",
+        "accepted": "partial"
+      },
+      "stageLabels": {
+        "built": "Eva-route",
+        "tested": "Windows-proef geslaagd",
+        "live": "12 sep technisch",
+        "accepted": "Deelproeven bevestigd"
+      },
+      "stageNotes": {
+        "built": "De bestaande connectorroute gebruikt dezelfde begrensde Chrome-worker en exclusieve bediening.",
+        "tested": "Echte Eva-aanroepen, aparte Windows Chrome, afzonderlijke paginawaarnemingen en tellercontrole na onderbreking. Transportherstel: 14 gerichte controles op verlies van caller, gatewayadres/DNS, worker, proxy en bridge; geen late actie na verlies en oude toegang/waarneming ongeldig.",
+        "live": "De productiegateway en Eva-route zijn beproefd met een tijdelijke eigen testsocket; de gewone gesloten route is daarna hersteld. Transportcorrectie op 12 september geactiveerd; bridge en proxy teruggelezen als niet verbonden, met verse waarneming vereist.",
+        "accepted": "Persoonlijke overname, verse waarneming na teruggeven en intrekken bevestigd op 11 september. Laatste zichtbare actie en lopende onderbreking in Jaaps Chrome staan open."
+      },
+      "sources": [
+        {
+          "path": "evidence/product/VB-003-completion-2026-09-10.json",
+          "sha256": "5e7c459e9b5de9acac19c28af93d8f6e2a9f2fabee223cd2095f6c8c7a104a1f"
+        },
+        {
+          "path": "../.eva2-artifacts/vb004-browser-recovery-check/receipt-scope.json",
+          "sha256": "7ea0866838d448ffbc27c8365ece4b8a96f49f543c71ab0525a5dd2ab27d6608"
+        },
+        {
+          "path": "evidence/product/chrome-isolated-route-2026-09-12.json",
+          "sha256": "a900ea7ba55adcf0bbc96900bb62a4acbc759932af726e17ab5b264d9e2d5b5a"
+        },
+        {
+          "path": "evidence/product/chrome-inflight-recovery-2026-09-12.json",
+          "sha256": "3f55352562d0c1ba9bd211f05a2d88de1bb24e54868419e8e94d31eaf1080991"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "Technische Chrome-route en afzonderlijk bevestigde eigenaarshandelingen",
+      "historyNote": "De bevestigde deelproeven van 11 september blijven geldig. Automatische proeven geven geen eigenaaracceptatie.",
+      "links": [
+        {
+          "title": "Open Chrome-bediening",
+          "url": "http://127.0.0.1:44718"
+        },
+        {
+          "title": "Open Chrome-proefpagina",
+          "url": "http://127.0.0.1:44718/proef"
+        }
+      ]
+    },
+    {
+      "id": "installation",
+      "intendedOutcome": "Beheerroute · runtime wisselen met gegevensbehoud. Installeren/verhuizen zonder terminal, volledige computerherstart en zeven dagen praktijk.",
+      "visibleResult": "Slotwissel van 11 sep 00:23 behield geheugen en operationele gegevens; kern gereed.",
+      "resultBasis": "AU-002-uitrolreceipt · 11 sep 00:23",
+      "gap": "Installeren/verhuizen zonder terminal, volledige computerherstart en zeven dagen praktijk.",
+      "gapKind": "Bredere ambitie",
+      "states": {
+        "built": "yes",
+        "tested": "yes",
+        "live": "yes",
+        "accepted": "no"
+      },
+      "stageLabels": {
+        "built": "Beheerroute",
+        "tested": "Gegevenscheck",
+        "live": "11 sep bewezen",
+        "accepted": "Nog open"
+      },
+      "stageNotes": {
+        "built": "Beheerroute. Bewijs geldt uitsluitend voor Beheerroute · runtime wisselen met gegevensbehoud. ",
+        "tested": "Gegevenscheck. Bewijs geldt uitsluitend voor Beheerroute · runtime wisselen met gegevensbehoud. ",
+        "live": "AU-002-slotwissel 4 naar 3 om 22:23 UTC / 00:23 Nederlandse tijd: 23 geheugentabellen en 48 operationele tabellen gesynchroniseerd, targetReady=true. Dit is geen volledige computerherstart of zeven dagen gebruik.",
+        "accepted": "Nog open. Bewijs geldt uitsluitend voor Beheerroute · runtime wisselen met gegevensbehoud. "
+      },
+      "sources": [
+        {
+          "path": "../.eva2-artifacts/co008-memory-20260910/recall-cutover-final.stdout",
+          "sha256": "2e42f30e9b10e52705879808896489f3b92e6f6aadb75b87f916b52ef7984e3f"
+        },
+        {
+          "path": "design/product/execution-workboard-v1.json",
+          "sha256": "c419c604f3ea7e5bd62078fefb67537b718cbccfa9273270d8f7f623e698512a"
+        },
+        {
+          "path": "evidence/product/TL-002-completion-2026-09-08.json",
+          "sha256": "00e8c8c816b7ee49bb4d1d0a0dcd96423af97e46080939121e743ad59a92fdda"
+        },
+        {
+          "path": "../.eva2-artifacts/au008-costless-initiative-20260910/owner-binding-cutover.stdout",
+          "sha256": "9d2b71970902d907d1926d8a6a57c55952df002a0051fd227153aae778d9fe4a"
+        },
+        {
+          "path": "evidence/product/AU-002-final-installed-2026-09-11.json",
+          "sha256": "80111ed7aeeb3b511e5ff073d4d6cf572c0a9cd005df9502bbe96ce0b46393ea"
+        }
+      ],
+      "statusCorrections": {},
+      "scope": "Beheerde slotwissel · gegevens behouden",
+      "historyNote": ""
+    }
+  ],
+  "updatedAt": "2026-09-10T10:24:31.120978+00:00",
+  "memoryEvidenceUpdate": {
+    "path": "evidence/product/CO-008-automatic-personal-memory-2026-09-10.json",
+    "technicalLive": true,
+    "independentReview": "GO",
+    "ownerAccepted": true,
+    "taskStatus": "done"
+  },
+  "ownerBrowserUpdate": {
+    "recordedOn": "2026-09-12",
+    "loginAccepted": true,
+    "viewerTrial": "failed",
+    "personalBrowser": "Google Chrome",
+    "personalBrowserConnected": false,
+    "evaRuntimeIntegrated": false,
+    "reversibleDemo": "Proces → Nu → Proces",
+    "handoffTrial": "reconnected_and_reversible_action_passed_after_explicit_selection",
+    "source": "Expliciete berichten Jaap en lokale Playwright MCP-extensieproef in deze taak.",
+    "trialClientStopped": true,
+    "bridgeProgress": "Via de gewone Eva-route zijn openen/sluiten, blokkeren van extra acties, stoppen van een lopende klik, verse waarneming na teruggeven en intrekken technisch bewezen in een aparte Windows-Chrome-proefbrowser. Jouw bevestigde overname, teruggeven en intrekken van 11 september blijven behouden. De eerdere klikweigering in jouw extensiesessie is niet opnieuw opgetreden in deze aparte proef; de precieze oorzaak is niet vastgesteld. Alleen de laatste proef in jouw opnieuw gekozen Chrome-tabblad staat open.",
+    "bridgeEvidence": "evidence/product/chrome-isolated-route-2026-09-12.json",
+    "normalEvaDenialVerified": true,
+    "chromeControlUrl": "http://127.0.0.1:44718",
+    "normalEvaIsolatedVerified": true,
+    "chromeTrialUrl": "http://127.0.0.1:44718/proef",
+    "trialInstructions": "Open de proefpagina in Google Chrome. Deel dat tabblad via Chrome-bediening en Allow & select. Meld Gedeeld; we doen dan één ronde met zichtbaar klikken, overnemen tijdens een wachtende klik, teruggeven en intrekken."
+  }
+}

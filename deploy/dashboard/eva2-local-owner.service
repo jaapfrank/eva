@@ -1,0 +1,16 @@
+[Unit]
+Description=Eva local owner dashboard without interactive login
+After=network.target docker.service
+
+[Service]
+User=administrator
+ExecStart=/usr/bin/node /home/administrator/project/Eva2/deploy/dashboard/local-owner.mjs
+LoadCredential=dashboard-token:/var/lib/eva2/managed-b-slot3/secrets/dashboard-token
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

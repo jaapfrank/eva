@@ -1,28 +1,22 @@
-# Eva 2
+# Eva2
 
-Eva 2 is a digital housemate project focused on conversation, personal memory,
-voice interaction and completing useful tasks. It is under active development;
-implemented, tested, deployed and accepted by the owner are separate states.
+A digital housemate that knows people, takes useful initiative, completes work and
+learns to add capabilities when needed. The active application is **src/eva** in
+this repository root. Current branch: **codex/eva2-root**.
 
-- [Local project dashboard](http://127.0.0.1:44712) — available on the configured development machine
-- [Current workboard](eva2/WERKBORD.md) — Dutch owner-facing progress and evidence
-- [Project vision](eva2/PROJECTDOEL.md) — Dutch owner decisions
-- [Development guide](CONTRIBUTING.md)
-- [Component documentation](eva2/README.md)
-- [Documentation index](eva2/DOCUMENTATIE_EN_ONDERHOUD.md)
-- [Existing component choices](OPEN_SOURCE_COMPONENTEN.md)
+| Read | Purpose |
+| --- | --- |
+| [PROJECTDOEL.md](PROJECTDOEL.md) | Owner goal and complete delivery conditions |
+| [ARCHITECTUUR.md](ARCHITECTUUR.md) | Current modules, interfaces and actual gaps |
+| [WERKBORD.md](WERKBORD.md) | Current work and remaining existing tasks |
+| [docs/project-reassessment-20261013.md](docs/project-reassessment-20261013.md) | Reassessment and retain/archive decisions |
+| [backup/README.md](backup/README.md) | Historical source and migration provenance |
 
-The active Python application is in `eva2/src/`, with tests in `eva2/tests/`.
-Older shared components outside `eva2/` have not all been separated from the
-legacy project. Their presence does not indicate a second active Eva 2 runtime.
+Run commands from this root. The Python package uses pyproject.toml and the existing
+locked dependencies. Optional integrations live in connectors, connector_sdk and deploy;
+the project dashboard is a developer tool in tools/project-dashboard.
 
-The current development checkout is `/home/administrator/project/Eva2`;
-the separate legacy installation is `/home/administrator/project/Bottie`.
-New work starts from the current integration commit on `main`. Historical
-evidence applies to its recorded version and scope, not automatically to today.
-
-Code identifiers and technical interfaces are predominantly English. Existing
-documentation and user-facing text are mixed English and Dutch. New technical
-code and developer documentation use English; conversation and interface
-language remain user-facing choices. The repository has not yet been prepared
-as a complete public open-source release.
+The existing WSL container installation remains separate from source checkout.
+Archived Eva1 code is not imported by Eva2. Historic proof and review records remain
+immutable; they do not define today's work. No general superiority over other agents
+has been established. See the workboard for measured results and remaining gaps.

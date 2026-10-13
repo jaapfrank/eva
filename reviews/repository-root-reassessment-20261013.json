@@ -1,0 +1,42 @@
+{
+  "contract": "EvaRepositoryReassessmentReview/v1",
+  "verdict": "GO_REPOSITORY_MIGRATION_ONLY",
+  "reviewedAt": "2026-10-13T11:16:01.607684+00:00",
+  "sourceReviews": {
+    "verdict": "GO_REPOSITORY_MIGRATION_ONLY",
+    "migrationReviewSha256": "d9d8e6233c2e61a427630ce61b54ba5aba64c487d2cf987db1a99d81b8478d91",
+    "documentationReviewSha256": "ca4e505428cc82f9c8f325be2bb7bc15ab953c979a12c0181737ccac1aae662e",
+    "publicReview": "reviews/repository-root-reassessment-20261013.json"
+  },
+  "preserved": {
+    "mappedOriginalFiles": 4907,
+    "byteExactArchives": 752,
+    "originalTaskIdsAndCriteria": 54,
+    "completedOriginalSubset": "39/48",
+    "completedExpandedTasks": "43/54"
+  },
+  "checks": {
+    "importApplication": 65,
+    "installerAssets": 24,
+    "rootFixtures": 154,
+    "sourceBindings": 10,
+    "catalog": "PASS",
+    "currentBoard": "PASS",
+    "dashboardBuild": "PASS",
+    "architectureBefore": 110,
+    "architectureAfter": 110,
+    "introducedArchitectureFindings": 0,
+    "baselineFailingContractTests": 73,
+    "currentFailingContractTests": 72,
+    "introducedFailingContractTests": 0
+  },
+  "limitations": [
+    "24 historical Markdown versions are not fully read",
+    "110 pre-existing architecture findings remain",
+    "72 pre-existing failing contract tests under root UID0 remain",
+    "Existing pinned runtime images were not replaced",
+    "No new product completion or general quality advantage is established",
+    "Development credit cost is unknown"
+  ],
+  "goalComplete": false
+}

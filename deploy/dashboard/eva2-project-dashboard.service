@@ -1,0 +1,13 @@
+[Unit]
+Description=Eva2 project dashboard
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/administrator/project/Eva2/tools/project-dashboard
+ExecStart=/usr/bin/node node_modules/vite/bin/vite.js preview --mode project --host 127.0.0.1 --port 44712 --strictPort
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

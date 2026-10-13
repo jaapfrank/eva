@@ -24,12 +24,12 @@ venv/
 *.env.*
 !.env.example
 !**/.env.example
-!eva2/deploy/living-core/runtime.env.example
-!eva2/deploy/living-core/hindsight.env.example
+!deploy/living-core/runtime.env.example
+!deploy/living-core/hindsight.env.example
 
 # Runtime secrets must remain local; only the templates above are traceable.
-eva2/deploy/living-core/secrets/
-eva2/deploy/living-core/secrets/**
+deploy/living-core/secrets/
+deploy/living-core/secrets/**
 
 # Private keys, certificates and exported credential bundles
 *.key
@@ -59,11 +59,26 @@ Thumbs.db
 /eva_brain/replay/out_*.txt
 
 # Sealed experiment artifacts are materialized locally from checked manifests.
-/eva2/experiments/distroless-core-v1/wheelhouse/*.whl
-/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk
-/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
-/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl
-/eva2/build/
-/eva2/deploy/voice-session/vendor/
+/experiments/distroless-core-v1/wheelhouse/*.whl
+/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk
+/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
+/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl
+/build/
+/deploy/voice-session/vendor/
 
-/eva2/experiments/react-admin-dashboard-v1/project-dist/
+/experiments/react-admin-dashboard-v1/project-dist/
+
+# Archived local caches and owner-private captures are never published.
+/backup/local-generated/
+**/.playwright-mcp/
+**/.pytest-secret-*
+**/secrets/**
+/backup/eva1/test/workspace-relocation-private-proof.py
+/backup/eva1/test/workspace-relocation-private-worker.py
+/tools/project-dashboard/project-dist/
+
+# Archived dependency caches retain the original exclusion policy.
+/backup/history/eva2/experiments/distroless-core-v1/wheelhouse/*.whl
+/backup/history/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk
+/backup/history/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
+/backup/history/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl
