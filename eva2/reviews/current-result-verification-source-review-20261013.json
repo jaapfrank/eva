@@ -1,0 +1,42 @@
+{
+  "contract": "EvaPublicCurrentResultVerificationSourceReview/v1",
+  "checkedAt": "2026-10-13T03:31:19.336859+00:00",
+  "verdict": "GO",
+  "scope": "Exact general current-result verification correction, for source/build/installation through the existing route. No native-input authority or behavioral success claim.",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "172d981816f0aa08e88d85a113c013529c6dff0436c5b42f43a4d619395bfe63"
+    }
+  ],
+  "baselineSha256": "7ba6e33ca70cc24aaa601dc00c0194256b98b9957fcde75ff5007e8c457e6161",
+  "privateReviewSha256": "8e07cb4b14e3e8fb3e56fcd653a9f03b9f9404c9ba3ac6cdae54903b6954949f",
+  "sourceManifestSha256": "acd2cbb66f5725fd04f47b804030760b8024c85061514c54c3f5b29a12b1db49",
+  "testEvidence": {
+    "finalSelection": "24 unique targeted checks PASS; exit0,4.29s, preserved raw log. No reviewer rerun.",
+    "newRegressionCases": {
+      "verifiedSingleRead": "All-done plan without current proof receives guidance; one verified existing-result read yields succeeded,3 measured model responses and1tool, validated measured usage; no repeated write.",
+      "noRead": "No read yields incomplete_work after2 measured model responses, no tool dispatch or result."
+    },
+    "retainedGuardCoverage": [
+      "current/unchanged blocked plans",
+      "retained predecessor is not current completion",
+      "unfinished tool execution",
+      "UNKNOWN/exhausted usage",
+      "external stop guard",
+      "programming process terminal state",
+      "task boundary",
+      "unchanged generate AST"
+    ],
+    "preClarificationSelection": "Earlier24-check result preserved separately; the two selections are not48 unique tests."
+  },
+  "blockers": [],
+  "limitations": [
+    "No historical failure/UNKNOWN/task state is rewritten.",
+    "No gate bypass, blind old-proof success, new quota or automatic external-effect replay is approved.",
+    "Native behavior, actual result delivery, owner acceptance, savings and full project closure still require their own actual evidence."
+  ],
+  "newInputAuthority": false,
+  "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+  "runtimeBehaviorProven": false
+}

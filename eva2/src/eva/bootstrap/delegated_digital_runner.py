@@ -152,7 +152,10 @@ class _TaskModel:
             "en onderscheid bewezen feiten, nog open vragen en voorwaarden voor latere uitvoering. "
             "Een opgeslagen tussenversie is geen afgeronde opdracht. Controleer het opgeslagen "
             "resultaat met een afzonderlijke teruglezing; meld alleen werkelijk aangetoonde "
-            "afronding. Onderzoek daarna gericht alleen wat voor de oorspronkelijke eindvoorwaarden "
+            "afronding. Ook bij hervatting moet een toolresultaat in deze uitvoerpoging de "
+            "actuele uitkomst bevestigen. Als de inhoud al klaar is, controleer alleen het "
+            "bestaande eindresultaat; herschrijf het niet en herhaal geen externe handeling. "
+            "Onderzoek daarna gericht alleen wat voor de oorspronkelijke eindvoorwaarden "
             "nog ontbreekt. Bij grotere opdrachten: bewaar een beknopt uitvoerplan met "
             "save_work_progress, behoud de bestaande stap-ID's en werk de stappen bij na "
             "betekenisvolle voortgang. Werknotities vervangen het gevraagde resultaat niet. "
@@ -682,7 +685,7 @@ class DelegatedDigitalRunner:
                             return reply
                         remaining = [step for step in progress_state["steps"]
                                      if step["state"] not in {"done", "skipped"}]
-                        if not remaining:
+                        if not remaining and _has_completed_tool_evidence(actions.receipts):
                             return reply
                         if (progress_state.get("work_id") == spec.work_id
                                 and any(step["state"] == "blocked" for step in remaining)):
@@ -701,14 +704,24 @@ class DelegatedDigitalRunner:
                                 or actions.dispatches >= spec.grant.maximum_tool_calls):
                             raise _DigitalBudgetExceeded("remaining attempt budget cannot continue the plan")
                         prompted_states.add(state_key)
-                        task_model.continuation_feedback = (
+                        task_model.continuation_feedback = ((
+                            "Je uitvoerplan is afgerond, maar deze uitvoerpoging heeft nog geen "
+                            "geverifieerd toolresultaat om de afsluiting te onderbouwen. Doe alleen "
+                            "de ontbrekende actuele controle van het gevraagde resultaat: lees "
+                            "bijvoorbeeld het bestaande einddocument apart terug. Gebruik eerdere "
+                            "bevindingen; schrijf het resultaat niet opnieuw en herhaal geen "
+                            "externe handeling. Geef daarna het werkelijk gecontroleerde resultaat "
+                            "terug. Als die controle niet mogelijk is, bewaar de concrete blokkade; "
+                            "verzin geen bewijs en vergroot het mandaat niet."
+                        ) if not remaining else (
                             "Je gaf een slotantwoord, maar je opgeslagen uitvoerplan heeft nog open "
                             "stappen. De opdracht is daarmee niet afgerond. Ga door met de eerstvolgende "
                             "uitvoerbare stap binnen dezelfde opdracht en werk daarna de voortgang bij. "
                             "Gebruik eerdere toolresultaten en herhaal geen al uitgevoerde actie. "
                             "Markeer stappen alleen als gedaan als werkelijk resultaat dat onderbouwt. "
                             "Bij een echte blokkade: bewaar die met state blocked, de reden en een "
-                            "bruikbare hervatnotitie; verzin geen succes en vergroot het mandaat niet.",)
+                            "bruikbare hervatnotitie; verzin geen succes en vergroot het mandaat niet."
+                        ),)
             worker = asyncio.create_task(asyncio.to_thread(execute))
             try:
                 reply = await asyncio.shield(worker)

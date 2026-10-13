@@ -1,4 +1,31 @@
-## Actueel 13 oktober — Eva schreef bruikbaar voorstel; algemene opleverfase gecorrigeerd
+## Actueel 13 oktober — Eva controleert haar eigen resultaat vóór taakafronding
+
+Eva's oorspronkelijke voorstel heeft inhoudelijk PASS (Gen22, SHA33c1204d).
+Gen23 markeerde alle drie voorstelstappen done, maar eindigde FAILED/incomplete_work:
+de uitvoerder beëindigde de modelronde zonder actueel toolbewijs en wees pas daarna
+het antwoord af. Drie gemeten/gesloten aanvragen, 146.726 tokens, één voortgangstool;
+geen nieuw document of HA-wijziging. Oude foutstatus wordt niet herschreven.
+
+Die algemene afsluitlus is nu gecorrigeerd en geïnstalleerd: runner172d9818 in
+gezonde, ready kern/werker; 344 overige bronnen per image en configuratie/mounts
+ongewijzigd. Als alleen actueel bewijs ontbreekt, krijgt Eva gericht terug wat ze
+nog moet controleren. Geen oude bewijzen blind als succes tellen, geen herschrijven
+of herhaalde effecten. Stop-, bevoegdheids-, blocked- en UNKNOWN-gates behouden.
+Onafhankelijke bronreview GO; 24 unieke gerichte controles slagen, waaronder
+één actuele teruglezing en begrensd stoppen zonder bewijs. Twee oudere identieke
+baselinefouten blijven bewaard. Eén installatie, nul modelaanvragen bij bouwen.
+
+Eén gewone Gen24-voortzetting loopt met oorspronkelijke opdracht/criteria/mandaat:
+work:eva-resume:f8f7f91e-aed4-5659-be6a-a2ca18efbb8c. Eva moet zelf het bestaande
+eindresultaat controleren en opleveren; Codex schrijft het voorstel niet. Native
+succes en levering nog niet waargenomen. Geen HA-migratie vóór later apart akkoord.
+Volledig goal ACTIVE; 39/48 en 39/54 onveranderd. HUE, leercyclus en AIDE² open;
+spraak geparkeerd, ongebruikte Docker Desktop ongemoeid, geen nieuwe vergelijking.
+Installatie: eva2/evidence/product/current-result-verification-installed-20261013.json.
+Review: eva2/reviews/current-result-verification-source-review-20261013.json.
+Gen23: eva2/evidence/product/proposal-phase-ordinary-result-20261013.json.
+
+## Historisch 13 oktober — Eva schreef bruikbaar voorstel; algemene opleverfase gecorrigeerd
 
 De oorspronkelijke inhoudelijke review van Gen22 is PASS: Eva schreef zelf een
 bruikbaar voorwaardelijk readonly voorstel en las het apart terug. 14.736 bytes,

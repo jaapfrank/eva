@@ -115,6 +115,47 @@ def test_two_tool_steps_finish_while_foreground_conversation_continues():
         _validate_usage(spec,outcome.usage,successful=True)
     asyncio.run(run())
 
+@pytest.mark.parametrize("verify_result", [True, False])
+def test_completed_plan_requires_current_verification_without_repeating_work(monkeypatch, verify_result):
+    import eva.bootstrap.delegated_digital_runner as module
+
+    source, spec, store, tools, journal, runner, identity = fixture()
+    tools.release.set()
+    monkeypatch.setattr(module, "load_work_progress", lambda *args: {
+        "work_id": spec.work_id, "revision": 36,
+        "steps": [{"state": "done"}],
+    })
+
+    class FinishSavedResult:
+        responses = 0
+        def generate(self, *args, **kwargs):
+            self.responses += 1
+            guidance = any("ontbrekende actuele controle" in item
+                           for item in kwargs["self_context"])
+            read = (verify_result and guidance
+                    and kwargs.get("completed_action") is None)
+            call = ConversationActionCall("verify-existing", "use_connector_tool", {
+                "operation": "read", "path": "/existing-result.md",
+            }) if read else None
+            return ConversationModelResult(None if call else "The saved result is ready.",
+                "controlled", call, usage=ConversationModelUsage.measured(
+                    input_tokens=30, output_tokens=10, tool_calls=int(call is not None)))
+
+    model = FinishSavedResult()
+    runner.model = model
+    outcome = asyncio.run(runner.run(spec, call_id="call:finish-saved"))
+    if verify_result:
+        assert outcome.status == "succeeded", outcome
+        assert outcome.result.output == "The saved result is ready."
+        assert [item[1] for item in tools.calls] == ["use_connector_tool"]
+        assert outcome.usage.completed_model_responses == model.responses == 3
+        assert outcome.usage.tool_calls == 1
+        _validate_usage(spec, outcome.usage, successful=True)
+    else:
+        assert outcome.status == "incomplete_work", outcome
+        assert outcome.result is None and not tools.calls
+        assert outcome.usage.completed_model_responses == model.responses == 2
+
 def test_outer_cancel_waits_for_connector_cleanup_without_second_step():
     async def run():
         _,spec,_,tools,_,runner,_=fixture()

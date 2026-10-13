@@ -1,0 +1,53 @@
+{
+  "contract": "EvaCurrentDeliveryPhaseOrdinaryResult/v1",
+  "checkedAt": "2026-10-13T03:26:16.822302+00:00",
+  "workId": "work:eva-resume:4177703f-ddf0-5879-b739-f3d583baf42e",
+  "generation": 23,
+  "nativeStatus": "failed",
+  "nativeError": "incomplete_work",
+  "nativeErrorFingerprint": "fb82923d6535f283e417a46f1db68a49d26a44033dfa48e65be0db06b2d006a1",
+  "confirmedCodeCause": "_UnfinishedWorkPlan:background task lacks verified completed tool results",
+  "phaseCorrectionObserved": {
+    "progressRevision": 36,
+    "inventory": "done",
+    "dependencies": "done",
+    "proposal": "done",
+    "modelReportedOnly": true
+  },
+  "currentCallAccounting": {
+    "admitted": 3,
+    "measured": 3,
+    "streamsClosed": 3,
+    "inputTokens": 145861,
+    "outputTokens": 865,
+    "totalTokens": 146726,
+    "tools": 1,
+    "currentUnknown": 0,
+    "inflight": 0,
+    "ownerApiMeasurement": "partial",
+    "historicalUnknownPreserved": true,
+    "creditCosts": null
+  },
+  "actions": {
+    "saveWorkProgress": 1,
+    "documentSaves": 0,
+    "currentWorkspaceReads": 0,
+    "haActions": 0
+  },
+  "document": {
+    "originGeneration": 22,
+    "bytes": 14736,
+    "sha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+    "unchanged": true,
+    "originalContentVerdict": "PASS reused only for exact unchanged bytes",
+    "priorSaveAndReadbackRetained": true
+  },
+  "nativeResultAvailable": false,
+  "delivery": "UNBOUND",
+  "newProviderOrInputBudgetFailure": false,
+  "necessaryGeneralCorrection": "The existing bounded continuation must request missing current verification when the plan is done, instead of returning then rejecting the answer without actionable feedback. No result-proof bypass.",
+  "terminalPrivateEvidenceSha256": "d91a143bc871ac01fa9b9cd4f43e13be6464c04e44bce22745b1fceada3de5c5",
+  "newComparisonSeries": false,
+  "pastFailuresCriteriaGrantsPreserved": true,
+  "wholeProjectComplete": false
+}

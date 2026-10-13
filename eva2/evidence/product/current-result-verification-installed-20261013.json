@@ -1,0 +1,92 @@
+{
+  "contract": "EvaPublicCurrentResultVerificationInstalled/v1",
+  "checkedAt": "2026-10-13T03:31:19.336859+00:00",
+  "scope": "General executor closure feedback; missing current proof must be obtained with one applicable verification, without rewriting the result or repeating effects.",
+  "cause": "Exact _UnfinishedWorkPlan:background task lacks verified completed tool results despite all existing plan steps done.",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "172d981816f0aa08e88d85a113c013529c6dff0436c5b42f43a4d619395bfe63"
+    }
+  ],
+  "baselineSha256": "7ba6e33ca70cc24aaa601dc00c0194256b98b9957fcde75ff5007e8c457e6161",
+  "review": {
+    "path": "eva2/reviews/current-result-verification-source-review-20261013.json",
+    "sha256": "877757618c0aa694de598bdcdb47e4523def2dd6a07e9dbf0656d445e3b6014b",
+    "verdict": "GO"
+  },
+  "verificationSha256": "2c0456868ad61061a5720e41d975b91ec07dcc66db51c4676e64649f456477c9",
+  "updateDispatches": 1,
+  "modelRequestsDuringBuildInstall": 0,
+  "services": {
+    "core": {
+      "image": "sha256:1404cb555b7746644741bbf678ba044cbf4f79ff7760ec9760b46d673d2b573d",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "bootstrap/delegated_digital_runner.py": "172d981816f0aa08e88d85a113c013529c6dff0436c5b42f43a4d619395bfe63"
+      },
+      "inspectionSha256": "2c69ff30168fece75ad9eb21abd7aa14024d89e157717f3f3bac3116b0d9f001"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:c9460e7f27d34296e9c97bb40073ff57f9ba6d5dcce3db15df1dd2f907c77f83",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "bootstrap/delegated_digital_runner.py": "172d981816f0aa08e88d85a113c013529c6dff0436c5b42f43a4d619395bfe63"
+      },
+      "inspectionSha256": "2b363232ea590207f386747b62d9b2b1038a3201e3a6f97949988d27297556b5"
+    }
+  },
+  "ready": true,
+  "tests": {
+    "uniqueTargetedChecks": 24,
+    "newParameterizedRegressionCases": 2,
+    "summary": "24 passed in 4.29s",
+    "resultSha256": "1629bc7d57f2e44c3acc50a591425783b2d8ed18c4434f07dcd4304f3e8a9ddc",
+    "liveModelRequests": 0,
+    "earlierSameSelectionNotAdditionalUniqueChecks": true,
+    "priorFullSuiteSameBaselineFailuresPreserved": 2
+  },
+  "priorOrdinaryResult": {
+    "path": "eva2/evidence/product/proposal-phase-ordinary-result-20261013.json",
+    "sha256": "1fb9bbe9e19edb58007cc293f16c20ee49845428bc61355d18e3b00d51c673c7",
+    "state": "failed",
+    "cause": "No current verified completed tool results despite completed plan",
+    "measuredTokens": 146726,
+    "closedRequests": 3
+  },
+  "nextOrdinaryResume": {
+    "workId": "work:eva-resume:f8f7f91e-aed4-5659-be6a-a2ca18efbb8c",
+    "parentWorkId": "work:eva-resume:4177703f-ddf0-5879-b739-f3d583baf42e",
+    "generation": 24,
+    "receiptSha256": "d696d168d3dc688730cf7fd3974da4a41258324096fe10ca38f765c747f77a5f",
+    "newInstruction": false,
+    "criteriaOrGrantChanged": false,
+    "state": "call_started",
+    "nativeResult": "not_yet_observed",
+    "delivery": "UNBOUND"
+  },
+  "boundaries": {
+    "noHandwrittenProposal": true,
+    "noHaMutationOrMigrationApproval": true,
+    "noNewComparisonSeries": true,
+    "previousFailureAndUnknownPreserved": true,
+    "mainCompletionCountsUnchanged": true,
+    "creditCosts": null
+  }
+}
