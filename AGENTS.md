@@ -14,7 +14,14 @@ en opgeslagen resultaat zijn bytegelijk. Standaard alleen een kort antwoord en
 samenvatting, geen automatische bijlage. De documentroute vereist een expliciet
 verzoek voor één oorspronkelijke taak; herhaal geen onderzoek of externe wijziging.
 Oude samenvatting-ACK en onzekere tekstpoging blijven behouden.
-Vervolg HUE6/AIDE², HUE5 en samenhangende chatoplevering; geen vergelijkingsserie.
+Beoordelingsdienst en geïsoleerde configuratietoegang zijn hersteld. De laatste
+hervatting faalde vóór de evaluatiewerker; kandidaat blijft onbeoordeeld. Bewijs:
+development/evidence/product/aide-evaluation-host-repair-installed-20261013.json.
+Gesloten proef en verbruik behouden; geen tijdreset of herhaling daarvan.
+Actief: HUE6/AIDE² via Eva's bewaarde kandidaat; onafhankelijke beoordeling,
+alleen kwaliteitswinst toepassen en later gebruiken. Daarna HUE5 en samenhangende
+chatoplevering; geen vergelijkingsserie. Spraak wordt door een ander model verzorgd;
+deze uitvoerder wijzigt geen spraakcode of spraakinstallatie.
 Repositoryopruiming is afgerond, met exacte herkomst op Git-revisie
 eab83747a3c33a83f2f63f38180dc7d6330635ec. Eva2 staat in src/eva; geen Eva1-ontwikkeling.
 

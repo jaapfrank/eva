@@ -822,18 +822,18 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T12:52:29.325596+00:00",
+  "lastUpdated": "2026-10-13T13:53:04.454562+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "L2.2",
+  "activeTaskId": "HUE6.1",
   "currentWork": {
-    "id": "L2.2",
-    "title": "Volledig opgeslagen werkresultaat leesbaar terugmelden",
-    "outcome": "Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.",
-    "area": "independent work",
-    "status": "completed",
-    "doneWhen": "Volledig opgeslagen document komt leesbaar bij de oorspronkelijke ontvanger en vraag; exacte broninhoud/aflevering bevestigd, oude ACK behouden, geen dubbele automatische verzending; geïnstalleerd in bestaande WSL-runtime.",
-    "countedAsProductTask": false
+    "id": "HUE6.1",
+    "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
+    "outcome": "Eva beoordeelt haar eigen bewaarde variant, past uitsluitend onafhankelijk bewezen kwaliteitswinst toe en gebruikt die bij later werk.",
+    "area": "independent work and learning",
+    "status": "in_progress",
+    "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
+    "countedAsProductTask": true
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -930,7 +930,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "Documentterugmelding afgerond; hierna HUE6/AIDE², HUE5 en samenhangende chatoplevering. Geen nieuwe vergelijkingsserie of spraakontwikkeling.",
+      "priorityDecision": "HUE6/AIDE²: bewaarde Eva-kandidaat via bestaande route afronden; daarna HUE5. Spraak wordt door een ander model verzorgd en valt buiten deze opdracht.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1758,22 +1758,23 @@
           "ownerRead": "unknown"
         },
         "now": {
-          "title": "Volledig opgeslagen werkresultaat leesbaar terugmelden",
-          "state": "Afgerond",
-          "phase": "full_result_delivered_summary_default",
-          "taskId": "L2.2",
-          "activeExecution": false,
+          "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
+          "state": "Bezig",
+          "phase": "access_repair_installed_candidate_unjudged",
+          "taskId": "HUE6.1",
+          "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.",
-          "detail": "Geïnstalleerd in kern en werker. Oud ontvangstbewijs en onzekere tekstpoging behouden; geen nieuw onderzoek. Onafhankelijke finale publicatiecontrole volgt.",
-          "doneWhen": "Volledig opgeslagen document komt leesbaar bij de oorspronkelijke ontvanger en vraag; exacte broninhoud/aflevering bevestigd, oude ACK behouden, geen dubbele automatische verzending; geïnstalleerd in bestaande WSL-runtime.",
-          "ownerActionNeeded": false
+          "summary": "Beoordelingsdienst en toegang voor de evaluatiewerker hersteld. De kandidaat is nog niet inhoudelijk beoordeeld.",
+          "detail": "Eén hervatting faalde vóór uitvoering van de evaluatiewerker. Oorzaak gecorrigeerd en zonder modelcalls gecontroleerd. Oude proef gesloten; geen kwaliteitswinst of afgeronde leercyclus claimen. Spraak bij ander model.",
+          "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
+          "ownerActionNeeded": false,
+          "latestEvidence": "development/evidence/product/aide-evaluation-host-repair-installed-20261013.json"
         },
         "next": {
           "state": "Hierna",
-          "title": "HUE6/AIDE² afmaken",
-          "detail": "Sluit de aantoonbare ontbrekende verbinding tussen opgeslagen document en de oorspronkelijke ontvanger. Geen handmatig herschreven voorstel.",
-          "summary": "HUE6/AIDE²: bestaande onafhankelijke verbetering toepassen en later gebruiken; geen nieuwe vergelijkingsserie."
+          "title": "HUE5: initiatief leert van echte feedback",
+          "summary": "Echte reactie laten doorwerken in volgend initiatief of bewust stilblijven.",
+          "detail": "Bestaande persoonsgebonden geheugen- en initiatiefroute gebruiken."
         },
         "ownerAction": {
           "title": "Nu niets nodig",
@@ -1781,12 +1782,12 @@
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-13T11:09:22.423738+00:00",
-        "reviewedAt": "2026-10-13T11:09:22.423738+00:00",
+        "checkedAt": "2026-10-13T14:44:38.960328+00:00",
+        "reviewedAt": "2026-10-13T14:44:38.960328+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-13T13:40:45.278382+00:00",
-      "checkedAt": "2026-10-13T13:40:45.278382+00:00",
+      "checkedAt": "2026-10-13T13:53:04.454562+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -1941,7 +1942,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "full-result-delivery",
+        "currentStep": "HUE6.1",
         "steps": [
           {
             "number": 1,
@@ -3607,8 +3608,8 @@
             ]
           }
         ],
-        "status": "delivery_completed",
-        "nextAction": "HUE6/AIDE²: bestaande onafhankelijke verbetering toepassen en later gebruiken; geen nieuwe vergelijkingsserie.",
+        "status": "in_progress",
+        "nextAction": "Bestaande Eva-kandidaat onafhankelijk beoordelen, alleen kwaliteitswinst toepassen en later gebruiken; spraak buiten deze opdracht.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -3616,12 +3617,12 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-13T13:40:45.278382+00:00"
+        "updatedAt": "2026-10-13T13:53:04.454562+00:00"
       }
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "full-result-delivery",
+      "currentStep": "HUE6.1",
       "steps": [
         {
           "number": 1,
@@ -5287,8 +5288,8 @@
           ]
         }
       ],
-      "status": "delivery_completed",
-      "nextAction": "HUE6/AIDE²: bestaande onafhankelijke verbetering toepassen en later gebruiken; geen nieuwe vergelijkingsserie.",
+      "status": "in_progress",
+      "nextAction": "Bestaande Eva-kandidaat onafhankelijk beoordelen, alleen kwaliteitswinst toepassen en later gebruiken; spraak buiten deze opdracht.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -5296,7 +5297,7 @@
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-13T13:40:45.278382+00:00"
+      "updatedAt": "2026-10-13T13:53:04.454562+00:00"
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -5549,7 +5550,15 @@
       "technicalCompletedOn": "2026-09-12",
       "reviewedBy": "/root/au008_final_review",
       "remaining": "IN-02 eigenaarsoordeel; geen concreet technisch restpunt binnen deze oplevering."
+    },
+    "aideRetainedResume20261013": {
+      "evidence": "development/evidence/product/aide-evaluation-host-repair-installed-20261013.json",
+      "independentReview": "development/evidence/product/aide-retained-resume-independent-review-20261013.json",
+      "candidateQuality": "unjudged",
+      "aideCycleComplete": false,
+      "voiceChanged": false,
+      "remaining": "Ontwikkelbeoordeling, onafhankelijke eindbeoordeling en eventueel later gebruik blijven open; geen heropening van de gesloten proef."
     }
   },
-  "updatedAt": "2026-10-13T13:40:45.278382+00:00"
+  "updatedAt": "2026-10-13T14:44:38.960328+00:00"
 }

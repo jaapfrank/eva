@@ -1,0 +1,46 @@
+{
+  "contract": "EvaAideEvaluationHostRepair/v1",
+  "recordedAt": "2026-10-13T14:41:29.917564+00:00",
+  "taskId": "HUE6.1",
+  "status": "installed_repair_candidate_not_assessed",
+  "installed": [
+    "canonical host JSON within unchanged loader bound",
+    "current repository source path for existing evaluation service",
+    "exact historical context assessment paths",
+    "hash-verified relocation of missing historical review evidence",
+    "existing isolated preview snapshot readable by evaluation UID"
+  ],
+  "unchanged": [
+    "normal core and worker images",
+    "candidate and baseline bytes",
+    "development and final criteria",
+    "provider and model roles",
+    "historical registrations and usage",
+    "voice installation and sources"
+  ],
+  "sourceTests": {
+    "path": "development/tests/operations/test_import_component_release.py",
+    "passed": 38
+  },
+  "independentReview": {
+    "path": "development/evidence/product/aide-retained-resume-independent-review-20261013.json",
+    "sha256": "18193fce12d8786be2e9dbb946e1c8afe264e99af80bd5a19f94b3d9b258217f"
+  },
+  "newEvaUsage": {
+    "modelRequests": 1,
+    "tools": 1,
+    "inputTokens": 23912,
+    "outputTokens": 66,
+    "totalTokens": 23978,
+    "nativeChildRequests": 0
+  },
+  "candidateEvaluated": false,
+  "candidateInstalled": false,
+  "qualityGainProven": false,
+  "learningCycleComplete": false,
+  "oldAttemptClosed": true,
+  "oldBudgetNotReset": true,
+  "creditCostsKnown": false,
+  "developmentCreditsKnown": false,
+  "scope": "Existing AIDE development/final evaluation route only; no comparator series or voice changes."
+}

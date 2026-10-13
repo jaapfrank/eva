@@ -227,3 +227,41 @@ def test_package_digest_cannot_be_rebound_implicitly(release_factory):
     release["package_file"].write_text(json.dumps(package))
     with pytest.raises(ValueError, match="candidate package binding differs"):
         prepare(release)
+
+
+@pytest.mark.parametrize("folder", ["evidence", "reviews"])
+def test_historical_evidence_uses_exact_relocated_bytes(tmp_path, monkeypatch, folder):
+    root = tmp_path / "checkout"
+    monkeypatch.setattr(importer, "__file__", str(root / "src/tools/import_component_release.py"))
+    old = root / "eva2" / folder / "result.json"
+    current = root / "development" / folder / "result.json"
+    current.parent.mkdir(parents=True)
+    current.write_bytes(b'{"passed":true}')
+    binding = {"path": str(old), "sha256": importer.digest(current.read_bytes())}
+    assert importer.checked_evidence(tmp_path / "review.json", binding) == binding
+    current.write_bytes(b'{"passed":false}')
+    with pytest.raises(ValueError, match="changed"):
+        importer.checked_evidence(tmp_path / "review.json", binding)
+
+
+def test_historical_evidence_does_not_redirect_existing_bytes(tmp_path, monkeypatch):
+    root = tmp_path / "checkout"
+    monkeypatch.setattr(importer, "__file__", str(root / "src/tools/import_component_release.py"))
+    old = root / "eva2/evidence/result.json"
+    current = root / "development/evidence/result.json"
+    old.parent.mkdir(parents=True)
+    current.parent.mkdir(parents=True)
+    old.write_bytes(b'old')
+    current.write_bytes(b'new')
+    with pytest.raises(ValueError, match="changed"):
+        importer.checked_evidence(tmp_path / "review.json",
+                                 {"path": str(old), "sha256": importer.digest(b'new')})
+
+
+@pytest.mark.parametrize("relative", ["src/private.json", "evidence/../src/private.json"])
+def test_historical_evidence_does_not_redirect_other_paths(tmp_path, monkeypatch, relative):
+    root = tmp_path / "checkout"
+    monkeypatch.setattr(importer, "__file__", str(root / "src/tools/import_component_release.py"))
+    with pytest.raises(FileNotFoundError):
+        importer.checked_evidence(tmp_path / "review.json",
+                                 {"path": str(root / "eva2" / relative), "sha256": importer.digest(b'new')})

@@ -62,7 +62,19 @@ def checked_evidence(review_file, entry):
     path = Path(entry["path"])
     if not path.is_absolute():
         path = review_file.parent / path
-    raw = path.read_bytes()
+    try:
+        raw = path.read_bytes()
+    except FileNotFoundError as missing:
+        # Root-layout migration preserves historical attestations and exact bytes.
+        # Only archived evidence/reviews may move; never redirect code or secrets.
+        root = Path(__file__).resolve().parents[2]
+        try:
+            relative = path.relative_to(root / "eva2")
+        except ValueError:
+            raise missing
+        if ".." in relative.parts or relative.parts[0] not in {"evidence", "reviews"}:
+            raise
+        raw = (root / "development" / relative).read_bytes()
     if not raw or len(raw) > 8388608 or digest(raw) != entry["sha256"]:
         raise ValueError("review evidence is absent, oversized, or changed")
     return {"path": str(path.resolve()), "sha256": digest(raw)}

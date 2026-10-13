@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Volledig opgeslagen werkresultaat leesbaar terugmelden
+Bestaande AIDE²-verbetering afronden en later toepassen
 
-Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.
+Beoordelingsdienst en toegang voor de evaluatiewerker hersteld. De kandidaat is nog niet inhoudelijk beoordeeld.
 
-Klaar wanneer: Volledig opgeslagen document komt leesbaar bij de oorspronkelijke ontvanger en vraag; exacte broninhoud/aflevering bevestigd, oude ACK behouden, geen dubbele automatische verzending; geïnstalleerd in bestaande WSL-runtime.
+Klaar wanneer: Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.
 
 ## Afmaakvolgorde
 

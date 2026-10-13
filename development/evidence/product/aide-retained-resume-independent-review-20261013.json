@@ -1,0 +1,56 @@
+{
+  "contract": "EvaIndependentRetainedResumeReview/v1",
+  "taskId": "HUE6.1",
+  "status": "closed_failed_attempt_access_repair_verified",
+  "scope": "Current retained candidate resume only; previous raw errors and historical UNKNOWN retained.",
+  "newParentRequests": 1,
+  "newPhysicalTools": 1,
+  "newInputTokens": 23912,
+  "newOutputTokens": 66,
+  "newTotalTokens": 23978,
+  "reconciledCurrentChain": {
+    "input_tokens": 124206,
+    "output_tokens": 1888,
+    "requests": 10,
+    "tools": 8,
+    "total_tokens": 126094
+  },
+  "nativeChildRequests": 0,
+  "nativeChildTools": 0,
+  "nativeChildTokens": 0,
+  "childZeroEvidence": "Producer client ownership guard fails before runtime config creation and before the first Docker create/start; bound once/failure evidence preserved.",
+  "historicalRawChildUsageStillNull": true,
+  "durableEvaluationReceiptCommitted": false,
+  "activeConstructionSeconds": 251.44583465193864,
+  "originalConstructionCapSeconds": 246,
+  "remainingConstructionActiveSeconds": 0,
+  "failedEvaluationSeconds": 44.3274715829175,
+  "failedEvaluationTimeCredit": false,
+  "remainingScopedSharedAllowance": {
+    "requests": 58,
+    "tools": 92,
+    "input_tokens": 260794,
+    "output_tokens": 13112,
+    "total_tokens": 273906
+  },
+  "remainingAllowanceDoesNotAuthorizeConstructionAfterTimeCap": true,
+  "installedAccessRepair": {
+    "preview_snapshot_uid": 65532,
+    "mode": "0400",
+    "bytes_path_inode_unchanged": true,
+    "host_configuration_source_and_profiles_unchanged": true,
+    "model_free_launch_config_created": true,
+    "probe_stopped_before_first_docker_create": true,
+    "new_model_native_dispatches": 0
+  },
+  "candidateQuality": "unjudged",
+  "candidateApplied": false,
+  "qualityGainProven": false,
+  "aideCycleComplete": false,
+  "newAllocation": false,
+  "retryAuthorized": false,
+  "reviewerPrivateEvidence": {
+    "failure_review_sha256": "a73ad333b80ee44e8f360c03407a74b3ec8d009911a28a1ec706b041adc3a507",
+    "access_repair_review_sha256": "7a393632d10200d6701dbaac2f6354fd98144ca8694f7a2360b0eae4ebcb5aec"
+  }
+}
