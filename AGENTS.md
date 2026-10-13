@@ -6,10 +6,15 @@ als onzeker afgesloten; de mandaatregistratie sluit nu aan op het huidige profie
 De bestaande toekomstige deadline ging van 5 naar 20 minuten volgens Jaaps
 instructie tegen onnodige korte limieten. Overige grant-/kosten-/privacyvelden
 en oude taken/deadlines blijven gelijk. Geen handmatige modelaanvraag, herhaling,
-bronwijziging of servicevervanging. De gelezen guards zijn gereed, maar nieuwe
-initiatiefkeuze, nuttige privéaflevering en leren van feedback zijn nog niet bewezen.
+bronwijziging of servicevervanging. De gelezen guards zijn gereed, maar nuttige privéaflevering
+en leren van feedback zijn nog niet bewezen.
 HUE5.1 blijft open; nu geen extra eigenaarproef. Spraak blijft bij de andere uitvoerder.
 Bewijs: development/evidence/product/initiative-runtime-binding-repaired-20261013.json.
+
+De gewone cyclus is daarna om 19:28:51 UTC daadwerkelijk beslist: stilte.
+Eén Astra-aanvraag, 1.969 tokens; geen handmatige proef. Dit bevestigt hervatting,
+niet een nuttige nieuwe bijdrage of het leren van Jaaps reactie. HUE5.1 blijft open.
+Bewijs: development/evidence/product/initiative-ordinary-cycle-resumed-20261013.json.
 
 ## Actuele uitvoering 13 oktober — AIDE²-proef zonder kwaliteitsresultaat
 

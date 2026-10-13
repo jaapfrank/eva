@@ -1,0 +1,75 @@
+{
+  "contract": "EvaOrdinaryInitiativeCycleIndependentPublicationReview/v1",
+  "verdict": "GO",
+  "scope": "new_actual_ordinary_runtime_decision_and_truthful_publication",
+  "references": [
+    {
+      "path": "development/evidence/product/initiative-ordinary-cycle-resumed-20261013.json",
+      "sha256": "ad5e09dc12b0d24e5a2e9a4a4c1fab80074d2d5b9d2a94ed128e2d36c7727620"
+    },
+    {
+      "path": "development/design/product/execution-workboard-v1.json",
+      "sha256": "2330de2d5b37fef6b714ab4518820e395cbac09415b7f4a7fcd4bed5eda8aafa"
+    },
+    {
+      "path": "development/docs/WERKBORD.md",
+      "sha256": "3335c2176299f402f340a50525d6cc8ee43e011d22cf2a51d154cd4ee1fdbbab"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "93e2e87403ed9d6a39a590d59c5a5e44bd25928f4fadb057dae35078802d530e"
+    },
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "sha256": "19250eafaf6ade9dea0a14949cc1d20150122693da3088c94a392e5d48fda617"
+    }
+  ],
+  "readOnlyObservationSha256": "35ed98891b1647decccaad9dac85e434e2793cd00a6397b17bb294bdae4398a3",
+  "decisionEventPayloadSha256": "fc34848fa6d1f2a2380f43d38ed64ac804351042011c3177873b53ed49c6c1c6",
+  "actualDecision": {
+    "startedAt": "2026-10-13T19:28:44+00:00",
+    "decidedAt": "2026-10-13T19:28:51+00:00",
+    "state": "silence",
+    "model": "gpt-6-astra",
+    "modelAttempts": 1,
+    "inputTokens": 1892,
+    "outputTokens": 77,
+    "totalTokens": 1969,
+    "toolCalls": 1,
+    "measurement": "measured",
+    "creditCost": null
+  },
+  "ordinarySchedulerResumptionProven": true,
+  "manualProbeOrForcedContributionClaimed": false,
+  "usefulInitiativeDeliveryProven": false,
+  "ownerFeedbackLearningProven": false,
+  "ownerFeedbackNotManufactured": true,
+  "previousRepairsAndReviewsUnchanged": {
+    "initiative-idle-blocker-publication-review-20261013.json": "53442ffd7644770a393d8a7e2a19e4e5e6d279b726e3780afb1b692b70152f9d",
+    "initiative-idle-blocker-repaired-20261013.json": "9999d28fb637a167e81a9e09ec16405d3fb391853d2b2d6b1b396ea29bfcdbb4",
+    "initiative-runtime-binding-publication-review-20261013.json": "6cf1b616d42e134bac08acbf6fd89c35889572bea78c338d77d3e42fd60d5662",
+    "initiative-runtime-binding-repaired-20261013.json": "57c96a0bd2d49179d04092934eee7cee7ba1e3f6a11cc33a45176fec5281ed4f"
+  },
+  "oldGrantsClosedAttemptsUsageNullUnknownPreserved": true,
+  "hue6UnpaidStopAndQualityUnjudgedPreserved": true,
+  "hue5AndHue6RemainOpen": true,
+  "validation": {
+    "activeTaskId": "HUE5.1",
+    "completed": 43,
+    "status": "valid",
+    "taskCount": 54
+  },
+  "renderedBoardMatches": true,
+  "gitPublication": {
+    "boardSha256": "1b84d8f3a1012fb38b89429e170a39404edce905c6dd1aebe7f20b5942ecccfd",
+    "workingBoardSha256": "2330de2d5b37fef6b714ab4518820e395cbac09415b7f4a7fcd4bed5eda8aafa",
+    "onlyExcludedKey": "audit.subscriptionVoice20261013",
+    "otherBoardFieldsIdentical": true,
+    "concurrentVoiceWorkingFilePreserved": true,
+    "voiceAuditContentReviewed": false,
+    "renderedWorkboardUnaffected": true
+  },
+  "reviewModels": 0,
+  "reviewWorkAdmissions": 0,
+  "noNewProductTaskCompletion": true
+}

@@ -1,0 +1,50 @@
+{
+  "contract": "EvaOrdinaryInitiativeCycleResumed/v1",
+  "recordedAt": "2026-10-13T19:33:50.670611+00:00",
+  "status": "ordinary_runtime_cycle_confirmed",
+  "source": "existing_private_opportunity_review_scheduler",
+  "observation": {
+    "beganAt": "2026-10-13T19:28:44+00:00",
+    "decidedAt": "2026-10-13T19:28:51+00:00",
+    "state": "silence",
+    "blocker": null,
+    "eventTypes": [
+      "SENSORY_EVENT_OBSERVED",
+      "WILL_EVALUATION_CLAIMED",
+      "WILL_MODEL_STARTED",
+      "WILL_DECIDED"
+    ]
+  },
+  "usage": {
+    "source": "one ordinary runtime decision; not a manual test",
+    "modelAttempts": 1,
+    "model": "gpt-6-astra",
+    "inputTokens": 1892,
+    "outputTokens": 77,
+    "totalTokens": 1969,
+    "toolCalls": 1,
+    "measurement": "measured",
+    "creditCost": null
+  },
+  "manualModelRequests": 0,
+  "forcedContribution": false,
+  "usefulDeliveryConfirmed": false,
+  "learningFromOwnerFeedbackProven": false,
+  "ownerActionRequired": false,
+  "productCompletionChanged": false,
+  "references": {
+    "readOnlyObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-initiative-feedback-20261013/source-audit/initiative-ordinary-cycle-after-repair.private.json",
+      "sha256": "35ed98891b1647decccaad9dac85e434e2793cd00a6397b17bb294bdae4398a3"
+    },
+    "previousRepairs": [
+      "development/evidence/product/initiative-idle-blocker-repaired-20261013.json",
+      "development/evidence/product/initiative-runtime-binding-repaired-20261013.json"
+    ]
+  },
+  "limitations": [
+    "A real ordinary decision resumed after the repairs; it selected silence, not a new family contribution.",
+    "No claim that this decision used the owner response or proves the full learning cycle.",
+    "No new task completion or owner acceptance."
+  ]
+}
