@@ -1,4 +1,28 @@
-## Actueel 13 oktober — Eva schreef en las het nieuwe voorstel; vervolg vastgelopen
+## Actueel 13 oktober — algemene vervolgcontext gecorrigeerd en geïnstalleerd
+
+Provider cc1ece36 en connectorresultaten cbc847a0 staan in de bestaande kern en
+werker. Eén update; beide gezond en ready, 343 andere Python-bronnen per image,
+configuratie, mounts en gegevens behouden. Onafhankelijke bron-/bouwreview GO.
+166 controles op de voorgaande kandidaat en 23 definitieve gerichte controles;
+fixture- en exportvoorbereidingsfouten blijven bewaard. Geen nieuwe modelproef.
+De exacte bekende 281-receiptcontext daalt van 65.510 naar 57.292 tokens; bij
+invoerdruk en heropname 65.514 naar 57.289. Raw bronnen, laatste wire, bewijs en
+mandaat blijven gelijk. Dynamische volledige aanvraag en gebruikerswinst nog onbekend.
+
+Oude bewezen catalogus-/statuswaarnemingen blijven via het bestaande scoped
+archief leesbaar. Herhaalde geschreven documentinhoud gebruikt de bestaande
+exacte bronbinding. Vrije invoerruimte wordt niet opnieuw met oude bronpagina's
+gevuld; de actuele werkfase blijft beschikbaar. Geen domeinscript of nieuw platform.
+Eva moet zelf de oorspronkelijke configuratie-/device-IDanalyse en mapping-/
+toegangsgrenzen afronden, opslaan en teruglezen. Gen20 blijft FAILED/INCOMPLETE:
+16 aanvragen, 891.408 tokens; het echte document blijft behouden. Geen HA-mutatie
+voor afzonderlijk akkoord. Geen vergelijkingsserie of hoofdtaakafronding geclaimd.
+Volledig goal ACTIVE; 39/48 en 39/54 onveranderd. HUE/leercyclus/AIDE² open;
+spraak geparkeerd en ongebruikte Docker Desktop ongemoeid.
+Bewijs: eva2/evidence/product/historical-execution-context-installed-20261013.json.
+Review: eva2/reviews/historical-execution-context-source-review-20261013.json.
+
+## Historisch 13 oktober — Eva schreef en las het nieuwe voorstel; vervolg vastgelopen
 
 Gen20 is gesloten met input_budget_exceeded: zestien volledig gemeten en gesloten
 modelaanvragen, zestien tools, 891.408 tokens (884.605 in / 6.803 uit), geen huidige

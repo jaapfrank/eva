@@ -1,0 +1,33 @@
+{
+  "contract": "EvaSourceReviewPublication/v1",
+  "reviewedAt": "2026-10-13T02:27:27.214590+00:00",
+  "verdict": "GO",
+  "scope": "Exact two-module source correction and retained build readiness; no native-input authority or task-completion verdict.",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "cc1ece369fbaa9c3bfe7301009492e9343096c2b293ce05179ef54c7a8046d7a"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "cbc847a013e2a38895338c7e940a1cd7e10d6d10a62f913a98939910b8053716"
+    }
+  ],
+  "findings": [
+    "Old status/catalogue observations archive only after a valid monotonic full-plan checkpoint, with the existing archive route available. Exact calls, receipt/proof/source hashes and historical bytes remain readable through the existing actor/execution/ingress-scoped reader; historical availability is not current authority.",
+    "Only durable verified exact read routes qualify. Latest/protected literals, errors, UNKNOWN, mutations/effects and explicit output/result success=false remain visible. The independently identified success=false omission is resolved in the definitive cc1ece source; available/disconnected=false is not incorrectly treated as failure.",
+    "Large connector-alias document content is referenced only after full retained-body projection validation and equal expected/observed proof matching the original content. Tool/path selectors and JSON-string decoding metadata remain; the exact original arguments are accessible through the same hash-bound reader. Raw/current/latest arguments are unchanged.",
+    "Working-read restoration uses validated current observation-phase pages, active authored material or the last-used source at a just-saved checkpoint. Omitted older material remains in the lossless source/archive route. Existing full-envelope admission, source guards, stop checks, grants, model roles and quotas are unchanged."
+  ],
+  "privateSourceReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/source-review.private.json",
+    "sha256": "987fdee4109bb10c33bf06370551c080f2427062b0b40cd21c7e39bc4eb10616"
+  },
+  "known281Replay": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen20-paired-result-v2.private.json",
+    "sha256": "db97ee2494d7e0e10d34ccde55a5417dcd59bbc6890c43322d824bd3d15a7db1"
+  },
+  "limits": [
+    "Source/build GO; actual installation verified separately. No native task or full-envelope success claim."
+  ]
+}

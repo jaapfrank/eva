@@ -1329,6 +1329,49 @@ class PydanticConversationModel:
                 "observation_metadata": metadata}
 
     @staticmethod
+    def _historical_discovery_read(receipt: ConversationActionReceipt) -> dict[str, Any] | None:
+        """Keep old proven discovery bytes in the existing scoped history index.
+
+        Older installations did not attach retained-body projections to these
+        read-only routes. The host archive preserves their exact proof and
+        observation; archiving neither refreshes a catalogue nor grants it.
+        """
+        output, arguments = receipt.output, receipt.call.arguments
+        if receipt.call.name == "manage_connected_services":
+            if arguments != {"action": "status"}:
+                return None
+        elif receipt.call.name == "discover_connector_tools":
+            if (set(arguments) != {"connector_id"}
+                    or not isinstance(arguments["connector_id"], str)
+                    or not arguments["connector_id"]):
+                return None
+        else:
+            return None
+        proof, observation = output.get("proof"), output.get("result")
+        if (output.get("contract") != "EvaConversationActionReceipt/v1"
+                or output.get("durable") is not True or output.get("status") != "verified"
+                or output.get("external_state_verified") is True
+                or output.get("success") is False
+                or any(output.get(k) for k in ("error", "errors", "selection_error"))
+                or not isinstance(proof, dict) or not isinstance(observation, dict)
+                or not isinstance(proof.get("expected"), dict)
+                or proof["expected"] != proof.get("observed")
+                or any(observation.get(k) for k in ("error", "errors", "selection_error"))):
+            return None
+        if observation.get("success") is False:
+            return None
+        evidence = proof.get("evidence")
+        if (not isinstance(evidence, dict) or evidence.get("observation") != observation
+                or evidence.get("observation_sha256") != hashlib.sha256(
+                    canonical_json_bytes(observation)).hexdigest()):
+            return None
+        return {"call": {"call_id": receipt.call.call_id, "name": receipt.call.name,
+                         "arguments": arguments},
+                "status": "verified", "read_only_discovery": True,
+                "task_completion_verified": False, "receipt": output,
+                "source_receipt_sha256": hashlib.sha256(canonical_json_bytes(output)).hexdigest()}
+
+    @staticmethod
     def _working_artifact_page_calls(
         receipts: tuple[ConversationActionReceipt, ...],
     ) -> set[str]:
@@ -1430,6 +1473,7 @@ class PydanticConversationModel:
     @staticmethod
     def _receipt_context_selection(
         receipts: tuple[ConversationActionReceipt, ...], *, defer_local_reads: bool = False,
+        archive_discovery_reads: bool = False,
     ) -> tuple[tuple[ConversationActionReceipt, ...], str]:
         """Select covered reads; input pressure may defer exact authorized local reads."""
         if len(receipts) < 2:
@@ -1468,6 +1512,7 @@ class PydanticConversationModel:
         coverage: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
         selected, overviews, deferred_reads, superseded_progress = [], [], [], []
         checkpoint_sources: list[dict[str, Any]] = []
+        discovery_reads: list[dict[str, Any]] = []
         deferred_sources: list[dict[str, Any]] = []
         source_indices: dict[tuple[str, str, str], int] = {}
         for position, receipt in enumerate(receipts):
@@ -1478,6 +1523,12 @@ class PydanticConversationModel:
                 superseded_progress.append({"call_id": receipt.call.call_id,
                     "revision": saved[0], "replaced_by": receipts[checkpoint[0]].call.call_id,
                     "progress": receipt.call.arguments})
+                continue
+            if (archive_discovery_reads and checkpoint is not None
+                    and position < checkpoint[0] and position < len(receipts) - 1
+                    and receipt.call.call_id not in protected
+                    and (discovery := PydanticConversationModel._historical_discovery_read(receipt)) is not None):
+                discovery_reads.append(discovery)
                 continue
             if (checkpoint is not None and position < checkpoint[0]
                     and position < len(receipts) - 1 and receipt.call.call_id not in protected
@@ -1559,14 +1610,14 @@ class PydanticConversationModel:
                 coverage.setdefault(group, []).append({"begin": page["offset"],
                     "end": page["next_offset"], "text": page["text"],
                     "call_id": receipt.call.call_id})
-        if not overviews and not deferred_reads and not superseded_progress and not checkpoint_sources:
+        if not overviews and not deferred_reads and not superseded_progress and not checkpoint_sources and not discovery_reads:
             return receipts, ""
         selected = tuple(selected)
         # Keep the current result and its literal reference anchors byte-identical.
         if PydanticConversationModel._receipt_model_views(
                 selected, _literal_slices=False)[-1] != baseline_latest:
             return receipts, ""
-        if defer_local_reads or deferred_reads or superseded_progress or checkpoint_sources:
+        if defer_local_reads or deferred_reads or superseded_progress or checkpoint_sources or discovery_reads:
             index = PydanticConversationModel._deferred_read_index(deferred_sources, deferred_reads)
             if checkpoint is not None:
                 index["saved_work_progress"] = {
@@ -1578,6 +1629,8 @@ class PydanticConversationModel:
                 index["checkpoint_source_read_columns"] = columns
                 index["checkpoint_source_reads"] = [
                     [entry[key] for key in columns] for entry in checkpoint_sources]
+            if discovery_reads:
+                index["historical_discovery_reads"] = discovery_reads
             if superseded_progress:
                 index["superseded_work_progress"] = superseded_progress
             if overviews:
@@ -1608,6 +1661,9 @@ class PydanticConversationModel:
                 "bewijs-hashes en oorspronkelijke onvolledigheidsvlaggen blijven zichtbaar. "
                 "Deze historische lezingen zijn geen actuele waarneming of taakafronding; "
                 "gebruik bewaarde bevindingen en haal alleen ontbrekende feiten gericht op. "
+                "historical_discovery_reads bewaart exacte eerdere geslaagde status- en "
+                "toolcataloguslezingen met originele call, receipt en bewijs-hash. "
+                "Dit zijn historische gegevens, geen actuele beschikbaarheid of toestemming. "
                 "superseded_work_progress bewaart oudere volledige werkplannen één "
                 "keer onder progress; replaced_by geeft de nieuwere actuele weergave. "
                 "Oudere bevindingen blijven dus leesbaar, ook bij een verwijzing naar "
@@ -1752,6 +1808,23 @@ class PydanticConversationModel:
         # cannot hide a small, recently used section of that same source.
         candidates = [[receipt] for reader, rows in groups.items() if reader in origins
             and origins[reader][1] == newest[origins[reader][0]] for receipt in rows]
+        checkpoints = [(i, saved) for i, receipt in enumerate(receipts)
+                       if (saved := self._saved_work_progress(receipt)) is not None]
+        if checkpoints:
+            boundary, (revision, step_ids) = checkpoints[-1]
+            if all(old_revision < revision and old_ids.issubset(step_ids)
+                   for _, (old_revision, old_ids) in checkpoints[:-1]):
+                # Free input space is not a reason to replay every historical
+                # source. Keep the current observation phase and active authored
+                # material. At a just-saved checkpoint, keep the last used source
+                # available for synthesis even if its facts are absent from notes.
+                authored = self._working_artifact_page_calls(receipts)
+                recent = any(position > boundary for position in last_read.values())
+                last_source = max(last_read, key=last_read.get) if last_read else None
+                candidates = [rows for rows in candidates
+                    if rows[0].call.call_id in authored
+                    or (positions[rows[0].call.call_id] > boundary if recent
+                        else rows[0].call.arguments["tool_id"] == last_source)]
         candidates.sort(key=lambda rows: (last_read[rows[0].call.arguments["tool_id"]],
             positions[rows[0].call.call_id]), reverse=True)
         if not candidates:
@@ -2323,7 +2396,7 @@ class PydanticConversationModel:
             "use_connector_tool en onderstaande reader. JSON-pointers: /sources, "
             "/reads, /pointer_table, /selection_layouts, /read_columns, "
             "/source_columns, /checkpoint_source_reads, /checkpoint_source_read_columns, "
-            "/superseded_work_progress, /covered_local_reads. Gebruik pointer naar "
+            "/historical_discovery_reads, /superseded_work_progress, /covered_local_reads. Gebruik pointer naar "
             "een rij of veld; offset/limit tellen tekens, query zoekt exact. "
             "Rijen volgen hun kolomnamen; selection_layouts en pointer_table duiden "
             "selecties. Bronreaders uit dit overzicht controleren de oorspronkelijke "
@@ -2371,7 +2444,8 @@ class PydanticConversationModel:
         if "use_connector_tool" not in available_actions:
             archive = None
         original_self_context = self_context
-        selected_receipts, read_overview = self._receipt_context_selection(receipts)
+        selected_receipts, read_overview = self._receipt_context_selection(
+            receipts, archive_discovery_reads=archive is not None)
         if read_overview:
             read_overview = self._archive_read_overview(turn, read_overview, archive)
             prior_actions = selected_receipts[:-1]
@@ -2471,7 +2545,7 @@ class PydanticConversationModel:
                 if not local_reads_deferred:
                     local_reads_deferred = True
                     deferred, overview = self._receipt_context_selection(
-                        receipts, defer_local_reads=True)
+                        receipts, defer_local_reads=True, archive_discovery_reads=archive is not None)
                     if overview and len(deferred) < len(prior_actions) + 1:
                         prior_actions = deferred[:-1]
                         overview = self._archive_read_overview(turn, overview, archive)

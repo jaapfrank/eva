@@ -165,6 +165,30 @@ def ancestor_action_presentation(receipt, projection):
             "byte_length": len(content_bytes),
             "reader_tool_id": manifest["reader"]["tool_id"],
             "pointer": "/call/arguments/content"}}
+    if (receipt.call.name == "use_connector_tool"
+            and isinstance(arguments.get("arguments_json"), str)):
+        try:
+            nested = json.loads(arguments["arguments_json"])
+        except (TypeError, ValueError):
+            nested = None
+        content = nested.get("content") if isinstance(nested, dict) else None
+        proof = receipt.output.get("proof")
+        expected, observed = (proof.get("expected"), proof.get("observed")) if isinstance(proof, dict) else (None, None)
+        if (isinstance(content, str) and len(content.encode("utf-8")) > MODEL_INLINE_BOUND
+                and isinstance(expected, dict) and expected == observed
+                and expected.get("content") == content):
+            # The same proven document write can arrive through connector
+            # discovery. Preserve its selector and all other fields; its exact
+            # original JSON string remains readable through the bound body.
+            content_bytes = content.encode("utf-8")
+            arguments = {**arguments, "arguments_json": json.dumps({**nested,
+                "content": {"model_view_encoding": "retained_document_content_v1",
+                    "original_content_sha256": hashlib.sha256(content_bytes).hexdigest(),
+                    "byte_length": len(content_bytes),
+                    "reader_tool_id": manifest["reader"]["tool_id"],
+                    "pointer": "/call/arguments/arguments_json",
+                    "source_encoding": "json_string_v1", "content_key": "content"}},
+                ensure_ascii=False, sort_keys=True, separators=(",", ":"))}
     if receipt.call.name == "use_connector_tool" and receipt.output.get("source") == "stored_connector_result":
         # A local page is already bounded. Keep its text and next offset visible;
         # wrapping it again would force the model to reread what it just read.

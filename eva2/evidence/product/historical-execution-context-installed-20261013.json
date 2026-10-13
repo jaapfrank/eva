@@ -1,0 +1,107 @@
+{
+  "contract": "EvaHistoricalExecutionContextInstalled/v1",
+  "createdAt": "2026-10-13T02:29:03.327264+00:00",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "cc1ece369fbaa9c3bfe7301009492e9343096c2b293ce05179ef54c7a8046d7a"
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/connector_results.py",
+      "sha256": "cbc847a013e2a38895338c7e940a1cd7e10d6d10a62f913a98939910b8053716"
+    }
+  ],
+  "installation": {
+    "contract": "EvaInstalledRetainedReceiptProjection/v1",
+    "checkedAt": "2026-10-13T02:28:20.507631+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:3b232bd4fd2238e8ede0e020887de8260a0a95cffe2efc70da2773d596f56941",
+        "checks": {
+          "exactImage": true,
+          "healthy": true,
+          "exactPythonInventory": true,
+          "sameMounts": true,
+          "sameEnvironment": true,
+          "sameProcessConfiguration": true
+        },
+        "unchangedPythonSources": 343,
+        "exactModules": {
+          "adapters/model/pydantic_conversation.py": "cc1ece369fbaa9c3bfe7301009492e9343096c2b293ce05179ef54c7a8046d7a",
+          "adapters/postgres/connector_results.py": "cbc847a013e2a38895338c7e940a1cd7e10d6d10a62f913a98939910b8053716"
+        },
+        "inspectionSha256": "23e6739c173458a9d004db980103d3421dee216e011bd2fdaecd2fdcb0812b39"
+      },
+      "delegated-work-worker": {
+        "image": "sha256:9b68ed52388164e581aa6d1e8b84c5d9abdfc4602edd27589669a0353fa0113d",
+        "checks": {
+          "exactImage": true,
+          "healthy": true,
+          "exactPythonInventory": true,
+          "sameMounts": true,
+          "sameEnvironment": true,
+          "sameProcessConfiguration": true
+        },
+        "unchangedPythonSources": 343,
+        "exactModules": {
+          "adapters/model/pydantic_conversation.py": "cc1ece369fbaa9c3bfe7301009492e9343096c2b293ce05179ef54c7a8046d7a",
+          "adapters/postgres/connector_results.py": "cbc847a013e2a38895338c7e940a1cd7e10d6d10a62f913a98939910b8053716"
+        },
+        "inspectionSha256": "11219099e581cdcb6b0cd698fb7073b4d7c2e95be456253678f5fda03db8c911"
+      }
+    },
+    "actualUpdateDispatches": 1,
+    "modelRequests": 0,
+    "sourceReviewSha256": "987fdee4109bb10c33bf06370551c080f2427062b0b40cd21c7e39bc4eb10616",
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    }
+  },
+  "independentSourceReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/source-review.private.json",
+    "sha256": "987fdee4109bb10c33bf06370551c080f2427062b0b40cd21c7e39bc4eb10616"
+  },
+  "knownRetainedContext": {
+    "receiptCount": 281,
+    "baselineNormalIncludingFraming": 65510,
+    "candidateNormalIncludingFraming": 57292,
+    "baselinePressureAfterRestoration": 65514,
+    "candidatePressureAfterRestoration": 57289,
+    "candidateMargins": [
+      8244,
+      8247
+    ],
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen20-paired-result-v2.private.json",
+      "sha256": "db97ee2494d7e0e10d34ccde55a5417dcd59bbc6890c43322d824bd3d15a7db1"
+    },
+    "rawProofLatestGrantUnchanged": true,
+    "actualDynamicEnvelope": "UNKNOWN"
+  },
+  "checks": {
+    "precedingCandidate": 166,
+    "finalConservativeChecks": 23,
+    "notOneCombinedFinalSuite": true,
+    "fixtureAndExportSetupErrorsRetained": true
+  },
+  "scope": [
+    "General history/discovery archival through existing scoped reader",
+    "Nested connector document content uses existing exact retained-body projection",
+    "Restore current working phase instead of filling input with unrelated old reads"
+  ],
+  "modelRequestsForChecks": 0,
+  "taskCompletionConfirmed": false,
+  "proposalWrittenByCodex": false,
+  "originalCriteriaOrGrantChanged": false,
+  "haMutation": false,
+  "wholeProjectCompletion": false,
+  "limitations": [
+    "Known retained context passes; actual future full envelope and quality remain unconfirmed.",
+    "Gen20 remains FAILED/INCOMPLETE with exact original accounting and artifact.",
+    "No new comparison series or feature/task completion by this correction."
+  ]
+}
