@@ -423,13 +423,29 @@ class HindsightMemoryEngine:
         )
         facts = tuple(fact.model_copy(update={"value": {
             key: value for key, value in fact.value.items()
-            if key not in {"original_source", "learning_context"}
+            if key not in {"original_source", "learning_context", "observation_sources"}
         }}) if isinstance(fact.value, dict) else fact for fact in memory.confirmed_facts)
-        references = []
+        primary_references, references, observation_references = [], [], {}
         for fact in facts:
             provenance = fact.value.get("reference_provenance", {}) if isinstance(fact.value, dict) else {}
-            references.append((fact.subject, provenance.get("source_ref", fact.source_ref),
-                               provenance.get("evidence_ref", fact.evidence_ref)))
+            primary = (fact.subject, provenance.get("source_ref", fact.source_ref),
+                       provenance.get("evidence_ref", fact.evidence_ref))
+            primary_references.append(primary)
+            if (fact.predicate == "memory.observation"
+                    and not is_human_understanding_reference(primary[2])):
+                items = fact.value.get("observation_source_refs", []) if isinstance(fact.value, dict) else []
+                complete = tuple((item["principal_id"], item["source_ref"], item["evidence_ref"])
+                    for item in items if isinstance(item, dict) and all(
+                        isinstance(item.get(key), str) and 0 < len(item[key]) <= 1024
+                        for key in ("principal_id", "source_ref", "evidence_ref"))) if isinstance(items, list) else ()
+                if (not isinstance(items, list) or not 1 <= len(complete) <= 3
+                        or len(complete) != len(items) or len(set(complete)) != len(complete)
+                        or primary not in complete):
+                    complete = ()
+                observation_references[fact.fact_id] = complete
+                references.extend(complete)
+            else:
+                references.append(primary)
         available = {}
         if self._private_source_resolver is not None and query.audience.kind == "private_person":
             try:
@@ -454,6 +470,9 @@ class HindsightMemoryEngine:
             except Exception:
                 _LOGGER.debug("Original private memory sources unavailable")
                 available = {}
+        # A different selected fact may already have consumed its primary source.
+        # Derived observations still require every contribution, on every cache hit.
+        observation_available = dict(available)
         enriched, excluded, used_learning, learning_records = [], dict(memory.recall.excluded_reasons), set(), set()
 
         def learning_value(reference, source):
@@ -474,9 +493,20 @@ class HindsightMemoryEngine:
             return {"text":head["record"]["interpretation"], "semantic_trust":"model_inference_unconfirmed",
                 "learning_context":context, "source_observed_at":head["record"]["recorded_at"]}
 
-        for fact, reference in zip(facts, references, strict=True):
+        for fact, reference in zip(facts, primary_references, strict=True):
             learning = is_human_understanding_reference(reference[2])
-            source = available.get(reference) if learning else available.pop(reference, None)
+            if fact.fact_id in observation_references and query.audience.kind == "private_person":
+                contributing = observation_references[fact.fact_id]
+                if not contributing or any(item not in observation_available for item in contributing):
+                    excluded[fact.fact_id] = "observation_source_unavailable"
+                    continue
+                # Shared observations use their existing audience/mandate checks;
+                # private observations additionally require current PG sources.
+                fact = fact.model_copy(update={"value": {**fact.value,
+                    "observation_sources": [observation_available[item] for item in contributing]}})
+                source = observation_available[reference]
+            else:
+                source = available.get(reference) if learning else available.pop(reference, None)
             if learning:
                 try:
                     value = learning_value(reference, source)
@@ -640,6 +670,7 @@ class HindsightMemoryEngine:
         for item in results:
             copied = dict(item)
             copied.pop("_eva_source_metadata", None)
+            copied.pop("_eva_observation_source_refs", None)
             copied["_eva_memory_project_id"] = memory_project_id
             copied["_eva_memory_observation_binding_sha256"] = (
                 memory_observation_binding_sha256
@@ -660,9 +691,12 @@ class HindsightMemoryEngine:
                         (metadata.get("source_ref"), metadata.get("evidence_ref"))
                         for metadata in learning}) != 1):
                     continue
-                source_metadata = self._observation_source_metadata(copied, source_facts)
-                if source_metadata is not None:
-                    copied["_eva_source_metadata"] = source_metadata
+                candidates = self._observation_source_candidates(copied, source_facts)
+                if candidates is not None:
+                    copied["_eva_source_metadata"] = max(candidates, key=lambda row: row[0])[1]
+                    copied["_eva_observation_source_refs"] = [
+                        {key: metadata[key] for key in ("principal_id", "source_ref", "evidence_ref")}
+                        for _timestamp, metadata in candidates]
                 elif learning:
                     continue
             enriched.append(copied)
@@ -672,6 +706,13 @@ class HindsightMemoryEngine:
     def _observation_source_metadata(
         observation: dict[str, Any], source_facts: dict[str, Any]
     ) -> dict[str, str] | None:
+        candidates = HindsightMemoryEngine._observation_source_candidates(observation, source_facts)
+        return max(candidates, key=lambda row: row[0])[1] if candidates else None
+
+    @staticmethod
+    def _observation_source_candidates(
+        observation: dict[str, Any], source_facts: dict[str, Any]
+    ) -> list[tuple[str, dict[str, str]]] | None:
         source_ids = observation.get("source_fact_ids")
         if (
             not isinstance(source_ids, list)
@@ -698,6 +739,8 @@ class HindsightMemoryEngine:
                     not isinstance(key, str) or not isinstance(value, str)
                     for key, value in metadata.items()
                 )
+                or any(not isinstance(metadata.get(key), str) or not 0 < len(metadata[key]) <= 1024
+                       for key in ("principal_id", "source_ref", "evidence_ref"))
                 or metadata.get("trust")
                 not in {
                     "direct_user",
@@ -736,7 +779,13 @@ class HindsightMemoryEngine:
                                    and metadata[key].startswith(conversation + ":")
                                    for key in ("source_ref", "evidence_ref"))):
                     return None
-        return max(candidates, key=lambda item: item[0])[1]
+        # Multiple extracted facts can share one original event. Retain every
+        # distinct event, or reject the observation rather than trim its support.
+        unique = {}
+        for candidate in sorted(candidates, key=lambda row: row[0]):
+            metadata = candidate[1]
+            unique[tuple(metadata[key] for key in ("principal_id", "source_ref", "evidence_ref"))] = candidate
+        return list(unique.values()) if len(unique) <= 3 else None
 
     def _request(
         self,
@@ -1624,7 +1673,7 @@ class HindsightMemoryEngine:
             # confirmed user fact merely through consolidation.
             trust = (
                 "model_inference_unconfirmed"
-                if memory_type == "observation" and source_metadata is None
+                if memory_type == "observation"
                 else metadata.get("trust", "host_policy")
             )
             if trust not in {
@@ -1660,12 +1709,14 @@ class HindsightMemoryEngine:
                 key: original for key, original in original_references.items()
                 if original != {"source_ref": source_ref, "evidence_ref": evidence_ref}[key]
             }
+            observation_refs = raw.get("_eva_observation_source_refs", []) if memory_type == "observation" else []
             rank = len(selected) + 1
             selected.append(
                 RecalledFact(
                     rank=rank,
                     fact_id=fact_id,
-                    source_event_ids=[source_ref],
+                    source_event_ids=list(dict.fromkeys(_bounded_memory_reference(item["source_ref"])
+                        for item in observation_refs)) if observation_refs else [source_ref],
                     trust=(
                         "confirmed_direct_user"
                         if trust == "direct_user"
@@ -1698,6 +1749,7 @@ class HindsightMemoryEngine:
                             if raw.get("mentioned_at") else None
                         ),
                         "text": text,
+                        **({"observation_source_refs": observation_refs} if observation_refs else {}),
                         **({"reference_provenance": reference_provenance}
                            if reference_provenance else {}),
                     },

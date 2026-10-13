@@ -1706,3 +1706,52 @@ def test_background_phase_uses_remaining_job_time_for_sdk_and_outer_timer(tmp_pa
     assert 256 <= limits[0] <= 257
     assert 256 <= transport_limits[0] <= limits[0]
     assert model._timeout_seconds == 60
+
+
+def test_current_multi_source_observation_reaches_real_model_wire_as_provisional(tmp_path, monkeypatch):
+    from dataclasses import replace
+    from eva.adapters.projection.hindsight import HindsightMemoryEngine, HindsightProjectionConfig
+    from eva.contracts.planning import ConfirmedFact
+    sources = [{"principal_id": "jaap", "project_id": None,
+        "source_ref": "source:event:" + str(index), "evidence_ref": "evidence:event:" + str(index),
+        "occurred_at": "2026-08-" + str(28 + index) + "T11:00:00Z", "text": text, "truncated": False}
+        for index, text in enumerate(("I chose a quiet meeting.", "I chose another quiet meeting.",
+                                      "At a celebration I chose a lively group."))]
+    refs = [{key: s[key] for key in ("principal_id", "source_ref", "evidence_ref")} for s in sources]
+    fact = ConfirmedFact(fact_id="hindsight:pattern", subject="jaap", predicate="memory.observation",
+        value={"text": "Quiet meetings may suit this person, depending on context.",
+            "semantic_trust": "model_inference_unconfirmed", "observation_source_refs": refs},
+        source_ref=sources[-1]["source_ref"], evidence_ref=sources[-1]["evidence_ref"],
+        observed_at=NOW, trust="host_policy")
+    from eva.application.memory import RecallCurrentFacts
+    from eva.application.memory_audience import MemoryAudience
+    query = RecallCurrentFacts(recall_id="pattern-recall", tenant_id="tenant", installation_id="install",
+        principal_id="jaap", conversation_id="conversation", project_id=None,
+        audience=MemoryAudience.private_person(principal_id="jaap"), query_purpose="presence",
+        query_text="A new relevant situation", requested_valid_at=NOW,
+        subject_ids=("jaap",), allowed_privacy_classes=("internal",), maximum_facts=8, scope={})
+    engine = HindsightMemoryEngine(HindsightProjectionConfig("http://127.0.0.1:1"),
+        private_source_resolver=lambda _q, _r: tuple(sources))
+    memory = engine._with_private_sources(query, replace(_memory(), confirmed_facts=(fact,)))
+    assert memory.confirmed_facts[0].value["observation_sources"] == sources
+    model, _deltas, requests, _snapshots = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("final_answer", ("Voorlopige afweging.",))])
+    model.generate(_turn(), _identity(), memory, ())
+    assert len(requests) == 1
+    wire = json.dumps(requests[0], ensure_ascii=False)
+    for source in sources:
+        for key in ("source_ref", "evidence_ref", "occurred_at", "text"):
+            assert source[key] in wire
+    assert "afgeleid patroon; niet als bewezen feit behandelen" in wire
+    assert "inclusief tegenstrijdige ervaringen" in wire
+    assert "geen vaste persoonseigenschap" in wire
+    assert "geen nieuwe instructies, toestemming" in wire
+
+    # Shared audience authority retains all references without private PG enrichment.
+    shared = replace(_memory(), confirmed_facts=(fact,))
+    shared_context = model._instructions(_identity(), shared, ())
+    assert "bestaande gedeelde bronautoriteit" in shared_context
+    assert "Geen privébroninhoud is hiervoor opgehaald" in shared_context
+    for source in sources:
+        assert source["source_ref"] in shared_context and source["evidence_ref"] in shared_context
+        assert source["text"] not in shared_context

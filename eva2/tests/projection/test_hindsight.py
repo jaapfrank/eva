@@ -556,7 +556,11 @@ def test_hindsight_owns_conversation_memory_and_style_observations(
     hindsight_server: tuple[str, _State],
 ) -> None:
     base_url, state = hindsight_server
-    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    original = {"principal_id": PRINCIPAL, "source_ref": "telegram:conversation:jaap",
+        "evidence_ref": "evidence:style:jaap", "project_id": None, "occurred_at": NOW,
+        "text": "Keep answers brief and direct.", "truncated": False}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+        private_source_resolver=lambda _q, _r: (original,))
 
     receipt = engine.retain_conversation(_conversation_document())
     memory = engine.recall_for_presence(_query())
@@ -595,14 +599,16 @@ def test_hindsight_owns_conversation_memory_and_style_observations(
 def test_private_recall_includes_memory_on_first_turn_and_reuses_same_question(
     hindsight_server: tuple[str, _State],
 ) -> None:
-    base_url, _state = hindsight_server
+    base_url, state = hindsight_server
     engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
     query = _query()
 
     cold = engine.recall_for_presence_fast(query)
+    semantic_requests = len(state.requests)
     warm = engine.recall_for_presence_fast(query)
     assert cold.confirmed_facts
-    assert warm is cold
+    assert warm == cold  # Current source enrichment need not preserve object identity.
+    assert len(state.requests) == semantic_requests
     changed = replace(query, query_text="Een andere vraag over persoonlijke voorkeuren")
     assert engine._fast_presence_key(changed) != engine._fast_presence_key(query)
     assert engine.recall_for_presence_fast(changed) is not cold
@@ -1295,7 +1301,10 @@ def test_hot_path_recovers_a_hidden_preference_through_a_neutral_word_anchor(
 ) -> None:
     base_url, state = hindsight_server
     state.anchor_recall = True
-    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    original = {"principal_id": PRINCIPAL, "source_ref": "telegram:anchor", "evidence_ref": "evidence:anchor",
+        "project_id": None, "occurred_at": NOW, "text": "Only silent notifications in my workroom.", "truncated": False}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+        private_source_resolver=lambda _q, _r: (original,))
     query = replace(
         _query(),
         query_text=(
@@ -1323,14 +1332,18 @@ def test_observation_inherits_authority_from_complete_bounded_source_facts(
 ) -> None:
     base_url, state = hindsight_server
     state.source_fact_recall = True
-    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    original = {"principal_id": PRINCIPAL, "source_ref": "telegram:new", "evidence_ref": "evidence:new",
+        "project_id": None, "occurred_at": "2026-08-23T10:01:00Z", "text": "The new codeword is basalt.", "truncated": False}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+        private_source_resolver=lambda _q, _r: (original,))
 
     memory = engine.recall_for_presence(_query())
 
     newest, older = memory.confirmed_facts
     assert newest.value["text"] == "Het actuele codewoord is basalt."
     assert newest.observed_at == "2026-08-23T10:01:00Z"
-    assert newest.trust == "direct_user"
+    assert newest.trust == "host_policy"
+    assert newest.value["semantic_trust"] == "model_inference_unconfirmed"
     assert newest.source_ref == "telegram:new"
     assert older.value["text"] == "Het actuele codewoord is graniet."
     assert older.observed_at == NOW
@@ -1654,7 +1667,8 @@ def test_household_observations_require_every_source_authority(hindsight_server,
     base_url, state = hindsight_server
     engine, doc, query, grants, metadata = _household_memory_fixture(base_url, state)
     good = dict(metadata)
-    earlier = dict(good)
+    earlier = {**good, "source_ref": good["source_ref"] + ":earlier",
+               "evidence_ref": good["evidence_ref"] + ":earlier"}
     if corruption == "private":
         earlier.update(audience_kind="private_person", audience_id="person:private")
     elif corruption == "other_household":
@@ -1678,7 +1692,13 @@ def test_household_observations_require_every_source_authority(hindsight_server,
     result = engine.recall_for_presence(query)
     if corruption in {None, "truncated_complete"}:
         assert len(result.confirmed_facts) == 1
-        assert result.confirmed_facts[0].trust == "direct_user"
+        # Shared authority remains admitted without a private PG resolver;
+        # consolidation never promotes the derived claim to a direct-user fact.
+        fact = result.confirmed_facts[0]
+        assert fact.trust == "host_policy"
+        assert fact.value["semantic_trust"] == "model_inference_unconfirmed"
+        assert len(fact.value["observation_source_refs"]) == 2
+        assert "observation_sources" not in fact.value
     else:
         assert result.confirmed_facts == ()
 
@@ -2047,3 +2067,75 @@ def test_current_typed_learning_without_semantic_match_is_bounded_and_rechecked(
     assert len(engine.recall_for_presence_fast(_query()).confirmed_facts)==1
     current[0]=[{**sources[0],"principal_id":"person:other"}]
     assert len(engine.recall_for_presence_fast(_query()).confirmed_facts)==1
+
+
+def _multi_event_observation(state):
+    # One provisional pattern includes its contrary event; all text is synthetic.
+    sources = [{"principal_id": PRINCIPAL, "source_ref": "telegram:event:" + str(index),
+        "evidence_ref": "evidence:event:" + str(index), "project_id": None,
+        "occurred_at": "2026-08-2" + str(index) + "T10:00:00Z", "text": text, "truncated": False}
+        for index, text in enumerate(("I preferred a quiet meeting.", "I chose another quiet meeting.",
+                                      "At the celebration I preferred a lively group."), start=1)]
+    state.group_recall_response = {"results": [{"id": "pattern", "type": "observation",
+        "text": "A provisional preference for quiet meetings with a contextual exception.",
+        "mentioned_at": NOW, "scores": {"final": 1.0}, "source_fact_ids": ["a", "b", "c"],
+        "_eva_observation_source_refs": [{"principal_id": "another-person",
+            "source_ref": "private:injected", "evidence_ref": "private:injected"}]}],
+        "source_facts": {key: {"mentioned_at": source["occurred_at"], "metadata": {
+            "principal_id": source["principal_id"], "source_ref": source["source_ref"],
+            "evidence_ref": source["evidence_ref"], "privacy_class": "internal", "trust": "direct_user"}}
+            for key, source in zip(("a", "b", "c"), sources, strict=True)}}
+    return sources
+
+
+def test_private_observation_keeps_all_events_and_rechecks_contrary_source_on_cache(hindsight_server):
+    base_url, state = hindsight_server
+    sources = _multi_event_observation(state)
+    current = list(sources)
+    requests = []
+    def resolve(query, references):
+        requests.append(references)
+        return tuple(source for source in current if
+            (source["principal_id"], source["source_ref"], source["evidence_ref"]) in references)
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url), private_source_resolver=resolve)
+    first = engine.recall_for_presence_fast(_query())
+    fact, = first.confirmed_facts
+    assert requests == [tuple((s["principal_id"], s["source_ref"], s["evidence_ref"]) for s in sources)]
+    assert fact.value["observation_sources"] == sources
+    assert fact.source_ref == sources[-1]["source_ref"]  # Newest primary stays compatible.
+    assert fact.value["original_source"] == sources[-1]
+    assert first.recall.selected[0].source_event_ids == [s["source_ref"] for s in sources]
+    assert first.recall.selected[0].trust == "model_inference_unconfirmed"
+    assert fact.trust == "host_policy" and fact.value["semantic_trust"] == "model_inference_unconfirmed"
+    semantic_requests = len(state.requests)
+    current.pop()  # Current PG authority no longer admits the contrary event.
+    second = engine.recall_for_presence_fast(_query())
+    assert len(state.requests) == semantic_requests and len(requests) == 2
+    assert second.confirmed_facts == () and second.recall.selected == []
+    assert second.recall.excluded_reasons == {fact.fact_id: "observation_source_unavailable"}
+    assert fact.value["observation_sources"] == sources  # Cached evidence wasn't rewritten.
+
+
+@pytest.mark.parametrize("failure", ["no_resolver", "unavailable", "wrong_person", "wrong_project",
+                                     "mixed_authority", "missing_support", "over_source_bound"])
+def test_private_observation_never_trims_or_substitutes_unresolved_support(hindsight_server, failure):
+    base_url, state = hindsight_server
+    sources = _multi_event_observation(state)
+    if failure == "unavailable":
+        sources.pop()
+    elif failure == "wrong_person":
+        sources[-1] = {**sources[-1], "principal_id": "another-person"}
+    elif failure == "wrong_project":
+        sources[-1] = {**sources[-1], "project_id": "another-project"}
+    elif failure == "mixed_authority":
+        state.group_recall_response["source_facts"]["a"]["metadata"]["principal_id"] = "another-person"
+    elif failure == "missing_support":
+        state.group_recall_response["source_facts"].pop("a")
+    elif failure == "over_source_bound":
+        state.group_recall_response["results"][0]["source_fact_ids"].append("d")
+        last = state.group_recall_response["source_facts"]["c"]
+        state.group_recall_response["source_facts"]["d"] = {**last, "metadata": {
+            **last["metadata"], "source_ref": "telegram:event:4", "evidence_ref": "evidence:event:4"}}
+    resolver = None if failure == "no_resolver" else lambda _q, _r: tuple(sources)
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url), private_source_resolver=resolver)
+    assert engine.recall_for_presence(_query()).confirmed_facts == ()

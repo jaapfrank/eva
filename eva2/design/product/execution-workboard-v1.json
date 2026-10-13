@@ -5590,7 +5590,7 @@
         "now": {
           "title": "Patronen en sociale feedback bij later gebruik toepassen",
           "state": "in_progress",
-          "phase": "existing_evidence_and_source_assessment",
+          "phase": "ordinary_case_resources_ready",
           "taskId": "HUE2.1",
           "linkedTaskIds": [
             "HUE4.1"
@@ -5600,12 +5600,12 @@
           "reviewer": "/root/product_execution_memory_review",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "De geïnstalleerde leercyclus behoudt correcties en gebruikt die later. Nu controleren wat bestaande patronen en sociale feedback al waarmaken.",
-          "detail": "Bronanalyse en onafhankelijke bewijsdekking eerst. Alleen een aantoonbaar ontbrekende verbinding of noodzakelijke latere gebruiksproef; geen tweede geheugen en geen herhaalde vergelijkingsserie.",
+          "summary": "De bestaande patroonroute verliest bijdragen behalve de nieuwste bron en kan een afleiding als gebruikersfeit labelen. Deze twee aangetoonde tekorten worden gericht hersteld.",
+          "detail": "HUE1.1/HUE3.1 blijven afgerond. HUE2.1/HUE4.1 blijven in uitvoering: alle patroonbronnen en tegenbewijs behouden, voorlopige conclusie zichtbaar; daarna één begrensde gewone later-gebruikcontrole op een ander onderwerp.",
           "doneWhen": "Een nieuw gesprek gebruikt een onderbouwd patroon met bronnen en tegenvoorbeeld; communicatiefeedback werkt door bij een ander onderwerp zonder privécontext bij een andere persoon.",
           "ownerActionNeeded": false,
           "previousGoalTurn": "PROGRESS: HUE1.1/HUE3.1 afgerond op oorspronkelijk bewijs, dashboard en GitHub bijgewerkt",
-          "currentActivity": "Bestaande Hindsight-synthese, stijlspiegel, brongebonden leerrecords en eerdere feedbackproeven op beide oorspronkelijke voorwaarden toetsen.",
+          "currentActivity": "Onafhankelijke bronreview GO;97 controles geslaagd. Eigen proefopslag klaar, definitieve invoerbinding loopt. Kandidaat nog niet geïnstalleerd; geen modelaanvragen gestart.",
           "modelRequestsThisStep": 0,
           "creditCosts": null,
           "checkedAt": "2026-10-13T04:48:08.425037+00:00"
@@ -23307,7 +23307,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva gebruikt bij een nieuwe relevante situatie een onderbouwd patroon uit meerdere eerdere gebeurtenissen van dezelfde persoon. Zij kan de bronnen noemen en houdt een tegenstrijdige gebeurtenis zichtbaar.",
-              "nextAction": "Oorspronkelijke eindvoorwaarde vergelijken met bestaande bron en eerder gebruiksbewijs; alleen aantoonbaar ontbrekende verbinding of latere toepassing afmaken.",
+              "nextAction": "HUE1.1/HUE3.1 blijven afgerond. HUE2.1/HUE4.1 blijven in uitvoering: alle patroonbronnen en tegenbewijs behouden, voorlopige conclusie zichtbaar; daarna één begrensde gewone later-gebruikcontrole op een ander onderwerp.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -23627,7 +23627,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Feedback over communicatie of gewenste hulp beïnvloedt een later gesprek over een ander onderwerp. Vermoedens over behoeften blijven toetsbare vragen; andere personen ontvangen geen privécontext.",
-              "nextAction": "Oorspronkelijke eindvoorwaarde vergelijken met bestaande bron en eerder gebruiksbewijs; alleen aantoonbaar ontbrekende verbinding of latere toepassing afmaken.",
+              "nextAction": "HUE1.1/HUE3.1 blijven afgerond. HUE2.1/HUE4.1 blijven in uitvoering: alle patroonbronnen en tegenbewijs behouden, voorlopige conclusie zichtbaar; daarna één begrensde gewone later-gebruikcontrole op een ander onderwerp.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -35361,6 +35361,6 @@
       ]
     }
   },
-  "updatedAt": "2026-10-13T04:48:08.425037+00:00",
+  "updatedAt": "2026-10-13T04:54:47.309939+00:00",
   "lastUpdatedAt": "2026-10-13T04:48:08.425037+00:00"
 }
