@@ -1,3 +1,15 @@
+## Actueel 13 oktober — AIDE-budgettoewijzing geïnstalleerd hersteld
+
+De bestaande evaluator trekt ouderverbruik niet meer dubbel af van een apart
+gereserveerd ontwikkeldeelbudget. Gezamenlijke verbruikscontrole en de oude
+gedeelde route blijven behouden. Eén hostmodule en de kindtoolcap 25→24 zijn
+aangepast; de dienst is gereed. 53 gerichte controles geslaagd, nul nieuwe
+modelaanvragen. Dit is een noodzakelijke correctie, geen HUE6-afronding.
+Hergebruik geldig verbeter-/toepassings-/latergebruikbewijs vóór nieuwe proeven;
+maak de ontbrekende rustige-reflectiekoppeling af. Geen gesloten herhaling,
+nieuwe vergelijkingsserie of spraakwerk. Oude UNKNOWN blijven behouden.
+Bewijs: development/evidence/product/aide-development-allocation-installed-20261013.json.
+
 ## Actuele uitvoering — bestaande verbeterbeoordeling gestopt
 
 De referentie voerde vier echte acties uit en schreef uitvoerbestanden. De vijfde

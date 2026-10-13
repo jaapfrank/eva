@@ -1,0 +1,45 @@
+{
+  "contract": "EvaAideDevelopmentAllocationInstalled/v1",
+  "task_id": "HUE6.1",
+  "recorded_at": "2026-10-13T21:27:37.586122+00:00",
+  "state": "installed",
+  "title": "Dubbele aftrek van ouderverbruik in AIDE-beoordeling hersteld",
+  "installed": true,
+  "actual_quality_gain_proven": false,
+  "full_task_complete": false,
+  "owner_action_required": false,
+  "changes": {
+    "separate_development_reservation_retained": true,
+    "parent_contact_usage_still_requires_measurement": true,
+    "joint_guard_unchanged": true,
+    "legacy_shared_budget_subtraction_unchanged": true,
+    "host_module_changed": "operations/component_work_execution.py",
+    "development_tool_cap_before": 25,
+    "development_tool_cap_after": 24
+  },
+  "checks": {
+    "focused_tests_passed": 53,
+    "test_tool_chunk_id": "00586c",
+    "actual_host_module_import_matches_source": true,
+    "evaluator_health": "ready",
+    "evaluator_restarts": 1,
+    "new_provider_requests": 0,
+    "core_worker_voice_changed": false
+  },
+  "hashes": {
+    "source_before": "fb89adc6f9f2f3dfd83e6345ad583d1e424bdefca8691ee753037cc6dc1d5cc3",
+    "source_after": "b34a3404c5010abebb4ecc8e56498fdeae5fbf99691c0a0777bb9f6a2be8e668",
+    "config_before": "fe48315bdee2b3b66e44eb338045efc032c2660a8b5af32df3bcbd1b84f0dd62",
+    "config_after": "b38d75481a15b63c37826400533f177487aa1459afa45b1ad2118e195bc5259a",
+    "independent_review": "9bcfb6001a4ab220db27a13881b004d7f8576c9537df92180096d196ba2e7d78"
+  },
+  "limits": {
+    "closed_case_not_repeated": true,
+    "old_raw_null_unknown_unchanged": true,
+    "candidate_not_run_or_applied": true,
+    "development_credit_costs": "UNKNOWN",
+    "post_install_observer_assertion_failed": true,
+    "observer_failure": "Exact systemctl runtime-metadata string comparison was invalid after PID change; read-only import/hash/config/health checks confirmed install without another restart. Full pre/post metadata attestation unavailable."
+  },
+  "next_action": "Use existing valid improvement/apply/later-use evidence where it satisfies original HUE6 conditions. Finish the missing quiet-reflection causal link and later ordinary use; do not repeat a closed case or create another comparison series."
+}

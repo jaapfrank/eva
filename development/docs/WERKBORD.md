@@ -6,11 +6,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Droomcyclus voor mensbegrip en AIDE² afmaken
 
-Bewaarde Eva-kandidaat via de bestaande beoordeling afronden: onafhankelijke kwaliteitsuitkomst, alleen winst toepassen of referentie behouden, daarna werkelijk gebruik. Huidige stabiele kern en resterend gezamenlijk verbruik vooraf coherent binden; geen nieuwe variant, gesloten herhaling, spraakwerk of vergelijkingsserie.
+Bestaande L3.6/L3.7 dekken onafhankelijke codewinst, toepassing en later gebruik; die niet herhalen. Nog af te maken binnen HUE6.1: rustige reflectie koppelen aan veranderd mensbegrip en later gebruik, plus een geldige onafhankelijke kwaliteitsuitkomst voor de aansturing van de ontwikkelende agent. Geen nieuwe variant, gesloten herhaling, spraakwerk of vergelijkingsserie.
 
 Klaar wanneer: Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.
 
-De laatste beoordeling is gesloten zonder officiële score door een te laag lokaal ontwikkeldeelbudget; de oorzaak wordt met de bewaarde metingen gecorrigeerd. Geen eigenaarhandeling, kandidaat of nieuwe afgeronde taak.
+De laatste beoordeling is gesloten zonder officiële score. De dubbele budgetaftrek is geïnstalleerd hersteld; 53 gerichte controles geslaagd, geen nieuwe modelaanvragen. HUE6.1 blijft open: rustige-reflectiekoppeling en later gebruik afmaken, bestaande geldige verbeterbewijzen hergebruiken. Geen herhaling van de gesloten proef of eigenaarhandeling.
 
 ## Afmaakvolgorde
 

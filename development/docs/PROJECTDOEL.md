@@ -1,3 +1,15 @@
+## Actueel 13 oktober — AIDE-budgettoewijzing geïnstalleerd hersteld
+
+De bestaande evaluator trekt ouderverbruik niet meer dubbel af van een apart
+gereserveerd ontwikkeldeelbudget. Gezamenlijke verbruikscontrole en de oude
+gedeelde route blijven behouden. Eén hostmodule en de kindtoolcap 25→24 zijn
+aangepast; de dienst is gereed. 53 gerichte controles geslaagd, nul nieuwe
+modelaanvragen. Dit is een noodzakelijke correctie, geen HUE6-afronding.
+Hergebruik geldig verbeter-/toepassings-/latergebruikbewijs vóór nieuwe proeven;
+maak de ontbrekende rustige-reflectiekoppeling af. Geen gesloten herhaling,
+nieuwe vergelijkingsserie of spraakwerk. Oude UNKNOWN blijven behouden.
+Bewijs: development/evidence/product/aide-development-allocation-installed-20261013.json.
+
 ## Actuele uitvoering — bestaande verbeterbeoordeling gestopt
 
 De referentie voerde vier echte acties uit en schreef uitvoerbestanden. De vijfde
@@ -12,10 +24,14 @@ Bewijs: development/evidence/product/aide-current-baseline-outcome-20261013.json
 
 ## Actuele opdracht — HUE6.1 volledig afmaken
 
-Maak de bestaande AIDE²-cyclus af: bewaarde kandidaat onafhankelijk beoordelen,
-alleen bewezen kwaliteitswinst toepassen of de referentie behouden, en de gekozen
-versie later werkelijk gebruiken. Hergebruik geldig mensbegrip-/reflectiebewijs.
-Bind de actuele stabiele kern en het resterende gezamenlijke verbruik vóór invoer.
+Maak de bestaande AIDE²-cyclus af. L3.6/L3.7 bewijzen al onafhankelijke
+contextcodewinst, toepassing en werkelijk later gebruik; dat niet opnieuw uitvoeren.
+De oorspronkelijke ontwikkelende-agentvoorwaarde mist nog een voldoende complete
+onafhankelijke kwaliteitsuitkomst: winst of een geldige referentiebehoudbeslissing.
+Daarnaast ontbreekt rustige reflectie → veranderd mensbegrip → later gebruik.
+De specifieke kandidaat eddd is geen verplichte nieuwe winnaar; de gesloten
+mislukking met score NULL is ook geen gelijkspel. Bind de actuele stabiele kern en
+het resterende gezamenlijke verbruik vóór eventuele noodzakelijke nieuwe invoer.
 Oude gesloten uitvoeringen, UNKNOWN en criteria blijven behouden; geen nieuwe
 variant, vergelijkingsserie of spraakwijziging. HUE5.1 blijft open. De telling
 blijft 43/54 tot een oorspronkelijke volledige eindvoorwaarde is gehaald.

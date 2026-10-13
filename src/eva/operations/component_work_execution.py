@@ -208,8 +208,13 @@ class ComponentWorkRuntime:
         return ComponentApplicationRuntime(self.config, run=self.run).active_work_usage(task_id)
 
 
-def _construction_remaining_settings(settings, usage):
-    """The paused constructor has already spent part of the same work budget."""
+def _construction_remaining_settings(settings, usage, *, resources=None):
+    """Debit the parent only when it shares the child's local allowance.
+
+    Separately reserved stages still share the physical ledger and joint guard;
+    the development reservation itself must not also pay for parent requests.
+    Only the host's hash-bound resource document can declare that reservation.
+    """
     from eva.application.conversation import ConversationModelUsage
     model = ConversationModelUsage.from_wire(usage['model_usage'])
     if model.measurement != 'measured' or model.model_attempts < 1:
@@ -227,11 +232,42 @@ def _construction_remaining_settings(settings, usage):
         counts = (model, contact)
     result = deepcopy(settings)
     limits = result['limits']
+    if resources is not None and 'prospective_reserved_stages' in resources:
+        _validate_separate_development_reservation(resources, limits)
+        return result
     limits['total_tool_calls'] -= sum(v.tool_calls for v in counts)
     limits['total_tokens'] -= sum(v.input_tokens + v.output_tokens for v in counts)
     if limits['total_tool_calls'] < 1 or limits['total_tokens'] < 1:
         raise ValueError('shared construction/development budget exhausted')
     return result
+
+
+def _validate_separate_development_reservation(resources, limits):
+    stages = resources['prospective_reserved_stages']
+    joint = resources.get('remaining_joint_allowance')
+    names = {'development', 'independent_final', 'later',
+             'parent_operator_assisted_carry_forward'}
+    fields = ('input_tokens', 'output_tokens', 'total_tokens',
+              'physical_tools', 'provider_attempts')
+    if (resources.get('contract') != 'EvaWorkerStrategyProductionResources/v1'
+            or not isinstance(stages, dict) or set(stages) != names
+            or not isinstance(joint, dict)):
+        raise ValueError('separate development reservation unavailable')
+    for allocation in (*stages.values(), joint):
+        if (not isinstance(allocation, dict)
+                or any(type(allocation.get(k)) is not int or allocation[k] < 0
+                for k in fields)
+                or allocation['total_tokens'] != allocation['input_tokens'] + allocation['output_tokens']):
+            raise ValueError('separate development reservation accounting differs')
+    if any(sum(v[k] for v in stages.values()) > joint[k] for k in fields):
+        raise ValueError('separate stage reservations exceed joint allowance')
+    development = stages['development']
+    for local, reserved in (('total_tokens', 'total_tokens'),
+                            ('total_tool_calls', 'physical_tools'),
+                            ('total_provider_attempts', 'provider_attempts')):
+        if (type(limits.get(local)) is not int or limits[local] < 1
+                or limits[local] > development[reserved]):
+            raise ValueError('child limits exceed separate development reservation')
 
 
 def _private_source(path, expected_sha256):
@@ -365,7 +401,10 @@ class NativeComponentWorkProducer:
             self.authorize(binding, request=request)
             require_remaining()
             construction_usage = self.runtime.active_work_usage(binding['task_id'])
-            settings = _construction_remaining_settings(settings, construction_usage)
+            resources = json.loads(_private_source(
+                settings['resources_file'], settings['resources_sha256']).read_bytes())
+            settings = _construction_remaining_settings(
+                settings, construction_usage, resources=resources)
             def authorizer():
                 current = self.authorize(binding, request=request)
                 if current["parent_deadline"] != authority["parent_deadline"]:

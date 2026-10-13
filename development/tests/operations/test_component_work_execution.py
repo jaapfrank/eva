@@ -1,5 +1,6 @@
 """Transport and original-authority checks for native component work."""
 from contextlib import contextmanager
+from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace as NS
 import json
 import threading
@@ -16,7 +17,10 @@ BINDING = {"contract": "EvaScopedComponentEvaluationBinding/v1", "task_id": "wor
            "draft_step": 1, "evaluation_step": 2, "evaluation_call_id": "eval:1",
            "execution_binding_ref": "a" * 64}
 
-PARENT_DEADLINE = "2026-10-12T12:15:00Z"
+# A live synthetic authority, rather than a calendar date that expires and
+# prevents every test from reaching its intended guard. The expiry test below
+# still supplies its own past deadline.
+PARENT_DEADLINE = (datetime.now(UTC) + timedelta(hours=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 def post(url, path, body, token="token"):
     request = Request(url + path, data=json.dumps(body).encode(), method="POST",
@@ -521,6 +525,62 @@ def test_shared_child_limits_include_prior_construction_and_contact():
         _construction_remaining_settings(settings, parent)
 
 
+def separate_stage_resources():
+    stages = {
+        'development': (45000, 3000, 24, 12),
+        'independent_final': (42000, 3000, 24, 12),
+        'later': (10500, 1500, 12, 6),
+        'parent_operator_assisted_carry_forward': (16260, 3119, 4, 2)}
+    return {'contract': 'EvaWorkerStrategyProductionResources/v1',
+        'prospective_reserved_stages': {name: {
+            'input_tokens': i, 'output_tokens': o, 'total_tokens': i + o,
+            'physical_tools': t, 'provider_attempts': p}
+            for name, (i, o, t, p) in stages.items()},
+        'remaining_joint_allowance': {'input_tokens': 113845, 'output_tokens': 10823,
+            'total_tokens': 124668, 'physical_tools': 73, 'provider_attempts': 44}}
+
+
+def test_separate_development_reservation_does_not_pay_parent_twice():
+    from eva.application.conversation import ConversationModelUsage
+    from eva.operations.component_work_execution import _construction_remaining_settings
+    settings = {'limits': {'total_tokens': 48000, 'total_tool_calls': 24,
+        'total_provider_attempts': 12}}
+    parent = {'model_usage': ConversationModelUsage.measured(model_attempts=3,
+        tool_calls=4, input_tokens=16746, output_tokens=877).to_wire(),
+        'contact_usage': None,
+        'contact_disposition': 'registered_technical_origin_without_foreground'}
+    bounded = _construction_remaining_settings(settings, parent,
+        resources=separate_stage_resources())
+    # The retained fifth response uses 35,489 child tokens: within its 48,000
+    # reservation, but outside the incorrectly parent-debited 30,377 allowance.
+    assert bounded['limits']['total_tokens'] == 48000
+    assert bounded['limits']['total_tool_calls'] == 24
+    assert 35489 < bounded['limits']['total_tokens']
+    assert _construction_remaining_settings(settings, parent)['limits']['total_tokens'] == 30377
+    assert settings['limits']['total_tokens'] == 48000
+    parent['model_usage'] = ConversationModelUsage.partial(model_attempts=3,
+        tool_calls=4, input_tokens=16746, output_tokens=877).to_wire()
+    with pytest.raises(ValueError, match='unmeasured construction'):
+        _construction_remaining_settings(settings, parent, resources=separate_stage_resources())
+
+
+@pytest.mark.parametrize('change', ['joint', 'stage', 'tools', 'tokens', 'attempts'])
+def test_separate_reservations_cannot_expand_registered_work(change):
+    from eva.operations.component_work_execution import _validate_separate_development_reservation
+    resources = separate_stage_resources()
+    limits = {'total_tokens': 48000, 'total_tool_calls': 24, 'total_provider_attempts': 12}
+    if change == 'joint':
+        resources['remaining_joint_allowance']['physical_tools'] = 63
+    elif change == 'stage':
+        resources['prospective_reserved_stages']['development']['total_tokens'] += 1
+    else:
+        key = {'tools': 'total_tool_calls', 'tokens': 'total_tokens',
+               'attempts': 'total_provider_attempts'}[change]
+        limits[key] += 1
+    with pytest.raises(ValueError):
+        _validate_separate_development_reservation(resources, limits)
+
+
 def test_construction_change_during_child_blocks_further_dispatch(work, tmp_path, monkeypatch):
     legs = []
     producer, request, evaluator = coordinator(work, tmp_path, monkeypatch,
@@ -577,8 +637,9 @@ def test_development_cannot_report_unknown_child_usage_as_zero(work, tmp_path, m
 
 @pytest.mark.parametrize("input_tokens,output_tokens", [
     (385001, 0), (0, 15001), (384880, 0), (0, 14985)])
+@pytest.mark.parametrize('separate', [False, True])
 def test_child_split_token_overrun_stops_before_next_dispatch(
-        work, tmp_path, monkeypatch, input_tokens, output_tokens):
+        work, tmp_path, monkeypatch, input_tokens, output_tokens, separate):
     from pathlib import Path
     dispatched = []
     def produce(**kw):
@@ -590,6 +651,17 @@ def test_child_split_token_overrun_stops_before_next_dispatch(
         kw["authorize"]()
         dispatched.append(kw["leg"])
     producer, request, evaluator = coordinator(work, tmp_path, monkeypatch, produce)
+    if separate:
+        settings = producer.config['settings']
+        resources_path = Path(settings['resources_file'])
+        resources = json.loads(resources_path.read_bytes())
+        resources.update(separate_stage_resources())
+        resources_path.chmod(0o600)
+        resources_path.write_text(json.dumps(resources))
+        resources_path.chmod(0o400)
+        settings['resources_sha256'] = hashlib.sha256(resources_path.read_bytes()).hexdigest()
+        settings['limits'].update(total_tokens=48000, total_tool_calls=24,
+            total_provider_attempts=12)
     with pytest.raises(ValueError, match="construction and child budget exceeded"):
         producer.evaluate(request, execution_binding=BINDING,
             evaluator=evaluator, static_lock=threading.Lock())
