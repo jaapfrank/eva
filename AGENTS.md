@@ -14,15 +14,16 @@ en opgeslagen resultaat zijn bytegelijk. Standaard alleen een kort antwoord en
 samenvatting, geen automatische bijlage. De documentroute vereist een expliciet
 verzoek voor één oorspronkelijke taak; herhaal geen onderzoek of externe wijziging.
 Oude samenvatting-ACK en onzekere tekstpoging blijven behouden.
-Beoordelingsdienst en geïsoleerde configuratietoegang zijn hersteld. Daarna zijn
-werkruimtehergebruik en een te lange bronidentiteit gericht gecorrigeerd. De laatste
-evaluatiewerker startte, maar bereikte nog geen modelaanvraag; kandidaat blijft
-onbeoordeeld. De compacte bron wordt onafhankelijk op het echte werkcontract
-gecontroleerd vóór hervatting; geen nieuwe kandidaat of beoordelingscriteria.
-Gesloten proef en verbruik behouden; geen tijdreset of heropening daarvan.
-Afzonderlijke noodzakelijke hersteluitvoering na bewezen toegangsherstel staat in
-development/docs/aide-quality-recovery-20261013.md; zelfde kandidaat en criteria,
-geen extra model-/token-/toolruimte. Alleen onafhankelijke winst toepassen.
+Beoordelingsdienst, werkruimtebinding en compacte bronidentiteit zijn hersteld en
+geïnstalleerd. De echte beoordeling gebruikte vijf kindmodelaanvragen, maar HTTP500
+bij programming.close overschreef de runner-uitkomst vóór terminalwrite/export.
+Dezelfde bestaande programmeersessie is daarna bevestigd gesloten. Kandidaat blijft
+onbeoordeeld; geen kwaliteitsscore, toepassing of nieuwe functie. Fysieke SSE-usage
+is gemeten; de gewone childregistratie blijft gedeeltelijk en de assessmentseal UNKNOWN.
+Bewijs: development/evidence/product/aide-evaluation-closure-result-20261013.json.
+Vervolg: behoud een expliciete gefaalde taakuitkomst en verbruik bij afsluitfout,
+zonder een mislukte afsluiting als geslaagd werk te presenteren. Geen herhaling van
+de gesloten uitvoering of reset van haar klok. Oorspronkelijke criteria behouden.
 Actief: HUE6/AIDE² via Eva's bewaarde kandidaat; onafhankelijke beoordeling,
 alleen kwaliteitswinst toepassen en later gebruiken. Daarna HUE5 en samenhangende
 chatoplevering; geen vergelijkingsserie. Spraak wordt door een ander model verzorgd;

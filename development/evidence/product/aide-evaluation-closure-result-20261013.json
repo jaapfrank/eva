@@ -1,0 +1,53 @@
+{
+  "contract": "EvaComponentEvaluationClosureResult/v1",
+  "status": "failed",
+  "timestamp": "2026-10-13T16:01:21.953194+00:00",
+  "taskId": "HUE6.1",
+  "independentReviewSha256": "8f88abbc12659efd2c26c47b856b5b1713dbaa233dba4773a9ace00b31808b4a",
+  "sourceRepairInstalled": true,
+  "candidateQuality": "unjudged",
+  "candidateApplied": false,
+  "qualityScore": null,
+  "observedFailure": "Programming session close returned HTTP500 and overrode the runner outcome before child terminal write/export. The service exception subtype was not retained.",
+  "physicalUsageThisExecution": {
+    "parentRequests": 1,
+    "parentInputTokens": 23681,
+    "parentOutputTokens": 62,
+    "childRequests": 5,
+    "childInputTokens": 32501,
+    "childOutputTokens": 837,
+    "totalTokens": 57081,
+    "tools": 6
+  },
+  "physicalUsageAcrossRetainedExecutions": {
+    "requests": 21,
+    "toolsIncludingLaterSessionClose": 19,
+    "inputTokens": 254415,
+    "outputTokens": 3296,
+    "totalTokens": 257711
+  },
+  "ordinaryChildJournal": {
+    "admitted": 5,
+    "recorded": 5,
+    "measuredSuccessful": 4,
+    "failedUnmeasured": 1,
+    "inputTokens": 25295,
+    "outputTokens": 769,
+    "measurement": "partial"
+  },
+  "normalChildAssessmentSeal": "UNKNOWN",
+  "originalRawChildUsage": "NULL_preserved",
+  "recoveryActiveSeconds": 348.2006371341413,
+  "recoveryCapSeconds": 300,
+  "failedIntervalExcludedSeconds": 0,
+  "originalClockUnchanged": true,
+  "containersRemoved": true,
+  "laterExistingProgrammingSessionCloseConfirmed": true,
+  "laterCloseIsSeparateFromOriginalFailure": true,
+  "retryStarted": false,
+  "newComparatorSeries": false,
+  "criteriaChanged": false,
+  "creditCost": "unknown",
+  "newProductCompletion": false,
+  "nextNecessaryCorrection": "Preserve an explicit failed task outcome and recorded usage when programming cleanup fails; do not present a cleanup failure as successful work."
+}

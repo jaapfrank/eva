@@ -57,3 +57,19 @@ Het oorspronkelijke gezamenlijke plafond van 68 aanvragen, 400.000 tokens en
 Geen wijziging van oorspronkelijke resourcebytes, vragen, criteria, kandidaat of
 modelrollen; dit is een hersteltoewijzing, geen bewijs dat de oorspronkelijke
 bouwgrens is gehaald. Alleen onafhankelijk bewezen kwaliteitswinst toepassen.
+
+## Werkelijke sluiting van de compacte hervatting
+
+De evaluator bereikte echte modeluitvoering, maar de oorspronkelijke afsluiting van
+de programmeersessie gaf HTTP500. Dit overschreef de runner-uitkomst en verhinderde
+de duurzame childafsluiting en beoordelingsseal. De precieze service-exception is
+niet gelogd; de ontbrekende-containerhypothese is met de actuele CLI weerlegd.
+Dezelfde bestaande sessie is later apart bevestigd gesloten; dit herstelt geen score.
+
+Deze uitvoering: één parentaanvraag/23.743 tokens en vijf childaanvragen/33.338
+fysiek gemeten tokens; samen 57.081 tokens. De gewone childjournal heeft vijf
+records, waarvan één failed/unmeasured, en blijft gedeeltelijk. Raw child_usage NULL
+en assessment UNKNOWN blijven staan. Recoverytijd 348,200637/300 seconden, geen
+tijdcredit voor het mislukte interval. Geen kandidaatbeoordeling, final, toepassing
+of later gebruik; geen nieuwe uitvoering gestart. Review en volledige metingen:
+development/evidence/product/aide-evaluation-closure-result-20261013.json.
