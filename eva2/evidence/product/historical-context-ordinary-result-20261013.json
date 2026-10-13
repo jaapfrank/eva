@@ -1,0 +1,84 @@
+{
+  "contract": "EvaOrdinaryExecutionClosedResult/v1",
+  "createdAt": "2026-10-13T02:54:15.004637+00:00",
+  "generation": 21,
+  "workId": "work:eva-resume:868d61d4-6b0c-5901-aeea-cc44be2af09e",
+  "terminalState": "ambiguous",
+  "errorCode": "internal_error",
+  "errorFingerprint": "039cc78514ddc215b86bfeea57f2a1d1f932aaf6160e4b687da08e3653eff0dd",
+  "cause": {
+    "category": "admitted_provider_protocol_error",
+    "httpStatus": 200,
+    "streamEvent": "error",
+    "preciseUpstreamCode": "UNKNOWN",
+    "inputBudgetFailureProven": false,
+    "safeDiagnostic": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-failed-request-safe-log.private.json",
+      "sha256": "fb08b9fb899b65b6722efbbf0129a10c0e06268a9429545bd570af2f9a76de3e"
+    }
+  },
+  "usage": {
+    "admittedRequests": 16,
+    "succeededMeasuredResponses": 15,
+    "failedUnmeasuredResponses": 1,
+    "localStreamsClosed": 16,
+    "inflight": 0,
+    "knownInputTokens": 759306,
+    "knownOutputTokens": 2976,
+    "knownTotalTokens": 762282,
+    "tools": 15,
+    "creditCosts": null,
+    "wholeTotalConfirmed": false,
+    "oldUnknownPreserved": true
+  },
+  "artifact": {
+    "bytes": 11961,
+    "sha256": "561346867e1f620516fce322d58d6b3c766b7b7fa5195ea0656cf1f1ff185e41",
+    "changed": false,
+    "newEvaSave": false,
+    "newIndependentReadback": false,
+    "originalContentVerdict": "INCOMPLETE"
+  },
+  "newResearch": {
+    "additionalConfigurationsRead": 8,
+    "fullAdditionalConfigurationSourceRead": true,
+    "processedInSavedProposal": false,
+    "identicalLocalAndConfigurationReadRepeated": true,
+    "independentCaptureAssessment": "New source coverage and exact repetitions both present; no renderer or model-intent cause proven."
+  },
+  "haMutation": false,
+  "finalIngressDeliveryConfirmed": false,
+  "taskCompletionConfirmed": false,
+  "wholeProjectCompletion": false,
+  "terminalObservation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-terminal-observation.private.json",
+    "sha256": "bb366199f12696bddf212a680ac116daad192c44a58c7aa4303d9dcae1f8b6a2"
+  },
+  "independentEndReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-original-proposal-end-review.private.json",
+    "sha256": "bd48db0ca8c521f69e635ab8bc959646300f3e8f2487571f179d6fa18fb08588"
+  },
+  "subsequentReadinessProbe": {
+    "separateFromOriginalTask": true,
+    "model": "gpt-6-astra",
+    "effort": "medium",
+    "requests": 1,
+    "inputTokens": 20,
+    "outputTokens": 5,
+    "totalTokens": 25,
+    "tools": 0,
+    "streamClosed": true,
+    "elapsedSeconds": 3.16978,
+    "success": true,
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/provider-readiness-probe-result.private.json",
+      "sha256": "298070943fe63c6329f7a8d9175a6891f7adf7f2d35abff4e27bdb62d536b117"
+    },
+    "oldErrorCauseAndQualityNotEstablished": true
+  },
+  "limits": [
+    "Original criteria and allowed later keys/IP/protocol/physical test conditions unchanged.",
+    "Current failed model usage remains UNKNOWN; no full token/cost total inferred.",
+    "No closed comparison repeated or new comparison matrix."
+  ]
+}

@@ -1,4 +1,29 @@
-## Actueel 13 oktober — algemene vervolgcontext gecorrigeerd en geïnstalleerd
+## Actueel 13 oktober — providerfout gesloten; Eva vervolgt vanaf eigen bevindingen
+
+De geïnstalleerde algemene contextcorrectie blijft behouden. Gen21 las acht
+verdere automatiseringsconfiguraties volledig, maar schreef geen nieuw voorstel.
+Het bestaande 11.961-byte-document/SHA56134686 blijft exact Gen20; oorspronkelijke
+inhoudelijke beoordeling INCOMPLETE. Exacte herlezingen blijven zichtbaar naast
+nieuwe brondekking. Geen HA-mutatie, voltooide gebruikersuitkomst of hoofdtaakclaim.
+
+Gen21: 16 admitted/gesloten streams, 15 gemeten antwoorden, 762.282 bekende tokens,
+15 tools en één mislukte/onbemeten aanvraag. Volledig verbruik en credits onbekend.
+HTTP200/SSE-error bewijst een provider/protocolfout, geen lokale invoergrensfout;
+precieze upstreamcode/reden niet bewaard. Oude fouten en UNKNOWN blijven behouden.
+Eén afzonderlijke kleine Astra/medium-aanvraag via dezelfde geïnstalleerde route
+slaagde: OK, 20 input/5 output, nul tools, gesloten stream, 3,17 s. Dit bewijst
+bereikbaarheid nu, niet de oude foutoorzaak of een kwaliteits-/efficiëntievoordeel.
+
+Eén gewone voortzetting Gen22 vanuit nieuwe configuratiebevindingen en eigen
+werknotities is gestart; oorspronkelijke opdracht, criteria, modelrollen en
+mandaat behouden. Geen handgeschreven voorstel of nieuwe vergelijkingsserie.
+Eva moet zelf opslaan, teruglezen en haar echte resultaat opleveren. Voortgang en
+verbruik blijven apart zichtbaar. Volledig goal ACTIVE; 39/48 en 39/54 onveranderd;
+HUE/leercyclus/AIDE² open, spraak geparkeerd en Docker Desktop ongemoeid.
+Resultaat: eva2/evidence/product/historical-context-ordinary-result-20261013.json.
+Review: eva2/reviews/historical-context-ordinary-result-review-20261013.json.
+
+## Historisch 13 oktober — algemene vervolgcontext gecorrigeerd en geïnstalleerd
 
 Provider cc1ece36 en connectorresultaten cbc847a0 staan in de bestaande kern en
 werker. Eén update; beide gezond en ready, 343 andere Python-bronnen per image,

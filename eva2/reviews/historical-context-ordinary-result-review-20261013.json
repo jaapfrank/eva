@@ -1,0 +1,19 @@
+{
+  "contract": "EvaOriginalProposalEndReviewPublication/v1",
+  "createdAt": "2026-10-13T02:54:15.004637+00:00",
+  "verdict": "INCOMPLETE",
+  "independentPrivateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-original-proposal-end-review.private.json",
+    "sha256": "bd48db0ca8c521f69e635ab8bc959646300f3e8f2487571f179d6fa18fb08588"
+  },
+  "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+  "unchangedOriginalArtifactSha256": "561346867e1f620516fce322d58d6b3c766b7b7fa5195ea0656cf1f1ff185e41",
+  "remainingOriginalConditions": [
+    "Relevant available configuration/device-ID synthesis",
+    "Conclude available per-device mapping and access boundaries"
+  ],
+  "newResultOrDeliveryConfirmed": false,
+  "knownTokens": 762282,
+  "failedUnmeasuredRequests": 1,
+  "providerFailurePreciseReason": "UNKNOWN"
+}

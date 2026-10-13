@@ -5549,18 +5549,18 @@
         "now": {
           "title": "Eva maakt haar oorspronkelijke voorstel zelf af",
           "state": "in_progress",
-          "phase": "eva_resuming_original_proposal",
-          "taskId": "work:eva-resume:868d61d4-6b0c-5901-aeea-cc44be2af09e",
+          "phase": "eva_continuing_after_provider_readiness",
+          "taskId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
           "linkedTaskIds": [
             "TL-001",
             "HUE1.1",
             "HUE3.1"
           ],
-          "activeExecution": "work:eva-resume:868d61d4-6b0c-5901-aeea-cc44be2af09e",
+          "activeExecution": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
           "owner": "/root",
           "executor": "Eva · gewone algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva heeft het oorspronkelijke voorstel zelf verbeterd, opgeslagen en teruggelezen. Nog twee oorspronkelijke analysepunten open; de taakroute stopte daarna door te grote invoer.",
+          "summary": "Algemene contextcorrectie geïnstalleerd. Gen21 las nieuwe bronnen maar stopte in de providerstream; voorstel nog niet af. Eva vervolgt nu vanaf de bewaarde werknotities.",
           "detail": "Het nieuwe document wordt onder de oorspronkelijke voorwaarden beoordeeld. Codex verhelpt de concrete vervolgcontext; geen handgeschreven voorstel, ongewijzigde herhaling of HA-mutatie.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-strategy-installed-20261013.json",
@@ -5568,8 +5568,8 @@
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/working-source-sections-ordinary-result-review-20261013.json",
           "previousResultReviewSha256": "9e34412371c2de088859aecb07e78bc1f94fbb62434a427477343be1276b2afa",
           "implementationStatus": "Kern en taakwerker bevatten de twee exact beoordeelde modules; beide gezond en ready.",
-          "currentActivity": "Eva werkt zelf verder aan het oorspronkelijke voorstel met de geïnstalleerde algemene contextcorrectie.",
-          "checkedAt": "2026-10-13T02:29:16.347350+00:00",
+          "currentActivity": "Dezelfde provider antwoordt weer in één kleine gecontroleerde aanvraag. Eva vervolgt haar oorspronkelijke voorstel vanuit bewaarde nieuwe configuratiebevindingen en werknotities.",
+          "checkedAt": "2026-10-13T02:54:15.004637+00:00",
           "remaining": [
             "Het werkelijke nieuwe voorstel onafhankelijk beoordelen onder de oorspronkelijke voorwaarden.",
             "De aangetoonde invoerfout in de algemene vervolgroute oplossen en Eva zelf de uitkomst laten afronden.",
@@ -5577,16 +5577,16 @@
           ],
           "nativeRunning": true,
           "observedUsage": {
-            "workId": "work:eva-resume:868d61d4-6b0c-5901-aeea-cc44be2af09e",
-            "generation": 21,
+            "workId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
+            "generation": 22,
             "measurement": "unknown_until_observed",
             "modelRequests": null,
             "totalTokens": null,
             "creditCosts": null
           },
           "currentObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/gen20-terminal-observation.private.json",
-            "sha256": "876a222bcdf89177956e55da274652703c1b9d0b74df38fb77188470cbdbde83"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-terminal-observation.private.json",
+            "sha256": "bb366199f12696bddf212a680ac116daad192c44a58c7aa4303d9dcae1f8b6a2"
           },
           "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/historical-execution-context-source-review-20261013.json",
           "sourceReviewSha256": "f744929ed20603df7eab9ccf9cd97943192bf29ddf44f73227ac3b309c8030b9",
@@ -5604,19 +5604,20 @@
             "origin": "Gen20_saved_work_notes_not_final_result"
           },
           "previousObservedUsage": {
-            "workId": "work:eva-resume:8669795c-e1c6-5559-84d3-afd944450878",
-            "generation": 20,
-            "measurement": "terminal_accounting_verified",
+            "workId": "work:eva-resume:868d61d4-6b0c-5901-aeea-cc44be2af09e",
+            "generation": 21,
+            "measurement": "terminal_accounting_known_lower_bound",
             "admittedRequests": 16,
-            "completedMeasuredResponses": 16,
+            "completedMeasuredResponses": 15,
+            "failedUnmeasuredResponses": 1,
             "pendingRequests": 0,
-            "inputTokens": 884605,
-            "outputTokens": 6803,
-            "knownTokens": 891408,
-            "tools": 16,
-            "currentUnknownRequests": 0,
+            "currentUnknownRequests": 1,
+            "inputTokens": 759306,
+            "outputTokens": 2976,
+            "knownTokens": 762282,
+            "tools": 15,
             "creditCosts": null,
-            "wholeTotalConfirmed": true
+            "wholeTotalConfirmed": false
           },
           "pendingSourceSha256": null,
           "pendingKnownContextCheck": {
@@ -5631,7 +5632,7 @@
             "wholeProposalConfirmed": false,
             "currentModelRequests": 0
           },
-          "updatedAt": "2026-10-13T02:29:16.347350+00:00",
+          "updatedAt": "2026-10-13T02:54:15.004637+00:00",
           "previousTerminalObservations": {
             "terminalObservation": {
               "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",
@@ -5656,8 +5657,8 @@
             }
           },
           "accountingObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/gen20-terminal-observation.private.json",
-            "sha256": "876a222bcdf89177956e55da274652703c1b9d0b74df38fb77188470cbdbde83"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-terminal-observation.private.json",
+            "sha256": "bb366199f12696bddf212a680ac116daad192c44a58c7aa4303d9dcae1f8b6a2"
           },
           "ownerActionNeeded": false,
           "previousProgressObservation": {
@@ -5712,8 +5713,8 @@
           "installedReview": "/home/administrator/project/Eva2/eva2/reviews/historical-execution-context-source-review-20261013.json",
           "installedReviewSha256": "4ce03885620b8e89544bbd01989a42de7e31b1336675e51e28b071575f7953b6",
           "currentActivityOwner": "Eva",
-          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/post-read-context-ordinary-result-20261013.json",
-          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/post-read-context-ordinary-result-review-20261013.json",
+          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/historical-context-ordinary-result-20261013.json",
+          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/historical-context-ordinary-result-review-20261013.json",
           "currentReadback": {
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen19-current-document-readback.private.json",
             "sha256": "91f1356e502e99de4b3c6dae8e9682425bbd5196c2da4d29554c0cac0ee874e1",
@@ -5721,8 +5722,8 @@
             "currentArtifactBytesExactExceptOneTerminalLF": true
           },
           "ordinaryResumeEvidence": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/ordinary-resume-receipt.private.json",
-            "sha256": "95c27975bbe40eb58b43eea10f5a44e36dac75698dc9da7c7e87f98eb1207faf"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen22-ordinary-resume-receipt.private.json",
+            "sha256": "b04866f1fd72a5561c0220533038b408c62591392042fd3f7e130c86a7d5709e"
           },
           "priorCorrectionEndpointFailure": {
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/continuation-receipt.private.json",
@@ -5745,11 +5746,11 @@
             "separateEvaRead": true,
             "terminalLFNormalization": true,
             "originalContentVerdict": "INCOMPLETE",
-            "nativeState": "failed",
-            "nativeError": "input_budget_exceeded"
+            "nativeState": "ambiguous",
+            "nativeError": "internal_error"
           },
-          "currentResultEvidenceSha256": "006a869097226213ae8fb0cbbc7896ffd845711d140022230a4893f62a79f3f5",
-          "currentResultReviewSha256": "5501767f5415ef50ba2a0060c9629d2bf4882d4deabf1e89fb733d4a9929a087",
+          "currentResultEvidenceSha256": "47e6b6f06c2ddf268de37a0ff3bb18252311a666b4551d130854fa981807999b",
+          "currentResultReviewSha256": "11ce0649bebcd468152d3977807aae33f8c83c0a53a8a4ab333c605035d882c1",
           "pendingImplementation": {
             "providerSha256": "cc1ece369fbaa9c3bfe7301009492e9343096c2b293ce05179ef54c7a8046d7a",
             "connectorResultsSha256": "cbc847a013e2a38895338c7e940a1cd7e10d6d10a62f913a98939910b8053716",
@@ -5757,6 +5758,22 @@
             "installed": true,
             "sourceReview": "GO",
             "checks": "166 eerdere kandidaatcontroles; 23 definitieve gerichte controles. Bekende context 65.510→57.292 tokens."
+          },
+          "currentDiagnosticObservation": {
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen21-current3-receipts.private.json",
+            "sha256": "a6858b9f5b1ae1f158f4d510bc85e985260b12ff27cc1fe6337e74ac555265e1",
+            "identicalLocalReadRepeated": true,
+            "newArtifactSaved": false
+          },
+          "providerReadiness": {
+            "source": {
+              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/provider-readiness-probe-result.private.json",
+              "sha256": "298070943fe63c6329f7a8d9175a6891f7adf7f2d35abff4e27bdb62d536b117"
+            },
+            "success": true,
+            "requests": 1,
+            "knownTokens": 25,
+            "oldFailureReason": "UNKNOWN"
           }
         },
         "next": {
