@@ -822,17 +822,17 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T12:00:00+02:00",
+  "lastUpdated": "2026-10-13T12:52:29.325596+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "REPO-001",
+  "activeTaskId": "L2.2",
   "currentWork": {
-    "id": "REPO-001",
-    "title": "Repository opgeruimd: 857 oude bestanden verwijderd",
-    "outcome": "857 overbodige oude bestanden verwijderd: 43,6 MB dubbele bronbackups en ongebruikte Eva1-code. Exact terughaalbaar via Git. Nog gebruikte referenties behouden; geen extra productfunctie afgerond.",
-    "area": "project administration",
-    "status": "done",
-    "doneWhen": "Verwijderde bestanden met Git-herkomst geregistreerd; actuele afhankelijkheden en productcriteria behouden; dashboard en GitHub bijgewerkt.",
+    "id": "L2.2",
+    "title": "Volledig opgeslagen werkresultaat leesbaar terugmelden",
+    "outcome": "Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.",
+    "area": "independent work",
+    "status": "completed",
+    "doneWhen": "Volledig opgeslagen document komt leesbaar bij de oorspronkelijke ontvanger en vraag; exacte broninhoud/aflevering bevestigd, oude ACK behouden, geen dubbele automatische verzending; geïnstalleerd in bestaande WSL-runtime.",
     "countedAsProductTask": false
   },
   "historicalWorkboard": {
@@ -930,7 +930,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "Eerst de actieve repository en productaansturing herbeoordelen. Daarna complete gebruikersuitkomsten afmaken; geen nieuwe vergelijkingsserie of spraakontwikkeling.",
+      "priorityDecision": "Documentterugmelding afgerond; hierna HUE6/AIDE², HUE5 en samenhangende chatoplevering. Geen nieuwe vergelijkingsserie of spraakontwikkeling.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -943,8 +943,8 @@
       "summary": [],
       "nextOutcomes": [
         {
-          "title": "Volledig resultaat terugmelden",
-          "detail": "Een samenvatting of lokaal pad is onvoldoende: dezelfde ontvanger moet het echte resultaat kunnen lezen."
+          "title": "Volledig resultaat geleverd",
+          "detail": "Bij oorspronkelijke vraag geleverd en exact teruggelezen. Standaard korte samenvatting; geen automatische bijlage."
         },
         {
           "title": "Zelfverbetering afmaken",
@@ -1614,6 +1614,20 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Volledig opgeslagen resultaat werkelijk geleverd",
+            "state": "installed",
+            "summary": "Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/full-saved-result-delivery-installed-20261013.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/full-saved-result-delivery-final-review-20261013.json",
+            "checkedAt": "2026-10-13T13:40:45.278382+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "documentDeliveryConfirmed": true,
+            "attachmentDefault": "none",
+            "ownerRead": "unknown"
+          },
+          {
             "title": "Eva’s voorstelsamenvatting automatisch teruggestuurd",
             "state": "installed",
             "summary": "Telegram bevestigt de inhoudelijke samenvatting en akkoordvraag op het oorspronkelijke bericht. Volledig voorstel opgeslagen; bijlage of bruikbare documentlink nog niet aangetoond.",
@@ -1730,40 +1744,40 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Eva’s voorstelsamenvatting terug in Telegram",
+          "title": "Volledig opgeslagen resultaat werkelijk geleverd",
           "state": "installed",
-          "summary": "De inhoudelijke samenvatting en akkoordvraag zijn via de gewone afleverwerker teruggestuurd en bevestigd. Het volledige voorstel is opgeslagen; een bijlage of werkende documentlink is nog niet aangetoond. Eén module geïnstalleerd, zonder herhaald onderzoek.",
-          "currentResultEvidence": "/home/administrator/project/Eva2/development/evidence/product/original-proposal-telegram-return-installed-20261013.json",
-          "currentResultEvidenceSha256": "ce03faf74ed47bfa15e44a211fc30f76f9dc8f2b02b813e836015d1e02b21974",
-          "deliveryAcknowledged": true,
-          "installationDispatches": 1,
-          "newModelRequests": 0,
-          "maintenanceRepair": true,
-          "fullDocumentPresentation": "not_demonstrated",
-          "currentResultReview": "/home/administrator/project/Eva2/development/reviews/original-proposal-telegram-return-installed-review-20261013.json",
-          "currentResultReviewSha256": "3cf5e76f02d7a372c7f52a793b4888a100252ade24da3161f895aa791ddf76ec",
-          "independentReview": "GO"
+          "summary": "Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/full-saved-result-delivery-installed-20261013.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/full-saved-result-delivery-final-review-20261013.json",
+          "checkedAt": "2026-10-13T13:40:45.278382+00:00",
+          "newProductFunctionCompleted": false,
+          "completedTaskIds": [],
+          "smallTaskCountsUnchanged": true,
+          "documentDeliveryConfirmed": true,
+          "attachmentDefault": "none",
+          "ownerRead": "unknown"
         },
         "now": {
-          "title": "Repository opgeruimd: 857 oude bestanden verwijderd",
-          "state": "Opgeleverd",
-          "phase": "repository_pruning_delivered",
-          "taskId": "REPO-001",
+          "title": "Volledig opgeslagen werkresultaat leesbaar terugmelden",
+          "state": "Afgerond",
+          "phase": "full_result_delivered_summary_default",
+          "taskId": "L2.2",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "857 overbodige oude bestanden verwijderd: 43,6 MB dubbele bronbackups en ongebruikte Eva1-code. Exact terughaalbaar via Git. Nog gebruikte referenties behouden; geen extra productfunctie afgerond.",
-          "detail": "25 gerichte tests, 10 bronbindings en cataloguscontrole geslaagd. Alle productcriteria behouden. Hierna: volledig opgeslagen werkresultaat leesbaar naar oorspronkelijke ontvanger.",
-          "doneWhen": "Verwijderde bestanden met Git-herkomst geregistreerd; actuele afhankelijkheden en productcriteria behouden; dashboard en GitHub bijgewerkt.",
+          "summary": "Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.",
+          "detail": "Geïnstalleerd in kern en werker. Oud ontvangstbewijs en onzekere tekstpoging behouden; geen nieuw onderzoek. Onafhankelijke finale publicatiecontrole volgt.",
+          "doneWhen": "Volledig opgeslagen document komt leesbaar bij de oorspronkelijke ontvanger en vraag; exacte broninhoud/aflevering bevestigd, oude ACK behouden, geen dubbele automatische verzending; geïnstalleerd in bestaande WSL-runtime.",
           "ownerActionNeeded": false
         },
         "next": {
           "state": "Hierna",
-          "title": "Bestaand volledig werkresultaat leesbaar terugmelden",
-          "detail": "Sluit de aantoonbare ontbrekende verbinding tussen opgeslagen document en de oorspronkelijke ontvanger. Geen handmatig herschreven voorstel."
+          "title": "HUE6/AIDE² afmaken",
+          "detail": "Sluit de aantoonbare ontbrekende verbinding tussen opgeslagen document en de oorspronkelijke ontvanger. Geen handmatig herschreven voorstel.",
+          "summary": "HUE6/AIDE²: bestaande onafhankelijke verbetering toepassen en later gebruiken; geen nieuwe vergelijkingsserie."
         },
         "ownerAction": {
           "title": "Nu niets nodig",
-          "detail": "Reorganisatie en technische blokkades zijn voor Codex. Gezinsacceptatie blijft later apart; spraakproeven zijn geparkeerd.",
+          "detail": "Een kort antwoord met samenvatting is de standaard. Het volledige resultaat blijft bewaard. Akkoord op uitvoering van een migratievoorstel is een afzonderlijke beslissing.",
           "steps": [],
           "blocksIndependentWork": false
         },
@@ -1771,8 +1785,8 @@
         "reviewedAt": "2026-10-13T11:09:22.423738+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-13T12:00:00+02:00",
-      "checkedAt": "2026-10-13T12:00:00+02:00",
+      "reviewedAt": "2026-10-13T13:40:45.278382+00:00",
+      "checkedAt": "2026-10-13T13:40:45.278382+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -1846,8 +1860,8 @@
             "name": "Zelfstandig werk",
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
-            "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst.",
-            "remaining": "Het volledige resultaat leesbaar terugmelden; HUE6: onafhankelijk aangetoonde verbetering toepassen en later gebruiken.",
+            "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst. Volledig opgeslagen resultaat nu werkelijk bij de oorspronkelijke Telegramvraag geleverd; bytes teruggelezen. Standaard geen bijlage.",
+            "remaining": "HUE6: onafhankelijk aangetoonde verbetering toepassen en later gebruiken; samenhangend dagelijks gebruik.",
             "evidencePaths": [
               "development/evidence/product/p2-published-results-20261006.json",
               "development/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -1877,13 +1891,14 @@
               "development/evidence/product/native-work-component-evaluation-clock-installed-20261012.json",
               "development/evidence/product/native-program-observation-installed-20261012.json",
               "development/evidence/product/native-work-completion-cause-diagnosis-20261012.json",
-              "development/evidence/product/native-budget-context-correction-installed-20261012.json"
+              "development/evidence/product/native-budget-context-correction-installed-20261012.json",
+              "development/evidence/product/full-saved-result-delivery-installed-20261013.json"
             ],
-            "checkedAt": "2026-10-13T12:00:00+02:00"
+            "checkedAt": "2026-10-13T13:40:45.278382+00:00"
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-13T04:17:30.073932+00:00",
+      "lastUpdatedAt": "2026-10-13T13:40:45.278382+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -1917,7 +1932,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-13T12:00:00+02:00",
+      "updatedAt": "2026-10-13T13:40:45.278382+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -1926,7 +1941,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "repository-root",
+        "currentStep": "full-result-delivery",
         "steps": [
           {
             "number": 1,
@@ -2033,9 +2048,9 @@
           "overviewVisible": true,
           "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
           "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt.",
-          "currentTaskId": "REPO-001",
-          "currentTaskPhase": "repository_pruning_delivered",
-          "lastUpdatedAt": "2026-10-13T12:32:51.615391+00:00",
+          "currentTaskId": "L2.2",
+          "currentTaskPhase": "full_result_delivered_summary_default",
+          "lastUpdatedAt": "2026-10-13T13:40:45.278382+00:00",
           "learningConnectionInstalled": true,
           "laterUseProven": true,
           "expandedCompletedTaskCount": 43
@@ -3592,21 +3607,21 @@
             ]
           }
         ],
-        "status": "reassessing",
-        "nextAction": "Eerst één actieve bron, werkregistratie en modulekaart. Daarna volledige bestaande resultaten leesbaar terugmelden.",
+        "status": "delivery_completed",
+        "nextAction": "HUE6/AIDE²: bestaande onafhankelijke verbetering toepassen en later gebruiken; geen nieuwe vergelijkingsserie.",
         "finishOrder": [
-          "Volledige opgeslagen resultaten terug bij de oorspronkelijke ontvanger",
+          "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
           "HUE5: echte reactie laten doorwerken in volgend initiatief of stilblijven",
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-13T12:00:00+02:00"
+        "updatedAt": "2026-10-13T13:40:45.278382+00:00"
       }
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "repository-root",
+      "currentStep": "full-result-delivery",
       "steps": [
         {
           "number": 1,
@@ -3713,9 +3728,9 @@
         "overviewVisible": true,
         "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
         "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt.",
-        "currentTaskId": "REPO-001",
-        "currentTaskPhase": "repository_pruning_delivered",
-        "lastUpdatedAt": "2026-10-13T12:32:51.615391+00:00",
+        "currentTaskId": "L2.2",
+        "currentTaskPhase": "full_result_delivered_summary_default",
+        "lastUpdatedAt": "2026-10-13T13:40:45.278382+00:00",
         "learningConnectionInstalled": true,
         "laterUseProven": true,
         "expandedCompletedTaskCount": 43
@@ -5272,16 +5287,16 @@
           ]
         }
       ],
-      "status": "reassessing",
-      "nextAction": "Eerst één actieve bron, werkregistratie en modulekaart. Daarna volledige bestaande resultaten leesbaar terugmelden.",
+      "status": "delivery_completed",
+      "nextAction": "HUE6/AIDE²: bestaande onafhankelijke verbetering toepassen en later gebruiken; geen nieuwe vergelijkingsserie.",
       "finishOrder": [
-        "Volledige opgeslagen resultaten terug bij de oorspronkelijke ontvanger",
+        "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
         "HUE5: echte reactie laten doorwerken in volgend initiatief of stilblijven",
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-13T12:00:00+02:00"
+      "updatedAt": "2026-10-13T13:40:45.278382+00:00"
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -5535,5 +5550,6 @@
       "reviewedBy": "/root/au008_final_review",
       "remaining": "IN-02 eigenaarsoordeel; geen concreet technisch restpunt binnen deze oplevering."
     }
-  }
+  },
+  "updatedAt": "2026-10-13T13:40:45.278382+00:00"
 }

@@ -106,13 +106,17 @@ class AuthorizedWorkDelivery:
     result_sha256: str
     output: str
     outcome: str = "completed"
+    artifact_sha256: str | None = None
 
     @property
     def operation_id(self) -> str:
-        return "delegated-completion:" + canonical_sha256({
+        identity = {
             "work_id": self.work_id, "spec_sha256": self.spec_sha256,
             "result_sha256": self.result_sha256, "destination": self.destination.to_payload(),
-        })
+        }
+        if self.artifact_sha256 is not None:
+            identity["artifact_sha256"] = self.artifact_sha256
+        return "delegated-completion:" + canonical_sha256(identity)
 
 
 @dataclass(frozen=True, slots=True)
@@ -124,9 +128,14 @@ class PrivateWorkDeliveryClaim:
     operation_id: str
     deadline: datetime
     revision: int = 1
+    artifact_sha256: str | None = None
 
     def to_payload(self) -> dict:
-        return {"work_id": self.work_id, "owner_principal_id": str(self.owner_principal_id),
+        payload = {"work_id": self.work_id, "owner_principal_id": str(self.owner_principal_id),
                 "principal_binding_id": str(self.principal_binding_id), "claim_id": self.claim_id,
                 "operation_id": self.operation_id, "deadline": self.deadline.isoformat(),
                 "revision": self.revision}
+        if self.artifact_sha256 is not None:
+            payload["artifact_sha256"] = self.artifact_sha256
+            payload["representation"] = "utf8_document/v1"
+        return payload

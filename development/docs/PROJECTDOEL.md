@@ -1,15 +1,18 @@
-## Actuele eigenaarprioriteit 13 oktober — repository opruimen
+## Actuele eigenaarprioriteit 13 oktober — kort terugmelden, document op verzoek
 
-Eva2 is de repository. Code staat in src, installatiebestanden in deploy en
-ontwikkelmateriaal in development. Verwijder aantoonbaar overbodige oude bestanden,
-niet alleen verplaatsen: dubbele bronbackups en de ongebruikte Eva1-applicatie
-blijven op exacte Git-revisie terug te halen. Behoud nog gebruikte bindings,
-testinputs, verlies-/UNKNOWN-bewijs en de oorspronkelijke productvoorwaarden.
-De [opruimregistratie](repository-pruning-20261013.md) maakt die grens zichtbaar.
-Deze administratieve opdracht rondt geen Eva-productfunctie af. Daarna eerst het
-volledige bestaande werkresultaat leesbaar naar de oorspronkelijke ontvanger,
-gevolgd door HUE6/AIDE², HUE5 en samenhangende chatoplevering. Geen spraakbouw
-of nieuwe vergelijkingsserie. Het volledige huisgenootgoal blijft behouden.
+Volledige documentterugmelding is geïnstalleerd en daadwerkelijk gebruikt: één
+Telegramdocument bij de oorspronkelijke vraag en ontvanger, exacte bytes teruggelezen
+en duurzaam ontvangstbewijs bewaard. De oude samenvatting-ACK en onzekere tekstpoging
+blijven ongewijzigd. Geen herhaald onderzoek of externe wijziging.
+De laatste eigenaarafspraak: standaard een kort antwoord met samenvatting; geen
+automatische bijlage. Volledige documentbezorging alleen op expliciet verzoek voor
+één oorspronkelijke taak. De transportmogelijkheid is aanwezig; nieuwe
+taalspecifieke aanvraagroutes zijn hiermee niet automatisch bewezen.
+Vervolg HUE6/AIDE², HUE5 en samenhangende chatoplevering. Dashboard en Git geven
+dezelfde uitkomst weer; documentterugmelding sluit het hele projectgoal niet af.
+Geen spraakbouw of vergelijkingsserie; het volledige huisgenootgoal blijft behouden.
+De [repositoryopruiming](repository-pruning-20261013.md) is afgerond en is geen
+nieuwe productfunctie. Oorspronkelijke voorwaarden en historisch bewijs blijven staan.
 
 # Eva2 — volledige digitale huisgenoot
 
@@ -140,8 +143,10 @@ voorbeeldspecifieke scripts. HUE1–4 zijn beperkt technisch bewezen en later ge
 M3.3 en bestaande geheugenacceptaties blijven staan. 43/54 kleine taken zijn afgerond,
 geen 43 productfuncties. Het oorspronkelijke werkbord en foutbewijs blijven als gebonden referentie bewaard.
 
-Na de huidige rootreorganisatie:
-1. Lever het volledige bestaande opgeslagen resultaat leesbaar aan dezelfde ontvanger.
+Rootreorganisatie en documentterugmelding zijn afgerond. De afmaakvolgorde:
+
+1. Afgerond: volledig bestaand opgeslagen resultaat bij dezelfde ontvanger geleverd.
+   Standaard korte terugmelding; geen automatische bijlage.
 2. Maak de bestaande HUE6/AIDE²-route compleet: onafhankelijke kwaliteitswinst,
    gecontroleerde toepassing en later gebruik; behoud historische UNKNOWN.
 3. Verbind echte ontvangerfeedback aan later initiatief of bewust stilblijven (HUE5).

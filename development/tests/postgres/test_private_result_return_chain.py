@@ -23,7 +23,8 @@ def test_saved_result_to_bound_transport_and_restart_without_resend(delegated_en
         assert storage.status(spec.work_id, **authority) == 'delivery_claimed'
         if uncertain:
             raise TimeoutError('fixture: acceptance unknown')
-        return {'message_id': 7, 'chat': {'id': 42, 'type': 'private'}, 'text': body['text']}
+        return {'message_id': 7, 'chat': {'id': 42, 'type': 'private'}, 'text': body['text'],
+                'reply_to_message': {'message_id': body['reply_parameters']['message_id']}}
     monkeypatch.setattr(transport._api, '_call', send)
     clock = lambda: NOW + timedelta(seconds=4)
     worker = DelegatedWorkDeliveryWorker(storage, transport, clock=clock)

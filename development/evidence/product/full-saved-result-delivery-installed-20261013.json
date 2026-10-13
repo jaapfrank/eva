@@ -1,0 +1,116 @@
+{
+  "contract": "EvaFullSavedResultDeliveryInstalled/v1",
+  "checkedAt": "2026-10-13T13:40:45.278382+00:00",
+  "status": "installed",
+  "outcome": "Volledig opgeslagen voorstel naar oorspronkelijke Telegramvraag/ontvanger geleverd; standaard alleen korte terugmelding, bijlage op expliciet verzoek.",
+  "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+  "savedSource": {
+    "documentBytes": 14736,
+    "documentSha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+    "deliveryBytes": 14899,
+    "deliverySha256": "e1e4e57c020c380cdb16386657fd8f829cac7293de3156df9bfaec563445f260",
+    "artifactManifestSha256": "a2940f1af74ac01db1c2e1937b0e3a6a01b24656d13f2e7c1c04a7640fda4e8c",
+    "source": "original verified save receipt; no rereading/repeating research"
+  },
+  "delivery": {
+    "representation": "utf8_document/v1",
+    "phase": "delivery_acknowledged",
+    "eventCount": 2,
+    "providerReceiptSha256": "bb321cdcdf3555d41f2e68d85551dabb96a93ad4805c0cb513bc2b45525c6553",
+    "telegramFileReadbackMatchesAllBytes": true,
+    "originalRecipientAndQuestionBound": true,
+    "ordinaryRuntimeWorkerDelivered": true,
+    "sameClaimAfterIdle": true,
+    "humanRead": "unknown",
+    "attachmentAutomaticallyDeliveredByDefault": false,
+    "explicitRequestInterface": "DelegatedWorkDeliveryWorker.run_once(saved_document_work_id=original_work_id)",
+    "newNaturalLanguageAttachmentRoutingProven": false
+  },
+  "preservation": {
+    "baselineSha256": "277cf06cba6ed1fc875f405170c021a62214c9ac956d45e9dd30ade8b584841a",
+    "sameOriginalSummary": true,
+    "samePreviousTextArtifact": true,
+    "sameOriginBinding": true,
+    "sameWorkBinding": true,
+    "supplementalManifestBound": true,
+    "supplementalAcknowledged": true
+  },
+  "installation": {
+    "services": {
+      "core": {
+        "image": "sha256:55277c86c8b291e403ba4b5788118400980a7137cfbd4382a5839e9a541d1081",
+        "checks": {
+          "exactImage": true,
+          "healthy": true,
+          "exactPythonInventory": true,
+          "sameMounts": true,
+          "sameEnvironment": true,
+          "sameProcessConfiguration": true
+        },
+        "changedPythonPaths": [
+          "adapters/postgres/delegated_work_delivery.py",
+          "operations/delegated_work_delivery.py"
+        ]
+      },
+      "delegated-work-worker": {
+        "image": "sha256:7b840de2086a36eccbd7c46e2bfd3f0ea15bfa1ec270d851f3c9754946941816",
+        "checks": {
+          "exactImage": true,
+          "healthy": true,
+          "exactPythonInventory": true,
+          "sameMounts": true,
+          "sameEnvironment": true,
+          "sameProcessConfiguration": true
+        },
+        "changedPythonPaths": [
+          "adapters/postgres/delegated_work_delivery.py",
+          "operations/delegated_work_delivery.py"
+        ]
+      }
+    },
+    "ready": true,
+    "sourceBinding": {
+      "manifestSha256": "1029e8e0ccdc6899c32a13aa54ab6fe433e8d00a83c6cf79ca0daf54c1b0733a",
+      "modules": {
+        "operations/delegated_work_delivery.py": "723362c0b997810a57441fcb247c997eaddd30a86b312654c3e036d0a5181e26",
+        "adapters/postgres/delegated_work_delivery.py": "af361ef240d97a3ce7e7b6f8f14096bef5e17ea9caf397b25ccf46bd26a6751c"
+      }
+    },
+    "configurationAndDataPreserved": true,
+    "finalPolicyUpdateDispatches": 1,
+    "totalUpdateDispatchesThisDelivery": 3,
+    "rollbackDispatches": 0
+  },
+  "verification": {
+    "currentRelevantPassingChecks": 49,
+    "transportChecks": 34,
+    "workerChecks": 7,
+    "scopedDatabaseChecks": 8,
+    "documentIndependentReviewSha256": "78dd976404806f07d1c1b33c8eeaa53f25fcc51dccfbfcdae5007186e2ddb053",
+    "policySourceReviewSha256": "0e205da7bc2adf858fccd94e3ebbf622181bcad408aa5ab78bde0a07f5e48814",
+    "finalReview": "development/reviews/full-saved-result-delivery-final-review-20261013.json",
+    "policyInstalledReviewSha256": "9745fc44cd9de01c1d9bf9b55f84ff7548726cf25f699e249858772288e7da3b"
+  },
+  "retainedFailures": [
+    "First text-parts delivery became ambiguous with RuntimeError; accepted parts remain unknown and were not replayed.",
+    "Old summary ACK and uncertain text claim remain byte-identical.",
+    "Initial unit mocks lacked optional artifact attribute; compatibility fixed before document deployment, failed log retained.",
+    "First text-overlay installation preflight compared mount ordering; fixed before dispatch."
+  ],
+  "usage": {
+    "newResearchModelCalls": 0,
+    "deliveryModelCalls": 0,
+    "developmentCreditCost": "unknown"
+  },
+  "wholeProjectComplete": false,
+  "newMainOutcomeCompleted": false,
+  "smallTaskCountsUnchanged": true,
+  "privateEvidenceHashes": {
+    "document-delivery/review/delivery-after-install.private.json": "f3ef823333488850399f52fca5c781348cfb88aac55f1c2d0cea1818300794bd",
+    "document-delivery/review/delivery-fresh-after-idle.private.json": "85334a6ff034904a797a81279dc17edec3aa95fe3caffaf30a9227e5203226ec",
+    "explicit-document-policy/installation/installation-verification.private.json": "3884d2d0e99ce7094be3efd92499a9e814c8ad5453ab670f18988bcf3f44795f",
+    "explicit-document-policy/regression/worker.log": "eba750768810cdb50c7c923ac3d0cd6946d422ac71b754504f0645d1744edd6f",
+    "explicit-document-policy/regression/artifact.log": "7b52a79a2e3f88e1ee4d59d4e525df85b083ba62651572ff3bd5de813e328739",
+    "explicit-document-policy/review/delivery-after-policy-install.private.json": "ed3427bf65cb2218526deb9129702591d928a3f4cff93be3fd2a0d9cd6cd6175"
+  }
+}

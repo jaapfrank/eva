@@ -43,16 +43,28 @@ class DelegatedWorkDeliveryWorker:
         self._store, self._delivery = store, delivery
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
-    def run_once(self) -> str:
-        claim = self._store.claim_next(now=self._clock())
+    def run_once(self, *, saved_document_work_id: str | None = None) -> str:
+        options = {} if saved_document_work_id is None else {'saved_document_work_id': saved_document_work_id}
+        claim = self._store.claim_next(now=self._clock(), **options)
         if claim is None:
             return 'idle'
         try:
             authority = dict(owner_principal_id=claim.owner_principal_id,
                              principal_binding_id=claim.principal_binding_id)
+            if getattr(claim, 'artifact_sha256', None) is not None:
+                authority['artifact_sha256'] = claim.artifact_sha256
             result = self._store.authorize_delivery(claim.work_id, **authority)
             if result is None or result.operation_id != claim.operation_id:
                 raise RuntimeError('delivery authorization changed')
+            if getattr(claim, 'artifact_sha256', None) is not None:
+                current = self._store.authorize_delivery(claim.work_id, **authority)
+                if current != result or self._clock() >= claim.deadline:
+                    raise RuntimeError('delivery authorization expired or changed')
+                receipt = self._delivery.deliver_document(
+                    result.output, expected_chat_id=result.destination.chat_id,
+                    reply_to_message_id=result.destination.telegram_message_id,
+                )
+                return self._store.acknowledge(claim, receipt, now=self._clock())
             messages = result_messages(claim.work_id, result.output, result.outcome)
             for message in messages:
                 # Every part rechecks authority; a changed pairing cannot receive

@@ -9,15 +9,14 @@ development/archive is historische referentie, geen stapel aanvullende uitvoerop
 
 ## Huidige opdracht
 
-De repository heeft drie hoofdmappen: src voor code, deploy voor installatie,
-development voor documentatie/tests/proeven/referenties. De aanvullende
-opruiming verwijdert dubbele bronbackups en de ongebruikte Eva1-applicatie;
-exacte herkomst blijft op Git-revisie eab83747a3c33a83f2f63f38180dc7d6330635ec.
-Alleen Eva1-benchmarkinputs die bestaande tests lezen blijven lokaal.
-Dit is administratieve oplevering, geen extra afgeronde productfunctie.
-Daarna eerst het volledige opgeslagen resultaat naar de oorspronkelijke ontvanger;
-volg vervolgens dezelfde productafmaakvolgorde. Geen nieuwe vergelijkingsserie.
-Eva2 staat in src/eva. Geen ontwikkeling of tweede route voor Eva1.
+Volledige documentterugmelding is geïnstalleerd en echt gebruikt; Telegrambestand
+en opgeslagen resultaat zijn bytegelijk. Standaard alleen een kort antwoord en
+samenvatting, geen automatische bijlage. De documentroute vereist een expliciet
+verzoek voor één oorspronkelijke taak; herhaal geen onderzoek of externe wijziging.
+Oude samenvatting-ACK en onzekere tekstpoging blijven behouden.
+Vervolg HUE6/AIDE², HUE5 en samenhangende chatoplevering; geen vergelijkingsserie.
+Repositoryopruiming is afgerond, met exacte herkomst op Git-revisie
+eab83747a3c33a83f2f63f38180dc7d6330635ec. Eva2 staat in src/eva; geen Eva1-ontwikkeling.
 
 ## Uitvoeren
 

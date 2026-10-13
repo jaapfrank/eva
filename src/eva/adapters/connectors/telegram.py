@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
+from uuid import uuid4
 from datetime import UTC, datetime
 from typing import Callable
 from urllib import error, request as urllib_request
@@ -110,6 +112,49 @@ class TelegramProactiveDelivery:
                 raise RuntimeError("Telegram receipt does not prove the original question binding")
         return f"telegram:{chat_id}:{message_id}"
 
+    def deliver_document(self, text: str, *, expected_chat_id: str,
+                         reply_to_message_id: int) -> str:
+        """Send one complete UTF-8 result and verify Telegram's stored bytes.
+
+        Only the accepted file is read back. A failed or uncertain send is never
+        retried here; the existing durable claim owns its disposition.
+        """
+        raw = text.encode('utf-8')
+        if not text.strip() or len(raw) > 65_536:
+            raise ValueError('Telegram saved document is invalid')
+        self._validate_private_chat(expected_chat_id)
+        chat_id = self._chat_id if self._recipient_resolver is None else self._recipient_resolver()
+        self._validate_private_chat(chat_id)
+        if chat_id != expected_chat_id or (self._chat_id is not None and self._chat_id != chat_id):
+            raise RuntimeError('saved Telegram destination differs from verified owner')
+        if type(reply_to_message_id) is not int or reply_to_message_id < 1:
+            raise ValueError('Telegram reply message identity is invalid')
+        filename = 'eva-volledig-resultaat.md'
+        caption = 'Eva2: het volledige opgeslagen resultaat, inclusief bronnen.'
+        result = self._api._call('sendDocument', {
+            'chat_id': chat_id, 'disable_notification': True, 'caption': caption,
+            'reply_parameters': {'message_id': reply_to_message_id, 'allow_sending_without_reply': False},
+        }, timeout_seconds=self._timeout, maximum_response_bytes=65_536,
+            document=(filename, raw))
+        if not isinstance(result, dict):
+            raise RuntimeError('Telegram document receipt is invalid')
+        chat, document, replied = (result.get(key) for key in ('chat', 'document', 'reply_to_message'))
+        message_id = result.get('message_id')
+        if (type(message_id) is not int or message_id < 1
+                or not isinstance(chat, dict) or type(chat.get('id')) is not int
+                or str(chat['id']) != chat_id or chat.get('type') != 'private'
+                or result.get('caption') != caption
+                or not isinstance(replied, dict) or type(replied.get('message_id')) is not int
+                or replied['message_id'] != reply_to_message_id
+                or not isinstance(document, dict) or document.get('file_name') != filename
+                or type(document.get('file_size')) is not int or document['file_size'] != len(raw)
+                or not isinstance(document.get('file_id'), str) or not document['file_id']):
+            raise RuntimeError('Telegram document receipt does not prove the original delivery')
+        stored = self._api.download_document(document['file_id'], maximum_bytes=len(raw))
+        if stored != raw:
+            raise RuntimeError('Telegram document content differs from the saved result')
+        return f"telegram:{chat_id}:{message_id}:sha256:{hashlib.sha256(stored).hexdigest()}"
+
 
 class TelegramBotApiAdapter:
     """Long-poll text updates and return exact sendMessage acceptance receipts."""
@@ -137,6 +182,7 @@ class TelegramBotApiAdapter:
         *,
         timeout_seconds: int | None = None,
         maximum_response_bytes: int = 1_048_576,
+        document: tuple[str, bytes] | None = None,
     ) -> object:
         if type(maximum_response_bytes) is not int or not 1 <= maximum_response_bytes <= 1_048_576:
             raise ValueError("Telegram response bound is invalid")
@@ -147,10 +193,24 @@ class TelegramBotApiAdapter:
             sort_keys=True,
             separators=(",", ":"),
         ).encode()
+        content_type = 'application/json'
+        if document is not None:
+            filename, content = document
+            if method != 'sendDocument' or filename != 'eva-volledig-resultaat.md' or len(content) > 65_536:
+                raise ValueError('Telegram document upload is invalid')
+            boundary = 'eva-' + uuid4().hex
+            fields = []
+            for key, value in payload.items():
+                wire = value if isinstance(value, str) else json.dumps(value, ensure_ascii=False, allow_nan=False)
+                fields.append(f'--{boundary}\r\nContent-Disposition: form-data; name="{key}"\r\n\r\n{wire}\r\n'.encode())
+            fields.extend((f'--{boundary}\r\nContent-Disposition: form-data; name="document"; filename="{filename}"\r\nContent-Type: text/markdown; charset=utf-8\r\n\r\n'.encode(),
+                           content, f'\r\n--{boundary}--\r\n'.encode()))
+            encoded = b''.join(fields)
+            content_type = f'multipart/form-data; boundary={boundary}'
         request = urllib_request.Request(
             f"{self._base_url}/{method}",
             data=encoded,
-            headers={"Content-Type": "application/json"},
+            headers={"Content-Type": content_type},
             method="POST",
         )
         failed_status = False
@@ -193,6 +253,27 @@ class TelegramBotApiAdapter:
                 raise TelegramProviderRateLimited(retry_after)
             raise RuntimeError(f"Telegram {method} was not accepted")
         return decoded.get("result")
+
+    def download_document(self, file_id: str, *, maximum_bytes: int) -> bytes:
+        """Read only the provider file bound by the sendDocument receipt."""
+        if not 1 <= maximum_bytes <= 65_536:
+            raise ValueError('Telegram document readback bound is invalid')
+        metadata = self._call('getFile', {'file_id': file_id}, maximum_response_bytes=8192)
+        path = metadata.get('file_path') if isinstance(metadata, dict) else None
+        if (not isinstance(metadata, dict) or metadata.get('file_id') != file_id
+                or type(metadata.get('file_size')) is not int or metadata['file_size'] != maximum_bytes
+                or not isinstance(path, str) or not re.fullmatch(r'[A-Za-z0-9_/-]+\.[A-Za-z0-9]+', path)
+                or path.startswith('/') or '..' in path):
+            raise RuntimeError('Telegram stored document metadata is invalid')
+        origin, token = self._base_url.rsplit('/bot', 1)
+        try:
+            with urllib_request.urlopen(f'{origin}/file/bot{token}/{path}', timeout=self._timeout) as response:
+                raw = response.read(maximum_bytes + 1)
+        except (TimeoutError, error.URLError) as exc:
+            raise RuntimeError('Telegram document readback failed') from exc
+        if len(raw) != maximum_bytes:
+            raise RuntimeError('Telegram stored document size differs')
+        return raw
 
     def poll(self, *, offset: int) -> tuple[TelegramInboundMessage, ...]:
         if offset < 0:

@@ -9,6 +9,7 @@ import sqlalchemy as sa
 from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore, DelegatedWorkConflict, DelegatedWorkNotFound
 from eva.adapters.postgres.delegated_work_delivery import PostgresDelegatedWorkDeliveryStore
 from eva.adapters.postgres import delegated_work_delivery as delivery_module
+from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.application.conversation import ConversationTurn
 from eva.application.delegated_work_delivery import PrivateWorkDestination
 from eva.application.telegram_ingress import TelegramPrincipalBindings, TelegramPrincipalBinding
@@ -150,12 +151,14 @@ def test_expired_authority_or_result_is_not_returned(delegated_engine,expired):
         assert delivery.claim_next(now=NOW+timedelta(seconds=4)) is None
 
 
-def _digital_return_chain(engine, label):
+def _digital_return_chain(engine, label, output=None, native_source_scope=False):
     from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
     from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
     store, _, _, delivery, current, auth = setup(engine, label)
     owner, binding = auth["owner_principal_id"], auth["principal_binding_id"]
-    source = ConversationTurn.private("tenant:" + label, "installation:" + label,
+    source = ConversationTurn.private(
+        str(store.scope.tenant_id) if native_source_scope else "tenant:" + label,
+        str(store.scope.installation_id) if native_source_scope else "installation:" + label,
         str(owner), "telegram:42", "telegram:42:1", "Prepare a private read-only proposal",
         NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
     destination = PrivateWorkDestination.from_telegram_turn(source,
@@ -169,7 +172,8 @@ def _digital_return_chain(engine, label):
         (("bootstrap/delegated_digital_runner.py", hashlib.sha256(runner.read_bytes()).hexdigest()),))
     service = DelegatedWorkOwnerService(store, **auth, clock=lambda: now[0],
         digital_profile=profile, delivery_destination_loader=lambda turn:
-            destination if turn.message_id == source.message_id else None)
+            destination if turn.message_id == source.message_id else None,
+        conversation_scope=external_timeline_scope(source.tenant_id, source.installation_id, 'fixture source'))
     first_id = service.execute("digital", source, task=source.text,
         request_key="digital:first")["work"]["work_id"]
     specs = [store.load(first_id, **auth).spec]
@@ -203,7 +207,7 @@ def _digital_return_chain(engine, label):
         now=NOW + timedelta(seconds=9))
     call = store.start_call(claim, now=NOW + timedelta(seconds=10))
     from eva.contracts.delegated_digital_work import DelegatedDigitalWorkResult
-    output = "The requested private proposal is complete and independently read back."
+    output = output or "The requested private proposal is complete and independently read back."
     result = DelegatedDigitalWorkResult(contract="DelegatedDigitalWorkResult/v4",
         schema_version=4, work_id=latest.work_id, call_id=call.call_id,
         output=output, output_sha256=hashlib.sha256(output.encode()).hexdigest(),

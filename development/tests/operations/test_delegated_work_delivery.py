@@ -13,7 +13,7 @@ class Store:
         self.claim = SimpleNamespace(work_id='work:example', owner_principal_id='owner',
             principal_binding_id='binding', operation_id='operation', deadline=NOW+timedelta(seconds=120))
         self.result = SimpleNamespace(operation_id='operation', output=output,
-                                      destination=SimpleNamespace(chat_id='42'))
+            outcome='completed', destination=SimpleNamespace(chat_id='42', telegram_message_id=1))
         self.calls = []
     def claim_next(self, **kwargs):
         self.calls.append('claim')
@@ -37,9 +37,10 @@ def test_complete_result_preserved_in_bounded_messages(output):
 
 def test_claim_precedes_effect_and_all_parts_precede_ack():
     store = Store('a'*7000)
-    def send(text, *, expected_chat_id):
+    def send(text, *, expected_chat_id, reply_to_message_id):
         assert store.calls[0] == 'claim'
         assert expected_chat_id == '42'
+        assert reply_to_message_id == 1
         store.calls.append('send')
         return 'telegram:42:7'
     worker = DelegatedWorkDeliveryWorker(store, SimpleNamespace(deliver_text=send), clock=lambda:NOW)

@@ -4,15 +4,15 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Repository opgeruimd: 857 oude bestanden verwijderd
+Volledig opgeslagen werkresultaat leesbaar terugmelden
 
-857 overbodige oude bestanden verwijderd: 43,6 MB dubbele bronbackups en ongebruikte Eva1-code. Exact terughaalbaar via Git. Nog gebruikte referenties behouden; geen extra productfunctie afgerond.
+Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.
 
-Klaar wanneer: Verwijderde bestanden met Git-herkomst geregistreerd; actuele afhankelijkheden en productcriteria behouden; dashboard en GitHub bijgewerkt.
+Klaar wanneer: Volledig opgeslagen document komt leesbaar bij de oorspronkelijke ontvanger en vraag; exacte broninhoud/aflevering bevestigd, oude ACK behouden, geen dubbele automatische verzending; geïnstalleerd in bestaande WSL-runtime.
 
 ## Afmaakvolgorde
 
-1. Volledige opgeslagen resultaten terug bij de oorspronkelijke ontvanger
+1. Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage
 2. Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik
 3. HUE5: echte reactie laten doorwerken in volgend initiatief of stilblijven
 4. Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie
@@ -24,7 +24,7 @@ Klaar wanneer: Verwijderde bestanden met Git-herkomst geregistreerd; actuele afh
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–4 zijn technisch afgerond en later toegepast. De samenhang met initiatief en werkelijk gezinsgebruik afronden; geen geheugenherbouw. |
 | Eigen initiatief | Resultaat geleverd · oordeel open | HUE5: echte ontvangerreactie beïnvloedt later initiatief of bewust stilblijven. |
-| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Het volledige resultaat leesbaar terugmelden; HUE6: onafhankelijk aangetoonde verbetering toepassen en later gebruiken. |
+| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE6: onafhankelijk aangetoonde verbetering toepassen en later gebruiken; samenhangend dagelijks gebruik. |
 
 43/54 bestaande kleine taken afgerond; 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage. De reorganisatie verhoogt die telling niet.
 
@@ -89,7 +89,7 @@ Klaar wanneer: Verwijderde bestanden met Git-herkomst geregistreerd; actuele afh
 
 ## Van jou
 
-Reorganisatie en technische blokkades zijn voor Codex. Gezinsacceptatie blijft later apart; spraakproeven zijn geparkeerd.
+Een kort antwoord met samenvatting is de standaard. Het volledige resultaat blijft bewaard. Akkoord op uitvoering van een migratievoorstel is een afzonderlijke beslissing.
 
 ## Historie
 

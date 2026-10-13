@@ -33,7 +33,7 @@ flowchart LR
 | src/eva/adapters/postgres + projection | PostgreSQL is gezaghebbend; Hindsight is een persoonsgebonden projectie | Import en HUE1–4 later-gebruik behouden; geen nieuw geheugen |
 | src/eva/providers | Optionele providerbijdragen leveren ontdekking en mogelijkheden aan algemene kern | Behouden; voorbeelden zijn geen ingebouwde verplichte functies |
 | src/eva/operations/delegated_work_runner.py | Afhankelijke acties, duurzame voortgang en stop/herstart | Behouden; capabilityspecifieke afrondingsregels zijn concrete schuld |
-| src/eva/adapters/postgres/delegated_work_delivery.py | Resultaat aan oorspronkelijke actor/ingang koppelen | Samenvatting werkt; volledig opgeslagen document moet praktisch leesbaar terugkomen |
+| src/eva/adapters/postgres/delegated_work_delivery.py | Resultaat aan oorspronkelijke actor/ingang koppelen | Korte terugmelding standaard; volledige opgeslagen tekst als één gecontroleerd document op expliciet verzoek |
 | src/eva/application + adapters/postgres: initiatief | Waarnemen, afwegen, uitgevoerd resultaat en echte reactie onthouden | HUE5: echte ontvangerfeedback en latere gedragswijziging ontbreken |
 | src/eva/operations: component evaluation/application | Eva-voorstel → geïsoleerde vergelijking → onafhankelijke eindbeoordeling → gecontroleerde toepassing | HUE6: volledige toegepaste kwaliteitswinst en later gebruik nog open |
 | src/eva/bootstrap | Eén samenstelling van poorten en adapters; geen productlogica in extra daemon | Behouden |
@@ -56,8 +56,9 @@ niet dat alle modules apart opnieuw gebouwd of elke mogelijke koppeling geleverd
    de controles of oude hashes worden niet versoepeld.
 3. **Overdrachten zonder complete gebruikersuitkomst:** bron, modelweergave, bewijs,
    voortgang en terugmelding hebben verschillende overgangen. Een ACK op 772 bytes
-   samenvatting was geen volledige leesbare oplevering. Eerst die concrete laatste
-   verbinding afmaken, daarna pas verbreden.
+   samenvatting was geen volledige documentoplevering. De laatste verbinding is
+   nu geïnstalleerd en echt gebruikt: één document, oorspronkelijke vraag en
+   ontvanger, alle providerbytes teruggelezen. Bijlagen zijn geen standaardmelding.
 4. **Deelbewijs als voortgang:** afgesloten proef, groene controles en metadataherstel
    werden te zwaar gewogen. De 54 taken blijven met oorspronkelijke criteria zichtbaar;
    vier huisgenootuitkomsten en gezinsacceptatie zijn de productmaatstaf.
@@ -72,7 +73,7 @@ niet dat alle modules apart opnieuw gebouwd of elke mogelijke koppeling geleverd
   Gedateerde instructies zijn geen nieuwe uitvoeropdrachten.
 - Expliciet actief maken: het gebruikte dashboard als development/tools/project-dashboard en
   de installer-gateway als deploy/gateway; geen runtimecode verstopt als experiment.
-- Gericht vervolgen: volledige result delivery, coherente bestaande verbeterbinding,
+- Gericht vervolgen: coherente bestaande verbeterbinding,
   echte feedback/latere toepassing en samenhangend chatgebruik. Geen nieuw platform.
 
 ## Afronden zonder opnieuw uit te waaieren
