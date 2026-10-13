@@ -1,0 +1,49 @@
+{
+  "contract": "EvaAideIndependentFinalOutcome/v1",
+  "recordedAt": "2026-10-13T23:58:10.473482+00:00",
+  "taskId": "HUE6.1",
+  "verdict": "unconfirmed_no_application",
+  "baseline": {
+    "completedTasks": 0,
+    "correctChecks": 4,
+    "humanHelp": 0,
+    "hardConditions": 0
+  },
+  "candidate": {
+    "officialScore": null,
+    "nativeState": "ambiguous",
+    "failure": "original_programming_close_http_500",
+    "originalFailureSubtype": null
+  },
+  "finalUsage": {
+    "modelRequests": 12,
+    "tools": 18,
+    "inputTokens": 78589,
+    "outputTokens": 2172,
+    "totalTokens": 80761,
+    "unknownRequests": 0
+  },
+  "freshCumulativeUsage": {
+    "modelRequests": 27,
+    "tools": 46,
+    "totalTokens": 203076
+  },
+  "selectedHistoricalCumulativeUsage": {
+    "modelRequests": 57,
+    "tools": 79,
+    "totalTokens": 519776
+  },
+  "creditCost": null,
+  "developmentRepeated": false,
+  "finalRepeated": false,
+  "candidateApplied": false,
+  "referenceRetained": true,
+  "originalFailedClosingEvidencePreserved": true,
+  "laterIdempotentCloseConfirmed": true,
+  "laterCloseModelRequests": 0,
+  "originalCleanupReservationRetained": 1,
+  "independentReviewSha256": "8f0377508e5b184df60de2310964c75f288f3832bf84ae23b9ba90c6d6b787fa",
+  "laterCloseReceiptSha256": "48e96a42d6e3af22836632a86065b724ef687ccb653be7da6a1b7d2a6c5b3815",
+  "taskCompleted": false,
+  "remainingQuietLearningEvidence": "Meaningful quiet reflection change and later same-person use with appropriate behavior are not yet demonstrated."
+}

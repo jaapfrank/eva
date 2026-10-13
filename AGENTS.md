@@ -1,3 +1,20 @@
+## Actuele uitkomst 14 oktober — AIDE-eindproef onbevestigd
+
+De echte opvolger heeft de opgeslagen zes resultaten met één modelaanvraag
+succesvol afgerond, zonder herhaald ontwikkelwerk. Dezelfde eindproef is daarna
+uitgevoerd: referentie vier correcte controles, nul volledig bewezen taken;
+kandidaat geen officiële score door HTTP500 bij de oorspronkelijke afsluiting.
+Geen bewezen winst, gelijkspel of toepassing. De referentie blijft.
+
+Nieuw gezamenlijk verbruik: 27 aanvragen, 203.076 tokens en 46 tools; inclusief de
+behouden geselecteerde historie 57 aanvragen, 519.776 tokens en 79 tools. Credits
+onbekend. De bestaande kandidaat-programmeersessie is vervolgens zonder model
+idempotent gesloten; dat herschrijft de oorspronkelijke fout of score niet.
+Geen herhaling van deze proef. Herstel gericht de afsluitroute vóór nieuwe betaalde
+verbeterbeoordeling. Rustige reflectie met betekenisvolle verandering en later
+gebruik bij dezelfde persoon is nog niet bewezen. HUE6 en 43/54 blijven open.
+Bewijs: development/evidence/product/aide-independent-final-outcome-20261014.json.
+
 ## Actuele uitvoering 14 oktober — ontwikkelresultaat behouden, afsluiting herstellen
 
 De bestaande AIDE-kandidaat haalt vier correcte controles tegenover nul bij de
