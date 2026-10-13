@@ -78,7 +78,7 @@ def _version(label, *, turn=TURN, proof_matches=True):
             return route.execute(turn, ConversationActionCall(call_id, "use_connector_tool", {
                 "tool_id": reader, "arguments_json": json.dumps({"pointer": "/output/result/content",
                     "offset": offset, "limit": limit, "query": None})}), step_index=step[0])
-    return SimpleNamespace(write=written, read=read, page=page)
+    return SimpleNamespace(write=written, read=read, page=page, route=route)
 
 
 def _latest():
@@ -161,3 +161,93 @@ def test_latest_actually_read_version_and_distinct_ranges_replace_old_pages_once
     assert {"old-page", "new-first"} <= {row["call_id"] for row in index["reads"]}
     assert selected[-1] == history[-1]
     assert _raw(history) == frozen
+
+
+def test_research_material_survives_saved_note_without_repeating_local_read():
+    version = _version("research-source")
+    first = version.page("research-first")
+    tail = version.page("research-tail", offset=8000)
+    duplicate = version.page("research-first-repeat")
+    # This source was read, not authored in the current task. Its material must
+    # not depend on whether a prose checkpoint copied every observed fact.
+    history = (version.read, first, tail, duplicate,
+        _working_note("checkpoint", 2, "Continue the synthesis from source references."), _latest())
+    frozen = _raw(history)
+    selected, overview = PydanticConversationModel._receipt_context_selection(history)
+    assert overview and not {"research-first", "research-tail", "research-first-repeat"} & _ids(selected)
+    model = object.__new__(PydanticConversationModel)
+    model._resource_budget = SimpleNamespace(max_input_tokens=65536)
+    restored = model._retain_working_reads(history, selected[:-1], selected[-1],
+        prompt="Complete the requested document.", instructions="Use observed data as evidence.", tools=())
+    assert {"research-tail", "research-first"} <= _ids(restored)
+    assert "research-first-repeat" not in _ids(restored)
+    wire = model._phase_admission_body(prompt="Complete the requested document.",
+        instructions="Use observed data as evidence.", tools=(), prior_actions=restored,
+        completed_action=selected[-1])
+    model._admit_request(wire, autonomous=False)
+    baseline = model._phase_admission_body(prompt="Complete the requested document.",
+        instructions="Use observed data as evidence.", tools=(), prior_actions=selected[:-1],
+        completed_action=selected[-1])
+    assert wire["input"][-2:] == baseline["input"][-2:]
+    assert _raw(history) == frozen
+
+
+def test_research_material_restoration_respects_request_space_and_has_no_uncapped_mode():
+    version = _version("research-source")
+    page = version.page("research-page", limit=8000)
+    history = (version.read, page, _working_note("checkpoint", 2, "Source remains locally available."), _latest())
+    selected, _ = PydanticConversationModel._receipt_context_selection(history)
+    model = object.__new__(PydanticConversationModel)
+    model._resource_budget = None
+    assert model._retain_working_reads(history, selected[:-1], selected[-1],
+        prompt="", instructions="", tools=()) == selected[:-1]
+    model._resource_budget = SimpleNamespace(max_input_tokens=4000)
+    restored = model._retain_working_reads(history, selected[:-1], selected[-1],
+        prompt="", instructions="Large required current instruction. " * 140, tools=())
+    assert "research-page" not in _ids(restored)
+    assert restored == selected[:-1]
+
+
+def test_research_material_cannot_cross_ingress_or_replace_failure_or_latest_result():
+    version = _version("research-source", turn=replace(TURN, message_id="different-source"))
+    page = version.page("other-person-page")
+    current = _version("current-source")
+    failed = ConversationActionReceipt(ConversationActionCall("failed", "read_source", {}),
+        {"status": "failed", "error": "An actual read failure."})
+    history = (version.read, page, current.read,
+        _working_note("checkpoint", 2, "Continue the original current task."), failed, _latest())
+    selected, _ = PydanticConversationModel._receipt_context_selection(history)
+    model = object.__new__(PydanticConversationModel)
+    model._resource_budget = SimpleNamespace(max_input_tokens=65536)
+    restored = model._retain_working_reads(history, selected[:-1], selected[-1],
+        prompt="", instructions="", tools=())
+    assert "other-person-page" not in _ids(restored)
+    assert "failed" in _ids(restored)
+    assert restored[-1] == failed
+
+
+def test_actual_provider_envelope_carries_read_material_after_checkpoint(tmp_path, monkeypatch):
+    from eva.adapters.model.pydantic_conversation import _descriptor_tool
+    from tests.model.test_pydantic_conversation_model import (
+        _phase_transport_adapter, _identity, _memory, TOOL)
+    model, _, requests, _ = _phase_transport_adapter(tmp_path, monkeypatch,
+        [("final_answer", ("Synthetic observed result.",))])
+    descriptor = replace(TOOL, name="use_connector_tool")
+    model._conversation_tools[descriptor.name] = _descriptor_tool(descriptor)
+    model._conversation_tool_descriptors[descriptor.name] = descriptor
+    model._resource_budget = SimpleNamespace(max_input_tokens=65536, max_output_tokens=1200)
+    version = _version("research-source")
+    page = version.page("research-page")
+    history = (version.read, page, _working_note("saved", 2, "Use the source for the final synthesis."))
+    scoped = model.with_context_archive(version.route.archive_model_context)
+    result = scoped.generate(TURN, _identity(), _memory(), (),
+        available_actions=("use_connector_tool",), prior_actions=history[:-1],
+        completed_action=history[-1])
+    assert result.text == "Synthetic observed result." and len(requests) == 1
+    assert "Modelcontextselectie" in requests[0]["instructions"]
+    outputs = {item["call_id"]: json.loads(item["output"]) for item in requests[0]["input"]
+        if item.get("type") == "function_call_output"}
+    assert "research-page" in outputs
+    assert outputs["research-page"]["result"]["text"] == page.output["result"]["text"]
+    assert outputs["saved"] == PydanticConversationModel._receipt_model_views(history)[-1]
+    assert model._context_archive is None

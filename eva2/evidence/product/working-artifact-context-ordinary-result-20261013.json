@@ -1,0 +1,52 @@
+{
+  "contract": "EvaOrdinaryWorkResult/v1",
+  "workId": "work:eva-resume:52194f7a-5621-5115-a7fb-84ad41c5cd6d",
+  "generation": 15,
+  "checkedAt": "2026-10-12T23:43:55+00:00",
+  "state": "failed",
+  "errorCode": "incomplete_work",
+  "originalTaskCompleted": false,
+  "newProductFunctionCompleted": false,
+  "currentExecutionUsageComplete": true,
+  "knownMeasuredUsage": {
+    "input_tokens": 1344209,
+    "model_attempts": 28,
+    "output_tokens": 6228,
+    "tool_calls": 27,
+    "total_tokens": 1350437
+  },
+  "currentUnknownRequests": 0,
+  "historicalTotalTokens": null,
+  "creditCosts": null,
+  "document": {
+    "byte_length": 10732,
+    "mode": "0o600",
+    "mtime_utc": "2026-10-12T23:04:10.274789+00:00",
+    "sha256": "969224f39a40621dc757e0ccf5c220ce987fd80b99e274fbedece7b4a30946d3",
+    "uid": 10001,
+    "unchangedFromPreviousAttempt": true,
+    "newWriteReadReceipts": 0
+  },
+  "homeAssistantChanges": 0,
+  "independentReview": "INCOMPLETE",
+  "findings": [
+    "Registry source pages183+184 fully cover22 observed records; no unavailable-first-half claim.",
+    "Available findings were not synthesized into a complete saved proposal.",
+    "Exact local page selections were repeated; checkpoint visibility loss is independently observed, not a proven exclusive cause."
+  ],
+  "references": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",
+      "sha256": "e8b5758229309513a5cc6d156568f06d1118bfb4637da02323fc0a77462f92ab"
+    },
+    "originalReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-original-proposal-end-review.private.json",
+      "sha256": "128f02b898c6a0e6ca825210a11ce70572d6fb53299bf2f71b9e808d9df69dec"
+    },
+    "checkpointVisibility": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-checkpoint-read-context.private.json",
+      "sha256": "08dd105a170fbff4947fb257d46232d7a6bd50babdf4a49766b6bd35878f8939"
+    }
+  },
+  "next": "Correct the general active research context before any ordinary continuation; no new comparison series."
+}

@@ -1,0 +1,130 @@
+{
+  "contract": "EvaResearchMaterialContextInstalled/v1",
+  "recordedAt": "2026-10-13T00:11:02.536220+00:00",
+  "status": "installed",
+  "originalTaskCompleted": false,
+  "newProductFunctionCompleted": false,
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4"
+    }
+  ],
+  "change": "Keep already-observed pages of exact active source observations visible across progress checkpoints as whole reader packets. Prefer exact immutable range coverage over rereading duplicated smaller pages; replaced source versions remain in the authorized archive.",
+  "tests": {
+    "contract": "EvaResearchMaterialChecks/v1",
+    "sourceFiles": [
+      {
+        "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "sha256": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4"
+      }
+    ],
+    "currentTargetedTests": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context-targeted-v4.private.xml",
+      "sha256": "48146ce86335a78dec138a40d5876554c1731611bedf4ad138d3112ad07b0d18",
+      "passed": 9,
+      "failed": 0,
+      "timeSeconds": 10.006,
+      "sourceSha256": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4"
+    },
+    "precedingFullSuite": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context-tests-v2.private.xml",
+      "sha256": "f83e52b294a9813bc171ca2efb0c73c66e43d44d49eeef31523ed47f90f5585e",
+      "passed": 106,
+      "failed": 0,
+      "timeSeconds": 34.613,
+      "sourceSha256": "ad2bc6bf1fb5622cb70b2fcd00d964b77444efdb4635e52fd44479a2f95483bd",
+      "scope": "97 pre-existing catalogue checks plus the nine targeted checks; not claimed as a rerun of all106 on finalv4"
+    },
+    "pairedReplay": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-retain-working-reads-paired-replay-v4.private.json",
+      "sha256": "846a0a3c65582dd6a33228f371a3a141f03eb75783f099b7d9e85e61d47dc63d"
+    },
+    "limitations": [
+      "Only known canonical phases, actual recall/recent unavailable",
+      "Input margins117/159 tokens very narrow; future admission remains required",
+      "No claimed proposal completion or exclusive model-cause proof"
+    ],
+    "oldFailuresPreserved": true,
+    "modelRequests": 0
+  },
+  "sourceReview": "eva2/reviews/research-material-context-source-review-20261013.json",
+  "sourceReviewSha256": "8f61af7f9d510975032d6534499c65d48adf7beda389e0e9c054c3e8ecd5dfef",
+  "build": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/build-result.private.json",
+    "sha256": "2c86a5838fc216b3250df834be798eafd387fea00f915fe8118ae07d6e164ca8"
+  },
+  "installation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/installation-verification.private.json",
+    "sha256": "f5a6526eadd11a5c934f6f3abb05210869927fab26ddbeacdf3c16e65fb957d2"
+  },
+  "services": {
+    "core": {
+      "image": "sha256:62f4f05a6b611484a760e3008dab37f1c23889171bcd62006e92ea2cc652c621",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4"
+      },
+      "inspectionSha256": "8fdca152813359d9a58deea55e22003a0308fcb50d68479b5fb0d817001f81ca"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:31a5a07840d79e9194875e4426dcd58a875411dc50bc4d746a8eb57b61b1a9a3",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "adapters/model/pydantic_conversation.py": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4"
+      },
+      "inspectionSha256": "3eee133e2ae0974d77a077a96b71280cb979d55d46f277a87b05a28257743f95"
+    }
+  },
+  "ready": true,
+  "exactUpdateDispatches": 1,
+  "sourceCorrectionModelRequests": 0,
+  "contextCheck": {
+    "pairedReplay": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-retain-working-reads-paired-replay-v4.private.json",
+      "sha256": "846a0a3c65582dd6a33228f371a3a141f03eb75783f099b7d9e85e61d47dc63d"
+    },
+    "checkpoint185WithFraming": 65419,
+    "checkpoint185Margin": 117,
+    "terminal206WithFraming": 65377,
+    "terminal206Margin": 159,
+    "bothRegistryPagesVisible": true,
+    "rawAndLatestPreserved": true,
+    "actualRecallRecentAndFutureFit": "UNKNOWN",
+    "earlierFailedVariantsPreserved": true
+  },
+  "boundaries": {
+    "ordinaryGrantProviderRolesPrivacyStopAndInputAdmissionUnchanged": true,
+    "haMigrationApprovalStillRequired": true,
+    "newTools": false,
+    "changedModulesPerImage": 1,
+    "unchangedPythonSourcesPerImage": 344,
+    "manualProposalWritten": false,
+    "taskModelAndAideStrategyUnchanged": true,
+    "oldFailedGen15And1350437TokensPreserved": true,
+    "noNewComparisonSeries": true
+  },
+  "next": "One ordinary readonly continuation is prepared but not dispatched; only Eva may finish the original proposal.",
+  "limits": [
+    "Very narrow known margins; exact actual admission still governs every model request.",
+    "This corrects observed checkpoint visibility loss, not a proven exclusive cause of task failure.",
+    "No claimed completed proposal, learning, efficiency gain or overall superiority.",
+    "Historical complete usage and monetary costs remain unknown."
+  ]
+}

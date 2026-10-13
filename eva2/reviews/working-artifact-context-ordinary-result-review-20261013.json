@@ -1,0 +1,196 @@
+{
+  "contract": "EvaIndependentOriginalReadonlyProposalEndReview/v1",
+  "recordedAt": "2026-10-12T23:50:51.312731+00:00",
+  "reviewer": "product_execution_memory_review",
+  "verdict": "INCOMPLETE",
+  "scope": "Original Gen15 readonly proposal outcome; unchanged original conditions, no new input authority.",
+  "bindings": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",
+      "sha256": "e8b5758229309513a5cc6d156568f06d1118bfb4637da02323fc0a77462f92ab"
+    },
+    "originalCriteria": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/end-review/original-readonly-proposal-end-criteria.private.json",
+      "sha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444"
+    },
+    "priorGen14Review": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/gen14-original-proposal-end-review.private.json",
+      "sha256": "86cf868930205976d5726f106b0e6d159e2c5abf2311805ecf1ded84263a38e2"
+    },
+    "accounting": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-accounting.private.json",
+      "sha256": "6ecd9e6d0e44ac98930fc7db5325a7aab91c8ed46c6a141d0fd9de1a8b6bdb4d"
+    },
+    "owner_terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/continuation-work-observer-status-4.private.json",
+      "sha256": "05b0e54fe18d4303447771423dd444dd589bae2056c01b1c7055f6a0856bb78b"
+    },
+    "receipts": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-receipts.private.json",
+      "sha256": "515fb1426654d610a7025bdd7ab3f4be91cbfa7f289a5dfa939a1a9920c6ffe9"
+    },
+    "document": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-document.private.json",
+      "sha256": "bad2f7c02202ec4fa4d237f13f7d54dcf0eb619a477f881b982a5069fa2a0106"
+    },
+    "tools": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-tool-observation.private.json",
+      "sha256": "c4798f81aa633205cdc04ec040fffd03035065c4f2e79907d02f24e0355a85dc"
+    }
+  },
+  "task": {
+    "work_id": "work:eva-resume:52194f7a-5621-5115-a7fb-84ad41c5cd6d",
+    "generation": 15,
+    "original_task_sha256": "87702100a7577caf810c9920dd51c4fc7d14f1bfa93e93d4e8ab9b9c9b22b195",
+    "source_ingress_sha256": "1b2df77c56cdd1f002c5d33a7522e0b3f639ce86e2927f45c90cdf846d6bf306",
+    "spec_sha256": "ff9df0fb50f44df415859e1e5a8ab4fa6ccdbe3389b3b47f5b008326b6d41c12",
+    "native_state": "failed",
+    "native_error": "incomplete_work",
+    "native_error_fingerprint": "00b36797c8d248812b83afbe4c699e356138bc5cf93c5b719b5c3c144a7ef73b",
+    "native_result_available": false,
+    "delivery": "unbound"
+  },
+  "contentVerdict": {
+    "usefulConditionalIntermediateProposal": true,
+    "originalCompleteProposalConfirmed": false,
+    "nativeFailureContradictedByCompletedArtifact": false,
+    "findings": [
+      {
+        "criterion": "Eva-authored useful saved proposal",
+        "status": "PARTIAL",
+        "finding": "The readable 10732-byte intermediate document remains identical to Gen14. It contains meaningful names, qualified support, safe sequencing and rollback, but explicitly acknowledges unfinished reachable research. Gen15 produced no new document write or separate workspace read."
+      },
+      {
+        "criterion": "Inventory, names, mappings and support",
+        "status": "PARTIAL",
+        "finding": "All 22 selected Tuya registry records were actually read through complete first/tail pages in Gen15. Missing completion is source-backed synthesis and remaining available per-device mapping assessment in the proposal, not missing access to the first registry half. Local protocol/physical DP behavior may remain qualified implementation conditions."
+      },
+      {
+        "criterion": "Available dependencies and history",
+        "status": "INCOMPLETE",
+        "finding": "The latest progress reports the remaining dashboard configuration as read and a relevant old entity reference as found, but that finding is not incorporated in the unchanged document. Relevant already-readable automation/device-ID comparisons and indirect dependency conclusions remain open. History/recorder limits must be assessed from genuinely available sources or bounded by concrete access evidence; no new access or exhaustive unrelated inventory is required."
+      },
+      {
+        "criterion": "Safe sequence, duplicate risk and rollback",
+        "status": "SATISFIED_AS_PROPOSAL",
+        "finding": "The existing document preserves technical IDs where suitable, distinguishes device-ID updates, avoids simultaneous control, retains fallback and gives phased migration and rollback only after owner approval. These are proposed steps, not executed or tested outcomes."
+      },
+      {
+        "criterion": "Truthful uncertainty and no illegal effects",
+        "status": "SATISFIED_AS_LIMITATION",
+        "finding": "The document and terminal answer identify incomplete research and distinguish unknown support from impossibility. No HA mutation, migration, restart, rename, purchase or secret disclosure was observed in Gen15."
+      }
+    ],
+    "minimumMissingOriginalConditions": [
+      "Incorporate and accurately assess already-read registry and remaining dashboard findings in the Eva-authored proposal.",
+      "Finish the relevant available automation/device-ID dependency comparison and connect available device/mapping evidence to recommendations; concrete unavailable routes may remain qualified.",
+      "Bound requested history/recorder implications by actual accessible evidence or a specific access limitation, rather than an uncompleted checklist.",
+      "Provide the resulting finished proposal through the original work route; native result and delivery remain unconfirmed."
+    ],
+    "legitimateLaterImplementationUnknowns": [
+      "Local keys, IP/protocol/gateway information that is not available in retained sources.",
+      "Physical LAN/DP/feature compatibility and safe live tests, LocalTuya version/installation checks at execution time.",
+      "Owner choices about locations, loads, offline devices, cloud-scene retention and final names.",
+      "Concrete unavailable configuration routes, where the failure or access boundary is stated honestly."
+    ],
+    "notAddedAsCriteria": [
+      "No physical compatibility test, secret acquisition, HA migration, rename or restart is required to complete readonly research.",
+      "No exhaustive unrelated integration, hypothetical dependency or duplicate inventory-read requirement is introduced.",
+      "A new save is not required merely because a new generation ran; the actual existing document is assessed on its contents. Here its acknowledged research gaps and missing newly read findings remain."
+    ]
+  },
+  "documentProof": {
+    "path": "/proof-state/tuya-localtuya-migratievoorstel.md",
+    "actual_volume_path": "/var/lib/docker/volumes/eva2-workspace-files/_data/tuya-localtuya-migratievoorstel.md",
+    "bytes": 10732,
+    "sha256": "969224f39a40621dc757e0ccf5c220ce987fd80b99e274fbedece7b4a30946d3",
+    "independentReviewerVolumeReadMatches": true,
+    "unchangedFromGen14": true,
+    "gen15NewNativeDocumentWrites": 0,
+    "gen15NewSeparateWorkspaceReads": 0,
+    "inheritedGen14NativeWriteStep": 175,
+    "inheritedGen14SeparateReadStep": 176,
+    "inheritedReadDifference": "Exactly one terminal LF removed; the inherited normalized read proof is preserved without claiming equal raw hashes.",
+    "storageDoesNotProveCompleteProposal": true
+  },
+  "observedResearchAndProgress": {
+    "latestRevision": 19,
+    "originalStepStates": [
+      {
+        "id": "inventory",
+        "state": "blocked"
+      },
+      {
+        "id": "dependencies",
+        "state": "blocked"
+      },
+      {
+        "id": "proposal",
+        "state": "blocked"
+      }
+    ],
+    "actualProgressSaves": 5,
+    "registryReadSteps": [
+      183,
+      184
+    ],
+    "registryRecords": 22,
+    "registrySelectionCharacters": 13895,
+    "registrySelectionSha256": "acf8d2f8786a12d100b79947793b87fea498f0500c8c113159138d47d8389ce0",
+    "registryFullyReadNotAccessFailure": true,
+    "knownExactRepeatedPageGroups": [
+      [
+        183,
+        194,
+        199
+      ],
+      [
+        184,
+        195
+      ]
+    ],
+    "automationInventorySameTextReadSteps": [
+      190,
+      201
+    ],
+    "actualTwoBatchCalls": true,
+    "selectionInvalidStep189Retained": true,
+    "causeLimit": "Repeated reads are directly observed; they do not establish model intent or an exclusive context/source failure cause. No new code fix is inferred by this outcome review."
+  },
+  "accounting": {
+    "current_admitted_complete_measured_closed_requests": 28,
+    "current_unknown_or_inflight": 0,
+    "input_tokens": 1344209,
+    "output_tokens": 6228,
+    "known_total_tokens": 1350437,
+    "tool_calls": 27,
+    "owner_api_usage_measurement": "partial",
+    "historical_full_usage_and_credit_costs": "UNKNOWN",
+    "sourceCorrectionEfficiencyClaim": false
+  },
+  "effects": {
+    "home_assistant_reads": 3,
+    "local_reader_calls": 19,
+    "save_work_progress_calls": 5,
+    "home_assistant_mutations_observed": 0,
+    "new_document_writes": 0,
+    "owner_approval_to_execute_migration": false
+  },
+  "boundaries": {
+    "original_criteria_unchanged": true,
+    "closed_execution_not_reopened": true,
+    "sourceInstallationSuccessSeparateFromWorkFailure": true,
+    "sourceSha256": "fd2a3207ebd783539f75b6f86bc8974b087a86fb722a0df22124acd2eb1bdb80",
+    "task_completed": false,
+    "new_native_input_go": false,
+    "general_quality_advantage": false,
+    "reviewer_model_requests": 0,
+    "reviewer_native_actions": 0,
+    "reviewer_database_operations": 0,
+    "reviewer_source_edits": 0
+  },
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-original-proposal-end-review.private.json",
+    "sha256": "128f02b898c6a0e6ca825210a11ce70572d6fb53299bf2f71b9e808d9df69dec"
+  }
+}

@@ -1,3 +1,31 @@
+## Actueel 13 oktober — onderzoeksgegevens blijven beschikbaar; Eva moet zelf voorstel afronden
+
+De vorige gewone Gen15 is gesloten met incomplete_work. Alle28 aanvragen volledig
+gemeten:1.350.437 tokens en27 tools; huidige UNKNOWN0, historische totaalkosten onbekend.
+Het10.732-byte tussenvoorstel blijft ongewijzigd; onafhankelijke eindreview INCOMPLETE.
+De22 registryrecords zijn volledig gelezen, maar beschikbare bevindingen niet afgemaakt.
+
+Een algemene één-modulecorrectie houdt reeds gelezen bronpagina's als samenhangend
+pakket zichtbaar na werknotities. Exacte overlappende pagina's worden niet dubbel
+opgenomen; vervangen bronversies blijven bevoegd terugleesbaar. Bestaande grant,
+privacy, stop, modelrollen en inputadmission blijven ongewijzigd. Geen Tuya-script,
+nieuwe tool of door Codex geschreven voorstel. Perimage344 andere bronnen behouden.
+Negen actuele gerichte tests geslaagd; eerdere106 opv2 apart gebonden. Onafhankelijke
+bronGO, één update uitgevoerd, kern/werker gezond en ready. Beide bekende fasen
+passen met marge117/159 tokens; actuele recall/recent/futurefit niet bewezen.
+Eerdere negatieve lokale varianten en alle oude taakfouten blijven behouden.
+
+Eén gewone uitsluitend leesbare voortzetting van Gen15 loopt:
+work:eva-resume:7c7e35f3-6ee5-557c-9a6f-3cd0d482e132 (Gen16).
+Alleen Eva maakt het oorspronkelijke voorstel, bewaart en leest het terug.
+HA-migratie vereist later apart akkoord. Installatie is geen bewezen taakafronding.
+Volledig goal ACTIVE;39/48 en39/54 onveranderd; HUE/leercyclus/AIDE² blijven open.
+Spraak geparkeerd;geen nieuwe vergelijkingsserie;Docker Desktop ongemoeid.
+
+Installatie:eva2/evidence/product/research-material-context-installed-20261013.json.
+Bronreview:eva2/reviews/research-material-context-source-review-20261013.json.
+Gen15:eva2/evidence/product/working-artifact-context-ordinary-result-20261013.json.
+
 ## Actueel 13 oktober — eigen werkcontext geïnstalleerd; Eva vervolgt oorspronkelijke opdracht
 
 Eén algemene module houdt bewezen eigen documentpagina's zichtbaar na werknotities;

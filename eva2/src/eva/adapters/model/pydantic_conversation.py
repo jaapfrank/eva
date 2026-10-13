@@ -1625,6 +1625,155 @@ class PydanticConversationModel:
         )
         return selected, note
 
+    def _retain_working_reads(
+        self, receipts: tuple[ConversationActionReceipt, ...],
+        prior_actions: tuple[ConversationActionReceipt, ...],
+        completed_action: ConversationActionReceipt,
+        *, prompt: str, instructions: str, tools: tuple[dict[str, Any], ...],
+    ) -> tuple[ConversationActionReceipt, ...]:
+        """Use existing input space for observed material after a checkpoint.
+
+        Saving notes does not prove that their prose contains every source fact.
+        Restore recent exact local reads, rather than making the agent read them
+        again. The archive and original request ceiling remain authoritative.
+        """
+        budget = self._resource_budget
+        if budget is None:
+            return prior_actions
+        selected = (*prior_actions, completed_action)
+        selected_ids = {r.call.call_id for r in selected}
+        ingress = next((r.model_output["ancestor_model_projection"]["source"]["source_ingress_sha256"]
+                        for r in reversed(receipts) if r.model_output
+                        and "ancestor_model_projection" in r.model_output), None)
+        origins: dict[str, tuple[bytes, int]] = {}
+        for position, receipt in enumerate(receipts):
+            projection = (receipt.model_output or {}).get("ancestor_model_projection")
+            if not isinstance(projection, dict) or projection["source"]["source_ingress_sha256"] != ingress:
+                continue
+            root = self._checkpoint_source_read(receipt)
+            if root is None:
+                output, proof = receipt.output, receipt.output.get("proof")
+                observation = output.get("result")
+                # Only a retained source observation roots working material.
+                # Reading an archive index itself is navigation metadata, not a
+                # new source; promoting it would crowd out the actual facts.
+                if (output.get("contract") != "EvaConversationActionReceipt/v1"
+                        or output.get("durable") is not True or output.get("status") != "verified"
+                        or output.get("source") == "stored_connector_result"
+                        or output.get("external_state_verified") is True
+                        or not isinstance(observation, dict) or not isinstance(proof, dict)
+                        or proof.get("evidence", {}).get("observation") != observation
+                        or any(observation.get(k) for k in ("error", "errors", "selection_error"))):
+                    continue
+                root = {"reader_tool_id": projection["manifest"]["reader"]["tool_id"]}
+            operation = canonical_json_bytes({"name": receipt.call.name, "arguments": receipt.call.arguments})
+            origins[root["reader_tool_id"]] = (operation, position)
+            manifest = receipt.output.get("result", {}).get("source_response_manifest")
+            if isinstance(manifest, dict) and isinstance(manifest.get("reader"), dict):
+                origins[manifest["reader"]["tool_id"]] = (operation, position)
+        seen: set[tuple[str, str, bytes]] = set()
+        coverage: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
+        groups: dict[str, list[ConversationActionReceipt]] = {}
+        observed_readers: set[str] = set()
+        for receipt in (*selected, *receipts):
+            projection = (receipt.model_output or {}).get("ancestor_model_projection")
+            output = receipt.output
+            if (receipt.call.name != "use_connector_tool" or not isinstance(projection, dict)
+                    or projection["source"]["source_ingress_sha256"] != ingress
+                    or output.get("status") != "verified"
+                    or output.get("source") != "stored_connector_result"
+                    or output.get("external_state_verified") is not False):
+                continue
+            self._receipt_presentation(receipt, ancestor=True)
+            result = output["result"]
+            pages = result.get("pages") or [result]
+            if any(page.get("found") is not True or not page.get("text") for page in pages):
+                continue
+            reader = receipt.call.arguments["tool_id"]
+            observed_readers.add(reader)
+            key = (reader, ingress, canonical_json_bytes(result))
+            if key in seen:
+                continue
+            seen.add(key)
+            arguments = json.loads(receipt.call.arguments["arguments_json"])
+            selections = arguments.get("selections", [arguments])
+            page_groups = [(reader, ingress, page["sha256"], page["byte_length"],
+                page["pointer"], page["selection_length"],
+                canonical_json_bytes({k: selection[k] for k in ("query", "json_filter") if k in selection}))
+                for page, selection in zip(pages, selections, strict=True)]
+            covered = True
+            for page, page_group in zip(pages, page_groups, strict=True):
+                cursor, end = page["offset"], page["next_offset"]
+                while cursor < end:
+                    previous = [p for p in coverage.get(page_group, ())
+                        if p["offset"] <= cursor < p["next_offset"]]
+                    if not previous:
+                        covered = False
+                        break
+                    earlier = max(previous, key=lambda p: p["next_offset"])
+                    stop = min(end, earlier["next_offset"])
+                    if (page["text"][cursor-page["offset"]:stop-page["offset"]]
+                            != earlier["text"][cursor-earlier["offset"]:stop-earlier["offset"]]):
+                        covered = False
+                        break
+                    cursor = stop
+                if not covered:
+                    break
+            if covered:
+                continue
+            for page, page_group in zip(pages, page_groups, strict=True):
+                coverage.setdefault(page_group, []).append(page)
+            if receipt.call.call_id not in selected_ids:
+                groups.setdefault(reader, []).append(receipt)
+        # A successful newer read of the same exact operation supersedes the old
+        # source only once its own pages have actually been observed. Raw versions
+        # stay in the scoped archive; no current-state claim is made from a page.
+        newest: dict[bytes, int] = {}
+        for reader in observed_readers:
+            if reader in origins:
+                operation, position = origins[reader]
+                newest[operation] = max(position, newest.get(operation, -1))
+        candidates = [rows for reader, rows in groups.items() if reader in origins
+            and origins[reader][1] == newest[origins[reader][0]]]
+        candidates.sort(key=lambda rows: origins[rows[0].call.arguments["tool_id"]][1], reverse=True)
+        if not candidates:
+            return prior_actions
+        body = self._phase_admission_body(prompt=prompt, instructions=instructions,
+            tools=tools, prior_actions=prior_actions, completed_action=completed_action)
+        tokenizer = _input_tokenizer()
+        space = budget.max_input_tokens - _INPUT_FRAMING_RESERVE_TOKENS - len(
+            tokenizer.encode_ordinary(canonical_json_bytes(body).decode("utf-8")))
+        restored_groups = []
+        for rows in candidates:
+            pairs = []
+            for receipt in rows:
+                pairs.extend([{"type": "function_call", "call_id": receipt.call.call_id,
+                     "name": receipt.call.name,
+                     "arguments": canonical_json_bytes(self._receipt_arguments(receipt, ancestor=True)).decode("utf-8")},
+                    {"type": "function_call_output", "call_id": receipt.call.call_id,
+                     "output": canonical_json_bytes(self._receipt_presentation(receipt, ancestor=True)).decode("utf-8")}])
+            cost = len(tokenizer.encode_ordinary(canonical_json_bytes(pairs).decode("utf-8")))
+            if cost <= space:
+                restored_groups.append({r.call.call_id for r in rows})
+                space -= cost
+        restored = set().union(*restored_groups)
+        # Final full-envelope admission also preserves the newest result's exact
+        # rendering and literal anchors; estimates never enlarge a request grant.
+        while restored:
+            enriched = tuple(r for r in receipts[:-1]
+                if r.call.call_id in selected_ids or r.call.call_id in restored)
+            candidate = self._phase_admission_body(prompt=prompt, instructions=instructions,
+                tools=tools, prior_actions=enriched, completed_action=completed_action)
+            if candidate["input"][-2:] != body["input"][-2:]:
+                return prior_actions
+            try:
+                self._admit_request(candidate, autonomous=False)
+                return enriched
+            except _InputBudgetError:
+                restored_groups.pop()
+                restored = set().union(*restored_groups)
+        return prior_actions
+
     @staticmethod
     def _phase_admission_body(
         *,
@@ -2320,6 +2469,9 @@ class PydanticConversationModel:
                        and selected_recent[0].role.casefold() in {"assistant", "eva"}):
                     selected_recent = selected_recent[1:]
                 omitted = True
+        if read_overview and archive is not None and completed_action is not None:
+            prior_actions = self._retain_working_reads(receipts, prior_actions, completed_action,
+                prompt=turn.grounded_text, instructions=instructions, tools=pydantic_catalog)
         # Capture the starting allowance for this generate result. Per-provider
         # requests refresh it separately; final aggregation must not subtract
         # this result's output a second time.

@@ -1,0 +1,124 @@
+{
+  "authorization": {
+    "exactSourceInstallation": true,
+    "nativeInput": false,
+    "taskCompletion": false
+  },
+  "bindings": {
+    "buildResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/build-result.private.json",
+      "sha256": "2c86a5838fc216b3250df834be798eafd387fea00f915fe8118ae07d6e164ca8"
+    },
+    "buildSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/build-source.private.json",
+      "sha256": "4ed6f64c2d801dbe20dde0d0d5acfe3f2c0711e04216fe7147b9c65017792ef9"
+    },
+    "candidateCompose": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/candidate.compose.private.json",
+      "sha256": "b095f36478f52fe1beda0d00e3a8d3358867fa4e294ea7ed0e8183194b176f10"
+    },
+    "closedGen15Review": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-original-proposal-end-review.private.json",
+      "sha256": "128f02b898c6a0e6ca825210a11ce70572d6fb53299bf2f71b9e808d9df69dec"
+    },
+    "pairedReplay": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-retain-working-reads-paired-replay-v4.private.json",
+      "sha256": "846a0a3c65582dd6a33228f371a3a141f03eb75783f099b7d9e85e61d47dc63d"
+    },
+    "provider": {
+      "path": "/home/administrator/project/Eva2/eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4"
+    },
+    "targetedChecks": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/targeted-checks.private.json",
+      "sha256": "005ec5f23ecec5a32d40ae3399b8d55fef9303e2b0f015fcadb52f6a05721824"
+    },
+    "tests": {
+      "path": "/home/administrator/project/Eva2/eva2/tests/model/test_authored_artifact_context.py",
+      "sha256": "8e1dcf4f0bf075dca00f1c32c6ce725a3ad0fdc4ad9be0cb8dd9f1b4def712f8"
+    }
+  },
+  "blockers": [],
+  "build": {
+    "changedPythonSourcesPerImage": 1,
+    "core": "sha256:62f4f05a6b611484a760e3008dab37f1c23889171bcd62006e92ea2cc652c621",
+    "importsPassed": true,
+    "installed": false,
+    "inventoriesIndependentlyMatched": true,
+    "unchangedPythonSourcesPerImage": 344,
+    "worker": "sha256:31a5a07840d79e9194875e4426dcd58a875411dc50bc4d746a8eb57b61b1a9a3"
+  },
+  "checks": {
+    "currentFinalV4": {
+      "failed": 0,
+      "junitSha256": "48146ce86335a78dec138a40d5876554c1731611bedf4ad138d3112ad07b0d18",
+      "passedUnique": 9,
+      "seconds": 10.006,
+      "sourceSha256": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4"
+    },
+    "priorV2": {
+      "failed": 0,
+      "junitSha256": "f83e52b294a9813bc171ca2efb0c73c66e43d44d49eeef31523ed47f90f5585e",
+      "passedUnique": 106,
+      "scope": "97 preceding catalogue checks plus nine targeted checks; not 106 checks rerun on final v4.",
+      "seconds": 34.613,
+      "sourceSha256": "ad2bc6bf1fb5622cb70b2fcd00d964b77444efdb4635e52fd44479a2f95483bd"
+    },
+    "reviewerReruns": 0
+  },
+  "contract": "EvaResearchMaterialContextSourceReview/v1",
+  "findings": [
+    "Saved prose notes do not establish that every previously read fact remains in context. Source-bound local pages are restored only into existing input space after existing selection/archive.",
+    "Original ancestor validation, actor/execution/ingress/proof checks and authorized reader route remain. Stored-index navigation does not establish a source-observation root.",
+    "Pages are selected atomically per reader origin. Deduplication requires exact reader/ingress/source hash/length/pointer/selection length/query/filter and matching character coverage. A newer source replaces the older active material only after its pages were actually observed.",
+    "Raw calls/outputs/proofs and archived historical sources remain immutable. Latest result and literal anchors, current progress, errors, UNKNOWN and effects remain protected.",
+    "The original complete-envelope gate runs again after restoration; whole groups are removed if necessary. No grant, quota, tools, source authority, task criteria or original owner scope changes.",
+    "AST comparison against installed reference found only the new _retain_working_reads method and its generate callsite; existing admission/selection/presentation and other methods are unchanged."
+  ],
+  "installedReferenceProviderSha256": "fd2a3207ebd783539f75b6f86bc8974b087a86fb722a0df22124acd2eb1bdb80",
+  "knownReplay": {
+    "archiveActorExecutionStopAndExactReadbackPassed": true,
+    "checkpoint185": {
+      "bothRegistryPagesPreserved": true,
+      "gatePassed": true,
+      "marginTokens": 117,
+      "withFramingTokens": 65419
+    },
+    "rawLatestUnchanged": true,
+    "registryPages": "Exact original steps183/184 text, equivalent to199/195, reader/pointer/ranges preserved.",
+    "scope": "Retained known canonical phases and existing synthetic offline archive fixture; no production authorizer or actual SDK-context assertion.",
+    "terminal206": {
+      "bothRegistryPagesPreserved": true,
+      "gatePassed": true,
+      "marginTokens": 159,
+      "withFramingTokens": 65377
+    }
+  },
+  "limitations": [
+    "117/159 tokens are narrow known margins. Actual recall/recent messages/dynamic context and future fit remain unknown; restoration may safely decline a whole package under the unchanged gate.",
+    "Historical v1-v3 partial-restoration/misfit and preparation failures remain retained. No exclusive historical model-cause or behavioral improvement is proved.",
+    "Closed Gen15 remains INCOMPLETE with its original criteria, accounting and document. This review does not reopen it, reset usage or authorize another native input.",
+    "No provider savings, credit-cost, complete proposal, full HUE/AIDE or general quality claim follows."
+  ],
+  "reviewedAt": "2026-10-13T00:09:24.050586+00:00",
+  "reviewerActions": {
+    "databaseQueries": 0,
+    "databaseWrites": 0,
+    "modelRequests": 0,
+    "nativeActions": 0,
+    "sourceWrites": 0,
+    "testsRun": 0
+  },
+  "scope": "Exact one-provider source/build installation; no native-input, proposal-completion or quality verdict.",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4"
+    }
+  ],
+  "verdict": "GO",
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context-source-review.private.json",
+    "sha256": "61e2644b4f17281a0c7269426c84595a02ee0790b798f7a7c4cc60b9a9dc7dc1"
+  }
+}

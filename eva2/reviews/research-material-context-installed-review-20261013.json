@@ -1,0 +1,80 @@
+{
+  "authorization": {
+    "nativeInput": false,
+    "safeInstalledFactsPublication": true,
+    "taskCompletion": false
+  },
+  "bindings": {
+    "buildResult": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/build-result.private.json",
+      "sha256": "2c86a5838fc216b3250df834be798eafd387fea00f915fe8118ae07d6e164ca8"
+    },
+    "continuationBinding": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/continuation-installed-binding.private.json",
+      "sha256": "302b88693a3025abe8947438399f3f3d9e6da5fc39d5f35358b1e32f649e8b84"
+    },
+    "continuationReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/continuation-receipt.private.json",
+      "sha256": "66c393251e82c73add8693c09a2ef97ef1841f3529ba6b498252208568404b79"
+    },
+    "installationVerification": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/installation-verification.private.json",
+      "sha256": "f5a6526eadd11a5c934f6f3abb05210869927fab26ddbeacdf3c16e65fb957d2"
+    },
+    "privateSourceReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context-source-review.private.json",
+      "sha256": "61e2644b4f17281a0c7269426c84595a02ee0790b798f7a7c4cc60b9a9dc7dc1"
+    },
+    "publicInstalledFacts": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-material-context-installed-20261013.json",
+      "sha256": "d350792d57af64886f58e741d637b3f5ef83b1804cd8dc099170b715a8e1dca0"
+    },
+    "publicSourceReview": {
+      "path": "/home/administrator/project/Eva2/eva2/reviews/research-material-context-source-review-20261013.json",
+      "sha256": "8f61af7f9d510975032d6534499c65d48adf7beda389e0e9c054c3e8ecd5dfef"
+    },
+    "updateReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/installation-dispatch-receipt.private.json",
+      "sha256": "5faf66f24de70eac44a54e73daf5a7c66bdcc3d53a22b32dd380d91a06d027b3"
+    }
+  },
+  "blockers": [],
+  "contract": "EvaResearchMaterialInstalledPublicationReview/v1",
+  "findings": [
+    "One existing-updater dispatch installed the approved provider0d708d54 into both exact built images. The retained verification records healthy/ready, exact one-module inventory, 344 unchanged Python sources per image and unchanged environment/mount/process configuration.",
+    "Build, dispatch, verification and public installed evidence agree on both image IDs and source hashes. The public source review retains every private source-review field unchanged.",
+    "Final-v4 nine targeted PASS are distinct from the preceding v2 106 PASS (97 catalogue plus nine targeted); publication does not claim all106 ran on finalv4.",
+    "Known replay preserves both registry page texts across checkpoints with unchanged raw/latest and scoped archive. Margins117/159 are narrow; actual recall/recent and future fit remain UNKNOWN, with the original full per-request gate authoritative.",
+    "The public next-field describes its recorded pre-dispatch publication snapshot. The separate later root binding and correction_saved receipt record one ordinary revision of the existing Gen15 readonly task; this is not proof of native success or reopening the old attempt.",
+    "Original proposal and product completion remain false. Historical Gen15 INCOMPLETE, original criteria, usage and artifact remain preserved; no HA migration, naming or restart is authorized by this review."
+  ],
+  "installed": {
+    "configurationRetained": true,
+    "coreImage": "sha256:62f4f05a6b611484a760e3008dab37f1c23889171bcd62006e92ea2cc652c621",
+    "healthyReady": true,
+    "providerSha256": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4",
+    "unchangedPythonSourcesPerImage": 344,
+    "updateDispatches": 1,
+    "workerImage": "sha256:31a5a07840d79e9194875e4426dcd58a875411dc50bc4d746a8eb57b61b1a9a3"
+  },
+  "publicationLimits": [
+    "No user acceptance, completed proposal, learning, efficiency, savings, full dynamic input fit or general-quality claim.",
+    "No new native-input authority from this installation/publication review. Ordinary owner mandate and actual admission remain separate."
+  ],
+  "reviewedAt": "2026-10-13T00:12:14.321714+00:00",
+  "reviewerActions": {
+    "databaseQueries": 0,
+    "databaseWrites": 0,
+    "factoryCalls": 0,
+    "modelRequests": 0,
+    "nativeActions": 0,
+    "sourceWrites": 0,
+    "testsRun": 0
+  },
+  "scope": "Exact installed-source facts and safe publication only; original readonly proposal outcome remains separate.",
+  "verdict": "GO",
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context-installed-publication-review.private.json",
+    "sha256": "017f3615dd0434e7735f88892aa401f4d1252c51bd9de47fa18ef856fc7e3a93"
+  }
+}
