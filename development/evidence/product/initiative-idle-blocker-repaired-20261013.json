@@ -1,0 +1,71 @@
+{
+  "contract": "EvaInitiativeIdleBlockerRepair/v1",
+  "recordedAt": "2026-10-13T19:16:18.637750+00:00",
+  "status": "installed_state_repair",
+  "ownerReport": "Geen nuttige eigen bijdrage ontvangen; alleen een weinig bruikbaar verbruikslijstje.",
+  "workId": "work:eva-chat:aad18e34-fa22-51cc-839f-595821dcc7d7",
+  "cause": "One physically closed AIDE child retained call_started and blocked the existing optional idle gate.",
+  "change": "Existing PostgresDelegatedWorkStore.record_failure called exactly once on the original spec/call; no source or service replacement.",
+  "before": {
+    "state": "call_started",
+    "revision": 3,
+    "leaseExpired": true,
+    "deadlineExpired": true
+  },
+  "after": {
+    "state": "ambiguous",
+    "revision": 4,
+    "leaseRemoved": true,
+    "result": null,
+    "pendingOrRunningWork": false,
+    "spareComputeAvailable": true
+  },
+  "usage": {
+    "measurement": "partial",
+    "completedModelResponses": 4,
+    "inputTokens": 25295,
+    "outputTokens": 769,
+    "totalTokens": 26064,
+    "toolCalls": 4,
+    "costUsdMicros": null,
+    "isLowerBound": true,
+    "newModelRequests": 0,
+    "newAdmissions": 0,
+    "notAdditionalUsage": true
+  },
+  "preserved": {
+    "originalJournalEvents": 10,
+    "originalRawNull": true,
+    "assessmentSeal": "UNKNOWN",
+    "oldOutcomeAndPhysicalUsageUnchanged": true
+  },
+  "initiativeDelivery": {
+    "historicalCompleted": 3,
+    "transportDeliveredEvents": 1,
+    "newUsefulDeliveryConfirmed": false,
+    "latestObservedDecision": "silence",
+    "latestObservedDecisionAt": "2026-10-12T00:46:24+00:00",
+    "linkedOwnerFeedback": false
+  },
+  "ownerActionRequired": false,
+  "productCompletionChanged": false,
+  "limitations": [
+    "Removing the old work blocker does not prove a new initiative decision, delivery or useful family outcome.",
+    "The consumption report is not linked to an arbitrary stored initiative.",
+    "The failed request and credit cost remain unknown."
+  ],
+  "references": {
+    "settlement": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/hue5-stale-child-settlement-20261013/settlement-receipt.private.json",
+      "sha256": "a984a1435016e1f7cad8b45dfee36a7e6da78d6275bf658b3e593ed308603c20"
+    },
+    "independentReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/hue6-prospective-review/stale-child-actual-settlement-independent-review.private.json",
+      "sha256": "6b3f9ad049eefa115c89de9cb744bd14e3a3b32f88e46eaba4cb226b7e20e7ff"
+    },
+    "readOnlyObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-initiative-feedback-20261013/source-audit/owner-scoped-post-settlement-readonly.private.json",
+      "sha256": "1d4eac653084fb273ccbc3cc5790522331b761b6d0ddbae0961b671bf129acfe"
+    }
+  }
+}

@@ -1,3 +1,15 @@
+## Actuele uitvoering 13 oktober — initiatiefblokkade verwijderd
+
+Jaap heeft geen nuttige eigen bijdrage ontvangen. Eén fysiek gesloten AIDE-kindtaak
+hield de gewone rustige initiatiefroute tegen. Die oorspronkelijke registratie is
+eenmalig via de bestaande record_failure-route als onzeker afgesloten. Vier gemeten
+reacties en 26.064 tokens zijn een bestaande ondergrens; de vijfde aanvraag en kosten
+blijven onbekend. Oorspronkelijke raw NULL, UNKNOWN en journalevents zijn behouden.
+De actuele idle-gate ziet geen lopend werk. Nul nieuwe modelaanvragen of installaties.
+HUE5.1 blijft open: nieuwe nuttige aflevering en leren van de reactie zijn nog niet
+aangetoond. Nu geen aanvullende eigenaarproef. Spraak blijft bij de andere uitvoerder.
+Bewijs: development/evidence/product/initiative-idle-blocker-repaired-20261013.json.
+
 ## Actuele uitvoering 13 oktober — AIDE²-proef zonder kwaliteitsresultaat
 
 Drie voorbereidingspogingen zijn gesloten: twee oudermodelaanvragen, 11.758
@@ -18,7 +30,7 @@ actuele modulegrenzen en development/design/product/execution-workboard-v1.json 
 development/docs/WERKBORD.md en het dashboard worden uit dat ene werkbord weergegeven.
 development/archive is historische referentie, geen stapel aanvullende uitvoeropdrachten.
 
-## Huidige opdracht
+## Eerder uitgevoerd — bewijs, geen actuele vervolgopdracht
 
 Volledige documentterugmelding is geïnstalleerd en echt gebruikt; Telegrambestand
 en opgeslagen resultaat zijn bytegelijk. Standaard alleen een kort antwoord en
@@ -52,6 +64,18 @@ chatoplevering; geen vergelijkingsserie. Spraak wordt door een ander model verzo
 deze uitvoerder wijzigt geen spraakcode of spraakinstallatie.
 Repositoryopruiming is afgerond, met exacte herkomst op Git-revisie
 eab83747a3c33a83f2f63f38180dc7d6330635ec. Eva2 staat in src/eva; geen Eva1-ontwikkeling.
+
+## Huidige opdracht
+
+Werk HUE5.1 af via de bestaande initiatief- en privéafleveringsroute. De oude,
+fysiek gesloten AIDE-kindtaak is als onzeker afgesloten; herhaal haar niet en
+behoud originele NULL/UNKNOWN/usage. De rustige gate ziet nu geen lopend werk.
+Jaap heeft geen nuttige bijdrage ontvangen; geen bijdrage vooraf kiezen en geen
+feedback aan een willekeurige opgeslagen bijdrage koppelen. Volg echte aflevering
+en later gebruik van de reactie. HUE5.1 blijft open zolang dat niet bewezen is.
+De AIDE-kandidaat blijft opgeslagen, ongebeoordeeld en ongeactiveerd; geen nieuwe
+betaalde herbindingsserie tijdens kernvervanging. Het volledige vier-uitkomstgoal
+met leercyclus en AIDE² blijft gelden. Spraak is werk van de andere uitvoerder.
 
 ## Uitvoeren
 

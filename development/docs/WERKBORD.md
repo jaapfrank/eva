@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Bestaande AIDE²-verbetering afronden en later toepassen
+Van de reactie op eigen initiatief leren
 
-Zelfverbetering heeft nog geen kwaliteitsresultaat: de kern werd tijdens de proef vervangen.
+Blokkade voor eigen initiatief verwijderd; nuttige bijdrage nog open.
 
-Klaar wanneer: Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.
+Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
 
 ## Afmaakvolgorde
 
@@ -89,7 +89,7 @@ Klaar wanneer: Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassi
 
 ## Van jou
 
-Een kort antwoord met samenvatting is de standaard. Het volledige resultaat blijft bewaard. Akkoord op uitvoering van een migratievoorstel is een afzonderlijke beslissing.
+Je hebt de initiatiefvraag beantwoord: geen nuttige bijdrage ontvangen. De aflevering en leercyclus zijn nu werk voor Codex; geen aanvullende proef van jou nodig.
 
 ## Historie
 

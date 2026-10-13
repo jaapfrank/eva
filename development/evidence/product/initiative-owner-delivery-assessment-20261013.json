@@ -1,0 +1,13 @@
+{
+  "contract": "EvaOwnerInitiativeDeliveryAssessment/v1",
+  "recordedAt": "2026-10-13T18:41:11.550648+00:00",
+  "source": "direct_owner_answer_20261013",
+  "ownerReport": "Geen nuttige eigen bijdrage ontvangen; alleen een weinig bruikbaar verbruikslijstje.",
+  "initiativeId": null,
+  "reportLinkedToStoredInitiative": false,
+  "usefulDeliveryConfirmed": false,
+  "ownerFeedbackOnSpecificInitiativeRegistered": false,
+  "ownerActionRequired": false,
+  "nextAction": "Codex maakt echte aflevering en de koppeling met latere feedback af; geen eigenaarfeedback aan een willekeurige bijdrage koppelen.",
+  "productCompletionChanged": false
+}

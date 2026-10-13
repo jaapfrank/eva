@@ -654,6 +654,16 @@
         "Technisch afgerond: echte zelfgekozen bijdrage teruggelezen; laatste beoordeling zichtbaar en onafhankelijk gecontroleerd.",
         "Alleen IN-02 blijft open: Jaap beoordeelt het nut en de passendheid van de bestaande bijdrage."
       ]
+    },
+    {
+      "id": "HUE5.1",
+      "title": "Van de reactie op eigen initiatief leren",
+      "status": "in_progress",
+      "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
+      "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+      "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
+      "area": "initiative and learning",
+      "countedAsProductTask": true
     }
   ],
   "milestones": [
@@ -822,19 +832,19 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T18:09:22.061890+00:00",
+  "lastUpdated": "2026-10-13T19:16:18.637750+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "HUE6.1",
+  "activeTaskId": "HUE5.1",
   "currentWork": {
-    "id": "HUE6.1",
-    "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
-    "outcome": "Eva beoordeelt haar eigen bewaarde variant, past uitsluitend onafhankelijk bewezen kwaliteitswinst toe en gebruikt die bij later werk.",
-    "area": "independent work and learning",
+    "id": "HUE5.1",
+    "title": "Van de reactie op eigen initiatief leren",
     "status": "in_progress",
-    "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
-    "countedAsProductTask": true,
-    "nextAction": "Bind de bestaande beoordelingsroute aan de actuele stabiele kern en het resterende gezamenlijke verbruik voordat een nieuwe uitvoering begint. Behoud de kandidaat, oorspronkelijke criteria en gesloten foutregistraties; geen spraakwijziging of nieuwe vergelijkingsserie."
+    "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
+    "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+    "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
+    "area": "initiative and learning",
+    "countedAsProductTask": true
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1615,6 +1625,17 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Blokkade voor rustig eigen initiatief verwijderd",
+            "state": "installed",
+            "summary": "Achtergebleven AIDE-kindtaak eenmalig eerlijk afgesloten; nul nieuwe modelaanvragen. Nuttige aflevering en leren blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/initiative-idle-blocker-repaired-20261013.json",
+            "checkedAt": "2026-10-13T19:16:18.637750+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": true
+          },
+          {
             "title": "Volledig opgeslagen resultaat werkelijk geleverd",
             "state": "installed",
             "summary": "Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.",
@@ -1759,31 +1780,31 @@
           "ownerRead": "unknown"
         },
         "now": {
-          "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
+          "title": "Van de reactie op eigen initiatief leren",
           "state": "Bezig",
-          "phase": "prospective_aide_closed_runtime_drift",
-          "taskId": "HUE6.1",
+          "phase": "initiative_idle_blocker_repaired",
+          "taskId": "HUE5.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Zelfverbetering heeft nog geen kwaliteitsresultaat: de kern werd tijdens de proef vervangen.",
-          "detail": "De drie voorbereidingsingangen zijn gesloten; twee ouderaanvragen gebruikten samen 11.758 tokens, nul kindaanvragen. Persoons- en projectbinding zijn gecorrigeerd. Het nieuwe kernimage blijft staan. Codex bindt de beoordelingsroute aan de stabiele actuele kern; geen nieuwe betaalde proef, spraakwijziging of groene afronding.",
-          "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
+          "summary": "Blokkade voor eigen initiatief verwijderd; nuttige bijdrage nog open.",
+          "detail": "Een fysiek gesloten AIDE-kindtaak hield nieuw initiatief tegen. De oorspronkelijke uitvoering is eenmalig als onzeker afgesloten, met behoud van foutbewijs en onbekend verbruik. De gewone gate ziet nu geen lopend werk. Nog geen nieuwe nuttige bijdrage of leercyclus aangetoond.",
+          "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
           "ownerActionNeeded": false,
-          "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json"
+          "latestEvidence": "development/evidence/product/initiative-idle-blocker-repaired-20261013.json"
         },
         "next": {
-          "state": "Hierna",
-          "title": "HUE5: initiatief leert van echte feedback",
-          "summary": "Echte reactie laten doorwerken in volgend initiatief of bewust stilblijven.",
-          "detail": "Bestaande persoonsgebonden geheugen- en initiatiefroute gebruiken."
+          "state": "Vervolg binnen dezelfde taak",
+          "title": "HUE5.1 · Echt initiatief en leren",
+          "summary": "Normale initiatiefkeuze, privéaflevering en latere reactie door dezelfde route laten lopen.",
+          "detail": "Geen voorgeschreven bijdrage en geen nieuwe vergelijking. Jouw eerdere antwoord is geregistreerd; nu geen handeling van jou nodig."
         },
         "ownerAction": {
           "title": "Nu niets nodig",
-          "detail": "Een kort antwoord met samenvatting is de standaard. Het volledige resultaat blijft bewaard. Akkoord op uitvoering van een migratievoorstel is een afzonderlijke beslissing.",
+          "detail": "Je hebt de initiatiefvraag beantwoord: geen nuttige bijdrage ontvangen. De aflevering en leercyclus zijn nu werk voor Codex; geen aanvullende proef van jou nodig.",
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-13T14:44:38.960328+00:00",
+        "checkedAt": "2026-10-13T19:16:18.637750+00:00",
         "reviewedAt": "2026-10-13T14:44:38.960328+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -1943,7 +1964,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "HUE6.1",
+        "currentStep": "HUE5.1",
         "steps": [
           {
             "number": 1,
@@ -1973,7 +1994,7 @@
           {
             "number": 3,
             "title": "Volledige AIDE² en droommodus",
-            "state": "In uitvoering · koppeling geïnstalleerd/GO; echte droom- en aansturingsuitkomst nog open",
+            "state": "Open · opgeslagen kandidaat behouden; hervatting ongeactiveerd na kernvervanging",
             "doneWhen": "Varianten voor agentaansturing én code of apps/addons worden onafhankelijk beoordeeld; een verbetering wordt toegepast of de referentie blijft behouden. Rustig achtergrondwerk wijkt voor gesprek en stopt op verzoek.",
             "existingCards": [
               "AU-003",
@@ -1984,7 +2005,7 @@
           {
             "number": 4,
             "title": "Passend eigen initiatief afronden",
-            "state": "planned",
+            "state": "In uitvoering · blokkade verwijderd; nuttige aflevering en leren nog open",
             "doneWhen": "Eva kiest en voltooit nuttig werk, beoordeelt timing en leert aantoonbaar van de menselijke reactie.",
             "existingCards": [
               "AU-007",
@@ -2866,24 +2887,26 @@
               {
                 "id": "HUE5.1",
                 "title": "Van de reactie op eigen initiatief leren",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-                "nextAction": "De bestaande route is aanwezig. In geïnstalleerde registratie zijn7zelfgekozen initiatieven en3eigen afgeronde bijdragen, maar geen gekoppelde ontvangerfeedback. Geen feedback verzinnen of bijdrage forceren; echte gewone reactie op ontvangen bijdrage gebruiken en daarna later aangepaste afweging controleren.",
-                "ownerActionRequired": true,
+                "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+                "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "Als Eva je echt een eigen bijdrage heeft teruggebracht, vertel haar gewoon wat eraan nuttig of onbruikbaar is. Geen voorstel zelf schrijven. Ontbreekt die terugmelding, dan is dat voor Codex om op te lossen.",
-                  "steps": [
-                    "Reageer in hetzelfde gewone privégesprek op een daadwerkelijk ontvangen eigen bijdrage: wat hielp je, wat wil je anders?",
-                    "Heb je nog geen eigen bijdrage ontvangen, dan hoef je niets te verzinnen of opnieuw te testen."
-                  ],
+                  "availableNow": false,
+                  "readyWhen": "Codex moet eerst een werkelijk nuttige eigen bijdrage afleveren. Jaap heeft de open vraag beantwoord; nu geen aanvullende handeling nodig.",
+                  "steps": [],
                   "blocksIndependentWork": false
                 },
                 "assignment": {
                   "activeWorkers": []
+                },
+                "ownerFeedback": {
+                  "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
+                  "usefulDeliveryConfirmed": false,
+                  "initiativeId": null
                 }
               }
             ]
@@ -3614,7 +3637,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Bestaande Eva-kandidaat onafhankelijk beoordelen, alleen kwaliteitswinst toepassen en later gebruiken; spraak buiten deze opdracht.",
+        "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -3622,12 +3645,12 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-13T18:00:56.495936+00:00"
+        "updatedAt": "2026-10-13T19:16:18.637750+00:00"
       }
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "HUE6.1",
+      "currentStep": "HUE5.1",
       "steps": [
         {
           "number": 1,
@@ -3657,7 +3680,7 @@
         {
           "number": 3,
           "title": "Volledige AIDE² en droommodus",
-          "state": "In uitvoering · koppeling geïnstalleerd/GO; echte droom- en aansturingsuitkomst nog open",
+          "state": "Open · opgeslagen kandidaat behouden; hervatting ongeactiveerd na kernvervanging",
           "doneWhen": "Varianten voor agentaansturing én code of apps/addons worden onafhankelijk beoordeeld; een verbetering wordt toegepast of de referentie blijft behouden. Rustig achtergrondwerk wijkt voor gesprek en stopt op verzoek.",
           "existingCards": [
             "AU-003",
@@ -3668,7 +3691,7 @@
         {
           "number": 4,
           "title": "Passend eigen initiatief afronden",
-          "state": "planned",
+          "state": "In uitvoering · blokkade verwijderd; nuttige aflevering en leren nog open",
           "doneWhen": "Eva kiest en voltooit nuttig werk, beoordeelt timing en leert aantoonbaar van de menselijke reactie.",
           "existingCards": [
             "AU-007",
@@ -4550,24 +4573,26 @@
             {
               "id": "HUE5.1",
               "title": "Van de reactie op eigen initiatief leren",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-              "nextAction": "De bestaande route is aanwezig. In geïnstalleerde registratie zijn7zelfgekozen initiatieven en3eigen afgeronde bijdragen, maar geen gekoppelde ontvangerfeedback. Geen feedback verzinnen of bijdrage forceren; echte gewone reactie op ontvangen bijdrage gebruiken en daarna later aangepaste afweging controleren.",
-              "ownerActionRequired": true,
+              "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+              "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "Als Eva je echt een eigen bijdrage heeft teruggebracht, vertel haar gewoon wat eraan nuttig of onbruikbaar is. Geen voorstel zelf schrijven. Ontbreekt die terugmelding, dan is dat voor Codex om op te lossen.",
-                "steps": [
-                  "Reageer in hetzelfde gewone privégesprek op een daadwerkelijk ontvangen eigen bijdrage: wat hielp je, wat wil je anders?",
-                  "Heb je nog geen eigen bijdrage ontvangen, dan hoef je niets te verzinnen of opnieuw te testen."
-                ],
+                "availableNow": false,
+                "readyWhen": "Codex moet eerst een werkelijk nuttige eigen bijdrage afleveren. Jaap heeft de open vraag beantwoord; nu geen aanvullende handeling nodig.",
+                "steps": [],
                 "blocksIndependentWork": false
               },
               "assignment": {
                 "activeWorkers": []
+              },
+              "ownerFeedback": {
+                "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
+                "usefulDeliveryConfirmed": false,
+                "initiativeId": null
               }
             }
           ]
@@ -5298,7 +5323,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Bestaande Eva-kandidaat onafhankelijk beoordelen, alleen kwaliteitswinst toepassen en later gebruiken; spraak buiten deze opdracht.",
+      "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -5306,7 +5331,7 @@
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-13T18:00:56.495936+00:00"
+      "updatedAt": "2026-10-13T19:16:18.637750+00:00"
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -5558,7 +5583,13 @@
       "reviewPath": "development/reviews/AU-008-current-status-e96b2054.md",
       "technicalCompletedOn": "2026-09-12",
       "reviewedBy": "/root/au008_final_review",
-      "remaining": "IN-02 eigenaarsoordeel; geen concreet technisch restpunt binnen deze oplevering."
+      "remaining": "IN-02 eigenaarsoordeel; geen concreet technisch restpunt binnen deze oplevering.",
+      "currentOwnerAssessment": {
+        "recordedAt": "2026-10-13T19:16:18.637750+00:00",
+        "ownerUsefulDeliveryConfirmed": false,
+        "ownerActionRequired": false,
+        "detail": "Jaap meldt geen nuttige bijdrage ontvangen. HUE5.1 blijft werk voor Codex; oude technische bewijsstatus is geen nieuwe gezinsacceptatie."
+      }
     },
     "aideRetainedResume20261013": {
       "evidence": "development/evidence/product/aide-evaluation-host-repair-installed-20261013.json",
@@ -5642,8 +5673,101 @@
       "candidateInstalled": false,
       "nativeRunning": false,
       "voiceChanged": false,
-      "ownerActionRequired": false
+      "ownerActionRequired": false,
+      "preparedResume": {
+        "state": "blocked_before_dispatch",
+        "reason": "core_replaced_again",
+        "nativeAdmissions": 0,
+        "modelRequests": 0,
+        "configurationActivated": false,
+        "independentReviewSha256": "0a3bf1d58e434793b0e483169e83a783ab1a649e37c218635677381ae1e43b80",
+        "oldUsageAndCandidateUnchanged": true
+      }
+    },
+    "initiativeOwnerAssessment20261013": {
+      "contract": "EvaOwnerInitiativeDeliveryAssessment/v1",
+      "recordedAt": "2026-10-13T18:41:11.550648+00:00",
+      "source": "direct_owner_answer_20261013",
+      "ownerReport": "Geen nuttige eigen bijdrage ontvangen; alleen een weinig bruikbaar verbruikslijstje.",
+      "initiativeId": null,
+      "reportLinkedToStoredInitiative": false,
+      "usefulDeliveryConfirmed": false,
+      "ownerFeedbackOnSpecificInitiativeRegistered": false,
+      "ownerActionRequired": false,
+      "nextAction": "Codex maakt echte aflevering en de koppeling met latere feedback af; geen eigenaarfeedback aan een willekeurige bijdrage koppelen.",
+      "productCompletionChanged": false
+    },
+    "initiativeIdleBlockerRepair20261013": {
+      "contract": "EvaInitiativeIdleBlockerRepair/v1",
+      "recordedAt": "2026-10-13T19:16:18.637750+00:00",
+      "status": "installed_state_repair",
+      "ownerReport": "Geen nuttige eigen bijdrage ontvangen; alleen een weinig bruikbaar verbruikslijstje.",
+      "workId": "work:eva-chat:aad18e34-fa22-51cc-839f-595821dcc7d7",
+      "cause": "One physically closed AIDE child retained call_started and blocked the existing optional idle gate.",
+      "change": "Existing PostgresDelegatedWorkStore.record_failure called exactly once on the original spec/call; no source or service replacement.",
+      "before": {
+        "state": "call_started",
+        "revision": 3,
+        "leaseExpired": true,
+        "deadlineExpired": true
+      },
+      "after": {
+        "state": "ambiguous",
+        "revision": 4,
+        "leaseRemoved": true,
+        "result": null,
+        "pendingOrRunningWork": false,
+        "spareComputeAvailable": true
+      },
+      "usage": {
+        "measurement": "partial",
+        "completedModelResponses": 4,
+        "inputTokens": 25295,
+        "outputTokens": 769,
+        "totalTokens": 26064,
+        "toolCalls": 4,
+        "costUsdMicros": null,
+        "isLowerBound": true,
+        "newModelRequests": 0,
+        "newAdmissions": 0,
+        "notAdditionalUsage": true
+      },
+      "preserved": {
+        "originalJournalEvents": 10,
+        "originalRawNull": true,
+        "assessmentSeal": "UNKNOWN",
+        "oldOutcomeAndPhysicalUsageUnchanged": true
+      },
+      "initiativeDelivery": {
+        "historicalCompleted": 3,
+        "transportDeliveredEvents": 1,
+        "newUsefulDeliveryConfirmed": false,
+        "latestObservedDecision": "silence",
+        "latestObservedDecisionAt": "2026-10-12T00:46:24+00:00",
+        "linkedOwnerFeedback": false
+      },
+      "ownerActionRequired": false,
+      "productCompletionChanged": false,
+      "limitations": [
+        "Removing the old work blocker does not prove a new initiative decision, delivery or useful family outcome.",
+        "The consumption report is not linked to an arbitrary stored initiative.",
+        "The failed request and credit cost remain unknown."
+      ],
+      "references": {
+        "settlement": {
+          "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/hue5-stale-child-settlement-20261013/settlement-receipt.private.json",
+          "sha256": "a984a1435016e1f7cad8b45dfee36a7e6da78d6275bf658b3e593ed308603c20"
+        },
+        "independentReview": {
+          "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/hue6-prospective-review/stale-child-actual-settlement-independent-review.private.json",
+          "sha256": "6b3f9ad049eefa115c89de9cb744bd14e3a3b32f88e46eaba4cb226b7e20e7ff"
+        },
+        "readOnlyObservation": {
+          "path": "/home/administrator/project/.eva2-artifacts/hue-initiative-feedback-20261013/source-audit/owner-scoped-post-settlement-readonly.private.json",
+          "sha256": "1d4eac653084fb273ccbc3cc5790522331b761b6d0ddbae0961b671bf129acfe"
+        }
+      }
     }
   },
-  "updatedAt": "2026-10-13T18:09:22.061890+00:00"
+  "updatedAt": "2026-10-13T19:16:18.637750+00:00"
 }

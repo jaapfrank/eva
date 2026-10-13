@@ -1,0 +1,68 @@
+{
+  "contract": "EvaInitiativeIdleBlockerIndependentPublicationReview/v1",
+  "verdict": "GO",
+  "scope": "safe_publication_of_one_existing_terminal_state_repair",
+  "references": [
+    {
+      "path": "development/evidence/product/initiative-idle-blocker-repaired-20261013.json",
+      "sha256": "9999d28fb637a167e81a9e09ec16405d3fb391853d2b2d6b1b396ea29bfcdbb4"
+    },
+    {
+      "path": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
+      "sha256": "56c1e9504f2175b26c4af306a87f2fba70c34e2da3a46b88233aa3f02aa3c19b"
+    },
+    {
+      "path": "development/evidence/product/aide-prospective-quality-cycle-20261013.json",
+      "sha256": "5991ceca51e2407a08fccc134e5fa63a51c98727bb5f0b3a7663c7f2b072104a"
+    },
+    {
+      "path": "development/design/product/execution-workboard-v1.json",
+      "sha256": "1f9c89a76c5da4d3a3fb47247fa6e8a095c79800835c556ea31dd8fd9de438d2"
+    },
+    {
+      "path": "development/docs/WERKBORD.md",
+      "sha256": "4b8b1d3386482882a20824b27ce8e8da549801cb1bdc1e02fe107788e75db304"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "586c280a98feb49062726402167590a2c87d9c7ce575556ed73f659d486aa86d"
+    },
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "sha256": "552091fa553a79812caf6aef56180359ed6e6a2c4afa2ae42999634a26c32909"
+    }
+  ],
+  "actualSettlementReviewSha256": "6b3f9ad049eefa115c89de9cb744bd14e3a3b32f88e46eaba4cb226b7e20e7ff",
+  "readOnlyObserverSha256": "1d4eac653084fb273ccbc3cc5790522331b761b6d0ddbae0961b671bf129acfe",
+  "validation": {
+    "status": "valid",
+    "taskCount": 54,
+    "completed": 43,
+    "activeTaskId": "HUE5.1"
+  },
+  "renderedBoardMatches": true,
+  "originalPartialJournalAndRawNullUnknownPreserved": true,
+  "settlementUsageNotAddedAgain": true,
+  "currentIdleGateBusy": false,
+  "historicalSilenceAndTransportNoticeAreNotUsefulDeliveryProof": true,
+  "ownerFeedbackNotManufactured": true,
+  "hue5UsefulDeliveryProven": false,
+  "hue6QualityProven": false,
+  "candidateApplied": false,
+  "hue5AndHue6RemainOpen": true,
+  "aideUnpaidRuntimeShiftStopPreserved": true,
+  "reviewModelCalls": 0,
+  "reviewAdmissions": 0,
+  "newProductCompletionClaim": false,
+  "voiceWorkPerformedByReviewer": false,
+  "gitPublication": {
+    "boardPath": "development/design/product/execution-workboard-v1.json",
+    "boardSha256": "dfe3e6403687f1d8eea4c2df228a570dcfb3ec1ceab4e1ba0414aba6c3f460e4",
+    "reviewedWorkingBoardSha256": "1f9c89a76c5da4d3a3fb47247fa6e8a095c79800835c556ea31dd8fd9de438d2",
+    "onlyDifference": "Uncommitted audit.subscriptionVoice20261013 omitted from the publication copy; absent in HEAD. The concurrent voice working file is preserved.",
+    "voiceAuditContentReviewed": false,
+    "otherBoardFieldsIdentical": true,
+    "renderedWorkboardUnaffected": true,
+    "scope": "Exact Git publication source; root-owned docs/evidence/review only, no voice files."
+  }
+}

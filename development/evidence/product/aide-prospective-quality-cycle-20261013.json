@@ -76,5 +76,19 @@
   "independent_review_sha256": "431ec71abc5c192a9bd0ee06f83f731f62b6699745faf0b095f835900af6569c",
   "original_aide_and_aide2": "AIDE explores measured code candidates; AIDE2 also improves the developing agent. This attempt only carries a retained Eva strategy forward with operator help. It demonstrates neither measured quality gain nor autonomous AIDE2 improvement.",
   "next_action": "Rebind the existing evaluation to the stable actual runtime without changing protected tasks, candidate or criteria. No new paid execution until all remaining parent/child accounting and the installed runtime are coherently bound. HUE6.1 remains open. Continue independently executable non-voice work.",
-  "owner_action_required": false
+  "owner_action_required": false,
+  "preparedRetainedResume": {
+    "contract": "EvaUnpaidRetainedResumeStop/v1",
+    "status": "blocked_before_dispatch",
+    "reason": "core_replaced_again_during_preparation",
+    "referenceImage": "sha256:74468f7c6894a28cba5d2f07d71538e62637d33aaadc0de636f5758495dd535c",
+    "observedImage": "sha256:f8121a5e346488ff4a2f791f80a650650565957f24a8cf374482f0513b429249",
+    "modelRequests": 0,
+    "admissions": 0,
+    "configurationActivated": false,
+    "oldClockUsageRawAndCandidateUnchanged": true,
+    "candidateQuality": "unjudged",
+    "independentReviewSha256": "0a3bf1d58e434793b0e483169e83a783ab1a649e37c218635677381ae1e43b80",
+    "noFurtherRebindingSeries": true
+  }
 }
