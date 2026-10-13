@@ -1,0 +1,77 @@
+{
+  "contract": "EvaAideProspectiveClosedIndependentReview/v1",
+  "status": "failed_before_child_dispatch",
+  "candidate_quality": "UNJUDGED",
+  "hue6_completed": false,
+  "one_dispatch_only": true,
+  "parent_usage": {
+    "provider_attempts": 1,
+    "input_tokens": 5492,
+    "output_tokens": 389,
+    "total_tokens": 5881
+  },
+  "parent_physical_tools": 3,
+  "child_usage_reconciled": {
+    "provider_attempts": 0,
+    "physical_tools": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "total_tokens": 0,
+    "basis": "Exact binding accounting/output directories absent; pinned producer source creates durable ledger before any native child launch; only pre-ledger gates can have run."
+  },
+  "original_raw_child_usage": null,
+  "original_shared_seal": "UNKNOWN",
+  "native_state": "ambiguous",
+  "terminal_measurement": "partial",
+  "committed_actions": [
+    "READ",
+    "DRAFT"
+  ],
+  "evaluation_score": null,
+  "independent_final_application_later": "not_executed",
+  "runtime_boundary": {
+    "parent_launch_core_image": "sha256:a0dc4b8aea7c953409bfcb0fd337d9d43f35eef183ff9722d0a5989b7771f685",
+    "current_core_image": "sha256:5db72d0f16ad6688a1e980aed22ba8d23581dac45ff5dd60e928b26fc82d197f",
+    "changed_configuration_fields": [
+      "image"
+    ],
+    "other_configuration_fields_equal": true,
+    "replacement_created_utc": "2026-10-13T18:02:25.972471456Z",
+    "replacement_started_utc": "2026-10-13T18:02:28.61180668Z",
+    "failure": "Pinned producer now rejects current runtime configuration; replacement overlapped the end of EVAL. Exact original internal HTTP500 subtype remains UNKNOWN."
+  },
+  "cleanup": "parent container removal confirmed; no child accounting/output/once/native model dispatch existed for this binding",
+  "construction_clock": {
+    "used_seconds": 96.69785894500092,
+    "cap_seconds": 240,
+    "failed_EVAL_seconds": 26.8432659979444,
+    "failed_interval_credit_seconds": 0,
+    "never_reset": true
+  },
+  "all_actual_usage": {
+    "provider_attempts": 23,
+    "physical_tools": 26,
+    "input_tokens": 265395,
+    "output_tokens": 4074,
+    "total_tokens": 269469
+  },
+  "remaining_original_joint": {
+    "provider_attempts": 45,
+    "physical_tools": 74,
+    "input_tokens": 119605,
+    "output_tokens": 10926,
+    "total_tokens": 130531
+  },
+  "remaining_parent_stage": {
+    "provider_attempts": 1,
+    "physical_tools": 3,
+    "input_tokens": 22020,
+    "output_tokens": 3222,
+    "total_tokens": 25242,
+    "active_seconds": 143.30214105499908
+  },
+  "closed_attempt_unchanged": true,
+  "independent_private_review_sha256": "ffcd7e83216ba088c334baaaba3263c83d8d4365bd631b0fbc715ec7521ca615",
+  "review_models_admissions": 0,
+  "frozen_candidate_cases_and_criteria_changed": false
+}

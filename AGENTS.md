@@ -1,3 +1,14 @@
+## Actuele uitvoering 13 oktober — AIDE²-proef zonder kwaliteitsresultaat
+
+Drie voorbereidingspogingen zijn gesloten: twee oudermodelaanvragen, 11.758
+geregistreerde tokens en geen kindmodeluitvoering. De laatste poging overlapt
+met vervanging van de draaiende kern; de exacte oorspronkelijke HTTP500-oorzaak
+blijft onbekend. De kandidaat is niet beoordeeld of toegepast. HUE6.1 blijft open.
+Deze uitvoerder behoudt de nieuwe kern en laat spraak bij het andere model.
+Geen nieuwe betaalde herhaling vóór coherente runtime- en verbruiksbinding.
+Het onafhankelijke initiatief-/feedbackwerk kan via de bestaande route doorgaan.
+Bewijs: development/evidence/product/aide-prospective-quality-cycle-20261013.json.
+
 # Eva2 — actuele werkafspraken
 
 ## Leidende bronnen

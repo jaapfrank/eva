@@ -822,7 +822,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T16:15:42.972601+00:00",
+  "lastUpdated": "2026-10-13T18:09:22.061890+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "HUE6.1",
@@ -833,7 +833,8 @@
     "area": "independent work and learning",
     "status": "in_progress",
     "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
-    "countedAsProductTask": true
+    "countedAsProductTask": true,
+    "nextAction": "Bind de bestaande beoordelingsroute aan de actuele stabiele kern en het resterende gezamenlijke verbruik voordat een nieuwe uitvoering begint. Behoud de kandidaat, oorspronkelijke criteria en gesloten foutregistraties; geen spraakwijziging of nieuwe vergelijkingsserie."
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1760,15 +1761,15 @@
         "now": {
           "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
           "state": "Bezig",
-          "phase": "programming_cleanup_serialization_installed",
+          "phase": "prospective_aide_closed_runtime_drift",
           "taskId": "HUE6.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Afsluitrace opgelost en geïnstalleerd; programmeerhost gereed.",
-          "detail": "Alleen de bestaande hostmodule voor containerafsluiting gewijzigd. 37 gerichte controles slagen; oude bron faalt op dezelfde overlaptest. Onafhankelijke review geslaagd. Geen modelcalls, kwaliteitsproef of spraakwijziging. Volgende stap: bewaarde AIDE²-strategie prospectief aan actuele bron en eigen beoordeling binden; oude mislukte proef blijft gesloten.",
+          "summary": "Zelfverbetering heeft nog geen kwaliteitsresultaat: de kern werd tijdens de proef vervangen.",
+          "detail": "De drie voorbereidingsingangen zijn gesloten; twee ouderaanvragen gebruikten samen 11.758 tokens, nul kindaanvragen. Persoons- en projectbinding zijn gecorrigeerd. Het nieuwe kernimage blijft staan. Codex bindt de beoordelingsroute aan de stabiele actuele kern; geen nieuwe betaalde proef, spraakwijziging of groene afronding.",
           "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
           "ownerActionNeeded": false,
-          "latestEvidence": "development/evidence/product/programming-cleanup-serialization-installed-20261013.json"
+          "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json"
         },
         "next": {
           "state": "Hierna",
@@ -3181,7 +3182,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-                "nextAction": "Afsluitrace geïnstalleerd en onafhankelijk gecontroleerd. Bestaande kandidaatstrategie ongewijzigd aan actuele bron binden via gewone prospectieve registratie, met vooraf vastgelegde onafhankelijke ontwikkel- en eindbeoordeling en verbruiksruimte. Oude uitvoering en UNKNOWN gesloten houden. Alleen kwaliteitswinst toepassen en later gebruiken.",
+                "nextAction": "Bind de bestaande beoordelingsroute aan de actuele stabiele kern en het resterende gezamenlijke verbruik voordat een nieuwe uitvoering begint. Behoud de kandidaat, oorspronkelijke criteria en gesloten foutregistraties; geen spraakwijziging of nieuwe vergelijkingsserie.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -3192,9 +3193,11 @@
                 },
                 "assignment": {
                   "activeWorkers": [
-                    "/root"
+                    "/root",
+                    "/root/hue6_independent_review"
                   ]
-                }
+                },
+                "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json"
               }
             ]
           },
@@ -3619,7 +3622,7 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-13T13:53:04.454562+00:00"
+        "updatedAt": "2026-10-13T18:00:56.495936+00:00"
       }
     },
     "deliveryPlan": {
@@ -4863,7 +4866,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Afsluitrace geïnstalleerd en onafhankelijk gecontroleerd. Bestaande kandidaatstrategie ongewijzigd aan actuele bron binden via gewone prospectieve registratie, met vooraf vastgelegde onafhankelijke ontwikkel- en eindbeoordeling en verbruiksruimte. Oude uitvoering en UNKNOWN gesloten houden. Alleen kwaliteitswinst toepassen en later gebruiken.",
+              "nextAction": "Bind de bestaande beoordelingsroute aan de actuele stabiele kern en het resterende gezamenlijke verbruik voordat een nieuwe uitvoering begint. Behoud de kandidaat, oorspronkelijke criteria en gesloten foutregistraties; geen spraakwijziging of nieuwe vergelijkingsserie.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -4874,9 +4877,11 @@
               },
               "assignment": {
                 "activeWorkers": [
-                  "/root"
+                  "/root",
+                  "/root/hue6_independent_review"
                 ]
-              }
+              },
+              "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json"
             }
           ]
         },
@@ -5301,7 +5306,7 @@
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-13T13:53:04.454562+00:00"
+      "updatedAt": "2026-10-13T18:00:56.495936+00:00"
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -5629,7 +5634,16 @@
       "nativeEvaluations": 0,
       "HUE6Complete": false,
       "voiceModified": false
+    },
+    "aideProspectiveQuality20261013": {
+      "evidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json",
+      "independentReview": "development/evidence/product/aide-prospective-project-bound-independent-review-20261013.json",
+      "qualityMeasured": false,
+      "candidateInstalled": false,
+      "nativeRunning": false,
+      "voiceChanged": false,
+      "ownerActionRequired": false
     }
   },
-  "updatedAt": "2026-10-13T16:33:19.414816+00:00"
+  "updatedAt": "2026-10-13T18:09:22.061890+00:00"
 }
