@@ -1,3 +1,23 @@
+## Actueel 13 oktober — bestaande AIDE²-route aan huidige installatie verbinden
+
+De vorige voortzetting bracht echte voortgang: oorspronkelijke Telegram-retour-
+samenvatting hersteld, geïnstalleerd en eenmaal ACK; volledig document niet als
+bijlage/link bewezen. Nu HUE6.1 afmaken via de bestaande route, geen nieuwe matrix.
+
+Eén configuratieladerregel corrigeert het bewezen tekort: de echte compacte huidige
+configuratie is131.572B waar131.072B toegestaan was. Begrensde bovengrens135.168B,
+vijf gerichte controles PASS en onafhankelijke bronreview GO; alle andere guards
+ongewijzigd. Nog niet in de bestaande hostdienst geïnstalleerd. Deze dienst draait
+buiten de kern; geen kern-/werkerimageupdate nodig. Oude gesloten rondes/UNKNOWN,
+registraties en oorspronkelijke beoordelingscriteria blijven exact behouden.
+
+Actuele gewone factorymetadata zonder provider-/model-/actieaanvragen bevestigd:
+live modelrol14a7, previewebd982, toekomstige gewone componentroute24ee5622;
+25 mogelijkheden en overige releasevelden ongewijzigd. Eerst nested configuratie,
+publicatiecommit en onafhankelijke binding afmaken, daarna de bestaande hostdienst
+éénmaal bijwerken. Een laadbare configuratie alleen is geen werkende AIDE²-cyclus.
+43/54 behouden; volledig goal ACTIVE. Geen handeling van Jaap nodig.
+
 ## Actueel 13 oktober — Eva’s voorstelsamenvatting automatisch afgeleverd
 
 Eva heeft haar eigen inhoudelijke Tuya→LocalTuya-voorstelsamenvatting en akkoordvraag

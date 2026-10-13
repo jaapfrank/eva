@@ -5614,22 +5614,23 @@
         "now": {
           "title": "Droomcyclus en AIDE² afmaken",
           "state": "in_progress",
-          "phase": "current_source_configuration_preparation",
+          "phase": "aide_current_runtime_binding",
           "taskId": "HUE6.1",
           "owner": "/root",
           "activeExecution": true,
           "nativeRunning": false,
           "summary": "Eva’s inhoudelijke voorstelsamenvatting is via de gewone route afgeleverd en bevestigd. Het volledige document blijft bewaard; leesbare bijlage of link is nog niet bewezen. De bestaande zelfverbeteringscyclus krijgt nu de actuele installatiebinding.",
-          "currentActivity": "Huidige installatie en 59 programmabronnen zijn gecontroleerd. De bestaande compacte configuratie overschrijdt haar laadgrens met500 bytes; deze concrete aansluiting en enkele releasebindings afmaken zonder oude proef opnieuw te starten.",
+          "currentActivity": "De begrensde loadercorrectie is gecontroleerd en onafhankelijk beoordeeld. Actuele modelrollen zijn zonder modelaanvraag uitgelezen; nu de bestaande configuratie en evaluatiebinding afmaken vóór één hostdienstactivatie.",
           "doneWhen": "De bestaande droom/AIDE²-route verbetert agentaansturing én code of uitbreiding, met onafhankelijke beoordeling, toepassing uitsluitend bij bewezen winst en later werkelijk gebruik.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-13T06:24:07.377936+00:00",
+          "checkedAt": "2026-10-13T06:44:30.872047+00:00",
           "previousUserResult": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
           "modelRequestsThisStep": 0,
           "creditCosts": null,
           "executor": "/root/eva1_memory_transfer",
           "activeReview": true,
-          "reviewer": "/root/product_execution_memory_review"
+          "reviewer": "/root/product_execution_memory_review",
+          "previousGoalTurn": "PROGRESS: original Telegram summary return installed and ACK confirmed; 483f74fc pushed, full document presentation not demonstrated."
         },
         "next": {
           "title": "Leren van een echte reactie op eigen bijdrage",
@@ -32985,7 +32986,7 @@
       "independentSourceReview": "eva2/reviews/tuya-retained-read-semantics-source-review-20261012.json"
     },
     "aideCurrentPreparation20261013": {
-      "checkedAt": "2026-10-13T05:44:58.957340+00:00",
+      "checkedAt": "2026-10-13T06:44:30.872047+00:00",
       "taskId": "HUE6.1",
       "sourceDefect": "installed runner differs from old baseline; ordinary client work suite differs from host development suite",
       "sourceAuditSha256": "0706850ac583925ad02b668ceb847db4edf7604b6dab76dd22b1d2082aa29a61",
@@ -32999,7 +33000,7 @@
       "wholeGoal": "active",
       "state": "prepared_not_activated",
       "nativeInputStarted": false,
-      "pendingReason": "Complete ordinary proposal return before freezing the next current-baseline improvement execution; core source will change.",
+      "pendingReason": "Coherent nested configuration and immutable source/publication binding before actual host activation; original return summary ACK already complete.",
       "previewFactoryMetadataSha256": "3fcf6bea35bd774d504d48a3676e44424d1db5eb4d01792b86792439aaa40dcc",
       "currentActivity": "After confirmed original proposal return, prepare current loader-compatible binding without model dispatch or old closed retries.",
       "currentAfterReturnManifestSha256": "e87ff2906525771f0458534325d92a09e1888263e259bc328ced2f36432846ee",
@@ -33012,7 +33013,12 @@
         "ordinary after-client model release",
         "current preview export",
         "publisher integration commit"
-      ]
+      ],
+      "loaderSourceCorrected": true,
+      "loaderSourceReviewSha256": "cb19b32f5feead2a1b10993b456b1c3fb32d70404647ef91b74fa04ec63d1ab8",
+      "candidateLoaderBoundBytes": 135168,
+      "actualCurrentFactoryMetadataSha256": "6eb630488e8a584359ee558fbe4cfc71d8a2a5d913a50dded2222625dda353be",
+      "ordinaryAfterModelReleaseSha256": "24ee562290217178b35e72007d06acc0040f7e93d1c39f2521a7bfc999f1e1ce"
     },
     "originalProposalReturnRepair20261013": {
       "checkedAt": "2026-10-13T06:22:26.217280+00:00",
@@ -35542,6 +35548,6 @@
       ]
     }
   },
-  "updatedAt": "2026-10-13T06:32:21.940968+00:00",
-  "lastUpdatedAt": "2026-10-13T06:32:21.940968+00:00"
+  "updatedAt": "2026-10-13T06:44:30.872047+00:00",
+  "lastUpdatedAt": "2026-10-13T06:44:30.872047+00:00"
 }

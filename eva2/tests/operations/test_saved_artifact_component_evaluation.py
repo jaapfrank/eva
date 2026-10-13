@@ -324,23 +324,50 @@ def test_service_config_admits_only_existing_fixed_saved_suite_structure(tmp_pat
             "assessment":{"cases_file":"/synthetic/cases.json","scorer_file":"/synthetic/score.py","criteria":{}}}}
     config.write_text(json.dumps(data))
     assert load_config(config)[2] == frozenset({"contracts/synthetic.py"})
+    data["saved_artifact_suite"]["source_target"]["receipt_sha256"] = "invalid"
+    config.write_text(json.dumps(data))
+    with pytest.raises(ValueError):
+        load_config(config)
     del data["saved_artifact_suite"]["source_target"]
     config.write_text(json.dumps(data))
     with pytest.raises(ValueError,match="fixed saved artifact"):
         load_config(config)
 
 
-def test_service_config_retains_fixed_128kib_read_bound(tmp_path):
+def test_service_config_retains_fixed_132kib_read_bound(tmp_path):
     token = tmp_path / "synthetic-token"; token.write_text("s" * 40)
     path = tmp_path / "host.json"
     data = {"image": IMAGE, "command": ["/usr/local/bin/python", "-c", "fixed-suite"],
         "token_file": str(token), "bind_host": "127.0.0.1", "port": 12345,
         "allowed_paths": ["contracts/synthetic.py"]}
     raw = json.dumps(data).encode()
-    path.write_bytes(raw + b" " * (128 * 1024 - len(raw)))
+    path.write_bytes(raw + b" " * (132 * 1024 - len(raw)))
     assert load_config(path)[2] == frozenset({"contracts/synthetic.py"})
     path.write_bytes(path.read_bytes() + b" ")
     with pytest.raises(ValueError, match="configuration is too large"):
+        load_config(path)
+    data["unrecognized"] = True
+    raw = json.dumps(data).encode()
+    path.write_bytes(raw + b" " * (132 * 1024 - len(raw)))
+    with pytest.raises(ValueError, match="configuration fields"):
+        load_config(path)
+
+
+@pytest.mark.parametrize("nested", [False, True])
+def test_service_config_rejects_duplicate_keys_within_new_bound(tmp_path, nested):
+    token = tmp_path / "synthetic-token"; token.write_text("s" * 40)
+    path = tmp_path / "host.json"
+    data = {"image": IMAGE, "command": ["/usr/local/bin/python", "-c", "fixed-suite"],
+        "token_file": str(token), "bind_host": "127.0.0.1", "port": 12345,
+        "allowed_paths": ["contracts/synthetic.py"]}
+    raw = json.dumps(data)
+    if nested:
+        raw = raw[:-1] + ', "component_suites": {"fixed": {"a": 1, "a": 2}}}'
+    else:
+        raw = '{"image": "duplicate", ' + raw[1:]
+    raw = raw.encode()
+    path.write_bytes(raw + b" " * (132 * 1024 - len(raw)))
+    with pytest.raises(ValueError, match="duplicate JSON field"):
         load_config(path)
 
 
