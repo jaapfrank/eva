@@ -1,0 +1,14 @@
+{
+  "contract": "EvaWorkingSourceSectionsInstalledReview/v1",
+  "verdict": "GO",
+  "scope": "Exact installation and limited public facts; no task completion, complete dynamic input fit, efficiency win or native authority.",
+  "installedEvidenceSha256": "85dc1c6706fa75c75be20cc440a8321958ee3fcea79a6784c996b9ada140ef00",
+  "providerSha256": "cf7131cfa6906d6ec0357e931f0235a7dbbbb96cdbc08847a96835e39a9c0271",
+  "sourceReviewSha256": "1ad16b0148fef4a0e9f8146f728f73b2735fc868b74cb4142a7bea2127953125",
+  "installationVerificationSha256": "894fa159780398554bb8db97ea50c620936b2e3688209ee72abd5e4fcb0205b7",
+  "reviewerMetadataAssumptionCorrectedBeforePublication": true,
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/installed-publication-review.private.json",
+    "sha256": "042d97901b2f2a1d7b7ef912287954c8cc85fe72766f605342d76293b8fa0451"
+  }
+}

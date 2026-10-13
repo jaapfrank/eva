@@ -1,0 +1,64 @@
+{
+  "contract": "EvaResultDirectedWorkStrategyInstallation/v1",
+  "installedAt": "2026-10-13T01:02:53.715825+00:00",
+  "installed": true,
+  "candidateSourceSha256": "4e9c8f775dbb587967be9943c1ef7f17c4cb70f09ed2e2fdb9a194a4860e05b3",
+  "change": "Only the pure _TaskModel._work_strategy literal prioritizes incorporating already confirmed findings in a requested working artifact before additional detail research. Original task/end criteria/tools/grant/provider/stop unchanged.",
+  "services": {
+    "core": {
+      "image": "sha256:3cb723a83312512affbad1e9ec2b0197b11aa63f63dfaa4ce5695264ef49b601",
+      "changedModules": [
+        "bootstrap/delegated_digital_runner.py"
+      ],
+      "unchangedPythonSources": 344,
+      "healthy": true,
+      "exactInventory": true
+    },
+    "delegated-work-worker": {
+      "image": "sha256:0abce38ca122530c7f807bbb1e07887afde7d699638bd3ec60ad63402af4ec0d",
+      "changedModules": [
+        "bootstrap/delegated_digital_runner.py"
+      ],
+      "unchangedPythonSources": 344,
+      "healthy": true,
+      "exactInventory": true
+    }
+  },
+  "updateDispatches": 1,
+  "ready": true,
+  "checks": {
+    "targetedPassed": 141,
+    "targetedFailed": 2,
+    "sameTwoFailuresWithBaselineLiteral": true,
+    "noNewTestRegression": true,
+    "pureStrategyBoundaryPassed": true
+  },
+  "manualProposalWritten": false,
+  "modelRequests": 0,
+  "newProductFunctionCompleted": false,
+  "originalProposalCompleted": false,
+  "actualBehaviorImprovement": "not_yet_proven",
+  "creditCosts": null,
+  "references": {
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/build-source.private.json",
+      "sha256": "f2e3f5efab1f9b6cb031e81c255dd375cf1d7a1a5dffabc5e33787176b6c9918"
+    },
+    "independentSourceBuildReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/source-review.private.json",
+      "sha256": "540bad15cff099f7713c2fcbc9e3f96b2d3e4ded340982509147c887b6fe610f"
+    },
+    "installationVerification": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/installation-verification.private.json",
+      "sha256": "774ca7e924e14928dcd8724b0d5085ac3ee89023263f46d2e024fe7aa6f29dd7"
+    },
+    "closedFailedTask": {
+      "path": "/home/administrator/project/Eva2/eva2/evidence/product/working-source-sections-ordinary-result-20261013.json",
+      "sha256": "9afcb40b036ecddd55c5600597383bd8b98bbc7d46175970751c33be20bb4a87"
+    }
+  },
+  "limits": [
+    "141 source/contract checks do not establish task success; two original historic-grant fixtures fail identically with the retained baseline literal.",
+    "No independent end criteria, historical UNKNOWN or original task budget reset. No Tuya script or domain proposal authored by coordinator."
+  ]
+}

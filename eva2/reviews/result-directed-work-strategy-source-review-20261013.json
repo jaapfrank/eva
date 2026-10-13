@@ -1,0 +1,27 @@
+{
+  "contract": "EvaResultDirectedWorkStrategyPublicReview/v1",
+  "verdict": "GO",
+  "scope": "Exact one-module source/build installation only; not native-input authority or task success",
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/source-review.private.json",
+    "sha256": "540bad15cff099f7713c2fcbc9e3f96b2d3e4ded340982509147c887b6fe610f"
+  },
+  "publishedInstallation": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-strategy-installed-20261013.json",
+    "sha256": "1410e5f4e433fcdbcdf382fc547db03a6fe07fe09c76f9ceef51b8e9ebd34a4d"
+  },
+  "originalSourceOutsideStrategyUnchanged": true,
+  "originalEndCriteriaUnchanged": true,
+  "testDelta": "Actual strategy injected once; original pinned generate AST and independent evaluator boundary preserved.",
+  "checks": {
+    "targetedPassed": 141,
+    "targetedFailed": 2,
+    "sameTwoFailuresWithBaselineLiteral": true,
+    "noNewTestRegression": true,
+    "pureStrategyBoundaryPassed": true
+  },
+  "runtimeVerificationByInstaller": true,
+  "newModelRequests": 0,
+  "manualProposalWritten": false,
+  "proposalCompleted": false
+}

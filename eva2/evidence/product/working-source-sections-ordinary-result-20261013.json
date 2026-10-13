@@ -1,0 +1,62 @@
+{
+  "contract": "EvaOrdinaryWorkResult/v1",
+  "workId": "work:eva-resume:0fb9c284-50a7-5851-97ce-61fed6c99498",
+  "parentWorkId": "work:eva-resume:7c7e35f3-6ee5-557c-9a6f-3cd0d482e132",
+  "generation": 17,
+  "checkedAt": "2026-10-13T01:00:54.420608+00:00",
+  "state": "failed",
+  "errorCode": "incomplete_work",
+  "originalTaskCompleted": false,
+  "newProductFunctionCompleted": false,
+  "currentExecutionUsageComplete": true,
+  "knownMeasuredUsage": {
+    "input_tokens": 1459360,
+    "model_attempts": 27,
+    "output_tokens": 6531,
+    "tool_calls": 26,
+    "total_tokens": 1465891
+  },
+  "currentUnknownRequests": 0,
+  "ownerApiUsageMeasurement": "partial",
+  "historicalTotalTokens": null,
+  "creditCosts": null,
+  "elapsedSeconds": 680,
+  "originalDeadlineReached": false,
+  "remainingGrantCountsAtClose": {
+    "modelRequests": 5,
+    "tools": 5
+  },
+  "document": {
+    "byte_length": 10732,
+    "sha256": "969224f39a40621dc757e0ccf5c220ce987fd80b99e274fbedece7b4a30946d3",
+    "unchangedFromPreviousAttempt": true,
+    "newWriteReceipts": 0
+  },
+  "homeAssistantChangesObserved": 0,
+  "independentReview": "INCOMPLETE",
+  "findings": [
+    "Additional confirmed observations and four progress updates did not reach the actual requested proposal.",
+    "No artifactwrite or new final readback; one diagnosis-tail text was read again. This does not establish exclusive cause or model intent.",
+    "An unavailable implementation secret or later physical compatibility test may remain a qualified implementation condition; accessible unsynthesized findings remain work."
+  ],
+  "references": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/gen17-terminal-observation.private.json",
+      "sha256": "a1c7f9ae581d87a48a7637424de0c3bdf1ed4bd8ac0ada02b4445a4763cbfe7b"
+    },
+    "originalReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/gen17-original-proposal-end-review.private.json",
+      "sha256": "9dad047a84ccc25ddebd08e9e613702e310163458425590fa1e8d96e58379db5"
+    },
+    "document": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/gen17-terminal-document.private.json",
+      "sha256": "ac476aa21502b84d7a5cefb4534d44db6a9153ce48fba1eedcbfaaeb21230ea9"
+    },
+    "toolObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/gen17-terminal-tool-observation.private.json",
+      "sha256": "f34747a443a448cc83eaa340922b17b3d43a0fe122ca844366d35bc4705d9e36"
+    }
+  },
+  "installedProviderSha256": "cf7131cfa6906d6ec0357e931f0235a7dbbbb96cdbc08847a96835e39a9c0271",
+  "next": "Target general requested-result prioritization; no manual Tuya proposal or new comparison series. A prompt change is not task-success evidence."
+}

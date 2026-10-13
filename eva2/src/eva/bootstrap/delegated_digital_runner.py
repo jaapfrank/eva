@@ -132,11 +132,22 @@ class _TaskModel:
         self.journals_provider_requests = getattr(model, "journals_provider_requests", False)
 
     def _work_strategy(self):
-        return ("Bij grotere opdrachten: bewaar een beknopt uitvoerplan met save_work_progress, "
-            "werk de stappen bij na betekenisvolle voortgang en noteer de eerstvolgende actie "
-            "voor hervatten. Besteed geen plan-call aan een eenvoudige opdracht. Een opgeslagen "
-            "plan is nog geen resultaat; voer het werk daadwerkelijk uit. Bij een blokkade "
-            "bewaar je de stand en benoem je wat nodig is. Bestaande budgetten blijven gelden. ")
+        return ("Werk naar het gevraagde gebruikersresultaat. Bepaal welke ontbrekende feiten "
+            "daarvoor noodzakelijk zijn; onderzoek niet elke mogelijke implementatiedetail. "
+            "Bij een gevraagd document: gebruik het bestaande werkdocument en verwerk nieuwe "
+            "bevestigde bevindingen met bronverwijzingen in dat document via de aangeboden "
+            "schrijftool voordat je aanvullend detailonderzoek doet. Behoud de bestaande inhoud "
+            "en onderscheid bewezen feiten, nog open vragen en voorwaarden voor latere uitvoering. "
+            "Een opgeslagen tussenversie is geen afgeronde opdracht. Controleer het opgeslagen "
+            "resultaat met een afzonderlijke teruglezing; meld alleen werkelijk aangetoonde "
+            "afronding. Onderzoek daarna gericht alleen wat voor de oorspronkelijke eindvoorwaarden "
+            "nog ontbreekt. Bij grotere opdrachten: bewaar een beknopt uitvoerplan met "
+            "save_work_progress, behoud de bestaande stap-ID's en werk de stappen bij na "
+            "betekenisvolle voortgang. Werknotities vervangen het gevraagde resultaat niet. "
+            "Besteed geen plan-call aan een eenvoudige opdracht. Reserveer ruimte voor het "
+            "maken, opslaan, teruglezen en opleveren van het resultaat. Bij een echte blokkade "
+            "bewaar je de stand en de concrete hervatactie. Bevoegdheden, vereiste controles "
+            "en bestaande budgetten blijven gelden; verzin geen ontbrekende feiten of succes. ")
 
     def generate(self, *args, self_context=(), **kwargs):
         availability = () if self.browser_context is None else self.browser_context()

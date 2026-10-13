@@ -8,17 +8,31 @@ passen afzonderlijk zodat een te grote hele bronbundel niet alles uitsluit.
 De bewaarde233-fase toont mappingpagina231 nu exact zichtbaar.64.736BPE inclusief
 framing/marge800; volledige recente/recall/futurefit en taakwinst niet bewezen.
 
-Eén normale uitsluitend leesbare voortzetting loopt vanuit gesloten Gen16:
-work:eva-resume:0fb9c284-50a7-5851-97ce-61fed6c99498 (Gen17).
+De normale uitsluitend leesbare voortzetting Gen17 is gesloten met incomplete_work:
+27 volledige gemeten aanvragen,26 tools,1.465.891 tokens;huidige UNKNOWN0.
+Het10.732-byte voorstel blijft ongewijzigd;vier progresssaves vervangen geen documentwrite.
+Er waren nog5 model/toolslots en de deadline was niet geraakt. Onafhankelijke eindreview INCOMPLETE.
+De algemene werkstrategie4e9c8f is onafhankelijk bron-/bouwbeoordeeld en geïnstalleerd:
+bevestigde bevindingen eerst in het gevraagde document verwerken,dan noodzakelijke
+resterende vragen onderzoeken. Alleen de pure strategieliteral wijzigt;344 andere
+Pythonbronnen perimage/configuratie/mounts behouden; kern/werker gezond en ready.
+141 gerichte checks slagen;2 historische grantfixtures falen identiek met de behouden
+baseline-literal. Geen onafhankelijke criteria of budgetten veranderd.
+Eén normale voortzetting Gen18 loopt:work:eva-resume:51cdd3a1-abfd-5041-819c-8b99350125dc.
+Werkelijke gedragswinst en volledige voorstelafronding zijn nog niet bevestigd.
+Geen volgende blinde herhaling wanneer ook deze bij alleen onderzoek/notities blijft.
 Zelfde oorspronkelijke opdracht/criteria/grant/rollen/goedkeuringsvoorwaarden;
 oude fouten/verbruik blijven staan. Alleen Eva maakt,slaat op en controleert haar voorstel.
 Een migratie gebeurt pas na apart akkoord. Deze broninstallatie rondt geen functie af.
 Volledig goal ACTIVE;39/48 en39/54 onveranderd; HUE/leercyclus/AIDE² blijven open.
 Spraak geparkeerd;geen nieuwe vergelijkingsserie;Docker Desktop ongemoeid.
 
-Installatie:eva2/evidence/product/working-source-sections-installed-20261013.json.
+Werkstrategie:eva2/evidence/product/result-directed-work-strategy-installed-20261013.json.
+Bronreview:eva2/reviews/result-directed-work-strategy-source-review-20261013.json.
+Eerdere bronselectie:eva2/evidence/product/working-source-sections-installed-20261013.json.
 Review:eva2/reviews/working-source-sections-source-review-20261013.json.
-Gen16:eva2/evidence/product/research-material-context-ordinary-result-20261013.json.
+Gen17:eva2/evidence/product/working-source-sections-ordinary-result-20261013.json.
+Eindreview:eva2/reviews/working-source-sections-ordinary-result-review-20261013.json.
 
 ## Historisch 13 oktober — Gen16 onvoltooid; algemene uitvoering herstellen
 

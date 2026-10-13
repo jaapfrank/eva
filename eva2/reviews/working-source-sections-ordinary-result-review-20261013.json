@@ -1,0 +1,25 @@
+{
+  "contract": "EvaOrdinaryWorkPublicReview/v1",
+  "verdict": "INCOMPLETE",
+  "originalCriteria": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/end-review/original-readonly-proposal-end-criteria.private.json",
+    "sha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444"
+  },
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/gen17-original-proposal-end-review.private.json",
+    "sha256": "9dad047a84ccc25ddebd08e9e613702e310163458425590fa1e8d96e58379db5"
+  },
+  "publishedResult": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/working-source-sections-ordinary-result-20261013.json",
+    "sha256": "9afcb40b036ecddd55c5600597383bd8b98bbc7d46175970751c33be20bb4a87"
+  },
+  "artifactUnchanged": true,
+  "actualTaskCompleted": false,
+  "criteriaGrantAndHistoricalUnknownPreserved": true,
+  "reviewerModelRequests": 0,
+  "creditCosts": null,
+  "limits": [
+    "Current complete request usage is distinct from partial owner-API status and unknown historical totals.",
+    "No new completion, owner acceptance, native authority or general engine success."
+  ]
+}

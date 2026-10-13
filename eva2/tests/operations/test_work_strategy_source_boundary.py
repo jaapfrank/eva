@@ -76,14 +76,14 @@ def test_standard_self_context_and_call_order_exactly_preserve_previous_generate
         attempt_work_id="work:current" if extra_context else None)
     task.continuation_feedback = ("existing continuation",) if extra_context else ()
     inherited = ("existing context",) if extra_context else ()
-    assert task._work_strategy() == DEFAULT
+    strategy = task._work_strategy()
     assert task.generate("input", self_context=inherited, marker="unchanged") == "same-result"
     args, kwargs = captured[0]
     assert args == ("input",) and kwargs["marker"] == "unchanged"
     context = kwargs["self_context"]
     task_index = 7 if extra_context else 0
     assert context[task_index] == "Je voert nu deze aangenomen achtergrondopdracht uit: exact host task"
-    assert context[task_index + 2] == DEFAULT and context.count(DEFAULT) == 1
+    assert context[task_index + 2] == strategy and context.count(strategy) == 1
     if extra_context:
         assert context[:4] == ("existing context", "browser one", "browser two", "host budget")
         assert context[4].startswith("Huidige uitvoerpoging: work:current")
@@ -144,7 +144,8 @@ def test_importer_rechecks_exact_baseline_before_body_admission(release_factory)
 
 def test_real_importer_applies_valid_literal_to_disposable_checkout_without_running_it(release_factory, monkeypatch, capsys):
     baseline = Path(inspect.getsourcefile(_TaskModel)).read_text()
-    candidate = baseline.replace('return ("Bij grotere opdrachten:', 'return ("Bij grotere eigen opdrachten:', 1)
+    candidate = baseline.replace('return ("Werk naar het gevraagde gebruikersresultaat.',
+                                 'return ("Werk direct naar het gevraagde gebruikersresultaat.', 1)
     release = release_factory(baseline, candidate, WORK_STRATEGY_PATH)
     receipt_file = release["review_file"].parent / "source-import.json"
     monkeypatch.setattr("sys.argv", ["import_component_release.py", "--package", str(release["package_file"]),
