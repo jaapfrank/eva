@@ -368,6 +368,27 @@ def test_distinct_evaluations_keep_case_but_isolate_workspace_and_replay(setup):
             s.case, execution_binding_ref="")
 
 
+@pytest.mark.parametrize("stage", ["development", "independent_final"])
+@pytest.mark.parametrize("leg", ["baseline", "candidate"])
+def test_evaluation_identity_fits_actual_private_work_source(setup, stage, leg):
+    from eva.contracts.delegated_digital_work import PrivateWorkSource
+    s = setup
+    case = {**s.case, "case_id": "long-case-id-" * 10}
+    identity = p._case_identity(s.settings, s.assessment["work_evidence"], leg, case,
+        execution_binding_ref=s.binding["execution_binding_ref"], stage=stage)
+    actor = s.settings["runtime"]["actor"]
+    source = PrivateWorkSource.model_validate({
+        **{key: actor[key] for key in ("tenant_id", "installation_id", "principal_id")},
+        "conversation_id": identity["conversation_id"], "message_id": identity["message_id"],
+        "audience": {"kind": "private_person", "principal_id": actor["principal_id"]}})
+    assert source.conversation_id == identity["conversation_id"]
+    assert len(source.message_id) <= 192
+    changed = p._case_identity(s.settings, s.assessment["work_evidence"], leg,
+        {**case, "case_id": case["case_id"] + "different"},
+        execution_binding_ref=s.binding["execution_binding_ref"], stage=stage)
+    assert changed["task_id"] != identity["task_id"]
+
+
 def test_existing_close_receipt_exact_session_identity_and_boolean(setup):
     s = setup
     raw = {"identity": s.identity, "programming_session_key": "session", "control_receipts": [{

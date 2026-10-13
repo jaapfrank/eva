@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Bestaande AIDE²-verbetering afronden en later toepassen
 
-Eva vervolgt de beoordeling van haar bewaarde kandidaat via de herstelde route.
+Gecorrigeerde evaluator geïnstalleerd; echte werkcontracten geaccepteerd.
 
 Klaar wanneer: Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.
 

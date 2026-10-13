@@ -1,0 +1,22 @@
+{
+  "contract": "EvaComponentEvaluationIngressRepair/v1",
+  "status": "installed_not_behaviorally_judged",
+  "taskId": "HUE6.1",
+  "timestamp": "2026-10-13T15:42:48.601170+00:00",
+  "source": "src/eva/operations/component_native_work_producer.py",
+  "sourceSha256": "67368bc5a79b6396294b462c340bc8ab29def3d45976216d2d7d40672de05672",
+  "sourceChecksPassed": 43,
+  "actualChildSpecificationsPassed": 8,
+  "actualAdmissionReached": false,
+  "technicalReviewSha256": "0b74095643009fd56d7ff3b943bca414df4eeca285bd2bcbb0d6eeccc41e3fe2",
+  "installedReceiptSha256": "04a15e334a8dd9fe2a0d6ac3cd75d8c3d2c773ecf8120e1cc81eff24af1be588",
+  "evaluatorRunning": true,
+  "coreWorkerVoiceRestarted": false,
+  "candidateQuality": "unjudged",
+  "candidateApplied": false,
+  "newModelCallsForInstallation": 0,
+  "failedRecoveryParentRequests": 2,
+  "failedRecoveryKnownTokens": 47954,
+  "oldFailuresAndUnknownPreserved": true,
+  "criteriaChanged": false
+}

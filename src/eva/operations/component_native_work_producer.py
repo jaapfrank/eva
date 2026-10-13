@@ -968,10 +968,13 @@ def _case_identity(settings, config, leg, case, *, execution_binding_ref, stage=
     from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
     actor = settings["runtime"]["actor"]
     require(_sha(execution_binding_ref), "evaluation binding required for isolated case identity")
-    namespace = "component-work-evaluation:" + config["registration_sha256"] + ":" + stage + ":" + leg + ":" + sha(case["case_id"].encode())[:16]
     # Keep the logical case fixed while separating distinct, bound evaluations.
     # Repeating the same binding still reaches the original once-only fences.
-    namespace += ":evaluation:" + execution_binding_ref
+    # Hash the complete tuple so original-ingress identifiers remain bounded.
+    identity_ref = canonical_sha256({"registration_sha256": config["registration_sha256"],
+        "stage": stage, "leg": leg, "case_id": case["case_id"],
+        "execution_binding_ref": execution_binding_ref})
+    namespace = "component-work-evaluation:" + stage + ":" + leg + ":" + identity_ref
     conversation, message = namespace, namespace + ":input"
     turn = ConversationTurn.private(actor["tenant_id"], actor["installation_id"], actor["principal_id"],
         conversation, message, case["task"], "2000-01-01T00:00:00Z", project_id=case["project_id"])

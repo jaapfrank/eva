@@ -39,3 +39,21 @@ Verbruikt: één aanvraag, één tool, 23.977 tokens; geen kindaanvragen. Er res
 bestaande gezamenlijke ruimte van 54 aanvragen, 89 tools en 223.347 tokens.
 Geen nieuwe tijd- of modelruimte. Alleen een afzonderlijk gebonden vervolg na
 bron- en volledige opstartcontrole; geen heropening van de gesloten poging.
+
+## Begrensd vervolg na werkelijk gestart proces
+
+De werker startte, maar zijn werkcontract weigerde een te lange bronverwijzing.
+De volledige identiteit wordt nu gehasht; beide fasen en varianten passen binnen
+het echte contract. 43 gerichte controles slagen. De tweede fout, NULL-registratie,
+lege kindmodellentelling en geslaagde opruiming blijven behouden.
+
+Voordat verder betaald werk start, moet de echte child-profielopbouw ook slagen.
+De resterende 30,192 seconden en twee bovenliggende aanvragen zijn onvoldoende
+voor de volledige overdracht. Daarom expliciet vooraf: 120 actieve seconden erbij,
+totaal 300 met alle reeds verbruikte 149,808 behouden. Drie ongebruikte slots gaan
+van eindbeoordeling (28 naar 25) naar de bovenliggende aansturing (nu vijf resterend).
+Het oorspronkelijke gezamenlijke plafond van 68 aanvragen, 400.000 tokens en
+100 tools verandert niet. Er resteert 53 aanvragen, 88 tools en 199.370 tokens.
+Geen wijziging van oorspronkelijke resourcebytes, vragen, criteria, kandidaat of
+modelrollen; dit is een hersteltoewijzing, geen bewijs dat de oorspronkelijke
+bouwgrens is gehaald. Alleen onafhankelijk bewezen kwaliteitswinst toepassen.

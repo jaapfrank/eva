@@ -14,9 +14,11 @@ en opgeslagen resultaat zijn bytegelijk. Standaard alleen een kort antwoord en
 samenvatting, geen automatische bijlage. De documentroute vereist een expliciet
 verzoek voor één oorspronkelijke taak; herhaal geen onderzoek of externe wijziging.
 Oude samenvatting-ACK en onzekere tekstpoging blijven behouden.
-Beoordelingsdienst en geïsoleerde configuratietoegang zijn hersteld. De laatste
-hervatting faalde vóór de evaluatiewerker; kandidaat blijft onbeoordeeld. Bewijs:
-development/evidence/product/aide-evaluation-host-repair-installed-20261013.json.
+Beoordelingsdienst en geïsoleerde configuratietoegang zijn hersteld. Daarna zijn
+werkruimtehergebruik en een te lange bronidentiteit gericht gecorrigeerd. De laatste
+evaluatiewerker startte, maar bereikte nog geen modelaanvraag; kandidaat blijft
+onbeoordeeld. De compacte bron wordt onafhankelijk op het echte werkcontract
+gecontroleerd vóór hervatting; geen nieuwe kandidaat of beoordelingscriteria.
 Gesloten proef en verbruik behouden; geen tijdreset of heropening daarvan.
 Afzonderlijke noodzakelijke hersteluitvoering na bewezen toegangsherstel staat in
 development/docs/aide-quality-recovery-20261013.md; zelfde kandidaat en criteria,

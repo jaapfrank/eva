@@ -822,7 +822,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T15:19:36.653870+00:00",
+  "lastUpdated": "2026-10-13T15:28:38.057839+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "HUE6.1",
@@ -1760,15 +1760,15 @@
         "now": {
           "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
           "state": "Bezig",
-          "phase": "isolated_development_evaluation_running",
+          "phase": "evaluation_ingress_contract_installed",
           "taskId": "HUE6.1",
           "activeExecution": true,
-          "nativeRunning": true,
-          "summary": "Eva vervolgt de beoordeling van haar bewaarde kandidaat via de herstelde route.",
-          "detail": "Werkmappen zijn per beoordeling gescheiden; bron en volledige opstart onafhankelijk gecontroleerd. Zelfde kandidaat en criteria, geen extra modelruimte. Kwaliteitswinst nog niet bevestigd.",
+          "nativeRunning": false,
+          "summary": "Gecorrigeerde evaluator geïnstalleerd; echte werkcontracten geaccepteerd.",
+          "detail": "43 gerichte broncontroles en acht echte werkcontractcontroles geslaagd. Kandidaat nog onbeoordeeld; geen nieuwe huishoudfunctie geclaimd. Spraak blijft bij ander model.",
           "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
           "ownerActionNeeded": false,
-          "latestEvidence": "development/evidence/product/aide-evaluation-workspace-isolation-installed-20261013.json"
+          "latestEvidence": "development/evidence/product/aide-evaluation-ingress-contract-installed-20261013.json"
         },
         "next": {
           "state": "Hierna",
@@ -5560,25 +5560,41 @@
       "remaining": "Ontwikkelbeoordeling, onafhankelijke eindbeoordeling en eventueel later gebruik blijven open; geen heropening van de gesloten proef."
     },
     "aideNecessaryRecovery20261013": {
-      "status": "bound_case_evaluation_running",
+      "status": "compact_source_installed",
       "taskId": "HUE6.1",
       "declaration": "development/docs/aide-quality-recovery-20261013.md",
       "newActiveSeconds": 180,
-      "parentRequestsRemaining": 3,
-      "globalRequestsRemaining": 54,
-      "globalToolsRemaining": 89,
-      "globalTokensRemaining": 223347,
+      "parentRequestsRemaining": 2,
+      "globalRequestsRemaining": 53,
+      "globalToolsRemaining": 88,
+      "globalTokensRemaining": 199370,
       "oldEpochReopened": false,
       "qualityGainProven": false,
       "candidateApplied": false,
       "ownerActionRequired": false,
-      "recoveryActiveSecondsUsed": 68.0918917520903,
-      "recoveryActiveSecondsRemaining": 111.9081082479097,
-      "newParentRequests": 1,
-      "newTokens": 23977,
+      "recoveryActiveSecondsUsed": 149.8084983121371,
+      "recoveryActiveSecondsRemaining": 30.19150168786291,
+      "newParentRequests": 2,
+      "newTokens": 47954,
       "childRequests": 0,
-      "installedEvidence": "development/evidence/product/aide-evaluation-workspace-isolation-installed-20261013.json"
+      "installedEvidence": "development/evidence/product/aide-evaluation-ingress-contract-installed-20261013.json",
+      "sourceTestsPassed": 43,
+      "prospectiveAllocation": {
+        "recoveryCapSeconds": 300,
+        "carriedActiveSeconds": 149.8084983121371,
+        "newActiveSeconds": 120,
+        "parentRequestsRemaining": 5,
+        "independentFinalRequestCeiling": 25,
+        "transferredFromFinal": 3,
+        "sharedRequestsRemaining": 53,
+        "sharedToolsRemaining": 88,
+        "sharedTokensRemaining": 199370,
+        "criteriaChanged": false,
+        "installed": true,
+        "nativeRunning": false
+      },
+      "actualChildSpecificationsPassed": 8
     }
   },
-  "updatedAt": "2026-10-13T15:19:36.653870+00:00"
+  "updatedAt": "2026-10-13T15:42:48.604771+00:00"
 }
