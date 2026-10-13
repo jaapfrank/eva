@@ -1,4 +1,25 @@
-## Actueel 13 oktober — Eva schrijft zelf; vervolgcontext nog herstellen
+## Actueel 13 oktober — vervolgcontext gecorrigeerd en geïnstalleerd
+
+Provider817b2ded is in kern/werker geïnstalleerd na onafhankelijke bron-/bouwGO.
+Eén bron gewijzigd,344 overige perimage/mounts/configuratie behouden;gezond en ready.
+112 gerichte tests geslaagd. Bij werkelijke invoerdruk mogen oude gelezen pagina's
+na een nieuw exact bewezen documentwrite naar het bestaande scoped archief.
+Nieuwste write,raw,bronversies,bevoegdheden,stop en criteria blijven gelijk.
+Bewaarde260-fase: baseline67.093BPE geweigerd;kandidaat63.677,met teruggeplaatste
+leesinhoud65.401/marge135 toegestaan. Alleen bekende context;actuele/futurefit UNKNOWN.
+Gen18's echte bijgewerkte voorstel blijft onvoltooid met oorspronkelijke eindreview.
+
+Eén noodzakelijke gewone voortzetting vanaf gesloten Gen18 is voorbereid binnen
+het expliciete mandaat: zorg dat Eva zelf het oorspronkelijke voorstel afmaakt.
+BronGO verleent geen nieuwe invoertoestemming; bestaande eigenaarroute/grant beslist.
+Geen handgeschreven voorstel,HA-mutatie,blind vervolg of nieuwe vergelijkingsserie.
+Migratie pas na apart akkoord. Volledig goal ACTIVE;39/48 en39/54 onveranderd.
+HUE/leercyclus/AIDE² open;spraak geparkeerd;Docker Desktop ongemoeid.
+
+Installatie:eva2/evidence/product/post-write-context-installed-20261013.json.
+Review:eva2/reviews/post-write-context-source-review-20261013.json.
+
+## Historisch 13 oktober — Eva schrijft zelf; vervolgcontext nog herstellen
 
 Gen18 is gesloten na één echte, geverifieerde documentwrite door Eva. Het voorstel
 is 12.868 bytes; call, bewijs en onafhankelijke volumeteruglezing zijn gelijk.

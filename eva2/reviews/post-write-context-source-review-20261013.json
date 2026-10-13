@@ -1,0 +1,26 @@
+{
+  "contract": "EvaPublishedSourceReview/v1",
+  "checkedAt": "2026-10-13T01:24:01.971919+00:00",
+  "verdict": "GO",
+  "privateSourceAndBuildReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/source-review.private.json",
+    "sha256": "249d82aca56bd8ca20b4eeb1f196a6334c37bf38674ce2db999cdfeec367abcc"
+  },
+  "sourceOnlyReviewUsedAtInstall": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/source-only-review-used-at-install.private.json",
+    "sha256": "648ef4d75d408862d23905d282fb80be00d38566fa2b5147669fbe89f4ad574d"
+  },
+  "installedEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/post-write-context-installed-20261013.json",
+    "sha256": "b9db8d88b5e77e637a1ef30814337d1aa53e0c6c6cdceb39a9864e0daba206e6"
+  },
+  "sourceSha256": "817b2dedc1a3073d59845af79a71d3fdfe0817ad1be525115eef7910989112b9",
+  "testSha256": "e1a0aaaf6d8f3b508d2f1ddff60fbfa26979bbdaf2ec2c9392e664177cb26fcb",
+  "limits": [
+    "GO binds exact ec8e6fb3 source freeze, two candidate image IDs, source817b2ded and limited Gen18 publication. It supplies no native-input authority.",
+    "135 known tokens is a narrow preserved-context margin, not full dynamic or future fit.",
+    "Original content criteria, historical raw/UNKNOWN and budgets remain unchanged. No manual proposal, new native request or completion claimed."
+  ],
+  "nativeInputAuthorized": false,
+  "originalProposalCompleted": false
+}

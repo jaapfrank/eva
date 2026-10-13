@@ -141,14 +141,31 @@ def test_unproven_or_other_ingress_pages_keep_existing_authorized_deferral(reaso
     assert _raw(history) == frozen
 
 
+def test_unconfirmed_new_write_cannot_displace_observed_artifact_under_pressure():
+    old, unconfirmed = _version("old"), _version("unconfirmed", proof_matches=False)
+    page = old.page("old-page")
+    history = (old.write, old.read, page, unconfirmed.write,
+               _working_note("checkpoint", 2, "Keep observed work."), _latest())
+    frozen = _raw(history)
+    selected, _ = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=True)
+    assert {"old-page", "unconfirmed-write", "latest"} <= _ids(selected)
+    assert selected[-1] == history[-1]
+    assert _raw(history) == frozen
+
+
 def test_latest_actually_read_version_and_distinct_ranges_replace_old_pages_once():
     old, new = _version("old"), _version("new")
     old_page = old.page("old-page")
     checkpoint = _working_note("checkpoint", 2, "Use the currently observed work document.")
     # A newer readroot alone must not hide the last version whose pages were read.
     unread_history = (old.write, old.read, old_page, new.write, new.read, checkpoint, _latest())
-    selected, _ = PydanticConversationModel._receipt_context_selection(unread_history, defer_local_reads=True)
+    selected, _ = PydanticConversationModel._receipt_context_selection(unread_history)
     assert "old-page" in _ids(selected)
+    selected, overview = PydanticConversationModel._receipt_context_selection(unread_history, defer_local_reads=True)
+    assert "old-page" not in _ids(selected)
+    assert selected[-1] == unread_history[-1] and "new-write" in _ids(selected)
+    index = expand_deferred_read_index(json.loads(overview.split("\n", 1)[1]))
+    assert "old-page" in {row["call_id"] for row in index["reads"]}
     first = new.page("new-first")
     tail = new.page("new-tail", offset=8000)
     duplicate = new.page("new-first-repeat")

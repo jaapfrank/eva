@@ -1,0 +1,82 @@
+{
+  "contract": "EvaInstalledContextCorrection/v1",
+  "checkedAt": "2026-10-13T01:24:01.971919+00:00",
+  "state": "installed",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "817b2dedc1a3073d59845af79a71d3fdfe0817ad1be525115eef7910989112b9"
+    }
+  ],
+  "actualUpdateDispatches": 1,
+  "modelRequests": 0,
+  "services": {
+    "core": {
+      "image": "sha256:27442b0afcccbb6ee1c0fb69ba35c96e276a530225b035733a5710b227cb1a90",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344
+    },
+    "delegated-work-worker": {
+      "image": "sha256:44940b54bfb6b05eae1438503e6039c715a482a842657a1fc9ffc3e38f5bd7d5",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344
+    }
+  },
+  "ready": true,
+  "targetedTests": {
+    "passed": 112,
+    "seconds": 38.13,
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/targeted-tests.private.json",
+      "sha256": "389e04c790df4b69d928c09f18db57bd56203ea406acd418c28b857d1819c0c5"
+    }
+  },
+  "known260": {
+    "baselineBpeIncludingFraming": 67093,
+    "candidatePressureBpeIncludingFraming": 63677,
+    "candidateFinalBpeIncludingFraming": 65401,
+    "knownMargin": 135,
+    "latestWriteAndRawArchivePreserved": true,
+    "actualDynamicAndFutureFit": "UNKNOWN",
+    "reference": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen18-complete260-paired-result.private.json",
+      "sha256": "e6fac31977b2cb72708aa23815bd968eae721d6e4d06009f521179a43d40dbc2"
+    }
+  },
+  "newProductFunctionCompleted": false,
+  "originalProposalCompleted": false,
+  "creditCosts": null,
+  "references": {
+    "sourceAndBuildReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/source-review.private.json",
+      "sha256": "249d82aca56bd8ca20b4eeb1f196a6334c37bf38674ce2db999cdfeec367abcc"
+    },
+    "sourceOnlyReviewAtInstall": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/source-only-review-used-at-install.private.json",
+      "sha256": "648ef4d75d408862d23905d282fb80be00d38566fa2b5147669fbe89f4ad574d"
+    },
+    "installation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/installation-verification.private.json",
+      "sha256": "b317edd128afc7ffd0a52bdb6640a27fe3cb53f4410f9bc1c7805b549f137160"
+    },
+    "sourceFreeze": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/build-source.private.json",
+      "sha256": "ec8e6fb39af63857687d7efc85974bd957f40fb1becff7901230db006f5d4dad"
+    }
+  },
+  "scope": "Only pressure deferral of older authored-document pages after a newer exact verified write; original source archive, current write, roles, grant, scope, stop and original evaluation unchanged."
+}

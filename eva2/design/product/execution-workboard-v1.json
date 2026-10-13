@@ -1024,6 +1024,14 @@
         "checkedAt": "2026-10-13T01:03:23.746179+00:00",
         "deliveries": [
           {
+            "title": "Gerichte contextcorrectie na documentwrite geïnstalleerd",
+            "state": "installed",
+            "summary": "Bestaande gegevens en kern behouden. Oorspronkelijk voorstel wordt door Eva zelf afgerond; geen groene hoofdfunctie geclaimd.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/post-write-context-installed-20261013.json",
+            "checkedAt": "2026-10-13T01:24:01.971919+00:00",
+            "newProductFunctionCompleted": false
+          },
+          {
             "title": "Eva heeft het oorspronkelijke voorstel zelf bijgewerkt",
             "state": "incomplete",
             "summary": "Nieuwe inhoud duurzaam opgeslagen. Contextfout vóór vervolgcall; onafhankelijke eindreview nog INCOMPLETE. Geen volledige functie afgerond.",
@@ -5531,9 +5539,9 @@
           }
         ],
         "now": {
-          "title": "Eva heeft haar voorstel bijgewerkt; afronding nog open",
+          "title": "Contextcorrectie geïnstalleerd; Eva gaat haar voorstel afmaken",
           "state": "in_progress",
-          "phase": "post_artifact_write_admission_repair",
+          "phase": "post_write_context_installed_ordinary_continuation",
           "taskId": "work:eva-resume:51cdd3a1-abfd-5041-819c-8b99350125dc",
           "linkedTaskIds": [
             "TL-001",
@@ -5544,7 +5552,7 @@
           "owner": "/root",
           "executor": "Eva · gewone algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Het voorstel is door Eva zelf opgeslagen met nieuwe mappings en afhankelijkheden. De volgende context paste niet binnen de invoergrens; teruglezing en eindoplevering zijn nog niet gelukt.",
+          "summary": "Oude documentpagina’s kunnen bij invoerdruk naar het bestaande archief. Nieuwste opgeslagen inhoud blijft zichtbaar. Eva gaat haar eigen voorstel teruglezen en afmaken; eindresultaat nog niet bewezen.",
           "detail": "Alleen de algemene werkstrategie is veranderd. Geen Tuya-script of door Codex geschreven voorstel. Het oorspronkelijke voorstel en afzonderlijke migratiegoedkeuring blijven leidend.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-strategy-installed-20261013.json",
@@ -5552,7 +5560,7 @@
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/working-source-sections-ordinary-result-review-20261013.json",
           "previousResultReviewSha256": "9e34412371c2de088859aecb07e78bc1f94fbb62434a427477343be1276b2afa",
           "implementationStatus": "Resultaatgerichte werkstrategie geïnstalleerd; eerste echte documentupdate bevestigd door volumeread, taskreceiptbinding wordt gecontroleerd.",
-          "currentActivity": "De bestaande vervolgcontext herstellen na de echte documentupdate; geen nieuwe vergelijking of handgeschreven voorstel.",
+          "currentActivity": "Eén normale voortzetting van Eva’s eigen oorspronkelijke voorstel starten via de bestaande werkroute.",
           "checkedAt": "2026-10-13T01:08:55.559269+00:00",
           "remaining": [
             "Eva verwerkt beschikbare brongegevens tot het oorspronkelijke complete voorstel, bewaart dit en leest het terug.",
@@ -5576,12 +5584,12 @@
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/continuation-work-status3.private.json",
             "sha256": "ee88b91aee3d8da53ae4f8844ef2a87b7670c6e14799aa7772fc6aa512ecc4c8"
           },
-          "sourceReview": "eva2/reviews/result-directed-work-strategy-source-review-20261013.json",
-          "sourceReviewSha256": "a246030d21b5b6c69a64913e24346bc58589890b2a86d50e31b7bb0ce3c3be85",
-          "installedEvidence": "eva2/evidence/product/result-directed-work-strategy-installed-20261013.json",
-          "sourceEvidence": "eva2/evidence/product/result-directed-work-strategy-installed-20261013.json",
-          "sourceEvidenceSha256": "1410e5f4e433fcdbcdf382fc547db03a6fe07fe09c76f9ceef51b8e9ebd34a4d",
-          "installedEvidenceSha256": "1410e5f4e433fcdbcdf382fc547db03a6fe07fe09c76f9ceef51b8e9ebd34a4d",
+          "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/post-write-context-source-review-20261013.json",
+          "sourceReviewSha256": "1968ee7a7852011e72082de7774723a70183bbe4b45c48e6701d9f7f3dbf0105",
+          "installedEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/post-write-context-installed-20261013.json",
+          "sourceEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/post-write-context-installed-20261013.json",
+          "sourceEvidenceSha256": "b9db8d88b5e77e637a1ef30814337d1aa53e0c6c6cdceb39a9864e0daba206e6",
+          "installedEvidenceSha256": "b9db8d88b5e77e637a1ef30814337d1aa53e0c6c6cdceb39a9864e0daba206e6",
           "previousObservation": {
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation-final.private.json",
             "sha256": "2df139a56d60e32097eb7762a4292d4cfb14b4db6e88304fcc11cc33a4af57f0"
@@ -5634,7 +5642,7 @@
             "actualRecallAndFutureFit": "UNKNOWN",
             "currentModelRequests": 0
           },
-          "updatedAt": "2026-10-13T01:16:50.082462+00:00",
+          "updatedAt": "2026-10-13T01:24:01.971919+00:00",
           "previousTerminalObservations": {
             "terminalObservation": {
               "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",

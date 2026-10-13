@@ -1331,6 +1331,7 @@ class PydanticConversationModel:
     @staticmethod
     def _working_artifact_page_calls(
         receipts: tuple[ConversationActionReceipt, ...],
+        *, current_written_version_only: bool = False,
     ) -> set[str]:
         """Keep observed pages of Eva's active authored artifact across checkpoints.
 
@@ -1339,7 +1340,8 @@ class PydanticConversationModel:
         """
         written: dict[tuple[str, str], set[str]] = {}
         active_source: tuple[str, str] | None = None
-        readers: dict[str, tuple[str, str, int]] = {}
+        active_versions: set[str] = set()
+        readers: dict[str, tuple[str, str, int, str]] = {}
         for position, receipt in enumerate(receipts):
             output, arguments = receipt.output, receipt.call.arguments
             if (output.get("contract") != "EvaConversationActionReceipt/v1"
@@ -1373,11 +1375,12 @@ class PydanticConversationModel:
                     and expected.get("content") == content):
                 # The workspace text reader omits one terminal LF. Retain both
                 # exact representations; never normalize arbitrary whitespace.
-                versions = written.setdefault(artifact_source, set())
-                versions.add(hashlib.sha256(content.encode("utf-8")).hexdigest())
+                versions = {hashlib.sha256(content.encode("utf-8")).hexdigest()}
                 if content.endswith("\n"):
                     versions.add(hashlib.sha256(content[:-1].encode("utf-8")).hexdigest())
+                written.setdefault(artifact_source, set()).update(versions)
                 active_source = artifact_source
+                active_versions = versions
                 continue
             result = output.get("result")
             evidence = proof.get("evidence")
@@ -1392,7 +1395,8 @@ class PydanticConversationModel:
             # _receipt_context_selection validates every presentation first.
             manifest, source = projection["manifest"], projection["source"]
             reader = manifest["reader"]["tool_id"]
-            readers[reader] = (path, source["source_ingress_sha256"], position)
+            readers[reader] = (path, source["source_ingress_sha256"], position,
+                              hashlib.sha256(result["content"].encode("utf-8")).hexdigest())
 
         eligible: list[tuple[ConversationActionReceipt, tuple[Any, ...], int]] = []
         for receipt in receipts:
@@ -1401,6 +1405,7 @@ class PydanticConversationModel:
             origin = readers.get(reader) if isinstance(reader, str) else None
             projection = (receipt.model_output or {}).get("ancestor_model_projection")
             if (origin is None or (origin[0], origin[1]) != active_source
+                    or (current_written_version_only and origin[3] not in active_versions)
                     or receipt.call.name != "use_connector_tool"
                     or output.get("status") != "verified"
                     or output.get("source") != "stored_connector_result"
@@ -1448,7 +1453,11 @@ class PydanticConversationModel:
                 for item in value:
                     protect(item)
         protect(baseline_latest)
-        protected.update(PydanticConversationModel._working_artifact_page_calls(receipts))
+        # On a real input misfit, the exact newer verified write already remains
+        # literal in the selected history. Older artifact pages may then use
+        # their unchanged scoped archive. This does not verify a fresh readback.
+        protected.update(PydanticConversationModel._working_artifact_page_calls(
+            receipts, current_written_version_only=defer_local_reads))
         snapshots = [(i, saved) for i, receipt in enumerate(receipts)
                      if (saved := PydanticConversationModel._saved_work_progress(receipt)) is not None]
         checkpoint = snapshots[-1] if snapshots else None
