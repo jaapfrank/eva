@@ -1,0 +1,74 @@
+{
+  "contract": "EvaCurrentAideHostBindingInstalled/v1",
+  "date": "2026-10-13T07:16:23.645324+00:00",
+  "status": "installed_technical_ready",
+  "task_id": "HUE6.1",
+  "product_task_completed": false,
+  "whole_goal_completed": false,
+  "installed": {
+    "host_source_path": "operations/component_evaluation_service.py",
+    "host_source_sha256": "0ebcc4a7fe2b0ca70abf8ad1ad466576f6a3d307ff2d35b6ef94816e4ca232ba",
+    "config_bytes": 131610,
+    "maximum_config_bytes": 135168,
+    "host_config_sha256": "06b7af4d6a8e61bda6e3ef82fe75b87bd1fecd9ec53d3b6654b3aa298c03cbd1",
+    "ordinary_client_sha256": "6e068bf7823c7b4582d300f4282e3905c4bc234de1271d63979765e1cbccc44a",
+    "coherent_core_worker_model_profile_sha256": "24ee562290217178b35e72007d06acc0040f7e93d1c39f2521a7bfc999f1e1ce",
+    "core_image": "sha256:80dfaac158484563d62a4bfaade3852fd2411383294293b123b5122a020c15a7",
+    "worker_image": "sha256:61edf0ea3bc396942988e03864dada1fa1eac844876d8ebfe8ecbc81a0af10b6",
+    "same_images_containers_environment_mount_sets": true,
+    "same_existing_systemd_service": true,
+    "one_coherent_activation": true,
+    "automatic_host_restarts": 0
+  },
+  "technical_checks": {
+    "targeted_source_tests": 5,
+    "dispatch_free_nested_checks": 7,
+    "protected_assessments_and_six_retained_constructor_checks": "PASS",
+    "current_baseline_source_sha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
+    "current_registration_sha256": "48e0deb1913ae9cee0737f8c02e370c888ebe8a0b302d47e0a76d4f5d24e35eb",
+    "round_available": true,
+    "technical_READ_only_not_Eva_model_action": true,
+    "core_worker_current_factory_match": true,
+    "capabilities": 25
+  },
+  "usage": {
+    "new_Eva_model_requests": 0,
+    "native_episodes_started": 0,
+    "credit_costs": null
+  },
+  "preserved": {
+    "closed_7898_and_unknown": true,
+    "retained_rounds": 6,
+    "original_criteria": true,
+    "original_39_of_48_completions": true,
+    "extended_43_of_54_completions": true,
+    "voice_parked": true,
+    "unused_Docker_Desktop_untouched": true
+  },
+  "errors": {
+    "initial_git_safe_directory_preflight_before_activation": "preserved; corrected local repository option only",
+    "post_activation_raw_mount_order_assertion": "preserved; identical mount sets independently verified, no reinstallation",
+    "technical_helper_UUID_alias_and_json_type_errors": "preserved; original source actor used, no authorization changes",
+    "model_trial_failures_this_step": 0
+  },
+  "limitations": [
+    "A loadable current round is not an independently improved candidate or completed AIDE² cycle.",
+    "No new candidate, independent native final assessment, application or later use has started.",
+    "Native-input authority still needs the exact current parent/input binding."
+  ],
+  "next": "Eva zelf een actuele variant laten maken via bestaande READ/DRAFT/EVALUATE/COMPARE/PREPARE en onafhankelijke eindroute; geen 9fd-script of oude proef heropenen.",
+  "private_refs": {
+    "installed_receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/activation/installed-current-host.private.json",
+      "sha256": "b09e7ee83d3ad466bb94e2c39d52e1a6a022cb7568462afbc52e0f8633869e28"
+    },
+    "technical_post_start_read": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/activation/post-start-current-bindings.private.json",
+      "sha256": "0a866a1aecb9906e92995adced6db5502723f0c04a1be9dcdd137abffec685fa"
+    },
+    "installed_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/independent-audit/hue6-current-host-installed-technical-review.private.json",
+      "sha256": "571fa0aefdb3285b3553b1f862dfeb7359f9945bd561676554fc4c29e52993af"
+    }
+  }
+}

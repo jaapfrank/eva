@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-13T06:22:26.217280+00:00",
+        "checkedAt": "2026-10-13T07:16:57.050025+00:00",
         "deliveries": [
           {
             "title": "Eva’s voorstelsamenvatting automatisch teruggestuurd",
@@ -5614,16 +5614,16 @@
         "now": {
           "title": "Droomcyclus en AIDE² afmaken",
           "state": "in_progress",
-          "phase": "aide_current_runtime_binding",
+          "phase": "aide_current_parent_preparation",
           "taskId": "HUE6.1",
           "owner": "/root",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Eva’s inhoudelijke voorstelsamenvatting is via de gewone route afgeleverd en bevestigd. Het volledige document blijft bewaard; leesbare bijlage of link is nog niet bewezen. De bestaande zelfverbeteringscyclus krijgt nu de actuele installatiebinding.",
-          "currentActivity": "De begrensde loadercorrectie is gecontroleerd en onafhankelijk beoordeeld. Actuele modelrollen zijn zonder modelaanvraag uitgelezen; nu de bestaande configuratie en evaluatiebinding afmaken vóór één hostdienstactivatie.",
+          "summary": "De bron-/installatiebinding van AIDE² is hersteld en geïnstalleerd. Technische bronuitlezing toont een beschikbare ronde voor de actuele code. De echte verbetercyclus blijft open.",
+          "currentActivity": "Actuele zelfverbeteringsdienst en gedeelde client geïnstalleerd; kern en taakwerker hebben dezelfde release. Nu één actuele eigen codevariant voorbereiden via bestaande uitvoering en onafhankelijke beoordeling.",
           "doneWhen": "De bestaande droom/AIDE²-route verbetert agentaansturing én code of uitbreiding, met onafhankelijke beoordeling, toepassing uitsluitend bij bewezen winst en later werkelijk gebruik.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-13T06:44:30.872047+00:00",
+          "checkedAt": "2026-10-13T07:16:57.050025+00:00",
           "previousUserResult": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
           "modelRequestsThisStep": 0,
           "creditCosts": null,
@@ -6001,7 +6001,7 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-13T06:22:26.217280+00:00",
+        "updatedAt": "2026-10-13T07:16:57.050025+00:00",
         "lastCompletedResult": {
           "title": "Eva’s voorstelsamenvatting terug in Telegram",
           "state": "installed",
@@ -6039,6 +6039,13 @@
           "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
           "existingProductOutcome": "Zelfstandig werk en ontwikkeling",
           "maintenanceRepair": true
+        },
+        "aideCurrentRuntimeBinding": {
+          "status": "installed_technical_ready",
+          "evidence": "eva2/evidence/product/aide-current-host-binding-installed-20261013.json",
+          "newModelRequests": 0,
+          "wholeCycleCompleted": false,
+          "next": "Eigen actuele variant via bestaande uitvoering, onafhankelijke beoordeling en alleen toepassing bij winst."
         }
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
@@ -25416,7 +25423,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Het oorspronkelijke voorstel is via de gewone route afgeleverd. Verbind nu de bestaande zelfverbetering met actuele bron-/installatiebinding; behoud gesloten proef en historische UNKNOWN.",
+              "nextAction": "Bestaande route met actuele bron geïnstalleerd. Eva laat zelf één variant maken en beoordelen; oorspronkelijke gesloten proef blijft behouden.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -25434,7 +25441,7 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "currentEvidence": "eva2/evidence/product/native-work-preserved-proposal-followup-preparation-20261012.json"
+              "currentEvidence": "eva2/evidence/product/aide-current-host-binding-installed-20261013.json"
             }
           ],
           "latestEvidence": "eva2/evidence/product/l3-reusable-cycle-ordinary-next-pass-20261007.json",
@@ -32986,39 +32993,42 @@
       "independentSourceReview": "eva2/reviews/tuya-retained-read-semantics-source-review-20261012.json"
     },
     "aideCurrentPreparation20261013": {
-      "checkedAt": "2026-10-13T06:44:30.872047+00:00",
+      "checkedAt": "2026-10-13T07:19:37.130019+00:00",
       "taskId": "HUE6.1",
-      "sourceDefect": "installed runner differs from old baseline; ordinary client work suite differs from host development suite",
+      "sourceDefect": "Resolved: current baseline, suite, ordinary client, host and cached core/worker releases now match.",
       "sourceAuditSha256": "0706850ac583925ad02b668ceb847db4edf7604b6dab76dd22b1d2082aa29a61",
       "currentBaselineSha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
       "liveFactoryMetadataSha256": "f9da0817a2b14daedda957ffa4c52dcbb5fab77e2f630db8a8e402bb4b983df4",
       "modelRequests": 0,
       "candidateAuthored": false,
-      "installedCorrection": false,
+      "installedCorrection": true,
       "oldClosedResultsPreserved": true,
       "metadataExportFailure": "An incorrect metadata field caused AttributeError before dispatch; corrected export preserved separately.",
       "wholeGoal": "active",
-      "state": "prepared_not_activated",
+      "state": "installed_technical_ready",
       "nativeInputStarted": false,
-      "pendingReason": "Coherent nested configuration and immutable source/publication binding before actual host activation; original return summary ACK already complete.",
+      "pendingReason": "Actuele bronbinding is geïnstalleerd en technisch beschikbaar. Exacte nieuwe parent/inputbinding wordt voorbereid; nog geen actuele eigen variant of native proef gestart.",
       "previewFactoryMetadataSha256": "3fcf6bea35bd774d504d48a3676e44424d1db5eb4d01792b86792439aaa40dcc",
-      "currentActivity": "After confirmed original proposal return, prepare current loader-compatible binding without model dispatch or old closed retries.",
-      "currentAfterReturnManifestSha256": "e87ff2906525771f0458534325d92a09e1888263e259bc328ced2f36432846ee",
-      "currentProspectiveConfigBytes": 131572,
-      "existingLoaderBoundBytes": 131072,
-      "loaderReady": false,
+      "currentActivity": "One coherent current installation verified; prepare the ordinary parent entry, exact input and independent native assessment.",
+      "currentAfterReturnManifestSha256": "3d1b6cc56383ace95b5289b0b56184f2ad966e0b000ba5b70ab98b9b04f9470a",
+      "currentProspectiveConfigBytes": 131610,
+      "existingLoaderBoundBytes": 135168,
+      "loaderReady": true,
       "currentSourceBindingsVerified": true,
       "remainingBindings": [
-        "loader boundary",
-        "ordinary after-client model release",
-        "current preview export",
-        "publisher integration commit"
+        "ordinary parent construction entry and fresh identity/input binding",
+        "independent native-input review",
+        "actual candidate evaluation, independent final decision, possible application and later use"
       ],
       "loaderSourceCorrected": true,
       "loaderSourceReviewSha256": "cb19b32f5feead2a1b10993b456b1c3fb32d70404647ef91b74fa04ec63d1ab8",
       "candidateLoaderBoundBytes": 135168,
       "actualCurrentFactoryMetadataSha256": "6eb630488e8a584359ee558fbe4cfc71d8a2a5d913a50dded2222625dda353be",
-      "ordinaryAfterModelReleaseSha256": "24ee562290217178b35e72007d06acc0040f7e93d1c39f2521a7bfc999f1e1ce"
+      "ordinaryAfterModelReleaseSha256": "24ee562290217178b35e72007d06acc0040f7e93d1c39f2521a7bfc999f1e1ce",
+      "activated": true,
+      "nativeInputGo": false,
+      "postStartBindingsSha256": "0a866a1aecb9906e92995adced6db5502723f0c04a1be9dcdd137abffec685fa",
+      "installedReviewSha256": "571fa0aefdb3285b3553b1f862dfeb7359f9945bd561676554fc4c29e52993af"
     },
     "originalProposalReturnRepair20261013": {
       "checkedAt": "2026-10-13T06:22:26.217280+00:00",
@@ -33077,6 +33087,43 @@
       "meaning": "Patroonherkomst en voorlopigheid geïnstalleerd in gezonde kern/werker; HUE2.1/HUE4.1 originele later-gebruikcriteria onafhankelijk PASS. Twee gewijzigde modules,343 overige Pythonbronnen en configuratie/mounts behouden.",
       "independentSourceReview": "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
       "installedReviewSha256": "1535218ed106d7e6f38056372057b3441c17e2b5a48ccdb1f12897f78fd7566e"
+    },
+    "historicalAidePreparationBeforeInstalledMetadataAlignment20261013": {
+      "checkedAt": "2026-10-13T06:44:30.872047+00:00",
+      "taskId": "HUE6.1",
+      "sourceDefect": "installed runner differs from old baseline; ordinary client work suite differs from host development suite",
+      "sourceAuditSha256": "0706850ac583925ad02b668ceb847db4edf7604b6dab76dd22b1d2082aa29a61",
+      "currentBaselineSha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
+      "liveFactoryMetadataSha256": "f9da0817a2b14daedda957ffa4c52dcbb5fab77e2f630db8a8e402bb4b983df4",
+      "modelRequests": 0,
+      "candidateAuthored": false,
+      "installedCorrection": false,
+      "oldClosedResultsPreserved": true,
+      "metadataExportFailure": "An incorrect metadata field caused AttributeError before dispatch; corrected export preserved separately.",
+      "wholeGoal": "active",
+      "state": "prepared_not_activated",
+      "nativeInputStarted": false,
+      "pendingReason": "Actuele bronbinding is geïnstalleerd en technisch beschikbaar. Exacte nieuwe parent/inputbinding wordt voorbereid; nog geen actuele eigen variant of native proef gestart.",
+      "previewFactoryMetadataSha256": "3fcf6bea35bd774d504d48a3676e44424d1db5eb4d01792b86792439aaa40dcc",
+      "currentActivity": "After confirmed original proposal return, prepare current loader-compatible binding without model dispatch or old closed retries.",
+      "currentAfterReturnManifestSha256": "e87ff2906525771f0458534325d92a09e1888263e259bc328ced2f36432846ee",
+      "currentProspectiveConfigBytes": 131572,
+      "existingLoaderBoundBytes": 131072,
+      "loaderReady": false,
+      "currentSourceBindingsVerified": true,
+      "remainingBindings": [
+        "loader boundary",
+        "ordinary after-client model release",
+        "current preview export",
+        "publisher integration commit"
+      ],
+      "loaderSourceCorrected": true,
+      "loaderSourceReviewSha256": "cb19b32f5feead2a1b10993b456b1c3fb32d70404647ef91b74fa04ec63d1ab8",
+      "candidateLoaderBoundBytes": 135168,
+      "actualCurrentFactoryMetadataSha256": "6eb630488e8a584359ee558fbe4cfc71d8a2a5d913a50dded2222625dda353be",
+      "ordinaryAfterModelReleaseSha256": "24ee562290217178b35e72007d06acc0040f7e93d1c39f2521a7bfc999f1e1ce",
+      "activated": true,
+      "nativeInputGo": false
     }
   },
   "activeTaskId": "AU-008",

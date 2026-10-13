@@ -1,0 +1,56 @@
+{
+  "boardSnapshot": {
+    "path": "eva2/design/product/execution-workboard-v1.json",
+    "sha256": "d193c2d1e8831aeeee806e3c1b2a76b7fa53ec3971d7777e28f22f4ebf90f3b2"
+  },
+  "contract": "EvaIndependentAideCurrentHostInstalledPublicationReview/v1",
+  "documentationSnapshots": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "01627f271005fb2339cd56cb2ad77d86dae8f0dcf5fa57d182e28d9da0ae21b2"
+    },
+    {
+      "path": "eva2/PROJECTDOEL.md",
+      "sha256": "5ab631b911a7f49bc2fcffd94f22b8fa25cf199082a5ea1688db7532a02c4ee8"
+    }
+  ],
+  "evidence": {
+    "path": "eva2/evidence/product/aide-current-host-binding-installed-20261013.json",
+    "sha256": "b3811d6c9166788e17470d1e13232ccace181d7bdaaff67b59183260c5b3abe7"
+  },
+  "findings": [
+    "One coherent same-image activation is supported by actual source/config/client hashes, preserved inodes/modes and healthy same-ID core/worker with equal environment and mount sets.",
+    "Post-start core/worker profile24ee,25 capabilities,source1e65,suite900 and registered scope/REG48 availability are actual technical readbacks.",
+    "Git preflight, mount-order assertion and metadata type/scope errors remain preserved; no repeated installation or paid model test.",
+    "Current board preparation flags now match installed technical readiness; the inconsistent intermediate metadata is retained as history. HUE6.1 remains in_progress;43/54 and39/48 unchanged.",
+    "Protected current/retained constructor checks and original private cases/criteria remain bound. No candidate, independent native assessment, application or later use proved."
+  ],
+  "independentInstalledReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/independent-audit/hue6-current-host-installed-technical-review.private.json",
+    "sha256": "571fa0aefdb3285b3553b1f862dfeb7359f9945bd561676554fc4c29e52993af"
+  },
+  "installedReceipt": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/activation/installed-current-host.private.json",
+    "sha256": "b09e7ee83d3ad466bb94e2c39d52e1a6a022cb7568462afbc52e0f8633869e28"
+  },
+  "limits": {
+    "creditCosts": null,
+    "efficiencyOrQualityClaim": false,
+    "hue6Complete": false,
+    "nativeInputAuthority": false,
+    "newEvaModelRequests": 0,
+    "wholeGoalComplete": false
+  },
+  "reviewActions": {
+    "models": 0,
+    "native": 0,
+    "rootDocsOrBoardEdits": 0,
+    "runtimeMutations": 0,
+    "sourceEdits": 0,
+    "sql": 0
+  },
+  "reviewPreparationError": "Initial metadata read used absent root PROJECTDOEL.md; corrected read at eva2/PROJECTDOEL.md. No file/runtime/model effect.",
+  "reviewedAt": "2026-10-13T07:20:32.628272+00:00",
+  "scope": "Exact installed technical host/client/profile/registered-round facts and qualified current documentation; no HUE6 completion or native input authority",
+  "verdict": "GO"
+}

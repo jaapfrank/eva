@@ -1,3 +1,23 @@
+## Actueel 13 oktober — AIDE² op huidige bron geïnstalleerd, cyclus nog open
+
+De bestaande hostdienst gebruikt de begrensde loadercorrectie en actuele configuratie.
+Gedeelde client bijgewerkt; dezelfde kern/taakwerker eenmaal samen herstart, zonder
+imagebuild of gegevensverhuizing. Beide healthy, dezelfde actuele release24ee,
+25 mogelijkheden, bron1e65 en suite900. Technische bron-/rondeuitlezing bevestigt
+registratie48 beschikbaar. Vijf broncontroles, zeven nested controles en beschermde
+constructorreview PASS; onafhankelijke geïnstalleerde technische review GO.
+Nul nieuwe Eva-modelaanvragen of native episoden; ontwikkelcredits onbekend.
+
+Eigen preflight-/metadatahulpfouten en de mountvolgorde-assertie blijven bewaard;
+feitelijk gelijke mounts, images en omgeving bevestigd, geen herinstallatie.
+Oude7898/UNKNOWN, oorspronkelijke criteria en zes retained rondes behouden.
+43/54 blijven behouden; HUE6.1 blijft open. Nu één actuele parent/inputbinding via
+bestaande algemene uitvoering: Eva maakt de variant zelf, onafhankelijke beoordeling
+blijft afgeschermd. Alleen bewezen winst toepassen en later gebruiken. Geen oude
+9fd-variant afdwingen, nieuwe vergelijkingsserie, spraakwerk of Docker Desktop-herstel.
+Volledig goal ACTIVE; geen handeling van Jaap nodig.
+Bewijs: eva2/evidence/product/aide-current-host-binding-installed-20261013.json.
+
 ## Actueel 13 oktober — bestaande AIDE²-route aan huidige installatie verbinden
 
 De vorige voortzetting bracht echte voortgang: oorspronkelijke Telegram-retour-
