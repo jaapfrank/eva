@@ -1,4 +1,25 @@
-## Actueel 13 oktober — onderzoeksgegevens blijven beschikbaar; Eva moet zelf voorstel afronden
+## Actueel 13 oktober — Eva’s voorstel blijft onvoltooid; algemene uitvoering herstellen
+
+Gen16 is gesloten met incomplete_work.28 volledig gemeten en afgesloten aanvragen,
+1.480.502 tokens,27 tools; huidige UNKNOWN0. Eigenaar-API partial en historische
+onbekenden blijven apart.693 seconden; de oorspronkelijke deadline is niet geraakt.
+Het10.732-byte document is ongewijzigd,geen HA-mutatie of nieuwe documentwrite.
+Onafhankelijke beoordeling aan ongewijzigde oorspronkelijke criteria: INCOMPLETE.
+Beschikbare mappings,registry-/apparaatrelaties en afhankelijkheden zijn nog niet
+samengebracht. Keys/IP/protocol/fysieke checks mogen latere uitvoeringsvoorwaarden blijven.
+
+Provider0d708 is geïnstalleerd en gezond,maar de taakuitvoering is niet afgemaakt.
+Een aparte lezersbindingcorrectie1dcc is niet geïnstalleerd:12 gerichte tests slagen,
+maar de bekende volledige206-context toont geen extra materiaal of tokenvoordeel.
+Geen nieuwe native voortzetting gestart. Herstel alleen aangetoonde algemene
+contextselectiefouten; alleen Eva schrijft het oorspronkelijke voorstel.
+Volledig goal ACTIVE;39/48 en39/54 onveranderd; HUE/leercyclus/AIDE² blijven open.
+Spraak geparkeerd;geen nieuwe vergelijkingsserie;Docker Desktop ongemoeid.
+
+Resultaat:eva2/evidence/product/research-material-context-ordinary-result-20261013.json.
+Review:eva2/reviews/research-material-context-ordinary-result-review-20261013.json.
+
+## Historisch 13 oktober — onderzoeksgegevens beschikbaar; Gen16 toen nog lopend
 
 De vorige gewone Gen15 is gesloten met incomplete_work. Alle28 aanvragen volledig
 gemeten:1.350.437 tokens en27 tools; huidige UNKNOWN0, historische totaalkosten onbekend.

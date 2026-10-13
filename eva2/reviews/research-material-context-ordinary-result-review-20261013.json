@@ -1,0 +1,20 @@
+{
+  "contract": "EvaOriginalProposalEndReview/v1",
+  "verdict": "INCOMPLETE",
+  "workId": "work:eva-resume:7c7e35f3-6ee5-557c-9a6f-3cd0d482e132",
+  "generation": 16,
+  "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+  "documentSha256": "969224f39a40621dc757e0ccf5c220ce987fd80b99e274fbedece7b4a30946d3",
+  "documentBytes": 10732,
+  "criteriaUnchanged": true,
+  "proposalAuthoredByEva": true,
+  "completeProposalConfirmed": false,
+  "availableFindingsNotSynthesized": true,
+  "laterImplementationConditionsRemainAllowed": true,
+  "homeAssistantChanges": 0,
+  "newNativeContinuationAuthorization": false,
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/gen16-original-proposal-end-review.private.json",
+    "sha256": "5c4c26fb7709222364035fe8c50f77937da2709bb9f579f22ee8dba67147c6c1"
+  }
+}

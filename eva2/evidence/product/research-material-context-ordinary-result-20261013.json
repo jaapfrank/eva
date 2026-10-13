@@ -1,0 +1,58 @@
+{
+  "contract": "EvaOrdinaryWorkResult/v1",
+  "workId": "work:eva-resume:7c7e35f3-6ee5-557c-9a6f-3cd0d482e132",
+  "parentWorkId": "work:eva-resume:52194f7a-5621-5115-a7fb-84ad41c5cd6d",
+  "generation": 16,
+  "checkedAt": "2026-10-13T00:22:46+00:00",
+  "state": "failed",
+  "errorCode": "incomplete_work",
+  "originalTaskCompleted": false,
+  "newProductFunctionCompleted": false,
+  "currentExecutionUsageComplete": true,
+  "knownMeasuredUsage": {
+    "input_tokens": 1473529,
+    "model_attempts": 28,
+    "output_tokens": 6973,
+    "tool_calls": 27,
+    "total_tokens": 1480502
+  },
+  "currentUnknownRequests": 0,
+  "ownerApiUsageMeasurement": "partial",
+  "historicalTotalTokens": null,
+  "creditCosts": null,
+  "document": {
+    "byte_length": 10732,
+    "sha256": "969224f39a40621dc757e0ccf5c220ce987fd80b99e274fbedece7b4a30946d3",
+    "unchangedFromPreviousAttempt": true,
+    "newWriteReceipts": 0
+  },
+  "homeAssistantChanges": 0,
+  "independentReview": "INCOMPLETE",
+  "findings": [
+    "The stored proposal remains unchanged despite newly read source data.",
+    "Available mapping, dependency and registry findings were not synthesized into the original complete proposal.",
+    "Repeated exact local selections are observed; exclusive cause and model intention are not established."
+  ],
+  "references": {
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/gen16-terminal-observation.private.json",
+      "sha256": "339f5afa01c67e0b6b2a440eb0775bfd0b17499b4de02833beb3173d1bb5365e"
+    },
+    "originalReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/gen16-original-proposal-end-review.private.json",
+      "sha256": "5c4c26fb7709222364035fe8c50f77937da2709bb9f579f22ee8dba67147c6c1"
+    },
+    "document": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/gen16-terminal-document.private.json",
+      "sha256": "73def6c0f8f8eb3ca7040b8eb9ff4b332d59d868ae4cfac53cbd3ec895986700"
+    },
+    "toolObservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/gen16-terminal-tool-observation.private.json",
+      "sha256": "eb9478fbb1d5f21b12e8f57d3e28532e59b72539d50edcd5148af26e4de18263"
+    }
+  },
+  "installedProviderSha256": "0d708d5411823b7c661ba47d1c394db5ba94b5ee3371f5b2eaa5a31a64b47af4",
+  "pendingAliasCandidateInstalled": false,
+  "noNewNativeContinuationStarted": true,
+  "next": "Correct proven general context selection defects before another ordinary execution. Eva must author the original proposal; no manual domain proposal or new comparison series."
+}
