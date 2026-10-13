@@ -1,4 +1,20 @@
-## Actueel 13 oktober — context na teruglezing hersteld en geïnstalleerd
+## Actueel 13 oktober — Eva schreef en las het nieuwe voorstel; vervolg vastgelopen
+
+Gen20 is gesloten met input_budget_exceeded: zestien volledig gemeten en gesloten
+modelaanvragen, zestien tools, 891.408 tokens (884.605 in / 6.803 uit), geen huidige
+UNKNOWN of lopende aanvraag. Eva heeft haar oorspronkelijke voorstel daadwerkelijk
+zelf bijgewerkt: 11.961 bytes, SHA56134686. Een afzonderlijke workspace-teruglezing
+bevestigt die bytes met één terminale LF-normalisatie. Native afronding is mislukt;
+de oorspronkelijke inhoudelijke eindbeoordeling wacht op de exacte terminalexport.
+Geen voltooide gebruikersuitkomst of nieuwe hoofdtaak geclaimd.
+
+Vervolg: beoordeel het echte document en herstel uitsluitend de aangetoonde te grote
+vervolgcontext. Geen handgeschreven voorstel, ongewijzigde herhaling, extra
+vergelijkingsserie of HA-mutatie. Geïnstalleerde contextcorrectie34e en historische
+fouten/gebruik blijven behouden. Volledig goal ACTIVE; 39/48 en 39/54 onveranderd,
+HUE/leercyclus/AIDE² open. Spraak geparkeerd; Docker Desktop ongemoeid.
+
+## Historisch 13 oktober — context na teruglezing hersteld en geïnstalleerd
 
 Provider34e3c8da is na onafhankelijke bron-/bouwreview in kern en taakwerker
 geïnstalleerd: één bron gewijzigd, 344 overige per image en configuratie behouden;
