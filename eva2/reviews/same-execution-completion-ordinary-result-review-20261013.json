@@ -1,0 +1,32 @@
+{
+  "contract": "EvaOriginalResultReviewPublication/v1",
+  "checkedAt": "2026-10-13T04:17:30.073932+00:00",
+  "verdict": "PASS_ORIGINAL_CONDITIONAL_PROPOSAL_AND_NATIVE_COMPLETION",
+  "sealedReviewSha256": "e60811388396465923c0495ea06a2bb1608bb448d6a086ca723a77b63e85d3ae",
+  "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+  "originalTaskSha256": "87702100a7577caf810c9920dd51c4fc7d14f1bfa93e93d4e8ab9b9c9b22b195",
+  "documentContentReviewSha256": "402763f6f9edd7747805242b7c4af54cbdaa94edc5a52f74b1116a4ef47d88a4",
+  "documentSha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+  "contentReviewReuse": "Exact unchanged document; original useful conditional proposal criteria retained. No current full migration audit claimed.",
+  "nativeResult": "SUCCEEDED_WITH_OUTPUT_AVAILABLE",
+  "nativeVerified": false,
+  "nativeOutputSha256": "ca7dcacbeda394130998f8a6de82242137496d1733a6d9efc13f70a9b0e543ee",
+  "originalIngressDelivery": "UNBOUND_NOT_PROVEN",
+  "previousDocumentReadProofSha256": "f9068529f5e4dfca517197e633cf4a2e7d90e169b15d82c64396b58d27a7aeb9",
+  "terminalManifestSha256": "49b8b8ee3b1b408993f46ff42e171ead91dd5950869436616466c33e5926689d",
+  "checks": {
+    "closedMeasuredRequests": 1,
+    "tokens": 53042,
+    "tools": 0,
+    "currentUnknown": 0,
+    "inflight": 0,
+    "homeAssistantEffects": 0,
+    "originalMandatePreserved": true
+  },
+  "limits": [
+    "This completes the original proposal phase, not the later migration.",
+    "Historical SAVE296, READ297 and READ304 remain separate; no fresh Gen26 read/write claimed.",
+    "No owner migration approval, automatic Telegram delivery, global efficiency or whole-project completion is claimed.",
+    "Old failures/UNKNOWN and the observer text-JSON parse error are preserved."
+  ]
+}

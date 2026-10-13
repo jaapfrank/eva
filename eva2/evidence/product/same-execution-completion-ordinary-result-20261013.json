@@ -1,0 +1,62 @@
+{
+  "contract": "EvaOrdinaryOriginalProposalOutcome/v1",
+  "checkedAt": "2026-10-13T04:17:30.073932+00:00",
+  "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+  "parentWorkId": "work:eva-resume:ceadcb9f-6327-58fd-b2f7-94c2c72e4e84",
+  "generation": 26,
+  "state": "succeeded",
+  "errorCode": null,
+  "outcome": "Eva herself completed the original readonly conditional proposal using her saved document and verified results from the same admitted execution.",
+  "artifact": {
+    "path": "/proof-state/tuya-localtuya-migratievoorstel.md",
+    "bytes": 14736,
+    "sha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+    "authoredBy": "Eva",
+    "contentVerdict": "PASS_ORIGINAL_CONDITIONAL_PROPOSAL_REUSED_UNCHANGED_ARTIFACT",
+    "separatePriorReadStep": 304,
+    "readProofSha256": "f9068529f5e4dfca517197e633cf4a2e7d90e169b15d82c64396b58d27a7aeb9",
+    "readbackIsHistorical": true
+  },
+  "native": {
+    "state": "succeeded",
+    "resultAvailable": true,
+    "verified": false,
+    "outputBytes": 772,
+    "outputSha256": "ca7dcacbeda394130998f8a6de82242137496d1733a6d9efc13f70a9b0e543ee",
+    "deliveryState": "unbound",
+    "automaticTelegramDeliveryProven": false
+  },
+  "usage": {
+    "measurement": "closed_provider_accounting",
+    "admitted": 1,
+    "measured": 1,
+    "closed": 1,
+    "inputTokens": 52878,
+    "outputTokens": 164,
+    "totalTokens": 53042,
+    "tools": 0,
+    "currentUnknown": 0,
+    "inflight": 0,
+    "creditCosts": null,
+    "historicalUnknownPreserved": true
+  },
+  "effects": {
+    "newToolCalls": 0,
+    "newDocumentReads": 0,
+    "newDocumentWrites": 0,
+    "homeAssistantMutations": 0
+  },
+  "sourceInstallation": "eva2/evidence/product/same-execution-completion-installed-20261013.json",
+  "independentReview": "eva2/reviews/same-execution-completion-ordinary-result-review-20261013.json",
+  "independentReviewSha256": "607b2a00f12ef10caaf5f99c5483d81ee67585d592e5479b253d1f4e0eb1c2b3",
+  "terminalManifestSha256": "49b8b8ee3b1b408993f46ff42e171ead91dd5950869436616466c33e5926689d",
+  "limits": {
+    "originalTaskCriteriaAndMandateUnchanged": true,
+    "migrationRequiresLaterApproval": true,
+    "newProductMainCompletion": false,
+    "wholeGoal": "active",
+    "originalTaskCount": "39/48",
+    "fullBoardTaskCount": "39/54",
+    "noNewComparisonSeries": true
+  }
+}

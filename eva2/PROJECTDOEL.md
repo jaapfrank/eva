@@ -1,4 +1,30 @@
-## Actueel 13 oktober — afronding met gecontroleerd bewijs uit dezelfde opdracht
+## Actueel 13 oktober — Eva heeft haar eigen voorstel afgerond
+
+De algemene afrondingscorrectie is geïnstalleerd en in de gewone opdracht gebruikt.
+Eva sloot Gen26 zelf af: SUCCEEDED, opgeslagen native eindantwoord beschikbaar.
+Het eigen oorspronkelijke voorstel SHA33c1204d heeft onafhankelijk inhoudelijk PASS;
+het exacte document en de oorspronkelijke criteria zijn behouden. Codex schreef
+het voorstel niet. Geen HA-migratie of wijziging; daarvoor blijft later apart akkoord nodig.
+
+Gen26:1 admitted/succeeded/measured/closed,53.042 tokens (52.878in/164out),0 tools,
+0 huidige UNKNOWN/inflight. Eerdere SAVE296/READ297/READ304 zijn historisch bewijs,
+geen nieuwe Gen26 read/write. Native verified=false blijft letterlijk bewaard;
+leveringUNBOUND betekent geen automatische Telegramterugmelding. Het resultaat
+is via de gewone eigenaarroute beschikbaar. Oude mislukkingen en UNKNOWN blijven
+ongewijzigd, inclusief Gen25 en de aparte lokale observer-JSON-parsefout.
+
+Runner1e65cb68 staat in gezonde/ready kern en werker;45 unieke gerichte controles
+en onafhankelijke bron- en beperkte eindreview slagen.344 overige bronnen per
+image/configuratie/mounts behouden. Geen nieuwe vergelijking of algemene winstclaim.
+
+Volledig goal ACTIVE;39/48 en39/54 blijven behouden. Deze reparatie sluit het project
+niet af. Vervolg de bestaande HUE1.1/HUE3.1-leercyclus met tegenbewijs, een echte
+uitkomst en later veranderde afweging. HUE/AIDE² blijven open, spraak geparkeerd
+en ongebruikte Docker Desktop ongemoeid.
+Resultaat: eva2/evidence/product/same-execution-completion-ordinary-result-20261013.json.
+Review: eva2/reviews/same-execution-completion-ordinary-result-review-20261013.json.
+
+## Historisch 13 oktober — afronding met gecontroleerd bewijs uit dezelfde opdracht
 
 De algemene uitvoerder gebruikt nu geldige herstelde receipts binnen dezelfde
 toegelaten opdracht. Erkende herstelbare leesfouten resetten alleen de tijdelijke

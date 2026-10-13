@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-13T04:09:56.555293+00:00",
+  "lastUpdated": "2026-10-13T04:17:30.073932+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1021,8 +1021,20 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-13T04:09:56.555293+00:00",
+        "checkedAt": "2026-10-13T04:17:30.073932+00:00",
         "deliveries": [
+          {
+            "title": "Eva levert haar eigen migratievoorstel op en sluit de opdracht af",
+            "state": "installed",
+            "summary": "Algemene afronding hersteld en echt gebruikt: voorstel inhoudelijk PASS, native opdracht succeeded, één aanvraag/53.042 tokens/0 nieuwe tools. Geen HA-wijziging; automatische Telegramlevering niet gebonden.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/same-execution-completion-ordinary-result-20261013.json",
+            "checkedAt": "2026-10-13T04:17:30.073932+00:00",
+            "newProductFunctionCompleted": false,
+            "nativeState": "succeeded",
+            "contentVerdict": "PASS",
+            "nativeVerified": false,
+            "deliveryState": "unbound"
+          },
           {
             "title": "Herstelcontext en actuele afronding in algemene uitvoerder gescheiden",
             "state": "installed",
@@ -5563,9 +5575,9 @@
           }
         ],
         "now": {
-          "title": "Eva rondt haar eigen voorstel af",
-          "state": "in_progress",
-          "phase": "eva_closing_same_execution_verified_result",
+          "title": "Eva heeft haar eigen voorstel afgerond",
+          "state": "completed",
+          "phase": "original_proposal_completed",
           "taskId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
           "linkedTaskIds": [
             "TL-001",
@@ -5576,31 +5588,45 @@
           "owner": "/root",
           "executor": "Eva · gewone algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "De algemene afronding gebruikt gecontroleerd bewijs uit dezelfde opdracht. De correctie is geïnstalleerd; Eva hervat zelf.",
-          "detail": "Gen25 bleef mislukt. Eva mag nu het eerder werkelijk teruggelezen eindresultaat gebruiken, zonder nogmaals dezelfde handeling te doen. Het oorspronkelijke readonly mandaat blijft gelden.",
+          "summary": "Eva leverde zelf het oorspronkelijke Tuya→LocalTuya-voorstel en sloot de opdracht succesvol af. Het voorstel is onafhankelijk inhoudelijk beoordeeld.",
+          "detail": "De algemene afrondingsregel is geïnstalleerd. Gen26 succeeded: 1 gesloten aanvraag, 53.042 tokens, 0 nieuwe tools en geen HA-wijzigingen. Het resultaat is via de eigenaarroute beschikbaar; automatische Telegramlevering is niet gebonden.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "/home/administrator/project/Eva2/eva2/evidence/product/same-execution-completion-installed-20261013.json",
           "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/working-source-sections-ordinary-result-20261013.json",
           "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/working-source-sections-ordinary-result-review-20261013.json",
           "previousResultReviewSha256": "9e34412371c2de088859aecb07e78bc1f94fbb62434a427477343be1276b2afa",
           "implementationStatus": "same_execution_completion_installed",
-          "currentActivity": "Eva sluit de oorspronkelijke opdracht af met haar eigen opgeslagen voorstel en bestaande gecontroleerde resultaten.",
-          "checkedAt": "2026-10-13T04:09:56.555293+00:00",
-          "remaining": [
-            "Eva moet de gewone taakroute afsluiten en het bestaande voorstel beschikbaar maken."
-          ],
-          "nativeRunning": true,
+          "currentActivity": "Deze gebruikersuitkomst is afgerond. De volgende bestaande stap is de menselijke leercyclus met tegenbewijs en echte uitkomsten.",
+          "checkedAt": "2026-10-13T04:17:30.073932+00:00",
+          "remaining": [],
+          "nativeRunning": false,
           "observedUsage": {
             "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
             "generation": 26,
-            "measurement": "not_yet_observed",
-            "totalTokens": null,
+            "measurement": "closed_provider_accounting",
+            "admitted": 1,
+            "measured": 1,
+            "streamsClosed": 1,
+            "inputTokens": 52878,
+            "outputTokens": 164,
+            "totalTokens": 53042,
+            "tools": 0,
+            "currentUnknown": 0,
+            "inflight": 0,
             "creditCosts": null,
-            "historicalUnknownPreserved": true
+            "historicalUnknownPreserved": true,
+            "terminalManifestSha256": "49b8b8ee3b1b408993f46ff42e171ead91dd5950869436616466c33e5926689d"
           },
           "currentObservation": {
-            "state": "admitted",
-            "receiptSha256": "c82bd30f9e88914a31fba54476dbc9a63064a5aa4f6b4d1d6f28adbbb82976e8"
+            "state": "succeeded",
+            "resultAvailable": true,
+            "nativeVerified": false,
+            "errorCode": null,
+            "deliveryState": "unbound",
+            "automaticTelegramDeliveryProven": false,
+            "originalContentVerdict": "PASS_REUSED_UNCHANGED_PROPOSAL",
+            "independentEndReview": "PASS",
+            "terminalManifestSha256": "49b8b8ee3b1b408993f46ff42e171ead91dd5950869436616466c33e5926689d"
           },
           "sourceReview": "eva2/reviews/same-execution-completion-source-review-20261013.json",
           "sourceReviewSha256": "54dcd0c62bb3c4e609627a7c1035c00516784a8ddbd9fe4b658a2b3ba950b2fa",
@@ -5631,7 +5657,7 @@
                 "inheritedFromGeneration": 23
               }
             ],
-            "nativeClosurePending": true,
+            "nativeClosurePending": false,
             "inheritedFromGeneration": 23
           },
           "previousObservedUsage": {
@@ -5663,7 +5689,7 @@
             "wholeProposalConfirmed": false,
             "currentModelRequests": 0
           },
-          "updatedAt": "2026-10-13T04:09:56.555293+00:00",
+          "updatedAt": "2026-10-13T04:17:30.073932+00:00",
           "previousTerminalObservations": {
             "terminalObservation": {
               "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",
@@ -5745,9 +5771,9 @@
           "previousInstalledReviewSha256": "8d3d69437bef04a8afdfbcf17edef4c0b8d996337c844148b448af29ca1eb7d1",
           "installedReview": "eva2/reviews/same-execution-completion-source-review-20261013.json",
           "installedReviewSha256": "54dcd0c62bb3c4e609627a7c1035c00516784a8ddbd9fe4b658a2b3ba950b2fa",
-          "currentActivityOwner": "Eva",
-          "currentResultEvidence": "eva2/evidence/product/same-execution-completion-prior-result-20261013.json",
-          "currentResultReview": "eva2/reviews/same-execution-completion-source-review-20261013.json",
+          "currentActivityOwner": "Codex",
+          "currentResultEvidence": "eva2/evidence/product/same-execution-completion-ordinary-result-20261013.json",
+          "currentResultReview": "eva2/reviews/same-execution-completion-ordinary-result-review-20261013.json",
           "currentReadback": {
             "workId": "work:eva-resume:f8f7f91e-aed4-5659-be6a-a2ca18efbb8c",
             "generation": 24,
@@ -5763,7 +5789,10 @@
             "proofPath": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/current-result-verification-v1/gen24-current2-document-proof.private.json",
             "proofSha256": "f9068529f5e4dfca517197e633cf4a2e7d90e169b15d82c64396b58d27a7aeb9",
             "nativeErrorCode": "incomplete_work",
-            "inheritedFromGeneration": 24
+            "inheritedFromGeneration": 24,
+            "nativeClosureInLaterGeneration": 26,
+            "laterNativeState": "succeeded",
+            "readbackIsHistorical": true
           },
           "ordinaryResumeEvidence": {
             "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
@@ -5798,10 +5827,12 @@
             "nativeCompletion": "failed",
             "proofPath": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen22-current2-document-proof.private.json",
             "proofSha256": "a2be693ab019d03074fe6f727fffeb78558a97f488ee32cc126f33d071b110cf",
-            "nativeErrorCode": "incomplete_work"
+            "nativeErrorCode": "incomplete_work",
+            "completedInLaterGeneration": 26,
+            "laterNativeState": "succeeded"
           },
-          "currentResultEvidenceSha256": "9bf2a63a9416cadc87b95bbb69cf504f4c10a3fd3aa019062ad2b189f1e8e180",
-          "currentResultReviewSha256": "54dcd0c62bb3c4e609627a7c1035c00516784a8ddbd9fe4b658a2b3ba950b2fa",
+          "currentResultEvidenceSha256": "bbdeeac46b5a64b5701ff7dd68a7eab145198dc041fb03cc5c9a9238c7c62c2d",
+          "currentResultReviewSha256": "607b2a00f12ef10caaf5f99c5483d81ee67585d592e5479b253d1f4e0eb1c2b3",
           "pendingImplementation": {
             "runnerSha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
             "built": true,
@@ -5861,15 +5892,16 @@
           }
         },
         "next": {
-          "title": "Verwachting aan echte uitkomst koppelen",
+          "title": "Mensbegrip: correctie gebruiken bij een volgende afweging",
           "state": "planned",
           "activeExecution": false,
           "taskIds": [
+            "HUE1.1",
             "HUE3.1"
           ],
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "summary": "Dezelfde leercyclus gebruiken om een vooraf vastgelegde verwachting aan een echte uitkomst en volgende afweging te verbinden.",
-          "detail": "De bestaande geheugen-, correctie- en reflectieroutes gebruiken. Geen tweede geheugen of vaste voorbeeldfuncties."
+          "summary": "Bestaande persoonsinterpretaties, tegenbewijs en verwachtingen aan echte uitkomsten verbinden en bij later gebruik toepassen.",
+          "detail": "Hergebruik het aanwezige geheugen en de gespreksroute. Alleen de ontbrekende verbinding bouwen; geen tweede geheugen of nieuwe vergelijkingsserie."
         },
         "ownerAction": "Nu geen handeling nodig. Eva moet eerst haar eigen onderbouwde voorstel afmaken; daadwerkelijke HA-migratie vereist later apart akkoord.",
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
@@ -6232,10 +6264,10 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-13T04:09:56.555293+00:00"
+        "updatedAt": "2026-10-13T04:17:30.073932+00:00"
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
-      "checkedAt": "2026-10-13T04:09:56.555293+00:00",
+      "checkedAt": "2026-10-13T04:17:30.073932+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -12619,7 +12651,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-13T04:09:56.555293+00:00",
+      "lastUpdatedAt": "2026-10-13T04:17:30.073932+00:00",
       "historicalSummaryBeforeXD11": "39/48 kleine taken afgerond; L3.4–L3.7 geïnstalleerd. XD07: beide voeren bedoelde wijziging niet uit. CM05/CM08-geheugenvoordelen en XD02-verlies behouden; geen algemene Eva2-voorsprong. P2.1/menselijk oordeel open; spraak geparkeerd.",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
@@ -13110,7 +13142,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-13T04:09:56.555293+00:00",
+      "updatedAt": "2026-10-13T04:17:30.073932+00:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -35567,6 +35599,6 @@
       ]
     }
   },
-  "updatedAt": "2026-10-13T04:09:56.555293+00:00",
-  "lastUpdatedAt": "2026-10-13T04:09:56.555293+00:00"
+  "updatedAt": "2026-10-13T04:17:30.073932+00:00",
+  "lastUpdatedAt": "2026-10-13T04:17:30.073932+00:00"
 }
