@@ -1,0 +1,83 @@
+{
+  "contract": "EvaOrdinaryComponentInputRepairInstalled/v1",
+  "published_at": "2026-10-13T08:57:01.053028+00:00",
+  "status": "installed_ordinary_repair_host_metadata_aligned",
+  "hue6_completed": false,
+  "whole_goal_completed": false,
+  "behavior": "An evaluation without an earlier saved code draft now returns the existing typed input feedback before dispatch, allowing one model correction. Eva must author the real draft; unverified drafts and all provenance checks remain hard.",
+  "source_path": "eva2/src/eva/adapters/postgres/component_improvement_actions.py",
+  "source_sha256": "41c8a252d41ef623e0158144f63205156c83c30dfe03cfc09dcaa0122426eafc",
+  "targeted_tests_passed": 23,
+  "installation": {
+    "dispatches": 1,
+    "core_image": "sha256:d452106c54ead7c4f1d756923c4ddf9abfffe76aa40b2d05f7acd09dc2443226",
+    "worker_image": "sha256:ad72b6c2c48b681414528fafadc257f42e414d5465ddcd5bbb97628a0b4a2b0a",
+    "healthy": true,
+    "ready": true,
+    "other_python_sources_unchanged_per_image": 344,
+    "same_environment_and_mounts": true,
+    "host_dependency_metadata_ready": true,
+    "future_component_native_input_ready": false,
+    "host_configuration_sha256": "59cbf22b350ee2ded7fa8afd276b6fdba660ab7d4345653e4d92998d8b130a3c",
+    "host_actual_configuration_sha256": "ac9a7c10155540034bf6c7eff8797e3e731585fa2697352b21130dc004dead3f",
+    "host_service_active": true,
+    "host_same_command": true,
+    "host_automatic_restarts": 0
+  },
+  "repair_usage": {
+    "eva_model_requests": 0,
+    "development_credit_cost": null
+  },
+  "separate_self_improvement_attempts": {
+    "parent_requests": 9,
+    "known_parent_tokens": 102116,
+    "parent_physical_tools": 7,
+    "full_shared_usage": "UNKNOWN",
+    "candidate_authored_by_Eva": true,
+    "candidate_applied": false,
+    "evaluation_succeeded": false,
+    "no_automatic_repeat": true
+  },
+  "preserved": {
+    "completions": "43/54",
+    "historical_unknown": true,
+    "old_closed_records": true,
+    "original_criteria": true,
+    "voice_parked": true
+  },
+  "limitations": [
+    "Targeted repair is not proof of a complete AIDE² learning cycle or a generally better Eva.",
+    "Last native EVAL failed without bound child usage; exact native cause remains UNKNOWN.",
+    "Host dependency pins are aligned with actual installed images/source. Future component input still requires current factory/admission validation; no new input is started."
+  ],
+  "private_refs": {
+    "source_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/ordinary-missing-draft-repair/source-review.private.json",
+      "sha256": "54318d8d0005f746f786c8067cdd58cc74eefddfb0539cfc0bd16c74691ce511"
+    },
+    "build_install_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/ordinary-missing-draft-repair/installation/build-install-review.private.json",
+      "sha256": "83458369d36fb4b5dacdfab451abdde3916ba934f1c0b8f0e9ea34dce45838ce"
+    },
+    "installed": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/ordinary-missing-draft-repair/installation/installation-verification.private.json",
+      "sha256": "0549cf76ce8f92a69ff31a562c845ae4b9c7778f0482d5f0161ebca2cc733265"
+    },
+    "repository_tests": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/ordinary-missing-draft-repair/repository-source-tests.private.json",
+      "sha256": "6f4115a921aa66391de76c41d0f796076ad1660633344a1cbdf2d51f88407c4b"
+    },
+    "closed_followup_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/native-failure-diagnosis/prospective-missing-draft-repair/construction/independent-terminal-review.private.json",
+      "sha256": "037d8ef509eb643e7b55610cc7f37900b205b63298bbf6e7009a9ccb9ba4e695"
+    },
+    "host_installed": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/ordinary-missing-draft-repair/installation/host-pin-preparation/host-pin-installed.private.json",
+      "sha256": "f4327884ceddf3eb3560c5293e0db9ff4fd0ad514a35502d43277be0b1f73d53"
+    },
+    "installed_host_pin_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/ordinary-missing-draft-repair/installation/installed-host-pin-review.private.json",
+      "sha256": "dad54584785df2a48bb16097d7f3ff0fd56ecf443e419003a41d52922a582ec4"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "contract": "EvaOrdinaryInputRepairPublicationReview/v1",
+  "verdict": "GO_FOR_INSTALLED_REPAIR_FACTS",
+  "independent_review_sha256": "ffa8b069e46b9e2572f25a359caca92aea60152520580432369ea1dd56e8d936",
+  "public_evidence_sha256": "54e084738126b174eb9caf279aca9f187e3a83c1c2a24a43b4113cb6d1bceda6",
+  "installation_verified": true,
+  "host_dependency_metadata_aligned": true,
+  "new_native_input_go": false,
+  "hue6_completed": false,
+  "whole_goal_completed": false,
+  "scope": "One ordinary input-repair module installed;23 tests,344other sources per image preserved. Full AIDE² quality and shared trial usage remain unproven."
+}

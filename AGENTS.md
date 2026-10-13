@@ -1,3 +1,24 @@
+## Actueel 13 oktober — gewone codevoorstelafhandeling geïnstalleerd
+
+Eva krijgt bij evaluatie zonder eerder opgeslagen codevoorstel nu herstelbare
+invoerfeedback vóór dispatch. Zij schrijft het echte voorstel zelf; een bestaand
+onbevestigd voorstel en bron-/herkomstfouten blijven geweigerd.23 gerichte controles
+slagen en onafhankelijke bron-/bouwreview GO. Eén module eenmaal geïnstalleerd;
+kern en werker healthy/ready,344 overige bronnen per image en instellingen behouden.
+Geen Eva-modelaanvraag voor deze gewone reparatie. Evaluatiedienst-versiegegevens
+zijn bijgewerkt; dezelfde hostdienst actief, geen verdere kern-/werkerherstart.
+Toekomstige componentinvoer vereist nog actuele factory-/admissioncontrole.
+
+De afzonderlijke verbeteruitvoering maakte een echte kandidaat, maar EVAL liep
+vast zonder bevestigd child-verbruik. Negen gemeten parentaanvragen samen102.116
+tokens en zeven fysieke tools; volledige gedeelde usage en exacte native oorzaak
+blijven UNKNOWN. Eigen transient gesloten. Geen kandidaat toegepast, geen bewezen
+kwaliteitswinst en geen automatische herhaling.43/54 behouden; HUE6.1 en volledig
+goal blijven open. Spraak geparkeerd; Docker Desktop ongemoeid. Codex schrijft
+geen inhoudelijk voorstel voor de eigenaar in plaats van Eva.
+Bewijs: eva2/evidence/product/ordinary-component-input-repair-installed-20261013.json.
+Review: eva2/reviews/ordinary-component-input-repair-installed-review-20261013.json.
+
 ## Actueel 13 oktober — eerste huidige verbeteruitvoering niet afgerond
 
 De foutieve configuratiepin is hersteld en in dezelfde hostdienst geïnstalleerd.
