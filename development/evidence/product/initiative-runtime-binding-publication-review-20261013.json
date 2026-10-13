@@ -1,0 +1,79 @@
+{
+  "contract": "EvaInitiativeRuntimeBindingIndependentPublicationReview/v1",
+  "verdict": "GO",
+  "scope": "one_installed_owner_authorized_future_timeout_revision_and_truthful_publication",
+  "references": [
+    {
+      "path": "development/evidence/product/initiative-runtime-binding-repaired-20261013.json",
+      "sha256": "57c96a0bd2d49179d04092934eee7cee7ba1e3f6a11cc33a45176fec5281ed4f"
+    },
+    {
+      "path": "development/design/product/execution-workboard-v1.json",
+      "sha256": "feb52767be34363f5f170560541002e549639e62f6c5d6fe685d2ae0c9661e84"
+    },
+    {
+      "path": "development/docs/WERKBORD.md",
+      "sha256": "1783453583df912fc8a8caf3fa192cee1b27c5f10e5499a985215706407e8e30"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "c29f472a7d9ce6a978a3626c1d7097113b57a8330189a895d64c8a4aec47e468"
+    },
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "sha256": "5a296d9cf0389676719f104188ae26e124ea392c25ff10b73fdef1805ff42837"
+    },
+    {
+      "path": "development/evidence/product/initiative-idle-blocker-repaired-20261013.json",
+      "sha256": "9999d28fb637a167e81a9e09ec16405d3fb391853d2b2d6b1b396ea29bfcdbb4"
+    },
+    {
+      "path": "development/evidence/product/initiative-idle-blocker-publication-review-20261013.json",
+      "sha256": "53442ffd7644770a393d8a7e2a19e4e5e6d279b726e3780afb1b692b70152f9d"
+    },
+    {
+      "path": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
+      "sha256": "56c1e9504f2175b26c4af306a87f2fba70c34e2da3a46b88233aa3f02aa3c19b"
+    },
+    {
+      "path": "development/evidence/product/aide-prospective-quality-cycle-20261013.json",
+      "sha256": "5991ceca51e2407a08fccc134e5fa63a51c98727bb5f0b3a7663c7f2b072104a"
+    }
+  ],
+  "actualRevisionReviewSha256": "b0e02664bf2f045ed59bd1c6feb60176af5701b6ceceed406646e68076076fd9",
+  "readOnlyObserverSha256": "ccb6e40096cf6f05d9f34d678f505ddcb56c540cd5b8d703ed3e1446822e8195",
+  "grantDeltaExplicit": {
+    "oldSeconds": 300,
+    "futureSeconds": 1200,
+    "oldMinutes": 5,
+    "futureMinutes": 20
+  },
+  "ownerInstructionQuotesExplicitlyBound": true,
+  "notClaimedAsHashOnlyRepair": true,
+  "otherActorPrivacyCapabilitiesModelCostUsageStopScopesPreserved": true,
+  "oldGrantsTasksDeadlinesAttemptsNullAndUnknownPreserved": true,
+  "previousClosureProofsAndPublicationReviewUnchanged": true,
+  "noManualModelsNewWorkSourceServiceVoiceChanges": true,
+  "hue5UsefulDeliveryProven": false,
+  "newOrdinaryInitiativeReviewOrFeedbackUseProven": false,
+  "hue6CandidateQualityProven": false,
+  "hue5AndHue6RemainOpen": true,
+  "validation": {
+    "status": "valid",
+    "taskCount": 54,
+    "completed": 43,
+    "activeTaskId": "HUE5.1"
+  },
+  "renderedBoardMatches": true,
+  "gitPublication": {
+    "boardSha256": "2f2a78b5c9c38d2d58b58ff82047811e194f7ab6f7d18cc9eea2d69f753652c4",
+    "workingBoardSha256": "feb52767be34363f5f170560541002e549639e62f6c5d6fe685d2ae0c9661e84",
+    "onlyExcludedKey": "audit.subscriptionVoice20261013",
+    "concurrentVoiceWorkingFilePreserved": true,
+    "voiceAuditContentReviewed": false,
+    "otherBoardFieldsIdentical": true,
+    "renderedWorkboardUnaffected": true
+  },
+  "reviewModels": 0,
+  "reviewWorkAdmissions": 0
+}

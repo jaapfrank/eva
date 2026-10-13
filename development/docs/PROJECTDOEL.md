@@ -1,14 +1,15 @@
-## Actuele uitvoering 13 oktober — initiatiefblokkade verwijderd
+## Actuele uitvoering 13 oktober — initiatiefcontroles weer aangesloten
 
-Jaap heeft geen nuttige eigen bijdrage ontvangen. Eén fysiek gesloten AIDE-kindtaak
-hield de gewone rustige initiatiefroute tegen. Die oorspronkelijke registratie is
-eenmalig via de bestaande record_failure-route als onzeker afgesloten. Vier gemeten
-reacties en 26.064 tokens zijn een bestaande ondergrens; de vijfde aanvraag en kosten
-blijven onbekend. Oorspronkelijke raw NULL, UNKNOWN en journalevents zijn behouden.
-De actuele idle-gate ziet geen lopend werk. Nul nieuwe modelaanvragen of installaties.
-HUE5.1 blijft open: nieuwe nuttige aflevering en leren van de reactie zijn nog niet
-aangetoond. Nu geen aanvullende eigenaarproef. Spraak blijft bij de andere uitvoerder.
-Bewijs: development/evidence/product/initiative-idle-blocker-repaired-20261013.json.
+Jaap heeft geen nuttige eigen bijdrage ontvangen. Twee concrete blokkades zijn
+opgelost via bestaande opslagroutes: de fysiek gesloten AIDE-kindtaak is eerlijk
+als onzeker afgesloten; de mandaatregistratie sluit nu aan op het huidige profiel.
+De bestaande toekomstige deadline ging van 5 naar 20 minuten volgens Jaaps
+instructie tegen onnodige korte limieten. Overige grant-/kosten-/privacyvelden
+en oude taken/deadlines blijven gelijk. Geen handmatige modelaanvraag, herhaling,
+bronwijziging of servicevervanging. De gelezen guards zijn gereed, maar nieuwe
+initiatiefkeuze, nuttige privéaflevering en leren van feedback zijn nog niet bewezen.
+HUE5.1 blijft open; nu geen extra eigenaarproef. Spraak blijft bij de andere uitvoerder.
+Bewijs: development/evidence/product/initiative-runtime-binding-repaired-20261013.json.
 
 ## Actuele uitvoering 13 oktober — AIDE²-proef zonder kwaliteitsresultaat
 

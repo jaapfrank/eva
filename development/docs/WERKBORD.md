@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van de reactie op eigen initiatief leren
 
-Blokkade voor eigen initiatief verwijderd; nuttige bijdrage nog open.
+Twee concrete initiatiefblokkades opgelost; nuttige bijdrage nog open.
 
 Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
 

@@ -660,7 +660,7 @@
       "title": "Van de reactie op eigen initiatief leren",
       "status": "in_progress",
       "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-      "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+      "nextAction": "De achtergebleven kindtaak is eerlijk afgesloten en het bestaande initiatiefmandaat is aangesloten op de huidige 20-minutendeadline. Mogelijkheden en verbruiksgrenzen blijven gelijk. Volg nu gewone initiatiefkeuze, privéaflevering en latere feedback; nog geen nuttige bijdrage aangetoond. Geen vooraf gekozen voorbeeld, handmatige proef of oude taakherhaling.",
       "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
       "area": "initiative and learning",
       "countedAsProductTask": true
@@ -832,7 +832,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T19:16:18.637750+00:00",
+  "lastUpdated": "2026-10-13T19:29:49.727924+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "HUE5.1",
@@ -841,7 +841,7 @@
     "title": "Van de reactie op eigen initiatief leren",
     "status": "in_progress",
     "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+    "nextAction": "De achtergebleven kindtaak is eerlijk afgesloten en het bestaande initiatiefmandaat is aangesloten op de huidige 20-minutendeadline. Mogelijkheden en verbruiksgrenzen blijven gelijk. Volg nu gewone initiatiefkeuze, privéaflevering en latere feedback; nog geen nuttige bijdrage aangetoond. Geen vooraf gekozen voorbeeld, handmatige proef of oude taakherhaling.",
     "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
     "area": "initiative and learning",
     "countedAsProductTask": true
@@ -1625,6 +1625,17 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Initiatiefmandaat op draaiende uitvoering aangesloten",
+            "state": "installed",
+            "summary": "Bestaande toekomstige deadline 5→20 minuten toegelaten volgens eigenaarinstructie; overige grantvelden gelijk. Geen oude taak herhaald of nieuwe handmatige modelaanvraag. Nuttig initiatief blijft open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/initiative-runtime-binding-repaired-20261013.json",
+            "checkedAt": "2026-10-13T19:29:49.727924+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": true
+          },
+          {
             "title": "Blokkade voor rustig eigen initiatief verwijderd",
             "state": "installed",
             "summary": "Achtergebleven AIDE-kindtaak eenmalig eerlijk afgesloten; nul nieuwe modelaanvragen. Nuttige aflevering en leren blijven open.",
@@ -1782,15 +1793,15 @@
         "now": {
           "title": "Van de reactie op eigen initiatief leren",
           "state": "Bezig",
-          "phase": "initiative_idle_blocker_repaired",
+          "phase": "initiative_runtime_guards_ready",
           "taskId": "HUE5.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Blokkade voor eigen initiatief verwijderd; nuttige bijdrage nog open.",
-          "detail": "Een fysiek gesloten AIDE-kindtaak hield nieuw initiatief tegen. De oorspronkelijke uitvoering is eenmalig als onzeker afgesloten, met behoud van foutbewijs en onbekend verbruik. De gewone gate ziet nu geen lopend werk. Nog geen nieuwe nuttige bijdrage of leercyclus aangetoond.",
+          "summary": "Twee concrete initiatiefblokkades opgelost; nuttige bijdrage nog open.",
+          "detail": "De oude kindtaak is eerlijk afgesloten. Het bestaande mandaat sluit nu aan op de huidige deadline van 20 minuten, met dezelfde mogelijkheden en verbruiksgrenzen. De gelezen controles zijn gereed; een nieuw eigen resultaat en leren van jouw reactie zijn nog niet aangetoond.",
           "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
           "ownerActionNeeded": false,
-          "latestEvidence": "development/evidence/product/initiative-idle-blocker-repaired-20261013.json"
+          "latestEvidence": "development/evidence/product/initiative-runtime-binding-repaired-20261013.json"
         },
         "next": {
           "state": "Vervolg binnen dezelfde taak",
@@ -1804,7 +1815,7 @@
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-13T19:16:18.637750+00:00",
+        "checkedAt": "2026-10-13T19:29:49.727924+00:00",
         "reviewedAt": "2026-10-13T14:44:38.960328+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -2891,7 +2902,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-                "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+                "nextAction": "De achtergebleven kindtaak is eerlijk afgesloten en het bestaande initiatiefmandaat is aangesloten op de huidige 20-minutendeadline. Mogelijkheden en verbruiksgrenzen blijven gelijk. Volg nu gewone initiatiefkeuze, privéaflevering en latere feedback; nog geen nuttige bijdrage aangetoond. Geen vooraf gekozen voorbeeld, handmatige proef of oude taakherhaling.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -3637,7 +3648,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+        "nextAction": "De achtergebleven kindtaak is eerlijk afgesloten en het bestaande initiatiefmandaat is aangesloten op de huidige 20-minutendeadline. Mogelijkheden en verbruiksgrenzen blijven gelijk. Volg nu gewone initiatiefkeuze, privéaflevering en latere feedback; nog geen nuttige bijdrage aangetoond. Geen vooraf gekozen voorbeeld, handmatige proef of oude taakherhaling.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -3645,7 +3656,7 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-13T19:16:18.637750+00:00"
+        "updatedAt": "2026-10-13T19:29:49.727924+00:00"
       }
     },
     "deliveryPlan": {
@@ -4577,7 +4588,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-              "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+              "nextAction": "De achtergebleven kindtaak is eerlijk afgesloten en het bestaande initiatiefmandaat is aangesloten op de huidige 20-minutendeadline. Mogelijkheden en verbruiksgrenzen blijven gelijk. Volg nu gewone initiatiefkeuze, privéaflevering en latere feedback; nog geen nuttige bijdrage aangetoond. Geen vooraf gekozen voorbeeld, handmatige proef of oude taakherhaling.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -5323,7 +5334,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De oude, fysiek gestopte AIDE-kindtaak is via de bestaande store als onzeker afgesloten; de gewone idle-gate ziet nu geen lopend werk. Volg de normale initiatiefafweging en echte privéaflevering; nuttige bijdrage en latere verwerking van feedback blijven open. Geen bijdrage vooraf kiezen of oude taak herhalen.",
+      "nextAction": "De achtergebleven kindtaak is eerlijk afgesloten en het bestaande initiatiefmandaat is aangesloten op de huidige 20-minutendeadline. Mogelijkheden en verbruiksgrenzen blijven gelijk. Volg nu gewone initiatiefkeuze, privéaflevering en latere feedback; nog geen nuttige bijdrage aangetoond. Geen vooraf gekozen voorbeeld, handmatige proef of oude taakherhaling.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -5331,7 +5342,7 @@
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-13T19:16:18.637750+00:00"
+      "updatedAt": "2026-10-13T19:29:49.727924+00:00"
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -5767,7 +5778,74 @@
           "sha256": "1d4eac653084fb273ccbc3cc5790522331b761b6d0ddbae0961b671bf129acfe"
         }
       }
+    },
+    "initiativeRuntimeBindingRepair20261013": {
+      "contract": "EvaInitiativeRuntimeBindingRepair/v1",
+      "recordedAt": "2026-10-13T19:29:49.727924+00:00",
+      "status": "installed_state_repair",
+      "ownerReport": "Geen nuttige eigen bijdrage ontvangen; alleen een weinig bruikbaar verbruikslijstje.",
+      "cause": "Enabled host initiative mandate referenced the current profile but durable admission still referenced its older grant. Existing policy rejected new initiative review.",
+      "change": "Existing owner-authorized admit_revision CAS exactly once; no host policy bytes rewritten or source/service/voice change.",
+      "authorization": {
+        "source": "Direct owner instructions in this session",
+        "quotes": [
+          "Hoezo tijds limiet. Houdt nou toch eens op met limieten en dergelijke!",
+          "eva2 wordt niet gebruikt je kan er mee doen wat je wilt"
+        ],
+        "scope": "Future deadline only; unknown credits do not mean unlimited spending."
+      },
+      "policyDelta": [
+        "digital_work.worker_profile_release_sha256"
+      ],
+      "grantDelta": {
+        "timeoutSeconds": {
+          "old": 300,
+          "future": 1200
+        },
+        "allOtherFieldsUnchanged": true
+      },
+      "before": {
+        "admittedDigest": "8a9eeb58d10b5f396557d3a77fe0273b41cb030afe7a70831f32d07b316e36dd",
+        "revision": 5
+      },
+      "after": {
+        "admittedDigest": "1861aa4f87be223819c4b9b82a5cc4b9add68cce935a0ff74cc80a8555d477ce",
+        "revision": 6,
+        "hostPolicyMatchesAdmission": true,
+        "pendingOrRunningWork": false,
+        "reflectionCapacity": true,
+        "spareComputeAvailable": true
+      },
+      "preserved": [
+        "Capabilities, actor, privacy, model roles, usage limits and stop conditions unchanged",
+        "Previous grants, deadlines, attempts, raw NULL and UNKNOWN unchanged",
+        "Original last admission event retained exactly"
+      ],
+      "newManualModelRequests": 0,
+      "newManualWorkAdmissions": 0,
+      "productCompletionChanged": false,
+      "usefulInitiativeDeliveryConfirmed": false,
+      "ownerActionRequired": false,
+      "limitations": [
+        "Current guards are ready; no new ordinary initiative decision or useful family delivery is yet proven.",
+        "Human report not linked to arbitrary initiative.",
+        "Credit cost remains unknown."
+      ],
+      "references": {
+        "actualRevision": {
+          "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/hue5-initiative-mandate-revision-20261013/revision-receipt.private.json",
+          "sha256": "f96d854ba2a40bb036803385bd7d5e93e99a23d700f5f5b6c44781e1b85364cb"
+        },
+        "independentReview": {
+          "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/hue6-prospective-review/initiative-mandate-timeout-actual-revision-independent-review.private.json",
+          "sha256": "b0e02664bf2f045ed59bd1c6feb60176af5701b6ceceed406646e68076076fd9"
+        },
+        "readOnlyObservation": {
+          "path": "/home/administrator/project/.eva2-artifacts/hue-initiative-feedback-20261013/source-audit/initiative-policy-capacity-after-revision.private.json",
+          "sha256": "ccb6e40096cf6f05d9f34d678f505ddcb56c540cd5b8d703ed3e1446822e8195"
+        }
+      }
     }
   },
-  "updatedAt": "2026-10-13T19:16:18.637750+00:00"
+  "updatedAt": "2026-10-13T19:29:49.727924+00:00"
 }

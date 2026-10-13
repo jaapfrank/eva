@@ -1,14 +1,15 @@
-## Actuele uitvoering 13 oktober — initiatiefblokkade verwijderd
+## Actuele uitvoering 13 oktober — initiatiefcontroles weer aangesloten
 
-Jaap heeft geen nuttige eigen bijdrage ontvangen. Eén fysiek gesloten AIDE-kindtaak
-hield de gewone rustige initiatiefroute tegen. Die oorspronkelijke registratie is
-eenmalig via de bestaande record_failure-route als onzeker afgesloten. Vier gemeten
-reacties en 26.064 tokens zijn een bestaande ondergrens; de vijfde aanvraag en kosten
-blijven onbekend. Oorspronkelijke raw NULL, UNKNOWN en journalevents zijn behouden.
-De actuele idle-gate ziet geen lopend werk. Nul nieuwe modelaanvragen of installaties.
-HUE5.1 blijft open: nieuwe nuttige aflevering en leren van de reactie zijn nog niet
-aangetoond. Nu geen aanvullende eigenaarproef. Spraak blijft bij de andere uitvoerder.
-Bewijs: development/evidence/product/initiative-idle-blocker-repaired-20261013.json.
+Jaap heeft geen nuttige eigen bijdrage ontvangen. Twee concrete blokkades zijn
+opgelost via bestaande opslagroutes: de fysiek gesloten AIDE-kindtaak is eerlijk
+als onzeker afgesloten; de mandaatregistratie sluit nu aan op het huidige profiel.
+De bestaande toekomstige deadline ging van 5 naar 20 minuten volgens Jaaps
+instructie tegen onnodige korte limieten. Overige grant-/kosten-/privacyvelden
+en oude taken/deadlines blijven gelijk. Geen handmatige modelaanvraag, herhaling,
+bronwijziging of servicevervanging. De gelezen guards zijn gereed, maar nieuwe
+initiatiefkeuze, nuttige privéaflevering en leren van feedback zijn nog niet bewezen.
+HUE5.1 blijft open; nu geen extra eigenaarproef. Spraak blijft bij de andere uitvoerder.
+Bewijs: development/evidence/product/initiative-runtime-binding-repaired-20261013.json.
 
 ## Actuele uitvoering 13 oktober — AIDE²-proef zonder kwaliteitsresultaat
 
@@ -67,13 +68,14 @@ eab83747a3c33a83f2f63f38180dc7d6330635ec. Eva2 staat in src/eva; geen Eva1-ontwi
 
 ## Huidige opdracht
 
-Werk HUE5.1 af via de bestaande initiatief- en privéafleveringsroute. De oude,
-fysiek gesloten AIDE-kindtaak is als onzeker afgesloten; herhaal haar niet en
-behoud originele NULL/UNKNOWN/usage. De rustige gate ziet nu geen lopend werk.
-Jaap heeft geen nuttige bijdrage ontvangen; geen bijdrage vooraf kiezen en geen
-feedback aan een willekeurige opgeslagen bijdrage koppelen. Volg echte aflevering
-en later gebruik van de reactie. HUE5.1 blijft open zolang dat niet bewezen is.
-De AIDE-kandidaat blijft opgeslagen, ongebeoordeeld en ongeactiveerd; geen nieuwe
+Werk HUE5.1 af via bestaande initiatief- en privéaflevering. Twee concrete guards
+zijn hersteld: oude kindtaak eerlijk onzeker afgesloten en het mandaat gekoppeld
+aan de huidige 20-minutendeadline volgens eigenaarinstructie. Behoud oude taken,
+NULL/UNKNOWN/usage; mogelijkheden en verbruiksgrenzen blijven gelijk. Volg normale
+initiatiefkeuze, echte privéaflevering en later gebruik van de reactie. Geen bijdrage
+vooraf kiezen, oude taak herhalen of feedback willekeurig koppelen. HUE5.1 blijft
+open zolang nuttige aflevering en leren niet bewezen zijn; nu geen eigenaarhandeling.
+De AIDE-kandidaat blijft opgeslagen, ongebeoordeeld en ongeactiveerd. Geen nieuwe
 betaalde herbindingsserie tijdens kernvervanging. Het volledige vier-uitkomstgoal
 met leercyclus en AIDE² blijft gelden. Spraak is werk van de andere uitvoerder.
 
