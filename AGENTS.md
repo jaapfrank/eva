@@ -1,4 +1,16 @@
-## Actueel 13 oktober — Eva heeft haar eigen voorstel afgerond
+## Actueel 13 oktober — menselijke leercyclus bij later gebruik afronden
+
+De HUE-correctie-, bronrecall- en verwachtingrevisieroute zijn al geïnstalleerd.
+De ontbrekende uitkomst is later aangepast advies in een nieuwe conversatie.
+Hergebruik één oorspronkelijke driebeurtenproef met eigen synthetische opslag;
+alleen afwikkeling van reeds geregistreerde helpers vóór de volgende beurt is
+in de meetroute gecorrigeerd. Originele criteria en oude gesloten UNKNOWN blijven.
+Geen tweede geheugen, nieuwe vergelijking of spraakwerk. Geen eigenaarhandeling.
+HUE1.1/HUE3.1 blijven open tot echt later gedrag;39/48 en39/54 onveranderd.
+Het volledige projectgoal blijft actief. De eerder door Eva afgeronde eigen
+voorsteluitkomst en algemene geïnstalleerde afrondingsregel blijven behouden.
+
+## Eerdere oplevering 13 oktober — Eva heeft haar eigen voorstel afgerond
 
 De algemene afrondingscorrectie is geïnstalleerd en in de gewone opdracht gebruikt.
 Eva sloot Gen26 zelf af: SUCCEEDED, opgeslagen native eindantwoord beschikbaar.

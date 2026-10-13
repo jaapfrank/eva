@@ -106,7 +106,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "Maak de ontbrekende beoordelingsaansluiting gericht af. Daarna HUE1.1/HUE3.1 voor de menselijke leercyclus. Geen nieuwe vergelijkingsserie; spraak geparkeerd.",
+      "priorityDecision": "HUE1.1/HUE3.1 afmaken: geïnstalleerde correctie- en verwachtingsroute bij een later gesprek gebruiken. Daarna patroon en sociale feedback; geen nieuwe vergelijkingsserie, spraak geparkeerd.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1021,7 +1021,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-13T04:17:30.073932+00:00",
+        "checkedAt": "2026-10-13T04:24:23.354958+00:00",
         "deliveries": [
           {
             "title": "Eva levert haar eigen migratievoorstel op en sluit de opdracht af",
@@ -5575,335 +5575,55 @@
           }
         ],
         "now": {
-          "title": "Eva heeft haar eigen voorstel afgerond",
-          "state": "completed",
-          "phase": "original_proposal_completed",
-          "taskId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+          "title": "Mensbegrip: leren van een correctie en later anders helpen",
+          "state": "in_progress",
+          "phase": "ordinary_later_use_preparation",
+          "taskId": "HUE1.1",
           "linkedTaskIds": [
-            "TL-001",
-            "HUE1.1",
             "HUE3.1"
           ],
-          "activeExecution": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
-          "owner": "/root",
-          "executor": "Eva · gewone algemene taakroute",
-          "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva leverde zelf het oorspronkelijke Tuya→LocalTuya-voorstel en sloot de opdracht succesvol af. Het voorstel is onafhankelijk inhoudelijk beoordeeld.",
-          "detail": "De algemene afrondingsregel is geïnstalleerd. Gen26 succeeded: 1 gesloten aanvraag, 53.042 tokens, 0 nieuwe tools en geen HA-wijzigingen. Het resultaat is via de eigenaarroute beschikbaar; automatische Telegramlevering is niet gebonden.",
-          "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
-          "source": "/home/administrator/project/Eva2/eva2/evidence/product/same-execution-completion-installed-20261013.json",
-          "previousResult": "/home/administrator/project/Eva2/eva2/evidence/product/working-source-sections-ordinary-result-20261013.json",
-          "previousResultReview": "/home/administrator/project/Eva2/eva2/reviews/working-source-sections-ordinary-result-review-20261013.json",
-          "previousResultReviewSha256": "9e34412371c2de088859aecb07e78bc1f94fbb62434a427477343be1276b2afa",
-          "implementationStatus": "same_execution_completion_installed",
-          "currentActivity": "Deze gebruikersuitkomst is afgerond. De volgende bestaande stap is de menselijke leercyclus met tegenbewijs en echte uitkomsten.",
-          "checkedAt": "2026-10-13T04:17:30.073932+00:00",
-          "remaining": [],
+          "activeExecution": false,
           "nativeRunning": false,
-          "observedUsage": {
-            "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
-            "generation": 26,
-            "measurement": "closed_provider_accounting",
-            "admitted": 1,
-            "measured": 1,
-            "streamsClosed": 1,
-            "inputTokens": 52878,
-            "outputTokens": 164,
-            "totalTokens": 53042,
-            "tools": 0,
-            "currentUnknown": 0,
-            "inflight": 0,
-            "creditCosts": null,
-            "historicalUnknownPreserved": true,
-            "terminalManifestSha256": "49b8b8ee3b1b408993f46ff42e171ead91dd5950869436616466c33e5926689d"
+          "owner": "/root",
+          "executor": "/root/eva1_memory_transfer",
+          "reviewer": "/root/product_execution_memory_review",
+          "summary": "De leerverbinding is al geïnstalleerd. Nu controleren of een echte correctie en uitkomst Eva’s advies in een nieuw gesprek veranderen.",
+          "detail": "Eén gerichte gewone leercyclus met bestaande code. De meetroute wacht nu op reeds gestarte geheugenverwerking vóór de volgende beurt; geen nieuw geheugen of vergelijkingsserie. Oude gesloten fouten en onbekend verbruik blijven staan.",
+          "doneWhen": "Voorlopige persoonsinterpretatie en verwachting worden met echte tegeninformatie herzien; een later gesprek zonder recente gesprekshistorie gebruikt de juiste bijgestelde afweging.",
+          "implementationStatus": {
+            "learningConnectionBuilt": true,
+            "learningConnectionInstalled": true,
+            "laterUseProven": false,
+            "fullAide2Completed": false
           },
-          "currentObservation": {
-            "state": "succeeded",
-            "resultAvailable": true,
-            "nativeVerified": false,
-            "errorCode": null,
-            "deliveryState": "unbound",
-            "automaticTelegramDeliveryProven": false,
-            "originalContentVerdict": "PASS_REUSED_UNCHANGED_PROPOSAL",
-            "independentEndReview": "PASS",
-            "terminalManifestSha256": "49b8b8ee3b1b408993f46ff42e171ead91dd5950869436616466c33e5926689d"
+          "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
+          "installedEvidence": "eva2/evidence/product/hue-expectation-lifecycle-installed-20261012.json",
+          "originalCriteriaSha256": "f70436a5db70f7f5574a31282c5f427536c63069d1505d1a8dfe0b90d9f3f547",
+          "experimentLimits": {
+            "turns": 3,
+            "physicalRequestsIncludingHelpers": 24,
+            "tools": 12,
+            "registeredTokens": 150000,
+            "models": "Astra/medium",
+            "creditCosts": null
           },
-          "sourceReview": "eva2/reviews/same-execution-completion-source-review-20261013.json",
-          "sourceReviewSha256": "54dcd0c62bb3c4e609627a7c1035c00516784a8ddbd9fe4b658a2b3ba950b2fa",
-          "installedEvidence": "eva2/evidence/product/same-execution-completion-installed-20261013.json",
-          "sourceEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/same-execution-completion-installed-20261013.json",
-          "sourceEvidenceSha256": "2d72e2e6b8eae26938d29e3cb050c435f4bd1ea3932e3e75b752d2bdd7e69381",
-          "installedEvidenceSha256": "2d72e2e6b8eae26938d29e3cb050c435f4bd1ea3932e3e75b752d2bdd7e69381",
-          "previousObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/research-progress-context/gen13-terminal-observation-final.private.json",
-            "sha256": "2df139a56d60e32097eb7762a4292d4cfb14b4db6e88304fcc11cc33a4af57f0"
-          },
-          "progressObservation": {
-            "revision": 36,
-            "steps": [
-              {
-                "id": "inventory",
-                "state": "done",
-                "inheritedFromGeneration": 23
-              },
-              {
-                "id": "dependencies",
-                "state": "done",
-                "inheritedFromGeneration": 23
-              },
-              {
-                "id": "proposal",
-                "state": "done",
-                "inheritedFromGeneration": 23
-              }
-            ],
-            "nativeClosurePending": false,
-            "inheritedFromGeneration": 23
-          },
-          "previousObservedUsage": {
-            "workId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
-            "generation": 22,
-            "measurement": "terminal_accounting_measured",
-            "admittedRequests": 8,
-            "completedMeasuredResponses": 8,
-            "pendingRequests": 0,
-            "currentUnknownRequests": 0,
-            "inputTokens": 405801,
-            "outputTokens": 5841,
-            "knownTokens": 411642,
-            "totalTokens": 411642,
-            "tools": 7,
-            "creditCosts": null,
-            "wholeTotalConfirmed": true,
-            "historicalUnknownPreserved": true
-          },
-          "pendingKnownContextCheck": {
-            "status": "known281_pass",
-            "source": {
-              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen20-paired-result-v2.private.json",
-              "sha256": "db97ee2494d7e0e10d34ccde55a5417dcd59bbc6890c43322d824bd3d15a7db1"
-            },
-            "normalIncludingFraming": 57292,
-            "pressureRestoredIncludingFraming": 57289,
-            "actualRecallAndFutureFit": "UNKNOWN",
-            "wholeProposalConfirmed": false,
-            "currentModelRequests": 0
-          },
-          "updatedAt": "2026-10-13T04:17:30.073932+00:00",
-          "previousTerminalObservations": {
-            "terminalObservation": {
-              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",
-              "sha256": "e8b5758229309513a5cc6d156568f06d1118bfb4637da02323fc0a77462f92ab"
-            },
-            "originalProposalReview": {
-              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-original-proposal-end-review.private.json",
-              "sha256": "128f02b898c6a0e6ca825210a11ce70572d6fb53299bf2f71b9e808d9df69dec"
-            },
-            "observedUsage": {
-              "workId": "work:eva-resume:7c7e35f3-6ee5-557c-9a6f-3cd0d482e132",
-              "generation": 16,
-              "measurement": "unknown_until_observed",
-              "modelAttempts": null,
-              "totalTokens": null,
-              "creditCosts": null
-            },
-            "progressObservation": {
-              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/continuation-work-status2.private.json",
-              "sha256": "f8a45fca743710c8bb364464c5d4bf67be8d8e316e0788448dacafad45e2eee9",
-              "revision": 20
-            }
-          },
-          "accountingObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/proposal-phase-boundary-v1/gen23-current2-accounting.private.json",
-            "sha256": "0150f5315b4497739f33cb9adc3477bbc054d2542afba2b68a1aa3f9555d7cd0",
-            "observedAt": "2026-10-13T03:18:42.096215+00:00",
-            "state": "call_started"
-          },
+          "currentActivity": "Eigen geïsoleerde proef voorbereiden op de huidige geïnstalleerde bron; daarna onafhankelijke controle en één gewone uitvoering.",
           "ownerActionNeeded": false,
-          "previousProgressObservation": {
-            "revision": 24,
-            "steps": [
-              {
-                "id": "inventory",
-                "state": "working"
-              },
-              {
-                "id": "dependencies",
-                "state": "working"
-              },
-              {
-                "id": "proposal",
-                "state": "blocked"
-              }
-            ],
-            "updatedAt": "2026-10-13T00:22:25+00:00"
-          },
-          "previousTerminalObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/gen16-terminal-observation.private.json",
-            "sha256": "339f5afa01c67e0b6b2a440eb0775bfd0b17499b4de02833beb3173d1bb5365e"
-          },
-          "previousOriginalProposalReview": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/gen16-original-proposal-end-review.private.json",
-            "sha256": "5c4c26fb7709222364035fe8c50f77937da2709bb9f579f22ee8dba67147c6c1"
-          },
-          "previousCurrentResultEvidence": {
-            "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-material-context-ordinary-result-20261013.json",
-            "sha256": "8257262be3de9bb294098f00408a094cd00f732e0c5e86eedb06b81cf2fb640b"
-          },
-          "previousCurrentResultReview": {
-            "path": "/home/administrator/project/Eva2/eva2/reviews/research-material-context-ordinary-result-review-20261013.json",
-            "sha256": "19fe41df8591a87f184afcdec63c2c25deecf94b916f3a0fc273d55c53b84f0c"
-          },
-          "previousDiagnosticObservation": {
-            "metadata": {
-              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-first-new-receipts-metadata.private.json",
-              "sha256": "7ca7954fde06e3f591ecd54cac2d06ea2dc1d2284d6fcceef3ddcbec1db6ac50"
-            },
-            "exactReceipts": {
-              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-first-new-receipts.private.json",
-              "sha256": "e8ff54abc28cc97a623cd99ce2731b0829d7b7b3f0e38929f1680c974b7d79c1"
-            },
-            "noIdenticalLocalSelectionLoopProven": false,
-            "noObservedHaMutationOrDocumentWrite": true,
-            "identicalSelectionRepeated": true
-          },
-          "previousInstalledReview": "eva2/reviews/research-material-context-installed-review-20261013.json",
-          "previousInstalledReviewSha256": "8d3d69437bef04a8afdfbcf17edef4c0b8d996337c844148b448af29ca1eb7d1",
-          "installedReview": "eva2/reviews/same-execution-completion-source-review-20261013.json",
-          "installedReviewSha256": "54dcd0c62bb3c4e609627a7c1035c00516784a8ddbd9fe4b658a2b3ba950b2fa",
-          "currentActivityOwner": "Codex",
-          "currentResultEvidence": "eva2/evidence/product/same-execution-completion-ordinary-result-20261013.json",
-          "currentResultReview": "eva2/reviews/same-execution-completion-ordinary-result-review-20261013.json",
-          "currentReadback": {
-            "workId": "work:eva-resume:f8f7f91e-aed4-5659-be6a-a2ca18efbb8c",
-            "generation": 24,
-            "documentPath": "/proof-state/tuya-localtuya-migratievoorstel.md",
-            "bytes": 14736,
-            "sha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
-            "saveStep": null,
-            "independentReadbackStep": 304,
-            "stateVerified": true,
-            "readbackMatchesWithSingleTerminalLfNormalization": true,
-            "contentAssessment": "PASS_ORIGINAL_CONTENT_ONLY_REUSED_UNCHANGED_ARTIFACT",
-            "nativeCompletion": "failed",
-            "proofPath": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/current-result-verification-v1/gen24-current2-document-proof.private.json",
-            "proofSha256": "f9068529f5e4dfca517197e633cf4a2e7d90e169b15d82c64396b58d27a7aeb9",
-            "nativeErrorCode": "incomplete_work",
-            "inheritedFromGeneration": 24,
-            "nativeClosureInLaterGeneration": 26,
-            "laterNativeState": "succeeded",
-            "readbackIsHistorical": true
-          },
-          "ordinaryResumeEvidence": {
-            "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
-            "generation": 26,
-            "receiptSha256": "c82bd30f9e88914a31fba54476dbc9a63064a5aa4f6b4d1d6f28adbbb82976e8"
-          },
-          "priorCorrectionEndpointFailure": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/continuation-receipt.private.json",
-            "sha256": "41ee7da88567739771114b15d9989c05a698acbc10aec0b503d76d9bd8026331"
-          },
-          "prospectiveProjectionCheck": {
-            "reference": {
-              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/prospective-projected-write-seam.private.json",
-              "sha256": "318e17e6e21803a2e51f1c1f34aeb248e0f472558f67af1975a5c5fdc5047586"
-            },
-            "syntheticOnly": true,
-            "sameContentSaveGatePass": true,
-            "sameContentReadGatePass": true,
-            "largerRevisedArtifactAndDynamicFit": "UNKNOWN"
-          },
-          "actualArtifactObservation": {
-            "workId": "work:eva-resume:1de52a00-7e78-5a5a-8ff3-a0b746b42bf5",
-            "generation": 22,
-            "documentPath": "/proof-state/tuya-localtuya-migratievoorstel.md",
-            "bytes": 14736,
-            "sha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
-            "saveStep": 296,
-            "independentReadbackStep": 297,
-            "stateVerified": true,
-            "readbackMatchesWithSingleTerminalLfNormalization": true,
-            "contentAssessment": "PASS_ORIGINAL_CONTENT_ONLY",
-            "nativeCompletion": "failed",
-            "proofPath": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/gen22-current2-document-proof.private.json",
-            "proofSha256": "a2be693ab019d03074fe6f727fffeb78558a97f488ee32cc126f33d071b110cf",
-            "nativeErrorCode": "incomplete_work",
-            "completedInLaterGeneration": 26,
-            "laterNativeState": "succeeded"
-          },
-          "currentResultEvidenceSha256": "bbdeeac46b5a64b5701ff7dd68a7eab145198dc041fb03cc5c9a9238c7c62c2d",
-          "currentResultReviewSha256": "607b2a00f12ef10caaf5f99c5483d81ee67585d592e5479b253d1f4e0eb1c2b3",
-          "pendingImplementation": {
-            "runnerSha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
-            "built": true,
-            "installed": true,
-            "sourceReview": "GO",
-            "checks": "45 unieke gerichte controles plus exacte opgeslagen taakbewijzen; native afronding nog te volgen."
-          },
-          "currentDiagnosticObservation": {
-            "path": "eva2/evidence/product/restored-context-completion-diagnosis-20261013.json",
-            "sha256": "e8ccca111891acf2af4d3beebbe7c9be2d74d1bdba444322c06a9584d0e661b2",
-            "causeConfirmed": true
-          },
-          "providerReadiness": {
-            "source": {
-              "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/historical-execution-context-v1/provider-readiness-probe-result.private.json",
-              "sha256": "298070943fe63c6329f7a8d9175a6891f7adf7f2d35abff4e27bdb62d536b117"
-            },
-            "success": true,
-            "requests": 1,
-            "knownTokens": 25,
-            "oldFailureReason": "UNKNOWN"
-          },
-          "previousArtifactObservation": {
-            "bytes": 11961,
-            "sha256": "561346867e1f620516fce322d58d6b3c766b7b7fa5195ea0656cf1f1ff185e41",
-            "savedByEva": true,
-            "separateEvaRead": true,
-            "terminalLFNormalization": true,
-            "originalContentVerdict": "INCOMPLETE",
-            "nativeState": "ambiguous",
-            "nativeError": "internal_error"
-          },
-          "previousExecutionUsage": {
-            "workId": "work:eva-resume:ceadcb9f-6327-58fd-b2f7-94c2c72e4e84",
-            "generation": 25,
-            "measurement": "terminal_accounting_measured",
-            "admitted": 2,
-            "measured": 2,
-            "streamsClosed": 2,
-            "inputTokens": 105893,
-            "outputTokens": 324,
-            "totalTokens": 106217,
-            "tools": 0,
-            "currentUnknown": 0,
-            "inflight": 0,
-            "creditCosts": null,
-            "historicalUnknownPreserved": true,
-            "terminalManifestSha256": "935da96ab6b65c4baf2eb1ffaad05de40f01d74b9bf948641d41627093c64051"
-          },
-          "previousCurrentObservation": {
-            "state": "failed",
-            "receiptSha256": "dc9f7629b1bdcb1a44045435b5bd7e4cd539f75c64ce0da36efe3a524ad9c05a",
-            "errorCode": "incomplete_work",
-            "nativeResult": null,
-            "deliveryState": "unbound",
-            "terminalManifestSha256": "935da96ab6b65c4baf2eb1ffaad05de40f01d74b9bf948641d41627093c64051"
-          }
+          "checkedAt": "2026-10-13T04:24:23.354958+00:00",
+          "updatedAt": "2026-10-13T04:24:23.354958+00:00"
         },
         "next": {
-          "title": "Mensbegrip: correctie gebruiken bij een volgende afweging",
+          "title": "Leren bij patroon en sociale feedback toepassen",
           "state": "planned",
           "activeExecution": false,
           "taskIds": [
-            "HUE1.1",
-            "HUE3.1"
+            "HUE2.1",
+            "HUE4.1"
           ],
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "summary": "Bestaande persoonsinterpretaties, tegenbewijs en verwachtingen aan echte uitkomsten verbinden en bij later gebruik toepassen.",
-          "detail": "Hergebruik het aanwezige geheugen en de gespreksroute. Alleen de ontbrekende verbinding bouwen; geen tweede geheugen of nieuwe vergelijkingsserie."
+          "summary": "Dezelfde menselijke leercyclus gebruiken voor relevante patronen en communicatie; geen tweede geheugen."
         },
-        "ownerAction": "Nu geen handeling nodig. Eva moet eerst haar eigen onderbouwde voorstel afmaken; daadwerkelijke HA-migratie vereist later apart akkoord.",
+        "ownerAction": "Geen handeling nodig. Eva moet zelf leren en haar werk afronden. Een daadwerkelijke HA-migratie volgt alleen na het daarvoor gevraagde aparte akkoord.",
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "reviewedAt": "2026-10-12T15:07:36.187047+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
@@ -6264,10 +5984,47 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-13T04:17:30.073932+00:00"
+        "updatedAt": "2026-10-13T04:17:30.073932+00:00",
+        "lastCompletedResult": {
+          "title": "Eva heeft haar eigen voorstel afgerond",
+          "state": "completed",
+          "summary": "Eva leverde zelf het oorspronkelijke Tuya→LocalTuya-voorstel en sloot de opdracht succesvol af. Het voorstel is onafhankelijk inhoudelijk beoordeeld.",
+          "currentResultEvidence": "eva2/evidence/product/same-execution-completion-ordinary-result-20261013.json",
+          "currentResultReview": "eva2/reviews/same-execution-completion-ordinary-result-review-20261013.json",
+          "currentResultEvidenceSha256": "bbdeeac46b5a64b5701ff7dd68a7eab145198dc041fb03cc5c9a9238c7c62c2d",
+          "currentResultReviewSha256": "607b2a00f12ef10caaf5f99c5483d81ee67585d592e5479b253d1f4e0eb1c2b3",
+          "observedUsage": {
+            "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+            "generation": 26,
+            "measurement": "closed_provider_accounting",
+            "admitted": 1,
+            "measured": 1,
+            "streamsClosed": 1,
+            "inputTokens": 52878,
+            "outputTokens": 164,
+            "totalTokens": 53042,
+            "tools": 0,
+            "currentUnknown": 0,
+            "inflight": 0,
+            "creditCosts": null,
+            "historicalUnknownPreserved": true,
+            "terminalManifestSha256": "49b8b8ee3b1b408993f46ff42e171ead91dd5950869436616466c33e5926689d"
+          },
+          "currentObservation": {
+            "state": "succeeded",
+            "resultAvailable": true,
+            "nativeVerified": false,
+            "errorCode": null,
+            "deliveryState": "unbound",
+            "automaticTelegramDeliveryProven": false,
+            "originalContentVerdict": "PASS_REUSED_UNCHANGED_PROPOSAL",
+            "independentEndReview": "PASS",
+            "terminalManifestSha256": "49b8b8ee3b1b408993f46ff42e171ead91dd5950869436616466c33e5926689d"
+          }
+        }
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
-      "checkedAt": "2026-10-13T04:17:30.073932+00:00",
+      "checkedAt": "2026-10-13T04:24:23.354958+00:00",
       "beforeFurtherBuild": {
         "contract": "EvaPrebuildEvidenceDecision/v1",
         "recordedAt": "2026-10-05T21:28:42.222430+00:00",
@@ -13142,7 +12899,7 @@
         "visibleLastDelivery": "Taakherkomst en verbruik voor zelfverbetering aangesloten",
         "visibleOwnerAction": "Geen handeling van jou nodig"
       },
-      "updatedAt": "2026-10-13T04:17:30.073932+00:00",
+      "updatedAt": "2026-10-13T04:24:23.354958+00:00",
       "dashboardVerificationNativeConstructionCurrent20261012": {
         "checkedAt": "2026-10-12T03:54:35.501445+00:00",
         "checkedBy": "root",
@@ -23588,15 +23345,18 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva legt vooraf een verwachting met bron, onzekerheid en controlemoment vast. Een latere echte uitkomst wordt als bevestigd, weerlegd of onbekend gekoppeld en verandert haar volgende afweging.",
-              "nextAction": "Leerbron-/revisieroute geïnstalleerd en onafhankelijk gecontroleerd. Gerichte gewone leercyclus afmaken: echte correctie opslaan en later in een nieuwe sessie gebruiken.",
+              "nextAction": "Bestaande geïnstalleerde leerroute eenmaal gebruiken: voorlopige aanname, echte correctie/uitkomst en later advies in een nieuw gesprek. Alleen de meetroute voor afronding van reeds gestarte helpers is gewijzigd.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
                 "owner": "/root",
                 "outcome": "Eva legt vooraf een verwachting met bron, onzekerheid en controlemoment vast. Een latere echte uitkomst wordt als bevestigd, weerlegd of onbekend gekoppeld en verandert haar volgende afweging.",
                 "existingRouteFirst": true,
-                "estimate": "Bestaande bron en bewijs eerst hergebruiken; alleen ontbrekende koppeling bouwen. Concrete uitvoerraming vóór een fysieke proef; creditkosten onbekend.",
-                "activeWorkers": []
+                "estimate": "Eén noodzakelijke geïsoleerde episode: 3 beurten, maximaal 24 fysieke aanvragen inclusief helpers, 12 tools en 150.000 geregistreerde tokens. Creditkosten onbekend.",
+                "activeWorkers": [
+                  "/root/eva1_memory_transfer",
+                  "/root/product_execution_memory_review"
+                ]
               },
               "ownerInstructions": {
                 "availableNow": false,
@@ -23847,15 +23607,18 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Een persoonsgebonden hypothese heeft herkomst, onzekerheid en tegenbewijs. Een latere correctie verandert de hypothese en het volgende relevante antwoord; de oude aanname wordt geen feit bij een andere persoon.",
-              "nextAction": "Leerbron-/revisieroute geïnstalleerd en onafhankelijk gecontroleerd. Gerichte gewone leercyclus afmaken: echte correctie opslaan en later in een nieuwe sessie gebruiken.",
+              "nextAction": "Bestaande geïnstalleerde leerroute eenmaal gebruiken: voorlopige aanname, echte correctie/uitkomst en later advies in een nieuw gesprek. Alleen de meetroute voor afronding van reeds gestarte helpers is gewijzigd.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
                 "owner": "/root",
                 "outcome": "Een persoonsgebonden hypothese heeft herkomst, onzekerheid en tegenbewijs. Een latere correctie verandert de hypothese en het volgende relevante antwoord; de oude aanname wordt geen feit bij een andere persoon.",
                 "existingRouteFirst": true,
-                "estimate": "Bestaande bron en bewijs eerst hergebruiken; alleen ontbrekende koppeling bouwen. Concrete uitvoerraming vóór een fysieke proef; creditkosten onbekend.",
-                "activeWorkers": []
+                "estimate": "Eén noodzakelijke geïsoleerde episode: 3 beurten, maximaal 24 fysieke aanvragen inclusief helpers, 12 tools en 150.000 geregistreerde tokens. Creditkosten onbekend.",
+                "activeWorkers": [
+                  "/root/eva1_memory_transfer",
+                  "/root/product_execution_memory_review"
+                ]
               },
               "ownerInstructions": {
                 "availableNow": false,
@@ -35599,6 +35362,6 @@
       ]
     }
   },
-  "updatedAt": "2026-10-13T04:17:30.073932+00:00",
-  "lastUpdatedAt": "2026-10-13T04:17:30.073932+00:00"
+  "updatedAt": "2026-10-13T04:24:23.354958+00:00",
+  "lastUpdatedAt": "2026-10-13T04:24:23.354958+00:00"
 }

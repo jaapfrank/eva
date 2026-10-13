@@ -4,7 +4,7 @@ Eva moet niet alleen informatie bewaren, maar verwachtingen vormen, uitkomsten h
 
 ## Mijn oordeel
 
-Ik neem de kringloop over: waarneming → voorlopige interpretatie → verwachting → handelen of wachten → echte uitkomst en feedback → bijstellen → later anders handelen. Vooral de expliciete verwachting-uitkomstverbinding ontbreekt nog in de gericht onderzochte routes. Zonder die verbinding kan Eva reflecties opslaan zonder aantoonbaar slimmer te worden.
+Ik neem de kringloop over: waarneming → voorlopige interpretatie → verwachting → handelen of wachten → echte uitkomst en feedback → bijstellen → later anders handelen. De expliciete verwachting-uitkomstverbinding is inmiddels gebouwd en geïnstalleerd. Het resterende bewijs is haar toepassing in een volgend gesprek: opgeslagen reflecties alleen tonen niet aan dat Eva slimmer helpt.
 
 Het ontwerp is een goede functionele richting, maar geen direct toepasbare implementatiebeschrijving van deze repository. Brainstem, ANIMA, SOUL.md en de vier voorbeeldvelden beschrijven voorgestelde verantwoordelijkheden. Hun namen bewijzen geen aanwezige interfaces. Het aangeleverde document eindigt bij de inleiding van zes bouwfasen; de concrete afrondingsvolgorde staat hieronder.
 
@@ -54,14 +54,12 @@ Eerst de lopende AIDE²-aansluiting afmaken. Daarna HUE1.1 en HUE3.1 als één m
 
 Iedere taak vraagt eerst hergebruik van aanwezige bron en bewijs, daarna alleen de ontbrekende verbinding. De oorspronkelijke 39 van 48 kleine afrondingen blijven exact behouden. Het uitgebreide werkbord bevat 54 kleine taken, waarvan 39 afgerond; dit is geen percentage van productkwaliteit. M3.3, geheugenacceptaties en L3.4–L3.7 worden niet heropend. Het volledige projectgoal blijft actief. Spraak blijft geparkeerd.
 
-## Eerstvolgende bouwuitkomst na de gesloten verbeterproef
+## Actuele afronding 13 oktober — later gebruik van de geïnstalleerde leerroute
 
-De gewone vervolgbeoordeling van het bewaarde codevoorstel is gesloten zonder geldige gezamenlijke uitkomst; één modelaanvraag mist complete usage. Er is niets toegepast. Dezelfde proef wordt niet opnieuw gestart. HUE6.1 blijft open.
+De [getypeerde leerroute](../../src/eva/application/human_understanding.py), [gewone gespreksactie](../../src/eva/providers/human_understanding_actions.py), brongebonden recall en verwachtingrevisies zijn gebouwd en geïnstalleerd. Zie [installatie van de levenscyclus](../../evidence/product/hue-expectation-lifecycle-installed-20261012.json). Er wordt geen tweede geheugen of nieuwe HUE-implementatie gebouwd.
 
-HUE1.1 en de afhankelijke HUE3.1 vormen nu één gebruikersuitkomst: Eva bewaart een voorlopige persoonsinterpretatie of verwachting, koppelt later echte tegeninformatie of een uitkomst en gebruikt de herziene afweging bij een volgende relevante situatie. Oude bronnen en onzekerheid blijven zichtbaar.
+De vorige gewone episode heeft een persoonscorrectie opgeslagen, maar stopte vóór de derde, nieuwe conversatie. Een terminale verwachtingrevisie zonder nieuw controlemoment werd onterecht geweigerd; die oorzaak is geïnstalleerd opgelost. De afzonderlijke meetroute controleerde compleet verbruik voordat reeds gestarte geheugenhelpers konden afronden. Alleen die afwikkeling wordt voor een nieuwe, eigen geïsoleerde episode hergebruikt en gecorrigeerd. Oude gesloten proefbestanden, fouten en UNKNOWN blijven ongewijzigd.
 
-Gerichte bronanalyse bevestigt dat het [geheugencontract](../../src/eva/contracts/memory.py) al herkomst, tijd, voorlopige inferenties en correcties bevat. De [normale gesprekproducer](../../src/eva/bootstrap/runtime.py) bewaart echte gebruikersbronnen; het [Hindsight-geheugen](../../src/eva/adapters/projection/hindsight.py) verwerkt correcties en houdt syntheses onbevestigd. De duurzame getypeerde relatie tussen eerdere interpretatie, afzonderlijke tegenbron of uitkomst en herziene afweging ontbreekt in de onderzochte gewone route.
+HUE1.1 en HUE3.1 blijven open tot een later gewoon gesprek met lege recente geschiedenis de herziene persoonsinterpretatie en echte verwachtinguitkomst gebruikt. De oorspronkelijke bronnen, onzekerheid, verwijzingen en persoonsscope moeten terug te lezen zijn. Eén noodzakelijke episode gebruikt de oorspronkelijke criteria: drie beurten, maximaal 24 fysieke aanvragen inclusief helpers, 12 tools en 150.000 geregistreerde tokens; alle inhoudelijke aanvragen Astra/medium. Creditkosten blijven onbekend.
 
-Bouw alleen die verbinding via bestaande gespreksacties, geheugenuitvoer en recall. Controleer vóór edits hoe gekoppelde bronverwijzingen Hindsight-consolidatie overleven. Alleen instructietekst toevoegen bewijst die verbinding niet. Een echte uitkomst komt uit een oorspronkelijke gebruikersbron of gecontroleerd uitvoerresultaat, nooit uit Eva's eigen eerdere antwoord.
-
-Eindvoorwaarde: bij een later gesprek beïnvloedt echte correctie of uitkomst de nieuwe afweging; oorspronkelijke verwachting, tegenbron en persoonsscope zijn terug te lezen. Dit is nog te bouwen en geen nieuwe geaccepteerde functie.
+De algemene taakafronding is daarnaast geïnstalleerd en door Eva gebruikt om haar eigen onderbouwde voorstel af te ronden. Die afzonderlijke uitkomst bewijst niet de menselijke leercyclus of volledige AIDE². Het volledige projectgoal blijft actief; er is nu geen handeling van Jaap nodig.
