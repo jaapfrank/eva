@@ -1,3 +1,31 @@
+## Actueel 13 oktober — Eva’s voorstelsamenvatting automatisch afgeleverd
+
+Eva heeft haar eigen inhoudelijke Tuya→LocalTuya-voorstelsamenvatting en akkoordvraag
+via de gewone Telegram-afleverwerker teruggebracht. De huidige taak blijft succeeded met exact hetzelfde
+resultaat; Telegram bevestigt delivery_acknowledged. Codex schreef het voorstel
+niet, verzond het niet handmatig en herhaalde het onderzoek niet. De migratie zelf
+is niet uitgevoerd en blijft afhankelijk van het oorspronkelijke latere akkoord.
+
+Eén bestaande aflevermodule herstelt de vertrouwde retourbinding via de echte
+voorganger-/generatieketen en oorspronkelijke bron. Een latere Telegram-message-
+binding wordt overgeslagen naar de exacte oorspronkelijke bestemming. Actuele
+ontvanger, stoppen, huidige resultaatbinding en ACK blijven gelden; geen backfill,
+reset of aflevering van superseded voorgangers.25 unieke gerichte controles PASS,
+onafhankelijke bron-/bouwreview GO. Eenmaal geïnstalleerd; beide diensten healthy/
+ready,344 overige Python-bronnen per image en configuratie/mounts ongewijzigd.
+Nul nieuwe Eva-modelaanvragen voor dit herstel; ontwikkelcredits onbekend. Eerste
+fixture-/testdatabase-/exportfouten blijven bewaard. Eigen test-PG en volumes weg.
+
+L2.2-onderhoud gereed; geen nieuwe kleine taak of gewijzigde hoofdafronding.
+43/54 behouden; volledig goal ACTIVE. Vervolg HUE6.1: bestaande AIDE²/droomroute
+verbinden met actuele bron en installatie. Voorbereiding nog niet geactiveerd;
+oude gesloten proef/UNKNOWN behouden. Geen nieuwe vergelijkingsserie, spraakwerk
+of Docker Desktop-herstel. De aflevering is één native tekstpart van772B, geen documentbijlage of werkende
+HTTP-link. Het volledige14.736B-voorstel blijft opgeslagen; volledige document-
+presentatie is nog niet aangetoond. ACK is geen gelezen/gezinsacceptatieclaim.
+Resultaat: eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json.
+Review: eva2/reviews/original-proposal-telegram-return-installed-review-20261013.json.
+
 ## Actueel 13 oktober — patronen en sociale feedback afgerond en geïnstalleerd
 
 HUE2.1 en HUE4.1 halen hun ongewijzigde oorspronkelijke eindvoorwaarden in één

@@ -1,0 +1,35 @@
+{
+  "contract": "EvaOriginalProposalReturnIndependentPublicationReview/v1",
+  "reviewedAt": "2026-10-13T06:31:15.138665+00:00",
+  "verdict": "GO",
+  "scope": "Exact installation and original-ingress native summary ACK; no complete proposal presentation claim.",
+  "evidence": "eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
+  "evidenceSha256": "ce03faf74ed47bfa15e44a211fc30f76f9dc8f2b02b813e836015d1e02b21974",
+  "independentSealedReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/installation/installed-return-review.private.json",
+    "sha256": "3bad2d82629d80460c8a51c72e85dc5191858457e004135b1507170e449410b0"
+  },
+  "confirmed": {
+    "exactInstallation": true,
+    "ordinaryWorkerDeliveredNativeSummary": true,
+    "originalSourceDestination": true,
+    "unchangedCompletedResult": true,
+    "currentDeliveryClaims": 1,
+    "currentDeliveryAcknowledgements": 1,
+    "transportParts": 1,
+    "nativeTextBytes": 772,
+    "manualSend": false,
+    "newResearchRequests": 0,
+    "supersededGenerations3Through25DeliveryEvents": 0
+  },
+  "presentation": {
+    "fullDocumentBytes": 14736,
+    "fullDocumentPresentation": "NOT_DEMONSTRATED",
+    "summaryContainsSubstantiveProposalAndConditionalApprovalQuestion": true,
+    "localDocumentPathPresent": true,
+    "verifiedHttpLinkOrAttachment": false
+  },
+  "wholeGoalCompleted": false,
+  "familyAcceptance": null,
+  "historicalUnknownAndVerifiedFalsePreserved": true
+}

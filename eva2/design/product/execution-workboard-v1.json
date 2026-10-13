@@ -1021,8 +1021,19 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-13T05:30:31.542429+00:00",
+        "checkedAt": "2026-10-13T06:22:26.217280+00:00",
         "deliveries": [
+          {
+            "title": "Eva’s voorstelsamenvatting automatisch teruggestuurd",
+            "state": "installed",
+            "summary": "Telegram bevestigt de inhoudelijke samenvatting en akkoordvraag op het oorspronkelijke bericht. Volledig voorstel opgeslagen; bijlage of bruikbare documentlink nog niet aangetoond.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
+            "checkedAt": "2026-10-13T06:22:26.217280+00:00",
+            "newProductFunctionCompleted": false,
+            "maintenanceRepair": true,
+            "completedTaskIds": [],
+            "installationDispatches": 1
+          },
           {
             "title": "Eva gebruikt patronen én eerdere feedback bij een nieuw onderwerp",
             "state": "installed",
@@ -5601,41 +5612,36 @@
           }
         ],
         "now": {
-          "title": "Eva levert haar afgeronde voorstel terug",
+          "title": "Droomcyclus en AIDE² afmaken",
           "state": "in_progress",
-          "phase": "original_proposal_return_route_repair",
-          "taskId": "L2.2",
+          "phase": "current_source_configuration_preparation",
+          "taskId": "HUE6.1",
           "owner": "/root",
-          "executor": "/root/eva1_memory_transfer",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Het voorstel is door Eva afgerond; bij technisch hervatten is de oorspronkelijke Telegram-retourbinding verloren gegaan. De bestaande afleverroute herstellen zonder het onderzoek opnieuw te doen.",
-          "currentActivity": "De gewone afleverqueue krijgt de bestaande vertrouwde retourbinding uit dezelfde hervattingsketen. Onafhankelijke controle bewaakt de juiste ontvanger en voorkomt dubbele levering. AIDE²-voorbereiding is bewaard, nog niet geactiveerd; eerst deze volledige gebruikersuitkomst afmaken.",
-          "doneWhen": "Eva’s bestaande afgeronde voorstel wordt via de gewone Telegram-afleverroute naar de oorspronkelijke geverifieerde ontvanger teruggebracht, zonder nieuwe onderzoekscall of dubbele levering.",
+          "summary": "Eva’s inhoudelijke voorstelsamenvatting is via de gewone route afgeleverd en bevestigd. Het volledige document blijft bewaard; leesbare bijlage of link is nog niet bewezen. De bestaande zelfverbeteringscyclus krijgt nu de actuele installatiebinding.",
+          "currentActivity": "Huidige installatie en 59 programmabronnen zijn gecontroleerd. De bestaande compacte configuratie overschrijdt haar laadgrens met500 bytes; deze concrete aansluiting en enkele releasebindings afmaken zonder oude proef opnieuw te starten.",
+          "doneWhen": "De bestaande droom/AIDE²-route verbetert agentaansturing én code of uitbreiding, met onafhankelijke beoordeling, toepassing uitsluitend bij bewezen winst en later werkelijk gebruik.",
           "ownerActionNeeded": false,
+          "checkedAt": "2026-10-13T06:24:07.377936+00:00",
+          "previousUserResult": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
           "modelRequestsThisStep": 0,
           "creditCosts": null,
-          "previousGoalTurn": "PROGRESS: HUE2.1 en HUE4.1 afgerond en geïnstalleerd;43/54.",
-          "checkedAt": "2026-10-13T05:55:06.394333+00:00",
+          "executor": "/root/eva1_memory_transfer",
           "activeReview": true,
-          "reviewer": "/root/product_execution_memory_review",
-          "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
-          "existingProductOutcome": "Zelfstandig werk en ontwikkeling",
-          "maintenanceRepair": true
+          "reviewer": "/root/product_execution_memory_review"
         },
         "next": {
-          "title": "Echte reactie op eigen bijdrage later toepassen",
+          "title": "Leren van een echte reactie op eigen bijdrage",
           "state": "planned",
-          "activeExecution": false,
           "taskIds": [
             "HUE5.1"
           ],
-          "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "summary": "Bestaande feedbackroute is klaar. Er is nog geen gekoppelde echte ontvangerreactie; gewoon gebruik levert deze op zonder ander bouw werk te blokkeren."
+          "summary": "De bestaande feedbackroute wacht op een echte reactie bij gewoon gebruik; geen verzonnen feedback en geen blokkade voor AIDE²."
         },
-        "ownerAction": "Voor de twee nieuwe geïnstalleerde afrondingen niets nodig. Reageer gewoon op een werkelijk ontvangen eigen bijdrage als die er is; je hoeft zelf geen voorstel, voorbeeld of feedback te verzinnen. Codex gaat verder met AIDE².",
+        "ownerAction": "Eva’s inhoudelijke voorstelsamenvatting en akkoordvraag staan in Telegram. Het volledige document is opgeslagen; een bruikbare bijlage of link is nog niet aangetoond. De HA-migratie blijft afhankelijk van jouw latere expliciete akkoord; voor het bouw werk hoef je niets te doen.",
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-13T05:23:14.340320+00:00",
+        "reviewedAt": "2026-10-13T06:32:21.940968+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5994,53 +6000,44 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-13T05:30:31.542429+00:00",
+        "updatedAt": "2026-10-13T06:22:26.217280+00:00",
         "lastCompletedResult": {
-          "title": "Patronen en sociale feedback werken in een nieuw gesprek",
-          "state": "completed",
-          "summary": "Eva gebruikt in een nieuw gesprek meerdere eerdere ervaringen, houdt een tegenvoorbeeld zichtbaar en vraagt op een ander onderwerp welke hulp gewenst is. Feedback beïnvloedt haar hulp; vermoedens blijven voorlopig.",
-          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
-          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
-          "currentResultEvidenceSha256": "351fa11d5a90767e7cb25fa864cbd717b95027c13088baafb91c59d87234dbb2",
-          "currentResultReviewSha256": "1535218ed106d7e6f38056372057b3441c17e2b5a48ccdb1f12897f78fd7566e",
-          "observedUsage": {
-            "registeredPhysicalRequests": 15,
-            "completedMeasuredRequests": 15,
-            "currentUnknownRequests": 0,
-            "inflightRequests": 0,
-            "allCurrentUsageComplete": true,
-            "inputTokens": 52866,
-            "outputTokens": 3298,
-            "totalTokens": 56164,
-            "foreground": {
-              "requests": 6,
-              "inputTokens": 21302,
-              "outputTokens": 995,
-              "totalTokens": 22297
-            },
-            "helpers": {
-              "requests": 9,
-              "inputTokens": 31564,
-              "outputTokens": 2303,
-              "totalTokens": 33867
-            },
-            "model": "gpt-6-astra",
-            "reasoningEffort": "medium",
-            "actualGeneratedActionCalls": 2,
-            "fixedLimits": {
-              "substantiveTurns": 4,
-              "physicalRequestsIncludingHelpers": 24,
-              "actionCalls": 12,
-              "registeredTokens": 150000,
-              "secondsIncludingResourceBoot": 600
-            },
-            "limitsExceeded": false,
-            "clockReset": false,
-            "creditCost": null,
-            "secondsBootToSealedResult": 457.525305,
-            "caseReportedExecutionElapsedSeconds": 303.7927951250458,
-            "developmentCredits": null
-          }
+          "title": "Eva’s voorstelsamenvatting terug in Telegram",
+          "state": "installed",
+          "summary": "De inhoudelijke samenvatting en akkoordvraag zijn via de gewone afleverwerker teruggestuurd en bevestigd. Het volledige voorstel is opgeslagen; een bijlage of werkende documentlink is nog niet aangetoond. Eén module geïnstalleerd, zonder herhaald onderzoek.",
+          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
+          "currentResultEvidenceSha256": "ce03faf74ed47bfa15e44a211fc30f76f9dc8f2b02b813e836015d1e02b21974",
+          "deliveryAcknowledged": true,
+          "installationDispatches": 1,
+          "newModelRequests": 0,
+          "maintenanceRepair": true,
+          "fullDocumentPresentation": "not_demonstrated",
+          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/original-proposal-telegram-return-installed-review-20261013.json",
+          "currentResultReviewSha256": "3cf5e76f02d7a372c7f52a793b4888a100252ade24da3161f895aa791ddf76ec",
+          "independentReview": "GO"
+        },
+        "historicalNowBeforeOriginalReturnInstalled20261013": {
+          "title": "Eva levert haar afgeronde voorstel terug",
+          "state": "in_progress",
+          "phase": "original_proposal_return_installation",
+          "taskId": "L2.2",
+          "owner": "/root",
+          "executor": "/root/eva1_memory_transfer",
+          "activeExecution": true,
+          "nativeRunning": false,
+          "summary": "Het voorstel is door Eva afgerond; bij technisch hervatten is de oorspronkelijke Telegram-retourbinding verloren gegaan. De bestaande afleverroute herstellen zonder het onderzoek opnieuw te doen.",
+          "currentActivity": "25 unieke gerichte controles en onafhankelijke bron-/bouwreview geslaagd. Exact één gewijzigde module wordt eenmaal in de bestaande kern en werker geïnstalleerd; daarna gewone Telegram-aflevering en ACK controleren. Geen nieuw onderzoek.",
+          "doneWhen": "Eva’s bestaande afgeronde voorstel wordt via de gewone Telegram-afleverroute naar de oorspronkelijke geverifieerde ontvanger teruggebracht, zonder nieuwe onderzoekscall of dubbele levering.",
+          "ownerActionNeeded": false,
+          "modelRequestsThisStep": 0,
+          "creditCosts": null,
+          "previousGoalTurn": "PROGRESS: HUE2.1 en HUE4.1 afgerond en geïnstalleerd;43/54.",
+          "checkedAt": "2026-10-13T06:19:13.955736+00:00",
+          "activeReview": false,
+          "reviewer": "/root/product_execution_memory_review",
+          "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+          "existingProductOutcome": "Zelfstandig werk en ontwikkeling",
+          "maintenanceRepair": true
         }
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
@@ -16361,9 +16358,9 @@
     },
     "currentRuntime": {
       "recordedAt": "2026-10-13T05:19:28.211424+00:00",
-      "image": "sha256:21a3cd51e011471bcea2a8750e1e44ae3d130fb346bd983b989bee4d576b29ba",
-      "coreImage": "sha256:21a3cd51e011471bcea2a8750e1e44ae3d130fb346bd983b989bee4d576b29ba",
-      "workerImage": "sha256:a342847d832d66f72f9051461a88f623b6be11ae32fc52d6bcd570efc5d1d065",
+      "image": "sha256:80dfaac158484563d62a4bfaade3852fd2411383294293b123b5122a020c15a7",
+      "coreImage": "sha256:80dfaac158484563d62a4bfaade3852fd2411383294293b123b5122a020c15a7",
+      "workerImage": "sha256:61edf0ea3bc396942988e03864dada1fa1eac844876d8ebfe8ecbc81a0af10b6",
       "core": "/eva2-managed-b-slot3-core",
       "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
       "coreHealth": "healthy",
@@ -16382,7 +16379,12 @@
       "installedReview": "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
       "meaning": "Patroonherkomst en voorlopigheid geïnstalleerd in gezonde kern/werker; HUE2.1/HUE4.1 originele later-gebruikcriteria onafhankelijk PASS. Twee gewijzigde modules,343 overige Pythonbronnen en configuratie/mounts behouden.",
       "independentSourceReview": "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
-      "installedReviewSha256": "1535218ed106d7e6f38056372057b3441c17e2b5a48ccdb1f12897f78fd7566e"
+      "installedReviewSha256": "1535218ed106d7e6f38056372057b3441c17e2b5a48ccdb1f12897f78fd7566e",
+      "checkedAt": "2026-10-13T06:25:55.653001+00:00",
+      "ready": true,
+      "healthy": true,
+      "verificationEvidence": "eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
+      "installationVerificationSha256": "eca40c0fd0cb2a663b7723b6595e79168cc9bb60811687eef5d1032d654cdb80"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -25050,10 +25052,14 @@
               "completedAt": "2026-09-29T11:12:52.855058+00:00",
               "result": "Autonoom vervolg na procesherstart en correctie: één definitief document en één terugmelding; websiteverbetering geïnstalleerd, onafhankelijke review GO. Eigenaaracceptatie open.",
               "maintenanceRepair": {
-                "state": "in_progress",
+                "state": "completed",
                 "scope": "Original Telegram destination after technical owner-dashboard resume",
                 "historicalAcceptancePreserved": true,
-                "ownerActionRequired": false
+                "ownerActionRequired": false,
+                "deliveryAcknowledged": true,
+                "evidence": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
+                "checkedAt": "2026-10-13T06:22:26.217280+00:00",
+                "fullDocumentPresentation": "not_demonstrated"
               }
             }
           ],
@@ -25405,11 +25411,11 @@
             {
               "id": "HUE6.1",
               "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "De voorbereidende huidige-bronbinding is bewaard, niet geactiveerd. Eerst de oorspronkelijke voorstelretour afmaken; daarna de bestaande AIDE²-cyclus met werkelijk actuele bron verbinden.",
+              "nextAction": "Het oorspronkelijke voorstel is via de gewone route afgeleverd. Verbind nu de bestaande zelfverbetering met actuele bron-/installatiebinding; behoud gesloten proef en historische UNKNOWN.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -25417,7 +25423,9 @@
                 "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
                 "existingRouteFirst": true,
                 "estimate": "Bestaande bron en bewijs eerst hergebruiken; alleen ontbrekende koppeling bouwen. Concrete uitvoerraming vóór een fysieke proef; creditkosten onbekend.",
-                "activeWorkers": []
+                "activeWorkers": [
+                  "/root/eva1_memory_transfer"
+                ]
               },
               "ownerInstructions": {
                 "availableNow": false,
@@ -32992,10 +33000,22 @@
       "state": "prepared_not_activated",
       "nativeInputStarted": false,
       "pendingReason": "Complete ordinary proposal return before freezing the next current-baseline improvement execution; core source will change.",
-      "previewFactoryMetadataSha256": "3fcf6bea35bd774d504d48a3676e44424d1db5eb4d01792b86792439aaa40dcc"
+      "previewFactoryMetadataSha256": "3fcf6bea35bd774d504d48a3676e44424d1db5eb4d01792b86792439aaa40dcc",
+      "currentActivity": "After confirmed original proposal return, prepare current loader-compatible binding without model dispatch or old closed retries.",
+      "currentAfterReturnManifestSha256": "e87ff2906525771f0458534325d92a09e1888263e259bc328ced2f36432846ee",
+      "currentProspectiveConfigBytes": 131572,
+      "existingLoaderBoundBytes": 131072,
+      "loaderReady": false,
+      "currentSourceBindingsVerified": true,
+      "remainingBindings": [
+        "loader boundary",
+        "ordinary after-client model release",
+        "current preview export",
+        "publisher integration commit"
+      ]
     },
     "originalProposalReturnRepair20261013": {
-      "checkedAt": "2026-10-13T05:55:06.394333+00:00",
+      "checkedAt": "2026-10-13T06:22:26.217280+00:00",
       "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
       "outcome": "Restore original trusted private Telegram completion after technical resume; reuse Eva-authored completed proposal.",
       "lineageEvidenceSha256": "fd937eae0a46e290653816a45c4cba82825b56c37bb86d0e1aa98b59223f7442",
@@ -33006,12 +33026,51 @@
       "completedGeneration": 26,
       "intermediateDestinationLost": true,
       "proposalSucceeded": true,
-      "deliveryAcknowledged": false,
+      "deliveryAcknowledged": true,
       "modelRequests": 0,
       "databaseWritesDuringDiagnosis": 0,
       "sourceMetadataExportFailurePreserved": true,
       "noNewSmallTask": true,
-      "wholeGoal": "active"
+      "wholeGoal": "active",
+      "state": "installed_delivery_acknowledged",
+      "sourceReviewSha256": "cb505d63c3a2e6330b2f7e2c15e6adbc36f6e9f5bb493285da0d677150ddcf32",
+      "uniqueTargetedChecksPassed": 25,
+      "evidence": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
+      "evidenceSha256": "ce03faf74ed47bfa15e44a211fc30f76f9dc8f2b02b813e836015d1e02b21974",
+      "installationDispatches": 1,
+      "resultSha256": "35eaf8c77e7efe17c85fd6a8a274c11a6b2c990389d02a037f0d88b2d61b3d62",
+      "automaticOrdinaryWorker": true,
+      "manualSend": false,
+      "newModelRequests": 0,
+      "completedResultNotificationAcknowledged": true,
+      "fullDocumentPresentation": "not_demonstrated",
+      "independentReviewSha256": "3cf5e76f02d7a372c7f52a793b4888a100252ade24da3161f895aa791ddf76ec",
+      "independentReview": "GO"
+    },
+    "historicalRuntimeBeforeOriginalReturnInstalled20261013": {
+      "recordedAt": "2026-10-13T05:19:28.211424+00:00",
+      "image": "sha256:21a3cd51e011471bcea2a8750e1e44ae3d130fb346bd983b989bee4d576b29ba",
+      "coreImage": "sha256:21a3cd51e011471bcea2a8750e1e44ae3d130fb346bd983b989bee4d576b29ba",
+      "workerImage": "sha256:a342847d832d66f72f9051461a88f623b6be11ae32fc52d6bcd570efc5d1d065",
+      "core": "/eva2-managed-b-slot3-core",
+      "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
+      "coreHealth": "healthy",
+      "workerHealth": "healthy",
+      "readyStatus": "ready",
+      "repositoryHeadFullyInstalled": false,
+      "reviewedSourceIdentity": {
+        "eva2/src/eva/adapters/projection/hindsight.py": "2cc2a6af72ddf19788d62f679b69f5560604e7f33b14e115d6cca0782062e9db",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py": "2305d23c289f9d7bb800fb143ece3f29e4fe2b33dc305c28d679d8058b211d55"
+      },
+      "retainedSourceItems": 343,
+      "evidence": "eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+      "evidencePath": "eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/hue-pattern-social-20261013/installation/candidate.compose.private.json",
+      "configurationEnvironmentMountsRetained": true,
+      "installedReview": "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
+      "meaning": "Patroonherkomst en voorlopigheid geïnstalleerd in gezonde kern/werker; HUE2.1/HUE4.1 originele later-gebruikcriteria onafhankelijk PASS. Twee gewijzigde modules,343 overige Pythonbronnen en configuratie/mounts behouden.",
+      "independentSourceReview": "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
+      "installedReviewSha256": "1535218ed106d7e6f38056372057b3441c17e2b5a48ccdb1f12897f78fd7566e"
     }
   },
   "activeTaskId": "AU-008",
@@ -35483,6 +35542,6 @@
       ]
     }
   },
-  "updatedAt": "2026-10-13T04:54:47.309939+00:00",
-  "lastUpdatedAt": "2026-10-13T04:48:08.425037+00:00"
+  "updatedAt": "2026-10-13T06:32:21.940968+00:00",
+  "lastUpdatedAt": "2026-10-13T06:32:21.940968+00:00"
 }

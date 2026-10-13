@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
-from uuid import UUID, uuid4
+from uuid import UUID, uuid4, uuid5
 import re
 
 import sqlalchemy as sa
@@ -62,6 +62,83 @@ def _read(connection, scope, spec) -> PrivateWorkDestination | None:
     return destination
 
 
+def _original_destination(spec, destination):
+    source = spec.source
+    return all(getattr(destination, "origin_" + key) == getattr(source, key)
+               for key in ("tenant_id", "installation_id", "principal_id",
+                           "conversation_id", "message_id"))
+
+
+def _effective_destination(connection, store, work, now):
+    """Read a trusted return route without changing old admission sidecars."""
+    destination = _read(connection, store.scope, work.spec)
+    if destination is not None:
+        return destination
+    if work.spec.contract != "DelegatedDigitalWork/v4" or work.spec.audience != "private":
+        return None
+    current = work
+    while current.spec.generation > 1:
+        parent = store._load_locked(connection, current.spec.parent_task_id)
+        child, prior = current.spec, parent.spec
+        expected_id = "work:eva-resume:" + str(uuid5(
+            store.scope.installation_id, f"{prior.work_id}:{prior.generation + 1}"))
+        if (prior.contract != child.contract or prior.audience != "private"
+                or child.work_id != expected_id or child.parent_task_id != prior.work_id
+                or child.generation != prior.generation + 1
+                or any(getattr(child, key) != getattr(prior, key) for key in (
+                    "owner_principal_id", "principal_binding_id", "episode_id",
+                    "execution_id", "source", "source_ingress_sha256", "grant", "task"))
+                or parent.retention_until <= now or parent.created_at > current.created_at
+                or parent.state not in {"failed", "ambiguous", "needs_help", "stopped"}):
+            raise ValueError("private return ancestry differs from its original work")
+        destination = _read(connection, store.scope, prior)
+        # A later Telegram turn can have its own direct destination. Inheritance
+        # uses only a destination bound to this task's exact original ingress.
+        if destination is not None and _original_destination(prior, destination):
+            return destination
+        current = parent
+    return None
+
+
+def _destination_candidates(scope, now):
+    """Queue only direct destinations or their exact private digital successors."""
+    runs, events = delegated_work_runs, operational_events
+    # A directly bound later turn remains deliverable itself, but only the exact
+    # original source destination may authorize inheritance to descendants.
+    original_origin = sa.and_(
+        runs.c.spec_payload["contract"].astext == "DelegatedDigitalWork/v4",
+        runs.c.spec_payload["audience"].astext == "private",
+        *(events.c.payload["data"]["destination"]["origin_" + key].astext
+          == runs.c.spec_payload["source"][key].astext
+          for key in ("tenant_id", "installation_id", "principal_id",
+                      "conversation_id", "message_id")))
+    lineage = sa.select(runs, original_origin.label("original_origin")).select_from(runs.join(events, sa.and_(
+        events.c.tenant_id == runs.c.tenant_id,
+        events.c.installation_id == runs.c.installation_id,
+        events.c.payload["data"]["work_id"].astext == runs.c.work_id,
+        events.c.event_type == _EVENT,
+    ))).where(runs.c.tenant_id == scope.tenant_id,
+              runs.c.installation_id == scope.installation_id,
+              runs.c.retention_until > now).cte("private_destination_lineage", recursive=True)
+    child = runs.alias("destination_successor")
+    same = [lineage.c.original_origin.is_(True),
+            child.c.tenant_id == lineage.c.tenant_id,
+            child.c.installation_id == lineage.c.installation_id,
+            child.c.parent_task_id == lineage.c.work_id,
+            child.c.generation == lineage.c.generation + 1,
+            child.c.owner_principal_id == lineage.c.owner_principal_id,
+            child.c.principal_binding_id == lineage.c.principal_binding_id,
+            child.c.storage_episode_id == lineage.c.storage_episode_id,
+            child.c.retention_until > now,
+            child.c.created_at >= lineage.c.created_at]
+    for key in ("contract", "audience", "execution_id", "source",
+                "source_ingress_sha256", "grant", "task"):
+        same.append(child.c.spec_payload[key] == lineage.c.spec_payload[key])
+    same.extend((child.c.spec_payload["contract"].astext == "DelegatedDigitalWork/v4",
+                 child.c.spec_payload["audience"].astext == "private"))
+    return lineage.union(sa.select(child, lineage.c.original_origin).join(lineage, sa.and_(*same)))
+
+
 def record_admission_destination(connection: sa.Connection, scope: TimelineScope, *,
                                  spec, destination: PrivateWorkDestination | None,
                                  occurred_at: datetime, existing: bool) -> None:
@@ -103,7 +180,7 @@ class PostgresDelegatedWorkDeliveryStore:
                 raise DelegatedWorkNotFound("delegated work is absent")
             if work.retention_until <= now:
                 raise ValueError("private completion result retention has expired")
-            destination = _read(connection, self._work.scope, work.spec)
+            destination = _effective_destination(connection, self._work, work, now)
             if destination is not None:
                 try:
                     recipient = PostgresPrivateTelegramRecipient(self._work._engine, self._work.scope,
@@ -151,20 +228,27 @@ class PostgresDelegatedWorkDeliveryStore:
             with self._work._engine.begin() as connection:
                 self._work._scope(connection)
                 cutoff = failure_notice_cutoff(connection, self._work, now)
-                joined = delegated_work_runs.join(events, sa.and_(
-                    events.c.tenant_id == delegated_work_runs.c.tenant_id,
-                    events.c.installation_id == delegated_work_runs.c.installation_id,
-                    events.c.payload["data"]["work_id"].astext == delegated_work_runs.c.work_id,
-                    events.c.event_type == _EVENT,
+                destinations = _destination_candidates(self._work.scope, now)
+                successor = delegated_work_runs.alias("superseding_work")
+                claims = events.alias("current_delivery_claim")
+                joined = delegated_work_runs.outerjoin(claims, sa.and_(
+                    claims.c.tenant_id == delegated_work_runs.c.tenant_id,
+                    claims.c.installation_id == delegated_work_runs.c.installation_id,
+                    claims.c.payload["data"]["work_id"].astext == delegated_work_runs.c.work_id,
+                    claims.c.event_type == "DELEGATED_DELIVERY_CLAIMED",
                 )).outerjoin(checkpoints, sa.and_(
-                    checkpoints.c.tenant_id == events.c.tenant_id,
-                    checkpoints.c.installation_id == events.c.installation_id,
-                    checkpoints.c.thread_id == sa.func.replace(events.c.thread_id,
-                        "delegated-destination:", "delegated-delivery:"),
+                    checkpoints.c.tenant_id == delegated_work_runs.c.tenant_id,
+                    checkpoints.c.installation_id == delegated_work_runs.c.installation_id,
+                    checkpoints.c.thread_id == claims.c.thread_id,
                 ))
                 row = connection.execute(sa.select(delegated_work_runs).select_from(joined).where(
                     delegated_work_runs.c.tenant_id == self._work.scope.tenant_id,
                     delegated_work_runs.c.installation_id == self._work.scope.installation_id,
+                    delegated_work_runs.c.work_id.in_(sa.select(destinations.c.work_id)),
+                    ~sa.exists(sa.select(1).where(
+                        successor.c.tenant_id == delegated_work_runs.c.tenant_id,
+                        successor.c.installation_id == delegated_work_runs.c.installation_id,
+                        successor.c.parent_task_id == delegated_work_runs.c.work_id)),
                     deliverable_states(delegated_work_runs, cutoff),
                     delegated_work_runs.c.stop_requested_at.is_(None),
                     delegated_work_runs.c.retention_until > now,
@@ -175,7 +259,7 @@ class PostgresDelegatedWorkDeliveryStore:
                 if row is None:
                     return self._claim_document_next(now=now, lease_seconds=lease_seconds)
                 work = self._work._validated(connection, row)
-                destination = _read(connection, self._work.scope, work.spec)
+                destination = _effective_destination(connection, self._work, work, now)
                 result = delivery_outcome(work)
                 if destination is None or result is None:
                     raise ValueError("completion destination or result disappeared")

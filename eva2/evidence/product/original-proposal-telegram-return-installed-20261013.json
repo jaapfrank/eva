@@ -1,0 +1,128 @@
+{
+  "contract": "EvaOriginalProposalTelegramReturnInstalled/v1",
+  "publishedAt": "2026-10-13T06:22:26.217280+00:00",
+  "status": "installed_delivery_acknowledged",
+  "userResult": "Eva’s completed result notification, substantive proposal summary and conditional approval question returned through her ordinary Telegram delivery worker after a technical dashboard resume. Codex did not write the proposal or manually send it. The full proposal document remains stored; recipient-accessible full-body presentation is not yet demonstrated.",
+  "taskId": "L2.2",
+  "maintenanceRepair": true,
+  "completedWorkId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+  "cause": {
+    "originalDestinationGenerations": [
+      1,
+      2
+    ],
+    "destinationMissingGenerations": [
+      3,
+      26
+    ],
+    "technicalDashboardResumeLostOriginalPrivateDestination": true,
+    "repair": "Resolve the trusted destination through exact original source and validated parent/generation chain. Current recipient, stop, result and ACK checks remain."
+  },
+  "observed": {
+    "beforeDeliveryStatus": "unbound",
+    "afterDeliveryStatus": "delivery_acknowledged",
+    "workState": "succeeded",
+    "sameResultBeforeAndAfter": true,
+    "resultSha256": "35eaf8c77e7efe17c85fd6a8a274c11a6b2c990389d02a037f0d88b2d61b3d62",
+    "documentSha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+    "proposalResearchRepeated": false,
+    "manualTelegramSend": false,
+    "haMigrationPerformed": false,
+    "deliveredNativeTextBytes": 772,
+    "deliveredTransportParts": 1,
+    "deliveredFullDocumentAttachment": false,
+    "recipientAccessibleFullProposalPresentation": "not_demonstrated"
+  },
+  "implementation": {
+    "sourceFiles": [
+      {
+        "beforeSha256": "9f45992eccaca65f7acafd06a41cedb0bee775c3c2549962b85860bac1a2387d",
+        "frozenCopy": {
+          "bytes": 26563,
+          "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/source-correction/delegated_work_delivery.final.private.py",
+          "sha256": "f645980403bfb2df24ce4191fdd05ddee8e7868dc79b7a9bc760a6e74b82f2ae"
+        },
+        "path": "eva2/src/eva/adapters/postgres/delegated_work_delivery.py",
+        "sha256": "f645980403bfb2df24ce4191fdd05ddee8e7868dc79b7a9bc760a6e74b82f2ae"
+      }
+    ],
+    "uniqueTargetedChecksPassed": 25,
+    "installationDispatches": 1,
+    "coreImage": "sha256:80dfaac158484563d62a4bfaade3852fd2411383294293b123b5122a020c15a7",
+    "workerImage": "sha256:61edf0ea3bc396942988e03864dada1fa1eac844876d8ebfe8ecbc81a0af10b6",
+    "unchangedPythonSourcesPerImage": 344,
+    "healthy": true,
+    "ready": true,
+    "sameMountsAndEnvironment": true
+  },
+  "usage": {
+    "newEvaModelRequestsForRepair": 0,
+    "newEvaModelTokensForRepair": 0,
+    "creditCost": null,
+    "developmentCredits": null,
+    "originalResearchUsageNotRepeatedOrReset": true
+  },
+  "provenance": {
+    "frozenSource": {
+      "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/source-correction/frozen-source.private.json",
+      "sha256": "99c6f1bb03eb8c071767d307858c3057e14ee3706295358cafc215ef6a57cc43"
+    },
+    "sourceReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/source-correction/source-review.private.json",
+      "sha256": "cb505d63c3a2e6330b2f7e2c15e6adbc36f6e9f5bb493285da0d677150ddcf32"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/installation/build-result.private.json",
+      "sha256": "ed8443f00ce31ae5fd2b98bc92e907a08bf9b0b67a0ef0fef6851f086fd68834"
+    },
+    "installed": {
+      "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/installation/installation-verification.private.json",
+      "sha256": "eca40c0fd0cb2a663b7723b6595e79168cc9bb60811687eef5d1032d654cdb80"
+    },
+    "before": {
+      "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/installation/delivery-observation-061547.private.json",
+      "sha256": "2f67165598f9efeabba0da3b04bb98a36822bc1d5701d7ca34477b399be3a1d9"
+    },
+    "after": {
+      "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/installation/delivery-observation-061948.private.json",
+      "sha256": "21e64e12a5bf0c5b0099ae04fb3306f02d0a9f774132bb9b18361d5703202292"
+    },
+    "ownedRegressionCleanup": {
+      "path": "/home/administrator/project/.eva2-artifacts/original-proposal-return-20261013/regression/owned-regression-cleanup.private.json",
+      "sha256": "1ce3c6592d7e523039f730de807f4129792be0c2c3d24eb0227b84c86f7e3261"
+    }
+  },
+  "preparationCorrections": {
+    "retainedLogs": [
+      "targeted-1",
+      "targeted-2",
+      "targeted-3",
+      "targeted-4",
+      "targeted-5",
+      "targeted-6"
+    ],
+    "errorsPreserved": [
+      "test execution source-hash fixture",
+      "disposable database version-table cleanup and migration grant",
+      "test retention mutation and empty recipient-binding fixtures",
+      "owned initial wrong PG version selection caught before tests",
+      "local metadata/freeze export shape errors"
+    ],
+    "productSourceChangedDuringFixtureCorrections": false,
+    "productionDatabaseUsedForRegression": false
+  },
+  "limitations": [
+    "Telegram ACK confirms delivery; it does not prove the owner has read or accepted the proposal.",
+    "This repair preserves the original completed proposal; no general autonomous quality or global efficiency claim.",
+    "Historical UNKNOWN, original evidence and 43/54 completion count preserved.",
+    "HA migration still requires the original explicit owner approval.",
+    "The delivered summary has a local document path, no verified HTTP link or attachment. Full proposal document presentation is not proven by delivery ACK."
+  ],
+  "wholeGoalCompleted": false,
+  "familyAcceptance": null,
+  "newComparisonSeries": false,
+  "finalIndependentReview": {
+    "source": "eva2/reviews/original-proposal-telegram-return-installed-review-20261013.json",
+    "scope": "Exact installation and original-source completed-result notification; full document presentation remains NOT_DEMONSTRATED."
+  }
+}
