@@ -822,7 +822,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T16:01:21.955909+00:00",
+  "lastUpdated": "2026-10-13T16:15:42.972601+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "HUE6.1",
@@ -1760,15 +1760,15 @@
         "now": {
           "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
           "state": "Bezig",
-          "phase": "programming_cleanup_outcome_correction",
+          "phase": "programming_cleanup_outcome_installed",
           "taskId": "HUE6.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Afsluitfout bevestigd; bestaande sessie gesloten, kandidaat niet beoordeeld.",
-          "detail": "Vijf onderliggende modelaanvragen gemeten. HTTP500 bij afsluiten voorkwam een bevestigd taakresultaat. Onafhankelijke review afgerond; originele fout en gedeeltelijke gewone registratie behouden. Vervolg: taakuitkomst en verbruik bij afsluitfout behouden. Geen herhaling of spraakwerk.",
+          "summary": "Correctie geïnstalleerd: taakuitkomst en geregistreerd verbruik blijven bij afsluitfout behouden.",
+          "detail": "Kern en taakwerker gezond; alleen de werkmodule gewijzigd. 119 controles slagen; twee bestaande fouten op oude bron bevestigd. Geen spraakwijziging of nieuwe modelproef. AIDE²-kwaliteitskandidaat blijft onbeoordeeld; volledige leercyclus nog open.",
           "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
           "ownerActionNeeded": false,
-          "latestEvidence": "development/evidence/product/aide-evaluation-closure-result-20261013.json"
+          "latestEvidence": "development/evidence/product/programming-cleanup-outcome-installed-20261013.json"
         },
         "next": {
           "state": "Hierna",
@@ -5560,7 +5560,7 @@
       "remaining": "Ontwikkelbeoordeling, onafhankelijke eindbeoordeling en eventueel later gebruik blijven open; geen heropening van de gesloten proef."
     },
     "aideNecessaryRecovery20261013": {
-      "status": "failed_closed_no_quality_result",
+      "status": "runner_cleanup_outcome_installed_quality_unjudged",
       "taskId": "HUE6.1",
       "declaration": "development/docs/aide-quality-recovery-20261013.md",
       "newActiveSeconds": 180,
@@ -5598,8 +5598,23 @@
       "childPhysicalTokens": 33338,
       "closureConfirmedSeparately": true,
       "latestFailureEvidence": "development/evidence/product/aide-evaluation-closure-result-20261013.json",
-      "independentReviewSha256": "8f88abbc12659efd2c26c47b856b5b1713dbaa233dba4773a9ace00b31808b4a"
+      "independentReviewSha256": "8f88abbc12659efd2c26c47b856b5b1713dbaa233dba4773a9ace00b31808b4a",
+      "runnerCleanupSourceCorrection": {
+        "sourceSha256": "9288a4b02e2b2f76aa1964db128a10f6ff45e6257373814bc2b06033ea21d012",
+        "testsPassed": 119,
+        "existingTestFailures": 2,
+        "existingFailuresReproducedOnHead": true,
+        "newCleanupAndCancellationCasesPassed": 3,
+        "sourceReviewSha256": "5b1897771f48bace5f74ecd57ef6a27f7737206fd22746858c8dd2bb1d1e8a16",
+        "imagesBuilt": true,
+        "installed": true,
+        "models": 0,
+        "qualityGainClaimed": false,
+        "installedEvidence": "development/evidence/product/programming-cleanup-outcome-installed-20261013.json",
+        "ready": true,
+        "installedPublicationReviewSha256": "89eaa5af09ce5b54505b6b5ae9432cbf14a3cdbb5cb3525cc552e09782a90f78"
+      }
     }
   },
-  "updatedAt": "2026-10-13T16:01:21.955909+00:00"
+  "updatedAt": "2026-10-13T16:15:42.972601+00:00"
 }

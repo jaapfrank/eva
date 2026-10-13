@@ -548,6 +548,7 @@ class DelegatedDigitalRunner:
         from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec, DelegatedDigitalWorkResult
         signal = CancellationSignal()
         usage = DelegatedWorkUsage.unmeasured()
+        outcome = None
         journal = source = actions = reply = programming = native_guard = native_context = None
         latest_usage = ConversationModelUsage.unmeasured()
         deadline = parse_utc_timestamp(spec.deadline)
@@ -761,7 +762,7 @@ class DelegatedDigitalRunner:
                 work_id=spec.work_id, call_id=call_id, output=reply.text,
                 output_sha256=hashlib.sha256(reply.text.encode()).hexdigest(), spec_sha256=spec.sha256,
                 usage=usage.to_payload(), completed_at=self.clock().strftime("%Y-%m-%dT%H:%M:%SZ"))
-            return ToolFreeChildOutcome("succeeded", result, usage, False, None)
+            outcome = ToolFreeChildOutcome("succeeded", result, usage, False, None)
         except Exception as error:
             from eva.adapters.model.pydantic_conversation import _InputBudgetError
             if journal is not None and source is not None:
@@ -783,13 +784,25 @@ class DelegatedDigitalRunner:
             if status == "budget_exceeded" and isinstance(error, _InputBudgetError):
                 report = ("input_budget_exceeded: De behouden taakcontext past niet binnen "
                           "de invoergrens. De opdracht is niet afgerond.")
-            return ToolFreeChildOutcome(status, None, usage, False,
+            outcome = ToolFreeChildOutcome(status, None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest(),
                 failure_report=report)
         finally:
             try:
                 if programming is not None:
-                    await asyncio.to_thread(programming.close)
+                    try:
+                        await asyncio.to_thread(programming.close)
+                    except Exception as error:
+                        # Cleanup cannot erase the task's durable usage or claim
+                        # success. An uncaught cancellation still propagates.
+                        if outcome is not None:
+                            stopped = (outcome.status == "cancelled" or
+                                (cancellation_event is not None and cancellation_event.is_set()))
+                            outcome = ToolFreeChildOutcome(
+                                "cancelled" if stopped else "internal_error", None,
+                                outcome.usage, False,
+                                hashlib.sha256(("programming_cleanup:" + type(error).__name__
+                                    + ":" + str(error)).encode()).hexdigest())
             finally:
                 try:
                     watcher.cancel()
@@ -798,6 +811,7 @@ class DelegatedDigitalRunner:
                 finally:
                     if native_context is not None:
                         native_context.__exit__(None, None, None)
+        return outcome
 
     @staticmethod
     def _usage(actual, tool_calls):

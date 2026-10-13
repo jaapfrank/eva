@@ -1,0 +1,62 @@
+{
+  "contract": "EvaProgrammingCleanupOutcomeInstalled/v1",
+  "status": "installed",
+  "timestamp": "2026-10-13T16:14:42.339547+00:00",
+  "taskId": "HUE6.1",
+  "change": "Programming cleanup failure returns a non-retryable failed or cancelled outcome with the existing recorded usage; no successful result. Uncaught outer cancellation still propagates.",
+  "source": "src/eva/bootstrap/delegated_digital_runner.py",
+  "sourceSha256": "9288a4b02e2b2f76aa1964db128a10f6ff45e6257373814bc2b06033ea21d012",
+  "sourceReviewSha256": "5b1897771f48bace5f74ecd57ef6a27f7737206fd22746858c8dd2bb1d1e8a16",
+  "installationInputReviewSha256": "c4cb185d2632547ed0269c4f3ddc27cae85a5eff3b65e280e795eac36280e42f",
+  "installationVerificationSha256": "64904d7e061d9306ea4a11f808e5493b7a691a26a7a553b1009d7f46ede9ee72",
+  "tests": {
+    "passed": 119,
+    "existingFailures": 2,
+    "existingFailuresReproducedOnUnchangedHead": true,
+    "newCleanupAndCancellationCasesPassed": 3
+  },
+  "services": {
+    "core": {
+      "image": "sha256:a0dc4b8aea7c953409bfcb0fd337d9d43f35eef183ff9722d0a5989b7771f685",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "changedPythonPaths": [
+        "bootstrap/delegated_digital_runner.py"
+      ],
+      "otherPythonFilesPreserved": 345
+    },
+    "delegated-work-worker": {
+      "image": "sha256:11209e5a4cc8815118eaf7d7c833893635305cfbb35bd9b7cb325a8be98dc6df",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "changedPythonPaths": [
+        "bootstrap/delegated_digital_runner.py"
+      ],
+      "otherPythonFilesPreserved": 345
+    }
+  },
+  "ready": true,
+  "voiceCodeOrConfigurationChanged": false,
+  "explicitModelCalls": 0,
+  "explicitSendCalls": 0,
+  "newNativeQualityTrial": false,
+  "closedTrialRetried": false,
+  "frozenQualityBindingsChanged": false,
+  "candidateQuality": "unjudged",
+  "candidateApplied": false,
+  "wholeAideCycleComplete": false,
+  "remaining": "The failed original cleanup subtype and independent candidate quality gain remain unproven. This source fix does not complete HUE6 or the whole project.",
+  "installedPublicationReviewSha256": "89eaa5af09ce5b54505b6b5ae9432cbf14a3cdbb5cb3525cc552e09782a90f78"
+}

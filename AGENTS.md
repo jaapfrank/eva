@@ -21,8 +21,12 @@ Dezelfde bestaande programmeersessie is daarna bevestigd gesloten. Kandidaat bli
 onbeoordeeld; geen kwaliteitsscore, toepassing of nieuwe functie. Fysieke SSE-usage
 is gemeten; de gewone childregistratie blijft gedeeltelijk en de assessmentseal UNKNOWN.
 Bewijs: development/evidence/product/aide-evaluation-closure-result-20261013.json.
-Vervolg: behoud een expliciete gefaalde taakuitkomst en verbruik bij afsluitfout,
-zonder een mislukte afsluiting als geslaagd werk te presenteren. Geen herhaling van
+De gerichte runnercorrectie is geïnstalleerd: afsluitfouten leveren een expliciete
+gefaalde of geannuleerde uitkomst met behouden geregistreerd verbruik; geen
+succes/resultaat/retry. Kern en taakwerker zijn gezond; alleen één werkmodule gewijzigd.
+Bewijs: development/evidence/product/programming-cleanup-outcome-installed-20261013.json.
+119 controles slagen; twee bestaande testfouten zijn ook op oude bron bevestigd.
+De oorspronkelijke cleanupoorzaak en kandidaatkwaliteit blijven onbewezen. Geen herhaling van
 de gesloten uitvoering of reset van haar klok. Oorspronkelijke criteria behouden.
 Actief: HUE6/AIDE² via Eva's bewaarde kandidaat; onafhankelijke beoordeling,
 alleen kwaliteitswinst toepassen en later gebruiken. Daarna HUE5 en samenhangende

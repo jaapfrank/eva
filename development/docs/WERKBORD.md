@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Bestaande AIDE²-verbetering afronden en later toepassen
 
-Afsluitfout bevestigd; bestaande sessie gesloten, kandidaat niet beoordeeld.
+Correctie geïnstalleerd: taakuitkomst en geregistreerd verbruik blijven bij afsluitfout behouden.
 
 Klaar wanneer: Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.
 

@@ -280,6 +280,57 @@ def test_outer_cancel_waits_for_connector_cleanup_without_second_step():
     asyncio.run(run())
 
 
+@pytest.mark.parametrize("idle", [True, False])
+def test_programming_cleanup_failure_returns_failed_outcome_with_usage(monkeypatch, idle):
+    import eva.bootstrap.delegated_digital_runner as module
+    closes = []
+
+    class FailedCleanup:
+        action_names = ()
+        def __init__(self, *args): pass
+        def available_for(self, turn): return False
+        def verify_idle(self): return idle
+        def close(self):
+            closes.append(True)
+            raise RuntimeError("private cleanup detail")
+
+    monkeypatch.setattr(module, "ProgrammingActions", FailedCleanup)
+    _, spec, _, tools, _, runner, _ = fixture()
+    tools.release.set()
+    outcome = asyncio.run(runner.run(spec, call_id="call:cleanup-failure"))
+    assert outcome.status == "internal_error" and outcome.result is None
+    assert outcome.usage.completed_model_responses == 3
+    assert outcome.usage.input_tokens == 90 and outcome.usage.output_tokens == 30
+    assert outcome.usage.tool_calls == 2 and closes == [True]
+    assert outcome.failure_report is None
+    assert outcome.error_fingerprint == hashlib.sha256(
+        b"programming_cleanup:RuntimeError:private cleanup detail").hexdigest()
+    _validate_usage(spec, outcome.usage, successful=False)
+
+
+def test_outer_cancellation_survives_programming_cleanup_failure(monkeypatch):
+    import eva.bootstrap.delegated_digital_runner as module
+
+    class FailedCleanup:
+        action_names = ()
+        def __init__(self, *args): pass
+        def available_for(self, turn): return False
+        def verify_idle(self): return True
+        def close(self): raise RuntimeError("cleanup unavailable")
+
+    monkeypatch.setattr(module, "ProgrammingActions", FailedCleanup)
+
+    async def run():
+        _, spec, _, tools, _, runner, _ = fixture()
+        task = asyncio.create_task(runner.run(spec, call_id="call:cancel-cleanup"))
+        assert await asyncio.to_thread(tools.started.wait, 2)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await asyncio.wait_for(task, 3)
+        assert len(tools.calls) == 1
+    asyncio.run(run())
+
+
 def test_revoked_job_stops_between_tool_steps():
     async def run():
         _,spec,store,tools,_,runner,_=fixture()
