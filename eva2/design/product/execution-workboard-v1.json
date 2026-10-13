@@ -1021,8 +1021,21 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-10-13T04:48:08.425037+00:00",
+        "checkedAt": "2026-10-13T05:25:34.369802+00:00",
         "deliveries": [
+          {
+            "title": "Eva gebruikt patronen én eerdere feedback bij een nieuw onderwerp",
+            "state": "installed",
+            "summary": "HUE2.1/HUE4.1 afgerond: meerdere ervaringen met tegenbewijs, herkenbare bronduiding en aangepaste hulp. Onafhankelijke PASS,15 complete aanvragen/56.164 tokens/2 acties.",
+            "source": "/home/administrator/project/Eva2/eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+            "checkedAt": "2026-10-13T05:25:34.369802+00:00",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "HUE2.1",
+              "HUE4.1"
+            ],
+            "installationDispatches": 1
+          },
           {
             "title": "Eva past mensbegrip toe na tegenbewijs en een echte uitkomst",
             "state": "installed",
@@ -5588,41 +5601,35 @@
           }
         ],
         "now": {
-          "title": "Patronen en sociale feedback bij later gebruik toepassen",
+          "title": "Leren van de reactie op Eva’s eigen initiatief",
           "state": "in_progress",
-          "phase": "ordinary_case_resources_ready",
-          "taskId": "HUE2.1",
-          "linkedTaskIds": [
-            "HUE4.1"
-          ],
+          "phase": "initiative_feedback_existing_route_binding",
+          "taskId": "HUE5.1",
           "owner": "/root",
-          "executor": "/root/eva1_memory_transfer",
-          "reviewer": "/root/product_execution_memory_review",
-          "activeExecution": false,
+          "activeExecution": true,
           "nativeRunning": false,
-          "summary": "De bestaande patroonroute verliest bijdragen behalve de nieuwste bron en kan een afleiding als gebruikersfeit labelen. Deze twee aangetoonde tekorten worden gericht hersteld.",
-          "detail": "HUE1.1/HUE3.1 blijven afgerond. HUE2.1/HUE4.1 blijven in uitvoering: alle patroonbronnen en tegenbewijs behouden, voorlopige conclusie zichtbaar; daarna één begrensde gewone later-gebruikcontrole op een ander onderwerp.",
-          "doneWhen": "Een nieuw gesprek gebruikt een onderbouwd patroon met bronnen en tegenvoorbeeld; communicatiefeedback werkt door bij een ander onderwerp zonder privécontext bij een andere persoon.",
+          "summary": "De bestaande technische keten is aanwezig. Nu de echte bestaande bijdrage en ontvangerreactie verbinden met een volgende gewone keuze.",
+          "currentActivity": "Gerichte broncontrole gereed, acht bestaande locaties. Geen ontbrekende productieovergang aangetoond; bestaande resultaat- en feedbackregistratie onderzoeken zonder nieuwe modelproef of implementatie.",
+          "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
           "ownerActionNeeded": false,
-          "previousGoalTurn": "PROGRESS: HUE1.1/HUE3.1 afgerond op oorspronkelijk bewijs, dashboard en GitHub bijgewerkt",
-          "currentActivity": "Onafhankelijke bronreview GO;97 controles geslaagd. Eigen proefopslag klaar, definitieve invoerbinding loopt. Kandidaat nog niet geïnstalleerd; geen modelaanvragen gestart.",
           "modelRequestsThisStep": 0,
           "creditCosts": null,
-          "checkedAt": "2026-10-13T04:48:08.425037+00:00"
+          "previousGoalTurn": "PROGRESS: HUE2.1 en HUE4.1 afgerond, geïnstalleerd en onafhankelijk beoordeeld.",
+          "checkedAt": "2026-10-13T05:25:34.369802+00:00"
         },
         "next": {
-          "title": "Initiatief laten leren van echte reacties",
+          "title": "Droomcyclus en AIDE² volledig laten doorwerken",
           "state": "planned",
           "activeExecution": false,
           "taskIds": [
-            "HUE5.1"
+            "HUE6.1"
           ],
           "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
-          "summary": "Dezelfde mensbegrip- en uitvoerroute verbinden met de echte reactie op Eva’s initiatief."
+          "summary": "Bestaande verbeterroute gebruiken voor agentaansturing én code/uitbreidingen; echte toepassing en later gebruik afronden, oude UNKNOWN behouden."
         },
-        "ownerAction": "Geen handeling nodig. Codex hergebruikt bestaande voorzieningen en bewijs; jij hoeft geen geheugen, patroon of voorstel zelf te maken.",
+        "ownerAction": "Geen handeling nodig voor deze oplevering. Eva maakt voorstellen en leert via haar eigen gewone routes; Codex onderzoekt het resterende initiatiefleren.",
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
-        "reviewedAt": "2026-10-12T15:07:36.187047+00:00",
+        "reviewedAt": "2026-10-13T05:23:14.340320+00:00",
         "historicalOverviewBeforeProductExecution20261010": {
           "now": {
             "taskId": "P2.1",
@@ -5981,29 +5988,52 @@
           "doneWhen": "Volledige resultaten blijven bewaard en zijn gericht leesbaar; hervatting stuurt de grote inventarissen niet opnieuw integraal naar het model.",
           "ownerAction": null
         },
-        "updatedAt": "2026-10-13T04:17:30.073932+00:00",
+        "updatedAt": "2026-10-13T05:25:34.369802+00:00",
         "lastCompletedResult": {
-          "title": "Eva leert van een correctie en gebruikt die later",
+          "title": "Patronen en sociale feedback werken in een nieuw gesprek",
           "state": "completed",
-          "summary": "Eva stelt een aanname en verwachting bij op echte tegeninformatie. In een nieuw gesprek helpt zij op basis van die gecorrigeerde ervaring.",
-          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/hue-learning-later-use-result-20261013.json",
-          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/hue-learning-later-use-review-20261013.json",
-          "currentResultEvidenceSha256": "a996cd3e7155e4dd6e4de3c70775b43c4b43fc74b937ea4722bc7db062a4cf5d",
-          "currentResultReviewSha256": "0cfec200746c68ea8713533af1f0f1ed9a326ae89ddec8d6ae372e7ef5f1a778",
+          "summary": "Eva gebruikt in een nieuw gesprek meerdere eerdere ervaringen, houdt een tegenvoorbeeld zichtbaar en vraagt op een ander onderwerp welke hulp gewenst is. Feedback beïnvloedt haar hulp; vermoedens blijven voorlopig.",
+          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
+          "currentResultEvidenceSha256": "351fa11d5a90767e7cb25fa864cbd717b95027c13088baafb91c59d87234dbb2",
+          "currentResultReviewSha256": "1535218ed106d7e6f38056372057b3441c17e2b5a48ccdb1f12897f78fd7566e",
           "observedUsage": {
-            "measurement": "completed_provider_accounting",
-            "physicalRequestsIncludingHelpers": 16,
-            "foregroundRequests": 7,
-            "helperRequests": 9,
-            "inputTokens": 55249,
-            "outputTokens": 3625,
-            "totalTokens": 58874,
-            "tools": 4,
-            "currentUnknown": 0,
-            "inflight": 0,
-            "elapsedSeconds": 164.19908609089907,
-            "creditCosts": null,
-            "historicalUnknownPreserved": true
+            "registeredPhysicalRequests": 15,
+            "completedMeasuredRequests": 15,
+            "currentUnknownRequests": 0,
+            "inflightRequests": 0,
+            "allCurrentUsageComplete": true,
+            "inputTokens": 52866,
+            "outputTokens": 3298,
+            "totalTokens": 56164,
+            "foreground": {
+              "requests": 6,
+              "inputTokens": 21302,
+              "outputTokens": 995,
+              "totalTokens": 22297
+            },
+            "helpers": {
+              "requests": 9,
+              "inputTokens": 31564,
+              "outputTokens": 2303,
+              "totalTokens": 33867
+            },
+            "model": "gpt-6-astra",
+            "reasoningEffort": "medium",
+            "actualGeneratedActionCalls": 2,
+            "fixedLimits": {
+              "substantiveTurns": 4,
+              "physicalRequestsIncludingHelpers": 24,
+              "actionCalls": 12,
+              "registeredTokens": 150000,
+              "secondsIncludingResourceBoot": 600
+            },
+            "limitsExceeded": false,
+            "clockReset": false,
+            "creditCost": null,
+            "secondsBootToSealedResult": 457.525305,
+            "caseReportedExecutionElapsedSeconds": 303.7927951250458,
+            "developmentCredits": null
           }
         }
       },
@@ -16324,10 +16354,10 @@
       "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-12T17:14:03.519922+00:00",
-      "image": "sha256:26c7efde8fe708fca5f6cea1a2e7b8c29d6963b38d22f88ed26e5e0d5b59e25a",
-      "coreImage": "sha256:26c7efde8fe708fca5f6cea1a2e7b8c29d6963b38d22f88ed26e5e0d5b59e25a",
-      "workerImage": "sha256:4e512dcd9b4bd5c33c1c471128cb0d943c681b3669cc724eb97871faf656287e",
+      "recordedAt": "2026-10-13T05:19:28.211424+00:00",
+      "image": "sha256:21a3cd51e011471bcea2a8750e1e44ae3d130fb346bd983b989bee4d576b29ba",
+      "coreImage": "sha256:21a3cd51e011471bcea2a8750e1e44ae3d130fb346bd983b989bee4d576b29ba",
+      "workerImage": "sha256:a342847d832d66f72f9051461a88f623b6be11ae32fc52d6bcd570efc5d1d065",
       "core": "/eva2-managed-b-slot3-core",
       "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
       "coreHealth": "healthy",
@@ -16335,19 +16365,18 @@
       "readyStatus": "ready",
       "repositoryHeadFullyInstalled": false,
       "reviewedSourceIdentity": {
-        "eva2/src/eva/adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
-        "eva2/src/eva/adapters/postgres/connector_results.py": "dc4e7dbdf5a8b9f1278df016a520eddb6bf64956e9cf4ee2ca15416d582efce5",
-        "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+        "eva2/src/eva/adapters/projection/hindsight.py": "2cc2a6af72ddf19788d62f679b69f5560604e7f33b14e115d6cca0782062e9db",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py": "2305d23c289f9d7bb800fb143ece3f29e4fe2b33dc305c28d679d8058b211d55"
       },
-      "retainedSourceItems": 344,
-      "evidence": "eva2/evidence/product/tuya-retained-read-semantics-installed-20261012.json",
-      "evidencePath": "eva2/evidence/product/tuya-retained-read-semantics-installed-20261012.json",
-      "composeOverride": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/candidate.compose.private.json",
+      "retainedSourceItems": 343,
+      "evidence": "eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+      "evidencePath": "eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/hue-pattern-social-20261013/installation/candidate.compose.private.json",
       "configurationEnvironmentMountsRetained": true,
-      "installedReview": "eva2/reviews/tuya-retained-read-semantics-installed-review-20261012.json",
-      "meaning": "Gezonde kern en werker met behoud van leessemantiek. Vijfde hervatting stopte op te grote taakcontext; geen eindvoorstel en geen nieuwe betaalde poging.",
-      "installedReviewSha256": "77b3fc8c86a4780734340967a25db02638220a0d4313464066831caf552d2750",
-      "independentSourceReview": "eva2/reviews/tuya-retained-read-semantics-source-review-20261012.json"
+      "installedReview": "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
+      "meaning": "Patroonherkomst en voorlopigheid geïnstalleerd in gezonde kern/werker; HUE2.1/HUE4.1 originele later-gebruikcriteria onafhankelijk PASS. Twee gewijzigde modules,343 overige Pythonbronnen en configuratie/mounts behouden.",
+      "independentSourceReview": "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
+      "installedReviewSha256": "1535218ed106d7e6f38056372057b3441c17e2b5a48ccdb1f12897f78fd7566e"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -23303,11 +23332,11 @@
             {
               "id": "HUE2.1",
               "title": "Patroon uit eerdere gebeurtenissen later gebruiken",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva gebruikt bij een nieuwe relevante situatie een onderbouwd patroon uit meerdere eerdere gebeurtenissen van dezelfde persoon. Zij kan de bronnen noemen en houdt een tegenstrijdige gebeurtenis zichtbaar.",
-              "nextAction": "HUE1.1/HUE3.1 blijven afgerond. HUE2.1/HUE4.1 blijven in uitvoering: alle patroonbronnen en tegenbewijs behouden, voorlopige conclusie zichtbaar; daarna één begrensde gewone later-gebruikcontrole op een ander onderwerp.",
+              "nextAction": "Afgerond en geïnstalleerd: oorspronkelijke criteria onafhankelijk PASS in een nieuw gesprek. Geen handeling of herhaalproef nodig.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -23315,17 +23344,19 @@
                 "outcome": "Eva gebruikt bij een nieuwe relevante situatie een onderbouwd patroon uit meerdere eerdere gebeurtenissen van dezelfde persoon. Zij kan de bronnen noemen en houdt een tegenstrijdige gebeurtenis zichtbaar.",
                 "existingRouteFirst": true,
                 "estimate": "Bestaande bron en bewijs eerst hergebruiken; alleen ontbrekende koppeling bouwen. Concrete uitvoerraming vóór een fysieke proef; creditkosten onbekend.",
-                "activeWorkers": [
-                  "/root/eva1_memory_transfer",
-                  "/root/product_execution_memory_review"
-                ]
+                "activeWorkers": []
               },
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex maakt deze technische koppeling af. Later gewoon gebruik levert menselijke feedback; nu geen herhaalproef nodig.",
+                "availableNow": true,
+                "readyWhen": "Afgerond en geïnstalleerd. Gewoon gebruik kan aanvullende gezinsfeedback geven; geen open technische blokkade.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-10-13T05:25:34.369802+00:00",
+              "evidencePaths": [
+                "eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+                "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json"
+              ]
             },
             {
               "id": "HUE3.1",
@@ -23623,11 +23654,11 @@
             {
               "id": "HUE4.1",
               "title": "Sociale feedback bij nieuw gesprek toepassen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Feedback over communicatie of gewenste hulp beïnvloedt een later gesprek over een ander onderwerp. Vermoedens over behoeften blijven toetsbare vragen; andere personen ontvangen geen privécontext.",
-              "nextAction": "HUE1.1/HUE3.1 blijven afgerond. HUE2.1/HUE4.1 blijven in uitvoering: alle patroonbronnen en tegenbewijs behouden, voorlopige conclusie zichtbaar; daarna één begrensde gewone later-gebruikcontrole op een ander onderwerp.",
+              "nextAction": "Afgerond en geïnstalleerd: oorspronkelijke criteria onafhankelijk PASS in een nieuw gesprek. Geen handeling of herhaalproef nodig.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -23635,17 +23666,19 @@
                 "outcome": "Feedback over communicatie of gewenste hulp beïnvloedt een later gesprek over een ander onderwerp. Vermoedens over behoeften blijven toetsbare vragen; andere personen ontvangen geen privécontext.",
                 "existingRouteFirst": true,
                 "estimate": "Bestaande bron en bewijs eerst hergebruiken; alleen ontbrekende koppeling bouwen. Concrete uitvoerraming vóór een fysieke proef; creditkosten onbekend.",
-                "activeWorkers": [
-                  "/root/eva1_memory_transfer",
-                  "/root/product_execution_memory_review"
-                ]
+                "activeWorkers": []
               },
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex maakt deze technische koppeling af. Later gewoon gebruik levert menselijke feedback; nu geen herhaalproef nodig.",
+                "availableNow": true,
+                "readyWhen": "Afgerond en geïnstalleerd. Gewoon gebruik kan aanvullende gezinsfeedback geven; geen open technische blokkade.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-10-13T05:25:34.369802+00:00",
+              "evidencePaths": [
+                "eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+                "eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json"
+              ]
             }
           ],
           "latestEvidence": "eva2/evidence/product/m3-personality-owner-accepted-20261005.json",
@@ -24587,11 +24620,11 @@
             {
               "id": "HUE5.1",
               "title": "Van de reactie op eigen initiatief leren",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-              "nextAction": "Gebruik de bestaande initiatiefgeschiedenis, algemene uitvoerder en resultaatterugmelding. Een opgeslagen reflectie of geforceerde voorbeeldbijdrage sluit dit niet af.",
+              "nextAction": "Bestaande eigen bijdrage, privéresultaat en ontvangerfeedback aan de latere gewone initiatiefkeuze binden. De volledige technische route bestaat; geen nieuwe koppeling of geforceerde bijdrage bouwen zonder aangetoond tekort.",
               "ownerActionRequired": false,
               "source": "eva2/design/product/human-understanding-engine-integration-20261012.md",
               "assignment": {
@@ -24606,7 +24639,8 @@
                 "readyWhen": "Codex maakt deze technische koppeling af. Later gewoon gebruik levert menselijke feedback; nu geen herhaalproef nodig.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "currentEvidence": "/home/administrator/project/.eva2-artifacts/hue-initiative-feedback-20261013/source-audit/hue5-initiative-feedback-source-audit.private.json"
             }
           ],
           "latestEvidence": "eva2/evidence/product/i1-private-contribution-readback-20261002.json",
@@ -25356,7 +25390,7 @@
             {
               "id": "HUE6.1",
               "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
-              "status": "in_progress",
+              "status": "planned",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
@@ -25368,11 +25402,7 @@
                 "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
                 "existingRouteFirst": true,
                 "estimate": "Bestaande bron en bewijs eerst hergebruiken; alleen ontbrekende koppeling bouwen. Concrete uitvoerraming vóór een fysieke proef; creditkosten onbekend.",
-                "activeWorkers": [
-                  "/root",
-                  "/root/eva1_memory_transfer",
-                  "/root/product_execution_memory_review"
-                ]
+                "activeWorkers": []
               },
               "ownerInstructions": {
                 "availableNow": false,
@@ -32734,8 +32764,8 @@
       "installedReview": "eva2/reviews/native-initiative-subscription-installed-review-20261011.json",
       "installedReviewSha256": "6dab933685791a895d23d5ae9cf9950d6510ecc0586cd13803cbd32927b1d372"
     },
-    "checkedAt": "2026-10-12T12:43:12.605191+02:00",
-    "reviewedAt": "2026-10-11T23:41:05.032229+00:00",
+    "checkedAt": "2026-10-13T05:25:34.369802+00:00",
+    "reviewedAt": "2026-10-13T05:23:14.340320+00:00",
     "historicalRuntimeBeforeInitiativeOutcomeMemory20261012": {
       "recordedAt": "2026-10-11T20:50:50.682674+00:00",
       "image": "sha256:c0f071c24a420e86adbe2cc7a2f13b661198bc3b95c7fb62d71546a8bee2e8e2",
@@ -32887,9 +32917,41 @@
     },
     "goalTurnProgress20261012": {
       "classification": "progress",
-      "previousAuthoritativeChange": "b5d3af83: exact Home Assistant context correction installed in core and worker; GitHub pushed.",
-      "currentAuthoritativeEvidence": "Ten real PostgreSQL learning-source checks passed with before/after source hashes equal; ordinary route integration remains.",
+      "currentAuthoritativeEvidence": "eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+      "completedTaskIds": [
+        "HUE2.1",
+        "HUE4.1"
+      ],
+      "originalProgress": "39/48 unchanged",
+      "expandedProgress": "43/54",
+      "nextTaskId": "HUE5.1",
       "globalGoalStatus": "active"
+    },
+    "historicalRuntimeBeforePatternProvenanceInstalled20261013": {
+      "recordedAt": "2026-10-12T17:14:03.519922+00:00",
+      "image": "sha256:26c7efde8fe708fca5f6cea1a2e7b8c29d6963b38d22f88ed26e5e0d5b59e25a",
+      "coreImage": "sha256:26c7efde8fe708fca5f6cea1a2e7b8c29d6963b38d22f88ed26e5e0d5b59e25a",
+      "workerImage": "sha256:4e512dcd9b4bd5c33c1c471128cb0d943c681b3669cc724eb97871faf656287e",
+      "core": "/eva2-managed-b-slot3-core",
+      "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
+      "coreHealth": "healthy",
+      "workerHealth": "healthy",
+      "readyStatus": "ready",
+      "repositoryHeadFullyInstalled": false,
+      "reviewedSourceIdentity": {
+        "eva2/src/eva/adapters/model/pydantic_conversation.py": "3340c00d84941bf772099965bf6e8cc6bf3337d8728127a32ce278d4472038bd",
+        "eva2/src/eva/adapters/postgres/connector_results.py": "dc4e7dbdf5a8b9f1278df016a520eddb6bf64956e9cf4ee2ca15416d582efce5",
+        "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "8f13f1e1410e1cbf50e7501dec8e07567c5f917730ef7e381e6f54830c56387a"
+      },
+      "retainedSourceItems": 344,
+      "evidence": "eva2/evidence/product/tuya-retained-read-semantics-installed-20261012.json",
+      "evidencePath": "eva2/evidence/product/tuya-retained-read-semantics-installed-20261012.json",
+      "composeOverride": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/ancestor-argument-semantics-correction/installation/candidate.compose.private.json",
+      "configurationEnvironmentMountsRetained": true,
+      "installedReview": "eva2/reviews/tuya-retained-read-semantics-installed-review-20261012.json",
+      "meaning": "Gezonde kern en werker met behoud van leessemantiek. Vijfde hervatting stopte op te grote taakcontext; geen eindvoorstel en geen nieuwe betaalde poging.",
+      "installedReviewSha256": "77b3fc8c86a4780734340967a25db02638220a0d4313464066831caf552d2750",
+      "independentSourceReview": "eva2/reviews/tuya-retained-read-semantics-source-review-20261012.json"
     }
   },
   "activeTaskId": "AU-008",

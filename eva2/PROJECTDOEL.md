@@ -1,3 +1,34 @@
+## Actueel 13 oktober — patronen en sociale feedback afgerond en geïnstalleerd
+
+HUE2.1 en HUE4.1 halen hun ongewijzigde oorspronkelijke eindvoorwaarden in één
+gewone vierbeurtenproef. Een nieuw gesprek zonder recente historie gebruikt twee
+eerdere ondersteunende ervaringen én het tegenvoorbeeld, met herkenbare bronnen.
+Feedback over gewenste hulp werkt door bij een ander onderwerp; Eva vraagt naar
+de behoefte en behandelt duiding niet als vast persoonsfeit. Onafhankelijke PASS.
+
+Volledige patroonherkomst en voorlopigheid in bestaande Hindsight/gesprekroute
+hersteld: alle actuele eigen bronnen vereist, geen privécontext uit een andere
+persoon.97 gerichte controles PASS; eerste twee fixturefouten behouden. Exact twee
+modules eenmaal geïnstalleerd; kern en werker healthy/ready,343 overige Python-
+bronnen per image en configuratie/mounts behouden. Geen tweede geheugen/platform.
+
+15/15 complete aanvragen:6 foreground/9 helpers, alle Astra/medium,56.164 tokens
+(52.866in/3.298out),2 acties, huidige UNKNOWN0/inflight0. Vier eigen resources weg.
+Helper-parentACKfalse/lokale disconnectannotation blijft apart van complete usage.
+Historische3UNKNOWN behouden; alleen genoemde HUE-episoden nu58registraties,
+55complete, bekende tokenondergrens195.787; totaal/creditkosten onbekend.
+Oude rekenfout in review bewaard met apart addendum: boot→eindresultaat457,525305s.
+Native observaties blijven afzonderlijke gebeurtenissen; geen native geconsolideerde
+multibronrecord-, algemene privacy-, efficiëntie- of gezinsacceptatieclaim.
+
+Oorspronkelijke39/48 behouden; uitgebreid bord43/54. Volledig goal ACTIVE.
+Vervolg HUE5.1: bestaande eigen bijdrage en echte reactie in volgende initiatief-
+afweging. De technische route bestaat; eerst werkelijke registratie binden,
+geen nieuwe voorbeeldfunctie of geforceerde bijdrage. Daarna HUE6.1/AIDE² voor
+agentaansturing én code/uitbreidingen. Spraak geparkeerd, Docker Desktop ongemoeid.
+Resultaat: eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json.
+Review: eva2/reviews/hue-pattern-social-later-use-installed-review-20261013.json.
+
 ## Actueel 13 oktober — HUE1.1 en HUE3.1 afgerond: later ander advies
 
 De bestaande geïnstalleerde leerroute is eenmaal gewoon gebruikt op dezelfde

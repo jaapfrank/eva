@@ -4,7 +4,7 @@ Eva moet niet alleen informatie bewaren, maar verwachtingen vormen, uitkomsten h
 
 ## Mijn oordeel
 
-Ik neem de kringloop over: waarneming → voorlopige interpretatie → verwachting → handelen of wachten → echte uitkomst en feedback → bijstellen → later anders handelen. De expliciete verwachting-uitkomstverbinding is inmiddels gebouwd en geïnstalleerd. HUE1.1 en HUE3.1 zijn nu onafhankelijk afgerond: een nieuw gesprek gebruikt de met tegeninformatie herziene afweging. Opslag alleen was daarvoor onvoldoende.
+Ik neem de kringloop over: waarneming → voorlopige interpretatie → verwachting → handelen of wachten → echte uitkomst en feedback → bijstellen → later anders handelen. De expliciete verwachting-uitkomstverbinding is inmiddels gebouwd en geïnstalleerd. HUE1.1 en HUE3.1 zijn onafhankelijk afgerond: een nieuw gesprek gebruikt de met tegeninformatie herziene afweging. HUE2.1 en HUE4.1 zijn nu ook afgerond en geïnstalleerd: een ander onderwerp gebruikt meerdere eerdere ervaringen inclusief tegenvoorbeeld en feedback over gewenste hulp. Opslag alleen was daarvoor onvoldoende.
 
 Het ontwerp is een goede functionele richting, maar geen direct toepasbare implementatiebeschrijving van deze repository. Brainstem, ANIMA, SOUL.md en de vier voorbeeldvelden beschrijven voorgestelde verantwoordelijkheden. Hun namen bewijzen geen aanwezige interfaces. Het aangeleverde document eindigt bij de inleiding van zes bouwfasen; de concrete afrondingsvolgorde staat hieronder.
 
@@ -13,9 +13,9 @@ Het ontwerp is een goede functionele richting, maar geen direct toepasbare imple
 | Vermogen | Hergebruiken | Nog af te maken |
 | --- | --- | --- |
 | Persoonsmodel | Getypeerde bron, tijd, privacy en model_inference_unconfirmed; correctie, vervanging en intrekking | Tegenbewijs koppelen en een voorlopige interpretatie bij later gedrag zichtbaar bijstellen |
-| Patronen | Hindsight-synthese, persoonsobservaties en tijdlijn | Onderbouwde herhaling met tegenbewijs daadwerkelijk bij een latere situatie gebruiken |
+| Patronen | Hindsight-synthese, persoonsobservaties en tijdlijn | HUE2.1 afgerond: later gebruik van meerdere ervaringen met herkenbare bronnen en zichtbaar tegenvoorbeeld |
 | Verwachtingen | Bestaand persoonsgeheugen en rustige reflectie | Vooraf verwachting vastleggen, later echte uitkomst verbinden en volgende afweging veranderen |
-| Sociale context | Stijlspiegel en beperkt bewezen later gebruik van norm en vorm | Feedback over hulp en communicatie bij een ander gesprek toepassen |
+| Sociale context | Stijlspiegel en bestaande gewone feedbackroute | HUE4.1 afgerond: gewenste hulp bij ander onderwerp toegepast; behoefte blijft een vraag |
 | Initiatief | Initiatiefgeschiedenis, algemene werkuitvoering en privéresultaatroute | Authentieke voltooiing, ontvangerreactie en daarop aangepast later initiatief samen aantonen |
 | Leren en droommodus | Bestaande codevoorstellen, varianten, geïsoleerde beoordeling en toepassing | Agentaansturing en code of uitbreiding door de hele kringloop laten gaan, inclusief later gebruik |
 
@@ -69,3 +69,12 @@ De algemene taakafronding is daarnaast geïnstalleerd en door Eva gebruikt om ha
 HUE1.1 en HUE3.1 zijn afgerond op de oorspronkelijke criteria. Eva bewaart beide voorlopige records, herziet ze met echte gemelde tegeninformatie en uitkomst, en past in een nieuw gesprek haar advies aan zonder recente gesprekshistorie. [Resultaat](../../evidence/product/hue-learning-later-use-result-20261013.json) en [onafhankelijke beoordeling](../../reviews/hue-learning-later-use-review-20261013.json) leggen scope en bewijs vast. De code was al geïnstalleerd; de proef gebruikte die exacte bron.
 
 16 volledige aanvragen inclusief negen geheugenhelpers, 58.874 tokens en vier acties. Oude UNKNOWN en de afzonderlijke ontbrekende helper-afsluitACK blijven zichtbaar. Een synthetische private episode vervangt geen gezinsacceptatie of algemene privacygarantie. Nu 41/54 kleine taken afgerond; oorspronkelijke 39/48 behouden. Volgende bestaande uitkomst: HUE2.1/HUE4.1 voor patroon en sociale feedback, via dezelfde leerroute. Het volledige goal en AIDE² blijven open.
+
+## Oplevering 13 oktober: patronen en sociale feedback
+
+HUE2.1 en HUE4.1 zijn volgens hun oorspronkelijke criteria onafhankelijk PASS en geïnstalleerd. De bestaande route houdt actuele herkomst en tegenbewijs bij. Eén nieuw gesprek gebruikt drie eerdere gebeurtenissen en communicatiefeedback; 15 volledige aanvragen/56.164 tokens/2 acties. Dit is begrensd later gedrag, geen gezinsacceptatie, volledige AIDE² of algemene voorsprong.
+
+- [Resultaat en meetgegevens](../../evidence/product/hue-pattern-social-later-use-installed-20261013.json).
+- [Onafhankelijke beoordeling](../../reviews/hue-pattern-social-later-use-installed-review-20261013.json).
+
+HUE5.1 blijft open voor een echte reactie op bestaande eigen bijdrage en later aangepast initiatief. De technische feedbackroute bestaat al; een geforceerde nieuwe bijdrage of tweede feedbackplatform is niet nodig.

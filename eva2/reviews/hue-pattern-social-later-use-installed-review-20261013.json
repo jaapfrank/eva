@@ -1,0 +1,71 @@
+{
+  "contract": "EvaPatternSocialLaterUsePublishedReview/v1",
+  "publishedAt": "2026-10-13T05:25:34.369802+00:00",
+  "verdict": "PASS",
+  "scope": "Original HUE2.1/HUE4.1 doneWhen in one protected four-turn ordinary case; exact candidate installed once.",
+  "taskVerdicts": {
+    "HUE2.1": {
+      "verdict": "PASS",
+      "doneWhenSatisfied": true,
+      "originalDoneWhen": "Eva gebruikt bij een nieuwe relevante situatie een onderbouwd patroon uit meerdere eerdere gebeurtenissen van dezelfde persoon. Zij kan de bronnen noemen en houdt een tegenstrijdige gebeurtenis zichtbaar.",
+      "conditions": [
+        {
+          "id": "pattern_multiple_events",
+          "verdict": "PASS",
+          "evidence": "The committed fourth reply uses both distinct earlier supporting events to choose a cautious help approach in the new situation. The contrary event prevents a universal two-options preference. This is grounded later synthesis, not storage alone."
+        },
+        {
+          "id": "sources_identifiable",
+          "verdict": "PASS",
+          "evidence": "The actual last outbound context retains all three current same-person source texts, source references and ingress times; the committed answer identifies the supporting experiences and contrary experience."
+        },
+        {
+          "id": "contrary_visible",
+          "verdict": "PASS",
+          "evidence": "The real contrary event remains in the final model context and qualified answer. It is not erased or subordinated to an asserted fixed trait."
+        }
+      ],
+      "scope": "Original doneWhen covered in this one controlled private synthetic-person case. No requirement for a particular typed pattern record or exact answer wording was introduced."
+    },
+    "HUE4.1": {
+      "verdict": "PASS",
+      "doneWhenSatisfied": true,
+      "originalDoneWhen": "Feedback over communicatie of gewenste hulp beïnvloedt een later gesprek over een ander onderwerp. Vermoedens over behoeften blijven toetsbare vragen; andere personen ontvangen geen privécontext.",
+      "conditions": [
+        {
+          "id": "feedback_transfer_other_subject",
+          "verdict": "PASS",
+          "evidence": "The fourth committed reply on a different topic follows the earlier communication/help feedback by first asking which kind of help is wanted. It does not merely reproduce a formatting preference."
+        },
+        {
+          "id": "needs_testable_question",
+          "verdict": "PASS",
+          "evidence": "The response asks whether the person wants to brainstorm or take a concrete first step, without declaring feelings or needs as facts or imposing an unsolicited full plan."
+        },
+        {
+          "id": "private_person_boundary",
+          "verdict": "PASS",
+          "evidence": "Every current memory source and record is bound to the same verified private person and project. No foreign-person private source occurs in the observed contexts. Existing independently reviewed two-person CM05 isolation evidence and the already-reviewed fresh scope tests remain applicable; no second-person native case was added."
+        }
+      ],
+      "scope": "Original doneWhen covered by actual later behavior plus retained bounded isolation evidence. This does not establish a universal privacy guarantee or household acceptance."
+    }
+  },
+  "sourceIndependentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue-pattern-social-20261013/independent-audit/hue2-hue4-independent-terminal-review.private.json",
+    "sha256": "31a7126461bf78672c21deeff353e3459ed3075703ee68d5a187dc56f62104de"
+  },
+  "elapsedCorrectionAddendum": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue-pattern-social-20261013/independent-audit/hue2-hue4-terminal-review-elapsed-addendum.private.json",
+    "sha256": "e3fac19b7b51660e7d5b4c9f0692760cb3c4ba05b8e246702826b7c299a0779f"
+  },
+  "publishedResult": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+    "sha256": "351fa11d5a90767e7cb25fa864cbd717b95027c13088baafb91c59d87234dbb2"
+  },
+  "currentUsageComplete": true,
+  "sourceAndInstalledIdentityConfirmed": true,
+  "helperAcknowledgementAndOldUnknownPreserved": true,
+  "familyAcceptance": false,
+  "wholeGoalCompleted": false
+}
