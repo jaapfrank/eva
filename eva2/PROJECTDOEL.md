@@ -1,4 +1,28 @@
-## Actueel 13 oktober — vervolgcontext gecorrigeerd en geïnstalleerd
+## Actueel 13 oktober — context na teruglezing hersteld en geïnstalleerd
+
+Provider34e3c8da is na onafhankelijke bron-/bouwreview in kern en taakwerker
+geïnstalleerd: één bron gewijzigd, 344 overige per image en configuratie behouden;
+beide gezond en ready. 112 gerichte controles slagen. Bij echte invoerdruk mogen
+ook eerdere gelezen documentpagina’s naar het bestaande exacte scoped archief.
+Writes, laatste resultaat, fouten, UNKNOWN, originele bronnen en bevoegdheden blijven.
+Alle zes bewaarde Gen19-vervolgfasen passen; laatste baseline 66.899 BPE geweigerd,
+kandidaat 62.803 en na terugplaatsen 65.262 toegestaan. Alleen bekende context;
+exact geweigerde aanvraag en dynamische toekomstige fit blijven onbekend.
+
+Gen19 blijft gesloten met vijf gemeten aanvragen/vijf tools/277.947 tokens en
+geen nieuwe write. Eva las haar eigen huidige document afzonderlijk terug;
+het oorspronkelijke voorstel is nog onvoltooid. Eerst de noodzakelijke volgende
+opslagstap lokaal controleren, dan één gerichte gewone voortzetting vanuit de
+exact gesloten ouder onder bestaande eigenaarroute, grant, rollen en criteria.
+Geen blind vervolg, handgeschreven voorstel of nieuwe vergelijkingsserie.
+Geen HA-mutatie of migratie vóór afzonderlijk akkoord.
+Volledig goal ACTIVE; 39/48 en 39/54 behouden; HUE/leercyclus/AIDE² open.
+Spraak geparkeerd; Docker Desktop ongemoeid.
+
+Installatie: eva2/evidence/product/post-read-context-installed-20261013.json.
+Review: eva2/reviews/post-read-context-source-review-20261013.json.
+
+## Historisch 13 oktober — eerdere vervolgcontextcorrectie geïnstalleerd
 
 Provider817b2ded is in kern/werker geïnstalleerd na onafhankelijke bron-/bouwGO.
 Eén bron gewijzigd,344 overige perimage/mounts/configuratie behouden;gezond en ready.

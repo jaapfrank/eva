@@ -110,15 +110,22 @@ def test_authored_content_only_proof_pages_survive_checkpoint_pressure_and_wire(
     baseline = PydanticConversationModel._phase_admission_body(prompt="", instructions="",
         prior_actions=history[:-1], completed_action=history[-1])["input"][-1]
     for pressure in (False, True):
-        selected, _ = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=pressure)
-        assert {"first-page", "tail-page", "saved-notes", "failed", "unknown", "latest"} <= _ids(selected)
+        selected, overview = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=pressure)
+        assert {"original-write", "saved-notes", "failed", "unknown", "latest"} <= _ids(selected)
+        if pressure:
+            assert not {"first-page", "tail-page"} & _ids(selected)
+            index = expand_deferred_read_index(json.loads(overview.split("\n", 1)[1]))
+            assert {"first-page", "tail-page"} <= {row["call_id"] for row in index["reads"]}
+        else:
+            assert {"first-page", "tail-page"} <= _ids(selected)
         wire = PydanticConversationModel._phase_admission_body(prompt="", instructions="",
             prior_actions=selected[:-1], completed_action=selected[-1])
         assert wire["input"][-1] == baseline
         rendered = tuple(json.loads(row["output"]) for row in wire["input"] if row["type"] == "function_call_output")
         expanded = dict(zip((r.call.call_id for r in selected), expand_receipt_history(selected, rendered), strict=True))
-        for page in (first, tail):
+        for page in (() if pressure else (first, tail)):
             assert expanded[page.call.call_id]["result"]["text"] == page.output["result"]["text"]
+        assert next(r for r in selected if r.call.call_id == "original-write") == version.write
         assert next(r for r in selected if r.call.call_id == "failed") == failed
         assert next(r for r in selected if r.call.call_id == "unknown") == unknown
     assert _raw(history) == frozen
@@ -141,14 +148,19 @@ def test_unproven_or_other_ingress_pages_keep_existing_authorized_deferral(reaso
     assert _raw(history) == frozen
 
 
-def test_unconfirmed_new_write_cannot_displace_observed_artifact_under_pressure():
+def test_pressure_preserves_unconfirmed_write_and_authorized_observed_source():
     old, unconfirmed = _version("old"), _version("unconfirmed", proof_matches=False)
     page = old.page("old-page")
     history = (old.write, old.read, page, unconfirmed.write,
                _working_note("checkpoint", 2, "Keep observed work."), _latest())
     frozen = _raw(history)
-    selected, _ = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=True)
-    assert {"old-page", "unconfirmed-write", "latest"} <= _ids(selected)
+    ordinary, _ = PydanticConversationModel._receipt_context_selection(history)
+    assert "old-page" in _ids(ordinary)
+    selected, overview = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=True)
+    assert {"old-write", "unconfirmed-write", "latest"} <= _ids(selected)
+    assert next(r for r in selected if r.call.call_id == "unconfirmed-write") == unconfirmed.write
+    index = expand_deferred_read_index(json.loads(overview.split("\n", 1)[1]))
+    assert "old-page" in {row["call_id"] for row in index["reads"]}
     assert selected[-1] == history[-1]
     assert _raw(history) == frozen
 
@@ -171,13 +183,19 @@ def test_latest_actually_read_version_and_distinct_ranges_replace_old_pages_once
     duplicate = new.page("new-first-repeat")
     history = (old.write, old.read, old_page, new.write, new.read, first, tail, duplicate, checkpoint, _latest())
     frozen = _raw(history)
-    selected, overview = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=True)
+    selected, overview = PydanticConversationModel._receipt_context_selection(history)
     assert {"new-tail", "new-first-repeat", "checkpoint", "latest"} <= _ids(selected)
     assert not {"old-page", "new-first"} & _ids(selected)
     index = expand_deferred_read_index(json.loads(overview.split("\n", 1)[1]))
     assert {"old-page", "new-first"} <= {row["call_id"] for row in index["reads"]}
     assert selected[-1] == history[-1]
     assert _raw(history) == frozen
+    pressured, overview = PydanticConversationModel._receipt_context_selection(history, defer_local_reads=True)
+    assert {"old-write", "new-write", "checkpoint", "latest"} <= _ids(pressured)
+    assert not {"new-tail", "new-first-repeat"} & _ids(pressured)
+    index = expand_deferred_read_index(json.loads(overview.split("\n", 1)[1]))
+    assert {"old-page", "new-first", "new-tail", "new-first-repeat"} <= {row["call_id"] for row in index["reads"]}
+    assert pressured[-1] == history[-1] and _raw(history) == frozen
 
 
 def test_research_material_survives_saved_note_without_repeating_local_read():

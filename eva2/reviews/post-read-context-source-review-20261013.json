@@ -1,0 +1,22 @@
+{
+  "contract": "EvaPublishedSourceReview/v1",
+  "checkedAt": "2026-10-13T01:44:51.877469+00:00",
+  "verdict": "GO",
+  "privateSourceAndBuildReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/source-review.private.json",
+    "sha256": "23ab43c2c85f7cffbaf9d38ff89f0256a90d570c2875bdc6947db43173cb1760"
+  },
+  "installedEvidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/post-read-context-installed-20261013.json",
+    "sha256": "5ad0e52d7de9144bcf6e2219c540b23d6bb53704cd1626061a59da0ae668f41b"
+  },
+  "sourceSha256": "34e3c8da2376ef74bbf9afd51a9397a0ad557f1e271c123035f3ec841134a7b8",
+  "testSha256": "57a363ac49f6cef978aa28a90da49dcf013bfaa1e0cea641cd02d0e763114d5b",
+  "limits": [
+    "Exact source/build and six known retained prefixes checked; no exact refused envelope/full future fit claim.",
+    "Installation uses one existing update; no native continuation authorized by source review.",
+    "Original readonly proposal remains incomplete; original criteria, closed failures and usage retained."
+  ],
+  "nativeInputAuthorized": false,
+  "originalProposalCompleted": false
+}
