@@ -1038,3 +1038,40 @@ def test_foreground_during_blocking_admission_defers_current_and_remaining_scope
     finally:
         for context in entered:
             context.__exit__(None, None, None)
+
+
+@pytest.mark.parametrize('recording_fails', [False, True])
+def test_settled_idle_reflection_is_recorded_without_repeating_on_record_failure(monkeypatch, recording_fails):
+    clock = [100.0]
+    monkeypatch.setattr('eva.application.memory_background.time.monotonic', lambda: clock[0])
+    completed, recorded = [], []
+    receipt = SimpleNamespace(operation_id='settled-operation')
+    admission = SimpleNamespace(admitted=True)
+    def maintain(*scope):
+        completed.append(scope)
+        return receipt
+    def record(**kwargs):
+        recorded.append(kwargs)
+        if recording_fails:
+            raise OSError('private backend details')
+    worker = HindsightColdPathWorker(SimpleNamespace(maintain_person_scope=maintain),
+        idle_seconds=1, reflection_budget=SimpleNamespace(
+            admit_background_reflection=lambda **kw: admission,
+            record_reflection_completed=record))
+    scope = ('tenant', 'installation', 'person')
+    worker._reflection_scopes.add(scope)
+    with worker.foreground():
+        clock[0] += 2
+        worker._schedule_reflection_if_idle()
+        assert completed == recorded == []
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert completed == [scope]
+    assert recorded[0]['receipt'] is receipt and recorded[0]['admission'] is admission
+    assert recorded[0]['principal_id'] == 'person'
+    assert worker._reflection_scopes == set()
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert len(completed) == len(recorded) == 1
+    if recording_fails:
+        assert worker.last_error == 'reflection completion recording failed: OSError'

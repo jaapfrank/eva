@@ -308,6 +308,33 @@ class PostgresConversationJournal(PostgresScopedRole):
             occurred_at=datetime.now(tz=UTC).replace(microsecond=0), data=data,
         )
 
+    def record_model_memory_context(self, turn: ConversationTurn, request_id: str,
+                                    *, style_mirror_sha256: str) -> None:
+        """Bind a recalled mirror digest to a particular admitted model request.
+
+        This proves context supply, not that the model understood or followed it.
+        No memory content is copied into accounting or public diagnostics.
+        """
+        if not isinstance(style_mirror_sha256, str) or not _SHA256.fullmatch(style_mirror_sha256):
+            raise ValueError('model style mirror digest is invalid')
+        identity = self._stop_identity(turn.principal_id, turn.conversation_id, turn.message_id)
+        admission = self._timeline.events(f'conversation-model:{request_id}')
+        if (not admission or admission[0].event_type != 'CONVERSATION_MODEL_ADMITTED'
+                or any(admission[0].payload.get('data', {}).get(k) != v for k, v in identity.items())
+                or admission[0].payload['data'].get('request_id') != request_id):
+            raise ConversationConflict('model memory context has no matching admission')
+        data = {**identity, 'request_id': request_id, 'style_mirror_sha256': style_mirror_sha256}
+        thread = f'conversation-model-memory:{request_id}'
+        existing = self._timeline.events(thread)
+        if existing:
+            if (len(existing) != 1 or existing[0].event_type != 'CONVERSATION_MODEL_MEMORY_CONTEXT'
+                    or existing[0].payload.get('data') != data):
+                raise ConversationConflict('model memory context differs')
+            return
+        self._timeline.create_thread(thread_id=thread, checkpoint_id=thread + ':context',
+            occurred_at=datetime.now(tz=UTC).replace(microsecond=0), data=data,
+            event_type='CONVERSATION_MODEL_MEMORY_CONTEXT', phase='model_memory_bound', status='completed')
+
     def model_usage(self, turn: ConversationTurn) -> ConversationModelUsage:
         """Known totals across restarts; missing results retain explicit uncertainty.
 

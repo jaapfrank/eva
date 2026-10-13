@@ -10,7 +10,7 @@ Bestaande L3.6/L3.7 dekken onafhankelijke codewinst, toepassing en later gebruik
 
 Klaar wanneer: Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.
 
-De laatste beoordeling is gesloten zonder officiële score. De dubbele budgetaftrek is geïnstalleerd hersteld; 53 gerichte controles geslaagd, geen nieuwe modelaanvragen. HUE6.1 blijft open: rustige-reflectiekoppeling en later gebruik afmaken, bestaande geldige verbeterbewijzen hergebruiken. Geen herhaling van de gesloten proef of eigenaarhandeling.
+De rustige-reflectieoverdracht is nu geïnstalleerd: afgeronde operatie en later aangeboden stijlspiegel zijn per persoon/modelaanvraag terug te vinden. Echte gewijzigde betekenis en gedragsinvloed blijven onbewezen. De onafhankelijke ontwikkelende-agentbeoordeling blijft open. Geen gesloten proef opnieuw uitvoeren; geen eigenaarhandeling.
 
 ## Afmaakvolgorde
 

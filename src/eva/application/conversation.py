@@ -779,7 +779,7 @@ class ConversationModelJournal(Protocol):
     def model_usage(self, turn: ConversationTurn) -> ConversationModelUsage: ...
 
 
-_MODEL_REQUEST_JOURNAL: ContextVar[tuple[ConversationTurn, ConversationModelJournal] | None] = ContextVar(
+_MODEL_REQUEST_JOURNAL: ContextVar[tuple[ConversationTurn, ConversationModelJournal, str | None] | None] = ContextVar(
     "eva_model_request_journal", default=None,
 )
 
@@ -787,8 +787,12 @@ _MODEL_REQUEST_JOURNAL: ContextVar[tuple[ConversationTurn, ConversationModelJour
 @contextmanager
 def observe_model_requests(
     turn: ConversationTurn, journal: ConversationModelJournal | None,
+    *, style_mirror_sha256: str | None = None,
 ) -> Iterator[None]:
-    token = _MODEL_REQUEST_JOURNAL.set(None if journal is None else (turn, journal))
+    if style_mirror_sha256 is not None and (not isinstance(style_mirror_sha256, str)
+                                           or not _SHA256.fullmatch(style_mirror_sha256)):
+        raise ValueError('model style mirror digest is invalid')
+    token = _MODEL_REQUEST_JOURNAL.set(None if journal is None else (turn, journal, style_mirror_sha256))
     try:
         yield
     finally:
@@ -797,7 +801,17 @@ def observe_model_requests(
 
 def begin_current_model_request() -> str | None:
     context = _MODEL_REQUEST_JOURNAL.get()
-    return None if context is None else context[1].begin_model_request(context[0])
+    if context is None:
+        return None
+    request_id = context[1].begin_model_request(context[0])
+    _record_model_memory_context(context[0], context[1], request_id, context[2])
+    return request_id
+
+
+def _record_model_memory_context(turn, journal, request_id, digest):
+    record = getattr(journal, 'record_model_memory_context', None)
+    if digest is not None and callable(record):
+        record(turn, request_id, style_mirror_sha256=digest)
 
 
 def complete_current_model_request(
@@ -1107,13 +1121,18 @@ class LivingConversation:
             individual_requests = getattr(model, "journals_provider_requests", False) is True
             request_id = (None if model_journal is None or individual_requests
                           else model_journal.begin_model_request(turn))
+            style_digest = (None if memory.style_mirror is None else
+                            hashlib.sha256(memory.style_mirror.encode('utf-8')).hexdigest())
+            if request_id is not None:
+                _record_model_memory_context(turn, model_journal, request_id, style_digest)
             guard_factory = getattr(self._actions, "reply_guard", None)
             reply_guard = (guard_factory(turn, tuple(
                 item for item in receipts if item.call.name not in {STOP_VOICE_WORK, SPEAK_AND_CONTINUE}
             )) if callable(guard_factory) else None)
             # A durable action may change while its acknowledgement is being
             # generated. Do not publish provisional claims before its guard.
-            with observe_model_requests(turn, model_journal if individual_requests else None), (
+            with observe_model_requests(turn, model_journal if individual_requests else None,
+                                        style_mirror_sha256=style_digest), (
                 stream_conversation_text(lambda _delta: None)
                 if reply_guard is not None or repairing_input else nullcontext()
             ):

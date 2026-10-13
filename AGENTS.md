@@ -1,3 +1,16 @@
+## Actueel 13 oktober — rustige reflectie en later modelgebruik gekoppeld
+
+De bestaande geheugenwerker bewaart nu het bewijs van een afgeronde rustige
+reflectie, gekoppeld aan de persoonsreservering en inhoudvrije bron-/versiehashes.
+Het gewone gespreksjournal registreert welke stijlspiegel aan een toegelaten
+modelaanvraag is aangeboden. Een registratie- of uitleesfout herhaalt geen
+afgeronde reflectie. Kern en werker bevatten exact vijf nieuwe modules en
+341 ongewijzigde andere Pythonbestanden per image; beide zijn gezond.
+Dit bewijst de geïnstalleerde overdracht, nog geen gewijzigde betekenis of
+latere gedragsinvloed. HUE6.1 en 43/54 blijven staan. Geen handmatige Eva-modelaanvraag,
+spraakwerk of vergelijkingsserie voor deze bouw en installatie.
+Bewijs: development/evidence/product/quiet-reflection-trace-installed-20261013.json.
+
 ## Actueel 13 oktober — AIDE-budgettoewijzing geïnstalleerd hersteld
 
 De bestaande evaluator trekt ouderverbruik niet meer dubbel af van een apart
@@ -24,10 +37,12 @@ Bewijs: development/evidence/product/aide-current-baseline-outcome-20261013.json
 
 ## Actuele opdracht — HUE6.1 volledig afmaken
 
-Maak de bestaande AIDE²-cyclus af: bewaarde kandidaat onafhankelijk beoordelen,
-alleen bewezen kwaliteitswinst toepassen of de referentie behouden, en de gekozen
-versie later werkelijk gebruiken. Hergebruik geldig mensbegrip-/reflectiebewijs.
-Bind de actuele stabiele kern en het resterende gezamenlijke verbruik vóór invoer.
+Maak de oorspronkelijke HUE6-cyclus af. L3.6/L3.7 bewijzen al onafhankelijke
+codewinst, toepassing en later gebruik; herhaal die niet. Nog nodig zijn echte
+rustige-reflectiebetekenis met later gedrag en een geldige onafhankelijke
+kwaliteitsuitkomst voor de ontwikkelende agent. De exacte kandidaat eddd hoeft
+geen nieuwe winnaar te worden; de gesloten score NULL is geen gelijkspel.
+Bind vóór noodzakelijke nieuwe invoer de actuele kern en het gezamenlijk verbruik.
 Oude gesloten uitvoeringen, UNKNOWN en criteria blijven behouden; geen nieuwe
 variant, vergelijkingsserie of spraakwijziging. HUE5.1 blijft open. De telling
 blijft 43/54 tot een oorspronkelijke volledige eindvoorwaarde is gehaald.
@@ -107,10 +122,12 @@ eab83747a3c33a83f2f63f38180dc7d6330635ec. Eva2 staat in src/eva; geen Eva1-ontwi
 
 ## Huidige opdracht
 
-Maak de bestaande AIDE²-cyclus af: bewaarde kandidaat onafhankelijk beoordelen,
-alleen bewezen kwaliteitswinst toepassen of de referentie behouden, en de gekozen
-versie later werkelijk gebruiken. Hergebruik geldig mensbegrip-/reflectiebewijs.
-Bind de actuele stabiele kern en het resterende gezamenlijke verbruik vóór invoer.
+Maak de oorspronkelijke HUE6-cyclus af. L3.6/L3.7 bewijzen al onafhankelijke
+codewinst, toepassing en later gebruik; herhaal die niet. Nog nodig zijn echte
+rustige-reflectiebetekenis met later gedrag en een geldige onafhankelijke
+kwaliteitsuitkomst voor de ontwikkelende agent. De exacte kandidaat eddd hoeft
+geen nieuwe winnaar te worden; de gesloten score NULL is geen gelijkspel.
+Bind vóór noodzakelijke nieuwe invoer de actuele kern en het gezamenlijk verbruik.
 Oude gesloten uitvoeringen, UNKNOWN en criteria blijven behouden; geen nieuwe
 variant, vergelijkingsserie of spraakwijziging. HUE5.1 blijft open. De telling
 blijft 43/54 tot een oorspronkelijke volledige eindvoorwaarde is gehaald.

@@ -2139,3 +2139,121 @@ def test_private_observation_never_trims_or_substitutes_unresolved_support(hinds
     resolver = None if failure == "no_resolver" else lambda _q, _r: tuple(sources)
     engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url), private_source_resolver=resolver)
     assert engine.recall_for_presence(_query()).confirmed_facts == ()
+
+
+@pytest.mark.parametrize("before,after,grounded", [
+    ("  Earlier style  ", "  Updated style\n", True),
+    ("Same style", "  Same style  ", True),
+    (None, "New style", True),
+    ("Old ungrounded style", "Ungrounded style", False),
+])
+def test_reflection_receipt_binds_only_grounded_presence_content(monkeypatch, before, after, grounded):
+    import hashlib
+    from dataclasses import asdict
+    from eva.adapters.projection.hindsight import BackgroundReflectionReceipt
+
+    engine = HindsightMemoryEngine(HindsightProjectionConfig("http://127.0.0.1:8888"))
+    model_id = engine._style_mirror_id(PRINCIPAL)
+    evidence = {"world": [{"id": "private-source-one"}], "observations": [{"id": "private-source-two"}]}
+    trace = []
+    finished = False
+
+    def ensure_bank(tenant, installation):
+        assert (tenant, installation) == (TENANT, INSTALLATION)
+        return "scoped-bank"
+
+    def response(content):
+        return {"id": model_id, "trigger": {}, "content": content,
+                "reflect_response": {"based_on": evidence if grounded else {"world": []}}}
+
+    def request(method, path, payload=None, **kwargs):
+        trace.append((method, path, payload))
+        assert path.startswith("/v1/default/banks/scoped-bank/mental-models")
+        if method == "GET":
+            if not finished and before is None:
+                return 404, {}
+            return 200, response(after if finished else before)
+        if method == "PATCH":
+            return 200, {"id": model_id, **payload}
+        if path.endswith("/mental-models"):
+            assert payload["tags"] == [engine._person_tag(PRINCIPAL)]
+            assert payload["trigger"]["tags_match"] == "all_strict"
+        return 200, {"operation_id": "operation-one"}
+
+    def wait(bank, operation):
+        nonlocal finished
+        assert (bank, operation) == ("scoped-bank", "operation-one")
+        trace.append(("WAIT", bank, operation))
+        finished = True
+
+    monkeypatch.setattr(engine, "ensure_bank", ensure_bank)
+    monkeypatch.setattr(engine, "_request", request)
+    monkeypatch.setattr(engine, "_wait_for_operation", wait)
+    receipt = engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
+    assert [item[0] for item in trace][-2:] == ["WAIT", "GET"]
+    digest = lambda content: hashlib.sha256(content.strip().encode()).hexdigest()
+    assert receipt.before_content_sha256 == (digest(before) if grounded and before is not None else None)
+    assert receipt.after_content_sha256 == (digest(after) if grounded else None)
+    assert receipt.source_fact_count == (2 if grounded else 0)
+    expected = hashlib.sha256(json.dumps(evidence, sort_keys=True, separators=(",", ":"),
+                                        ensure_ascii=False, allow_nan=False).encode()).hexdigest()
+    assert receipt.source_evidence_sha256 == (expected if grounded else None)
+    assert engine._recall_style_mirror("scoped-bank", PRINCIPAL) == (after.strip() if grounded else None)
+    assert "private-source" not in json.dumps(asdict(receipt))
+    assert after not in json.dumps(asdict(receipt))
+    assert BackgroundReflectionReceipt("b", "m", "created", "o").source_fact_count == 0
+    wrong = response(after)
+    wrong["id"] = engine._style_mirror_id("another-person")
+    with pytest.raises(HindsightProjectionProtocolError, match="identity differs"):
+        engine._style_mirror_content(wrong, model_id)
+
+
+@pytest.mark.parametrize("readback", ["unavailable", "malformed", "ungrounded"])
+def test_reflection_receipt_preserves_settled_operation_on_readback_loss(monkeypatch, readback):
+    import hashlib
+    from dataclasses import asdict
+    from eva.adapters.projection.hindsight import HindsightProjectionUnavailable
+
+    engine = HindsightMemoryEngine(HindsightProjectionConfig("http://127.0.0.1:8888"))
+    model_id = engine._style_mirror_id(PRINCIPAL)
+    trace = []
+    settled = False
+
+    def request(method, path, payload=None, **kwargs):
+        trace.append(method)
+        if method == "GET" and not settled:
+            return 404, {}
+        if method == "POST":
+            assert not settled
+            return 200, {"operation_id": "settled-operation"}
+        assert method == "GET" and settled
+        if readback == "unavailable":
+            raise HindsightProjectionUnavailable("private diagnostic must not escape")
+        return 200, {
+            "id": model_id,
+            "content": None if readback == "malformed" else "Ungrounded content",
+            "reflect_response": {"based_on": {"world": ["private-source"] if readback == "malformed" else []}},
+        }
+
+    def wait(bank, operation):
+        nonlocal settled
+        assert operation == "settled-operation"
+        settled = True
+        trace.append("WAIT")
+
+    monkeypatch.setattr(engine, "ensure_bank", lambda *args: "scoped-bank")
+    monkeypatch.setattr(engine, "_request", request)
+    monkeypatch.setattr(engine, "_wait_for_operation", wait)
+    receipt = engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
+    assert trace == ["GET", "POST", "WAIT", "GET"]
+    assert receipt.operation_id == "settled-operation" and receipt.disposition == "created"
+    assert receipt.after_content_sha256 is None
+    assert receipt.source_evidence_sha256 is None and receipt.source_fact_count == 0
+    if readback == "ungrounded":
+        assert receipt.observation_error_type is None
+    else:
+        error_type = HindsightProjectionUnavailable if readback == "unavailable" else HindsightProjectionProtocolError
+        assert receipt.observation_error_type == hashlib.sha256(
+            f"{error_type.__module__}.{error_type.__qualname__}".encode()
+        ).hexdigest()
+    assert "private" not in json.dumps(asdict(receipt))

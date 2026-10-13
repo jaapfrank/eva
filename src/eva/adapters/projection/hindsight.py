@@ -207,6 +207,11 @@ class BackgroundReflectionReceipt:
     mental_model_id: str
     disposition: Literal["created", "refreshed"]
     operation_id: str | None
+    before_content_sha256: str | None = None
+    after_content_sha256: str | None = None
+    source_evidence_sha256: str | None = None
+    source_fact_count: int = 0
+    observation_error_type: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -973,6 +978,13 @@ class HindsightMemoryEngine:
             "?detail=full",
             allowed_statuses=frozenset({404}),
         )
+        before_content = None
+        if status != 404:
+            try:
+                before_content = self._style_mirror_content(existing, mental_model_id)
+            except HindsightProjectionProtocolError:
+                # An invalid old derivative may still be repaired by this reflection.
+                pass
         if status == 404:
             _, created = self._request(
                 "POST",
@@ -1024,8 +1036,40 @@ class HindsightMemoryEngine:
             disposition = "refreshed"
         assert operation_id is not None
         self._wait_for_operation(bank_id, operation_id)
+        after_digest = source_digest = observation_error_type = None
+        source_fact_count = 0
+        try:
+            _, final = self._request(
+                "GET",
+                f"/v1/default/banks/{bank_id}/mental-models/{mental_model_id}?detail=full",
+            )
+            after_content = self._style_mirror_content(final, mental_model_id)
+            if after_content is not None:
+                based_on = final["reflect_response"]["based_on"]
+                source_digest = hashlib.sha256(json.dumps(
+                    based_on, sort_keys=True, separators=(",", ":"),
+                    ensure_ascii=False, allow_nan=False,
+                ).encode("utf-8")).hexdigest()
+                source_fact_count = sum(
+                    len(items) for items in based_on.values() if isinstance(items, list)
+                )
+                after_digest = hashlib.sha256(after_content.encode("utf-8")).hexdigest()
+        except Exception as error:
+            # Reflection already settled: missing readback must not trigger another one.
+            after_digest = source_digest = None
+            source_fact_count = 0
+            error_type = type(error)
+            observation_error_type = hashlib.sha256(
+                f"{error_type.__module__}.{error_type.__qualname__}".encode("utf-8")
+            ).hexdigest()
         return BackgroundReflectionReceipt(
-            bank_id, mental_model_id, disposition, operation_id
+            bank_id, mental_model_id, disposition, operation_id,
+            before_content_sha256=(None if before_content is None else
+                                   hashlib.sha256(before_content.encode("utf-8")).hexdigest()),
+            after_content_sha256=after_digest,
+            source_evidence_sha256=source_digest,
+            source_fact_count=source_fact_count,
+            observation_error_type=observation_error_type,
         )
 
     def _recall_style_mirror(self, bank_id: str, principal_id: str) -> str | None:
@@ -1037,6 +1081,11 @@ class HindsightMemoryEngine:
         )
         if status == 404:
             return None
+        return self._style_mirror_content(response, mental_model_id)
+
+    @staticmethod
+    def _style_mirror_content(response: dict[str, Any], mental_model_id: str) -> str | None:
+        """Return precisely the grounded, stripped content admitted to Presence."""
         if response.get("id") != mental_model_id:
             raise HindsightProjectionProtocolError(
                 "Hindsight style mirror identity differs"

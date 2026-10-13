@@ -1,3 +1,16 @@
+## Actueel 13 oktober — rustige reflectie en later modelgebruik gekoppeld
+
+De bestaande geheugenwerker bewaart nu het bewijs van een afgeronde rustige
+reflectie, gekoppeld aan de persoonsreservering en inhoudvrije bron-/versiehashes.
+Het gewone gespreksjournal registreert welke stijlspiegel aan een toegelaten
+modelaanvraag is aangeboden. Een registratie- of uitleesfout herhaalt geen
+afgeronde reflectie. Kern en werker bevatten exact vijf nieuwe modules en
+341 ongewijzigde andere Pythonbestanden per image; beide zijn gezond.
+Dit bewijst de geïnstalleerde overdracht, nog geen gewijzigde betekenis of
+latere gedragsinvloed. HUE6.1 en 43/54 blijven staan. Geen handmatige Eva-modelaanvraag,
+spraakwerk of vergelijkingsserie voor deze bouw en installatie.
+Bewijs: development/evidence/product/quiet-reflection-trace-installed-20261013.json.
+
 ## Actueel 13 oktober — AIDE-budgettoewijzing geïnstalleerd hersteld
 
 De bestaande evaluator trekt ouderverbruik niet meer dubbel af van een apart

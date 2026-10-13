@@ -204,6 +204,60 @@ def test_provider_journal_follows_selected_model_without_double_counting():
     assert reply.model_usage.input_tokens == 20
 
 
+def test_provider_request_receives_only_the_exact_recalled_style_digest():
+    import hashlib
+    from eva.application.conversation import begin_current_model_request, observe_model_requests
+    class Journal:
+        def begin_model_request(self, t):
+            return 'request:one'
+        def record_model_memory_context(self, t, request, *, style_mirror_sha256):
+            contexts.append((t, request, style_mirror_sha256))
+    contexts = []
+    digest = hashlib.sha256('Kort en direct.'.encode()).hexdigest()
+    with observe_model_requests(turn(), Journal(), style_mirror_sha256=digest):
+        assert begin_current_model_request() == 'request:one'
+    assert contexts == [(turn(), 'request:one', digest)]
+    assert begin_current_model_request() is None
+    with pytest.raises(ValueError, match='digest'):
+        with observe_model_requests(turn(), Journal(), style_mirror_sha256='private text'):
+            pass
+
+
+@pytest.mark.parametrize('physical_journal', [False, True])
+def test_living_conversation_binds_mirror_supplied_to_selected_model(physical_journal):
+    import hashlib
+    from eva.application.conversation import begin_current_model_request, complete_current_model_request
+    mirror = 'Kort en direct, zonder vaste opening.'
+    class StyledMemory(_Memory):
+        def recall_for_presence(self, query):
+            return replace(super().recall_for_presence(query), style_mirror=mirror)
+    class Journal:
+        def __init__(self):
+            self.contexts = []
+            self.usages = []
+        def begin_model_request(self, t):
+            return 'selected:request'
+        def record_model_memory_context(self, t, request, *, style_mirror_sha256):
+            self.contexts.append((request, style_mirror_sha256))
+        def complete_model_request(self, t, request, usage):
+            self.usages.append(usage)
+        def model_usage(self, t):
+            return ConversationModelUsage.aggregate(tuple(self.usages))
+    class Selected(Model):
+        journals_provider_requests = physical_journal
+        def generate(self, *args, **kwargs):
+            assert args[2].style_mirror == mirror
+            request = begin_current_model_request() if physical_journal else None
+            result = super().generate(*args, **kwargs)
+            if physical_journal:
+                complete_current_model_request(request, result.usage)
+            return result
+    selected, journal = Selected(lambda t, k: 'Goed.'), Journal()
+    LivingConversation(StyledMemory(), selected, IDENTITY).respond(turn(), model_journal=journal)
+    assert journal.contexts == [('selected:request', hashlib.sha256(mirror.encode()).hexdigest())]
+    assert len(journal.usages) == 1
+
+
 def test_autonomous_work_keeps_existing_work_model():
     from eva.application.initiative_execution import initiative_execution
     class Guard:

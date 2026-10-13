@@ -347,6 +347,71 @@ class PostgresDailyReflectionBudget:
         raise OperationalTimelineError("reflection budget admission remained busy")
 
 
+    def record_reflection_completed(self, *, tenant_id: str, installation_id: str,
+                                    principal_id: str, admission: BackgroundReflectionAdmission,
+                                    receipt: object, now: datetime) -> None:
+        """Retain the settled idle operation, not merely its budget reservation.
+
+        Only opaque identifiers and digests enter the existing timeline. A
+        duplicate receipt is idempotent; this method never starts maintenance.
+        """
+        if tenant_id != self._tenant_id or installation_id != self._installation_id:
+            raise ValueError('reflection completion crossed its runtime scope')
+        if not isinstance(admission, BackgroundReflectionAdmission) or not admission.admitted:
+            raise ValueError('reflection completion has no admitted reservation')
+        self._day(now)
+        principal = self._principal_sha256(principal_id)
+        matches = [event for event in self._timeline.events(f'runtime-reflections:{admission.day}')
+            if event.event_type == 'RUNTIME_REFLECTION_RESERVED'
+            and event.payload.get('data', {}).get('principal_sha256') == principal
+            and event.payload['data'].get('person_limit') == self._person_limit
+            and event.payload['data'].get('installation_limit') == self._installation_limit
+            and event.payload['data'].get('source_budget_sha256') == self._source_budget_sha256
+            and event.payload['data'].get('person_used',
+                event.payload['data'].get('people', {}).get(principal)) == admission.person_used
+            and event.payload['data'].get('installation_used') == admission.installation_used]
+        if len(matches) != 1:
+            raise ValueError('reflection completion reservation differs')
+        identifiers = {}
+        for key in ('bank_id', 'mental_model_id', 'operation_id'):
+            value = getattr(receipt, key, None)
+            if not isinstance(value, str) or not value.strip() or len(value) > 512:
+                raise ValueError('reflection completion identifier invalid')
+            identifiers[key.removesuffix('_id') + '_sha256'] = hashlib.sha256(value.encode()).hexdigest()
+        digests = {}
+        for key in ('before_content_sha256', 'after_content_sha256', 'source_evidence_sha256',
+                    'observation_error_type'):
+            value = getattr(receipt, key, None)
+            if value is not None and (not isinstance(value, str) or not re.fullmatch(r'[0-9a-f]{64}', value)):
+                raise ValueError('reflection completion digest invalid')
+            digests[key] = value
+        count = getattr(receipt, 'source_fact_count', 0)
+        if type(count) is not int or count < 0 or count > 1_000_000:
+            raise ValueError('reflection completion source count invalid')
+        if (digests['after_content_sha256'] is not None
+                and (digests['source_evidence_sha256'] is None or count == 0)):
+            raise ValueError('reflection completion lacks source evidence')
+        reservation_hash = matches[0].payload_sha256
+        if isinstance(reservation_hash, bytes):
+            reservation_hash = reservation_hash.hex()
+        data = {'contract': 'EvaIdleReflectionCompleted/v1',
+            'principal_sha256': principal, **identifiers, **digests,
+            'source_fact_count': count, 'reservation_payload_sha256': reservation_hash,
+            'disposition': getattr(receipt, 'disposition', None)}
+        if data['disposition'] not in {'created', 'refreshed'}:
+            raise ValueError('reflection completion disposition invalid')
+        thread = f"memory-reflection:{principal}:{identifiers['operation_sha256']}"
+        existing = self._timeline.events(thread)
+        if existing:
+            if (len(existing) != 1 or existing[0].event_type != 'MEMORY_REFLECTION_COMPLETED'
+                    or existing[0].payload.get('data') != data):
+                raise ValueError('reflection completion replay differs')
+            return
+        self._timeline.create_thread(thread_id=thread, checkpoint_id=thread + ':completed',
+            occurred_at=now.astimezone(UTC), data=data, event_type='MEMORY_REFLECTION_COMPLETED',
+            phase='reflection_completed', status='completed')
+
+
 class PostgresMemoryStorageBudget(PostgresScopedRole):
     """Keep conversation-memory records and UTF-8 bytes inside owner limits.
 

@@ -584,6 +584,7 @@ class SemanticMemoryColdPathWorker:
                     self._reflection_scopes.update(scopes[index:])
                 return
             try:
+                admission = None
                 if self._reflection_budget is not None:
                     admission = self._reflection_budget.admit_background_reflection(
                         tenant_id=tenant_id,
@@ -604,7 +605,7 @@ class SemanticMemoryColdPathWorker:
                     with self._lock:
                         self._reflection_scopes.update(scopes[index:])
                     return
-                self._memory.maintain_person_scope(
+                receipt = self._memory.maintain_person_scope(
                     tenant_id, installation_id, principal_id
                 )
             except Exception as error:  # retried after the next retained exchange
@@ -613,6 +614,19 @@ class SemanticMemoryColdPathWorker:
                     self._reflection_scopes.add(
                         (tenant_id, installation_id, principal_id)
                     )
+                continue
+            # A settled provider operation must never be repeated because its
+            # local receipt could not be stored. Admission and completion are
+            # different facts; the existing timeline records the latter too.
+            recorder = getattr(self._reflection_budget, 'record_reflection_completed', None)
+            if callable(recorder) and admission is not None:
+                try:
+                    recorder(tenant_id=tenant_id, installation_id=installation_id,
+                        principal_id=principal_id, admission=admission, receipt=receipt,
+                        now=datetime.now(tz=UTC).replace(microsecond=0))
+                except Exception as error:
+                    with self._lock:
+                        self._last_error = f'reflection completion recording failed: {type(error).__name__}'
         for task in self._idle_tasks:
             # Finish an already started stage, then yield before another
             # optional model run or delivery. Durable tasks retain their state.

@@ -1,0 +1,97 @@
+{
+  "contract": "EvaQuietReflectionTraceDelivery/v1",
+  "task_id": "HUE6.1",
+  "recorded_at": "2026-10-13T21:54:53.439066+00:00",
+  "title": "Afgeronde rustige reflectie gekoppeld aan latere modelcontext",
+  "state": "installed",
+  "installed": true,
+  "full_task_complete": false,
+  "existing": "Idle maintenance, person-scoped grounded style mirror, ordinary model request journal and PostgreSQL operational timeline already existed.",
+  "added": [
+    "Persist settled idle reflection receipt tied to its actual person reservation and source evidence digests.",
+    "Record the exact recalled style mirror digest per admitted ordinary conversation model request.",
+    "Preserve completed operations when receipt storage or post-settlement readback fails; do not run reflection again for observation failure."
+  ],
+  "new_platform": false,
+  "privacy": "No mirror text or fact IDs in reflection accounting. Person/request/admission scopes checked; unchanged shared-audience exclusion.",
+  "verification": {
+    "adapter_initial_cases": 10,
+    "adapter_after_readback_loss_fix": 7,
+    "application_bundle": 73,
+    "focused_model_context_cases": 3,
+    "real_disposable_postgres_cases": 2,
+    "unique_total_not_claimed": true,
+    "isolated_candidate_imports": "PASS",
+    "unchanged_other_python_files_per_image": 341,
+    "current_core_worker_factory_release_matches": true,
+    "core_worker_health": "healthy",
+    "mounts_retained": true,
+    "installation_dispatches": 1,
+    "manual_eva_provider_requests": 0
+  },
+  "services": {
+    "core": {
+      "image": "sha256:178504a05c7f99e5eb2dd1c2cecb1f39926021f9c4ed3272c8e94cadb8e0368c",
+      "health": "healthy",
+      "exact_module_hashes": {
+        "application/conversation.py": "2d1891807dc8f2364fa748f8f06b9fb1cc67b829dbdc87d1d3279fbef0ffdc6b",
+        "application/memory_background.py": "5fb8d1e23c1a809f9abccea3be776bfef23bb00977664a8db4b106cd49ae602a",
+        "adapters/postgres/conversation_journal.py": "5a298b8f869b11d7a63a3ac3e7171b55d9d712263235a575a6974ae286bc855c",
+        "adapters/postgres/runtime_resource_usage.py": "d0e85af60a3439a88c6127444008d38e6bc7099ff1ca81e26047ae0506953d44",
+        "adapters/projection/hindsight.py": "f39e8c622eddb9618f74197ec14a44bab076409b9d449f95493b0d27f1dc9a13"
+      },
+      "actual_digital_factory_release": {
+        "worker_profile_release_sha256": "9e4405645ba1448a3ec300b68f1acdd2ab6c7c16159a0fc320afcff36f61f46b",
+        "model_profile_release_sha256": "5e6ebb6f52dbd433b3460cf202b24897db7475391673f90fcf6747501697dad2",
+        "worker_program_sha256": "09b48f0645b4548006c2a0714b06c700c7d9397b2d1995f25fab526f457125b1",
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+      }
+    },
+    "delegated-work-worker": {
+      "image": "sha256:2ff30d998405d86ec050846a286384f9740273c4b560d4638b755402eecac478",
+      "health": "healthy",
+      "exact_module_hashes": {
+        "application/conversation.py": "2d1891807dc8f2364fa748f8f06b9fb1cc67b829dbdc87d1d3279fbef0ffdc6b",
+        "application/memory_background.py": "5fb8d1e23c1a809f9abccea3be776bfef23bb00977664a8db4b106cd49ae602a",
+        "adapters/postgres/conversation_journal.py": "5a298b8f869b11d7a63a3ac3e7171b55d9d712263235a575a6974ae286bc855c",
+        "adapters/postgres/runtime_resource_usage.py": "d0e85af60a3439a88c6127444008d38e6bc7099ff1ca81e26047ae0506953d44",
+        "adapters/projection/hindsight.py": "f39e8c622eddb9618f74197ec14a44bab076409b9d449f95493b0d27f1dc9a13"
+      },
+      "actual_digital_factory_release": {
+        "worker_profile_release_sha256": "9e4405645ba1448a3ec300b68f1acdd2ab6c7c16159a0fc320afcff36f61f46b",
+        "model_profile_release_sha256": "5e6ebb6f52dbd433b3460cf202b24897db7475391673f90fcf6747501697dad2",
+        "worker_program_sha256": "09b48f0645b4548006c2a0714b06c700c7d9397b2d1995f25fab526f457125b1",
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+      }
+    }
+  },
+  "independent_reviews": {
+    "source": "3ac6ebabe1a4094690770c95d0641ceff44aa5b7da8e21615cea723b17e8622a",
+    "installation": "b04c0fa692efb64109bbb30d6d99ea15492cba3ea0f8c241e8983a929f685790",
+    "installed": "efb766c6373eece64e0da3b44ba7b1bad49dc7709c5a37ab1896835b4bbfda9e"
+  },
+  "installed_readback_sha256": "115379b610e08935203b92b3d696f0aa28776f42fb0ba1fb763fdff1fc65c9ee",
+  "limitations": {
+    "real_changed_person_understanding_proven": false,
+    "real_later_behavior_proven": false,
+    "recorded_model_context_is_not_provider_success": true,
+    "background_parent_journal_not_extended": true,
+    "independent_developing_agent_verdict_still_missing": true,
+    "aide_candidate_not_repeated": true,
+    "old_null_unknown_and_closed_clocks_preserved": true
+  },
+  "development_setup_failures": [
+    "PostgreSQL test harness initially expected inline password; actual container uses secret file.",
+    "Unit fixture pinned old PostgreSQL16.13; current installed server18.6. Fixture now allows exactly both pinned versions.",
+    "Minimal core has no stat executable; Python os.stat used before image building.",
+    "Updater import initially missed repository/src; failed before any receipt or dispatch. PYTHONPATH corrected for the one actual update."
+  ],
+  "costs": {
+    "codex_development_credits": "UNKNOWN",
+    "manual_eva_provider_requests": 0
+  },
+  "owner_action_required": false,
+  "next_action": "Observe a genuine ordinary quiet reflection and later ordinary conversation without fabricated preferences or manually forced maintenance. Independently judge changed meaning and later behavior; finish developing-agent verdict separately using original existing criteria."
+}

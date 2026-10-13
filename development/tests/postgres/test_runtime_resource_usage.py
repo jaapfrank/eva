@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 import hashlib
+import json
 import os
 from pathlib import Path
 from typing import Iterator
@@ -240,7 +241,10 @@ def resource_engine() -> Iterator[Engine]:
     config.set_main_option("sqlalchemy.url", dsn.replace("%", "%%"))
     try:
         with engine.connect() as connection:
-            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            # Retain the original test release and allow the installed 18.6
+            # release. This fixture checks storage semantics on either pinned
+            # server; it does not change any independent quality criteria.
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) in (160013, 180006)
             assert (
                 connection.scalar(
                     sa.text(
@@ -325,6 +329,67 @@ def test_reflection_admission_rejects_cross_scope(
             principal_id="person:jaap",
             now=NOW,
         )
+
+
+def test_completed_idle_reflection_survives_restart_and_binds_later_model_context(resource_engine):
+    from types import SimpleNamespace
+    from tests.model.test_pydantic_conversation_model import _turn
+    from eva.application.conversation import begin_current_model_request, observe_model_requests, ConversationModelUsage
+    governor = _governor(resource_engine)
+    turn = replace(_turn(), tenant_id=TENANT, installation_id=INSTALLATION)
+    admission = governor.admit_background_reflection(tenant_id=TENANT,
+        installation_id=INSTALLATION, principal_id=turn.principal_id, now=NOW)
+    digest = hashlib.sha256('Een compacte onderbouwde stijlspiegel.'.encode()).hexdigest()
+    receipt = SimpleNamespace(bank_id='bank:private-test', mental_model_id='mirror:test',
+        operation_id='operation:settled', disposition='refreshed',
+        before_content_sha256='a'*64, after_content_sha256=digest,
+        source_evidence_sha256='b'*64, source_fact_count=2)
+    kwargs = dict(tenant_id=TENANT, installation_id=INSTALLATION,
+        principal_id=turn.principal_id, admission=admission, receipt=receipt, now=NOW)
+    governor.record_reflection_completed(**kwargs)
+    restarted = _governor(resource_engine)
+    restarted.record_reflection_completed(**kwargs)
+    thread = 'memory-reflection:' + hashlib.sha256(turn.principal_id.encode()).hexdigest() + ':' + hashlib.sha256(receipt.operation_id.encode()).hexdigest()
+    events = restarted._timeline.events(thread)
+    assert len(events) == 1 and events[0].event_type == 'MEMORY_REFLECTION_COMPLETED'
+    completed = events[0].payload['data']
+    assert completed['before_content_sha256'] != completed['after_content_sha256']
+    assert completed['source_fact_count'] == 2
+    assert 'Een compacte' not in json.dumps(completed)
+    journal = PostgresConversationJournal(resource_engine, restarted._timeline._scope_value)
+    with observe_model_requests(turn, journal, style_mirror_sha256=digest):
+        request = begin_current_model_request()
+    journal.complete_model_request(turn, request, ConversationModelUsage.measured(
+        model_attempts=1, tool_calls=0, input_tokens=12, output_tokens=3))
+    context = journal._timeline.events('conversation-model-memory:' + request)
+    assert context[0].payload['data']['style_mirror_sha256'] == completed['after_content_sha256']
+    journal.record_model_memory_context(turn, request, style_mirror_sha256=digest)
+    assert len(journal._timeline.events('conversation-model-memory:' + request)) == 1
+    with pytest.raises(ValueError, match='reservation differs'):
+        restarted.record_reflection_completed(**{**kwargs, 'principal_id': 'person:other'})
+    from eva.application.conversation import ConversationConflict
+    with pytest.raises(ConversationConflict, match='matching admission'):
+        journal.record_model_memory_context(replace(turn, principal_id='person:other',
+            audience=MemoryAudience.private_person(principal_id='person:other')),
+            request, style_mirror_sha256=digest)
+
+
+def test_completed_reflection_readback_loss_does_not_claim_changed_understanding(resource_engine):
+    from types import SimpleNamespace
+    governor = _governor(resource_engine)
+    principal = 'person:readback-loss'
+    admission = governor.admit_background_reflection(tenant_id=TENANT,
+        installation_id=INSTALLATION, principal_id=principal, now=NOW)
+    receipt = SimpleNamespace(bank_id='bank:test', mental_model_id='mirror:test',
+        operation_id='operation:readback-loss', disposition='refreshed',
+        before_content_sha256='c'*64, after_content_sha256=None,
+        source_evidence_sha256=None, source_fact_count=0, observation_error_type='d'*64)
+    governor.record_reflection_completed(tenant_id=TENANT, installation_id=INSTALLATION,
+        principal_id=principal, admission=admission, receipt=receipt, now=NOW)
+    thread = 'memory-reflection:' + hashlib.sha256(principal.encode()).hexdigest() + ':' + hashlib.sha256(receipt.operation_id.encode()).hexdigest()
+    data = governor._timeline.events(thread)[0].payload['data']
+    assert data['after_content_sha256'] is None and data['source_fact_count'] == 0
+    assert data['observation_error_type'] == 'd'*64
 
 
 def test_memory_storage_limits_survive_races_restart_and_expiry(

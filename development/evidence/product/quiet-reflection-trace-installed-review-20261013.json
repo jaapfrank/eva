@@ -1,0 +1,49 @@
+{
+  "contract": "EvaIndependentQuietReflectionTraceInstalledReview/v1",
+  "recorded_at": "2026-10-13T21:54:14.085336+00:00",
+  "verdict": "GO_INSTALLED_TECHNICAL_TRACE_ONLY",
+  "source_review_sha256": "3ac6ebabe1a4094690770c95d0641ceff44aa5b7da8e21615cea723b17e8622a",
+  "installation_go_sha256": "b04c0fa692efb64109bbb30d6d99ea15492cba3ea0f8c241e8983a929f685790",
+  "build_binding_sha256": "1b71b7fbdeb0f8bef6db59778bcf5d326ae90f45d33ad6f842afd7027e2dbff0",
+  "installed_readback_sha256": "115379b610e08935203b92b3d696f0aa28776f42fb0ba1fb763fdff1fc65c9ee",
+  "updater_receipt_sha256": "5aa010372b8c3bb48d8252a83dbdc775a4bde20b90bf5c3cd25e4f0512bb8ab8",
+  "installation_dispatches": 1,
+  "installed_images": {
+    "core": "sha256:178504a05c7f99e5eb2dd1c2cecb1f39926021f9c4ed3272c8e94cadb8e0368c",
+    "delegated-work-worker": "sha256:2ff30d998405d86ec050846a286384f9740273c4b560d4638b755402eecac478"
+  },
+  "installed_module_sha256": {
+    "application/conversation.py": "2d1891807dc8f2364fa748f8f06b9fb1cc67b829dbdc87d1d3279fbef0ffdc6b",
+    "application/memory_background.py": "5fb8d1e23c1a809f9abccea3be776bfef23bb00977664a8db4b106cd49ae602a",
+    "adapters/postgres/conversation_journal.py": "5a298b8f869b11d7a63a3ac3e7171b55d9d712263235a575a6974ae286bc855c",
+    "adapters/postgres/runtime_resource_usage.py": "d0e85af60a3439a88c6127444008d38e6bc7099ff1ca81e26047ae0506953d44",
+    "adapters/projection/hindsight.py": "f39e8c622eddb9618f74197ec14a44bab076409b9d449f95493b0d27f1dc9a13"
+  },
+  "checks": {
+    "both_installed_images_match_review": true,
+    "five_source_hashes_match_in_both_images": true,
+    "both_services_healthy": true,
+    "existing_mounts_retained": true,
+    "core_and_worker_actual_digital_factory_release_equal": true,
+    "closed_aide_epochs_or_grants_not_upgraded": true
+  },
+  "actual_digital_factory_release": {
+    "worker_profile_release_sha256": "9e4405645ba1448a3ec300b68f1acdd2ab6c7c16159a0fc320afcff36f61f46b",
+    "model_profile_release_sha256": "5e6ebb6f52dbd433b3460cf202b24897db7475391673f90fcf6747501697dad2",
+    "worker_program_sha256": "09b48f0645b4548006c2a0714b06c700c7d9397b2d1995f25fab526f457125b1",
+    "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+    "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+  },
+  "technical_result": "Existing idle reflection completion receipts and matching ordinary admitted-model style digests can now be retained without content. Successful reflection is not repeated merely because post-operation readback or receipt recording fails.",
+  "limitations": {
+    "real_quiet_changed_understanding_proven": false,
+    "real_later_behavior_proven": false,
+    "candidate_quality_score": null,
+    "candidate_applied": false,
+    "full_hue6_complete": false,
+    "new_model_input_go": false,
+    "reviewer_tests_or_runtime_requests": 0,
+    "installation_preparation_import_error": "Missing repository source path before receipt and dispatch; corrected existing PYTHONPATH. Retained as development failure; no second installation or rollback."
+  },
+  "privacy": "No person content, private conversations, protected cases or answers are included. Concurrent voice changes are outside this review."
+}
