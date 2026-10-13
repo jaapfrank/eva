@@ -1,0 +1,58 @@
+{
+  "contract": "EvaOrdinaryProposalResult/v1",
+  "createdAt": "2026-10-13T02:09:35.773569+00:00",
+  "generation": 20,
+  "workId": "work:eva-resume:8669795c-e1c6-5559-84d3-afd944450878",
+  "originalTaskCanonicalJsonSha256": "87702100a7577caf810c9920dd51c4fc7d14f1bfa93e93d4e8ab9b9c9b22b195",
+  "terminalState": "FAILED",
+  "errorCode": "budget_exceeded",
+  "exactFailureReason": "input_budget_exceeded",
+  "artifact": {
+    "writtenByEva": true,
+    "bytes": 11961,
+    "sha256": "561346867e1f620516fce322d58d6b3c766b7b7fa5195ea0656cf1f1ff185e41",
+    "separateEvaWorkspaceReadConfirmed": true,
+    "singleTerminalLFNormalization": true
+  },
+  "quality": {
+    "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+    "verdict": "INCOMPLETE",
+    "usefulIntermediateProposal": true,
+    "remainingOriginalConditions": [
+      "Finish the bounded relevant configuration and device-reference synthesis from available sources.",
+      "Conclude available-source mapping analysis and actual configuration-access boundaries."
+    ],
+    "implementationKeysIPsProtocolAndPhysicalTestsNotNewPrerequisites": true
+  },
+  "usage": {
+    "admittedRequests": 16,
+    "completedMeasuredResponses": 16,
+    "streamsClosed": 16,
+    "inputTokens": 884605,
+    "outputTokens": 6803,
+    "knownTokens": 891408,
+    "tools": 16,
+    "currentUnknownOrInflight": 0,
+    "apiUsageStillPartial": true,
+    "creditCosts": null,
+    "historicalUnknownPreserved": true
+  },
+  "haMutation": false,
+  "finalIngressDeliveryConfirmed": false,
+  "taskCompletionConfirmed": false,
+  "wholeProjectCompletion": false,
+  "continuationStartedByThisPublication": false,
+  "independentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/gen20-original-proposal-end-review.private.json",
+    "sha256": "5c3e13a52bb455d4e30c8feb1980571d46daba8bf4ad5385094fcfba15961d2d"
+  },
+  "terminalObservation": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/gen20-terminal-observation.private.json",
+    "sha256": "876a222bcdf89177956e55da274652703c1b9d0b74df38fb77188470cbdbde83"
+  },
+  "limits": [
+    "The actually rejected next SDK envelope was not retained. Its exact dynamic context is unknown.",
+    "Native failure, artifact existence, original content quality and ingress delivery remain separate facts.",
+    "No new comparison series; no original condition or grant changed."
+  ]
+}

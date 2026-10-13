@@ -5560,7 +5560,7 @@
           "owner": "/root",
           "executor": "Eva · gewone algemene taakroute",
           "reviewer": "/root/product_execution_memory_review",
-          "summary": "Eva heeft haar voorstel zelf bijgewerkt en afzonderlijk teruggelezen. Haar gewone taakroute is daarna opnieuw gestopt door te grote invoer; geen bevestigde eindoplevering.",
+          "summary": "Eva heeft het oorspronkelijke voorstel zelf verbeterd, opgeslagen en teruggelezen. Nog twee oorspronkelijke analysepunten open; de taakroute stopte daarna door te grote invoer.",
           "detail": "Het nieuwe document wordt onder de oorspronkelijke voorwaarden beoordeeld. Codex verhelpt de concrete vervolgcontext; geen handgeschreven voorstel, ongewijzigde herhaling of HA-mutatie.",
           "doneWhen": "Eva gebruikt eerdere bevindingen, kiest gericht vervolgwerk en levert zelf een opgeslagen, onderbouwd resultaat via haar gewone taakroute. Geen volle inventarissen opnieuw meesturen of dezelfde passages blind herhalen. De oorspronkelijke leesbevoegdheid en afzonderlijke goedkeuring voor migratie blijven gelden.",
           "source": "/home/administrator/project/Eva2/eva2/evidence/product/result-directed-work-strategy-installed-20261013.json",
@@ -5569,7 +5569,7 @@
           "previousResultReviewSha256": "9e34412371c2de088859aecb07e78bc1f94fbb62434a427477343be1276b2afa",
           "implementationStatus": "Contextcorrectie in kern en werker geïnstalleerd; beide gezond. 112 controles geslaagd.",
           "currentActivity": "Werkelijk nieuw voorstel beoordelen en de exacte te grote vervolgcontext corrigeren.",
-          "checkedAt": "2026-10-13T02:06:07.874679+00:00",
+          "checkedAt": "2026-10-13T02:09:35.773569+00:00",
           "remaining": [
             "Het werkelijke nieuwe voorstel onafhankelijk beoordelen onder de oorspronkelijke voorwaarden.",
             "De aangetoonde invoerfout in de algemene vervolgroute oplossen en Eva zelf de uitkomst laten afronden.",
@@ -5579,7 +5579,7 @@
           "observedUsage": {
             "workId": "work:eva-resume:8669795c-e1c6-5559-84d3-afd944450878",
             "generation": 20,
-            "measurement": "terminal_accounting_confirmed_export_pending",
+            "measurement": "terminal_accounting_verified",
             "admittedRequests": 16,
             "completedMeasuredResponses": 16,
             "pendingRequests": 0,
@@ -5592,8 +5592,8 @@
             "wholeTotalConfirmed": true
           },
           "currentObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/gen20-owner-current-5.private.json",
-            "sha256": "f431d17f9ce52ee0f485001c300b9da7415c97596872004daa4e0ed8215d12f2"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/gen20-terminal-observation.private.json",
+            "sha256": "876a222bcdf89177956e55da274652703c1b9d0b74df38fb77188470cbdbde83"
           },
           "sourceReview": "/home/administrator/project/Eva2/eva2/reviews/post-read-context-source-review-20261013.json",
           "sourceReviewSha256": "f744929ed20603df7eab9ccf9cd97943192bf29ddf44f73227ac3b309c8030b9",
@@ -5637,7 +5637,7 @@
             "wholeProposalConfirmed": false,
             "currentModelRequests": 0
           },
-          "updatedAt": "2026-10-13T02:06:07.874679+00:00",
+          "updatedAt": "2026-10-13T02:09:35.773569+00:00",
           "previousTerminalObservations": {
             "terminalObservation": {
               "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/gen15-terminal-observation.private.json",
@@ -5662,8 +5662,8 @@
             }
           },
           "accountingObservation": {
-            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen19-terminal-observation.private.json",
-            "sha256": "b32ab95c21b0978989672dfc9d431e557d4a562d67bce2da5d4fc8f3b85fd61c"
+            "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/gen20-terminal-observation.private.json",
+            "sha256": "876a222bcdf89177956e55da274652703c1b9d0b74df38fb77188470cbdbde83"
           },
           "ownerActionNeeded": false,
           "previousProgressObservation": {
@@ -5718,11 +5718,8 @@
           "installedReview": "/home/administrator/project/Eva2/eva2/reviews/post-read-context-source-review-20261013.json",
           "installedReviewSha256": "f744929ed20603df7eab9ccf9cd97943192bf29ddf44f73227ac3b309c8030b9",
           "currentActivityOwner": "Eva",
-          "currentResultEvidence": {
-            "path": "/home/administrator/project/Eva2/eva2/evidence/product/post-write-context-ordinary-result-20261013.json",
-            "sha256": "633703d0d3e4ef0e170309aab7f8662f35358cdd0e332df77f4cbaf696bd7682"
-          },
-          "currentResultReview": null,
+          "currentResultEvidence": "/home/administrator/project/Eva2/eva2/evidence/product/post-read-context-ordinary-result-20261013.json",
+          "currentResultReview": "/home/administrator/project/Eva2/eva2/reviews/post-read-context-ordinary-result-review-20261013.json",
           "currentReadback": {
             "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-write-context-v1/gen19-current-document-readback.private.json",
             "sha256": "91f1356e502e99de4b3c6dae8e9682425bbd5196c2da4d29554c0cac0ee874e1",
@@ -5753,10 +5750,12 @@
             "savedByEva": true,
             "separateEvaRead": true,
             "terminalLFNormalization": true,
-            "originalContentVerdict": "pending_independent_review",
+            "originalContentVerdict": "INCOMPLETE",
             "nativeState": "failed",
             "nativeError": "input_budget_exceeded"
-          }
+          },
+          "currentResultEvidenceSha256": "006a869097226213ae8fb0cbbc7896ffd845711d140022230a4893f62a79f3f5",
+          "currentResultReviewSha256": "5501767f5415ef50ba2a0060c9629d2bf4882d4deabf1e89fb733d4a9929a087"
         },
         "next": {
           "title": "Verwachting aan echte uitkomst koppelen",
@@ -35465,6 +35464,6 @@
       ]
     }
   },
-  "updatedAt": "2026-10-13T02:06:07.874679+00:00",
+  "updatedAt": "2026-10-13T02:09:35.773569+00:00",
   "lastUpdatedAt": "2026-10-13T02:06:07.874679+00:00"
 }

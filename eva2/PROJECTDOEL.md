@@ -5,8 +5,12 @@ modelaanvragen, zestien tools, 891.408 tokens (884.605 in / 6.803 uit), geen hui
 UNKNOWN of lopende aanvraag. Eva heeft haar oorspronkelijke voorstel daadwerkelijk
 zelf bijgewerkt: 11.961 bytes, SHA56134686. Een afzonderlijke workspace-teruglezing
 bevestigt die bytes met één terminale LF-normalisatie. Native afronding is mislukt;
-de oorspronkelijke inhoudelijke eindbeoordeling wacht op de exacte terminalexport.
+de oorspronkelijke onafhankelijke eindbeoordeling is INCOMPLETE: de relevante
+configuratie-/device-IDanalyse en grenzen aan mapping/toegang zijn nog niet af.
+Sleutels, IP/protocol en fysieke tests zijn toegestane latere voorwaarden.
 Geen voltooide gebruikersuitkomst of nieuwe hoofdtaak geclaimd.
+Resultaat: eva2/evidence/product/post-read-context-ordinary-result-20261013.json.
+Review: eva2/reviews/post-read-context-ordinary-result-review-20261013.json.
 
 Vervolg: beoordeel het echte document en herstel uitsluitend de aangetoonde te grote
 vervolgcontext. Geen handgeschreven voorstel, ongewijzigde herhaling, extra

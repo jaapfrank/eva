@@ -1,0 +1,26 @@
+{
+  "contract": "EvaOriginalProposalReviewPublication/v1",
+  "createdAt": "2026-10-13T02:09:35.773569+00:00",
+  "result": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/post-read-context-ordinary-result-20261013.json",
+    "sha256": "006a869097226213ae8fb0cbbc7896ffd845711d140022230a4893f62a79f3f5"
+  },
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/result-directed-v1/post-read-context-v1/gen20-original-proposal-end-review.private.json",
+    "sha256": "5c3e13a52bb455d4e30c8feb1980571d46daba8bf4ad5385094fcfba15961d2d"
+  },
+  "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+  "verdict": "INCOMPLETE",
+  "newInputAuthority": false,
+  "taskSuccessClaim": false,
+  "publicSummary": {
+    "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+    "verdict": "INCOMPLETE",
+    "usefulIntermediateProposal": true,
+    "remainingOriginalConditions": [
+      "Finish the bounded relevant configuration and device-reference synthesis from available sources.",
+      "Conclude available-source mapping analysis and actual configuration-access boundaries."
+    ],
+    "implementationKeysIPsProtocolAndPhysicalTestsNotNewPrerequisites": true
+  }
+}
