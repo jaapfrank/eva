@@ -1,3 +1,24 @@
+## Actueel 13 oktober — bronversie in verbeterbeoordeling gelijkgetrokken
+
+Eva heeft haar kandidaat zelf gemaakt. De vaste evaluatieimage bevatte echter
+bron c2d47, terwijl haar geverifieerde DRAFT de actuele bron1e65 gebruikt.
+Die aantoonbare mismatch is gericht hersteld: dezelfde bestaande image met1e65
+in beide actieve statische beoordelingen, gekoppelde suite/clientversies en
+actuele program-release. Vijf hostvelden en één clientveld; geen criteriawijziging.
+Kern en werker healthy, dezelfde images/instellingen/mounts en25 mogelijkheden.
+Werkelijke bron-/kandidaatcontrole en geïnstalleerde factorybinding slagen.
+
+Nul nieuwe Eva-modelaanvragen of native episoden voor dit herstel. Oud HTTP400-
+antwoord mist zijn body; exacte historische innerreden en volledig child/shared-
+verbruik blijven UNKNOWN. Negen eerdere parentaanvragen/102.116 tokens blijven
+behouden. Geen kandidaat toegepast, kwaliteitswinst of volledige AIDE²-afronding.
+43/54 en de oorspronkelijke registratie/gesloten proeven blijven behouden.
+HUE6.1 en het volledige goal blijven open. Geen nieuwe vergelijkingsserie;
+Codex schrijft geen inhoudelijk eigenaarsvoorstel in plaats van Eva.
+Bewijs: eva2/evidence/product/aide-static-baseline-version-correction-installed-20261013.json.
+Onafhankelijke installatie-/publicatiereview GO; geen nieuwe native-invoertoelating.
+Review: eva2/reviews/aide-static-baseline-version-correction-installed-review-20261013.json.
+
 ## Actueel 13 oktober — gewone codevoorstelafhandeling geïnstalleerd
 
 Eva krijgt bij evaluatie zonder eerder opgeslagen codevoorstel nu herstelbare

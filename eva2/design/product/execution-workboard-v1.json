@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-10-13T04:17:30.073932+00:00",
+  "lastUpdated": "2026-10-13T09:36:20.410662+00:00",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -5614,16 +5614,16 @@
         "now": {
           "title": "Droomcyclus en AIDE² afmaken",
           "state": "in_progress",
-          "phase": "aide_evaluation_failure_diagnosis",
+          "phase": "aide_static_baseline_installed",
           "taskId": "HUE6.1",
           "owner": "/root",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Gewone foutafhandeling geïnstalleerd: Eva krijgt herstelbare feedback bij evaluatie zonder codevoorstel.23 controles geslaagd; kern en werker gezond. Zelfverbeteringsvariant is gemaakt, maar evaluatie is nog niet gelukt.",
-          "currentActivity": "Gewone invoerherstelroute geïnstalleerd en evaluatiedienstverwijzingen bijgewerkt. Resterend: EVAL-fout gericht verklaren uit bestaande gegevens; geen nieuwe modelproef.",
+          "summary": "Eva maakte zelf haar verbeterkandidaat. De beoordelingsroute gebruikte een oude bronversie; die aansluiting is hersteld en geïnstalleerd. Geen bewezen betere kandidaat of afgeronde AIDE²-cyclus.",
+          "currentActivity": "Versiecorrectie geïnstalleerd en onafhankelijk gecontroleerd. Resterend voor HUE6.1: werkelijke kwaliteitsbeoordeling, toepassen uitsluitend bij bewezen winst en later gebruik. Oud volledig proefverbruik blijft onbekend; gesloten proeven worden niet heropend.",
           "doneWhen": "De bestaande droom/AIDE²-route verbetert agentaansturing én code of uitbreiding, met onafhankelijke beoordeling, toepassing uitsluitend bij bewezen winst en later werkelijk gebruik.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-13T08:59:50.299016+00:00",
+          "checkedAt": "2026-10-13T09:36:20.410662+00:00",
           "previousUserResult": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
           "modelRequestsThisStep": 9,
           "creditCosts": null,
@@ -33222,6 +33222,24 @@
       "ordinaryAfterModelReleaseSha256": "24ee562290217178b35e72007d06acc0040f7e93d1c39f2521a7bfc999f1e1ce",
       "activated": true,
       "nativeInputGo": false
+    },
+    "aideStaticBaselineCorrection20261013": {
+      "state": "installed_independently_reviewed",
+      "taskId": "HUE6.1",
+      "historicalHttpStatus": 400,
+      "historicalInnerError": "UNKNOWN",
+      "retainedCandidateSha256": "be64adcb4433edf1ced07e6aede433700394c344687b5925b34f89bbd58a0973",
+      "staticBaselineMismatchProven": true,
+      "correctedStaticCheckPassed": true,
+      "newModelRequests": 0,
+      "newNativeEpisodes": 0,
+      "candidateApplied": false,
+      "wholeCycleComplete": false,
+      "preparedDeltaSha256": "7029b7e10ef28fb0aff5c9846de24f94d487e2e890234b319700ba6550a8a050",
+      "evidencePath": "eva2/evidence/product/aide-static-baseline-version-correction-installed-20261013.json",
+      "installationSha256": "bdadfdb819923e6f21cc199c9c893019ebc403cfae652b6882d54ac660a122e9",
+      "reviewPath": "eva2/reviews/aide-static-baseline-version-correction-installed-review-20261013.json",
+      "independentReviewSha256": "61c61568b0b1d0e733b162101722683c345246ad4b3fbd9f8ab26d858e7aa353"
     }
   },
   "activeTaskId": "AU-008",
@@ -35693,6 +35711,6 @@
       ]
     }
   },
-  "updatedAt": "2026-10-13T06:44:30.872047+00:00",
-  "lastUpdatedAt": "2026-10-13T06:44:30.872047+00:00"
+  "updatedAt": "2026-10-13T09:36:20.410662+00:00",
+  "lastUpdatedAt": "2026-10-13T09:36:20.410662+00:00"
 }

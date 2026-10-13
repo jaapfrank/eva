@@ -1,0 +1,97 @@
+{
+  "contract": "EvaStaticBaselineVersionCorrectionInstalled/v1",
+  "date": "2026-10-13T09:30:41.898540+00:00",
+  "status": "installed_technical_version_correction",
+  "task_id": "HUE6.1",
+  "product_task_completed": false,
+  "whole_goal_completed": false,
+  "diagnosis": {
+    "retained_http_status": 400,
+    "original_inner_error": "UNKNOWN",
+    "old_static_image_baseline_sha256": "c2d47aef67098447353b791b990b102809acf2feb502d1ae6a4efdcf0b674412",
+    "actual_draft_baseline_sha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
+    "static_image_baseline_mismatch_proven": true,
+    "historical_child_dispatch_and_usage": "UNKNOWN",
+    "retained_request_and_literal_only_candidate_validated": true
+  },
+  "installed": {
+    "technical_correction_only": true,
+    "active_host_config_sha256": "0a028b0454bdc4530da83e1d575f306c8391d5594d86df45937295ee6f09e3a6",
+    "client_config_sha256": "7ca3e6a2d0d80a2dcf71f9901e92b2ead8587524516f8e745ac64c9560141743",
+    "suite_sha256": "b87bfcea2a4a9d37107c2a3f4db4b29cad769e93390f61d17b75e45e45e7a214",
+    "ordinary_model_profile_sha256": "5e6ebb6f52dbd433b3460cf202b24897db7475391673f90fcf6747501697dad2",
+    "parent_model_profile_sha256": "6886f483bb4eb28765c828394c6429c452a33e53859ad9b77f3df40cada721e3",
+    "child_preview_model_profile_sha256": "ebd982477ab889a62deb6ed990aaa4dfe967abbe8b3e7bd6a177c6b94511f8ca",
+    "worker_program_sha256": "723ddd0e8968ab7abec1c5bf6433655ad15b43a640f50e83183605c811959871",
+    "host_changed_leaves": 5,
+    "client_changed_leaves": 1,
+    "same_runtime_images_environment_mounts_and_containers": true,
+    "host_active": "active",
+    "host_restarts": 0,
+    "both_services_healthy": true,
+    "capability_count": 25,
+    "source_sha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
+    "candidate_applied": false
+  },
+  "checks": {
+    "correct_image_baseline_and_candidate_static_execution": "PASS",
+    "actual_prospective_ordinary_parent_preview_factories": "PASS",
+    "actual_installed_core_and_worker_factory_agreement": "PASS",
+    "ordinary_read_round_registration48_available": "PASS",
+    "before_activation_nonexpired_active_work_and_assessments": 0
+  },
+  "usage": {
+    "new_Eva_model_requests": 0,
+    "new_native_improvement_episodes": 0,
+    "retained_parent_requests": 9,
+    "retained_parent_tokens": 102116,
+    "retained_physical_tools": 7,
+    "full_retained_shared_usage": "UNKNOWN",
+    "credit_costs": null
+  },
+  "preserved": {
+    "registration48_original_static_image_retained": true,
+    "retained_rounds_unchanged": true,
+    "criteria_cases_scorers_unchanged": true,
+    "closed_attempts_unchanged": true,
+    "43_of_54_task_count_unchanged": true,
+    "voice_parked": true,
+    "unused_Docker_Desktop_untouched": true
+  },
+  "limitations": [
+    "Static success and coherent metadata are not a measured quality improvement.",
+    "The original HTTP response body is absent; precise historical inner failure and complete child usage remain UNKNOWN.",
+    "No independent native final assessment, application or later use was completed by this repair.",
+    "No closed attempt reopened and no new native-input authority granted by publication."
+  ],
+  "private_refs": {
+    "retained_diagnosis": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/native-evaluation-http400-diagnosis/retained-http400-static-baseline-diagnosis.private.json",
+      "sha256": "56a7d6e798dc770c9f4a800b149bf0f13f9fab6cb0881125fe05e728f3b382db"
+    },
+    "request_reconstruction": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/native-evaluation-http400-root-proof/request-reconstruction.private.json",
+      "sha256": "9410c73e90259c4e7972f82114c2a00eb3200458a71197469559590285305c78"
+    },
+    "static_check": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/static-baseline-correction/fixed-image-static-check.private.json",
+      "sha256": "41aa3874094da7c1b0fb39de8c96e1ef50a91ad2cd0f8cbbca0a9d743b7d1af1"
+    },
+    "configuration_delta": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/static-baseline-correction/prepared-factory-bound-delta.private.json",
+      "sha256": "7029b7e10ef28fb0aff5c9846de24f94d487e2e890234b319700ba6550a8a050"
+    },
+    "activation_review": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/native-evaluation-http400-root-proof/static-baseline-correction-review/source-configuration-review.private.json",
+      "sha256": "3f36b0144eb0c125789c6f467c1bb77158912a1fa7f2cbf182cc5b41d27e7a83"
+    },
+    "installation": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/static-baseline-correction/installed.private.json",
+      "sha256": "bdadfdb819923e6f21cc199c9c893019ebc403cfae652b6882d54ac660a122e9"
+    },
+    "post_start": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/static-baseline-correction/post-start-current-bindings.private.json",
+      "sha256": "69e6c2bf6bcc6160a15948e2c19bfbe6962baa477d019f70c0c61b4447826552"
+    }
+  }
+}

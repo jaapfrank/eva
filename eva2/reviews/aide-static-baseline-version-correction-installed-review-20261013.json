@@ -1,0 +1,17 @@
+{
+  "contract": "EvaIndependentInstalledCorrectionReview/v1",
+  "verdict": "GO",
+  "scope": "Installed technical static-baseline correction and limited publication only",
+  "evidence": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/aide-static-baseline-version-correction-installed-20261013.json",
+    "sha256": "a251332ec0aec2b0c52ea79d00f67a8a3fdd0b9089c03b8975f628435ff35ab5"
+  },
+  "independent_review": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/native-evaluation-http400-root-proof/static-baseline-correction-review/installed-publication-review.private.json",
+    "sha256": "61c61568b0b1d0e733b162101722683c345246ad4b3fbd9f8ab26d858e7aa353"
+  },
+  "new_native_input_go": false,
+  "hue6_completed": false,
+  "whole_goal_completed": false,
+  "historical_unknown_preserved": true
+}
