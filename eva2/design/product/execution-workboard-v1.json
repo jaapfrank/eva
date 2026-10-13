@@ -5614,21 +5614,21 @@
         "now": {
           "title": "Droomcyclus en AIDE² afmaken",
           "state": "in_progress",
-          "phase": "aide_current_parent_preparation",
+          "phase": "aide_current_construction_running",
           "taskId": "HUE6.1",
           "owner": "/root",
           "activeExecution": true,
-          "nativeRunning": false,
-          "summary": "De bron-/installatiebinding van AIDE² is hersteld en geïnstalleerd. Technische bronuitlezing toont een beschikbare ronde voor de actuele code. De echte verbetercyclus blijft open.",
-          "currentActivity": "Actuele zelfverbeteringsdienst en gedeelde client geïnstalleerd; kern en taakwerker hebben dezelfde release. Nu één actuele eigen codevariant voorbereiden via bestaande uitvoering en onafhankelijke beoordeling.",
+          "nativeRunning": true,
+          "summary": "De huidige verbeterroute is geïnstalleerd. Eva start één eigen codevoorstel en ontwikkelvergelijking; de daadwerkelijke uitkomst staat nog open.",
+          "currentActivity": "Eva leest haar huidige taakuitvoering, maakt zelf één variant en vergelijkt die met de bestaande aanpak. Onafhankelijke eindbeoordeling volgt alleen bij echte ontwikkelwinst.",
           "doneWhen": "De bestaande droom/AIDE²-route verbetert agentaansturing én code of uitbreiding, met onafhankelijke beoordeling, toepassing uitsluitend bij bewezen winst en later werkelijk gebruik.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-13T07:16:57.050025+00:00",
+          "checkedAt": "2026-10-13T07:40:13.140034+00:00",
           "previousUserResult": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
           "modelRequestsThisStep": 0,
           "creditCosts": null,
-          "executor": "/root/eva1_memory_transfer",
-          "activeReview": true,
+          "executor": "Eva — bestaande algemene taakuitvoerder",
+          "activeReview": false,
           "reviewer": "/root/product_execution_memory_review",
           "previousGoalTurn": "PROGRESS: original Telegram summary return installed and ACK confirmed; 483f74fc pushed, full document presentation not demonstrated."
         },
@@ -33028,7 +33028,12 @@
       "activated": true,
       "nativeInputGo": false,
       "postStartBindingsSha256": "0a866a1aecb9906e92995adced6db5502723f0c04a1be9dcdd137abffec685fa",
-      "installedReviewSha256": "571fa0aefdb3285b3553b1f862dfeb7359f9945bd561676554fc4c29e52993af"
+      "installedReviewSha256": "571fa0aefdb3285b3553b1f862dfeb7359f9945bd561676554fc4c29e52993af",
+      "constructionInputReview": {
+        "sha256": "7158b2b0ca95e072fcece970e944757200613b5ced4863f155d88f5e445b106e",
+        "result": "GO: one current construction only",
+        "manifestSha256": "50119facd8242d5599d7ac28b8f03848d000385357873c62a5ebfe556b819880"
+      }
     },
     "originalProposalReturnRepair20261013": {
       "checkedAt": "2026-10-13T06:22:26.217280+00:00",
