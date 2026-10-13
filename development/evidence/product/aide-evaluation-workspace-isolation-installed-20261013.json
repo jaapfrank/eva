@@ -1,0 +1,59 @@
+{
+  "contract": "EvaComponentEvaluationWorkspaceIsolationInstalled/v1",
+  "timestamp": "2026-10-13T15:18:28.240045+00:00",
+  "taskId": "HUE6.1",
+  "status": "installed_not_behaviorally_judged",
+  "problem": "Distinct component evaluations reused the same case workspace; the existing replay guard then blocked a necessary evaluation before any child model dispatch.",
+  "change": "Bind logical case identities to the scoped evaluation reference in both policy and actual production; same-binding replay remains rejected.",
+  "sourcePath": "src/eva/operations/component_native_work_producer.py",
+  "sourceSha256": "b35f3c7b49fba8d301b815ee0943bec589bb585715735e312075b71d2c719bde",
+  "logicalCasesAndCriteriaChanged": false,
+  "oldWorkspacesAndOnceRecordsChanged": false,
+  "checks": {
+    "passed": 39,
+    "scope": "Existing native producer contracts plus distinct evaluation workspaces, stable same-binding identity and replay rejection.",
+    "models": 0
+  },
+  "independentPreflight": {
+    "reviewSha256": "c294835e2782fb16b7898191706524e017d0789910095f6ed41eec2f0f3742e4",
+    "realCallerWorkspaceAndLaunchConfigurationPassed": true,
+    "stoppedBeforeDockerCreate": true
+  },
+  "installed": {
+    "service": "eva-component-evaluation.service",
+    "configurationSha256": "a3fcd87a25c56af84b7c5f6da8c25032a4841e68fc943cbd4d91f0a4dc52b1c3",
+    "serviceReceiptSha256": "1d76e86e735cb84650bbad59f86e4238491ef3dfc831061174633fffb02551da",
+    "producerMatchesRepositoryBytes": true,
+    "running": true,
+    "coreOrWorkerRestarted": false,
+    "voiceChanged": false
+  },
+  "precedingFailedRecovery": {
+    "status": "closed_failed",
+    "reviewSha256": "ec44b1d8b78f6075f5e7fb217593a54fbf2acd82cd61139bedf6ae24921be863",
+    "newParentRequests": 1,
+    "newPhysicalTools": 1,
+    "newTokens": 23977,
+    "derivedChildRequests": 0,
+    "rawChildUsageRemainsNull": true,
+    "missedWorkspacePreconditionRecorded": true,
+    "recoveryActiveSeconds": 68.0918917520903,
+    "recoveryCapSeconds": 180,
+    "originalClosedActiveSeconds": 251.44583465193864,
+    "originalCapSeconds": 246,
+    "failedIntervalCredited": false
+  },
+  "continuation": {
+    "newTimeAllocation": false,
+    "parentRequestsRemaining": 3,
+    "activeSecondsRemaining": 111.9081082479097,
+    "sharedRequestsRemaining": 54,
+    "sharedToolsRemaining": 89,
+    "sharedTokensRemaining": 223347,
+    "candidateChanged": false,
+    "candidateQuality": "unjudged",
+    "candidateApplied": false,
+    "aideCycleComplete": false
+  },
+  "creditsAndDevelopmentCost": "unknown"
+}

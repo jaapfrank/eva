@@ -77,7 +77,8 @@ def setup(tmp_path):
         "draft_step": 1, "evaluation_step": 2, "evaluation_call_id": "original-call", "execution_binding_ref": digest("original-ref")}
     request = SimpleNamespace(relative_path="bootstrap/delegated_digital_runner.py", baseline_sha256=p.sha(baseline), source=candidate.decode())
     policy = p._policy(settings, config, binding, request, [case])
-    identity = {**p._case_identity(settings, config, "baseline", case), "source_sha256": p.sha(baseline)}
+    identity = {**p._case_identity(settings, config, "baseline", case,
+        execution_binding_ref=binding["execution_binding_ref"]), "source_sha256": p.sha(baseline)}
     return SimpleNamespace(settings=settings, assessment=assessment, binding=binding, request=request,
         policy=policy, identity=identity, case=case, baseline=baseline, candidate=candidate, roots=roots)
 
@@ -334,10 +335,37 @@ def test_exclusion_marker_only_inserts_exact_fresh_work_not_projection(setup):
 
 def test_final_stage_cannot_reuse_development_identity_or_authority(setup):
     s = setup
-    ordinary = p._case_identity(s.settings, s.assessment["work_evidence"], "baseline", s.case)
-    final = p._case_identity(s.settings, s.assessment["work_evidence"], "baseline", s.case, stage="independent_final")
+    ordinary = p._case_identity(s.settings, s.assessment["work_evidence"], "baseline", s.case,
+        execution_binding_ref=s.binding["execution_binding_ref"])
+    final = p._case_identity(s.settings, s.assessment["work_evidence"], "baseline", s.case,
+        execution_binding_ref=s.binding["execution_binding_ref"], stage="independent_final")
     assert ordinary["task_id"] != final["task_id"] and final["stage"] == "independent_final"
     assert ordinary["source_ingress_sha256"] != final["source_ingress_sha256"]
+
+
+def test_distinct_evaluations_keep_case_but_isolate_workspace_and_replay(setup):
+    if os.geteuid() != 0:
+        pytest.skip("synthetic workspace ownership requires root")
+    s = setup
+    first = s.identity
+    second_ref = digest("different-evaluation")
+    second = p._case_identity(s.settings, s.assessment["work_evidence"], "baseline",
+        s.case, execution_binding_ref=second_ref)
+    assert first["case_id"] == second["case_id"] == s.case["case_id"]
+    for key in ("task_id", "session_id", "source_ingress_sha256"):
+        assert first[key] != second[key]
+    first_path, _ = p._workspace(s.settings, first, s.case)
+    second_path, _ = p._workspace(s.settings, second, s.case)
+    assert first_path != second_path
+    assert (first_path / "input.json").read_bytes() == (second_path / "input.json").read_bytes()
+    repeated = p._case_identity(s.settings, s.assessment["work_evidence"], "baseline",
+        s.case, execution_binding_ref=second_ref)
+    assert repeated == second
+    with pytest.raises(p.ComponentWorkProductionError, match="already exists; no retry"):
+        p._workspace(s.settings, repeated, s.case)
+    with pytest.raises(p.ComponentWorkProductionError, match="evaluation binding required"):
+        p._case_identity(s.settings, s.assessment["work_evidence"], "baseline",
+            s.case, execution_binding_ref="")
 
 
 def test_existing_close_receipt_exact_session_identity_and_boolean(setup):
@@ -795,7 +823,8 @@ def test_registered_physical_budget_context_replaces_grant_display_without_dispa
         with guard._ledger() as state:
             assert sum(row["role"] == "helper" for row in state["requests"]) == 1
     candidate = {**p._case_identity(s.settings, s.assessment["work_evidence"], "candidate",
-        s.case, stage="development"), "source_sha256": p.sha(s.candidate)}
+        s.case, execution_binding_ref=s.binding["execution_binding_ref"],
+        stage="development"), "source_sha256": p.sha(s.candidate)}
     with guard.case(candidate):
         guard.start_case_once(candidate)
         guard.reserve_model("context-inflight", {"model": "gpt-6-astra", "reasoning": {"effort": "medium"}})

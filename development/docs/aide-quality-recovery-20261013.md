@@ -1,0 +1,41 @@
+# HUE6.1 — bestaande kandidaat beoordelen na toegangsherstel
+
+De door Eva gemaakte kandidaat be64adcb… blijft ongewijzigd. De vorige hervatting
+faalde vóór de evaluatiewerker door verkeerde eigendom van de geïsoleerde
+configuratie. Die oorzaak is hersteld en onafhankelijk gecontroleerd.
+
+Deze afzonderlijke noodzakelijke hersteluitvoering hergebruikt hetzelfde voorstel,
+dezelfde ontwikkeltaken, afgeschermde eindbeoordeling, actor, bron en providerroute.
+Geen nieuwe kandidaat, concurrentenvergelijking of voorbeeldfunctie.
+
+Vooraf: één uitvoering, maximaal vier resterende bovenliggende modelaanvragen en
+180 nieuw toegewezen actieve seconden. De oude mislukte 251,446 seconden tegenover
+246 blijven gesloten en behouden; geen tijdreset of krediet. Echte onafhankelijke
+ontwikkeluitvoering wordt afzonderlijk gemeten. Er komen geen model-, token- of
+toolrechten bij: van de bestaande gezamenlijke ruimte resteert na alle eerdere
+13 aanvragen 55 aanvragen, 90 tools en 247.324 tokens, inclusief ontwikkeling,
+eindbeoordeling en later gebruik. Creditkosten zijn onbekend.
+
+Volgorde: ontwikkeling beoordelen → bestaande selectie → onafhankelijke eindbeoordeling
+→ uitsluitend bewezen kwaliteitswinst toepassen → later gebruik. Bij gelijkspel,
+verlies of onvolledigheid blijft de referentie staan. Menselijke hulp en kwaliteit
+staan voorop; snelheid en kosten zijn afzonderlijke metingen. Deze uitvoering bewijst
+niet de volledige oorspronkelijke AIDE²-methode of algemene superioriteit.
+
+Spraak blijft bij het andere model. Dashboard vermeldt de werkelijke fase;
+HUE6.1 wordt niet groen door alleen voorbereiding of een geslaagd proefrapport.
+
+## Vervolg binnen dezelfde herstelruimte
+
+De eerste hersteluitvoering strandde vóór een evaluatiewerker op een bestaande
+werkmap: de case-identiteit onderscheidde afzonderlijke beoordelingen niet.
+De bestaande producer bindt case-identiteiten nu aan de concrete beoordeling.
+Logische cases en beoordelingsregels blijven gelijk; dezelfde binding blijft
+herhaling weigeren. Oude werkmappen, registraties en NULL-bewijs blijven behouden.
+39 gerichte modelvrije controles slagen, inclusief aparte werkmappen en geweigerde replay.
+
+Verbruikt: één aanvraag, één tool, 23.977 tokens; geen kindaanvragen. Er resteert
+111,908 actieve seconden van dezelfde 180, drie bovenliggende aanvragen en de
+bestaande gezamenlijke ruimte van 54 aanvragen, 89 tools en 223.347 tokens.
+Geen nieuwe tijd- of modelruimte. Alleen een afzonderlijk gebonden vervolg na
+bron- en volledige opstartcontrole; geen heropening van de gesloten poging.

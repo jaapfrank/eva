@@ -822,7 +822,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T13:53:04.454562+00:00",
+  "lastUpdated": "2026-10-13T15:19:36.653870+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "HUE6.1",
@@ -1760,15 +1760,15 @@
         "now": {
           "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
           "state": "Bezig",
-          "phase": "access_repair_installed_candidate_unjudged",
+          "phase": "isolated_development_evaluation_running",
           "taskId": "HUE6.1",
           "activeExecution": true,
-          "nativeRunning": false,
-          "summary": "Beoordelingsdienst en toegang voor de evaluatiewerker hersteld. De kandidaat is nog niet inhoudelijk beoordeeld.",
-          "detail": "Eén hervatting faalde vóór uitvoering van de evaluatiewerker. Oorzaak gecorrigeerd en zonder modelcalls gecontroleerd. Oude proef gesloten; geen kwaliteitswinst of afgeronde leercyclus claimen. Spraak bij ander model.",
+          "nativeRunning": true,
+          "summary": "Eva vervolgt de beoordeling van haar bewaarde kandidaat via de herstelde route.",
+          "detail": "Werkmappen zijn per beoordeling gescheiden; bron en volledige opstart onafhankelijk gecontroleerd. Zelfde kandidaat en criteria, geen extra modelruimte. Kwaliteitswinst nog niet bevestigd.",
           "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
           "ownerActionNeeded": false,
-          "latestEvidence": "development/evidence/product/aide-evaluation-host-repair-installed-20261013.json"
+          "latestEvidence": "development/evidence/product/aide-evaluation-workspace-isolation-installed-20261013.json"
         },
         "next": {
           "state": "Hierna",
@@ -5558,7 +5558,27 @@
       "aideCycleComplete": false,
       "voiceChanged": false,
       "remaining": "Ontwikkelbeoordeling, onafhankelijke eindbeoordeling en eventueel later gebruik blijven open; geen heropening van de gesloten proef."
+    },
+    "aideNecessaryRecovery20261013": {
+      "status": "bound_case_evaluation_running",
+      "taskId": "HUE6.1",
+      "declaration": "development/docs/aide-quality-recovery-20261013.md",
+      "newActiveSeconds": 180,
+      "parentRequestsRemaining": 3,
+      "globalRequestsRemaining": 54,
+      "globalToolsRemaining": 89,
+      "globalTokensRemaining": 223347,
+      "oldEpochReopened": false,
+      "qualityGainProven": false,
+      "candidateApplied": false,
+      "ownerActionRequired": false,
+      "recoveryActiveSecondsUsed": 68.0918917520903,
+      "recoveryActiveSecondsRemaining": 111.9081082479097,
+      "newParentRequests": 1,
+      "newTokens": 23977,
+      "childRequests": 0,
+      "installedEvidence": "development/evidence/product/aide-evaluation-workspace-isolation-installed-20261013.json"
     }
   },
-  "updatedAt": "2026-10-13T14:44:38.960328+00:00"
+  "updatedAt": "2026-10-13T15:19:36.653870+00:00"
 }

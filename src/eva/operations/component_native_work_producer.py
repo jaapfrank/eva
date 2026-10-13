@@ -963,11 +963,15 @@ def _cases(settings, assessment):
     return inputs["cases"], inputs["stage"]
 
 
-def _case_identity(settings, config, leg, case, *, stage="development"):
+def _case_identity(settings, config, leg, case, *, execution_binding_ref, stage="development"):
     from eva.application.conversation import ConversationTurn
     from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
     actor = settings["runtime"]["actor"]
+    require(_sha(execution_binding_ref), "evaluation binding required for isolated case identity")
     namespace = "component-work-evaluation:" + config["registration_sha256"] + ":" + stage + ":" + leg + ":" + sha(case["case_id"].encode())[:16]
+    # Keep the logical case fixed while separating distinct, bound evaluations.
+    # Repeating the same binding still reaches the original once-only fences.
+    namespace += ":evaluation:" + execution_binding_ref
     conversation, message = namespace, namespace + ":input"
     turn = ConversationTurn.private(actor["tenant_id"], actor["installation_id"], actor["principal_id"],
         conversation, message, case["task"], "2000-01-01T00:00:00Z", project_id=case["project_id"])
@@ -981,7 +985,8 @@ def _case_identity(settings, config, leg, case, *, stage="development"):
 
 def _policy(settings, config, binding, request, cases, *, stage="development"):
     limits = settings["limits"]
-    identities = {leg + ":" + stage + ":" + c["case_id"]: _case_identity(settings, config, leg, c, stage=stage)
+    identities = {leg + ":" + stage + ":" + c["case_id"]: _case_identity(settings, config, leg, c,
+        execution_binding_ref=binding["execution_binding_ref"], stage=stage)
         for leg in ("baseline", "candidate") for c in cases}
     return {**limits, "registration_sha256": config["registration_sha256"],
         "scope_sha256": config["scope_sha256"], "baseline_sha256": request.baseline_sha256,
@@ -1588,7 +1593,8 @@ def produce_work_evidence(*, leg, request, execution_binding, settings, assessme
     try:
         for case in cases:
             _authority(authorize, execution_binding, settings["parent_deadline"])
-            identity = {**_case_identity(settings, assessment["work_evidence"], leg, case, stage=stage), "source_sha256": sha(source)}
+            identity = {**_case_identity(settings, assessment["work_evidence"], leg, case,
+                execution_binding_ref=execution_binding["execution_binding_ref"], stage=stage), "source_sha256": sha(source)}
             run_root = directory(leg_root / sha(case["case_id"].encode()))
             workspace, _ = _workspace(settings, identity, case)
             raw = _launch(settings, configuration, source, identity, case, policy, run_root, ledger_root, authorize, execution_binding)

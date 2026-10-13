@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Bestaande AIDE²-verbetering afronden en later toepassen
 
-Beoordelingsdienst en toegang voor de evaluatiewerker hersteld. De kandidaat is nog niet inhoudelijk beoordeeld.
+Eva vervolgt de beoordeling van haar bewaarde kandidaat via de herstelde route.
 
 Klaar wanneer: Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.
 
