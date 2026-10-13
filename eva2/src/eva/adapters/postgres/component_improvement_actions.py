@@ -9,7 +9,7 @@ from eva.application.component_development import (
     make_scoped_component_evaluation_binding,
 )
 from eva.application.component_improvements import read_component, draft_component, prepare_component_release, bind_selected_release, read_component_content, draft_component_content
-from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationConflict, ConversationToolDescriptor
+from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationActionInputRejected, ConversationConflict, ConversationToolDescriptor
 from eva.application.schema_validation import validate_schema_value
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope
 from eva.contracts.canonical_json import canonical_sha256
@@ -246,6 +246,14 @@ class ComponentImprovementActions:
                     and not (call.name == APPLICATION_STATUS and scope in dict(
                         getattr(self.evaluator, "final_assessment_scopes", ())).values())):
                 raise ConversationConflict("reviewed component is not approved for this source")
+        if call.name == EVALUATE:
+            draft_step = call.arguments["draft_step"]
+            draft_receipt = (self.pending(turn, step_index=draft_step)
+                             if draft_step < step_index else None)
+            if draft_receipt is None or draft_receipt.call.name != DRAFT:
+                raise ConversationActionInputRejected(("draft_step",), prompt=
+                    "Maak eerst een codevoorstel met draft_own_component_improvement. "
+                    "Gebruik daarna draft_step uit het opgeslagen voorstel voor de vergelijking.")
         self.dispatch(turn)
         if call.name in {APPLY, APPLICATION_STATUS}:
             request_id = canonical_sha256({"execution": self.spec.execution_id,
