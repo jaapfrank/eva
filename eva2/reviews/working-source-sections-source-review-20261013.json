@@ -1,0 +1,17 @@
+{
+  "contract": "EvaWorkingSourceSectionsPublicReview/v1",
+  "verdict": "GO",
+  "scope": "Exact source and built images for installation only; no original-task success, full fit, efficiency win or native-input authority.",
+  "sourceSha256": "cf7131cfa6906d6ec0357e931f0235a7dbbbb96cdbc08847a96835e39a9c0271",
+  "sourceManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/build-source.private.json",
+    "sha256": "a7e28aea51af1b18a3f3362d14ac0693a7d6174b74212beffdd912c7a5156fce"
+  },
+  "privateReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/source-review.private.json",
+    "sha256": "1ad16b0148fef4a0e9f8146f728f73b2735fc868b74cb4142a7bea2127953125"
+  },
+  "targetedChecks": 14,
+  "latestNeededMappingRestoredInKnown233": true,
+  "actualDynamicFutureFit": "UNKNOWN"
+}

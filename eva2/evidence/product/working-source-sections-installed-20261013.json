@@ -1,0 +1,56 @@
+{
+  "contract": "EvaWorkingSourceSectionsInstalled/v1",
+  "checkedAt": "2026-10-13T00:38:01.122256+00:00",
+  "state": "installed",
+  "sourceSha256": "cf7131cfa6906d6ec0357e931f0235a7dbbbb96cdbc08847a96835e39a9c0271",
+  "changedModules": 1,
+  "otherPythonModulesPreservedPerImage": 344,
+  "coreAndWorkerHealthyAndReady": true,
+  "actualUpdateDispatches": 1,
+  "targetedTests": {
+    "passed": 14,
+    "failed": 0
+  },
+  "scope": "General retention of actually observed local read receipts after checkpoints, with legacy reader bindings and recent-use priority. No domain script or manually authored proposal.",
+  "known233Context": {
+    "installedPreviousWithFraming": 63518,
+    "candidateWithFraming": 64736,
+    "inputCeiling": 65536,
+    "framingReserve": 256,
+    "candidateKnownMargin": 800,
+    "latestObservedMappingPage231ExactVisible": true,
+    "rawLatestIngressGrantUnchanged": true,
+    "fullSourceCoverage": false,
+    "actualDynamicAndFutureFit": "UNKNOWN"
+  },
+  "originalTaskCompleted": false,
+  "newProductFunctionCompleted": false,
+  "modelRequestsDuringSourceChecksAndUpdate": 0,
+  "runtimeCreditCosts": null,
+  "references": {
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/build-source.private.json",
+      "sha256": "a7e28aea51af1b18a3f3362d14ac0693a7d6174b74212beffdd912c7a5156fce"
+    },
+    "sourceReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/source-review.private.json",
+      "sha256": "1ad16b0148fef4a0e9f8146f728f73b2735fc868b74cb4142a7bea2127953125"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/build-result.private.json",
+      "sha256": "17341c4ab847dd118c676107fb60934b21048c37f22127ea459f8bcb7b72c46d"
+    },
+    "installation": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/working-sections-v1/installation-verification.private.json",
+      "sha256": "894fa159780398554bb8db97ea50c620936b2e3688209ee72abd5e4fcb0205b7"
+    },
+    "known233Pair": {
+      "path": "/home/administrator/project/.eva2-artifacts/telegram-ha-context-20261012/checkpoint-source-context/structural/active-artifact-context/research-material-context/final-v4/gen16-working-sections-known233-result.private.json",
+      "sha256": "055db8cc6478bfc848c0c7d208185cff975d83333509819c367abf675c66c511"
+    }
+  },
+  "previousNativeResult": {
+    "path": "/home/administrator/project/Eva2/eva2/evidence/product/research-material-context-ordinary-result-20261013.json",
+    "sha256": "8257262be3de9bb294098f00408a094cd00f732e0c5e86eedb06b81cf2fb640b"
+  }
+}

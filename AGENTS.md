@@ -1,4 +1,26 @@
-## Actueel 13 oktober — Eva’s voorstel blijft onvoltooid; algemene uitvoering herstellen
+## Actueel 13 oktober — kleine gelezen passages bruikbaar houden; Eva schrijft haar eigen voorstel
+
+Providercf713 is na onafhankelijke bron-/bouwGO in kern en taakwerker geïnstalleerd.
+Eén gewijzigde module,344 andere Pythonbronnen perimage en mounts/configuratie behouden;
+beide gezond en ready.14 gerichte tests slagen. Geen Tuya-script of handgeschreven voorstel.
+Gevalideerde bestaande lezersbindings blijven bruikbaar; recente echte leesreceipts
+passen afzonderlijk zodat een te grote hele bronbundel niet alles uitsluit.
+De bewaarde233-fase toont mappingpagina231 nu exact zichtbaar.64.736BPE inclusief
+framing/marge800; volledige recente/recall/futurefit en taakwinst niet bewezen.
+
+Eén normale uitsluitend leesbare voortzetting loopt vanuit gesloten Gen16:
+work:eva-resume:0fb9c284-50a7-5851-97ce-61fed6c99498 (Gen17).
+Zelfde oorspronkelijke opdracht/criteria/grant/rollen/goedkeuringsvoorwaarden;
+oude fouten/verbruik blijven staan. Alleen Eva maakt,slaat op en controleert haar voorstel.
+Een migratie gebeurt pas na apart akkoord. Deze broninstallatie rondt geen functie af.
+Volledig goal ACTIVE;39/48 en39/54 onveranderd; HUE/leercyclus/AIDE² blijven open.
+Spraak geparkeerd;geen nieuwe vergelijkingsserie;Docker Desktop ongemoeid.
+
+Installatie:eva2/evidence/product/working-source-sections-installed-20261013.json.
+Review:eva2/reviews/working-source-sections-source-review-20261013.json.
+Gen16:eva2/evidence/product/research-material-context-ordinary-result-20261013.json.
+
+## Historisch 13 oktober — Gen16 onvoltooid; algemene uitvoering herstellen
 
 Gen16 is gesloten met incomplete_work.28 volledig gemeten en afgesloten aanvragen,
 1.480.502 tokens,27 tools; huidige UNKNOWN0. Eigenaar-API partial en historische

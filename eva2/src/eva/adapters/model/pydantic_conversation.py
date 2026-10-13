@@ -1668,6 +1668,12 @@ class PydanticConversationModel:
                 root = {"reader_tool_id": projection["manifest"]["reader"]["tool_id"]}
             operation = canonical_json_bytes({"name": receipt.call.name, "arguments": receipt.call.arguments})
             origins[root["reader_tool_id"]] = (operation, position)
+            if "model_projection" in (receipt.model_output or {}):
+                # The legacy observation reader and the retained-body reader
+                # address the same verified source through different bindings.
+                legacy = self._receipt_presentation(receipt)
+                key = legacy["model_projection"]["observation_key"]
+                origins[legacy[key]["reader"]["tool_id"]] = (operation, position)
             manifest = receipt.output.get("result", {}).get("source_response_manifest")
             if isinstance(manifest, dict) and isinstance(manifest.get("reader"), dict):
                 origins[manifest["reader"]["tool_id"]] = (operation, position)
@@ -1675,6 +1681,8 @@ class PydanticConversationModel:
         coverage: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
         groups: dict[str, list[ConversationActionReceipt]] = {}
         observed_readers: set[str] = set()
+        positions = {r.call.call_id: i for i, r in enumerate(receipts)}
+        last_read: dict[str, int] = {}
         for receipt in (*selected, *receipts):
             projection = (receipt.model_output or {}).get("ancestor_model_projection")
             output = receipt.output
@@ -1691,6 +1699,7 @@ class PydanticConversationModel:
                 continue
             reader = receipt.call.arguments["tool_id"]
             observed_readers.add(reader)
+            last_read[reader] = max(last_read.get(reader, -1), positions[receipt.call.call_id])
             key = (reader, ingress, canonical_json_bytes(result))
             if key in seen:
                 continue
@@ -1733,9 +1742,13 @@ class PydanticConversationModel:
             if reader in origins:
                 operation, position = origins[reader]
                 newest[operation] = max(position, newest.get(operation, -1))
-        candidates = [rows for reader, rows in groups.items() if reader in origins
-            and origins[reader][1] == newest[origins[reader][0]]]
-        candidates.sort(key=lambda rows: origins[rows[0].call.arguments["tool_id"]][1], reverse=True)
+        # A reader can hold much more material than the available input space.
+        # Admit exact observed receipts separately so an oversized old section
+        # cannot hide a small, recently used section of that same source.
+        candidates = [[receipt] for reader, rows in groups.items() if reader in origins
+            and origins[reader][1] == newest[origins[reader][0]] for receipt in rows]
+        candidates.sort(key=lambda rows: (last_read[rows[0].call.arguments["tool_id"]],
+            positions[rows[0].call.call_id]), reverse=True)
         if not candidates:
             return prior_actions
         body = self._phase_admission_body(prompt=prompt, instructions=instructions,

@@ -27,7 +27,7 @@ from tests.model.test_catalogue_model_view import (
 PATH = "/proof-state/work-notes.md"
 
 
-def _version(label, *, turn=TURN, proof_matches=True):
+def _version(label, *, turn=TURN, proof_matches=True, path=PATH):
     # Distinct Unicode lines make observed page ranges independently identifiable.
     content = "".join(f"{label} {i:04d} observed material λ🙂\n" for i in range(500))
     port, timeline, _, _, _ = _retained_document()
@@ -40,7 +40,7 @@ def _version(label, *, turn=TURN, proof_matches=True):
         port._ensure_running = authorize
         write_thread = port._thread_id(turn, "save_workspace_document", 18)
         admission = {"action_name": "save_workspace_document", "action_call_id": label + "-write",
-            "action_arguments": {"path": PATH, "content": content, "component_step": None},
+            "action_arguments": {"path": path, "content": content, "component_step": None},
             "step_index": 18, "conversation_id": turn.conversation_id,
             "principal_id": turn.principal_id, "source_message_id": turn.message_id,
             "execution_namespace": background_execution_namespace(turn),
@@ -59,7 +59,7 @@ def _version(label, *, turn=TURN, proof_matches=True):
         read_admission.update(action_call_id=label + "-read", step_index=125,
             conversation_id=turn.conversation_id, principal_id=turn.principal_id,
             source_message_id=turn.message_id, execution_namespace=background_execution_namespace(turn),
-            action_arguments={"tool_id": "workspace-read-text", "arguments_json": json.dumps({"path": PATH})})
+            action_arguments={"tool_id": "workspace-read-text", "arguments_json": json.dumps({"path": path})})
         # Exactly the observed reader normalization: one final LF is absent.
         rows[-1].payload["data"]["proof"]["evidence"]["observation"] = {"content": content[:-1]}
         timeline.rows[read_thread] = rows
@@ -251,3 +251,101 @@ def test_actual_provider_envelope_carries_read_material_after_checkpoint(tmp_pat
     assert outputs["research-page"]["result"]["text"] == page.output["result"]["text"]
     assert outputs["saved"] == PydanticConversationModel._receipt_model_views(history)[-1]
     assert model._context_archive is None
+
+
+@pytest.mark.parametrize("inventory", (False, True))
+def test_legacy_observation_reader_remains_working_material_after_checkpoint(inventory):
+    from tests.model.test_catalogue_model_view import _checkpoint_ha_read
+    read, _, timeline, _, _, authorize = _checkpoint_ha_read(inventory=inventory)
+    key = "inventory" if inventory else "result"
+    legacy_reader = read.model_output[key]["reader"]["tool_id"]
+    assert legacy_reader != read.model_output["ancestor_model_projection"]["manifest"]["reader"]["tool_id"]
+    route = PostgresExternalConversationTools(None,
+        SimpleNamespace(action_names=("use_connector_tool",)),
+        SimpleNamespace(supports_stored_results=True))
+    route._execution_lock = lambda _: nullcontext()
+    route._timeline = lambda _: timeline
+    route._ensure_running = authorize
+    page = route.execute(TURN, ConversationActionCall("legacy-page", "use_connector_tool", {
+        "tool_id": legacy_reader,
+        "arguments_json": json.dumps({"pointer": "/response_json", "offset": 100,
+            "limit": 900, "query": None})}), step_index=2)
+    history = (read, page, _working_note("checkpoint", 2, "Continue from read evidence."), _latest())
+    frozen = _raw(history)
+    selected, _ = PydanticConversationModel._receipt_context_selection(history)
+    assert "legacy-page" not in _ids(selected)
+    model = object.__new__(PydanticConversationModel)
+    model._resource_budget = SimpleNamespace(max_input_tokens=65536)
+    restored = model._retain_working_reads(history, selected[:-1], selected[-1],
+        prompt="", instructions="", tools=())
+    assert "legacy-page" in _ids(restored)
+    assert _raw(history) == frozen
+
+
+def test_legacy_source_alias_requires_existing_projection_validation():
+    from copy import deepcopy
+    from eva.adapters.model.contracts import ConversationModelError
+    from tests.model.test_catalogue_model_view import _checkpoint_ha_read
+    read, *_ = _checkpoint_ha_read()
+    injected = deepcopy(read.model_output)
+    injected["result"]["sha256"] = "0" * 64
+    altered = replace(read, model_output=injected)
+    # The independently valid ancestor-body projection cannot legitimize a
+    # changed legacy observation manifest used for a second reader binding.
+    history = (altered, _working_note("checkpoint", 2, "Continue from read evidence."), _latest())
+    model = object.__new__(PydanticConversationModel)
+    model._resource_budget = SimpleNamespace(max_input_tokens=65536)
+    with pytest.raises(ConversationModelError, match="projection is invalid"):
+        model._retain_working_reads(history, history[1:-1], history[-1],
+            prompt="", instructions="", tools=())
+
+
+def _budget_for_exact_page(model, selected, page):
+    from eva.adapters.model.pydantic_conversation import (
+        _INPUT_FRAMING_RESERVE_TOKENS, _input_tokenizer)
+    wire = model._phase_admission_body(prompt="", instructions="", tools=(),
+        prior_actions=(*selected[:-1], page), completed_action=selected[-1])
+    return len(_input_tokenizer().encode_ordinary(
+        canonical_json_bytes(wire).decode())) + _INPUT_FRAMING_RESERVE_TOKENS + 64
+
+
+def test_recent_small_section_survives_when_its_whole_reader_cannot_fit():
+    source = _version("bounded-material")
+    large = source.page("large-earlier-section", limit=8000)
+    small = source.page("small-needed-section", offset=12000, limit=600)
+    history = (source.read, large, small,
+        _working_note("checkpoint", 2, "Use the recently read section."), _latest())
+    frozen = _raw(history)
+    selected, overview = PydanticConversationModel._receipt_context_selection(history)
+    assert overview and not {"large-earlier-section", "small-needed-section"} & _ids(selected)
+    model = object.__new__(PydanticConversationModel)
+    model._resource_budget = SimpleNamespace(max_input_tokens=_budget_for_exact_page(model, selected, small))
+    restored = model._retain_working_reads(history, selected[:-1], selected[-1],
+        prompt="", instructions="", tools=())
+    assert "small-needed-section" in _ids(restored)
+    assert "large-earlier-section" not in _ids(restored)
+    wire = model._phase_admission_body(prompt="", instructions="", tools=(),
+        prior_actions=restored, completed_action=selected[-1])
+    model._admit_request(wire, autonomous=False)
+    output = next(json.loads(row["output"]) for row in wire["input"]
+        if row.get("call_id") == "small-needed-section" and row["type"] == "function_call_output")
+    assert output["result"]["text"] == small.output["result"]["text"]
+    assert _raw(history) == frozen
+
+
+def test_recent_use_of_older_source_precedes_an_unused_newer_observation():
+    older = _version("older-source", path="/proof-state/older.md")
+    newer = _version("newer-source", path="/proof-state/newer.md")
+    new_page = newer.page("unused-newer-source", limit=1200)
+    old_page = older.page("needed-older-source", offset=4000, limit=600)
+    history = (older.read, newer.read, new_page, old_page,
+        _working_note("checkpoint", 2, "Use the last inspected source."), _latest())
+    selected, _ = PydanticConversationModel._receipt_context_selection(history)
+    model = object.__new__(PydanticConversationModel)
+    model._resource_budget = SimpleNamespace(max_input_tokens=_budget_for_exact_page(model, selected, old_page))
+    restored = model._retain_working_reads(history, selected[:-1], selected[-1],
+        prompt="", instructions="", tools=())
+    assert "needed-older-source" in _ids(restored)
+    assert "unused-newer-source" not in _ids(restored)
+    model._admit_request(model._phase_admission_body(prompt="", instructions="", tools=(),
+        prior_actions=restored, completed_action=selected[-1]), autonomous=False)
