@@ -1,0 +1,13 @@
+{
+  "contract": "EvaPublicOrdinaryCurrentResultReview/v1",
+  "checkedAt": "2026-10-13T03:46:47.624035+00:00",
+  "verdict": "INCOMPLETE_NATIVE_AND_DELIVERY",
+  "privateReviewSha256": "76ba876bb146400f371319bee230916f2ca56f45036e9b6ad1c1b93ae9d16c81",
+  "originalCriteriaSha256": "0c9d0f82f24f19b0df79df7f636aaf2c4a8fa978b5d7cff02dcb39fa805ed444",
+  "contentVerdict": "PASS_REUSED_UNCHANGED_ARTIFACT",
+  "currentReadback": "PASS_SINGLE_TERMINAL_LF_NORMALIZATION",
+  "nativeState": "failed",
+  "delivery": "unbound",
+  "historicalFailureUnchanged": true,
+  "noNewRunAuthority": true
+}

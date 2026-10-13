@@ -1,4 +1,34 @@
-## Actueel 13 oktober — Eva controleert haar eigen resultaat vóór taakafronding
+## Actueel 13 oktober — historische context blokkeert actuele afronding niet meer
+
+Gen24 blijft FAILED/incomplete_work: Eva las het eigen inhoudelijk bruikbare
+voorstel actueel terug (READ304, ongewijzigde SHA33c1204d, inhoud PASS), maar de
+uitvoerder telde oude selection_invalid mee als huidige afwijsgrond. Drie gemeten/
+gesloten aanvragen, 155.543 tokens, één tool, nul huidige UNKNOWN/inflight; native
+resultaat NULL en levering UNBOUND. Oude status en fouten blijven exact behouden.
+
+De gerichte modelvrije diagnose bewijst de oorzaak: fullview269 receipts faalt,
+huidige READ304 alleen slaagt. Zes oude mislukte selecties blokkeerden afzonderlijk.
+De algemene correctie scheidt herstelde context van huidig uitvoeringsbewijs:
+pending retourneert oude receipts nog exact aan het gesprek, maar telt ze niet als
+huidige voltooiing; nieuwe execute_step-receipts blijven gelijk. Geen foutlabels
+herschrijven, context weggooien, gatebypass of extra bevoegdheden. Runner252147b4
+staat in gezonde/ready kern en werker, één update,344 overige bronnen per image
+ongewijzigd. Onafhankelijke bronreview GO;26 unieke gerichte controles slagen.
+Eerste volledige selectie114PASS/3FAIL bewaart twee bekende baselinefouten en één
+nieuwe fixture die de normale dispatchguard miste; die fixture is gericht hersteld,
+productcode/eindbeoordelingsregels ongewijzigd. Geen dubbele testtelling.
+
+Eén gewone Gen25-voortzetting loopt: work:eva-resume:ceadcb9f-6327-58fd-b2f7-94c2c72e4e84.
+Eva controleert en sluit zelf haar bestaande voorstel af; Codex schrijft het niet.
+Oorspronkelijke opdracht/criteria/mandaat en later apart akkoord voor HA-migratie
+behouden. Native resultaat/levering nog niet waargenomen; geen nieuwe vergelijking.
+Volledig goal ACTIVE;39/48 en39/54 onveranderd. HUE/leercyclus/AIDE² open, spraak
+geparkeerd en ongebruikte Docker Desktop ongemoeid.
+Installatie: eva2/evidence/product/restored-context-evidence-installed-20261013.json.
+Review: eva2/reviews/restored-context-evidence-source-review-20261013.json.
+Gen24: eva2/evidence/product/current-result-verification-ordinary-result-20261013.json.
+
+## Historisch 13 oktober — Eva controleert haar eigen resultaat vóór taakafronding
 
 Eva's oorspronkelijke voorstel heeft inhoudelijk PASS (Gen22, SHA33c1204d).
 Gen23 markeerde alle drie voorstelstappen done, maar eindigde FAILED/incomplete_work:
@@ -15,10 +45,14 @@ Onafhankelijke bronreview GO; 24 unieke gerichte controles slagen, waaronder
 één actuele teruglezing en begrensd stoppen zonder bewijs. Twee oudere identieke
 baselinefouten blijven bewaard. Eén installatie, nul modelaanvragen bij bouwen.
 
-Eén gewone Gen24-voortzetting loopt met oorspronkelijke opdracht/criteria/mandaat:
-work:eva-resume:f8f7f91e-aed4-5659-be6a-a2ca18efbb8c. Eva moet zelf het bestaande
-eindresultaat controleren en opleveren; Codex schrijft het voorstel niet. Native
-succes en levering nog niet waargenomen. Geen HA-migratie vóór later apart akkoord.
+Gen24 is gesloten: actuele READ304 verified, ongewijzigd einddocument en inhoud
+PASS, maar native FAILED/incomplete_work; 3 gemeten/gesloten aanvragen, 155.543
+tokens, één tool, nul huidige UNKNOWN/inflight en levering UNBOUND. Een gerichte
+modelvrije diagnose toont zes oude selection_invalid-receipts die de huidige
+controle blokkeren. Herstelde context en actuele uitvoeringsbewijzen worden nu
+algemeen gescheiden; ruwe context/oude fouten blijven behouden. 26 gerichte
+controles slagen; bronreview loopt, nog geen nieuwe uitvoering. Codex schrijft het
+voorstel niet. Geen HA-migratie vóór later apart akkoord.
 Volledig goal ACTIVE; 39/48 en 39/54 onveranderd. HUE, leercyclus en AIDE² open;
 spraak geparkeerd, ongebruikte Docker Desktop ongemoeid, geen nieuwe vergelijking.
 Installatie: eva2/evidence/product/current-result-verification-installed-20261013.json.

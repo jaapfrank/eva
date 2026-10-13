@@ -1,0 +1,48 @@
+{
+  "contract": "EvaOrdinaryCurrentResultVerification/v1",
+  "checkedAt": "2026-10-13T03:46:47.624035+00:00",
+  "workId": "work:eva-resume:f8f7f91e-aed4-5659-be6a-a2ca18efbb8c",
+  "generation": 24,
+  "nativeState": "failed",
+  "errorCode": "incomplete_work",
+  "errorFingerprint": "9487b8363dcd3d62c584aca8c1588a58f3b9abda6cff5aaf71451a5ca5d8a609",
+  "exactMatchedCause": "_UnfinishedWorkPlan:task made no progress after continuation",
+  "terminalManifestSha256": "faa5d917d8edd6fbcad3491916d4d3294812a6ce7a64e6c0456a0f962b55e1cf",
+  "originalContent": {
+    "verdict": "PASS",
+    "reusedUnchangedArtifactReviewSha256": "402763f6f9edd7747805242b7c4af54cbdaa94edc5a52f74b1116a4ef47d88a4",
+    "artifactBytes": 14736,
+    "artifactSha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76"
+  },
+  "currentReadback": {
+    "step": 304,
+    "status": "verified",
+    "durable": true,
+    "bytes": 14735,
+    "sha256": "80ee69b9f60f2100b8acbba4c488749439cb4287c0ad145bbb05151b51660565",
+    "sameTextWithSingleTerminalLfNormalization": true,
+    "proofSha256": "f9068529f5e4dfca517197e633cf4a2e7d90e169b15d82c64396b58d27a7aeb9"
+  },
+  "usage": {
+    "admitted": 3,
+    "succeeded": 3,
+    "measured": 3,
+    "streamsClosed": 3,
+    "inputTokens": 155076,
+    "outputTokens": 467,
+    "totalTokens": 155543,
+    "tools": 1,
+    "currentUnknown": 0,
+    "inflight": 0,
+    "ownerApiMeasurement": "partial",
+    "historicalUnknownPreserved": true,
+    "creditCosts": null
+  },
+  "nativeResultAvailable": false,
+  "delivery": "unbound",
+  "newWrites": 0,
+  "haActions": 0,
+  "progress": "inherited revision36,all3done",
+  "noRepeatOrComparisonStarted": true,
+  "mainCompletionCountsUnchanged": true
+}

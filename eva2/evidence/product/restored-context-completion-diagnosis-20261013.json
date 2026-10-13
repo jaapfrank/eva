@@ -1,0 +1,26 @@
+{
+  "contract": "EvaPublicRestoredContextCompletionDiagnosis/v1",
+  "checkedAt": "2026-10-13T03:46:47.624035+00:00",
+  "privateReviewSha256": "8da1e3ef57d25d9b9471bec743f23dcf17e56436a28c2380a3e3b82133241ab2",
+  "historicalViewSha256": "edf99bd902588fd5ef7e78b87dfc71d5634bd480708d88c273dd096acfea943f",
+  "runtimeSourceSha256": "172d981816f0aa08e88d85a113c013529c6dff0436c5b42f43a4d619395bfe63",
+  "records": 269,
+  "allHistoricalAndCurrentPass": false,
+  "currentRead304OnlyPass": true,
+  "blockingHistoricalSelectionInvalidSteps": [
+    51,
+    66,
+    165,
+    189,
+    222,
+    242
+  ],
+  "firstFalseReturnLine": 523,
+  "cause": "pending_step restores old receipts into both historical conversation context and current completion evidence; old invalid selection blocks the verified current readback.",
+  "noHistoricalStatusRewritten": true,
+  "modelRequests": 0,
+  "databaseWrites": 0,
+  "nativeActions": 0,
+  "diagnosticOmissionOfOldRowsIsNotRuntimeApproval": true,
+  "proposedCorrection": "Preserve restored context and raw errors; count fresh execute_step receipts as current attempt evidence."
+}

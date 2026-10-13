@@ -1,0 +1,73 @@
+{
+  "contract": "EvaPublicRestoredContextEvidenceInstalled/v1",
+  "checkedAt": "2026-10-13T03:50:23.666386+00:00",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "252147b4fc2212234fcfcc469e68488da5f119deb4fb7040cc69a1344b26162b"
+    }
+  ],
+  "baselineSha256": "172d981816f0aa08e88d85a113c013529c6dff0436c5b42f43a4d619395bfe63",
+  "sourceReview": {
+    "path": "eva2/reviews/restored-context-evidence-source-review-20261013.json",
+    "sha256": "075295757401654c0074a41a4841bd97d2c413e2bddeaca1350b10d41b2f7146",
+    "verdict": "GO"
+  },
+  "runtimeVerificationSha256": "e235120b73e2bad16541c31efc8e7de3b45309ddce91eb5f88d249eb49c3030d",
+  "updateDispatches": 1,
+  "modelRequestsDuringBuildAndInstall": 0,
+  "ready": true,
+  "services": {
+    "core": {
+      "image": "sha256:fcb7dfe11e774be7240326bf2082a9a1a9faf26bc11478ad9adc5bad1f131816",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "bootstrap/delegated_digital_runner.py": "252147b4fc2212234fcfcc469e68488da5f119deb4fb7040cc69a1344b26162b"
+      },
+      "inspectionSha256": "660244ff38a602f55dcbc0c663346b66042420418236ddea2e3e436fcfe53caa"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:ec6735b36aacb9a85c7d1a4e98231fb14e6519b0ffba55b326439c28654cdf68",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedPythonSources": 344,
+      "exactModules": {
+        "bootstrap/delegated_digital_runner.py": "252147b4fc2212234fcfcc469e68488da5f119deb4fb7040cc69a1344b26162b"
+      },
+      "inspectionSha256": "91bd89b499e8d4a945ecbfbd9b61eace42f93c1c233974d8242a2f0c1c1d687d"
+    }
+  },
+  "diagnosis": {
+    "path": "eva2/evidence/product/restored-context-completion-diagnosis-20261013.json",
+    "sha256": "e8ccca111891acf2af4d3beebbe7c9be2d74d1bdba444322c06a9584d0e661b2"
+  },
+  "ordinaryResume": {
+    "workId": "work:eva-resume:ceadcb9f-6327-58fd-b2f7-94c2c72e4e84",
+    "parentWorkId": "work:eva-resume:f8f7f91e-aed4-5659-be6a-a2ca18efbb8c",
+    "generation": 25,
+    "receiptSha256": "dc9f7629b1bdcb1a44045435b5bd7e4cd539f75c64ce0da36efe3a524ad9c05a",
+    "originalCriteriaOrGrantChanged": false,
+    "newInstruction": false,
+    "nativeResult": "not_yet_observed",
+    "delivery": "unbound"
+  },
+  "priorFailuresPreserved": true,
+  "mainCompletionCountsUnchanged": true,
+  "noNewComparisonSeries": true,
+  "noHaMigrationApproval": true,
+  "creditCosts": null
+}

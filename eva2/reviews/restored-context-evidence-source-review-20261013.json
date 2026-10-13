@@ -1,0 +1,31 @@
+{
+  "contract": "EvaPublicRestoredContextEvidenceSourceReview/v1",
+  "checkedAt": "2026-10-13T03:50:23.666386+00:00",
+  "verdict": "GO",
+  "privateReviewSha256": "b3cf2bb3e11ea56847b620ee8a25c517ceccfd76b7ffdc3468aa2d8a86cc165a",
+  "sourceFiles": [
+    {
+      "path": "eva2/src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "252147b4fc2212234fcfcc469e68488da5f119deb4fb7040cc69a1344b26162b"
+    }
+  ],
+  "baselineSha256": "172d981816f0aa08e88d85a113c013529c6dff0436c5b42f43a4d619395bfe63",
+  "sourceManifestSha256": "c7e8c978954d89c3b131f1dd1d8386e277bc5b22ff81fade65c8e21efd4b1401",
+  "scope": "Historical receipts remain in conversation/raw records; only actual execute_step receipts count as this attempt evidence. No gate bypass or historical state rewrite.",
+  "tests": {
+    "baselineRegression": "1 failed,1 passed; reproduces the actual historical-selection failure",
+    "finalTargeted": "26 passed in3.44s",
+    "initialFullSelection": "114 passed,3 failed;2 exact known baseline failures,1 controlled dispatch fixture omission",
+    "fixtureCorrection": "Synthetic tool now invokes normal dispatch guard; preserved initial failure, product source unchanged by this fixture correction.",
+    "notIndependentCriterionChange": true,
+    "notAdditionalUniqueCounts": true,
+    "liveModelRequests": 0
+  },
+  "boundaries": {
+    "restoredContextAndRawFailurePreserved": true,
+    "currentExecutionReceiptsUnchanged": true,
+    "completionGatesAndModelGenerateUnchanged": true,
+    "newInputAuthority": false,
+    "actualNativeResultPending": true
+  }
+}

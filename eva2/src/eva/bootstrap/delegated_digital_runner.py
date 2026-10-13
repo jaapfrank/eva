@@ -327,9 +327,9 @@ class BackgroundConnectorActions:
                 if receipt.call.name not in self._allowed or found is not None:
                     raise ConversationConflict("background action admission differs")
                 found = self._receipt(receipt)
-        if found is not None:
-            # Recovered receipts do not consume this attempt's new-call budget.
-            self.receipts.append(found)
+        # Recovered receipts remain in the conversation's historical context.
+        # They neither consume this attempt's new-call budget nor count as its
+        # current completion evidence. New execute_step receipts stay separate.
         return found
 
     def execute(self, turn, call):

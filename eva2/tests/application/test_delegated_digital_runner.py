@@ -156,6 +156,66 @@ def test_completed_plan_requires_current_verification_without_repeating_work(mon
         assert outcome.result is None and not tools.calls
         assert outcome.usage.completed_model_responses == model.responses == 2
 
+@pytest.mark.parametrize("verify_result", [True, False])
+def test_restored_invalid_read_keeps_context_without_poisoning_current_verification(monkeypatch, verify_result):
+    import eva.bootstrap.delegated_digital_runner as module
+    from eva.adapters.postgres.connector_results import READER_PREFIX
+
+    source, spec, store, tools, journal, runner, identity = fixture()
+    restored = ConversationActionReceipt(ConversationActionCall(
+        "old-invalid-reader", "use_connector_tool", {"tool_id": READER_PREFIX + "old"}), {
+        "status": "selection_invalid", "source": "stored_connector_result",
+        "external_state_verified": False,
+    })
+    saved = {0: restored}
+    tools.pending = lambda turn, step_index: saved.get(step_index)
+    monkeypatch.setattr(module, "load_work_progress", lambda *args: {
+        "work_id": "work:previous", "revision": 36, "steps": [{"state": "done"}],
+    })
+
+    def verify(turn, call, *, step_index):
+        from eva.application.background_execution import authorize_background_dispatch
+        authorize_background_dispatch(turn)
+        assert step_index == 1 and call.call_id == "current-read"
+        tools.calls.append((turn, call.name, step_index, background_execution_namespace(turn)))
+        receipt = ConversationActionReceipt(call, {"status": "verified", "result": "existing result read back"})
+        saved[step_index] = receipt
+        return receipt
+    tools.execute = verify
+
+    class VerifyExisting:
+        responses = 0
+        def generate(self, *args, **kwargs):
+            self.responses += 1
+            recovered = kwargs.get("completed_action")
+            assert recovered is not None
+            # Restored raw failure still reaches the model as historical context.
+            if recovered.call.call_id == "old-invalid-reader":
+                assert recovered.output["status"] == "selection_invalid"
+            read = verify_result and recovered.call.call_id == "old-invalid-reader"
+            call = ConversationActionCall("current-read", "use_connector_tool", {
+                "operation": "read", "path": "/existing-result.md",
+            }) if read else None
+            return ConversationModelResult(None if call else "The saved result is ready.",
+                "controlled", call, usage=ConversationModelUsage.measured(
+                    input_tokens=30, output_tokens=10, tool_calls=int(call is not None)))
+
+    model = VerifyExisting()
+    runner.model = model
+    outcome = asyncio.run(runner.run(spec, call_id="call:restored-context"))
+    assert restored.output["status"] == "selection_invalid"
+    assert restored is saved[0]
+    if verify_result:
+        assert outcome.status == "succeeded", outcome
+        assert len(tools.calls) == 1 and tools.calls[0][2] == 1
+        assert outcome.usage.completed_model_responses == model.responses == 2
+        assert outcome.usage.tool_calls == 1
+        _validate_usage(spec, outcome.usage, successful=True)
+    else:
+        assert outcome.status == "incomplete_work", outcome
+        assert outcome.result is None and not tools.calls
+        assert outcome.usage.completed_model_responses == model.responses == 2
+
 def test_outer_cancel_waits_for_connector_cleanup_without_second_step():
     async def run():
         _,spec,_,tools,_,runner,_=fixture()
