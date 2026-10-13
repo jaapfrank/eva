@@ -1,0 +1,60 @@
+{
+  "contract": "EvaCurrentAideConstructionCause/v1",
+  "date": "2026-10-13T08:21:39.274184+00:00",
+  "task_id": "HUE6.1",
+  "status": "installed_host_pin_construction_incomplete",
+  "product_task_completed": false,
+  "whole_goal_completed": false,
+  "host_pin_installed": true,
+  "core_worker_restarted_for_pin": false,
+  "native_attempt": {
+    "state": "ambiguous",
+    "error_code": "internal_error",
+    "model_requests": 3,
+    "input_tokens": 26205,
+    "output_tokens": 377,
+    "total_tokens": 26582,
+    "tools": 2,
+    "verified_source_reads": 2,
+    "active_seconds": 53.71338224201463,
+    "current_unknown_requests": 0,
+    "candidate": false,
+    "evaluation": false,
+    "application": false,
+    "later_use": false,
+    "own_transient_closed": true
+  },
+  "cause": "Private evaluation guard made missing/non-DRAFT proof fatal before dispatch instead of using the existing typed single input-repair route. No provider or component-quality loss inferred.",
+  "next": "Only repair missing/non-DRAFT input handling; Eva authors its own draft. Any reviewed followup carries prior actual usage and time within original limits.",
+  "remaining_original_upper_bounds": {
+    "construction_requests": 11,
+    "construction_active_seconds": 192.28661775798537,
+    "shared_requests": 65,
+    "shared_tools": 98,
+    "input_tokens": 358795,
+    "output_tokens": 14623,
+    "total_tokens": 373418
+  },
+  "preserved": {
+    "original_criteria": true,
+    "historical_unknown": true,
+    "closed_attempts": true,
+    "completions": "43/54",
+    "voice_parked": true
+  },
+  "credit_costs": null,
+  "private_refs": {
+    "installed": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/current-configuration-pin-correction/host-pin-installed.private.json",
+      "sha256": "65597e65c1355038a3f8475e7d6737a9e9bb5a9fb5c2cfc382fafbc071640a7f"
+    },
+    "terminal": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/current-configuration-pin-correction/parent/independent-construction-terminal-review.private.json",
+      "sha256": "7e5f5e53bcfb6b048bdcb0d9e36cdcdc606d958bbfe4675ac936d24432679938"
+    },
+    "cause": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/current-configuration-pin-correction/parent/missing-draft-cause-independent-addendum.private.json",
+      "sha256": "71ffcbd362d5d7b03da346f9a4af3b33afe8849e08cda6beecc35d0936ee0eea"
+    }
+  }
+}

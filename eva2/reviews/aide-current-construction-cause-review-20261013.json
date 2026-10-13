@@ -1,0 +1,10 @@
+{
+  "contract": "EvaCurrentAideConstructionPublicReview/v1",
+  "source_review_sha256": "22754ae9626bec2ad51ee27568816b8837ee9671704220655a361263f723967f",
+  "public_facts_sha256": "a34f87f6601e2018930c635ec1f2fa7425a24744f4538616daa5f3a5ab4a5187",
+  "verdict": "GO_FOR_LIMITED_FAILURE_FACTS_AND_MISSING_DRAFT_SOURCE_CORRECTION",
+  "native_input_go": false,
+  "hue6_completed": false,
+  "production_source_modified": false,
+  "proof_scope": "Exact private source and five model-free checks; existing one-repair interface, no invented candidate or quality gain; cumulative input binding pending."
+}

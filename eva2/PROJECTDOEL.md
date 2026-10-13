@@ -1,3 +1,23 @@
+## Actueel 13 oktober — eerste huidige verbeteruitvoering niet afgerond
+
+De foutieve configuratiepin is hersteld en in dezelfde hostdienst geïnstalleerd.
+Kern en taakwerker zijn daarbij niet herstart. Eva las de actuele eigen bron
+via twee geverifieerde acties, maar vroeg daarna evaluatie zonder bestaand
+codevoorstel. De private proefadapter maakte hiervan een fatale fout in plaats
+van de bestaande herstelbare invoermelding. Exacte oorzaak onafhankelijk bevestigd.
+
+De uitvoering is gesloten: drie Astra/medium-aanvragen,26.205 invoer- en377
+uitvoertokens,26.582 totaal, twee tools en53,713 actieve seconden. Geen kandidaat,
+evaluatie, toepassing of latere gebruikswinst. Geen onbekend huidig modelverbruik;
+ontwikkelcredits en historische UNKNOWN blijven onbekend. Alle oude bytes behouden.
+
+Nu uitsluitend de ontbrekend-DRAFT-afhandeling corrigeren met de bestaande
+invoerherstelroute; bewijscontroles blijven gelden. Eva schrijft het voorstel
+zelf. Een eventueel gericht vervolg draagt werkelijk verbruik en tijd over:
+maximaal11 constructieaanvragen en192,287 resterende actieve seconden; geen
+heropening of extra budget.43/54 behouden; HUE6.1 en volledig goal blijven open.
+Dashboard toont deze concrete fout, niet een afgeronde AIDE²-cyclus.
+
 ## Actueel 13 oktober — AIDE² op huidige bron geïnstalleerd, cyclus nog open
 
 De bestaande hostdienst gebruikt de begrensde loadercorrectie en actuele configuratie.
