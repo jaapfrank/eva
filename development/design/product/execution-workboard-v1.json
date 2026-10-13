@@ -656,13 +656,13 @@
       ]
     },
     {
-      "id": "HUE5.1",
-      "title": "Van de reactie op eigen initiatief leren",
+      "id": "HUE6.1",
+      "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
       "status": "in_progress",
-      "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-      "nextAction": "De normale initiatiefcyclus loopt weer: om 21:28 koos Eva zelf voor stilte, met één Astra-aanvraag en 1.969 geregistreerde tokens. Nog geen nuttige nieuwe bijdrage of leren van eigenaarfeedback aangetoond. Volg bestaande privéaflevering en latere reactie; geen vooraf gekozen voorbeeld, extra proef of oude taakherhaling.",
-      "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-      "area": "initiative and learning",
+      "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
+      "nextAction": "HUE6.1 blijft open. De referentie heeft werkelijk werk uitgevoerd, maar onze beoordelingsroute trok eerder ouderverbruik af van het ontwikkeldeelbudget en wees de vijfde volledige reactie daarna af. Kandidaat niet uitgevoerd. Herstel uitsluitend deze toewijzing met bestaande meetgegevens; geen herhaling van deze gesloten proef. Rustige reflectie en later gebruik blijven nodig. Geen eigenaarhandeling.",
+      "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
+      "area": "self-improvement and learning",
       "countedAsProductTask": true
     }
   ],
@@ -832,18 +832,18 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T19:33:50.670611+00:00",
+  "lastUpdated": "2026-10-13T21:14:42.949332+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "HUE5.1",
+  "activeTaskId": "HUE6.1",
   "currentWork": {
-    "id": "HUE5.1",
-    "title": "Van de reactie op eigen initiatief leren",
+    "id": "HUE6.1",
+    "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
     "status": "in_progress",
-    "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "nextAction": "De normale initiatiefcyclus loopt weer: om 21:28 koos Eva zelf voor stilte, met één Astra-aanvraag en 1.969 geregistreerde tokens. Nog geen nuttige nieuwe bijdrage of leren van eigenaarfeedback aangetoond. Volg bestaande privéaflevering en latere reactie; geen vooraf gekozen voorbeeld, extra proef of oude taakherhaling.",
-    "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "area": "initiative and learning",
+    "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
+    "nextAction": "HUE6.1 blijft open. De referentie heeft werkelijk werk uitgevoerd, maar onze beoordelingsroute trok eerder ouderverbruik af van het ontwikkeldeelbudget en wees de vijfde volledige reactie daarna af. Kandidaat niet uitgevoerd. Herstel uitsluitend deze toewijzing met bestaande meetgegevens; geen herhaling van deze gesloten proef. Rustige reflectie en later gebruik blijven nodig. Geen eigenaarhandeling.",
+    "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
+    "area": "self-improvement and learning",
     "countedAsProductTask": true
   },
   "historicalWorkboard": {
@@ -861,7 +861,7 @@
   "team": {
     "coordinator": "/root",
     "architectureReviewer": "/root/eva1_memory_transfer",
-    "documentationReviewer": "/root/product_execution_memory_review"
+    "documentationReviewer": "/root/hue6_independent_review"
   },
   "audit": {
     "projectDashboard": {
@@ -941,7 +941,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "HUE6/AIDE²: bewaarde Eva-kandidaat via bestaande route afronden; daarna HUE5. Spraak wordt door een ander model verzorgd en valt buiten deze opdracht.",
+      "priorityDecision": "HUE6.1 blijft open. De referentie heeft werkelijk werk uitgevoerd, maar onze beoordelingsroute trok eerder ouderverbruik af van het ontwikkeldeelbudget en wees de vijfde volledige reactie daarna af. Kandidaat niet uitgevoerd. Herstel uitsluitend deze toewijzing met bestaande meetgegevens; geen herhaling van deze gesloten proef. Rustige reflectie en later gebruik blijven nodig. Geen eigenaarhandeling.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1791,23 +1791,23 @@
           "ownerRead": "unknown"
         },
         "now": {
-          "title": "Van de reactie op eigen initiatief leren",
+          "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
           "state": "Bezig",
-          "phase": "ordinary_initiative_cycle_resumed",
-          "taskId": "HUE5.1",
+          "phase": "retained_candidate_quality_and_later_use",
+          "taskId": "HUE6.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Normale initiatiefafweging loopt weer; Eva koos voor stilte.",
-          "detail": "De twee concrete blokkades zijn opgelost. De echte rustige cyclus nam om 21:28 zelfstandig een besluit: stilblijven. Eén Astra-aanvraag, 1.969 tokens. Dit bevestigt hervatting, maar nog geen nuttige bijdrage of leren van jouw reactie.",
-          "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
+          "summary": "Bewaarde AIDE²-kandidaat beoordelen en gekozen versie later gebruiken.",
+          "detail": "Bewaarde Eva-kandidaat via de bestaande beoordeling afronden: onafhankelijke kwaliteitsuitkomst, alleen winst toepassen of referentie behouden, daarna werkelijk gebruik. Huidige stabiele kern en resterend gezamenlijk verbruik vooraf coherent binden; geen nieuwe variant, gesloten herhaling, spraakwerk of vergelijkingsserie.",
+          "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
           "ownerActionNeeded": false,
-          "latestEvidence": "development/evidence/product/initiative-ordinary-cycle-resumed-20261013.json"
+          "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json"
         },
         "next": {
           "state": "Vervolg binnen dezelfde taak",
-          "title": "HUE5.1 · Echt initiatief en leren",
-          "summary": "Normale initiatiefkeuze, privéaflevering en latere reactie door dezelfde route laten lopen.",
-          "detail": "Geen voorgeschreven bijdrage en geen nieuwe vergelijking. Jouw eerdere antwoord is geregistreerd; nu geen handeling van jou nodig."
+          "title": "HUE6.1 · Beoordelen, selecteren en later gebruiken",
+          "summary": "Geen voltooiing op basis van alleen een gerepareerde evaluator.",
+          "detail": "Originele kwaliteitseisen en onafhankelijke eindbeoordeling behouden. Bij gelijkspel blijft de referentie; geen spraakwerk of nieuwe vergelijkingsserie."
         },
         "ownerAction": {
           "title": "Nu niets nodig",
@@ -1932,7 +1932,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-13T13:40:45.278382+00:00",
+      "lastUpdatedAt": "2026-10-13T20:37:54.881915+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -1966,7 +1966,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-13T13:40:45.278382+00:00",
+      "updatedAt": "2026-10-13T20:37:54.881915+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -1975,7 +1975,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "HUE5.1",
+        "currentStep": "HUE6.1",
         "steps": [
           {
             "number": 1,
@@ -3216,7 +3216,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-                "nextAction": "Bind de bestaande beoordelingsroute aan de actuele stabiele kern en het resterende gezamenlijke verbruik voordat een nieuwe uitvoering begint. Behoud de kandidaat, oorspronkelijke criteria en gesloten foutregistraties; geen spraakwijziging of nieuwe vergelijkingsserie.",
+                "nextAction": "HUE6.1 blijft open. De referentie heeft werkelijk werk uitgevoerd, maar onze beoordelingsroute trok eerder ouderverbruik af van het ontwikkeldeelbudget en wees de vijfde volledige reactie daarna af. Kandidaat niet uitgevoerd. Herstel uitsluitend deze toewijzing met bestaande meetgegevens; geen herhaling van deze gesloten proef. Rustige reflectie en later gebruik blijven nodig. Geen eigenaarhandeling.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -3648,7 +3648,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De normale initiatiefcyclus loopt weer: om 21:28 koos Eva zelf voor stilte, met één Astra-aanvraag en 1.969 geregistreerde tokens. Nog geen nuttige nieuwe bijdrage of leren van eigenaarfeedback aangetoond. Volg bestaande privéaflevering en latere reactie; geen vooraf gekozen voorbeeld, extra proef of oude taakherhaling.",
+        "nextAction": "HUE6.1 blijft open. De referentie heeft werkelijk werk uitgevoerd, maar onze beoordelingsroute trok eerder ouderverbruik af van het ontwikkeldeelbudget en wees de vijfde volledige reactie daarna af. Kandidaat niet uitgevoerd. Herstel uitsluitend deze toewijzing met bestaande meetgegevens; geen herhaling van deze gesloten proef. Rustige reflectie en later gebruik blijven nodig. Geen eigenaarhandeling.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -3656,12 +3656,12 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-13T19:33:50.670611+00:00"
+        "updatedAt": "2026-10-13T20:37:54.881915+00:00"
       }
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "HUE5.1",
+      "currentStep": "HUE6.1",
       "steps": [
         {
           "number": 1,
@@ -4902,7 +4902,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Bind de bestaande beoordelingsroute aan de actuele stabiele kern en het resterende gezamenlijke verbruik voordat een nieuwe uitvoering begint. Behoud de kandidaat, oorspronkelijke criteria en gesloten foutregistraties; geen spraakwijziging of nieuwe vergelijkingsserie.",
+              "nextAction": "HUE6.1 blijft open. De referentie heeft werkelijk werk uitgevoerd, maar onze beoordelingsroute trok eerder ouderverbruik af van het ontwikkeldeelbudget en wees de vijfde volledige reactie daarna af. Kandidaat niet uitgevoerd. Herstel uitsluitend deze toewijzing met bestaande meetgegevens; geen herhaling van deze gesloten proef. Rustige reflectie en later gebruik blijven nodig. Geen eigenaarhandeling.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -4917,7 +4917,8 @@
                   "/root/hue6_independent_review"
                 ]
               },
-              "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json"
+              "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json",
+              "checkedAt": "2026-10-13T20:08:23.210651+00:00"
             }
           ]
         },
@@ -5334,7 +5335,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De normale initiatiefcyclus loopt weer: om 21:28 koos Eva zelf voor stilte, met één Astra-aanvraag en 1.969 geregistreerde tokens. Nog geen nuttige nieuwe bijdrage of leren van eigenaarfeedback aangetoond. Volg bestaande privéaflevering en latere reactie; geen vooraf gekozen voorbeeld, extra proef of oude taakherhaling.",
+      "nextAction": "HUE6.1 blijft open. De referentie heeft werkelijk werk uitgevoerd, maar onze beoordelingsroute trok eerder ouderverbruik af van het ontwikkeldeelbudget en wees de vijfde volledige reactie daarna af. Kandidaat niet uitgevoerd. Herstel uitsluitend deze toewijzing met bestaande meetgegevens; geen herhaling van deze gesloten proef. Rustige reflectie en later gebruik blijven nodig. Geen eigenaarhandeling.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -5342,7 +5343,7 @@
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-13T19:33:50.670611+00:00"
+      "updatedAt": "2026-10-13T20:37:54.881915+00:00"
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -5895,7 +5896,28 @@
         "No claim that this decision used the owner response or proves the full learning cycle.",
         "No new task completion or owner acceptance."
       ]
+    },
+    "aideCurrentPreparation20261013": {
+      "checkedAt": "2026-10-13T21:14:42.949332+00:00",
+      "taskId": "HUE6.1",
+      "state": "closed_failed_local_development_budget",
+      "parentModelRequests": 1,
+      "parentTokens": 5879,
+      "childModelRequests": 5,
+      "cause": "Local development allocation overrun, not demonstrated upstream stream defect.",
+      "candidateApplied": false,
+      "completeTask": false,
+      "ownerActionRequired": false,
+      "nativeRunning": false,
+      "currentConfiguration": "fe48315bdee2b3b66e44eb338045efc032c2660a8b5af32df3bcbd1b84f0dd62",
+      "independentReview": "36cf9eb1abb4fafc4e1b2a6d494c87dc170f687106d9c657b0949015eb36b5ac",
+      "qualityMeasured": false,
+      "evidence": "development/evidence/product/aide-current-baseline-outcome-20261013.json",
+      "actualRequests": 6,
+      "actualTokens": 41368,
+      "childTokens": 35489,
+      "inputGo": "e3200ecef62743a5426c7cfd0502d8bb62397e5bdacf2eaa422d48989dcd3765"
     }
   },
-  "updatedAt": "2026-10-13T19:33:50.670611+00:00"
+  "updatedAt": "2026-10-13T21:14:42.949332+00:00"
 }

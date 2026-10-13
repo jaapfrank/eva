@@ -1,3 +1,25 @@
+## Actuele uitvoering — bestaande verbeterbeoordeling gestopt
+
+De referentie voerde vier echte acties uit en schreef uitvoerbestanden. De vijfde
+modelreactie was compleet, maar de lokale beoordelingsguard wees haar af na
+overschrijding van het effectieve ontwikkeldeelbudget (30.377 tegenover 35.489
+tokens). Er is geen officiële kwaliteitsscore, kandidaatuitvoering of toepassing.
+Deze uitvoering gebruikte zes aanvragen en 41.368 tokens inclusief ouder; credits
+blijven onbekend. Oude gedeeltelijke journals en UNKNOWN blijven behouden.
+HUE6.1 blijft open. Corrigeer de aangetoonde toewijzing modelvrij; geen herhaling van
+de gesloten proef. Rustige reflectie en later gebruik blijven nodig.
+Bewijs: development/evidence/product/aide-current-baseline-outcome-20261013.json.
+
+## Actuele opdracht — HUE6.1 volledig afmaken
+
+Maak de bestaande AIDE²-cyclus af: bewaarde kandidaat onafhankelijk beoordelen,
+alleen bewezen kwaliteitswinst toepassen of de referentie behouden, en de gekozen
+versie later werkelijk gebruiken. Hergebruik geldig mensbegrip-/reflectiebewijs.
+Bind de actuele stabiele kern en het resterende gezamenlijke verbruik vóór invoer.
+Oude gesloten uitvoeringen, UNKNOWN en criteria blijven behouden; geen nieuwe
+variant, vergelijkingsserie of spraakwijziging. HUE5.1 blijft open. De telling
+blijft 43/54 tot een oorspronkelijke volledige eindvoorwaarde is gehaald.
+
 ## Actuele uitvoering 13 oktober — initiatiefcontroles weer aangesloten
 
 Jaap heeft geen nuttige eigen bijdrage ontvangen. Twee concrete blokkades zijn
@@ -73,16 +95,13 @@ eab83747a3c33a83f2f63f38180dc7d6330635ec. Eva2 staat in src/eva; geen Eva1-ontwi
 
 ## Huidige opdracht
 
-Werk HUE5.1 af via bestaande initiatief- en privéaflevering. Twee concrete guards
-zijn hersteld: oude kindtaak eerlijk onzeker afgesloten en het mandaat gekoppeld
-aan de huidige 20-minutendeadline volgens eigenaarinstructie. Behoud oude taken,
-NULL/UNKNOWN/usage; mogelijkheden en verbruiksgrenzen blijven gelijk. Volg normale
-initiatiefkeuze, echte privéaflevering en later gebruik van de reactie. Geen bijdrage
-vooraf kiezen, oude taak herhalen of feedback willekeurig koppelen. HUE5.1 blijft
-open zolang nuttige aflevering en leren niet bewezen zijn; nu geen eigenaarhandeling.
-De AIDE-kandidaat blijft opgeslagen, ongebeoordeeld en ongeactiveerd. Geen nieuwe
-betaalde herbindingsserie tijdens kernvervanging. Het volledige vier-uitkomstgoal
-met leercyclus en AIDE² blijft gelden. Spraak is werk van de andere uitvoerder.
+Maak de bestaande AIDE²-cyclus af: bewaarde kandidaat onafhankelijk beoordelen,
+alleen bewezen kwaliteitswinst toepassen of de referentie behouden, en de gekozen
+versie later werkelijk gebruiken. Hergebruik geldig mensbegrip-/reflectiebewijs.
+Bind de actuele stabiele kern en het resterende gezamenlijke verbruik vóór invoer.
+Oude gesloten uitvoeringen, UNKNOWN en criteria blijven behouden; geen nieuwe
+variant, vergelijkingsserie of spraakwijziging. HUE5.1 blijft open. De telling
+blijft 43/54 tot een oorspronkelijke volledige eindvoorwaarde is gehaald.
 
 ## Uitvoeren
 

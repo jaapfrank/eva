@@ -4,11 +4,13 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Van de reactie op eigen initiatief leren
+Droomcyclus voor mensbegrip en AIDE² afmaken
 
-Normale initiatiefafweging loopt weer; Eva koos voor stilte.
+Bewaarde Eva-kandidaat via de bestaande beoordeling afronden: onafhankelijke kwaliteitsuitkomst, alleen winst toepassen of referentie behouden, daarna werkelijk gebruik. Huidige stabiele kern en resterend gezamenlijk verbruik vooraf coherent binden; geen nieuwe variant, gesloten herhaling, spraakwerk of vergelijkingsserie.
 
-Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
+Klaar wanneer: Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.
+
+De laatste beoordeling is gesloten zonder officiële score door een te laag lokaal ontwikkeldeelbudget; de oorzaak wordt met de bewaarde metingen gecorrigeerd. Geen eigenaarhandeling, kandidaat of nieuwe afgeronde taak.
 
 ## Afmaakvolgorde
 
@@ -23,7 +25,7 @@ Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat v
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–4 zijn technisch afgerond en later toegepast. De samenhang met initiatief en werkelijk gezinsgebruik afronden; geen geheugenherbouw. |
-| Eigen initiatief | Resultaat geleverd · oordeel open | HUE5: echte ontvangerreactie beïnvloedt later initiatief of bewust stilblijven. |
+| Eigen initiatief | Nog geen nuttige bijdrage bevestigd | HUE5: nuttige bijdrage afleveren en echte ontvangerreactie laten doorwerken; Jaap heeft nog geen nuttige bijdrage ontvangen. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE6: onafhankelijk aangetoonde verbetering toepassen en later gebruiken; samenhangend dagelijks gebruik. |
 
 43/54 bestaande kleine taken afgerond; 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage. De reorganisatie verhoogt die telling niet.

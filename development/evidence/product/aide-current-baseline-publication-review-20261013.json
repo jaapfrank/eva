@@ -1,0 +1,41 @@
+{
+  "contract": "EvaIndependentCurrentBaselinePublicationReview/v1",
+  "recorded_at": "2026-10-13T21:17:32.889883+00:00",
+  "verdict": "GO",
+  "publication_only": true,
+  "reviewed_sources_sha256": {
+    "development/evidence/product/aide-current-baseline-outcome-20261013.json": "5c1eae5156e8b31dc14110dd717f7b9b2d5bcf9115cbe230e74ad1545f5a702f",
+    "AGENTS.md": "2132fe06e89de12413f678a1f7d1dbc6d0c9859d5e82dc8c65d2d98129f2aa3d",
+    "development/docs/PROJECTDOEL.md": "1a23b53377826efd97c6d8148de67fb7dab42dad5742bbf1f0380327bbf7e6c8",
+    "development/docs/WERKBORD.md": "46f2881420d780b6ece982da9ed8f65faa8598dd17345043c15ff0ba5ff90d6a"
+  },
+  "independent_closed_review_sha256": "36cf9eb1abb4fafc4e1b2a6d494c87dc170f687106d9c657b0949015eb36b5ac",
+  "board_source_sha256_at_observation": "437f94eced5d725f6b05fa82c6d2223864922ae48becb591747184d6a602d551",
+  "board_without_concurrent_voice_audit_canonical_sha256": "e8c3b6d0f9cd416a76bfa5998a491cf7831b9eead95159776a3e4f81508d3df9",
+  "excluded_review_scope": [
+    "audit.subscriptionVoice20261013",
+    "voice source and runtime"
+  ],
+  "facts": {
+    "cause": "local post-response token overrun",
+    "effective_child_token_cap": 30377,
+    "actual_child_tokens": 35489,
+    "new_combined_tokens": 41368,
+    "known_cumulative_tokens": 316700,
+    "known_cumulative_requests": 30,
+    "known_cumulative_physical_tools": 33,
+    "original_partial_journal_preserved": true,
+    "original_child_usage_null_preserved": true,
+    "original_shared_seal_unknown_preserved": true,
+    "active_seconds": 303.516294,
+    "cap_seconds": 240,
+    "qualified_exclusion_seconds": 0,
+    "physical_cleanup_confirmed": true,
+    "official_score": null,
+    "candidate_executed": false,
+    "candidate_applied": false,
+    "full_hue6_complete": false
+  },
+  "privacy": "No protected cases, answers, private conversations or secrets published. Generic readback match does not disclose oracle content.",
+  "scope_limit": "Publication GO only. No model execution, replay, fresh allocation, source change or further input GO."
+}

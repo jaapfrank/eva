@@ -1,3 +1,25 @@
+## Actuele uitvoering — bestaande verbeterbeoordeling gestopt
+
+De referentie voerde vier echte acties uit en schreef uitvoerbestanden. De vijfde
+modelreactie was compleet, maar de lokale beoordelingsguard wees haar af na
+overschrijding van het effectieve ontwikkeldeelbudget (30.377 tegenover 35.489
+tokens). Er is geen officiële kwaliteitsscore, kandidaatuitvoering of toepassing.
+Deze uitvoering gebruikte zes aanvragen en 41.368 tokens inclusief ouder; credits
+blijven onbekend. Oude gedeeltelijke journals en UNKNOWN blijven behouden.
+HUE6.1 blijft open. Corrigeer de aangetoonde toewijzing modelvrij; geen herhaling van
+de gesloten proef. Rustige reflectie en later gebruik blijven nodig.
+Bewijs: development/evidence/product/aide-current-baseline-outcome-20261013.json.
+
+## Actuele opdracht — HUE6.1 volledig afmaken
+
+Maak de bestaande AIDE²-cyclus af: bewaarde kandidaat onafhankelijk beoordelen,
+alleen bewezen kwaliteitswinst toepassen of de referentie behouden, en de gekozen
+versie later werkelijk gebruiken. Hergebruik geldig mensbegrip-/reflectiebewijs.
+Bind de actuele stabiele kern en het resterende gezamenlijke verbruik vóór invoer.
+Oude gesloten uitvoeringen, UNKNOWN en criteria blijven behouden; geen nieuwe
+variant, vergelijkingsserie of spraakwijziging. HUE5.1 blijft open. De telling
+blijft 43/54 tot een oorspronkelijke volledige eindvoorwaarde is gehaald.
+
 ## Actuele uitvoering 13 oktober — initiatiefcontroles weer aangesloten
 
 Jaap heeft geen nuttige eigen bijdrage ontvangen. Twee concrete blokkades zijn

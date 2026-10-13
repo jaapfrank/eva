@@ -1,0 +1,85 @@
+{
+  "contract": "EvaAideCurrentBaselineOutcome/v1",
+  "task_id": "HUE6.1",
+  "recorded_at": "2026-10-13T21:14:42.949332+00:00",
+  "state": "closed_failed_local_development_budget",
+  "baseline_executed": true,
+  "candidate_executed": false,
+  "baseline_sha256": "9288a4b02e2b2f76aa1964db128a10f6ff45e6257373814bc2b06033ea21d012",
+  "candidate_sha256": "eddd2118c52a939ae37898dc1bf3b38dfb59d5d0c2a733eef5b2119502e57e92",
+  "verified_native_actions": 4,
+  "physical_programming_close_confirmed": true,
+  "actual_program_and_result_readback": true,
+  "one_fixture_output_matches_fixed_oracle": true,
+  "four_required_check_receipts_present": false,
+  "official_quality_score": null,
+  "independent_final_executed": false,
+  "candidate_applied": false,
+  "baseline_reference_early_stop_eligible": false,
+  "later_use_proven": false,
+  "cause": {
+    "kind": "local_post_response_token_overrun",
+    "child_effective_token_cap": 30377,
+    "child_actual_tokens": 35489,
+    "overrun_tokens": 5112,
+    "previous_suspected_upstream_stream_defect_confirmed": false,
+    "physical_observer_saw_valid_terminal_usage": true,
+    "inner_consumer_did_not_receive_that_terminal_after_local_overrun_guard": true,
+    "faithful_sse_replay_possible": false
+  },
+  "actual_usage_this_execution": {
+    "parent_requests": 1,
+    "parent_tokens": 5879,
+    "parent_physical_tools": 1,
+    "child_requests": 5,
+    "child_input_tokens": 34262,
+    "child_output_tokens": 1227,
+    "child_total_tokens": 35489,
+    "child_physical_tools_including_close": 5,
+    "combined_requests": 6,
+    "combined_tokens": 41368,
+    "combined_physical_tools": 6
+  },
+  "selected_experiment_cumulative_known_usage": {
+    "model_requests": 30,
+    "physical_tools": 33,
+    "input_tokens": 311174,
+    "output_tokens": 5526,
+    "total_tokens": 316700,
+    "whole_project_usage": false
+  },
+  "original_normal_records": {
+    "child_journal_measurement": "partial",
+    "child_journal_input_tokens": 26388,
+    "child_journal_output_tokens": 1159,
+    "child_journal_tokens": 27547,
+    "parent_child_usage": null,
+    "shared_seal": "UNKNOWN",
+    "raw_and_closed_epochs_unchanged": true
+  },
+  "timing": {
+    "construction_elapsed_seconds": 303.516294,
+    "original_construction_cap_seconds": 240,
+    "failed_eval_elapsed_seconds": 171.848648,
+    "qualified_development_exclusion_seconds": 0,
+    "closed_epoch_not_reopened": true
+  },
+  "closure": {
+    "both_transient_containers_removed": true,
+    "programming_session_closed": true,
+    "reservations_finalized": true
+  },
+  "installed": {
+    "evaluation_configuration_updated": true,
+    "root_changed_core_worker_or_voice": false,
+    "candidate_installed": false
+  },
+  "independent_review_sha256": "36cf9eb1abb4fafc4e1b2a6d494c87dc170f687106d9c657b0949015eb36b5ac",
+  "costs": {
+    "eva_credits": "UNKNOWN",
+    "codex_development_credits": "UNKNOWN"
+  },
+  "full_task_complete": false,
+  "owner_action_required": false,
+  "next_action": "Correct only the proven parent/child allocation mismatch model-free before future input. No repetition of this closed case, extra variant or comparison series. Existing quiet reflection causal linkage and ordinary later use still required."
+}
