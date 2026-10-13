@@ -1,3 +1,27 @@
+## Actuele uitvoering 14 oktober — bestaande AIDE²-cyclus afronden
+
+De gewone reflectie van 13 oktober is volgens de providerlog afgerond zonder
+nieuwe stijlspiegelinhoud. Er is geen aangetoonde providerfout die herstelbouw
+rechtvaardigt. Die onveranderde reflectie bewijst nog geen nieuw mensbegrip.
+De oorspronkelijke AIDE-ontwikkelproef blijft gesloten met score NULL; de
+budgettoewijzing is inmiddels gericht gecorrigeerd. De bestaande Eva-geschreven
+kandidaat en de huidige referentiebron blijven exact behouden.
+
+Het actuele projectgoal en Jaaps toestemming voor noodzakelijke proeven geven
+ruimte om een noodzakelijke aansluitende verbeterbeoordeling concreet voor te
+bereiden. Een nieuwe uitvoering krijgt vooraf een eigen actuele bron-, klok- en
+verbruiksbinding; oude uitvoeringen, limieten, scores en UNKNOWN worden niet
+heropend of herschreven. Onafhankelijke criteria en afgeschermde eindgevallen
+blijven onveranderd en gescheiden van de bouwer. Bestaande bruikbare resultaten
+worden hergebruikt. Geen nieuwe kandidaat, concurrentenserie of agentplatform.
+Vóór modelinvoer moeten de beoordelingsroute en volledige verbruiksraming kloppen;
+een ongebruikte eindbeoordeling is niet vanzelf een uitvoerbare selectie.
+
+I1.2 vraagt nu geen extra eigenaarhandeling: Jaap meldde geen nuttige eigen bijdrage
+te hebben ontvangen. Het weinig nuttige verbruikslijstje is niet het technisch
+bezorgde restjesdocument; feedback wordt daaraan niet willekeurig gekoppeld.
+HUE5.1/HUE6.1 en de telling 43/54 blijven open en ongewijzigd.
+
 ## Actueel 13 oktober — rustige reflectie en later modelgebruik gekoppeld
 
 De bestaande geheugenwerker bewaart nu het bewijs van een afgeronde rustige

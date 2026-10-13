@@ -660,7 +660,7 @@
       "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
       "status": "in_progress",
       "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-      "nextAction": "Rustige-reflectiekoppeling is geïnstalleerd in kern en werker: afgeronde operatie, bron-/versiehashes en later aangeboden stijlspiegel per gewone modelaanvraag zijn verbonden. HUE6.1 mist nog echte gewijzigde betekenis/latere gedragsinvloed en een geldige onafhankelijke beoordeling van de ontwikkelende agent. L3.6/L3.7 codewinst en later gebruik behouden. Geen gesloten herhaling, nieuwe vergelijkingsserie of eigenaarhandeling.",
+      "nextAction": "Eén noodzakelijke nieuwe AIDE²-vervolgcyclus voorbereiden met dezelfde Eva-geschreven kandidaat en actuele referentie, na de bewezen budgetcorrectie. Oude mislukte proef blijft gesloten. Eerst actuele bron-, stagebudget- en onafhankelijke beoordelingsbinding; daarna echte uitvoering, selectie en later gebruik. Geen nieuwe concurrentenserie of eigenaarhandeling. Nog geen kwaliteitswinst of volledige HUE6-afronding.",
       "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
       "area": "self-improvement and learning",
       "countedAsProductTask": true
@@ -841,7 +841,7 @@
     "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
     "status": "in_progress",
     "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-    "nextAction": "Rustige-reflectiekoppeling is geïnstalleerd in kern en werker: afgeronde operatie, bron-/versiehashes en later aangeboden stijlspiegel per gewone modelaanvraag zijn verbonden. HUE6.1 mist nog echte gewijzigde betekenis/latere gedragsinvloed en een geldige onafhankelijke beoordeling van de ontwikkelende agent. L3.6/L3.7 codewinst en later gebruik behouden. Geen gesloten herhaling, nieuwe vergelijkingsserie of eigenaarhandeling.",
+    "nextAction": "Eén noodzakelijke nieuwe AIDE²-vervolgcyclus voorbereiden met dezelfde Eva-geschreven kandidaat en actuele referentie, na de bewezen budgetcorrectie. Oude mislukte proef blijft gesloten. Eerst actuele bron-, stagebudget- en onafhankelijke beoordelingsbinding; daarna echte uitvoering, selectie en later gebruik. Geen nieuwe concurrentenserie of eigenaarhandeling. Nog geen kwaliteitswinst of volledige HUE6-afronding.",
     "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
     "area": "self-improvement and learning",
     "countedAsProductTask": true
@@ -941,7 +941,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "Rustige-reflectiekoppeling is geïnstalleerd in kern en werker: afgeronde operatie, bron-/versiehashes en later aangeboden stijlspiegel per gewone modelaanvraag zijn verbonden. HUE6.1 mist nog echte gewijzigde betekenis/latere gedragsinvloed en een geldige onafhankelijke beoordeling van de ontwikkelende agent. L3.6/L3.7 codewinst en later gebruik behouden. Geen gesloten herhaling, nieuwe vergelijkingsserie of eigenaarhandeling.",
+      "priorityDecision": "Eén noodzakelijke nieuwe AIDE²-vervolgcyclus voorbereiden met dezelfde Eva-geschreven kandidaat en actuele referentie, na de bewezen budgetcorrectie. Oude mislukte proef blijft gesloten. Eerst actuele bron-, stagebudget- en onafhankelijke beoordelingsbinding; daarna echte uitvoering, selectie en later gebruik. Geen nieuwe concurrentenserie of eigenaarhandeling. Nog geen kwaliteitswinst of volledige HUE6-afronding.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -2877,22 +2877,22 @@
                 "kind": "gebruikersproef",
                 "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
                 "owner": "Jaap",
-                "nextAction": "Beoordeel nut en hinder van werkelijk uitgevoerde bijdragen; gebruik feedback later en laat Eva bij ongeschikte aanleiding stil blijven. Geen nieuwe beoordeling van alleen reflectietekst.",
-                "ownerActionRequired": true,
+                "nextAction": "Jaap heeft gemeld geen nuttige eigen bijdrage te hebben ontvangen. Het verbruikslijstje is niet het technisch afgeleverde restjesdocument. Codex moet eerst een voor Jaap herkenbare bijdrage opleveren; nu geen extra eigenaarhandeling of beoordeling van een willekeurige oude bijdrage.",
+                "ownerActionRequired": false,
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "De restjesplanner is op 30 september privé afgeleverd. Je kunt het nut en moment van die bestaande bijdrage beoordelen; geen speakerproef of nieuwe opdracht vereist.",
-                  "steps": [
-                    "Bekijk in Telegram de al afgeleverde bijdrage Flexibele restjesplanner voor minder voedselverspilling van 30 september.",
-                    "Geef tijdens gewoon gebruik aan of zoiets nuttig is en of het moment past."
-                  ],
-                  "expected": "Nuttige aanwezigheid en passend stil blijven.",
-                  "reportBack": "Bijdrage, moment en je oordeel.",
+                  "availableNow": false,
+                  "readyWhen": "Eerst moet een herkenbare eigen bijdrage daadwerkelijk beschikbaar zijn. Eerder transportbewijs vervangt Jaaps ontvangst- of nuttigheidsoordeel niet.",
+                  "steps": [],
                   "blocksIndependentWork": false
                 },
                 "checkedAt": "2026-10-05T02:13:15.233372+00:00",
                 "assignment": {
                   "activeWorkers": []
+                },
+                "ownerFeedback": {
+                  "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
+                  "usefulDeliveryConfirmed": false,
+                  "initiativeId": null
                 }
               },
               {
@@ -3216,7 +3216,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-                "nextAction": "Rustige-reflectiekoppeling is geïnstalleerd in kern en werker: afgeronde operatie, bron-/versiehashes en later aangeboden stijlspiegel per gewone modelaanvraag zijn verbonden. HUE6.1 mist nog echte gewijzigde betekenis/latere gedragsinvloed en een geldige onafhankelijke beoordeling van de ontwikkelende agent. L3.6/L3.7 codewinst en later gebruik behouden. Geen gesloten herhaling, nieuwe vergelijkingsserie of eigenaarhandeling.",
+                "nextAction": "Eén noodzakelijke nieuwe AIDE²-vervolgcyclus voorbereiden met dezelfde Eva-geschreven kandidaat en actuele referentie, na de bewezen budgetcorrectie. Oude mislukte proef blijft gesloten. Eerst actuele bron-, stagebudget- en onafhankelijke beoordelingsbinding; daarna echte uitvoering, selectie en later gebruik. Geen nieuwe concurrentenserie of eigenaarhandeling. Nog geen kwaliteitswinst of volledige HUE6-afronding.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -3228,6 +3228,7 @@
                 "assignment": {
                   "activeWorkers": [
                     "/root",
+                    "/root/background_execution_seam",
                     "/root/hue6_independent_review"
                   ]
                 },
@@ -3648,7 +3649,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Rustige-reflectiekoppeling is geïnstalleerd in kern en werker: afgeronde operatie, bron-/versiehashes en later aangeboden stijlspiegel per gewone modelaanvraag zijn verbonden. HUE6.1 mist nog echte gewijzigde betekenis/latere gedragsinvloed en een geldige onafhankelijke beoordeling van de ontwikkelende agent. L3.6/L3.7 codewinst en later gebruik behouden. Geen gesloten herhaling, nieuwe vergelijkingsserie of eigenaarhandeling.",
+        "nextAction": "Eén noodzakelijke nieuwe AIDE²-vervolgcyclus voorbereiden met dezelfde Eva-geschreven kandidaat en actuele referentie, na de bewezen budgetcorrectie. Oude mislukte proef blijft gesloten. Eerst actuele bron-, stagebudget- en onafhankelijke beoordelingsbinding; daarna echte uitvoering, selectie en later gebruik. Geen nieuwe concurrentenserie of eigenaarhandeling. Nog geen kwaliteitswinst of volledige HUE6-afronding.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -4563,22 +4564,22 @@
               "kind": "gebruikersproef",
               "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
               "owner": "Jaap",
-              "nextAction": "Beoordeel nut en hinder van werkelijk uitgevoerde bijdragen; gebruik feedback later en laat Eva bij ongeschikte aanleiding stil blijven. Geen nieuwe beoordeling van alleen reflectietekst.",
-              "ownerActionRequired": true,
+              "nextAction": "Jaap heeft gemeld geen nuttige eigen bijdrage te hebben ontvangen. Het verbruikslijstje is niet het technisch afgeleverde restjesdocument. Codex moet eerst een voor Jaap herkenbare bijdrage opleveren; nu geen extra eigenaarhandeling of beoordeling van een willekeurige oude bijdrage.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "De restjesplanner is op 30 september privé afgeleverd. Je kunt het nut en moment van die bestaande bijdrage beoordelen; geen speakerproef of nieuwe opdracht vereist.",
-                "steps": [
-                  "Bekijk in Telegram de al afgeleverde bijdrage Flexibele restjesplanner voor minder voedselverspilling van 30 september.",
-                  "Geef tijdens gewoon gebruik aan of zoiets nuttig is en of het moment past."
-                ],
-                "expected": "Nuttige aanwezigheid en passend stil blijven.",
-                "reportBack": "Bijdrage, moment en je oordeel.",
+                "availableNow": false,
+                "readyWhen": "Eerst moet een herkenbare eigen bijdrage daadwerkelijk beschikbaar zijn. Eerder transportbewijs vervangt Jaaps ontvangst- of nuttigheidsoordeel niet.",
+                "steps": [],
                 "blocksIndependentWork": false
               },
               "checkedAt": "2026-10-05T02:13:15.233372+00:00",
               "assignment": {
                 "activeWorkers": []
+              },
+              "ownerFeedback": {
+                "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
+                "usefulDeliveryConfirmed": false,
+                "initiativeId": null
               }
             },
             {
@@ -4902,7 +4903,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Rustige-reflectiekoppeling is geïnstalleerd in kern en werker: afgeronde operatie, bron-/versiehashes en later aangeboden stijlspiegel per gewone modelaanvraag zijn verbonden. HUE6.1 mist nog echte gewijzigde betekenis/latere gedragsinvloed en een geldige onafhankelijke beoordeling van de ontwikkelende agent. L3.6/L3.7 codewinst en later gebruik behouden. Geen gesloten herhaling, nieuwe vergelijkingsserie of eigenaarhandeling.",
+              "nextAction": "Eén noodzakelijke nieuwe AIDE²-vervolgcyclus voorbereiden met dezelfde Eva-geschreven kandidaat en actuele referentie, na de bewezen budgetcorrectie. Oude mislukte proef blijft gesloten. Eerst actuele bron-, stagebudget- en onafhankelijke beoordelingsbinding; daarna echte uitvoering, selectie en later gebruik. Geen nieuwe concurrentenserie of eigenaarhandeling. Nog geen kwaliteitswinst of volledige HUE6-afronding.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -4914,6 +4915,7 @@
               "assignment": {
                 "activeWorkers": [
                   "/root",
+                  "/root/background_execution_seam",
                   "/root/hue6_independent_review"
                 ]
               },
@@ -5335,7 +5337,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Rustige-reflectiekoppeling is geïnstalleerd in kern en werker: afgeronde operatie, bron-/versiehashes en later aangeboden stijlspiegel per gewone modelaanvraag zijn verbonden. HUE6.1 mist nog echte gewijzigde betekenis/latere gedragsinvloed en een geldige onafhankelijke beoordeling van de ontwikkelende agent. L3.6/L3.7 codewinst en later gebruik behouden. Geen gesloten herhaling, nieuwe vergelijkingsserie of eigenaarhandeling.",
+      "nextAction": "Eén noodzakelijke nieuwe AIDE²-vervolgcyclus voorbereiden met dezelfde Eva-geschreven kandidaat en actuele referentie, na de bewezen budgetcorrectie. Oude mislukte proef blijft gesloten. Eerst actuele bron-, stagebudget- en onafhankelijke beoordelingsbinding; daarna echte uitvoering, selectie en later gebruik. Geen nieuwe concurrentenserie of eigenaarhandeling. Nog geen kwaliteitswinst of volledige HUE6-afronding.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -5936,7 +5938,35 @@
       "independentSourceReview": "3ac6ebabe1a4094690770c95d0641ceff44aa5b7da8e21615cea723b17e8622a",
       "independentInstallationReview": "b04c0fa692efb64109bbb30d6d99ea15492cba3ea0f8c241e8983a929f685790",
       "independentInstalledReview": "efb766c6373eece64e0da3b44ba7b1bad49dc7709c5a37ab1896835b4bbfda9e"
+    },
+    "hue6ProspectiveCycle20261014": {
+      "status": "preparing_no_model_input",
+      "sameBaseline": "9288a4b02e2b2f76aa1964db128a10f6ff45e6257373814bc2b06033ea21d012",
+      "existingCandidate": "eddd2118c52a939ae37898dc1bf3b38dfb59d5d0c2a733eef5b2119502e57e92",
+      "plannedNewMaximum": {
+        "tokens": 270000,
+        "modelRequests": 32,
+        "tools": 66
+      },
+      "plannedStageMaximumTokens": {
+        "parent": 30000,
+        "developmentPair": 96000,
+        "independentFinalPair": 96000,
+        "laterUse": 48000
+      },
+      "oldKnownSelectedExperimentTokens": 316700,
+      "oldUnspentTokens": 83300,
+      "additionalTokenCeilingBeyondOldUnspent": 186700,
+      "possibleSelectedExperimentCumulativeTokenCeiling": 586700,
+      "limitsAreNotForecastUsage": true,
+      "creditCosts": null,
+      "oldClosedClocksAndScoresPreserved": true,
+      "criteriaAndHeldoutDataUnchanged": true,
+      "newProductTasks": 0,
+      "completionChanged": false,
+      "ownerActionRequired": false,
+      "checkedAt": "2026-10-13T22:36:22.625849+00:00"
     }
   },
-  "updatedAt": "2026-10-13T21:54:53.439066+00:00"
+  "updatedAt": "2026-10-13T22:36:22.625849+00:00"
 }
