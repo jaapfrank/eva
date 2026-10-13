@@ -5614,21 +5614,21 @@
         "now": {
           "title": "Droomcyclus en AIDE² afmaken",
           "state": "in_progress",
-          "phase": "aide_current_construction_running",
+          "phase": "aide_current_configuration_pin_correction",
           "taskId": "HUE6.1",
           "owner": "/root",
           "activeExecution": true,
-          "nativeRunning": true,
-          "summary": "De huidige verbeterroute is geïnstalleerd. Eva start één eigen codevoorstel en ontwikkelvergelijking; de daadwerkelijke uitkomst staat nog open.",
-          "currentActivity": "Eva leest haar huidige taakuitvoering, maakt zelf één variant en vergelijkt die met de bestaande aanpak. Onafhankelijke eindbeoordeling volgt alleen bij echte ontwikkelwinst.",
+          "nativeRunning": false,
+          "summary": "De huidige hostdienst is geïnstalleerd, maar de uitvoerstart werd vóór Eva gestopt door een verkeerd opgeslagen configuratiehash. De geïnstalleerde verbetercyclus is nog niet bruikbaar aangetoond.",
+          "currentActivity": "De vastgelegde en draaiende kern zijn exact gelijk. Hun configuratiehash wordt opnieuw correct gebonden via de bestaande projector; de originele startfout en klok blijven behouden.",
           "doneWhen": "De bestaande droom/AIDE²-route verbetert agentaansturing én code of uitbreiding, met onafhankelijke beoordeling, toepassing uitsluitend bij bewezen winst en later werkelijk gebruik.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-13T07:40:13.140034+00:00",
+          "checkedAt": "2026-10-13T07:48:43.046657+00:00",
           "previousUserResult": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
           "modelRequestsThisStep": 0,
           "creditCosts": null,
-          "executor": "Eva — bestaande algemene taakuitvoerder",
-          "activeReview": false,
+          "executor": "/root/eva1_memory_transfer",
+          "activeReview": true,
           "reviewer": "/root/product_execution_memory_review",
           "previousGoalTurn": "PROGRESS: original Telegram summary return installed and ACK confirmed; 483f74fc pushed, full document presentation not demonstrated."
         },
@@ -6045,7 +6045,9 @@
           "evidence": "eva2/evidence/product/aide-current-host-binding-installed-20261013.json",
           "newModelRequests": 0,
           "wholeCycleCompleted": false,
-          "next": "Eigen actuele variant via bestaande uitvoering, onafhankelijke beoordeling en alleen toepassing bij winst."
+          "next": "Eigen actuele variant via bestaande uitvoering, onafhankelijke beoordeling en alleen toepassing bij winst.",
+          "nativeExecutionReady": false,
+          "remaining": "Correct actual configuration-hash binding before native execution; READ/readiness alone does not prove usable self-improvement."
         }
       },
       "reviewedAt": "2026-10-12T12:31:30.540790+02:00",
@@ -33005,7 +33007,7 @@
       "oldClosedResultsPreserved": true,
       "metadataExportFailure": "An incorrect metadata field caused AttributeError before dispatch; corrected export preserved separately.",
       "wholeGoal": "active",
-      "state": "installed_technical_ready",
+      "state": "installed_configuration_pin_correction_required",
       "nativeInputStarted": false,
       "pendingReason": "Actuele bronbinding is geïnstalleerd en technisch beschikbaar. Exacte nieuwe parent/inputbinding wordt voorbereid; nog geen actuele eigen variant of native proef gestart.",
       "previewFactoryMetadataSha256": "3fcf6bea35bd774d504d48a3676e44424d1db5eb4d01792b86792439aaa40dcc",
@@ -33033,6 +33035,17 @@
         "sha256": "7158b2b0ca95e072fcece970e944757200613b5ced4863f155d88f5e445b106e",
         "result": "GO: one current construction only",
         "manifestSha256": "50119facd8242d5599d7ac28b8f03848d000385357873c62a5ebfe556b819880"
+      },
+      "nativeConstructionStarted": false,
+      "preflightFailure": {
+        "line": 373,
+        "cause": "retained configuration_sha256 pin does not match unchanged original projector output",
+        "expectedSha256": "c13fdc448675b8d2f901d2ed9ad9c1c150d30705968edc8ad4dae8ef652a58f9",
+        "actualAndRetainedSha256": "55f2eba16a86c8256f236f0cf8a3cb14c6752726db806e5d946d42f1bfa31615",
+        "modelRequests": 0,
+        "nativeTasks": 0,
+        "clockExpiredWithoutReset": true,
+        "independentReviewSha256": "6c0f25d4344dbee37eb46f30a8d579e53cf665d54dfd9da4260e7b976ae6ba73"
       }
     },
     "originalProposalReturnRepair20261013": {

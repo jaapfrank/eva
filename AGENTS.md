@@ -1,3 +1,17 @@
+## Actueel 13 oktober — verkeerde uitvoerconfiguratiepin herstellen
+
+De eerste huidige parentstart stopte bij configuratiecontrole vóór workspace,
+containerboot, Eva-invoer of modelaanvraag. De originele producerprojectie van
+behouden én actuele kern is gelijk (55f2); de opgeslagen pin c13 is onjuist.
+Onafhankelijke diagnose bevestigt nul technische velddelta. Technische READ-
+gereedheid geldt daarom niet als bruikbaar aangetoonde verbeteruitvoering.
+
+Originele marker, fout en verlopen klok blijven staan; geen reset of heropening.
+Nul nieuwe Eva-modelaanvragen/native episoden. Nu alleen de juiste configuratiepin
+met haar bestaande immutable afhankelijkheden herstellen, zonder bron-/guard-
+versoepeling, tweede platform of concurrentenserie.43/54 behouden; HUE6.1 en
+volledig goal blijven open. Dashboard toont de concrete startfout en huidig herstel.
+
 ## Actueel 13 oktober — AIDE² op huidige bron geïnstalleerd, cyclus nog open
 
 De bestaande hostdienst gebruikt de begrensde loadercorrectie en actuele configuratie.
