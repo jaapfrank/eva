@@ -1,0 +1,44 @@
+{
+  "contract": "EvaAideTerminalContinuationOutcome/v1",
+  "recordedAt": "2026-10-13T23:38:46.889005+00:00",
+  "taskId": "HUE6.1",
+  "nativeState": "succeeded",
+  "developmentRepeated": false,
+  "newCandidateCreated": false,
+  "physicalTools": 0,
+  "usage": {
+    "input_tokens": 10061,
+    "measurement": "measured",
+    "output_tokens": 171,
+    "provider_attempts": 1,
+    "request_ids": [
+      "cca6e7fe-ec27-4451-91ae-1156ceecd0ce"
+    ],
+    "roles": [
+      {
+        "attempts": 1,
+        "model": "gpt-6-astra",
+        "reasoning_effort": "medium",
+        "role": "work"
+      }
+    ],
+    "total_tokens": 10232,
+    "unknown_attempts": 0
+  },
+  "freshCumulative": {
+    "input_tokens": 119068,
+    "output_tokens": 3247,
+    "physical_tools": 28,
+    "provider_attempts": 15
+  },
+  "freshTotalTokens": 122315,
+  "selectedHistoricalTotalTokens": 439015,
+  "creditCost": null,
+  "originalFailedStateAndPartialJournalPreserved": true,
+  "oldClocksNotReopened": true,
+  "parentActiveSecondsIncludingCarry": 51.03256218205206,
+  "privateResultSha256": "26013b4e2443a01c8612acc396c2f78446bd766069b16e157455457c8e3d7979",
+  "independentFinalState": "answer_assessing",
+  "candidateApplied": false,
+  "taskCompleted": false
+}
