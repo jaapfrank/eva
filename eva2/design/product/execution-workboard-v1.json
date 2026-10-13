@@ -5614,23 +5614,26 @@
         "now": {
           "title": "Droomcyclus en AIDE² afmaken",
           "state": "in_progress",
-          "phase": "aide_current_configuration_pin_correction",
+          "phase": "aide_current_first_content_construction",
           "taskId": "HUE6.1",
           "owner": "/root",
           "activeExecution": true,
-          "nativeRunning": false,
+          "nativeRunning": true,
           "summary": "De huidige hostdienst is geïnstalleerd, maar de uitvoerstart werd vóór Eva gestopt door een verkeerd opgeslagen configuratiehash. De geïnstalleerde verbetercyclus is nog niet bruikbaar aangetoond.",
-          "currentActivity": "De vastgelegde en draaiende kern zijn exact gelijk. Hun configuratiehash wordt opnieuw correct gebonden via de bestaande projector; de originele startfout en klok blijven behouden.",
+          "currentActivity": "Eva voert de verbeteropdracht uit via haar gewone taakengine. Haar bronuitlezing en modelaanvragen zijn geregistreerd; kandidaat en uitkomst zijn nog niet bevestigd.",
           "doneWhen": "De bestaande droom/AIDE²-route verbetert agentaansturing én code of uitbreiding, met onafhankelijke beoordeling, toepassing uitsluitend bij bewezen winst en later werkelijk gebruik.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-13T07:48:43.046657+00:00",
+          "checkedAt": "2026-10-13T08:00:44.917303+00:00",
           "previousUserResult": "/home/administrator/project/Eva2/eva2/evidence/product/original-proposal-telegram-return-installed-20261013.json",
-          "modelRequestsThisStep": 0,
+          "modelRequestsThisStep": 3,
           "creditCosts": null,
-          "executor": "/root/eva1_memory_transfer",
-          "activeReview": true,
+          "executor": "Eva — bestaande algemene taakuitvoerder",
+          "activeReview": false,
           "reviewer": "/root/product_execution_memory_review",
-          "previousGoalTurn": "PROGRESS: original Telegram summary return installed and ACK confirmed; 483f74fc pushed, full document presentation not demonstrated."
+          "previousGoalTurn": "PROGRESS: original Telegram summary return installed and ACK confirmed; 483f74fc pushed, full document presentation not demonstrated.",
+          "registeredTokensSoFar": 26582,
+          "registeredToolsSoFar": 2,
+          "measurementsAreInterim": true
         },
         "next": {
           "title": "Leren van een echte reactie op eigen bijdrage",
@@ -33046,6 +33049,15 @@
         "nativeTasks": 0,
         "clockExpiredWithoutReset": true,
         "independentReviewSha256": "6c0f25d4344dbee37eb46f30a8d579e53cf665d54dfd9da4260e7b976ae6ba73"
+      },
+      "configurationPinCorrection": {
+        "installed": true,
+        "hostConfigurationSha256": "bd191470715ec182e81857d4cbc881e3826bd1a520eff21f32f14fd2fbb5b373",
+        "actualConfigurationSha256": "55f2eba16a86c8256f236f0cf8a3cb14c6752726db806e5d946d42f1bfa31615",
+        "coreWorkerRestarted": false,
+        "independentReviewSha256": "6cceb7377e5c70fb4ee4b95badeda2d293a2b16b5b5c8e4203449585f090d441",
+        "oldPreflightPreserved": true,
+        "priorEvaRequests": 0
       }
     },
     "originalProposalReturnRepair20261013": {
