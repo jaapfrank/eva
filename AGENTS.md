@@ -26,6 +26,13 @@ gefaalde of geannuleerde uitkomst met behouden geregistreerd verbruik; geen
 succes/resultaat/retry. Kern en taakwerker zijn gezond; alleen één werkmodule gewijzigd.
 Bewijs: development/evidence/product/programming-cleanup-outcome-installed-20261013.json.
 119 controles slagen; twee bestaande testfouten zijn ook op oude bron bevestigd.
+Daarnaast is één concrete afsluitrace modelvrij gereproduceerd: publiek stoppen en
+actorafsluiting verwijderen dezelfde container tegelijk; Docker weigert één daarvan.
+De bestaande hostmodule serialiseert nu alleen deze twee verwijderingen, zonder
+MCP/toollock of succescache. 37 gerichte controles slagen; de nieuwe overlapcontrole
+faalt op ongewijzigde oude bron. Eén hostmodule geïnstalleerd, beoordelingsdienst
+ready; configuratie, omgeving en overige modules gelijk. Geen spraakwijziging.
+Bewijs: development/evidence/product/programming-cleanup-serialization-installed-20261013.json.
 De oorspronkelijke cleanupoorzaak en kandidaatkwaliteit blijven onbewezen. Geen herhaling van
 de gesloten uitvoering of reset van haar klok. Oorspronkelijke criteria behouden.
 Actief: HUE6/AIDE² via Eva's bewaarde kandidaat; onafhankelijke beoordeling,

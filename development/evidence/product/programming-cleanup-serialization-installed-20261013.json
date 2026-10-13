@@ -1,0 +1,45 @@
+{
+  "contract": "EvaProgrammingCleanupSerializationPublication/v1",
+  "recorded_at": "2026-10-13T16:32:17.095587+00:00",
+  "status": "installed",
+  "scope": "One existing programming-host module; no voice or quality-run change",
+  "source_sha256": "fe0ab4687ea1915f96a9f7926af71adec036d3e076c77111a2c31a557f5b5d30",
+  "previous_source_sha256": "0e52303e892964e0da3f034a739b79f7006a8c2e1034810232b51b929ff51678",
+  "observed_defect": {
+    "isolated_sessions": 1,
+    "concurrent_removals": 2,
+    "results": [
+      "confirmed",
+      "removal_already_in_progress_error"
+    ],
+    "container_absent": true,
+    "model_requests": 0,
+    "network": "none",
+    "control_sha256": "4f5b97ecbe2ad4d546e354da8ba16945c81eb4683868b8c0e3080335692abb22",
+    "original_http500_cause": "UNKNOWN"
+  },
+  "change": "Public close and actor teardown share one per-session removal lock; no tool lock or successful-removal cache. Both existing cleanup calls remain.",
+  "verification": {
+    "workspace_and_service_tests_passed": 37,
+    "baseline_regression": "New overlap check fails on unchanged HEAD: peak3; corrected source peak1.",
+    "service_ready": true,
+    "restart_dispatches": 1,
+    "config_environment_other_overlay_modules_and_mode_unchanged": true,
+    "core_worker_images_or_voice_changed": false,
+    "initial_verification_error": "Health check used localhost instead of configured bind_host. Corrected check passed without another restart.",
+    "installation_sha256": "86b40bcb235f5ff5df48ecbf662eaa1370dbcf001da398d679fe441b3271a7df"
+  },
+  "review": {
+    "source_and_installation_input_sha256": "c6293b091817aaaf0d44c9683fa7d8c335bb3843e4853523bcdb9a4d3895f3e8",
+    "installed_publication": "GO",
+    "installed_publication_sha256": "76c4ec9afb7dd2a847087445526583c0fc801a8a77373ca5aaaaf020e7582faf"
+  },
+  "limitations": {
+    "quality_candidate": "UNJUDGED",
+    "HUE6_1": "OPEN",
+    "native_evaluations": 0,
+    "model_requests": 0,
+    "development_credit_cost": "UNKNOWN",
+    "historical_runs_criteria_usage_and_unknown_unchanged": true
+  }
+}

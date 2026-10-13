@@ -195,6 +195,44 @@ def test_closed_before_first_call_cannot_start_a_container(boundary):
     assert not state.entered
 
 
+def test_public_close_and_actor_teardown_do_not_overlap_container_removal(boundary, monkeypatch):
+    create, _, state = boundary
+    manager = create()
+    manager.list_tools(SESSION, workspace_key=WORKSPACE)
+    guard = threading.Lock()
+    active = peak = calls = 0
+    start = threading.Barrier(2)
+
+    def remove(key):
+        nonlocal active, peak, calls
+        assert key == SESSION
+        with guard:
+            active += 1
+            peak = max(peak, active)
+            calls += 1
+        try:
+            # Represent a Docker removal in progress while the cancelled
+            # actor and both public close calls reach the same boundary.
+            time.sleep(0.05)
+        finally:
+            with guard:
+                active -= 1
+
+    monkeypatch.setattr(pw, "_remove_container", remove)
+
+    def close():
+        start.wait(timeout=2)
+        return manager.close(SESSION)
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        futures = [pool.submit(close) for _ in range(2)]
+        assert all(f.result(timeout=2)["workspace_preserved"] for f in futures)
+    assert peak == 1
+    assert calls == 3  # Two public closes plus the existing actor finally.
+    assert state.entered == state.exited
+    monkeypatch.setattr(pw, "_remove_container", state.removed.append)
+
+
 def test_docker_boundary_mounts_only_task_directory_and_immutable_image(tmp_path):
     config = pw.ProgrammingWorkspaceConfig(IMAGE, tmp_path / "workspaces")
     path = config.workspace_root / WORKSPACE

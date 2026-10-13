@@ -248,6 +248,9 @@ class _Session:
         self.closed = threading.Event()
         self.ready = threading.Event()
         self.guard = threading.Lock()
+        # Public stop and actor teardown may reach Docker at the same time.
+        # Serialize only removal, independently of the tool/MCP actor lock.
+        self.cleanup_guard = threading.Lock()
         self.pending = set()
         self.loop = self.task = self.queue = None
         self.thread = threading.Thread(target=self._thread_main,
@@ -304,7 +307,7 @@ class _Session:
         finally:
             self.closed.set()
             try:
-                _remove_container(self.key)
+                self.remove_container()
             except (OSError, RuntimeError, subprocess.SubprocessError):
                 pass  # Public close still performs and verifies its own removal.
 
@@ -372,6 +375,12 @@ class _Session:
                 self.loop.call_soon_threadsafe(self.task.cancel)
             except RuntimeError:
                 pass
+
+    def remove_container(self):
+        with self.cleanup_guard:
+            # Do not cache success: startup may still be unwinding after an
+            # earlier removal observed an absent container.
+            _remove_container(self.key)
 
 
 class ProgrammingWorkspaces:
@@ -446,7 +455,10 @@ class ProgrammingWorkspaces:
         if session is not None:
             session.signal_close()
         # Never take a tool lock or wait for an MCP call to return before removal.
-        _remove_container(key)
+        if session is None:
+            _remove_container(key)
+        else:
+            session.remove_container()
         if session is not None:
             session.thread.join(timeout=10)
             if session.thread.is_alive():

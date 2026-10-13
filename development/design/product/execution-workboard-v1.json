@@ -1760,15 +1760,15 @@
         "now": {
           "title": "Bestaande AIDE²-verbetering afronden en later toepassen",
           "state": "Bezig",
-          "phase": "programming_cleanup_outcome_installed",
+          "phase": "programming_cleanup_serialization_installed",
           "taskId": "HUE6.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Correctie geïnstalleerd: taakuitkomst en geregistreerd verbruik blijven bij afsluitfout behouden.",
-          "detail": "Kern en taakwerker gezond; alleen de werkmodule gewijzigd. 119 controles slagen; twee bestaande fouten op oude bron bevestigd. Geen spraakwijziging of nieuwe modelproef. AIDE²-kwaliteitskandidaat blijft onbeoordeeld; volledige leercyclus nog open.",
+          "summary": "Afsluitrace opgelost en geïnstalleerd; programmeerhost gereed.",
+          "detail": "Alleen de bestaande hostmodule voor containerafsluiting gewijzigd. 37 gerichte controles slagen; oude bron faalt op dezelfde overlaptest. Onafhankelijke review geslaagd. Geen modelcalls, kwaliteitsproef of spraakwijziging. Volgende stap: bewaarde AIDE²-strategie prospectief aan actuele bron en eigen beoordeling binden; oude mislukte proef blijft gesloten.",
           "doneWhen": "Bestaande onafhankelijke eindbeoordeling, gecontroleerde toepassing en later gebruik bevestigd; bij gelijkspel referentie behouden. Geen nieuwe vergelijkingsserie.",
           "ownerActionNeeded": false,
-          "latestEvidence": "development/evidence/product/programming-cleanup-outcome-installed-20261013.json"
+          "latestEvidence": "development/evidence/product/programming-cleanup-serialization-installed-20261013.json"
         },
         "next": {
           "state": "Hierna",
@@ -3181,7 +3181,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-                "nextAction": "Bestaande route met actuele bron geïnstalleerd. Eva laat zelf één variant maken en beoordelen; oorspronkelijke gesloten proef blijft behouden.",
+                "nextAction": "Afsluitrace geïnstalleerd en onafhankelijk gecontroleerd. Bestaande kandidaatstrategie ongewijzigd aan actuele bron binden via gewone prospectieve registratie, met vooraf vastgelegde onafhankelijke ontwikkel- en eindbeoordeling en verbruiksruimte. Oude uitvoering en UNKNOWN gesloten houden. Alleen kwaliteitswinst toepassen en later gebruiken.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -3191,7 +3191,9 @@
                   "blocksIndependentWork": false
                 },
                 "assignment": {
-                  "activeWorkers": []
+                  "activeWorkers": [
+                    "/root"
+                  ]
                 }
               }
             ]
@@ -4861,7 +4863,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "Bestaande route met actuele bron geïnstalleerd. Eva laat zelf één variant maken en beoordelen; oorspronkelijke gesloten proef blijft behouden.",
+              "nextAction": "Afsluitrace geïnstalleerd en onafhankelijk gecontroleerd. Bestaande kandidaatstrategie ongewijzigd aan actuele bron binden via gewone prospectieve registratie, met vooraf vastgelegde onafhankelijke ontwikkel- en eindbeoordeling en verbruiksruimte. Oude uitvoering en UNKNOWN gesloten houden. Alleen kwaliteitswinst toepassen en later gebruiken.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -4871,7 +4873,9 @@
                 "blocksIndependentWork": false
               },
               "assignment": {
-                "activeWorkers": []
+                "activeWorkers": [
+                  "/root"
+                ]
               }
             }
           ]
@@ -5614,7 +5618,18 @@
         "ready": true,
         "installedPublicationReviewSha256": "89eaa5af09ce5b54505b6b5ae9432cbf14a3cdbb5cb3525cc552e09782a90f78"
       }
+    },
+    "programmingCleanupSerialization20261013": {
+      "status": "installed",
+      "sourceSha256": "fe0ab4687ea1915f96a9f7926af71adec036d3e076c77111a2c31a557f5b5d30",
+      "evidence": "development/evidence/product/programming-cleanup-serialization-installed-20261013.json",
+      "independentReviewSha256": "76c4ec9afb7dd2a847087445526583c0fc801a8a77373ca5aaaaf020e7582faf",
+      "testsPassed": 37,
+      "modelRequests": 0,
+      "nativeEvaluations": 0,
+      "HUE6Complete": false,
+      "voiceModified": false
     }
   },
-  "updatedAt": "2026-10-13T16:15:42.972601+00:00"
+  "updatedAt": "2026-10-13T16:33:19.414816+00:00"
 }
