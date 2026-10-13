@@ -1,0 +1,67 @@
+{
+  "contract": "EvaRepositoryPruningEvidence/v1",
+  "checkedAt": "2026-10-13T12:30:14.203722+00:00",
+  "baselineCommit": "eab83747a3c33a83f2f63f38180dc7d6330635ec",
+  "removedFiles": 857,
+  "removedBytes": 43586937,
+  "record": "development/archive/pruning-20261013.json",
+  "scope": "Exact tracked subset only; no untracked private or generated files deleted.",
+  "runtimeCodeChanged": false,
+  "installedImagesChanged": false,
+  "productScopeChanged": false,
+  "productTasks": {
+    "total": 54,
+    "completed": 43
+  },
+  "verification": {
+    "gitByteRecovery": {
+      "files": 857,
+      "passed": true
+    },
+    "sourceBindings": {
+      "expected": 10,
+      "passed": true
+    },
+    "retainedBenchmarkAssertions": "Three previously relocated assertions restored to match unchanged historical fixture bytes; no original result/scorer modified.",
+    "focusedTests": {
+      "passed": 25,
+      "failed": 0,
+      "scope": [
+        "retained Eva1 fixture reads",
+        "workboard original task guards"
+      ],
+      "initialFailures": 3,
+      "cause": "Incorrect relocated literals in previously changed tests; frozen fixture bytes were unchanged."
+    },
+    "catalog": {
+      "ok": true,
+      "violations": []
+    },
+    "liveDashboard": {
+      "44710": 200,
+      "44711": 200,
+      "44712": 200,
+      "board": "repository_pruning_delivered"
+    },
+    "protectedBytes": {
+      "files": 3820,
+      "byteExact": true
+    }
+  },
+  "reviews": "development/reviews/repository-pruning-20261013.json",
+  "limitations": [
+    "No line-by-line obsolete-code audit of every active module.",
+    "History contains current validation and dashboard dependencies; it cannot all be deleted.",
+    "110 existing import-boundary findings and 9 missing historical release inputs not resolved by cleanup."
+  ],
+  "usage": {
+    "newEvaModelRequests": 0,
+    "newComparisons": 0,
+    "developmentCredits": null
+  },
+  "trackedPathsBefore": 5424,
+  "removedPaths": 857,
+  "retainedOriginalPaths": 4567,
+  "newCleanupRecords": 4,
+  "currentTrackedPathInventory": 4571
+}

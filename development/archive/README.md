@@ -1,15 +1,11 @@
-# Repository archive
+# Historical references
 
-| Location | Meaning |
-| --- | --- |
-| eva1/ | Former root Node/Eva1 source, tests and build configuration; reference only |
-| history/root/ | Earlier repository documents and frozen design inputs |
-| history/eva2/ | Superseded plans, research, experiments and the original full workboard |
-| migration-baseline/ | Exact pre-edit bytes of prospective operational path changes |
-| migration-manifest.json | Original/current paths, SHA256 and disposition |
-| local-generated/ | Ignored local caches; never published |
+This directory is not a second Eva application or an additional work queue.
 
-Archived instructions are historical, not current tasks. Historical evidence and reviews
-stay read-only at repository root because current source/review bindings reference them.
-No private data or credentials have been imported into Git. Existing frozen inputs remain
-byte-exact; the prospective tools reference their new locations without changing hashes.
+- `history/`: historical sources still used by current source bindings, installer validation, dashboard links and tests.
+- `eva1/benchmark/agentbench-fc-v1/`: inputs read by existing benchmark tests; no Eva1 application.
+- The two migration manifests record earlier snapshots. Their `originalCopy` paths may now exist only in Git history.
+- `pruning-20261013.json`: exact removed paths, hashes and recovery revision.
+
+Retrieve a removed file with `git show eab83747a3c33a83f2f63f38180dc7d6330635ec:<path>`.
+Do not rewrite old scores, hashes or failure records to describe later cleanup.

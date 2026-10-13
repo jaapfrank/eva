@@ -1,6 +1,18 @@
 # Eva2 — herbeoordeling en actieve bronindeling · 13 oktober 2026
 
-## Aanvullende rootgroepering — 13 oktober
+## Aanvullende verwijdering — 13 oktober
+
+De oude volledige Eva1-applicatie en twee dubbele migratiebackups zijn daarna
+uit de actieve checkout verwijderd: 857 bestanden, 43.586.937 bytes. Ze blijven
+bytegelijk terug te halen vanaf Git-revisie `eab83747a3c33a83f2f63f38180dc7d6330635ec`.
+De 33 nog door benchmarktests gebruikte Eva1-inputbestanden blijven lokaal.
+Historische bronbindings, installatieinputs, dashboardreferenties en gesloten
+bewijs zijn behouden. De onderstaande migratiebeschrijving is een eerdere
+snapshot; oorspronkelijke kopieën hoeven na deze opruiming niet lokaal te staan.
+Zie [besluiten en beperkingen](repository-pruning-20261013.md) en de
+[exacte verwijderlijst](../archive/pruning-20261013.json).
+
+## Historische rootgroepering — 13 oktober
 
 De zichtbare root heeft drie hoofdmappen: `src` (code), `deploy` (installatie,
 locks, schema's en migraties), `development` (documentatie, tests, benchmarks,
@@ -26,7 +38,7 @@ zijn behouden. Geen betaalde Eva-modelproef of vergelijkingsserie gestart.
 
 De bestaande Pythonbasis blijft; de actieve bron staat direct in `src/eva` in de
 repositoryroot. De bestaande uitvoerder, poorten, geheugen en verbeterroute worden
-hergebruikt. Eva1 is uitsluitend een vergelijkingsreferentie in `development/archive/eva1`.
+hergebruikt. Eva1 is uitsluitend historische vergelijkingsreferentie; lokaal resteren alleen gebruikte benchmarkinputs.
 De afzonderlijke voorbereidingsbranch `codex/eva2-root` wordt na review naar `main`
 gebracht. Branch en map zijn verschillende zaken: een geneste `eva2/`-map was geen
 voorwaarde voor een afzonderlijke branch.

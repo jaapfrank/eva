@@ -10,13 +10,14 @@ development/archive is historische referentie, geen stapel aanvullende uitvoerop
 ## Huidige opdracht
 
 De repository heeft drie hoofdmappen: src voor code, deploy voor installatie,
-development voor documentatie/tests/proeven/archief. Branch codex/eva-layout.
-De groepering, gekoppelde paden en historische bytes zijn gecontroleerd; geen
-productfunctie is door deze administratieve oplevering afgerond.
+development voor documentatie/tests/proeven/referenties. De aanvullende
+opruiming verwijdert dubbele bronbackups en de ongebruikte Eva1-applicatie;
+exacte herkomst blijft op Git-revisie eab83747a3c33a83f2f63f38180dc7d6330635ec.
+Alleen Eva1-benchmarkinputs die bestaande tests lezen blijven lokaal.
+Dit is administratieve oplevering, geen extra afgeronde productfunctie.
 Daarna eerst het volledige opgeslagen resultaat naar de oorspronkelijke ontvanger;
 volg vervolgens dezelfde productafmaakvolgorde. Geen nieuwe vergelijkingsserie.
-Eva2 staat in src/eva. Eva1 is uitsluitend historische vergelijkingsreferentie in
-development/archive/eva1; geen ontwikkeling of tweede route.
+Eva2 staat in src/eva. Geen ontwikkeling of tweede route voor Eva1.
 
 ## Uitvoeren
 
@@ -49,8 +50,10 @@ Desktop blijft ongemoeid. Het hele projectgoal sluit pas bij de voorwaarden in P
 
 ## Archief en paden
 
-development/archive/history bevat oude plannen/experimenten; development/archive/migration-baseline de exacte
-bytes van operationele bestanden vóór padnormalisatie. development/archive/migration-manifest.json
-legt oorspronkelijke paden en hashes vast. Oude bewijs-/reviewrecords blijven ongewijzigd
-in evidence en reviews omdat actieve bron-/reviewbindingen die gebruiken. Een oud pad
-in bewijs is herkomst, geen actuele startopdracht. Geen symlink of importalias naar Eva1.
+development/archive/history bevat nog gebruikte historische bronbindings,
+installatieproefinputs en referenties. Evidence/reviews en frozen criteria blijven
+ongewijzigd. De oude migratiemanifesten zijn gesloten snapshots, geen garantie
+van lokale kopieën na latere opruiming. development/archive/pruning-20261013.json
+vermeldt verwijderde paden, hashes en de exacte Git-revisie voor terughalen.
+Verwijder alleen aantoonbaar overbodige bestanden; ouderdom is geen gebruikstest.
+Geen symlink of importalias naar Eva1.

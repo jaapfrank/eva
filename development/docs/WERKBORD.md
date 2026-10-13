@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Repositoryroot geordend: code, installatie, ontwikkeling
+Repository opgeruimd: 857 oude bestanden verwijderd
 
-src, deploy en development zijn de drie hoofdmappen. Oude bron en bewijs zijn behouden; imports, installer- en dashboardpaden gecontroleerd. Geen extra productfunctie afgerond.
+857 overbodige oude bestanden verwijderd: 43,6 MB dubbele bronbackups en ongebruikte Eva1-code. Exact terughaalbaar via Git. Nog gebruikte referenties behouden; geen extra productfunctie afgerond.
 
-Klaar wanneer: Drie hoofdmappen, gekoppelde imports/installer/dashboardpaden en gecontroleerd behoud van oude bron en productcriteria.
+Klaar wanneer: Verwijderde bestanden met Git-herkomst geregistreerd; actuele afhankelijkheden en productcriteria behouden; dashboard en GitHub bijgewerkt.
 
 ## Afmaakvolgorde
 

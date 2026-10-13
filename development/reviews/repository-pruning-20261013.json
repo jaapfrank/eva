@@ -1,0 +1,16 @@
+{
+  "contract": "EvaRepositoryPruningReview/v1",
+  "status": "approved",
+  "baselineCommit": "eab83747a3c33a83f2f63f38180dc7d6330635ec",
+  "scope": "Exact 857 tracked deletions, preserved runtime/historical bindings, frozen-literal assertion correction, current documentation and unchanged product acceptance.",
+  "independentReviews": [
+    {
+      "area": "runtime dependencies and byte recovery",
+      "sha256": "faea55a7688a29e554391b8a33942912ab20cf7e7c301475686c84cddddb4084"
+    },
+    {
+      "area": "documentation, links, goal and product acceptance",
+      "sha256": "83aed0b8c071746f4d270dfc13e16f01a484b5cbda1d8488cea867eec83efe92"
+    }
+  ]
+}

@@ -67,8 +67,9 @@ niet dat alle modules apart opnieuw gebouwd of elke mogelijke koppeling geleverd
 - Behouden: huidige application ports, getypeerde contracten, PostgreSQL/Hindsight,
   providerbijdragen, gewone uitvoerder, result binding, verbeter-/toepassingsroute,
   locks, schema's en echte acceptaties. Nieuwe bronlocatie: src/eva.
-- Archiveren: oude root-Node/Eva1, gedateerde plannen, verkenningen, verouderde
-  Markdownaansturing en niet-gebruikte experimenten. Het behoudmanifest bevat alle hashes.
+- Historie: de oude Node/Eva1-applicatie en dubbele bronbackups staan op exacte Git-revisie.
+  Alleen nog gebruikte referenties blijven lokaal; zie repository-pruning-20261013.md.
+  Gedateerde instructies zijn geen nieuwe uitvoeropdrachten.
 - Expliciet actief maken: het gebruikte dashboard als development/tools/project-dashboard en
   de installer-gateway als deploy/gateway; geen runtimecode verstopt als experiment.
 - Gericht vervolgen: volledige result delivery, coherente bestaande verbeterbinding,

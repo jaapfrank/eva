@@ -1,13 +1,15 @@
-## Actuele eigenaarprioriteit 13 oktober — overzichtelijke repositoryroot
+## Actuele eigenaarprioriteit 13 oktober — repository opruimen
 
 Eva2 is de repository. Code staat in src, installatiebestanden in deploy en
-ontwikkelmateriaal in development. De indeling wordt op codex/eva-layout
-gecontroleerd en naar main gepubliceerd. Alle oude bron- en bewijsbytes blijven
-behouden in development/archive en de verplaatste bewijsregisters. Deze groepering
-rondt geen productfunctie af. Daarna eerst het volledige bestaande werkresultaat
-leesbaar terugbrengen naar de oorspronkelijke ontvanger, gevolgd door de bestaande
-HUE6/AIDE²-, HUE5- en samenhangende chatoplevering. Geen spraakbouw of nieuwe
-vergelijkingsserie. Het volledige huisgenootgoal en zijn eindvoorwaarden blijven.
+ontwikkelmateriaal in development. Verwijder aantoonbaar overbodige oude bestanden,
+niet alleen verplaatsen: dubbele bronbackups en de ongebruikte Eva1-applicatie
+blijven op exacte Git-revisie terug te halen. Behoud nog gebruikte bindings,
+testinputs, verlies-/UNKNOWN-bewijs en de oorspronkelijke productvoorwaarden.
+De [opruimregistratie](repository-pruning-20261013.md) maakt die grens zichtbaar.
+Deze administratieve opdracht rondt geen Eva-productfunctie af. Daarna eerst het
+volledige bestaande werkresultaat leesbaar naar de oorspronkelijke ontvanger,
+gevolgd door HUE6/AIDE², HUE5 en samenhangende chatoplevering. Geen spraakbouw
+of nieuwe vergelijkingsserie. Het volledige huisgenootgoal blijft behouden.
 
 # Eva2 — volledige digitale huisgenoot
 
@@ -136,7 +138,7 @@ niet stilzwijgend kleiner gemaakt.
 De bestaande Eva2-basis blijft. Geen nieuw agentframework, tweede geheugen of
 voorbeeldspecifieke scripts. HUE1–4 zijn beperkt technisch bewezen en later gebruikt;
 M3.3 en bestaande geheugenacceptaties blijven staan. 43/54 kleine taken zijn afgerond,
-geen 43 productfuncties. Het oorspronkelijke werkbord en foutbewijs blijven in backup.
+geen 43 productfuncties. Het oorspronkelijke werkbord en foutbewijs blijven als gebonden referentie bewaard.
 
 Na de huidige rootreorganisatie:
 1. Lever het volledige bestaande opgeslagen resultaat leesbaar aan dezelfde ontvanger.

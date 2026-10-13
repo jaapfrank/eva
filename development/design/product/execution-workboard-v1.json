@@ -828,11 +828,11 @@
   "activeTaskId": "REPO-001",
   "currentWork": {
     "id": "REPO-001",
-    "title": "Repositoryroot overzichtelijk groeperen",
-    "outcome": "Drie hoofdmappen, gekoppelde imports/installer/dashboardpaden en gecontroleerd behoud van oude bron en productcriteria.",
+    "title": "Repository opgeruimd: 857 oude bestanden verwijderd",
+    "outcome": "857 overbodige oude bestanden verwijderd: 43,6 MB dubbele bronbackups en ongebruikte Eva1-code. Exact terughaalbaar via Git. Nog gebruikte referenties behouden; geen extra productfunctie afgerond.",
     "area": "project administration",
     "status": "done",
-    "doneWhen": "Drie hoofdmappen, gekoppelde imports/installer/dashboardpaden en gecontroleerd behoud van oude bron en productcriteria.",
+    "doneWhen": "Verwijderde bestanden met Git-herkomst geregistreerd; actuele afhankelijkheden en productcriteria behouden; dashboard en GitHub bijgewerkt.",
     "countedAsProductTask": false
   },
   "historicalWorkboard": {
@@ -1745,15 +1745,15 @@
           "independentReview": "GO"
         },
         "now": {
-          "title": "Repositoryroot geordend: code, installatie, ontwikkeling",
+          "title": "Repository opgeruimd: 857 oude bestanden verwijderd",
           "state": "Opgeleverd",
-          "phase": "repository_layout_grouping_delivered",
+          "phase": "repository_pruning_delivered",
           "taskId": "REPO-001",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "src, deploy en development zijn de drie hoofdmappen. Oude bron en bewijs zijn behouden; imports, installer- en dashboardpaden gecontroleerd. Geen extra productfunctie afgerond.",
-          "detail": "Dezelfde productafmaakvolgorde blijft: eerst het volledige opgeslagen werkresultaat naar de oorspronkelijke ontvanger.",
-          "doneWhen": "Drie hoofdmappen, gekoppelde imports/installer/dashboardpaden en gecontroleerd behoud van oude bron en productcriteria.",
+          "summary": "857 overbodige oude bestanden verwijderd: 43,6 MB dubbele bronbackups en ongebruikte Eva1-code. Exact terughaalbaar via Git. Nog gebruikte referenties behouden; geen extra productfunctie afgerond.",
+          "detail": "25 gerichte tests, 10 bronbindings en cataloguscontrole geslaagd. Alle productcriteria behouden. Hierna: volledig opgeslagen werkresultaat leesbaar naar oorspronkelijke ontvanger.",
+          "doneWhen": "Verwijderde bestanden met Git-herkomst geregistreerd; actuele afhankelijkheden en productcriteria behouden; dashboard en GitHub bijgewerkt.",
           "ownerActionNeeded": false
         },
         "next": {
@@ -2034,8 +2034,8 @@
           "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
           "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt.",
           "currentTaskId": "REPO-001",
-          "currentTaskPhase": "repository_layout_grouping_delivered",
-          "lastUpdatedAt": "2026-10-13T11:09:22.423738+00:00",
+          "currentTaskPhase": "repository_pruning_delivered",
+          "lastUpdatedAt": "2026-10-13T12:32:51.615391+00:00",
           "learningConnectionInstalled": true,
           "laterUseProven": true,
           "expandedCompletedTaskCount": 43
@@ -3714,8 +3714,8 @@
         "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
         "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt.",
         "currentTaskId": "REPO-001",
-        "currentTaskPhase": "repository_layout_grouping_delivered",
-        "lastUpdatedAt": "2026-10-13T11:09:22.423738+00:00",
+        "currentTaskPhase": "repository_pruning_delivered",
+        "lastUpdatedAt": "2026-10-13T12:32:51.615391+00:00",
         "learningConnectionInstalled": true,
         "laterUseProven": true,
         "expandedCompletedTaskCount": 43

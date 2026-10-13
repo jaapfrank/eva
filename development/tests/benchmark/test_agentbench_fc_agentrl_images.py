@@ -206,13 +206,14 @@ def test_agentrl_controller_build_has_pinned_primary_inputs_and_declares_build_t
 
 
 def test_agentrl_worker_is_a_source_build_with_only_the_sealed_wheelhouse() -> None:
+    # Archived build-context literals retain their original paths after relocation.
     source = WORKER.read_text(encoding="utf-8")
 
     assert "python:3.10.18-slim-bookworm@sha256:" in source
     assert "COPY agentrl-worker-requirements.lock ./requirements.lock" in source
     assert "COPY agentrl-worker-wheelhouse ./wheelhouse" in source
     assert "--no-index --only-binary=:all:" in source
-    assert "--require-hashes -r deploy/requirements.lock" in source
+    assert "--require-hashes -r requirements.lock" in source
     assert "COPY proto ./proto" in source
     assert "COPY worker ./worker" in source
     assert "--no-deps --no-build-isolation ./worker" in source
@@ -252,7 +253,7 @@ def test_agentrl_artifact_provenance_binds_exact_manifests_and_rebuild_inputs() 
     assert controller["artifact"] == "EvaAgentBenchFcControllerInputsProvenance/v1"
     assert controller["status"] == "historical_provenance_incomplete_superseded_by_v2"
     assert controller["replacement"]["path"] == (
-        "development/benchmark/agentbench-fc-v1/agentrl-controller-inputs-provenance-amd64-v2.json"
+        "benchmark/agentbench-fc-v1/agentrl-controller-inputs-provenance-amd64-v2.json"
     )
     assert controller_v2["artifact"] == "EvaAgentBenchFcControllerInputsProvenance/v2"
     assert controller_v2["artifactManifest"]["sha256"] == hashlib.sha256(
@@ -543,7 +544,7 @@ def test_dbbench_audited_worker_adds_only_the_environment_auditor() -> None:
         in dockerfile
     )
     assert (
-        "COPY development/benchmark/audit_agentbench_dbbench_environment.py "
+        "COPY benchmark/audit_agentbench_dbbench_environment.py "
         "/app/audit_agentbench_dbbench_environment.py"
         in dockerfile
     )
