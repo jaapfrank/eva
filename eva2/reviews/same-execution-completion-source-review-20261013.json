@@ -1,0 +1,22 @@
+{
+  "contract": "EvaSourceReviewPublication/v1",
+  "checkedAt": "2026-10-13T04:09:56.555293+00:00",
+  "verdict": "GO_SOURCE_BUILD_INSTALL_ONLY",
+  "sealedPrivateReviewSha256": "6a15738942c6751afe1eb37fbe7997974158ef0d79d9b35409412adeee653291",
+  "frozenSourceSha256": "179dd110e0fec50ee8824f1236be2fc6b44d440df4647897eb3ed00a3f41223f",
+  "runnerSha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
+  "checks": {
+    "uniqueTargetedTestsPassed": 45,
+    "actualSameExecutionReceipts269Accepted": true,
+    "actualVerifiedRead304Accepted": true,
+    "eachOfSixInvalidSelectionsAloneRejected": true,
+    "differentNamespaceRejected": true,
+    "oldRawEvidenceUnchanged": true,
+    "modelRequests": 0
+  },
+  "limits": [
+    "Native behavior is not proven by source checks.",
+    "Gen25 remains FAILED/incomplete_work and delivery unbound.",
+    "Original task criteria and historical UNKNOWN remain unchanged."
+  ]
+}

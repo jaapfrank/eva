@@ -1,0 +1,48 @@
+{
+  "contract": "EvaOrdinaryTaskResumeResult/v1",
+  "checkedAt": "2026-10-13T04:06:20.986148+00:00",
+  "workId": "work:eva-resume:ceadcb9f-6327-58fd-b2f7-94c2c72e4e84",
+  "generation": 25,
+  "state": "failed",
+  "errorCode": "incomplete_work",
+  "nativeResult": null,
+  "deliveryState": "unbound",
+  "usage": {
+    "admittedRequests": 2,
+    "measuredResponses": 2,
+    "closedRequests": 2,
+    "inputTokens": 105893,
+    "outputTokens": 324,
+    "totalTokens": 106217,
+    "tools": 0,
+    "currentUnknown": 0,
+    "inflight": 0,
+    "creditCosts": null
+  },
+  "outcome": {
+    "originalProposalContent": "PASS_REUSED_UNCHANGED_DOCUMENT_ONLY",
+    "documentSha256": "33c1204d29256cbc5fd7365206d997e8dc59fe3e51e200a15d0a7571d3155d76",
+    "newDocumentReads": 0,
+    "newDocumentWrites": 0,
+    "homeAssistantEffects": 0,
+    "nativeCompletion": "NOT_COMPLETED"
+  },
+  "limits": {
+    "noNewFunctionCompletion": true,
+    "originalCriteriaUnchanged": true,
+    "oldFailuresAndUnknownPreserved": true,
+    "noNewComparisonSeries": true,
+    "wholeProjectGoal": "active",
+    "originalTaskCompletionCount": "39/48",
+    "fullBoardCompletionCount": "39/54"
+  },
+  "evidence": {
+    "terminalManifestSha256": "935da96ab6b65c4baf2eb1ffaad05de40f01d74b9bf948641d41627093c64051",
+    "originalContentReviewSha256": "402763f6f9edd7747805242b7c4af54cbdaa94edc5a52f74b1116a4ef47d88a4",
+    "previousActualReadProofSha256": "f9068529f5e4dfca517197e633cf4a2e7d90e169b15d82c64396b58d27a7aeb9"
+  },
+  "independentReview": {
+    "verdict": "GO_FACTS_ONLY",
+    "sealedReviewSha256": "6a15738942c6751afe1eb37fbe7997974158ef0d79d9b35409412adeee653291"
+  }
+}

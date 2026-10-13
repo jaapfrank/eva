@@ -216,6 +216,59 @@ def test_restored_invalid_read_keeps_context_without_poisoning_current_verificat
         assert outcome.result is None and not tools.calls
         assert outcome.usage.completed_model_responses == model.responses == 2
 
+@pytest.mark.parametrize("evidence", ["same_execution", "invalid_only", "other_execution"])
+def test_resume_uses_verified_same_execution_evidence_without_replaying_effects(monkeypatch, evidence):
+    import eva.bootstrap.delegated_digital_runner as module
+    from eva.adapters.postgres.connector_results import READER_PREFIX
+    from eva.application.background_execution import BackgroundExecutionScope, background_execution
+
+    source, spec, store, tools, journal, runner, identity = fixture()
+    invalid = ConversationActionReceipt(ConversationActionCall(
+        "old-invalid-reader", "use_connector_tool", {"tool_id": READER_PREFIX + "old"}), {
+        "status": "selection_invalid", "source": "stored_connector_result",
+        "external_state_verified": False,
+    })
+    verified = ConversationActionReceipt(ConversationActionCall(
+        "saved-result-readback", "use_connector_tool", {"path": "/existing-result.md"}), {
+        "status": "verified", "result": "saved result independently read back",
+    })
+    with background_execution(BackgroundExecutionScope(source, spec.execution_id)):
+        namespace = background_execution_namespace(source)
+    saved = {(namespace, 0): invalid}
+    if evidence != "invalid_only":
+        result_namespace = namespace if evidence == "same_execution" else namespace + ":other"
+        saved[(result_namespace, 1)] = verified
+    tools.pending = lambda turn, step_index: saved.get((background_execution_namespace(turn), step_index))
+    monkeypatch.setattr(module, "load_work_progress", lambda *args: {
+        "work_id": "work:previous", "revision": 36, "steps": [{"state": "done"}],
+    })
+
+    class DeliverSavedResult:
+        responses = 0
+        def generate(self, *args, **kwargs):
+            self.responses += 1
+            recovered = kwargs["completed_action"]
+            assert recovered is (verified if evidence == "same_execution" else invalid)
+            return ConversationModelResult("The saved result is ready.", "controlled",
+                usage=ConversationModelUsage.measured(input_tokens=30, output_tokens=10, tool_calls=0))
+
+    model = DeliverSavedResult()
+    runner.model = model
+    outcome = asyncio.run(runner.run(spec, call_id="call:recover-result"))
+    assert tools.calls == []
+    assert outcome.usage.tool_calls == 0
+    assert invalid.output["status"] == "selection_invalid"
+    if evidence == "same_execution":
+        assert outcome.status == "succeeded", outcome
+        assert outcome.result.output == "The saved result is ready."
+        assert outcome.usage.completed_model_responses == model.responses == 1
+        _validate_usage(spec, outcome.usage, successful=True)
+    else:
+        assert outcome.status == "incomplete_work", outcome
+        assert outcome.result is None
+        assert outcome.usage.completed_model_responses == model.responses == 2
+
+
 def test_outer_cancel_waits_for_connector_cleanup_without_second_step():
     async def run():
         _,spec,_,tools,_,runner,_=fixture()

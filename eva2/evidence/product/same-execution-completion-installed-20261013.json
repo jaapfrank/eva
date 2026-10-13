@@ -1,0 +1,60 @@
+{
+  "contract": "EvaSameExecutionCompletionInstalled/v1",
+  "checkedAt": "2026-10-13T04:09:56.555293+00:00",
+  "state": "installed",
+  "behavior": "Recovered verified results within the same admitted execution remain completion evidence without replaying effects. Recognized recoverable read selection failures do not permanently poison later verified results.",
+  "runnerSha256": "1e65cb6819191c8436c5949cae41eafbe8fa15d91ca51eaf95962385ed500758",
+  "sourceReview": "eva2/reviews/same-execution-completion-source-review-20261013.json",
+  "sourceReviewSha256": "54dcd0c62bb3c4e609627a7c1035c00516784a8ddbd9fe4b658a2b3ba950b2fa",
+  "runtimeVerificationSha256": "137ba47e552448183bf288d850b7a631678430a3b5411880945794ae4a83843c",
+  "services": {
+    "core": {
+      "image": "sha256:12db66bdca6e22b6690aa52f624658a82b76da8898097c4ae1ef4c4443a5b7ec",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedOtherPythonSources": 344
+    },
+    "delegated-work-worker": {
+      "image": "sha256:85c50b4a3bf4ae421507917895106cf1f189c9a38b88743dbf89d826b15c361e",
+      "checks": {
+        "exactImage": true,
+        "healthy": true,
+        "exactPythonInventory": true,
+        "sameMounts": true,
+        "sameEnvironment": true,
+        "sameProcessConfiguration": true
+      },
+      "unchangedOtherPythonSources": 344
+    }
+  },
+  "updateDispatches": 1,
+  "modelRequestsBeforeNormalResume": 0,
+  "tests": {
+    "uniquePassed": 45,
+    "firstFixtureMissingUsageKeywordPreserved": true,
+    "twoEarlierBaselineFailuresRemainVisible": true
+  },
+  "priorResult": "eva2/evidence/product/same-execution-completion-prior-result-20261013.json",
+  "ordinaryResume": {
+    "workId": "work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b",
+    "generation": 26,
+    "receiptSha256": "c82bd30f9e88914a31fba54476dbc9a63064a5aa4f6b4d1d6f28adbbb82976e8",
+    "state": "admitted_not_terminal_at_publication",
+    "originalTaskAndCriteriaUnchanged": true
+  },
+  "limits": {
+    "newProductCompletion": false,
+    "wholeGoal": "active",
+    "originalCompletionCount": "39/48",
+    "fullCompletionCount": "39/54",
+    "historicalUnknownPreserved": true,
+    "voice": "parked",
+    "unusedDockerDesktop": "untouched"
+  }
+}

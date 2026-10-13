@@ -1,4 +1,49 @@
-## Actueel 13 oktober — historische context blokkeert actuele afronding niet meer
+## Actueel 13 oktober — afronding met gecontroleerd bewijs uit dezelfde opdracht
+
+De algemene uitvoerder gebruikt nu geldige herstelde receipts binnen dezelfde
+toegelaten opdracht. Erkende herstelbare leesfouten resetten alleen de tijdelijke
+voltooiingsindicatie; een later werkelijk gecontroleerd resultaat mag die herstellen.
+Ongeldige selecties alleen, andere namespaces en onzekere effecten blijven geweigerd.
+Geen herhaling van afgehandelde effecten en geen verse teruglezing bij iedere hervatting.
+
+Runner1e65cb68 is eenmaal geïnstalleerd in gezonde/ready kern en werker;344 overige
+Python-bronnen per image, configuratie en mounts behouden.45 unieke gerichte controles
+slagen; onafhankelijk exact269-bewijs en READ304 slagen, zes invalid-only selecties
+blijven onvoldoende. Eerste synthetische fixture miste verplicht tool_calls=0 en is
+hersteld; foutlog behouden. Twee eerder bekende baselinefouten blijven zichtbaar.
+
+Gen25 blijft FAILED/incomplete_work,106.217 tokens/2 gesloten aanvragen/0 tools,
+nativeNULL/leveringUNBOUND; geen HA-wijziging. Het inhoudelijk goedgekeurde eigen
+voorstel SHA33c1204d blijft onveranderd. Eén gewone Gen26 loopt nu:
+work:eva-resume:717fb35c-c3ee-553f-be00-b592f40f453b. Geen nieuwe opdracht, criteria, vergelijking of migratie.
+Codex schrijft het voorstel niet. Native eindresultaat en levering nog te volgen.
+
+Volledig goal ACTIVE;39/48 en39/54 onveranderd. HUE/leercyclus/AIDE² open,
+spraak geparkeerd en ongebruikte Docker Desktop ongemoeid.
+Installatie: eva2/evidence/product/same-execution-completion-installed-20261013.json.
+Review: eva2/reviews/same-execution-completion-source-review-20261013.json.
+
+## Historisch 13 oktober — geldige taakbewijzen behouden; Gen25 mislukt
+
+Gen25 is gesloten met FAILED/incomplete_work: twee gemeten en afgesloten
+modelaanvragen, 106.217 tokens, nul nieuwe tools, nul huidige UNKNOWN/inflight.
+Het native resultaat is NULL; levering blijft UNBOUND. Geen HA-wijziging.
+Het bestaande voorstel (SHA33c1204d) houdt zijn oorspronkelijke inhoudelijke PASS;
+dat is geen nieuwe native afronding. Oude fouten en registraties blijven behouden.
+
+De laatste correctie sloot alle herstelde receipts uit en dwong daardoor onnodig
+nieuw bewijs af. De gerichte correctie herstelt de oorspronkelijke bedoeling:
+geldige gecontroleerde resultaten binnen dezelfde toegelaten opdracht behouden,
+geen voltooide effecten herhalen, en alleen de bestaande herkenbare recoverable
+leesselectiefout als herstelbare context behandelen. Ongeldige selecties alleen,
+onbevestigde effecten en bewijzen van een andere opdracht bewijzen geen afronding.
+Broncorrectie en gerichte onafhankelijke review worden uitgevoerd; geen nieuwe
+betaalde voortzetting gestart. Codex schrijft het voorstel niet zelf.
+
+Het volledige goal blijft ACTIVE. 39/48 en 39/54 onveranderd; HUE, leercyclus
+en AIDE² blijven open. Spraak geparkeerd, Docker Desktop ongemoeid.
+
+## Historisch 13 oktober — historische context blokkeert actuele afronding niet meer
 
 Gen24 blijft FAILED/incomplete_work: Eva las het eigen inhoudelijk bruikbare
 voorstel actueel terug (READ304, ongewijzigde SHA33c1204d, inhoud PASS), maar de

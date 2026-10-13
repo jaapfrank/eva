@@ -152,9 +152,9 @@ class _TaskModel:
             "en onderscheid bewezen feiten, nog open vragen en voorwaarden voor latere uitvoering. "
             "Een opgeslagen tussenversie is geen afgeronde opdracht. Controleer het opgeslagen "
             "resultaat met een afzonderlijke teruglezing; meld alleen werkelijk aangetoonde "
-            "afronding. Ook bij hervatting moet een toolresultaat in deze uitvoerpoging de "
-            "actuele uitkomst bevestigen. Als de inhoud al klaar is, controleer alleen het "
-            "bestaande eindresultaat; herschrijf het niet en herhaal geen externe handeling. "
+            "afronding. Gebruik bij hervatting de geverifieerde resultaten en teruglezingen "
+            "uit dezelfde opdracht. Controleer alleen wat nog ontbreekt of inmiddels is "
+            "veranderd; herschrijf een klaar resultaat niet en herhaal geen externe handeling. "
             "Onderzoek daarna gericht alleen wat voor de oorspronkelijke eindvoorwaarden "
             "nog ontbreekt. Bij grotere opdrachten: bewaar een beknopt uitvoerplan met "
             "save_work_progress, behoud de bestaande stap-ID's en werk de stappen bij na "
@@ -327,9 +327,10 @@ class BackgroundConnectorActions:
                 if receipt.call.name not in self._allowed or found is not None:
                     raise ConversationConflict("background action admission differs")
                 found = self._receipt(receipt)
-        # Recovered receipts remain in the conversation's historical context.
-        # They neither consume this attempt's new-call budget nor count as its
-        # current completion evidence. New execute_step receipts stay separate.
+        if found is not None:
+            # The admitted execution's recovered results remain usable without
+            # replaying completed effects or consuming this attempt's call budget.
+            self.receipts.append(found)
         return found
 
     def execute(self, turn, call):
@@ -459,7 +460,9 @@ def _has_completed_tool_evidence(receipts):
     last_procedure_success = None
     pending_automation_readbacks = set()
     for receipt in receipts:
-        if _recoverable_read_error(receipt):
+        if BackgroundConnectorActions.can_continue_after(None, receipt):
+            # A recoverable read failure is context, not completed work. A later
+            # verified result in the same admitted execution may resolve it.
             completed = False
             continue
         output = receipt.output
@@ -705,8 +708,8 @@ class DelegatedDigitalRunner:
                             raise _DigitalBudgetExceeded("remaining attempt budget cannot continue the plan")
                         prompted_states.add(state_key)
                         task_model.continuation_feedback = ((
-                            "Je uitvoerplan is afgerond, maar deze uitvoerpoging heeft nog geen "
-                            "geverifieerd toolresultaat om de afsluiting te onderbouwen. Doe alleen "
+                            "Je uitvoerplan is afgerond, maar de resultaten van deze opdracht "
+                            "onderbouwen de afsluiting nog niet. Doe alleen "
                             "de ontbrekende actuele controle van het gevraagde resultaat: lees "
                             "bijvoorbeeld het bestaande einddocument apart terug. Gebruik eerdere "
                             "bevindingen; schrijf het resultaat niet opnieuw en herhaal geen "
