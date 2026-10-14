@@ -1,4 +1,32 @@
-## Actueel 14 oktober — bestaande eigen bijdrage werkelijk privé afgeleverd
+## Actueel 14 oktober — HUE5 afgerond; aandacht/stilte als volgende uitkomst
+
+HUE5.1 is volgens haar oorspronkelijke eindvoorwaarde onafhankelijk afgerond.
+Eva leverde een eigen bijdrage echt privé af. Jaap beoordeelde het nut negatief,
+met een concrete reden die Eva vooraf niet kende; dit is geen algemene afwijzing
+van initiatief. Die echte reactie bleef bij de juiste bijdrage bewaard. Een nieuwe
+neutrale privévraag zonder herhaalde voorkeur leidde tot een feedback-specifieke
+bewuste keuze geen nieuw werk te starten. Eén gemeten Sol/none-contactaanvraag,
+9.153 tokens, nul tools of nieuwe acties; geen onderzoek/code/verbetering via Sol.
+
+De actuele context is onafhankelijk herlezen, niet de oorspronkelijke providerbody.
+Die instrumentatielimiet blijft zichtbaar; geen exclusieve causaliteit of algemene
+kwaliteitsvoorsprong geclaimd. De oorspronkelijke bijdrage/aflevering, oude mislukte
+taak en gedeeltelijke usage blijven behouden. Nieuwe source/installatie was niet nodig.
+
+Jaap beoordeelde timing/hinder afzonderlijk als goed en niet storend. Beide echte
+reacties zijn gecombineerd bewaard zodat de oorspronkelijke reden niet verdwijnt.
+Persoonlijke werkwijze en letterlijke antwoorden blijven buiten de publieke repo.
+I1.2 blijft open: vijf echte routine-lampprikkels zijn stil verwerkt, maar dit bewijst
+nog geen aandacht/stilte bij drukte of slapen. Controleer de bestaande koppeling
+gericht; geen grotere audit, nieuwe voorbeeldfunctie, spraakbouw of vergelijkingsserie.
+Nu geen extra eigenaarhandeling. De oude feedbackblokkade is inhoudelijk opgelost.
+
+45/54 bestaande kleine taken afgerond, negen open. HUE5 en HUE6 zijn de twee nieuwe
+afrondingen; het volledige projectgoal en finale gezinsacceptatie blijven open.
+Bewijs: development/evidence/product/hue5-feedback-later-use-outcome-20261014.json.
+Review: development/evidence/product/hue5-feedback-later-use-completion-review-20261014.json.
+
+## Historisch 14 oktober — bestaande eigen bijdrage werkelijk privé afgeleverd
 
 De ontbrekende overdracht is gemaakt en geïnstalleerd: gewone chat en de digitale
 werker kunnen één bewezen opgeslagen eigen bijdrage via dezelfde bestaande

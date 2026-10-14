@@ -1,0 +1,111 @@
+{
+  "contract": "EvaInitiativeFeedbackLaterUseOutcome/v1",
+  "recordedAt": "2026-10-14T07:20:53.933616+00:00",
+  "task": "HUE5.1",
+  "originalDoneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
+  "result": "DONE: an actual completed private contribution received genuine negative utility feedback; a later neutral ordinary question produced a feedback-specific decision to do no new work.",
+  "installedExistingRoute": true,
+  "newSourceOrDeployment": false,
+  "previousContributionEvidence": "development/evidence/product/hue5-completed-contribution-outcome-20261014.json",
+  "actualFeedback": {
+    "utility": "negative for this contribution",
+    "ownerSaysEvaCouldNotHaveKnown": true,
+    "nuisance": "not intrusive",
+    "timing": "appropriate",
+    "notGeneralRejectionOfInitiative": true,
+    "literalAnswersRemainPrivate": true,
+    "sources": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/owner-feedback-source.private.json",
+        "sha256": "3f1432c45fcb86bd4916bbf1a78c929ff61f560883d13b775068297e5ef4f57d"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/owner-timing-source.private.json",
+        "sha256": "a5507baa4312a7f09bd4d3b1e2dcce8d9e9bf20572bb02979156417fd1e83abd"
+      }
+    ],
+    "firstApiReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/owner-feedback-receipt.private.json",
+      "sha256": "87319608e32ab8642bdc2b91a9ee4472507384ff3e916694aa530b45a2e9fc13"
+    },
+    "combinedApiReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/owner-combined-feedback-receipt.private.json",
+      "sha256": "87319608e32ab8642bdc2b91a9ee4472507384ff3e916694aa530b45a2e9fc13"
+    },
+    "originalReasonPreservedInLatestFeedback": true
+  },
+  "laterUse": {
+    "ordinaryOperatorStimulatedQuestion": true,
+    "questionHadNoContributionOrFeedbackHint": true,
+    "unprompted": false,
+    "messageId": "dashboard:afa19238-d93e-4bf7-8b30-852e41a0dbe0",
+    "replySha256": "dfa432ec9880d3ac3615c48576a02fe69f1c7d8be73090d0c20659f3ab6ecbd9",
+    "choice": "Consciously do no new work because a repeat of the unhelpful contribution would not match the owner routine.",
+    "actualWorkOrExternalActionStarted": false,
+    "requests": 1,
+    "provider": "chatgpt-codex:gpt-6-sol",
+    "role": "simple contact decision on known context; no research, code or development",
+    "inputTokens": 9081,
+    "outputTokens": 72,
+    "totalTokens": 9153,
+    "modelToolCalls": 0,
+    "requestsSucceededAndLocallyClosed": true,
+    "transport": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/later-choice-transport.private.json",
+      "sha256": "4652758e939a2395ba78c32ae2a14ee0d84538beb50067a2bf04e98afc1a5429"
+    },
+    "audit": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/later-choice-context-accounting.private.json",
+      "sha256": "dd307c157093384c42d07c0b4a724c17b09ec3007b1b229eead4ec6788f33807"
+    }
+  },
+  "limits": {
+    "originalSerializedProviderBodyNotRetained": true,
+    "contextEvidenceIsAuthorizedReread": true,
+    "sourceRouteAndFeedbackSpecificReplySupportOriginalBehaviourCondition": true,
+    "exclusiveCausalAttributionNotProven": true,
+    "generalAutonomyOrQualityWinnerNotClaimed": true,
+    "I1.2NotAutomaticallyCompleted": true,
+    "noInappropriateMomentAttentionEventProven": true,
+    "familyFinalAcceptanceNotClaimed": true
+  },
+  "usageHistory": {
+    "currentOwnerFeedbackVerificationRequests": 1,
+    "currentOwnerFeedbackVerificationTokens": 9153,
+    "priorRegistrationRequests": 2,
+    "priorRegistrationTokens": 20347,
+    "priorFailedContributionKnownCombinedRequests": 14,
+    "priorFailedContributionKnownCombinedTokens": 221270,
+    "knownBoundCombinedRequests": 17,
+    "knownBoundCombinedTokenLowerBound": 250770,
+    "oldFailureAndPartialUsagePreserved": true,
+    "completeProjectTotalAndCredits": "unknown",
+    "automaticRuntimeTotalNotMeasured": true
+  },
+  "completion": {
+    "taskCompleted": true,
+    "completionKind": "technical_with_genuine_owner_feedback",
+    "smallTasksCompleted": 45,
+    "smallTasksTotal": 54,
+    "smallTasksOpen": 9,
+    "wholeGoalCompleted": false
+  },
+  "independentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/independent-feedback-later-use-review.private.json",
+    "sha256": "0f384f8ea52ab7dbfde66c9730c9edeab2a62e4b4b417e82c20d894b40abe20b"
+  },
+  "predeclaredReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/predeclared-feedback-review.private.json",
+    "sha256": "b235cf94f65831764dbb46ed6663411fa1f7e40dd0d2a26e4b20186fcb2e5bfe"
+  },
+  "separateTimingReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/independent-I1.2-timing-review.private.json",
+    "sha256": "0430c679116e0da392ca378f7718153f02991acac6d07dc7896863094ec4e66f"
+  },
+  "retainedRoutineSilenceRead": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/retained-inappropriate-moment-silence.private.json",
+    "sha256": "fc9bafdcd2f31e4fa1f384451cd6553c8e99ee5839814c722332a6adff13d4d5"
+  },
+  "newComparisonSeries": false,
+  "voiceWork": false
+}

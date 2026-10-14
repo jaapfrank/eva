@@ -4,17 +4,17 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Van de reactie op eigen initiatief leren
+Stilte en passendheid beoordelen
 
-De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.
+HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.
 
-Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
+Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.
 
 ## Afmaakvolgorde
 
 1. Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage
 2. Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik
-3. HUE5: echte reactie laten doorwerken in volgend initiatief of stilblijven
+3. Afgerond HUE5: echte reactie toegepast bij latere bewuste nonactie
 4. Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie
 
 ## Vier productuitkomsten
@@ -22,11 +22,11 @@ Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat v
 | Uitkomst | Wat staat | Wat ontbreekt |
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
-| Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–4 zijn technisch afgerond en later toegepast. De samenhang met initiatief en werkelijk gezinsgebruik afronden; geen geheugenherbouw. |
-| Eigen initiatief | Nog geen nuttige bijdrage bevestigd | Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd. |
-| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE5: nuttig initiatief met echte feedback; samenhangend dagelijks gebruik en uiteindelijke gezinsacceptatie blijven open. |
+| Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw. |
+| Eigen initiatief | Afgeleverd en van echte reactie geleerd · HUE5 | I1.2: stilte op ongepaste momenten; daarna samenhangend gezinsgebruik en finale acceptatie. |
+| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE5 is nu afgerond. I1.2 aandacht/stilte en samenhangend dagelijks gebruik/finale gezinsacceptatie blijven open. |
 
-44/54 bestaande kleine taken afgerond; 10 open. 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage.
+45/54 bestaande kleine taken afgerond; 9 open. 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage.
 
 ## Alle bestaande kleine taken
 
@@ -58,7 +58,7 @@ Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat v
 | T3.3 · Overnemen en correct doorgaan | ✓ Afgerond | Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie. |
 | I1.1 · Een nuttige huisbijdrage laten aankomen | ✓ Afgerond | Bestaande initiatiefroute kiest en levert een concrete toegestane bijdrage. |
 | I1.2 · Stilte en passendheid beoordelen | ● Open | Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart. |
-| HUE5.1 · Van de reactie op eigen initiatief leren | ● Open | Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven. |
+| HUE5.1 · Van de reactie op eigen initiatief leren | ✓ Afgerond | Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven. |
 | I2.1 · Relevante bronnen zelfstandig ontdekken en kiezen | ✓ Afgerond | Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag. |
 | I2.2 · Waarnemingsopdracht zelf automatiseren en terugmelden | ✓ Afgerond | Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat. |
 | L2.1 · Project na onderbreking zelfstandig vervolgen | ✓ Afgerond | Bewaard resultaat en correctie leiden zonder ontwikkelaarhervatting tot de volgende uitvoerstap. |
@@ -89,7 +89,7 @@ Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat v
 
 ## Van jou
 
-Eva stuurde ‘Wasgoed zonder gokwerk’ via Telegram. Vertel kort wat nuttig of onbruikbaar is; die echte reactie hoort bij deze bijdrage en moet haar volgende keuze beïnvloeden.
+Je oordeel over nut én timing/hinder is vastgelegd. Het resterende stiltebewijs is werk voor Codex; nu geen extra handeling nodig.
 
 ## Historie
 

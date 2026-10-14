@@ -1,0 +1,18 @@
+{
+  "contract": "EvaInitiativeFeedbackCompletionReview/v1",
+  "verdict": "HUE5_GO_DONE_ONLY",
+  "outcome": {
+    "path": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+    "sha256": "8b4c2351c752170d49dc4ce2397ffef9e273c3513c87de6f036c6af8e81a216d"
+  },
+  "independentOriginalConditionReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/independent-feedback-later-use-review.private.json",
+    "sha256": "0f384f8ea52ab7dbfde66c9730c9edeab2a62e4b4b417e82c20d894b40abe20b"
+  },
+  "completedTaskIds": [
+    "HUE5.1"
+  ],
+  "I1.2RemainsOpen": true,
+  "originalBodyCaptureLimitRetained": true,
+  "familyFinalAcceptance": false
+}

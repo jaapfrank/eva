@@ -1,0 +1,22 @@
+{
+  "contract": "EvaHUE5PublicationReview/v1",
+  "verdict": "GO_PUBLICATION_HUE5_DONE_I1.2_OPEN",
+  "independentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-feedback-20261014/publication-go.private.json",
+    "sha256": "1b6bf48864e35358b7536b9e1d298f721ac76c4d0dc2375dc8d7b1b788c3fd4e"
+  },
+  "outcome": {
+    "path": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+    "sha256": "8b4c2351c752170d49dc4ce2397ffef9e273c3513c87de6f036c6af8e81a216d"
+  },
+  "boardCanonicalSha256ExcludingUnrelatedVoiceAudit": "4be1d27a6b9bc63c770cc1bbf030ba39e97e4b925c87d7f9c6c3a8a12743febe",
+  "completedTaskIds": [
+    "HUE5.1"
+  ],
+  "smallTasksCompleted": 45,
+  "smallTasksTotal": 54,
+  "activeTaskId": "I1.2",
+  "privateAnswersNotPublished": true,
+  "originalCriteriaAndHistoricalFailuresPreserved": true,
+  "wholeGoalCompleted": false
+}

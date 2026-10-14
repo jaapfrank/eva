@@ -841,18 +841,18 @@
   "lastUpdated": "2026-10-14T03:14:08.630849+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "HUE5.1",
+  "activeTaskId": "I1.2",
   "currentWork": {
-    "id": "HUE5.1",
-    "title": "Van de reactie op eigen initiatief leren",
+    "id": "I1.2",
+    "title": "Stilte en passendheid beoordelen",
     "status": "in_progress",
-    "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "nextAction": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
-    "area": "initiative and learning",
+    "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
+    "outcome": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
+    "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+    "area": "initiative and attention",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T05:41:44.256882+00:00",
-    "ownerActionRequired": true
+    "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+    "ownerActionRequired": false
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1096,7 +1096,7 @@
           "tested": "yes",
           "live": "yes",
           "accepted": "partial",
-          "gap": "I1/I2: zelf een nuttige bijdrage uitvoeren/afleveren en een gewone waarnemingsopdracht zelf automatiseren; gezinsbeoordeling apart.",
+          "gap": "I1.2: stilte op ongepaste momenten. Echte nuts- en timingbeoordeling ontvangen; algemene gezinsacceptatie blijft apart.",
           "detail": "AU-008 en de eerder geaccepteerde bijdrage blijven behouden. De bredere initiatiefuitkomst bevat nog technisch werk: zelfgekozen werk werkelijk uitvoeren en terugbrengen, relevante bronnen zelf kiezen en automatiseringen maken. Een ontbrekende speakersessie blokkeert alleen die hoorbare afleverroute.",
           "evidence": "development/evidence/product/AU-008-current-review-delivery-2026-09-12.json · development/reviews/AU-008-current-status-e96b2054.md",
           "outcomes": [
@@ -1117,14 +1117,15 @@
             }
           ],
           "works": "Eva koos vanuit jouw bestaande huiswens zelfstandig een beoordelingskaart en leverde deze als privaat document op.",
-          "ownerSummary": "I1.1: een eigen bijdrage is werkelijk uitgevoerd en privé teruggelezen; bestaande initiatiefroute behouden. Nog open: I1.2 nut/stilte beoordelen. I2: relevante waarnemingsbronnen zelf kiezen en de opdracht werkelijk automatiseren/terugmelden blijft open.",
+          "ownerSummary": "HUE5 voltooid: aflevering, echte reactie en latere toepassing. I2 bronkeuze/automatisering zijn technisch afgerond. I1.2 aandacht/stilte blijft open.",
           "currentSummary": {
-            "checkedAt": "2026-10-06T09:54:42.358033+00:00",
-            "works": "I1.1: een eigen bijdrage is werkelijk uitgevoerd en privé teruggelezen; bestaande initiatiefroute behouden.",
-            "gap": "I1.1 geleverd en I2 technisch afgerond. I1.2: nut, timing en hinder in echt gezinsgebruik beoordelen; volledige acceptatie blijft apart.",
-            "detail": "De eigen bijdrage is een concreet resultaat. Herhaald passend gezinsinitiatief en algemene waarnemingsopdrachten zijn nog geen afgerond geheel.",
+            "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+            "works": "Werkelijk afgeleverd en van echte eigenaarreactie geleerd; een volgende keuze gebruikt de reactie.",
+            "gap": "I1.2: stilte op ongepaste momenten. Nut negatief en timing/hinder goed ontvangen; geen positieve algemene acceptatie.",
+            "detail": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd.",
             "evidencePaths": [
-              "development/evidence/product/i1-private-contribution-readback-20261002.json"
+              "development/evidence/product/i1-private-contribution-readback-20261002.json",
+              "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json"
             ]
           }
         },
@@ -1633,6 +1634,21 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "HUE5.1 · Van echte initiatiefreactie geleerd",
+            "state": "installed",
+            "summary": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+            "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "HUE5.1"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "maintenanceRepair": false,
+            "familyAcceptance": false,
+            "completionScope": "HUE5.1 only"
+          },
+          {
             "title": "HUE5 · Eigen bijdrage echt via Telegram afgeleverd",
             "state": "installed",
             "summary": "Bestaande zelfgekozen bijdrage gecontroleerd, geregistreerd en kort privé afgeleverd. Geen herhaalde creatie. Nut en later feedbackgebruik nog open.",
@@ -1836,31 +1852,31 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "HUE6.1 · Droomcyclus technisch afgerond",
+          "title": "HUE5.1 · Van echte initiatiefreactie geleerd",
           "state": "installed",
-          "summary": "HUE6.1 technisch afgerond: gewone rustige reflectie maakte een gegronde stijlspiegel uit twee feiten; die werd gebruikt in een nieuw gesprek met een vriendelijk antwoord van 37 woorden zonder genummerde lijst. Agentvarianten eindigden gelijk: referentie terecht behouden en later gebruikt. Bestaande onafhankelijke codewinst/toepassing/later gebruik blijven bewezen. Geen algemene voorsprong of gezinsacceptatie geclaimd.",
-          "source": "/home/administrator/project/Eva2/development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
-          "checkedAt": "2026-10-14T03:14:08.630849+00:00",
+          "summary": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+          "checkedAt": "2026-10-14T07:22:01.869796+00:00",
           "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "HUE6.1"
+            "HUE5.1"
           ],
           "smallTaskCountsUnchanged": false,
           "maintenanceRepair": false,
           "familyAcceptance": false,
-          "completionScope": "HUE6.1 only"
+          "completionScope": "HUE5.1 only"
         },
         "now": {
-          "title": "Van de reactie op eigen initiatief leren",
-          "state": "Jouw reactie nodig",
-          "phase": "awaiting_actual_owner_feedback",
-          "taskId": "HUE5.1",
-          "activeExecution": false,
+          "title": "Stilte en passendheid beoordelen",
+          "state": "Bezig",
+          "phase": "inappropriate_moment_silence_evidence",
+          "taskId": "I1.2",
+          "activeExecution": true,
           "nativeRunning": false,
-          "summary": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
-          "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-          "ownerActionNeeded": true,
-          "checkedAt": "2026-10-14T05:45:19.527664+00:00"
+          "summary": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+          "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
+          "ownerActionNeeded": false,
+          "checkedAt": "2026-10-14T07:22:01.869796+00:00"
         },
         "next": {
           "state": "Daarna",
@@ -1869,15 +1885,12 @@
           "detail": "Geen nieuwe vergelijkingsserie of spraakbouw."
         },
         "ownerAction": {
-          "title": "Kort oordeel op afgeleverde eigen bijdrage",
-          "detail": "Eva stuurde ‘Wasgoed zonder gokwerk’ via Telegram. Vertel kort wat nuttig of onbruikbaar is; die echte reactie hoort bij deze bijdrage en moet haar volgende keuze beïnvloeden.",
-          "steps": [
-            "Lees het korte Telegrambericht.",
-            "Geef je oordeel hier of aan Eva."
-          ],
+          "title": "Je reacties zijn verwerkt",
+          "detail": "Je oordeel over nut én timing/hinder is vastgelegd. Het resterende stiltebewijs is werk voor Codex; nu geen extra handeling nodig.",
+          "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-14T05:41:44.256882+00:00",
+        "checkedAt": "2026-10-14T07:22:01.869796+00:00",
         "reviewedAt": "2026-10-14T03:14:08.630849+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -1896,10 +1909,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-14T03:14:08.630849+00:00",
-        "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 is technisch afgerond: rustige gegronde reflectie later gebruikt, echte agentbeoordeling en bestaande codeverbetering. Nuttig initiatief en samenhangende gezinsacceptatie blijven open.",
-        "headline": "HUE6 afgerond. Volgende uitkomst: nuttig eigen initiatief en leren van jouw reactie.",
-        "note": "44/54 bestaande kleine taken afgerond; 10 open. 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage.",
+        "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+        "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
+        "headline": "HUE5 en HUE6 afgerond. Nog stilte/aandacht en gezinsafronding.",
+        "note": "45/54 bestaande kleine taken afgerond; 9 open. 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -1917,7 +1930,7 @@
             "state": "incomplete",
             "label": "Geheugenbasis geaccepteerd · correctie en uitkomst toegepast",
             "result": "Geaccepteerde geheugenbasis en Eva1-import behouden. Werkuitkomsten en feedback worden opgeslagen. Bij een nieuwe opdracht in een andere sessie paste Eva de eerdere norm én vorm toe zonder herhaling: 8 over, 1 tekort tegen de norm van 9, drie korte bullets met vervolgstap. Werkelijk bestand apart teruggelezen; beide oude bestanden ongewijzigd. Installatie en beperkte toepassing onafhankelijk beoordeeld. HUE1.1/HUE3.1: persoonsaanname en verwachting herzien, vervolgens gebruikt in een nieuw gesprek zonder recente historie; onafhankelijk beoordeeld. HUE6: persoonlijke stijl tijdens rust gegrond bijgesteld en in een later gesprek gebruikt.",
-            "remaining": "HUE1–4 zijn technisch afgerond en later toegepast. De samenhang met initiatief en werkelijk gezinsgebruik afronden; geen geheugenherbouw.",
+            "remaining": "HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw.",
             "evidencePaths": [
               "development/design/product/execution-workboard-v1.json",
               "development/evidence/product/p2-published-results-20261006.json",
@@ -1940,25 +1953,26 @@
           {
             "name": "Eigen initiatief",
             "state": "incomplete",
-            "label": "Nog geen nuttige bijdrage bevestigd",
-            "result": "Een eerdere eigen bijdrage is uitgevoerd en privé teruggelezen. De algemene programmeer-/verbeterroute en de correctie van de onbedoelde extra daggrens zijn nu geïnstalleerd; bron- en installatiereview GO. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst. Jaap meldde geen nuttige bijdrage te hebben ontvangen; het verbruikslijstje was niet nuttig.",
-            "remaining": "Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.",
+            "label": "Afgeleverd en van echte reactie geleerd · HUE5",
+            "result": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd. De huidige bijdrage werd als niet nuttig beoordeeld; timing/hinder waren goed.",
+            "remaining": "I1.2: stilte op ongepaste momenten; daarna samenhangend gezinsgebruik en finale acceptatie.",
             "evidencePaths": [
               "development/evidence/product/i1-private-contribution-readback-20261002.json",
               "development/evidence/product/i2-self-chosen-research-installed-20261005.json",
               "development/evidence/product/native-initiative-digital-installed-20261011.json",
               "development/evidence/product/native-initiative-daily-quota-diagnosis-20261011.json",
               "development/evidence/product/native-initiative-subscription-installed-20261011.json",
-              "development/evidence/product/native-reviewed-artifact-installed-20261012.json"
+              "development/evidence/product/native-reviewed-artifact-installed-20261012.json",
+              "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json"
             ],
-            "checkedAt": "2026-10-14T03:14:08.630849+00:00"
+            "checkedAt": "2026-10-14T07:22:01.869796+00:00"
           },
           {
             "name": "Zelfstandig werk",
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst. Volledig opgeslagen resultaat nu werkelijk bij de oorspronkelijke Telegramvraag geleverd; bytes teruggelezen. Standaard geen bijlage. HUE6 technisch afgerond: agentvariant werkelijk beoordeeld; gelijkspel, dus referentie behouden en later gebruikt. Bestaande codewinst/toepassing/later gebruik behouden.",
-            "remaining": "HUE5: nuttig initiatief met echte feedback; samenhangend dagelijks gebruik en uiteindelijke gezinsacceptatie blijven open.",
+            "remaining": "HUE5 is nu afgerond. I1.2 aandacht/stilte en samenhangend dagelijks gebruik/finale gezinsacceptatie blijven open.",
             "evidencePaths": [
               "development/evidence/product/p2-published-results-20261006.json",
               "development/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -2039,7 +2053,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "HUE5.1",
+        "currentStep": "I1.2",
         "steps": [
           {
             "number": 1,
@@ -2147,11 +2161,11 @@
           "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
           "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt.",
           "currentTaskId": "HUE5.1",
-          "currentTaskPhase": "useful_initiative_delivery_and_later_feedback",
-          "lastUpdatedAt": "2026-10-14T03:14:08.630849+00:00",
+          "currentTaskPhase": "technical_hue_scope_completed",
+          "lastUpdatedAt": "2026-10-14T07:22:01.869796+00:00",
           "learningConnectionInstalled": true,
           "laterUseProven": true,
-          "expandedCompletedTaskCount": 44
+          "expandedCompletedTaskCount": 45
         },
         "implementationSlices": [
           {
@@ -2937,21 +2951,19 @@
               {
                 "id": "I1.2",
                 "title": "Stilte en passendheid beoordelen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "gebruikersproef",
                 "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
                 "owner": "Jaap",
-                "nextAction": "Een herkenbare eigen bijdrage is nu kort via Telegram afgeleverd: ‘Wasgoed zonder gokwerk’. Het bestaande HUE5-oordeel kan ook nut/hinder voor I1.2 vastleggen; geen tweede proef of willekeurig oud resultaat. Stilte op ongepaste momenten en gezinsbeleving blijven afzonderlijk.",
-                "ownerActionRequired": true,
+                "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+                "ownerActionRequired": false,
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "De bijdrage is afgeleverd; dezelfde echte reactie op HUE5 kan nu worden gebruikt.",
-                  "steps": [
-                    "Geef één kort oordeel op de afgeleverde bijdrage: nuttig of onbruikbaar, en waarom."
-                  ],
+                  "availableNow": false,
+                  "readyWhen": "Nut en timing zijn beide echt beoordeeld; het resterende stiltebewijs is werk voor Codex.",
+                  "steps": [],
                   "blocksIndependentWork": false
                 },
-                "checkedAt": "2026-10-14T05:41:44.256882+00:00",
+                "checkedAt": "2026-10-14T07:22:01.869796+00:00",
                 "assignment": {
                   "activeWorkers": []
                 },
@@ -2959,25 +2971,31 @@
                   "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
                   "usefulDeliveryConfirmed": false,
                   "initiativeId": null
+                },
+                "latestEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+                "latestOwnerAssessment": {
+                  "source": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+                  "utility": "not_useful_for_this_owner",
+                  "nuisance": "not_intrusive",
+                  "timing": "appropriate",
+                  "literalFeedbackPrivate": true,
+                  "initiativeId": "personal-interest:0ba0895fd13369c376edca686c5ee6080f539d284f0216e97bf8b4e0976d780c"
                 }
               },
               {
                 "id": "HUE5.1",
                 "title": "Van de reactie op eigen initiatief leren",
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-                "nextAction": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
-                "ownerActionRequired": true,
+                "nextAction": "Afgerond. Vervolg I1.2: bestaande stilte/aandachtsvoorwaarde afmaken; geen herhaalde HUE5-proef.",
+                "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "De bijdrage is afgeleverd; een kort echt oordeel kan nu worden gegeven. Codex verwerkt de reactie en bewijst haar latere toepassing.",
-                  "steps": [
-                    "Lees de korte Telegrambijdrage ‘Wasgoed zonder gokwerk’.",
-                    "Vertel kort wat nuttig of onbruikbaar is; dat wordt aan dit initiatief gekoppeld en bij de volgende keuze gebruikt."
-                  ],
+                  "availableNow": false,
+                  "readyWhen": "Deze leercyclus is afgerond; geen aanvullende handeling of herproef nodig.",
+                  "steps": [],
                   "blocksIndependentWork": false,
                   "expected": "Echte reactie op deze afgeleverde bijdrage.",
                   "reportBack": "Een kort oordeel."
@@ -2990,8 +3008,22 @@
                   "usefulDeliveryConfirmed": false,
                   "initiativeId": null
                 },
-                "checkedAt": "2026-10-14T05:41:44.256882+00:00",
-                "latestEvidence": "development/evidence/product/hue5-completed-contribution-outcome-20261014.json"
+                "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+                "latestEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+                "completedAt": "2026-10-14T07:22:01.869796+00:00",
+                "result": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd.",
+                "completionKind": "technical_with_actual_owner_feedback",
+                "familyAccepted": false,
+                "completionEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+                "independentReview": "development/evidence/product/hue5-feedback-later-use-completion-review-20261014.json",
+                "latestOwnerAssessment": {
+                  "source": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+                  "utility": "not_useful_for_this_owner",
+                  "nuisance": "not_intrusive",
+                  "timing": "appropriate",
+                  "literalFeedbackPrivate": true,
+                  "initiativeId": "personal-interest:0ba0895fd13369c376edca686c5ee6080f539d284f0216e97bf8b4e0976d780c"
+                }
               }
             ]
           },
@@ -3725,20 +3757,20 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.",
+        "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
-          "HUE5: echte reactie laten doorwerken in volgend initiatief of stilblijven",
+          "Afgerond HUE5: echte reactie toegepast bij latere bewuste nonactie",
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-14T03:14:08.630849+00:00"
+        "updatedAt": "2026-10-14T07:22:01.869796+00:00"
       }
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "HUE5.1",
+      "currentStep": "I1.2",
       "steps": [
         {
           "number": 1,
@@ -3846,11 +3878,11 @@
         "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
         "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt.",
         "currentTaskId": "HUE5.1",
-        "currentTaskPhase": "useful_initiative_delivery_and_later_feedback",
-        "lastUpdatedAt": "2026-10-14T03:14:08.630849+00:00",
+        "currentTaskPhase": "technical_hue_scope_completed",
+        "lastUpdatedAt": "2026-10-14T07:22:01.869796+00:00",
         "learningConnectionInstalled": true,
         "laterUseProven": true,
-        "expandedCompletedTaskCount": 44
+        "expandedCompletedTaskCount": 45
       },
       "implementationSlices": [
         {
@@ -4636,21 +4668,19 @@
             {
               "id": "I1.2",
               "title": "Stilte en passendheid beoordelen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "gebruikersproef",
               "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
               "owner": "Jaap",
-              "nextAction": "Een herkenbare eigen bijdrage is nu kort via Telegram afgeleverd: ‘Wasgoed zonder gokwerk’. Het bestaande HUE5-oordeel kan ook nut/hinder voor I1.2 vastleggen; geen tweede proef of willekeurig oud resultaat. Stilte op ongepaste momenten en gezinsbeleving blijven afzonderlijk.",
-              "ownerActionRequired": true,
+              "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "De bijdrage is afgeleverd; dezelfde echte reactie op HUE5 kan nu worden gebruikt.",
-                "steps": [
-                  "Geef één kort oordeel op de afgeleverde bijdrage: nuttig of onbruikbaar, en waarom."
-                ],
+                "availableNow": false,
+                "readyWhen": "Nut en timing zijn beide echt beoordeeld; het resterende stiltebewijs is werk voor Codex.",
+                "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-14T05:41:44.256882+00:00",
+              "checkedAt": "2026-10-14T07:22:01.869796+00:00",
               "assignment": {
                 "activeWorkers": []
               },
@@ -4658,25 +4688,31 @@
                 "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
                 "usefulDeliveryConfirmed": false,
                 "initiativeId": null
+              },
+              "latestEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+              "latestOwnerAssessment": {
+                "source": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+                "utility": "not_useful_for_this_owner",
+                "nuisance": "not_intrusive",
+                "timing": "appropriate",
+                "literalFeedbackPrivate": true,
+                "initiativeId": "personal-interest:0ba0895fd13369c376edca686c5ee6080f539d284f0216e97bf8b4e0976d780c"
               }
             },
             {
               "id": "HUE5.1",
               "title": "Van de reactie op eigen initiatief leren",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-              "nextAction": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
-              "ownerActionRequired": true,
+              "nextAction": "Afgerond. Vervolg I1.2: bestaande stilte/aandachtsvoorwaarde afmaken; geen herhaalde HUE5-proef.",
+              "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "De bijdrage is afgeleverd; een kort echt oordeel kan nu worden gegeven. Codex verwerkt de reactie en bewijst haar latere toepassing.",
-                "steps": [
-                  "Lees de korte Telegrambijdrage ‘Wasgoed zonder gokwerk’.",
-                  "Vertel kort wat nuttig of onbruikbaar is; dat wordt aan dit initiatief gekoppeld en bij de volgende keuze gebruikt."
-                ],
+                "availableNow": false,
+                "readyWhen": "Deze leercyclus is afgerond; geen aanvullende handeling of herproef nodig.",
+                "steps": [],
                 "blocksIndependentWork": false,
                 "expected": "Echte reactie op deze afgeleverde bijdrage.",
                 "reportBack": "Een kort oordeel."
@@ -4689,8 +4725,22 @@
                 "usefulDeliveryConfirmed": false,
                 "initiativeId": null
               },
-              "checkedAt": "2026-10-14T05:41:44.256882+00:00",
-              "latestEvidence": "development/evidence/product/hue5-completed-contribution-outcome-20261014.json"
+              "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+              "latestEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+              "completedAt": "2026-10-14T07:22:01.869796+00:00",
+              "result": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd.",
+              "completionKind": "technical_with_actual_owner_feedback",
+              "familyAccepted": false,
+              "completionEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+              "independentReview": "development/evidence/product/hue5-feedback-later-use-completion-review-20261014.json",
+              "latestOwnerAssessment": {
+                "source": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+                "utility": "not_useful_for_this_owner",
+                "nuisance": "not_intrusive",
+                "timing": "appropriate",
+                "literalFeedbackPrivate": true,
+                "initiativeId": "personal-interest:0ba0895fd13369c376edca686c5ee6080f539d284f0216e97bf8b4e0976d780c"
+              }
             }
           ]
         },
@@ -5424,15 +5474,15 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.",
+      "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
-        "HUE5: echte reactie laten doorwerken in volgend initiatief of stilblijven",
+        "Afgerond HUE5: echte reactie toegepast bij latere bewuste nonactie",
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-14T03:14:08.630849+00:00"
+      "updatedAt": "2026-10-14T07:22:01.869796+00:00"
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -6225,7 +6275,10 @@
         "otherOpenWork": "Five voice tasks owner-parked; I1.2 shares real family judgement; P2.1 lacks original coverage/human judgement and no new comparison series is permitted; F2.1/F2.2 require actual family use/acceptance.",
         "taskScopeAndDoneWhenPreserved": true,
         "noNewModelRequests": true
-      }
+      },
+      "blockResolvedByActualOwnerReplyAt": "2026-10-14T06:56:05.069587+00:00",
+      "conditionResolved": true,
+      "resolvedBy": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json"
     }
   },
   "updatedAt": "2026-10-14T03:14:08.630849+00:00"
