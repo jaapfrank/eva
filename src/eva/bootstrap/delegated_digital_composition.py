@@ -20,11 +20,15 @@ from eva.adapters.connectors.procedure_execution import configured_procedure_exe
 _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
                         "manage_connected_services", "use_connector_tool"})
 _PROCEDURES = frozenset({"list_reusable_procedures", "resolve_reusable_procedure",
-                         "designate_reusable_procedure", "save_workspace_document", "run_reusable_procedure"})
+                         "designate_reusable_procedure", "save_workspace_document", "run_reusable_procedure",
+                         "register_own_contribution"})
 _HOME_ASSISTANT = frozenset({"home_assistant_request", "read_home_assistant_inventory"})
 _DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gateway", "home_assistant"})
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
+    "bootstrap/completed_contributions.py",
+    "adapters/postgres/completed_contribution.py",
+    "adapters/postgres/initiative_adoption.py",
     "bootstrap/delegated_digital_composition.py",
     "bootstrap/background_research.py",
     "adapters/model/research_tools.py",
@@ -193,7 +197,9 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
     selected_providers = ExternalProviderSettings(tuple(loaded for loaded in
         (() if settings.external_provider is None else settings.external_provider.providers)
         if loaded.provider_id in _DIGITAL_PROVIDERS))
-    bundle = provider_bundle or build_external_provider_bundle(selected_providers, engine)
+    from eva.bootstrap.completed_contributions import with_completed_contributions
+    bundle = with_completed_contributions(settings, engine,
+        provider_bundle or build_external_provider_bundle(selected_providers, engine))
     profile = build_digital_profile(settings, bundle)
     descriptors, routes = digital_tools(bundle)
     owner, binding = UUID(settings.background_principal_id), UUID(settings.dashboard_principal_binding_id)

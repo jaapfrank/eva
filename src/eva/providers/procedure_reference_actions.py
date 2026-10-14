@@ -151,6 +151,84 @@ class ProcedureReferenceActions:
                     "source_target": target}
         raise ProcedureReferenceRejected("saved improvement source unavailable")
 
+    def resolve_contribution_artifact(self, turn, source_work_id, artifact_path):
+        """Read an actual saved result from the same current private owner."""
+        import hashlib
+        import sqlalchemy as sa
+        from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+        from eva.adapters.postgres.operational_timeline import operational_events
+        from eva.application.background_execution import BackgroundExecutionScope, background_execution_namespace
+        from eva.application.procedure_references import verified_saved_artifact
+        from eva.contracts.delegated_digital_work import (
+            DelegatedDigitalWorkSpec, DelegatedInitiativeDigitalWorkSpec,
+        )
+        host = self._host(turn)
+        resolver = self.private_owner_resolver
+        if resolver is None or resolver(turn) is None:
+            raise ProcedureReferenceRejected("private contribution owner unavailable")
+        store = PostgresDelegatedWorkStore(self.engine, resolver._scope)
+        work = store.load(source_work_id, owner_principal_id=resolver._owner,
+                          principal_binding_id=resolver._binding)
+        if (not isinstance(work.spec, DelegatedDigitalWorkSpec)
+                or isinstance(work.spec, DelegatedInitiativeDigitalWorkSpec)
+                or work.retention_until <= datetime.now(UTC)
+                or work.stop_requested_at is not None or work.state == "stopped"):
+            raise ProcedureReferenceRejected("contribution source work unavailable")
+        source = work.spec.source
+        original = self.source_loader(source.model_dump(mode="json"))
+        if resolver(original) != resolver(turn) or original.project_id != turn.project_id:
+            raise ProcedureReferenceRejected("contribution belongs to another private source")
+        namespace = BackgroundExecutionScope(original, work.spec.execution_id).namespace
+        def check_source(candidate):
+            if (candidate.spec.sha256 != work.spec.sha256
+                    or candidate.retention_until <= datetime.now(UTC)
+                    or candidate.stop_requested_at is not None or candidate.state == "stopped"
+                    or (candidate.state not in {"failed", "succeeded", "verified"}
+                        and namespace != background_execution_namespace(turn))):
+                raise ProcedureReferenceRejected("contribution source is active elsewhere, stopped or changed")
+        check_source(work)
+        scope = ProcedureScope(original.tenant_id, original.installation_id,
+                               original.principal_id, original.project_id)
+        host.require_scope(scope)
+        e = operational_events.c
+        data = e.payload["data"]
+        with self.engine.begin() as conn:
+            host.timeline._scope(conn)
+            ids = conn.execute(sa.select(data["action_call_id"].astext).where(
+                e.tenant_id == host.authority.scope.tenant_id,
+                e.installation_id == host.authority.scope.installation_id,
+                e.event_type == "TOOL_REQUEST_ADMITTED", e.sequence == 1,
+                data["principal_id"].astext == source.principal_id,
+                data["conversation_id"].astext == source.conversation_id,
+                data["source_message_id"].astext == source.message_id,
+                data["execution_namespace"].astext == namespace,
+                data["request_arguments"]["path"].astext == artifact_path,
+                data["request_arguments"].has_key("content"),
+            ).limit(2)).scalars().all()
+        if len(ids) != 1:
+            raise ProcedureReferenceRejected("contribution save absent or ambiguous")
+        saved = host.load_save(scope, ids[0])
+        args, config, message, conversation, digest, receipt_hash = verified_saved_artifact(
+            scope, ids[0], saved)
+        if args["path"] != artifact_path:
+            raise ProcedureReferenceRejected("contribution artifact path differs")
+        current = host.read_current(scope, artifact_path)
+        if hashlib.sha256(current).hexdigest() != digest:
+            raise ProcedureReferenceRejected("contribution artifact changed")
+        host.require_scope(scope)
+        fresh = store.load(source_work_id, owner_principal_id=resolver._owner,
+                           principal_binding_id=resolver._binding)
+        check_source(fresh)
+        if self.source_loader(source.model_dump(mode="json")) != original:
+            raise ProcedureReferenceRejected("contribution source changed during read")
+        return {"content": current.decode("utf-8"), "content_sha256": digest,
+                "source_provenance": {"source_kind": "verified_saved_digital_contribution",
+                    "work_id": source_work_id, "work_spec_sha256": work.spec.sha256,
+                    "source_principal_id": source.principal_id, "source_message_id": message,
+                    "source_conversation_id": conversation, "execution_namespace": namespace,
+                    "source_call_id": ids[0], "artifact_path": artifact_path,
+                    "saved_receipt_sha256": receipt_hash, "tool_configuration_sha256": config}}
+
     def _candidate_page(self, store, turn, cursor):
         scopes = self._scopes(turn)
         selected, source_cursor = scopes[0], cursor

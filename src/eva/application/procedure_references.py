@@ -95,6 +95,41 @@ def verified_save_arguments(admission: dict) -> dict:
     return decoded
 
 
+def verified_saved_artifact(scope: ProcedureScope, source_call_id: str, source: VerifiedSaveSource):
+    """Validate one existing saved-document proof without designating a procedure."""
+    a, proof = source.admission, source.proof
+    output = a.get("receipt_output", {})
+    args = verified_save_arguments(a)
+    if (source.scope != scope or a.get("principal_id") != scope.principal_id
+            or a.get("action_call_id") != source_call_id
+            or source.terminal_event_type != "STATE_VERIFIED"
+            or output.get("transport") != "mcp_gateway"
+            or output.get("operation_kind") in {"invoke", "read"}
+            or output.get("external_state_verified") is False
+            or proof.get("evidence", {}).get("source") != "mcp_gateway_readback"
+            or proof.get("expected") != proof.get("observed")
+            or proof.get("observed", {}).get("content") != args.get("content")
+            or not isinstance(args.get("content"), str)
+            or not isinstance(args.get("path"), str) or not args["path"]):
+        raise ProcedureReferenceRejected("not a bound verified save")
+    config = a.get("request_tool_configuration_sha256")
+    if (not isinstance(config, str) or len(config) != 64
+            or any(c not in "0123456789abcdef" for c in config)
+            or output.get("tool_configuration_sha256") != config
+            or a.get("request_expected_proof") != proof["expected"]
+            or a.get("request_observation_arguments", {}).get("path") != args["path"]
+            or a.get("request_arguments", {}).get("path") != args["path"]
+            or a.get("request_arguments", {}).get("content") != args["content"]):
+        raise ProcedureReferenceRejected("save proof binding differs")
+    message = a.get("source_message_id")
+    conversation = a.get("conversation_id")
+    if not isinstance(message, str) or not message or not isinstance(conversation, str) or not conversation:
+        raise ProcedureReferenceRejected("source identity missing")
+    digest = hashlib.sha256(args["content"].encode("utf-8")).hexdigest()
+    receipt_hash = canonical_sha256({"admission": a, "proof": proof})
+    return args, config, message, conversation, digest, receipt_hash
+
+
 class ProcedureReferences:
     def __init__(self, sources: ProcedureSources, host: ProcedureHost):
         self._sources, self._host = sources, host
@@ -107,36 +142,8 @@ class ProcedureReferences:
         if _instant(retention_until) <= _instant(now):
             raise ProcedureReferenceRejected("expired reference")
         source = self._host.load_save(scope, source_call_id)
-        a, proof = source.admission, source.proof
-        output = a.get("receipt_output", {})
-        args = verified_save_arguments(a)
-        if (source.scope != scope or a.get("principal_id") != scope.principal_id
-                or a.get("action_call_id") != source_call_id
-                or source.terminal_event_type != "STATE_VERIFIED"
-                or output.get("transport") != "mcp_gateway"
-                or output.get("operation_kind") in {"invoke", "read"}
-                or output.get("external_state_verified") is False
-                or proof.get("evidence", {}).get("source") != "mcp_gateway_readback"
-                or proof.get("expected") != proof.get("observed")
-                or proof.get("observed", {}).get("content") != args.get("content")
-                or not isinstance(args.get("content"), str)
-                or not isinstance(args.get("path"), str) or not args["path"]):
-            raise ProcedureReferenceRejected("not a bound verified save")
-        config = a.get("request_tool_configuration_sha256")
-        if (not isinstance(config, str) or len(config) != 64
-                or any(c not in "0123456789abcdef" for c in config)
-                or output.get("tool_configuration_sha256") != config
-                or a.get("request_expected_proof") != proof["expected"]
-                or a.get("request_observation_arguments", {}).get("path") != args["path"]
-                or a.get("request_arguments", {}).get("path") != args["path"]
-                or a.get("request_arguments", {}).get("content") != args["content"]):
-            raise ProcedureReferenceRejected("save proof binding differs")
-        message = a.get("source_message_id")
-        conversation = a.get("conversation_id")
-        if not isinstance(message, str) or not message or not isinstance(conversation, str) or not conversation:
-            raise ProcedureReferenceRejected("source identity missing")
-        digest = hashlib.sha256(args["content"].encode("utf-8")).hexdigest()
-        receipt_hash = canonical_sha256({"admission": a, "proof": proof})
+        args, config, message, conversation, digest, receipt_hash = verified_saved_artifact(
+            scope, source_call_id, source)
         doc_id = "procedure-reference:" + canonical_sha256({"scope": asdict(scope), "receipt": receipt_hash})
         reference = ProcedureReference(doc_id, use_when.strip(), args["path"], digest,
             source_call_id, message, config, receipt_hash, retention_until)

@@ -848,11 +848,11 @@
     "status": "in_progress",
     "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
     "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "nextAction": "Geïnstalleerd: chat- en achtergrondideeën delen nu native adoptie, uitvoering, privéaflevering en feedback. De echte chatbeurt koos echter gewone digitale delegatie: Eva bewaarde een eigen waskaart, maar initiatiefregistratie/aflevering blokkeerde in die uitvoerroute (incomplete_work). Bekende ondergrens 221.270 tokens inclusief contact; partial blijft behouden. HUE5 blijft open. Vervolg uitsluitend de aangetoonde routekoppeling, gebruik de bewaarde kaart opnieuw en herhaal de creatie niet.",
+    "nextAction": "Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.",
     "area": "initiative and learning",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T04:54:27.093921+00:00",
-    "ownerActionRequired": false
+    "checkedAt": "2026-10-14T05:31:59.361863+00:00",
+    "ownerActionRequired": true
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1633,6 +1633,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "HUE5 · Eigen bijdrage echt via Telegram afgeleverd",
+            "state": "installed",
+            "summary": "Bestaande zelfgekozen bijdrage gecontroleerd, geregistreerd en kort privé afgeleverd. Geen herhaalde creatie. Nut en later feedbackgebruik nog open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-completed-contribution-outcome-20261014.json",
+            "checkedAt": "2026-10-14T05:32:32.004913+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "HUE5 · Dezelfde identiteit bij eigen initiatief",
             "state": "installed",
             "summary": "Bestaande identiteit en principes aangesloten op de gewone initiatiefbeslissing. Gespreksgedrag behouden; nuttige aflevering en later feedbackgebruik blijven open. Geen nieuwe taak afgerond.",
@@ -1845,10 +1857,10 @@
           "taskId": "HUE5.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Geïnstalleerd: chat- en achtergrondideeën delen nu native adoptie, uitvoering, privéaflevering en feedback. De echte chatbeurt koos echter gewone digitale delegatie: Eva bewaarde een eigen waskaart, maar initiatiefregistratie/aflevering blokkeerde in die uitvoerroute (incomplete_work). Bekende ondergrens 221.270 tokens inclusief contact; partial blijft behouden. HUE5 blijft open. Vervolg uitsluitend de aangetoonde routekoppeling, gebruik de bewaarde kaart opnieuw en herhaal de creatie niet.",
+          "summary": "Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.",
           "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-          "ownerActionNeeded": false,
-          "checkedAt": "2026-10-14T04:54:27.093921+00:00"
+          "ownerActionNeeded": true,
+          "checkedAt": "2026-10-14T05:31:59.361863+00:00"
         },
         "next": {
           "state": "Daarna",
@@ -1857,12 +1869,15 @@
           "detail": "Geen nieuwe vergelijkingsserie of spraakbouw."
         },
         "ownerAction": {
-          "title": "Nu niets nodig",
-          "detail": "Je hebt de initiatiefvraag beantwoord: geen nuttige bijdrage ontvangen. De aflevering en leercyclus zijn nu werk voor Codex; geen aanvullende proef van jou nodig.",
-          "steps": [],
+          "title": "Kort oordeel op afgeleverde eigen bijdrage",
+          "detail": "Eva stuurde ‘Wasgoed zonder gokwerk’ via Telegram. Vertel kort wat nuttig of onbruikbaar is; die echte reactie hoort bij deze bijdrage en moet haar volgende keuze beïnvloeden.",
+          "steps": [
+            "Lees het korte Telegrambericht.",
+            "Geef je oordeel hier of aan Eva."
+          ],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-14T03:14:08.630849+00:00",
+        "checkedAt": "2026-10-14T05:32:32.004913+00:00",
         "reviewedAt": "2026-10-14T03:14:08.630849+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -2951,14 +2966,19 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-                "nextAction": "Geïnstalleerd: chat- en achtergrondideeën delen nu native adoptie, uitvoering, privéaflevering en feedback. De echte chatbeurt koos echter gewone digitale delegatie: Eva bewaarde een eigen waskaart, maar initiatiefregistratie/aflevering blokkeerde in die uitvoerroute (incomplete_work). Bekende ondergrens 221.270 tokens inclusief contact; partial blijft behouden. HUE5 blijft open. Vervolg uitsluitend de aangetoonde routekoppeling, gebruik de bewaarde kaart opnieuw en herhaal de creatie niet.",
-                "ownerActionRequired": false,
+                "nextAction": "Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.",
+                "ownerActionRequired": true,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Codex moet eerst een werkelijk nuttige eigen bijdrage afleveren. Jaap heeft de open vraag beantwoord; nu geen aanvullende handeling nodig.",
-                  "steps": [],
-                  "blocksIndependentWork": false
+                  "availableNow": true,
+                  "readyWhen": "De bijdrage is afgeleverd; een kort echt oordeel kan nu worden gegeven. Codex verwerkt de reactie en bewijst haar latere toepassing.",
+                  "steps": [
+                    "Lees de korte Telegrambijdrage ‘Wasgoed zonder gokwerk’.",
+                    "Vertel kort wat nuttig of onbruikbaar is; dat wordt aan dit initiatief gekoppeld en bij de volgende keuze gebruikt."
+                  ],
+                  "blocksIndependentWork": false,
+                  "expected": "Echte reactie op deze afgeleverde bijdrage.",
+                  "reportBack": "Een kort oordeel."
                 },
                 "assignment": {
                   "activeWorkers": [
@@ -2970,8 +2990,8 @@
                   "usefulDeliveryConfirmed": false,
                   "initiativeId": null
                 },
-                "checkedAt": "2026-10-14T04:54:27.093921+00:00",
-                "latestEvidence": "development/evidence/product/hue5-shared-initiative-outcome-20261014.json"
+                "checkedAt": "2026-10-14T05:31:59.361863+00:00",
+                "latestEvidence": "development/evidence/product/hue5-completed-contribution-outcome-20261014.json"
               }
             ]
           },
@@ -4645,14 +4665,19 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-              "nextAction": "Geïnstalleerd: chat- en achtergrondideeën delen nu native adoptie, uitvoering, privéaflevering en feedback. De echte chatbeurt koos echter gewone digitale delegatie: Eva bewaarde een eigen waskaart, maar initiatiefregistratie/aflevering blokkeerde in die uitvoerroute (incomplete_work). Bekende ondergrens 221.270 tokens inclusief contact; partial blijft behouden. HUE5 blijft open. Vervolg uitsluitend de aangetoonde routekoppeling, gebruik de bewaarde kaart opnieuw en herhaal de creatie niet.",
-              "ownerActionRequired": false,
+              "nextAction": "Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.",
+              "ownerActionRequired": true,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Codex moet eerst een werkelijk nuttige eigen bijdrage afleveren. Jaap heeft de open vraag beantwoord; nu geen aanvullende handeling nodig.",
-                "steps": [],
-                "blocksIndependentWork": false
+                "availableNow": true,
+                "readyWhen": "De bijdrage is afgeleverd; een kort echt oordeel kan nu worden gegeven. Codex verwerkt de reactie en bewijst haar latere toepassing.",
+                "steps": [
+                  "Lees de korte Telegrambijdrage ‘Wasgoed zonder gokwerk’.",
+                  "Vertel kort wat nuttig of onbruikbaar is; dat wordt aan dit initiatief gekoppeld en bij de volgende keuze gebruikt."
+                ],
+                "blocksIndependentWork": false,
+                "expected": "Echte reactie op deze afgeleverde bijdrage.",
+                "reportBack": "Een kort oordeel."
               },
               "assignment": {
                 "activeWorkers": [
@@ -4664,8 +4689,8 @@
                 "usefulDeliveryConfirmed": false,
                 "initiativeId": null
               },
-              "checkedAt": "2026-10-14T04:54:27.093921+00:00",
-              "latestEvidence": "development/evidence/product/hue5-shared-initiative-outcome-20261014.json"
+              "checkedAt": "2026-10-14T05:31:59.361863+00:00",
+              "latestEvidence": "development/evidence/product/hue5-completed-contribution-outcome-20261014.json"
             }
           ]
         },

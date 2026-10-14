@@ -1,0 +1,19 @@
+{
+  "contract": "EvaCompletedContributionPublicationReview/v1",
+  "verdict": "GO_INSTALLED_AND_PUBLICATION",
+  "outcome": {
+    "path": "development/evidence/product/hue5-completed-contribution-outcome-20261014.json",
+    "sha256": "632c4055404295f62a9d7f0285cdad02ce51bc6a0ca4d56abae338fdc808dc32"
+  },
+  "independentReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/bounded-publication-review.private.json",
+    "sha256": "9172e673c76b11d537b1cb563921d9112ace1fab92fdbc63d3e7f9ef2d1ff3c9"
+  },
+  "scope": "Exact installed source, retained artifact, genuine ordinary registration, same-content private delivery, measured request usage and truthful open original HUE5 conditions.",
+  "completedTaskIds": [],
+  "taskRemainsOpen": "HUE5.1",
+  "smallTasksCompleted": 44,
+  "smallTasksTotal": 54,
+  "ownerReadUsefulnessAndLaterFeedbackUseNotProven": true,
+  "newModelOrComparisonRun": false
+}

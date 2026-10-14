@@ -95,6 +95,7 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
         allowed = {"research_current_options", "get_delegated_work", "connect_service", "discover_connector_tools", "manage_connected_services", "use_connector_tool",
                    "list_reusable_procedures", "resolve_reusable_procedure",
                    "designate_reusable_procedure", "save_workspace_document", "save_work_progress",
+                   "register_own_contribution",
                    "list_programming_tools", "use_programming_tool", "write_programming_file", "start_programming_process",
                    "read_own_component_source", "draft_own_component_improvement",
                    "evaluate_own_component_improvement", "compare_own_component_improvements",

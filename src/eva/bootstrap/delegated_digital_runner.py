@@ -649,6 +649,26 @@ class DelegatedDigitalRunner:
                 tool.with_preparation_call_resolver(improvements.resolve_document_call)
                 if "save_workspace_document" in tool.action_names else tool
                 for tool in self.connector_tools)
+            def contribution_dispatch(turn):
+                # The contribution adapter checks the running row on its own
+                # transaction. Do not reopen that locked row on another connection.
+                signal.check()
+                if turn != source or self.clock() >= deadline:
+                    raise ConversationConflict("contribution dispatch source or deadline differs")
+                if actions is None or actions.dispatches >= spec.grant.maximum_tool_calls:
+                    raise _DigitalBudgetExceeded("background dispatch budget exhausted")
+                actions.dispatches += 1
+
+            from eva.application.background_execution import BackgroundExecutionScope
+            connector_tools = tuple(
+                tool.with_execution_guard(authorize=authorize, dispatch=contribution_dispatch,
+                    clock=self.clock,
+                    authorize_locked=lambda conn: self.store.authorize_tool_dispatch(call, _connection=conn),
+                    execution_namespace=BackgroundExecutionScope(source, spec.execution_id).namespace,
+                    spec_binding={"work_id": spec.work_id, "execution_id": spec.execution_id,
+                                  "spec_sha256": spec.sha256, "call_id": call.call_id})
+                if "register_own_contribution" in tool.action_names else tool
+                for tool in connector_tools)
             if "research_current_options" in spec.grant.capability_ids:
                 from eva.bootstrap.background_research import task_research_tools
                 connector_tools = (*connector_tools, task_research_tools(

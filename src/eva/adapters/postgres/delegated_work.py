@@ -999,10 +999,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         except DelegatedWorkConflict:
             return False
 
-    def authorize_tool_dispatch(self, call: DelegatedWorkCall) -> None:
-        """Recheck durable call, owner binding and stop immediately before tool dispatch."""
+    def authorize_tool_dispatch(self, call: DelegatedWorkCall, *, _connection=None) -> None:
+        """Recheck stop under an optional caller-owned atomic result transaction."""
         self._native_guard(call.spec)
-        with self._engine.begin() as connection:
+        def check(connection):
             self._scope(connection)
             self._authorize_household(call.spec, connection)
             self._validate_owner_binding(connection,
@@ -1017,6 +1017,12 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     or bytes(row.spec_sha256).hex() != call.spec.sha256
                     or row.stop_requested_at is not None):
                 raise DelegatedWorkConflict("research call is stopped or no longer authorized")
+
+        if _connection is not None:
+            check(_connection)
+        else:
+            with self._engine.begin() as connection:
+                check(connection)
 
     def record_stopped(
         self,

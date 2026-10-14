@@ -1,0 +1,103 @@
+{
+  "contract": "EvaCompletedContributionDeliveryOutcome/v1",
+  "recordedAt": "2026-10-14T05:31:38.525195+00:00",
+  "task": "HUE5.1",
+  "change": "One common ordinary-chat/digital-worker capability registers a verified saved self-selected contribution in the existing initiative completion, private delivery and feedback lifecycle. No second executor or result recreation.",
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "modifiedModules": 7,
+    "newModules": 2,
+    "unchangedModulesPerImage": 340,
+    "configurationAndDataRetained": true,
+    "schemaChanged": false,
+    "proof": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/installed-source-proof.private.json",
+      "sha256": "e6a74872fc7507f7249053b112ba56e6a255c7c5a8b9c36fa5cdbcdfb83ca38f"
+    },
+    "receipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/installation-receipt.private.json",
+      "sha256": "f87acdbe61d37bfabcb0043d18b0849c59f62a57f1274b4f4ea8a6d0775936a6"
+    },
+    "sourceReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/independent-source-install-go.private.json",
+      "sha256": "0e1289fb7682ada8b9dd91839ddeb02933af91d1e9d00c21065326978651947d"
+    }
+  },
+  "verification": {
+    "existingProcedureCasesPassed": 20,
+    "latestGuardAndCompositionCasesPassed": 26,
+    "earlierGuardCaseRepeatedAfterChangedGucBoundary": true,
+    "not47UniqueCases": true,
+    "sourceRead": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/retained-artifact-read.private.json",
+      "sha256": "e8782662e51e1fd29b02eb919bc86a2223919bbe9f8e0d0bd1c9b01a65794aab"
+    },
+    "sourceBytes": 3109,
+    "sourceSha256": "7ea4d981f63efdd84c9a608cae8ae535e29982fcca5286270fbf449a3af1df84",
+    "workerSameConnectionGuard": true,
+    "rlsRestoredBeforeAdoption": true,
+    "oldGrantNotWidened": true,
+    "oldFailedJobNotRetagged": true,
+    "candidateProof": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/candidate-source-proof.private.json",
+      "sha256": "e221617742cd261568041462bb2afc2bf4fbecfdc027a8dfa95ed13cd6163a22"
+    }
+  },
+  "actualUse": {
+    "source": "controller_stimulated_ordinary_registration_chat_of_previous_model_chosen_contribution",
+    "unprompted": false,
+    "messageId": "dashboard:700ea46e-84af-47a9-aede-abbdda868e24",
+    "intentId": "personal-interest:0ba0895fd13369c376edca686c5ee6080f539d284f0216e97bf8b4e0976d780c",
+    "artifactBytes": 3109,
+    "artifactSha256": "7ea4d981f63efdd84c9a608cae8ae535e29982fcca5286270fbf449a3af1df84",
+    "initiativeCompletedUtc": "2026-10-14T05:29:57+00:00",
+    "privateDeliveryConfirmedUtc": "2026-10-14T05:29:59+00:00",
+    "deliveryChannel": "telegram_private",
+    "providerReceiptSha256": "17b1cd667691c6bdb3496a45fd0fd539520d54498ec9bac84a6db3adbae9372b",
+    "humanReadConfirmed": false,
+    "ownerFeedbackFabricated": false,
+    "usefulnessAccepted": false,
+    "laterFeedbackUseProven": false,
+    "modelRequests": 2,
+    "inputTokens": 20067,
+    "outputTokens": 280,
+    "totalTokens": 20347,
+    "modelToolCalls": 1,
+    "requestsSucceededAndStreamClosed": true,
+    "audit": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/actual-registration-delivery-accounting.private.json",
+      "sha256": "c935659c0da837884178966d956f53b3df032d9a8b84518b3fd50bd4bd9f6cc6"
+    },
+    "chatTransport": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/registration-chat-transport.private.json",
+      "sha256": "d6aab56d3d56221c8c7ad66f16d2ed65db008bddb9e1ea6fd6fe139722784c3c"
+    },
+    "newSourceArtifactCreated": false,
+    "noManualTelegramSend": true,
+    "digitalWorkerActualUse": "not executed for this handoff; worker routing and same-connection guards checked without model",
+    "generalIndependentWorkImprovement": "not proven by this registration"
+  },
+  "historicalFailurePreserved": {
+    "workId": "work:eva-chat:d18eac78-a11a-5460-9062-351511a6b358",
+    "state": "failed",
+    "specSha256": "3bfbb818a84b4b945248c8b0bcead66f77b459c0ea9c99896023901a2c637a13",
+    "historicalKnownCombinedTokens": 221270,
+    "usageType": "partial",
+    "oldGrantNotChanged": true,
+    "source": "development/evidence/product/hue5-shared-initiative-outcome-20261014.json"
+  },
+  "completion": {
+    "taskCompleted": false,
+    "smallTasksTotal": 54,
+    "smallTasksCompleted": 44,
+    "smallTasksOpen": 10,
+    "remaining": "Actual owner feedback and its later application to an appropriate initiative or silence; family acceptance is separate."
+  },
+  "newComparisonSeries": false,
+  "voiceWork": false,
+  "developmentCredits": "unknown",
+  "runtimeCreditCosts": "unknown",
+  "automaticRuntimeTotal": "not measured"
+}

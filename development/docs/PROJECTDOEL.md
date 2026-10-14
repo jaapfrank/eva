@@ -1,4 +1,27 @@
-## Actueel 14 oktober — gedeelde initiatiefketen geïnstalleerd; echte aflevering open
+## Actueel 14 oktober — bestaande eigen bijdrage werkelijk privé afgeleverd
+
+De ontbrekende overdracht is gemaakt en geïnstalleerd: gewone chat en de digitale
+werker kunnen één bewezen opgeslagen eigen bijdrage via dezelfde bestaande
+initiatiefregistratie, privéaflevering en feedback laten lopen. Geen tweede
+uitvoerder of voorbeeldfunctie. Nieuwe grants kunnen de actie aanbieden;
+oude taak/grant blijven ongewijzigd. Zeven modules vervangen, twee toegevoegd;
+340 andere modules per image, configuratie, mounts en gegevens behouden.
+
+De echte oorspronkelijke bron is teruggelezen: 3.109 bytes, exact dezelfde
+save-receipt en inhoud. Een nieuwe gewone registratiechat gebruikte die bestaande
+bijdrage. Initiatief voltooid 05:29:57 UTC; Telegramaflevering bevestigd 05:29:59 UTC.
+Geen nieuw document gemaakt, directe handmatige Telegramsend of fictieve feedback.
+Nieuwe uitvoering: twee gemeten modelaanvragen, 20.347 tokens, één modeltoolcall.
+De controllerstimulans blijft expliciet; geen spontaan initiatief of gezinsacceptatie.
+De oude mislukte taak en 221.270 bekende gedeeltelijke tokens blijven bewaard.
+
+HUE5 blijft open voor echte reactie en latere toepassing daarvan op passend
+initiatief of bewust stilblijven. De gerichte vraag aan Jaap is nu gesteld nadat
+iets concreets is afgeleverd. Geen herhaalde creatie, vergelijking of spraakbouw.
+HUE6.1 blijft de enige nieuwe taakafronding: 44/54 klaar, tien open. Goal actief.
+Bewijs: development/evidence/product/hue5-completed-contribution-outcome-20261014.json.
+
+## Historisch 14 oktober — gedeelde initiatiefketen geïnstalleerd; echte aflevering open
 
 Chat- en sensorideeën delen nu dezelfde bestaande bewaakte native adoptie,
 uitvoering, historie, privéaflevering en feedback. De actuele eigenaar en echte

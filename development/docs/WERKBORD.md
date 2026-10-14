@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van de reactie op eigen initiatief leren
 
-Geïnstalleerd: chat- en achtergrondideeën delen nu native adoptie, uitvoering, privéaflevering en feedback. De echte chatbeurt koos echter gewone digitale delegatie: Eva bewaarde een eigen waskaart, maar initiatiefregistratie/aflevering blokkeerde in die uitvoerroute (incomplete_work). Bekende ondergrens 221.270 tokens inclusief contact; partial blijft behouden. HUE5 blijft open. Vervolg uitsluitend de aangetoonde routekoppeling, gebruik de bewaarde kaart opnieuw en herhaal de creatie niet.
+Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.
 
 Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
 
@@ -89,7 +89,7 @@ Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat v
 
 ## Van jou
 
-Je hebt de initiatiefvraag beantwoord: geen nuttige bijdrage ontvangen. De aflevering en leercyclus zijn nu werk voor Codex; geen aanvullende proef van jou nodig.
+Eva stuurde ‘Wasgoed zonder gokwerk’ via Telegram. Vertel kort wat nuttig of onbruikbaar is; die echte reactie hoort bij deze bijdrage en moet haar volgende keuze beïnvloeden.
 
 ## Historie
 

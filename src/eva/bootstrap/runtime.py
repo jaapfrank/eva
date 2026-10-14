@@ -1793,7 +1793,9 @@ def create_runtime_app() -> FastAPI:
     if delegated_work_service is not None:
         delegated_work_service.document_completion_source = document_results
     household_work_server = None
-    provider_bundle = build_external_provider_bundle(settings.external_provider, engine)
+    from eva.bootstrap.completed_contributions import with_completed_contributions
+    provider_bundle = with_completed_contributions(settings, engine,
+        build_external_provider_bundle(settings.external_provider, engine))
     if settings.delegated_digital_enabled:
         from eva.bootstrap.delegated_digital_composition import build_digital_profile
         if delegated_work_service is None:
