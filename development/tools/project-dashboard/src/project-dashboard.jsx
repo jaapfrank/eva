@@ -268,12 +268,16 @@ function formatDeliveryDate(value) {
 
 function DeliveryRecord({ item, technical = false }) {
   const grouped = Array.isArray(item.children) && item.children.length > 0;
-  const label = deliveryResultLabels[item.state] || (grouped ? 'Onvoltooid · uitgesteld' : technical
+  const completed = item.newProductFunctionCompleted === true && item.completedTaskIds?.length > 0;
+  const remaining = typeof item.remaining === 'string' ? item.remaining.trim() : null;
+  const label = completed && item.state === 'installed' ? 'Afgerond · geïnstalleerd' : deliveryResultLabels[item.state] || (grouped ? 'Onvoltooid · uitgesteld' : technical
     ? ({ installed: 'Geïnstalleerde deelstap', tested: 'Deelproef geslaagd', built: 'Deelstap gebouwd', accepted: 'Geaccepteerd' })[item.state]
     : ({ installed: 'Geïnstalleerd', tested: 'Getest · niet geïnstalleerd', built: 'Gebouwd · niet geïnstalleerd', accepted: 'Geaccepteerd' })[item.state]);
   return <details>
-    <summary><span className={`overview-badge ${item.state}`}>{label || 'Status ontbreekt'}</span> {item.title} · {formatDeliveryDate(item.date)}</summary>
-    <p>{item.result}</p><p><b>Nog open:</b> {item.remaining}</p>
+    <summary><span className={`overview-badge ${item.state}`}>{label || 'Status ontbreekt'}</span> {item.title} · {formatDeliveryDate(item.date || item.checkedAt)}</summary>
+    {(item.result || item.summary) && <p>{item.result || item.summary}</p>}
+    {completed && <p><b>Afgerond:</b> {item.completedTaskIds.join(', ')}.</p>}
+    {remaining && <p><b>{completed ? 'Apart vervolgwerk:' : 'Bij deze oplevering nog open:'}</b> {remaining}</p>}
     {grouped && <section aria-label="Technische tussenstappen"><h3>{item.children.length} technische tussenstappen — geen afzonderlijke opleveringen</h3>
       {item.children.map((child, index) => <DeliveryRecord key={`${child.source}-${index}`} item={child} technical />)}
     </section>}
