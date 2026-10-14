@@ -848,10 +848,10 @@
     "status": "in_progress",
     "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
     "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "nextAction": "De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.",
+    "nextAction": "Geïnstalleerd: eigen initiatief gebruikt nu dezelfde geladen identiteit en principes als gesprekken. De juiste eigenaarskoppeling is behouden; één echte begrensde geheugenlezing leverde zeven feiten met expliciete onzekerheid. De gewone review vóór deze identiteitscorrectie koos stilte; een nieuwe nuttige bijdrage is nog niet afgeleverd. Vervolg de gewone initiatiefroute tot werkelijke aflevering en later gebruik van echte feedback; HUE5 blijft open.",
     "area": "initiative and learning",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T03:33:49.764137+00:00",
+    "checkedAt": "2026-10-14T04:07:09.539839+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1633,6 +1633,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "HUE5 · Dezelfde identiteit bij eigen initiatief",
+            "state": "installed",
+            "summary": "Bestaande identiteit en principes aangesloten op de gewone initiatiefbeslissing. Gespreksgedrag behouden; nuttige aflevering en later feedbackgebruik blijven open. Geen nieuwe taak afgerond.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-identity-context-outcome-20261014.json",
+            "checkedAt": "2026-10-14T04:07:09.539839+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "HUE5 · Eigenaarsgeheugen in initiatiefroute hersteld",
             "state": "installed",
             "summary": "Gerichte herstelcorrectie geïnstalleerd. Zelfgekozen nuttige bijdrage en later feedbackgebruik nog open; geen nieuwe taak afgerond.",
@@ -1833,10 +1845,10 @@
           "taskId": "HUE5.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.",
+          "summary": "Geïnstalleerd: eigen initiatief gebruikt nu dezelfde geladen identiteit en principes als gesprekken. De juiste eigenaarskoppeling is behouden; één echte begrensde geheugenlezing leverde zeven feiten met expliciete onzekerheid. De gewone review vóór deze identiteitscorrectie koos stilte; een nieuwe nuttige bijdrage is nog niet afgeleverd. Vervolg de gewone initiatiefroute tot werkelijke aflevering en later gebruik van echte feedback; HUE5 blijft open.",
           "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-14T03:33:49.764137+00:00"
+          "checkedAt": "2026-10-14T04:07:09.539839+00:00"
         },
         "next": {
           "state": "Daarna",
@@ -2939,7 +2951,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-                "nextAction": "De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.",
+                "nextAction": "Geïnstalleerd: eigen initiatief gebruikt nu dezelfde geladen identiteit en principes als gesprekken. De juiste eigenaarskoppeling is behouden; één echte begrensde geheugenlezing leverde zeven feiten met expliciete onzekerheid. De gewone review vóór deze identiteitscorrectie koos stilte; een nieuwe nuttige bijdrage is nog niet afgeleverd. Vervolg de gewone initiatiefroute tot werkelijke aflevering en later gebruik van echte feedback; HUE5 blijft open.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -2958,8 +2970,8 @@
                   "usefulDeliveryConfirmed": false,
                   "initiativeId": null
                 },
-                "checkedAt": "2026-10-14T03:33:49.764137+00:00",
-                "latestEvidence": "development/evidence/product/hue5-owner-context-outcome-20261014.json"
+                "checkedAt": "2026-10-14T04:07:09.539839+00:00",
+                "latestEvidence": "development/evidence/product/hue5-identity-context-outcome-20261014.json"
               }
             ]
           },
@@ -4633,7 +4645,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-              "nextAction": "De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.",
+              "nextAction": "Geïnstalleerd: eigen initiatief gebruikt nu dezelfde geladen identiteit en principes als gesprekken. De juiste eigenaarskoppeling is behouden; één echte begrensde geheugenlezing leverde zeven feiten met expliciete onzekerheid. De gewone review vóór deze identiteitscorrectie koos stilte; een nieuwe nuttige bijdrage is nog niet afgeleverd. Vervolg de gewone initiatiefroute tot werkelijke aflevering en later gebruik van echte feedback; HUE5 blijft open.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -4652,8 +4664,8 @@
                 "usefulDeliveryConfirmed": false,
                 "initiativeId": null
               },
-              "checkedAt": "2026-10-14T03:33:49.764137+00:00",
-              "latestEvidence": "development/evidence/product/hue5-owner-context-outcome-20261014.json"
+              "checkedAt": "2026-10-14T04:07:09.539839+00:00",
+              "latestEvidence": "development/evidence/product/hue5-identity-context-outcome-20261014.json"
             }
           ]
         },

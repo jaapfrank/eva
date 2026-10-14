@@ -1,3 +1,23 @@
+## Actueel 14 oktober — dezelfde identiteit bij initiatief
+
+De bestaande geladen identiteit en principes worden nu ook in de gewone
+initiatiefbeslissing gebruikt. Dezelfde renderer wordt hergebruikt; chatinstructies
+blijven bytegelijk met en zonder identiteitspakket. Kern en werker zijn gezond
+geïnstalleerd; gegevens/configuratie en 345 andere Pythonbestanden per image behouden.
+Drie gerichte checks slagen; de oude sensorymethode faalt op beide regressies.
+Geen geforceerde voorbeeldtaak, verruimde rechten, spraakwerk of vergelijkingsserie.
+
+Een echte begrensde geheugenlezing gaf zeven feiten: vijf onbevestigde imports,
+één directe-gebruikersmarkering en één onbevestigde modelafleiding. Twee bronnen
+zijn hiermee niet als gesprek of proef geclassificeerd. De eerdere diagnosticGET
+was niet ondersteund (405); geen geheugenfout. Geen writes of beslismodelaanvraag
+voor deze controle; onderliggend Hindsightverbruik onbekend. De review van 03:41
+koos vóór deze identiteitscorrectie stilte; een nieuw afgeleverd initiatief en
+later feedbackgebruik blijven onbewezen. HUE5 en tien taken blijven open; 44/54
+afgerond. Vervolg de gewone route tot echt nuttige aflevering; geen nieuwe
+eigenaarvraag daarvoor. Het volledige goal blijft actief.
+Bewijs: development/evidence/product/hue5-identity-context-outcome-20261014.json.
+
 ## Actueel 14 oktober — eigenaarsgeheugen voor initiatief hersteld
 
 De gewone achtergrondroute gebruikte een Telegram-alias bij een sensory-conversatie,

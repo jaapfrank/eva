@@ -1,0 +1,87 @@
+{
+  "checks": {
+    "HUE5_1_open": true,
+    "HUE6_1_lastCompleted": true,
+    "WERKBORDMatchesRenderedCurrentBoard": true,
+    "counts": {
+      "completed": 44,
+      "open": 10,
+      "total": 54
+    },
+    "currentOwnerImportNamespaceScopeMatches": true,
+    "exactApprovedModelSource6d169AndBothImagesInstalledHealthy": true,
+    "existingDataEnvironmentMountsAndConfigurationRetained": true,
+    "existingTrustedIdentityPrinciplesReusedWithoutNewPersonaOrMandate": true,
+    "noForcedExampleTaskPrivacyAuthorityOrModelRoleExpansion": true,
+    "noNewUsefulDeliveryFeedbackOrLaterFeedbackUseClaimed": true,
+    "noProtectedFinalOrPrivateSourceContentPublished": true,
+    "notRetrospectiveModelInputOrSilenceCausalProof": true,
+    "oneActualRecallSevenFactsWithinMaximumEight": true,
+    "ordinaryConversationByteEqualityAndSilenceValidityPreserved": true,
+    "other345PythonFilesPerImageUnchanged": true,
+    "readOnlyFourRecallPOSTsOneScopedStyleMetadataGET": true,
+    "trustCounts": {
+      "direct_user": 1,
+      "legacy_unverified": 5,
+      "model_inference_unconfirmed": 1
+    },
+    "twoSourceOriginsUnclassifiedNotGuessed": true,
+    "underlyingHindsightUsageUnknown": true,
+    "unsupportedDiagnosticGET405PreservedNotRuntimeBug": true
+  },
+  "contract": "EvaIndependentHue5IdentityInstalledPublicationReview/v1",
+  "gitScope": {
+    "cachedModelDiffContainsOnlyOwnedIdentityPatch": true,
+    "canonicalBoardWithoutForeignVoiceAuditSha256": "99a12fa4931660b8c148bbb7246752908afa08dc3756257e0e40c8189dd66a23",
+    "foreignResearchWorkingEditsExcluded": true,
+    "foreignVoiceAuditMustRemainWorkingOnly": true
+  },
+  "installedReadback": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/identity-binding/installation/installed-readback.private.json",
+    "sha256": "6f26f9f77993303d428be47ff44666b6ad234f859d6afa285938268020006ac3"
+  },
+  "limits": [
+    "HUE5 remains open until actual useful private delivery and later use of genuine feedback.",
+    "Actual seven-fact readback is separate from the preceding ordinary model input; earlier loaded counts remain unknown.",
+    "Automatic production and Hindsight provider usage not measured by this correction; not claimed zero.",
+    "No tests/models/probes/deployment or data mutation by reviewer."
+  ],
+  "recordedAt": "2026-10-14T04:09:29.003566+00:00",
+  "reviewedFiles": [
+    {
+      "path": "/home/administrator/project/Eva2/development/evidence/product/hue5-identity-context-outcome-20261014.json",
+      "sha256": "35017f6a39bcc08b60b45a03a6358d2e6582534d97e89dc6d8bb933c2cad86fc"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/AGENTS.md",
+      "sha256": "7209dbccbca3f56559e92987c9bf11afa604fec62d570726d361b1aa8c8b2265"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/docs/PROJECTDOEL.md",
+      "sha256": "a566a8bc5a8555c70e3b7d5f55879c6bbb51a06e2d579a18b8e98b95a5477408"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/docs/WERKBORD.md",
+      "sha256": "aa0096326dddc3310260a29b45131044bfdbcb9b4f5c24b0d41008586aaf55a9"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/design/product/execution-workboard-v1.json",
+      "sha256": "04bdf902791cf1c52c4060dc4877b0cf86c039c454482e5502fff0790a14e8f4"
+    }
+  ],
+  "reviewerModelCalls": 0,
+  "reviewerRuntimeMutations": 0,
+  "singleRecallMetadata": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/single-recall-bound-metadata-result.private.json",
+    "sha256": "bedc5754e2b2d35ee4c9ff1cf12441de44fb3bdc6e072de654abd3d01b615581"
+  },
+  "sourceInstallationGo": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/identity-binding/independent-source-install-go.private.json",
+    "sha256": "6226120b6f8e20f7c0bd717fcd32e61ccf41bd76ec3b15c25c57e8e37930b74b"
+  },
+  "update": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/identity-binding/installation/update.private.json",
+    "sha256": "a27cfa141f7e6d209fbf09145263b055b40ae969d525995612d9e3cda5095a7a"
+  },
+  "verdict": "GO_INSTALLED_AND_PUBLICATION"
+}

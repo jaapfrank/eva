@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van de reactie op eigen initiatief leren
 
-De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.
+Geïnstalleerd: eigen initiatief gebruikt nu dezelfde geladen identiteit en principes als gesprekken. De juiste eigenaarskoppeling is behouden; één echte begrensde geheugenlezing leverde zeven feiten met expliciete onzekerheid. De gewone review vóór deze identiteitscorrectie koos stilte; een nieuwe nuttige bijdrage is nog niet afgeleverd. Vervolg de gewone initiatiefroute tot werkelijke aflevering en later gebruik van echte feedback; HUE5 blijft open.
 
 Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
 

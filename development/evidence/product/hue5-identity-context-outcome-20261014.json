@@ -1,0 +1,58 @@
+{
+  "contract": "EvaInitiativeIdentityOutcome/v1",
+  "recordedAt": "2026-10-14T04:07:09.539839+00:00",
+  "change": "Use one existing trusted identity/principles renderer in both conversation and autonomous sensory decisions.",
+  "beforeOrdinaryReview": {
+    "utc": "2026-10-14T03:41:37+00:00",
+    "decision": "silence",
+    "initiative": null,
+    "notCausalIdentityFailureProof": true
+  },
+  "source": {
+    "installedBeforeSha256": "655ef0c4db128e7b1e194273070f7cf036034365fffb53f96f9ebedbe177c358",
+    "ownedPatchSha256": "b5e2cd1164ce871b910748652e35c1903eaa297f9de20b00173a9112bb048586",
+    "installedAfterSha256": "6d1690669fcae162f877a038ee62ffd7a37f84e03582779b16cfdcd5e3660a59"
+  },
+  "verification": {
+    "checksPassed": 3,
+    "oldSensoryMethodRegressionFailures": 2,
+    "ordinaryConversationByteEqualWithPack": true,
+    "ordinaryConversationByteEqualWithoutPack": true,
+    "sourceAndInstallationReviewSha256": "6226120b6f8e20f7c0bd717fcd32e61ccf41bd76ec3b15c25c57e8e37930b74b"
+  },
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "otherPythonFilesPerImageUnchanged": 345,
+    "schemaChanged": false,
+    "previousResearchChangesRetained": true
+  },
+  "memoryRead": {
+    "actualFacts": 7,
+    "maximumFacts": 8,
+    "legacyUnverified": 5,
+    "directUserTrust": 1,
+    "modelInferenceUnconfirmed": 1,
+    "twoOriginalSourcesNotClassifiableAsConversationOrTrial": true,
+    "scopeAndOwnerVerified": true,
+    "applicationRecallInvocations": 1,
+    "nativePostRecallRequests": 4,
+    "nativeStyleMirrorGets": 1,
+    "writes": 0,
+    "firstDiagnosticUnsupportedGetPreserved": true,
+    "receiptSha256": "bedc5754e2b2d35ee4c9ff1cf12441de44fb3bdc6e072de654abd3d01b615581",
+    "underlyingHindsightProviderUsage": "not measured",
+    "notSameAsEarlierNativeModelInputProof": true
+  },
+  "manualEvaDecisionModelRequests": 0,
+  "automaticRuntimeUsage": "not measured by this installation; not claimed zero",
+  "developmentCredits": "unknown",
+  "taskCompleted": false,
+  "additionalTasksCompleted": 0,
+  "initiativeDelivered": false,
+  "ownerFeedbackUseProven": false,
+  "noForcedInitiative": true,
+  "voiceWork": false,
+  "newComparisonSeries": false
+}

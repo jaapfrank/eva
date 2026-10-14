@@ -2948,6 +2948,7 @@ class PydanticConversationModel:
             ],
             "instructions": (
                 f"Je bent {identity.name}. {identity.description} "
+                f"{self._identity_instructions(identity)}"
                 "Bij source initiative-review beoordeel je op een rustig moment jouw toegestane "
                 "context en eigen belangstelling voor één nuttige private bijdrage. De klokprikkel "
                 "is geen huiswaarneming of persoonlijke wens. Kies altijd silence zonder expression; "
@@ -3821,16 +3822,9 @@ class PydanticConversationModel:
         )
         return "eva-conversation-" + hashlib.sha256(value.encode()).hexdigest()[:32]
 
-    def _instructions(
-        self,
-        identity: IdentityProfile,
-        memory: PresenceMemory,
-        recent_messages: tuple[RecentConversationMessage, ...],
-        *,
-        available_actions: tuple[str, ...] = (),
-        completed_action: ConversationActionReceipt | None = None,
-        self_context: tuple[str, ...] = (),
-    ) -> str:
+    @staticmethod
+    def _identity_instructions(identity: IdentityProfile) -> str:
+        """Render the same trusted identity for conversation and background decisions."""
         principles = "\n".join(f"- {value}" for value in identity.principles)
         if identity.identity_pack is None:
             procedural_identity = "- Geen versieerbaar IdentityPack geladen."
@@ -3856,6 +3850,21 @@ class PydanticConversationModel:
                     f"- Maximaal {pack.voice_style.maximum_paragraphs} alinea's.",
                 )
             )
+        return (
+            f"Vaste principes:\n{principles}\n\n"
+            f"Actief procedureel IdentityPack:\n{procedural_identity}\n\n"
+        )
+
+    def _instructions(
+        self,
+        identity: IdentityProfile,
+        memory: PresenceMemory,
+        recent_messages: tuple[RecentConversationMessage, ...],
+        *,
+        available_actions: tuple[str, ...] = (),
+        completed_action: ConversationActionReceipt | None = None,
+        self_context: tuple[str, ...] = (),
+    ) -> str:
         remembered: list[str] = []
         for rank, fact in enumerate(memory.confirmed_facts, start=1):
             value = fact.value
@@ -4176,8 +4185,7 @@ class PydanticConversationModel:
             "Sluit inhoudelijk af en voeg nooit een generiek dienstenmenu of 'als je wilt'-"
             "aanbod toe, tenzij daarom wordt gevraagd. Claim een handeling alleen met "
             "werkelijk bewijs.\n\n"
-            f"Vaste principes:\n{principles}\n\n"
-            f"Actief procedureel IdentityPack:\n{procedural_identity}\n\n"
+            f"{self._identity_instructions(identity)}"
             f"Duurzame stijlspiegel:\n{style_mirror}\n\n"
             f"Relevante herinneringen:\n{memories}\n\n"
             f"Jouw duurzame eigen toestand:\n{durable_self}\n\n"
