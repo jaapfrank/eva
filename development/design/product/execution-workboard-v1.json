@@ -845,13 +845,13 @@
   "currentWork": {
     "id": "I1.2",
     "title": "Stilte en passendheid beoordelen",
-    "status": "in_progress",
+    "status": "blocked",
     "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
     "outcome": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
-    "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+    "nextAction": "Live gecontroleerd: kern en taakwerker gezond; achtergrondwerk en privéaflevering ingeschakeld. Laatste gewone initiatiefbeslissing 2026-10-14T08:07:11+00:00: will_usage_uncertain / autonomous_provider_usage_unverified. Autonoom initiatief vraagt technisch herstel van de verbruiksregistratie, geen eigenaarhandeling. Dit verklaart huidige stilstand, niet zonder meer alle eerdere dagen. Behoud afgesloten uitvoering en onbekend verbruik; herstel de concrete aansluiting zonder herhaling of nieuwe vergelijkingsserie. I1.2 aandacht/stilte blijft daarnaast open.",
     "area": "initiative and attention",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+    "checkedAt": "2026-10-14T09:06:47.717421+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1868,15 +1868,15 @@
         },
         "now": {
           "title": "Stilte en passendheid beoordelen",
-          "state": "Bezig",
-          "phase": "inappropriate_moment_silence_evidence",
+          "state": "Technische blokkade",
+          "phase": "autonomous_usage_unverified",
           "taskId": "I1.2",
-          "activeExecution": true,
+          "activeExecution": false,
           "nativeRunning": false,
-          "summary": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+          "summary": "Live gecontroleerd: kern en taakwerker gezond; achtergrondwerk en privéaflevering ingeschakeld. Laatste gewone initiatiefbeslissing 2026-10-14T08:07:11+00:00: will_usage_uncertain / autonomous_provider_usage_unverified. Autonoom initiatief vraagt technisch herstel van de verbruiksregistratie, geen eigenaarhandeling. Dit verklaart huidige stilstand, niet zonder meer alle eerdere dagen. Behoud afgesloten uitvoering en onbekend verbruik; herstel de concrete aansluiting zonder herhaling of nieuwe vergelijkingsserie. I1.2 aandacht/stilte blijft daarnaast open.",
           "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-14T07:22:01.869796+00:00"
+          "checkedAt": "2026-10-14T09:06:47.717421+00:00"
         },
         "next": {
           "state": "Daarna",
@@ -1885,12 +1885,12 @@
           "detail": "Geen nieuwe vergelijkingsserie of spraakbouw."
         },
         "ownerAction": {
-          "title": "Je reacties zijn verwerkt",
-          "detail": "Je oordeel over nut én timing/hinder is vastgelegd. Het resterende stiltebewijs is werk voor Codex; nu geen extra handeling nodig.",
+          "title": "Geen handeling nodig",
+          "detail": "Eva2 staat aan. De actuele blokkade in autonoom initiatief is technisch werk voor Codex; je hoeft niets te activeren.",
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+        "checkedAt": "2026-10-14T09:06:47.717421+00:00",
         "reviewedAt": "2026-10-14T03:14:08.630849+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -6440,6 +6440,20 @@
       "completedTasksAdded": 0,
       "perDeviceCriteriaAndEvidenceRetained": true,
       "voiceRuntimeChanged": false
+    },
+    "initiativeAvailability20261014": {
+      "checkedAt": "2026-10-14T09:06:47.717421+00:00",
+      "coreHealthy": true,
+      "workerHealthy": true,
+      "backgroundEnabled": true,
+      "privateDeliveryEnabled": true,
+      "latestReviewAt": "2026-10-14T08:07:11+00:00",
+      "phase": "will_usage_uncertain",
+      "reason": "autonomous_provider_usage_unverified",
+      "state": "technical_blocker",
+      "ownerActionRequired": false,
+      "newModelCalls": 0,
+      "explainsAllPastAbsence": false
     }
   },
   "updatedAt": "2026-10-14T03:14:08.630849+00:00",

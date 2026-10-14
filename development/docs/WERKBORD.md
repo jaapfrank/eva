@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Stilte en passendheid beoordelen
 
-HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.
+Live gecontroleerd: kern en taakwerker gezond; achtergrondwerk en privéaflevering ingeschakeld. Laatste gewone initiatiefbeslissing 2026-10-14T08:07:11+00:00: will_usage_uncertain / autonomous_provider_usage_unverified. Autonoom initiatief vraagt technisch herstel van de verbruiksregistratie, geen eigenaarhandeling. Dit verklaart huidige stilstand, niet zonder meer alle eerdere dagen. Behoud afgesloten uitvoering en onbekend verbruik; herstel de concrete aansluiting zonder herhaling of nieuwe vergelijkingsserie. I1.2 aandacht/stilte blijft daarnaast open.
 
 Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.
 
@@ -91,7 +91,7 @@ Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hi
 
 ## Van jou
 
-Je oordeel over nut én timing/hinder is vastgelegd. Het resterende stiltebewijs is werk voor Codex; nu geen extra handeling nodig.
+Eva2 staat aan. De actuele blokkade in autonoom initiatief is technisch werk voor Codex; je hoeft niets te activeren.
 
 ## Historie
 
