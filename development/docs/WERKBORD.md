@@ -4,13 +4,13 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Droomcyclus voor mensbegrip en AIDE² afmaken
+Van de reactie op eigen initiatief leren — HUE5.1
 
-Bestaande L3.6/L3.7 dekken onafhankelijke codewinst, toepassing en later gebruik; die niet herhalen. De aansturing van de ontwikkelende agent is echt beoordeeld: gelijkspel, dus de referentie blijft. Nog af te maken binnen HUE6.1: rustige reflectie koppelen aan veranderd mensbegrip en later gedrag. Geen herhaling van gesloten proeven, spraakwerk of vergelijkingsserie.
+Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.
 
-Klaar wanneer: Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.
+Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
 
-HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opgeslagen en de slotreactie afgerond. Beide versies halen 4 correctheidscontroles maar 0 volledig bewezen taken: gelijkspel, referentie blijft. Duurzaam herstel van wachtende reflectie is nu geïnstalleerd; kern en werker draaien met behouden gegevens. De N+1-startfout is in dezelfde installatie opgelost, niet teruggezet. Nog open: rustige reflectie moet mensbegrip bijstellen en een later gesprek beïnvloeden. Geen eigenaarhandeling, spraakwerk of nieuwe vergelijkingsserie.
+Laatste oplevering: HUE6.1 technisch afgerond: gewone rustige reflectie maakte een gegronde stijlspiegel uit twee feiten; die werd gebruikt in een nieuw gesprek met een vriendelijk antwoord van 37 woorden zonder genummerde lijst. Agentvarianten eindigden gelijk: referentie terecht behouden en later gebruikt. Bestaande onafhankelijke codewinst/toepassing/later gebruik blijven bewezen. Geen algemene voorsprong of gezinsacceptatie geclaimd.
 
 ## Afmaakvolgorde
 
@@ -26,9 +26,9 @@ HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opges
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–4 zijn technisch afgerond en later toegepast. De samenhang met initiatief en werkelijk gezinsgebruik afronden; geen geheugenherbouw. |
 | Eigen initiatief | Nog geen nuttige bijdrage bevestigd | HUE5: nuttige bijdrage afleveren en echte ontvangerreactie laten doorwerken; Jaap heeft nog geen nuttige bijdrage ontvangen. |
-| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE6: onafhankelijk aangetoonde verbetering toepassen en later gebruiken; samenhangend dagelijks gebruik. |
+| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE6 technisch afgerond. HUE5 en samenhangend dagelijks gezinsgebruik blijven open. |
 
-43/54 bestaande kleine taken afgerond; 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage. De reorganisatie verhoogt die telling niet.
+44/54 bestaande kleine taken afgerond; 10 open; 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage. De reorganisatie verhoogt die telling niet.
 
 ## Alle bestaande kleine taken
 
@@ -60,7 +60,7 @@ HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opges
 | T3.3 · Overnemen en correct doorgaan | ✓ Afgerond | Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie. |
 | I1.1 · Een nuttige huisbijdrage laten aankomen | ✓ Afgerond | Bestaande initiatiefroute kiest en levert een concrete toegestane bijdrage. |
 | I1.2 · Stilte en passendheid beoordelen | ● Open | Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart. |
-| HUE5.1 · Van de reactie op eigen initiatief leren | ● Open | Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven. |
+| HUE5.1 · Van de reactie op eigen initiatief leren | ⏳ Bezig | Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven. |
 | I2.1 · Relevante bronnen zelfstandig ontdekken en kiezen | ✓ Afgerond | Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag. |
 | I2.2 · Waarnemingsopdracht zelf automatiseren en terugmelden | ✓ Afgerond | Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat. |
 | L2.1 · Project na onderbreking zelfstandig vervolgen | ✓ Afgerond | Bewaard resultaat en correctie leiden zonder ontwikkelaarhervatting tot de volgende uitvoerstap. |
@@ -72,7 +72,7 @@ HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opges
 | L3.5 · Varianten op kwaliteit kiezen en verder verbeteren | ✓ Afgerond | Eén vooraf vastgelegd verbeterdoel gebruikt meerdere herleidbare kandidaten en dezelfde ontwikkelbeoordeling. Eva kiest op betere taakresultaten, bewaart fouten/verbruik en vervolgt alleen een veelbelovende kandidaat; het gewone taakbudget en stoppen blijven gelden. |
 | L3.6 · Beste kandidaat onafhankelijk beoordelen en werkelijk toepassen | ✓ Afgerond | De gekozen exacte kandidaat doorloopt een gescheiden eindbeoordeling op vooraf vastgelegde afgeschermde taken. Alleen gemeten voordeel kan via de bestaande beheerde route worden toegepast; verlies blijft bewaard. Dit vereist geen handmatig door Codex geschreven kandidaat of nieuw installatiepad. |
 | L3.7 · Volledige verbetercyclus op gewone Eva aantonen | ✓ Afgerond | Een echte algemene werkwijzeverbetering begint via gewone chat of de bestaande toegelaten initiatiefroute, levert aantoonbaar beter taakgedrag op en wordt werkelijk toegepast. Een volgende toegelaten ronde gebruikt de beste actuele versie en eerdere ervaring; stoppen/hervatten herhaalt geen toepassing. Hulp, fouten, kwaliteit, snelheid en totaal verbruik blijven zichtbaar. |
-| HUE6.1 · Droomcyclus voor mensbegrip en AIDE² afmaken | ● Open | Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie. |
+| HUE6.1 · Droomcyclus voor mensbegrip en AIDE² afmaken | ✓ Afgerond | Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie. |
 | R1.1 · Ervaringsmodel begrensd vergelijken | ✓ Afgerond | Eén passende geïsoleerde vergelijking met gewone bestaande werkwijzen, inclusief leerverbruik. |
 | R1.2 · Meerwaarde beslissen | ✓ Afgerond | Aantoonbare winst behouden of kandidaat afwijzen; geen verplichte nieuwe techniek. |
 | O1.1 · Installatiewizard zonder handwerk afronden | ✓ Afgerond | Bestaande wizard kan de gekozen doelinstallatie zonder handgeschreven instellingen voorbereiden en starten. |

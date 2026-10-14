@@ -1,0 +1,77 @@
+{
+  "HUE6_1_complete": true,
+  "checks": {
+    "HUE5_1_inProgress": true,
+    "NULL_UNKNOWNOldClocksAndFailedHandshakePreserved": true,
+    "acceptedIndependentCodeGainAppliedAndLaterUsedPreserved": true,
+    "agentFixedQualityTieReferenceRetainedAndLaterUsed": true,
+    "completedSmallTasks": 44,
+    "creditsUnknown": true,
+    "laterResponseIndependentlyUsefulFriendly37WordsUnnumbered": true,
+    "noGeneralSuperiorityOrFamilyAcceptance": true,
+    "noProtectedFinalOrPrivateOwnerContentPublished": true,
+    "oldFixtureNegativeProofUnchanged": true,
+    "onlyNewCompletedTask": "HUE6.1",
+    "ordinaryGroundedQuietAndExactLaterContextProven": true,
+    "originalTaskIdsAndDoneWhenUnchanged": true,
+    "ownerActionRequired": false,
+    "remainingSmallTasks": 10,
+    "totalSmallTasks": 54,
+    "usefulInitiativeNotInvented": true
+  },
+  "contract": "EvaIndependentHue6CompletionPublicationReview/v1",
+  "gitPublicationScope": {
+    "exactGitBoardBytes": "Bind the separately supplied scoped index copy; this review does not claim the foreign working-board bytes will be committed.",
+    "excludeOnlyConcurrentForeignAudit": "audit.subscriptionVoice20261013",
+    "expectedBoardObjectWithoutForeignAuditCanonicalSha256": "bbd19244f47c35d3ffb816f6e2bab6712f8986da0062bfe7ee1bc052664267b7",
+    "foreignWorkingAuditMustRemainUntouched": true
+  },
+  "independentOriginalCompletionSha256": "c2528eff1d84b1bcca20bc3581caf824a1a33330c1f114542c48ef30a87889bc",
+  "installedSourceBinding": {
+    "existingInstalledReadbackSha256": "fc8e1c71a8e42cf2ec0e9b9534886df24463632d99c8793742e6a80f06202ab5",
+    "installation_runtime_update.py": "62eb33f9659bd47549b57f89047135c6d16b4cfcbd377725e030964059b40b57",
+    "memory_background.py": "1be6171dc1b70db805c88d4e8c27655276f03031e834841b15283521ff973acd",
+    "memory_outbox.py": "14e38a635c7893e021ed7c4d3d4265a8e97cfc37acd88780490e1d77b02e695f",
+    "noNewProbeOrTestPerformed": true
+  },
+  "measurementScope": {
+    "helperInternalRecallToolsNotSeparatelyCounted": true,
+    "knownQuietCumulativeRequests": 19,
+    "knownQuietCumulativeTokens": 53745,
+    "nativeActionCalls": 0,
+    "newQuietRequests": 11,
+    "newQuietTokens": 31985,
+    "notWholeProjectUsage": true
+  },
+  "recordedAt": "2026-10-14T03:16:00.738113+00:00",
+  "reviewedFiles": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "635703c61f7e9c57295da4b8a982cef6ac59a10d7477659f2557781dddeee761"
+    },
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "sha256": "d6ab2df9bd852de613e80355d31d6533d84ef5ae1fa5d2cb4cccc2c95bb64309"
+    },
+    {
+      "path": "development/docs/WERKBORD.md",
+      "sha256": "86ebadf5df63c6a83c9722b85fa7e3e2a53391f4c7ab7c614d345a2b2dae17fb"
+    },
+    {
+      "path": "development/design/product/execution-workboard-v1.json",
+      "sha256": "d3d806758370bfeef864c97364bb0298580cab5a0c0461944c6390d681376c1e"
+    },
+    {
+      "path": "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
+      "sha256": "51e3588df165594fb90790e1d20e806f7e099775f17ce9980a93970fcaaae57e"
+    },
+    {
+      "path": "development/evidence/product/quiet-reflection-fixture-outcome-20261014.json",
+      "sha256": "a5447544cbcf6e72690ae7d24f7cead888fa2a0dad99ec88bab42ffe2769fc35"
+    }
+  ],
+  "reviewerModels": 0,
+  "reviewerRuntimeMutations": 0,
+  "verdict": "GO_PUBLICATION",
+  "wholeProjectComplete": false
+}

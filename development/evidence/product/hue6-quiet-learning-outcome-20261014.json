@@ -1,0 +1,76 @@
+{
+  "contract": "EvaHue6OriginalCompletionEvidence/v1",
+  "recordedAt": "2026-10-14T03:06:46.635623+00:00",
+  "status": "independently_completed_HUE6_only",
+  "installedRuntime": {
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "durableReflectionRecoveryInstalled": true,
+    "sourceReceipt": "development/evidence/product/durable-reflection-recovery-outcome-20261014.json"
+  },
+  "quietHumanUnderstanding": {
+    "initialStyleMirror": null,
+    "nativeCreatedStyleMirror": true,
+    "sourceFacts": 2,
+    "afterContentSha256": "8d2d225f692159f5b0151833941bafc92ca487a880da94ae306ef4c8c36e8bf5",
+    "sourceEvidenceSha256": "1587be8da9193ac9ed1babec03d91e6b8ebc1bbcc7ee8d9ae41ab31b6629b7df",
+    "ordinaryIdleSeconds": 300,
+    "laterNewSession": true,
+    "laterExplicitStyleInstruction": false,
+    "sameMirrorInLaterContext": true,
+    "laterReplyWordCount": 37,
+    "laterReply": "Begin met één hoekje: veeg de vloer, zet twee stoelen prettig neer en leg er een kussen of plaid bij. Heb je nog tien minuten over, zet dan een plant of lampje neer. Klein hoekje, groot verschil.",
+    "numberedList": false,
+    "independentFinalDecision": "passed_original_criteria",
+    "notExclusiveCausalProof": true
+  },
+  "nativeAgentSteering": {
+    "agentAuthoredVariant": true,
+    "fixedDevelopmentDecision": "tie_reference_retained",
+    "checksEach": 4,
+    "completedDevelopmentTasksEach": 0,
+    "reportStoredAndNativeClosed": true,
+    "referenceLaterBoundedNativeUse": true,
+    "evidence": "development/evidence/product/aide-native-terminal-outcome-20261014.json"
+  },
+  "acceptedCodeCycle": "Existing L3.6/L3.7 independent improvement, application and later use retained, not repeated",
+  "newMeasuredQuietUsage": {
+    "providerRequests": 11,
+    "input_tokens": 31159,
+    "output_tokens": 826,
+    "total_tokens": 31985,
+    "complete": true,
+    "nativeActionTools": 0
+  },
+  "quietKnownUsageIncludingPrior": {
+    "providerRequests": 19,
+    "knownTokens": 53745,
+    "notWholeProjectTotal": true
+  },
+  "caseElapsedSecondsIncludingOrdinaryIdle": 391.7827193059493,
+  "ownedResourcesClosed": true,
+  "oldFixtureFailurePreserved": true,
+  "noProjectFactsPromoted": true,
+  "oldClocksAndNullJournalsPreserved": true,
+  "criteriaChanged": false,
+  "newComparisonSeries": false,
+  "generalSuperiorityClaim": false,
+  "familyAcceptanceInvented": false,
+  "taskCompleted": true,
+  "additionalTasksCompleted": 1,
+  "credits": "unknown",
+  "sourceHashes": {
+    "nativeResult": "17b54a26d2ada99e249ecf770f12121f536568a9d6e91ec86b47bf4f782e3117",
+    "execution": "93ff61a606ae99281fcce30a4ab1e67a61f52715d7c1387d0b3bd9f51a5ee352",
+    "originalCriteria": "47438f05ba495c772ed6645e6470efcf7ed00eeb8d0da27e78269a38eda05f58"
+  },
+  "toolMeasurementScope": "Eva native action intents/executions; Hindsight internal recall tools not separately counted",
+  "independentReviewSha256": "c2528eff1d84b1bcca20bc3581caf824a1a33330c1f114542c48ef30a87889bc",
+  "terminalHandshake": {
+    "parentAcknowledged": false,
+    "terminal": null,
+    "originalPreserved": true,
+    "requestUsageIndependentlyReconciled": true,
+    "noUnknownOutstandingRequests": true
+  }
+}

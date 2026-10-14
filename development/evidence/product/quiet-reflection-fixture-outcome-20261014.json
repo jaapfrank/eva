@@ -1,0 +1,41 @@
+{
+  "contract": "EvaQuietReflectionFixtureOutcome/v1",
+  "recordedAt": "2026-10-14T02:53:26.494968+00:00",
+  "ordinaryIdleReservationClaimAndCompletion": true,
+  "reflectionChangedGroundedStyle": false,
+  "laterTurnDispatched": false,
+  "cause": "The fixture injected project_id outside the registered criteria; retained preferences went to the project bank while personal style reflection reads the installation bank",
+  "productFailureProven": false,
+  "installationBank": {
+    "documents": 0,
+    "facts": 0
+  },
+  "projectBank": {
+    "documents": 1,
+    "facts": 2
+  },
+  "newMeasuredUsage": {
+    "requests": 5,
+    "inputTokens": 13144,
+    "outputTokens": 264,
+    "totalTokens": 13408,
+    "tools": 0,
+    "complete": true
+  },
+  "quietKnownUsageIncludingRetainedFirstTurn": {
+    "requests": 8,
+    "tokens": 21760,
+    "notWholeProjectTotal": true
+  },
+  "remainingOriginalQuietBudget": {
+    "requests": 16,
+    "tokens": 128240,
+    "tools": 12
+  },
+  "oldClocksNullFailuresAndRowsPreserved": true,
+  "factsMovedOrScoringChanged": false,
+  "currentTaskCompleted": false,
+  "additionalTasksCompleted": 0,
+  "credits": "unknown",
+  "independentReviewSha256": "d392024142fd4053b59700fcec20e6a245e8113fc68d87d08d2583fc7f135b11"
+}

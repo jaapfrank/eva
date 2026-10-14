@@ -1,4 +1,26 @@
-## Actueel 14 oktober — agentcyclus afgesloten; reflectieherstel geïnstalleerd
+## Actueel 14 oktober — HUE6.1 afgerond; nuttig initiatief als volgende uitkomst
+
+HUE6.1 is volgens haar oorspronkelijke eindvoorwaarde onafhankelijk afgerond.
+Gewone rustige reflectie maakte een gegronde stijlspiegel uit twee geheugenfeiten.
+Een nieuw gesprek zonder herhaalde voorkeur of recente historie gebruikte exact die
+spiegel en leverde een vriendelijk antwoord van 37 woorden, zonder genummerde lijst.
+De echte agentbeoordeling eindigde gelijk: referentie behouden en later gebruikt.
+Bestaande L3.6/L3.7 codewinst, toepassing en later gebruik blijven behouden.
+
+44/54 kleine taken afgerond; 10 open. Alleen HUE6.1 is nieuw afgerond, geen volledige
+project- of gezinsacceptatie en geen algemene voorsprong op concurrenten.
+Nieuwe juiste privéproef: 11 aanvragen en 31.985 tokens. Met de eerdere quiet-
+uitvoeringen: 19 aanvragen en 53.745 bekende tokens. Oude fouten, NULL/UNKNOWN,
+klokken en ontbrekende terminalhandshake blijven expliciet bewaard; gesloten
+requestusage is onafhankelijk gereconcilieerd. Creditkosten blijven onbekend.
+
+Vervolg HUE5.1: Eva kiest en voltooit een nuttige eigen bijdrage, laat die werkelijk
+bij Jaap aankomen en gebruikt zijn echte reactie later. Hij meldde geen nuttige
+bijdrage; geen nieuwe vraag vóór concrete aflevering. Geen vooraf gekozen
+voorbeeldfunctie, spraakbouw of nieuwe vergelijkingsserie. Het volledige goal blijft actief.
+Bewijs: development/evidence/product/hue6-quiet-learning-outcome-20261014.json.
+
+## Historisch 14 oktober — agentcyclus afgesloten; reflectieherstel geïnstalleerd
 
 Eva heeft zelf de bron gelezen, een variant gemaakt, beide versies beoordeeld en
 het vergelijkingsrapport opgeslagen. De ontbrekende slotreactie is nu echt afgerond,
