@@ -1860,7 +1860,7 @@
           "summary": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
           "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
           "ownerActionNeeded": true,
-          "checkedAt": "2026-10-14T05:41:44.256882+00:00"
+          "checkedAt": "2026-10-14T05:45:19.527664+00:00"
         },
         "next": {
           "state": "Daarna",
@@ -6214,7 +6214,18 @@
           "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/owner-telegram-after-delivery.private.json",
           "sha256": "d5ca08cf615a38b1cdd44e5a81a2da3ffc76b917f8abc7940a582c9248d9556b"
         }
-      ]
+      ],
+      "blockedAudit": {
+        "checkedAt": "2026-10-14T05:45:19.527664+00:00",
+        "previousGoalTurnClassification": "no_progress",
+        "sameBlockerPresentAcrossThreeConsecutiveTurns": true,
+        "condition": "Actual owner feedback on the privately delivered contribution is absent; subsequent learning cannot be attributed to invented feedback.",
+        "revalidatedSnapshot": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/revalidation-054350.private.json",
+        "snapshotSha256": "ee7853f266d29f7b3aa1b59c768d7259f3770957fe578169497cb88337563124",
+        "otherOpenWork": "Five voice tasks owner-parked; I1.2 shares real family judgement; P2.1 lacks original coverage/human judgement and no new comparison series is permitted; F2.1/F2.2 require actual family use/acceptance.",
+        "taskScopeAndDoneWhenPreserved": true,
+        "noNewModelRequests": true
+      }
     }
   },
   "updatedAt": "2026-10-14T03:14:08.630849+00:00"

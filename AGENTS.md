@@ -21,7 +21,8 @@ of nieuw privébericht gevonden in de bestaande ontvangstregistratie. Eén kort 
 kan zowel HUE5 als I1.2 helpen afronden; geen dubbele gebruikersproef. Er loopt geen
 uitvoering voor deze taak en deze voortzetting gebruikte nul Eva-modelaanvragen.
 Geen herhaalde creatie, vergelijking of spraakbouw.
-HUE6.1 blijft de enige nieuwe taakafronding: 44/54 klaar, tien open. Goal actief.
+HUE6.1 blijft de enige nieuwe taakafronding: 44/54 klaar, tien open. Het volledige
+goal is niet voltooid; verdere uitvoering wacht op echte eigenaarfeedback.
 Bewijs: development/evidence/product/hue5-completed-contribution-outcome-20261014.json.
 
 ## Historisch 14 oktober — gedeelde initiatiefketen geïnstalleerd; echte aflevering open
