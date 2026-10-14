@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van de reactie op eigen initiatief leren
 
-Geïnstalleerd: eigen initiatief gebruikt nu dezelfde geladen identiteit en principes als gesprekken. De juiste eigenaarskoppeling is behouden; één echte begrensde geheugenlezing leverde zeven feiten met expliciete onzekerheid. De gewone review vóór deze identiteitscorrectie koos stilte; een nieuwe nuttige bijdrage is nog niet afgeleverd. Vervolg de gewone initiatiefroute tot werkelijke aflevering en later gebruik van echte feedback; HUE5 blijft open.
+Geïnstalleerd: chat- en achtergrondideeën delen nu native adoptie, uitvoering, privéaflevering en feedback. De echte chatbeurt koos echter gewone digitale delegatie: Eva bewaarde een eigen waskaart, maar initiatiefregistratie/aflevering blokkeerde in die uitvoerroute (incomplete_work). Bekende ondergrens 221.270 tokens inclusief contact; partial blijft behouden. HUE5 blijft open. Vervolg uitsluitend de aangetoonde routekoppeling, gebruik de bewaarde kaart opnieuw en herhaal de creatie niet.
 
 Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
 

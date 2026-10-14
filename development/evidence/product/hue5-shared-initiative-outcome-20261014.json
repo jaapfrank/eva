@@ -1,0 +1,117 @@
+{
+  "contract": "EvaSharedInitiativeAdmissionOutcome/v1",
+  "recordedAt": "2026-10-14T04:44:31.563899+00:00",
+  "change": "Ordinary owner-chat and sensory initiative adoption share one guarded native execution, history, result delivery and feedback route.",
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "modifiedModules": 4,
+    "newModules": 1,
+    "otherPythonFilesPerImageUnchanged": 342,
+    "schemaChanged": false,
+    "configurationAndDataRetained": true,
+    "sourceReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/chat-adoption/independent-source-install-go.private.json",
+      "sha256": "9a7a30c566c6f6244bd776902096e58e80a6e328925fb6658ab005f8fa9f89ea"
+    },
+    "installedReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/chat-adoption/independent-installed-review.private.json",
+      "sha256": "7dfbdedc739792c200984be96ac0c81cfe87f920deb41e0cf43e5ed3439d4a04"
+    },
+    "readback": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/chat-adoption/installation/installed-readback.private.json",
+      "sha256": "d7d21281955d99f9d47b2a09e3a326ce4bd366cbedef2cc216f8dfcd6da95a82"
+    }
+  },
+  "verification": {
+    "uniquePostgresCasesPassed": 4,
+    "additionalChangedLockCasePassed": 1,
+    "notFiveUniqueCases": true,
+    "originalExecuteRegressionFailed": true,
+    "syntheticDeliveryAndFeedbackOnly": true,
+    "canonicalOwnerAndOriginalChatSourceSeparated": true,
+    "native64AndUnchangedLegacy32IDs": true,
+    "pendingAndAfterLockAuthorityRevalidation": true,
+    "fullArtifactKeptShortPreviewOnly": true,
+    "priorRealIdFailurePreserved": true,
+    "priorFixtureSetupErrorsPreserved": true
+  },
+  "actualUse": {
+    "source": "controller_stimulated_ordinary_chat",
+    "unprompted": false,
+    "serverMessageId": "dashboard:9033698d-3eba-48ba-8f3f-feab68b7cedc",
+    "response": "Contact acknowledged a real ordinary digital delegation, which failed before initiative registration and private delivery.",
+    "ownerFeedbackFabricated": false,
+    "deliveryConfirmed": false,
+    "initiativeAdopted": false,
+    "modelRequests": 2,
+    "inputTokens": 23407,
+    "outputTokens": 578,
+    "totalTokens": 23985,
+    "modelToolCalls": 2,
+    "toolCallsNotConfirmedBusinessActions": true,
+    "snapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/ordinary-choice-snapshot-20261014T0445.private.json",
+      "sha256": "e8ee304c124fc1a1416290c778d5e9a8aa4815e4835640c8e6f0267334c726a4"
+    },
+    "notProofOfGeneralFamilyBehaviour": true,
+    "ordinaryDelegatedWorkAdmitted": true,
+    "ordinaryDelegatedWorkState": "failed",
+    "ordinaryDelegatedWorkError": "incomplete_work",
+    "workId": "work:eva-chat:d18eac78-a11a-5460-9062-351511a6b358",
+    "workUsageType": "partial",
+    "knownChildRequests": 12,
+    "knownChildInputTokens": 194289,
+    "knownChildOutputTokens": 2996,
+    "knownChildTokens": 197285,
+    "knownBoundCombinedRequests": 14,
+    "knownBoundCombinedTokenLowerBound": 221270,
+    "completeTotalClaim": false,
+    "artifactReportedSavedAndReadBack": true,
+    "artifactNotPrivateDelivery": true,
+    "failureCause": "The recorded work plan has a blocker: ordinary digital worker lacks initiative registration/private initiative delivery.",
+    "retryPerformed": false,
+    "digitalWorkBinding": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/background-40adca-binding-workscope.private.json",
+      "sha256": "97074a1aee2ee9ea84c0ff77ad797d64f32fbc80ae93e0774aaec00d114484c7"
+    },
+    "exactFailure": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/exact-digital-reason.private.json",
+      "sha256": "6ea2bd57f0923040209c9806fcc2a622242bd4f0f31d2cdd1a1211720647906b"
+    },
+    "actionChain": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/exact-parent-action-chain.private.json",
+      "sha256": "b2a20293ff5fd527d7756bcdc7e29754cfc6e01b2188d03f34ffbfb1007ad882"
+    },
+    "ownInitiativeWorkAdmitted": false
+  },
+  "completion": {
+    "task": "HUE5.1",
+    "completed": false,
+    "smallTasksTotal": 54,
+    "smallTasksCompleted": 44,
+    "smallTasksOpen": 10
+  },
+  "manualDecisionModelRequests": 2,
+  "developmentCredits": "unknown",
+  "newComparisonSeries": false,
+  "voiceWork": false,
+  "ordinaryBackgroundSnapshot": {
+    "checkedAt": "2026-10-14T04:48:19+00:00",
+    "latestReviewUtc": "2026-10-14T03:41:37+00:00",
+    "state": "silence",
+    "newAdoptionOrDelivery": false,
+    "source": {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/ordinary-review-snapshot-20261014T044815Z.private.json",
+      "sha256": "c6c4339402602ff81d43bdd059e3b4cf9033a864e0d23b3c44ed18454271c75e"
+    },
+    "additionalMeasuredNativeBackgroundRows": 12,
+    "additionalMeasuredNativeBackgroundTokens": 197285,
+    "sourceTaskNotYetBound": false,
+    "notAttributedToControllerChat": false,
+    "notCompleteAutomaticRuntimeTotal": true,
+    "actualSource": "same controller-stimulated ordinary digital task; not a private-opportunity review"
+  },
+  "knownRequestsBoundToControllerStimulus": 14
+}

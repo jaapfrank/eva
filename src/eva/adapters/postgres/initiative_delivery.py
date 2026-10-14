@@ -69,9 +69,11 @@ class InitiativeCompletionDelivery:
                 return "idle"
             title = str(row.adoption["data"]["title"])[:250]
             content = artifact["content"]
-            text = f"Ik heb mijn initiatief ‘{title}’ afgerond. Dit is het bewaarde resultaat:\n\n{content[:2800]}"
-            if len(content) > 2800:
-                text += "\n\nDit is een ingekort resultaat. Vraag me naar het volledige initiatiefresultaat."
+            words = content.split()
+            preview = " ".join(words[:90])[:1200]
+            text = f"Ik heb mijn initiatief ‘{title}’ afgerond:\n\n{preview}"
+            if len(words) > 90 or len(" ".join(words[:90])) > 1200:
+                text += "\n\nDe volledige uitwerking is bewaard en beschikbaar op verzoek."
             thread_id = "initiative-notice:" + row.thread_id
             insert_initial_timeline_thread(conn, scope, thread_id=thread_id,
                 checkpoint_id=thread_id + ":attempt", occurred_at=now,

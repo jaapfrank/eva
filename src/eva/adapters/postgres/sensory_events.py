@@ -716,43 +716,9 @@ class PostgresSensoryEventStore:
                 self._initiative_authorizer()
             except Exception:
                 return {"status": "not_admitted", "reason": "initiative_mandate_unavailable"}
-        scope = self._timeline._scope_value
-        # Serialize admission for one owner's background work, across workers.
-        key = f"eva-initiative:{scope.tenant_id}:{scope.installation_id}:{principal}"
-        connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"), {"key": key})
-        pending = connection.execute(sa.select(operational_checkpoints.c.thread_id).join(
-            operational_events, sa.and_(
-                operational_events.c.tenant_id == operational_checkpoints.c.tenant_id,
-                operational_events.c.installation_id == operational_checkpoints.c.installation_id,
-                operational_events.c.thread_id == operational_checkpoints.c.thread_id,
-            )).where(
-                operational_checkpoints.c.tenant_id == scope.tenant_id,
-                operational_checkpoints.c.installation_id == scope.installation_id,
-                operational_events.c.event_type == "PERSONAL_INTENT_ADOPTED",
-                operational_events.c.payload["data"]["principal_id"].astext == principal,
-                operational_events.c.payload["data"]["origin"].astext == "eva_initiative",
-                operational_checkpoints.c.phase.not_in(("release_ready", "personal_stopped", "initiative_completed", "initiative_blocked")),
-            ).limit(1)).scalar_one_or_none()
-        if pending is not None:
-            return {"status": "not_admitted", "reason": "active_initiative_exists", "thread_id": pending}
-        previous = connection.execute(sa.select(operational_events.c.thread_id).where(
-            operational_events.c.tenant_id == scope.tenant_id,
-            operational_events.c.installation_id == scope.installation_id,
-            operational_events.c.event_type == "PERSONAL_INTENT_ADOPTED",
-            operational_events.c.payload["data"]["principal_id"].astext == principal,
-            operational_events.c.payload["data"]["origin"].astext == "eva_initiative",
-            sa.func.lower(sa.func.btrim(operational_events.c.payload["data"]["title"].astext))
-                == proposal.title.strip().lower(),
-        ).limit(1)).scalar_one_or_none()
-        if previous is not None:
-            return {"status": "not_admitted", "reason": "initiative_already_attempted", "thread_id": previous}
-        data = proposal.adoption(claim, principal_id=principal)
-        thread_id = "intent:" + data["intent_id"]
-        insert_initial_timeline_thread(connection, scope, thread_id=thread_id,
-            checkpoint_id=f"{thread_id}:adopted", occurred_at=now, data=data,
-            event_type="PERSONAL_INTENT_ADOPTED", phase="intent_adopted",
-            status="active", operation_id=data["intent_id"])
-        return {"status": "adopted", "intent_id": data["intent_id"], "thread_id": thread_id}
+        from eva.adapters.postgres.initiative_adoption import adopt_private_initiative
+        return adopt_private_initiative(connection, self._timeline._scope_value,
+            proposal.adoption(claim, principal_id=principal), now=now)
 
     def _complete_group_members(
         self, connection: sa.Connection, original: SensoryEvent, *, group_thread_id: str,

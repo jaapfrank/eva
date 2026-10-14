@@ -1888,8 +1888,29 @@ def create_runtime_app() -> FastAPI:
         from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
         research_adapter = NativeResearchTool(model, PostgresConversationActions._validated_research_arguments)
         native_research = PostgresExternalConversationTools(engine, research_adapter, research_adapter)
+    initiative_adopter = None
+    if dashboard_owner_principal_id is not None:
+        from eva.adapters.postgres.initiative_adoption import PostgresOwnerConversationInitiativeAdopter
+        from eva.adapters.postgres.private_owner import PostgresPrivateOwnerResolver
+
+        def current_initiative_bindings():
+            if settings.telegram_principal_bindings_file is None:
+                raise ConversationConflict("private initiative bridge is not configured")
+            return load_principal_bindings(settings.telegram_principal_bindings_file)
+
+        initiative_owner = PostgresPrivateOwnerResolver(
+            engine, tenant_id=settings.background_tenant_id,
+            installation_id=settings.background_installation_id,
+            owner=dashboard_owner_principal_id, binding=dashboard_principal_binding_id,
+            authority_scope=dashboard_authority_scope,
+            bindings_loader=current_initiative_bindings,
+        )
+        initiative_adopter = PostgresOwnerConversationInitiativeAdopter(
+            lambda: runtime._initiative_authority(), initiative_owner,
+        )
     conversation_actions = PostgresConversationActions(
         engine,
+        initiative_adopter=initiative_adopter,
         research=model,
         native_research=native_research,
         file_batch=file_batch,

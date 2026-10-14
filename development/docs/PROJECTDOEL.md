@@ -1,22 +1,25 @@
-## Actueel 14 oktober — dezelfde identiteit bij initiatief
+## Actueel 14 oktober — gedeelde initiatiefketen geïnstalleerd; echte aflevering open
 
-De bestaande geladen identiteit en principes worden nu ook in de gewone
-initiatiefbeslissing gebruikt. Dezelfde renderer wordt hergebruikt; chatinstructies
-blijven bytegelijk met en zonder identiteitspakket. Kern en werker zijn gezond
-geïnstalleerd; gegevens/configuratie en 345 andere Pythonbestanden per image behouden.
-Drie gerichte checks slagen; de oude sensorymethode faalt op beide regressies.
-Geen geforceerde voorbeeldtaak, verruimde rechten, spraakwerk of vergelijkingsserie.
+Chat- en sensorideeën delen nu dezelfde bestaande bewaakte native adoptie,
+uitvoering, historie, privéaflevering en feedback. De actuele eigenaar en echte
+chatbron blijven onderscheiden; nieuwe 64-tekens-IDs passen bij bestaande
+bediening, oude 32-tekens-taken blijven ongemuteerd. Replay en adoptie controleren
+actuele bevoegdheid; geen nieuw platform, rechten of verzonnen feedback.
+Kern en werker zijn gezond; vier modules vervangen, één helper toegevoegd en
+342 andere Pythonbestanden per image behouden. Vier gerichte PostgreSQLgevallen
+slagen; de gewijzigde slotcontrole slaagt apart. Oude fouten blijven bewaard.
+Resultaatmelding is kort; het volledige resultaat blijft op verzoek beschikbaar.
 
-Een echte begrensde geheugenlezing gaf zeven feiten: vijf onbevestigde imports,
-één directe-gebruikersmarkering en één onbevestigde modelafleiding. Twee bronnen
-zijn hiermee niet als gesprek of proef geclassificeerd. De eerdere diagnosticGET
-was niet ondersteund (405); geen geheugenfout. Geen writes of beslismodelaanvraag
-voor deze controle; onderliggend Hindsightverbruik onbekend. De review van 03:41
-koos vóór deze identiteitscorrectie stilte; een nieuw afgeleverd initiatief en
-later feedbackgebruik blijven onbewezen. HUE5 en tien taken blijven open; 44/54
-afgerond. Vervolg de gewone route tot echt nuttige aflevering; geen nieuwe
-eigenaarvraag daarvoor. Het volledige goal blijft actief.
-Bewijs: development/evidence/product/hue5-identity-context-outcome-20261014.json.
+De controllergestimuleerde eerste chatbeurt startte gewone digitale uitvoering.
+Eva bewaarde een eigen waskaart, maar de worker kon haar niet als initiatief
+registreren en privé afleveren; de taak faalde met incomplete_work. Bekende
+ondergrens inclusief contact: 14 aanvragen, 221.270 tokens; partial blijft staan.
+Dit is geen spontaan initiatief of HUE5-afronding. Verbind uitsluitend de aangetoonde uitvoerroute met initiatiefregistratie/aflevering;
+hergebruik het bewaarde resultaat, geen herhaalde creatie of willekeurige proef.
+Werk verder naar nuttige aflevering en later gebruik van echte ontvangerfeedback.
+HUE6.1 blijft de enige nieuwe afronding: 44/54 afgerond, tien open. Het volledige
+goal blijft actief; geen spraakbouw of nieuwe vergelijkingsserie.
+Bewijs: development/evidence/product/hue5-shared-initiative-outcome-20261014.json.
 
 ## Actueel 14 oktober — eigenaarsgeheugen voor initiatief hersteld
 

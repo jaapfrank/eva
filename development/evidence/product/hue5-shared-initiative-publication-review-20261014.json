@@ -1,0 +1,133 @@
+{
+  "actualClosedUse": {
+    "boundKnownUsage": {
+      "input_tokens": 217696,
+      "model_tool_calls": 13,
+      "output_tokens": 3574,
+      "requests": 14,
+      "total_tokens": 221270
+    },
+    "child": {
+      "cost": null,
+      "input_tokens": 194289,
+      "model_tool_calls": 11,
+      "output_tokens": 2996,
+      "requests": 12,
+      "total_tokens": 197285,
+      "typedMeasurement": "partial"
+    },
+    "completeProjectProviderOrCreditTotalClaim": false,
+    "controllerStimulatedOrdinaryChat": true,
+    "currentWorkerGrantDoesNotIncludeAdoptPersonalInterest": true,
+    "error_code": "incomplete_work",
+    "exactStopFingerprintMatchesUnfinishedWorkPlanRecordedBlocker": true,
+    "oldMissingUnknownPartialPreserved": true,
+    "ordinaryDelegatedWorkAdmitted": true,
+    "parent": {
+      "input_tokens": 23407,
+      "model_tool_calls": 2,
+      "output_tokens": 578,
+      "requests": 2,
+      "total_tokens": 23985
+    },
+    "parentAndChildJournalRowsUniqueMeasuredAndExactStoredScopeMatch": true,
+    "personalInitiativeAdopted": false,
+    "savedArtifactAndReadback": "Reported in durable work progress; not independently assessed family usefulness or private delivery.",
+    "savedProgressStates": [
+      "done",
+      "done",
+      "blocked"
+    ],
+    "state": "failed",
+    "unprompted": false,
+    "work_id": "work:eva-chat:d18eac78-a11a-5460-9062-351511a6b358"
+  },
+  "actualSourceEvidence": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/ordinary-choice-snapshot-20261014T0445.private.json",
+      "sha256": "e8ee304c124fc1a1416290c778d5e9a8aa4815e4835640c8e6f0267334c726a4"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/ordinary-review-snapshot-20261014T044815Z.private.json",
+      "sha256": "c6c4339402602ff81d43bdd059e3b4cf9033a864e0d23b3c44ed18454271c75e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/background-40adca-binding-workscope.private.json",
+      "sha256": "97074a1aee2ee9ea84c0ff77ad797d64f32fbc80ae93e0774aaec00d114484c7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/exact-digital-reason.private.json",
+      "sha256": "6ea2bd57f0923040209c9806fcc2a622242bd4f0f31d2cdd1a1211720647906b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/exact-parent-action-chain.private.json",
+      "sha256": "b2a20293ff5fd527d7756bcdc7e29754cfc6e01b2188d03f34ffbfb1007ad882"
+    }
+  ],
+  "contract": "EvaIndependentHue5SharedInitiativePublicationReview/v1",
+  "gitScope": {
+    "excludeOnlyForeignVoiceAudit": "audit.subscriptionVoice20261013",
+    "expectedCanonicalBoardWithoutForeignVoiceAuditSha256": "6b86a29ed93abac4c088903599f7ff647dbaa7d15717e0f60875acced80aa71b",
+    "workingAuditUntouched": true
+  },
+  "installedReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/chat-adoption/independent-installed-review.private.json",
+    "sha256": "7dfbdedc739792c200984be96ac0c81cfe87f920deb41e0cf43e5ed3439d4a04"
+  },
+  "limits": [
+    "This is truthful installed repair and failed actual-use publication, not HUE5 completion.",
+    "Stored/readback artifact report is not an independent household quality or delivery verdict.",
+    "Other automatic runtime/Hindsight provider usage and credit costs remain unmeasured.",
+    "No reviewer model/HTTP/test/deployment/data mutation."
+  ],
+  "publicationChecks": {
+    "HUE5_1Open": true,
+    "HUE6_1LastCompleted": true,
+    "counts": {
+      "completed": 44,
+      "open": 10,
+      "total": 54
+    },
+    "earlierNoOrdinaryWorkInferenceWithdrawn": true,
+    "fourUniquePGCasesPlusModifiedOneCaseNotFiveUnique": true,
+    "generatedWERKBORDMatchesCurrentWork": true,
+    "noActualDeliveryOrOwnerFeedbackFabricated": true,
+    "noGeneralSuperiorityFamilyAcceptanceOrSpontaneousInitiativeClaim": true,
+    "noNewTaskCompleted": true,
+    "noRetryRecreationPerformed": true,
+    "originalDoneWhenAndWholeGoalActiveUnchanged": true,
+    "privateContentAndProtectedFinalQuestionsNotPublished": true,
+    "realDelegationDistinguishedFromPersonalInitiative": true,
+    "syntheticTransportFeedbackNotOwnerEvidence": true
+  },
+  "recordedAt": "2026-10-14T04:56:37.124397+00:00",
+  "reviewedFiles": [
+    {
+      "path": "/home/administrator/project/Eva2/development/evidence/product/hue5-shared-initiative-outcome-20261014.json",
+      "sha256": "9bd27cf1357bc025d53a6aeb2131063b17e8548c9e06d09ca9301cc2dc2ef598"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/AGENTS.md",
+      "sha256": "b6a518ea0652382234ab2be644c2b63992ad1074f63603b21abc920b68b34d17"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/docs/PROJECTDOEL.md",
+      "sha256": "2420980bcf27765f553ba684e22fa98aa83e1e988e9666f7ab6343a830eebeec"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/docs/WERKBORD.md",
+      "sha256": "2a91b31b724e46188046f71bb163f2711b66eb38c7c2d15a572f125d0e930a52"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/design/product/execution-workboard-v1.json",
+      "sha256": "b63fbea128f5d57d5dee491c88d8f1754887afb8f22dbb8f88f1d54edc40d955"
+    }
+  ],
+  "reviewerModels": 0,
+  "reviewerRuntimeMutations": 0,
+  "sourceInstallReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/chat-adoption/independent-source-install-go.private.json",
+    "sha256": "9a7a30c566c6f6244bd776902096e58e80a6e328925fb6658ab005f8fa9f89ea"
+  },
+  "verdict": "GO_PUBLICATION"
+}

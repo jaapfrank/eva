@@ -189,8 +189,10 @@ class PostgresConversationActions:
         durable_goal_recipients: tuple[str, ...] = (),
         external_tools: tuple[ConversationExternalToolPort, ...] = (),
         native_research: ConversationExternalToolPort | None = None,
+        initiative_adopter=None,
     ) -> None:
         self._engine = engine
+        self._initiative_adopter = initiative_adopter
         self._external_tools = external_tools
         self._native_research = native_research
         external_action_names = tuple(
@@ -437,10 +439,11 @@ class PostgresConversationActions:
                 self._resume_research(turn, research_events)
                 research_events = timeline.events(self._research_thread_id(turn))
             return self._research_receipt(turn, research_events)
-        events = timeline.events(self._intent_thread_id(turn))
-        if not events:
-            return None
-        return self._receipt_from_event(turn, events[0], disposition="already_adopted")
+        for intent_id in (self._native_intent_id(turn), self._intent_id(turn)):
+            events = timeline.events("intent:" + intent_id)
+            if events:
+                return self._receipt_from_event(turn, events[0], disposition="already_adopted")
+        return None
 
     def active_context(self, turn: ConversationTurn) -> tuple[str, ...]:
         from eva.application.initiative_execution import require_initiative_context
@@ -667,8 +670,14 @@ class PostgresConversationActions:
             raise ConversationConflict(f"unsupported conversation action {call.name!r}")
         arguments = self._validated_arguments(call.arguments)
         timeline = self._timeline(turn)
-        intent_id = self._intent_id(turn)
-        thread_id = self._intent_thread_id(turn)
+        legacy = timeline.events(self._intent_thread_id(turn))
+        if legacy:
+            receipt = self._receipt_from_event(turn, legacy[0], disposition="already_adopted")
+            self._link_to_conversation(turn, receipt)
+            return receipt
+        intent_id = (self._native_intent_id(turn) if self._initiative_adopter is not None
+                     else self._intent_id(turn))
+        thread_id = "intent:" + intent_id
         data: dict[str, JsonValue] = {
             "action_call_id": call.call_id,
             "action_name": call.name,
@@ -681,6 +690,16 @@ class PostgresConversationActions:
             "source_message_id": turn.message_id,
             "title": arguments["title"],
         }
+        if self._initiative_adopter is not None:
+            result = self._initiative_adopter(turn, data, now=self._timestamp(turn))
+            if result["status"] not in {"adopted", "already_adopted"}:
+                raise ConversationConflict("initiative not admitted: " + result["reason"])
+            if result["intent_id"] != intent_id or result["thread_id"] != thread_id:
+                raise ConversationConflict("initiative adoption identity differs")
+            event = timeline.events(thread_id)[0]
+            receipt = self._receipt_from_event(turn, event, disposition=result["status"])
+            self._link_to_conversation(turn, receipt)
+            return receipt
         try:
             timeline.create_thread(
                 thread_id=thread_id,
@@ -2457,6 +2476,10 @@ class PostgresConversationActions:
             raise ConversationConflict("personal intent event type differs")
         self._require_same_intent_scope(turn, event)
         data = self._event_data(event)
+        if data.get("adoption_source") == "ordinary_conversation":
+            if self._initiative_adopter is None:
+                raise ConversationConflict("initiative replay authority unavailable")
+            self._initiative_adopter.validate(turn)
         arguments = self._validated_arguments(
             {
                 "motivation": data.get("motivation"),
@@ -2489,13 +2512,17 @@ class PostgresConversationActions:
         expected = {
             "action_name": _ACTION,
             "conversation_id": turn.conversation_id,
-            "intent_id": self._intent_id(turn),
+            "intent_id": (self._native_intent_id(turn)
+                if data.get("adoption_source") == "ordinary_conversation" else self._intent_id(turn)),
             "kind": "personal_interest",
             "principal_id": turn.principal_id,
             "source_message_id": turn.message_id,
         }
         for key, value in expected.items():
-            if data.get(key) != value:
+            actual = (data.get("source_principal_id")
+                if key == "principal_id" and data.get("adoption_source") == "ordinary_conversation"
+                else data.get(key))
+            if actual != value:
                 raise ConversationConflict("personal intent replay scope differs")
 
     @staticmethod
@@ -2657,6 +2684,13 @@ class PostgresConversationActions:
     @staticmethod
     def _intent_id(turn: ConversationTurn) -> str:
         return _turn_id(turn, "personal_interest", "personal-interest:", "person")
+
+    @staticmethod
+    def _native_intent_id(turn: ConversationTurn) -> str:
+        return "personal-interest:" + hashlib.sha256(canonical_json_bytes([
+            "ordinary-conversation-initiative:v1", turn.tenant_id, turn.installation_id,
+            turn.principal_id, turn.conversation_id, turn.message_id,
+        ])).hexdigest()
 
     @classmethod
     def _intent_thread_id(cls, turn: ConversationTurn) -> str:
