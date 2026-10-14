@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-14T03:14:08.630849+00:00",
+  "lastUpdated": "2026-10-14T11:00:28.499282+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "I1.2",
@@ -848,10 +848,10 @@
     "status": "in_progress",
     "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
     "outcome": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
-    "nextAction": "Eva1 gestopt en uitgeschakeld voor herstart. Eva2 heeft zelfstandige Telegrambediening. De echte gewone initiatiefcyclus is hervat: op 14 oktober 11:49 besloot Eva zonder handmatige vraag bewust stil te blijven; één Astra-aanvraag, 4.599 geregistreerde tokens. Oude UNKNOWN behouden. Reflectieachterstand houdt initiatief niet meer op; kern en werker gebruiken weer hetzelfde toegelaten uitvoerprofiel. Nog geen nieuwe nuttige bijdrage of volledige aanwezigheid bewezen. Vervolg I1.2: aandacht/stilte bij echte drukte of slapen controleren; geen extra eigenaarvraag, spraakbouw of vergelijkingsserie.",
+    "nextAction": "Geïnstalleerd en gewoon gebruikt: rustige initiatiefafweging verbindt nu tijd, recente huiswaarnemingen en eigen opgeslagen verplichtingen met gericht geheugen. Op 14 oktober 12:53 besloot Eva zelf stil te blijven na acht waarnemingen en drie eigen verplichtingen; één Astra-aanvraag, 4.854 geregistreerde tokens. Geen nieuwe bijdrage, aflevering of I1.2-afronding. Actuele service-/agendagegevens zelfstandig raadplegen en passend tijdig opnieuw kijken blijven nodig; geen voorbeeldfuncties. Vervolg: Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
     "area": "initiative and attention",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T09:56:19.700892+00:00",
+    "checkedAt": "2026-10-14T11:00:28.499282+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1634,6 +1634,19 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Eigen initiatief gebruikt nu tijd, huiswaarnemingen en eigen verplichtingen",
+            "state": "installed",
+            "checkedAt": "2026-10-14T11:00:28.499282+00:00",
+            "summary": "Geïnstalleerd en gewoon gebruikt: rustige initiatiefafweging verbindt nu tijd, recente huiswaarnemingen en eigen opgeslagen verplichtingen met gericht geheugen. Op 14 oktober 12:53 besloot Eva zelf stil te blijven na acht waarnemingen en drie eigen verplichtingen; één Astra-aanvraag, 4.854 geregistreerde tokens. Geen nieuwe bijdrage, aflevering of I1.2-afronding. Actuele service-/agendagegevens zelfstandig raadplegen en passend tijdig opnieuw kijken blijven nodig; geen voorbeeldfuncties.",
+            "remaining": "Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/daily-life-context-installed-20261014.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "Opleveringen tonen weer datum, resultaat en juiste afronding",
             "state": "installed",
             "checkedAt": "2026-10-14T10:13:59.960454+00:00",
@@ -1891,22 +1904,22 @@
           "completionScope": "HUE5.1 only"
         },
         "now": {
-          "title": "Stilte en passendheid beoordelen",
+          "title": "Algemeen dagelijks meedenken aansluiten",
           "state": "Bezig",
-          "phase": "attention_at_real_household_moments",
+          "phase": "source_context_installed_ordinary_use_confirmed",
           "taskId": "I1.2",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Eva1 gestopt en uitgeschakeld voor herstart. Eva2 heeft zelfstandige Telegrambediening. De echte gewone initiatiefcyclus is hervat: op 14 oktober 11:49 besloot Eva zonder handmatige vraag bewust stil te blijven; één Astra-aanvraag, 4.599 geregistreerde tokens. Oude UNKNOWN behouden. Reflectieachterstand houdt initiatief niet meer op; kern en werker gebruiken weer hetzelfde toegelaten uitvoerprofiel. Nog geen nieuwe nuttige bijdrage of volledige aanwezigheid bewezen. Vervolg I1.2: aandacht/stilte bij echte drukte of slapen controleren; geen extra eigenaarvraag, spraakbouw of vergelijkingsserie.",
+          "summary": "Geïnstalleerd en gewoon gebruikt: rustige initiatiefafweging verbindt nu tijd, recente huiswaarnemingen en eigen opgeslagen verplichtingen met gericht geheugen. Op 14 oktober 12:53 besloot Eva zelf stil te blijven na acht waarnemingen en drie eigen verplichtingen; één Astra-aanvraag, 4.854 geregistreerde tokens. Geen nieuwe bijdrage, aflevering of I1.2-afronding. Actuele service-/agendagegevens zelfstandig raadplegen en passend tijdig opnieuw kijken blijven nodig; geen voorbeeldfuncties. Vervolg: Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
           "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-14T09:56:19.700892+00:00"
+          "checkedAt": "2026-10-14T11:00:28.499282+00:00"
         },
         "next": {
-          "state": "Daarna",
-          "title": "Eerst dagelijks werkend; daarna gericht verbeteren",
-          "summary": "Eerst gewone gesprekken, zelfstandig werk, terugmelding en passende aanwezigheid in het dagelijkse gebruik bevestigen. Daarna verbeterpunten onderzoeken en alleen concrete ontbrekende verbeteringen als nieuwe taken vastleggen.",
-          "detail": "De bestaande afrondingen en het volledige projectgoal blijven leidend. Het verbeteronderzoek is nog niet gestart; geen extra bouwtaken toegevoegd."
+          "title": "Zelf actuele bronnen raadplegen en tijdig terugkomen",
+          "state": "Nog af te maken",
+          "summary": "Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
+          "ownerActionNeeded": false
         },
         "ownerAction": {
           "title": "Eva2 staat zelfstandig aan; Eva1 is gestopt",
@@ -2107,7 +2120,7 @@
           {
             "number": 3,
             "title": "Volledige AIDE² en droommodus",
-            "state": "Open · opgeslagen kandidaat behouden; hervatting ongeactiveerd na kernvervanging",
+            "state": "HUE6-cyclus technisch afgerond met later gebruik; dagelijkse brede toepassing en gezinsacceptatie apart",
             "doneWhen": "Varianten voor agentaansturing én code of apps/addons worden onafhankelijk beoordeeld; een verbetering wordt toegepast of de referentie blijft behouden. Rustig achtergrondwerk wijkt voor gesprek en stopt op verzoek.",
             "existingCards": [
               "AU-003",
@@ -2118,7 +2131,7 @@
           {
             "number": 4,
             "title": "Passend eigen initiatief afronden",
-            "state": "In uitvoering · blokkade verwijderd; nuttige aflevering en leren nog open",
+            "state": "HUE5-bijdrage en later feedbackgebruik afgerond; algemeen dagelijks initiatief en aandacht/stilte nog open",
             "doneWhen": "Eva kiest en voltooit nuttig werk, beoordeelt timing en leert aantoonbaar van de menselijke reactie.",
             "existingCards": [
               "AU-007",
@@ -3896,7 +3909,7 @@
         {
           "number": 3,
           "title": "Volledige AIDE² en droommodus",
-          "state": "Open · opgeslagen kandidaat behouden; hervatting ongeactiveerd na kernvervanging",
+          "state": "HUE6-cyclus technisch afgerond met later gebruik; dagelijkse brede toepassing en gezinsacceptatie apart",
           "doneWhen": "Varianten voor agentaansturing én code of apps/addons worden onafhankelijk beoordeeld; een verbetering wordt toegepast of de referentie blijft behouden. Rustig achtergrondwerk wijkt voor gesprek en stopt op verzoek.",
           "existingCards": [
             "AU-003",
@@ -3907,7 +3920,7 @@
         {
           "number": 4,
           "title": "Passend eigen initiatief afronden",
-          "state": "In uitvoering · blokkade verwijderd; nuttige aflevering en leren nog open",
+          "state": "HUE5-bijdrage en later feedbackgebruik afgerond; algemeen dagelijks initiatief en aandacht/stilte nog open",
           "doneWhen": "Eva kiest en voltooit nuttig werk, beoordeelt timing en leert aantoonbaar van de menselijke reactie.",
           "existingCards": [
             "AU-007",
@@ -6520,9 +6533,30 @@
       ],
       "scopeDoesNotReplaceExistingGoal": true,
       "ownerActionRequested": false
+    },
+    "dailyLifeInitiative20261014": {
+      "status": "context_installed_and_used_ordinary",
+      "startedAt": "2026-10-14T10:31:32.112838+00:00",
+      "taskId": "I1.2",
+      "ownerInstruction": "Make general daily-life initiative work in the installed route; no example-specific features; keep dashboard current.",
+      "existingRoute": "sensory ingestion -> private opportunity review -> native initiative work -> original recipient and feedback",
+      "concreteGap": "Private opportunity review recalls personal memories and initiative history but receives no combined current household observation context.",
+      "outcome": "Eva can relate current observations and time to relevant personal context and choose a justified response through existing initiative execution.",
+      "limits": [
+        "No voice changes",
+        "No new competitor comparison",
+        "No example-specific function",
+        "No completion claim from code or health alone"
+      ],
+      "ownerActionRequired": false,
+      "checkedAt": "2026-10-14T11:00:28.499282+00:00",
+      "latestEvidence": "development/evidence/product/daily-life-context-installed-20261014.json",
+      "remaining": "Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
+      "newProductTaskCompleted": false,
+      "providerBodyNotRetained": true
     }
   },
-  "updatedAt": "2026-10-14T03:14:08.630849+00:00",
+  "updatedAt": "2026-10-14T11:00:28.499282+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

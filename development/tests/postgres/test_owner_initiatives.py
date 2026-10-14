@@ -10,6 +10,7 @@ from eva.adapters.postgres.conversation_actions import (
 from eva.adapters.postgres.operational_timeline import CheckpointConflict
 from eva.adapters.postgres.current_catalog import metadata
 from eva.application.free_will import FreeWillDecision, PersonalInitiativeProposal
+from eva.application.sensory import SensoryEvent
 from eva.application.personal_interests import PersonalInterestExploration, PersonalPrototype
 from tests.postgres.test_delegated_work_store import _seed_authority, _id
 from tests.postgres.test_sensory_admission import _event
@@ -641,6 +642,12 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
             tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id,
             initiative_principal_id=old_claim.principal_id, initiative_authorizer=auth.policy,
             context_reviews_only=True)
+    observations = PostgresSensoryEventStore(auth.owner._engine,
+        tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id)
+    observations.retain(SensoryEvent("home_assistant", "home-assistant:review-source",
+        "state_changed", NOW - timedelta(seconds=10),
+        {"entity_id": "sensor.review_context", "friendly_name": "Relevant context fixture",
+         "old_state": "unavailable", "new_state": "available"}))
     reviews = review_store()
     assert reviews.schedule_context_review(now=NOW) == "idle"  # Existing native work wins.
     control.stop(old_claim.intent_id, now=NOW)
@@ -665,6 +672,8 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
             assert query.principal_id == old_claim.principal_id
             assert query.conversation_id == "sensory:initiative-review"
             assert query.scope["kind"] == "private_opportunity"
+            assert "Relevant context fixture" in query.query_text
+            assert "bronhistorie, geen actuele bevestiging" in query.query_text
             if outcome == "revoked_during_recall": auth.revoke()
             if outcome == "expired_during_recall": clock[0] += timedelta(minutes=2)
             return object()
@@ -673,7 +682,14 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
             calls.append(event)
             assert event.source == "initiative-review"
             assert event.event_type == "private_opportunity_review"
-            assert set(event.payload) == {"review_window"}
+            assert set(event.payload) == {"review_window", "life_context"}
+            assert event.payload["life_context"]["observed_at_utc"]
+            observation = next(item for item in event.payload["life_context"]["observations"]
+                               if item["entity_id"] == "sensor.review_context")
+            assert observation["friendly_name"] == "Relevant context fixture"
+            assert observation["is_current_proof"] is False
+            original = restarted._timeline.events("sensory:" + event.source_event_id)[0]
+            assert original.payload["data"]["payload"] == event.payload
             if outcome == "unknown": raise RuntimeError("lost model response")
             return FreeWillDecision("respond", "Eigen nuttig idee" if outcome == "idea" else "Nu niets nodig", 1,
                 "fixture", expression="This must never be delivered",
@@ -684,7 +700,17 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
         tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id,
         principal_id=old_claim.principal_id, context_review_budget=budget,
         context_review_authorizer=auth.policy, clock=lambda: clock[0])
+    failures = []
+    original_fail = restarted.fail
+    def capture_failure(claim, error, *, now):
+        failures.append(repr(error))
+        return original_fail(claim, error, now=now)
+    restarted.fail = capture_failure
     result = worker.run_once(now=NOW + timedelta(minutes=20))
+    if outcome in {"idea", "silence"}:
+        assert result != "failed", failures
+    elif outcome == "unknown":
+        assert failures == ["RuntimeError('lost model response')"]
     assert len(calls) == (0 if outcome in {"budget_denied", "revoked_during_recall", "expired_during_recall"} else 1)
     assert len(recalled) == (0 if outcome == "budget_denied" else 1)
     assert worker.run_once(now=NOW + timedelta(minutes=21)) == "idle"

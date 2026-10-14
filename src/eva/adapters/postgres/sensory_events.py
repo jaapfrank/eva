@@ -159,8 +159,16 @@ class PostgresSensoryEventStore:
             window = int(now.timestamp()) // 3600
             source_id = self._decision_prefix.removeprefix("sensory:") + str(window)
             thread_id = "sensory:" + source_id
+            payload = {"review_window": window}
+            if self._household_binding is None:
+                # Capture the bounded source view once in the existing immutable
+                # review. Retries and admission retain this original provenance;
+                # current service reads remain work for the native executor.
+                from eva.adapters.postgres.initiative_context import read_private_initiative_context
+                payload["life_context"] = read_private_initiative_context(
+                    connection, scope, self._initiative_principal_id, now)
             data = {"event_type": "private_opportunity_review", "source": "initiative-review",
-                    "source_event_id": source_id, "payload": {"review_window": window}}
+                    "source_event_id": source_id, "payload": payload}
             if self._household_binding is not None:
                 event = self._household_binding.event(now)
                 if source_id != event.source_event_id:

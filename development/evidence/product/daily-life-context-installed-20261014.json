@@ -1,0 +1,70 @@
+{
+  "contract": "EvaPrivateDailyLifeContext/v1",
+  "checkedAt": "2026-10-14T11:00:28.499282+00:00",
+  "status": "installed_and_used_by_ordinary_initiative_review",
+  "scope": "Connect existing private opportunity review to retained household observations, exact-owner commitments and clock; not complete daily-life autonomy.",
+  "installed": {
+    "coreImage": "sha256:2c7ee6509658e0d247c1d915cbf369ac4d66d2c2a3382a14d7a32e8eca2df072",
+    "changedModules": [
+      "application/free_will.py",
+      "adapters/postgres/sensory_events.py"
+    ],
+    "addedModules": [
+      "adapters/postgres/initiative_context.py"
+    ],
+    "unchangedModules": 350,
+    "workerChanged": false,
+    "voiceChanged": false,
+    "configurationAndMountsRetained": true,
+    "sourceHashes": {
+      "adapters/postgres/sensory_events.py": "6b8310f870404ed6aaad5af108fb71c40b6a8f8a78448aad14305e808184a005",
+      "application/free_will.py": "8bf59053de714868bfa2fdca8cfe3f1d1ca7d3997c8d3bac546c7f7a0ee49150",
+      "adapters/postgres/initiative_context.py": "01e05673caa80a54d0c8aee20e6f3f039fb4cc2fc9bc7500b243280939d6b97b"
+    }
+  },
+  "context": {
+    "recentHouseholdObservations": 8,
+    "exactOwnerRetainedCommitments": 3,
+    "maximumPayloadBytes": 8192,
+    "historicalObservationsAreLiveProof": false,
+    "sharedReviewReceivesPrivateContext": false,
+    "memoryRecallUsesCompactRelevantContext": true,
+    "originalReviewSourceRetained": true
+  },
+  "ordinaryUse": {
+    "controllerInvokedModel": false,
+    "observedAt": "2026-10-14T10:53:48+00:00",
+    "model": "gpt-6-astra",
+    "modelRequests": 1,
+    "inputTokens": 4769,
+    "outputTokens": 85,
+    "totalRegisteredTokens": 4854,
+    "decisionTools": 1,
+    "decision": "silence",
+    "newWorkOrDelivery": false,
+    "creditCost": "unknown"
+  },
+  "verification": {
+    "isolatedPostgresHelperCases": 6,
+    "privateSourceAndAdmissionCases": 18,
+    "focusedRecallCases": 2,
+    "productionWritesByVerification": false,
+    "manualEvaModelRequests": 0,
+    "independentReview": "GO_FOR_INSTALLED_ORDINARY_CONTEXT_ONLY",
+    "independentReviewSha256": "565f3b5cac3da971f92d4ddfa7c6a74c53633269c493b78994cfab6744c27546",
+    "initialTestFixtureFailuresRetained": true
+  },
+  "limits": [
+    "Live service inventory and calendar contents are not supplied by this snapshot; source lookup remains necessary.",
+    "Ordinary delegated work has a separate authority binding and is not guessed from this operational scope.",
+    "Review currently uses the existing hourly interval after five minutes of conversation inactivity; no model-selected attention time is implemented here.",
+    "Original provider body was not retained; no exclusive causal claim about changed behavior.",
+    "No useful new contribution, I1.2 completion, family acceptance or general superiority claimed."
+  ],
+  "newProductTaskCompleted": false,
+  "taskCounts": {
+    "completed": 45,
+    "total": 52,
+    "open": 7
+  }
+}

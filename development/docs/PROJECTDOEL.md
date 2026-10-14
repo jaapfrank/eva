@@ -1,3 +1,30 @@
+## Actueel 14 oktober — dagelijkse context in gewone initiatiefroute geïnstalleerd
+
+De private rustige afweging bewaart nu tijd, maximaal acht recente huiswaarnemingen
+(en hun oorspronkelijke hashes/tijden) en vier exact-eigen eerder aangenomen
+verplichtingen/statussen in haar onveranderlijke bron. Dit richt dezelfde bestaande
+geheugenaanvraag; de gewone beslisser krijgt de volledige begrensde context.
+Historie is geen actuele waarneming of toestemming om oud werk te herhalen.
+Gedeelde beoordelingen krijgen deze privécontext niet. Geen tweede uitvoerder,
+voorbeeldfunctie, nieuwe tabel of spraakwijziging.
+
+Twee modules vervangen, één toegevoegd; 350 overige Pythonmodules, huidige
+configuratie/mounts en de taakwerker behouden. De gewone cyclus van 14 oktober
+10:53:48 UTC gebruikte acht waarnemingen en drie eerdere eigen verplichtingen:
+één Astra-aanvraag, 4.854 geregistreerde tokens, één beslisfunctie; keuze stilte.
+Geen nieuw werk/aflevering, nuttige zichtbare bijdrage of I1.2-afronding geclaimd.
+De oorspronkelijke providerbody is niet behouden; geen exclusieve causaliteit.
+Gerichte bron-/scope-/afsluitcontroles en onafhankelijke review slagen. Eerste
+voorbereidingsfouten in testfixtures en oude uitvoeringen blijven bewaard.
+
+Actief vervolg binnen het bestaande initiatiefdoel: actuele beschikbare bronnen
+zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De snapshot
+bevat nog geen live agenda/service-inventaris en geen geraden dashboardtaakbinding.
+De bestaande uurcyclus met vijf minuten gespreksrust is geen modelgekozen
+volgende aandachtstijd. Geen voorbeeldspecifieke herinnering, spraakbouw of
+nieuwe vergelijkingsserie. 45/52 blijven staan; volledig goal en gezinsacceptatie
+blijven open. Bewijs: development/evidence/product/daily-life-context-installed-20261014.json.
+
 ## Actuele eigenaarvolgorde 14 oktober — verbeteronderzoek na werkende dagelijkse Eva
 
 Eerst Eva2 volledig operationeel maken via de gewone gebruikte ingangen: gesprek

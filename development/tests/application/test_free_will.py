@@ -341,3 +341,27 @@ def test_native_work_cannot_forge_user_ingress_or_direct_user_memory():
             "tenant_id": turn.tenant_id, "installation_id": turn.installation_id,
             "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
             "message_id": turn.message_id, "audience": {"kind": "private_person"}})
+
+
+def test_private_opportunity_recall_connects_observation_context_without_leaking_to_shared_review():
+    from eva.application.free_will import _private_review_recall_context
+    from dataclasses import replace
+    private = SensoryEvent("initiative-review", "review:fixture", "private_opportunity_review", NOW,
+        {"life_context": {"observed_at_utc": NOW.isoformat(), "observations": [
+            {"entity_id": "sensor.workspace", "friendly_name": "Workspace", "state": "occupied",
+             "historical": True}], "coverage": {"calendar": "not_read"}}})
+    hint = _private_review_recall_context(private)
+    assert "Workspace" in hint and "occupied" in hint
+    assert "bronhistorie, geen actuele bevestiging" in hint
+    assert _private_review_recall_context(replace(private, source="household-initiative")) == ""
+    assert _private_review_recall_context(replace(private, source="home-assistant")) == ""
+    assert _private_review_recall_context(replace(private, payload={})) == ""
+
+
+def test_private_opportunity_recall_bounds_search_context_but_preserves_original_snapshot():
+    from eva.application.free_will import _private_review_recall_context
+    payload = {"life_context": {"observations": [{"friendly_name": "x" * 8000}]}}
+    event = SensoryEvent("initiative-review", "review:fixture", "private_opportunity_review", NOW, payload)
+    hint = _private_review_recall_context(event)
+    assert len(hint) < 1800
+    assert len(event.payload["life_context"]["observations"][0]["friendly_name"]) == 8000

@@ -398,7 +398,7 @@ class SensoryDecisionWorker:
                             "voor een nuttige eigen bijdrage. Context bij deze waarneming: "
                             f"{event.source} {event.event_type} "
                             f"{event.payload.get('entity_id', '')} "
-                            f"{state_description}"
+                            f"{state_description}{_private_review_recall_context(event)}"
                         ),
                         maximum_facts=8,
                     )
@@ -469,6 +469,27 @@ class SensoryDecisionWorker:
             return "revalidated"
         blocker = None if self._admission_blocker is None else self._admission_blocker()
         return self._decide_claim(decision_claim, now=now, blocker=blocker)
+
+
+
+def _private_review_recall_context(event: SensoryEvent) -> str:
+    """Use the private source snapshot to recall relevant plans, not generic hobbies."""
+    if event.source != "initiative-review":
+        return ""
+    context = event.payload.get("life_context")
+    if not isinstance(context, dict):
+        return ""
+    # The full bounded, stamped snapshot reaches the decision model in the event.
+    # Recall receives a compact search hint, never shared-family or foreign memory.
+    import json
+    hint = {"time": context.get("local_time"),
+        "own_work": [{key: item.get(key) for key in ("title", "phase", "deadline")}
+                     for item in context.get("own_work", ()) if isinstance(item, dict)],
+        "observations": [{key: item.get(key) for key in (
+            "friendly_name", "entity_id", "state", "observed_at")}
+            for item in context.get("observations", ()) if isinstance(item, dict)]}
+    return " Context voor relevante plannen en behoeften (bronhistorie, geen actuele bevestiging): " + json.dumps(
+        hint, ensure_ascii=False, separators=(",", ":"))[:1600]
 
 
 def _bounded_routine_decision(event: SensoryEvent) -> FreeWillDecision | None:
