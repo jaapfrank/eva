@@ -1,4 +1,31 @@
-# Installed Telegram bridge source
+# Standalone Eva2 Telegram transport
+
+`standalone.mjs` runs the existing concurrent poller, Eva2 turn/draft adapter and
+photo adapter without importing or starting the legacy conversation agent,
+autonomous scheduler or perception loop. Replies remain bound to their original
+Telegram message. A private SQLite transport journal preserves original updates,
+media interpretation, final answers and delivery uncertainty. It contains no
+separate agent memory; Eva2 reads its own existing PostgreSQL conversation.
+Uncertain model or delivery attempts are retained and are not automatically replayed.
+
+Configure the existing token and trusted principal-binding files, current Eva2 URL,
+a private transport database path and the installed third-party dependency manifest.
+The photo provider is an explicit optional provider-only module dependency. The
+current installation temporarily retains the original provider implementation and
+its existing OAuth/usage journal; this does not start Eva1. Removing that retained
+provider dependency is separate from stopping the old agent and must preserve the
+ordinary photo route. Voice/audio uploads remain unsupported, as before this switch.
+
+Only one poller may own the bot: the installed standalone service conflicts with
+`eva.service`. Before stopping that legacy service, detach its lifecycle dependency
+from the existing Eva2 ingress proxy while preserving the proxy configuration.
+`/eva1` explains that the old agent has stopped and does not dispatch to either agent.
+
+Run `node --test deploy/telegram-bridge/standalone.test.mjs` for the bounded fake-
+transport checks. These checks verify reply binding, concurrency, replay, uncertainty,
+authority and the photo handoff; they do not prove a new real Telegram conversation.
+
+## Earlier installed adapter wiring
 
 These are the versioned source assets for the existing Bottie Telegram adapter.
 Install the three `src/` files at their corresponding host paths. The existing

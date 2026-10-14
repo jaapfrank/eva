@@ -1,0 +1,106 @@
+{
+  "contract": "EvaAutonomousHouseholdAvailability/v1",
+  "checkedAt": "2026-10-14T09:56:19.700892+00:00",
+  "status": "installed_and_ordinary_decision_observed",
+  "scope": "Restore ordinary autonomous availability and stop the legacy agent; not complete family acceptance.",
+  "legacyAgent": {
+    "service": "eva.service",
+    "active": false,
+    "autostart": false,
+    "deleted": false,
+    "dataPreserved": true
+  },
+  "telegram": {
+    "independentService": "eva2-telegram.service",
+    "textAndConcurrencyRetained": true,
+    "photoProviderRetained": true,
+    "providerOnlyLegacyLibraryDependency": true,
+    "legacyAgentOrAutonomyImported": false,
+    "newRealOwnerExchangeProven": false
+  },
+  "repairs": {
+    "failureDiagnostics": {
+      "oldSubtypeLost": true,
+      "oldUsageStillUnknown": true,
+      "newExceptionTypeAndFingerprintRetained": true,
+      "noAutomaticReplay": true
+    },
+    "reflectionScheduling": {
+      "recoveredScopes": 428,
+      "installationReservationsAtLimit": 40,
+      "limit": 40,
+      "blockedScopeChecksSkippedWhenNoCapacity": true,
+      "sourcesPreservedForLater": true,
+      "foregroundPriorityRetained": true,
+      "noBudgetIncrease": true
+    },
+    "nativeExecutionBinding": {
+      "coreAndWorkerProfilesEqual": true,
+      "oldProfilePreservedInHistory": true,
+      "currentProfileSha256": "7b26d8da7d93c740b179b87b27148a56b31e312f047a2f89974858d4b41f1be4",
+      "onlyHostProfileBindingChanged": true,
+      "capabilitiesAndPermissionsPreserved": true
+    }
+  },
+  "installation": {
+    "actual_current_baseline": "sha256:6ecea348adc9ebc682a06b0f416aacb45c5c9ac46e90320abe77af23508bcd3e",
+    "actual_candidate": "sha256:cbb55540b7a6b68163e86425fe6659f0405a0c9411ed4304e17c8a69de828732",
+    "changed_modules": [
+      "application/memory_background.py"
+    ],
+    "retained_modules": 351,
+    "added_modules": 0,
+    "sensory_diagnostic_retained": true
+  },
+  "ordinaryDecision": {
+    "sourceObservedAt": "2026-10-14T09:49:10+00:00",
+    "startedAt": "2026-10-14T09:49:11+00:00",
+    "completedAt": "2026-10-14T09:49:19+00:00",
+    "controllerInvoked": false,
+    "oldReviewReplayed": false,
+    "model": "gpt-6-astra",
+    "inputTokens": 4517,
+    "outputTokens": 82,
+    "totalTokens": 4599,
+    "modelRequests": 1,
+    "decisionFunctionCalls": 1,
+    "decision": "silence",
+    "newWorkSelected": false,
+    "newDeliverySelected": false,
+    "creditCost": null,
+    "isFullRuntimeUsageTotal": false
+  },
+  "verification": {
+    "postgresChecksPassed": 14,
+    "memorySchedulerChecksPassed": 32,
+    "existingMemoryTestDoubleFailuresConfirmedOnBaseline": 2,
+    "transportChecksPassed": 6,
+    "manualEvaModelRequests": 0,
+    "manualTelegramMessages": 0
+  },
+  "privateEvidenceSha256": {
+    "initiative-usage-readonly-diagnosis.private.json": "32ec59182d068880005b2d649c28f366cdf751cdb698b59747779ef402b3d78a",
+    "independent-diagnostic-review.private.json": "814ef3be79a295566d0e74862283cdf19cff9ef99bb29b78807542adb95adbc6",
+    "exact-review-abandon.private.json": "3b4da41da1ef5cd1b3c5bfc921a9ea9910e49a8dd007a07d586065650232aa0b",
+    "independent-capacity-fastpath-review.private.json": "30319f171f98dca8aaf10c96a69d34da2589171a2c36a7db933daa1e2ee91634",
+    "merged-capacity-installation-receipt.private.json": "41ae00931b5ab780d4f70fe91da9966a3391031fdbc053134f53de6cc2bcb30d",
+    "merged-installed-source-proof.private.json": "7835495963826d234a6be04eb2431361698673e5f7277a82244a03e0a83d4a40",
+    "initiative-mandate-rebind-receipt.private.json": "0edb55d02ddf60266bccd0c7ac1e0b8ec526aa9d8904577ea506b6026ad6a7c9",
+    "telegram-switch.private.json": "9eed02e9069115802eb03ba4ecf9f5c2c0e1bb767d14838cf78ab85cd1e9b8e8",
+    "telegram-switch-passive-readiness.private.json": "db3e658bef50d40ac7e320b5e18741939ef88afe5b891db9f105bb4818b7b072",
+    "independent-ordinary-resumption-review.private.json": "edc4ba144e8319378b5dffbf1191270ea2a339cbfaac35c916286546282d925b"
+  },
+  "limits": [
+    "The original lost failure subtype is unknown.",
+    "A completed autonomous silence decision is not a useful visible contribution.",
+    "No new native work was selected or delivered in this cycle.",
+    "I1.2 attention during busy or sleeping household use remains open.",
+    "No family acceptance or general quality superiority claimed."
+  ],
+  "newProductTaskCompleted": false,
+  "taskCounts": {
+    "completed": 45,
+    "total": 52,
+    "open": 7
+  }
+}

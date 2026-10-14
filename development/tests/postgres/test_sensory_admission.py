@@ -1,6 +1,7 @@
 """RT-001: durable cost waiting, without model or memory-provider I/O."""
 
 from datetime import UTC, datetime, timedelta
+import hashlib
 import os
 import subprocess
 import sys
@@ -1129,6 +1130,14 @@ def test_pre_model_claim_can_recover_but_started_claim_cannot(postgres_engine):
     assert store.claim_next(now=NOW + timedelta(minutes=10)) is None
     state = store._timeline.load(first.thread_id)
     assert state.phase == "will_usage_uncertain" and state.status == "needs_help"
+    failure = store._timeline.events(first.thread_id)[-1].payload["data"]
+    assert failure["failure_type"] == "TimeoutError"
+    assert failure["provider_usage_error"] is False
+    assert failure["usage"] is None
+    assert failure["failure_fingerprint"] == hashlib.sha256(
+        b"TimeoutError: synthetic interrupted model"
+    ).hexdigest()
+    assert "synthetic interrupted model" not in str(failure)
     assert store._timeline.rebuild_projection(first.thread_id) == state
 
 

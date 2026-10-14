@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Stilte en passendheid beoordelen
 
-Live gecontroleerd: kern en taakwerker gezond; achtergrondwerk en privéaflevering ingeschakeld. Laatste gewone initiatiefbeslissing 2026-10-14T08:07:11+00:00: will_usage_uncertain / autonomous_provider_usage_unverified. Autonoom initiatief vraagt technisch herstel van de verbruiksregistratie, geen eigenaarhandeling. Dit verklaart huidige stilstand, niet zonder meer alle eerdere dagen. Behoud afgesloten uitvoering en onbekend verbruik; herstel de concrete aansluiting zonder herhaling of nieuwe vergelijkingsserie. I1.2 aandacht/stilte blijft daarnaast open.
+Eva1 gestopt en uitgeschakeld voor herstart. Eva2 heeft zelfstandige Telegrambediening. De echte gewone initiatiefcyclus is hervat: op 14 oktober 11:49 besloot Eva zonder handmatige vraag bewust stil te blijven; één Astra-aanvraag, 4.599 geregistreerde tokens. Oude UNKNOWN behouden. Reflectieachterstand houdt initiatief niet meer op; kern en werker gebruiken weer hetzelfde toegelaten uitvoerprofiel. Nog geen nieuwe nuttige bijdrage of volledige aanwezigheid bewezen. Vervolg I1.2: aandacht/stilte bij echte drukte of slapen controleren; geen extra eigenaarvraag, spraakbouw of vergelijkingsserie.
 
 Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.
 
@@ -91,7 +91,7 @@ Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hi
 
 ## Van jou
 
-Eva2 staat aan. De actuele blokkade in autonoom initiatief is technisch werk voor Codex; je hoeft niets te activeren.
+Gewone Telegramvragen gaan naar Eva2. Je hoeft niets te activeren of dezelfde proef opnieuw te doen. Nieuwe nuttige bijdragen en timing worden afzonderlijk beoordeeld.
 
 ## Historie
 

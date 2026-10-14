@@ -1089,7 +1089,16 @@ class PostgresSensoryEventStore:
                 phase="will_usage_uncertain", status="needs_help",
                 event_type="WILL_USAGE_UNCERTAIN", occurred_at=now,
                 data={"reason": "autonomous_provider_usage_unverified", "usage": None,
-                      "source_event_id": claim.event.source_event_id},
+                      "source_event_id": claim.event.source_event_id,
+                      # A dispatch marker precedes context preparation. It does
+                      # not prove that the provider was called or that missing
+                      # usage caused the failure. Retain the actual exception
+                      # without persisting potentially private exception text.
+                      "failure_type": type(error).__name__,
+                      "failure_fingerprint": hashlib.sha256(
+                          f"{type(error).__name__}: {error}".encode()
+                      ).hexdigest(),
+                      "provider_usage_error": isinstance(error, AutonomousUsageUncertain)},
                 retry_count=claim.retry_count + 1,
                 last_error_fingerprint=hashlib.sha256(b"autonomous_provider_usage_unverified").hexdigest(),
             )

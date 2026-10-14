@@ -845,13 +845,13 @@
   "currentWork": {
     "id": "I1.2",
     "title": "Stilte en passendheid beoordelen",
-    "status": "blocked",
+    "status": "in_progress",
     "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
     "outcome": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
-    "nextAction": "Live gecontroleerd: kern en taakwerker gezond; achtergrondwerk en privéaflevering ingeschakeld. Laatste gewone initiatiefbeslissing 2026-10-14T08:07:11+00:00: will_usage_uncertain / autonomous_provider_usage_unverified. Autonoom initiatief vraagt technisch herstel van de verbruiksregistratie, geen eigenaarhandeling. Dit verklaart huidige stilstand, niet zonder meer alle eerdere dagen. Behoud afgesloten uitvoering en onbekend verbruik; herstel de concrete aansluiting zonder herhaling of nieuwe vergelijkingsserie. I1.2 aandacht/stilte blijft daarnaast open.",
+    "nextAction": "Eva1 gestopt en uitgeschakeld voor herstart. Eva2 heeft zelfstandige Telegrambediening. De echte gewone initiatiefcyclus is hervat: op 14 oktober 11:49 besloot Eva zonder handmatige vraag bewust stil te blijven; één Astra-aanvraag, 4.599 geregistreerde tokens. Oude UNKNOWN behouden. Reflectieachterstand houdt initiatief niet meer op; kern en werker gebruiken weer hetzelfde toegelaten uitvoerprofiel. Nog geen nieuwe nuttige bijdrage of volledige aanwezigheid bewezen. Vervolg I1.2: aandacht/stilte bij echte drukte of slapen controleren; geen extra eigenaarvraag, spraakbouw of vergelijkingsserie.",
     "area": "initiative and attention",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T09:06:47.717421+00:00",
+    "checkedAt": "2026-10-14T09:56:19.700892+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1634,6 +1634,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Eva2-autonomie hervat; Eva1 gestopt",
+            "state": "installed",
+            "summary": "Eva1 gestopt en uitgeschakeld voor herstart. Eva2 heeft zelfstandige Telegrambediening. De echte gewone initiatiefcyclus is hervat: op 14 oktober 11:49 besloot Eva zonder handmatige vraag bewust stil te blijven; één Astra-aanvraag, 4.599 geregistreerde tokens. Oude UNKNOWN behouden. Reflectieachterstand houdt initiatief niet meer op; kern en werker gebruiken weer hetzelfde toegelaten uitvoerprofiel. Nog geen nieuwe nuttige bijdrage of volledige aanwezigheid bewezen. Vervolg I1.2: aandacht/stilte bij echte drukte of slapen controleren; geen extra eigenaarvraag, spraakbouw of vergelijkingsserie.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/autonomous-household-availability-20261014.json",
+            "checkedAt": "2026-10-14T09:56:19.700892+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "HUE5.1 · Van echte initiatiefreactie geleerd",
             "state": "installed",
             "summary": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd.",
@@ -1868,15 +1880,15 @@
         },
         "now": {
           "title": "Stilte en passendheid beoordelen",
-          "state": "Technische blokkade",
-          "phase": "autonomous_usage_unverified",
+          "state": "Bezig",
+          "phase": "attention_at_real_household_moments",
           "taskId": "I1.2",
-          "activeExecution": false,
+          "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Live gecontroleerd: kern en taakwerker gezond; achtergrondwerk en privéaflevering ingeschakeld. Laatste gewone initiatiefbeslissing 2026-10-14T08:07:11+00:00: will_usage_uncertain / autonomous_provider_usage_unverified. Autonoom initiatief vraagt technisch herstel van de verbruiksregistratie, geen eigenaarhandeling. Dit verklaart huidige stilstand, niet zonder meer alle eerdere dagen. Behoud afgesloten uitvoering en onbekend verbruik; herstel de concrete aansluiting zonder herhaling of nieuwe vergelijkingsserie. I1.2 aandacht/stilte blijft daarnaast open.",
+          "summary": "Eva1 gestopt en uitgeschakeld voor herstart. Eva2 heeft zelfstandige Telegrambediening. De echte gewone initiatiefcyclus is hervat: op 14 oktober 11:49 besloot Eva zonder handmatige vraag bewust stil te blijven; één Astra-aanvraag, 4.599 geregistreerde tokens. Oude UNKNOWN behouden. Reflectieachterstand houdt initiatief niet meer op; kern en werker gebruiken weer hetzelfde toegelaten uitvoerprofiel. Nog geen nieuwe nuttige bijdrage of volledige aanwezigheid bewezen. Vervolg I1.2: aandacht/stilte bij echte drukte of slapen controleren; geen extra eigenaarvraag, spraakbouw of vergelijkingsserie.",
           "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-14T09:06:47.717421+00:00"
+          "checkedAt": "2026-10-14T09:56:19.700892+00:00"
         },
         "next": {
           "state": "Daarna",
@@ -1885,12 +1897,12 @@
           "detail": "Geen nieuwe vergelijkingsserie of spraakbouw."
         },
         "ownerAction": {
-          "title": "Geen handeling nodig",
-          "detail": "Eva2 staat aan. De actuele blokkade in autonoom initiatief is technisch werk voor Codex; je hoeft niets te activeren.",
+          "title": "Eva2 staat zelfstandig aan; Eva1 is gestopt",
+          "detail": "Gewone Telegramvragen gaan naar Eva2. Je hoeft niets te activeren of dezelfde proef opnieuw te doen. Nieuwe nuttige bijdragen en timing worden afzonderlijk beoordeeld.",
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-14T09:06:47.717421+00:00",
+        "checkedAt": "2026-10-14T09:56:19.700892+00:00",
         "reviewedAt": "2026-10-14T03:14:08.630849+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -6442,18 +6454,30 @@
       "voiceRuntimeChanged": false
     },
     "initiativeAvailability20261014": {
-      "checkedAt": "2026-10-14T09:06:47.717421+00:00",
+      "checkedAt": "2026-10-14T09:56:19.700892+00:00",
       "coreHealthy": true,
       "workerHealthy": true,
       "backgroundEnabled": true,
       "privateDeliveryEnabled": true,
-      "latestReviewAt": "2026-10-14T08:07:11+00:00",
-      "phase": "will_usage_uncertain",
-      "reason": "autonomous_provider_usage_unverified",
-      "state": "technical_blocker",
+      "latestReviewAt": "2026-10-14T09:49:19+00:00",
+      "phase": "will_decided",
+      "reason": "silence",
+      "state": "ordinary_decision_resumed",
       "ownerActionRequired": false,
-      "newModelCalls": 0,
-      "explainsAllPastAbsence": false
+      "explainsAllPastAbsence": false,
+      "legacyAgentStopped": true,
+      "legacyAgentAutostart": false,
+      "independentTelegramEnabled": true,
+      "oldUncertainReviewAbandoned": true,
+      "oldUsagePreservedUnknown": true,
+      "newWorkSelected": false,
+      "newVisibleContributionProven": false,
+      "source": "development/evidence/product/autonomous-household-availability-20261014.json",
+      "nativeExecutionProfileRebound": true,
+      "manualEvaModelRequests": 0,
+      "ordinaryModelRequests": 1,
+      "ordinaryRegisteredTokens": 4599,
+      "ordinaryUsageIsFullRuntimeTotal": false
     }
   },
   "updatedAt": "2026-10-14T03:14:08.630849+00:00",

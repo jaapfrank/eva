@@ -1,0 +1,27 @@
+{
+  "contract": "EvaAutonomousAvailabilityPublicationReview/v1",
+  "reviewedAt": "2026-10-14T09:59:57.641607+00:00",
+  "verdict": "GO",
+  "scope": "Installed availability repairs and one actual ordinary autonomous decision; no new product task completion.",
+  "outcome": "development/evidence/product/autonomous-household-availability-20261014.json",
+  "outcomeSha256": "70a5c42076240ee03358339a0bab87d30052771ea5965a13653e20a227ba2281",
+  "workboardProjectionSha256": "969fdb1376a82a58214cf2382f1da0e1f226d7d41eb45f69ab27ecfe805daa3e",
+  "independentPrivateReviewSha256": "00db45977e2bd5e6ca8ce13e16af447b209f5c891ae92a9945b9eb2b7c172343",
+  "ordinaryDecisionVerified": true,
+  "registeredModelRequests": 1,
+  "registeredTokens": 4599,
+  "usageIsFullRuntimeTotal": false,
+  "controllerModelRequests": 0,
+  "nativeExecutionProfileAcceptedByCoreAndWorker": true,
+  "originalUnknownAndEventsPreserved": true,
+  "legacyAgentStoppedAndDisabledEvidenceReviewed": true,
+  "newProductTaskCompleted": false,
+  "familyAcceptance": false,
+  "qualitySuperiority": false,
+  "limits": [
+    "Single ordinary silence decision proves availability, not useful visible presence.",
+    "No new native work or delivery chosen in this cycle.",
+    "No new real owner Telegram exchange is proven.",
+    "Original08:07failure subtype remains unknown."
+  ]
+}

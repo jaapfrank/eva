@@ -34,8 +34,8 @@ flowchart LR
 | src/eva/providers | Optionele providerbijdragen leveren ontdekking en mogelijkheden aan algemene kern | Behouden; voorbeelden zijn geen ingebouwde verplichte functies |
 | src/eva/operations/delegated_work_runner.py | Afhankelijke acties, duurzame voortgang en stop/herstart | Behouden; capabilityspecifieke afrondingsregels zijn concrete schuld |
 | src/eva/adapters/postgres/delegated_work_delivery.py | Resultaat aan oorspronkelijke actor/ingang koppelen | Korte terugmelding standaard; volledige opgeslagen tekst als één gecontroleerd document op expliciet verzoek |
-| src/eva/application + adapters/postgres: initiatief | Waarnemen, afwegen, uitgevoerd resultaat en echte reactie onthouden | HUE5: echte ontvangerfeedback en latere gedragswijziging ontbreken |
-| src/eva/operations: component evaluation/application | Eva-voorstel → geïsoleerde vergelijking → onafhankelijke eindbeoordeling → gecontroleerde toepassing | HUE6: volledige toegepaste kwaliteitswinst en later gebruik nog open |
+| src/eva/application + adapters/postgres: initiatief | Waarnemen, afwegen, uitgevoerd resultaat en echte reactie onthouden | HUE5 afgerond met echte feedback en later gedrag; dagelijkse autonome beschikbaarheid en aandacht/stilte afzonderlijk controleren |
+| src/eva/operations: component evaluation/application | Eva-voorstel → geïsoleerde vergelijking → onafhankelijke eindbeoordeling → gecontroleerde toepassing | HUE6 afgerond binnen oorspronkelijke scope: codewinst toegepast/later gebruikt; agentbeoordeling gelijk, referentie behouden; geen algemene voorsprong |
 | src/eva/bootstrap | Eén samenstelling van poorten en adapters; geen productlogica in extra daemon | Behouden |
 | src/connectors + src/connector_sdk + deploy | Optionele protocollen, installatie en procesgrenzen | Alleen aansluiten bij behoefte; bestaande ingangen blijven |
 | development/tools/project-dashboard | Ontwikkeloverzicht uit hetzelfde werkbord | Geen Eva-productfunctie of afzonderlijke waarheid |

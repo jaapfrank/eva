@@ -198,6 +198,21 @@ class SemanticMemoryColdPathWorker:
         # Capacity/database reads must not conceal a newly arrived conversation.
         return self._idle_due()
 
+    def _reflection_has_capacity(self) -> bool:
+        """Do not scan exhausted reflection scopes before unrelated idle work."""
+        reader = getattr(self._reflection_budget, "has_installation_capacity", None)
+        if not callable(reader):
+            return True  # Older budget ports retain their per-scope admission.
+        try:
+            available = reader(now=datetime.now(tz=UTC).replace(microsecond=0))
+            if type(available) is not bool:
+                raise RuntimeError("reflection capacity returned an invalid decision")
+            return available
+        except Exception as error:
+            with self._lock:
+                self._last_error = f"reflection capacity unavailable: {type(error).__name__}"
+            return False
+
     @property
     def last_error(self) -> str | None:
         with self._lock:
@@ -595,6 +610,18 @@ class SemanticMemoryColdPathWorker:
             self._reflection_scopes.clear()
         for index, (tenant_id, installation_id, principal_id) in enumerate(scopes):
             if not self._idle_ready():
+                with self._lock:
+                    self._reflection_scopes.update(scopes[index:])
+                return
+            if not self._reflection_has_capacity():
+                # Keep sources pending for a later allowance. The installation
+                # limit cannot be fixed by reserving every other person's scope.
+                # Initiative admission has its own current authority and budget.
+                with self._lock:
+                    self._reflection_scopes.update(scopes[index:])
+                break
+            if not self._idle_due():
+                # The capacity read can block while a conversation arrives.
                 with self._lock:
                     self._reflection_scopes.update(scopes[index:])
                 return

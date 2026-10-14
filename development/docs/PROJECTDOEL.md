@@ -1,3 +1,26 @@
+## Actueel 14 oktober — gewone autonomie hervat; Eva1 gestopt
+
+Eva1 is gestopt en uitgeschakeld voor herstart; gegevens blijven behouden.
+Eva2 heeft zelfstandige Telegrambediening met parallelle vragen en de bestaande
+fotoroute. Alleen de bestaande foto-providerbibliotheek wordt nog hergebruikt;
+geen Eva1-agent, initiatief- of waarnemingslus draait daarin.
+De onzekere oude initiatiefbeoordeling is via de bestaande eigenaarroute afgesloten:
+UNKNOWN en oorspronkelijke gebeurtenissen blijven staan, zonder herhaling.
+De reflectiewerker bewaart de 428 wachtende scopes wanneer de installatiecapaciteit
+vol is; hij blokkeert afzonderlijk toegelaten initiatief niet met honderden scans.
+Een nieuwe gewone cyclus besloot op 14 oktober 09:49:19 UTC bewust stil te blijven:
+één Astra-aanvraag, 4.599 geregistreerde tokens, geen nieuw werk of bericht.
+Dit bewijst hervatte zelfstandige afweging, geen nuttige zichtbare gezinsbijdrage.
+
+Kern en taakwerker delen het actuele uitvoerprofiel; alleen de verouderde lokale
+profielbinding is via bestaande CAS-toelating bijgewerkt, zonder ruimere rechten.
+Controleer die bestaande gedeelde binding bij relevante bron-/modelwijzigingen
+vóór nieuwe autonome uitvoering. Bewaar oude grants, fouten en UNKNOWN; vervang
+geen afgesloten bron of criteria. Geen nieuwe vergelijkingsserie of spraakbouw.
+45/52 afgerond, zeven open. I1.2 aandacht/stilte en echte gezinsacceptatie blijven
+open; geen extra eigenaarhandeling nu. Het volledige projectgoal blijft onvervuld.
+Bewijs: development/evidence/product/autonomous-household-availability-20261014.json.
+
 ## Actueel 14 oktober — HUE5 afgerond; aandacht/stilte als volgende uitkomst
 
 HUE5.1 is volgens haar oorspronkelijke eindvoorwaarde onafhankelijk afgerond.

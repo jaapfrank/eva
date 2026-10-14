@@ -987,6 +987,67 @@ def test_overlapping_foreground_and_capacity_deferral_preserve_pending_scopes(mo
     assert worker._reflection_scopes == set()
 
 
+@pytest.mark.parametrize("capacity", [False, "unavailable"])
+def test_exhausted_reflection_capacity_preserves_backlog_and_runs_other_idle_work(monkeypatch, capacity):
+    clock = [100.0]
+    monkeypatch.setattr("eva.application.memory_background.time.monotonic", lambda: clock[0])
+    calls = []
+    scopes = {("tenant", "installation", f"person-{i}") for i in range(428)}
+
+    def reflection_capacity(**kwargs):
+        calls.append("capacity")
+        if capacity == "unavailable":
+            raise OSError("private backend details")
+        return capacity
+
+    worker = HindsightColdPathWorker(
+        SimpleNamespace(maintain_person_scope=lambda *scope: calls.append("reflect")),
+        idle_seconds=1, idle_capacity=lambda: True,
+        reflection_budget=SimpleNamespace(
+            has_installation_capacity=reflection_capacity,
+            admit_background_reflection=lambda **kwargs: calls.append("reserve")),
+        idle_tasks=(lambda: calls.append("initiative"),))
+    worker._reflection_scopes.update(scopes)
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert calls == ["capacity", "initiative"]
+    assert worker._reflection_scopes == scopes
+    if capacity == "unavailable":
+        assert worker.last_error == "reflection capacity unavailable: OSError"
+
+
+def test_final_reflection_slot_finishes_then_preserves_remaining_scopes_without_starving_idle(monkeypatch):
+    clock = [100.0]
+    monkeypatch.setattr("eva.application.memory_background.time.monotonic", lambda: clock[0])
+    available = [True]
+    reserved, maintained, idle = [], [], []
+    scopes = {("tenant", "installation", "one"), ("tenant", "installation", "two")}
+
+    def reserve(**kwargs):
+        reserved.append(kwargs["principal_id"])
+        available[0] = False
+        return SimpleNamespace(admitted=True)
+
+    worker = HindsightColdPathWorker(
+        SimpleNamespace(maintain_person_scope=lambda *scope: maintained.append(scope)),
+        idle_seconds=1, idle_capacity=lambda: True,
+        reflection_budget=SimpleNamespace(
+            has_installation_capacity=lambda **kwargs: available[0],
+            admit_background_reflection=reserve),
+        idle_tasks=(lambda: idle.append("initiative"),))
+    worker._reflection_scopes.update(scopes)
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert len(reserved) == len(maintained) == 1
+    assert worker._reflection_scopes == scopes - set(maintained)
+    assert idle == ["initiative"]
+    clock[0] += 2
+    worker._schedule_reflection_if_idle()
+    assert len(reserved) == len(maintained) == 1
+    assert worker._reflection_scopes == scopes - set(maintained)
+    assert idle == ["initiative", "initiative"]
+
+
 def test_foreground_exception_releases_busy_and_unknown_capacity_starts_nothing(monkeypatch):
     clock = [100.0]
     monkeypatch.setattr("eva.application.memory_background.time.monotonic", lambda: clock[0])
@@ -1004,7 +1065,7 @@ def test_foreground_exception_releases_busy_and_unknown_capacity_starts_nothing(
     assert calls == []
     assert worker.last_error == "idle capacity unavailable: OSError"
 
-@pytest.mark.parametrize("during", ["capacity", "admission"])
+@pytest.mark.parametrize("during", ["capacity", "reflection_capacity", "admission"])
 def test_foreground_during_blocking_admission_defers_current_and_remaining_scopes(monkeypatch, during):
     clock = [100.0]
     monkeypatch.setattr("eva.application.memory_background.time.monotonic", lambda: clock[0])
@@ -1023,10 +1084,15 @@ def test_foreground_during_blocking_admission_defers_current_and_remaining_scope
         if during == "admission":
             begin()
         return SimpleNamespace(admitted=True)
+    def reflection_capacity(**kwargs):
+        if during == "reflection_capacity":
+            begin()
+        return True
     worker = HindsightColdPathWorker(
         SimpleNamespace(maintain_person_scope=lambda *scope: maintained.append(scope)),
         idle_seconds=1, idle_capacity=capacity,
-        reflection_budget=SimpleNamespace(admit_background_reflection=reserve))
+        reflection_budget=SimpleNamespace(admit_background_reflection=reserve,
+            has_installation_capacity=reflection_capacity))
     scopes = {("tenant", "installation", "one"), ("tenant", "installation", "two")}
     worker._reflection_scopes.update(scopes)
     clock[0] += 2
