@@ -45,6 +45,26 @@ De importgrenzen zijn machineleesbaar in development/design/architecture/package
 Modulair betekent duidelijke eigendom, poorten en vervangbare adapters. Het betekent
 niet dat alle modules apart opnieuw gebouwd of elke mogelijke koppeling geleverd wordt.
 
+## Algemene aandacht voor het dagelijkse leven
+
+Gebruik de bestaande sensory-, geheugen-, initiatief- en uitvoerpoorten voor één
+kringloop: actuele bronnen en tijd → relevante persoon/bedoeling → verwachting en
+waargenomen verschil → onderbouwde afweging → melding, voorstel, actie of stilte →
+resultaatcontrole en feedback. Bronnen melden gegevens en beschikbaarheid; zij
+bepalen niet met voorbeeldspecifieke scripts wat de mens nodig heeft.
+
+Eva kan zelf een volgende aandachtstijd kiezen en relevante informatie opnieuw
+opvragen. Alleen sensorveranderingen volgen is onvoldoende voor naderende afspraken.
+Inhoudelijke relevantie, timing en verbeterideeën komen uit Eva's afweging met
+geheugen en actuele bronfeiten; technische regels verzorgen onder meer deduplicatie,
+bevoegdheden, privacy, stoppen en verbruiksregistratie. Home Assistant-automatiseringen
+zijn door Eva ontdekte of gemaakte mogelijkheden, geen vaste productlogica in de kern.
+
+Bestaande free_will, sensory en resident_attention bevatten delen van deze route;
+een hervatte cyclus of afgeronde feedbackproef bewijst niet het volledige vermogen.
+Controleer bij concrete uitvoering eerst bestaande verbindingen. Er komt geen tweede
+permanente agent of afzonderlijke ingebouwde functie voor het tandartsvoorbeeld.
+
 ## Optionele modelproviders en communicatiekanalen
 
 De eigenaar wil Claude/Anthropic en andere modelproviders kunnen toevoegen, en

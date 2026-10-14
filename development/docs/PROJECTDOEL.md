@@ -397,6 +397,34 @@ bouwt of koppelt zij het en hergebruikt het bij een andere opdracht. Browser, HA
 camera's, financiële onderwerpen en apparaten zijn voorbeelden, geen vaste
 productfuncties die allemaal vooraf geprogrammeerd moeten worden.
 
+## Meedenken in het dagelijkse leven — eigenaarverduidelijking 14 oktober
+
+Eva volgt relevante ontwikkelingen bij de mensen die zij kent. Zij verbindt actuele
+waarnemingen en tijd met hun afspraken, doelen, gewoontes en eerdere antwoorden.
+Zij vormt een onderbouwde verwachting, merkt een betekenisvol verschil of kans op,
+controleert ontbrekende gegevens en kiest tussen stilblijven, een korte vraag,
+een tijdig seintje, een voorstel of een toegestane actie. Daarna controleert zij
+het effect en onthoudt de reactie. Een startende of afgeronde container bewijst
+dit meedenken niet.
+
+Een afspraak om 14:30 terwijl iemand nog thuis is, is uitsluitend een voorbeeld.
+Eva moet zelf locatie, benodigde reistijd, onzekerheid en geschiktheid van een
+melding verbinden; niet voor iedere afspraak waarschuwen of thuis-zijn gelijkstellen
+aan te laat vertrekken. Home Assistant is eveneens een optionele informatiebron
+of uitvoermiddel: Eva ontdekt relevante patronen, onderzoekt bestaande
+automatiseringen en kan een verbetering voorstellen of binnen het geldende mandaat
+realiseren en het resultaat controleren. Geen tandarts-, afval-, lamp- of andere
+voorbeeldspecifieke beslisregels in de kern.
+
+De algemene infrastructuur biedt waarneming, actuele bronopvraging, persoonsgebonden
+geheugen, uitgestelde herbeoordeling, communicatie en duurzame uitvoering. Eva bepaalt
+inhoudelijk zelf wat relevant is en wanneer zij opnieuw moet kijken. Tijd kan reden
+voor herbeoordeling zijn zonder een nieuw sensorbericht. Bundel gewone herhalingen
+en gebruik relevante veranderingen of geplande aandacht; niet iedere sensorwijziging
+of minuut naar een model sturen. Hetzelfde algemene vermogen moet op een nieuwe,
+niet vooraf ingerichte gezinssituatie werken. Reeds geleverde feedback- en
+reflectieproeven bewijzen dit bredere dagelijkse vermogen nog niet volledig.
+
 ## Eva-beheer en optionele providers en communicatie — eigenaarwens 14 oktober
 
 Eén Eva-beheeromgeving toont gesprekken, geheugenbronnen en afgeleide herinneringen,
