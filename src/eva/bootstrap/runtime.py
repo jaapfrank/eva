@@ -2040,18 +2040,8 @@ def create_runtime_app() -> FastAPI:
                 tenant_id=settings.background_tenant_id,
                 installation_id=settings.background_installation_id,
                 principal_id=settings.background_principal_id,
-                memory_principal_resolver=(
-                    None
-                    if settings.telegram_principal_bindings_file is None
-                    or settings.dashboard_principal_binding_id is None
-                    else lambda: (
-                        load_principal_bindings(settings.telegram_principal_bindings_file)
-                        .private_bridge_principal(
-                            principal_id=settings.background_principal_id,
-                            principal_binding_id=UUID(settings.dashboard_principal_binding_id),
-                        ) or settings.background_principal_id
-                    )
-                ),
+                # Background conversations retain the canonical owner. The memory
+                # adapter resolves trusted aliases under the current private binding.
                 admission_blocker=model.autonomous_admission_blocker,
                 clock=lambda: datetime.now(tz=UTC).replace(microsecond=0),
                 revalidator=(
@@ -2082,18 +2072,8 @@ def create_runtime_app() -> FastAPI:
                 tenant_id=settings.background_tenant_id,
                 installation_id=settings.background_installation_id,
                 principal_id=settings.background_principal_id,
-                memory_principal_resolver=(
-                    None
-                    if settings.telegram_principal_bindings_file is None
-                    or settings.dashboard_principal_binding_id is None
-                    else lambda: (
-                        load_principal_bindings(settings.telegram_principal_bindings_file)
-                        .private_bridge_principal(
-                            principal_id=settings.background_principal_id,
-                            principal_binding_id=UUID(settings.dashboard_principal_binding_id),
-                        ) or settings.background_principal_id
-                    )
-                ),
+                # Background conversations retain the canonical owner. The memory
+                # adapter resolves trusted aliases under the current private binding.
                 admission_blocker=model.autonomous_admission_blocker,
                 context_review_budget=reflection_budget,
                 context_review_authorizer=lambda: runtime._initiative_authority().policy(),

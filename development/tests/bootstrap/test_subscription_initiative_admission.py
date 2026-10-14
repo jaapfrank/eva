@@ -98,3 +98,95 @@ def test_private_subscription_callback_cannot_admit_household_review():
     assert worker.run_once(now=now) == "waiting_for_budget"
     assert len(reservations) == len(decisions) == 1
     assert decisions[0].provider == "eva:background-budget"
+
+
+@pytest.mark.parametrize("worker_name,source", [
+    ("decision_worker", "home-assistant"),
+    ("context_decision_worker", "initiative-review"),
+])
+def test_background_runtime_reads_canonical_owner_with_guarded_live_aliases(
+        monkeypatch, worker_name, source):
+    """Execute the factory assignment without starting its DB, threads or providers."""
+    import ast
+    from dataclasses import replace
+    from pathlib import Path
+    from uuid import UUID
+
+    from eva.adapters.postgres.private_owner import PostgresPrivateOwnerResolver
+    from eva.application.memory import MemoryAudience
+    from eva.application.telegram_ingress import TelegramPrincipalBinding, TelegramPrincipalBindings
+
+    owner = UUID("33333333-3333-4333-8333-333333333333")
+    binding = UUID("44444444-4444-4444-8444-444444444444")
+    alias = "telegram:12345"
+    bindings = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        12345, str(owner), ("12345",), str(binding)),))
+    live = [True]
+    resolver = PostgresPrivateOwnerResolver(object(), tenant_id="tenant",
+        installation_id="home", owner=owner, binding=binding,
+        authority_scope=object(), bindings_loader=lambda: bindings)
+    monkeypatch.setattr(resolver, "_current_binding", lambda: live[0])
+    now = datetime(2026, 10, 14, 12, tzinfo=UTC)
+    event = SensoryEvent(source, source + ":fixture", "private_opportunity_review"
+        if source == "initiative-review" else "state_changed", now, {})
+    claim = SensoryDecisionClaim(event, "sensory:" + source, source + ":fixture", 1, 0)
+    queries, decisions = [], []
+    context = object()
+
+    class Store:
+        def claim_next(self, **kwargs): return claim
+        def mark_model_started(self, actual, **kwargs): return actual
+        def context_review_claim_is_current(self, actual, **kwargs): return True
+        def complete(self, actual, decision, **kwargs): decisions.append(decision)
+        def fail(self, actual, error, **kwargs): raise error
+
+    class Memory:
+        def recall_for_presence(self, query):
+            queries.append(query)
+            assert resolver.aliases(query) == (str(owner), alias)
+            return context
+
+    class Model:
+        def autonomous_admission_blocker(self): return None
+        def evaluate_sensory_event(self, actual, identity, memory, attention=None, **kwargs):
+            assert memory is context
+            return FreeWillDecision("silence", "Fixture", 0, "fixture")
+
+    store = Store()
+    authority = SimpleNamespace(policy=lambda: None)
+    namespace = dict(
+        SensoryDecisionWorker=SensoryDecisionWorker,
+        settings=SimpleNamespace(background_tenant_id="tenant", background_installation_id="home",
+            background_principal_id=str(owner), telegram_principal_bindings_file="fixture",
+            dashboard_principal_binding_id=str(binding)),
+        sensory_store=store, context_review_store=store, model=Model(), memory=Memory(),
+        identity=IdentityProfile("Eva", "Fixture", ("Be honest",), 80),
+        provider_bundle=None, reflection_budget=object(),
+        runtime=SimpleNamespace(_initiative_authority=lambda: authority),
+        admit_initiative_review=lambda *args, **kwargs: SimpleNamespace(admitted=True),
+        load_principal_bindings=lambda _: bindings, UUID=UUID, datetime=datetime, UTC=UTC,
+    )
+    # Compile the actual factory expression, not a second hand-written composition.
+    runtime_path = Path(__file__).resolve().parents[3] / "src/eva/bootstrap/runtime.py"
+    tree = ast.parse(runtime_path.read_text())
+    matches = [node for node in ast.walk(tree) if isinstance(node, ast.Assign)
+        and any(isinstance(target, ast.Name) and target.id == worker_name for target in node.targets)]
+    assert len(matches) == 1
+    exec(compile(ast.Module(body=matches, type_ignores=[]), str(runtime_path), "exec"), namespace)
+    worker = namespace[worker_name]
+    assert worker.run_once(now=now) == "silence"
+    assert len(queries) == len(decisions) == 1
+    query = queries[0]
+    assert query.principal_id == str(owner) and query.subject_ids == (str(owner),)
+    assert query.conversation_id == "sensory:" + source
+    assert query.maximum_facts == 8
+    # Alias access still needs its exact private conversation and live authority.
+    alias_query = replace(query, principal_id=alias,
+        audience=MemoryAudience.private_person(principal_id=alias), subject_ids=(alias,))
+    assert resolver.aliases(alias_query) == ()
+    assert resolver.aliases(replace(alias_query, conversation_id=alias)) == (str(owner), alias)
+    assert resolver.aliases(replace(query, tenant_id="another-tenant")) == ()
+    assert resolver.aliases(replace(query, installation_id="another-home")) == ()
+    live[0] = False
+    assert resolver.aliases(query) == ()
+    assert resolver.aliases(replace(alias_query, conversation_id=alias)) == ()

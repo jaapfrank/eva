@@ -1,3 +1,19 @@
+## Actueel 14 oktober — eigenaarsgeheugen voor initiatief hersteld
+
+De gewone achtergrondroute gebruikte een Telegram-alias bij een sensory-conversatie,
+waardoor het canonieke eigenaarsgeheugen buiten de selectie viel. Beide private
+achtergrondlezers behouden nu de canonieke eigenaar; bestaande actuele alias-,
+bron- en privacycontroles blijven ongewijzigd. Drie gerichte checks slagen; dezelfde
+twee regressies falen op de oorspronkelijke compositie. Kern en werker zijn
+geïnstalleerd gezond, met behouden gegevens/configuratie en 345 andere Pythonbestanden
+per image. Nul handmatige Eva-modelaanvragen voor deze correctie; automatisch
+runtimeverbruik is hiermee niet gemeten. Geen spraakwerk of vergelijkingsserie.
+
+Dit is herstel, geen HUE5-afronding. 44/54 afgerond, tien open blijven staan.
+Vervolg HUE5: zelfgekozen nuttig werk werkelijk afleveren en echte feedback later
+toepassen. Geen nieuwe eigenaarvraag voordat een concrete bijdrage is afgeleverd.
+Bewijs: development/evidence/product/hue5-owner-context-outcome-20261014.json.
+
 ## Actueel 14 oktober — HUE6.1 afgerond; nuttig initiatief als volgende uitkomst
 
 HUE6.1 is volgens haar oorspronkelijke eindvoorwaarde onafhankelijk afgerond.

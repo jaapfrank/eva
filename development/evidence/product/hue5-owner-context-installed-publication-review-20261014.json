@@ -1,0 +1,90 @@
+{
+  "actualLiveBinding": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/installed-context-corrected.private.json",
+    "sha256": "91faa02b3afe7aa6332c5f11bdb13096a0eb4a4b4720e4e1e88b5257bc6b41fe"
+  },
+  "checks": {
+    "HUE5_1_stillOpen": true,
+    "HUE6_1_remainsLastCompletedTask": true,
+    "WERKBORDGeneratedFromCurrentBoard": true,
+    "actualRecallSelectedFactsNotMeasured": true,
+    "approvedExactImagesAndRuntimeInstalledHealthy": true,
+    "automaticRuntimeUsageUnmeasuredNotClaimedZero": true,
+    "creditsUnknown": true,
+    "currentCanonicalOwnerAndTrustedAliasAdmittedUnderActualDashboardAuthorityScope": true,
+    "existingProjectConfigurationAndMountsRetained": true,
+    "firstDiagnosticWrongScopeErrorPreservedNotProductExpiry": true,
+    "noAuthorityRenewalOrPrivacyBypass": true,
+    "noForcedInitiativeReviewOrNewDeliveryProven": true,
+    "noOwnerFeedbackEventFabricated": true,
+    "noPrivateContentOrProtectedFinalCasesPublished": true,
+    "originalDoneWhenUnchanged": true,
+    "other345PythonFilesPerImageUnchanged": true,
+    "smallTasksCompleted": 44,
+    "smallTasksOpen": 10,
+    "smallTasksTotal": 54,
+    "wrongAliasSensoryConversationStillRejected": true
+  },
+  "contract": "EvaIndependentHue5OwnerContextInstalledPublicationReview/v1",
+  "gitPublicationScope": {
+    "boardObjectWithoutForeignAuditCanonicalSha256": "5df89a6799a411c465d9b88425f2325115e2f6bfc4db8a9377138ca915c8c7ce",
+    "excludeOnlyConcurrentForeignAudit": "audit.subscriptionVoice20261013",
+    "scopedIndexByteHash": "Bind separately when root supplies the exact staged board copy.",
+    "workingForeignAuditUntouched": true
+  },
+  "installationInputReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/independent-installation-input-go.private.json",
+    "sha256": "01befeae59af978a26ab8fb3a4357387d31ce507f7d6a708a485179ab8cf28a1"
+  },
+  "installedReadback": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/installation/installed-readback.private.json",
+    "sha256": "7bd99bbfb00b5624fccd99a9a963927be5b633c1cc9ab5f952da3599ea12135b"
+  },
+  "limits": [
+    "Installed context handoff repair does not prove useful initiative, recipient delivery or later feedback use.",
+    "No new live recall/model/test/deployment by reviewer.",
+    "Existing negative owner feedback and historical NULL/UNKNOWN remain preserved."
+  ],
+  "recordedAt": "2026-10-14T03:38:25.745047+00:00",
+  "reviewedFiles": [
+    {
+      "path": "/home/administrator/project/Eva2/development/evidence/product/hue5-owner-context-outcome-20261014.json",
+      "sha256": "7662a15cdfcbab312def1b5baed08db3b60e7a32604f6251b22b949a0ef4cd58"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/AGENTS.md",
+      "sha256": "ca7b606a63b9cbd5f6b3bc397e128769d460169fb530a7306c55a9594ccc132a"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/docs/PROJECTDOEL.md",
+      "sha256": "c863eccd3158580a0748aa92b183993bd97dd51971dd64c44602f0a3515fef0e"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/docs/WERKBORD.md",
+      "sha256": "c967375a033b46dd9d2343b0061585acb5db1c8725a56e58f353d3d14dadc2ab"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/design/product/execution-workboard-v1.json",
+      "sha256": "e37d4b2d64dcfd57bf0da8ffe6028b46d1a2e54c36224eae3cffde736bed6d00"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/src/eva/bootstrap/runtime.py",
+      "sha256": "745d7f9e6cdd66502042c47ad1d4549aade978d39da17cad1c1c711ef2c7794d"
+    },
+    {
+      "path": "/home/administrator/project/Eva2/development/tests/bootstrap/test_subscription_initiative_admission.py",
+      "sha256": "24449b0e975205d5f462fbce807c7abc0797599537480f8f1fdc7dee9504e987"
+    }
+  ],
+  "reviewerModels": 0,
+  "reviewerRuntimeMutations": 0,
+  "sourceReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/independent-background-owner-source-review.private.json",
+    "sha256": "f75ef072e1ce0e4a37743f5fba41a4265a6836cc06eb9cb6b09e2d7a7ea4d676"
+  },
+  "update": {
+    "path": "/home/administrator/project/.eva2-artifacts/hue5-context-20261014/installation/update.private.json",
+    "sha256": "c0cbe909b3bfe08d72a23a735c2d33423784a509deb9d87d62bf94e910827b91"
+  },
+  "verdict": "GO_INSTALLED_AND_PUBLICATION"
+}

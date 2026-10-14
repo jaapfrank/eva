@@ -1,0 +1,45 @@
+{
+  "contract": "EvaInitiativeOwnerContextOutcome/v1",
+  "recordedAt": "2026-10-14T03:33:49.764137+00:00",
+  "cause": "Background recall replaced canonical owner with Telegram alias while retaining sensory conversation ID; trusted alias guard correctly excluded canonical owner memories.",
+  "change": "Retain canonical owner in both ordinary background private read routes; existing live private aliases and source checks unchanged.",
+  "sourceSha256": "745d7f9e6cdd66502042c47ad1d4549aade978d39da17cad1c1c711ef2c7794d",
+  "verification": {
+    "targetedChecksPassed": 3,
+    "sameRegressionChecksFailOnOriginal": 2,
+    "actualDatabaseBindingMockedInUnitTests": true,
+    "sourceReviewSha256": "f75ef072e1ce0e4a37743f5fba41a4265a6836cc06eb9cb6b09e2d7a7ea4d676",
+    "installationInputReviewSha256": "01befeae59af978a26ab8fb3a4357387d31ce507f7d6a708a485179ab8cf28a1",
+    "actualCurrentOwnerAliasPairValidated": true,
+    "originalAliasSensoryConversationStillRejected": true,
+    "liveBindingReceiptSha256": "91faa02b3afe7aa6332c5f11bdb13096a0eb4a4b4720e4e1e88b5257bc6b41fe",
+    "diagnosticScopeErrorPreserved": true,
+    "diagnosticErrorWasNotProductBindingExpiry": true
+  },
+  "installation": "running_with_retained_mounts",
+  "initiativeDelivered": false,
+  "ownerFeedbackLinked": false,
+  "laterFeedbackUseProven": false,
+  "taskCompleted": false,
+  "additionalTasksCompleted": 0,
+  "manualEvaModelRequestsForThisCorrection": 0,
+  "developmentCredits": "unknown",
+  "scope": "HUE5 existing context handoff only; no new initiative system, memory import, voice change or comparison series",
+  "installedRuntime": {
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "sourceSha256": "745d7f9e6cdd66502042c47ad1d4549aade978d39da17cad1c1c711ef2c7794d",
+    "otherPythonFilesPerImageUnchanged": 345,
+    "schemaChanged": false,
+    "dataAndConfigurationRetained": true
+  },
+  "automaticRuntimeModelUsage": "not measured by this source installation; not claimed zero",
+  "ordinaryInitiativeState": {
+    "lastReviewUtc": "2026-10-14T02:39:27+00:00",
+    "decision": "silence",
+    "newDeliverySinceInstalledCorrection": false,
+    "personalFeedbackEvents": 0,
+    "noForcedReview": true,
+    "futureSelectedFactCount": "not measured"
+  }
+}

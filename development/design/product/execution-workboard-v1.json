@@ -848,10 +848,10 @@
     "status": "in_progress",
     "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
     "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "nextAction": "Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.",
+    "nextAction": "De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.",
     "area": "initiative and learning",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T03:14:08.630849+00:00",
+    "checkedAt": "2026-10-14T03:33:49.764137+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1633,6 +1633,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "HUE5 · Eigenaarsgeheugen in initiatiefroute hersteld",
+            "state": "installed",
+            "summary": "Gerichte herstelcorrectie geïnstalleerd. Zelfgekozen nuttige bijdrage en later feedbackgebruik nog open; geen nieuwe taak afgerond.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-owner-context-outcome-20261014.json",
+            "checkedAt": "2026-10-14T03:33:49.764137+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "HUE6.1 · Droomcyclus technisch afgerond",
             "state": "installed",
             "summary": "HUE6.1 technisch afgerond: gewone rustige reflectie maakte een gegronde stijlspiegel uit twee feiten; die werd gebruikt in een nieuw gesprek met een vriendelijk antwoord van 37 woorden zonder genummerde lijst. Agentvarianten eindigden gelijk: referentie terecht behouden en later gebruikt. Bestaande onafhankelijke codewinst/toepassing/later gebruik blijven bewezen. Geen algemene voorsprong of gezinsacceptatie geclaimd.",
@@ -1821,9 +1833,10 @@
           "taskId": "HUE5.1",
           "activeExecution": true,
           "nativeRunning": false,
-          "summary": "Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.",
+          "summary": "De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.",
           "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-          "ownerActionNeeded": false
+          "ownerActionNeeded": false,
+          "checkedAt": "2026-10-14T03:33:49.764137+00:00"
         },
         "next": {
           "state": "Daarna",
@@ -1999,7 +2012,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "HUE6.1",
+        "currentStep": "HUE5.1",
         "steps": [
           {
             "number": 1,
@@ -2106,12 +2119,12 @@
           "overviewVisible": true,
           "overviewVerifiedAt": "2026-10-12T12:19:53.756360+02:00",
           "assessmentSummary": "Eva vormt verwachtingen, vergelijkt ze met echte uitkomsten en past haar latere gedrag aan. Bestaande opslag en uitvoering worden hergebruikt.",
-          "currentTaskId": "L2.2",
-          "currentTaskPhase": "full_result_delivered_summary_default",
-          "lastUpdatedAt": "2026-10-13T13:40:45.278382+00:00",
+          "currentTaskId": "HUE5.1",
+          "currentTaskPhase": "useful_initiative_delivery_and_later_feedback",
+          "lastUpdatedAt": "2026-10-14T03:14:08.630849+00:00",
           "learningConnectionInstalled": true,
           "laterUseProven": true,
-          "expandedCompletedTaskCount": 43
+          "expandedCompletedTaskCount": 44
         },
         "implementationSlices": [
           {
@@ -2926,7 +2939,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-                "nextAction": "De normale initiatiefcyclus loopt weer: om 21:28 koos Eva zelf voor stilte, met één Astra-aanvraag en 1.969 geregistreerde tokens. Nog geen nuttige nieuwe bijdrage of leren van eigenaarfeedback aangetoond. Volg bestaande privéaflevering en latere reactie; geen vooraf gekozen voorbeeld, extra proef of oude taakherhaling.",
+                "nextAction": "De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -2936,13 +2949,17 @@
                   "blocksIndependentWork": false
                 },
                 "assignment": {
-                  "activeWorkers": []
+                  "activeWorkers": [
+                    "/root"
+                  ]
                 },
                 "ownerFeedback": {
                   "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
                   "usefulDeliveryConfirmed": false,
                   "initiativeId": null
-                }
+                },
+                "checkedAt": "2026-10-14T03:33:49.764137+00:00",
+                "latestEvidence": "development/evidence/product/hue5-owner-context-outcome-20261014.json"
               }
             ]
           },
@@ -3257,7 +3274,9 @@
                 "completedAt": "2026-10-14T03:14:08.630849+00:00",
                 "result": "HUE6.1 technisch afgerond: gewone rustige reflectie maakte een gegronde stijlspiegel uit twee feiten; die werd gebruikt in een nieuw gesprek met een vriendelijk antwoord van 37 woorden zonder genummerde lijst. Agentvarianten eindigden gelijk: referentie terecht behouden en later gebruikt. Bestaande onafhankelijke codewinst/toepassing/later gebruik blijven bewezen. Geen algemene voorsprong of gezinsacceptatie geclaimd.",
                 "completionKind": "technical",
-                "familyAccepted": false
+                "familyAccepted": false,
+                "completionEvidence": "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
+                "independentReview": "development/evidence/product/hue6-original-completion-publication-review-20261014.json"
               }
             ]
           },
@@ -3674,7 +3693,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
+        "nextAction": "Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -3682,7 +3701,7 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-13T20:37:54.881915+00:00"
+        "updatedAt": "2026-10-14T03:14:08.630849+00:00"
       }
     },
     "deliveryPlan": {
@@ -4614,7 +4633,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-              "nextAction": "Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.",
+              "nextAction": "De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -4633,7 +4652,8 @@
                 "usefulDeliveryConfirmed": false,
                 "initiativeId": null
               },
-              "checkedAt": "2026-10-14T03:14:08.630849+00:00"
+              "checkedAt": "2026-10-14T03:33:49.764137+00:00",
+              "latestEvidence": "development/evidence/product/hue5-owner-context-outcome-20261014.json"
             }
           ]
         },
@@ -4948,7 +4968,9 @@
               "completedAt": "2026-10-14T03:14:08.630849+00:00",
               "result": "HUE6.1 technisch afgerond: gewone rustige reflectie maakte een gegronde stijlspiegel uit twee feiten; die werd gebruikt in een nieuw gesprek met een vriendelijk antwoord van 37 woorden zonder genummerde lijst. Agentvarianten eindigden gelijk: referentie terecht behouden en later gebruikt. Bestaande onafhankelijke codewinst/toepassing/later gebruik blijven bewezen. Geen algemene voorsprong of gezinsacceptatie geclaimd.",
               "completionKind": "technical",
-              "familyAccepted": false
+              "familyAccepted": false,
+              "completionEvidence": "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
+              "independentReview": "development/evidence/product/hue6-original-completion-publication-review-20261014.json"
             }
           ]
         },

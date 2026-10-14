@@ -4,13 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Van de reactie op eigen initiatief leren — HUE5.1
+Van de reactie op eigen initiatief leren
 
-Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd.
+De verkeerde persoonskoppeling in de initiatiefreview is geïnstalleerd hersteld; kern en werker zijn gezond. Eva kan nu het canonieke eigenaarsgeheugen én actuele toegelaten privé-alias meenemen. Volgende uitkomst: werkelijk zelfgekozen nuttig werk uitvoeren en privé afleveren, daarna echte feedback bij later initiatief gebruiken. Aflevering en feedbackgebruik zijn nog niet bewezen; HUE5 blijft open.
 
 Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
-
-Laatste oplevering: HUE6.1 technisch afgerond: gewone rustige reflectie maakte een gegronde stijlspiegel uit twee feiten; die werd gebruikt in een nieuw gesprek met een vriendelijk antwoord van 37 woorden zonder genummerde lijst. Agentvarianten eindigden gelijk: referentie terecht behouden en later gebruikt. Bestaande onafhankelijke codewinst/toepassing/later gebruik blijven bewezen. Geen algemene voorsprong of gezinsacceptatie geclaimd.
 
 ## Afmaakvolgorde
 
@@ -25,10 +23,10 @@ Laatste oplevering: HUE6.1 technisch afgerond: gewone rustige reflectie maakte e
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–4 zijn technisch afgerond en later toegepast. De samenhang met initiatief en werkelijk gezinsgebruik afronden; geen geheugenherbouw. |
-| Eigen initiatief | Nog geen nuttige bijdrage bevestigd | HUE5: nuttige bijdrage afleveren en echte ontvangerreactie laten doorwerken; Jaap heeft nog geen nuttige bijdrage ontvangen. |
-| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE6 technisch afgerond. HUE5 en samenhangend dagelijks gezinsgebruik blijven open. |
+| Eigen initiatief | Nog geen nuttige bijdrage bevestigd | Eva moet een werkelijk nuttige eigen bijdrage kiezen, afronden en via de bestaande privéroute bij Jaap laten aankomen. Gebruik vervolgens zijn echte reactie bij een volgend initiatief of bewust stilblijven. Zijn eerdere melding dat hij niets nuttigs ontving blijft staan; geen nieuwe vraag voordat iets concreets is geleverd. |
+| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE5: nuttig initiatief met echte feedback; samenhangend dagelijks gebruik en uiteindelijke gezinsacceptatie blijven open. |
 
-44/54 bestaande kleine taken afgerond; 10 open; 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage. De reorganisatie verhoogt die telling niet.
+44/54 bestaande kleine taken afgerond; 10 open. 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage.
 
 ## Alle bestaande kleine taken
 
@@ -60,7 +58,7 @@ Laatste oplevering: HUE6.1 technisch afgerond: gewone rustige reflectie maakte e
 | T3.3 · Overnemen en correct doorgaan | ✓ Afgerond | Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie. |
 | I1.1 · Een nuttige huisbijdrage laten aankomen | ✓ Afgerond | Bestaande initiatiefroute kiest en levert een concrete toegestane bijdrage. |
 | I1.2 · Stilte en passendheid beoordelen | ● Open | Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart. |
-| HUE5.1 · Van de reactie op eigen initiatief leren | ⏳ Bezig | Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven. |
+| HUE5.1 · Van de reactie op eigen initiatief leren | ● Open | Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven. |
 | I2.1 · Relevante bronnen zelfstandig ontdekken en kiezen | ✓ Afgerond | Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag. |
 | I2.2 · Waarnemingsopdracht zelf automatiseren en terugmelden | ✓ Afgerond | Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat. |
 | L2.1 · Project na onderbreking zelfstandig vervolgen | ✓ Afgerond | Bewaard resultaat en correctie leiden zonder ontwikkelaarhervatting tot de volgende uitvoerstap. |
