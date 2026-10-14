@@ -1,0 +1,27 @@
+{
+  "contract": "EvaImprovementReviewAdmission/v1",
+  "checkedAt": "2026-10-14T10:06:39.538705+00:00",
+  "requestDeferredUntilOperational": true,
+  "readOnlyStateCheck": true,
+  "newEvaModelRequests": 0,
+  "newBuildTasks": 0,
+  "readiness": {
+    "coreReady": true,
+    "databaseReady": true,
+    "memoryProjectionReady": true,
+    "modelProviderReady": true,
+    "workerHealthy": true,
+    "telegramServiceActive": true,
+    "legacyAgentActive": false,
+    "ordinaryAutonomousDecisionObserved": true,
+    "newStandaloneTelegramExchangeObserved": false,
+    "newUsefulInitiativeDeliveryObserved": false
+  },
+  "limits": [
+    "No fresh standalone Telegram exchange recorded at this observation.",
+    "A completed autonomous silence decision does not prove a useful visible contribution.",
+    "The current processes being healthy does not close the full product goal."
+  ],
+  "taskCountUnchanged": 52,
+  "completedTaskCountUnchanged": 45
+}

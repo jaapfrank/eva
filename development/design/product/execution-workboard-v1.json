@@ -1892,9 +1892,9 @@
         },
         "next": {
           "state": "Daarna",
-          "title": "Samenhangend dagelijks gebruik en gezinsacceptatie",
-          "summary": "De volledige leercyclus en vier huisgenootuitkomsten samen gebruiken; jouw acceptatie blijft afzonderlijk.",
-          "detail": "Geen nieuwe vergelijkingsserie of spraakbouw."
+          "title": "Eerst dagelijks werkend; daarna gericht verbeteren",
+          "summary": "Eerst gewone gesprekken, zelfstandig werk, terugmelding en passende aanwezigheid in het dagelijkse gebruik bevestigen. Daarna verbeterpunten onderzoeken en alleen concrete ontbrekende verbeteringen als nieuwe taken vastleggen.",
+          "detail": "De bestaande afrondingen en het volledige projectgoal blijven leidend. Het verbeteronderzoek is nog niet gestart; geen extra bouwtaken toegevoegd."
         },
         "ownerAction": {
           "title": "Eva2 staat zelfstandig aan; Eva1 is gestopt",
@@ -1902,7 +1902,7 @@
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-14T09:56:19.700892+00:00",
+        "checkedAt": "2026-10-14T10:06:39.538705+00:00",
         "reviewedAt": "2026-10-14T03:14:08.630849+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -6478,6 +6478,36 @@
       "ordinaryModelRequests": 1,
       "ordinaryRegisteredTokens": 4599,
       "ordinaryUsageIsFullRuntimeTotal": false
+    },
+    "deferredImprovementReview20261014": {
+      "requestedAt": "2026-10-14T10:06:39.538705+00:00",
+      "ownerInstruction": "Ga nu eva onderzoeken en kijken waar het punten bevat die verbeterd moeten en kunnen worden. Maak daar nieuwe taken van. Maar pas zodra eva volledig draaid.",
+      "status": "waiting_for_ordinary_operational_use",
+      "countedAsProductTask": false,
+      "researchStarted": false,
+      "newBuildTasksAdded": 0,
+      "startCondition": "De geïnstalleerde Eva2-kern werkt via de gebruikte dagelijkse ingang: gesprek/geheugen, waarneming, zelfstandig werk en oorspronkelijke terugmelding; autonome afweging blijft bereikbaar zonder runtimeblokkade. Procesgezondheid alleen is onvoldoende. Geparkeerd optioneel spraakwerk en finale gezinsacceptatie zijn afzonderlijk.",
+      "observed": {
+        "coreReady": true,
+        "databaseReady": true,
+        "memoryProjectionReady": true,
+        "modelProviderReady": true,
+        "workerHealthy": true,
+        "telegramServiceActive": true,
+        "legacyAgentActive": false,
+        "ordinaryAutonomousDecisionObserved": true,
+        "newStandaloneTelegramExchangeObserved": false,
+        "newUsefulInitiativeDeliveryObserved": false
+      },
+      "method": [
+        "Gebruik actuele installatie, echte gebruiksresultaten en bestaande bewijzen.",
+        "Onderzoek concrete tekorten in slimheid/resultaatkwaliteit, geheugen/mensbegrip, initiatief, zelfstandig programmeren/uitbreiden, leercyclus/AIDE², snelheid/verbruik en modulariteit/betrouwbaarheid.",
+        "Vergelijk iedere bevinding eerst met bestaande taken en modules; bestaande afronding eerst, geen dubbele implementatie of nieuwe vergelijkingsserie.",
+        "Maak pas na de operationele startvoorwaarde nieuwe taken: bewijs, gebruikersgevolg, herbruikbare module, prioriteit, concrete eindvoorwaarde en noodzakelijke verificatie.",
+        "Houd technische werking, merkbare gezinswaarde en eigenaaracceptatie afzonderlijk."
+      ],
+      "scopeDoesNotReplaceExistingGoal": true,
+      "ownerActionRequested": false
     }
   },
   "updatedAt": "2026-10-14T03:14:08.630849+00:00",

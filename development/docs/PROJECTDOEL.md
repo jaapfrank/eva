@@ -1,3 +1,18 @@
+## Actuele eigenaarvolgorde 14 oktober — verbeteronderzoek na werkende dagelijkse Eva
+
+Eerst Eva2 volledig operationeel maken via de gewone gebruikte ingangen: gesprek
+en geheugen, waarneming, zelfstandig werk, resultaat terugbrengen en autonome
+afweging zonder actuele runtimeblokkade. Containergezondheid is geen eindvoorwaarde.
+Daarna gericht onderzoeken waar Eva slimmer, nuttiger, sneller, zuiniger of beter
+onderhoudbaar kan worden, inclusief programmeren, uitbreidingen en AIDE².
+Nieuwe taken volgen pas uit concrete bevindingen nadat deze operationele voorwaarde
+is gehaald. Vergelijk eerst met bestaande taken en modules; geen dubbele taken,
+nieuwe algemene herbouw of vergelijkingsserie. Iedere nieuwe taak krijgt bewijs,
+gebruiksgevolg, prioriteit en een toetsbare eindvoorwaarde. Het huidige volledige
+huisgenootgoal en de bestaande afrondingen blijven behouden; automatische bestaande
+leercycli worden door deze volgorde niet stopgezet. Optionele spraak en finale
+gezinsacceptatie blijven afzonderlijk zichtbaar. Nu geen extra eigenaarproef.
+
 ## Actueel 14 oktober — gewone autonomie hervat; Eva1 gestopt
 
 Eva1 is gestopt en uitgeschakeld voor herstart; gegevens blijven behouden.
