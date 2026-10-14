@@ -397,6 +397,28 @@ bouwt of koppelt zij het en hergebruikt het bij een andere opdracht. Browser, HA
 camera's, financiële onderwerpen en apparaten zijn voorbeelden, geen vaste
 productfuncties die allemaal vooraf geprogrammeerd moeten worden.
 
+## Eva-beheer en optionele providers en communicatie — eigenaarwens 14 oktober
+
+Eén Eva-beheeromgeving toont gesprekken, geheugenbronnen en afgeleide herinneringen,
+bekende personen, opdrachten en resultaten, eigen initiatief en feedback, rustige
+reflecties/dromen en daadwerkelijk toegepaste verbeteringen. Onderscheid gedachte,
+voorstel, uitgevoerde actie en bewezen uitkomst. Persoonsgebonden privé-inhoud blijft
+bij de juiste persoon. Het projectdashboard blijft het ontwikkeloverzicht.
+
+Vanuit dezelfde beheeromgeving moeten modelverbindingen en communicatiekanalen
+optioneel toegevoegd, ingesteld, gecontroleerd en uitgeschakeld kunnen worden.
+Claude/Anthropic en andere modelproviders zijn gewenste uitbreidingen naast de
+bestaande providerroute; WhatsApp is een gewenst optioneel kanaal naast Telegram
+en gewone chat. Een extra provider of kanaal gebruikt dezelfde Eva-identiteit,
+hetzelfde persoonsgebonden geheugen en dezelfde taken en resultaatterugmelding.
+Ondersteunde aanmeldmethoden en externe vereisten worden bij realisatie geverifieerd;
+een wens is geen bewijs van een bestaande werkende koppeling.
+
+Dit verduidelijkt het productontwerp; de huidige uitvoervolgorde blijft gelden.
+Hergebruik bestaande beheer-, installatie- en adapteronderdelen. Geen nieuwe
+afzonderlijke agent, geheugenopslag of verplichte lijst met vooraf aangesloten tools.
+De genoemde uitbreidingen zijn nog niet als gebouwd of geïnstalleerd aangemerkt.
+
 ## Verplichte leercyclus en AIDE²
 
 Werk de volledige kringloop af: **waarnemen → relevant geheugen → verwachting en

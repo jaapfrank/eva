@@ -45,6 +45,21 @@ De importgrenzen zijn machineleesbaar in development/design/architecture/package
 Modulair betekent duidelijke eigendom, poorten en vervangbare adapters. Het betekent
 niet dat alle modules apart opnieuw gebouwd of elke mogelijke koppeling geleverd wordt.
 
+## Optionele modelproviders en communicatiekanalen
+
+De eigenaar wil Claude/Anthropic en andere modelproviders kunnen toevoegen, en
+WhatsApp als optioneel communicatiekanaal. Modeladapters verzorgen uitsluitend
+providerprotocol, aanmelding, ondersteunde modelmogelijkheden en gebruiksregistratie;
+kanaaladapters verzorgen ontvangst, persoonsbinding en aflevering aan de oorspronkelijke
+ontvanger. Identiteit, geheugen, initiatief en duurzame taken blijven in de gedeelde kern.
+Een kanaalwissel of modelwissel maakt geen nieuwe Eva of afzonderlijke uitvoerder.
+
+Het Eva-beheer verbindt de bestaande chat-, geheugen-, werk- en initiatiefpagina's
+met personen, reflectie-/verbeteruitkomsten en optionele verbindingsinstellingen.
+Installatievoorzieningen worden hergebruikt waar passend. Dit is een gewenste
+uitbreiding, geen claim dat deze adapters of volledige beheeromgeving al geleverd zijn.
+Actuele provider- en kanaalvereisten worden vóór concrete aansluiting gecontroleerd.
+
 ## Waar de uitvoering vastliep
 
 1. **Tegenstrijdige aansturing:** verouderde Actueel-opdrachten, 41/54 naast 43/54,
