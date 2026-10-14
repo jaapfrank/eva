@@ -84,7 +84,8 @@ def test_mount_order_is_not_identity_but_storage_changes_are():
     assert not same_mounts(mounts, [*mounts, mounts[0]])
 
 
-def test_update_follows_same_process_without_elapsed_time_failure(tmp_path):
+@pytest.mark.parametrize("initial_state", ["running", "exited", "created"])
+def test_update_follows_same_process_without_elapsed_time_failure(tmp_path, initial_state):
     import json
     baseline = {"services": {"core": {"image": "sha256:" + "a" * 64}}}
     candidate = deepcopy(baseline)
@@ -97,6 +98,10 @@ def test_update_follows_same_process_without_elapsed_time_failure(tmp_path):
                 return "core current-hash"
             return json.dumps(candidate if "after" in args else baseline)
         if "ps" in args:
+            if not dispatched and initial_state != "running" and "--all" not in args:
+                return ""
+            if dispatched:
+                assert "--all" not in args
             return "current-container"
         if args[:3] == ["docker", "image", "inspect"]:
             return json.dumps([{"Id": args[-1], "Config": {}}])
@@ -107,6 +112,7 @@ def test_update_follows_same_process_without_elapsed_time_failure(tmp_path):
                     "com.docker.compose.config-hash": "current-hash"}},
                 "Image": (candidate if dispatched else baseline)["services"]["core"]["image"],
                 "Mounts": [],
+                "State": {"Status": "running" if dispatched else initial_state},
             }])
         if "up" in args:
             assert kwargs["deadline"] is None

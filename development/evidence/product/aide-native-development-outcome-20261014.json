@@ -1,0 +1,201 @@
+{
+  "contract": "EvaNativeSteeringDevelopmentOutcome/v1",
+  "at": "2026-10-14T01:30:44.732372+00:00",
+  "status": "development_tie_parent_unconfirmed",
+  "candidate_sha256": "99ac9cc9aed93e8da6628a65dea0ca6e3f6dd4e9cfc1d17810c61444be787cd1",
+  "baseline_sha256": "9288a4b02e2b2f76aa1964db128a10f6ff45e6257373814bc2b06033ea21d012",
+  "source_read_and_draft": "genuine native retained original receipts; not operator-authored",
+  "development": {
+    "assessment_sha256": "5863aae8e0f6faeabda6aa1a9730d4d9e11d51987763585de5a6030e9c90758e",
+    "baseline": {
+      "complete": true,
+      "error": null,
+      "metrics": {
+        "case_count": 1,
+        "completed_tasks": 0,
+        "correct_checks": 4,
+        "elapsed_ms": 147249,
+        "hard_failures": 0,
+        "help_count": 0,
+        "input_tokens": 37634,
+        "output_tokens": 1046,
+        "provider_attempts": 6,
+        "verified_progress_tasks": 0
+      }
+    },
+    "candidate": {
+      "complete": true,
+      "error": null,
+      "metrics": {
+        "case_count": 1,
+        "completed_tasks": 0,
+        "correct_checks": 4,
+        "elapsed_ms": 144517,
+        "hard_failures": 0,
+        "help_count": 0,
+        "input_tokens": 36586,
+        "output_tokens": 675,
+        "provider_attempts": 6,
+        "verified_progress_tasks": 0
+      }
+    },
+    "contract": "EvaComponentDevelopmentAssessment/v1",
+    "criteria": {
+      "case_count_metric": "case_count",
+      "hard_checks": {
+        "hard_failures": 0,
+        "help_count": 0
+      },
+      "id": "eva-hue6-prospective-explicit-results-quality-20261013",
+      "metrics": [
+        {
+          "direction": "maximize",
+          "kind": "quality",
+          "name": "completed_tasks"
+        },
+        {
+          "direction": "maximize",
+          "kind": "quality",
+          "name": "correct_checks"
+        },
+        {
+          "direction": "maximize",
+          "kind": "quality",
+          "name": "verified_progress_tasks"
+        },
+        {
+          "direction": "minimize",
+          "kind": "quality",
+          "name": "help_count"
+        }
+      ],
+      "objective": "Complete both explicitly requested deliverables, execute and independently read back the real program and result, and pass all four fixed correctness checks with zero human help. Only strictly improved measured result quality without regression can justify independent final assessment and application. Timing and token usage are descriptive. One new development case and one separate protected final case; closed historical cases are reference only."
+    }
+  },
+  "decision": {
+    "state": "baseline_retained",
+    "selected_candidate_sha256": null,
+    "baseline_retained": true,
+    "independent_final_started": false,
+    "installed_candidate": false,
+    "quality_win": false
+  },
+  "parent": {
+    "state": "ambiguous",
+    "result": null,
+    "error_code": "internal_error",
+    "error_fingerprint": "78ae4ef91593b7c523ec6ac91f85aeae99e490cfec10c6bf3d9ea1a278ed3947",
+    "verified_steps": [
+      {
+        "step": 2,
+        "name": "evaluate_own_component_improvement"
+      },
+      {
+        "step": 3,
+        "name": "compare_own_component_improvements"
+      },
+      {
+        "step": 4,
+        "name": "save_workspace_document"
+      }
+    ],
+    "saved_result_verified": true,
+    "closing_response_confirmed": false
+  },
+  "usage": {
+    "continuation_parent": {
+      "input_tokens": 34356,
+      "measurement": "measured",
+      "output_tokens": 186,
+      "provider_attempts": 3,
+      "request_ids": [
+        "d2887f6f-ff47-4c96-8888-061c43cdb658",
+        "966675c3-6f48-4f1c-bdd2-ebd44db31e83",
+        "f8f7bec6-7606-4a7f-813b-be830215c825"
+      ],
+      "roles": [
+        {
+          "attempts": 3,
+          "model": "gpt-6-astra",
+          "reasoning_effort": "medium",
+          "role": "work"
+        }
+      ],
+      "total_tokens": 34542,
+      "unknown_attempts": 0
+    },
+    "child": {
+      "input_tokens": 74220,
+      "output_tokens": 1721,
+      "physical_tools": 22,
+      "provider_attempts": 12,
+      "retries": 0,
+      "unknown_attempts": 0
+    },
+    "current_cycle_including_original_parent": {
+      "input_tokens": 135596,
+      "output_tokens": 2759,
+      "physical_tools": 28,
+      "provider_attempts": 18,
+      "total_tokens": 138355
+    },
+    "selected_historical_usage": {
+      "provider_attempts": 57,
+      "total_tokens": 519776,
+      "physical_tools": 79
+    },
+    "known_cumulative_selected_usage": {
+      "provider_attempts": 75,
+      "total_tokens": 658131,
+      "physical_tools": 107
+    },
+    "credit_cost": "unknown",
+    "codex_development_credits": "unknown"
+  },
+  "time": {
+    "clock_never_reset": true,
+    "construction_active_seconds": 26.58776371309068,
+    "development_excluded_seconds": 422.1637379130116,
+    "development_inflight": false,
+    "fresh_prospective_epoch": true,
+    "intervals": [
+      {
+        "elapsed_seconds": 422.1637379130116,
+        "end": 672449.463015149,
+        "proof": {
+          "baseline_sha256": "9288a4b02e2b2f76aa1964db128a10f6ff45e6257373814bc2b06033ea21d012",
+          "binding": {
+            "contract": "EvaScopedComponentEvaluationBinding/v1",
+            "draft_step": 1,
+            "evaluation_call_id": "call_91b8d7d609ad42d29f68c9b494ac9090",
+            "evaluation_step": 2,
+            "execution_binding_ref": "321ac6d1cd96276ec654e05c04ccbf8f1b68eb2934668c272bedffb8a1e8dd96",
+            "task_id": "work:eva-resume:5f86d906-f106-5a00-871b-8ce16dd9f28b"
+          },
+          "candidate_sha256": "99ac9cc9aed93e8da6628a65dea0ca6e3f6dd4e9cfc1d17810c61444be787cd1",
+          "draft_event_payload_sha256": "c36f88714fff29db8a6515e928b8273d9ed254f0327309c74c0bf71f43201f50",
+          "draft_thread_id": "component-draft:53d2c43ab6f09cc7492eb8c20b5c9a17c1e02df301ea5a6116f66b37e9ad6b83",
+          "receipt_sha256": "eaa04d830c2b0d6e31fed3da61be4aba250196db42e62748e25ead363bb48d27"
+        },
+        "qualified": true,
+        "start": 672027.299277236
+      }
+    ],
+    "old_original_and_recovery_epochs_reopened": false,
+    "wall_elapsed_seconds": 448.75150162610225
+  },
+  "source_binding": {
+    "raw_sha256": "30bc12cafe0a0ae595ca0d71ac0de3f824d9458bed9ee34e37ab527379274ae3",
+    "seal_sha256": "38299644643f5fa49ddc2500beb3c5fbb5323522188e7294c9ce4514b96bdf5e"
+  },
+  "limits": {
+    "not_general_agent_quality": true,
+    "scorer_unchanged": true,
+    "historical_unknown_preserved": true,
+    "HUE6_completed": false,
+    "additional_tasks_completed": 0,
+    "completed": 43,
+    "total": 54
+  },
+  "next": "Only diagnose the missing native closing response using the existing saved receipts. Do not repeat development or run a final comparison for a non-winning candidate."
+}

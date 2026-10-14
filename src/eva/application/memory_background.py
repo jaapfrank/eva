@@ -24,6 +24,12 @@ class DurableMemoryOutboxPort(Protocol):
 
     def pending(self, *, limit: int = 256) -> tuple[object, ...]: ...
 
+    def pending_reflection_scopes(self, *, now: datetime | None = None
+                                  ) -> tuple[tuple[str, str, str], ...]: ...
+
+    def claim_reflection_scope(self, tenant_id: str, installation_id: str,
+                               principal_id: str, *, now: datetime) -> bool: ...
+
     def begin(self, job: object, *, now: datetime | None = None) -> object | None: ...
 
     def erase_content(
@@ -199,10 +205,19 @@ class SemanticMemoryColdPathWorker:
 
     def start(self) -> None:
         pending_jobs = () if self._outbox is None else self._outbox.pending()
+        recover = getattr(self._outbox, "pending_reflection_scopes", None)
+        recovered_scopes = () if not callable(recover) else recover()
+        if recovered_scopes and not callable(getattr(self._outbox, "claim_reflection_scope", None)):
+            raise RuntimeError("durable reflection recovery lacks a dispatch claim")
+        if any(not isinstance(scope, tuple) or len(scope) != 3
+               or any(not isinstance(value, str) or not value.strip() for value in scope)
+               for scope in recovered_scopes):
+            raise RuntimeError("durable reflection scope is invalid")
         with self._lock:
             if self._stopping or any(thread is not None and thread.is_alive()
                                      for thread in (self._thread, self._service_thread)):
                 return
+            self._reflection_scopes.update(recovered_scopes)
             self._stop.clear()
             self._thread = Thread(
                 target=self._run,
@@ -583,6 +598,7 @@ class SemanticMemoryColdPathWorker:
                 with self._lock:
                     self._reflection_scopes.update(scopes[index:])
                 return
+            durably_claimed = False
             try:
                 admission = None
                 if self._reflection_budget is not None:
@@ -605,15 +621,24 @@ class SemanticMemoryColdPathWorker:
                     with self._lock:
                         self._reflection_scopes.update(scopes[index:])
                     return
+                claim = getattr(self._outbox, "claim_reflection_scope", None)
+                if callable(claim):
+                    if not claim(tenant_id, installation_id, principal_id,
+                                 now=datetime.now(tz=UTC).replace(microsecond=0)):
+                        continue
+                    durably_claimed = True
+                if not self._idle_due():
+                    continue  # A durable claim is not evidence of provider completion.
                 receipt = self._memory.maintain_person_scope(
                     tenant_id, installation_id, principal_id
                 )
             except Exception as error:  # retried after the next retained exchange
                 with self._lock:
                     self._last_error = f"{type(error).__name__}: {error}"
-                    self._reflection_scopes.add(
-                        (tenant_id, installation_id, principal_id)
-                    )
+                    if not durably_claimed:
+                        self._reflection_scopes.add(
+                            (tenant_id, installation_id, principal_id)
+                        )
                 continue
             # A settled provider operation must never be repeated because its
             # local receipt could not be stored. Admission and completion are

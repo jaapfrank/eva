@@ -3877,3 +3877,139 @@ def test_timeline_load_uses_one_snapshot_during_concurrent_transition(timeline_e
     finally:
         sa.event.remove(timeline_engine, "after_cursor_execute", concurrent_transition)
     assert timeline.load(first.thread_id).revision == 2
+
+
+def test_retained_private_reflection_recovers_after_restart_without_retention(timeline_engine):
+    from eva.application.memory_background import HindsightColdPathWorker
+    from dataclasses import replace
+
+    outbox = PostgresMemoryOutbox(timeline_engine, tenant_id="reflection-recovery", installation_id="home")
+    document = ConversationMemoryDocument(
+        tenant_id="reflection-recovery", installation_id="home", principal_id="person",
+        conversation_id="private:synthetic", document_id="reflection-recovery:source",
+        content="Synthetic communication preference", occurred_at="2026-08-23T12:56:00Z",
+        source_ref="synthetic:1", evidence_ref="synthetic-reply:1", privacy_class="internal",
+        trust="direct_user", audience=MemoryAudience.private_person(principal_id="person"))
+    def retain(doc):
+        job = outbox.begin(outbox.enqueue(doc), now=NOW)
+        outbox.succeed(job, MemoryRetentionReceipt(bank_id="synthetic-bank", document_id=doc.document_id,
+            content_sha256=hashlib.sha256(doc.content.encode()).hexdigest()), now=NOW)
+    retain(document)
+    retain(replace(document, document_id="reflection-recovery:shared", conversation_id="telegram:-1001",
+        audience=MemoryAudience.telegram_group(principal_id="person", group_chat_id="-1001",
+            consent_ref=TelegramGroupConsentReference(principal_id="person", group_chat_id="-1001",
+                operation_id="telegram-group-consent:fixture"))))
+    outbox._timeline.create_thread(thread_id="memory-retain:invalid-fixture",
+        checkpoint_id="memory-retain:invalid-fixture:retained", occurred_at=NOW,
+        data={"kind": "invalid"}, event_type="MEMORY_RETAIN_QUEUED",
+        phase="memory_retained", status="completed")
+    unconfirmed = replace(document, document_id="reflection-recovery:unconfirmed")
+    outbox.enqueue(unconfirmed)  # Queued work must not become reflection authority.
+    retain(replace(document, document_id="reflection-recovery:expired", principal_id="expired",
+                   audience=MemoryAudience.private_person(principal_id="expired"),
+                   retention_until="2026-08-23T12:57:00Z"))
+    erased = replace(document, document_id="reflection-recovery:erased", principal_id="erased",
+                     audience=MemoryAudience.private_person(principal_id="erased"))
+    retain(erased)
+    outbox.erase_content(principal_sha256=hashlib.sha256(b"erased").hexdigest(),
+        document_id=erased.document_id, operation_sha256="a" * 64, erased_at=NOW)
+    # Keep the worker restart focused on completed sources; the separate
+    # unconfirmed candidate is marked failed/needs-help, never retained.
+    pending = outbox.pending()
+    assert len(pending) == 1 and pending[0].document == unconfirmed
+    state = pending[0].state
+    outbox._timeline.transition(thread_id=state.thread_id, expected_revision=state.revision,
+        checkpoint_id=state.thread_id + ":needs-help", occurred_at=NOW,
+        data={"reason": "fixture-unconfirmed"}, event_type="MEMORY_RETAIN_NEEDS_HELP",
+        phase="memory_needs_help", status="needs_help")
+    restarted_store = PostgresMemoryOutbox(timeline_engine, tenant_id="reflection-recovery", installation_id="home")
+    assert restarted_store.pending_reflection_scopes() == (("reflection-recovery", "home", "person"),)
+    reflected = Event()
+    class Memory:
+        def retain_conversation(self, document):
+            raise AssertionError("completed retention was repeated")
+        def maintain_person_scope(self, *scope):
+            assert scope == ("reflection-recovery", "home", "person")
+            reflected.set()
+            raise RuntimeError("uncertain provider result must not replay")
+    worker = HindsightColdPathWorker(Memory(), outbox=restarted_store, idle_seconds=0.01)
+    worker.start()
+    try:
+        assert reflected.wait(2)
+    finally:
+        worker.stop()
+    assert restarted_store.pending_reflection_scopes() == ()
+    legacy = replace(document, document_id="reflection-recovery:legacy", principal_id="legacy",
+                     audience=MemoryAudience.private_person(principal_id="legacy"))
+    retain(legacy)
+    outbox._timeline.create_thread(thread_id="legacy-reservation:fixture",
+        checkpoint_id="legacy-reservation:fixture:1", occurred_at=NOW,
+        data={"contract": "EvaDailyReflectionBudget/v1", "admitted": True,
+              "principal_sha256": hashlib.sha256(b"legacy").hexdigest()},
+        event_type="RUNTIME_REFLECTION_RESERVED", phase="reflection_budget_active")
+    assert restarted_store.pending_reflection_scopes() == ()  # Unknown legacy dispatch is not replayable.
+    assert outbox._timeline.load(outbox._thread_id(document.document_id)).phase == "memory_retained"
+    assert outbox._timeline.load(outbox._thread_id(document.document_id)).status == "completed"
+    events = outbox._timeline.events(outbox._thread_id(document.document_id))
+    assert [e.event_type for e in events].count("MEMORY_REFLECTION_CLAIMED") == 1
+    assert not any(e.event_type == "MEMORY_REFLECTION_COMPLETED" for e in events)
+
+
+def test_retained_reflection_claim_is_atomic_between_store_instances(timeline_engine):
+    tenant = "reflection-claim-race"
+    first = PostgresMemoryOutbox(timeline_engine, tenant_id=tenant, installation_id="home")
+    doc = ConversationMemoryDocument(tenant_id=tenant, installation_id="home", principal_id="person",
+        conversation_id="private:synthetic", document_id="reflection-race:source", content="Synthetic source",
+        occurred_at="2026-08-23T12:56:00Z", source_ref="synthetic:2", evidence_ref="synthetic-reply:2",
+        privacy_class="internal", trust="direct_user", audience=MemoryAudience.private_person(principal_id="person"))
+    job = first.begin(first.enqueue(doc), now=NOW)
+    first.succeed(job, MemoryRetentionReceipt(bank_id="synthetic-bank", document_id=doc.document_id,
+        content_sha256=hashlib.sha256(doc.content.encode()).hexdigest()), now=NOW)
+    second = PostgresMemoryOutbox(timeline_engine, tenant_id=tenant, installation_id="home")
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        futures = [pool.submit(store.claim_reflection_scope, tenant, "home", "person", now=NOW)
+                   for store in (first, second)]
+        assert sorted(f.result(timeout=5) for f in futures) == [False, True]
+    assert first.pending_reflection_scopes() == ()
+    with pytest.raises(ValueError, match="scope"):
+        first.claim_reflection_scope("other", "home", "person", now=NOW)
+
+
+def test_reflection_recovery_batches_1479_retained_documents(timeline_engine):
+    """Production-sized retained history must not multiply startup SQL scans."""
+    from dataclasses import replace
+
+    tenant = "reflection-bulk-recovery"
+    outbox = PostgresMemoryOutbox(timeline_engine, tenant_id=tenant, installation_id="home")
+    base = ConversationMemoryDocument(tenant_id=tenant, installation_id="home", principal_id="person-0",
+        conversation_id="private:bulk", document_id="bulk:0", content="Synthetic retained preference",
+        occurred_at="2026-08-23T12:56:00Z", source_ref="synthetic:bulk", evidence_ref="synthetic-reply:bulk",
+        privacy_class="internal", trust="direct_user", audience=MemoryAudience.private_person(principal_id="person-0"))
+    content_hash = hashlib.sha256(base.content.encode()).hexdigest()
+    for index in range(1479):
+        person = "person-" + str(index % 3)
+        doc = replace(base, document_id="bulk:" + str(index), principal_id=person,
+                      audience=MemoryAudience.private_person(principal_id=person))
+        job = outbox.begin(outbox.enqueue(doc), now=NOW)
+        outbox.succeed(job, MemoryRetentionReceipt(bank_id="synthetic-bank", document_id=doc.document_id,
+            content_sha256=content_hash), now=NOW)
+    outbox._timeline.create_thread(thread_id="runtime-reflections:bulk-fixture",
+        checkpoint_id="runtime-reflections:bulk-fixture:1", occurred_at=NOW,
+        data={"contract": "EvaDailyReflectionBudget/v1", "admitted": True,
+              "principal_sha256": hashlib.sha256(b"person-0").hexdigest()},
+        event_type="RUNTIME_REFLECTION_RESERVED", phase="reflection_budget_active")
+    statements = []
+    def observe(conn, cursor, statement, parameters, context, executemany):
+        if statement.lstrip().upper().startswith("SELECT"):
+            statements.append(statement)
+    sa.event.listen(timeline_engine, "before_cursor_execute", observe)
+    try:
+        scopes = outbox.pending_reflection_scopes(now=NOW)
+    finally:
+        sa.event.remove(timeline_engine, "before_cursor_execute", observe)
+    assert scopes == ((tenant, "home", "person-1"), (tenant, "home", "person-2"))
+    # Three data reads plus the existing two set_config SELECTs for RLS.
+    assert len(statements) == 5
+    assert outbox.claim_reflection_scope(tenant, "home", "person-1", now=NOW)
+    assert not outbox.claim_reflection_scope(tenant, "home", "person-1", now=NOW)
+    assert outbox.pending_reflection_scopes(now=NOW) == ((tenant, "home", "person-2"),)

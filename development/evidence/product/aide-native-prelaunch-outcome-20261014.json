@@ -1,0 +1,114 @@
+{
+  "contract": "EvaNativeSteeringPreparationOutcome/v1",
+  "at": "2026-10-14T01:08:17.844908+00:00",
+  "status": "evaluation_prelaunch_failed",
+  "what_existed": "Existing source proposal, native runner, isolated comparison, independent final assessment and application route. Previous code-improvement evidence and historical failures remain unchanged.",
+  "native_result": {
+    "real_source_read": true,
+    "model_authored_draft": true,
+    "candidate_sha256": "99ac9cc9aed93e8da6628a65dea0ca6e3f6dd4e9cfc1d17810c61444be787cd1",
+    "operator_literal_patch": false,
+    "development_evaluation_started": false,
+    "independent_final_started": false,
+    "installed": false,
+    "later_used": false
+  },
+  "failure": {
+    "reproduced": "Registered development producer requires an envelope object; its configured input had a list root. Rejected before accounting, workspace and native launch.",
+    "type": "ComponentWorkProductionError",
+    "original_server_stack": "not_retained",
+    "original_parent_state": "ambiguous",
+    "original_usage_measurement": "partial",
+    "old_null_and_unknown_preserved": true
+  },
+  "usage": {
+    "new_parent": {
+      "cost_usd_micros": null,
+      "input_tokens": 27020,
+      "output_tokens": 852,
+      "physical_tools": 3,
+      "provider_attempts": 3,
+      "total_tokens": 27872
+    },
+    "child": {
+      "basis": [
+        "exact configured input deterministically rejected before ledger/workspace/native-launch creation",
+        "actual registered accounting/output/evidence roots remain empty"
+      ],
+      "input_tokens": 0,
+      "original_null_untouched": true,
+      "output_tokens": 0,
+      "physical_provider_attempts": 0,
+      "physical_tools": 0,
+      "total_tokens": 0
+    },
+    "retained_history": {
+      "immutable": true,
+      "input_tokens": 508831,
+      "output_tokens": 10945,
+      "physical_tools": 79,
+      "provider_attempts": 57,
+      "total_tokens": 519776
+    },
+    "known_cumulative": {
+      "input_tokens": 535851,
+      "output_tokens": 11797,
+      "physical_tools": 82,
+      "provider_attempts": 60,
+      "total_tokens": 547648
+    },
+    "codex_development_credits": "unknown"
+  },
+  "time": {
+    "clock_never_reset": true,
+    "construction_active_seconds": 743.760585639975,
+    "development_excluded_seconds": 0.0,
+    "development_inflight": false,
+    "fresh_prospective_epoch": true,
+    "intervals": [
+      {
+        "elapsed_seconds": 23.009924207930453,
+        "end": 670689.921731444,
+        "proof": {
+          "baseline_sha256": "9288a4b02e2b2f76aa1964db128a10f6ff45e6257373814bc2b06033ea21d012",
+          "binding": {
+            "contract": "EvaScopedComponentEvaluationBinding/v1",
+            "draft_step": 1,
+            "evaluation_call_id": "call_078d9de3e78b46339b799ae7395fa019",
+            "evaluation_step": 2,
+            "execution_binding_ref": "8831251a095cf60c17bf76bbef38c8143632d24b34daec02e2f99a4e9bef4e6b",
+            "task_id": "work:eva-chat:814ec23e-fc67-5792-a039-b9e1773fc962"
+          },
+          "candidate_sha256": "99ac9cc9aed93e8da6628a65dea0ca6e3f6dd4e9cfc1d17810c61444be787cd1",
+          "draft_event_payload_sha256": "c36f88714fff29db8a6515e928b8273d9ed254f0327309c74c0bf71f43201f50",
+          "draft_thread_id": "component-draft:53d2c43ab6f09cc7492eb8c20b5c9a17c1e02df301ea5a6116f66b37e9ad6b83"
+        },
+        "qualified": false,
+        "start": 670666.911807236
+      }
+    ],
+    "old_original_and_recovery_epochs_reopened": false,
+    "wall_elapsed_seconds": 743.760585639975
+  },
+  "independent_review": {
+    "private_sha256": "6f4131889ac35f86cd299d9a8be8d0267b5333c53c6da5605a73e863f0bc43ab"
+  },
+  "installation_repair": {
+    "local_trusted_config_bound_bytes": 1048576,
+    "http_bounds_changed": false,
+    "source_sha256": "48202d7197a3912160577ebe956398c0e1e5c872d27f5ea4a2ac054a6d176886",
+    "config_tests_passed": 5,
+    "retained_queue_files": 4326,
+    "initial_missing_retained_round_and_restart_failures_preserved": true,
+    "core_worker_healthy": true,
+    "voice_unchanged": true
+  },
+  "task_status": {
+    "HUE6_completed": false,
+    "additional_tasks_completed": 0,
+    "completed": 43,
+    "total": 54,
+    "remaining": 11
+  },
+  "next": "Correct only the prospective input envelope and reuse the actual retained draft for the never-started comparison; do not reopen or rescore the closed original parent."
+}

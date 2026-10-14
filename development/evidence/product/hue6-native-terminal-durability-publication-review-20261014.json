@@ -1,0 +1,91 @@
+{
+  "contract": "EvaIndependentHUE6TerminalDurabilityPublicationReview/v1",
+  "recordedAt": "2026-10-14",
+  "verdict": "GO_PUBLICATION",
+  "reviewedFiles": [
+    {
+      "path": "development/evidence/product/durable-reflection-recovery-outcome-20261014.json",
+      "sha256": "c1266b50918c02d6f41f427b717aedcc640f2097d04fe1d5af0bf314434cec07"
+    },
+    {
+      "path": "development/evidence/product/aide-native-terminal-outcome-20261014.json",
+      "sha256": "779aaa9e6f1f949485c6a4e898fe9a9c33c9549c8f772f1033293a564cc2fbf5"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "d27cdc7d3bb1f4d675be204973ac13a48a9b2c587801f173d63cceba056866ff"
+    },
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "sha256": "5528ff337dbc33da6c1e7476f40fe8ca98665aac82fb08ea6a6985524ffc9ac9"
+    },
+    {
+      "path": "development/docs/WERKBORD.md",
+      "sha256": "cd09f9da8caede74c15fed905d1aca30c2a39356c3300e50270ce67e933631f9"
+    },
+    {
+      "path": "development/design/product/execution-workboard-v1.json",
+      "sha256": "91f2f466495e5d2310bffc0f53ba90801fce72d90b1fd1467e5265f8268fc38d"
+    }
+  ],
+  "publicationScope": "Own native-terminal result, durable-reflection recovery installation facts, leading goal/docs and current HUE6 board. Concurrent subscriptionVoice20261013 audit excluded from review and remains untouched in shared working board.",
+  "foreignVoiceAuditExcluded": true,
+  "workingBoardSha256": "91f2f466495e5d2310bffc0f53ba90801fce72d90b1fd1467e5265f8268fc38d",
+  "reviewedBoardWithoutForeignVoiceCanonicalSha256": "a4f23232e16d25efea94f3c6e470e4cfc38f8a77c0cebaff8311fe4b8e285b48",
+  "facts": {
+    "nativeParentGenuineSucceeded": true,
+    "fixedIndependentDevelopmentTie": true,
+    "bothCorrectChecks": 4,
+    "bothCompletedTasks": 0,
+    "referenceRetained": true,
+    "candidateFinalOrApplicationOccurred": false,
+    "comparisonNotRepeated": true,
+    "freshUsage": {
+      "requests": 19,
+      "tokens": 150419,
+      "tools": 28
+    },
+    "retainedSelectedHistory": {
+      "requests": 76,
+      "knownTokens": 670195,
+      "tools": 107,
+      "wholeProjectTotal": false
+    },
+    "quietFirstTurnSeparate": {
+      "requests": 3,
+      "knownTokens": 8352
+    },
+    "typedPartialJournalsCosts_UNKNOWN_oldClocksPreserved": true,
+    "correctedCoreAndWorkerHealthy": true,
+    "installedExactSourceHashesAndRetainedMountsVerified": true,
+    "correctedCoreStartupSeconds": 5.346109,
+    "firstIncompleteInstallationAndOnceStopRetained": true,
+    "1479SourceScaleTest3DataQueriesPlus2RLS": true,
+    "automaticProductionUsageNotInstrumentedAndNotClaimedZero": true,
+    "quietCausalHumanUnderstandingAndLaterBehaviorStillMissing": true,
+    "HUE6Completed": false,
+    "completedSmallTasks": 43,
+    "totalSmallTasks": 54,
+    "additionalCompletedTasks": 0
+  },
+  "privateEvidenceHashes": {
+    "nativeTerminalClosure": "c7e8d9692e37d653a7793a439bb444ef6a9d6b90de15bd23848d359c39198995",
+    "correctedDurabilityInstalledReadback": "fc8e1c71a8e42cf2ec0e9b9534886df24463632d99c8793742e6a80f06202ab5",
+    "originalHUE6Coverage": "684f7e13091370700f88c62acacc678292492f5f43b07265536ba1331456beff"
+  },
+  "originalFinishConditionUnchanged": true,
+  "existingL3_6L3_7IndependentCodeGainApplyLaterUseRetained": true,
+  "noNewHumanAcceptanceOrWinningVariantRequirement": true,
+  "secretsPrivatePreferencesProtectedFinalInputsPublished": false,
+  "reviewerAdditionalModelsTestsOrRuntimeChanges": 0,
+  "materialDefects": [],
+  "gitPublicationBoard": {
+    "sha256": "49d9d3985af2b1e456a88f6ad5fd1f3b4b621916d4868efba081df1f615e3538",
+    "independentlyReadFromGitIndex": true,
+    "matchesReviewedWorkingObjectExceptForeignVoiceAudit": true,
+    "excludedKey": "audit.subscriptionVoice20261013",
+    "HEADHadNoKey": true,
+    "foreignWorkingAuditPreserved": true,
+    "canonicalScopeSha256": "a4f23232e16d25efea94f3c6e470e4cfc38f8a77c0cebaff8311fe4b8e285b48"
+  }
+}

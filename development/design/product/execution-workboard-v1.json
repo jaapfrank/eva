@@ -660,10 +660,12 @@
       "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
       "status": "in_progress",
       "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-      "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
+      "nextAction": "HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opgeslagen en de slotreactie afgerond. Beide versies halen 4 correctheidscontroles maar 0 volledig bewezen taken: gelijkspel, referentie blijft. Duurzaam herstel van wachtende reflectie is nu geïnstalleerd; kern en werker draaien met behouden gegevens. De N+1-startfout is in dezelfde installatie opgelost, niet teruggezet. Nog open: rustige reflectie moet mensbegrip bijstellen en een later gesprek beïnvloeden. Geen eigenaarhandeling, spraakwerk of nieuwe vergelijkingsserie.",
       "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
       "area": "self-improvement and learning",
-      "countedAsProductTask": true
+      "countedAsProductTask": true,
+      "checkedAt": "2026-10-14T02:13:45.475594+00:00",
+      "latestEvidence": "development/evidence/product/durable-reflection-recovery-outcome-20261014.json"
     }
   ],
   "milestones": [
@@ -832,7 +834,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-14T00:13:34.452517+00:00",
+  "lastUpdated": "2026-10-14T01:37:09.231369+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "HUE6.1",
@@ -841,10 +843,12 @@
     "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
     "status": "in_progress",
     "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-    "nextAction": "Afsluitfout in de programmeerwerkruimte geïnstalleerd en via de echte Eva-route gebruikt: bestand gemaakt, teruggelezen en behouden na sluiten. HUE6 blijft open: betekenisvolle rustige reflectie en later gedrag, plus geldige onafhankelijke verbetering van de ontwikkelende agent ontbreken. De afgesloten eindproef blijft staan; geen nieuwe vergelijkingsserie of eigenaarhandeling.",
+    "nextAction": "HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opgeslagen en de slotreactie afgerond. Beide versies halen 4 correctheidscontroles maar 0 volledig bewezen taken: gelijkspel, referentie blijft. Duurzaam herstel van wachtende reflectie is nu geïnstalleerd; kern en werker draaien met behouden gegevens. De N+1-startfout is in dezelfde installatie opgelost, niet teruggezet. Nog open: rustige reflectie moet mensbegrip bijstellen en een later gesprek beïnvloeden. Geen eigenaarhandeling, spraakwerk of nieuwe vergelijkingsserie.",
     "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
     "area": "self-improvement and learning",
-    "countedAsProductTask": true
+    "countedAsProductTask": true,
+    "checkedAt": "2026-10-14T02:13:45.475594+00:00",
+    "latestEvidence": "development/evidence/product/durable-reflection-recovery-outcome-20261014.json"
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -941,7 +945,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "De toegelaten AIDE²-uitvoering loopt in een eigen werkruimte met dezelfde kandidaat en huidige referentie. Eerst werkelijke ontwikkelkwaliteit en volledig verbruik afsluiten; alleen daarna een geldige selectie onafhankelijk beoordelen en bewezen winst toepassen. Oude mislukking blijft staan. Nog geen kwaliteitsscore of HUE6-afronding; geen eigenaarhandeling.",
+      "priorityDecision": "HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opgeslagen en de slotreactie afgerond. Beide versies halen 4 correctheidscontroles maar 0 volledig bewezen taken: gelijkspel, referentie blijft. Duurzaam herstel van wachtende reflectie is nu geïnstalleerd; kern en werker draaien met behouden gegevens. De N+1-startfout is in dezelfde installatie opgelost, niet teruggezet. Nog open: rustige reflectie moet mensbegrip bijstellen en een later gesprek beïnvloeden. Geen eigenaarhandeling, spraakwerk of nieuwe vergelijkingsserie.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -3216,7 +3220,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-                "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
+                "nextAction": "HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opgeslagen en de slotreactie afgerond. Beide versies halen 4 correctheidscontroles maar 0 volledig bewezen taken: gelijkspel, referentie blijft. Duurzaam herstel van wachtende reflectie is nu geïnstalleerd; kern en werker draaien met behouden gegevens. De N+1-startfout is in dezelfde installatie opgelost, niet teruggezet. Nog open: rustige reflectie moet mensbegrip bijstellen en een later gesprek beïnvloeden. Geen eigenaarhandeling, spraakwerk of nieuwe vergelijkingsserie.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -3231,7 +3235,8 @@
                     "/root/hue6_independent_review"
                   ]
                 },
-                "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json"
+                "latestEvidence": "development/evidence/product/durable-reflection-recovery-outcome-20261014.json",
+                "checkedAt": "2026-10-14T02:13:45.475594+00:00"
               }
             ]
           },
@@ -4902,7 +4907,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
+              "nextAction": "HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opgeslagen en de slotreactie afgerond. Beide versies halen 4 correctheidscontroles maar 0 volledig bewezen taken: gelijkspel, referentie blijft. Duurzaam herstel van wachtende reflectie is nu geïnstalleerd; kern en werker draaien met behouden gegevens. De N+1-startfout is in dezelfde installatie opgelost, niet teruggezet. Nog open: rustige reflectie moet mensbegrip bijstellen en een later gesprek beïnvloeden. Geen eigenaarhandeling, spraakwerk of nieuwe vergelijkingsserie.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -4917,8 +4922,8 @@
                   "/root/hue6_independent_review"
                 ]
               },
-              "latestEvidence": "development/evidence/product/aide-prospective-quality-cycle-20261013.json",
-              "checkedAt": "2026-10-13T20:08:23.210651+00:00"
+              "latestEvidence": "development/evidence/product/durable-reflection-recovery-outcome-20261014.json",
+              "checkedAt": "2026-10-14T02:13:45.475594+00:00"
             }
           ]
         },
@@ -5335,7 +5340,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
+      "nextAction": "HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opgeslagen en de slotreactie afgerond. Beide versies halen 4 correctheidscontroles maar 0 volledig bewezen taken: gelijkspel, referentie blijft. Duurzaam herstel van wachtende reflectie is nu geïnstalleerd; kern en werker draaien met behouden gegevens. De N+1-startfout is in dezelfde installatie opgelost, niet teruggezet. Nog open: rustige reflectie moet mensbegrip bijstellen en een later gesprek beïnvloeden. Geen eigenaarhandeling, spraakwerk of nieuwe vergelijkingsserie.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -6058,7 +6063,47 @@
       "ownerActionRequired": false,
       "evidencePath": "development/evidence/product/programming-close-installed-20261014.json",
       "additionalTasksCompleted": 0
+    },
+    "hue6CurrentCompletion20261014": {
+      "previousGoalTurn": "progress",
+      "reason": "Actual programming closure race installed and exercised through current core; result retained, original unconfirmed final preserved.",
+      "status": "native_agent_cycle_tie_closed_durable_reflection_recovery_installed",
+      "modelRequests": 3,
+      "newTaskIds": false,
+      "ownerActionRequired": false,
+      "quietBootstrapFailure": "helper_instrument_set_mismatch_before_runtime_and_models",
+      "quietProviderRequests": 0,
+      "nativeParentProviderRequests": 7,
+      "fixedScorerChanged": false,
+      "operatorLiteralPatchUsed": false,
+      "nativeParentTokens": 74478,
+      "nativeChildProviderRequests": 12,
+      "qualityScore": null,
+      "taskCompleted": false,
+      "candidateSha256": "99ac9cc9aed93e8da6628a65dea0ca6e3f6dd4e9cfc1d17810c61444be787cd1",
+      "evaluationPrelaunchFailure": "registered producer fields differ: list root instead of registered envelope",
+      "originalRawUnknownPreserved": true,
+      "quietNativeProviderRequests": 3,
+      "quietNativeTokens": 8352,
+      "quietBehaviorProven": false,
+      "additionalTasksCompleted": 0,
+      "nativeChildTokens": 75941,
+      "freshCycleKnownRequests": 19,
+      "freshCycleKnownTokens": 150419,
+      "freshCycleKnownTools": 28,
+      "developmentTasksCompleted": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "developmentChecksPassed": {
+        "baseline": 4,
+        "candidate": 4
+      },
+      "selectedCandidate": null,
+      "referenceRetained": true,
+      "quietDurableRecovery": "installed_healthy_with_retained_mounts",
+      "nativeTerminal": "succeeded"
     }
   },
-  "updatedAt": "2026-10-14T00:13:34.452517+00:00"
+  "updatedAt": "2026-10-14T02:13:45.475594+00:00"
 }

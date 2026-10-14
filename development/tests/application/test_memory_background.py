@@ -1075,3 +1075,52 @@ def test_settled_idle_reflection_is_recorded_without_repeating_on_record_failure
     assert len(completed) == len(recorded) == 1
     if recording_fails:
         assert worker.last_error == 'reflection completion recording failed: OSError'
+
+
+@pytest.mark.parametrize("provider_fails", [False, True])
+def test_completed_retain_scope_recovers_once_without_retaining_again(provider_fails):
+    reflected = Event()
+    calls = []
+
+    class Outbox:
+        claimed = False
+
+        def pending(self):
+            return ()  # Retention already succeeded before the process restart.
+
+        def pending_reflection_scopes(self):
+            return () if self.claimed else (("tenant", "installation", "person"),)
+
+        def claim_reflection_scope(self, *scope, now):
+            assert scope == ("tenant", "installation", "person")
+            assert now.tzinfo is not None
+            if self.claimed:
+                return False
+            self.claimed = True
+            calls.append("claim")
+            return True
+
+    class Memory:
+        def retain_conversation(self, document):
+            raise AssertionError("completed retention must not run again")
+
+        def maintain_person_scope(self, *scope):
+            calls.append("provider")
+            reflected.set()
+            if provider_fails:
+                raise RuntimeError("provider outcome unknown")
+
+    outbox = Outbox()
+    worker = HindsightColdPathWorker(Memory(), outbox=outbox, idle_seconds=0.01)
+    with worker.foreground():
+        worker.start()
+        assert not reflected.wait(0.04)
+    try:
+        assert reflected.wait(1)
+    finally:
+        worker.stop()
+    restarted = HindsightColdPathWorker(Memory(), outbox=outbox, idle_seconds=0.01)
+    restarted.start()
+    restarted.stop()
+    assert restarted._reflection_scopes == set()
+    assert calls == ["claim", "provider"]

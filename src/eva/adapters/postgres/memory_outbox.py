@@ -325,6 +325,117 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             jobs.append(DurableMemoryRetentionJob(self._document_from_data(data), state))
         return tuple(jobs)
 
+    def _reflection_candidates(self, connection, *, principal_id=None, now, lock=False, recovery=False):
+        """Read only validated, retained private documents without a dispatch claim."""
+        c, e = operational_checkpoints, operational_events
+        query = sa.select(c, e.c.payload.label("source_payload")).select_from(c.join(e,
+            sa.and_(c.c.tenant_id == e.c.tenant_id,
+                    c.c.installation_id == e.c.installation_id,
+                    c.c.thread_id == e.c.thread_id))).where(
+            c.c.tenant_id == self._scope_value.tenant_id,
+            c.c.installation_id == self._scope_value.installation_id,
+            c.c.thread_id.startswith("memory-retain:"),
+            c.c.phase == "memory_retained", c.c.status == "completed",
+            e.c.sequence == 1, e.c.event_type == "MEMORY_RETAIN_QUEUED",
+        ).order_by(c.c.thread_id)
+        if principal_id is not None:
+            query = query.where(e.c.payload["data"]["principal_id"].astext == principal_id)
+        if lock:
+            query = query.with_for_update(of=c)
+        rows = connection.execute(query).mappings().all()
+        if not rows:
+            return []
+        # One post-lock read preserves the concurrent-claim fence without an
+        # extra event query for every retained document.
+        events_by_thread = {}
+        for event in connection.execute(sa.select(
+                e.c.thread_id, e.c.event_type, e.c.payload, e.c.occurred_at).where(
+                e.c.tenant_id == self._scope_value.tenant_id,
+                e.c.installation_id == self._scope_value.installation_id,
+                e.c.thread_id.in_([row["thread_id"] for row in rows]),
+                e.c.event_type.in_(("MEMORY_RETAIN_SUCCEEDED", "MEMORY_REFLECTION_CLAIMED")),
+        )):
+            events_by_thread.setdefault(event.thread_id, []).append(event)
+        reserved_until = {}
+        if recovery:
+            principal = e.c.payload["data"]["principal_sha256"].astext
+            reserved_until = dict(connection.execute(sa.select(
+                principal, sa.func.max(e.c.occurred_at)).where(
+                e.c.tenant_id == self._scope_value.tenant_id,
+                e.c.installation_id == self._scope_value.installation_id,
+                e.c.event_type == "RUNTIME_REFLECTION_RESERVED",
+                e.c.payload["data"]["contract"].astext == "EvaDailyReflectionBudget/v1",
+            ).group_by(principal)).all())
+        candidates = []
+        for row in rows:
+            payload = row["source_payload"]
+            data = payload.get("data") if isinstance(payload, dict) else None
+            if not isinstance(data, dict) or data.get("content_erasure"):
+                continue
+            try:
+                document = self._document_from_data(data)
+                if (document.tenant_id != self._tenant_id
+                        or document.installation_id != self._installation_id
+                        or document.audience.kind != "private_person"
+                        or (document.retention_until is not None and
+                            datetime.fromisoformat(document.retention_until.replace("Z", "+00:00")) <= now)):
+                    continue
+            except (RuntimeError, ValueError, TypeError):
+                continue
+            events = events_by_thread.get(row["thread_id"], ())
+            if any(event.event_type == "MEMORY_REFLECTION_CLAIMED" for event in events):
+                continue
+            content_hash = hashlib.sha256(document.content.encode("utf-8")).hexdigest()
+            if not any(event.event_type == "MEMORY_RETAIN_SUCCEEDED"
+                       and event.payload.get("data", {}).get("document_id") == document.document_id
+                       and event.payload.get("data", {}).get("content_sha256") == content_hash
+                       for event in events):
+                continue
+            if recovery:
+                # Older runtimes did not write source claims. A prior reservation
+                # may have reached the provider even without completion evidence;
+                # never turn that ambiguity into another automatic request.
+                retained_at = max(event.occurred_at for event in events
+                                  if event.event_type == "MEMORY_RETAIN_SUCCEEDED")
+                principal_hash = hashlib.sha256(document.principal_id.encode()).hexdigest()
+                reserved = reserved_until.get(principal_hash)
+                if reserved is not None and reserved >= retained_at:
+                    continue
+            candidates.append((row, document))
+        return candidates
+
+    def pending_reflection_scopes(self, *, now: datetime | None = None
+                                  ) -> tuple[tuple[str, str, str], ...]:
+        """Recover retained private scopes, without re-enqueueing semantic retention."""
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            candidates = self._reflection_candidates(connection, now=now or self._now(), recovery=True)
+            return tuple(sorted({(doc.tenant_id, doc.installation_id, doc.principal_id)
+                                 for _, doc in candidates}))
+
+    def claim_reflection_scope(self, tenant_id: str, installation_id: str,
+                               principal_id: str, *, now: datetime) -> bool:
+        """Consume retained sources before dispatch; this is not completion evidence."""
+        if (tenant_id, installation_id) != (self._tenant_id, self._installation_id):
+            raise ValueError("reflection claim crossed its runtime scope")
+        if not principal_id or not principal_id.strip():
+            raise ValueError("reflection claim principal is required")
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            candidates = self._reflection_candidates(
+                connection, principal_id=principal_id, now=now, lock=True)
+            for row, document in candidates:
+                transition_timeline_thread(connection, self._scope_value,
+                    thread_id=row["thread_id"], expected_revision=row["revision"],
+                    checkpoint_id=row["thread_id"] + ":reflection-claimed",
+                    operation_id=row["operation_id"], phase="memory_retained",
+                    status="completed", retry_count=row["retry_count"],
+                    occurred_at=now, event_type="MEMORY_REFLECTION_CLAIMED",
+                    data={"principal_sha256": hashlib.sha256(principal_id.encode()).hexdigest(),
+                          "document_sha256": hashlib.sha256(document.document_id.encode()).hexdigest(),
+                          "meaning": "dispatch claimed; completion and outcome recorded separately"})
+            return bool(candidates)
+
     def begin(
         self, job: DurableMemoryRetentionJob, *, now: datetime | None = None
     ) -> DurableMemoryRetentionJob | None:

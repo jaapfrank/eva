@@ -334,21 +334,21 @@ def test_service_config_admits_only_existing_fixed_saved_suite_structure(tmp_pat
         load_config(config)
 
 
-def test_service_config_retains_fixed_132kib_read_bound(tmp_path):
+def test_service_config_retains_bounded_1mib_read_bound(tmp_path):
     token = tmp_path / "synthetic-token"; token.write_text("s" * 40)
     path = tmp_path / "host.json"
     data = {"image": IMAGE, "command": ["/usr/local/bin/python", "-c", "fixed-suite"],
         "token_file": str(token), "bind_host": "127.0.0.1", "port": 12345,
         "allowed_paths": ["contracts/synthetic.py"]}
     raw = json.dumps(data).encode()
-    path.write_bytes(raw + b" " * (132 * 1024 - len(raw)))
+    path.write_bytes(raw + b" " * (1024 * 1024 - len(raw)))
     assert load_config(path)[2] == frozenset({"contracts/synthetic.py"})
     path.write_bytes(path.read_bytes() + b" ")
     with pytest.raises(ValueError, match="configuration is too large"):
         load_config(path)
     data["unrecognized"] = True
     raw = json.dumps(data).encode()
-    path.write_bytes(raw + b" " * (132 * 1024 - len(raw)))
+    path.write_bytes(raw + b" " * (1024 * 1024 - len(raw)))
     with pytest.raises(ValueError, match="configuration fields"):
         load_config(path)
 

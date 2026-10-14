@@ -1,0 +1,38 @@
+{
+  "contract": "EvaDurableReflectionRecoveryOutcome/v1",
+  "recordedAt": "2026-10-14T02:13:45.475594+00:00",
+  "why": "Completed native semantic retention did not restore reflection scheduling after restart",
+  "change": "Recover retained private scopes and claim source documents durably before quiet dispatch",
+  "firstInstallation": "incomplete startup; repeated legacy reservation scan once per source",
+  "sourceCountInScaleTest": 1479,
+  "correctedRecoveryDataQueries": 3,
+  "privacyAndLegacyUnknownPreserved": true,
+  "schemaChanged": false,
+  "providerRequestsForDevelopmentTestsBuildInstall": 0,
+  "correctedInstallation": "running_with_retained_mounts",
+  "quietBehaviorProven": false,
+  "taskCompleted": false,
+  "additionalTasksCompleted": 0,
+  "evidenceHashes": {
+    "firstFailedUpdate": "7a9b34ecb8ab8f0f75d785548b39986314daa2b1c1f6b5f589e33a7227a5c2a7",
+    "sourceScaleTest": "eddfcf15628cb91a6353edfe6dc8f5ba0074429bcba14ea78c8e8992f7dfa11c",
+    "correctedIndependentSource": "99e0b6feae22c4b8363c49489fdc1b1acfda789cd26bebde57da67ccd53fdfc4",
+    "correctedBuild": "e8d9e341e8809123f2545237ba06b86d3731673144fd69e3cb49e3f1e7d1678f",
+    "stoppedContainerUpdaterTest": "b0e764116b6fa01f1ceb053077d2dd3f3540449d5e0691d7533037af693878f4",
+    "correctedUpdate": "9c3f04d0764e840738540dfce003bfc7eecaa376c1050d90704ae526ce352a2a",
+    "correctedSourceExpandedTest": "42517615748d30a7529a8c1ea74f54ad991da2a43d11d4760716b1d89bc05d9e",
+    "independentInstalledReadback": "fc8e1c71a8e42cf2ec0e9b9534886df24463632d99c8793742e6a80f06202ab5"
+  },
+  "credits": "unknown",
+  "actualImages": {
+    "core": "sha256:e22be34fc3f24535a26bc444783f8ad83ad8c203469483dfc4e6a3ebfc0088b2",
+    "delegated-work-worker": "sha256:2055f925c70bb6c2dbc43b612f67d2ab4bcb8c5464368928116f944a3aa878bc"
+  },
+  "onlyCorrectedOutboxChanged": true,
+  "otherPythonFilesPerImageUnchanged": 345,
+  "firstFailedUpdatePreserved": true,
+  "correctedCoreStartupSeconds": 5.346109,
+  "actualCoreHealthy": true,
+  "actualWorkerHealthy": true,
+  "automaticProductionRuntimeUsage": "not instrumented by this deployment; not claimed zero"
+}

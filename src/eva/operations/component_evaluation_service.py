@@ -16,7 +16,8 @@ from eva.operations.component_evaluation import (
 )
 
 _MAX_BODY = 96 * 1024
-_MAX_CONFIG = 132 * 1024
+# Local trusted configuration includes retained round metadata; HTTP request bounds remain separate.
+_MAX_CONFIG = 1024 * 1024
 # Two bounded sources can expand sixfold when JSON escapes control characters.
 _MAX_EVALUATE_BODY = 1024 * 1024
 

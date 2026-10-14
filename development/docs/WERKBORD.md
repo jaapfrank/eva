@@ -6,16 +6,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Droomcyclus voor mensbegrip en AIDE² afmaken
 
-Bestaande L3.6/L3.7 dekken onafhankelijke codewinst, toepassing en later gebruik; die niet herhalen. Nog af te maken binnen HUE6.1: rustige reflectie koppelen aan veranderd mensbegrip en later gebruik, plus een geldige onafhankelijke kwaliteitsuitkomst voor de aansturing van de ontwikkelende agent. Geen nieuwe variant, gesloten herhaling, spraakwerk of vergelijkingsserie.
+Bestaande L3.6/L3.7 dekken onafhankelijke codewinst, toepassing en later gebruik; die niet herhalen. De aansturing van de ontwikkelende agent is echt beoordeeld: gelijkspel, dus de referentie blijft. Nog af te maken binnen HUE6.1: rustige reflectie koppelen aan veranderd mensbegrip en later gedrag. Geen herhaling van gesloten proeven, spraakwerk of vergelijkingsserie.
 
 Klaar wanneer: Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.
 
-De afsluitfout van de programmeerwerkruimte is geïnstalleerd en via de echte
-Eva-route gebruikt: resultaat gemaakt, teruggelezen en behouden na sluiten.
-Nul Eva-modelaanvragen voor dit herstel; 25 gerichte tests geslaagd. Dit rondt
-HUE6 niet af. Rustige reflectie met gewijzigde betekenis en later gedrag, en
-een geldige onafhankelijke kwaliteitsuitkomst voor agentaansturing ontbreken.
-De oude eindproef blijft onbevestigd en wordt niet herhaald. Geen eigenaarhandeling.
+HUE6: de echte agent heeft zijn eigen codevoorstel beoordeeld, het rapport opgeslagen en de slotreactie afgerond. Beide versies halen 4 correctheidscontroles maar 0 volledig bewezen taken: gelijkspel, referentie blijft. Duurzaam herstel van wachtende reflectie is nu geïnstalleerd; kern en werker draaien met behouden gegevens. De N+1-startfout is in dezelfde installatie opgelost, niet teruggezet. Nog open: rustige reflectie moet mensbegrip bijstellen en een later gesprek beïnvloeden. Geen eigenaarhandeling, spraakwerk of nieuwe vergelijkingsserie.
 
 ## Afmaakvolgorde
 

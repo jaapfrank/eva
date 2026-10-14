@@ -1,0 +1,47 @@
+{
+  "contract": "EvaNativeAgentSteeringTerminalOutcome/v1",
+  "recordedAt": "2026-10-14T02:07:50.262830+00:00",
+  "candidateSha256": "99ac9cc9aed93e8da6628a65dea0ca6e3f6dd4e9cfc1d17810c61444be787cd1",
+  "agentAuthored": true,
+  "operatorLiteralPatch": false,
+  "development": {
+    "baselineChecks": 4,
+    "candidateChecks": 4,
+    "baselineCompletedTasks": 0,
+    "candidateCompletedTasks": 0,
+    "decision": "baseline_retained",
+    "qualitySuperiority": false
+  },
+  "terminal": {
+    "nativeState": "succeeded",
+    "providerRequests": 1,
+    "tokens": 12064,
+    "tools": 0,
+    "comparisonRepeated": false,
+    "reportStored": "/proof-state/programmeeraansturing-ontwikkelvergelijking.json"
+  },
+  "freshCycle": {
+    "providerRequests": 19,
+    "knownTokens": 150419,
+    "tools": 28
+  },
+  "retainedSelectedHistory": {
+    "providerRequests": 76,
+    "knownTokens": 670195,
+    "tools": 107,
+    "notWholeProjectTotal": true
+  },
+  "quietFirstContact": {
+    "providerRequests": 3,
+    "knownTokens": 8352,
+    "laterQuietBehaviorProven": false
+  },
+  "oldFailuresUnknownAndClocksPreserved": true,
+  "HUE6Completed": false,
+  "additionalTasksCompleted": 0,
+  "credits": "unknown",
+  "independentSource": {
+    "sha256": "c7e8d9692e37d653a7793a439bb444ef6a9d6b90de15bd23848d359c39198995"
+  },
+  "sealedResultSha256": "ac82bd429e5cf34393d794c82a1f58438019ddc69327df759459aa2e73d78fdc"
+}

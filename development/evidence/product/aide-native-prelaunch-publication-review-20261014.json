@@ -1,0 +1,51 @@
+{
+  "contract": "EvaNativePrelaunchPublicationIndependentReview/v1",
+  "verdict": "GO",
+  "publication_go": true,
+  "reviewed_at": "2026-10-14T01:21:23.330950+00:00",
+  "source_hashes": {
+    "development/evidence/product/aide-native-prelaunch-outcome-20261014.json": "b8b1b71b954f92aefd07b0bea84cf9e71e0a77a2b607429f7d1a4b3255137b3a",
+    "AGENTS.md": "cb93db876e131ea028347efc1d126abc02a57ac371deec967facf3fa641887d1",
+    "development/docs/PROJECTDOEL.md": "3d35b4d1c0cbdad83d80a9c0094fdcdc521b5ffb89ae291cef7c26993c74c77f",
+    "development/docs/WERKBORD.md": "ff7fe103f144f711c3912bd0af56f449084f421b96d68968425fd4b062f49c11",
+    "development/design/product/execution-workboard-v1.json": "a9b73bd8c594590a5abbb11d8b68158e457607007dd132bd508da68636ca1e67"
+  },
+  "closed_independent_result_sha256": "6f4131889ac35f86cd299d9a8be8d0267b5333c53c6da5605a73e863f0bc43ab",
+  "facts": {
+    "genuine_source_read_and_model_authored_draft": true,
+    "candidate_sha256": "99ac9cc9aed93e8da6628a65dea0ca6e3f6dd4e9cfc1d17810c61444be787cd1",
+    "parent_provider_attempts": 3,
+    "parent_physical_tools": 3,
+    "parent_input_tokens": 27020,
+    "parent_output_tokens": 852,
+    "parent_total_tokens": 27872,
+    "child_dispatch_before_input_envelope_rejection": false,
+    "known_cumulative_provider_attempts": 60,
+    "known_cumulative_physical_tools": 82,
+    "known_cumulative_total_tokens": 547648,
+    "original_partial_NULL_UNKNOWN_and_closed_clocks_preserved": true,
+    "quality_selection_application_later_or_HUE6_completion_claimed": false
+  },
+  "installed_local_config_reader": {
+    "source_sha256": "48202d7197a3912160577ebe956398c0e1e5c872d27f5ea4a2ac054a6d176886",
+    "trusted_local_limit_bytes": 1048576,
+    "HTTP_or_model_limits_changed": false,
+    "targeted_test_receipt_sha256": "a4e4b024a58c0b23292bc2c862f5c5fcee6b290ae7718d16ff00123c3c6ff60b",
+    "passed": 5,
+    "initial_activation_errors_preserved": true
+  },
+  "privacy": {
+    "protected_final_inputs_or_answers_published": false,
+    "owner_private_content_published": false,
+    "voice_work_reviewed_or_changed": false
+  },
+  "board": {
+    "active_HUE6_1_open": true,
+    "completed": 43,
+    "total": 54,
+    "remaining": 11,
+    "concurrent_voice_audit_excluded_from_review_scope": true,
+    "nonblocking_stale_text": "executionTasks HUE6.1 nextAction retains earlier network setup failure; currentWork/WERKBORD describes later helper-instrument failure."
+  },
+  "models_or_tests_by_reviewer_for_publication": 0
+}

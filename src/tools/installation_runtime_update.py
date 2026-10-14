@@ -87,7 +87,10 @@ def update_runtime(*, project: str, installed: Path, candidate: Path,
     changed = image_update_services(before, after)
     containers = {}
     for service in changed:
-        ids = run([*prefix, "--file", str(installed), "--profile", "*", "ps", "-q", service]).split()
+        # A failed first start may leave the exact retained container stopped.
+        # Include it for identity/storage validation; the post-update check still
+        # requires a running container.
+        ids = run([*prefix, "--file", str(installed), "--profile", "*", "ps", "--all", "-q", service]).split()
         if len(ids) != 1:
             raise ValueError("update requires one existing container per changed service")
         current = json.loads(run(["docker", "inspect", ids[0]]))[0]

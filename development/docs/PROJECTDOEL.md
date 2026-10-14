@@ -1,4 +1,43 @@
-## Actueel 14 oktober — programmeerwerkruimte sluit correct
+## Actueel 14 oktober — agentcyclus afgesloten; reflectieherstel geïnstalleerd
+
+Eva heeft zelf de bron gelezen, een variant gemaakt, beide versies beoordeeld en
+het vergelijkingsrapport opgeslagen. De ontbrekende slotreactie is nu echt afgerond,
+zonder herhaalde vergelijking. Vier correctheidscontroles en nul volledig bewezen
+taken voor beide versies: gelijkspel; de referentie blijft. Geen kwaliteitsvoorsprong.
+
+Deze verse cyclus: 19 modelaanvragen, 150.419 bekende tokens, 28 tools. De behouden
+selectiehistorie omvat 76 aanvragen, 670.195 bekende tokens en 107 tools; geen totaal
+van het hele project. De afzonderlijke eerste geheugenbeurt gebruikte 3 aanvragen
+en 8.352 tokens. Oude fouten, UNKNOWN, klokken en gedeeltelijke journals blijven staan.
+
+De eerste reflectie-update liep vast door een N+1-reserveringsscan. Dat foutbewijs
+blijft behouden. De bulkcorrectie is in dezelfde installatie toegepast; kern en
+werker draaien met behouden gegevens. Geen terugzetten, nieuw schema of platform.
+Rustige reflectie met bijgesteld mensbegrip en later gedrag ontbreekt nog.
+43/54 en alle elf open taken blijven zichtbaar. Geen eigenaarhandeling, spraakwerk
+of nieuwe vergelijkingsserie. Bewijs: development/evidence/product/aide-native-terminal-outcome-20261014.json.
+
+## Historisch 14 oktober — eigen voorstel behouden; beoordeling nog niet begonnen
+
+Eva heeft de echte bron gelezen en zelf kandidaat99ac gemaakt, zonder een door
+Codex voorgeschreven patch. De beoordeling stopte vóór kinduitvoering: de
+proefgegevens hadden een lijst als root waar de bestaande producer een geregistreerd
+object vereist. Die voorbereidingsfout is modelvrij gereproduceerd; geen score,
+selectie, toepassing of HUE6-afronding. De echte kandidaat blijft bewaard.
+
+Nieuw: 3 aanvragen, 27.872 tokens en 3 tools; nul kindaanvragen. Met de behouden
+selectiehistorie 60 aanvragen, 547.648 tokens en 82 tools. Ontwikkelcredits onbekend.
+Oude gedeeltelijke registraties, NULL, fouten en klokken blijven staan. De lokale
+configlezer is geïnstalleerd verruimd voor behouden rondmetadata; vijf gerichte
+configcontroles geslaagd. De eerste mislukte activatie blijft in het bewijs.
+
+Vervolg alleen de herstelde inputaansluiting en de werkelijk nooit begonnen
+vergelijking van het behouden voorstel. Rustige-reflectiebootstrap wordt apart
+hersteld na een fout vóór modelinvoer; geen spraakwerk, vergelijkingsserie of
+extra eigenaarhandeling. 43/54 en alle elf open taken blijven zichtbaar.
+Bewijs: development/evidence/product/aide-native-prelaunch-outcome-20261014.json.
+
+## Historisch 14 oktober — programmeerwerkruimte sluit correct
 
 Een echte Docker-auto-removalrace is zonder modelaanvragen gereproduceerd en
 gericht gecorrigeerd. De bestaande evaluator is één keer bijgewerkt. Via Eva's
