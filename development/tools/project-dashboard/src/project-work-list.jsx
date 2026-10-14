@@ -36,6 +36,18 @@ function TaskGuidance({ task }) {
   </div>;
 }
 
+function DeviceChecks({ task }) {
+  if (!task.deviceChecks?.length) return null;
+  return <div className="task-guidance">
+    <p><b>Eén functie, controles per apparaat:</b> beide controles horen bij deze taak.</p>
+    <ul>{task.deviceChecks.map(check => <li key={check.sourceTaskId}>
+      <b>{check.device}</b> · {taskProgressLabel(check)}
+      <p>{check.remaining || check.doneWhen}</p>
+      {check.latestEvidence && <small>Bewijs: {check.latestEvidence}</small>}
+    </li>)}</ul>
+  </div>;
+}
+
 export function SmallTaskChecklist({ project, stale = false }) {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all');
@@ -73,6 +85,7 @@ export function SmallTaskChecklist({ project, stale = false }) {
           <span className="checklist-task-heading"><strong>{task.id} · {task.title}</strong><small>{task.section}</small></span>
           <span className="checklist-status">{taskProgressLabel(task)}</span></summary>
         <div className="checklist-task-detail"><p><b>Klaar wanneer:</b> {task.doneWhen}</p>
+          <DeviceChecks task={task} />
           <p><b>Verantwoordelijke:</b> {task.owner || 'Niet vastgelegd'}</p>
           {!done && <TaskGuidance task={task} />}
         </div></details>;
@@ -115,6 +128,7 @@ export default function ProjectWorkList({ project }) {
             {(!done || openChild) && <div className="remaining-actions">{slice.remainingTasks?.length ? slice.remainingTasks.map(task => <article className={`small-task ${task.status}`} key={task.id} data-small-task-id={task.id}>
               <div><span className="small-task-state">{taskProgressLabel(task)}</span><strong>{task.id} · {task.title}</strong></div>
               <p><b>Klaar wanneer:</b> {task.doneWhen}</p><small>Verantwoordelijke: {task.owner} · {task.kind}</small>
+              <DeviceChecks task={task} />
               {task.status !== 'completed' && <details className="task-next-action"><summary>Volgende stap en jouw instructies</summary><TaskGuidance task={task} /></details>}
             </article>) : <p>De concrete resterende acties zijn nog niet vastgelegd. Deze opdracht is niet als afgerond geregistreerd.</p>}</div>}
             {done && <p>Technische afronding is geregistreerd; jouw acceptatie en de complete productfunctie worden afzonderlijk bijgehouden.</p>}

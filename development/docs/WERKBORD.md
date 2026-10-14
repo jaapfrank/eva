@@ -26,7 +26,7 @@ Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hi
 | Eigen initiatief | Afgeleverd en van echte reactie geleerd · HUE5 | I1.2: stilte op ongepaste momenten; daarna samenhangend gezinsgebruik en finale acceptatie. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE5 is nu afgerond. I1.2 aandacht/stilte en samenhangend dagelijks gebruik/finale gezinsacceptatie blijven open. |
 
-45/54 bestaande kleine taken afgerond; 9 open. 39/48 oorspronkelijke afrondingen behouden. Dit is geen productpercentage.
+45/52 kleine taken afgerond; 7 open. Twee dubbele speakertaken zijn op eigenaarverzoek samengevoegd; geen extra functie afgevinkt. Apparaatbewijs blijft behouden.
 
 ## Alle bestaande kleine taken
 
@@ -34,11 +34,13 @@ Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hi
 | --- | --- | --- |
 | C1.1 · Begroeting versnellen | ✓ Afgerond | Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd. |
 | C1.2 · Telegram-tussenvraag vóór onderzoeksresultaat | ✓ Afgerond | Gewone tussenvraag komt vóór onderzoek terug en beide antwoorden horen bij hun eigen vraag. |
-| C3.1 · Doorpraten via woonkamer-speaker | Geparkeerd | Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt. |
-| C3.2 · Doorpraten via tweede speaker | Geparkeerd | Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker. |
+| C3.1 · Doorpraten via beide speakers | Geparkeerd | Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt. |
+| ↳ Apparaatcontrole: Woonkamer | planned | Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt. |
+| ↳ Apparaatcontrole: Tweede speaker | planned | Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker. |
 | C3.3 · Onderzoeksresultaat terug op juiste speaker | ✓ Afgerond | Werkelijke uitkomst komt terug bij de oorspronkelijke speaker; geen privé-inhoud. |
-| C4.1 · Onderbreken op woonkamer-speaker | Geparkeerd | Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan. |
-| C4.2 · Onderbreken op tweede speaker | Geparkeerd | Hetzelfde gedrag werkt op het tweede apparaat. |
+| C4.1 · Onderbreken op beide speakers | Geparkeerd | Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan. |
+| ↳ Apparaatcontrole: Woonkamer | planned | Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan. |
+| ↳ Apparaatcontrole: Tweede speaker | planned | Hetzelfde gedrag werkt op het tweede apparaat. |
 | C4.3 · Optioneel: stoppen en doorpraten op telefoon | Geparkeerd | Een lopende gesproken reactie stoppen en gesprek vervolgen; aangenomen werk alleen stoppen op verzoek. |
 | M1.1 · Eerder onderwerp later op privéwebsite vervolgen | ✓ Afgerond | Een Telegramonderwerp en laatste correctie worden later op de toegestane privéwebsite relevant gebruikt. |
 | M1.2 · Later verder praten zonder alles opnieuw uit te leggen | ✓ Afgerond | Jaap heeft latere onderwerpvoortzetting tijdens gewoon gebruik beoordeeld; eventuele ontbrekende of verzonnen details zijn apart geregistreerd. |

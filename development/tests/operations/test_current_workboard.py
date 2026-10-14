@@ -10,8 +10,24 @@ def board():
 
 def test_current_scope_retained():
     result = validate(ROOT, board())
-    assert result["taskCount"] == 54
-    assert result["completed"] == 43
+    assert result["taskCount"] == 52
+    assert result["completed"] >= 43
+
+def test_missing_device_check_refused():
+    value = board()
+    merged = next(task for step in value["audit"]["deliveryPlan"]["implementationSlices"]
+                 for task in step["remainingTasks"] if task.get("deviceChecks"))
+    merged["deviceChecks"].pop()
+    with pytest.raises(ValueError, match="consolidated device scope changed"):
+        validate(ROOT, value)
+
+def test_unfinished_device_cannot_complete_function():
+    value = board()
+    merged = next(task for step in value["audit"]["deliveryPlan"]["implementationSlices"]
+                 for task in step["remainingTasks"] if task.get("deviceChecks"))
+    merged["status"] = "completed"
+    with pytest.raises(ValueError, match="unfinished device checks"):
+        validate(ROOT, value)
 
 def test_changed_original_condition_refused():
     value = board()

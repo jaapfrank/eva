@@ -21,8 +21,11 @@ nog geen aandacht/stilte bij drukte of slapen. Controleer de bestaande koppeling
 gericht; geen grotere audit, nieuwe voorbeeldfunctie, spraakbouw of vergelijkingsserie.
 Nu geen extra eigenaarhandeling. De oude feedbackblokkade is inhoudelijk opgelost.
 
-45/54 bestaande kleine taken afgerond, negen open. HUE5 en HUE6 zijn de twee nieuwe
-afrondingen; het volledige projectgoal en finale gezinsacceptatie blijven open.
+45/52 bestaande kleine taken afgerond, zeven open. Op Jaaps verzoek zijn C3.1/C3.2
+en C4.1/C4.2 elk één functie met twee apparaatcontroles. Criteria, resultaten en
+bewijs blijven per speaker behouden; er is geen extra functie afgerond. HUE5 en
+HUE6 zijn de twee nieuwe afrondingen; het volledige projectgoal en finale
+gezinsacceptatie blijven open.
 Bewijs: development/evidence/product/hue5-feedback-later-use-outcome-20261014.json.
 Review: development/evidence/product/hue5-feedback-later-use-completion-review-20261014.json.
 

@@ -31,14 +31,44 @@ def validate(root: Path, board):
     previous = {t["id"]: t for t in small_tasks(json.loads(raw))}
     tasks = small_tasks(board)
     ids = [t["id"] for t in tasks]
-    if len(ids) != len(set(ids)) or set(ids) != set(previous):
-        raise ValueError("original task scope changed")
+    consolidations = board.get("taskConsolidations", [])
+    merged = {}
+    for group in consolidations:
+        primary = group["primaryTaskId"]
+        sources = group["sourceTaskIds"]
+        if (primary in merged or primary not in sources or len(sources) < 2
+                or len(sources) != len(set(sources))
+                or group.get("ownerAuthorized") is not True
+                or not group.get("ownerInstruction")):
+            raise ValueError("invalid owner task consolidation")
+        merged[primary] = sources
+    covered = []
     for task in tasks:
+        if task["id"] not in merged:
+            if task.get("deviceChecks"):
+                raise ValueError("undeclared device checks")
+            covered.append(task)
+            continue
+        checks = task.get("deviceChecks", [])
+        if [check["sourceTaskId"] for check in checks] != merged[task["id"]]:
+            raise ValueError("consolidated device scope changed")
+        covered.extend({**check, "id": check["sourceTaskId"]} for check in checks)
+        if task["status"] == "completed" and any(check["status"] != "completed" for check in checks):
+            raise ValueError("consolidated function has unfinished device checks")
+    source_ids = [task["id"] for task in covered]
+    if (len(ids) != len(set(ids)) or set(merged) - set(ids)
+            or len(source_ids) != len(set(source_ids)) or set(source_ids) != set(previous)):
+        raise ValueError("original task scope changed")
+    for task in covered:
         old = previous[task["id"]]
         if task["doneWhen"] != old["doneWhen"]:
             raise ValueError(f"original end condition changed: {task['id']}")
         if old["status"] == "completed" and task["status"] != "completed":
             raise ValueError(f"accepted technical completion revoked: {task['id']}")
+    for task in tasks:
+        old = previous[task["id"]]
+        if task["doneWhen"] != old["doneWhen"]:
+            raise ValueError(f"original end condition changed: {task['id']}")
         if old["status"] != "completed" and task["status"] == "completed":
             for key in ("completionEvidence", "independentReview"):
                 regular(root, task[key])
@@ -69,6 +99,8 @@ def render_human(board):
     for task in small_tasks(board):
         state = "✓ Afgerond" if task["status"] == "completed" else ("Geparkeerd" if task.get("parked") else "● Open")
         lines.append(f"| {task['id']} · {task['title']} | {state} | {task['doneWhen'].replace('|', '/')} |")
+        for check in task.get("deviceChecks", []):
+            lines.append(f"| ↳ Apparaatcontrole: {check['device']} | {check['status']} | {check['doneWhen'].replace('|', '/')} |")
     lines += ["", "## Van jou", "", overview["ownerAction"]["detail"], "", "## Historie", "",
               f"Het oorspronkelijke bord staat in [{board['historicalWorkboard']['path']}]({os.path.relpath(board['historicalWorkboard']['path'], 'development/docs')}).",
               "Oude criteria, mislukte proeven en onbekend verbruik blijven behouden. De reorganisatie is geen productfunctie.", ""]
