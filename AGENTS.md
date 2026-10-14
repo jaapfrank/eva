@@ -1,4 +1,19 @@
-## Actuele uitkomst 14 oktober — AIDE-eindproef onbevestigd
+## Actueel 14 oktober — programmeerwerkruimte sluit correct
+
+Een echte Docker-auto-removalrace is zonder modelaanvragen gereproduceerd en
+gericht gecorrigeerd. De bestaande evaluator is één keer bijgewerkt. Via Eva's
+geïnstalleerde programmeerclient is een bestand gemaakt, teruggelezen en behouden
+na sluiten; containerafwezigheid bevestigd. 25 gerichte tests geslaagd.
+Configuratie, 4.326 queuebestanden en andere 37 overlaymodules behouden.
+
+Dit is herstel van een uitvoeringsfout, geen nieuwe productafronding. De subtype-
+oorzaak van de oude eindproeffout blijft onbekend; de afgesloten proef en scores
+blijven staan. HUE6 en 43/54 blijven open. Vervolg uitsluitend de ontbrekende
+betekenisvolle reflectie en onafhankelijke agentverbetering binnen het bestaande
+goal; geen vergelijkingsserie, spraakwerk of eigenaarhandeling.
+Bewijs: development/evidence/product/programming-close-installed-20261014.json.
+
+## Historische uitkomst 14 oktober vóór afsluitcorrectie — AIDE-eindproef onbevestigd
 
 De echte opvolger heeft de opgeslagen zes resultaten met één modelaanvraag
 succesvol afgerond, zonder herhaald ontwikkelwerk. Dezelfde eindproef is daarna
@@ -15,7 +30,7 @@ verbeterbeoordeling. Rustige reflectie met betekenisvolle verandering en later
 gebruik bij dezelfde persoon is nog niet bewezen. HUE6 en 43/54 blijven open.
 Bewijs: development/evidence/product/aide-independent-final-outcome-20261014.json.
 
-## Actuele uitvoering 14 oktober — ontwikkelresultaat behouden, afsluiting herstellen
+## Historische uitvoering 14 oktober — ontwikkelresultaat behouden, afsluiting herstellen
 
 De bestaande AIDE-kandidaat haalt vier correcte controles tegenover nul bij de
 referentie. Beide hebben volgens de vaste beoordeling nul volledig bewezen taken.
@@ -36,7 +51,7 @@ queuebestanden zijn behouden; kern en werker zijn niet vervangen. De legitieme
 opvolger en eindbeoordeling zijn nog niet uitgevoerd. Geen nieuwe modelaanvraag.
 Bewijs: development/evidence/product/aide-usage-supplement-installed-20261014.json.
 
-## Actuele uitvoering 14 oktober — bestaande AIDE²-cyclus afronden
+## Historische voorbereiding 14 oktober — bestaande AIDE²-cyclus afronden
 
 De gewone reflectie van 13 oktober is volgens de providerlog afgerond zonder
 nieuwe stijlspiegelinhoud. Er is geen aangetoonde providerfout die herstelbouw

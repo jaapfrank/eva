@@ -10,7 +10,12 @@ Bestaande L3.6/L3.7 dekken onafhankelijke codewinst, toepassing en later gebruik
 
 Klaar wanneer: Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.
 
-De rustige-reflectieoverdracht is nu geïnstalleerd: afgeronde operatie en later aangeboden stijlspiegel zijn per persoon/modelaanvraag terug te vinden. Echte gewijzigde betekenis en gedragsinvloed blijven onbewezen. De onafhankelijke ontwikkelende-agentbeoordeling blijft open. Geen gesloten proef opnieuw uitvoeren; geen eigenaarhandeling.
+De afsluitfout van de programmeerwerkruimte is geïnstalleerd en via de echte
+Eva-route gebruikt: resultaat gemaakt, teruggelezen en behouden na sluiten.
+Nul Eva-modelaanvragen voor dit herstel; 25 gerichte tests geslaagd. Dit rondt
+HUE6 niet af. Rustige reflectie met gewijzigde betekenis en later gedrag, en
+een geldige onafhankelijke kwaliteitsuitkomst voor agentaansturing ontbreken.
+De oude eindproef blijft onbevestigd en wordt niet herhaald. Geen eigenaarhandeling.
 
 ## Afmaakvolgorde
 

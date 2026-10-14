@@ -20,6 +20,7 @@ import re
 import stat
 import subprocess
 import threading
+import time
 import uuid
 
 
@@ -126,11 +127,35 @@ def _docker_arguments(config, session_key, workspace):
 
 
 def _remove_container(session_key):
-    result = subprocess.run(["docker", "rm", "--force", _container_name(session_key)],
+    name = _container_name(session_key)
+    env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin")}
+    result = subprocess.run(["docker", "rm", "--force", name],
         stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        env={"PATH": os.environ.get("PATH", "/usr/bin:/bin")}, timeout=10, check=False)
+        env=env, timeout=10, check=False)
     if result.returncode and b"No such container" not in result.stderr:
+        # Docker's --rm exit can already be removing this exact container.
+        # Observe that removal rather than issue another destructive command.
+        progress = f"removal of container {name} is already in progress".encode()
+        if progress in result.stderr:
+            _wait_for_container_absence(name, env)
+            return
         raise RuntimeError("programming container cleanup was not confirmed")
+
+
+def _wait_for_container_absence(name, env):
+    deadline = time.monotonic() + 10
+    while (remaining := deadline - time.monotonic()) > 0:
+        result = subprocess.run(["docker", "inspect", "--format", "{{.State.Status}}", name],
+            stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            env=env, timeout=remaining, check=False)
+        if result.returncode:
+            error = result.stderr.lower()
+            if (name.encode() in error and any(message in error for message in
+                    (b"no such object", b"no such container"))):
+                return
+            break
+        time.sleep(min(0.05, max(0, deadline - time.monotonic())))
+    raise RuntimeError("programming container cleanup was not confirmed")
 
 
 def _reconcile_containers(config):

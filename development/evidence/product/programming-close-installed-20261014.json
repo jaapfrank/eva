@@ -1,0 +1,58 @@
+{
+  "contract": "EvaProgrammingCloseInstalledPublication/v1",
+  "at": "2026-10-14T00:12:20.438683+00:00",
+  "status": "installed_and_used",
+  "problem": "Docker automatic removal could overlap explicit programming-workspace cleanup and incorrectly report failure after programming stopped.",
+  "change": "For the exact already-removing container, observe confirmed absence once before accepting cleanup; unknown or still-present targets remain failures.",
+  "source": {
+    "path": "src/eva/operations/programming_workspace.py",
+    "sha256": "a6a2a9f8d424641aeb3551f74adf92a64dc4954d19a00082e15f5306beed5555",
+    "previous_sha256": "fe0ab4687ea1915f96a9f7926af71adec036d3e076c77111a2c31a557f5b5d30"
+  },
+  "tests": {
+    "passed": 25,
+    "existing": 21,
+    "new": 4,
+    "receipt_sha256": "18e632d543bcb4bae12136bd006d8a0dae4040f4735bcb7a76f87de82bb9242f"
+  },
+  "real_use": {
+    "route": "Installed core configured programming client -> existing evaluator -> pinned MCP programming container",
+    "program_created_and_read_back": true,
+    "result_retained_after_close": true,
+    "result_sha256": "88073baecb1ae8938ed060805c17fbb8d978a39b0ca3cd96c3061f9d7a72a4c4",
+    "close_response": {
+      "closed": true
+    },
+    "container_absent": true,
+    "wall_seconds": 3.3867586459964514
+  },
+  "installation": {
+    "restart_count": 1,
+    "config_sha256": "357f5ec957890097f6ac9fcc9909ad9be0e3d7b914eff2fcba19b76bb1869d49",
+    "queue_files_preserved": 4326,
+    "other_overlay_modules_unchanged": 37,
+    "health": {
+      "status": "ready"
+    },
+    "core_worker_voice_changed": false,
+    "initial_import_readback_corrected_before_endpoint_verification": true
+  },
+  "private_receipts": {
+    "installed_sha256": "d0c8fb2f53f19fd36a09a71fbfd579ac48599e4783344a2dfcad72fbecb5f214",
+    "endpoint_sha256": "3ae9f4c47a70f900f92cf00852a71363c9d09ab06af5f860113871a2a0a8aaa2",
+    "captured_failure_sha256": "fa38ed7f066cd4615e51036288a713108c3d858a1bfd1936a48b0c06c0346e5e"
+  },
+  "limits": {
+    "historical_final_http500_subtype": "UNKNOWN",
+    "historical_final_case_reopened": false,
+    "independent_quality_win": false,
+    "HUE6_completed": false,
+    "additional_tasks_completed": 0,
+    "completed_tasks": 43,
+    "total_tasks": 54
+  },
+  "usage": {
+    "eva_model_requests": 0,
+    "credit_cost": "unknown"
+  }
+}

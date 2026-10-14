@@ -315,6 +315,51 @@ def test_container_removal_uses_exact_name_and_rejects_unconfirmed_failure(monke
         pw._remove_container(SESSION)
 
 
+def test_auto_removal_race_observes_absence_without_repeating_removal(monkeypatch):
+    name = pw._container_name(SESSION)
+    responses = iter([
+        SimpleNamespace(returncode=1, stderr=f"removal of container {name} is already in progress".encode()),
+        SimpleNamespace(returncode=0, stdout=b"removing\n", stderr=b""),
+        SimpleNamespace(returncode=1, stdout=b"", stderr=f"error: no such object: {name}".encode()),
+    ])
+    calls = []
+    def run(args, **kwargs):
+        calls.append(args)
+        return next(responses)
+    monkeypatch.setattr(pw.subprocess, "run", run)
+    monkeypatch.setattr(pw.time, "sleep", lambda seconds: None)
+    pw._remove_container(SESSION)
+    assert calls == [["docker", "rm", "--force", name],
+                     ["docker", "inspect", "--format", "{{.State.Status}}", name],
+                     ["docker", "inspect", "--format", "{{.State.Status}}", name]]
+
+
+@pytest.mark.parametrize("error", [b"daemon unavailable", b"no such object: another-container"])
+def test_auto_removal_race_does_not_claim_absence_without_exact_confirmation(monkeypatch, error):
+    name = pw._container_name(SESSION)
+    responses = iter([
+        SimpleNamespace(returncode=1, stderr=f"removal of container {name} is already in progress".encode()),
+        SimpleNamespace(returncode=1, stdout=b"", stderr=error),
+    ])
+    monkeypatch.setattr(pw.subprocess, "run", lambda *args, **kwargs: next(responses))
+    with pytest.raises(RuntimeError, match="not confirmed"):
+        pw._remove_container(SESSION)
+
+
+def test_auto_removal_race_cannot_report_a_persistent_container_as_closed(monkeypatch):
+    name = pw._container_name(SESSION)
+    times = iter([0, 0, 10, 10])
+    responses = iter([
+        SimpleNamespace(returncode=1, stderr=f"removal of container {name} is already in progress".encode()),
+        SimpleNamespace(returncode=0, stdout=b"removing\n", stderr=b""),
+    ])
+    monkeypatch.setattr(pw.time, "monotonic", lambda: next(times))
+    monkeypatch.setattr(pw.time, "sleep", lambda seconds: None)
+    monkeypatch.setattr(pw.subprocess, "run", lambda *args, **kwargs: next(responses))
+    with pytest.raises(RuntimeError, match="not confirmed"):
+        pw._remove_container(SESSION)
+
+
 def test_non_string_json_keys_reject_and_argument_snapshot_matches_receipt(boundary, monkeypatch):
     create, _, state = boundary
     manager = create()

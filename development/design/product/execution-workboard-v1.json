@@ -660,7 +660,7 @@
       "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
       "status": "in_progress",
       "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-      "nextAction": "De onafhankelijke eindproef is onbevestigd: de kandidaat kreeg HTTP500 bij afsluiten. Geen bewezen winst of gelijkspel; de referentie blijft. De bestaande sessie is daarna zonder modelaanvraag gesloten. Geen herhaling van deze proef. Corrigeer de concrete afsluitroute voordat nieuw verbeterwerk wordt beoordeeld; rustige reflectie met later gedrag blijft ook onbewezen. HUE6 nog niet afgerond; geen eigenaarhandeling.",
+      "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
       "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
       "area": "self-improvement and learning",
       "countedAsProductTask": true
@@ -832,7 +832,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-13T23:58:10.473482+00:00",
+  "lastUpdated": "2026-10-14T00:13:34.452517+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "HUE6.1",
@@ -841,7 +841,7 @@
     "title": "Droomcyclus voor mensbegrip en AIDE² afmaken",
     "status": "in_progress",
     "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-    "nextAction": "De onafhankelijke eindproef is onbevestigd: de kandidaat kreeg HTTP500 bij afsluiten. Geen bewezen winst of gelijkspel; de referentie blijft. De bestaande sessie is daarna zonder modelaanvraag gesloten. Geen herhaling van deze proef. Corrigeer de concrete afsluitroute voordat nieuw verbeterwerk wordt beoordeeld; rustige reflectie met later gedrag blijft ook onbewezen. HUE6 nog niet afgerond; geen eigenaarhandeling.",
+    "nextAction": "Afsluitfout in de programmeerwerkruimte geïnstalleerd en via de echte Eva-route gebruikt: bestand gemaakt, teruggelezen en behouden na sluiten. HUE6 blijft open: betekenisvolle rustige reflectie en later gedrag, plus geldige onafhankelijke verbetering van de ontwikkelende agent ontbreken. De afgesloten eindproef blijft staan; geen nieuwe vergelijkingsserie of eigenaarhandeling.",
     "outcome": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
     "area": "self-improvement and learning",
     "countedAsProductTask": true
@@ -3216,7 +3216,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-                "nextAction": "De onafhankelijke eindproef is onbevestigd: de kandidaat kreeg HTTP500 bij afsluiten. Geen bewezen winst of gelijkspel; de referentie blijft. De bestaande sessie is daarna zonder modelaanvraag gesloten. Geen herhaling van deze proef. Corrigeer de concrete afsluitroute voordat nieuw verbeterwerk wordt beoordeeld; rustige reflectie met later gedrag blijft ook onbewezen. HUE6 nog niet afgerond; geen eigenaarhandeling.",
+                "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
                 "ownerActionRequired": false,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -3648,7 +3648,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De onafhankelijke eindproef is onbevestigd: de kandidaat kreeg HTTP500 bij afsluiten. Geen bewezen winst of gelijkspel; de referentie blijft. De bestaande sessie is daarna zonder modelaanvraag gesloten. Geen herhaling van deze proef. Corrigeer de concrete afsluitroute voordat nieuw verbeterwerk wordt beoordeeld; rustige reflectie met later gedrag blijft ook onbewezen. HUE6 nog niet afgerond; geen eigenaarhandeling.",
+        "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -4902,7 +4902,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Rustige reflectie leidt tot bijgesteld mensbegrip en een echte verbetercyclus voor agentaansturing én code of uitbreiding. Alleen onafhankelijk bewezen winst wordt toegepast en later werkelijk gebruikt; bij gelijkspel blijft de referentie.",
-              "nextAction": "De onafhankelijke eindproef is onbevestigd: de kandidaat kreeg HTTP500 bij afsluiten. Geen bewezen winst of gelijkspel; de referentie blijft. De bestaande sessie is daarna zonder modelaanvraag gesloten. Geen herhaling van deze proef. Corrigeer de concrete afsluitroute voordat nieuw verbeterwerk wordt beoordeeld; rustige reflectie met later gedrag blijft ook onbewezen. HUE6 nog niet afgerond; geen eigenaarhandeling.",
+              "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
               "ownerActionRequired": false,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -5335,7 +5335,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De onafhankelijke eindproef is onbevestigd: de kandidaat kreeg HTTP500 bij afsluiten. Geen bewezen winst of gelijkspel; de referentie blijft. De bestaande sessie is daarna zonder modelaanvraag gesloten. Geen herhaling van deze proef. Corrigeer de concrete afsluitroute voordat nieuw verbeterwerk wordt beoordeeld; rustige reflectie met later gedrag blijft ook onbewezen. HUE6 nog niet afgerond; geen eigenaarhandeling.",
+      "nextAction": "De echte afsluitroute van de programmeerwerkruimte onderzoeken met één geïsoleerde controle zonder modelaanvragen. Alleen een aangetoond sluitingsprobleem herstellen en in de bestaande evaluator installeren. De afgesloten eindproef blijft ongewijzigd; geen nieuwe vergelijkingsserie. HUE6 blijft open; geen eigenaarhandeling.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -6048,7 +6048,17 @@
       "newEvaModelRequests": 0,
       "completionChanged": false,
       "evidence": "development/evidence/product/aide-usage-supplement-installed-20261014.json"
+    },
+    "programmingCloseInvestigation20261014": {
+      "previousGoalTurn": "progress",
+      "reason": "Installed usage bridge and successful native continuation; independent final failure changed next action. No completed product task claimed.",
+      "status": "installed_and_used",
+      "modelRequests": 0,
+      "sameProtectedFinalCaseRepeated": false,
+      "ownerActionRequired": false,
+      "evidencePath": "development/evidence/product/programming-close-installed-20261014.json",
+      "additionalTasksCompleted": 0
     }
   },
-  "updatedAt": "2026-10-13T23:58:10.473482+00:00"
+  "updatedAt": "2026-10-14T00:13:34.452517+00:00"
 }
