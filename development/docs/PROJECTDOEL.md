@@ -16,8 +16,11 @@ De controllerstimulans blijft expliciet; geen spontaan initiatief of gezinsaccep
 De oude mislukte taak en 221.270 bekende gedeeltelijke tokens blijven bewaard.
 
 HUE5 blijft open voor echte reactie en latere toepassing daarvan op passend
-initiatief of bewust stilblijven. De gerichte vraag aan Jaap is nu gesteld nadat
-iets concreets is afgeleverd. Geen herhaalde creatie, vergelijking of spraakbouw.
+initiatief of bewust stilblijven. Na aflevering is nog geen echte reactie geregistreerd
+of nieuw privébericht gevonden in de bestaande ontvangstregistratie. Eén kort oordeel
+kan zowel HUE5 als I1.2 helpen afronden; geen dubbele gebruikersproef. Er loopt geen
+uitvoering voor deze taak en deze voortzetting gebruikte nul Eva-modelaanvragen.
+Geen herhaalde creatie, vergelijking of spraakbouw.
 HUE6.1 blijft de enige nieuwe taakafronding: 44/54 klaar, tien open. Goal actief.
 Bewijs: development/evidence/product/hue5-completed-contribution-outcome-20261014.json.
 

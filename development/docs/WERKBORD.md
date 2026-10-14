@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van de reactie op eigen initiatief leren
 
-Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.
+De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.
 
 Klaar wanneer: Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.
 

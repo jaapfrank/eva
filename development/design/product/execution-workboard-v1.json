@@ -848,10 +848,10 @@
     "status": "in_progress",
     "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
     "outcome": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-    "nextAction": "Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.",
+    "nextAction": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
     "area": "initiative and learning",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T05:31:59.361863+00:00",
+    "checkedAt": "2026-10-14T05:41:44.256882+00:00",
     "ownerActionRequired": true
   },
   "historicalWorkboard": {
@@ -1852,15 +1852,15 @@
         },
         "now": {
           "title": "Van de reactie op eigen initiatief leren",
-          "state": "Bezig",
-          "phase": "useful_initiative_and_feedback",
+          "state": "Jouw reactie nodig",
+          "phase": "awaiting_actual_owner_feedback",
           "taskId": "HUE5.1",
-          "activeExecution": true,
+          "activeExecution": false,
           "nativeRunning": false,
-          "summary": "Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.",
+          "summary": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
           "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
           "ownerActionNeeded": true,
-          "checkedAt": "2026-10-14T05:31:59.361863+00:00"
+          "checkedAt": "2026-10-14T05:41:44.256882+00:00"
         },
         "next": {
           "state": "Daarna",
@@ -1877,7 +1877,7 @@
           ],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-14T05:32:32.004913+00:00",
+        "checkedAt": "2026-10-14T05:41:44.256882+00:00",
         "reviewedAt": "2026-10-14T03:14:08.630849+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -2941,15 +2941,17 @@
                 "kind": "gebruikersproef",
                 "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
                 "owner": "Jaap",
-                "nextAction": "Jaap heeft gemeld geen nuttige eigen bijdrage te hebben ontvangen. Het verbruikslijstje is niet het technisch afgeleverde restjesdocument. Codex moet eerst een voor Jaap herkenbare bijdrage opleveren; nu geen extra eigenaarhandeling of beoordeling van een willekeurige oude bijdrage.",
-                "ownerActionRequired": false,
+                "nextAction": "Een herkenbare eigen bijdrage is nu kort via Telegram afgeleverd: ‘Wasgoed zonder gokwerk’. Het bestaande HUE5-oordeel kan ook nut/hinder voor I1.2 vastleggen; geen tweede proef of willekeurig oud resultaat. Stilte op ongepaste momenten en gezinsbeleving blijven afzonderlijk.",
+                "ownerActionRequired": true,
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Eerst moet een herkenbare eigen bijdrage daadwerkelijk beschikbaar zijn. Eerder transportbewijs vervangt Jaaps ontvangst- of nuttigheidsoordeel niet.",
-                  "steps": [],
+                  "availableNow": true,
+                  "readyWhen": "De bijdrage is afgeleverd; dezelfde echte reactie op HUE5 kan nu worden gebruikt.",
+                  "steps": [
+                    "Geef één kort oordeel op de afgeleverde bijdrage: nuttig of onbruikbaar, en waarom."
+                  ],
                   "blocksIndependentWork": false
                 },
-                "checkedAt": "2026-10-05T02:13:15.233372+00:00",
+                "checkedAt": "2026-10-14T05:41:44.256882+00:00",
                 "assignment": {
                   "activeWorkers": []
                 },
@@ -2966,7 +2968,7 @@
                 "kind": "afronding",
                 "owner": "Codex",
                 "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-                "nextAction": "Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.",
+                "nextAction": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
                 "ownerActionRequired": true,
                 "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
                 "ownerInstructions": {
@@ -2981,16 +2983,14 @@
                   "reportBack": "Een kort oordeel."
                 },
                 "assignment": {
-                  "activeWorkers": [
-                    "/root"
-                  ]
+                  "activeWorkers": []
                 },
                 "ownerFeedback": {
                   "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
                   "usefulDeliveryConfirmed": false,
                   "initiativeId": null
                 },
-                "checkedAt": "2026-10-14T05:31:59.361863+00:00",
+                "checkedAt": "2026-10-14T05:41:44.256882+00:00",
                 "latestEvidence": "development/evidence/product/hue5-completed-contribution-outcome-20261014.json"
               }
             ]
@@ -4640,15 +4640,17 @@
               "kind": "gebruikersproef",
               "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
               "owner": "Jaap",
-              "nextAction": "Jaap heeft gemeld geen nuttige eigen bijdrage te hebben ontvangen. Het verbruikslijstje is niet het technisch afgeleverde restjesdocument. Codex moet eerst een voor Jaap herkenbare bijdrage opleveren; nu geen extra eigenaarhandeling of beoordeling van een willekeurige oude bijdrage.",
-              "ownerActionRequired": false,
+              "nextAction": "Een herkenbare eigen bijdrage is nu kort via Telegram afgeleverd: ‘Wasgoed zonder gokwerk’. Het bestaande HUE5-oordeel kan ook nut/hinder voor I1.2 vastleggen; geen tweede proef of willekeurig oud resultaat. Stilte op ongepaste momenten en gezinsbeleving blijven afzonderlijk.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Eerst moet een herkenbare eigen bijdrage daadwerkelijk beschikbaar zijn. Eerder transportbewijs vervangt Jaaps ontvangst- of nuttigheidsoordeel niet.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "De bijdrage is afgeleverd; dezelfde echte reactie op HUE5 kan nu worden gebruikt.",
+                "steps": [
+                  "Geef één kort oordeel op de afgeleverde bijdrage: nuttig of onbruikbaar, en waarom."
+                ],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-05T02:13:15.233372+00:00",
+              "checkedAt": "2026-10-14T05:41:44.256882+00:00",
               "assignment": {
                 "activeWorkers": []
               },
@@ -4665,7 +4667,7 @@
               "kind": "afronding",
               "owner": "Codex",
               "doneWhen": "Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven.",
-              "nextAction": "Werkend en geïnstalleerd: Eva heeft haar eerder zelfgekozen bijdrage ‘Wasgoed zonder gokwerk’ geregistreerd en kort via Telegram afgeleverd (07:29:59). Geen nieuw document gemaakt. Nieuwe overdracht: 2 gemeten modelaanvragen, 20.347 tokens; oude mislukte taak en gedeeltelijk verbruik behouden. HUE5 blijft open tot haar volgende keuze aantoonbaar jouw echte reactie gebruikt. 44/54 taken klaar, tien open. Spraak geparkeerd; geen nieuwe vergelijking.",
+              "nextAction": "De eigen bijdrage is geïnstalleerd en via Telegram afgeleverd. Er is nog geen echte reactie geregistreerd of privébericht na aflevering gevonden. HUE5 wacht op dat oordeel om later gedrag te kunnen aantonen; I1.2 gebruikt hetzelfde oordeel voor nut/hinder. Geen werkproces of modelaanvraag loopt voor deze taak. 44/54 taken klaar, tien open: vijf spraak geparkeerd, twee initiatiefbeoordelingen, P2.1 bestaande dekking en twee gezinseindbeoordelingen. Geen nieuwe vergelijking of fictieve feedback.",
               "ownerActionRequired": true,
               "source": "development/archive/history/eva2/design/product/human-understanding-engine-integration-20261012.md",
               "ownerInstructions": {
@@ -4680,16 +4682,14 @@
                 "reportBack": "Een kort oordeel."
               },
               "assignment": {
-                "activeWorkers": [
-                  "/root"
-                ]
+                "activeWorkers": []
               },
               "ownerFeedback": {
                 "source": "development/evidence/product/initiative-owner-delivery-assessment-20261013.json",
                 "usefulDeliveryConfirmed": false,
                 "initiativeId": null
               },
-              "checkedAt": "2026-10-14T05:31:59.361863+00:00",
+              "checkedAt": "2026-10-14T05:41:44.256882+00:00",
               "latestEvidence": "development/evidence/product/hue5-completed-contribution-outcome-20261014.json"
             }
           ]
@@ -6196,6 +6196,25 @@
       "quietSourceFactCount": 2,
       "quietLaterReplyWords": 37,
       "independentOriginalReviewSha256": "c2528eff1d84b1bcca20bc3581caf824a1a33330c1f114542c48ef30a87889bc"
+    },
+    "hue5FeedbackReadiness20261014": {
+      "checkedAt": "2026-10-14T05:41:44.256882+00:00",
+      "classificationOfPreviousTurn": "progress: installed registration and actual private delivery",
+      "feedbackCount": 0,
+      "privateOwnerMessagesAfterDelivery": 0,
+      "currentTaskExecutionLive": false,
+      "modelRequestsThisContinuation": 0,
+      "remainingOriginalConditionsPreserved": true,
+      "snapshots": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/feedback-readiness-20261014.private.json",
+          "sha256": "4be38f0d8752fb8ad0379ad52a85073ff5d443b19b9b29910d3e40aec2d67908"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/hue5-completed-contribution-20261014/owner-telegram-after-delivery.private.json",
+          "sha256": "d5ca08cf615a38b1cdd44e5a81a2da3ffc76b917f8abc7940a582c9248d9556b"
+        }
+      ]
     }
   },
   "updatedAt": "2026-10-14T03:14:08.630849+00:00"
