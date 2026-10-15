@@ -1,0 +1,196 @@
+{
+  "contract": "EvaNextAttentionOutcome/v1",
+  "taskId": "E1.2",
+  "checkedAt": "2026-10-15T11:04:35.270465+00:00",
+  "status": "completed_installed",
+  "installed": true,
+  "wholeProjectComplete": false,
+  "originalDoneWhen": "Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging.",
+  "existingReused": [
+    "Sensory decision and private/shared opportunity routes",
+    "Existing PostgreSQL operational timeline and immutable source events",
+    "Existing context-review scheduler, claims, authority, stop and UNKNOWN gates",
+    "Existing background provider/owner admission and household signal coalescing"
+  ],
+  "added": [
+    "Optional next_attention with UTC time and reason in the existing model decision",
+    "One durable next choice per exact audience; unrelated NULL keeps it, newer nonnull choices supersede by serialized commit order",
+    "One-shot due review with original source/hash and separately fresh context",
+    "Resume the same deferred event after foreground activity; cancelled/stopped/superseded sources do not dispatch",
+    "Preserve the existing300-second coalescing floor with requested/effective time explicit; no new planner, table or permanent worker"
+  ],
+  "realProof": {
+    "isolatedTechnicalFixture": true,
+    "notAHouseholdNeed": true,
+    "actualExistingProviderAndOwnerAuthority": true,
+    "modelChoseTimeAndReason": true,
+    "choice": {
+      "at": "2026-10-15T11:06:12Z",
+      "reason": "Dan begint het opgegeven gereedheidsvenster van de tijdelijke interne controle; beoordelen of er inmiddels een nieuw resultaat beschikbaar is.",
+      "requested_at": "2026-10-15T11:06:12Z",
+      "selection_sequence": 1
+    },
+    "firstReason": "Er is geen huiswaarneming of gezinsbehoefte aangetoond. De tijdelijke interne controle wacht op haar gereedheidsvenster en heeft nu geen nieuw resultaat; alleen later opnieuw beoordelen is passend.",
+    "secondReason": "De meegegeven context meldt dat de tijdelijke interne controle gereed is. Er is geen afzonderlijke bronlezing meegeleverd, maar ook geen openstaande concrete vraag of huishoudelijke aanleiding voor een bericht, nieuw werk of verdere herbeoordeling.",
+    "secondNextAttention": null,
+    "reconstructedStoreAndWorker": true,
+    "operatingSystemProcessCrashTest": false,
+    "foregroundInterruptionAndResume": true,
+    "sameDueEventReused": true,
+    "additionalModelCallsBeforeDue": 0,
+    "additionalModelCallsDuringForeground": 0,
+    "modelCallsAfterResume": 1,
+    "totalModelCalls": 2,
+    "actualElapsedSeconds": 12.535,
+    "logicalClockAdvancedOnlyDisposableDatabase": true,
+    "notRealTimeFiveMinuteWait": true,
+    "nativeOrExternalActions": 0,
+    "productionWorkOrReviewsReopened": false,
+    "temporaryDatabaseRemoved": true,
+    "foregroundPredicateSimulated": true
+  },
+  "usage": {
+    "scope": "Only the two real-model decisions in this isolated proof; ordinary concurrent production and developer usage are separate.",
+    "model": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "requests": 2,
+    "inputTokens": 4869,
+    "outputTokens": 223,
+    "registeredTokens": 5092,
+    "decisionToolCalls": 2,
+    "externalToolCalls": 0,
+    "creditCosts": null,
+    "developerCreditCosts": null
+  },
+  "validation": {
+    "uniqueUnitAndModelCasesCovered": 35,
+    "uniquePostgresCasesCovered": 48,
+    "all83InOneSingleRun": false,
+    "postgresInitialAffectedRun": {
+      "passed": 47,
+      "retained": true
+    },
+    "postgresAfterOrderingChange": {
+      "passed": 9,
+      "targetedOnly": true
+    },
+    "realModelIntegrationCases": 1,
+    "isolatedPostgresOnly": true,
+    "productionFixtureWrites": false
+  },
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "receiptSha256": "c001de12806ad41a2ac311a828c502d4f55d868f503985489e66c01c7bb166d6",
+    "services": {
+      "core": {
+        "image": "sha256:913ad97ce663380ba0699217555be256827cbf568f4d28bcdc0ea48c9ed1ffc0",
+        "mountsRetained": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:80f050e046afd324b54a126862d9c0d785b5037871a9aae01183b22f66686a6e",
+        "mountsRetained": true
+      }
+    },
+    "changedModules": {
+      "core": [
+        "adapters/model/pydantic_conversation.py",
+        "adapters/postgres/initiative_attention.py",
+        "adapters/postgres/sensory_events.py",
+        "application/free_will.py",
+        "application/household_initiative.py",
+        "application/resident_attention.py"
+      ],
+      "worker": [
+        "adapters/model/pydantic_conversation.py",
+        "adapters/postgres/initiative_attention.py",
+        "adapters/postgres/sensory_events.py",
+        "application/free_will.py",
+        "application/household_initiative.py",
+        "application/resident_attention.py"
+      ]
+    },
+    "otherPythonModulesPreserved": {
+      "core": 350,
+      "worker": 349
+    },
+    "allDigitalExecutionSourcesMatch": true,
+    "voiceSpecificSourceOrConfigurationChanged": false,
+    "olderWorkerBindingDependencyAligned": true
+  },
+  "limitations": [
+    "Proof uses an explicit synthetic technical readiness state, not spontaneous family initiative.",
+    "Time advances only in the disposable database. No claim of a real five-minute household wait or operating-system crash test.",
+    "E1.3 daily useful contribution, I1.2 attention/silence and final family acceptance remain separate.",
+    "No general competitor advantage or efficiency improvement is claimed.",
+    "The existing300-second coalescing floor can delay an earlier requested review; requested and effective timestamps remain explicit."
+  ],
+  "privateEvidence": [
+    {
+      "label": "plan.private.json",
+      "sha256": "431116a84ff3cb0c4abd99e59a9b793e2ef688fd6b3d773d009d637c8c97f7df",
+      "restricted": true
+    },
+    {
+      "label": "real-proof.private.json",
+      "sha256": "9cd4f5428a318ad0c6af6b319cf687b645b7e3393fc30c451742cb96d7b45fc8",
+      "restricted": true
+    },
+    {
+      "label": "real-proof-run.private.json",
+      "sha256": "e7f2820e8181feb6ca08d4a7a06469f8125e7e61ed19cd28d70452d4a1561d2d",
+      "restricted": true
+    },
+    {
+      "label": "unit-model-checks.private.json",
+      "sha256": "2352b2a6eea36f9dc1417d795a3c8b9d6263f143297ed0fca935f4a3e905a42c",
+      "restricted": true
+    },
+    {
+      "label": "attention-postgres.before-ordering.private.json",
+      "sha256": "e0d10a5ee2a925fd279e0e205e22fb46e90a8854126a905070f19c1c706eb35b",
+      "restricted": true
+    },
+    {
+      "label": "attention-postgres.private.json",
+      "sha256": "1c0e1f3064e7d633ac1dc06af2fea0c1127d4cc3ec73f82742ead3602439500c",
+      "restricted": true
+    },
+    {
+      "label": "independent-next-attention-source-review.private.json",
+      "sha256": "2a705bc329141a16d8877b1b9b5be1e392ab3280dc04aad278fcab0f5a4eb3fc",
+      "restricted": true
+    },
+    {
+      "label": "worker-dependency-alignment.private.json",
+      "sha256": "79d2fde905a9fe87d72c3bd2305c5a5ac417d35dfab2adfe5f4782e06127f254",
+      "restricted": true
+    },
+    {
+      "label": "independent-next-attention-outcome-review.private.json",
+      "sha256": "fc2eb2e34803c09ab3cf5e9587d10c423341f50b4817e8cd4c442f4709661a86",
+      "restricted": true
+    },
+    {
+      "label": "dashboard-after.private.json",
+      "sha256": "743a4bd5b0c0b685570a810e79264382c3700a86636e37958d77ae39faba3fc1",
+      "restricted": true
+    }
+  ],
+  "taskCompleted": true,
+  "completedAt": "2026-10-15T11:06:18.134166+00:00",
+  "independentReview": "development/reviews/e12-next-attention-review-20261015.json",
+  "dashboard": {
+    "checkedAt": "2026-10-15T11:07:22.276952+00:00",
+    "url": "http://localhost:44712/project-state",
+    "status": 200,
+    "revision": "c14afc24a5f5f7086b8c9af9ccba0c550a930cb58d9b642140afd95a08d2ff33",
+    "completedTaskId": "E1.2",
+    "activeTaskId": "E1.3",
+    "activeStatus": "planned",
+    "counts": {
+      "completed": 47,
+      "total": 70
+    },
+    "extensionUsed": false
+  }
+}

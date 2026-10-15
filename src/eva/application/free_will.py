@@ -10,7 +10,7 @@ from eva.application.conversation import ConversationModelUsage, IdentityProfile
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
 from eva.application.sensory import SensoryEvent, SensoryEventRevalidatorPort
-from eva.application.resident_attention import ResidentAttentionDecision
+from eva.application.resident_attention import ResidentAttentionDecision, NextAttention
 
 
 WillDisposition = Literal["silence", "respond"]
@@ -81,8 +81,11 @@ class FreeWillDecision:
     usage: ConversationModelUsage | None = None
     initiative: PersonalInitiativeProposal | None = None
     source_context_sha256: str | None = None
+    next_attention: NextAttention | None = None
 
     def __post_init__(self) -> None:
+        if self.next_attention is not None and not isinstance(self.next_attention, NextAttention):
+            raise ValueError("next attention must be a validated choice")
         if self.source_context_sha256 is not None:
             import re
             if re.fullmatch(r"[0-9a-f]{64}", self.source_context_sha256) is None:
@@ -323,6 +326,9 @@ class SensoryDecisionWorker:
                 if self._context_review_authorizer is None:
                     raise RuntimeError("private review authority is unavailable")
                 self._context_review_authorizer()
+            cancel_attention = getattr(self._store, "cancel_superseded_attention", None)
+            if context_review and callable(cancel_attention) and cancel_attention(claim, now=now):
+                return "cancelled"
             bounded_decision = _bounded_routine_decision(event)
             if bounded_decision is not None:
                 self._store.complete(claim, bounded_decision, now=now)
@@ -382,7 +388,8 @@ class SensoryDecisionWorker:
                 history = ()
                 capability_reader = getattr(self._store, "native_capabilities", None)
                 capabilities = () if not callable(capability_reader) else capability_reader()
-                if not memory.confirmed_facts and event.event_type != "household_observation_review":
+                if not memory.confirmed_facts and event.event_type not in {
+                        "household_observation_review", "household_attention_review"}:
                     self._store.complete(claim, FreeWillDecision("silence",
                         "Er is geen expliciet gedeelde context voor een nuttige huisbijdrage.",
                         0, "eva:household-context-empty"), now=self._current_time(now))
@@ -448,6 +455,8 @@ class SensoryDecisionWorker:
             now = self._current_time(now)
             if context_review:
                 self._context_review_authorizer()
+                if callable(cancel_attention) and cancel_attention(claim, now=now):
+                    return "cancelled"
                 if not self._store.context_review_claim_is_current(claim, now=now):
                     return "idle"
             else:

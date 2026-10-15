@@ -72,6 +72,20 @@ class HouseholdInitiativeBinding:
             event_type="household_opportunity_review", occurred_at=now,
             payload={"household_binding": self.to_payload(), "review_window": window})
 
+    def attention_event(self, now: datetime, reference: dict) -> SensoryEvent:
+        """A fresh review occasion carrying only its original shared provenance."""
+        from eva.application.resident_attention import validate_attention_reference
+        from eva.contracts.timestamps import require_utc_second, parse_utc_timestamp
+        require_utc_second(now, "attention review")
+        prefix = "sensory:" + self.event(now).source_event_id.rsplit(":", 1)[0] + ":"
+        validate_attention_reference(reference, prefix=prefix)
+        if parse_utc_timestamp(reference["effective_at"]) > now:
+            raise ValueError("household attention is not due")
+        suffix = str(int(canonical_sha256({"model_attention": reference}), 16))
+        return SensoryEvent("household-initiative", prefix.removeprefix("sensory:") + suffix,
+            "household_attention_review", now,
+            {"household_binding": self.to_payload(), "attention_origin": reference})
+
     def observation_event(self, original: SensoryEvent) -> SensoryEvent:
         """Bind one normalized public household signal to this audience and output."""
         if (not isinstance(original, SensoryEvent)
@@ -124,6 +138,10 @@ class HouseholdInitiativeBinding:
         if not isinstance(event, SensoryEvent):
             return False
         try:
+            if event.event_type == "household_attention_review":
+                return (set(event.payload) == {"household_binding", "attention_origin"}
+                    and event.payload["household_binding"] == self.to_payload()
+                    and event == self.attention_event(event.occurred_at, event.payload["attention_origin"]))
             if event.event_type == "household_opportunity_review":
                 return event == self.event(event.occurred_at)
             if (event.event_type != "household_observation_review"

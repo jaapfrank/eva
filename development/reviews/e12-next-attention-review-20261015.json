@@ -1,0 +1,26 @@
+{
+  "contract": "EvaE12IndependentCompletionReview/v1",
+  "taskId": "E1.2",
+  "checkedAt": "2026-10-15T11:06:18.134166+00:00",
+  "verdict": "GO",
+  "originalTaskCompleted": true,
+  "originalCriteriaUnchanged": true,
+  "statement": "Onafhankelijk akkoord voor E1.2: de geïnstalleerde Eva koos zelf een later aandachtsmoment, bewaarde dit en pakte dezelfde bedoeling na onderbreking weer op. Tijdens voorgrondgebruik ging geen modelaanvraag uit; daarna volgde één inhoudelijke vervolgafweging. Bewezen met twee echte Astra-antwoorden in een geïsoleerde technische proef, met logisch versnelde tijd. Dagelijkse spontane gezinswaarde is hiermee niet bewezen.",
+  "verified": [
+    "Original body hashes and actual model-selected time/reason",
+    "Durable decision identity to deterministic due event",
+    "Foreground defer and same-thread reclaim with one subsequent semantic decision",
+    "NULL after readiness conclusion, no new timer or native action",
+    "Six installed module hashes match source, both services healthy, configuration/mounts preserved"
+  ],
+  "privateReviewSha256": "fc2eb2e34803c09ab3cf5e9587d10c423341f50b4817e8cd4c442f4709661a86",
+  "sourceEvidence": "development/evidence/product/e12-next-attention-outcome-20261015.json",
+  "proofIsIsolated": true,
+  "logicalTimeAccelerated": true,
+  "foregroundPredicateSimulated": true,
+  "operatingSystemCrashTest": false,
+  "extraEvaModelCallsByReviewer": 0,
+  "wholeProjectComplete": false,
+  "familyAcceptance": false,
+  "spontaneousHouseholdUseClaim": false
+}

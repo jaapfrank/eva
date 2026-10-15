@@ -116,8 +116,12 @@ onafhankelijk afgerond: Eva koos zelf een informatiegat, las via de native uitvo
 en gebruikte de gecontroleerde inhoud later bij een gewone afweging, met concrete
 beperking van wat de bron kon aantonen. De eerdere volledige onderzoekstaak bleef
 onzeker; dat foutbewijs is niet vervangen door succes. Zie [E1.1-brongebruik](../evidence/product/e11-semantic-source-use-outcome-20261015.json).
-Modelgekozen vervolg-aandacht E1.2 en daadwerkelijk nuttig dagelijks gezinsgedrag
-E1.3/I1.2 blijven open; de beschrijving hierboven is daarvoor het doel.
+E1.2 is eveneens geïnstalleerd en onafhankelijk afgerond: een zelfgekozen volgend
+moment bleef bewaard en kwam na onderbreking één keer terug, met voorrang voor
+gesprek. De [proef](../evidence/product/e12-next-attention-outcome-20261015.json) gebruikte
+twee echte modelbesluiten in een tijdelijke database met versnelde logische tijd;
+geen productiecrash of spontane gezinswaarde. Daadwerkelijk nuttig dagelijks
+gezinsgedrag E1.3/I1.2 blijft open; de beschrijving hierboven is daarvoor het doel.
 Zie [HUE5](../evidence/product/hue5-feedback-later-use-outcome-20261014.json),
 [HUE6](../evidence/product/hue6-quiet-learning-outcome-20261014.json),
 [autonome beschikbaarheid](../evidence/product/autonomous-household-availability-20261014.json)

@@ -117,6 +117,10 @@ class PostgresSensoryEventStore:
             if self._household_binding is not None and self._household_window_active(connection, now=now):
                 return "idle"
             c, e = operational_checkpoints.c, operational_events.c
+            from eva.adapters.postgres.initiative_attention import pending_attention, attention_suffix
+            from eva.contracts.timestamps import parse_utc_timestamp
+            attention = pending_attention(connection, self, now=now)
+            attention_due = attention is not None and parse_utc_timestamp(attention["effective_at"]) <= now
             # A completed native read returns to the same private decision lane.
             # Its original result identity permits one follow-up, not another
             # timer, tool invocation, or retry of an uncertain decision.
@@ -167,8 +171,9 @@ class PostgresSensoryEventStore:
                         e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
                         e.thread_id == latest.thread_id, e.event_type == "WILL_USAGE_UNCERTAIN")
                         .order_by(e.sequence.desc()).limit(1)).scalar_one()
-                if completion_source is None and now - reviewed_at < timedelta(hours=1):
-                    return "idle"
+                if completion_source is None and not attention_due:
+                    if attention is not None or now - reviewed_at < timedelta(hours=1):
+                        return "idle"
             if self._household_binding is None:
                 pending = connection.execute(sa.select(c.thread_id).join(operational_events, sa.and_(
                     c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
@@ -183,10 +188,15 @@ class PostgresSensoryEventStore:
                     return "idle"
             window = int(now.timestamp()) // 3600
             source_id = self._decision_prefix.removeprefix("sensory:") + (
+                attention_suffix(attention) if attention_due else
                 completion_id if completion_source is not None else str(window))
             thread_id = "sensory:" + source_id
             payload = {"review_window": window}
-            if completion_source is not None:
+            if attention_due:
+                payload["attention_origin"] = attention
+            elif attention is not None:
+                payload["pending_attention"] = attention
+            if completion_source is not None and not attention_due:
                 payload["native_completion_source"] = completion_source
             if self._household_binding is None:
                 # Capture the bounded source view once in the existing immutable
@@ -198,7 +208,8 @@ class PostgresSensoryEventStore:
             data = {"event_type": "private_opportunity_review", "source": "initiative-review",
                     "source_event_id": source_id, "payload": payload}
             if self._household_binding is not None:
-                event = self._household_binding.event(now)
+                event = (self._household_binding.attention_event(now, attention) if attention_due
+                         else self._household_binding.event(now))
                 if source_id != event.source_event_id:
                     raise RuntimeError("household initiative source identity differs")
                 data = {"event_type": event.event_type, "source": event.source,
@@ -237,6 +248,11 @@ class PostgresSensoryEventStore:
                 {"key": "sensory:household-initiative:"})
             if self._household_window_active(connection, now=now):
                 return None
+            from eva.adapters.postgres.initiative_attention import pending_attention
+            from eva.contracts.timestamps import parse_utc_timestamp
+            attention = pending_attention(connection, self, now=now)
+            if attention is not None and parse_utc_timestamp(attention["effective_at"]) <= now:
+                return None  # The same scheduler handles due attention before fresh telemetry.
             rows = connection.execute(sa.select(
                 operational_checkpoints, e.payload.label("source_payload"),
                 e.payload_sha256.label("source_sha256"), e.occurred_at.label("source_at"),
@@ -389,6 +405,11 @@ class PostgresSensoryEventStore:
                 return "source_unavailable"
             if self._household_window_active(connection, now=now):
                 return "window_pending"
+            from eva.adapters.postgres.initiative_attention import pending_attention
+            from eva.contracts.timestamps import parse_utc_timestamp
+            attention = pending_attention(connection, self, now=now)
+            if attention is not None and parse_utc_timestamp(attention["effective_at"]) <= now:
+                return "attention_pending"
             thread = "sensory:" + wrapper.source_event_id
             insert_initial_timeline_thread(connection, scope, thread_id=thread,
                 checkpoint_id=thread + ":observed", occurred_at=wrapper.occurred_at,
@@ -406,6 +427,33 @@ class PostgresSensoryEventStore:
                       "source_payload_sha256": bytes(row["source_sha256"]).hex(),
                       "replayed": False}, retry_count=row["retry_count"])
         return "scheduled"
+
+    def cancel_superseded_attention(self, claim, *, now: datetime) -> bool:
+        """Cancel only an undispatched due event whose original choice was replaced/stopped."""
+        reference = claim.event.payload.get("attention_origin")
+        if reference is None:
+            return False
+        if not self._context_reviews_only or not claim.thread_id.startswith(self._decision_prefix):
+            raise ValueError("attention claim audience differs")
+        self._initiative_authorizer()
+        from eva.adapters.postgres.initiative_attention import pending_attention, attention_suffix
+        scope = self._timeline._scope_value
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            schedule_prefix = ("sensory:household-initiative:" if self._household_binding is not None
+                               else self._decision_prefix)
+            connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                {"key": schedule_prefix})
+            current = pending_attention(connection, self, now=now, include_consumed=True)
+            if current == reference and claim.thread_id == self._decision_prefix + attention_suffix(reference):
+                return False
+            transition_timeline_thread(connection, scope, thread_id=claim.thread_id,
+                expected_revision=claim.revision, operation_id=claim.operation_id,
+                checkpoint_id=f"{claim.thread_id}:attention-cancelled:{claim.revision + 1}",
+                event_type="WILL_ATTENTION_CANCELLED", phase="will_decided", status="completed",
+                occurred_at=now, data={"reason": "attention_replaced_or_origin_stopped",
+                    "provider_dispatched": False, "source_event_id": claim.event.source_event_id})
+        return True
 
     def context_review_claim_is_current(self, claim, *, now: datetime) -> bool:
         if not self._context_reviews_only or not claim.thread_id.startswith(self._decision_prefix):
@@ -924,7 +972,8 @@ class PostgresSensoryEventStore:
                 and decision.disposition == "respond"):
             decision = FreeWillDecision("silence", decision.reason, 0, decision.provider,
                 usage=decision.usage, initiative=decision.initiative,
-                source_context_sha256=decision.source_context_sha256)
+                source_context_sha256=decision.source_context_sha256,
+                next_attention=decision.next_attention)
         if decision.disposition == "respond" and self._cooldown_applies(
             claim, decision, now=now
         ):
@@ -936,7 +985,11 @@ class PostgresSensoryEventStore:
                 usage=decision.usage,
                 initiative=decision.initiative,
                 source_context_sha256=decision.source_context_sha256,
+                next_attention=decision.next_attention,
             )
+        from eva.adapters.postgres.initiative_attention import attention_fields
+        attention = (attention_fields(decision.next_attention, now=now) if self._context_reviews_only
+                     else {})
         expression_pending = decision.disposition == "respond"
         transition = dict(
             thread_id=claim.thread_id,
@@ -959,6 +1012,7 @@ class PostgresSensoryEventStore:
                 "provider": decision.provider,
                 "reason": decision.reason,
                 "shadow_mode": True,
+                **attention,
                 **({"source_context_sha256": decision.source_context_sha256}
                    if decision.source_context_sha256 is not None else {}),
                 "source_event_id": claim.event.source_event_id,
@@ -971,7 +1025,8 @@ class PostgresSensoryEventStore:
         if self._household_binding is not None:
             transition["data"]["household_binding"] = self._household_binding.to_payload()
         original = self._event_from_thread(claim.thread_id)
-        if original.event_type != "historical_observation_batch" and decision.initiative is None:
+        if (original.event_type != "historical_observation_batch" and decision.initiative is None
+                and "next_attention" not in attention):
             self._timeline.transition(**transition)
             return
         # Decision and member coverage commit together. Only the group can
@@ -979,6 +1034,9 @@ class PostgresSensoryEventStore:
         scope = self._timeline._scope_value
         with self._timeline._engine.begin() as connection:
             self._timeline._scope(connection)
+            if "next_attention" in attention:
+                from eva.adapters.postgres.initiative_attention import assign_attention_sequence
+                assign_attention_sequence(connection, self, transition["data"])
             if decision.initiative is not None:
                 transition["data"]["initiative"] = self._adopt_initiative(
                     connection, claim, decision, now=now)

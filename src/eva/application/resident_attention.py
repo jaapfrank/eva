@@ -16,6 +16,37 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from eva.application.sensory import SensoryEvent
 
 
+@dataclass(frozen=True, slots=True)
+class NextAttention:
+    """A model-selected future review; never an action or delivery permission."""
+    at: datetime
+    reason: str
+
+    def __post_init__(self):
+        from eva.contracts.timestamps import require_utc_second
+        if not isinstance(self.at, datetime):
+            raise ValueError("next attention requires a UTC datetime")
+        require_utc_second(self.at, "next attention")
+        if not isinstance(self.reason, str) or not self.reason.strip() or len(self.reason) > 400:
+            raise ValueError("next attention reason is invalid")
+
+    def to_payload(self):
+        from eva.contracts.timestamps import format_required_utc_timestamp
+        return {"at": format_required_utc_timestamp(self.at), "reason": self.reason}
+
+    @classmethod
+    def from_payload(cls, value):
+        from eva.contracts.timestamps import parse_utc_timestamp
+        if not isinstance(value, dict) or set(value) != {"at", "reason"}:
+            raise ValueError("next attention fields are invalid")
+        if not isinstance(value["at"], str):
+            raise ValueError("next attention time must be a UTC timestamp")
+        at = parse_utc_timestamp(value["at"])
+        if at.strftime("%Y-%m-%dT%H:%M:%SZ") != value["at"]:
+            raise ValueError("next attention time must be canonical UTC")
+        return cls(at, value["reason"])
+
+
 AttentionDisposition = Literal["silence", "model"]
 
 
@@ -341,3 +372,27 @@ __all__ = [
     "ResidentTemperatureRule",
     "evaluate_resident_attention",
 ]
+
+
+def validate_attention_reference(value, *, prefix):
+    """Validate bounded host provenance without treating an old signal as current."""
+    import re
+    from eva.contracts.timestamps import parse_utc_timestamp
+    keys = {"source_thread_id", "source_event_id", "source_decision_sequence",
+            "source_decision_sha256", "source_occurred_at", "origin_thread_id",
+            "origin_occurred_at", "requested_at", "effective_at", "reason"}
+    if not isinstance(value, dict) or set(value) != keys:
+        raise ValueError("attention provenance fields differ")
+    if (any(not isinstance(value[k], str) or not value[k].startswith(prefix)
+            or len(value[k]) > 256 for k in ("source_thread_id", "origin_thread_id"))
+            or value["source_event_id"] != value["source_thread_id"].removeprefix("sensory:")
+            or type(value["source_decision_sequence"]) is not int
+            or value["source_decision_sequence"] < 2
+            or re.fullmatch(r"[0-9a-f]{64}", str(value["source_decision_sha256"])) is None):
+        raise ValueError("attention provenance identity differs")
+    choice = NextAttention.from_payload({"at": value["requested_at"], "reason": value["reason"]})
+    times = {k: parse_utc_timestamp(value[k]) for k in
+             ("source_occurred_at", "origin_occurred_at", "effective_at")}
+    if times["effective_at"] < choice.at or times["effective_at"] <= times["source_occurred_at"]:
+        raise ValueError("attention provenance time differs")
+    return value

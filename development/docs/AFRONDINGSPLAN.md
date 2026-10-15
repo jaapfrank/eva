@@ -67,8 +67,13 @@ of vrijblijvende stiltescore alleen sluit E1 niet.
 [afgerond](../evidence/product/e11-semantic-source-use-outcome-20261015.json): de zelfgekozen
 bronvraag is gelezen via de bestaande uitvoerder en inhoudelijk gebruikt bij de volgende
 gewone afweging. De oorspronkelijke onzekere onderzoekstaak blijft als zodanig staan.
-Modelgekozen vervolg-aandacht E1.2 en een werkelijk dagelijkse bijdrage E1.3 blijven
-open; E1 als geheel is niet afgerond. Een recente speakersessie is geen voorwaarde
+Modelgekozen vervolg-aandacht E1.2 is eveneens geïnstalleerd en onafhankelijk
+[afgerond](../evidence/product/e12-next-attention-outcome-20261015.json): keuze/bewaring,
+één hervatting en voorrang voor gesprek zijn met twee echte modelbesluiten in een
+geïsoleerde technische proef aangetoond. De logische klok liep versneld; dit was
+geen productiecrash- of dagelijkse gezinsproef. Een werkelijk dagelijkse bijdrage
+E1.3 en aandacht/stilte I1.2 blijven open; E1 als geheel is niet afgerond.
+Een recente speakersessie is geen voorwaarde
 voor zelfstandig initiatief of een passend gedeeld bericht via de ingestelde
 huisuitgang; privé-inhoud blijft in de toegelaten privéroute.
 

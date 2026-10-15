@@ -40,7 +40,7 @@ relevantie met de toegelaten bronnen. Technologie verzorgt betrouwbaarheid en gr
 | `src/eva/contracts` en `domain` | Betekenis, identiteiten, versieerbare gegevens en actieregels | Geen provider-, apparaat- of kanaalprotocol als productbetekenis. |
 | `application/conversation.py`, `memory.py` | Contact, relevante persoonscontext en overdracht van werk | Application ports en getypeerde input/output; geen tweede gespreksrouter. |
 | `application/free_will.py`, `sensory.py`, `resident_attention.py` | Waarneming, afweging, aandacht en passende stilte | `SensoryEvent` en `FreeWillDecision`; geen voorbeeldspecifieke wensregel. |
-| `adapters/postgres/sensory_events.py`, `initiative_context.py`, `initiative_source_outcomes.py` | Bestaande bronregistratie, private reviews en begrensde historische context | Nieuwe review bewaart haar oorspronkelijke bron; gedeelde bron krijgt geen eigenaarprivécontext. Historie is geen actuele bevestiging. |
+| `adapters/postgres/sensory_events.py`, `initiative_context.py`, `initiative_source_outcomes.py`, `initiative_attention.py` | Bestaande bronregistratie, private reviews en begrensde historische context | Nieuwe review bewaart haar oorspronkelijke bron; gedeelde bron krijgt geen eigenaarprivécontext. Historie is geen actuele bevestiging. |
 | `adapters/postgres`, `projection`, `adapters/projection/hindsight.py` | PostgreSQL als gezaghebbende opslag; Hindsight als persoonsgebonden zoekprojectie | Bronherkomst, actuele persoon/audience en correctie/erasure blijven dezelfde. Geen tweede geheugen. |
 | `operations/delegated_work_runner.py`, `bootstrap/delegated_digital_runner.py` | Afhankelijke stappen uitvoeren, voortgang bewaren, stoppen en legitiem hervatten | Bestaande werk-/actiecontracten, expliciete resultaten en huidige grants; geen tweede taakstore. |
 | `adapters/postgres/delegated_work_delivery.py` en bestaande initiatiefaflevering | Resultaat koppelen aan oorspronkelijke actor/ingang en feedback | Korte terugmelding; volledig opgeslagen resultaat op verzoek. Geen nieuwe ontvanger of fictieve aflevering. |
@@ -89,9 +89,24 @@ vervolgafweging in dezelfde bestaande reviewroute veroorzaken. De werker leest
 daarvoor uitsluitend hetzelfde werk met dezelfde spec- en resultaat-/uitkomsthash;
 een gelijktijdige andere taak verdringt die bron niet. Een lege mislukking start
 geen betaalde bronbeoordeling. Onzeker lopend werk blijft blokkeren. Dit is
-resultaatterugvoer, geen tweede planner of bewijs van modelgekozen toekomstige
-aandacht. Zelf passende vervolg-aandacht kiezen blijft E1.2. Een huisautomatisering
-kan Eva ontdekken of maken; zij wordt geen vaste kernregel voor een voorbeeld.
+resultaatterugvoer, geen tweede planner. Daarnaast kiest Eva in dezelfde bestaande
+afweging optioneel `next_attention`: een toekomstige UTC-tijd en een reden.
+De oorspronkelijke beslissing bewaart die keuze met bronbinding. Per exacte privé-
+of gedeelde scope geldt de laatst gecommitteerde niet-lege keuze; een niet-verwante
+lege keuze wist eerder geplande aandacht niet. Een volgnummer onder dezelfde
+schedulerlock maakt ook gelijktijdige keuzes eenduidig. Het due-event consumeert de
+keuze één keer en draagt haar oorspronkelijke bron/revisie/hash en tijd mee; de
+nieuwe context blijft daarvan onderscheiden. Een nieuw gekozen moment vervangt
+oude nog niet uitgevoerde aandacht, ook na langzame geheugenraadpleging.
+
+De bestaande bundeling houdt minimaal 300 seconden aan; gevraagde en effectieve
+tijd blijven apart bewaard. Gesprek krijgt voorrang; uitstel houdt dezelfde
+gebeurtenis vast. Huidig mandaat, een gestopte oorspronkelijke intentie en UNKNOWN
+blijven bewaakt. Er is geen extra planner, taakstore of permanent proces.
+E1.2 is geïnstalleerd en onafhankelijk bewezen met twee echte modelbesluiten in een
+geïsoleerde technische proef; logisch versnelde tijd, geen productiecrash of spontane
+gezinswaarde geclaimd. Dagelijks nut blijft E1.3. Een huisautomatisering kan Eva
+ontdekken of maken; zij wordt geen vaste kernregel voor een voorbeeld.
 
 ## Model, kanaal en optionele installatie
 

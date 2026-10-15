@@ -4,15 +4,15 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Zelf de volgende aandacht kiezen
+Een dagelijkse aanleiding zelfstandig afhandelen
 
-E1.1 is werkend, geïnstalleerd en onafhankelijk afgerond. Volgende: Eva zelf een passende volgende aandacht laten kiezen en bewaren via de bestaande route. E1.2 is nog niet gestart.
+E1.2 is werkend, geïnstalleerd en onafhankelijk afgerond. Volgende: de gewone algemene keten een door Eva gekozen dagelijkse bijdrage laten afronden en werkelijk afleveren. E1.3 is nog niet gestart.
 
-Klaar wanneer: Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging.
+Klaar wanneer: De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.
 
 ## Afmaakvolgorde
 
-1. E1 afmaken: bronvaardigheid E1.1 afgerond; nu passende volgende aandacht, dagelijkse bijdrage en aandacht/stilte
+1. E1 afmaken: bronvaardigheid E1.1 en modelgekozen aandacht E1.2 afgerond; nu dagelijkse bijdrage E1.3 en aandacht/stilte I1.2
 2. E2: één Eva-beheeromgeving en optionele verbindingen
 3. E3: volledige bestandsregistratie en onderbouwde besluiten
 4. E4: gerichte vereenvoudiging, efficiëntie en onderhoud
@@ -24,10 +24,10 @@ Klaar wanneer: Eva kiest en bewaart een passende volgende aandacht op basis van 
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw. |
-| Eigen initiatief | Afgeleverd en van echte reactie geleerd · HUE5 | E1.2: passende volgende aandacht; E1.3: dagelijks nuttig resultaat; I1.2: aandacht/stilte en daarna gezinsacceptatie. |
-| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1.1-bronterugvoer is inhoudelijk gebruikt. E1.2/E1.3, I1.2 en samenhangende finale gezinsacceptatie blijven open. |
+| Eigen initiatief | Afgeleverd en van echte reactie geleerd · HUE5 | E1.3: dagelijks nuttig resultaat; I1.2: aandacht/stilte en daarna gezinsacceptatie. |
+| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1.1-brongebruik en E1.2-aandacht zijn technisch afgerond. E1.3, I1.2 en samenhangende finale gezinsacceptatie blijven open. |
 
-46 van 70 geregistreerde kleine taken afgerond; 24 open. E1.1 is de nieuwe afronding. Dit is geen productpercentage; de vier volledige huisgenootuitkomsten en gezinsacceptatie blijven apart zichtbaar.
+47 van 70 geregistreerde kleine taken afgerond; 23 open. E1.2 is de nieuwe afronding. Dit is geen productpercentage; de vier volledige huisgenootuitkomsten en gezinsacceptatie blijven apart zichtbaar.
 
 ## Alle geregistreerde kleine taken
 
@@ -90,7 +90,7 @@ Klaar wanneer: Eva kiest en bewaart een passende volgende aandacht op basis van 
 | F2.1 · Zeven dagen gezinsgebruik | ● Open | Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen. |
 | F2.2 · Eindoordeel vastleggen | ● Open | Jaap beslist over acceptatie; bestaande acceptaties blijven behouden. |
 | E1.1 · Actuele bronnen zelfstandig raadplegen | ✓ Afgerond | Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel. |
-| E1.2 · Zelf de volgende aandacht kiezen | ● Open | Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging. |
+| E1.2 · Zelf de volgende aandacht kiezen | ✓ Afgerond | Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging. |
 | E1.3 · Een dagelijkse aanleiding zelfstandig afhandelen | ● Open | De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven. |
 | E2.1 · Eén Eva-beheeromgeving aansluiten | ● Open | Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart. |
 | E2.2 · Personen en geheugen bekijken en bijwerken | ● Open | De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon. |
