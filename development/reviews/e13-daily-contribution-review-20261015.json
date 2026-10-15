@@ -1,0 +1,75 @@
+{
+  "contract": "EvaE13IndependentReview/v1",
+  "reviewer": "/root/eva1_shutdown_check",
+  "checkedAt": "2026-10-15T13:40:08.242239+00:00",
+  "installedCorrectionVerdict": "GO_EXACT_INSTALLED_CONTEXT_AND_SCOPE_CORRECTION",
+  "taskVerdict": "E1.3_NOT_COMPLETED",
+  "taskCompleted": false,
+  "summary": "De gerichte context- en bronverduidelijking is geïnstalleerd en onafhankelijk gecontroleerd. Beide diensten zijn gezond; uitvoerbronhashes, omgeving en gegevensmounts zijn behouden/coherent. E1.3 is niet afgerond: de echte gewone cyclus koos stilte en leverde geen nieuwe bijdrage af. Eén automatische modelaanvraag gebruikte7.568tokens; er zijn geen extra pogingen gedaan om afronding te forceren.",
+  "installedServices": {
+    "core": {
+      "image": "sha256:824ba6d48931983ecad63ca02fee9431589e49abf62125e98ddfd87abbc6c190",
+      "image_matches_frozen_plan": true,
+      "receipt_current_image_match": true,
+      "running": true,
+      "health": "healthy",
+      "environment_equal": true,
+      "mounts_equal": true,
+      "owned_or_copied_module_hashes": {
+        "adapters/model/pydantic_conversation.py": "3853a8be95a022837f22cd1ba6e3980a12adc3f02108a6acd07f864050a3104e"
+      },
+      "owned_or_copied_match": true,
+      "full_package_hashes_match_preservation": true,
+      "retained_other_python_files": 357,
+      "changed_paths": [
+        "adapters/model/pydantic_conversation.py"
+      ]
+    },
+    "delegated-work-worker": {
+      "image": "sha256:1d7df58b8c4a11c5d189f7d8bee8313c4da401152564e09545e31cb2540a3131",
+      "image_matches_frozen_plan": true,
+      "receipt_current_image_match": true,
+      "running": true,
+      "health": "healthy",
+      "environment_equal": true,
+      "mounts_equal": true,
+      "owned_or_copied_module_hashes": {
+        "adapters/model/pydantic_conversation.py": "3853a8be95a022837f22cd1ba6e3980a12adc3f02108a6acd07f864050a3104e",
+        "bootstrap/runtime.py": "2a45502573b45d871ebb5d73948b6ecb3889291b276c02520e35981b5d7d74fd"
+      },
+      "owned_or_copied_match": true,
+      "full_package_hashes_match_preservation": true,
+      "retained_other_python_files": 355,
+      "changed_paths": [
+        "adapters/model/pydantic_conversation.py",
+        "bootstrap/runtime.py"
+      ]
+    }
+  },
+  "executionSourceProof": {
+    "core_worker_equal_sources": 62,
+    "actual_installed_both_match_record": true,
+    "runtime_copy_sha256": "2a45502573b45d871ebb5d73948b6ecb3889291b276c02520e35981b5d7d74fd"
+  },
+  "actualOrdinaryOutcome": {
+    "at": "2026-10-15T13:27:57Z",
+    "model_attempts": 1,
+    "input_tokens": 7463,
+    "output_tokens": 105,
+    "total_tokens": 7568,
+    "disposition": "silence",
+    "initiative": null,
+    "new_native_work": false,
+    "new_verified_result": false,
+    "new_private_delivery": false,
+    "manual_additional_requests": 0
+  },
+  "remainingOriginalEndCondition": "New ordinary selfchosen contribution/action, actual native verification and one delivery to correct recipient, with real usefulness/feedback honestlyseparate. Source/installation/tests and validsilence do not satisfy this.",
+  "limitations": [
+    "Scopeclarification hasno newpostinstallmodelbehaviourproof; no extra attempt made toforcegreen.",
+    "Currentprofile/sourcecoherence isfrozeninstalledstate, not a generalfutureupdateguarantee. Existingruntimewholefilecoupling remains documented existingE3/E4reviewitem.",
+    "Earlier failed/ambiguouswork, originalcriteriaandpriorreviewsremain; no replay or automaticrecoveryclaim.",
+    "No wholeinitiative/familyacceptance/comparativesuperiorityclaim. E1.3 remainsin_progress47/70."
+  ],
+  "privateReviewSha256": "9ffb110e8698ecb2b7a40d269346974b9e4a34774b44a5e0bf17f0b175875cd0"
+}

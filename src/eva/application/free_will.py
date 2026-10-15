@@ -420,10 +420,11 @@ class SensoryDecisionWorker:
                         subject_ids=(memory_principal,),
                         query_text=(
                             "Persoonlijke plannen, dagelijkse behoeften, interesses en voorkeuren "
-                            "voor een nuttige eigen bijdrage. Context bij deze waarneming: "
-                            f"{event.source} {event.event_type} "
-                            f"{event.payload.get('entity_id', '')} "
-                            f"{state_description}{_private_review_recall_context(event)}"
+                            "voor een nuttige eigen bijdrage. "
+                            + (_private_review_recall_context(event) if event.source == "initiative-review" else
+                               "Context bij deze waarneming: "
+                               f"{event.source} {event.event_type} "
+                               f"{event.payload.get('entity_id', '')} {state_description}")
                         ),
                         maximum_facts=8,
                     )
@@ -447,8 +448,19 @@ class SensoryDecisionWorker:
                     if not source_outcomes:
                         source_outcomes = ({"work_id": trigger.get("work_id"), "status": "unavailable",
                             "reason": "original_native_outcome_no_longer_available", "verified_reads": []},)
-                else:
-                    source_outcomes = self._source_outcome_reader(now=self._current_time(now))
+                elif isinstance(event.payload.get("attention_origin"), dict):
+                    # A later attention may return to the same exact completed
+                    # source. Ordinary clock reviews must not re-litigate every
+                    # old failure instead of considering today's opportunity.
+                    source_reader = getattr(self._store, "attention_source_binding", None)
+                    binding = None if not callable(source_reader) else source_reader(claim)
+                    if binding is not None:
+                        source_outcomes = tuple(value for value in self._source_outcome_reader(
+                            now=self._current_time(now), work_id=binding["work_id"])
+                            if all(value.get(key) == expected for key, expected in binding.items()))
+                        if not source_outcomes:
+                            source_outcomes = ({"work_id": binding["work_id"], "status": "unavailable",
+                                "reason": "original_native_outcome_no_longer_available", "verified_reads": []},)
             # Persist the ambiguity boundary before entering the model adapter.
             # A process can die without calling fail(), including after the
             # provider response but before complete() records the decision.
@@ -529,23 +541,27 @@ class SensoryDecisionWorker:
 
 
 def _private_review_recall_context(event: SensoryEvent) -> str:
-    """Use the private source snapshot to recall relevant plans, not generic hobbies."""
+    """Search for personal opportunity, not recurring telemetry or closed test work.
+
+    The full stamped household snapshot still reaches the decision. Only a
+    pending attention reason or live commitment belongs in this search hint.
+    """
     if event.source != "initiative-review":
         return ""
+    import json
+    attention = event.payload.get("attention_origin")
+    if isinstance(attention, dict) and isinstance(attention.get("reason"), str):
+        return "Eerder zelfgekozen aandacht (historische bedoeling, geen nieuwe opdracht): " + attention["reason"][:400]
     context = event.payload.get("life_context")
     if not isinstance(context, dict):
         return ""
-    # The full bounded, stamped snapshot reaches the decision model in the event.
-    # Recall receives a compact search hint, never shared-family or foreign memory.
-    import json
-    hint = {"time": context.get("local_time"),
-        "own_work": [{key: item.get(key) for key in ("title", "phase", "deadline")}
-                     for item in context.get("own_work", ()) if isinstance(item, dict)],
-        "observations": [{key: item.get(key) for key in (
-            "friendly_name", "entity_id", "state", "observed_at")}
-            for item in context.get("observations", ()) if isinstance(item, dict)]}
-    return " Context voor relevante plannen en behoeften (bronhistorie, geen actuele bevestiging): " + json.dumps(
-        hint, ensure_ascii=False, separators=(",", ":"))[:1600]
+    commitments = [{key: item.get(key) for key in ("title", "phase", "deadline")}
+                   for item in context.get("own_work", ()) if isinstance(item, dict)
+                   and item.get("status") in {"active", "waiting_for_proof"}]
+    if not commitments:
+        return ""
+    return " Lopende eigen bedoelingen (bronhistorie, geen actuele bevestiging): " + json.dumps(
+        commitments, ensure_ascii=False, separators=(",", ":"))[:1600]
 
 
 def _bounded_routine_decision(event: SensoryEvent) -> FreeWillDecision | None:

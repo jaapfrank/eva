@@ -428,6 +428,21 @@ class PostgresSensoryEventStore:
                       "replayed": False}, retry_count=row["retry_count"])
         return "scheduled"
 
+    def attention_source_binding(self, claim):
+        """Recover only a due attention's exact original native completion source."""
+        if (not self._context_reviews_only or self._household_binding is not None
+                or claim.event.source != "initiative-review"
+                or not claim.thread_id.startswith(self._decision_prefix)):
+            raise ValueError("attention source requires its private owner review")
+        self._initiative_authorizer()
+        from eva.application.resident_attention import validate_attention_reference
+        reference = claim.event.payload.get("attention_origin")
+        validate_attention_reference(reference, prefix=self._decision_prefix)
+        original = self._event_from_thread(reference["origin_thread_id"])
+        if original.source != "initiative-review":
+            raise ValueError("attention original source differs")
+        return original.payload.get("native_completion_source")
+
     def cancel_superseded_attention(self, claim, *, now: datetime) -> bool:
         """Cancel only an undispatched due event whose original choice was replaced/stopped."""
         reference = claim.event.payload.get("attention_origin")

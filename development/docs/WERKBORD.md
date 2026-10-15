@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Een dagelijkse aanleiding zelfstandig afhandelen
 
-E1.2 is werkend, geïnstalleerd en onafhankelijk afgerond. Volgende: de gewone algemene keten een door Eva gekozen dagelijkse bijdrage laten afronden en werkelijk afleveren. E1.3 is nog niet gestart.
+E1.3 blijft open. De contextcorrectie is geïnstalleerd; de gewone cyclus koos stilte en leverde geen nieuwe bijdrage. Volgende concrete uitkomst: zelfgekozen nieuw werk echt afmaken en privé afleveren. Geen extra eigenaarhandeling.
 
 Klaar wanneer: De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.
 

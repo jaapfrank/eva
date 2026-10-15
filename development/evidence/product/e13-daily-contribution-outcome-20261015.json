@@ -1,0 +1,259 @@
+{
+  "contract": "EvaE13DailyContributionOutcome/v1",
+  "taskId": "E1.3",
+  "checkedAt": "2026-10-15T13:40:46.416962+00:00",
+  "status": "context_correction_installed_daily_result_open",
+  "taskCompleted": false,
+  "wholeProjectComplete": false,
+  "existing": [
+    "same sensory opportunity review",
+    "same private memory and provider",
+    "same native digital worker",
+    "same verified completion and private delivery"
+  ],
+  "changed": [
+    "Only new exact completion or its bound attention receives original source feedback; ordinary clock reviews retain failure history without repeating old source bodies.",
+    "Personal opportunity recall uses interests/preferences and active intentions; routine telemetry remains in stamped event context."
+  ],
+  "validation": {
+    "uniqueUnitCasesPassed": 31,
+    "uniquePostgresCasesPassed": 18,
+    "preparationError": "Two new tests first lacked imported fixture; retained and corrected before they ran. Sixteen existing cases were not repeated.",
+    "newEvaModelCalls": 0
+  },
+  "installation": {
+    "receiptStatus": "running_with_retained_mounts",
+    "services": {
+      "core": {
+        "image": "sha256:dc3a3b68b8133b06fc4044a3705505440bf68a8de97ecff4a48e4cf7d3bfae52",
+        "health": "healthy",
+        "mountsPreserved": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:e902ef5d45098cb2114b95528388f64b22cf539eef2977209f7d534c4e8c7a7b",
+        "health": "healthy",
+        "mountsPreserved": true
+      }
+    },
+    "changedModules": [
+      "application/free_will.py",
+      "adapters/postgres/sensory_events.py",
+      "adapters/model/pydantic_conversation.py"
+    ],
+    "otherExecutorUpdatedCoreAfterInstall": true,
+    "ownedThreeModulesRetainedInLaterCore": true,
+    "currentNativeProgramCoherence": "All62source hashes match after exact-source worker integration; original core updates and earlier mismatch remain separately preserved.",
+    "finalReceiptStatus": "running_with_retained_mounts",
+    "finalServices": {
+      "core": {
+        "image": "sha256:824ba6d48931983ecad63ca02fee9431589e49abf62125e98ddfd87abbc6c190",
+        "health": "healthy",
+        "mountsPreserved": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:1d7df58b8c4a11c5d189f7d8bee8313c4da401152564e09545e31cb2540a3131",
+        "health": "healthy",
+        "mountsPreserved": true
+      }
+    },
+    "finalExecutionSourcesMatch": true,
+    "sequence": [
+      {
+        "step": "existing context selection corrected",
+        "services": [
+          "core",
+          "delegated-work-worker"
+        ],
+        "rollback": false
+      },
+      {
+        "step": "two exact foreign composition modules aligned in worker after concurrent core update",
+        "services": [
+          "delegated-work-worker"
+        ],
+        "rollback": false
+      },
+      {
+        "step": "source-scope instruction clarified and final current composition aligned",
+        "services": [
+          "core",
+          "delegated-work-worker"
+        ],
+        "rollback": false
+      }
+    ],
+    "preDispatchIssue": "First update preparation omitted the separate worker Compose overlay; existing updater rejected before dispatch. Correct per-service metadata was retained and used. No rollback."
+  },
+  "limitations": [
+    "E1.3 is not complete: no new self-chosen contribution or actual private result delivery.",
+    "The new ordinary cycle selected silence; this is not a product completion or proof of useful daily family behaviour.",
+    "The later source-scope wording is installed but its behavioural effect is not demonstrated.",
+    "No forced contribution, synthetic household situation, replay of closed HUE tests or new comparison series.",
+    "The automatic decision provider body was not separately retained; stored event, source/version and measured usage are independently reviewable. No exclusive causality claimed.",
+    "Original failed/ambiguous native work and partial usage remain unchanged.",
+    "Concurrent core updates from other executor and each installed image are recorded separately; dedicated voice services/content were not developed here."
+  ],
+  "usage": {
+    "scope": "The one new ordinary private cycle observed here only; concurrent household runtime and prior work excluded.",
+    "provider": "existing ChatGPT Codex route",
+    "model": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "ordinaryAutomaticModelAttempts": 1,
+    "registeredInputTokens": 7463,
+    "registeredOutputTokens": 105,
+    "registeredTotalTokens": 7568,
+    "decisionToolCalls": 1,
+    "externalToolCalls": 0,
+    "manualEvaModelRequests": 0,
+    "manualExistingCallbackDisposition": "idle; scheduler preserved while ordinary auto cycle already owned claim",
+    "creditCosts": null,
+    "developerCreditCosts": null
+  },
+  "privateEvidence": [
+    {
+      "name": "plan.private.json",
+      "sha256": "96e5a4a0197afff384466223803591d8bb2beab86e6455fdb55235a30593c3b3",
+      "restricted": true
+    },
+    {
+      "name": "plan-refinement.private.json",
+      "sha256": "a004013e39ad435d84386c7a3e3a20df3008d0e581d5abd0746d49fedf0616df",
+      "restricted": true
+    },
+    {
+      "name": "before.private.json",
+      "sha256": "42e8dc54f2184bf626dfeb07e31a9fb9cad84f8e7ceb17ee614641ddbd796745",
+      "restricted": true
+    },
+    {
+      "name": "ordinary-tick.private.json",
+      "sha256": "74024c49a368257333987ed835e6231072a15d6ba2f9e2619299c2c81b7600b8",
+      "restricted": true
+    },
+    {
+      "name": "ordinary-current.private.json",
+      "sha256": "e0bca81039344a8358d265d0fe95a7722f45850ed21bd6736bced08efa57f974",
+      "restricted": true
+    },
+    {
+      "name": "recall-readiness.private.json",
+      "sha256": "b20511ca6d026d1a789b3974e1847d0069fa30ba2cb30eb74eea1d7343a7f87d",
+      "restricted": true
+    },
+    {
+      "name": "checks.private.json",
+      "sha256": "7b5a855d9a2e6adaab637715ea82c436d6f79aed4370d28babbe1d9f5203b56d",
+      "restricted": true
+    },
+    {
+      "name": "opportunity-postgres.fixture-error.private.json",
+      "sha256": "c4e2514c775a8256e67d460afbf436fa2abdda1971717cb143bd5c0f0b7a3b7a",
+      "restricted": true
+    },
+    {
+      "name": "opportunity-postgres.private.json",
+      "sha256": "3dfdf89b93f1e0e9bfc5181bfcbf746431d7218a23b71f5aa79c2cb2f7d76830",
+      "restricted": true
+    },
+    {
+      "name": "independent-ordinary-route-diagnosis.private.json",
+      "sha256": "80710be75249eb2ced9e079c5a7b90cf8adb625efcc7cdc97152f84c7fb77889",
+      "restricted": true
+    },
+    {
+      "name": "independent-opportunity-source-review.private.json",
+      "sha256": "9f11db87446cd7fb43561c63db26c31c95f21e154275b2ade2f87d8acc49c455",
+      "restricted": true
+    },
+    {
+      "name": "independent-partial-installed-review.private.json",
+      "sha256": "9af5248068ab56944082d690e169b1bd4e4db74e81e4ba1bae3f4514c9e91b85",
+      "restricted": true
+    },
+    {
+      "name": "independent-post-correction-diagnosis.private.json",
+      "sha256": "470b8ba8b0d581bfca54d18cd41bd1870f4a057a367c5d0bc94958febe1b8604",
+      "restricted": true
+    },
+    {
+      "name": "independent-scope-clarification-review.private.json",
+      "sha256": "e82e587751f43fcaa38026ece7989bc99dcd06ba6d76bf25050d63e22ea74353",
+      "restricted": true
+    },
+    {
+      "name": "independent-runtime-source-coupling-diagnosis.private.json",
+      "sha256": "be30ae7d382d3b4a0a9f1c29d19b19328505fa26b22aee5170dddb8a20dca753",
+      "restricted": true
+    },
+    {
+      "name": "installation-receipt.private.json",
+      "sha256": "b946e8e8f796408a65b1052b6a3cc31930e542b03c3f280631cba76b2ba8901e",
+      "restricted": true
+    },
+    {
+      "name": "alignment-installation-receipt.private.json",
+      "sha256": "bf7db3457ad64450613ce53fb9d5b8f03249148bac3b2d6a75c44c547ca524bd",
+      "restricted": true
+    },
+    {
+      "name": "final-installation-receipt.private.json",
+      "sha256": "f13986289b7143cec12ce53ef10fad0395602738e1f9e6aaae3bb41477acc5af",
+      "restricted": true
+    },
+    {
+      "name": "final-source-preservation.private.json",
+      "sha256": "28d6356ef230394c3ca54b6e50136f6d667414504a74c5ba1c44d3a5d08dbb70",
+      "restricted": true
+    },
+    {
+      "name": "final-execution-source-hashes.private.json",
+      "sha256": "0c8b0560392edcdb39a799855f7bc93d76a5d1a082d778b7f049d22c99a56622",
+      "restricted": true
+    },
+    {
+      "name": "final-installed-health.private.json",
+      "sha256": "1e33324bc08d45ce00f2bcaf1a8fb82900fc4c35a78ad7730479a18e847f37c0",
+      "restricted": true
+    },
+    {
+      "name": "independent-final-partial-installed-review.private.json",
+      "sha256": "9ffb110e8698ecb2b7a40d269346974b9e4a34774b44a5e0bf17f0b175875cd0",
+      "restricted": true
+    }
+  ],
+  "maintenanceFinding": {
+    "existingTaskId": "E3.2",
+    "newTaskAdded": false,
+    "independentDiagnosisSha256": "be30ae7d382d3b4a0a9f1c29d19b19328505fa26b22aee5170dddb8a20dca753",
+    "scope": "Unnecessary broad runtime source coupling; no uncoordinated refactor or source-pin removal in this task."
+  },
+  "actualOrdinaryCycle": {
+    "automaticallyScheduled": true,
+    "newOrdinaryHourlyWindow": 497797,
+    "decisionAt": "2026-10-15T13:27:57+00:00",
+    "decisionEventSha256": "8f00fed37827367620f0565b9872419701b64accf8f44a31d006d780838411c3",
+    "disposition": "silence",
+    "newNativeWorkStarted": false,
+    "newResultDelivered": false,
+    "priorSourceQuestionLoopRepeated": false,
+    "priorSourceContextHashAttached": false,
+    "originalDecisionReopened": false,
+    "promptScopeClarificationAfterThisDecision": true,
+    "clarificationBehaviourProven": false,
+    "noFakeHouseholdNeed": true,
+    "originalProviderBodyIndependentlyRetained": false
+  },
+  "remaining": "A real new daily contribution must still be independently followed through native execution, verification and actual delivery to the original private recipient. Genuine feedback/value remains separate from silence and I1.2 timing.",
+  "independentReview": "development/reviews/e13-daily-contribution-review-20261015.json",
+  "independentTaskVerdict": "E1.3_NOT_COMPLETED",
+  "dashboard": {
+    "url": "http://localhost:44712/",
+    "activeTaskId": "E1.3",
+    "status": "in_progress",
+    "completedSmallTasks": 47,
+    "totalSmallTasks": 70,
+    "newTaskCompletionClaim": false,
+    "readbackSha256": "ad69ce6959861b178e4ad790fe57b62e648a4dbf4bff539a2d86ec50601431db",
+    "checkedAt": "2026-10-15T13:41:26.133955+00:00"
+  }
+}

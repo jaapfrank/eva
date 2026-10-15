@@ -89,7 +89,13 @@ vervolgafweging in dezelfde bestaande reviewroute veroorzaken. De werker leest
 daarvoor uitsluitend hetzelfde werk met dezelfde spec- en resultaat-/uitkomsthash;
 een gelijktijdige andere taak verdringt die bron niet. Een lege mislukking start
 geen betaalde bronbeoordeling. Onzeker lopend werk blijft blokkeren. Dit is
-resultaatterugvoer, geen tweede planner. Daarnaast kiest Eva in dezelfde bestaande
+resultaatterugvoer, geen tweede planner. De oorspronkelijke bronvraag krijgt alleen
+voorrang bij die nieuwe exacte uitkomst of haar brongebonden vervolgaandacht; gewone
+klokafwegingen krijgen oude mislukkingen als historie, zonder telkens hun volledige
+bronvraag opnieuw te moeten beantwoorden. De geheugenzoekvraag richt zich dan op
+persoonlijke plannen/interesses en lopende bedoelingen; routinewaarnemingen en
+voltooide proefdocumenten blijven in hun gestempelde eventcontext en verdringen die
+zoekvraag niet. Daarnaast kiest Eva in dezelfde bestaande
 afweging optioneel `next_attention`: een toekomstige UTC-tijd en een reden.
 De oorspronkelijke beslissing bewaart die keuze met bronbinding. Per exacte privé-
 of gedeelde scope geldt de laatst gecommitteerde niet-lege keuze; een niet-verwante

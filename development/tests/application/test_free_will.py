@@ -343,7 +343,7 @@ def test_native_work_cannot_forge_user_ingress_or_direct_user_memory():
             "message_id": turn.message_id, "audience": {"kind": "private_person"}})
 
 
-def test_private_opportunity_recall_connects_observation_context_without_leaking_to_shared_review():
+def test_private_opportunity_recall_keeps_routine_observations_out_of_personal_search():
     from eva.application.free_will import _private_review_recall_context
     from dataclasses import replace
     private = SensoryEvent("initiative-review", "review:fixture", "private_opportunity_review", NOW,
@@ -351,8 +351,8 @@ def test_private_opportunity_recall_connects_observation_context_without_leaking
             {"entity_id": "sensor.workspace", "friendly_name": "Workspace", "state": "occupied",
              "historical": True}], "coverage": {"calendar": "not_read"}}})
     hint = _private_review_recall_context(private)
-    assert "Workspace" in hint and "occupied" in hint
-    assert "bronhistorie, geen actuele bevestiging" in hint
+    assert hint == ""
+    assert private.payload["life_context"]["observations"][0]["state"] == "occupied"
     assert _private_review_recall_context(replace(private, source="household-initiative")) == ""
     assert _private_review_recall_context(replace(private, source="home-assistant")) == ""
     assert _private_review_recall_context(replace(private, payload={})) == ""
