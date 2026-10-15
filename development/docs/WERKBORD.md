@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Een dagelijkse aanleiding zelfstandig afhandelen
+Stilte en passendheid beoordelen
 
-E1.3 blijft open. De contextcorrectie is geïnstalleerd; de gewone cyclus koos stilte en leverde geen nieuwe bijdrage. Volgende concrete uitkomst: zelfgekozen nieuw werk echt afmaken en privé afleveren. Geen extra eigenaarhandeling.
+E1.3 is technisch afgerond en werkelijk privé afgeleverd. Hierna volgt uitsluitend het resterende aandacht/stiltebewijs van I1.2. Nut van de nieuwe bijdrage is nog niet door Jaap beoordeeld.
 
-Klaar wanneer: De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.
+Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.
 
 ## Afmaakvolgorde
 
@@ -91,7 +91,7 @@ Klaar wanneer: De gewone geïnstalleerde cyclus leest benodigde context, kiest z
 | F2.2 · Eindoordeel vastleggen | ● Open | Jaap beslist over acceptatie; bestaande acceptaties blijven behouden. |
 | E1.1 · Actuele bronnen zelfstandig raadplegen | ✓ Afgerond | Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel. |
 | E1.2 · Zelf de volgende aandacht kiezen | ✓ Afgerond | Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging. |
-| E1.3 · Een dagelijkse aanleiding zelfstandig afhandelen | ● Open | De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven. |
+| E1.3 · Een dagelijkse aanleiding zelfstandig afhandelen | ✓ Afgerond | De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven. |
 | E2.1 · Eén Eva-beheeromgeving aansluiten | ● Open | Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart. |
 | E2.2 · Personen en geheugen bekijken en bijwerken | ● Open | De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon. |
 | E2.3 · Gesprekken, opdrachten en resultaten samen tonen | ● Open | Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek. |

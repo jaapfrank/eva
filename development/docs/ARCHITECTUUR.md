@@ -173,3 +173,7 @@ en optionele verbindingsbediening; onderhoud hoeft geen nieuwe bouwronde te word
 De eindvoorwaarden voor inventaris, verwijdering/refactor, efficiëntie en gezamenlijke
 oplevering staan in [AFRONDINGSPLAN](AFRONDINGSPLAN.md). Geen massaherschrijving,
 ongevraagde licentiewijziging of nieuwe concurrentenserie.
+
+### Private initiative planning and household notifications
+
+The existing sensory model uses a separate private orientation instruction for `initiative-review`. Notification silence does not imply absence of useful work: the model may choose one bounded native initiative to investigate a worthwhile information gap without an urgent household event. The shared/passive instruction, decision schema, durable adoption, current authority, native executor and private completion delivery remain unchanged. A deliberate null proposal remains valid. Controller-stimulated reviews retain their actual provenance and do not demonstrate spontaneous initiation.

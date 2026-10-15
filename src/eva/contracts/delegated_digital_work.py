@@ -166,6 +166,10 @@ class DelegatedHouseholdDigitalWorkSpec(DelegatedDigitalWorkSpec):
 # Local actions still use the installed programming/evaluator boundaries. This
 # list is only the set a separate, owner-admitted host mandate may explicitly pin.
 INITIATIVE_LOCAL_CAPABILITIES = frozenset({
+    # Host-local retained-result selection stays owner/namespace/hash bound.
+    # This meta-action does not admit a remote connector request: those still
+    # require their exact zero-cost tool/configuration/argument profile.
+    "use_connector_tool",
     "save_work_progress", "list_programming_tools", "use_programming_tool",
     "write_programming_file", "start_programming_process",
     "read_own_component_source", "draft_own_component_improvement",

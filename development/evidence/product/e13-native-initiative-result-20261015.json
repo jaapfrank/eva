@@ -1,0 +1,118 @@
+{
+  "contract": "EvaE13NativeInitiativeResult/v1",
+  "taskId": "E1.3",
+  "checkedAt": "2026-10-15T15:07:43.006284+00:00",
+  "status": "installed_used_and_independently_completed",
+  "taskCompleted": true,
+  "originalCriteriaUnchanged": true,
+  "wholeProjectComplete": false,
+  "familyAcceptance": false,
+  "result": "Eva independently chose a new read-only household configuration check, read a current connected source, saved and verified the report and delivered it to the current original private recipient.",
+  "causesAndCorrections": [
+    {
+      "cause": "Private orientation inherited passive notification triage instructions.",
+      "correction": "Separate private planning instructions inside the same sensory model method; the shared/passive branch remains unchanged."
+    },
+    {
+      "cause": "The existing native grant omitted the owner-scoped retained-result reader, while large receipts referred to it.",
+      "correction": "Explicit current owner policy now admits the existing local reader. Remote requests retain their existing exact tool/configuration/schema authorization."
+    },
+    {
+      "cause": "Document capability pinned an obsolete provider configuration.",
+      "correction": "Owner-authorized policy CAS binds the current installed write/paired-readback provider, preserving path/content schemas and cost/privacy boundaries."
+    },
+    {
+      "cause": "General Home Assistant read context remained limited to previous camera/calendar examples.",
+      "correction": "The existing owner-private read-only API profile now also permits configuration and entity states. No write, auth or secret endpoint added."
+    }
+  ],
+  "proof": {
+    "plannerModel": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "literalContributionChosenByCodex": false,
+    "reviewControllerStimulated": true,
+    "fakeHouseholdNeed": false,
+    "ordinaryIdleWorkerAdmitted": true,
+    "sourceReadSucceeded": true,
+    "sourceFieldSelectionAvoidedUnneededData": true,
+    "savedContentMatchesSeparateRemoteReadback": true,
+    "savedContentSha256": "269d7af776611b19f23199f377c8370b540d90a7d44a35272ad410d03c521943",
+    "nativeResultSha256": "8af1cb8725a89e25b875bec9ed5d1c060993d8142959f0121b5efcca9cbb0ce9",
+    "nativeCompletedAt": "2026-10-15T15:00:50+00:00",
+    "privateDeliveryAt": "2026-10-15T15:00:53+00:00",
+    "currentPrivateRecipientBindingMatches": true,
+    "manualTelegramSend": false,
+    "automaticAttachment": false,
+    "ownerFeedbackForThisContribution": "not_yet_received"
+  },
+  "validation": {
+    "privatePlanningIdentityAndSharedProtocolCasesPassed": 5,
+    "newNativeGrantAndRemoteDenialPostgresCasesPassed": 1,
+    "productionDatabaseUsedForFixtures": false,
+    "testModelCalls": 0,
+    "newComparisonSeries": false,
+    "voiceCodeOrVoiceConfigurationChanged": false
+  },
+  "installation": {
+    "plannerReceiptStatus": "running_with_retained_mounts",
+    "readerReceiptStatus": "running_with_retained_mounts",
+    "coreImage": "sha256:ba76115e134f2468a426571747a4cca2238d5a22af77815f500a9460fbc55599",
+    "workerImage": "sha256:6ba2f58c30313b3a1d3a31db86f30e750b537ca2184764c001476cf85b19c86b",
+    "bothHealthy": true,
+    "configurationEnvironmentAndMountsRetained": true,
+    "ownedSourceModules": [
+      "adapters/model/pydantic_conversation.py",
+      "contracts/delegated_digital_work.py"
+    ],
+    "otherExecutorWorkRetained": true,
+    "newPolicyAppliesOnlyToNewGrants": true,
+    "modelAndToolBudgetsUnchanged": true
+  },
+  "usage": {
+    "successfulChain": {
+      "modelRequests": 4,
+      "knownRegisteredTokens": 42768,
+      "nativeUsageMeasurement": "partial",
+      "nativeToolDispatches": 2,
+      "creditCost": "unknown"
+    },
+    "boundedContinuationThroughDelivery": {
+      "modelRequests": 9,
+      "knownRegisteredTokensLowerBound": 91997,
+      "includesFailedNativeAttemptAndAutomaticSourceFeedback": true,
+      "measurement": "partial",
+      "notWholeRuntimeOrProjectUsage": true,
+      "creditCost": "unknown"
+    },
+    "developmentUsage": "Not measurable from Eva runtime journals; not included or estimated."
+  },
+  "preservedFailure": {
+    "firstNewNativeAttempt": "failed: incomplete_work",
+    "knownRegisteredTokens": 33134,
+    "measurement": "partial",
+    "oldGrantSpecAndClaimCountUnchanged": true,
+    "earlierContextOnlyOutcome": "development/evidence/product/e13-daily-contribution-outcome-20261015.json",
+    "failedWorkNotReopenedOrRenamed": true
+  },
+  "limitations": [
+    "The start was explicitly owner-requested and transparently controller-stimulated; repeated spontaneous daily household value is not established.",
+    "The model incorrectly describes an additional read as open although the separate paired remote readback succeeded. The original text is retained.",
+    "The report labels its earlier review-context time as approximate read time; actual source-read and completion times are retained separately.",
+    "The recipient has not judged the new contribution useful. I1.2 and final family acceptance remain open.",
+    "The successful task did not exercise a retained-result reader roundtrip; the new grant/remote-denial test must not be reported as such.",
+    "No general quality or efficiency superiority over Eva1 or competitors is claimed."
+  ],
+  "independentReview": "development/reviews/e13-native-initiative-completion-review-20261015.json",
+  "privateReviewSha256": "e7ddebb8faff2886af8786e49d1a85947d13fde99800b7294150331307f38003",
+  "privateEvidenceSha256": {
+    "owner-review.private.json": "6d12920d5fa2bbc263c9b38636781f1bc1357e1a515b3324924a0528412d4787",
+    "native-failure-diagnosis.private.json": "5b8e3b40717abf08036b683b6eed1e2bc4e2a8cc65837e984501d6aaa92e6afc",
+    "repaired-route-owner-review.private.json": "0a16dd5ab403a50a2e3e58361dff56933989ab420edd5196a78dc11baa21249b",
+    "completed-native-evidence.private.json": "8f4cf0e161f21167d64559ad0349747f231121a7aa779cc5fb88ea5bc3ddeafc",
+    "current-recipient-binding-check.private.json": "9bc197c71869cba847730ae403e603c6b249d4b5409b1a66841a7a46583ed248",
+    "reader-policy-revision.private.json": "4525ba2b6604f4daa724d403cadebf3f2e4e69453640a757a9e9a51dd5090b6d",
+    "general-ha-read-policy-revision.private.json": "067ad6514538993f85382d806b5aa233619c605fe52e2d3de8ff5dd863d39533",
+    "installation-receipt.private.json": "a0b83e238148b627d97c5f3b75b5f2f28a2f9f9f1acdeb3668bb42582b4f6303",
+    "reader-install/installation-receipt.private.json": "dd3401d401ee85cadf3a336afe6a8ccf25607702a218e8f1e03cf77fe13fbef4"
+  }
+}

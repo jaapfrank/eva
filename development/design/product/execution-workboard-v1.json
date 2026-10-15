@@ -838,19 +838,19 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-15T11:06:18.134166+00:00",
+  "lastUpdated": "2026-10-15T15:07:43.006284+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.3",
+  "activeTaskId": "I1.2",
   "currentWork": {
-    "id": "E1.3",
-    "title": "Een dagelijkse aanleiding zelfstandig afhandelen",
+    "id": "I1.2",
+    "title": "Stilte en passendheid beoordelen",
     "status": "in_progress",
-    "doneWhen": "De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.",
-    "nextAction": "Volg nieuw werkelijk gekozen werk via de bestaande gewone cyclus tot geverifieerd resultaat en privéaflevering. Geen herhaling van gesloten besluiten, geen verzonnen proefbehoefte of gedwongen ideeën. Houd de actuele kern/worker-bronbinding coherent; spraak blijft elders.",
+    "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
+    "nextAction": "Volg I1.2: behoud echte feedback en onderzoek gericht de bestaande aandacht/stilte bij drukte en rust. Geen spraakbouw, nieuwe voorbeeldfunctie of vergelijkingsserie.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-15T13:40:46.416962+00:00",
-    "outcome": "De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.",
+    "checkedAt": "2026-10-15T15:07:43.006284+00:00",
+    "outcome": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
     "area": "initiative and attention",
     "countedAsProductTask": true
   },
@@ -1635,6 +1635,22 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E1.3 · Eigen bijdrage uitgevoerd en privé afgeleverd",
+            "state": "installed",
+            "checkedAt": "2026-10-15T15:07:43.006284+00:00",
+            "summary": "Afgerond en onafhankelijk goedgekeurd: Eva koos zelf nieuw werk, las echte huisgegevens, bewaarde het resultaat met aparte bewezen teruglezing en leverde het privé af. Gestimuleerde start, onbekend nut en twee onnauwkeurigheden in haar tekst blijven zichtbaar. Eerste mislukte poging blijft mislukt.",
+            "remaining": "I1.2: passendheid, stilte bij drukte/slapen en herhaald gezinsnut blijven open. Geen extra handeling van Jaap nodig. De onnauwkeurige lees-/tijdtekst staat expliciet bij de bestaande codebeoordeling.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e13-native-initiative-result-20261015.json",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E1.3"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "maintenanceRepair": false,
+            "familyAcceptance": false,
+            "completionScope": "E1.3 only"
+          },
+          {
             "title": "E1.2 · Zelf volgende aandacht kiezen, bewaren en hervatten",
             "state": "installed",
             "checkedAt": "2026-10-15T11:06:18.134166+00:00",
@@ -1955,37 +1971,38 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "HUE5.1 · Van echte initiatiefreactie geleerd",
+          "title": "E1.3 · Eigen bijdrage uitgevoerd en privé afgeleverd",
           "state": "installed",
-          "summary": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd.",
-          "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
-          "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+          "checkedAt": "2026-10-15T15:07:43.006284+00:00",
+          "summary": "Afgerond en onafhankelijk goedgekeurd: Eva koos zelf nieuw werk, las echte huisgegevens, bewaarde het resultaat met aparte bewezen teruglezing en leverde het privé af. Gestimuleerde start, onbekend nut en twee onnauwkeurigheden in haar tekst blijven zichtbaar. Eerste mislukte poging blijft mislukt.",
+          "remaining": "I1.2: passendheid, stilte bij drukte/slapen en herhaald gezinsnut blijven open. Geen extra handeling van Jaap nodig. De onnauwkeurige lees-/tijdtekst staat expliciet bij de bestaande codebeoordeling.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/e13-native-initiative-result-20261015.json",
           "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "HUE5.1"
+            "E1.3"
           ],
           "smallTaskCountsUnchanged": false,
           "maintenanceRepair": false,
           "familyAcceptance": false,
-          "completionScope": "HUE5.1 only"
+          "completionScope": "E1.3 only"
         },
         "now": {
-          "taskId": "E1.3",
-          "title": "Een dagelijkse aanleiding zelfstandig afhandelen",
+          "taskId": "I1.2",
+          "title": "Stilte en passendheid beoordelen",
           "state": "Volgende taak",
           "phase": "ready_to_start",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "E1.3 blijft open. De contextcorrectie is geïnstalleerd; de gewone cyclus koos stilte en leverde geen nieuwe bijdrage. Volgende concrete uitkomst: zelfgekozen nieuw werk echt afmaken en privé afleveren. Geen extra eigenaarhandeling.",
-          "doneWhen": "De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.",
+          "summary": "E1.3 is technisch afgerond en werkelijk privé afgeleverd. Hierna volgt uitsluitend het resterende aandacht/stiltebewijs van I1.2. Nut van de nieuwe bijdrage is nog niet door Jaap beoordeeld.",
+          "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-15T13:40:46.416962+00:00",
+          "checkedAt": "2026-10-15T15:07:43.006284+00:00",
           "status": "in_progress"
         },
         "next": {
-          "title": "Aandacht/stilte en dagelijkse gezinswaarde beoordelen",
-          "state": "I1.2 · samen met dagelijkse bijdrage",
-          "summary": "Nut, timing en hinder afzonderlijk beoordelen op echte bijdragen; geen nieuwe vooraf gebouwde voorbeeldfunctie.",
+          "title": "Aandacht/stilte en daarna één Eva-beheeromgeving",
+          "state": "I1.2 → E2.1",
+          "summary": "Volg I1.2: behoud echte feedback en onderzoek gericht de bestaande aandacht/stilte bij drukte en rust. Geen spraakbouw, nieuwe voorbeeldfunctie of vergelijkingsserie.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
@@ -1994,8 +2011,8 @@
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-15T11:06:18.134166+00:00",
-        "reviewedAt": "2026-10-15T11:06:18.134166+00:00",
+        "checkedAt": "2026-10-15T15:07:43.006284+00:00",
+        "reviewedAt": "2026-10-15T15:07:43.006284+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-13T13:40:45.278382+00:00",
@@ -2159,7 +2176,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E1.3",
+        "currentStep": "I1.2",
         "steps": [
           {
             "number": 1,
@@ -4020,14 +4037,14 @@
               {
                 "id": "E1.3",
                 "title": "Een dagelijkse aanleiding zelfstandig afhandelen",
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "HUE5/HUE6, algemene taakuitvoering en de nieuwe gewone stiltekeuze zijn bewezen binnen hun scope.",
-                "gap": "Nog nodig: een echte nieuwe door Eva gekozen dagelijkse bijdrage via de gewone keten controleren en bij de juiste privéontvanger afleveren. De latere bron-scopeverduidelijking heeft nog geen gedragsbewijs.",
-                "nextAction": "Volg nieuw werkelijk gekozen werk via de bestaande gewone cyclus tot geverifieerd resultaat en privéaflevering. Geen herhaling van gesloten besluiten, geen verzonnen proefbehoefte of gedwongen ideeën. Houd de actuele kern/worker-bronbinding coherent; spraak blijft elders.",
+                "gap": "De oorspronkelijke technische keten is af; herhaald spontaan gezinsnut en gezinsacceptatie blijven aparte voorwaarden.",
+                "nextAction": "Behoud de geïnstalleerde cyclus. Beoordeel nut/stilte afzonderlijk onder I1.2; tekst-/tijdpresentatiebevindingen staan op de bestaande E3.2-kaart.",
                 "files": [
                   "src/eva/bootstrap/native_initiative_work.py",
                   "src/eva/application/initiative_execution.py",
@@ -4041,15 +4058,18 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T13:40:46.416962+00:00",
+                "checkedAt": "2026-10-15T15:07:43.006284+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
                 },
-                "latestEvidence": "development/evidence/product/e13-daily-contribution-outcome-20261015.json",
-                "result": "Contextcorrectie geïnstalleerd en bronreview akkoord. De gewone automatische afweging koos stilte (1Astra-aanvraag,7568tokens); geen nieuwe bijdrage/aflevering. Daarom geen E1.3-afronding."
+                "latestEvidence": "development/evidence/product/e13-native-initiative-result-20261015.json",
+                "result": "Afgerond en onafhankelijk goedgekeurd: Eva koos zelf nieuw werk, las echte huisgegevens, bewaarde het resultaat met aparte bewezen teruglezing en leverde het privé af. Gestimuleerde start, onbekend nut en twee onnauwkeurigheden in haar tekst blijven zichtbaar. Eerste mislukte poging blijft mislukt.",
+                "completedAt": "2026-10-15T15:00:50+00:00",
+                "completionEvidence": "development/evidence/product/e13-native-initiative-result-20261015.json",
+                "independentReview": "development/reviews/e13-native-initiative-completion-review-20261015.json"
               }
             ]
           },
@@ -4331,6 +4351,16 @@
                   "reviewDecision": "Beoordeel binnen deze bestaande E3-kaart een afzonderlijke ongewijzigde RuntimeSettings-module plus acht helpers en directe importgrenzen. Behoud configuratievalidatie en echte sourcepins; niet simpelweg de controle verwijderen. E4 volgt uitsluitend na gecoördineerde bronovergang.",
                   "newTask": false,
                   "implementationStarted": false
+                },
+                "initiativePresentationFindings": {
+                  "source": "development/evidence/product/e13-native-initiative-result-20261015.json",
+                  "observed": [
+                    "Planner currently receives action names without the detailed route scope; evaluate an existing bounded projection of actual admitted capability boundaries.",
+                    "A verified document save performs a separate host readback, yet the model described an extra unavailable read as still open. Preserve the original reply and explain verification accurately.",
+                    "The model used its original review-context time as approximate read time. Keep source event/receipt time distinct from model context time."
+                  ],
+                  "newTask": false,
+                  "implementationStarted": false
                 }
               },
               {
@@ -4606,7 +4636,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg nieuw werkelijk gekozen werk via de bestaande gewone cyclus tot geverifieerd resultaat en privéaflevering. Geen herhaling van gesloten besluiten, geen verzonnen proefbehoefte of gedwongen ideeën. Houd de actuele kern/worker-bronbinding coherent; spraak blijft elders.",
+        "nextAction": "Volg I1.2: behoud echte feedback en onderzoek gericht de bestaande aandacht/stilte bij drukte en rust. Geen spraakbouw, nieuwe voorbeeldfunctie of vergelijkingsserie.",
         "finishOrder": [
           "E1 afmaken: bronvaardigheid E1.1 en modelgekozen aandacht E1.2 afgerond; nu dagelijkse bijdrage E1.3 en aandacht/stilte I1.2",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -4615,7 +4645,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-15T13:40:46.416962+00:00",
+        "updatedAt": "2026-10-15T15:07:43.006284+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-15T07:56:55.051091+00:00",
@@ -4700,7 +4730,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E1.3",
+      "currentStep": "I1.2",
       "steps": [
         {
           "number": 1,
@@ -6561,14 +6591,14 @@
             {
               "id": "E1.3",
               "title": "Een dagelijkse aanleiding zelfstandig afhandelen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "bouwen / afmaken",
               "doneWhen": "De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "HUE5/HUE6, algemene taakuitvoering en de nieuwe gewone stiltekeuze zijn bewezen binnen hun scope.",
-              "gap": "Nog nodig: een echte nieuwe door Eva gekozen dagelijkse bijdrage via de gewone keten controleren en bij de juiste privéontvanger afleveren. De latere bron-scopeverduidelijking heeft nog geen gedragsbewijs.",
-              "nextAction": "Volg nieuw werkelijk gekozen werk via de bestaande gewone cyclus tot geverifieerd resultaat en privéaflevering. Geen herhaling van gesloten besluiten, geen verzonnen proefbehoefte of gedwongen ideeën. Houd de actuele kern/worker-bronbinding coherent; spraak blijft elders.",
+              "gap": "De oorspronkelijke technische keten is af; herhaald spontaan gezinsnut en gezinsacceptatie blijven aparte voorwaarden.",
+              "nextAction": "Behoud de geïnstalleerde cyclus. Beoordeel nut/stilte afzonderlijk onder I1.2; tekst-/tijdpresentatiebevindingen staan op de bestaande E3.2-kaart.",
               "files": [
                 "src/eva/bootstrap/native_initiative_work.py",
                 "src/eva/application/initiative_execution.py",
@@ -6582,15 +6612,18 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T13:40:46.416962+00:00",
+              "checkedAt": "2026-10-15T15:07:43.006284+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "development/evidence/product/e13-daily-contribution-outcome-20261015.json",
-              "result": "Contextcorrectie geïnstalleerd en bronreview akkoord. De gewone automatische afweging koos stilte (1Astra-aanvraag,7568tokens); geen nieuwe bijdrage/aflevering. Daarom geen E1.3-afronding."
+              "latestEvidence": "development/evidence/product/e13-native-initiative-result-20261015.json",
+              "result": "Afgerond en onafhankelijk goedgekeurd: Eva koos zelf nieuw werk, las echte huisgegevens, bewaarde het resultaat met aparte bewezen teruglezing en leverde het privé af. Gestimuleerde start, onbekend nut en twee onnauwkeurigheden in haar tekst blijven zichtbaar. Eerste mislukte poging blijft mislukt.",
+              "completedAt": "2026-10-15T15:00:50+00:00",
+              "completionEvidence": "development/evidence/product/e13-native-initiative-result-20261015.json",
+              "independentReview": "development/reviews/e13-native-initiative-completion-review-20261015.json"
             }
           ]
         },
@@ -6872,6 +6905,16 @@
                 "reviewDecision": "Beoordeel binnen deze bestaande E3-kaart een afzonderlijke ongewijzigde RuntimeSettings-module plus acht helpers en directe importgrenzen. Behoud configuratievalidatie en echte sourcepins; niet simpelweg de controle verwijderen. E4 volgt uitsluitend na gecoördineerde bronovergang.",
                 "newTask": false,
                 "implementationStarted": false
+              },
+              "initiativePresentationFindings": {
+                "source": "development/evidence/product/e13-native-initiative-result-20261015.json",
+                "observed": [
+                  "Planner currently receives action names without the detailed route scope; evaluate an existing bounded projection of actual admitted capability boundaries.",
+                  "A verified document save performs a separate host readback, yet the model described an extra unavailable read as still open. Preserve the original reply and explain verification accurately.",
+                  "The model used its original review-context time as approximate read time. Keep source event/receipt time distinct from model context time."
+                ],
+                "newTask": false,
+                "implementationStarted": false
               }
             },
             {
@@ -7147,7 +7190,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg nieuw werkelijk gekozen werk via de bestaande gewone cyclus tot geverifieerd resultaat en privéaflevering. Geen herhaling van gesloten besluiten, geen verzonnen proefbehoefte of gedwongen ideeën. Houd de actuele kern/worker-bronbinding coherent; spraak blijft elders.",
+      "nextAction": "Volg I1.2: behoud echte feedback en onderzoek gericht de bestaande aandacht/stilte bij drukte en rust. Geen spraakbouw, nieuwe voorbeeldfunctie of vergelijkingsserie.",
       "finishOrder": [
         "E1 afmaken: bronvaardigheid E1.1 en modelgekozen aandacht E1.2 afgerond; nu dagelijkse bijdrage E1.3 en aandacht/stilte I1.2",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7156,7 +7199,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-15T13:40:46.416962+00:00",
+      "updatedAt": "2026-10-15T15:07:43.006284+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-15T07:56:55.051091+00:00",
@@ -8191,7 +8234,7 @@
       "checkedAt": "2026-10-15T11:06:18.134166+00:00"
     }
   },
-  "updatedAt": "2026-10-15T11:06:18.134166+00:00",
+  "updatedAt": "2026-10-15T15:07:43.006284+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
