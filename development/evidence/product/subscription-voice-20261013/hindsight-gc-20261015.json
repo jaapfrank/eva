@@ -1,12 +1,12 @@
 {
-  "status": "installed_gc_verified_warmup_pending",
+  "status": "installed_and_verified_gc_and_startup_warmup",
   "date": "2026-10-15",
   "scope": "Existing Hindsight shared local embedding/reranking cleanup; no ranking/model/filter/index changes.",
   "base_image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
   "gc_image": "sha256:cd4dab0bb0829c122df30999406a31ef82a2a203e71952744aebcfc29598fc27",
   "source_sha256_before": "88d99f8fabe4926a556ad6a6e7980ac89939ac8c3df81f1fc5a448ce7cc03365",
   "source_sha256_after": "559b84434c7f39aecd6562d1ff1cbdca69750b8a4d725870fea79ddb6e0199b7",
-  "review": "Independent review of source, 5 passing focused tests, installation and rollback.",
+  "review": "Independent review of GC, corrected engine warmup and install/rollback; 11 focused tests pass. Earlier cross-encoder warmup rejected before deployment for parallel-loader dtype race.",
   "warm_recall": {
     "before_seconds": [
       5.3831,
@@ -48,7 +48,10 @@
     "first_recall_seconds": 18.2893,
     "same_facts": true,
     "following_probe_renewal": "session expired",
-    "status": "Investigating startup warmup before readiness"
+    "status": "Resolved in measured restart by synthetic inference after parallel loaders and dtype reset, before readiness",
+    "first_recall_after_warmup_seconds": 1.8669,
+    "activation_to_healthy_seconds": 49.39,
+    "original_cross_encoder_retained": true
   },
   "other_probe_failure": "Transient core-container replacement during concurrent work caused postgres DNS failure before recall; preserved failed log, reran against stable current core.",
   "data_preservation": {
@@ -83,5 +86,25 @@
     "critical_retrieval_seconds": 0.2902,
     "critical_reranking_including_wait_seconds": 1.185,
     "limit": "Parallel branches overlap; do not sum branch durations."
-  }
+  },
+  "final_image": "sha256:fc1efcd7102e753673b7e0e6fd613f107d58d1c769d015a2d9ef10ca8dd7995d",
+  "warmup_source_sha256": "8b60ebc16dbc654f0245616e0dbe93864b7468e61615176772205d1e6bca7483",
+  "final_recall": {
+    "seconds": [
+      1.8669,
+      0.7923,
+      1.3914,
+      0.7166,
+      1.3645,
+      0.6198
+    ],
+    "median_seconds": 1.0784,
+    "first_measurement_after_restart": true,
+    "all_ordered_facts_equal_to_baseline": true,
+    "answer_model_calls": 0,
+    "bank_configuration_writes": 0
+  },
+  "runtime_memory_after_mib": 1428.76,
+  "startup_warmup_limit": "Moves GPU first-prediction work into startup; does not make overall boot instant. Await timeout cannot forcibly stop native GPU work; external readiness deadline and rollback retained.",
+  "private_warmup_receipts": "/var/lib/eva2/voice-session/room-audio-20261015/gc-warmup"
 }

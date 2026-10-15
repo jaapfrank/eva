@@ -39,3 +39,23 @@ the actual workload. Finite tests do not establish long-term leak freedom.
 Installation receipts and private rollback scripts are kept with the voice
 measurement receipts. Product evidence records the measured outcome separately
 from physical speaker or complete-conversation latency.
+
+## Warm local inference before readiness
+
+`warmup_patch.py` separately pins the installed `memory_engine.py`. With
+`EVA_HINDSIGHT_WARMUP_RERANKER=1`, it runs one eight-pair synthetic prediction
+on the existing executor after **all** model-load tasks have joined and the
+existing PyTorch default-dtype normalization has completed. It precedes engine
+readiness. Do not move this into `cross_encoder.initialize()`: the parallel
+embedding loader can still be changing the process-global dtype there.
+
+Only `LocalSTCrossEncoder` is warmed; remote providers and default-off behavior
+are unchanged. No memory bank, private content or answer model is consulted.
+Failures prevent readiness, and retries run the warmup again. Its wait uses the
+configured model-init timeout. A timed-out Python wait cannot forcibly stop a
+native GPU worker; keep the external activation deadline and rollback.
+
+Build this second one-file overlay on the verified GC image, retaining the
+original `cross_encoder.py`. The first measured real recall after activation
+must be checked as well as warm recalls. This moves work into startup; it does
+not promise a shorter overall boot or eliminate every cold-start cost.
