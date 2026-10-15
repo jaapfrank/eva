@@ -76,8 +76,13 @@ bronlezing zijn afzonderlijk: een mislukte taak kan bruikbare geverifieerde
 bronpagina's behouden, zonder eindresultaat, nieuwe bevoegdheid of automatische
 herhaling te fabriceren. Oorspronkelijke tijd, spec/uitvoering/receiptbinding,
 begrensde selectie en ontbrekende dekking blijven meegegeven. De werkertekst
-blijft een onbevestigde interpretatie. Privébronnen gaan alleen naar de volgende
-privé-afweging; de host bewaart de hash van de werkelijk aangeboden context.
+blijft een onbevestigde interpretatie. Iedere bronuitkomst draagt de oorspronkelijke
+informatievraag uit exact dezelfde gevalideerde werkspecificatie, met volledige
+teksthash en expliciete begrenzing. Dit is geen nieuwe opdracht. De volgende
+afweging gebruikt een inhoudelijke bevinding of benoemt welke informatie voor
+die vraag ontbreekt; alleen de taakstatus noemen is geen inhoudelijk brongebruik.
+Privébronnen gaan alleen naar de volgende privé-afweging; de host bewaart de hash
+van de werkelijk aangeboden context.
 
 Een nieuwe native uitkomst met geverifieerde bronlezing mag precies één
 vervolgafweging in dezelfde bestaande reviewroute veroorzaken. De werker leest

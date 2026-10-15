@@ -59,6 +59,9 @@ def test_exact_native_read_is_recalled_without_redispatch_and_worker_text_is_sep
     assert len(values) == 1
     item = values[0]
     assert item["work_id"] == work.spec.work_id and item["spec_sha256"] == work.spec.sha256
+    assert item["source_question"] == {"text": work.spec.task[:1200],
+        "sha256": hashlib.sha256(work.spec.task.encode()).hexdigest(),
+        "truncated": len(work.spec.task)>1200, "is_new_instruction": False}
     assert item["reported_output"]["semantic_verification"] is False
     source = item["verified_reads"][0]
     assert source["observed_at"] == NOW.isoformat()
@@ -249,6 +252,9 @@ def test_verified_component_read_survives_ambiguous_work_without_fabricating_res
     assert data["result_sha256"] is None and data["reported_output"] is None
     assert data["work_outcome"]["state"]=="ambiguous"
     assert data["work_outcome"]["error_code"]=="internal_error"
+    assert data["source_question"]["text"] == work.spec.task[:1200]
+    assert data["source_question"]["sha256"] == hashlib.sha256(work.spec.task.encode()).hexdigest()
+    assert data["source_question"]["is_new_instruction"] is False
     assert data["outcome_sha256"]==canonical_sha256(data["work_outcome"])
     assert data["verified_reads"][0]["observation"]["content"].startswith("FLAG = True")
     assert native_digital.auth.timeline.load(native_digital.claim.thread_id).phase=="initiative_blocked"

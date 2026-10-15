@@ -110,7 +110,14 @@ HUE5 heeft echte aflevering, reactie en later gedrag aangetoond; HUE6 heeft de
 beperkte oorspronkelijke reflectie-/verbetercyclus afgerond. De geïnstalleerde
 contextaansluiting van 14 oktober liet de gewone autonome afweging acht historische
 huiswaarnemingen en drie eerdere eigen verplichtingen gebruiken en stilte kiezen.
-Dat is geen nieuwe nuttige bijdrage, volledige I1.2-afronding of algemeen kwaliteitsvoordeel. Actuele bronnen zelfstandig lezen en modelgekozen vervolg-aandacht zijn nog open; de beschrijving daarvan hierboven is een doel, geen claim dat die onderdelen al geïnstalleerd werken.
+Dat is geen nieuwe nuttige bijdrage, volledige I1.2-afronding of algemeen kwaliteitsvoordeel.
+E1.1 is op 15 oktober binnen haar oorspronkelijke bronvaardigheid geïnstalleerd en
+onafhankelijk afgerond: Eva koos zelf een informatiegat, las via de native uitvoerder
+en gebruikte de gecontroleerde inhoud later bij een gewone afweging, met concrete
+beperking van wat de bron kon aantonen. De eerdere volledige onderzoekstaak bleef
+onzeker; dat foutbewijs is niet vervangen door succes. Zie [E1.1-brongebruik](../evidence/product/e11-semantic-source-use-outcome-20261015.json).
+Modelgekozen vervolg-aandacht E1.2 en daadwerkelijk nuttig dagelijks gezinsgedrag
+E1.3/I1.2 blijven open; de beschrijving hierboven is daarvoor het doel.
 Zie [HUE5](../evidence/product/hue5-feedback-later-use-outcome-20261014.json),
 [HUE6](../evidence/product/hue6-quiet-learning-outcome-20261014.json),
 [autonome beschikbaarheid](../evidence/product/autonomous-household-availability-20261014.json)

@@ -294,6 +294,12 @@ def read_recent_source_outcomes(authority, *, now, work_id=None) -> tuple[dict, 
             item = {"work_id": work_id, "spec_sha256": work.spec.sha256,
                 "result_sha256": outcome["result_sha256"], "outcome_sha256": canonical_sha256(outcome),
                 "work_outcome": outcome,
+                # Bind the information need to this exact verified spec. Recent
+                # initiative history is not an identity-bearing source join.
+                "source_question": {"text": work.spec.task[:1200],
+                    "sha256": hashlib.sha256(work.spec.task.encode()).hexdigest(),
+                    "truncated": len(work.spec.task) > 1200,
+                    "is_new_instruction": False},
                 "completed_at": work.completed_at.isoformat(),
                 "reported_output": None if output is None else {"text": output[:384],
                     "output_sha256": work.result.output_sha256,

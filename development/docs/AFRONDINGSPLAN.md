@@ -63,11 +63,14 @@ en op passend moment ook stil blijven. Later feedbackgebruik is gebonden aan de
 juiste persoon en bijdrage. Een gezonde container, kloktrigger, geforceerde creatie
 of vrijblijvende stiltescore alleen sluit E1 niet.
 
-**Huidige bewijsgrens:** actuele beschikbare bronnen zelfstandig lezen en modelgekozen
-vervolg-aandacht zijn nog open. De E1-beschrijving is de vereiste uitkomst, geen
-claim dat alleen de contextinstallatie dit al levert. Een recente speakersessie is
-geen voorwaarde voor zelfstandig initiatief of een passend gedeeld bericht via de
-ingestelde huisuitgang; privé-inhoud blijft in de toegelaten privéroute.
+**Huidige bewijsgrens:** E1.1-bronvaardigheid is geïnstalleerd en onafhankelijk
+[afgerond](../evidence/product/e11-semantic-source-use-outcome-20261015.json): de zelfgekozen
+bronvraag is gelezen via de bestaande uitvoerder en inhoudelijk gebruikt bij de volgende
+gewone afweging. De oorspronkelijke onzekere onderzoekstaak blijft als zodanig staan.
+Modelgekozen vervolg-aandacht E1.2 en een werkelijk dagelijkse bijdrage E1.3 blijven
+open; E1 als geheel is niet afgerond. Een recente speakersessie is geen voorwaarde
+voor zelfstandig initiatief of een passend gedeeld bericht via de ingestelde
+huisuitgang; privé-inhoud blijft in de toegelaten privéroute.
 
 **Afgrenzing:** geen nieuwe autonome daemon, tweede geheugen/taakstore of losse
 vooraf gebouwde afspraak-/afval-/lampfunctie. Gebruik waargenomen fouten om alleen

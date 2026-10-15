@@ -14,6 +14,8 @@ from tests.model.test_conversation_model import _memory
 NOW = datetime(2026, 10, 15, 10, tzinfo=UTC)
 OUTCOMES = ({"work_id": "work:eva-initiative:" + "a" * 64,
     "spec_sha256":"e"*64,"result_sha256":"f"*64,
+    "source_question":{"text":"Which verified calendar facts are available?", "sha256":"c"*64,
+        "truncated":False,"is_new_instruction":False},
     "reported_output": {"text": "Reported interpretation", "semantic_verification": False},
     "verified_reads": [{"observed_at": "2026-10-15T09:50:00Z",
         "observation": {"events": []}, "receipt_sha256": "b" * 64}]},)
@@ -82,6 +84,10 @@ def test_model_includes_original_source_time_and_unconfirmed_report(monkeypatch,
     assert result.disposition == "silence"
     assert "onbevestigde interpretatie" in bodies[0]["instructions"]
     assert "oorspronkelijke tijd" in bodies[0]["instructions"]
+    assert payload["native_source_outcomes"][0]["source_question"]==OUTCOMES[0]["source_question"]
+    assert "source_question" in bodies[0]["instructions"]
+    assert "concrete bronbevinding" in bodies[0]["instructions"]
+    assert "geen nieuwe opdracht" in bodies[0]["instructions"]
     assert len(bodies[0]["tools"]) == 1  # No second source-execution route.
     with pytest.raises(ValueError, match="private opportunity"):
         model.evaluate_sensory_event(SensoryEvent("household-initiative", "shared", "household_observation_review", NOW, {}),

@@ -1,0 +1,161 @@
+{
+  "contract": "EvaE11SemanticSourceUseOutcome/v1",
+  "taskId": "E1.1",
+  "checkedAt": "2026-10-15T10:24:55.033283+00:00",
+  "status": "completed_installed",
+  "installed": true,
+  "wholeProjectComplete": false,
+  "oldEvidencePreserved": "development/evidence/product/e1-current-source-initiative-outcome-20261015.json",
+  "existingReused": [
+    "Same private initiative/hourly review",
+    "Same native digital worker and original source receipts",
+    "Existing authority, retention, stop, source-context trace and provider route"
+  ],
+  "changed": [
+    "Original information question is now bound directly to its exact validated native work spec and retained reads; full question hash and truncation explicit.",
+    "The existing decision asks what the source says about that question, including specific unknowns, independently of whole-task success."
+  ],
+  "actualOutcome": {
+    "newOrdinaryHourlyWindow": 497794,
+    "noControlledOccasionInNewEvent": true,
+    "timerCallbackObservedOnce": true,
+    "oldReviewReopened": false,
+    "oldWorkRerun": false,
+    "providerRequests": 1,
+    "providerBodySha256": "cacab7f050fcabba6e91d805abdc7e42559316c263076c8f4e3bde67de8d9c42",
+    "offeredAndStoredSourceContextSha256": "649a481174d50a5c649216adb9cf8df2024dbedb843d437a722dafcb39cd897c",
+    "originalVerifiedReadsUsed": 2,
+    "boundedSourceSelection": true,
+    "verifiedQuestionHash": true,
+    "substantiveFinding": "The retained code shows event-source initialization and address/token validation.",
+    "specificLimit": "The abbreviated read contains no historical-versus-current-state tests, so their coverage cannot be assessed from it.",
+    "decision": "silence",
+    "newNativeWorkStarted": false,
+    "sourceReadsRepeated": false,
+    "originalTaskSucceeded": false,
+    "originalNativeState": "ambiguous",
+    "originalProbeSucceeded": false,
+    "newReviewReplacesOldFailure": false,
+    "exclusiveCausalityClaim": false,
+    "timerCallbackControllerStimulated": true
+  },
+  "usage": {
+    "scope": "This new ordinary decision only; old partial usage is preserved separately.",
+    "provider": "existing ChatGPT Codex route",
+    "model": "gpt-6-astra",
+    "modelAttempts": 1,
+    "inputTokens": 7666,
+    "outputTokens": 158,
+    "registeredTotalTokens": 7824,
+    "decisionToolCalls": 1,
+    "externalToolCalls": 0,
+    "elapsedSeconds": 23.87,
+    "creditCosts": null,
+    "developerCreditCost": null,
+    "reasoningEffort": "medium"
+  },
+  "validation": {
+    "affectedReaderPostgresCasesPassed": 21,
+    "affectedApplicationAndModelCasesPassed": 9,
+    "totalAffectedCasesPassed": 30,
+    "ephemeralPostgresOnly": true,
+    "productionFixtureWrites": false,
+    "extraEvaEvaluationModelCalls": 0
+  },
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "receiptSha256": "26541ac37ceb1cd6a74a5126a5da82618d6273c1df723cb28f03d04703e71f88",
+    "services": {
+      "core": {
+        "image": "sha256:299035b18b9165c06456cd27942a12abbaef49a19bb47bc7710b36d71d7bae4d",
+        "mountsPreserved": true
+      },
+      "delegated-work-worker": {
+        "image": "sha256:02816d93141f0113d01379d34794df1a547e8547792052b4261ad2e77cd9650d",
+        "mountsPreserved": true
+      }
+    },
+    "onlyChangedModules": [
+      "adapters/model/pydantic_conversation.py",
+      "adapters/postgres/initiative_source_outcomes.py"
+    ],
+    "retainedOtherPythonModules": {
+      "core": 353,
+      "worker": 352
+    },
+    "allDigitalExecutionSourcesMatch": true,
+    "otherExecutorChangesPreserved": true,
+    "voiceSourceOrServiceChanges": false
+  },
+  "limitations": [
+    "The original controller-stimulated source acquisition ended with ambiguous work; its failed experiment remains failed.",
+    "This result proves bounded substantive later use of verified reads, not successful completion of that original native task.",
+    "The same capability must still contribute to useful daily family behaviour; E1.3 and final family acceptance are separate.",
+    "Model-chosen future attention E1.2 is separate.",
+    "No general competitor advantage, exclusive causality or efficiency improvement is claimed."
+  ],
+  "privateEvidence": [
+    {
+      "label": "plan.private.json",
+      "sha256": "c0b7af429d83369f1a2964db60841ccffeb29fd8b9015fee5dc8e90913e35942",
+      "restricted": true
+    },
+    {
+      "label": "checks.private.json",
+      "sha256": "ff90bbb6c2046fdec2260c05c4cc5abf5006f2aab4434b1134c32d1455f36a1d",
+      "restricted": true
+    },
+    {
+      "label": "runtime-before.private.json",
+      "sha256": "9967a7252ba3a62290be97709d6fb33462c6c7f13b4ec783c873400058a5cc21",
+      "restricted": true
+    },
+    {
+      "label": "source-preservation.private.json",
+      "sha256": "ee1343aee0496a51df76019f58a44899038a7d8a89ee35e14c513a1600b6b021",
+      "restricted": true
+    },
+    {
+      "label": "next-ordinary.private.json",
+      "sha256": "ff37407619a8e882013ac38ac365e50fdf3b5e1295ed0e840ad913b5b7bf9f7c",
+      "restricted": true
+    },
+    {
+      "label": "after-ordinary.private.json",
+      "sha256": "fa32a68c9ecf61fe6289d611b6a8560643df3982dbbf4cd52d6cfc995727846e",
+      "restricted": true
+    },
+    {
+      "label": "source-use-link.private.json",
+      "sha256": "7cc2b9849b691049d6a552c12254fc43a5b48dac3532079230b5b25465c8a64a",
+      "restricted": true
+    },
+    {
+      "label": "independent-semantic-bridge-source-review.private.json",
+      "sha256": "f7e0dd85983397db71dbfcb4a8d3122b987302fe1231603ff743ae0cb402dbf0",
+      "restricted": true
+    },
+    {
+      "label": "independent-semantic-use-outcome-review.private.json",
+      "sha256": "7b5ce24acd0fdb47201924bbab1ac983c406bc35a09c5f47c53f7c75be4f5ec2",
+      "restricted": true
+    },
+    {
+      "label": "dashboard-after.private.json",
+      "sha256": "2dde4addf2740cb188d7c237b176fb441a1131a8c795b0d82bda8986a427c79a",
+      "restricted": true
+    }
+  ],
+  "taskCompleted": true,
+  "completedAt": "2026-10-15T10:27:29.953637+00:00",
+  "independentReview": "development/reviews/e11-semantic-source-use-review-20261015.json",
+  "dashboard": {
+    "url": "http://localhost:44712/",
+    "activeTaskId": "E1.2",
+    "activeTaskStatus": "planned",
+    "completedTaskId": "E1.1",
+    "completedSmallTasks": 46,
+    "totalSmallTasks": 70,
+    "extensionUsed": false
+  }
+}

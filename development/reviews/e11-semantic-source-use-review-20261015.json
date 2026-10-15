@@ -1,0 +1,26 @@
+{
+  "contract": "EvaE11IndependentCompletionReview/v1",
+  "taskId": "E1.1",
+  "checkedAt": "2026-10-15T10:27:29.953637+00:00",
+  "verdict": "GO",
+  "originalTaskCompleted": true,
+  "originalCriteriaUnchanged": true,
+  "statement": "Onafhankelijk akkoord voor E1.1 binnen de oorspronkelijke beperkte bronvaardigheid: Eva koos zelf een informatiegat, las via de bestaande uitvoerder en gebruikte de gecontroleerde broninhoud later inhoudelijk bij haar besluit. De nieuwe gewone uurafweging benoemde concreet wat de gelezen selectie wel en niet aantoonde. Geïnstalleerd en gezond. De eerdere volledige onderzoekstaak blijft mislukt/onzeker; geen bewijs van spontane dagelijkse gezinswaarde, afgeronde verbetering of algemene voorsprong.",
+  "whyPreviousNoGoChanged": "A new ordinary hourly decision now gives a concrete substantive source finding and a specific insufficiency answering the self-chosen original source question. The previous decision only classified task failure.",
+  "verified": [
+    "Question text/hash matches the exact original validated work spec",
+    "Two original retained source read items are unchanged",
+    "Actual provider body, source-context hash and durable decision match",
+    "Current installed images healthy and retained mounts match",
+    "No old work/review reopened and no source action repeated"
+  ],
+  "privateReviewSha256": "7b5ce24acd0fdb47201924bbab1ac983c406bc35a09c5f47c53f7c75be4f5ec2",
+  "sourceEvidence": "development/evidence/product/e11-semantic-source-use-outcome-20261015.json",
+  "previousNoGoPreserved": "development/reviews/e1-current-source-initiative-review-20261015.json",
+  "originalWholeExperimentSucceeded": false,
+  "originalNativeWorkState": "ambiguous",
+  "extraEvaModelCallsByReviewer": 0,
+  "wholeProjectComplete": false,
+  "familyAcceptance": false,
+  "spontaneousHouseholdUseClaim": false
+}
