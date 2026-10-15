@@ -128,14 +128,13 @@ def test_real_composition_uses_bound_source_and_late_foreground_gate(monkeypatch
     assert workers[0].dispatch_ready() is False  # Same live callback, not a frozen pre-call value.
 
 
-def test_foreground_yields_new_work_but_does_not_prevent_pending_delivery(monkeypatch):
+def test_foreground_defers_unsolicited_delivery_and_new_work(monkeypatch):
     loop, allow, calls, workers, stores = _compose_without_network(monkeypatch, available=False)
     assert loop.run_once() == "idle"
-    assert calls == ["pending-delivery"]
-    loop, allow, calls, workers, stores = _compose_without_network(
-        monkeypatch, available=False, delivery_result="offered")
-    assert loop.run_once() == "offered"
-    assert calls == ["pending-delivery"]
+    assert calls == []
+    allow[0] = True
+    assert loop.run_once() == "silence"
+    assert calls == ["pending-delivery", "bound-source", "schedule-clock", "decision"]
 
 
 def test_source_scope_mismatch_stops_before_delivery_or_model(monkeypatch):

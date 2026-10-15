@@ -71,8 +71,16 @@ Modelgekozen vervolg-aandacht E1.2 is eveneens geïnstalleerd en onafhankelijk
 [afgerond](../evidence/product/e12-next-attention-outcome-20261015.json): keuze/bewaring,
 één hervatting en voorrang voor gesprek zijn met twee echte modelbesluiten in een
 geïsoleerde technische proef aangetoond. De logische klok liep versneld; dit was
-geen productiecrash- of dagelijkse gezinsproef. Een werkelijk dagelijkse bijdrage
-E1.3 en aandacht/stilte I1.2 blijven open; E1 als geheel is niet afgerond.
+geen productiecrash- of dagelijkse gezinsproef. E1.3 is vervolgens technisch
+[afgerond](../evidence/product/e13-native-initiative-result-20261015.json): nieuw zelfgekozen
+werk uitgevoerd, teruggelezen en privé afgeleverd na een transparant gestimuleerde
+start. I1.2 is op 16 oktober eveneens
+[geïnstalleerd en onafhankelijk afgerond](../evidence/product/i12-quiet-attention-installed-20261016.json):
+ongevraagde berichten volgen de lopende voorgrond en bestaande nachtrust, ook na
+de laatste broncontrole. Echte eerdere feedback over nut, hinder en timing blijft
+gescheiden. E1 is hiermee technisch afgerond binnen deze beperkte bewijsgrenzen;
+geen werkelijk slapend/druk gezin, herhaald spontaan gezinsnut of volledige
+gezinsacceptatie is aangetoond. Dat laatste blijft in E5/F2, geen nieuwe kaart.
 Een recente speakersessie is geen voorwaarde
 voor zelfstandig initiatief of een passend gedeeld bericht via de ingestelde
 huisuitgang; privé-inhoud blijft in de toegelaten privéroute.

@@ -1,0 +1,85 @@
+{
+  "contract": "EvaI12QuietAttentionOutcome/v1",
+  "taskId": "I1.2",
+  "checkedAt": "2026-10-15T22:10:53.727800+00:00",
+  "status": "completed_installed",
+  "taskCompleted": true,
+  "completionKind": "technical_with_retained_genuine_owner_feedback",
+  "originalCriteriaUnchanged": true,
+  "originalDoneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
+  "wholeProjectComplete": false,
+  "familyAcceptance": false,
+  "result": "Ongevraagde gedeelde berichten volgen nu dezelfde actuele voorgrondcontrole als de bestaande initiatiefafweging, ook na de laatste duurzame broncontrole. De bestaande nachtrust 22:00–08:00 Europe/Amsterdam blijft behouden. Nut, hinder en timing blijven afzonderlijk beoordeeld.",
+  "existing": [
+    "Existing initiative planner, durable store, household delivery, authority and quiet-time window.",
+    "Genuine separated owner feedback already recorded in HUE5; no replay of closed HUE5/HUE6 trials."
+  ],
+  "changes": [
+    {
+      "path": "src/eva/bootstrap/household_initiative.py",
+      "change": "Apply the existing current foreground callback to the existing delivery window after authority validation.",
+      "installedSha256": "283d54b46ee6aadd6cb9428912793e43f48c477cec7712866a36e4a9bbbb545a"
+    },
+    {
+      "path": "src/eva/bootstrap/household_initiative_delivery.py",
+      "change": "Recheck the current attention window after final durable provenance authorization immediately before an unsolicited HTTP offer.",
+      "installedSha256": "033b8495db400ec5bad68e8102f41428306aa8dbdebadabe3ce4d6d50d1c3ad4"
+    }
+  ],
+  "validation": {
+    "focusedTests": 20,
+    "focusedTestSeconds": 3.63,
+    "failedTests": 0,
+    "installedCompositionCases": 4,
+    "installedQuietBoundaryCases": 5,
+    "sameForegroundCallback": true,
+    "liveAnnouncements": 0,
+    "productionClaimsOrTaskStateWritten": false,
+    "actualFamilySleepingOrBusyObserved": false
+  },
+  "retainedOwnerAssessment": {
+    "source": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+    "utility": "not_useful_for_this_owner",
+    "nuisance": "not_intrusive",
+    "timing": "appropriate",
+    "literalFeedbackPrivate": true,
+    "newFeedbackRequested": false
+  },
+  "installation": {
+    "coreImage": "sha256:645c4431c4dd9a44455c92329fab00c5f1b3ec04cdb77cd7542104f3a8db5ba7",
+    "previousCoreImage": "sha256:ba76115e134f2468a426571747a4cca2238d5a22af77815f500a9460fbc55599",
+    "changedServices": [
+      "core"
+    ],
+    "workerImageUnchanged": true,
+    "environmentAndMountsRetained": true,
+    "coreAndWorkerHealthy": true,
+    "overlaySourceFileCount": 2,
+    "speechCodeServicesOrFirmwareChanged": false,
+    "rollbackPerformed": false
+  },
+  "usage": {
+    "evaExperimentModelCalls": 0,
+    "evaExperimentModelTokens": 0,
+    "evaExperimentLiveToolActions": 0,
+    "independentReviewers": 1,
+    "developmentCredits": null,
+    "developmentModelTokens": null,
+    "note": "Counts concern this bounded verification; ordinary Eva runtime usage and Codex development usage are separate. Unknown credits are not estimated."
+  },
+  "independentReview": "development/reviews/i12-quiet-attention-review-20261016.json",
+  "privateReviewSha256": "9f7d065d30737e703d4259e9289e3d25ce978ccffb1bcd9b35fe7fc9d7ebfc84",
+  "privateEvidenceSha256": {
+    "plan.private.json": "70d7232281d3d388a43368df7cf90dd4740f3f707b6b3cb28d6bf3a321479349",
+    "installed-probe.private.json": "73100a5db10531f600d99b3cec82cbd169e532989a04af49c221b271fc10132f",
+    "installation-receipt.private.json": "6f95b014152256f6a29cb575f67c9e99b6041c586b4063ebe6b5eeb5a5cfbc43",
+    "installation-verification.private.json": "5cda2d43f6efb8bfbda31974173758f82a31af7d8d6f1665313e7264b3fd21e3"
+  },
+  "limitations": [
+    "Foreground means an in-flight runtime conversation, not arbitrary household busyness or sleeping detection.",
+    "The installed probe used real composition with isolated output/store boundaries; no physical household announcement was sent and no actual sleeping/busy family was observed.",
+    "Existing owner feedback belongs only to its original contribution: utility not useful for this owner, timing appropriate and not intrusive. It is not positive acceptance of all initiatives.",
+    "A final check and external HTTP operation cannot form an atomic transaction; no absolute elimination of every concurrent interruption is claimed.",
+    "Repeated spontaneous household value and full family acceptance remain open under the existing final acceptance tasks."
+  ]
+}

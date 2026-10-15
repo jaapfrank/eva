@@ -4,15 +4,15 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Stilte en passendheid beoordelen
+Eén Eva-beheeromgeving aansluiten
 
-E1.3 is technisch afgerond en werkelijk privé afgeleverd. Hierna volgt uitsluitend het resterende aandacht/stiltebewijs van I1.2. Nut van de nieuwe bijdrage is nog niet door Jaap beoordeeld.
+E2.1: controleer bestaande productpagina’s en echte API’s en verbind ze tot één Eva-beheeromgeving voor gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Projectdashboard blijft apart; geen spraakbouw.
 
-Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.
+Klaar wanneer: Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart.
 
 ## Afmaakvolgorde
 
-1. E1 afmaken: bronvaardigheid E1.1 en modelgekozen aandacht E1.2 afgerond; nu dagelijkse bijdrage E1.3 en aandacht/stilte I1.2
+1. E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie
 2. E2: één Eva-beheeromgeving en optionele verbindingen
 3. E3: volledige bestandsregistratie en onderbouwde besluiten
 4. E4: gerichte vereenvoudiging, efficiëntie en onderhoud
@@ -24,10 +24,10 @@ Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hi
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw. |
-| Eigen initiatief | Afgeleverd en van echte reactie geleerd · HUE5 | E1.3: dagelijks nuttig resultaat; I1.2: aandacht/stilte en daarna gezinsacceptatie. |
-| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1.1-brongebruik en E1.2-aandacht zijn technisch afgerond. E1.3, I1.2 en samenhangende finale gezinsacceptatie blijven open. |
+| Eigen initiatief | E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd | Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie; samenhangende bediening volgt in E2. |
+| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open. |
 
-47 van 70 geregistreerde kleine taken afgerond; 23 open. E1.2 is de nieuwe afronding. Dit is geen productpercentage; de vier volledige huisgenootuitkomsten en gezinsacceptatie blijven apart zichtbaar.
+49 van 70 geregistreerde kleine taken afgerond; 21 open. I1.2 is de nieuwe technische afronding. Geen productpercentage of volledige gezinsacceptatie.
 
 ## Alle geregistreerde kleine taken
 
@@ -60,7 +60,7 @@ Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hi
 | T3.2 · Een browseropdracht volledig afmaken | ✓ Afgerond | Eva voert een concrete opdracht uit, controleert het resultaat en levert het begrijpelijk op. |
 | T3.3 · Overnemen en correct doorgaan | ✓ Afgerond | Overname stopt lopende bediening; teruggeven vereist verse waarneming en herhaalt geen oude actie. |
 | I1.1 · Een nuttige huisbijdrage laten aankomen | ✓ Afgerond | Bestaande initiatiefroute kiest en levert een concrete toegestane bijdrage. |
-| I1.2 · Stilte en passendheid beoordelen | ● Open | Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart. |
+| I1.2 · Stilte en passendheid beoordelen | ✓ Afgerond | Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart. |
 | HUE5.1 · Van de reactie op eigen initiatief leren | ✓ Afgerond | Eva kiest en voltooit echt toegestaan werk, meldt het resultaat via de bestaande privéroute en gebruikt de reactie later voor een passend initiatief of bewust stil blijven. |
 | I2.1 · Relevante bronnen zelfstandig ontdekken en kiezen | ✓ Afgerond | Eva ontdekt en kiest via bestaande algemene hulpmiddelen de camera-/agendabronnen die bij een gewone waarnemingsopdracht passen; alleen echte onduidelijkheid vraagt een vervolgvraag. |
 | I2.2 · Waarnemingsopdracht zelf automatiseren en terugmelden | ✓ Afgerond | Eva stelt de gevraagde waarneming en terugmelding zelf in via bestaande algemene hulpmiddelen en passende automatisering, zonder vraag-/apparaatspecifieke kernregel; de werkelijke terugmelding blijft binnen het bestaande mandaat. |

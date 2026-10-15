@@ -83,7 +83,8 @@ class HouseholdInitiativeLoop:
                 return False
             self._authorize()
             return (self.voice.policy.devices.get(satellite) == device
-                    and canonical_sha256(self.voice.policy.model_dump(mode="json")) == policy_sha)
+                    and canonical_sha256(self.voice.policy.model_dump(mode="json")) == policy_sha
+                    and self.can_decide())
 
         worker = SensoryDecisionWorker(store, self.model, self.memory, self.identity,
             tenant_id=policy.tenant_id, installation_id=policy.installation_id,

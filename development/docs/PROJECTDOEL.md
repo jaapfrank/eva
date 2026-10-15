@@ -120,8 +120,14 @@ E1.2 is eveneens geïnstalleerd en onafhankelijk afgerond: een zelfgekozen volge
 moment bleef bewaard en kwam na onderbreking één keer terug, met voorrang voor
 gesprek. De [proef](../evidence/product/e12-next-attention-outcome-20261015.json) gebruikte
 twee echte modelbesluiten in een tijdelijke database met versnelde logische tijd;
-geen productiecrash of spontane gezinswaarde. Daadwerkelijk nuttig dagelijks
-gezinsgedrag E1.3/I1.2 blijft open; de beschrijving hierboven is daarvoor het doel.
+geen productiecrash of spontane gezinswaarde. E1.3 is daarna binnen haar oorspronkelijke technische keten
+[afgerond](../evidence/product/e13-native-initiative-result-20261015.json): nieuw door Eva
+gekozen werk is uitgevoerd, apart teruggelezen en privé afgeleverd. De start was
+gestimuleerd en het nut van die nieuwe bijdrage is onbekend. I1.2 is op 16 oktober
+[geïnstalleerd en onafhankelijk afgerond](../evidence/product/i12-quiet-attention-installed-20261016.json):
+ongevraagde gedeelde berichten volgen actuele voorgrondactiviteit en nachtrust.
+De bestaande echte feedback houdt nut, hinder en timing afzonderlijk. Dit bewijst
+geen werkelijk slapend/druk gezin, herhaald spontaan gezinsnut of finale gezinsacceptatie.
 Zie [HUE5](../evidence/product/hue5-feedback-later-use-outcome-20261014.json),
 [HUE6](../evidence/product/hue6-quiet-learning-outcome-20261014.json),
 [autonome beschikbaarheid](../evidence/product/autonomous-household-availability-20261014.json)

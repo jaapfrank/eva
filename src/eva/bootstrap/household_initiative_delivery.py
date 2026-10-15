@@ -94,6 +94,11 @@ class HouseholdInitiativeDelivery:
                 # Re-read durable provenance and lease immediately before the
                 # effect, after the potentially blocking satellite observation.
                 self.store.authorize_household_expression(claim, binding=payload, now=self._now())
+                # Durable provenance may block while a conversation starts or
+                # quiet hours begin. Recheck the current attention window after
+                # that read, immediately before offering an unsolicited message.
+                if not self._window_open(self._now()):
+                    return self._interrupted(claim, payload)
                 response = client.post("/api/services/assist_satellite/announce",
                     json={"entity_id": self.binding.satellite_id, "message": claim.text,
                           "preannounce": False})
