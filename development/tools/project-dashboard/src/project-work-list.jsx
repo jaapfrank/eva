@@ -21,6 +21,10 @@ function TaskGuidance({ task }) {
   const canOpenLink = !trial?.localComputerOnly || (typeof window !== 'undefined' &&
     ['localhost', '127.0.0.1', '[::1]', '::1'].includes(window.location.hostname));
   return <div className="task-guidance">
+    {task.existing && <p><b>Al aanwezig:</b> {task.existing}</p>}
+    {task.gap && <p><b>Nog nodig:</b> {task.gap}</p>}
+    {task.dependsOn?.length > 0 && <p><b>Volgorde:</b> na {task.dependsOn.join(', ')}. Dit is geen nieuwe vraag aan jou.</p>}
+    {task.files?.length > 0 && <details><summary>Geraakte onderdelen</summary><ul>{task.files.map(file => <li key={file}>{file}</li>)}</ul></details>}
     {task.nextAction && <p><b>Volgende stap:</b> {task.nextAction}</p>}
     {task.blocker && <p className="checklist-blocker"><b>Wat houdt dit tegen:</b> {task.blocker}</p>}
     {trial?.availableNow === false && <p><b>Voor jou:</b> {trial.readyWhen || 'Nu niets nodig; Codex moet eerst het resterende technische werk afronden.'}</p>}
@@ -48,11 +52,12 @@ function DeviceChecks({ task }) {
   </div>;
 }
 
-export function SmallTaskChecklist({ project, stale = false }) {
+export function SmallTaskChecklist({ project, stale = false, initialFilter = 'all' }) {
   const [query, setQuery] = useState('');
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState(initialFilter);
   const tasks = (project.deliveryPlan?.implementationSlices || []).flatMap(slice =>
-    (slice.remainingTasks || []).map(task => ({ ...task, section: slice.outcome })));
+    (slice.remainingTasks || []).map(task => ({ ...task, section: slice.outcome })))
+    .sort((a, b) => Number(b.scopeOrigin === 'finalization-20261015') - Number(a.scopeOrigin === 'finalization-20261015'));
   const finished = tasks.filter(task => task.status === 'completed').length;
   const visible = tasks.filter(task => {
     const done = task.status === 'completed';
@@ -75,7 +80,7 @@ export function SmallTaskChecklist({ project, stale = false }) {
           <button key={value} type="button" aria-pressed={filter === value}
             onClick={() => setFilter(value)}>{title}</button>)}
       </div></div>
-    <p className="checklist-note">{tasks.length} bestaande kleine taken. De grote productonderdelen en jouw acceptatie staan daar los van.
+    <p className="checklist-note">{tasks.length} geregistreerde taken, inclusief de kaarten uit het afrondingsplan. De grote productonderdelen en jouw acceptatie staan daar los van.
       De lijst wordt iedere vijf seconden uit het werkbord bijgewerkt; alleen “Codex werkt eraan” betekent dat er een uitvoerder is geregistreerd. Een open gebruiksproef blokkeert onafhankelijk bouwen niet.</p>
     <div className="checklist-rows">{visible.map(task => {
       const done = task.status === 'completed';
@@ -98,7 +103,8 @@ export default function ProjectWorkList({ project }) {
   const [query, setQuery] = useState('');
   const [mode, setMode] = useState('open');
   const slices = project.deliveryPlan?.implementationSlices || [];
-  const groups = [...project.capabilities, { id: 'project-wide', title: 'Vergelijking en eindoplevering' }];
+  const phases = project.deliveryPlan?.finalizationPlan?.phases || [];
+  const groups = [...phases.map(phase => ({id:`finalization-${phase.id}`,title:`${phase.id} · ${phase.title}`})), ...project.capabilities, { id: 'project-wide', title: 'Vergelijking en eindoplevering' }];
   const matches = (slice) => `${slice.id} ${slice.outcome} ${(slice.remainingTasks || []).map(task => `${task.id} ${task.title} ${task.doneWhen}`).join(' ')}`.toLocaleLowerCase('nl').includes(query.toLocaleLowerCase('nl'));
   const smallTasks = slices.flatMap(slice => slice.remainingTasks || []);
   const hasOpenActions = slice => slice.status !== 'completed' ||
@@ -108,7 +114,7 @@ export default function ProjectWorkList({ project }) {
   const visible = slices.filter(slice => matches(slice) && (mode === 'all' ||
     (mode === 'done' ? slice.status === 'completed' : hasOpenActions(slice))));
   return <section className="concrete-work" aria-label="Concrete taken per onderdeel">
-    <header><h2>Alle taken per onderdeel</h2><p><b>{open.length} opdrachten met open acties</b> · {completed.length} technisch afgerond, inclusief de basiskeuze; daar kan nog een beoordeling bij openstaan. Dit zijn de bestaande 24 hoofdopdrachten. Het resterende werk is opgesplitst in <b>{smallTasks.filter(task => task.status !== 'completed').length} kleine taken</b>; geen extra scope of productpercentage.</p></header>
+    <header><h2>Alle taken per onderdeel</h2><p><b>{open.length} opdrachten met open acties</b> · {completed.length} technisch afgerond, inclusief de basiskeuze; daar kan nog een beoordeling bij openstaan. De bestaande opdrachten en de concrete kaarten uit het afgesproken afrondingsplan staan hier samen. Het resterende werk bestaat uit <b>{smallTasks.filter(task => task.status !== 'completed').length} taken</b>; geen productpercentage.</p></header>
     <div className="work-list-controls"><label>Zoek taak of onderwerp<input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Bijvoorbeeld speakers, geheugen of T2" /></label><fieldset><legend>Toon</legend>{[['open', 'Open'], ['done', 'Afgerond'], ['all', 'Alles']].map(([value, label]) => <button key={value} aria-pressed={mode === value} onClick={() => setMode(value)}>{label}</button>)}</fieldset></div>
     <p className="work-list-help">Iedere kleine taak heeft een eigen nummer, status en eindvoorwaarde. De status komt uit dezelfde werklijst als die van Codex. Een open opdracht kan al werkende delen bevatten. Gepland of eerder gestart betekent niet dat er nu een agent aan werkt.</p>
     <div className="work-jump-links">{groups.map(group => <a key={group.id} href={`#work-group-${group.id}`}>{group.title}</a>)}</div>
@@ -136,7 +142,7 @@ export default function ProjectWorkList({ project }) {
             <details><summary>Vastgelegde afronding en bewijs</summary><p>{slice.completion?.remaining || slice.remaining || slice.nextAction || slice.endCondition || slice.baselineDecision?.nextAction || 'Zie de vastgelegde opdrachtspecificatie.'}</p><small>Bewijs: {slice.latestEvidence || slice.evidence || slice.baselineDecision?.evidencePaths?.join(' · ') || 'Geen afzonderlijk bewijs gekoppeld.'}</small><p>Bron: bestaande werkbordopdracht {slice.id}. Bouw, installatie, praktijkbewijs en acceptatie zijn afzonderlijke beoordelingen.</p></details>
           </article>;
         })}
-        {group.product?.steps?.length > 0 && <details className="original-scope"><summary>Oorspronkelijke deelstappen en eindvoorwaarden ({group.product.steps.filter(step => !step.evidenceOnly).length})</summary>{group.product.steps.filter(step => !step.evidenceOnly).map(step => <article key={step.id}><h4>{step.complete ? '✓' : '○'} {step.id} · {step.title}</h4><p>{step.status}</p><ul>{(step.criteria || []).map((criterion, index) => <li key={index}>{criterion}</li>)}</ul></article>)}<p>Dit zijn de onderliggende bestaande criteria, geen extra opdrachten naast de 24 bouwopdrachten.</p></details>}
+        {group.product?.steps?.length > 0 && <details className="original-scope"><summary>Oorspronkelijke deelstappen en eindvoorwaarden ({group.product.steps.filter(step => !step.evidenceOnly).length})</summary>{group.product.steps.filter(step => !step.evidenceOnly).map(step => <article key={step.id}><h4>{step.complete ? '✓' : '○'} {step.id} · {step.title}</h4><p>{step.status}</p><ul>{(step.criteria || []).map((criterion, index) => <li key={index}>{criterion}</li>)}</ul></article>)}<p>Dit zijn de onderliggende bestaande criteria, geen extra opdrachten naast deze registratie.</p></details>}
       </section>;
     })}
     {query && !visible.length && <p role="status">Geen taken gevonden voor deze zoekopdracht.</p>}

@@ -1,0 +1,40 @@
+{
+  "contract": "EvaFinalizationTaskVisibility/v1",
+  "checkedAt": "2026-10-15T08:04:45.907226+00:00",
+  "status": "published_and_browser_verified",
+  "cause": "The five agreed finalization phases existed as plan headings only, not as concrete cards in the Tasks per component registration.",
+  "change": "18 concrete cards now live in the same canonical implementationSlices and appear first, grouped E1-E5; task tab defaults to open work.",
+  "tasksByPhase": {
+    "E1": 3,
+    "E2": 6,
+    "E3": 4,
+    "E4": 4,
+    "E5": 1
+  },
+  "counts": {
+    "preservedOriginalTasks": 52,
+    "preservedCompletedTasks": 45,
+    "originalOpenTasks": 7,
+    "addedAgreedPlanCards": 18,
+    "totalRegisteredTasks": 70,
+    "totalOpenTasks": 25
+  },
+  "scope": "Existing plan made executable and visible; no historical completion revoked, no new Eva runtime function claimed. Original HUE, voice and family acceptance IDs retained.",
+  "criteria": "Added initial end conditions are frozen in finalization-task-scope-20261015.json; checker retains every historical criterion and requires completion/review evidence for added tasks too.",
+  "verification": {
+    "workboard_checks_passed": 9,
+    "project_build": "passed",
+    "published_browser_receipt_sha256": "d2602dfced427e8a9c12493f5fbd70de6152963f4bb06ebe07f23d5e87abd3fd",
+    "visibleOpenCards": 25,
+    "visibleAddedCards": 18,
+    "firstVisibleTask": "E1.1",
+    "phaseGroupCount": 5,
+    "taskGuidanceChecked": true,
+    "browserPageErrors": [],
+    "independentReview": "GO from /root/eva1_shutdown_check: task coverage, no duplicate HUE/voice/family trials, frozen criteria and UI mapping checked."
+  },
+  "runtimeChanges": false,
+  "evaModelRequests": 0,
+  "goalScopeChanged": false,
+  "sourcePlan": "development/docs/AFRONDINGSPLAN.md"
+}

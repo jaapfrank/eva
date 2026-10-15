@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Actuele bronnen en volgende aandacht verbinden
+Actuele bronnen zelfstandig raadplegen
 
-Maak modelgekozen vervolg-aandacht en benodigde actuele bronraadpleging af via dezelfde bestaande uitvoerder; behoud aandacht/stilte, voorgrondprioriteit en echte gezinsbeoordeling. Geen nieuwe eigenaarhandeling of vergelijkingsserie.
+Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.
 
-Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.
+Klaar wanneer: Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.
 
 ## Afmaakvolgorde
 
@@ -26,9 +26,9 @@ Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hi
 | Eigen initiatief | Afgeleverd en van echte reactie geleerd · HUE5 | I1.2: stilte op ongepaste momenten; daarna samenhangend gezinsgebruik en finale acceptatie. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | HUE5 is nu afgerond. I1.2 aandacht/stilte en samenhangend dagelijks gebruik/finale gezinsacceptatie blijven open. |
 
-45/52 kleine taken afgerond; 7 open. Twee dubbele speakertaken zijn op eigenaarverzoek samengevoegd; geen extra functie afgevinkt. Apparaatbewijs blijft behouden.
+45 van de 52 eerder geregistreerde kleine taken blijven afgerond; 7 daarvan staan open. Het bestaande afrondingsplan heeft nu 18 concrete open kaarten. Totaal: 45/70 afgerond; geen bestaande afronding ingetrokken en geen nieuw productpercentage.
 
-## Alle bestaande kleine taken
+## Alle geregistreerde kleine taken
 
 | Taak | Status | Eindvoorwaarde |
 | --- | --- | --- |
@@ -88,6 +88,24 @@ Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hi
 | F1.2 · Gezamenlijke werking en herstart controleren | ✓ Afgerond | Gebundelde eindcontrole, computerherstart en onafhankelijke review; alleen concrete resterende fouten corrigeren. |
 | F2.1 · Zeven dagen gezinsgebruik | ● Open | Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen. |
 | F2.2 · Eindoordeel vastleggen | ● Open | Jaap beslist over acceptatie; bestaande acceptaties blijven behouden. |
+| E1.1 · Actuele bronnen zelfstandig raadplegen | ● Open | Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel. |
+| E1.2 · Zelf de volgende aandacht kiezen | ● Open | Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging. |
+| E1.3 · Een dagelijkse aanleiding zelfstandig afhandelen | ● Open | De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven. |
+| E2.1 · Eén Eva-beheeromgeving aansluiten | ● Open | Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart. |
+| E2.2 · Personen en geheugen bekijken en bijwerken | ● Open | De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon. |
+| E2.3 · Gesprekken, opdrachten en resultaten samen tonen | ● Open | Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek. |
+| E2.4 · Initiatief, dromen en verbeteringen inzichtelijk maken | ● Open | De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties. |
+| E2.5 · Extra modelproviders optioneel aansluiten | ● Open | De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter. |
+| E2.6 · WhatsApp als optioneel kanaal aansluiten | ● Open | WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers. |
+| E3.1 · Alle bestanden en hun rol registreren | ● Open | Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review. |
+| E3.2 · Actieve kerncode inhoudelijk beoordelen | ● Open | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
+| E3.3 · Adapters, installatie en dynamisch gebruik beoordelen | ● Open | Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit. |
+| E3.4 · Tests, documentatie en historie op noodzaak beoordelen | ● Open | Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd. |
+| E4.1 · Bewezen dode en dubbele bestanden opruimen | ● Open | De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen. |
+| E4.2 · Omslachtige code en modulegrenzen vereenvoudigen | ● Open | De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite. |
+| E4.3 · Runtime-efficiëntie verbeteren zonder dommer gedrag | ● Open | Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend. |
+| E4.4 · Modules en updates onderhoudbaar opleveren | ● Open | Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten. |
+| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ● Open | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
 
 ## Van jou
 

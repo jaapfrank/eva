@@ -256,6 +256,15 @@ Een afgebakende kleine taak, opschoning of zelfstandige review sluit het hele go
 
 ## Bijhouden zonder nieuwe ondoorgrondelijke lijsten
 
+De 18 concrete kaarten uit dit bestaande plan zijn nu geregistreerd als E1.1–E1.3,
+E2.1–E2.6, E3.1–E3.4, E4.1–E4.4 en E5.1. Ze staan onder dezelfde vijf fasen in
+**Taken per onderdeel**. De zeven bestaande open kaarten blijven behouden; HUE5/HUE6
+worden niet opnieuw aangemaakt. F2.1/F2.2 blijven de echte gezinsproef en acceptatie.
+De historische 45/52 wordt hierdoor 45/70 geregistreerde taken; het werk is zichtbaar
+gemaakt, geen bestaande afronding ingetrokken. Status staat alleen in het werkbord;
+het scopebestand bewaart uitsluitend de oorspronkelijke nieuwe eindvoorwaarden.
+
+
 Het bestaande bord krijgt voor deze vijf fasen een groepering en de noodzakelijke
 concrete clusters. Elke clusterkaart noemt uitkomst, bestaande werking, tekort,
 geraakte bestanden, afhankelijkheden, eindvoorwaarde, eigenaar, bewijs en volgende

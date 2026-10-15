@@ -1,0 +1,119 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "finalization-20261015",
+  "createdAt": "2026-10-15T07:56:55.051091+00:00",
+  "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+  "ownerAuthorized": true,
+  "authorization": "Owner requested concrete visible tasks for the already agreed full Eva/finalization plan. Existing completed tasks and original criteria remain intact.",
+  "meaning": "Frozen initial task scope, not a second live status board. Current status exists only in execution-workboard-v1.json.",
+  "tasks": [
+    {
+      "id": "E1.1",
+      "title": "Actuele bronnen zelfstandig raadplegen",
+      "status": "planned",
+      "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel."
+    },
+    {
+      "id": "E1.2",
+      "title": "Zelf de volgende aandacht kiezen",
+      "status": "planned",
+      "doneWhen": "Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging."
+    },
+    {
+      "id": "E1.3",
+      "title": "Een dagelijkse aanleiding zelfstandig afhandelen",
+      "status": "planned",
+      "doneWhen": "De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven."
+    },
+    {
+      "id": "E2.1",
+      "title": "Eén Eva-beheeromgeving aansluiten",
+      "status": "planned",
+      "doneWhen": "Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart."
+    },
+    {
+      "id": "E2.2",
+      "title": "Personen en geheugen bekijken en bijwerken",
+      "status": "planned",
+      "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon."
+    },
+    {
+      "id": "E2.3",
+      "title": "Gesprekken, opdrachten en resultaten samen tonen",
+      "status": "planned",
+      "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek."
+    },
+    {
+      "id": "E2.4",
+      "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
+      "status": "planned",
+      "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties."
+    },
+    {
+      "id": "E2.5",
+      "title": "Extra modelproviders optioneel aansluiten",
+      "status": "planned",
+      "doneWhen": "De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter."
+    },
+    {
+      "id": "E2.6",
+      "title": "WhatsApp als optioneel kanaal aansluiten",
+      "status": "planned",
+      "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers."
+    },
+    {
+      "id": "E3.1",
+      "title": "Alle bestanden en hun rol registreren",
+      "status": "planned",
+      "doneWhen": "Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review."
+    },
+    {
+      "id": "E3.2",
+      "title": "Actieve kerncode inhoudelijk beoordelen",
+      "status": "planned",
+      "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur."
+    },
+    {
+      "id": "E3.3",
+      "title": "Adapters, installatie en dynamisch gebruik beoordelen",
+      "status": "planned",
+      "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit."
+    },
+    {
+      "id": "E3.4",
+      "title": "Tests, documentatie en historie op noodzaak beoordelen",
+      "status": "planned",
+      "doneWhen": "Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd."
+    },
+    {
+      "id": "E4.1",
+      "title": "Bewezen dode en dubbele bestanden opruimen",
+      "status": "planned",
+      "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen."
+    },
+    {
+      "id": "E4.2",
+      "title": "Omslachtige code en modulegrenzen vereenvoudigen",
+      "status": "planned",
+      "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite."
+    },
+    {
+      "id": "E4.3",
+      "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
+      "status": "planned",
+      "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend."
+    },
+    {
+      "id": "E4.4",
+      "title": "Modules en updates onderhoudbaar opleveren",
+      "status": "planned",
+      "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten."
+    },
+    {
+      "id": "E5.1",
+      "title": "Het volledige actuele geheel opleveren en laten beoordelen",
+      "status": "planned",
+      "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2."
+    }
+  ]
+}

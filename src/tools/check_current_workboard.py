@@ -29,6 +29,24 @@ def validate(root: Path, board):
     if hashlib.sha256(raw).hexdigest() != binding["sha256"]:
         raise ValueError("historical workboard bytes changed")
     previous = {t["id"]: t for t in small_tasks(json.loads(raw))}
+    # New owner-requested scope is explicit and frozen separately. This extends
+    # coverage without weakening any historical end condition or completion.
+    extension_ids = set()
+    for binding in board.get("taskScopeExtensions", []):
+        raw_extension = regular(root, binding["path"]).read_bytes()
+        if hashlib.sha256(raw_extension).hexdigest() != binding["sha256"]:
+            raise ValueError("task scope extension bytes changed")
+        extension = json.loads(raw_extension)
+        if (extension.get("contract") != "EvaWorkboardScopeExtension/v1"
+                or extension.get("id") != binding["id"] or binding["id"] in extension_ids
+                or extension.get("ownerAuthorized") is not True or not extension.get("authorization")):
+            raise ValueError("invalid task scope extension")
+        extension_ids.add(binding["id"])
+        regular(root, extension["sourceDocument"])
+        for task in extension["tasks"]:
+            if task["id"] in previous or task.get("status") != "planned" or not task.get("doneWhen"):
+                raise ValueError("duplicate or invalid added task scope")
+            previous[task["id"]] = task
     tasks = small_tasks(board)
     ids = [t["id"] for t in tasks]
     consolidations = board.get("taskConsolidations", [])
@@ -71,7 +89,14 @@ def validate(root: Path, board):
             raise ValueError(f"original end condition changed: {task['id']}")
         if old["status"] != "completed" and task["status"] == "completed":
             for key in ("completionEvidence", "independentReview"):
+                if not isinstance(task.get(key), str):
+                    raise ValueError(f"completion requires {key}: {task['id']}")
                 regular(root, task[key])
+    for phase in board["audit"]["deliveryPlan"].get("finalizationPlan", {}).get("phases", []):
+        if set(phase.get("taskIds", []) + phase.get("existingTaskIds", [])) - set(ids):
+            raise ValueError("finalization phase references missing task")
+    if any(set(task.get("dependsOn", [])) - set(ids) for task in tasks):
+        raise ValueError("task dependency is missing")
     work = board["currentWork"]
     now = board["audit"]["projectDashboard"]["deliveryOverview"]["now"]
     if work["id"] != board["activeTaskId"] or work["id"] != now["taskId"]:
@@ -95,7 +120,7 @@ def render_human(board):
     lines += ["", "## Vier productuitkomsten", "", "| Uitkomst | Wat staat | Wat ontbreekt |", "| --- | --- | --- |"]
     for row in project["housemateSummary"]["rows"]:
         lines.append(f"| {row['name']} | {row['label']} | {row['remaining']} |")
-    lines += ["", project["housemateSummary"]["note"], "", "## Alle bestaande kleine taken", "", "| Taak | Status | Eindvoorwaarde |", "| --- | --- | --- |"]
+    lines += ["", project["housemateSummary"]["note"], "", "## Alle geregistreerde kleine taken", "", "| Taak | Status | Eindvoorwaarde |", "| --- | --- | --- |"]
     for task in small_tasks(board):
         state = "✓ Afgerond" if task["status"] == "completed" else ("Geparkeerd" if task.get("parked") else "● Open")
         lines.append(f"| {task['id']} · {task['title']} | {state} | {task['doneWhen'].replace('|', '/')} |")

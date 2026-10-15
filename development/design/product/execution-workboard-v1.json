@@ -838,21 +838,21 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-15T07:49:43.442557+00:00",
+  "lastUpdated": "2026-10-15T08:04:45.907226+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "I1.2",
+  "activeTaskId": "E1.1",
   "currentWork": {
-    "id": "I1.2",
-    "title": "Stilte en passendheid beoordelen",
-    "status": "in_progress",
-    "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
-    "outcome": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
-    "nextAction": "Maak modelgekozen vervolg-aandacht en benodigde actuele bronraadpleging af via dezelfde bestaande uitvoerder; behoud aandacht/stilte, voorgrondprioriteit en echte gezinsbeoordeling. Geen nieuwe eigenaarhandeling of vergelijkingsserie.",
+    "id": "E1.1",
+    "title": "Actuele bronnen zelfstandig raadplegen",
+    "status": "planned",
+    "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
+    "nextAction": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
+    "ownerActionRequired": false,
+    "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+    "outcome": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
     "area": "initiative and attention",
-    "countedAsProductTask": true,
-    "checkedAt": "2026-10-15T07:49:43.442557+00:00",
-    "ownerActionRequired": false
+    "countedAsProductTask": true
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1634,6 +1634,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Afrondingsplan zichtbaar als 18 concrete taakkaarten",
+            "state": "installed",
+            "checkedAt": "2026-10-15T08:04:45.907226+00:00",
+            "summary": "Taken per onderdeel toont de afgesproken E1–E5-kaarten met bestaande werking, tekort, eindvoorwaarde, volgorde en instructies. Nieuwe kaarten staan bovenaan; standaard alleen open werk. 45 bestaande afrondingen behouden, totaal 25 open taken (7 eerder + 18 planwerk). Browsercontrole geslaagd.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/finalization-task-visibility-20261015.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": false,
+            "maintenanceRepair": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "Algemene huiswaarneming naar Eva’s eigen afweging aangesloten",
             "state": "installed",
             "checkedAt": "2026-10-15T07:49:43.442557+00:00",
@@ -1917,16 +1929,16 @@
           "completionScope": "HUE5.1 only"
         },
         "now": {
-          "title": "Actuele bronnen en volgende aandacht verbinden",
-          "state": "Volgende uitkomst",
-          "phase": "next_adaptive_attention",
-          "taskId": "I1.2",
+          "title": "Actuele bronnen zelfstandig raadplegen",
+          "state": "Volgende bouwtaak",
+          "phase": "next_current_source_reads",
+          "taskId": "E1.1",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "Maak modelgekozen vervolg-aandacht en benodigde actuele bronraadpleging af via dezelfde bestaande uitvoerder; behoud aandacht/stilte, voorgrondprioriteit en echte gezinsbeoordeling. Geen nieuwe eigenaarhandeling of vergelijkingsserie.",
-          "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
+          "summary": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
+          "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-15T07:49:43.442557+00:00"
+          "checkedAt": "2026-10-15T08:04:45.907226+00:00"
         },
         "next": {
           "title": "Eén Eva-beheeromgeving afmaken",
@@ -1940,8 +1952,8 @@
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-15T07:49:43.442557+00:00",
-        "reviewedAt": "2026-10-15T07:49:43.442557+00:00",
+        "checkedAt": "2026-10-15T08:04:45.907226+00:00",
+        "reviewedAt": "2026-10-15T08:04:45.907226+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-13T13:40:45.278382+00:00",
@@ -1962,7 +1974,7 @@
         "checkedAt": "2026-10-15T07:49:43.442557+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
         "headline": "HUE5 en HUE6 afgerond. Nog stilte/aandacht en gezinsafronding.",
-        "note": "45/52 kleine taken afgerond; 7 open. Twee dubbele speakertaken zijn op eigenaarverzoek samengevoegd; geen extra functie afgevinkt. Apparaatbewijs blijft behouden.",
+        "note": "45 van de 52 eerder geregistreerde kleine taken blijven afgerond; 7 daarvan staan open. Het bestaande afrondingsplan heeft nu 18 concrete open kaarten. Totaal: 45/70 afgerond; geen bestaande afronding ingetrokken en geen nieuw productpercentage.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2103,7 +2115,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "I1.2",
+        "currentStep": "E1.1",
         "steps": [
           {
             "number": 1,
@@ -2179,7 +2191,7 @@
           }
         ],
         "smallTaskPolicy": {
-          "source": "Remainder of existing 24 slices only; completed/accepted scope retained.",
+          "source": "52 preserved historical tasks plus 18 concrete cards for the already agreed finalization plan; original criteria remain unchanged.",
           "statusRule": "Each remaining task owns its status; do not infer completion from its parent, test count or elapsed work.",
           "executionRule": "Prepare the complete real user route, reuse existing work, fix proven causes, and bundle focused verification, independent review and deployment. No arbitrary time or retry limits; no unchanged repeated probe. Preserve accepted scope.",
           "completionRule": "All required remaining tasks must be resolved before parent technical closure; final owner acceptance remains separate.",
@@ -3877,10 +3889,660 @@
                 }
               }
             ]
+          },
+          {
+            "id": "FE1",
+            "parentStep": null,
+            "phaseId": "E1",
+            "dependsOn": [],
+            "outcome": "Gewone autonome Eva",
+            "status": "planned",
+            "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+            "endCondition": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
+            "dashboardComponent": "finalization-E1",
+            "scopeOrigin": "finalization-20261015",
+            "remainingTasks": [
+              {
+                "id": "E1.1",
+                "title": "Actuele bronnen zelfstandig raadplegen",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "De gedeelde waarneming, geheugencontext en native uitvoerder werken.",
+                "gap": "De afweging gebruikt nog niet aantoonbaar de benodigde nieuwe bronlezing.",
+                "nextAction": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
+                "files": [
+                  "src/eva/application/free_will.py",
+                  "src/eva/adapters/postgres/initiative_context.py",
+                  "src/eva/bootstrap/native_initiative_work.py"
+                ],
+                "dependsOn": [],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E1.2",
+                "title": "Zelf de volgende aandacht kiezen",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Verse signalen worden vooraf gebundeld; de host gebruikt nu een vast venster van 300 seconden.",
+                "gap": "De volgende aandachtstijd wordt nog niet inhoudelijk door Eva gekozen.",
+                "nextAction": "Hergebruik de bestaande planning en aandachtsregistratie voor modelgekozen herbeoordeling; behoud bundeling, stoppen en oorspronkelijke bron.",
+                "files": [
+                  "src/eva/application/resident_attention.py",
+                  "src/eva/adapters/postgres/sensory_events.py",
+                  "src/eva/bootstrap/household_initiative.py"
+                ],
+                "dependsOn": [
+                  "E1.1"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E1.3",
+                "title": "Een dagelijkse aanleiding zelfstandig afhandelen",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "HUE5/HUE6, algemene taakuitvoering en de nieuwe gewone stiltekeuze zijn bewezen binnen hun scope.",
+                "gap": "Een volledige nieuwe dagelijkse bijdrage via de actuele waarnemingsketen is nog niet aangetoond.",
+                "nextAction": "Laat de complete algemene keten werken met de door Eva gekozen aanleiding en leg resultaat en echte reactie vast; I1.2 blijft de bestaande aparte timing-/hinderbeoordeling.",
+                "files": [
+                  "src/eva/bootstrap/native_initiative_work.py",
+                  "src/eva/application/initiative_execution.py",
+                  "src/eva/bootstrap/household_initiative_delivery.py"
+                ],
+                "dependsOn": [
+                  "E1.1",
+                  "E1.2"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              }
+            ]
+          },
+          {
+            "id": "FE2",
+            "parentStep": null,
+            "phaseId": "E2",
+            "dependsOn": [],
+            "outcome": "Eén Eva-beheeromgeving en optionele verbindingen",
+            "status": "planned",
+            "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+            "endCondition": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten.",
+            "dashboardComponent": "finalization-E2",
+            "scopeOrigin": "finalization-20261015",
+            "remainingTasks": [
+              {
+                "id": "E2.1",
+                "title": "Eén Eva-beheeromgeving aansluiten",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Chat, diverse beheerpagina’s en API’s bestaan.",
+                "gap": "Dagelijks Eva-beheer is nog geen samenhangend geheel.",
+                "nextAction": "Inventariseer de huidige productroutes en verbind ze met één consistente navigatie; hergebruik bestaande bediening.",
+                "files": [
+                  "src/eva/adapters/api",
+                  "development/tools/project-dashboard/src"
+                ],
+                "dependsOn": [],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E2.2",
+                "title": "Personen en geheugen bekijken en bijwerken",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Geheugenbeheer, persoonsgrenzen en bron-API’s bestaan en hebben eerder bewijs.",
+                "gap": "Personen en afgeleid geheugen zijn nog niet samen begrijpelijk bedienbaar.",
+                "nextAction": "Sluit de bestaande persoons-/geheugenlezers en correctieacties op de productbediening aan; geen nieuwe geheugenbank.",
+                "files": [
+                  "src/eva/adapters/api",
+                  "src/eva/adapters/postgres/people_memory_overview.py",
+                  "development/tools/project-dashboard/src"
+                ],
+                "dependsOn": [
+                  "E2.1"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E2.3",
+                "title": "Gesprekken, opdrachten en resultaten samen tonen",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Gespreks- en taakregistratie, stoppen/hervatten en resultaatbinding bestaan.",
+                "gap": "Het verband tussen gesprek, opdracht en opgeslagen resultaat is niet in één gebruiksstroom zichtbaar.",
+                "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
+                "files": [
+                  "src/eva/adapters/api/dashboard_work.py",
+                  "src/eva/adapters/api",
+                  "development/tools/project-dashboard/src"
+                ],
+                "dependsOn": [
+                  "E2.1"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E2.4",
+                "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Initiatief-, reflectie- en AIDE²-registraties bestaan; HUE5/HUE6 blijven afgerond.",
+                "gap": "Die registraties zijn nog niet gezamenlijk inzichtelijk in dagelijks Eva-beheer.",
+                "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+                "files": [
+                  "src/eva/adapters/api/dashboard_initiatives.py",
+                  "src/eva/adapters/api",
+                  "development/tools/project-dashboard/src"
+                ],
+                "dependsOn": [
+                  "E2.1"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E2.5",
+                "title": "Extra modelproviders optioneel aansluiten",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Een bestaande model- en installatie/providerroute is beschikbaar.",
+                "gap": "Gewenste extra providers zijn nog niet als werkende optionele adapters aangetoond.",
+                "nextAction": "Controleer bij uitvoering officiële aansluitvoorwaarden en hergebruik het bestaande providercontract; geen ongevraagde abonnementen of betaalde route.",
+                "files": [
+                  "src/eva/adapters/model",
+                  "src/eva/providers",
+                  "src/eva/bootstrap",
+                  "deploy"
+                ],
+                "dependsOn": [
+                  "E2.1"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E2.6",
+                "title": "WhatsApp als optioneel kanaal aansluiten",
+                "status": "planned",
+                "kind": "bouwen / afmaken",
+                "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Chat/Telegram en gedeelde kanaal-/taakbetekenis bestaan.",
+                "gap": "WhatsApp is gevraagd maar nog niet als werkend optioneel transport geleverd.",
+                "nextAction": "Controleer actuele officiële transport-/aanmeldvoorwaarden en verbind een adapter aan de bestaande ontvangst en aflevering.",
+                "files": [
+                  "src/eva/adapters/connectors",
+                  "src/eva/adapters/api",
+                  "src/eva/bootstrap",
+                  "deploy"
+                ],
+                "dependsOn": [
+                  "E2.1"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              }
+            ]
+          },
+          {
+            "id": "FE3",
+            "parentStep": null,
+            "phaseId": "E3",
+            "dependsOn": [],
+            "outcome": "Alle bestanden inventariseren en beoordelen",
+            "status": "planned",
+            "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+            "endCondition": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden.",
+            "dashboardComponent": "finalization-E3",
+            "scopeOrigin": "finalization-20261015",
+            "remainingTasks": [
+              {
+                "id": "E3.1",
+                "title": "Alle bestanden en hun rol registreren",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Er zijn eerdere inventarissen, documentleesregistraties en opruimbewijzen.",
+                "gap": "Er is geen volledige actuele inventaris van de uiteindelijke bron en installatie met besluiten per bestand.",
+                "nextAction": "Leg een vaste bronstand plus expliciete delta vast en hergebruik eerdere lezing uitsluitend bij dezelfde hash.",
+                "files": [
+                  "src",
+                  "deploy",
+                  "development",
+                  "pyproject.toml"
+                ],
+                "dependsOn": [],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E3.2",
+                "title": "Actieve kerncode inhoudelijk beoordelen",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Kernroutes en eerdere modulegrensbevindingen zijn bekend.",
+                "gap": "Een complete actuele beoordeling met besluit per actief kernbestand ontbreekt.",
+                "nextAction": "Werk per bestaand modulecluster gesprek/geheugen/initiatief/uitvoering/leren; houd de geïnventariseerde bestandslijst eindig.",
+                "files": [
+                  "src/eva/application",
+                  "src/eva/contracts",
+                  "src/eva/domain",
+                  "src/eva/bootstrap"
+                ],
+                "dependsOn": [
+                  "E3.1"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E3.3",
+                "title": "Adapters, installatie en dynamisch gebruik beoordelen",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Bestaande adapters en installaties werken; de oude fotobibliotheek is als tijdelijke afhankelijkheid bekend.",
+                "gap": "Actuele import-/runtime-/buildconsumenten zijn nog niet volledig per bestand vastgesteld.",
+                "nextAction": "Controleer module voor module de E3-bestandslijst en verbind besluiten aan echte entrypoints, manifests en installatie.",
+                "files": [
+                  "src/eva/adapters",
+                  "src/eva/providers",
+                  "src/connectors",
+                  "deploy",
+                  "development/tools"
+                ],
+                "dependsOn": [
+                  "E3.1"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E3.4",
+                "title": "Tests, documentatie en historie op noodzaak beoordelen",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Actuele leidende MD’s zijn geconsolideerd; veel historisch bewijs is al behouden en geclassificeerd.",
+                "gap": "Alle overige bestanden en hun actuele noodzaak zijn nog niet verantwoord in dezelfde inventaris.",
+                "nextAction": "Gebruik exacte hashes en eerdere leesregistraties; beoordeel beschermd bewijs apart en maak geen nieuwe algemene geschiedenisronde.",
+                "files": [
+                  "development/docs",
+                  "development/tests",
+                  "development/evidence",
+                  "development/reviews",
+                  "development/archive"
+                ],
+                "dependsOn": [
+                  "E3.1",
+                  "E3.2",
+                  "E3.3"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              }
+            ]
+          },
+          {
+            "id": "FE4",
+            "parentStep": null,
+            "phaseId": "E4",
+            "dependsOn": [
+              "FE3"
+            ],
+            "outcome": "Bewezen schuld opruimen; efficiëntie en onderhoud",
+            "status": "planned",
+            "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+            "endCondition": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
+            "dashboardComponent": "finalization-E4",
+            "scopeOrigin": "finalization-20261015",
+            "remainingTasks": [
+              {
+                "id": "E4.1",
+                "title": "Bewezen dode en dubbele bestanden opruimen",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Er is al een eerdere gerichte historische opruiming.",
+                "gap": "De nieuwe actuele beoordeling moet nog aantonen wat echt weg kan.",
+                "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
+                "files": [
+                  "src",
+                  "deploy",
+                  "development"
+                ],
+                "dependsOn": [
+                  "E3.4"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E4.2",
+                "title": "Omslachtige code en modulegrenzen vereenvoudigen",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Modulegrenzen en historische bevindingen bestaan.",
+                "gap": "De werkelijk relevante actuele grensproblemen en omwegen moeten nog gericht worden opgelost.",
+                "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
+                "files": [
+                  "src/eva",
+                  "development/design/architecture"
+                ],
+                "dependsOn": [
+                  "E3.4"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E4.3",
+                "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Er zijn echte usagegegevens, bronbundeling en een bestaande geïsoleerde verbeterroute.",
+                "gap": "Een samenhangende efficiëntiebeoordeling van het uiteindelijke dagelijkse gebruik ontbreekt.",
+                "nextAction": "Gebruik de concrete E3-verbruiksoorzaken en bestaande AIDE²-route waar passend; geen nieuwe concurrentenmatrix of algemeen optimalisatieplatform.",
+                "files": [
+                  "src/eva/adapters/model",
+                  "src/eva/application",
+                  "src/eva/adapters/postgres/runtime_resource_usage.py"
+                ],
+                "dependsOn": [
+                  "E3.4"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              },
+              {
+                "id": "E4.4",
+                "title": "Modules en updates onderhoudbaar opleveren",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "Bestaande installer, locks, adapters en runtime-updatepad worden hergebruikt.",
+                "gap": "Een volledig actueel onderhouds-/modulebeleid en samenhangende metadata ontbreken.",
+                "nextAction": "Werk uitsluitend aangetoonde E3-gaten af, inclusief tijdelijke oude runtime-afhankelijkheden; geen extra microservices of ongevraagde licentiewijziging.",
+                "files": [
+                  "src/eva/contracts",
+                  "src/eva/bootstrap",
+                  "deploy",
+                  "pyproject.toml",
+                  "development/docs"
+                ],
+                "dependsOn": [
+                  "E3.4"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              }
+            ]
+          },
+          {
+            "id": "FE5",
+            "parentStep": null,
+            "phaseId": "E5",
+            "dependsOn": [
+              "FE1",
+              "FE2",
+              "FE3",
+              "FE4"
+            ],
+            "outcome": "Eén eindkandidaat en gezinsacceptatie",
+            "status": "planned",
+            "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+            "endCondition": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
+            "dashboardComponent": "finalization-E5",
+            "scopeOrigin": "finalization-20261015",
+            "remainingTasks": [
+              {
+                "id": "E5.1",
+                "title": "Het volledige actuele geheel opleveren en laten beoordelen",
+                "status": "planned",
+                "kind": "afronden",
+                "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "F1-installatie-/herstartbewijs en afzonderlijke afgeronde gebruikersuitkomsten bestaan.",
+                "gap": "Het nieuwe volledige doel is nog niet als één actuele kandidaat opgeleverd en beoordeeld.",
+                "nextAction": "Stel na E1–E4 één kandidaat samen, controleer alleen geraakt/ontbrekend bewijs en lever duidelijke bediening; geen nieuwe vergelijkingsserie.",
+                "files": [
+                  "src",
+                  "deploy",
+                  "development/docs",
+                  "development/evidence"
+                ],
+                "dependsOn": [
+                  "E1.3",
+                  "E2.2",
+                  "E2.3",
+                  "E2.4",
+                  "E2.5",
+                  "E2.6",
+                  "E4.1",
+                  "E4.2",
+                  "E4.3",
+                  "E4.4"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "finalization-20261015",
+                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "steps": [],
+                  "blocksIndependentWork": false
+                }
+              }
+            ]
           }
         ],
         "status": "in_progress",
-        "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+        "nextAction": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
         "finishOrder": [
           "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
           "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -3888,10 +4550,10 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-15T07:49:43.442557+00:00",
+        "updatedAt": "2026-10-15T07:56:55.051091+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-15T07:22:21.009000+00:00",
+          "updatedAt": "2026-10-15T07:56:55.051091+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -3899,31 +4561,73 @@
               "title": "Gewone autonome Eva",
               "status": "in_progress",
               "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
-              "currentGap": "Algemene gedeelde waarneming/afweging/uitvoer is geïnstalleerd en gewoon gebruikt (stilte). Nog nodig: modelgekozen vervolg-aandacht, benodigde actuele bronnen zelfstandig lezen en passend dagelijks gebruik."
+              "currentGap": "Algemene gedeelde waarneming/afweging/uitvoer is geïnstalleerd en gewoon gebruikt (stilte). Nog nodig: modelgekozen vervolg-aandacht, benodigde actuele bronnen zelfstandig lezen en passend dagelijks gebruik.",
+              "taskIds": [
+                "E1.1",
+                "E1.2",
+                "E1.3"
+              ],
+              "existingTaskIds": [
+                "I1.2",
+                "HUE5.1",
+                "HUE6.1"
+              ]
             },
             {
               "id": "E2",
               "title": "Eén Eva-beheeromgeving en optionele verbindingen",
               "status": "planned",
-              "finish": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten."
+              "finish": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten.",
+              "taskIds": [
+                "E2.1",
+                "E2.2",
+                "E2.3",
+                "E2.4",
+                "E2.5",
+                "E2.6"
+              ],
+              "existingTaskIds": [
+                "C3.1",
+                "C4.1",
+                "C4.3"
+              ]
             },
             {
               "id": "E3",
               "title": "Alle bestanden inventariseren en beoordelen",
               "status": "planned",
-              "finish": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden."
+              "finish": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden.",
+              "taskIds": [
+                "E3.1",
+                "E3.2",
+                "E3.3",
+                "E3.4"
+              ]
             },
             {
               "id": "E4",
               "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
               "status": "planned",
-              "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen."
+              "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
+              "taskIds": [
+                "E4.1",
+                "E4.2",
+                "E4.3",
+                "E4.4"
+              ]
             },
             {
               "id": "E5",
               "title": "Eén eindkandidaat en gezinsacceptatie",
               "status": "planned",
-              "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie."
+              "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
+              "taskIds": [
+                "E5.1"
+              ],
+              "existingTaskIds": [
+                "F2.1",
+                "F2.2"
+              ]
             }
           ]
         }
@@ -3931,7 +4635,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "I1.2",
+      "currentStep": "E1.1",
       "steps": [
         {
           "number": 1,
@@ -4007,7 +4711,7 @@
         }
       ],
       "smallTaskPolicy": {
-        "source": "Remainder of existing 24 slices only; completed/accepted scope retained.",
+        "source": "52 preserved historical tasks plus 18 concrete cards for the already agreed finalization plan; original criteria remain unchanged.",
         "statusRule": "Each remaining task owns its status; do not infer completion from its parent, test count or elapsed work.",
         "executionRule": "Prepare the complete real user route, reuse existing work, fix proven causes, and bundle focused verification, independent review and deployment. No arbitrary time or retry limits; no unchanged repeated probe. Preserve accepted scope.",
         "completionRule": "All required remaining tasks must be resolved before parent technical closure; final owner acceptance remains separate.",
@@ -5705,10 +6409,660 @@
               }
             }
           ]
+        },
+        {
+          "id": "FE1",
+          "parentStep": null,
+          "phaseId": "E1",
+          "dependsOn": [],
+          "outcome": "Gewone autonome Eva",
+          "status": "planned",
+          "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+          "endCondition": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
+          "dashboardComponent": "finalization-E1",
+          "scopeOrigin": "finalization-20261015",
+          "remainingTasks": [
+            {
+              "id": "E1.1",
+              "title": "Actuele bronnen zelfstandig raadplegen",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "De gedeelde waarneming, geheugencontext en native uitvoerder werken.",
+              "gap": "De afweging gebruikt nog niet aantoonbaar de benodigde nieuwe bronlezing.",
+              "nextAction": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
+              "files": [
+                "src/eva/application/free_will.py",
+                "src/eva/adapters/postgres/initiative_context.py",
+                "src/eva/bootstrap/native_initiative_work.py"
+              ],
+              "dependsOn": [],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E1.2",
+              "title": "Zelf de volgende aandacht kiezen",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Verse signalen worden vooraf gebundeld; de host gebruikt nu een vast venster van 300 seconden.",
+              "gap": "De volgende aandachtstijd wordt nog niet inhoudelijk door Eva gekozen.",
+              "nextAction": "Hergebruik de bestaande planning en aandachtsregistratie voor modelgekozen herbeoordeling; behoud bundeling, stoppen en oorspronkelijke bron.",
+              "files": [
+                "src/eva/application/resident_attention.py",
+                "src/eva/adapters/postgres/sensory_events.py",
+                "src/eva/bootstrap/household_initiative.py"
+              ],
+              "dependsOn": [
+                "E1.1"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E1.3",
+              "title": "Een dagelijkse aanleiding zelfstandig afhandelen",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "HUE5/HUE6, algemene taakuitvoering en de nieuwe gewone stiltekeuze zijn bewezen binnen hun scope.",
+              "gap": "Een volledige nieuwe dagelijkse bijdrage via de actuele waarnemingsketen is nog niet aangetoond.",
+              "nextAction": "Laat de complete algemene keten werken met de door Eva gekozen aanleiding en leg resultaat en echte reactie vast; I1.2 blijft de bestaande aparte timing-/hinderbeoordeling.",
+              "files": [
+                "src/eva/bootstrap/native_initiative_work.py",
+                "src/eva/application/initiative_execution.py",
+                "src/eva/bootstrap/household_initiative_delivery.py"
+              ],
+              "dependsOn": [
+                "E1.1",
+                "E1.2"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "FE2",
+          "parentStep": null,
+          "phaseId": "E2",
+          "dependsOn": [],
+          "outcome": "Eén Eva-beheeromgeving en optionele verbindingen",
+          "status": "planned",
+          "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+          "endCondition": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten.",
+          "dashboardComponent": "finalization-E2",
+          "scopeOrigin": "finalization-20261015",
+          "remainingTasks": [
+            {
+              "id": "E2.1",
+              "title": "Eén Eva-beheeromgeving aansluiten",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Chat, diverse beheerpagina’s en API’s bestaan.",
+              "gap": "Dagelijks Eva-beheer is nog geen samenhangend geheel.",
+              "nextAction": "Inventariseer de huidige productroutes en verbind ze met één consistente navigatie; hergebruik bestaande bediening.",
+              "files": [
+                "src/eva/adapters/api",
+                "development/tools/project-dashboard/src"
+              ],
+              "dependsOn": [],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E2.2",
+              "title": "Personen en geheugen bekijken en bijwerken",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Geheugenbeheer, persoonsgrenzen en bron-API’s bestaan en hebben eerder bewijs.",
+              "gap": "Personen en afgeleid geheugen zijn nog niet samen begrijpelijk bedienbaar.",
+              "nextAction": "Sluit de bestaande persoons-/geheugenlezers en correctieacties op de productbediening aan; geen nieuwe geheugenbank.",
+              "files": [
+                "src/eva/adapters/api",
+                "src/eva/adapters/postgres/people_memory_overview.py",
+                "development/tools/project-dashboard/src"
+              ],
+              "dependsOn": [
+                "E2.1"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E2.3",
+              "title": "Gesprekken, opdrachten en resultaten samen tonen",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Gespreks- en taakregistratie, stoppen/hervatten en resultaatbinding bestaan.",
+              "gap": "Het verband tussen gesprek, opdracht en opgeslagen resultaat is niet in één gebruiksstroom zichtbaar.",
+              "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
+              "files": [
+                "src/eva/adapters/api/dashboard_work.py",
+                "src/eva/adapters/api",
+                "development/tools/project-dashboard/src"
+              ],
+              "dependsOn": [
+                "E2.1"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E2.4",
+              "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Initiatief-, reflectie- en AIDE²-registraties bestaan; HUE5/HUE6 blijven afgerond.",
+              "gap": "Die registraties zijn nog niet gezamenlijk inzichtelijk in dagelijks Eva-beheer.",
+              "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+              "files": [
+                "src/eva/adapters/api/dashboard_initiatives.py",
+                "src/eva/adapters/api",
+                "development/tools/project-dashboard/src"
+              ],
+              "dependsOn": [
+                "E2.1"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E2.5",
+              "title": "Extra modelproviders optioneel aansluiten",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Een bestaande model- en installatie/providerroute is beschikbaar.",
+              "gap": "Gewenste extra providers zijn nog niet als werkende optionele adapters aangetoond.",
+              "nextAction": "Controleer bij uitvoering officiële aansluitvoorwaarden en hergebruik het bestaande providercontract; geen ongevraagde abonnementen of betaalde route.",
+              "files": [
+                "src/eva/adapters/model",
+                "src/eva/providers",
+                "src/eva/bootstrap",
+                "deploy"
+              ],
+              "dependsOn": [
+                "E2.1"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E2.6",
+              "title": "WhatsApp als optioneel kanaal aansluiten",
+              "status": "planned",
+              "kind": "bouwen / afmaken",
+              "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Chat/Telegram en gedeelde kanaal-/taakbetekenis bestaan.",
+              "gap": "WhatsApp is gevraagd maar nog niet als werkend optioneel transport geleverd.",
+              "nextAction": "Controleer actuele officiële transport-/aanmeldvoorwaarden en verbind een adapter aan de bestaande ontvangst en aflevering.",
+              "files": [
+                "src/eva/adapters/connectors",
+                "src/eva/adapters/api",
+                "src/eva/bootstrap",
+                "deploy"
+              ],
+              "dependsOn": [
+                "E2.1"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "FE3",
+          "parentStep": null,
+          "phaseId": "E3",
+          "dependsOn": [],
+          "outcome": "Alle bestanden inventariseren en beoordelen",
+          "status": "planned",
+          "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+          "endCondition": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden.",
+          "dashboardComponent": "finalization-E3",
+          "scopeOrigin": "finalization-20261015",
+          "remainingTasks": [
+            {
+              "id": "E3.1",
+              "title": "Alle bestanden en hun rol registreren",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Er zijn eerdere inventarissen, documentleesregistraties en opruimbewijzen.",
+              "gap": "Er is geen volledige actuele inventaris van de uiteindelijke bron en installatie met besluiten per bestand.",
+              "nextAction": "Leg een vaste bronstand plus expliciete delta vast en hergebruik eerdere lezing uitsluitend bij dezelfde hash.",
+              "files": [
+                "src",
+                "deploy",
+                "development",
+                "pyproject.toml"
+              ],
+              "dependsOn": [],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E3.2",
+              "title": "Actieve kerncode inhoudelijk beoordelen",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Kernroutes en eerdere modulegrensbevindingen zijn bekend.",
+              "gap": "Een complete actuele beoordeling met besluit per actief kernbestand ontbreekt.",
+              "nextAction": "Werk per bestaand modulecluster gesprek/geheugen/initiatief/uitvoering/leren; houd de geïnventariseerde bestandslijst eindig.",
+              "files": [
+                "src/eva/application",
+                "src/eva/contracts",
+                "src/eva/domain",
+                "src/eva/bootstrap"
+              ],
+              "dependsOn": [
+                "E3.1"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E3.3",
+              "title": "Adapters, installatie en dynamisch gebruik beoordelen",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Bestaande adapters en installaties werken; de oude fotobibliotheek is als tijdelijke afhankelijkheid bekend.",
+              "gap": "Actuele import-/runtime-/buildconsumenten zijn nog niet volledig per bestand vastgesteld.",
+              "nextAction": "Controleer module voor module de E3-bestandslijst en verbind besluiten aan echte entrypoints, manifests en installatie.",
+              "files": [
+                "src/eva/adapters",
+                "src/eva/providers",
+                "src/connectors",
+                "deploy",
+                "development/tools"
+              ],
+              "dependsOn": [
+                "E3.1"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E3.4",
+              "title": "Tests, documentatie en historie op noodzaak beoordelen",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Actuele leidende MD’s zijn geconsolideerd; veel historisch bewijs is al behouden en geclassificeerd.",
+              "gap": "Alle overige bestanden en hun actuele noodzaak zijn nog niet verantwoord in dezelfde inventaris.",
+              "nextAction": "Gebruik exacte hashes en eerdere leesregistraties; beoordeel beschermd bewijs apart en maak geen nieuwe algemene geschiedenisronde.",
+              "files": [
+                "development/docs",
+                "development/tests",
+                "development/evidence",
+                "development/reviews",
+                "development/archive"
+              ],
+              "dependsOn": [
+                "E3.1",
+                "E3.2",
+                "E3.3"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "FE4",
+          "parentStep": null,
+          "phaseId": "E4",
+          "dependsOn": [
+            "FE3"
+          ],
+          "outcome": "Bewezen schuld opruimen; efficiëntie en onderhoud",
+          "status": "planned",
+          "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+          "endCondition": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
+          "dashboardComponent": "finalization-E4",
+          "scopeOrigin": "finalization-20261015",
+          "remainingTasks": [
+            {
+              "id": "E4.1",
+              "title": "Bewezen dode en dubbele bestanden opruimen",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Er is al een eerdere gerichte historische opruiming.",
+              "gap": "De nieuwe actuele beoordeling moet nog aantonen wat echt weg kan.",
+              "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
+              "files": [
+                "src",
+                "deploy",
+                "development"
+              ],
+              "dependsOn": [
+                "E3.4"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E4.2",
+              "title": "Omslachtige code en modulegrenzen vereenvoudigen",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Modulegrenzen en historische bevindingen bestaan.",
+              "gap": "De werkelijk relevante actuele grensproblemen en omwegen moeten nog gericht worden opgelost.",
+              "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
+              "files": [
+                "src/eva",
+                "development/design/architecture"
+              ],
+              "dependsOn": [
+                "E3.4"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E4.3",
+              "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Er zijn echte usagegegevens, bronbundeling en een bestaande geïsoleerde verbeterroute.",
+              "gap": "Een samenhangende efficiëntiebeoordeling van het uiteindelijke dagelijkse gebruik ontbreekt.",
+              "nextAction": "Gebruik de concrete E3-verbruiksoorzaken en bestaande AIDE²-route waar passend; geen nieuwe concurrentenmatrix of algemeen optimalisatieplatform.",
+              "files": [
+                "src/eva/adapters/model",
+                "src/eva/application",
+                "src/eva/adapters/postgres/runtime_resource_usage.py"
+              ],
+              "dependsOn": [
+                "E3.4"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            },
+            {
+              "id": "E4.4",
+              "title": "Modules en updates onderhoudbaar opleveren",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "Bestaande installer, locks, adapters en runtime-updatepad worden hergebruikt.",
+              "gap": "Een volledig actueel onderhouds-/modulebeleid en samenhangende metadata ontbreken.",
+              "nextAction": "Werk uitsluitend aangetoonde E3-gaten af, inclusief tijdelijke oude runtime-afhankelijkheden; geen extra microservices of ongevraagde licentiewijziging.",
+              "files": [
+                "src/eva/contracts",
+                "src/eva/bootstrap",
+                "deploy",
+                "pyproject.toml",
+                "development/docs"
+              ],
+              "dependsOn": [
+                "E3.4"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "FE5",
+          "parentStep": null,
+          "phaseId": "E5",
+          "dependsOn": [
+            "FE1",
+            "FE2",
+            "FE3",
+            "FE4"
+          ],
+          "outcome": "Eén eindkandidaat en gezinsacceptatie",
+          "status": "planned",
+          "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
+          "endCondition": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
+          "dashboardComponent": "finalization-E5",
+          "scopeOrigin": "finalization-20261015",
+          "remainingTasks": [
+            {
+              "id": "E5.1",
+              "title": "Het volledige actuele geheel opleveren en laten beoordelen",
+              "status": "planned",
+              "kind": "afronden",
+              "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "F1-installatie-/herstartbewijs en afzonderlijke afgeronde gebruikersuitkomsten bestaan.",
+              "gap": "Het nieuwe volledige doel is nog niet als één actuele kandidaat opgeleverd en beoordeeld.",
+              "nextAction": "Stel na E1–E4 één kandidaat samen, controleer alleen geraakt/ontbrekend bewijs en lever duidelijke bediening; geen nieuwe vergelijkingsserie.",
+              "files": [
+                "src",
+                "deploy",
+                "development/docs",
+                "development/evidence"
+              ],
+              "dependsOn": [
+                "E1.3",
+                "E2.2",
+                "E2.3",
+                "E2.4",
+                "E2.5",
+                "E2.6",
+                "E4.1",
+                "E4.2",
+                "E4.3",
+                "E4.4"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "finalization-20261015",
+              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "steps": [],
+                "blocksIndependentWork": false
+              }
+            }
+          ]
         }
       ],
       "status": "in_progress",
-      "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+      "nextAction": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
       "finishOrder": [
         "Afgerond: volledig opgeslagen resultaat bij oorspronkelijke ontvanger; standaard korte samenvatting, geen automatische bijlage",
         "Bestaande HUE6/AIDE²-cyclus: onafhankelijke winst, toepassing en later gebruik",
@@ -5716,10 +7070,10 @@
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-15T07:49:43.442557+00:00",
+      "updatedAt": "2026-10-15T07:56:55.051091+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-15T07:22:21.009000+00:00",
+        "updatedAt": "2026-10-15T07:56:55.051091+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -5727,31 +7081,73 @@
             "title": "Gewone autonome Eva",
             "status": "in_progress",
             "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
-            "currentGap": "Algemene gedeelde waarneming/afweging/uitvoer is geïnstalleerd en gewoon gebruikt (stilte). Nog nodig: modelgekozen vervolg-aandacht, benodigde actuele bronnen zelfstandig lezen en passend dagelijks gebruik."
+            "currentGap": "Algemene gedeelde waarneming/afweging/uitvoer is geïnstalleerd en gewoon gebruikt (stilte). Nog nodig: modelgekozen vervolg-aandacht, benodigde actuele bronnen zelfstandig lezen en passend dagelijks gebruik.",
+            "taskIds": [
+              "E1.1",
+              "E1.2",
+              "E1.3"
+            ],
+            "existingTaskIds": [
+              "I1.2",
+              "HUE5.1",
+              "HUE6.1"
+            ]
           },
           {
             "id": "E2",
             "title": "Eén Eva-beheeromgeving en optionele verbindingen",
             "status": "planned",
-            "finish": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten."
+            "finish": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten.",
+            "taskIds": [
+              "E2.1",
+              "E2.2",
+              "E2.3",
+              "E2.4",
+              "E2.5",
+              "E2.6"
+            ],
+            "existingTaskIds": [
+              "C3.1",
+              "C4.1",
+              "C4.3"
+            ]
           },
           {
             "id": "E3",
             "title": "Alle bestanden inventariseren en beoordelen",
             "status": "planned",
-            "finish": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden."
+            "finish": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden.",
+            "taskIds": [
+              "E3.1",
+              "E3.2",
+              "E3.3",
+              "E3.4"
+            ]
           },
           {
             "id": "E4",
             "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
             "status": "planned",
-            "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen."
+            "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
+            "taskIds": [
+              "E4.1",
+              "E4.2",
+              "E4.3",
+              "E4.4"
+            ]
           },
           {
             "id": "E5",
             "title": "Eén eindkandidaat en gezinsacceptatie",
             "status": "planned",
-            "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie."
+            "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
+            "taskIds": [
+              "E5.1"
+            ],
+            "existingTaskIds": [
+              "F2.1",
+              "F2.2"
+            ]
           }
         ]
       }
@@ -6667,9 +8063,22 @@
       "evidence": "development/evidence/product/general-household-initiative-installed-20261015.json",
       "reviewedAt": "2026-10-15T07:49:43.442557+00:00",
       "wholeProjectComplete": false
+    },
+    "finalizationTaskRegistration20261015": {
+      "checkedAt": "2026-10-15T08:04:45.907226+00:00",
+      "addedTaskCount": 18,
+      "originalTaskCount": 52,
+      "originalCompletedTaskCount": 45,
+      "totalTaskCount": 70,
+      "completedTaskCount": 45,
+      "source": "development/design/product/finalization-task-scope-20261015.json",
+      "newProductWorkAdded": false,
+      "reason": "Previously agreed plan lacked concrete cards in Tasks per component.",
+      "status": "published_and_browser_verified",
+      "evidence": "development/evidence/product/finalization-task-visibility-20261015.json"
     }
   },
-  "updatedAt": "2026-10-15T07:49:43.442557+00:00",
+  "updatedAt": "2026-10-15T08:04:45.907226+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -6692,6 +8101,13 @@
       "ownerInstruction": "c3.1 en c3.2 zijn geen aparte taken. datzelfde geld voor 4.1 en 4.2. Dat is hetzelfde.",
       "recordedAt": "2026-10-14T07:32:57.288997+00:00",
       "meaning": "One function, two device acceptance checks; no capability or evidence removed."
+    }
+  ],
+  "taskScopeExtensions": [
+    {
+      "id": "finalization-20261015",
+      "path": "development/design/product/finalization-task-scope-20261015.json",
+      "sha256": "5c37c38b3c87133a65ddbdbc595a09cf98be09a7e65a05104ade2a5011d4aac5"
     }
   ]
 }
