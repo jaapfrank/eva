@@ -1,0 +1,87 @@
+{
+  "status": "installed_gc_verified_warmup_pending",
+  "date": "2026-10-15",
+  "scope": "Existing Hindsight shared local embedding/reranking cleanup; no ranking/model/filter/index changes.",
+  "base_image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+  "gc_image": "sha256:cd4dab0bb0829c122df30999406a31ef82a2a203e71952744aebcfc29598fc27",
+  "source_sha256_before": "88d99f8fabe4926a556ad6a6e7980ac89939ac8c3df81f1fc5a448ce7cc03365",
+  "source_sha256_after": "559b84434c7f39aecd6562d1ff1cbdca69750b8a4d725870fea79ddb6e0199b7",
+  "review": "Independent review of source, 5 passing focused tests, installation and rollback.",
+  "warm_recall": {
+    "before_seconds": [
+      5.3831,
+      5.4209,
+      5.4367,
+      4.1135,
+      3.4391,
+      3.929
+    ],
+    "after_seconds": [
+      1.9161,
+      0.8241,
+      1.7388,
+      1.5728,
+      0.7403,
+      1.4583
+    ],
+    "before_median_seconds": 4.7483,
+    "after_median_seconds": 1.51555,
+    "all_ordered_facts_equal": true,
+    "selected_facts": 2,
+    "parallel_http_recalls_per_request": 4,
+    "answer_model_calls": 0,
+    "bank_configuration_writes": 0
+  },
+  "stability": {
+    "seconds": 301.931,
+    "calls": 1204,
+    "synthetic_pairs": 34245,
+    "all_scores_identical": true,
+    "rss_growth_mib": 2.17,
+    "rss_last_10_mib": 1497.69,
+    "gpu_allocated_mib": 132.28,
+    "gpu_reserved_mib": 170,
+    "oom_events": 0,
+    "limitations": "Finite synthetic stability test, not long-term leak proof. Mixed batch sizes stress p95 not improved versus short baseline; no p95 guarantee."
+  },
+  "cold_start": {
+    "first_recall_seconds": 18.2893,
+    "same_facts": true,
+    "following_probe_renewal": "session expired",
+    "status": "Investigating startup warmup before readiness"
+  },
+  "other_probe_failure": "Transient core-container replacement during concurrent work caused postgres DNS failure before recall; preserved failed log, reran against stable current core.",
+  "data_preservation": {
+    "memory_units_before": 1682,
+    "memory_units_after": 1682,
+    "configuration_diff": "Hindsight image and opt-in variable only",
+    "other_services_recreated": false
+  },
+  "limits": [
+    "Full voice latency and acoustic playback unmeasured",
+    "Before/after on live workload, not randomized causal isolation",
+    "Prior baseline was ~2.55 seconds; fresh baseline 4.75 seconds, host load varies"
+  ],
+  "private_receipts": "/var/lib/eva2/voice-session/room-audio-20261015/gc",
+  "index_check": {
+    "existing": "Vector HNSW, text GIN, bank/fact-type/date btree indexes present; pg_stat_user_indexes confirms use.",
+    "representative_text_explain": {
+      "index": "idx_memory_units_text_search",
+      "node": "Bitmap Index Scan",
+      "execution_ms": 0.73,
+      "planning_ms": 5.038,
+      "rows": 0,
+      "limitation": "Simple representative text query, not complete actual recall query plan."
+    },
+    "index_created": false,
+    "reason": "Measured retrieval ~0.20s; model reranking including wait ~2.31s was main bottleneck."
+  },
+  "post_gc_trace": {
+    "total_seconds": 1.8487,
+    "critical_http_seconds": 1.8322,
+    "critical_embedding_seconds": 0.2989,
+    "critical_retrieval_seconds": 0.2902,
+    "critical_reranking_including_wait_seconds": 1.185,
+    "limit": "Parallel branches overlap; do not sum branch durations."
+  }
+}
