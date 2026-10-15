@@ -1,0 +1,97 @@
+{
+  "recorded_at": "2026-10-15T22:09:08.164117+00:00",
+  "status": "installed_reboot_recovery_verified",
+  "scope": "Restore existing voice dependencies after actual host reboot; no voice engine or memory behavior change.",
+  "findings": [
+    "Docker initialization spent several minutes loading BuildKit metadata before serving its API. No Docker data removed.",
+    "Gateway startup bind retained removed pre-restructure source path; core and worker repeatedly failed gateway catalog admission.",
+    "Chrome proxy bind and host worker arguments also retained pre-restructure paths."
+  ],
+  "repairs": [
+    "Gateway recreated from existing private Compose configuration changing only starter bind to deploy/gateway/start-contextforge.sh; image, guarded modules and volumes retained.",
+    "Chrome proxy recreated preserving inspected configuration and immutable image, replacing only proxy source bind; previous stopped container retained with restart disabled.",
+    "Existing private Chrome worker arguments corrected to current deploy path; prior config backed up; host bridge restarted."
+  ],
+  "verification": {
+    "services": {
+      "eva2-mcp-gateway": {
+        "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 0
+      },
+      "eva2-managed-b-slot3-core": {
+        "image": "sha256:645c4431c4dd9a44455c92329fab00c5f1b3ec04cdb77cd7542104f3a8db5ba7",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 0
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "image": "sha256:6ba2f58c30313b3a1d3a31db86f30e750b537ca2184764c001476cf85b19c86b",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 21
+      },
+      "eva2-managed-b-slot3-hindsight-1": {
+        "image": "sha256:fc1efcd7102e753673b7e0e6fd613f107d58d1c769d015a2d9ef10ca8dd7995d",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 0
+      },
+      "eva2-household-speaker-1": {
+        "image": "sha256:59a0eca0511b5a471ff46cd2089101a6f65e76bed8c1739e1089459f098d215c",
+        "running": true,
+        "health": null,
+        "restart_count": 0
+      },
+      "eva2-owner-voice-media-1": {
+        "image": "sha256:d25c1ae7f403c68bd3bf27d4460fefc3e348e4c64e09ee7c24971f565b6d7e7f",
+        "running": true,
+        "health": null,
+        "restart_count": 0
+      },
+      "eva2-shared-chrome": {
+        "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 0
+      }
+    },
+    "core_health_http": 200,
+    "household_ready_bindings": 2,
+    "household_work_return_bindings": 2,
+    "chrome_bridge": "healthy; owner status disconnected, no tab control granted",
+    "project_dashboard_http": 200,
+    "voice_probe": {
+      "synthetic": true,
+      "microphone_used": false,
+      "physical_audio": false,
+      "device_ack_tested": false,
+      "ready_seconds": 9.801,
+      "cold_ice_gathering_ms": 7581,
+      "first_audio_after_say_ms": [
+        970,
+        828
+      ],
+      "pcm_samples": [
+        62384,
+        73440
+      ],
+      "session_remained_open": true,
+      "suppressed_audio_frames": 0,
+      "voice_requests": 2,
+      "credits": "unknown",
+      "note": "Direct generated sentences, not microphone-to-core question latency. Session closed after probe."
+    }
+  },
+  "private_receipts": "/var/lib/eva2/voice-session/reboot-recovery-20261016",
+  "remaining": [
+    "Physical first-word truncation not reproduced or resolved by this synthetic test.",
+    "Overall conversational latency remains open; previous memory improvements preserved.",
+    "Chrome bridge is available but no browser tab is shared."
+  ],
+  "source_sha256": {
+    "deploy/gateway/start-contextforge.sh": "f3fdcd8c3e4c6c512e2bbcfdacaa620bf028803dbb1c8ed738c5e0dbd2e305d9",
+    "deploy/chrome-bridge/proxy.py": "86ca3f1c3f522b3580a29913d898602f44fee783e405add88494194044bb4dd2"
+  }
+}
