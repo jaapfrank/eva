@@ -2227,8 +2227,15 @@ def create_runtime_app() -> FastAPI:
                     engine=engine, voice=household_voice, server=household_work_server,
                     provider=native_media[0], model=model, memory=memory, identity=identity,
                     budget=reflection_budget, principal_id=settings.background_principal_id,
-                    authorize_initiative=lambda: runtime._initiative_authority().policy())
-                idle_tasks = (*idle_tasks, household_initiatives.run_once)
+                    authorize_initiative=lambda: runtime._initiative_authority().policy(),
+                    source_store=sensory_store,
+                    can_decide=lambda: not runtime._cold_path.foreground_active)
+                # Shared sensory decisions are real-time service work. They use
+                # household context, not the owner's private event decision lane.
+                service_tasks = (*service_tasks, household_initiatives.run_once)
+                if sensory_store is not None:
+                    idle_tasks = tuple(task for task in idle_tasks
+                                       if task is not evaluate_one_sensory_event)
     if delegated_work_service is not None:
         from eva.bootstrap.delegated_work_memory import DelegatedWorkMemory
         work_memory = DelegatedWorkMemory(

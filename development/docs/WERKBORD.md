@@ -4,9 +4,9 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Algemeen dagelijks meedenken aansluiten
+Actuele bronnen en volgende aandacht verbinden
 
-Geïnstalleerd en gewoon gebruikt: rustige initiatiefafweging verbindt nu tijd, recente huiswaarnemingen en eigen opgeslagen verplichtingen met gericht geheugen. Op 14 oktober 12:53 besloot Eva zelf stil te blijven na acht waarnemingen en drie eigen verplichtingen; één Astra-aanvraag, 4.854 geregistreerde tokens. Geen nieuwe bijdrage, aflevering of I1.2-afronding. Actuele service-/agendagegevens zelfstandig raadplegen en passend tijdig opnieuw kijken blijven nodig; geen voorbeeldfuncties. Vervolg: Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.
+Maak modelgekozen vervolg-aandacht en benodigde actuele bronraadpleging af via dezelfde bestaande uitvoerder; behoud aandacht/stilte, voorgrondprioriteit en echte gezinsbeoordeling. Geen nieuwe eigenaarhandeling of vergelijkingsserie.
 
 Klaar wanneer: Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.
 

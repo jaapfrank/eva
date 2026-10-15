@@ -197,6 +197,10 @@ class FreeWillStorePort(Protocol):
         *, now: datetime,
     ) -> None: ...
 
+    def defer_before_dispatch(
+        self, claim: SensoryDecisionClaim, *, reason: str, now: datetime
+    ) -> None: ...
+
     def complete(
         self,
         claim: SensoryDecisionClaim,
@@ -252,6 +256,7 @@ class SensoryDecisionWorker:
         context_review_authorizer=None,
         context_review_admission=None,
         household_context=None,
+        dispatch_ready: Callable[[], bool] | None = None,
     ) -> None:
         self._store = store
         self._model = model
@@ -271,6 +276,7 @@ class SensoryDecisionWorker:
         self._context_review_authorizer = context_review_authorizer
         self._context_review_admission = context_review_admission
         self._household_context = household_context
+        self._dispatch_ready = dispatch_ready
         self._prefer_revalidation = False
 
     def _current_time(self, previous: datetime) -> datetime:
@@ -337,7 +343,7 @@ class SensoryDecisionWorker:
                 if started is None:
                     return "idle"
                 claim = started
-                if not household_review and self._context_review_admission is not None:
+                if self._context_review_admission is not None:
                     admission = self._context_review_admission(claim, now=self._current_time(now))
                 else:
                     admission = None if self._context_review_budget is None else self._context_review_budget.admit_background_reflection(
@@ -362,9 +368,13 @@ class SensoryDecisionWorker:
                 memory, binding = self._household_context(event, now, self._memory)
                 if binding != event.payload.get("household_binding"):
                     raise RuntimeError("household initiative provenance changed")
-                # Never load owner history or owner capabilities for a shared expression.
-                history, capabilities, capability_reader = (), (), None
-                if not memory.confirmed_facts:
+                # Capability names are host authority metadata, not owner memory.
+                # A household proposal still needs the existing owner grant before
+                # any native work executes; its result remains on the private route.
+                history = ()
+                capability_reader = getattr(self._store, "native_capabilities", None)
+                capabilities = () if not callable(capability_reader) else capability_reader()
+                if not memory.confirmed_facts and event.event_type != "household_observation_review":
                     self._store.complete(claim, FreeWillDecision("silence",
                         "Er is geen expliciet gedeelde context voor een nuttige huisbijdrage.",
                         0, "eva:household-context-empty"), now=self._current_time(now))
@@ -420,6 +430,16 @@ class SensoryDecisionWorker:
                 if started is None:
                     return "idle"  # Expired or competing owner: never dispatch.
                 claim = started
+            expire_observation = getattr(self._store, "expire_stale_household_observation", None)
+            if household_review and callable(expire_observation) and expire_observation(claim, now=now):
+                return "expired"
+            # Recall/authority can block while an ordinary conversation starts.
+            # This host-only handoff proves the provider has not been entered;
+            # a later attempt reuses the same durable admission identity.
+            if self._dispatch_ready is not None and not self._dispatch_ready():
+                self._store.defer_before_dispatch(claim, reason="foreground_active",
+                    now=self._current_time(now))
+                return "deferred"
             decision = self._model.evaluate_sensory_event(
                 event,
                 self._identity,
@@ -428,8 +448,6 @@ class SensoryDecisionWorker:
                 **({"initiative_history": history} if history else {}),
                 **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
             )
-            if household_review and decision.initiative is not None:
-                raise RuntimeError("household expression cannot adopt a private initiative")
             if attention is not None and (
                 decision.disposition != "respond"
                 or decision.urgency < attention.urgency_floor

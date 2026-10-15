@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-14T11:00:28.499282+00:00",
+  "lastUpdated": "2026-10-15T07:49:43.442557+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "I1.2",
@@ -848,10 +848,10 @@
     "status": "in_progress",
     "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
     "outcome": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
-    "nextAction": "Geïnstalleerd en gewoon gebruikt: rustige initiatiefafweging verbindt nu tijd, recente huiswaarnemingen en eigen opgeslagen verplichtingen met gericht geheugen. Op 14 oktober 12:53 besloot Eva zelf stil te blijven na acht waarnemingen en drie eigen verplichtingen; één Astra-aanvraag, 4.854 geregistreerde tokens. Geen nieuwe bijdrage, aflevering of I1.2-afronding. Actuele service-/agendagegevens zelfstandig raadplegen en passend tijdig opnieuw kijken blijven nodig; geen voorbeeldfuncties. Vervolg: Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
+    "nextAction": "Maak modelgekozen vervolg-aandacht en benodigde actuele bronraadpleging af via dezelfde bestaande uitvoerder; behoud aandacht/stilte, voorgrondprioriteit en echte gezinsbeoordeling. Geen nieuwe eigenaarhandeling of vergelijkingsserie.",
     "area": "initiative and attention",
     "countedAsProductTask": true,
-    "checkedAt": "2026-10-14T11:00:28.499282+00:00",
+    "checkedAt": "2026-10-15T07:49:43.442557+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1634,6 +1634,19 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Algemene huiswaarneming naar Eva’s eigen afweging aangesloten",
+            "state": "installed",
+            "checkedAt": "2026-10-15T07:49:43.442557+00:00",
+            "summary": "Algemene gedeelde verbinding geïnstalleerd en werkelijk gebruikt: één Astra-afweging over twee behouden huiswaarnemingen koos stilte (5.312 tokens). Geen aparte voorbeeldfunctie; spreken/native werk via bestaande routes aangesloten. Nog geen nuttige/hoorbare nieuwe bijdrage of volledige I1.2-afronding. Goal en MD-aansturing geconsolideerd; eindfase voor volledige bestandsbeoordeling, vereenvoudiging, efficiëntie en onderhoud uitgewerkt.",
+            "remaining": "Actuele bronnen en modelgekozen vervolg-aandacht; hoorbare/nuttige dagelijkse bijdrage en I1.2 nog open. De vaste hostbundeling gebruikt nu 300 seconden; geen onmiddellijke deurbelgarantie.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/general-household-initiative-installed-20261015.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "Eigen initiatief gebruikt nu tijd, huiswaarnemingen en eigen verplichtingen",
             "state": "installed",
             "checkedAt": "2026-10-14T11:00:28.499282+00:00",
@@ -1904,21 +1917,21 @@
           "completionScope": "HUE5.1 only"
         },
         "now": {
-          "title": "Algemeen dagelijks meedenken aansluiten",
-          "state": "Bezig",
-          "phase": "source_context_installed_ordinary_use_confirmed",
+          "title": "Actuele bronnen en volgende aandacht verbinden",
+          "state": "Volgende uitkomst",
+          "phase": "next_adaptive_attention",
           "taskId": "I1.2",
-          "activeExecution": true,
+          "activeExecution": false,
           "nativeRunning": false,
-          "summary": "Geïnstalleerd en gewoon gebruikt: rustige initiatiefafweging verbindt nu tijd, recente huiswaarnemingen en eigen opgeslagen verplichtingen met gericht geheugen. Op 14 oktober 12:53 besloot Eva zelf stil te blijven na acht waarnemingen en drie eigen verplichtingen; één Astra-aanvraag, 4.854 geregistreerde tokens. Geen nieuwe bijdrage, aflevering of I1.2-afronding. Actuele service-/agendagegevens zelfstandig raadplegen en passend tijdig opnieuw kijken blijven nodig; geen voorbeeldfuncties. Vervolg: Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
+          "summary": "Maak modelgekozen vervolg-aandacht en benodigde actuele bronraadpleging af via dezelfde bestaande uitvoerder; behoud aandacht/stilte, voorgrondprioriteit en echte gezinsbeoordeling. Geen nieuwe eigenaarhandeling of vergelijkingsserie.",
           "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-14T11:00:28.499282+00:00"
+          "checkedAt": "2026-10-15T07:49:43.442557+00:00"
         },
         "next": {
-          "title": "Zelf actuele bronnen raadplegen en tijdig terugkomen",
-          "state": "Nog af te maken",
-          "summary": "Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
+          "title": "Eén Eva-beheeromgeving afmaken",
+          "state": "E2 · na dagelijkse autonome werking",
+          "summary": "Gesprekken, mensen, geheugen, opdrachten, dromen en toegepaste verbeteringen samen met optionele verbindingen zichtbaar maken.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
@@ -1927,8 +1940,8 @@
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-14T10:13:59.960454+00:00",
-        "reviewedAt": "2026-10-14T03:14:08.630849+00:00",
+        "checkedAt": "2026-10-15T07:49:43.442557+00:00",
+        "reviewedAt": "2026-10-15T07:49:43.442557+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-13T13:40:45.278382+00:00",
@@ -1946,7 +1959,7 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-14T07:32:57.288997+00:00",
+        "checkedAt": "2026-10-15T07:49:43.442557+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
         "headline": "HUE5 en HUE6 afgerond. Nog stilte/aandacht en gezinsafronding.",
         "note": "45/52 kleine taken afgerond; 7 open. Twee dubbele speakertaken zijn op eigenaarverzoek samengevoegd; geen extra functie afgevinkt. Apparaatbewijs blijft behouden.",
@@ -3063,8 +3076,8 @@
                 "status": "in_progress",
                 "kind": "gebruikersproef",
                 "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
-                "owner": "Jaap",
-                "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+                "owner": "Codex",
+                "nextAction": "Maak modelgekozen vervolg-aandacht en benodigde actuele bronraadpleging af via dezelfde bestaande uitvoerder; behoud aandacht/stilte, voorgrondprioriteit en echte gezinsbeoordeling. Geen nieuwe eigenaarhandeling of vergelijkingsserie.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3072,7 +3085,7 @@
                   "steps": [],
                   "blocksIndependentWork": false
                 },
-                "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+                "checkedAt": "2026-10-15T07:49:43.442557+00:00",
                 "assignment": {
                   "activeWorkers": []
                 },
@@ -3081,7 +3094,7 @@
                   "usefulDeliveryConfirmed": false,
                   "initiativeId": null
                 },
-                "latestEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+                "latestEvidence": "development/evidence/product/general-household-initiative-installed-20261015.json",
                 "latestOwnerAssessment": {
                   "source": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
                   "utility": "not_useful_for_this_owner",
@@ -3089,7 +3102,8 @@
                   "timing": "appropriate",
                   "literalFeedbackPrivate": true,
                   "initiativeId": "personal-interest:0ba0895fd13369c376edca686c5ee6080f539d284f0216e97bf8b4e0976d780c"
-                }
+                },
+                "result": "Algemene gedeelde verbinding geïnstalleerd en werkelijk gebruikt: één Astra-afweging over twee behouden huiswaarnemingen koos stilte (5.312 tokens). Geen aparte voorbeeldfunctie; spreken/native werk via bestaande routes aangesloten. Nog geen nuttige/hoorbare nieuwe bijdrage of volledige I1.2-afronding."
               },
               {
                 "id": "HUE5.1",
@@ -3874,7 +3888,45 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-14T07:32:57.288997+00:00"
+        "updatedAt": "2026-10-15T07:49:43.442557+00:00",
+        "finalizationPlan": {
+          "source": "development/docs/AFRONDINGSPLAN.md",
+          "updatedAt": "2026-10-15T07:22:21.009000+00:00",
+          "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
+          "phases": [
+            {
+              "id": "E1",
+              "title": "Gewone autonome Eva",
+              "status": "in_progress",
+              "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
+              "currentGap": "Algemene gedeelde waarneming/afweging/uitvoer is geïnstalleerd en gewoon gebruikt (stilte). Nog nodig: modelgekozen vervolg-aandacht, benodigde actuele bronnen zelfstandig lezen en passend dagelijks gebruik."
+            },
+            {
+              "id": "E2",
+              "title": "Eén Eva-beheeromgeving en optionele verbindingen",
+              "status": "planned",
+              "finish": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten."
+            },
+            {
+              "id": "E3",
+              "title": "Alle bestanden inventariseren en beoordelen",
+              "status": "planned",
+              "finish": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden."
+            },
+            {
+              "id": "E4",
+              "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
+              "status": "planned",
+              "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen."
+            },
+            {
+              "id": "E5",
+              "title": "Eén eindkandidaat en gezinsacceptatie",
+              "status": "planned",
+              "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie."
+            }
+          ]
+        }
       }
     },
     "deliveryPlan": {
@@ -4852,8 +4904,8 @@
               "status": "in_progress",
               "kind": "gebruikersproef",
               "doneWhen": "Eva blijft op ongepaste momenten stil; gezin beoordeelt nut en hinder apart.",
-              "owner": "Jaap",
-              "nextAction": "HUE5 afgerond: echte aflevering, feedback en latere bewuste nonactie zijn onafhankelijk bevestigd. I1.2: nut negatief, timing/hinder goed volgens Jaap. Routine-lampbediening veroorzaakt bewezen geen onnodig bericht. Nog open: bestaande aandacht/stilte op een ongepast moment aantonen of de concrete ontbrekende koppeling herstellen. Geen nieuwe eigenaarvraag, modelproef, spraakbouw of vergelijkingsserie.",
+              "owner": "Codex",
+              "nextAction": "Maak modelgekozen vervolg-aandacht en benodigde actuele bronraadpleging af via dezelfde bestaande uitvoerder; behoud aandacht/stilte, voorgrondprioriteit en echte gezinsbeoordeling. Geen nieuwe eigenaarhandeling of vergelijkingsserie.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -4861,7 +4913,7 @@
                 "steps": [],
                 "blocksIndependentWork": false
               },
-              "checkedAt": "2026-10-14T07:22:01.869796+00:00",
+              "checkedAt": "2026-10-15T07:49:43.442557+00:00",
               "assignment": {
                 "activeWorkers": []
               },
@@ -4870,7 +4922,7 @@
                 "usefulDeliveryConfirmed": false,
                 "initiativeId": null
               },
-              "latestEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+              "latestEvidence": "development/evidence/product/general-household-initiative-installed-20261015.json",
               "latestOwnerAssessment": {
                 "source": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
                 "utility": "not_useful_for_this_owner",
@@ -4878,7 +4930,8 @@
                 "timing": "appropriate",
                 "literalFeedbackPrivate": true,
                 "initiativeId": "personal-interest:0ba0895fd13369c376edca686c5ee6080f539d284f0216e97bf8b4e0976d780c"
-              }
+              },
+              "result": "Algemene gedeelde verbinding geïnstalleerd en werkelijk gebruikt: één Astra-afweging over twee behouden huiswaarnemingen koos stilte (5.312 tokens). Geen aparte voorbeeldfunctie; spreken/native werk via bestaande routes aangesloten. Nog geen nuttige/hoorbare nieuwe bijdrage of volledige I1.2-afronding."
             },
             {
               "id": "HUE5.1",
@@ -5663,7 +5716,45 @@
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-14T07:32:57.288997+00:00"
+      "updatedAt": "2026-10-15T07:49:43.442557+00:00",
+      "finalizationPlan": {
+        "source": "development/docs/AFRONDINGSPLAN.md",
+        "updatedAt": "2026-10-15T07:22:21.009000+00:00",
+        "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
+        "phases": [
+          {
+            "id": "E1",
+            "title": "Gewone autonome Eva",
+            "status": "in_progress",
+            "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
+            "currentGap": "Algemene gedeelde waarneming/afweging/uitvoer is geïnstalleerd en gewoon gebruikt (stilte). Nog nodig: modelgekozen vervolg-aandacht, benodigde actuele bronnen zelfstandig lezen en passend dagelijks gebruik."
+          },
+          {
+            "id": "E2",
+            "title": "Eén Eva-beheeromgeving en optionele verbindingen",
+            "status": "planned",
+            "finish": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten."
+          },
+          {
+            "id": "E3",
+            "title": "Alle bestanden inventariseren en beoordelen",
+            "status": "planned",
+            "finish": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden."
+          },
+          {
+            "id": "E4",
+            "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
+            "status": "planned",
+            "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen."
+          },
+          {
+            "id": "E5",
+            "title": "Eén eindkandidaat en gezinsacceptatie",
+            "status": "planned",
+            "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie."
+          }
+        ]
+      }
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -6554,9 +6645,31 @@
       "remaining": "Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
       "newProductTaskCompleted": false,
       "providerBodyNotRetained": true
+    },
+    "generalInitiativeAndFinalization20261015": {
+      "status": "installed_ordinary_decision_observed",
+      "startedAt": "2026-10-15T07:04:45.447617+00:00",
+      "taskId": "I1.2",
+      "scope": [
+        "General observation-to-expression/action bridge",
+        "Reuse current Codex voice route",
+        "Current goal and concise owner instructions",
+        "Finite full-repository finalization and efficiency/maintainability phase"
+      ],
+      "team": {
+        "coordinator": "root",
+        "implementation": "initiative_usage_diagnosis",
+        "goalAndFinalPhase": "eva1_shutdown_check"
+      },
+      "newProductTaskCompleted": false,
+      "ownerActionRequired": false,
+      "installationRequired": true,
+      "evidence": "development/evidence/product/general-household-initiative-installed-20261015.json",
+      "reviewedAt": "2026-10-15T07:49:43.442557+00:00",
+      "wholeProjectComplete": false
     }
   },
-  "updatedAt": "2026-10-14T11:00:28.499282+00:00",
+  "updatedAt": "2026-10-15T07:49:43.442557+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

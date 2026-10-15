@@ -15,7 +15,7 @@ from typing import Callable, Protocol
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import HouseholdConsentReference, MemoryAudience
 from eva.application.sensory import SensoryEvent
-from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 
 _SHARED_QUERY = (
@@ -72,6 +72,75 @@ class HouseholdInitiativeBinding:
             event_type="household_opportunity_review", occurred_at=now,
             payload={"household_binding": self.to_payload(), "review_window": window})
 
+    def observation_event(self, original: SensoryEvent) -> SensoryEvent:
+        """Bind one normalized public household signal to this audience and output."""
+        if (not isinstance(original, SensoryEvent)
+                or original.source in {"initiative-review", "household-initiative", "telegram", "conversation"}
+                or original.occurred_at.tzinfo is None or original.occurred_at.utcoffset() != timedelta(0)
+                or original.occurred_at.microsecond):
+            raise ValueError("household observation source differs")
+        allowed = {"entity_id", "device_class", "friendly_name", "old_state", "new_state",
+                   "unit_of_measurement", "time_fired", "current_state", "checked_at"}
+        # Only normalized sensor metadata enters the shared audience. Raw bodies,
+        # private memories, attributes, images and credentials are never copied.
+        if original.event_type == "household_observation_batch":
+            members = original.payload.get("observations")
+            if (not isinstance(members, list) or not 1 <= len(members) <= 16
+                    or len(canonical_json_bytes(members)) > 6144):
+                raise ValueError("household observation batch is invalid")
+            normalized = []
+            for member in members:
+                if not isinstance(member, dict) or set(member) != {"source", "source_event_id", "event_type", "occurred_at", "payload"}:
+                    raise ValueError("household observation batch member is invalid")
+                if member["event_type"] == "household_observation_batch":
+                    raise ValueError("nested household observation batches are invalid")
+                source = SensoryEvent(member["source"], member["source_event_id"], member["event_type"],
+                    datetime.fromisoformat(member["occurred_at"]), member["payload"])
+                public = self.observation_event(source).payload["observation"]
+                if public != member:
+                    raise ValueError("household observation batch contains unnormalized data")
+                normalized.append(public)
+            payload = {"observations": normalized, "selection_limit": 16,
+                       "historical_observations_not_live_proof": True}
+        else:
+            payload = {key: value for key, value in original.payload.items() if key in allowed}
+        if original.event_type != "household_observation_batch" and (not isinstance(payload.get("entity_id"), str) or not payload["entity_id"]
+                or any(value is not None and not isinstance(value, (str, bool, int, float))
+                       for value in payload.values())):
+            raise ValueError("household observation metadata is invalid")
+        observation = {"source": original.source, "source_event_id": original.source_event_id,
+            "event_type": original.event_type, "occurred_at": original.occurred_at.isoformat(),
+            "payload": payload}
+        binding = self.to_payload()
+        if len(canonical_json_bytes(observation)) > 8192:
+            raise ValueError("household observation metadata exceeds its bound")
+        prefix = self.event(original.occurred_at).source_event_id.rsplit(":", 1)[0]
+        identity = prefix + ":observation:" + canonical_sha256(observation)
+        return SensoryEvent("household-initiative", identity, "household_observation_review",
+            original.occurred_at, {"household_binding": binding, "observation": observation})
+
+    def matches_event(self, event: SensoryEvent) -> bool:
+        """Validate either the original clock source or an immutable shared signal."""
+        if not isinstance(event, SensoryEvent):
+            return False
+        try:
+            if event.event_type == "household_opportunity_review":
+                return event == self.event(event.occurred_at)
+            if (event.event_type != "household_observation_review"
+                    or set(event.payload) != {"household_binding", "observation"}
+                    or event.payload["household_binding"] != self.to_payload()):
+                return False
+            observation = event.payload["observation"]
+            if (not isinstance(observation, dict) or set(observation) != {
+                    "source", "source_event_id", "event_type", "occurred_at", "payload"}):
+                return False
+            original = SensoryEvent(observation["source"], observation["source_event_id"],
+                observation["event_type"], datetime.fromisoformat(observation["occurred_at"]),
+                observation["payload"])
+            return event == self.observation_event(original)
+        except (ValueError, TypeError, KeyError, AttributeError):
+            return False
+
     def recall_request(self, *, recall_id: str, now: datetime) -> RecallCurrentFacts:
         if (not isinstance(now, datetime) or now.tzinfo is None
                 or now.utcoffset() != timedelta(0) or now.microsecond
@@ -104,9 +173,7 @@ class HouseholdInitiativeContext:
 
     def __call__(self, event: SensoryEvent, now: datetime,
                  memory: HouseholdInitiativeMemoryPort) -> tuple[PresenceMemory, dict[str, str]]:
-        if (not isinstance(event, SensoryEvent)
-                or type(event.payload.get("review_window")) is not int
-                or event != self.binding.event(event.occurred_at)):
+        if not self.binding.matches_event(event):
             raise ValueError("household initiative event binding differs")
         recall_id = "household-initiative:" + hashlib.sha256(event.source_event_id.encode()).hexdigest()
         query = self.binding.recall_request(recall_id=recall_id, now=now)
@@ -116,8 +183,10 @@ class HouseholdInitiativeContext:
         if not isinstance(result, PresenceMemory):
             raise ValueError("household initiative memory response is invalid")
         recall = result.recall
+        # Projection version identifies the actual memory adapter, not an echoed
+        # request identity. Hindsight legitimately replaces the generic default.
         fields = ("recall_id", "tenant_id", "principal_id", "conversation_id", "project_id",
-                  "query_purpose", "requested_valid_at", "projection_version")
+                  "query_purpose", "requested_valid_at")
         if (any(getattr(recall, name) != getattr(query, name) for name in fields)
                 or recall.scope_sha256 != canonical_sha256(query.scope)
                 or len(result.confirmed_facts) > query.maximum_facts

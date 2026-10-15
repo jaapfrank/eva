@@ -114,6 +114,8 @@ class PostgresSensoryEventStore:
             self._timeline._scope(connection)
             connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                 {"key": schedule_prefix})
+            if self._household_binding is not None and self._household_window_active(connection, now=now):
+                return "idle"
             c, e = operational_checkpoints.c, operational_events.c
             latest = connection.execute(sa.select(c.phase, c.updated_at, c.thread_id, c.revision, c.operation_id).where(
                 c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
@@ -124,7 +126,7 @@ class PostgresSensoryEventStore:
             if latest is not None:
                 terminal = {"will_decided", "will_abandoned"}
                 if self._household_binding is not None:
-                    terminal |= {"expression_offered", "expression_interrupted", "expression_expired"}
+                    terminal |= {"expression_offered", "expression_interrupted", "expression_expired", "will_observation_expired"}
                 if (self._household_binding is not None and latest.phase == "expression_pending"
                         and now - latest.updated_at > timedelta(minutes=15)):
                     transition_timeline_thread(connection, scope, thread_id=latest.thread_id,
@@ -182,6 +184,201 @@ class PostgresSensoryEventStore:
                     status="completed", operation_id=source_id)
             except CheckpointConflict:
                 return "idle"
+        return "scheduled"
+
+    def _matches_household_event(self, event: SensoryEvent) -> bool:
+        binding = self._household_binding
+        if binding is None:
+            return False
+        matches = getattr(binding, "matches_event", None)
+        return matches(event) is True if callable(matches) else event == binding.event(event.occurred_at)
+
+    def next_household_observation(self, *, now: datetime) -> SensoryEvent | None:
+        """Select a fresh retained original, without impersonating an owner turn.
+
+        Routine actuator telemetry follows the same model-free silence rule as
+        the existing sensory worker. Old/claimed/uncertain events are untouched.
+        """
+        if self._household_binding is None:
+            raise ValueError("household observation routing requires a household binding")
+        self._initiative_authorizer()
+        from eva.application.free_will import _bounded_routine_decision
+        c, e = operational_checkpoints.c, operational_events.c
+        scope = self._timeline._scope_value
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                {"key": "sensory:household-initiative:"})
+            if self._household_window_active(connection, now=now):
+                return None
+            rows = connection.execute(sa.select(
+                operational_checkpoints, e.payload.label("source_payload"),
+                e.payload_sha256.label("source_sha256"), e.occurred_at.label("source_at"),
+            ).join(operational_events, sa.and_(
+                c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+                c.thread_id == e.thread_id, e.sequence == 1,
+            )).where(
+                c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                c.thread_id.startswith("sensory:home-assistant:"),
+                c.phase == "sensory_observed", c.status == "completed",
+                e.event_type == "SENSORY_EVENT_OBSERVED", e.occurred_at <= now,
+                e.payload["data"]["event_type"].astext.in_(("state_changed", "household_observation_batch")),
+                e.occurred_at >= now - self._observation_freshness,
+            ).order_by(e.occurred_at.desc(), c.thread_id).limit(32)
+                .with_for_update(of=operational_checkpoints, skip_locked=True)).mappings().all()
+            pending = []
+            for row in rows:
+                event = self._retained_household_observation(row)
+                decision = _bounded_routine_decision(event)
+                if decision is None:
+                    pending.append((row, event))
+                    continue
+                transition_timeline_thread(connection, scope, thread_id=row["thread_id"],
+                    expected_revision=row["revision"],
+                    checkpoint_id=f"{row['thread_id']}:routine-silence:{row['revision'] + 1}",
+                    operation_id=row["operation_id"], phase="will_decided", status="completed",
+                    event_type="WILL_DECIDED", occurred_at=now,
+                    data={"disposition": "silence", "entity_id": event.payload.get("entity_id"),
+                          "expression": None, "provider": decision.provider, "reason": decision.reason,
+                          "shadow_mode": True, "source_event_id": event.source_event_id,
+                          "urgency": 0, "usage": None}, retry_count=0)
+            # Recover an already-created batch after interruption; never reassign
+            # its original members or create another model owner for them.
+            existing = next((event for _, event in pending
+                             if event.event_type == "household_observation_batch"), None)
+            if existing is not None:
+                return existing
+            if len(pending) == 1:
+                return pending[0][1]
+            selected, members, keys = [], [], set()
+            for row, event in pending:
+                key = (event.source, event.payload.get("entity_id"))
+                if key in keys:
+                    continue  # Query is newest-first: retain only the latest state.
+                public = self._household_binding.observation_event(event).payload["observation"]
+                if len(members) >= 16 or len(canonical_json_bytes([*members, public])) > 6144:
+                    break
+                keys.add(key)
+                members.append(public)
+                selected.append(event)
+            if not selected:
+                return None
+            if len(pending) > 1:
+                payload = {"observations": members, "selection_limit": 16,
+                           "historical_observations_not_live_proof": True}
+                source_id = "home-assistant:initiative-batch:" + canonical_sha256(payload)
+                batch = SensoryEvent("home_assistant", source_id, "household_observation_batch",
+                    min(event.occurred_at for event in selected), payload)
+                thread = "sensory:" + source_id
+                insert_initial_timeline_thread(connection, scope, thread_id=thread,
+                    checkpoint_id=thread + ":observed", occurred_at=batch.occurred_at,
+                    data={"source": batch.source, "source_event_id": source_id,
+                          "event_type": batch.event_type, "payload": payload},
+                    event_type="SENSORY_EVENT_OBSERVED", phase="sensory_observed",
+                    status="completed", operation_id=source_id)
+                for row, event in pending:
+                    if (event.source, event.payload.get("entity_id")) not in keys:
+                        continue
+                    transition_timeline_thread(connection, scope, thread_id=row["thread_id"],
+                        expected_revision=row["revision"],
+                        checkpoint_id=f"{row['thread_id']}:household-grouped:{row['revision'] + 1}",
+                        operation_id=row["operation_id"], phase="will_household_grouped", status="completed",
+                        event_type="SENSORY_EVENT_HOUSEHOLD_GROUPED", occurred_at=now,
+                        data={"group_thread_id": thread, "source_payload_sha256": bytes(row["source_sha256"]).hex(),
+                              "latest_state_selected": event in selected, "replayed": False},
+                        retry_count=row["retry_count"])
+                return batch
+        return None
+
+    def _household_window_active(self, connection, *, now: datetime, excluding_thread: str | None = None) -> bool:
+        """One joint household review per existing observation-freshness window."""
+        scope, e = self._timeline._scope_value, operational_events.c
+        query = sa.select(e.thread_id).where(e.tenant_id == scope.tenant_id,
+            e.installation_id == scope.installation_id, e.thread_id.startswith("sensory:household-initiative:"),
+            e.event_type == "WILL_MODEL_STARTED", e.occurred_at > now - self._observation_freshness,
+            e.occurred_at <= now)
+        if excluding_thread is not None:
+            query = query.where(e.thread_id != excluding_thread)
+        if connection.execute(query.limit(1)).first() is not None:
+            return True
+        c = operational_checkpoints.c
+        unresolved = sa.select(c.thread_id).where(c.tenant_id == scope.tenant_id,
+            c.installation_id == scope.installation_id, c.thread_id.startswith("sensory:household-initiative:"),
+            c.phase.in_(("will_model_started", "will_usage_uncertain")))
+        if excluding_thread is not None:
+            unresolved = unresolved.where(c.thread_id != excluding_thread)
+        return connection.execute(unresolved.limit(1)).first() is not None
+
+    @staticmethod
+    def _retained_household_observation(row) -> SensoryEvent:
+        payload = row["source_payload"]
+        if canonical_sha256(payload) != bytes(row["source_sha256"]).hex():
+            raise RuntimeError("household observation source hash differs")
+        data = payload.get("data")
+        if (not isinstance(data, dict)
+                or data.get("source") not in {"home_assistant", "home-assistant"}
+                or not isinstance(data.get("source_event_id"), str)
+                or row["thread_id"] != "sensory:" + data["source_event_id"]
+                or not isinstance(data.get("event_type"), str)
+                or not isinstance(data.get("payload"), dict)):
+            raise ValueError("household observation source differs")
+        return SensoryEvent(data["source"], data["source_event_id"], data["event_type"],
+                            row["source_at"], data["payload"])
+
+    def schedule_household_observation(self, event: SensoryEvent, *, now: datetime) -> str:
+        """Route one exact original and its household decision in one transaction."""
+        if self._household_binding is None:
+            raise ValueError("household observation requires a household binding")
+        self._initiative_authorizer()
+        if (not isinstance(event, SensoryEvent) or event.occurred_at > now
+                or now - event.occurred_at > self._observation_freshness):
+            raise ValueError("household observation is not fresh")
+        wrapper = self._household_binding.observation_event(event)
+        if (not self._matches_household_event(wrapper)
+                or not ("sensory:" + wrapper.source_event_id).startswith(self._decision_prefix)):
+            raise ValueError("household observation wrapper differs")
+        scope = self._timeline._scope_value
+        c, e = operational_checkpoints.c, operational_events.c
+        original_thread = "sensory:" + event.source_event_id
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                {"key": "sensory:household-initiative:"})
+            row = connection.execute(sa.select(
+                operational_checkpoints, e.payload.label("source_payload"),
+                e.payload_sha256.label("source_sha256"), e.occurred_at.label("source_at"),
+            ).join(operational_events, sa.and_(
+                c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+                c.thread_id == e.thread_id, e.sequence == 1,
+            )).where(c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                c.thread_id == original_thread, e.event_type == "SENSORY_EVENT_OBSERVED")
+                .with_for_update(of=operational_checkpoints)).mappings().one_or_none()
+            if row is None:
+                return "source_unavailable"
+            if self._retained_household_observation(row) != event:
+                raise ValueError("household observation does not match retained source")
+            if row["phase"] == "will_household_routed":
+                return "already_routed"
+            if row["phase"] != "sensory_observed" or row["status"] != "completed":
+                return "source_unavailable"
+            if self._household_window_active(connection, now=now):
+                return "window_pending"
+            thread = "sensory:" + wrapper.source_event_id
+            insert_initial_timeline_thread(connection, scope, thread_id=thread,
+                checkpoint_id=thread + ":observed", occurred_at=wrapper.occurred_at,
+                data={"source": wrapper.source, "source_event_id": wrapper.source_event_id,
+                      "event_type": wrapper.event_type, "payload": wrapper.payload},
+                event_type="SENSORY_EVENT_OBSERVED", phase="sensory_observed",
+                status="completed", operation_id=wrapper.source_event_id)
+            transition_timeline_thread(connection, scope, thread_id=original_thread,
+                expected_revision=row["revision"],
+                checkpoint_id=f"{original_thread}:household-routed:{row['revision'] + 1}",
+                operation_id=row["operation_id"], occurred_at=now, phase="will_household_routed",
+                status="completed", event_type="SENSORY_EVENT_HOUSEHOLD_ROUTED",
+                data={"household_review_thread_id": thread,
+                      "household_binding": self._household_binding.to_payload(),
+                      "source_payload_sha256": bytes(row["source_sha256"]).hex(),
+                      "replayed": False}, retry_count=row["retry_count"])
         return "scheduled"
 
     def context_review_claim_is_current(self, claim, *, now: datetime) -> bool:
@@ -280,6 +477,13 @@ class PostgresSensoryEventStore:
             if state.status == "failed" and state.retry_count >= 3:
                 continue
             event = self._event_from_thread(state.thread_id, latest=True)
+            try:
+                if self.expire_stale_household_observation(SensoryDecisionClaim(
+                    event, state.thread_id, state.operation_id or event.source_event_id,
+                    state.revision, state.retry_count), now=now):
+                    continue
+            except CheckpointConflict:
+                continue
             if (state.phase == "will_waiting_admission" and not self._context_reviews_only) or self._requires_revalidation(event, now=now):
                 # Permission to use the model says nothing about whether the
                 # observation is still relevant. Keep recovery separate from a
@@ -330,7 +534,7 @@ class PostgresSensoryEventStore:
                 or state.deadline is None or state.deadline <= now):
             return None
         try:
-            started = self._timeline.transition(
+            transition = dict(
                 thread_id=claim.thread_id, expected_revision=claim.revision,
                 checkpoint_id=f"{claim.thread_id}:model-started:{claim.revision + 1}",
                 operation_id=claim.operation_id, phase="will_model_started", status="active",
@@ -341,6 +545,25 @@ class PostgresSensoryEventStore:
                 retry_count=claim.retry_count,
                 last_error_fingerprint=state.last_error_fingerprint,
             )
+            if self._household_binding is None:
+                started = self._timeline.transition(**transition)
+            else:
+                scope = self._timeline._scope_value
+                with self._timeline._engine.begin() as connection:
+                    self._timeline._scope(connection)
+                    connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                        {"key": "sensory:household-initiative:"})
+                    if self._household_window_active(connection, now=now, excluding_thread=claim.thread_id):
+                        transition_timeline_thread(connection, scope, thread_id=claim.thread_id,
+                            expected_revision=claim.revision,
+                            checkpoint_id=f"{claim.thread_id}:window-pending:{claim.revision + 1}",
+                            operation_id=claim.operation_id, phase="will_waiting_admission", status="waiting_for_proof",
+                            event_type="WILL_DISPATCH_DEFERRED", occurred_at=now,
+                            data={"reason": "observation_window_active", "source_event_id": claim.event.source_event_id,
+                                  "provider_dispatched": False, "model_dispatch_started": False},
+                            retry_count=claim.retry_count, last_error_fingerprint=state.last_error_fingerprint)
+                        return None
+                    started = transition_timeline_thread(connection, scope, **transition)
         except CheckpointConflict:
             return None
         return SensoryDecisionClaim(
@@ -364,7 +587,7 @@ class PostgresSensoryEventStore:
 
     def _requires_revalidation(self, event: SensoryEvent, *, now: datetime) -> bool:
         if self._household_binding is not None:
-            if event != self._household_binding.event(event.occurred_at):
+            if not self._matches_household_event(event):
                 raise ValueError("household review source differs")
             return False
         if self._context_reviews_only:
@@ -612,6 +835,54 @@ class PostgresSensoryEventStore:
             last_error_fingerprint=None,
         )
 
+    def expire_stale_household_observation(self, claim: SensoryDecisionClaim, *, now: datetime) -> bool:
+        """Expire a known pre-provider external signal rather than replay stale state."""
+        if self._household_binding is None or claim.event.event_type != "household_observation_review":
+            return False
+        if not self._matches_household_event(claim.event):
+            raise ValueError("household observation binding differs")
+        if timedelta(0) <= now - claim.event.occurred_at <= self._observation_freshness:
+            return False
+        state = self._timeline.load(claim.thread_id)
+        if (not claim.thread_id.startswith(self._decision_prefix)
+                or state.phase not in {"sensory_observed", "will_waiting_admission", "will_claimed", "will_model_started"}
+                or state.status not in {"completed", "waiting_for_proof", "active"}
+                or state.revision != claim.revision or state.operation_id != claim.operation_id
+                or self._event_from_thread(claim.thread_id, latest=True) != claim.event):
+            raise CheckpointConflict("stale observation claim is no longer current")
+        self._timeline.transition(thread_id=claim.thread_id, expected_revision=claim.revision,
+            checkpoint_id=f"{claim.thread_id}:observation-expired:{claim.revision + 1}",
+            operation_id=claim.operation_id, phase="will_observation_expired", status="completed",
+            event_type="WILL_OBSERVATION_EXPIRED", occurred_at=now,
+            data={"reason": "household_observation_not_current", "source_event_id": claim.event.source_event_id,
+                  "provider_dispatched": False, "replayed": False},
+            retry_count=claim.retry_count, last_error_fingerprint=state.last_error_fingerprint)
+        return True
+
+    def defer_before_dispatch(
+        self, claim: SensoryDecisionClaim, *, reason: str, now: datetime,
+    ) -> None:
+        """Record a host-proven pre-provider deferral, never recover unknown usage."""
+        if reason != "foreground_active":
+            raise ValueError("pre-dispatch deferral reason is invalid")
+        state = self._timeline.load(claim.thread_id)
+        if (not claim.thread_id.startswith(self._decision_prefix)
+                or state.phase != "will_model_started" or state.status != "active"
+                or state.revision != claim.revision or state.operation_id != claim.operation_id
+                or state.deadline is None or state.deadline <= now
+                or self._event_from_thread(claim.thread_id, latest=True) != claim.event):
+            raise CheckpointConflict("pre-dispatch claim is no longer current")
+        self._timeline.transition(
+            thread_id=claim.thread_id, expected_revision=claim.revision,
+            checkpoint_id=f"{claim.thread_id}:dispatch-deferred:{claim.revision + 1}",
+            operation_id=claim.operation_id, phase="will_waiting_admission",
+            status="waiting_for_proof", event_type="WILL_DISPATCH_DEFERRED", occurred_at=now,
+            data={"reason": reason, "source_event_id": claim.event.source_event_id,
+                  "provider_dispatched": False, "model_dispatch_started": False},
+            retry_count=claim.retry_count,
+            last_error_fingerprint=state.last_error_fingerprint,
+        )
+
     def complete(
         self,
         claim: SensoryDecisionClaim,
@@ -620,8 +891,7 @@ class PostgresSensoryEventStore:
         now: datetime,
     ) -> None:
         if self._household_binding is not None:
-            if (claim.event != self._household_binding.event(claim.event.occurred_at)
-                    or decision.initiative is not None):
+            if not self._matches_household_event(claim.event):
                 raise ValueError("household initiative decision audience differs")
             self._initiative_authorizer()
         if (self._context_reviews_only and self._household_binding is None
@@ -655,7 +925,8 @@ class PostgresSensoryEventStore:
             occurred_at=now,
             data={
                 "disposition": decision.disposition,
-                "entity_id": claim.event.payload.get("entity_id"),
+                "entity_id": _observation_entity_id(claim.event),
+                "entity_ids": sorted(_observation_entity_ids(claim.event)),
                 "expression": decision.expression,
                 "provider": decision.provider,
                 "reason": decision.reason,
@@ -949,7 +1220,7 @@ class PostgresSensoryEventStore:
             raise ValueError("household expression storage audience differs")
         self._initiative_authorizer()
         event = self._event_from_thread(thread_id)
-        if event != self._household_binding.event(event.occurred_at):
+        if not self._matches_household_event(event):
             raise ValueError("household expression origin differs")
         history = self._timeline.events(thread_id)
         prepared = next((item.payload.get("data", {}) for item in reversed(history)
@@ -1186,12 +1457,12 @@ class PostgresSensoryEventStore:
     ) -> bool:
         states = self._timeline.list_checkpoints(
             thread_prefix=self._decision_prefix,
-            phases=("expression_pending", "expression_claimed", "expression_delivered"),
+            phases=("expression_pending", "expression_claimed", "expression_delivered", "expression_offered"),
             statuses=("completed", "active", "failed"),
             updated_before=now,
             limit=64,
         )
-        entity_id = claim.event.payload.get("entity_id")
+        entity_ids = _observation_entity_ids(claim.event)
         for state in states:
             age = now - state.updated_at
             if age > timedelta(minutes=30):
@@ -1214,11 +1485,38 @@ class PostgresSensoryEventStore:
                 if isinstance(prepared_data, dict)
                 else None
             )
-            if entity_id is not None and entity_id == prior_entity:
+            prior_entities = ({prior_entity} if isinstance(prior_entity, str) else set())
+            if isinstance(prepared_data, dict) and isinstance(prepared_data.get("entity_ids"), list):
+                prior_entities.update(value for value in prepared_data["entity_ids"] if isinstance(value, str))
+            if not prior_entities:
+                prior_entities = _observation_entity_ids(self._event_from_thread(state.thread_id))
+            if entity_ids & prior_entities:
                 return True
             if decision.urgency < 3 and age <= timedelta(minutes=5):
                 return True
         return False
+
+
+def _observation_entity_id(event: SensoryEvent) -> str | None:
+    """Read the normalized source entity for ordinary and bound shared events."""
+    payload = event.payload
+    if event.source == "household-initiative" and event.event_type == "household_observation_review":
+        observation = payload.get("observation")
+        payload = observation.get("payload", {}) if isinstance(observation, dict) else {}
+    value = payload.get("entity_id") if isinstance(payload, dict) else None
+    return value if isinstance(value, str) and value else None
+
+
+def _observation_entity_ids(event: SensoryEvent) -> set[str]:
+    value = _observation_entity_id(event)
+    if value is not None:
+        return {value}
+    observation = event.payload.get("observation")
+    payload = observation.get("payload", {}) if isinstance(observation, dict) else {}
+    members = payload.get("observations", ()) if isinstance(payload, dict) else ()
+    return {item["payload"]["entity_id"] for item in members
+            if isinstance(item, dict) and isinstance(item.get("payload"), dict)
+            and isinstance(item["payload"].get("entity_id"), str)}
 
 
 __all__ = ["PostgresSensoryEventStore"]

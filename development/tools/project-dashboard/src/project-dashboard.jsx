@@ -289,6 +289,11 @@ function DeliveryHistory({ project }) {
   return <section className="delivery-history"><h2>Opleveringen en onvoltooid werk</h2><p>Proeven en reparaties tellen niet als extra afgeronde Eva-functies.</p>{project.deliveryOverview?.deliveries.map((item, index) => <DeliveryRecord key={`${item.source}-${index}`} item={item} />)}</section>;
 }
 
+function FinalizationPlan({ plan }) {
+  if (!plan?.phases?.length) return null;
+  return <section className="delivery-history"><h2>Zo maken we Eva af</h2><p>Vijf afgebakende fasen. De kleine-taakteller blijft apart; deze fasen zijn nog geen afgeronde functies.</p>{plan.phases.map(phase => <details className="overview-details" key={phase.id}><summary><span style={{color:phase.status === 'completed' ? '#267345' : phase.status === 'in_progress' ? '#a06400' : '#ac3434'}}>{phase.status === 'completed' ? '✓' : phase.status === 'in_progress' ? '● Bezig' : '○ Nog te doen'}</span> · {phase.id} · {phase.title}</summary><p>{phase.finish}</p>{phase.currentGap && <p><b>Nu nog nodig:</b> {phase.currentGap}</p>}</details>)}</section>;
+}
+
 export default function ProjectDashboard() {
   const [tab, setTab] = useState('overzicht');
   const [selected, setSelected] = useState(null);
@@ -326,6 +331,7 @@ export default function ProjectDashboard() {
       <section className="project-heading"><div><p className="eyebrow">VAN AMBITIE NAAR DAGELIJKS GEBRUIK</p><h1>{tab === 'overzicht' ? 'Waar staat Eva écht?' : tab === 'werk' ? 'Dit moet er nog af.' : tab === 'details' ? 'Resultaten en bewijs' : 'Leren van de besten.'}</h1><p>{tab === 'overzicht' ? null : tab === 'werk' ? 'De afgesproken volgorde naar een complete Eva.' : tab === 'details' ? 'Eerdere opleveringen, praktijktests en technische onderbouwing.' : 'Actuele bronnen, open keuzes en bewijs. Geen verzonnen voorsprong.'}</p></div>{tab !== 'overzicht' && <span className="phase-tag">In ontwikkeling</span>}</section>
       {tab === 'overzicht' && <>
         <DeliveryOverview project={project} runtime={runtime} stale={Boolean(query.error)} onWork={() => setTab('werk')} onHistory={() => setTab('details')} onComparison={() => setTab('keuzes')} onRefresh={() => query.refetch()} refreshing={query.isFetching}/>
+        <FinalizationPlan plan={project.deliveryPlan?.finalizationPlan}/>
         <SmallTaskChecklist project={project} stale={Boolean(query.error)}/>
       </>}
       {tab === 'details' && <>

@@ -1,0 +1,26 @@
+{
+  "contract": "EvaInstructionSnapshot/v1",
+  "snapshot_date": "2026-10-15",
+  "source_revision": "8b40dacdfe021bfd7a604892e5e6b9982005002f",
+  "meaning": "Exact old document bytes before authority consolidation; historical reference, not active instructions. Frozen criteria, evidence and workboard unchanged by this snapshot.",
+  "files": [
+    {
+      "original_path": "AGENTS.md",
+      "snapshot_path": "development/archive/history/20261015-authority-consolidation/AGENTS.md",
+      "bytes": 31566,
+      "sha256": "24738bdab0f43dda07699794e9ca43f6abbfd4dd77752d09ba3ee19e9f15b6e1"
+    },
+    {
+      "original_path": "development/docs/PROJECTDOEL.md",
+      "snapshot_path": "development/archive/history/20261015-authority-consolidation/PROJECTDOEL.md",
+      "bytes": 38835,
+      "sha256": "a6d001552b5a700d53d3077c8433f68ad3a716eae9d6ffb5880af51ba296ec6a"
+    },
+    {
+      "original_path": "development/docs/ARCHITECTUUR.md",
+      "snapshot_path": "development/archive/history/20261015-authority-consolidation/ARCHITECTUUR.md",
+      "bytes": 8855,
+      "sha256": "389a7b6f686d87a3629d315a0c0b0aac49b478d52c84db9a90cc1d54b770b239"
+    }
+  ]
+}

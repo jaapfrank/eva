@@ -179,6 +179,12 @@ class SemanticMemoryColdPathWorker:
                 self._foreground_count -= 1
                 self._last_activity = time.monotonic()
 
+    @property
+    def foreground_active(self) -> bool:
+        """Read current conversation pressure without imposing an idle interval."""
+        with self._lock:
+            return self._foreground_count > 0
+
     def _idle_due(self) -> bool:
         with self._lock:
             return (not self._stop.is_set() and not self._foreground_count

@@ -1,0 +1,124 @@
+{
+  "contract": "EvaGeneralHouseholdInitiativeInstalled/v1",
+  "checkedAt": "2026-10-15T07:49:43.442557+00:00",
+  "status": "installed_and_ordinary_silence_observed",
+  "outcome": "Existing shared household sources now reach one autonomous decision and the existing speech/native-work paths without requiring a recent speaker session.",
+  "scope": {
+    "new_example_specific_functions": false,
+    "new_executor": false,
+    "voice_services_or_firmware_changed": false,
+    "private_memory_kept_private": true,
+    "completed_small_tasks_added": [],
+    "family_acceptance": false
+  },
+  "reused": [
+    "SensoryEvent/FreeWillDecision",
+    "PostgreSQL sensory timeline and household consent",
+    "Current Hindsight household recall",
+    "Owner initiative adoption and native digital execution",
+    "Existing HA satellite announcement output"
+  ],
+  "added": [
+    "Immutable shared projection of fresh original observations, with source/hash/current authority checks",
+    "Same existing 300-second freshness period as a durable installation-wide review window; bounded coalescing before model dispatch",
+    "Current configured shared output without a recent session; current recent session may select the preferred configured output",
+    "Foreground priority checked again after recall and before provider dispatch",
+    "Stale wrappers expire without new provider requests; uncertainty is retained and not replayed",
+    "Ordinary social relevance can justify a model-selected contribution; no scripted greeting",
+    "Consolidated current goal, architecture and execution instructions; five finite finalization phases visible on project dashboard"
+  ],
+  "source_rate": {
+    "read_only_measured_at": "2026-10-15T07:26:32+00:00",
+    "candidate_nonroutine_original_signals_last_hour": 170,
+    "last_24_hours": 2967,
+    "old_actual_model_request_count_from_these_signals": "not measured",
+    "risk": "One request per signal could cause unnecessary provider load; raw signal count is not demonstrated relevance.",
+    "new_host_cadence_seconds": 300,
+    "maximum_selected_entities_per_batch": 16,
+    "candidate_original_scan_limit": 32,
+    "normalized_batch_maximum_bytes": 6144,
+    "coverage": "Latest selected transition with old_state/new_state/time; older transitions retained in original timeline. Not a guarantee of immediate response or evaluation of every transition."
+  },
+  "verification": {
+    "focused_unique_cases": 64,
+    "case_groups": {
+      "sensory_worker_subscription_and_shared_postgres": 47,
+      "binding_composition_and_actual_hindsight_projection": 9,
+      "existing_native_destination_continuity": 1,
+      "actual_model_protocol_and_existing_identity": 7
+    },
+    "controls": "Disposable PostgreSQL and model-free protocol tests; no test writes to production. Source changed cases were rechecked; earlier failed/skipped preparation retained.",
+    "independent_source_review_sha256": "f2515c0a9df5ddbe6cb1451fc7d8d260b1dc31a4baa7cd3a3e5623638f57d13d",
+    "independent_projection_fix_review_sha256": "0306bfb6b7716b2d5b3712099b763cc2251dd1a7da24945b95d23ab9bd4568e5",
+    "independent_installed_review_sha256": "b877d013eeea1865be9eceedf8336ade55a20d62e3890386282f13c58e3e96e5"
+  },
+  "installation": {
+    "core_image": "sha256:3e6b78eca5538d1e3f49f0caa36a988c385c8fd54344b62b6fec492f2b62f35b",
+    "worker_image": "sha256:79d024a5df47ea9f29f8f6f846680e21c2bb3506bcaa05e5029e731e56b81990",
+    "changed_core_modules": 7,
+    "unchanged_other_core_python_modules": 347,
+    "changed_worker_modules": 2,
+    "unchanged_other_worker_python_modules": 351,
+    "current_environment_and_mounts_retained": true,
+    "digital_execution_sources_coherent": 62,
+    "initial_preflight": "No dispatch: core configuration view retained an older worker image. Original worker layers differed only in image; service-specific current configurations merged and both exact live hashes matched.",
+    "dispatches": [
+      "Core and worker image-only update",
+      "Necessary one-module core correction after actual Hindsight contract mismatch"
+    ],
+    "no_rollback": true,
+    "mandate": "Only current worker profile reference rebound through existing owner CAS; 12 capabilities, rights and other fields unchanged."
+  },
+  "retained_first_live_failure": {
+    "phase_before_closure": "will_usage_uncertain",
+    "failure_type": "ValueError",
+    "fingerprint": "10698c19f4438cd82ae9b5ce848ecb446daf8330ef28cfa61cd892f3a7a482d0",
+    "cause": "Existing context guard compared a generic PostgreSQL request projection version to the actual Hindsight response version. All other identity, scope, selected facts and private-style checks matched.",
+    "correction": "Projection version remains the adapter-declared receipt version; it is not an input identity echo. All other guards retained.",
+    "original_usage": "unknown; original NULL retained",
+    "diagnostic": "Exact same failure reproduced before model adapter with zero provider requests; installed correction then accepted eight shared facts and no private style mirror.",
+    "recovery": "One exact owner-authorized revision-checked terminal closure with original event hashes and failure retained, no replay."
+  },
+  "ordinary_runtime_observation": {
+    "started_at": "2026-10-15T07:45:29+00:00",
+    "completed_at": "2026-10-15T07:45:38+00:00",
+    "source": "Actual retained household_observation_batch, two selected observations",
+    "controller_forced_new_source": false,
+    "model_provider": "chatgpt-codex:gpt-6-astra",
+    "model_attempts": 1,
+    "input_tokens": 5208,
+    "output_tokens": 104,
+    "total_tokens": 5312,
+    "decision_tool_calls": 1,
+    "decision": "silence",
+    "native_adoptions": 0,
+    "announcement_offers": 0,
+    "heard_or_useful_contribution_proven": false,
+    "provider_request_body_retained": false,
+    "boundaries": "Recorded usage and decision corroborated independently; no exclusive semantic-causality or general quality/efficiency superiority claim."
+  },
+  "usage": {
+    "manual_paid_eva_model_requests": 0,
+    "agent_test_provider_requests": 0,
+    "automatic_runtime": "One measured ordinary review: 5,312 tokens. Older NULL is preserved; this is not full project/development usage.",
+    "development_credit_cost": "unknown",
+    "runtime_credit_cost": "unknown"
+  },
+  "remaining": [
+    "Model-selected next attention time and necessary live-source reads through the existing executor",
+    "Useful and appropriately timed daily contribution or deliberate silence under original I1.2 conditions",
+    "Actual audible/natural household delivery and family assessment remain distinct from protocol/HTTP checks",
+    "E2 unified product management and optional providers/channels",
+    "E3 per-file inventory/review and E4 finite evidence-based simplification, measured efficiency and update contracts",
+    "E5 integrated final candidate, independent review and existing seven-day family acceptance"
+  ],
+  "goal": {
+    "source": "development/docs/PROJECTDOEL.md",
+    "instructions": "AGENTS.md",
+    "architecture": "development/docs/ARCHITECTUUR.md",
+    "finalization_plan": "development/docs/AFRONDINGSPLAN.md",
+    "external_full_goal_text_updated": true,
+    "whole_project_complete": false
+  },
+  "privacy": "Raw observations, memory results, household device names, literal owner feedback, credentials and original provider bodies are not published."
+}
