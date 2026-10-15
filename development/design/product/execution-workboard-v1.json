@@ -838,18 +838,18 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-15T08:04:45.907226+00:00",
+  "lastUpdated": "2026-10-15T09:28:50.177255+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E1.1",
   "currentWork": {
     "id": "E1.1",
     "title": "Actuele bronnen zelfstandig raadplegen",
-    "status": "planned",
+    "status": "in_progress",
     "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
-    "nextAction": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
+    "nextAction": "Bronoverdracht geïnstalleerd en echt gebruikt: vier oorspronkelijke lezingen kwamen bij exact dezelfde privé-afweging terug. E1.1 nog open: Eva benoemde alleen de mislukte taak, geen inhoudelijke bronbevinding of concreet onbeantwoorde bronvraag. De onafhankelijke review keurt volledige afronding daarom af; de oude taak/proef blijven mislukt. Geen nieuwe proef of eigenaarhandeling.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+    "checkedAt": "2026-10-15T09:28:50.177255+00:00",
     "outcome": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
     "area": "initiative and attention",
     "countedAsProductTask": true
@@ -1634,6 +1634,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Eigen bronlezingen terug in de juiste afweging; E1.1 inhoudelijk nog open",
+            "state": "installed",
+            "checkedAt": "2026-10-15T09:28:50.177255+00:00",
+            "summary": "Vier echte bronlezingen zijn privé en zonder herlezing teruggegeven aan exact de juiste vervolgafweging. Dat deel is geïnstalleerd en onafhankelijk goedgekeurd. De inhoudelijke bronvraag is in het besluit niet beantwoord; geen volledige E1.1-afronding.",
+            "remaining": "Use a verified substantive finding about the self-chosen source question in the next decision, or explicitly state why the retained pages cannot answer that question. The source-context hash alone does not prove substantive use.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e1-current-source-initiative-outcome-20261015.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "Afrondingsplan zichtbaar als 18 concrete taakkaarten",
             "state": "installed",
             "checkedAt": "2026-10-15T08:04:45.907226+00:00",
@@ -1930,15 +1942,15 @@
         },
         "now": {
           "title": "Actuele bronnen zelfstandig raadplegen",
-          "state": "Volgende bouwtaak",
-          "phase": "next_current_source_reads",
+          "state": "Bezig",
+          "phase": "substantive_source_use_missing",
           "taskId": "E1.1",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
+          "summary": "Bronoverdracht geïnstalleerd en echt gebruikt: vier oorspronkelijke lezingen kwamen bij exact dezelfde privé-afweging terug. E1.1 nog open: Eva benoemde alleen de mislukte taak, geen inhoudelijke bronbevinding of concreet onbeantwoorde bronvraag. De onafhankelijke review keurt volledige afronding daarom af; de oude taak/proef blijven mislukt. Geen nieuwe proef of eigenaarhandeling.",
           "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-15T08:04:45.907226+00:00"
+          "checkedAt": "2026-10-15T09:28:50.177255+00:00"
         },
         "next": {
           "title": "Eén Eva-beheeromgeving afmaken",
@@ -1952,8 +1964,8 @@
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-15T08:04:45.907226+00:00",
-        "reviewedAt": "2026-10-15T08:04:45.907226+00:00",
+        "checkedAt": "2026-10-15T09:28:50.177255+00:00",
+        "reviewedAt": "2026-10-15T08:16:57.408108+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-13T13:40:45.278382+00:00",
@@ -3905,31 +3917,35 @@
               {
                 "id": "E1.1",
                 "title": "Actuele bronnen zelfstandig raadplegen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "De gedeelde waarneming, geheugencontext en native uitvoerder werken.",
-                "gap": "De afweging gebruikt nog niet aantoonbaar de benodigde nieuwe bronlezing.",
-                "nextAction": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
+                "gap": "Betrouwbare bronterugvoer werkt. Inhoudelijke toepassing op de eigen bronvraag is nog niet aangetoond.",
+                "nextAction": "Bronoverdracht geïnstalleerd en echt gebruikt: vier oorspronkelijke lezingen kwamen bij exact dezelfde privé-afweging terug. E1.1 nog open: Eva benoemde alleen de mislukte taak, geen inhoudelijke bronbevinding of concreet onbeantwoorde bronvraag. De onafhankelijke review keurt volledige afronding daarom af; de oude taak/proef blijven mislukt. Geen nieuwe proef of eigenaarhandeling.",
                 "files": [
+                  "src/eva/adapters/postgres/initiative_source_outcomes.py",
                   "src/eva/application/free_will.py",
-                  "src/eva/adapters/postgres/initiative_context.py",
-                  "src/eva/bootstrap/native_initiative_work.py"
+                  "src/eva/adapters/model/pydantic_conversation.py",
+                  "src/eva/bootstrap/runtime.py"
                 ],
                 "dependsOn": [],
                 "assignment": {
-                  "activeWorkers": []
+                  "activeWorkers": [
+                    "/root"
+                  ]
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-15T09:28:50.177255+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
-                }
+                },
+                "partialEvidence": "development/evidence/product/e1-current-source-initiative-outcome-20261015.json"
               },
               {
                 "id": "E1.2",
@@ -4550,7 +4566,7 @@
           "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-15T07:56:55.051091+00:00",
+        "updatedAt": "2026-10-15T09:04:24.087151+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-15T07:56:55.051091+00:00",
@@ -6425,31 +6441,35 @@
             {
               "id": "E1.1",
               "title": "Actuele bronnen zelfstandig raadplegen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "bouwen / afmaken",
               "doneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "De gedeelde waarneming, geheugencontext en native uitvoerder werken.",
-              "gap": "De afweging gebruikt nog niet aantoonbaar de benodigde nieuwe bronlezing.",
-              "nextAction": "Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.",
+              "gap": "Betrouwbare bronterugvoer werkt. Inhoudelijke toepassing op de eigen bronvraag is nog niet aangetoond.",
+              "nextAction": "Bronoverdracht geïnstalleerd en echt gebruikt: vier oorspronkelijke lezingen kwamen bij exact dezelfde privé-afweging terug. E1.1 nog open: Eva benoemde alleen de mislukte taak, geen inhoudelijke bronbevinding of concreet onbeantwoorde bronvraag. De onafhankelijke review keurt volledige afronding daarom af; de oude taak/proef blijven mislukt. Geen nieuwe proef of eigenaarhandeling.",
               "files": [
+                "src/eva/adapters/postgres/initiative_source_outcomes.py",
                 "src/eva/application/free_will.py",
-                "src/eva/adapters/postgres/initiative_context.py",
-                "src/eva/bootstrap/native_initiative_work.py"
+                "src/eva/adapters/model/pydantic_conversation.py",
+                "src/eva/bootstrap/runtime.py"
               ],
               "dependsOn": [],
               "assignment": {
-                "activeWorkers": []
+                "activeWorkers": [
+                  "/root"
+                ]
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-15T09:28:50.177255+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "partialEvidence": "development/evidence/product/e1-current-source-initiative-outcome-20261015.json"
             },
             {
               "id": "E1.2",
@@ -7070,7 +7090,7 @@
         "Dagelijks samenhangend chatgebruik, eindbeoordeling en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-15T07:56:55.051091+00:00",
+      "updatedAt": "2026-10-15T09:04:24.087151+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-15T07:56:55.051091+00:00",
@@ -8076,9 +8096,16 @@
       "reason": "Previously agreed plan lacked concrete cards in Tasks per component.",
       "status": "published_and_browser_verified",
       "evidence": "development/evidence/product/finalization-task-visibility-20261015.json"
+    },
+    "e1CurrentSource20261015": {
+      "status": "installed_partial_original_task_open",
+      "evidence": "development/evidence/product/e1-current-source-initiative-outcome-20261015.json",
+      "taskCompleted": false,
+      "remaining": "Use a verified substantive finding about the self-chosen source question in the next decision, or explicitly state why the retained pages cannot answer that question. The source-context hash alone does not prove substantive use.",
+      "checkedAt": "2026-10-15T09:28:50.177255+00:00"
     }
   },
-  "updatedAt": "2026-10-15T08:04:45.907226+00:00",
+  "updatedAt": "2026-10-15T09:28:50.177255+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

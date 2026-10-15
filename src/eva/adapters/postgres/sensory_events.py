@@ -99,8 +99,8 @@ class PostgresSensoryEventStore:
                 datetime.fromtimestamp(0, tz=UTC)
             ).source_event_id.rsplit(":", 1)[0] + ":"
 
-    def schedule_context_review(self, *, now: datetime) -> str:
-        """At most one durable private opportunity review per hour, without catch-up."""
+    def schedule_context_review(self, *, now: datetime, source_outcomes: tuple[dict, ...] = ()) -> str:
+        """Hourly opportunity or one new retained native completion; never catch up."""
         if not self._context_reviews_only:
             raise ValueError("context review scheduler requires its private source")
         try:
@@ -117,6 +117,29 @@ class PostgresSensoryEventStore:
             if self._household_binding is not None and self._household_window_active(connection, now=now):
                 return "idle"
             c, e = operational_checkpoints.c, operational_events.c
+            # A completed native read returns to the same private decision lane.
+            # Its original result identity permits one follow-up, not another
+            # timer, tool invocation, or retry of an uncertain decision.
+            completion_source = None
+            if self._household_binding is None:
+                import re
+                for outcome in source_outcomes:
+                    if not outcome.get("verified_reads"):
+                        continue  # No source read: status history suffices; no paid readback review.
+                    outcome_key = ("result_sha256" if outcome.get("result_sha256") is not None
+                                   else "outcome_sha256")
+                    binding = {k: outcome.get(k) for k in ("work_id", "spec_sha256", outcome_key)}
+                    if (re.fullmatch(r"work:eva-initiative:[0-9a-f]{64}", str(binding["work_id"]))
+                            and all(re.fullmatch(r"[0-9a-f]{64}", str(binding[k]))
+                                    for k in ("spec_sha256", outcome_key))):
+                        completion_id = str(int(canonical_sha256(binding), 16))
+                        completed_review = connection.execute(sa.select(c.thread_id).where(
+                            c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                            c.thread_id == self._decision_prefix + completion_id)).first()
+                        if completed_review is not None:
+                            continue  # Already used; a different retained source may still be pending.
+                        completion_source = binding
+                        break  # Select one never-reviewed source, retaining newest-first order.
             latest = connection.execute(sa.select(c.phase, c.updated_at, c.thread_id, c.revision, c.operation_id).where(
                 c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
                 c.thread_id.startswith(schedule_prefix)).order_by(c.updated_at.desc()).limit(1)).first()
@@ -144,7 +167,7 @@ class PostgresSensoryEventStore:
                         e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
                         e.thread_id == latest.thread_id, e.event_type == "WILL_USAGE_UNCERTAIN")
                         .order_by(e.sequence.desc()).limit(1)).scalar_one()
-                if now - reviewed_at < timedelta(hours=1):
+                if completion_source is None and now - reviewed_at < timedelta(hours=1):
                     return "idle"
             if self._household_binding is None:
                 pending = connection.execute(sa.select(c.thread_id).join(operational_events, sa.and_(
@@ -159,9 +182,12 @@ class PostgresSensoryEventStore:
                 if pending is not None:
                     return "idle"
             window = int(now.timestamp()) // 3600
-            source_id = self._decision_prefix.removeprefix("sensory:") + str(window)
+            source_id = self._decision_prefix.removeprefix("sensory:") + (
+                completion_id if completion_source is not None else str(window))
             thread_id = "sensory:" + source_id
             payload = {"review_window": window}
+            if completion_source is not None:
+                payload["native_completion_source"] = completion_source
             if self._household_binding is None:
                 # Capture the bounded source view once in the existing immutable
                 # review. Retries and admission retain this original provenance;
@@ -897,7 +923,8 @@ class PostgresSensoryEventStore:
         if (self._context_reviews_only and self._household_binding is None
                 and decision.disposition == "respond"):
             decision = FreeWillDecision("silence", decision.reason, 0, decision.provider,
-                usage=decision.usage, initiative=decision.initiative)
+                usage=decision.usage, initiative=decision.initiative,
+                source_context_sha256=decision.source_context_sha256)
         if decision.disposition == "respond" and self._cooldown_applies(
             claim, decision, now=now
         ):
@@ -908,6 +935,7 @@ class PostgresSensoryEventStore:
                 "eva:proactive-cooldown",
                 usage=decision.usage,
                 initiative=decision.initiative,
+                source_context_sha256=decision.source_context_sha256,
             )
         expression_pending = decision.disposition == "respond"
         transition = dict(
@@ -931,6 +959,8 @@ class PostgresSensoryEventStore:
                 "provider": decision.provider,
                 "reason": decision.reason,
                 "shadow_mode": True,
+                **({"source_context_sha256": decision.source_context_sha256}
+                   if decision.source_context_sha256 is not None else {}),
                 "source_event_id": claim.event.source_event_id,
                 "urgency": decision.urgency,
                 "usage": None if decision.usage is None else asdict(decision.usage),

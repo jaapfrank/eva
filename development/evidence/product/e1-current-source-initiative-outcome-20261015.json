@@ -1,0 +1,196 @@
+{
+  "contract": "EvaCurrentSourceInitiativeOutcome/v1",
+  "taskId": "E1.1",
+  "checkedAt": "2026-10-15T09:25:02.315951+00:00",
+  "status": "installed_partial_original_task_open",
+  "installed": true,
+  "wholeProjectComplete": false,
+  "originalDoneWhen": "Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.",
+  "existingReused": [
+    "Private sensory decision and existing hourly opportunity",
+    "Native initiative adoption and digital worker",
+    "Original HA and own-component read receipts",
+    "Original owner/source authority, stop, retention and usage records"
+  ],
+  "added": [
+    "Private readback of verified retained native source receipts, including explicitly incomplete task outcomes",
+    "Exactly bound work/spec/outcome followup through the same private review lane",
+    "Host context hash on the actual decision; no source read replay",
+    "Empty failed tasks do not create paid source feedback; another pending source is not hidden by an already used source"
+  ],
+  "chain": {
+    "initialOccasion": "controller-stimulated capability check through installed private route; no prescribed source, tool, action or household feature",
+    "modelChoseSource": "Eva independently chose to inspect installed own source distinguishing historical and current household observations",
+    "nativeTaskState": "ambiguous",
+    "nativeTaskError": "internal_error",
+    "wholeNativeTaskSucceeded": false,
+    "verifiedOriginalReads": 4,
+    "sourceContentIsComplete": false,
+    "sourceReadTimesUtc": [
+      "2026-10-15T08:57:06+00:00",
+      "2026-10-15T08:57:40+00:00"
+    ],
+    "outcomeSha256": "9e04bb9e45da18307b97c15f3f862761947033b82a5e9d110728e2d9264e218a",
+    "providerBodySha256": "9d91161b7c670668c5bce7edf322c9a58ab53c73fb4e4d6437d6d5baa79354e8",
+    "offeredAndStoredSourceContextSha256": "071246ad8b46e9701163270ee8efbc132fe1b94633ead7826b28ce0cc9662ed9",
+    "followupDecision": "silence",
+    "followupReason": "Dit is een rustig beoordelingsmoment, geen actuele huiswaarneming. De bewaarde bronlezingen bewijzen geen afgeronde verbetering; de onzekere eerdere uitvoering wordt niet automatisch hervat. Er is nu geen voldoende concrete nieuwe bijdrage die eerder gekozen werk niet herhaalt.",
+    "followupUsage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 7844,
+      "output_tokens": 96,
+      "model_attempts": 1
+    },
+    "newSourceCallsInFollowup": 0,
+    "exclusiveCausalityClaim": false
+  },
+  "usage": {
+    "scope": "Only known completed model responses observed for this E1.1 capability chain, not all runtime or developer usage",
+    "knownCompletedModelResponses": 12,
+    "knownTokens": 114464,
+    "nativeFailedWorkKnownTokens": 83027,
+    "unknownCreditCosts": true,
+    "partialNativeAccountingPreserved": true,
+    "concurrentOtherOrdinaryWorkUsageNotReconciled": true,
+    "failedPrelaunchAndWrongSourceTriggerPreserved": true
+  },
+  "validation": {
+    "uniqueCasesCovered": 65,
+    "unitAndModel": 25,
+    "readerPostgres": 21,
+    "schedulerPostgres": 7,
+    "existingPrivateReviewPostgres": 12,
+    "oneSingleAll65Run": false,
+    "correctedOwnerStopFixtureFailurePreserved": true,
+    "temporaryPostgresOnly": true,
+    "productionFixtureWrites": false
+  },
+  "installations": [
+    {
+      "receiptSha256": "8bf684a9bc630b058db16bc6118fa6d4f372a3daf81537226db3c77d62cacdc4",
+      "status": "running_with_retained_mounts",
+      "services": {
+        "core": {
+          "candidateImage": "sha256:a169b4b16c1f7d9d7f564886e763d8885184aab02dcdac944b7ff557da3b0fb5",
+          "unchangedMounts": true
+        },
+        "delegated-work-worker": {
+          "candidateImage": "sha256:6215b79da970e1f20dfb0af31f721627e2b8ebaf01b626c3a53aef12d75ba4dd",
+          "unchangedMounts": true
+        }
+      },
+      "changedModuleCounts": {
+        "core": 5,
+        "worker": 5
+      },
+      "otherPythonModulesPreserved": {
+        "core": 350,
+        "worker": 349
+      }
+    },
+    {
+      "receiptSha256": "32c09331a315db4b2b6555ad08f5f569da43c2de10c21f05cd9d9c4d46e9934b",
+      "status": "running_with_retained_mounts",
+      "services": {
+        "core": {
+          "candidateImage": "sha256:9a1724c2d4cb2e46f7388e7c2608b8019a5672c585c7badb112aab67749421dc",
+          "unchangedMounts": true
+        },
+        "delegated-work-worker": {
+          "candidateImage": "sha256:4156bcf391f69fffa7618e81bf3aa87756594caff749e0afc0ad2189e264fd9e",
+          "unchangedMounts": true
+        }
+      },
+      "changedModuleCounts": {
+        "core": 3,
+        "worker": 3
+      },
+      "otherPythonModulesPreserved": {
+        "core": 352,
+        "worker": 351
+      }
+    },
+    {
+      "receiptSha256": "3702fe9858161b87021144aa67b33bffff40a3b01c598ff62dc10f2e5475dd92",
+      "status": "running_with_retained_mounts",
+      "services": {
+        "core": {
+          "candidateImage": "sha256:10643158af087b332b297e08649dd633fde2fa544c78cbbb87172a44612bfb8f",
+          "unchangedMounts": true
+        },
+        "delegated-work-worker": {
+          "candidateImage": "sha256:8fb47a90a4773929f6d29f00eeaee394ca906479e7b95cd0d6d240fdc956ec7e",
+          "unchangedMounts": true
+        }
+      },
+      "changedModuleCounts": {
+        "core": 4,
+        "worker": 4
+      },
+      "otherPythonModulesPreserved": {
+        "core": 351,
+        "worker": 350
+      }
+    }
+  ],
+  "limitations": [
+    "The initial occasion and final timer callback were controller-stimulated, not a spontaneous useful household initiative.",
+    "The native task still failed; verified source reads do not turn it into a completed task or applied improvement.",
+    "Only a bounded retained source selection is passed; truncation, missing access and original timestamps remain explicit.",
+    "This proves no exclusive source causality, competitor advantage, general efficiency or final family acceptance.",
+    "E1.2 attention planning, E1.3 daily utility and I1.2 remain separate open conditions."
+  ],
+  "privateEvidence": [
+    {
+      "label": "single-source-probe.private.json",
+      "sha256": "52b1f0b1cefcbbc7c197ed66cc523d3dfb8f5c25994857a9f20b949e343e47ac",
+      "restricted": true
+    },
+    {
+      "label": "native-admission-block.private.json",
+      "sha256": "23f7a559a7f2edb17c91c327bdd7e74ad2b3a284e68def9a06aa106496e44c8d",
+      "restricted": true
+    },
+    {
+      "label": "actual-service-mandate-revised.private.json",
+      "sha256": "2456e9eeeca0d65863b7283a0b2c9238672a1655904f081fbbc1660fb7bddebd",
+      "restricted": true
+    },
+    {
+      "label": "ordinary-cycle-native-02.private.json",
+      "sha256": "3d6db2fddfb88a195babf2e51af200d6960ab2108b47abf31c27a4c4077ed8c4",
+      "restricted": true
+    },
+    {
+      "label": "retained-source-next-decision.private.json",
+      "sha256": "52e59ba019d95ade2348ed0f9762e01281ec5b7735a68e88c008b0d5950578b2",
+      "restricted": true
+    },
+    {
+      "label": "exact-source-binding/exact-source-next-decision.private.json",
+      "sha256": "0ebb50a23f309bdb82aa9751a24e091790f9f983709c2ad134a26710eba4f5a2",
+      "restricted": true
+    },
+    {
+      "label": "exact-source-binding/installed-after-source-review.private.json",
+      "sha256": "6de732c4b861b03a25e6cadffb8b58332f180146e20bab810d352c2e62903870",
+      "restricted": true
+    },
+    {
+      "label": "independent-exact-source-binding-review.private.json",
+      "sha256": "37961f6f3fa9e25cd5457dccf48fe30ae4ded21328ac025629bc4cbe65f111ba",
+      "restricted": true
+    },
+    {
+      "label": "independent-e11-outcome-review.private.json",
+      "sha256": "824eb287bce2ef0bc5433c66f656dc5e12624eca6fc7ad73ce64badb62362a75",
+      "restricted": true
+    }
+  ],
+  "taskCompleted": false,
+  "originalProbeSucceeded": false,
+  "originalProbeFailure": "The native work remained ambiguous with no successful result receipt; the original completed-work success condition was not met.",
+  "remaining": "Use a verified substantive finding about the self-chosen source question in the next decision, or explicitly state why the retained pages cannot answer that question. The source-context hash alone does not prove substantive use.",
+  "independentReview": "development/reviews/e1-current-source-initiative-review-20261015.json"
+}

@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Actuele bronnen zelfstandig raadplegen
 
-Volg de bestaande afweging naar bronontdekking, gecontroleerd lezen en terugkoppeling; maak uitsluitend de ontbrekende overdracht af.
+Bronoverdracht geïnstalleerd en echt gebruikt: vier oorspronkelijke lezingen kwamen bij exact dezelfde privé-afweging terug. E1.1 nog open: Eva benoemde alleen de mislukte taak, geen inhoudelijke bronbevinding of concreet onbeantwoorde bronvraag. De onafhankelijke review keurt volledige afronding daarom af; de oude taak/proef blijven mislukt. Geen nieuwe proef of eigenaarhandeling.
 
 Klaar wanneer: Eva bepaalt vanuit een gewone autonome aanleiding welke actuele informatie ontbreekt, leest die via de bestaande uitvoerder en gebruikt het gecontroleerde resultaat bij haar besluit. Ontbrekende toegang blijft expliciet; geen vaste agenda-, deurbel- of afvalregel.
 

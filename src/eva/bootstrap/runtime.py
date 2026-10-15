@@ -983,6 +983,10 @@ class PostgresHindsightMemoryRuntime:
         from eva.bootstrap.native_initiative_work import configured_initiative_authority
         return configured_initiative_authority(self._owner_initiatives())
 
+    def _initiative_source_outcomes(self, *, now, work_id=None):
+        from eva.adapters.postgres.initiative_source_outcomes import read_recent_source_outcomes
+        return read_recent_source_outcomes(self._initiative_authority(), now=now, work_id=work_id)
+
     def execute_native_initiative(self, claim):
         from eva.bootstrap.native_initiative_work import admit_native_initiative
         # The selected quiet initiative remains native work, not owner ingress.
@@ -2102,6 +2106,8 @@ def create_runtime_app() -> FastAPI:
                 context_review_authorizer=lambda: runtime._initiative_authority().policy(),
                 context_review_admission=lambda claim, now: admit_initiative_review(
                     runtime._initiative_authority(), model, reflection_budget, claim, now=now),
+                source_outcome_reader=lambda now, work_id=None: runtime._initiative_source_outcomes(now=now, work_id=work_id),
+                dispatch_ready=lambda: not runtime._cold_path.foreground_active,
                 clock=lambda: datetime.now(tz=UTC).replace(microsecond=0),
 
             )
@@ -2165,7 +2171,8 @@ def create_runtime_app() -> FastAPI:
             if model.autonomous_admission_blocker() is not None:
                 return "idle"
             now = datetime.now(tz=UTC).replace(microsecond=0)
-            context_review_store.schedule_context_review(now=now)
+            context_review_store.schedule_context_review(now=now,
+                source_outcomes=runtime._initiative_source_outcomes(now=now))
             return context_decision_worker.run_once(now=now)
 
         idle_tasks = (

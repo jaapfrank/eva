@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime
 from typing import Callable, Literal, Protocol
 
@@ -80,8 +80,13 @@ class FreeWillDecision:
     expression: str | None = None
     usage: ConversationModelUsage | None = None
     initiative: PersonalInitiativeProposal | None = None
+    source_context_sha256: str | None = None
 
     def __post_init__(self) -> None:
+        if self.source_context_sha256 is not None:
+            import re
+            if re.fullmatch(r"[0-9a-f]{64}", self.source_context_sha256) is None:
+                raise ValueError("source outcome context hash is invalid")
         if self.initiative is not None and not isinstance(self.initiative, PersonalInitiativeProposal):
             raise ValueError("personal initiative must be a validated proposal")
         if self.disposition not in {"silence", "respond"}:
@@ -223,6 +228,7 @@ class FreeWillModelPort(Protocol):
         attention: ResidentAttentionDecision | None = None,
         initiative_history: tuple[dict[str, str], ...] = (),
         initiative_capabilities: tuple[str, ...] = (),
+        initiative_source_outcomes: tuple[dict, ...] = (),
     ) -> FreeWillDecision: ...
 
 
@@ -257,6 +263,7 @@ class SensoryDecisionWorker:
         context_review_admission=None,
         household_context=None,
         dispatch_ready: Callable[[], bool] | None = None,
+        source_outcome_reader: Callable[..., tuple[dict, ...]] | None = None,
     ) -> None:
         self._store = store
         self._model = model
@@ -277,6 +284,7 @@ class SensoryDecisionWorker:
         self._context_review_admission = context_review_admission
         self._household_context = household_context
         self._dispatch_ready = dispatch_ready
+        self._source_outcome_reader = source_outcome_reader
         self._prefer_revalidation = False
 
     def _current_time(self, previous: datetime) -> datetime:
@@ -417,6 +425,23 @@ class SensoryDecisionWorker:
                 history = () if not callable(history_reader) else history_reader()
                 capability_reader = getattr(self._store, "native_capabilities", None)
                 capabilities = () if not callable(capability_reader) else capability_reader()
+            # Native outcomes stay private, with original observation times and
+            # verified source receipts. This read never invokes an external tool.
+            source_outcomes = ()
+            if event.source == "initiative-review" and self._source_outcome_reader is not None:
+                trigger = event.payload.get("native_completion_source")
+                if isinstance(trigger, dict):
+                    source_outcomes = self._source_outcome_reader(
+                        now=self._current_time(now), work_id=trigger.get("work_id"))
+                    # A concurrent outcome must not replace the source that
+                    # caused this private review or displace its verified pages.
+                    source_outcomes = tuple(value for value in source_outcomes
+                        if all(value.get(key) == expected for key, expected in trigger.items()))
+                    if not source_outcomes:
+                        source_outcomes = ({"work_id": trigger.get("work_id"), "status": "unavailable",
+                            "reason": "original_native_outcome_no_longer_available", "verified_reads": []},)
+                else:
+                    source_outcomes = self._source_outcome_reader(now=self._current_time(now))
             # Persist the ambiguity boundary before entering the model adapter.
             # A process can die without calling fail(), including after the
             # provider response but before complete() records the decision.
@@ -447,7 +472,11 @@ class SensoryDecisionWorker:
                 attention,
                 **({"initiative_history": history} if history else {}),
                 **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
+                **({"initiative_source_outcomes": source_outcomes} if source_outcomes else {}),
             )
+            if source_outcomes:
+                from eva.contracts.canonical_json import canonical_sha256
+                decision = replace(decision, source_context_sha256=canonical_sha256(list(source_outcomes)))
             if attention is not None and (
                 decision.disposition != "respond"
                 or decision.urgency < attention.urgency_floor

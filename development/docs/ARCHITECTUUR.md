@@ -40,7 +40,7 @@ relevantie met de toegelaten bronnen. Technologie verzorgt betrouwbaarheid en gr
 | `src/eva/contracts` en `domain` | Betekenis, identiteiten, versieerbare gegevens en actieregels | Geen provider-, apparaat- of kanaalprotocol als productbetekenis. |
 | `application/conversation.py`, `memory.py` | Contact, relevante persoonscontext en overdracht van werk | Application ports en getypeerde input/output; geen tweede gespreksrouter. |
 | `application/free_will.py`, `sensory.py`, `resident_attention.py` | Waarneming, afweging, aandacht en passende stilte | `SensoryEvent` en `FreeWillDecision`; geen voorbeeldspecifieke wensregel. |
-| `adapters/postgres/sensory_events.py`, `initiative_context.py` | Bestaande bronregistratie, private reviews en begrensde historische context | Nieuwe review bewaart haar oorspronkelijke bron; gedeelde bron krijgt geen eigenaarprivécontext. Historie is geen actuele bevestiging. |
+| `adapters/postgres/sensory_events.py`, `initiative_context.py`, `initiative_source_outcomes.py` | Bestaande bronregistratie, private reviews en begrensde historische context | Nieuwe review bewaart haar oorspronkelijke bron; gedeelde bron krijgt geen eigenaarprivécontext. Historie is geen actuele bevestiging. |
 | `adapters/postgres`, `projection`, `adapters/projection/hindsight.py` | PostgreSQL als gezaghebbende opslag; Hindsight als persoonsgebonden zoekprojectie | Bronherkomst, actuele persoon/audience en correctie/erasure blijven dezelfde. Geen tweede geheugen. |
 | `operations/delegated_work_runner.py`, `bootstrap/delegated_digital_runner.py` | Afhankelijke stappen uitvoeren, voortgang bewaren, stoppen en legitiem hervatten | Bestaande werk-/actiecontracten, expliciete resultaten en huidige grants; geen tweede taakstore. |
 | `adapters/postgres/delegated_work_delivery.py` en bestaande initiatiefaflevering | Resultaat koppelen aan oorspronkelijke actor/ingang en feedback | Korte terugmelding; volledig opgeslagen resultaat op verzoek. Geen nieuwe ontvanger of fictieve aflevering. |
@@ -70,9 +70,23 @@ gegevens opgevraagd en resultaten teruggelezen.
 De private review van 14 oktober kreeg tijd, begrensde recente huisgeschiedenis
 en exact-eigen opgeslagen verplichtingen mee. Dit is een geïnstalleerde verbinding,
 geen volledige live agenda-/service-inventaris of bewijs van dagelijkse autonomie.
-Zelf passende vervolg-aandacht kiezen en actuele beschikbare bronnen gebruiken
-moet via dezelfde bestaande poorten worden afgemaakt. Een huisautomatisering kan
-Eva daarbij ontdekken of maken; zij wordt geen vaste kernregel voor een voorbeeld.
+De bronterugvoer gebruikt de bestaande native uitvoerder en exact bewaarde
+HA- of eigen-codebronreceipts. Succes van een hele taak en geldigheid van een
+bronlezing zijn afzonderlijk: een mislukte taak kan bruikbare geverifieerde
+bronpagina's behouden, zonder eindresultaat, nieuwe bevoegdheid of automatische
+herhaling te fabriceren. Oorspronkelijke tijd, spec/uitvoering/receiptbinding,
+begrensde selectie en ontbrekende dekking blijven meegegeven. De werkertekst
+blijft een onbevestigde interpretatie. Privébronnen gaan alleen naar de volgende
+privé-afweging; de host bewaart de hash van de werkelijk aangeboden context.
+
+Een nieuwe native uitkomst met geverifieerde bronlezing mag precies één
+vervolgafweging in dezelfde bestaande reviewroute veroorzaken. De werker leest
+daarvoor uitsluitend hetzelfde werk met dezelfde spec- en resultaat-/uitkomsthash;
+een gelijktijdige andere taak verdringt die bron niet. Een lege mislukking start
+geen betaalde bronbeoordeling. Onzeker lopend werk blijft blokkeren. Dit is
+resultaatterugvoer, geen tweede planner of bewijs van modelgekozen toekomstige
+aandacht. Zelf passende vervolg-aandacht kiezen blijft E1.2. Een huisautomatisering
+kan Eva ontdekken of maken; zij wordt geen vaste kernregel voor een voorbeeld.
 
 ## Model, kanaal en optionele installatie
 

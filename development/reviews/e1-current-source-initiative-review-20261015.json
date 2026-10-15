@@ -1,0 +1,23 @@
+{
+  "contract": "EvaE11IndependentOutcomeReview/v1",
+  "taskId": "E1.1",
+  "checkedAt": "2026-10-15T09:29:20.391511+00:00",
+  "reviewer": "independent collaborator; owns reader implementation, reviews coordinator integration and actual installed outcome; not a new model benchmark",
+  "sourceTransferDecision": "GO",
+  "fullTaskCompletionDecision": "NO GO",
+  "originalExperimentDecision": "failed",
+  "originalCriteriaUnchanged": true,
+  "reviewed": [
+    "Exact installed source work/spec/outcome identity",
+    "Four retained read projections in the actual provider body",
+    "Independently recomputed source context hash matches the host decision",
+    "Private audience and no duplicated source/worker action",
+    "Explicit incomplete native work; no successful result fabricated"
+  ],
+  "remaining": "The decision must use a substantive finding about the self-chosen source question, or explicitly explain why the retained pages cannot answer that question. It currently classifies only task uncertainty.",
+  "sourceContextSha256": "071246ad8b46e9701163270ee8efbc132fe1b94633ead7826b28ce0cc9662ed9",
+  "privateReviewSha256": "824eb287bce2ef0bc5433c66f656dc5e12624eca6fc7ad73ce64badb62362a75",
+  "privateEvidencePublished": false,
+  "newPaidModelRequestsByReviewer": 0,
+  "wholeProjectComplete": false
+}
