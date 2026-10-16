@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E3.1 · Alle bestanden en hun rol registreren
+E3.2 · Actieve kerncode inhoudelijk beoordelen
 
-E3.1 afgerond:4.896 paden geregistreerd met bronstand, hash of expliciete uitsluiting, categorie, rol en lees-/reviewstatus. Alle4.789 tracked paden zijn aanwezig;447 exacte eerdere lezingen hergebruikt. Dit is registratie, geen inhoudelijke codekwaliteitsschouw.
+Nu bezig:136 kernbestanden inhoudelijk beoordelen, echte consumers vastleggen en concrete vereenvoudigingsbesluiten aan bestaande E4-kaarten koppelen. Geen spraakwijzigingen.
 
-Klaar wanneer: Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review.
+Klaar wanneer: Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.
 
 ## Afmaakvolgorde
 

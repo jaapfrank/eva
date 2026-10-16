@@ -841,21 +841,17 @@
   "lastUpdated": "2026-10-16T16:23:00.574395+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E3.1",
+  "activeTaskId": "E3.2",
   "currentWork": {
-    "id": "E3.1",
-    "title": "Alle bestanden en hun rol registreren",
-    "status": "completed",
-    "doneWhen": "Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review.",
-    "nextAction": "Gebruik het vaste register en de expliciete delta bij E3.2–E3.4; geen bestanden verwijderen voordat hun consumers en noodzaak beoordeeld zijn.",
+    "id": "E3.2",
+    "title": "Actieve kerncode inhoudelijk beoordelen",
+    "status": "in_progress",
+    "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-16T23:06:04.003274+00:00",
-    "completedAt": "2026-10-16T23:06:04.003274+00:00",
-    "result": "E3.1 afgerond:4.896 paden geregistreerd met bronstand, hash of expliciete uitsluiting, categorie, rol en lees-/reviewstatus. Alle4.789 tracked paden zijn aanwezig;447 exacte eerdere lezingen hergebruikt. Dit is registratie, geen inhoudelijke codekwaliteitsschouw.",
-    "completionEvidence": "development/evidence/reassessment/e31-file-register-20261017.json",
-    "independentReview": "development/reviews/e31-file-register-20261017.json",
-    "area": "repository inventory",
-    "outcome": "Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review.",
+    "nextAction": "Inhoudelijke review van de 136 vaste kernbestanden in application/contracts/domain/bootstrap, inclusief actuele delta en echte consumers. Leg alleen eindige vereenvoudigingsbesluiten vast; geen spraakwijzigingen of featurebouw.",
+    "checkedAt": "2026-10-16T23:14:55.796386+00:00",
+    "area": "core code review",
+    "outcome": "Hashgebonden inhoudelijke kernbeoordeling met echte consumers, eindige E4-besluiten en gebundelde onafhankelijke review.",
     "countedAsProductTask": false
   },
   "historicalWorkboard": {
@@ -2207,22 +2203,16 @@
           "completionScope": "File registration only; E3.2–E3.4 semantic review and cleanup remain separate."
         },
         "now": {
-          "taskId": "E3.1",
-          "title": "E3.1 · Alle bestanden en hun rol registreren",
-          "state": "E3.1 afgerond",
-          "status": "completed",
-          "phase": "registered",
-          "activeExecution": false,
-          "nativeRunning": false,
-          "summary": "E3.1 afgerond:4.896 paden geregistreerd met bronstand, hash of expliciete uitsluiting, categorie, rol en lees-/reviewstatus. Alle4.789 tracked paden zijn aanwezig;447 exacte eerdere lezingen hergebruikt. Dit is registratie, geen inhoudelijke codekwaliteitsschouw.",
-          "doneWhen": "Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review.",
-          "ownerActionNeeded": false,
-          "checkedAt": "2026-10-16T23:06:04.003274+00:00"
+          "title": "E3.2 · Actieve kerncode inhoudelijk beoordelen",
+          "taskId": "E3.2",
+          "status": "in_progress",
+          "summary": "Nu bezig:136 kernbestanden inhoudelijk beoordelen, echte consumers vastleggen en concrete vereenvoudigingsbesluiten aan bestaande E4-kaarten koppelen. Geen spraakwijzigingen.",
+          "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur."
         },
         "next": {
-          "title": "E3.2 · Actieve kerncode inhoudelijk beoordelen",
-          "state": "Eerstvolgende uitvoerbare taak",
-          "summary": "E3.2 blijft de volgende uitvoerbare taak. De vijf dagelijkse samenhangaspecten zijn gekoppeld aan bestaande E5.1/F2.1/F2.2; geen nieuwe bouwfase.",
+          "title": "E3.3 · Adapters en installatie beoordelen",
+          "state": "Na E3.2",
+          "summary": "Vervolg met de bestaande E3.3-kaart; geen nieuwe taken of bouwfase.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
@@ -4661,14 +4651,14 @@
               {
                 "id": "E3.2",
                 "title": "Actieve kerncode inhoudelijk beoordelen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "afronden",
                 "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Kernroutes en eerdere modulegrensbevindingen zijn bekend.",
                 "gap": "Een complete actuele beoordeling met besluit per actief kernbestand ontbreekt. Bij E2.5 vastgesteld: de huidige core en werker verschillen al in openai_codex_provider.py en daarmee in gedelegeerde bronbinding. Onderzoek dit verschil gericht; overschrijf geen werk van de spraakuitvoerder.",
-                "nextAction": "Werk per bestaand modulecluster gesprek/geheugen/initiatief/uitvoering/leren; houd de geïnventariseerde bestandslijst eindig.",
+                "nextAction": "Inhoudelijke review van de 136 vaste kernbestanden in application/contracts/domain/bootstrap, inclusief actuele delta en echte consumers. Leg alleen eindige vereenvoudigingsbesluiten vast; geen spraakwijzigingen of featurebouw.",
                 "files": [
                   "src/eva/application",
                   "src/eva/contracts",
@@ -4679,10 +4669,20 @@
                   "E3.1"
                 ],
                 "assignment": {
-                  "activeWorkers": []
+                  "coordinator": "Codex",
+                  "activeWorkers": [
+                    {
+                      "id": "e32_application_review",
+                      "scope": "src/eva/application (review only)"
+                    },
+                    {
+                      "id": "e32_bootstrap_review",
+                      "scope": "src/eva/bootstrap (review only)"
+                    }
+                  ]
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-16T23:14:55.796386+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -4725,6 +4725,15 @@
                   "observation": "De daadwerkelijk draaiende kern en werker verschillen op18 gedeelde bronpaden;15 paden alleen in kern en6 alleen in werker. Dit omvat UI-bestanden en gedeelde provider-/uitvoerbronnen. Verschil is niet automatisch een fout.",
                   "priority": "Beoordeel eerst het al geregistreerde provider/sourcepin-verschil en daarna de overige echte consumers; overschrijf geen spraakwerk.",
                   "newTask": false
+                },
+                "execution": {
+                  "alreadyWorks": "Bestaande gedeelde kern en E3.1-register met 136 kernpaden.",
+                  "concreteGap": "Volledige inhoudelijke beoordeling en besluit per actief kernbestand ontbreken.",
+                  "outcome": "Hashgebonden inhoudelijke kernbeoordeling met echte consumers, eindige E4-besluiten en gebundelde onafhankelijke review.",
+                  "userUse": "Taken per onderdeel toont wat beoordeeld is en welke bestaande E4-kaart het concrete vervolg uitvoert. Dit is geen nieuwe gezinsfunctie.",
+                  "estimate": "136 geregistreerde kernbestanden, verdeeld over drie afzonderlijke reviewverantwoordelijkheden; geen modelruntimeproef, installatie of concurrentenserie. Ontwikkeltokens/creditkosten onbekend.",
+                  "sourceSnapshot": "development/docs/eva-repository-inventory.generated.json",
+                  "startedAt": "2026-10-16T23:14:55.796386+00:00"
                 }
               },
               {
@@ -5017,7 +5026,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T23:08:48.419108+00:00",
+        "updatedAt": "2026-10-16T23:14:55.796386+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -7419,14 +7428,14 @@
             {
               "id": "E3.2",
               "title": "Actieve kerncode inhoudelijk beoordelen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "afronden",
               "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Kernroutes en eerdere modulegrensbevindingen zijn bekend.",
               "gap": "Een complete actuele beoordeling met besluit per actief kernbestand ontbreekt. Bij E2.5 vastgesteld: de huidige core en werker verschillen al in openai_codex_provider.py en daarmee in gedelegeerde bronbinding. Onderzoek dit verschil gericht; overschrijf geen werk van de spraakuitvoerder.",
-              "nextAction": "Werk per bestaand modulecluster gesprek/geheugen/initiatief/uitvoering/leren; houd de geïnventariseerde bestandslijst eindig.",
+              "nextAction": "Inhoudelijke review van de 136 vaste kernbestanden in application/contracts/domain/bootstrap, inclusief actuele delta en echte consumers. Leg alleen eindige vereenvoudigingsbesluiten vast; geen spraakwijzigingen of featurebouw.",
               "files": [
                 "src/eva/application",
                 "src/eva/contracts",
@@ -7437,10 +7446,20 @@
                 "E3.1"
               ],
               "assignment": {
-                "activeWorkers": []
+                "coordinator": "Codex",
+                "activeWorkers": [
+                  {
+                    "id": "e32_application_review",
+                    "scope": "src/eva/application (review only)"
+                  },
+                  {
+                    "id": "e32_bootstrap_review",
+                    "scope": "src/eva/bootstrap (review only)"
+                  }
+                ]
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-16T23:14:55.796386+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -7483,6 +7502,15 @@
                 "observation": "De daadwerkelijk draaiende kern en werker verschillen op18 gedeelde bronpaden;15 paden alleen in kern en6 alleen in werker. Dit omvat UI-bestanden en gedeelde provider-/uitvoerbronnen. Verschil is niet automatisch een fout.",
                 "priority": "Beoordeel eerst het al geregistreerde provider/sourcepin-verschil en daarna de overige echte consumers; overschrijf geen spraakwerk.",
                 "newTask": false
+              },
+              "execution": {
+                "alreadyWorks": "Bestaande gedeelde kern en E3.1-register met 136 kernpaden.",
+                "concreteGap": "Volledige inhoudelijke beoordeling en besluit per actief kernbestand ontbreken.",
+                "outcome": "Hashgebonden inhoudelijke kernbeoordeling met echte consumers, eindige E4-besluiten en gebundelde onafhankelijke review.",
+                "userUse": "Taken per onderdeel toont wat beoordeeld is en welke bestaande E4-kaart het concrete vervolg uitvoert. Dit is geen nieuwe gezinsfunctie.",
+                "estimate": "136 geregistreerde kernbestanden, verdeeld over drie afzonderlijke reviewverantwoordelijkheden; geen modelruntimeproef, installatie of concurrentenserie. Ontwikkeltokens/creditkosten onbekend.",
+                "sourceSnapshot": "development/docs/eva-repository-inventory.generated.json",
+                "startedAt": "2026-10-16T23:14:55.796386+00:00"
               }
             },
             {
@@ -7775,7 +7803,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T23:08:48.419108+00:00",
+      "updatedAt": "2026-10-16T23:14:55.796386+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -8927,7 +8955,7 @@
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
     }
   },
-  "updatedAt": "2026-10-16T23:08:48.419108+00:00",
+  "updatedAt": "2026-10-16T23:14:55.796386+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
