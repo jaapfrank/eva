@@ -71,6 +71,7 @@ class EvaVoiceBackend:
         self.url = None
         self.closed = False
         self.requests = {}
+        self.allow_handoffs = True
         self.active = {}
         self.results = {}
         self.recent = []
@@ -112,11 +113,15 @@ class EvaVoiceBackend:
                 'http_headers':{'X-Eva-Voice-Bridge':self.secret},
                 'request_max_retries':0, 'stream_max_retries':0},
             'experimental_realtime_webrtc_call_base_url':'https://chatgpt.com/backend-api/codex',
-            'features.shell_tool':False, 'web_search':'disabled'}
+            'features.shell_tool':False, 'features.apps':False,
+            'features.plugins':False, 'features.remote_plugin':False,
+            'web_search':'disabled'}
 
     async def respond(self, request):
         if not secrets.compare_digest(request.headers.get('X-Eva-Voice-Bridge',''), self.secret):
             raise web.HTTPUnauthorized(text='Voice session authentication required')
+        if not self.allow_handoffs:
+            raise web.HTTPForbidden(text='Voice transport cannot originate core requests')
         try:
             self.current()
             body = await request.json()

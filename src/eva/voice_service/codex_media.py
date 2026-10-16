@@ -4,43 +4,27 @@ import asyncio
 import json
 import re
 import time
+import httpx
 from pathlib import Path
 from types import SimpleNamespace
-from uuid import uuid4
+from uuid import UUID, uuid4, uuid5
 from aiortc import RTCPeerConnection, RTCSessionDescription, AudioStreamTrack
 from av import AudioFrame, AudioResampler
 from livekit import rtc
 from eva.voice_service.codex_backend import EvaVoiceBackend
 from eva.voice_service.codex_session import CodexVoiceSession
 
-VOICE_PROMPT = '''You are Eva. Speak natural, concise Dutch in the first person.
-Your voice, memory, reasoning and actions belong to one continuous identity.
-The attached backend is your own thinking and authorized memory, not another
-person, assistant or organization. Delegation is an internal operation.
-Never describe it as asking Eva, checking with someone else, or obtaining an
-answer from a separate you. Keep internal handoffs inaudible.
-For substantive questions, your own past activities, personal history, corrections
-and actions, invoke delegation immediately. This includes questions about your day:
-use your actual records, not a fictional biography or the voice session's limited
-memory. Deliver the resulting answer naturally as your own, preserving its facts,
-times, qualifications and uncertainty. Do not convert a partial record into a
-claim that nothing else happened. Do not invent experiences, feelings or results.
-While thinking, prefer a brief natural pause over a stock waiting announcement.
-Do not routinely say you will check, ask, look something up, or get back to the
-speaker. If a meaningful acknowledgement helps, respond to the person's actual
-point in one short sentence without claiming facts you have not established.
-Do not ask an unrelated follow-up just to keep the conversation going. Ask a
-clarifying question only when its answer is needed. Vary wording with context;
-there is no mandatory filler or acknowledgement for every question.
-Respond directly to self-contained greetings and courtesy small talk without
-delegation or lookup claims. A local wake greeting may already have played;
-do not repeat it unless greeted again. For goodbye, give a brief warm farewell,
-without delegation or a new question.
-For live information, personal memory and requested actions, actually delegate;
-a spoken promise is not execution. Continue until delivering a result or a
-concrete failure. Claim success only from confirmed results. A spoken interruption
-stops speech, not accepted work; explicit task cancellation requires delegation.
-Do not announce internal protocols or tools. Use the speaker's language.'''
+# Neither transport owns Eva's identity or memory. Only the core does.
+VOICE_PROMPT = """You are an input transcription transport. Listen to Dutch speech.
+After each complete user utterance, immediately repeat exactly their words.
+Do not answer questions, interpret requests, use tools or delegate. Your output
+is discarded; another component handles the original completed user transcript.
+Repeat even greetings and goodbyes. Never add your own conversational content."""
+SPEECH_PROMPT = """You are a speech renderer. Repeat all supplied speech text
+exactly in Dutch with a warm, natural delivery. Do not answer questions in that
+text. Speak only the literal supplied text. Do not add introductions, fillers,
+acknowledgements, interpretations or follow-up questions. Do not delegate.
+Stay silent until speech text is supplied."""
 
 
 def access_lease(path):
@@ -154,8 +138,19 @@ class AudioInputPort:
 
 
 class CodexMediaSession:
-    def __init__(self, config, state, check):
+    def __init__(self, config, state, check, *, render_only=False):
         self.config,self.state,self.check=config,state,check
+        self.render_only=render_only
+        self.renderer=None
+        self._turns={}
+        self._input_generations={}
+        self._input_fragments=[]
+        self._input_empty_generation=0
+        self._input_open=set()
+        self._input_flush=None
+        self._generation=0
+        self._core_lock=asyncio.Lock()
+        self._core_pending=0
         self.handlers={};self.tasks=set();self.closed=False
         self.input=AudioInputPort(self)
         self.output=SimpleNamespace(audio=None)
@@ -168,7 +163,7 @@ class CodexMediaSession:
         self._assistant_turns=set()
         self._ended_assistant_turns={}
         self._assistant_idle=asyncio.Event();self._assistant_idle.set()
-        self.output_suppressed=False
+        self.output_suppressed=render_only
         self.last_activity=time.monotonic()
         self.peer=None;self.voice=None;self.bridge=None;self.room=None
         self.prepared=None;self.channel=None
@@ -235,6 +230,9 @@ class CodexMediaSession:
         This opens no model session and reads no microphone or account lease.
         """
         if self.peer is not None:return
+        if not self.render_only and self.renderer is None:
+            self.renderer=CodexMediaSession(self.config,self.state,self.current,render_only=True)
+            self.renderer.prewarm()
         self.peer=RTCPeerConnection();self.microphone=MicrophoneTrack(
             lambda dropped, queued: self.diagnostic('microphone_overrun',
                 dropped_frames=dropped, queued_frames=queued))
@@ -267,6 +265,9 @@ class CodexMediaSession:
             event=json.loads(raw)
             self.current()
             kind=event.get('type')
+            if not self.render_only and self.renderer is not None:
+                self.input_event(event)
+                return
             if kind in {'session.started','input_transcript.added','output_transcript.added','turn.created'}:
                 self.last_activity=time.monotonic()
             if kind in {'session.started','turn.created','turn.done','error','session.closed','delegation.created','delegation.context.appended'}:
@@ -321,12 +322,13 @@ class CodexMediaSession:
                             else round((now-self.last_suppressed_signal_at)*1000)))
                     self.suppressed_signal_frames=0;self.last_suppressed_signal_at=None
                     self.output_gate_opened_at=now;self.turn_first_audio=False
-                    self.output_suppressed=False
-                    self.emit('agent_state_changed',new_state='speaking')
+                    if not self.render_only or self._speaking_handle is not None:
+                        self.output_suppressed=False
+                        self.emit('agent_state_changed',new_state='speaking')
             elif kind=='turn.done':
                 turn=event.get('turn',{})
                 role=turn.get('role');text=turn.get('transcript','')
-                if isinstance(text,str) and text:
+                if isinstance(text,str) and text and (not self.render_only or self._speaking_handle is not None):
                     self.task(self.caption(role,text,str(turn.get('id',uuid4()))))
                 if role=='user':
                     if isinstance(text,str):self.user_transcript(text)
@@ -346,11 +348,117 @@ class CodexMediaSession:
                     self.emit('agent_state_changed',new_state='listening')
         except (ValueError,TypeError,AttributeError):self.task(self.aclose())
 
+    def input_event(self, event):
+        """The input transport has no audio route and cannot initiate work."""
+        kind=event.get('type');turn=event.get('turn',{})
+        if kind in {'session.started','turn.created','turn.done','error','session.closed'}:
+            self.diagnostic('input_event',kind=kind,role=turn.get('role'))
+        if kind=='session.started':
+            self.started.set();self.microphone.enabled=True
+            self.emit('agent_state_changed',new_state='listening')
+        elif kind in {'error','session.closed'}:
+            self.task(self.aclose())
+        elif turn.get('role')=='user' and kind=='turn.created':
+            identity=turn.get('id')
+            if not isinstance(identity,str) or not 1<=len(identity)<=256:
+                raise ValueError('Missing input turn identity')
+            if identity in self._input_generations:return
+            if len(self._input_generations)>=128:raise ValueError('Voice capacity reached')
+            self.last_activity=time.monotonic()
+            self._generation+=1
+            self._input_generations[identity]=self._generation
+            self._input_open.add(identity)
+            if self._input_flush and not self._input_flush.done():self._input_flush.cancel()
+            if self.greeting and not self.greeting.done():self.greeting.cancel()
+            self.renderer.interrupt()
+            self.emit('user_state_changed',new_state='speaking')
+        elif turn.get('role')=='user' and kind=='turn.done':
+            identity=turn.get('id');text=turn.get('transcript')
+            if not isinstance(identity,str) or not 1<=len(identity)<=256:
+                raise ValueError('Missing input turn identity')
+            if not isinstance(text,str):raise ValueError('Invalid input transcript')
+            if len(text)>4096:raise ValueError('Input turn too long')
+            if identity in self._turns:
+                if self._turns[identity]!=text:raise ValueError('Conflicting input turn')
+                return
+            if len(self._turns)>=128 or self._core_pending>=8:
+                raise ValueError('Voice capacity reached')
+            self._turns[identity]=text
+            self._input_open.discard(identity)
+            if not text.strip():
+                # Settled noise may release a buffered sentence, but an explicit
+                # STOP after that noise must still revoke its eventual speech.
+                generation=self._input_generations.get(identity,-1)
+                if self._input_fragments and generation==self._generation:
+                    self._input_empty_generation=max(self._input_empty_generation,generation)
+                if self._input_flush and not self._input_flush.done():self._input_flush.cancel()
+                if self._input_fragments and not self._input_open:
+                    self._input_flush=self.task(self.flush_input())
+                return
+            self._input_fragments.append((identity,text,self._input_generations.get(identity,self._generation)))
+            if sum(len(row[1]) for row in self._input_fragments)>4096:
+                raise ValueError('Input utterance too long')
+            self.last_activity=time.monotonic()
+            self.task(self.caption('user',text,identity))
+            if self._input_flush and not self._input_flush.done():self._input_flush.cancel()
+            if not self._input_open:self._input_flush=self.task(self.flush_input())
+            self.emit('user_state_changed',new_state='listening')
+            self.emit('user_input_transcribed',is_final=True)
+
+    async def flush_input(self):
+        # The provider can finalize a clause just before recognizing its last
+        # word. A short quiet window joins only unadmitted adjacent fragments.
+        await asyncio.sleep(.45)
+        self.current()
+        if self._input_open:return
+        fragments=sorted(self._input_fragments,key=lambda row:row[2])
+        self._input_fragments=[]
+        if not fragments:return
+        if self._core_pending>=8:raise ValueError('Voice capacity reached')
+        text=' '.join(row[1].strip() for row in fragments)
+        key='voice-turn:'+json.dumps([row[0] for row in fragments],separators=(',',':'))
+        self._core_pending+=1
+        generation=max(fragments[-1][2],self._input_empty_generation)
+        self._input_empty_generation=0
+        self.task(self.core_turn(text,key,generation))
+
+    async def core_turn(self, text, key, generation):
+        self.current()
+        # Each recognized turn, including social contact, enters the same core.
+        # A new utterance revokes playback, never previously accepted work.
+        try:
+            async with self._core_lock:
+                try:
+                    answer=await self.bridge.dispatch(text,key)
+                except (httpx.HTTPError,RuntimeError) as error:
+                    self.current()
+                    self.diagnostic('core_reply_failed',error_type=type(error).__name__)
+                    self.bridge.notify({'type':'work_failed','message_id':str(uuid5(UUID(self.bridge.session_id),key))})
+                    answer='Ik kan hier nu geen betrouwbaar antwoord op geven. Een eventueel gestarte taak kan nog lopen.'
+                self.current()
+                self.bridge.transcript('user',text)
+        finally:
+            self._core_pending=max(0,self._core_pending-1)
+        if generation!=self._generation:return
+        handle=self.say(answer)
+        try:
+            await handle.task
+        finally:
+            if not self.closed:
+                self.bridge.transcript('assistant',answer,interrupted=(
+                    True if handle.task.cancelled() else None if handle.interrupted else False))
+        self.current()
+        normalized=re.sub(r"[.!?,]+$", "", text.strip().casefold()).strip()
+        farewell=re.fullmatch(r"(?:(?:dank\s*je(?:\s*wel)?|bedankt)(?:[,\s.!]+h[eèé])?[,\s.!]+)?(?:(?:tot\s+)?do\s*ei|tot ziens|tot later|tot morgen|bye|goodbye)(?:[, ]+eva)?",normalized)
+        if farewell and generation==self._generation:
+            self.diagnostic('farewell_session_close')
+            await self.aclose()
+
     def user_transcript(self, text):
         # Session controls match a complete standalone utterance, never a word
         # inside a question, quotation, cancellation of work or longer sentence.
         normalized=re.sub(r"[.!?,]+$", "", text.strip().casefold()).strip()
-        if not re.fullmatch(r"(?:(?:dank\s*je(?:\s*wel)?|bedankt)[,\s.!]+)?(?:doei|tot ziens|tot later|tot morgen|bye|goodbye)(?:[, ]+eva)?", normalized):
+        if not re.fullmatch(r"(?:(?:dank\s*je(?:\s*wel)?|bedankt)(?:[,\s.!]+h[eèé])?[,\s.!]+)?(?:(?:tot\s+)?do\s*ei|tot ziens|tot later|tot morgen|bye|goodbye)(?:[, ]+eva)?", normalized):
             return
         if self._farewell_task and not self._farewell_task.done():return
         self.diagnostic('farewell_detected')
@@ -394,14 +502,17 @@ class CodexMediaSession:
         self.opened_at=time.monotonic()
         self.last_activity=self.opened_at
         if self.state is None:self.state=agent.state
-        self.bridge=await EvaVoiceBackend(self.state.backend,self.state.session_id,self.current,
+        if not self.render_only:
+            self.bridge=await EvaVoiceBackend(self.state.backend,self.state.session_id,self.current,
             self.state.notify,state=self.state,refresh_context=agent.refresh_saved_context).open()
+            self.bridge.allow_handoffs=False
         self.voice=CodexVoiceSession(self.config['codex_executable'],
-            lambda:access_lease(self.config['codex_auth_file']),self.bridge)
+            lambda:access_lease(self.config['codex_auth_file']),self.bridge,media_only=True)
         self.prewarm()
         self.channel.on('message', self.provider_message)
         @self.peer.on('track')
-        def output(track):self.task(self.play(track))
+        def output(track):
+            self.task(self.play(track) if self.render_only else self.discard_audio(track))
         @self.peer.on('connectionstatechange')
         def connection():
             self.transport_diagnostic('connection_state')
@@ -409,7 +520,9 @@ class CodexMediaSession:
                 self.task(self.aclose())
         @self.peer.on('iceconnectionstatechange')
         def ice_connection():self.transport_diagnostic('ice_state')
-        if room is None:
+        if self.render_only:
+            pass  # Shared output, no microphone input or independent core.
+        elif room is None:
             if self.output.audio is None:raise ValueError('Speaker output missing')
             from eva.voice_service.codex_speaker_audio import SpeakerSource
             self.source=SpeakerSource(self.output.audio,self.diagnostic)
@@ -434,23 +547,38 @@ class CodexMediaSession:
                 if not isinstance(text,str) or not 1<=len(text)<=4096:return
                 self.current()
                 # Typed messages go directly to the same core, never a second model.
-                answer=await self.bridge.dispatch(text,uuid4().hex)
-                self.say(answer)
+                if self._core_pending>=8:raise ValueError('Voice capacity reached')
+                self._core_pending+=1
+                self.interrupt()
+                await self.core_turn(text,uuid4().hex,self._generation)
             room.register_text_stream_handler('lk.chat',lambda reader,participant_identity:self.task(typed(reader,participant_identity)))
         # Drain native capture before account negotiation: the provisioned wire
         # intentionally permits only two seconds of unread microphone audio.
+        if not self.render_only:
+            self.renderer.state=self.state
+            self.renderer.bridge=self.bridge;self.renderer.source=self.source
+            self.renderer.room=room
+            for name in ('agent_state_changed',):
+                self.renderer.on(name,lambda event,n=name:self.emit(n,**vars(event)))
+            if room is not None:
+                self.renderer.output_publication=self.output_publication
+            self.renderer.on('close',lambda _:self.task(self.aclose()) if not self.closed else None)
+            renderer_start=self.task(self.renderer.start(agent,room=room))
         self.diagnostic('account_start')
         await self.voice.__aenter__()
         self.diagnostic('account_ready')
         await self.prepared
         self.current()
-        answer=await self.voice.start(self.peer.localDescription.sdp,prompt=VOICE_PROMPT)
+        answer=await self.voice.start(self.peer.localDescription.sdp,
+            prompt=SPEECH_PROMPT if self.render_only else VOICE_PROMPT,
+            output_modality='audio')
         self.diagnostic('voice_answer_ready')
         await self.peer.setRemoteDescription(RTCSessionDescription(sdp=answer,type='answer'))
         await asyncio.wait_for(self.started.wait(),15)
+        if not self.render_only:await renderer_start
         self.diagnostic('media_ready')
         self.task(self.watch_voice())
-        self.task(self.watch_lifetime())
+        if not self.render_only:self.task(self.watch_lifetime())
 
     async def greet(self):
         import secrets
@@ -500,6 +628,12 @@ class CodexMediaSession:
         finally:
             await stream.aclose()
 
+    async def discard_audio(self,track):
+        # Even unexpected provider audio has no path to the user's speaker.
+        while True:
+            await track.recv()
+            self.current()
+
     async def play(self,track):
         if self.greeting:
             try:await asyncio.shield(self.greeting)
@@ -537,6 +671,7 @@ class CodexMediaSession:
             track_sid=track_id,segments=[rtc.TranscriptionSegment(id=identity,text=text,start_time=0,end_time=0,final=True,language='nl')]))
 
     def say(self,text,**_):
+        if self.renderer is not None:return self.renderer.say(text,**_)
         def interrupted():
             # Revoking a saved result must stop its media, not just its waiter.
             # Cancelling a queued offer must not silence somebody else's answer.
@@ -549,14 +684,19 @@ class CodexMediaSession:
                 for offset in range(0,len(value),1500):
                     self.current();offered=True
                     await asyncio.wait_for(self._assistant_idle.wait(),30)
+                    self.current()
                     marker=(self.source.playback_marker()
                         if hasattr(self.source,'playback_marker') else None)
                     self._speech_turn=None
                     self._speech_waiter=asyncio.get_running_loop().create_future()
                     try:
                         self._speaking_handle=handle
+                        # Renderer receives no user audio; open before RPC so
+                        # early RTP cannot clip the first words.
+                        self.output_suppressed=False
                         await self.voice.say(value[offset:offset+1500])
-                        await asyncio.wait_for(self._speech_waiter,30)
+                        await asyncio.wait_for(self._speech_waiter,
+                            max(30,min(180,len(value[offset:offset+1500])/8+10)))
                         played=False
                         if marker is not None:
                             try:played=await asyncio.wait_for(self.source.confirm_playout(marker),10)
@@ -569,11 +709,16 @@ class CodexMediaSession:
             # advance a new part or an independently queued saved result.
             async with self._speech_lock:
                 try:
+                    if self.render_only:
+                        await asyncio.wait_for(self.started.wait(),30)
+                        self.current()
                     if isinstance(text,str):await part(text)
                     else:
                         async for value in text:await part(value)
                     if offered and confirmed:handle.interrupted=False
-                finally:self._speaking_handle=None
+                finally:
+                    self._speaking_handle=None
+                    if self.render_only:self.output_suppressed=True
         handle.task=self.task(send());self.speech_handles.add(handle)
         handle.task.add_done_callback(lambda _:self.speech_handles.discard(handle))
         return handle
@@ -583,15 +728,21 @@ class CodexMediaSession:
             while not self.microphone.frames.empty():self.microphone.frames.get_nowait()
 
     def stop_current_audio(self):
+        if self.renderer is not None:
+            self._generation+=1
+            return self.renderer.stop_current_audio()
         self.output_suppressed=True
         self.retire_interrupted_output()
         if self.source:self.source.clear_queue()
-        if self.voice and not self.closed:
+        if self.voice and not self.closed and self._assistant_turns:
             self.task(self.voice.request('thread/realtime/appendText',{
                 'threadId':self.voice.thread,'role':'developer',
                 'text':'Stop speaking now and listen. Previously accepted backend work remains active.'}))
 
     def interrupt(self):
+        if self.renderer is not None:
+            self._generation+=1
+            return self.renderer.interrupt()
         self.stop_current_audio()
         for handle in list(self.speech_handles):handle.interrupt(notify_provider=False)
 
@@ -622,15 +773,16 @@ class CodexMediaSession:
             async def cleanup():
                 await asyncio.gather(*owned,return_exceptions=True)
                 try:
+                    if self.renderer:await self.renderer.aclose()
                     if self.voice:await self.voice.close()
                 finally:
                     try:
                         if self.peer:await self.peer.close()
                     finally:
                         try:
-                            if self.bridge:await self.bridge.close()
+                            if self.bridge and not self.render_only:await self.bridge.close()
                         finally:
-                            if self.source:await self.source.aclose()
+                            if self.source and not self.render_only:await self.source.aclose()
                             self.emit('close')
             self._closing=asyncio.create_task(cleanup())
         if self._closing is not asyncio.current_task():await asyncio.shield(self._closing)

@@ -1,0 +1,135 @@
+{
+  "checkedAt": "2026-10-16T16:36:26.607754+00:00",
+  "status": "installed_owner_review_pending",
+  "ownerRequirement": "One Eva across voice, text, memory and commands.",
+  "architecture": {
+    "ingress": "Final original user transcripts admitted to the existing authorized household/private conversation core; social turns included.",
+    "output": "Only core answers or previously authorized saved-result text are supplied to the speech renderer.",
+    "boundary": "Listener RTP discarded unconditionally; native model backend handoffs rejected; renderer receives silence instead of user microphone input.",
+    "memory": "Same core conversation storage, retrieved context and durable work. No new memory/planner or identity.",
+    "fragmentWindowMs": 450,
+    "transportSessionsPerConversation": 2
+  },
+  "changes": [
+    "Deduplicate turn IDs; reject conflicting replay; combine immediately adjoining unadmitted transcript fragments.",
+    "Bind speech permission to input generation; STOP and interruptions revoke stale speech without cancelling accepted durable work.",
+    "Wait for renderer readiness; preserve existing prefix buffer and 100ms output priming.",
+    "Farewell goes through core, then output completion before session close. Unknown playback stays unconfirmed.",
+    "Disable unnecessary media app/plugin initialization; bound speaker temporary storage to128MiB."
+  ],
+  "tests": {
+    "passed": 93,
+    "failed": 0,
+    "independentReview": "review_cursor: no remaining scoped code blockers"
+  },
+  "runtime": [
+    {
+      "name": "eva2-household-speaker-1",
+      "slug": "speaker",
+      "project": "eva2-household-speaker",
+      "service": "speaker",
+      "base": "sha256:7d61a092e23f2a6b62610e13b0fabbdf49270c9eb5b52e03babdab7e99dbe0c7",
+      "tag": "eva2-voice-single-core-speaker:20261016-installed",
+      "hashes": {
+        "codex_media": "52effaef1c3de4df50c65d63a1d7ea2b2b5f46529969a3d449926c85f50ad91a",
+        "codex_session": "180cdd56e7b0d7fc0f1a3b2d5ed745717a6b3430f54c1a01950547c22b842c48",
+        "codex_backend": "021459a47d509bec0dfc0900e88ebd5067692e2c4d94a3b8209969fb4d61e865"
+      },
+      "installed_image": "sha256:999c0a8a14b67be97a95af1796544738d0cc18c48f1f66a0c90db33cb87cbcf2",
+      "running": true
+    },
+    {
+      "name": "eva2-owner-voice-media-1",
+      "slug": "media",
+      "project": "eva2-owner-voice",
+      "service": "media",
+      "base": "sha256:1b3b3a27be7135b79b73e8805f8c8d1f068ab8cc6762a85a367b3b0e731852a3",
+      "tag": "eva2-voice-single-core-media:20261016-installed",
+      "hashes": {
+        "codex_media": "52effaef1c3de4df50c65d63a1d7ea2b2b5f46529969a3d449926c85f50ad91a",
+        "codex_session": "180cdd56e7b0d7fc0f1a3b2d5ed745717a6b3430f54c1a01950547c22b842c48",
+        "codex_backend": "021459a47d509bec0dfc0900e88ebd5067692e2c4d94a3b8209969fb4d61e865"
+      },
+      "installed_image": "sha256:e50c0d603d639a51a609a86700ed12c454bf211b0c77c82eaa9bd881592fb309",
+      "running": true
+    }
+  ],
+  "preinstallConversation": {
+    "readyMs": 11439,
+    "coreFinals": 4,
+    "recognizedTurns": 4,
+    "timings": [
+      {
+        "turn": 0,
+        "elapsed_ms": 17901,
+        "first_audio_ms": 17861,
+        "audio_samples": 11040
+      },
+      {
+        "turn": 1,
+        "elapsed_ms": 18632,
+        "audio_samples": 107040
+      },
+      {
+        "turn": 2,
+        "elapsed_ms": 14546,
+        "first_audio_ms": 12345,
+        "audio_samples": 31200
+      },
+      {
+        "turn": 3,
+        "elapsed_ms": 13601,
+        "first_audio_ms": 11079,
+        "audio_samples": 43200
+      }
+    ],
+    "closedAfterFarewell": true,
+    "physicalAudio": false
+  },
+  "postinstallConversation": {
+    "readyMs": 12253,
+    "coreFinals": 2,
+    "recognizedTurns": 2,
+    "timings": [
+      {
+        "turn": 0,
+        "elapsed_ms": 14373,
+        "first_audio_ms": 12361,
+        "audio_samples": 30720
+      },
+      {
+        "turn": 1,
+        "elapsed_ms": 13820,
+        "audio_samples": 41280
+      }
+    ],
+    "closedAfterFarewell": true,
+    "physicalAudio": false
+  },
+  "memoryChecks": {
+    "correctionRecalledInSameSession": true,
+    "correctionRecalledInNewSession": true
+  },
+  "interruptionConfirmed": true,
+  "limits": [
+    "Automated audio input and output capture; no physical hearing or native device ACK simulated.",
+    "Speech renderer may normalize or rephrase text; strict verbatim reproduction not established.",
+    "Every conversational turn now waits for the same core. Latency remains noticeable; no claim that prior fast local-smalltalk latency is retained.",
+    "Existing bounded, audience-scoped history is not an exhaustive activity ledger."
+  ],
+  "usage": {
+    "successfulPreinstallCoreRequests": 4,
+    "successfulPostinstallCoreRequests": 2,
+    "modelCalls": null,
+    "credits": null,
+    "developmentUsage": "Includes additional synthesis, unsuccessful protocol probes and tests; separate from ongoing Eva runtime, no total credit estimate."
+  },
+  "excludedProbes": [
+    "Text output with v3 rejected by installed protocol.",
+    "Silent listener did not finalize user transcripts.",
+    "32MiB temporary storage exhausted in initial two-transport probe.",
+    "Initial multi-turn probe exposed transcript fragmentation; corrected and tested before installation.",
+    "Postinstall recognition rendered goodbye as dank je, tot doei and dank je, hè. Do ei; these standalone farewell variants were added and tested."
+  ],
+  "privacy": "No private transcripts, raw audio, account material or task contents included."
+}

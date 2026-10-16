@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     command: ["/run/speaker-deploy/launch.py"]
     tmpfs:
-      - /tmp:rw,nosuid,nodev,size=32m,uid=65532,gid=65532,mode=0700
+      - /tmp:rw,nosuid,nodev,size=128m,uid=65532,gid=65532,mode=0700
       - /run/eva-speaker-runtime:rw,nosuid,nodev,noexec,size=1m,uid=65532,gid=65532,mode=0700
     volumes:
       - type: bind
