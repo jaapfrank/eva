@@ -18,8 +18,11 @@ _BOUND = 65536
 MODEL_INLINE_BOUND = 8192
 _TRANSPORT_BOUND = 2097152
 _current = ContextVar("connector_result_capture", default=None)
-SOURCE_RESPONSE_FIELDS = ("success", "http_status", "truncated", "selection_error",
-                          "request_sent", "response_sha256", "external_state_verified")
+LEGACY_SOURCE_RESPONSE_FIELDS = ("success", "http_status", "truncated", "selection_error",
+                                "request_sent", "response_sha256", "external_state_verified")
+SOURCE_RESPONSE_FIELDS = (*LEGACY_SOURCE_RESPONSE_FIELDS,
+                          "section", "area_id", "domain", "captured_at", "snapshot_sha256",
+                          "offset", "total", "has_more", "next_offset")
 
 
 class ConnectorSelectionError(ConversationConflict):

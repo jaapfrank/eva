@@ -145,6 +145,50 @@ def _retained_ha():
     return port, timeline, thread, stopped, authorize
 
 
+@pytest.mark.parametrize("has_more,next_offset", [(True, 50), (False, None)])
+def test_large_inventory_preserves_source_cursor_separately_from_saved_bytes(has_more, next_offset):
+    from copy import deepcopy
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel, ConversationModelError
+    port, timeline, old_thread, _, authorize = _retained_ha()
+    port._action_names = ("read_home_assistant_inventory",)
+    thread = port._thread_id(TURN, "read_home_assistant_inventory", 1)
+    timeline.rows[thread] = timeline.rows.pop(old_thread)
+    admission = timeline.rows[thread][0].payload["data"]
+    admission.update(action_name="read_home_assistant_inventory",
+        action_arguments={"section": "entities", "domain": "light", "area_id": "",
+                          "offset": 0, "snapshot_sha256": "", "automation_ids": []},
+        receipt_output={"provider": "home_assistant"}, observation_output_key="inventory")
+    observation = {"section": "entities", "domain": "light", "area_id": "",
+        "captured_at": "2026-10-16T10:00:00Z", "snapshot_sha256": "a" * 64,
+        "offset": 0, "total": 75 if has_more else 50,
+        "has_more": has_more, "next_offset": next_offset,
+        "items": [{"entity_id": f"light.item_{i}", "name": "Long device label " * 12}
+                  for i in range(50)]}
+    evidence = timeline.rows[thread][-1].payload["data"]["proof"]["evidence"]
+    evidence.update(source="home_assistant_inventory", observation=observation)
+    before = _encoded([event.payload for event in timeline.rows[thread]])
+    receipt = port._receipt(TURN, timeline.events(thread), 1)
+    view = PydanticConversationModel._receipt_presentation(receipt)
+    manifest = view["inventory"]
+    expected = {key: value for key, value in observation.items() if key != "items"}
+    assert manifest["source_response"] == expected
+    assert manifest["sha256"] != manifest["source_response"]["snapshot_sha256"]
+    assert manifest["has_more"] is True  # Preview pagination differs from source pagination.
+    assert _encoded([event.payload for event in timeline.rows[thread]]) == before
+    capture = ConnectorResults(timeline, TURN, authorize)
+    page = capture.read(manifest["reader"]["tool_id"],
+        {"pointer": "/snapshot_sha256", "offset": 0, "limit": 100, "query": None})
+    assert page["text"] == expected["snapshot_sha256"]
+    legacy = deepcopy(receipt.model_output)
+    legacy["inventory"]["source_response"] = {}
+    assert PydanticConversationModel._receipt_presentation(
+        replace(receipt, model_output=legacy))["inventory"]["source_response"] == {}
+    tampered = deepcopy(receipt.model_output)
+    tampered["inventory"]["source_response"]["snapshot_sha256"] = "b" * 64
+    with pytest.raises(ConversationModelError):
+        PydanticConversationModel._receipt_presentation(replace(receipt, model_output=tampered))
+
+
 def test_retained_ha_projection_resume_and_local_reader_preserve_raw_proof():
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel, _InputBudgetError
     from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256

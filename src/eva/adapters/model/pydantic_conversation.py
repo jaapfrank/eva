@@ -811,7 +811,9 @@ class PydanticConversationModel:
             view = {key: value for key, value in view.items() if key != "ancestor_model_projection"}
             if not view:
                 return receipt.output
-        from eva.adapters.postgres.connector_results import _encoded, READER_PREFIX, SOURCE_RESPONSE_FIELDS
+        from eva.adapters.postgres.connector_results import (
+            _encoded, READER_PREFIX, SOURCE_RESPONSE_FIELDS, LEGACY_SOURCE_RESPONSE_FIELDS,
+        )
         output = receipt.output
         metadata = view.get("model_projection")
         proof = output.get("proof")
@@ -830,8 +832,10 @@ class PydanticConversationModel:
                 or manifest.get("sha256") != hashlib.sha256(_encoded(observation)).hexdigest()
                 or manifest.get("byte_length") != len(_encoded(observation))
                 or manifest.get("source_output_truncated") != (observation.get("truncated") is True)
-                or manifest.get("source_response") != {key: observation[key]
-                    for key in SOURCE_RESPONSE_FIELDS if key in observation}
+                or manifest.get("source_response") not in (
+                    {key: observation[key] for key in SOURCE_RESPONSE_FIELDS if key in observation},
+                    {key: observation[key] for key in LEGACY_SOURCE_RESPONSE_FIELDS if key in observation},
+                )
                 or not isinstance(manifest.get("reader"), dict)
                 or manifest["reader"].get("action") != "use_connector_tool"
                 or not str(manifest["reader"].get("tool_id", "")).startswith(READER_PREFIX)):

@@ -1,0 +1,203 @@
+{
+  "checkedAt": "2026-10-16T10:46:44.374054+00:00",
+  "scope": "Existing household voice conversation inventory paging; no new voice platform",
+  "change": "Preserve source paging metadata separately from saved-byte digest and local preview pagination, accepting exact legacy projections.",
+  "baseline": {
+    "weather_backend_ms": 16677,
+    "inventory_backend_ms": [
+      21310,
+      14349
+    ],
+    "inventory_followup": "snapshot_unavailable: saved-byte digest used as source snapshot; offset incorrectly repeated at zero"
+  },
+  "candidate": {
+    "events": [
+      {
+        "stage": "active_context",
+        "elapsed_ms": 1251
+      },
+      {
+        "stage": "recall_for_presence_fast",
+        "elapsed_ms": 6940
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 4815,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 5313,
+          "output_tokens": 42
+        },
+        "timing": {
+          "first_content_ms": null,
+          "completed_ms": 4325
+        },
+        "action": "read_home_assistant_inventory"
+      },
+      {
+        "stage": "execute",
+        "elapsed_ms": 776
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 5575,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 8385,
+          "output_tokens": 135
+        },
+        "timing": {
+          "first_content_ms": null,
+          "completed_ms": 5235
+        },
+        "action": "read_home_assistant_inventory"
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 3717,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 8426,
+          "output_tokens": 83
+        },
+        "timing": {
+          "first_content_ms": null,
+          "completed_ms": 2714
+        },
+        "action": "read_home_assistant_inventory"
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 5625,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 9611,
+          "output_tokens": 129
+        },
+        "timing": {
+          "first_content_ms": null,
+          "completed_ms": 5025
+        },
+        "action": "home_assistant_request"
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 7566,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 11984,
+          "output_tokens": 110
+        },
+        "timing": {
+          "first_content_ms": null,
+          "completed_ms": 6530
+        },
+        "action": "read_home_assistant_inventory"
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 11342,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 12848,
+          "output_tokens": 212
+        },
+        "timing": {
+          "first_content_ms": 6435,
+          "completed_ms": 9452
+        },
+        "action": null
+      },
+      {
+        "stage": "case",
+        "elapsed_ms": 54027,
+        "index": 0,
+        "message_id": "9f8752eb-e7ca-4f82-a022-73b15aa1ad14",
+        "session_id": "ea469e24-ff01-4bfb-ac25-006c71d15e23",
+        "completed": true,
+        "answer_characters": 301,
+        "actions": [
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "home_assistant_request",
+            "status": "verified"
+          },
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          }
+        ]
+      }
+    ],
+    "source_offsets_verified": [
+      0,
+      50,
+      100
+    ],
+    "snapshot_failure_observed": false,
+    "speed_improvement_proven": false,
+    "remaining": "Model repeated inventory after successful pages; 54027 ms response. Full inventory answer completeness not independently judged."
+  },
+  "tests": {
+    "passed": 60,
+    "deselected": 2,
+    "preexisting_failure": "test_real_conversation_receives_read_error_and_finishes_following_service: None engine.url; reproduced on unchanged installed base",
+    "independent_review": "review_cursor: no remaining concrete blockers; raw proof, exact legacy/full projection validation and source pagination covered"
+  },
+  "memory": {
+    "restarted_existing_service": true,
+    "recall_restored": true,
+    "gpu_error_recurred": true,
+    "root_cause_resolved": false,
+    "health_endpoint_did_not_detect_failure": true
+  },
+  "acceptance": {
+    "physical_audio_tested": false,
+    "missing_first_words_resolved": false,
+    "full_voice_accepted": false
+  },
+  "installation": {
+    "status": "installed_verified",
+    "config": "/var/lib/eva2/voice-session/inventory-cursor-20261016/candidate.json",
+    "core_base": "sha256:d7424e83432950d86c6f5101ebbceaf19b0c191c13558bd23c4e9471cc59d8c2",
+    "worker_base": "sha256:6ba2f58c30313b3a1d3a31db86f30e750b537ca2184764c001476cf85b19c86b",
+    "core_image": "sha256:309c7e871d09901cf85dddc73e824a455cfd248eb04b2ddf10a2d71cfb1c01f5",
+    "worker_image": "sha256:33757b4250bd04f05140665a8af0724840866fc6fe8a462ef681507a4534e185",
+    "both_services_healthy": true,
+    "speaker_bindings_ready": [
+      true,
+      true
+    ],
+    "healthz_http_status": 200
+  },
+  "usage": {
+    "runtime_model_attempts": 6,
+    "runtime_input_tokens": 56567,
+    "runtime_output_tokens": 711,
+    "development_model_tokens": null,
+    "credits": null
+  }
+}
