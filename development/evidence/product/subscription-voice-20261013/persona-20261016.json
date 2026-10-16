@@ -1,0 +1,128 @@
+{
+  "checkedAt": "2026-10-16T14:12:01.640094+00:00",
+  "status": "installed_owner_review_pending",
+  "ownerFeedback": {
+    "audio": "Output now sounds good",
+    "speed": "Acceptable",
+    "remaining": "Separate-person phrasing, mechanical interim responses, incomplete own activity knowledge."
+  },
+  "changes": [
+    "First-person voice identity; delegation remains mandatory but internal. No default waiting announcements or unrelated follow-up questions.",
+    "First-person transport failure wording without false completion.",
+    "Preserve original creation, update and completion times in existing authorized task metadata and household list/get.",
+    "Correct list receipt guidance: jobs, not work; use one list and relevant saved results.",
+    "Broader work questions use task context rather than recent dialogue alone; no invented history."
+  ],
+  "tests": {
+    "application": 13,
+    "installedVoice": 43
+  },
+  "runtime": [
+    {
+      "name": "eva2-household-speaker-1",
+      "slug": "speaker",
+      "project": "eva2-household-speaker",
+      "service": "speaker",
+      "base": "sha256:4f3ed96ac2488b798403d208bbca6856dcb03bacfb28f3d61af3a92200e7ad90",
+      "tag": "eva2-voice-persona-speaker:20261016",
+      "hashes": {
+        "voice_service/codex_media.py": "505aaa60a5140dc7388f865f88f2b0b51825baa75b306e34e9b86db65e46ac26",
+        "voice_service/codex_backend.py": "d9fdb411dabece6912ecaa279ad71b25453e233ce60458d7c5fe6421fd1771a2"
+      },
+      "installed_image": "sha256:790880c03e90fc3042b47de8b266a8280992874382f7ffda3c0f264af2700865",
+      "hashesVerified": true
+    },
+    {
+      "name": "eva2-owner-voice-media-1",
+      "slug": "media",
+      "project": "eva2-owner-voice",
+      "service": "media",
+      "base": "sha256:ad3e5b80efdad09bd463190c07c89b8969871f869d6afd544c99604420f1c07f",
+      "tag": "eva2-voice-persona-media:20261016",
+      "hashes": {
+        "voice_service/codex_media.py": "505aaa60a5140dc7388f865f88f2b0b51825baa75b306e34e9b86db65e46ac26",
+        "voice_service/codex_backend.py": "d9fdb411dabece6912ecaa279ad71b25453e233ce60458d7c5fe6421fd1771a2"
+      },
+      "installed_image": "sha256:2f546f6f5dad052be16c33487b85b1dfbc6adbdc0434a280c6c66721a3ddb98e",
+      "hashesVerified": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "slug": "core",
+      "project": "eva2-managed-b-slot3",
+      "service": "core",
+      "base": "sha256:27e9c867dc9a8edc09443fe8ea9d25c96699631e15e3d72d0e6899db7f56926e",
+      "tag": "eva2-voice-persona-core:20261016",
+      "hashes": {
+        "application/work_context.py": "128277e278abaa40d7e4fcc10a7df5e54ec9842121316596b9bb078f3fc8dc99",
+        "application/voice_context.py": "4b7972c37f7cbcfe6329a58fe9926b596cff8471ca8b49ef2494190b3a86e4a8",
+        "adapters/postgres/delegated_work_actions.py": "63acbe0726ad57e2fa83c493327a2d2e9f5910f5aa131412d855370f66516d08",
+        "bootstrap/household_work.py": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd"
+      },
+      "installed_image": "sha256:3a3e3d795f5bdbfd3b5eaf5d94a0dc7f2a909d5fcf4b75380dd71f3234e8bfbe",
+      "hashesVerified": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "slug": "worker",
+      "project": "eva2-managed-b-slot3",
+      "service": "delegated-work-worker",
+      "base": "sha256:7455c64028d861b92ffc19245390cf06d7d8a8772a0aa622b77d430fe5b3415e",
+      "tag": "eva2-voice-persona-worker:20261016",
+      "hashes": {
+        "application/work_context.py": "128277e278abaa40d7e4fcc10a7df5e54ec9842121316596b9bb078f3fc8dc99",
+        "application/voice_context.py": "4b7972c37f7cbcfe6329a58fe9926b596cff8471ca8b49ef2494190b3a86e4a8",
+        "adapters/postgres/delegated_work_actions.py": "63acbe0726ad57e2fa83c493327a2d2e9f5910f5aa131412d855370f66516d08",
+        "bootstrap/household_work.py": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd"
+      },
+      "installed_image": "sha256:eae839102b3734dcaaf30f25eadf8c00e602e04132e387428a937cb9e2bfefd5",
+      "hashesVerified": true
+    }
+  ],
+  "liveCore": {
+    "beforeListGuidanceFix": {
+      "backendMs": 37121,
+      "modelCalls": 5,
+      "repeatedListCalls": 4
+    },
+    "afterListGuidanceFix": {
+      "backendMs": 21108,
+      "modelCalls": 2,
+      "listCalls": 1,
+      "verified": true
+    },
+    "quality": "Uses real dated task states, distinguishes previous-day completion and failures. Still cannot establish original inventory execution from retained conversational mentions."
+  },
+  "voiceProbe": {
+    "typedInput": "Not accepted as evidence of spoken-user delegation; timed out waiting for backend result.",
+    "firstAudioInput": "Invalid test input: synthesizer answered the question rather than reading it. Detected from actual ASR transcript; excluded from product assessment.",
+    "correctedAudioInput": {
+      "elapsed_ms": 53494,
+      "backend_results": 1,
+      "audio_samples": 544800,
+      "session_open": true,
+      "physical_audio": false
+    },
+    "observedOutcome": {
+      "actualAudioInputRecognized": true,
+      "backendDelegationObserved": true,
+      "firstPersonReply": true,
+      "handoffOrLookupAnnouncement": false,
+      "datedTaskStatesUsed": true,
+      "inventoryExecutionDateStillUnknown": true,
+      "physicalSpeakerUsed": false
+    }
+  },
+  "independentReview": {
+    "reviewer": "review_cursor",
+    "blockingFindings": 0,
+    "householdListTestAdded": true
+  },
+  "limits": [
+    "Recent conversation and task history remain bounded and audience-scoped; no exhaustive day ledger claimed.",
+    "Conversational naturalness needs owner feedback.",
+    "Earlier model statements are not proof of executed actions."
+  ],
+  "physicalAudioAcceptance": false,
+  "privacy": "No private transcripts, raw audio, credentials or task contents included."
+}

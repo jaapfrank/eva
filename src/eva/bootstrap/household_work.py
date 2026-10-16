@@ -274,6 +274,9 @@ class HouseholdWorkService:
         return dict(
             work_id=work.spec.work_id,
             title=work.title,
+            created_at=work.spec.created_at,
+            updated_at=work.updated_at.isoformat(),
+            completed_at=None if work.result is None else work.result.completed_at,
             question=work.spec.task,
             generation=work.spec.generation,
             parent_work_id=work.spec.parent_task_id if work.spec.parent_task_id.startswith("work:") else None,
@@ -373,7 +376,7 @@ class HouseholdWorkService:
             rows = self._native_work(self.origin(turn), limit=21)
             # Listing supplies selection context, not all completed research text.
             return {"jobs": [{key: view[key] for key in
-                    ("work_id", "title", "question", "state", "generation", "stop_requested")}
+                    ("work_id", "title", "question", "state", "generation", "stop_requested", "created_at", "updated_at", "completed_at")}
                     for view in (self.view(work) for work in rows[:20])], "truncated": len(rows) > 20}
         if prior_work_id is not None:
             if operation != "research" or not isinstance(prior_work_id, str) or not 1 <= len(prior_work_id) <= 240:

@@ -151,6 +151,13 @@ class PostgresDelegatedWorkActions:
                  "Zoekresultaten staan in operation_result.jobs. Open de passende work_id met get_delegated_work. "
                  "Gebruik next_before_work_id alleen wanneer truncated waar is. Geen treffer bewijst geen afwezig verleden."
                  if operation == "search" else
+                 "De taaklijst staat in operation_result.jobs, niet operation_result.work. "
+                 "Gebruik deze lijst eenmaal; dezelfde lijst opnieuw opvragen voegt geen oudere taken toe. "
+                 "Open alleen relevante work_id's met get_delegated_work voor hun echte resultaat. "
+                 "created_at is het startmoment, updated_at de laatste wijziging en completed_at "
+                 "een opgeslagen eindmoment indien aanwezig; lees de state voor succes of mislukking. "
+                 "Een begrensde of afgekorte lijst bewijst niet dat er verder niets is gebeurd."
+                 if operation == "list" else
                  "Rapporteer het bewaarde startmoment en de schedule_id. Ingepland betekent nog niet uitgevoerd. "
                  "Een geblokkeerde start vereist bijsturing; beloof geen automatische herhaling."
                  if operation.startswith("schedule_") else
@@ -242,14 +249,17 @@ class PostgresDelegatedWorkActions:
             return (explicit_id, score / math.sqrt(max(1, len(words))))
 
         active = sorted(active, key=relevance, reverse=True)
-        selected = [{"work_id": job["work_id"], "title": job["title"][:160], "state": job["state"]}
+        selected = [{"work_id": job["work_id"], "title": job["title"][:160], "state": job["state"],
+                     "created_at": job.get("created_at"), "updated_at": job.get("updated_at")}
                     for job in active[:8]]
         outcomes = sorted((job for job in listing.get("jobs", ())
                            if job.get("recent_outcome", False)),
                           key=lambda job: job.get("updated_at", ""), reverse=True)
         outcomes = sorted(outcomes, key=relevance, reverse=True)
         recent = [{"work_id": job["work_id"], "title": job["title"][:120],
-                   "state": job["state"], "result_available": job.get("result_available", False)}
+                   "state": job["state"], "result_available": job.get("result_available", False),
+                   "created_at": job.get("created_at"), "updated_at": job.get("updated_at"),
+                   "completed_at": job.get("completed_at")}
                   for job in outcomes[:3]]
         limited = listing.get("truncated", False) or len(active) > 8 or len(outcomes) > 3
         context = []
@@ -258,6 +268,10 @@ class PostgresDelegatedWorkActions:
                 + canonical_json_bytes({"active": selected, "recent_outcomes": recent,
                                         "limited": bool(limited)}).decode("utf-8")
                 + " Recent betekent bijgewerkt in de laatste 24 uur, niet noodzakelijk zojuist afgeleverd. "
+                "Timestamps describe creation, last update and recorded completion separately; "
+                "an update is not proof of completion or delivery. This bounded selection is not "
+                "a complete activity history. For a broader account of your work, inspect "
+                "list_delegated_work and read relevant results before describing their contents. "
                 "For questions about an earlier result or failure, read its real work_id with "
                 "get_delegated_work before discussing the content; do not start new work. "
                 "A current explicit request to perform an action is new work even if its wording "

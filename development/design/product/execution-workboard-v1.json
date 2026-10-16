@@ -1638,6 +1638,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Voice · Eén Eva en gedateerde taakcontext",
+            "state": "installed",
+            "checkedAt": "2026-10-16T14:12:01.640094+00:00",
+            "summary": "Eerste-persoon stem; interne overdracht niet uitspreken, geen vaste wachtreacties. Taaktijden behouden en taaklijst-uitleg hersteld.56 tests; geïnstalleerde bronnen gecontroleerd.",
+            "remaining": "Natuurlijkheid nog beoordelen. Begrensde geschiedenis is geen volledig daglogboek; oorspronkelijke uitvoering ontbreekt soms in gesprekscontext.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/persona-20261016.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "smallTaskCountsUnchanged": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "E2.4 · Initiatief en leren zichtbaar; actuele werkvoorraad gescheiden",
             "state": "installed",
             "checkedAt": "2026-10-16T13:33:11.133399+00:00",
@@ -7783,6 +7795,14 @@
         "audioFollowupEvidence": "development/evidence/product/subscription-voice-20261013/turn-gate-20261016.json",
         "followupEvidence": "development/evidence/product/subscription-voice-20261013/followup-20261016.json",
         "dayContext": "UTC source timestamps preserved; live answer now places recorded activity today.103 model tests."
+      },
+      "persona20261016": {
+        "status": "installed_owner_review_pending",
+        "checkedAt": "2026-10-16T14:12:01.640094+00:00",
+        "evidence": "development/evidence/product/subscription-voice-20261013/persona-20261016.json",
+        "ownerAcceptedAudioAndSpeed": true,
+        "summary": "Eerste-persoon stem; interne overdracht niet uitspreken, geen vaste wachtreacties. Taaktijden behouden en taaklijst-uitleg hersteld.56 tests; geïnstalleerde bronnen gecontroleerd.",
+        "remaining": "Natuurlijkheid nog beoordelen. Begrensde geschiedenis is geen volledig daglogboek; oorspronkelijke uitvoering ontbreekt soms in gesprekscontext."
       }
     },
     "aideRetainedResume20261013": {
