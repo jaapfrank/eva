@@ -2222,7 +2222,7 @@
         "next": {
           "title": "E3.2 · Actieve kerncode inhoudelijk beoordelen",
           "state": "Eerstvolgende uitvoerbare taak",
-          "summary": "Gerichte inhoudelijke beoordeling vanuit het vaste register; eerst bekende bronverschillen en echte overdrachten.",
+          "summary": "E3.2 blijft de volgende uitvoerbare taak. De vijf dagelijkse samenhangaspecten zijn gekoppeld aan bestaande E5.1/F2.1/F2.2; geen nieuwe bouwfase.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
@@ -2236,7 +2236,7 @@
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-16T16:23:00.574395+00:00",
-      "checkedAt": "2026-10-16T23:06:04.003274+00:00",
+      "checkedAt": "2026-10-16T23:08:48.419108+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2357,7 +2357,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-16T23:06:04.003274+00:00",
+      "lastUpdatedAt": "2026-10-16T23:08:48.419108+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2391,7 +2391,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-16T23:06:04.003274+00:00",
+      "updatedAt": "2026-10-16T23:08:48.419108+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -4138,22 +4138,32 @@
                 "kind": "gebruikersproef",
                 "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
                 "owner": "Jaap",
-                "nextAction": "Jaap gebruikt de technisch opgeleverde Eva zeven dagen normaal. Beoordeel bruikbaarheid, humor, betrokkenheid en eigen initiatief; ontbrekende fysieke waarneming is geen fictieve technische afronding.",
+                "nextAction": "Gebruik na E5.1 dezelfde kandidaat zeven dagen normaal: dagelijkse continuïteit, blijvende eigen projecten, bijdrage per deelnemend gezinslid, afgesproken huisbewaking en één Eva. Leg concrete hulp/hinder en noodzakelijke begeleiding vast.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
-                  "readyWhen": "Eerst F1.1/F1.2 eindkandidaat en gezamenlijke eindcontrole. Nu nog geen gezinsweek starten.",
+                  "readyWhen": "Eerst E5.1: één actuele technisch opgeleverde en geïnstalleerde eindkandidaat. Nu nog geen gezinsweek starten.",
                   "steps": [
-                    "Gebruik de technisch gereed gemelde eindkandidaat zeven dagen in het gezin.",
-                    "Meld concrete fouten en situaties waarin Eva helpt of hindert."
+                    "Gebruik de door E5.1 opgeleverde kandidaat zeven dagen normaal; geen aparte vooraf gescripte gezinsfuncties.",
+                    "Meld concrete voorbeelden van de vijf vastgelegde samenhangaspecten, per deelnemend gezinslid waar mogelijk.",
+                    "Noteer ook wanneer je Eva moest aansporen, iets opnieuw uitleggen of ingrijpen."
                   ],
-                  "expected": "Oordeel over samenhangend dagelijks gebruik.",
+                  "expected": "Echte dagelijkse betrokkenheid, hulp en steeds minder nodige begeleiding; nut, plezier, timing en hinder apart.",
                   "reportBack": "Ervaringen en concrete problemen.",
                   "blocksIndependentWork": false
                 },
                 "assignment": {
                   "activeWorkers": []
-                }
+                },
+                "acceptanceFocusIds": [
+                  "daily_continuity",
+                  "own_life",
+                  "family_contribution",
+                  "house_awareness",
+                  "one_eva"
+                ],
+                "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
+                "checkedAt": "2026-10-16T23:08:48.419108+00:00"
               },
               {
                 "id": "F2.2",
@@ -4162,7 +4172,7 @@
                 "kind": "gebruikersproef",
                 "doneWhen": "Jaap beslist over acceptatie; bestaande acceptaties blijven behouden.",
                 "owner": "Jaap",
-                "nextAction": "Jaap bepaalt of Eva daadwerkelijk iets toevoegt aan het gezin. Codex bewaart eerdere acceptaties en registreert dit echte eindoordeel.",
+                "nextAction": "Jaap beoordeelt na de bestaande gezinsweek of Eva blijvend betrokken en nuttig is en minder begeleiding nodig heeft; onderbouw met de vijf vastgelegde aspecten en behoud eerdere acceptaties.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -4170,13 +4180,22 @@
                   "steps": [
                     "Geef na de gezinsweek je eindoordeel en eventuele nog noodzakelijke wijzigingen."
                   ],
-                  "expected": "Jouw acceptatie apart van technische afronding.",
+                  "expected": "Jouw eindoordeel over de samenwerkende dagelijkse Eva; technische deelresultaten vervangen dat oordeel niet.",
                   "reportBack": "Accepteren, of de concrete reden waarom niet.",
                   "blocksIndependentWork": false
                 },
                 "assignment": {
                   "activeWorkers": []
-                }
+                },
+                "acceptanceFocusIds": [
+                  "daily_continuity",
+                  "own_life",
+                  "family_contribution",
+                  "house_awareness",
+                  "one_eva"
+                ],
+                "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
+                "checkedAt": "2026-10-16T23:08:48.419108+00:00"
               }
             ]
           },
@@ -4946,7 +4965,7 @@
                 "ownerActionRequired": false,
                 "existing": "F1-installatie-/herstartbewijs en afzonderlijke afgeronde gebruikersuitkomsten bestaan.",
                 "gap": "Het nieuwe volledige doel is nog niet als één actuele kandidaat opgeleverd en beoordeeld.",
-                "nextAction": "Stel na E1–E4 één kandidaat samen, controleer alleen geraakt/ontbrekend bewijs en lever duidelijke bediening; geen nieuwe vergelijkingsserie.",
+                "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
                 "files": [
                   "src",
                   "deploy",
@@ -4969,13 +4988,21 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-16T23:08:48.419108+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
-                }
+                },
+                "acceptanceFocusIds": [
+                  "daily_continuity",
+                  "own_life",
+                  "family_contribution",
+                  "house_awareness",
+                  "one_eva"
+                ],
+                "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus"
               }
             ]
           }
@@ -4990,7 +5017,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T23:06:04.003274+00:00",
+        "updatedAt": "2026-10-16T23:08:48.419108+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -5072,7 +5099,60 @@
                 "F2.2"
               ]
             }
-          ]
+          ],
+          "acceptanceFocus": {
+            "ownerClarifiedAt": "2026-10-16T23:08:48.419108+00:00",
+            "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+            "sourceInstruction": "Directe eigenaarinstructie in deze chat: betrokken dagelijkse digitale huisgenoot; scherp aan binnen bestaande kaarten, geen tweede plan of bouwfase.",
+            "previousGoalSha256": "ad5e699b964877eb56e751213d51136c0042a06ed866cd9dae2009ccdd998918",
+            "aspects": [
+              {
+                "id": "daily_continuity",
+                "label": "Dagelijkse continuïteit",
+                "observe": "Afspraken, beloften, activiteiten en open zaken passend vervolgen over meerdere dagen; werkelijke status en resultaat behouden."
+              },
+              {
+                "id": "own_life",
+                "label": "Eigen leven",
+                "observe": "Dezelfde zelfgekozen interesses/projecten werkelijk voortzetten zonder telkens nieuwe aansturing; bewaren wat uitgevoerd en geleerd is."
+              },
+              {
+                "id": "family_contribution",
+                "label": "Gezinsbijdrage",
+                "observe": "Per deelnemend gezinslid echte hulp, betrokkenheid, plezier, timing en hinder afzonderlijk beoordelen; ontbrekend oordeel niet invullen."
+              },
+              {
+                "id": "house_awareness",
+                "label": "Huisbewaking",
+                "observe": "Gekozen bronnen, afgesproken aandacht, meldmomenten, bevoegdheden en ontbrekende dekking zijn duidelijk; passend waarnemen/handelen via de algemene kringloop."
+              },
+              {
+                "id": "one_eva",
+                "label": "Eén Eva via aangesloten ingangen",
+                "observe": "Dezelfde identiteit, toegelaten herinneringen en opdrachten via tekst en spraak, met persoonsgrenzen; geen verplichte niet-gekozen kanalen."
+              }
+            ],
+            "evaluationCards": [
+              "E5.1",
+              "F2.1",
+              "F2.2"
+            ],
+            "guidanceEvidence": [
+              "Werkelijk vervolg zonder nieuwe opdracht",
+              "Benodigde aansporingen",
+              "Herhaalde uitleg",
+              "Menselijke ingrepen"
+            ],
+            "endJudgment": "Blijvend betrokken, nuttige hulp en steeds minder noodzakelijke begeleiding in gewoon gebruik.",
+            "doesNotReopenAcceptedTasks": [
+              "M1.2",
+              "M3.3",
+              "I1.2",
+              "HUE5.1",
+              "HUE6.1"
+            ],
+            "newTasksAdded": false
+          }
         }
       }
     },
@@ -6816,22 +6896,32 @@
               "kind": "gebruikersproef",
               "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
               "owner": "Jaap",
-              "nextAction": "Jaap gebruikt de technisch opgeleverde Eva zeven dagen normaal. Beoordeel bruikbaarheid, humor, betrokkenheid en eigen initiatief; ontbrekende fysieke waarneming is geen fictieve technische afronding.",
+              "nextAction": "Gebruik na E5.1 dezelfde kandidaat zeven dagen normaal: dagelijkse continuïteit, blijvende eigen projecten, bijdrage per deelnemend gezinslid, afgesproken huisbewaking en één Eva. Leg concrete hulp/hinder en noodzakelijke begeleiding vast.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Eerst F1.1/F1.2 eindkandidaat en gezamenlijke eindcontrole. Nu nog geen gezinsweek starten.",
+                "readyWhen": "Eerst E5.1: één actuele technisch opgeleverde en geïnstalleerde eindkandidaat. Nu nog geen gezinsweek starten.",
                 "steps": [
-                  "Gebruik de technisch gereed gemelde eindkandidaat zeven dagen in het gezin.",
-                  "Meld concrete fouten en situaties waarin Eva helpt of hindert."
+                  "Gebruik de door E5.1 opgeleverde kandidaat zeven dagen normaal; geen aparte vooraf gescripte gezinsfuncties.",
+                  "Meld concrete voorbeelden van de vijf vastgelegde samenhangaspecten, per deelnemend gezinslid waar mogelijk.",
+                  "Noteer ook wanneer je Eva moest aansporen, iets opnieuw uitleggen of ingrijpen."
                 ],
-                "expected": "Oordeel over samenhangend dagelijks gebruik.",
+                "expected": "Echte dagelijkse betrokkenheid, hulp en steeds minder nodige begeleiding; nut, plezier, timing en hinder apart.",
                 "reportBack": "Ervaringen en concrete problemen.",
                 "blocksIndependentWork": false
               },
               "assignment": {
                 "activeWorkers": []
-              }
+              },
+              "acceptanceFocusIds": [
+                "daily_continuity",
+                "own_life",
+                "family_contribution",
+                "house_awareness",
+                "one_eva"
+              ],
+              "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
+              "checkedAt": "2026-10-16T23:08:48.419108+00:00"
             },
             {
               "id": "F2.2",
@@ -6840,7 +6930,7 @@
               "kind": "gebruikersproef",
               "doneWhen": "Jaap beslist over acceptatie; bestaande acceptaties blijven behouden.",
               "owner": "Jaap",
-              "nextAction": "Jaap bepaalt of Eva daadwerkelijk iets toevoegt aan het gezin. Codex bewaart eerdere acceptaties en registreert dit echte eindoordeel.",
+              "nextAction": "Jaap beoordeelt na de bestaande gezinsweek of Eva blijvend betrokken en nuttig is en minder begeleiding nodig heeft; onderbouw met de vijf vastgelegde aspecten en behoud eerdere acceptaties.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -6848,13 +6938,22 @@
                 "steps": [
                   "Geef na de gezinsweek je eindoordeel en eventuele nog noodzakelijke wijzigingen."
                 ],
-                "expected": "Jouw acceptatie apart van technische afronding.",
+                "expected": "Jouw eindoordeel over de samenwerkende dagelijkse Eva; technische deelresultaten vervangen dat oordeel niet.",
                 "reportBack": "Accepteren, of de concrete reden waarom niet.",
                 "blocksIndependentWork": false
               },
               "assignment": {
                 "activeWorkers": []
-              }
+              },
+              "acceptanceFocusIds": [
+                "daily_continuity",
+                "own_life",
+                "family_contribution",
+                "house_awareness",
+                "one_eva"
+              ],
+              "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
+              "checkedAt": "2026-10-16T23:08:48.419108+00:00"
             }
           ]
         },
@@ -7624,7 +7723,7 @@
               "ownerActionRequired": false,
               "existing": "F1-installatie-/herstartbewijs en afzonderlijke afgeronde gebruikersuitkomsten bestaan.",
               "gap": "Het nieuwe volledige doel is nog niet als één actuele kandidaat opgeleverd en beoordeeld.",
-              "nextAction": "Stel na E1–E4 één kandidaat samen, controleer alleen geraakt/ontbrekend bewijs en lever duidelijke bediening; geen nieuwe vergelijkingsserie.",
+              "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
               "files": [
                 "src",
                 "deploy",
@@ -7647,13 +7746,21 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-16T23:08:48.419108+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "acceptanceFocusIds": [
+                "daily_continuity",
+                "own_life",
+                "family_contribution",
+                "house_awareness",
+                "one_eva"
+              ],
+              "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus"
             }
           ]
         }
@@ -7668,7 +7775,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T23:06:04.003274+00:00",
+      "updatedAt": "2026-10-16T23:08:48.419108+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -7750,7 +7857,60 @@
               "F2.2"
             ]
           }
-        ]
+        ],
+        "acceptanceFocus": {
+          "ownerClarifiedAt": "2026-10-16T23:08:48.419108+00:00",
+          "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+          "sourceInstruction": "Directe eigenaarinstructie in deze chat: betrokken dagelijkse digitale huisgenoot; scherp aan binnen bestaande kaarten, geen tweede plan of bouwfase.",
+          "previousGoalSha256": "ad5e699b964877eb56e751213d51136c0042a06ed866cd9dae2009ccdd998918",
+          "aspects": [
+            {
+              "id": "daily_continuity",
+              "label": "Dagelijkse continuïteit",
+              "observe": "Afspraken, beloften, activiteiten en open zaken passend vervolgen over meerdere dagen; werkelijke status en resultaat behouden."
+            },
+            {
+              "id": "own_life",
+              "label": "Eigen leven",
+              "observe": "Dezelfde zelfgekozen interesses/projecten werkelijk voortzetten zonder telkens nieuwe aansturing; bewaren wat uitgevoerd en geleerd is."
+            },
+            {
+              "id": "family_contribution",
+              "label": "Gezinsbijdrage",
+              "observe": "Per deelnemend gezinslid echte hulp, betrokkenheid, plezier, timing en hinder afzonderlijk beoordelen; ontbrekend oordeel niet invullen."
+            },
+            {
+              "id": "house_awareness",
+              "label": "Huisbewaking",
+              "observe": "Gekozen bronnen, afgesproken aandacht, meldmomenten, bevoegdheden en ontbrekende dekking zijn duidelijk; passend waarnemen/handelen via de algemene kringloop."
+            },
+            {
+              "id": "one_eva",
+              "label": "Eén Eva via aangesloten ingangen",
+              "observe": "Dezelfde identiteit, toegelaten herinneringen en opdrachten via tekst en spraak, met persoonsgrenzen; geen verplichte niet-gekozen kanalen."
+            }
+          ],
+          "evaluationCards": [
+            "E5.1",
+            "F2.1",
+            "F2.2"
+          ],
+          "guidanceEvidence": [
+            "Werkelijk vervolg zonder nieuwe opdracht",
+            "Benodigde aansporingen",
+            "Herhaalde uitleg",
+            "Menselijke ingrepen"
+          ],
+          "endJudgment": "Blijvend betrokken, nuttige hulp en steeds minder noodzakelijke begeleiding in gewoon gebruik.",
+          "doesNotReopenAcceptedTasks": [
+            "M1.2",
+            "M3.3",
+            "I1.2",
+            "HUE5.1",
+            "HUE6.1"
+          ],
+          "newTasksAdded": false
+        }
       }
     },
     "goalRevision": {
@@ -8767,7 +8927,7 @@
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
     }
   },
-  "updatedAt": "2026-10-16T23:06:04.003274+00:00",
+  "updatedAt": "2026-10-16T23:08:48.419108+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

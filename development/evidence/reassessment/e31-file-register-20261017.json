@@ -113,11 +113,14 @@
   },
   "independentReview": "development/reviews/e31-file-register-20261017.json",
   "postSnapshotDelta": {
+    "checkedAt": "2026-10-16T23:08:48.419108+00:00",
     "changes": {
       "added": [],
       "removed": [],
       "changed": [
         "development/design/product/execution-workboard-v1.json",
+        "development/docs/AFRONDINGSPLAN.md",
+        "development/docs/PROJECTDOEL.md",
         "development/docs/WERKBORD.md"
       ]
     },
@@ -130,8 +133,8 @@
           "gitState": "tracked",
           "present": true,
           "ignored": false,
-          "contentSha256": "46b885627a2a64b5e39ce71a648b762dfe0aaca9b31886ce4a193d4e348110ec",
-          "bytes": 551405,
+          "contentSha256": "079c0ca23c95aae6a9f682895c10b12d6c2a09525133f9dedf9f184b9e8822b4",
+          "bytes": 559695,
           "sourceState": "modified",
           "role": "design-or-fixture",
           "owner": "development-records",
@@ -144,18 +147,18 @@
           "hashExclusion": null,
           "installedIn": []
         },
-        "reason": "Delivery metadata after independently reviewed snapshot"
+        "reason": "Owner clarification: existing goal and E5/F2 daily acceptance focus; original E3.1 snapshot remains frozen."
       },
       {
-        "path": "development/docs/WERKBORD.md",
-        "snapshotSha256": "023cd167f7826f8df4bd04b41c023f944828eec180e22af1c350bc3a27e5adee",
+        "path": "development/docs/AFRONDINGSPLAN.md",
+        "snapshotSha256": "ebf45e7e68a8821bba529c812eb810328983f8df7472a2330d9380cb990da533",
         "current": {
-          "path": "development/docs/WERKBORD.md",
+          "path": "development/docs/AFRONDINGSPLAN.md",
           "gitState": "tracked",
           "present": true,
           "ignored": false,
-          "contentSha256": "653e1c89b71644cebc4648f27c4289828637c28c1ac294623be9c45139e106b2",
-          "bytes": 19920,
+          "contentSha256": "9ad7d1014dda8ac8b7815f1e1f7f79850d9373b2e2e3db907930b49d46381a3d",
+          "bytes": 26723,
           "sourceState": "modified",
           "role": "documentation",
           "owner": "project-documentation",
@@ -168,10 +171,58 @@
           "hashExclusion": null,
           "installedIn": []
         },
-        "reason": "Delivery metadata after independently reviewed snapshot"
+        "reason": "Owner clarification: existing goal and E5/F2 daily acceptance focus; original E3.1 snapshot remains frozen."
+      },
+      {
+        "path": "development/docs/PROJECTDOEL.md",
+        "snapshotSha256": "ad5e699b964877eb56e751213d51136c0042a06ed866cd9dae2009ccdd998918",
+        "current": {
+          "path": "development/docs/PROJECTDOEL.md",
+          "gitState": "tracked",
+          "present": true,
+          "ignored": false,
+          "contentSha256": "f82d024534a17a1085458fe00aef3b1d6d6e9a610cc96ee3da98c0d90e8aa0de",
+          "bytes": 17245,
+          "sourceState": "modified",
+          "role": "documentation",
+          "owner": "project-documentation",
+          "roleBasis": "path_policy_not_semantic_review",
+          "reviewStatus": "enumerated",
+          "readingEvidence": null,
+          "decision": "pending_review",
+          "reviewCard": "E3.4",
+          "consumerStatus": "not_yet_verified",
+          "hashExclusion": null,
+          "installedIn": []
+        },
+        "reason": "Owner clarification: existing goal and E5/F2 daily acceptance focus; original E3.1 snapshot remains frozen."
+      },
+      {
+        "path": "development/docs/WERKBORD.md",
+        "snapshotSha256": "023cd167f7826f8df4bd04b41c023f944828eec180e22af1c350bc3a27e5adee",
+        "current": {
+          "path": "development/docs/WERKBORD.md",
+          "gitState": "tracked",
+          "present": true,
+          "ignored": false,
+          "contentSha256": "653e1c89b71644cebc4648f27c4289828637c28c1ac294623be9c45139e106b2",
+          "bytes": 19920,
+          "sourceState": "baseline",
+          "role": "documentation",
+          "owner": "project-documentation",
+          "roleBasis": "path_policy_not_semantic_review",
+          "reviewStatus": "enumerated",
+          "readingEvidence": null,
+          "decision": "pending_review",
+          "reviewCard": "E3.4",
+          "consumerStatus": "not_yet_verified",
+          "hashExclusion": null,
+          "installedIn": []
+        },
+        "reason": "Owner clarification: existing goal and E5/F2 daily acceptance focus; original E3.1 snapshot remains frozen."
       }
     ],
-    "reason": "Keep the independently reviewed snapshot immutable; explain later delivery metadata and any concurrent changes with exact current hashes."
+    "reason": "Explicit delta after owner clarification; no replacement of original reviewed registration."
   },
   "usage": {
     "evaRuntimeModelCalls": 0,
@@ -185,5 +236,68 @@
     "No voice-owned source/configuration/API/installation changed.",
     "Enumerated is not fully read; only exact-hash full-reading evidence is reused."
   ],
-  "wholeProjectCompleted": false
+  "wholeProjectCompleted": false,
+  "postSnapshotDeltaHistory": [
+    {
+      "changes": {
+        "added": [],
+        "removed": [],
+        "changed": [
+          "development/design/product/execution-workboard-v1.json",
+          "development/docs/WERKBORD.md"
+        ]
+      },
+      "records": [
+        {
+          "path": "development/design/product/execution-workboard-v1.json",
+          "snapshotSha256": "e7bc074010304256943809e812a02c6e92393acfc34b61312e5bcc2b44cb6dea",
+          "current": {
+            "path": "development/design/product/execution-workboard-v1.json",
+            "gitState": "tracked",
+            "present": true,
+            "ignored": false,
+            "contentSha256": "46b885627a2a64b5e39ce71a648b762dfe0aaca9b31886ce4a193d4e348110ec",
+            "bytes": 551405,
+            "sourceState": "modified",
+            "role": "design-or-fixture",
+            "owner": "development-records",
+            "roleBasis": "path_policy_not_semantic_review",
+            "reviewStatus": "enumerated",
+            "readingEvidence": null,
+            "decision": "pending_review",
+            "reviewCard": "E3.4",
+            "consumerStatus": "not_yet_verified",
+            "hashExclusion": null,
+            "installedIn": []
+          },
+          "reason": "Delivery metadata after independently reviewed snapshot"
+        },
+        {
+          "path": "development/docs/WERKBORD.md",
+          "snapshotSha256": "023cd167f7826f8df4bd04b41c023f944828eec180e22af1c350bc3a27e5adee",
+          "current": {
+            "path": "development/docs/WERKBORD.md",
+            "gitState": "tracked",
+            "present": true,
+            "ignored": false,
+            "contentSha256": "653e1c89b71644cebc4648f27c4289828637c28c1ac294623be9c45139e106b2",
+            "bytes": 19920,
+            "sourceState": "modified",
+            "role": "documentation",
+            "owner": "project-documentation",
+            "roleBasis": "path_policy_not_semantic_review",
+            "reviewStatus": "enumerated",
+            "readingEvidence": null,
+            "decision": "pending_review",
+            "reviewCard": "E3.4",
+            "consumerStatus": "not_yet_verified",
+            "hashExclusion": null,
+            "installedIn": []
+          },
+          "reason": "Delivery metadata after independently reviewed snapshot"
+        }
+      ],
+      "reason": "Keep the independently reviewed snapshot immutable; explain later delivery metadata and any concurrent changes with exact current hashes."
+    }
+  ]
 }

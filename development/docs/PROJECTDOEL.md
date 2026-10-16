@@ -8,9 +8,9 @@ het [werkbord](../design/product/execution-workboard-v1.json) bepaalt huidig wer
 
 ## Wat we opleveren
 
-Maak Eva2 tot één bruikbare digitale huisgenoot die de mensen kent, een eigen warme
-persoonlijkheid heeft, passend initiatief neemt, zelfstandig werk afmaakt en ontbrekende
-mogelijkheden kan realiseren. Na installatie kan iemand gewoon met haar chatten en
+Maak Eva2 tot één herkenbare, beschikbare digitale huisgenoot die de mensen kent,
+een eigen warme persoonlijkheid heeft, betrokken blijft bij het gezin, passend initiatief
+neemt, zelfstandig werk afmaakt en ontbrekende mogelijkheden kan realiseren. Na installatie kan iemand gewoon met haar chatten en
 optionele verbindingen kiezen. Vervolgens leert Eva het huishouden kennen, onderzoekt
 beschikbare mogelijkheden en draagt bij zonder voortdurend aangestuurd te worden.
 
@@ -51,6 +51,24 @@ zijn voorbeelden van dezelfde afweging. Het systeem krijgt geen aparte beslisreg
 voor ieder voorbeeld. Het vermogen moet ook bij een andere, niet vooraf ingerichte
 situatie werken. Eva kan informatie, een korte vraag, een bruikbaar voorstel, een
 toegestane actie of bewuste stilte kiezen en het gevolg daarvan onthouden.
+
+Dagelijkse continuïteit verbindt afspraken, beloften, eigen activiteiten en openstaande
+zaken met hun werkelijke status. Eva komt passend terug op wat nog aandacht vraagt,
+ook wanneer niemand zojuist een opdracht gaf. Zij onderscheidt voornemen, begonnen
+werk, bevestigd resultaat en geleerd inzicht; een verdwenen gesprek beëindigt geen
+blijvende verantwoordelijkheid.
+
+Haar eigen leven bestaat uit blijvende, zelfgekozen interesses en projecten. Die krijgen
+werkelijk vervolg over meerdere dagen, met bewaarde voortgang en geleerde lessen.
+Telkens een nieuw idee noemen bewijst dit niet. Rust en reflectie mogen voorbereiding
+of verbetering opleveren; beschikbaarheid betekent niet voortdurend modelaanvragen doen.
+Uitval en ontbrekende toegang blijven zichtbaar.
+
+Huisbewaking is onderdeel van dezelfde algemene afweging, binnen de werkelijk gekozen
+verbindingen en bevoegdheden. Per installatie is duidelijk welke bronnen Eva kan
+waarnemen, welke aandacht met het gezin is afgesproken, wanneer een melding past en
+wat zij zelf mag oplossen. Niet aangesloten bronnen en onvoldoende dekking blijven
+onbekend. Er komt geen aparte hardgecodeerde bewakingsfunctie per gezinsvoorbeeld.
 
 ## Eén Eva-beheeromgeving en optionele verbindingen
 
@@ -199,7 +217,12 @@ Het goal sluit pas wanneer dezelfde geïnstalleerde kandidaat:
   een beoordeelde bestandsinventaris en een afgewerkte eindige opruimlijst heeft;
 - moduleverantwoordelijkheden, versie-/updatebeleid en gemeten efficiëntie plus resterende
   onzekerheden vastlegt, met gebundelde onafhankelijke eindreview;
-- zeven dagen echt gezinsgebruik en Jaaps afzonderlijke eindoordeel heeft doorlopen.
+- zeven dagen echt gezinsgebruik en Jaaps afzonderlijke eindoordeel heeft doorlopen,
+  met dagelijkse continuïteit, werkelijk vervolg van eigen interesses/projecten,
+  gezinsbijdrage per deelnemend gezinslid, afgesproken huisbewaking en één Eva via
+  aangesloten ingangen. Echte hulp, betrokkenheid, plezier, timing en hinder blijven
+  afzonderlijk zichtbaar. Vastgelegde voortgang en benodigde herinneringen, herhaalde
+  uitleg en ingrepen laten zien of minder begeleiding nodig is.
 
 Technische afronding en eigenaaracceptatie blijven afzonderlijk. Een reparatie, import,
 installatie, opschoning of deelproef sluit dit doel niet af. Geparkeerde optionele

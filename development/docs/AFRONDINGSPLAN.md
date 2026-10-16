@@ -274,6 +274,24 @@ perfecte code houdt de release niet oneindig open.
    Alleen concrete releaseblokkerende fouten herstellen; een relevant gewijzigd deel
    krijgt gerichte herbeoordeling, niet automatisch een volledig nieuwe testweek of matrix.
 
+De bestaande E5.1-oplevering en F2.1/F2.2-gezinsproef beoordelen dezelfde vijf
+samenhangende aspecten over de bestaande zeven dagen:
+
+| Aspect | Wat het echte gebruik moet laten zien |
+| --- | --- |
+| Dagelijkse continuïteit | Eva kent afspraken, beloften, activiteiten en open zaken en komt er passend op terug. Status en uitvoering zijn controleerbaar. |
+| Eigen leven | Dezelfde zelfgekozen interesses en projecten krijgen werkelijk vervolg, ook zonder nieuwe eigenaaropdracht; resultaten en lessen blijven bewaard. |
+| Gezinsbijdrage | Per deelnemend gezinslid afzonderlijk: echte hulp, betrokkenheid, plezier, timing en hinder. Geen verzonnen oordeel namens iemand die niet deelnam. |
+| Huisbewaking | Werkelijk aangesloten bronnen, afgesproken aandacht, meldmomenten, toegelaten eigen oplossingen en ontbrekende dekking zijn duidelijk; de algemene afweging gebruikt ze passend. |
+| Eén Eva | Aangesloten tekst- en spraakingangen delen identiteit, toegelaten herinneringen en opdrachten, met persoonsgrenzen. Niet-gekozen ingangen vragen geen nieuwe proefmatrix. |
+
+Leg concrete vervolgacties en benodigde aansporingen, herhaalde uitleg en menselijke
+ingrepen vast. De eindbeoordeling gaat over blijvende betrokkenheid, nuttige hulp en
+minder noodzakelijke begeleiding. Losse technische afrondingen bewijzen dit niet.
+Herbruik geldige eerdere acceptaties; begin M1.2, M3.3, HUE5/HUE6 of I1.2 niet opnieuw.
+Dit scherpt de bestaande gezamenlijke oplevering aan; het voegt geen bouwfase,
+voorbeeldspecifieke functie of tweede plan toe. Spraak blijft bij haar uitvoerder.
+
 **Eindvoorwaarde:** de volledige PROJECTDOEL-eindvoorwaarden zijn aan dezelfde
 geïnstalleerde kandidaat en geldige bestaande bewijsstukken gebonden. Vier
 productuitkomsten, complete leercyclus, zelf gerealiseerde/hergebruikte mogelijkheid,
