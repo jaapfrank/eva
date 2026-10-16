@@ -12,6 +12,7 @@ import OwnerBrowser from './owner-browser.jsx';
 import OwnerWork from './owner-work.jsx';
 import OwnerHealth from './owner-health.jsx';
 import OwnerModelProviders from './owner-model-providers.jsx';
+import OwnerWhatsApp from './owner-whatsapp.jsx';
 import OwnerMemoryView from './owner-memory-view.jsx';
 import { ownerSections, ownerSection, ownerSectionHref } from './owner-navigation.mjs';
 import ProjectDashboard, { ProjectLayout, projectProvider } from './project-dashboard.jsx';
@@ -421,8 +422,8 @@ function Dashboard() {
       {selected === 'memory' && <><OwnerMemoryView revision={memoryRevision} onSource={id => setSelectedSource({ id, revision: Date.now() })} /><MemorySources selectedSource={selectedSource} onMemoryChanged={memoryChanged} /></>}
       {selected === 'work' && <OwnerWork key={selectedWork || 'all'} initialWorkId={selectedWork} />}
       {selected === 'initiative' && <OwnerInitiatives />}
-      {selected === 'connections' && <><OwnerModelProviders /><OwnerHealth /><section className="owner-panel"><h2>Optionele verbindingen</h2>
-        <p>Modelverbindingen beheer je hierboven. Extra communicatiekanalen blijven optioneel; WhatsApp is nog niet aangesloten.</p>
+      {selected === 'connections' && <><OwnerModelProviders /><OwnerWhatsApp /><OwnerHealth /><section className="owner-panel"><h2>Optionele verbindingen</h2>
+        <p>Modelproviders en WhatsApp beheer je hierboven. Iedere verbinding blijft optioneel.</p>
       </section><OwnerBrowser /></>}
     </main>
   </div>;

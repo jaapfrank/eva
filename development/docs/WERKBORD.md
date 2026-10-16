@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Extra modelproviders optioneel aansluiten
+WhatsApp geïnstalleerd · QR koppelen
 
-E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.
+WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.
 
-Klaar wanneer: De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter.
+Klaar wanneer: WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.
 
 ## Afmaakvolgorde
 
@@ -110,7 +110,7 @@ Klaar wanneer: De providergrens ondersteunt Claude/Anthropic en andere providers
 
 ## Van jou
 
-Geen verplichte handeling. De bestaande modelroute blijft gekozen; alleen voor een extra provider is eigen API-toegang nodig.
+Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond.
 
 ## Historie
 

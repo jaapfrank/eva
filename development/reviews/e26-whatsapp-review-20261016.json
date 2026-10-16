@@ -1,0 +1,106 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "card": "E2.6",
+  "date": "2026-10-16",
+  "decision": "GO_SOURCE_FOR_INSTALLATION_AND_OWNER_PAIRING",
+  "criteria": {
+    "id": "E2.6",
+    "title": "WhatsApp als optioneel kanaal aansluiten",
+    "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers."
+  },
+  "review_scope": {
+    "independent_review": "Child reviewed coordinator-owned core API, current-owner binding, original-result source reader, shared route allowances and owner UI. Child did not edit these files.",
+    "transport_review": "Coordinator reviewed child-owned deploy/whatsapp-bridge implementation. This reviewer authored that transport and does not represent its own tests as independent review.",
+    "installation": "Final helper source was independently compared byte-for-byte with the healthy running core. This does not independently establish every image/configuration invariant or real external WhatsApp use."
+  },
+  "findings": [
+    {
+      "priority": "P2",
+      "status": "fixed_and_rechecked",
+      "file": "src/eva/adapters/api/dashboard_whatsapp.py",
+      "finding": "Owner authority could change during settings body intake before a bridge mutation.",
+      "fix": "The thread dispatch rechecks authorize(request) immediately before control.call. Dedicated late-revocation test confirms zero bridge mutation."
+    },
+    {
+      "priority": "P2",
+      "status": "fixed_and_rechecked",
+      "file": "src/eva/adapters/api/dashboard_whatsapp.py",
+      "finding": "Audio disable or authority change during PCM upload could still start transcription.",
+      "fix": "Fresh media_session and original-session media.check execute after body intake and before STT. Dedicated test confirms no STT call."
+    }
+  ],
+  "conclusions": [
+    "The current canonical owner, not a phone-derived new principal, supplies the private ConversationTurn and existing runtime response route.",
+    "Result returns reuse existing scoped work claim/authorize/ack; WhatsApp route syntax is strict and exact episode/source bindings remain required.",
+    "Digital work uses its retained source. Legacy research/tool-free work uses integrity-checked existing ingress at immutable creation time and an exact deterministic command/action creation key; generation ancestry is bounded. Failure to prove origin rejects return rather than choosing a recent message.",
+    "Background transport receives only a600-character summary plus full stored result hashes for authorization.",
+    "Media uses existing speech input/output ports with bounded PCM and encoded synthesis. No voice implementation or second agent was introduced.",
+    "Owner UI uses same-origin no-store requests, fixed QR data-URL validation, hidden/unmount clearing and explicit actions. It states the unofficial Baileys transport and optional account requirement.",
+    "The final legacy source reader scopes the ingress query through service.conversation_scope and PostgresOperationalTimeline._scope, independently of work storage scope. All four logical tenant/installation/principal/conversation source fields must match; _SourceTurnLoader verifies the current durable private ingress and current authority before returning its message ID."
+  ],
+  "evidence": {
+    "independent_api_tests": {
+      "file": "private:independent-api-tests.private.txt",
+      "passed": 13,
+      "seconds": 2.23
+    },
+    "coordinator_real_postgres_tests": {
+      "file": "private:postgres-tests.private.txt",
+      "passed": 3,
+      "seconds": 4.96,
+      "observation": "Reread final helper/test and retained stdout. Parametrized actual PostgreSQL proof covers equal and separated storage/conversation namespaces, with scoped return claim, exact origin, authorization, acknowledgment and wrong-contact isolation."
+    },
+    "transport_tests": {
+      "file": "private:bridge-focused-tests.private.txt",
+      "passed": 16,
+      "seconds": 2.250611546,
+      "scope": "Synthetic sockets/core and local HTTP only; real SDK auth serialization and local ffmpeg; no external WhatsApp or model requests."
+    },
+    "independent_installed_context_alignment": {
+      "file": "private:independent-context-alignment.private.json",
+      "exact_source_and_installed_sha256": "792b4694dda091942038af0b75fa1aff197027d0e13c036b9f715883b9f9408b",
+      "core_running": true,
+      "core_health": "healthy",
+      "scope": "Read-only docker exec SHA-256 of installed whatsapp_context.py and docker inspect core state. No model, private conversation, QR or external message read."
+    }
+  },
+  "limitations": [
+    "No real external WhatsApp account pairing, incoming message, quoted reply or background delivery is proven by this source review.",
+    "E2.6 doneWhen requires a permitted actual connection; card completion must wait for installed/real-use evidence.",
+    "No family acceptance, general conversational quality, live telephone call or universal speech availability is claimed.",
+    "Uncertain transport sends remain ambiguous and are never blindly replayed. Confirmed delivery with a lost core acknowledgment retries only the idempotent acknowledgment.",
+    "The child transport global console sink addresses libsignal session-object logging identified by the coordinator; no QR/session/credential logs are acceptable."
+  ],
+  "sourceSha256": {
+    "src/eva/bootstrap/whatsapp_context.py": "792b4694dda091942038af0b75fa1aff197027d0e13c036b9f715883b9f9408b",
+    "src/eva/adapters/api/dashboard_whatsapp.py": "b13a19e3a1cc2e8384f5624f95c4d83141c10c915e063abf07272b5a8ee02d53",
+    "src/eva/application/channel_routes.py": "bd074eccf3c3b6a7eb1c1af89d37f0fb8d605b6d97ddf001ba88dd81c7badd79",
+    "src/eva/adapters/postgres/private_work_return.py": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61",
+    "src/eva/adapters/postgres/scheduled_work_failure.py": "482e7f28883337c84e7431c5e96ef9f5389d31a3ec4e1b2c6807896c06b414c9",
+    "src/eva/providers/document_completion.py": "cce12ecb12cb92dec80a7eec9fef1110708d720a6694bdfc15cb674245b48e4b",
+    "development/tools/project-dashboard/src/owner-whatsapp.jsx": "6ea7de651bbf88fe1d03a7ad689a2031c3e685ef939e2754028a656e06df8f2a",
+    "development/tests/api/test_dashboard_whatsapp.py": "c3f8f38f18a6f9d8f42d690eeaf01d592e6dff14e864534257fdd8f510009d01",
+    "development/tests/postgres/test_whatsapp_work_return.py": "4a6829123086d3b335a98b5c0d401996daaf77ce4906e3347b099acc2004a58d"
+  },
+  "transportSourceSha256": {
+    "deploy/whatsapp-bridge/core.mjs": "0998054f740b9edcb5a9262506b3ba0cac5918e28f6f9d44e938b591f82d0e8a",
+    "deploy/whatsapp-bridge/.dockerignore": "debb0f6faea65a8b3ef17e69e2e813fad68eefee3c9843f594660efa7813f348",
+    "deploy/whatsapp-bridge/bridge.mjs": "c4bbb7ea052e5fee172d2688a385952abc55437cd4d5858fc88a7857a82ba246",
+    "deploy/whatsapp-bridge/package-lock.json": "7c89e13a8f415e6f70ce000a452875c7b4eeefe4bba9eec61f9d4d0243823ac6",
+    "deploy/whatsapp-bridge/audio.mjs": "777c29f5c3d6ab0c21cf66b33088e3a1d2316f6e58cddd8f848b7ed77b8439a8",
+    "deploy/whatsapp-bridge/.gitignore": "d218fb26f9877c8fab9f6cf87fc3cae10e877ac4dcc384854bbca3e742123f91",
+    "deploy/whatsapp-bridge/Dockerfile": "eeb12da0efce59bcd49ff8c4b68160ad42a8a4f0dca9bfc325232783d5bb1812",
+    "deploy/whatsapp-bridge/README.md": "f60f5d94a36fc0739ee9fe38b18c2cbaa751525bd7d1306120c80e746be4594e",
+    "deploy/whatsapp-bridge/store.mjs": "72905c1e7aeeb69489ceca93a690c92a689d6e1830526dca85b8c715d7ea11ee",
+    "deploy/whatsapp-bridge/server.mjs": "c4b7b8c0650793d34b12cd8a3dc9e144d4c47960f1912527baafa089e2abb37f",
+    "deploy/whatsapp-bridge/package.json": "de47d65ee1827dd41f0e9eadac5b8dc3bd6e8b2b46c402c5d60ff978e3d5146b",
+    "deploy/whatsapp-bridge/test/bridge.test.mjs": "df36d704064912c44b12b099804224a6c0f4164fbc9293af9a302315c2846d04"
+  },
+  "deployment_note": {
+    "status": "source_corrected_awaiting_coordinator_rebuild_and_health_check",
+    "observed_failure": "Coordinator reported installed bridge refused startup with private_storage_required. Compose runtime UID65532 matched the existing core secret; the fresh image volume was seeded with UID1000 ownership.",
+    "targeted_fix": "Dockerfile now runs UID65532:GID65532 and seeds /var/lib/eva-whatsapp with UID65532:GID65532 and mode0700. README runtime ownership matches. No SDK, transport or voice logic changed.",
+    "validation_boundary": "Source ownership directives inspected. Actual installed startup and retained volume ownership still require coordinator verification; the original failed attempt remains evidence.",
+    "followup_observation": "Coordinator subsequently reports the rebuilt bridge healthy and awaiting_qr, with media_available true. No external message or completed pairing is claimed. Reviewer independently observed the final core healthy and exact helper source bytes."
+  }
+}

@@ -841,21 +841,22 @@
   "lastUpdated": "2026-10-16T16:23:00.574395+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E2.5",
+  "activeTaskId": "E2.6",
   "currentWork": {
-    "id": "E2.5",
-    "title": "Extra modelproviders optioneel aansluiten",
-    "status": "completed",
-    "doneWhen": "De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter.",
-    "nextAction": "Gebruik de optionele modelinstellingen. Volgende geplande taak: E2.6 WhatsApp als optioneel kanaal.",
-    "ownerActionRequired": false,
-    "checkedAt": "2026-10-16T16:23:00.574395+00:00",
-    "area": "optional model adapters",
-    "outcome": "De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter.",
+    "id": "E2.6",
+    "title": "WhatsApp als optioneel kanaal aansluiten",
+    "status": "in_progress",
+    "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
+    "nextAction": "Echte accountkoppeling en gebruik bevestigen; geen verdere kanaalbouw vóór deze concrete controle.",
+    "ownerActionRequired": true,
+    "checkedAt": "2026-10-16T17:36:14.550321+00:00",
+    "result": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
+    "completionEvidence": "development/evidence/product/e26-whatsapp-installed-20261016.json",
+    "independentReview": "development/reviews/e26-whatsapp-review-20261016.json",
+    "area": "optional WhatsApp channel",
+    "outcome": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
     "countedAsProductTask": true,
-    "result": "E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.",
-    "completionEvidence": "development/evidence/product/e25-optional-models-installed-20261016.json",
-    "independentReview": "development/reviews/e25-optional-models-review-20261016.json"
+    "startedAt": "2026-10-16T17:18:19.193007+00:00"
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1650,6 +1651,20 @@
             "familyAcceptance": false
           },
           {
+            "title": "E2.6 · WhatsApp en spraakberichten geïnstalleerd; QR-koppeling open",
+            "state": "installed",
+            "checkedAt": "2026-10-16T17:36:14.550321+00:00",
+            "summary": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
+            "remaining": "Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e26-whatsapp-installed-20261016.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": false,
+            "familyAcceptance": false,
+            "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections"
+          },
+          {
             "title": "Voice · Eén gesprekskern voor heel Eva",
             "state": "installed",
             "checkedAt": "2026-10-16T16:36:26.607754+00:00",
@@ -2164,37 +2179,37 @@
           "completionScope": "E2.5 optional private-text model adapters/control; no external account access claimed"
         },
         "now": {
-          "taskId": "E2.5",
-          "title": "Extra modelproviders optioneel aansluiten",
-          "state": "Afgerond en geïnstalleerd",
-          "status": "completed",
-          "phase": "delivered",
+          "taskId": "E2.6",
+          "title": "WhatsApp geïnstalleerd · QR koppelen",
+          "state": "Geïnstalleerd · jouw koppeling nodig",
+          "status": "in_progress",
+          "phase": "installed_awaiting_pairing",
           "activeExecution": false,
-          "nativeRunning": false,
-          "summary": "E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.",
-          "doneWhen": "De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter.",
-          "ownerActionNeeded": false,
-          "checkedAt": "2026-10-16T16:23:00.574395+00:00"
+          "nativeRunning": true,
+          "summary": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
+          "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
+          "ownerActionNeeded": true,
+          "checkedAt": "2026-10-16T17:36:14.550321+00:00"
         },
         "next": {
-          "title": "WhatsApp als optioneel kanaal aansluiten",
-          "state": "Volgende: E2.6",
-          "summary": "E2.6: WhatsApp via toegelaten transport optioneel aan dezelfde Eva verbinden; geen tweede identiteit of taakroute.",
-          "ownerActionNeeded": false
+          "title": "E2.6 werkelijk gebruiken, daarna E3.1",
+          "state": "WhatsApp-gebruikscontrole open",
+          "summary": "Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond.",
+          "ownerActionNeeded": true
         },
         "ownerAction": {
-          "title": "Optioneel een modelprovider kiezen",
-          "detail": "Geen verplichte handeling. De bestaande modelroute blijft gekozen; alleen voor een extra provider is eigen API-toegang nodig.",
+          "title": "WhatsApp koppelen",
+          "detail": "Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond.",
           "steps": [
             "Open http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections",
-            "Optioneel: kies provider, vul een eigen API-sleutel en exact model-ID in en kies Verbinding privé bewaren.",
-            "Kies Controleer met één modelantwoord. Deze expliciete controle kan apart providerverbruik veroorzaken.",
-            "Na een geslaagde controle kies Kies voor privétekstgesprekken. Gebruik bestaande modelroute of Verbinding uitschakelen om terug te gaan."
+            "Scan de QR via WhatsApp → Instellingen → Gekoppelde apparaten → Apparaat koppelen.",
+            "Stuur Hallo Eva in je chat met jezelf. Controleer of Eva bij dat bericht antwoordt.",
+            "Optioneel: zet spraakberichten aan bij Contact en spraakkeuze bewaren, verbind opnieuw en stuur een gesproken bericht."
           ],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-16T16:23:00.574395+00:00",
-        "reviewedAt": "2026-10-16T16:23:00.574395+00:00",
+        "checkedAt": "2026-10-16T17:36:14.550321+00:00",
+        "reviewedAt": "2026-10-16T17:36:14.550321+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -2362,7 +2377,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E2.4",
+        "currentStep": "E2.6",
         "steps": [
           {
             "number": 1,
@@ -4484,14 +4499,14 @@
               {
                 "id": "E2.6",
                 "title": "WhatsApp als optioneel kanaal aansluiten",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
                 "owner": "Codex",
-                "ownerActionRequired": false,
-                "existing": "Chat/Telegram en gedeelde kanaal-/taakbetekenis bestaan.",
-                "gap": "WhatsApp is gevraagd maar nog niet als werkend optioneel transport geleverd.",
-                "nextAction": "Controleer actuele officiële transport-/aanmeldvoorwaarden en verbind een adapter aan de bestaande ontvangst en aflevering.",
+                "ownerActionRequired": true,
+                "existing": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
+                "gap": "Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond.",
+                "nextAction": "Echte accountkoppeling en gebruik bevestigen; geen verdere kanaalbouw vóór deze concrete controle.",
                 "files": [
                   "src/eva/adapters/connectors",
                   "src/eva/adapters/api",
@@ -4505,13 +4520,25 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-16T17:36:14.550321+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                  "steps": [],
+                  "availableNow": true,
+                  "readyWhen": "De geïnstalleerde QR-koppeling staat klaar. Een eigen WhatsApp-account kan alleen door jou worden gekoppeld.",
+                  "steps": [
+                    "Open http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections",
+                    "Scan de QR via WhatsApp → Instellingen → Gekoppelde apparaten → Apparaat koppelen.",
+                    "Stuur Hallo Eva in je chat met jezelf. Controleer of Eva bij dat bericht antwoordt.",
+                    "Optioneel: zet spraakberichten aan bij Contact en spraakkeuze bewaren, verbind opnieuw en stuur een gesproken bericht."
+                  ],
                   "blocksIndependentWork": false
-                }
+                },
+                "ownerScopeExtension": "16 oktober: WhatsApp moet spraakberichten kunnen koppelen aan de bestaande mediaverwerking. Geen nieuwe speaker-/spraakroute; deze blijft bij de andere uitvoerder.",
+                "result": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
+                "installationState": "installed",
+                "technicalChecks": "13 API + 16 transport + 3 echte PostgreSQL-controles geslaagd; geïnstalleerd dashboard toont QR zonder browserfouten.",
+                "completionEvidence": "development/evidence/product/e26-whatsapp-installed-20261016.json",
+                "independentReview": "development/reviews/e26-whatsapp-review-20261016.json",
+                "remaining": "Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond."
               }
             ]
           },
@@ -4892,7 +4919,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E2.6: WhatsApp via toegelaten transport optioneel aan dezelfde Eva verbinden; geen tweede identiteit of taakroute.",
+        "nextAction": "QR-koppeling en echt WhatsApp-gebruik afronden; daarna E3.1 bestandsregistratie.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -4901,7 +4928,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T16:23:00.574395+00:00",
+        "updatedAt": "2026-10-16T17:36:14.550321+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -4944,7 +4971,7 @@
                 "C4.1",
                 "C4.3"
               ],
-              "currentGap": "E2.1–E2.5 bediening en optionele privétekstproviders geïnstalleerd. Niet-gekozen externe accounts blijven losgekoppeld. E2.6 WhatsApp blijft open; spraak bij de andere uitvoerder."
+              "currentGap": "E2.1–E2.5 afgerond. E2.6 WhatsApp-adapter en spraakberichtaansluiting geïnstalleerd; echte QR-koppeling en kanaalgebruik open. Speakerwerking bij andere uitvoerder."
             },
             {
               "id": "E3",
@@ -4989,7 +5016,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E2.4",
+      "currentStep": "E2.6",
       "steps": [
         {
           "number": 1,
@@ -7111,14 +7138,14 @@
             {
               "id": "E2.6",
               "title": "WhatsApp als optioneel kanaal aansluiten",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "bouwen / afmaken",
               "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
               "owner": "Codex",
-              "ownerActionRequired": false,
-              "existing": "Chat/Telegram en gedeelde kanaal-/taakbetekenis bestaan.",
-              "gap": "WhatsApp is gevraagd maar nog niet als werkend optioneel transport geleverd.",
-              "nextAction": "Controleer actuele officiële transport-/aanmeldvoorwaarden en verbind een adapter aan de bestaande ontvangst en aflevering.",
+              "ownerActionRequired": true,
+              "existing": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
+              "gap": "Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond.",
+              "nextAction": "Echte accountkoppeling en gebruik bevestigen; geen verdere kanaalbouw vóór deze concrete controle.",
               "files": [
                 "src/eva/adapters/connectors",
                 "src/eva/adapters/api",
@@ -7132,13 +7159,25 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-16T17:36:14.550321+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "De geïnstalleerde QR-koppeling staat klaar. Een eigen WhatsApp-account kan alleen door jou worden gekoppeld.",
+                "steps": [
+                  "Open http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections",
+                  "Scan de QR via WhatsApp → Instellingen → Gekoppelde apparaten → Apparaat koppelen.",
+                  "Stuur Hallo Eva in je chat met jezelf. Controleer of Eva bij dat bericht antwoordt.",
+                  "Optioneel: zet spraakberichten aan bij Contact en spraakkeuze bewaren, verbind opnieuw en stuur een gesproken bericht."
+                ],
                 "blocksIndependentWork": false
-              }
+              },
+              "ownerScopeExtension": "16 oktober: WhatsApp moet spraakberichten kunnen koppelen aan de bestaande mediaverwerking. Geen nieuwe speaker-/spraakroute; deze blijft bij de andere uitvoerder.",
+              "result": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
+              "installationState": "installed",
+              "technicalChecks": "13 API + 16 transport + 3 echte PostgreSQL-controles geslaagd; geïnstalleerd dashboard toont QR zonder browserfouten.",
+              "completionEvidence": "development/evidence/product/e26-whatsapp-installed-20261016.json",
+              "independentReview": "development/reviews/e26-whatsapp-review-20261016.json",
+              "remaining": "Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond."
             }
           ]
         },
@@ -7519,7 +7558,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E2.6: WhatsApp via toegelaten transport optioneel aan dezelfde Eva verbinden; geen tweede identiteit of taakroute.",
+      "nextAction": "QR-koppeling en echt WhatsApp-gebruik afronden; daarna E3.1 bestandsregistratie.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7528,7 +7567,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T16:23:00.574395+00:00",
+      "updatedAt": "2026-10-16T17:36:14.550321+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -7571,7 +7610,7 @@
               "C4.1",
               "C4.3"
             ],
-            "currentGap": "E2.1–E2.5 bediening en optionele privétekstproviders geïnstalleerd. Niet-gekozen externe accounts blijven losgekoppeld. E2.6 WhatsApp blijft open; spraak bij de andere uitvoerder."
+            "currentGap": "E2.1–E2.5 afgerond. E2.6 WhatsApp-adapter en spraakberichtaansluiting geïnstalleerd; echte QR-koppeling en kanaalgebruik open. Speakerwerking bij andere uitvoerder."
           },
           {
             "id": "E3",

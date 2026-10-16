@@ -52,7 +52,9 @@ class PrivateWorkReturnStore:
         if not self.service.available_for(turn):
             raise ValueError("private return authority unavailable")
         voice = turn.conversation_id.startswith('voice:')
-        if not voice and turn.conversation_id != 'dashboard:' + str(self.service.principal_binding_id):
+        from eva.application.channel_routes import is_whatsapp_conversation
+        if (not voice and turn.conversation_id != 'dashboard:' + str(self.service.principal_binding_id)
+                and not is_whatsapp_conversation(turn.conversation_id)):
             raise ValueError("private return route unavailable")
         if operation not in {'open', 'close', 'renew', 'poll', 'authorize', 'ack', 'history', 'replay'}:
             raise ValueError("unknown return operation")

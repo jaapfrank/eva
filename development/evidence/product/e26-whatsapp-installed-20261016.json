@@ -1,0 +1,103 @@
+{
+  "contract": "EvaOptionalChannelDelivery/v1",
+  "card": "E2.6",
+  "date": "2026-10-16",
+  "status": "installed_awaiting_owner_pairing",
+  "scope": "Optional WhatsApp Web linked-device transport for the current owner, ordinary Eva conversation and task engine, original-message result return, optional voice messages using existing STT/TTS ports.",
+  "existingReused": [
+    "Current server-bound owner authority and ordinary ConversationTurn/runtime/respond/after_response",
+    "Existing conversation and operational journals, private task result claim/authorize/ack",
+    "Existing owner gateway secret and dashboard navigation",
+    "Existing DashboardVoice media ports and current media policy; no speaker installation changes"
+  ],
+  "added": [
+    "Baileys 7.0.0-rc14 optional transport with SQLite auth/source/delivery persistence",
+    "Owner QR/status/configure/enable/disable/logout controls",
+    "Exact original provider message quote and duplicate/ambiguous delivery fences",
+    "Voice-note decode to PCM and existing STT, existing TTS to Ogg/Opus replies",
+    "WhatsApp admission bindings for existing private research/digital/document/scheduled result routes"
+  ],
+  "checks": {
+    "api": {
+      "passed": 13,
+      "providerCalls": 0
+    },
+    "postgres": {
+      "passed": 3,
+      "disposableDatabase": true,
+      "separateConversationAndStorageScope": true,
+      "providerCalls": 0
+    },
+    "transport": {
+      "passed": 16,
+      "actualSdkCodec": true,
+      "actualFfmpeg": true,
+      "externalMessages": 0
+    },
+    "installedBrowser": {
+      "passed": true,
+      "qrVisible": true,
+      "browserErrors": 0,
+      "mutatingRequests": 0
+    },
+    "installedCore": "healthy",
+    "installedBridge": "healthy",
+    "existingMediaPolicy": "available"
+  },
+  "independentReview": "development/reviews/e26-whatsapp-review-20261016.json",
+  "preservedFailures": [
+    "First database fixture used an unavailable default psycopg2 driver; rerun used the installed Psycopg driver.",
+    "Historical shared database fixture pinned PostgreSQL 16; focused disposable fixture uses the actual installed PostgreSQL 18 schema.",
+    "First bridge startup found image UID1000 versus installed owner UID65532 mismatch. The image and deployment now use UID65532; existing Eva data was not changed."
+  ],
+  "limits": [
+    "QR availability proves a real unauthenticated WhatsApp connection; it does not prove account pairing or conversation delivery.",
+    "No real WhatsApp text, background result or voice message exchange has yet been observed.",
+    "Optional audio is voice messages, not live WhatsApp calls.",
+    "One configured private contact; groups and history import are excluded.",
+    "Baileys is an open-source WhatsApp Web adapter, not the official Meta Business API.",
+    "Legacy research original-message lookup checks exact deterministic admission keys against the existing journal; missing or erased original evidence prevents delivery."
+  ],
+  "usage": {
+    "evaRuntimeModelCallsStartedByTechnicalChecks": 0,
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null,
+    "externalWhatsAppMessagesSentByTechnicalChecks": 0
+  },
+  "ownerAction": {
+    "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections",
+    "steps": [
+      "Scan the WhatsApp QR using Linked devices on the account to connect.",
+      "Send Hallo Eva in the self-chat; verify the reply is attached to that message.",
+      "Enable voice messages in the same settings if desired, reconnect, and send a voice note.",
+      "Ask an ordinary background question and verify its short result returns to the original WhatsApp message."
+    ]
+  },
+  "originalDoneWhenUnchanged": true,
+  "cardCompleted": false,
+  "wholeProjectCompleted": false,
+  "checkedAt": "2026-10-16T17:36:14.550321+00:00",
+  "startedAt": "2026-10-16T17:18:19.193007+00:00",
+  "elapsedSecondsToInstalledEvidence": 1075.4,
+  "installation": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:7540eef682d2c4e3bb986cdc14e49deba36b82977c997ff08c70559272f7fcb7",
+      "state": "running",
+      "health": "healthy",
+      "user": "65532:65532"
+    },
+    "eva2-whatsapp": {
+      "image": "sha256:a9d5787f40869c44f7a59354e0c3d21f8ab701a897eb650a234dfe2750f6803e",
+      "state": "running",
+      "health": "healthy",
+      "user": "65532:65532"
+    }
+  },
+  "sourceSha256": {
+    "src/eva/adapters/api/dashboard_whatsapp.py": "b13a19e3a1cc2e8384f5624f95c4d83141c10c915e063abf07272b5a8ee02d53",
+    "src/eva/bootstrap/whatsapp_context.py": "792b4694dda091942038af0b75fa1aff197027d0e13c036b9f715883b9f9408b",
+    "deploy/whatsapp-bridge/bridge.mjs": "c4bbb7ea052e5fee172d2688a385952abc55437cd4d5858fc88a7857a82ba246",
+    "deploy/whatsapp-bridge/server.mjs": "c4b7b8c0650793d34b12cd8a3dc9e144d4c47960f1912527baafa089e2abb37f",
+    "development/tools/project-dashboard/src/owner-whatsapp.jsx": "6ea7de651bbf88fe1d03a7ad689a2031c3e685ef939e2754028a656e06df8f2a"
+  }
+}

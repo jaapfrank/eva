@@ -25,7 +25,7 @@ class OptionalConversationModel:
 
     def generate(self, turn, *args, **kwargs):
         from eva.application.voice_context import current_voice_context
-        if current_voice_context() is not None or turn.audience.kind!='private_person' or not turn.conversation_id.startswith(('dashboard:','telegram:')):
+        if current_voice_context() is not None or turn.audience.kind!='private_person' or not turn.conversation_id.startswith(('dashboard:','telegram:','whatsapp:')):
             return self.baseline.generate(turn,*args,**kwargs)
         state=self.control.settings.read();identifier=state['selected_id']
         if identifier is None: return self.baseline.generate(turn,*args,**kwargs)

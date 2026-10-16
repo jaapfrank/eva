@@ -1,0 +1,36 @@
+# Optional transport only. Connect to the already installed Eva core network.
+# The token is the existing owner-gateway secret; no new provider account/key.
+name: eva2-whatsapp
+services:
+  whatsapp:
+    image: ${EVA_WHATSAPP_IMAGE:?exact image ID required}
+    container_name: eva2-whatsapp
+    user: "65532:65532"
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      EVA_WHATSAPP_CORE_URL: http://core:8080
+      EVA_WHATSAPP_CONTROL_TOKEN_FILE: /run/secrets/dashboard_access_token
+    volumes:
+      - type: volume
+        source: whatsapp-data
+        target: /var/lib/eva-whatsapp
+      - type: bind
+        source: ${EVA_WHATSAPP_TOKEN_FILE:?existing owner token file required}
+        target: /run/secrets/dashboard_access_token
+        read_only: true
+    networks:
+      eva-core:
+        aliases: [eva2-whatsapp]
+networks:
+  eva-core:
+    external: true
+    name: ${EVA_INSTALLATION_NETWORK:?existing core network required}
+volumes:
+  whatsapp-data:
+    name: eva2-whatsapp-data

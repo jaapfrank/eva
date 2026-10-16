@@ -68,7 +68,11 @@ mogelijkheden in het plan. E2.5 heeft Anthropic- en OpenAI-compatibele privétek
 adapters en hun bediening geïnstalleerd met bestaande identiteit/geheugen/acties.
 De externe account is daarmee niet aangesloten of bewezen; eigen API-sleutel,
 expliciete controle en selectie zijn optioneel. Astra voor achtergrondwerk en
-initiatief en de bestaande spraakverbinding blijven behouden. WhatsApp blijft E2.6.
+initiatief en de bestaande spraakverbinding blijven behouden. E2.6 heeft de optionele
+WhatsApp Web-adapter en QR-bediening geïnstalleerd. Tekst en spraakberichten sluiten
+aan op dezelfde kern en bestaande mediaverwerking; een echte accountkoppeling en
+gebruik blijven open tot de eigenaar de QR scant. Live WhatsApp-bellen is geen
+onderdeel van deze aansluiting.
 Gebruik bestaande adapters/installatieonderdelen en ondersteunde aanmeldmethoden.
 Gebrek aan een niet-gekozen externe account blokkeert de andere vier uitkomsten niet.
 

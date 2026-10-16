@@ -14,6 +14,7 @@ from eva.providers.document_task_input import DocumentTaskPool
 
 def return_binding(authority, turn):
     """Bind only a freshly verified private route at new document admission."""
+    from eva.application.channel_routes import is_whatsapp_conversation
     resolver = authority._private_owner_resolver
     if resolver is None:
         return None
@@ -30,7 +31,8 @@ def return_binding(authority, turn):
             owner_principal_id=UUID(owner), principal_binding_id=resolver._binding,
             telegram_user_id=int(chat), chat_id=chat, bindings=resolver._bindings_loader()).to_payload()
         channel = 'telegram_private'
-    elif turn.conversation_id == 'dashboard:' + binding or turn.conversation_id.startswith('voice:'):
+    elif (turn.conversation_id == 'dashboard:' + binding or turn.conversation_id.startswith('voice:')
+          or is_whatsapp_conversation(turn.conversation_id)):
         channel = 'private_session'
     else:
         return None

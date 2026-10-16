@@ -11,6 +11,7 @@ from eva.contracts.canonical_json import canonical_sha256
 
 def schedule_return_binding(service, turn):
     from eva.adapters.postgres.private_work_return import private_episode
+    from eva.application.channel_routes import is_whatsapp_conversation
     service.validate_authority(turn)
     destination = service._delivery_arguments(turn).get("delivery_destination")
     if destination is not None:
@@ -21,7 +22,7 @@ def schedule_return_binding(service, turn):
             raise ValueError("scheduled destination differs from its original owner turn")
         channel = "telegram_private"
     elif (turn.conversation_id == "dashboard:" + str(service.principal_binding_id)
-          or turn.conversation_id.startswith("voice:")):
+          or turn.conversation_id.startswith("voice:") or is_whatsapp_conversation(turn.conversation_id)):
         channel = "private_session"
     else:
         return None
@@ -29,7 +30,8 @@ def schedule_return_binding(service, turn):
             "owner_principal_id": str(service.owner_principal_id),
             "principal_binding_id": str(service.principal_binding_id),
             "conversation_id": turn.conversation_id, "episode_id": private_episode(turn),
-            "destination": None if destination is None else destination.to_payload()}
+            "destination": None if destination is None else destination.to_payload(),
+            "source": {key: getattr(turn, key) for key in ("tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")}}
 
 
 @dataclass(frozen=True)

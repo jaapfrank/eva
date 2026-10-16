@@ -130,8 +130,16 @@ verstuurt de inhoud niet stil naar een andere provider. Achtergrondwerk, native
 research en initiatief behouden Astra; de bestaande spraakroute blijft ongewijzigd.
 De geïnstalleerde SDK-proeven gebruiken lokaal testtransport; een externe account
 is niet aangesloten of bewezen. De API-sleutel en een eigen controle blijven een
-optionele eigenaarhandeling. WhatsApp blijft E2.6. Een niet-gekozen account hoeft
-niet te worden ingericht om Eva te gebruiken.
+optionele eigenaarhandeling. WhatsApp is in E2.6 een apart optioneel Baileys-transport
+met private sessieopslag, QR-aanmelding en aan-/uitschakeling. Alleen het gekozen
+privécontact wordt aan de actuele eigenaar gebonden; geen groeps- of historie-import.
+De gewone gesprekskern en bestaande taak-/resultaatjournalen blijven leidend.
+Een achtergrondresultaat wordt bij zijn exact bewezen oorspronkelijke bericht
+teruggebracht; een onzekere verzending wordt niet blind herhaald. De adapter krijgt
+alleen een kort resultaatfragment; volledig resultaat op verzoek. Spraakberichten
+gebruiken de bestaande STT/TTS-poorten met audioconversie in de kanaaladapter, zonder
+nieuwe speakerroute. De geïnstalleerde adapter wacht nog op echte accountkoppeling en
+gebruik. Een niet-gekozen account hoeft niet te worden ingericht om Eva te gebruiken.
 
 Een optionele module krijgt een herkenbaar manifest: naam/versie, aangeboden
 mogelijkheden, benodigde verbinding/bevoegdheden, configuratie- en contractversies,

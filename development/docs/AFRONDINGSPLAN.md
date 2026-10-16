@@ -121,6 +121,11 @@ installatiestap. Werkende tekst-/fotogesprekken blijven behouden.
 een modulemanifest bewijst geen ondersteund model of echt berichttransport. Nog
 niet gemaakte gewenste adapters blijven expliciet bouwstatus, geen "alleen inloggen".
 
+E2.6 heeft de WhatsApp-adapter en QR-/verbindingsbediening geïnstalleerd. Protocol-,
+database-, audioconversie- en geïnstalleerde browsercontroles zijn geslaagd. De echte
+accountkoppeling, tekst-/spraakuitwisseling en oorspronkelijke terugmelding blijven
+als concrete gebruiksstap zichtbaar; de kaart is daardoor nog niet afgerond.
+
 ## E3 — Alle bestanden beoordeelbaar maken
 
 ### Eén complete, herleidbare inventaris
