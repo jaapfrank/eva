@@ -72,9 +72,9 @@ async def test_conflicting_duplicate_cannot_start_second_action():
 async def test_interruption_revokes_delayed_answer_not_accepted_core_work(interrupt):
     s,payloads,spoken=fixture();entered=asyncio.Event();release=asyncio.Event()
     original=s.bridge.dispatch
-    async def delayed(text,key):
+    async def delayed(text,key,**kwargs):
         entered.set();await release.wait()
-        return await original(text,key)
+        return await original(text,key,**kwargs)
     s.bridge.dispatch=delayed
     turn(s,'turn.done','one','Begin onderzoek')
     await entered.wait()
@@ -252,4 +252,37 @@ async def test_empty_final_replay_cannot_undo_explicit_stop():
     assert s._input_flush is flush
     await settle(s)
     assert len(payloads)==1 and not spoken
+    await s.aclose()
+
+
+@pytest.mark.asyncio
+async def test_explicit_core_update_is_spoken_before_final_without_blocking_core():
+    s,payloads,spoken=fixture();waiting=asyncio.Event();release=asyncio.Event()
+    async def events(payload):
+        yield {'type':'delta','text':'Unapproved draft'}
+        yield {'type':'spoken_update','text':'Het eerste deel staat vast.'}
+        yield {'type':'spoken_update','text':'Duplicate update must not speak.'}
+        waiting.set();await release.wait()
+        yield {'type':'final','reply':{'text':'Dit is het vervolg.'}}
+    s.bridge.backend.events=events
+    task=asyncio.create_task(s.core_turn('Vertel verder','test',0))
+    await waiting.wait();await asyncio.sleep(0)
+    assert spoken==['Het eerste deel staat vast.'] and not task.done()
+    release.set();await task
+    assert spoken==['Het eerste deel staat vast.','Dit is het vervolg.']
+    assert [r['text'] for r in s.bridge.recent]==['Vertel verder',*spoken]
+    await s.aclose()
+
+
+@pytest.mark.asyncio
+async def test_interruption_suppresses_update_and_final_but_core_finishes():
+    s,payloads,spoken=fixture();waiting=asyncio.Event();release=asyncio.Event()
+    async def events(payload):
+        waiting.set();await release.wait()
+        yield {'type':'spoken_update','text':'Dit mag niet meer klinken.'}
+        yield {'type':'final','reply':{'text':'Ook dit niet.'}}
+    s.bridge.backend.events=events
+    task=asyncio.create_task(s.core_turn('Werk verder','test',0))
+    await waiting.wait();s.interrupt();release.set();await task
+    assert not spoken and len(s.bridge.results)==1
     await s.aclose()

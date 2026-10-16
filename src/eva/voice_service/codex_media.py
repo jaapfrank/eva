@@ -426,10 +426,15 @@ class CodexMediaSession:
         self.current()
         # Each recognized turn, including social contact, enters the same core.
         # A new utterance revokes playback, never previously accepted work.
+        updates=[]
+        def spoken_update(value):
+            self.current()
+            if generation==self._generation:
+                updates.append((value,self.say(value)))
         try:
             async with self._core_lock:
                 try:
-                    answer=await self.bridge.dispatch(text,key)
+                    answer=await self.bridge.dispatch(text,key,spoken_update=spoken_update)
                 except (httpx.HTTPError,RuntimeError) as error:
                     self.current()
                     self.diagnostic('core_reply_failed',error_type=type(error).__name__)
@@ -439,7 +444,15 @@ class CodexMediaSession:
                 self.bridge.transcript('user',text)
         finally:
             self._core_pending=max(0,self._core_pending-1)
+        # Rendering the approved first part overlaps core work. Drain it before
+        # the final answer, preserving interruption and actual playback status.
+        for value,update in updates:
+            await asyncio.gather(update.task,return_exceptions=True)
+            if not self.closed:
+                self.bridge.transcript('assistant',value,interrupted=(
+                    True if update.task.cancelled() else None if update.interrupted else False))
         if generation!=self._generation:return
+        self.current()
         handle=self.say(answer)
         try:
             await handle.task

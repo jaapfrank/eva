@@ -1,0 +1,169 @@
+{
+  "checkedAt": "2026-10-16T17:37:04.612829+00:00",
+  "status": "installed_owner_review_pending",
+  "changes": [
+    "Render the existing core speak_and_continue event once while core work continues; never speak provisional deltas. Preserve STOP, generation binding and playback uncertainty.",
+    "An approved first speech part alone no longer escalates the contact model to the work model; substantive tool work still escalates.",
+    "Read retained public foreground tool receipts and existing authorized delegated task list in one on-demand action, with original timestamps, source hashes, failure states and explicit coverage limits.",
+    "Cross-device household history uses validated source actor/consent; private/erased/revoked sources excluded. Fixed request-time window; bounded pages and explicit truncation."
+  ],
+  "tests": {
+    "voicePassed": 95,
+    "contactAndVoiceContextPassed": 66,
+    "postgresPassed": 12,
+    "totalPassed": 173,
+    "independentReview": "review_cursor: no remaining scoped code blockers, including bundled existing task list"
+  },
+  "runtime": [
+    {
+      "name": "eva2-household-speaker-1",
+      "slug": "speaker",
+      "project": "eva2-household-speaker",
+      "service": "speaker",
+      "base": "sha256:999c0a8a14b67be97a95af1796544738d0cc18c48f1f66a0c90db33cb87cbcf2",
+      "tag": "eva2-voice-followup-speaker:20261016",
+      "hashes": {
+        "voice_service/codex_media.py": "f08fce59f89323c9e12b1b8bd8949117aca08f1cb25d8f97614682c0b026e90d",
+        "voice_service/codex_backend.py": "61aa458b27f604ccdd05d7252151a015775909a3232b8330d62d8173f0d5a748"
+      },
+      "installed_image": "sha256:ffe4c4166aa5d299ff214ac11930dde8191434eecf1b7072bb328b515a11871c",
+      "running": true,
+      "current_image": "sha256:ffe4c4166aa5d299ff214ac11930dde8191434eecf1b7072bb328b515a11871c",
+      "verified_current_hashes": true
+    },
+    {
+      "name": "eva2-owner-voice-media-1",
+      "slug": "media",
+      "project": "eva2-owner-voice",
+      "service": "media",
+      "base": "sha256:e50c0d603d639a51a609a86700ed12c454bf211b0c77c82eaa9bd881592fb309",
+      "tag": "eva2-voice-followup-media:20261016",
+      "hashes": {
+        "voice_service/codex_media.py": "f08fce59f89323c9e12b1b8bd8949117aca08f1cb25d8f97614682c0b026e90d",
+        "voice_service/codex_backend.py": "61aa458b27f604ccdd05d7252151a015775909a3232b8330d62d8173f0d5a748"
+      },
+      "installed_image": "sha256:52a56600329bca113b3d3e8888234cad5e8728aca3290eff08e3d20c4722ebc1",
+      "running": true,
+      "current_image": "sha256:52a56600329bca113b3d3e8888234cad5e8728aca3290eff08e3d20c4722ebc1",
+      "verified_current_hashes": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "slug": "core",
+      "project": "eva2-managed-b-slot3",
+      "service": "core",
+      "base": "sha256:91feac3b21535d0e3060b76de9f8f8273b721f8e8b6f92704a626a811b75fc29",
+      "tag": "eva2-voice-followup-core:20261016",
+      "hashes": {
+        "application/conversation.py": "c30a21c6ba3ec78a954ea10f8677fcc7471b9a0723bfbba2a617376d97d1c743",
+        "application/voice_context.py": "e8f690d06d10ab0666e702d7ba2f505557be38614a891ebc9822f0a494065889",
+        "bootstrap/household_continuity.py": "63e8c6bcc94f3283e77ea56bc52f6fbe90631dbd3c6fa9cad9d0651d69a25f63",
+        "bootstrap/runtime.py": "6445b842758a3543fb594ae618c3399703953cbb3c881475b59749c079d4a2c1",
+        "bootstrap/recent_activity.py": "af757c496c64424a689cf40052182ecf2cf70a7ab6c993e4153a1a1435f3addf"
+      },
+      "installed_image": "sha256:fe39dd499c22d2c3f0af305672507179b9cf1fa999c601f9e50f7ad6f9d28636",
+      "running": true,
+      "current_image": "sha256:7540eef682d2c4e3bb986cdc14e49deba36b82977c997ff08c70559272f7fcb7",
+      "verified_current_hashes": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "slug": "worker",
+      "project": "eva2-managed-b-slot3",
+      "service": "delegated-work-worker",
+      "base": "sha256:31fb31c4a3ec88648cfbffa86b844d320922a46411cde14c241d79cd0b8aadd5",
+      "tag": "eva2-voice-followup-worker:20261016",
+      "hashes": {
+        "application/conversation.py": "c30a21c6ba3ec78a954ea10f8677fcc7471b9a0723bfbba2a617376d97d1c743",
+        "application/voice_context.py": "e8f690d06d10ab0666e702d7ba2f505557be38614a891ebc9822f0a494065889",
+        "bootstrap/household_continuity.py": "63e8c6bcc94f3283e77ea56bc52f6fbe90631dbd3c6fa9cad9d0651d69a25f63",
+        "bootstrap/runtime.py": "6445b842758a3543fb594ae618c3399703953cbb3c881475b59749c079d4a2c1",
+        "bootstrap/recent_activity.py": "af757c496c64424a689cf40052182ecf2cf70a7ab6c993e4153a1a1435f3addf"
+      },
+      "installed_image": "sha256:f9d8cdc1d5da9c0164e222090607e420fdf82a85649828d580c440395cf3f2a7",
+      "running": true,
+      "current_image": "sha256:f9d8cdc1d5da9c0164e222090607e420fdf82a85649828d580c440395cf3f2a7",
+      "verified_current_hashes": true
+    }
+  ],
+  "measurements": {
+    "baselineLimitedDay": {
+      "completed": true,
+      "elapsedMs": 22749,
+      "actions": [
+        {
+          "name": "list_delegated_work",
+          "status": "verified"
+        }
+      ],
+      "modelCalls": 2,
+      "inputTokens": 14262,
+      "outputTokens": 128,
+      "credits": null
+    },
+    "candidateSeparateReads": {
+      "completed": true,
+      "elapsedMs": 35866,
+      "actions": [
+        {
+          "name": "list_delegated_work",
+          "status": "verified"
+        },
+        {
+          "name": "read_recent_activity",
+          "status": "verified"
+        }
+      ],
+      "modelCalls": 3,
+      "inputTokens": 25299,
+      "outputTokens": 227,
+      "credits": null
+    },
+    "installedCombinedRead": {
+      "completed": true,
+      "elapsedMs": 24531,
+      "actions": [
+        {
+          "name": "read_recent_activity",
+          "status": "verified"
+        }
+      ],
+      "modelCalls": 2,
+      "inputTokens": 17020,
+      "outputTokens": 147,
+      "credits": null
+    },
+    "sampleSizePerVariant": 1,
+    "comparisonLimit": "Different source coverage and concurrent maintenance; not a controlled latency benchmark. No claim that full day reply is faster than baseline.",
+    "abortedProbes": "Two probes were interrupted by concurrent core container replacements (exit137); no successful timing claimed. Final probe used actual installed image/config in an isolated temporary compose run, background workers disabled."
+  },
+  "audio": {
+    "coreFinals": 2,
+    "recognizedTurns": 2,
+    "closedAfterFarewell": true,
+    "timings": [
+      {
+        "turn": 0,
+        "elapsed_ms": 15831,
+        "first_audio_ms": 13889,
+        "audio_samples": 27360
+      },
+      {
+        "turn": 1,
+        "elapsed_ms": 13037,
+        "first_audio_ms": 10502,
+        "audio_samples": 40320
+      }
+    ],
+    "physicalHearingOrDeviceAckSimulated": false
+  },
+  "limits": [
+    "Day question still takes about25s in this single measurement; initial memory recall remains several seconds.",
+    "The added activity reader covers retained public household foreground external-tool receipts in the last24h and existing bounded shared task list, not all private or initiative activity.",
+    "At most65 candidate public sessions,20 source exchanges/page,32 tool receipts/exchange; pagination caps are explicit. Concurrent source erasure can affect OFFSET pagination.",
+    "Contentful early speech depends on the core choosing speak_and_continue; no fixed filler or second persona. Real early-speech overlap covered by deterministic integration tests; this live audio probe tests final answers and goodbye.",
+    "Physical audio/naturalness requires owner observation; no owner acceptance fabricated."
+  ],
+  "usage": "Live model usage above is development validation, separate from ongoing Eva runtime. Audio transport usage and total development credits remain unknown.",
+  "privacy": "No private text, audio, credentials, session identifiers or task contents in this evidence."
+}

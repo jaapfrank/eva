@@ -150,16 +150,17 @@ def test_household_contact_receives_household_scope_without_owner_tools():
     assert contact.calls[0][1]["available_actions"] == ()
 
 
-def test_spoken_first_part_hands_over_to_work_model_with_receipt():
+def test_spoken_first_part_keeps_contact_model_until_real_work():
     events = []
     contact = Model(lambda t, k: ConversationActionCall("speak", "speak_and_continue",
-                                                       {"text": "Ik vergelijk de opties."}))
-    work = Model(lambda t, k: "Dit is het vervolg.")
+                                                       {"text": "Ik vergelijk de opties."})
+                    if k["completed_action"] is None else "Dit is het vervolg.")
+    work = Model(lambda t, k: pytest.fail("speech alone must not escalate"))
     with voice_context(VoiceContext((), (), lambda _: None, events.append)):
         LivingConversation(_Memory(), work, IDENTITY, contact_model=contact).respond(turn())
-    assert len(contact.calls) == len(work.calls) == 1
+    assert len(contact.calls) == 2 and not work.calls
     assert events == [{"type": "spoken_update", "text": "Ik vergelijk de opties."}]
-    assert work.calls[0][1]["completed_action"].output["heard"] is False
+    assert contact.calls[1][1]["completed_action"].output["heard"] is False
 
 
 def test_failed_admission_never_generates_acceptance():

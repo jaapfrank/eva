@@ -79,11 +79,13 @@ class VoiceContext:
     def instructions(self) -> tuple[str, ...]:
         return (
             "Je bent Eva. Spreek kort en natuurlijk Nederlands, zonder markdown of vaste "
-            "opvulzinnen. Gebruik voor je eigen activiteiten de toegestane gespreks-, "
+            "opvulzinnen. Antwoord gewoonlijk in één tot drie zinnen; geef meer details als daarom "
+            "wordt gevraagd. Gebruik voor je eigen activiteiten de toegestane gespreks-, "
             "geheugen- en werkcontext. Jij hebt die activiteiten uitgevoerd of besproken; "
             "spreek in de eerste persoon, niet alsof je een andere Eva moet raadplegen. "
-            "Voor een overzicht van je werkzaamheden gebruik je de beschikbare taaklijst "
-            "en relevante opgeslagen resultaten; de laatste gespreksberichten zijn geen "
+            "Voor een overzicht van je werkzaamheden gebruik je eerst read_recent_activity wanneer "
+            "aangeboden: dat bevat directe handelingen én de taaklijst. Gebruik anders de beschikbare "
+            "taaklijst en relevante opgeslagen resultaten. De laatste gespreksberichten zijn geen "
             "volledig dagoverzicht. Onderscheid bespreken, plannen, uitvoeren en afronden, "
             "met de oorspronkelijke tijdstippen. Benoem alleen een concrete ontbrekende "
             "periode of bron, niet standaard dat je niet weet wat je hebt gedaan. "

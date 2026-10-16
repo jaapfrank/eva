@@ -154,7 +154,7 @@ class EvaVoiceBackend:
         await response.write_eof()
         return response
 
-    async def dispatch(self, text, key):
+    async def dispatch(self, text, key, *, spoken_update=None):
         self.current()
         # Freeze the selected context before authorization; a concurrently
         # arriving saved result requires its own check on a subsequent turn.
@@ -178,12 +178,22 @@ class EvaVoiceBackend:
         self.notify({'type':'work_started','message_id':message_id,'text':text})
         try:
             final = None
+            update_seen = False
             async for event in self.backend.events(payload):
                 self.current()
                 if event.get('type') in {'request_acknowledged','final'}:
                     self.diagnostic('core_'+event['type'])
                 if event.get('type') == 'final':
                     final = event['reply']['text']
+                elif event.get('type') == 'spoken_update':
+                    # Only explicit, final speech from Eva's core; never model deltas.
+                    value = event.get('text')
+                    if (not update_seen and isinstance(value, str) and value.strip()
+                            and len(value) <= 1000 and len(value.split()) <= 35):
+                        update_seen = True
+                        if spoken_update is not None:
+                            spoken_update(value)
+                        self.notify({**event, 'message_id': message_id})
                 elif event.get('type') == 'error':
                     raise RuntimeError('EVA core response failed')
                 elif event.get('type') != 'delta':

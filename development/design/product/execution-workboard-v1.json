@@ -1638,6 +1638,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Voice · Eigen activiteiten en hoorbare tussenreacties",
+            "state": "installed",
+            "checkedAt": "2026-10-16T17:37:04.612829+00:00",
+            "summary": "Kern-tussenreacties klinken tijdens verder werken; alleen spreken veroorzaakt geen modelescalatie. Eén opvraag combineert directe openbare handelingen met de bestaande taaklijst.173 controles en geïnstalleerde tweebeurtenspraakproef geslaagd.",
+            "remaining": "Dagvraag circa25s in één proef; geen volledige privé-/initiatiefdaghistorie. Fysieke natuurlijkheid door eigenaar beoordelen.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/activity-and-updates-20261016.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "smallTaskCountsUnchanged": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "Voice · Eén gesprekskern voor heel Eva",
             "state": "installed",
             "checkedAt": "2026-10-16T16:36:26.607754+00:00",
@@ -7888,6 +7900,13 @@
         "summary": "Alle gesproken beurten via dezelfde Eva-kern; luisteraudio kan niet naar de speaker.93 tests; vierbeurtengesprek met correctie, onderbreken en afscheid geslaagd. Beide bestaande spraakingangen geïnstalleerd.",
         "newSessionRecallVerified": true,
         "remaining": "Natuurlijkheid en fysieke audio door eigenaar beoordelen; kernwachttijd blijft merkbaar. Geen volledig daglogboek geclaimd."
+      },
+      "followup20261016": {
+        "status": "installed_owner_review_pending",
+        "checkedAt": "2026-10-16T17:37:04.612829+00:00",
+        "evidence": "development/evidence/product/subscription-voice-20261013/activity-and-updates-20261016.json",
+        "summary": "Kern-tussenreacties klinken tijdens verder werken; alleen spreken veroorzaakt geen modelescalatie. Eén opvraag combineert directe openbare handelingen met de bestaande taaklijst.173 controles en geïnstalleerde tweebeurtenspraakproef geslaagd.",
+        "remaining": "Dagvraag circa25s in één proef; geen volledige privé-/initiatiefdaghistorie. Fysieke natuurlijkheid door eigenaar beoordelen."
       }
     },
     "aideRetainedResume20261013": {

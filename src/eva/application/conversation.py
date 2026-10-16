@@ -1103,9 +1103,11 @@ class LivingConversation:
             history = {"prior_actions": tuple(prior_actions)} if prior_actions else {}
             # Routing uses actual receipts, never channel names or greeting regexes.
             # Acknowledging durable work and searching memory stay on the contact
-            # model. Tool execution / spoken continuation use the existing work model.
+            # model. Speaking an approved first part alone does not escalate;
+            # substantive tool execution still uses the existing work model.
             contact_receipts = {
-                MEMORY_SEARCH_ACTION, STOP_VOICE_WORK,
+                MEMORY_SEARCH_ACTION, STOP_VOICE_WORK, SPEAK_AND_CONTINUE,
+                "read_recent_activity",
                 "list_reusable_procedures", "resolve_reusable_procedure",
                 "start_delegated_work", "start_background_research", "start_digital_work", "list_delegated_work", "get_delegated_work", "get_related_work", "search_delegated_work", "revise_digital_work",
                 "stop_delegated_work", "stop_related_work", "resume_delegated_work",

@@ -1829,6 +1829,9 @@ def create_runtime_app() -> FastAPI:
             submit=lambda document: runtime._cold_path.submit(document))
     learning_tools = (() if human_understanding_actions is None
                       else human_understanding_actions.conversation_tools())
+    from eva.bootstrap.recent_activity import RecentActivityActions, RECENT_ACTIVITY
+    activity_actions = RecentActivityActions(lambda: runtime._household_conversation_context)
+    activity_tools = (RECENT_ACTIVITY,)
     model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,
@@ -1836,7 +1839,7 @@ def create_runtime_app() -> FastAPI:
         resource_budget=settings.runtime_resource_budget,
         conversation_tools=(
             (() if provider_bundle is None else provider_bundle.conversation_tools)
-            + learning_tools
+            + learning_tools + activity_tools
             + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
                 include_research=delegated_research_profile is not None,
                 include_digital=settings.delegated_digital_enabled))
@@ -1931,6 +1934,7 @@ def create_runtime_app() -> FastAPI:
         external_tools=(
             (() if provider_bundle is None else provider_bundle.external_tools)
             + (() if human_understanding_actions is None else (human_understanding_actions,))
+            + (activity_actions,)
             + (() if delegated_work_actions is None else (delegated_work_actions,))
         ),
     )
@@ -1945,7 +1949,7 @@ def create_runtime_app() -> FastAPI:
             resource_budget=settings.runtime_resource_budget,
             conversation_tools=(
                 (() if provider_bundle is None else provider_bundle.conversation_tools)
-                + learning_tools
+                + learning_tools + activity_tools
                 + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
                     include_research=delegated_research_profile is not None,
                     include_digital=settings.delegated_digital_enabled))
@@ -2308,6 +2312,9 @@ def create_runtime_app() -> FastAPI:
     if delegated_work_store is not None:
         delegated_work_store._initiative_authority_loader = runtime._initiative_authority
     runtime._work_memory = None if delegated_work_service is None else work_memory
+    from eva.bootstrap.household_continuity import HouseholdConversationContext
+    runtime._household_conversation_context = (None if household_work_server is None
+        else HouseholdConversationContext(household_work_server))
     native_voice = (None if household_voice is None else household_voice.build_service(
         runtime=runtime, engine=engine, work_server=household_work_server,
     ))

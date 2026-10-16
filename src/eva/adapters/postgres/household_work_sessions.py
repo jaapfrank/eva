@@ -269,6 +269,16 @@ class HouseholdWorkSessions:
                 raise ValueError("native delivery metadata is invalid")
             return destination
 
+    def read_retained_household(self, session_id, satellite_id, device_id):
+        """Read sealed provenance; explicit output additionally requires its task destination grant."""
+        self.authority.validate_device(satellite_id, device_id)
+        with self.store._engine.begin() as connection:
+            self.store._scope(connection)
+            self.store._validate_owner_binding(connection,
+                owner_principal_id=self.authority.policy.owner_principal_id,
+                principal_binding_id=self.authority.policy.principal_binding_id)
+            return self._read_binding(connection, session_id, satellite_id, device_id)["binding"]
+
     def read_retained_native(self, session_id, satellite_id, device_id):
         """Read an original native destination without renewing its foreground lease."""
         self.authority.validate_device(satellite_id, device_id)
