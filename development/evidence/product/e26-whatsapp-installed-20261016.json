@@ -68,12 +68,8 @@
   },
   "ownerAction": {
     "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections",
-    "steps": [
-      "Scan the WhatsApp QR using Linked devices on the account to connect.",
-      "Send Hallo Eva in the self-chat; verify the reply is attached to that message.",
-      "Enable voice messages in the same settings if desired, reconnect, and send a voice note.",
-      "Ask an ordinary background question and verify its short result returns to the original WhatsApp message."
-    ]
+    "steps": [],
+    "reason": "Do not pair the personal account or create a Business account until the calling route and account eligibility are confirmed."
   },
   "originalDoneWhenUnchanged": true,
   "cardCompleted": false,
@@ -101,5 +97,11 @@
     "deploy/whatsapp-bridge/bridge.mjs": "c4bbb7ea052e5fee172d2688a385952abc55437cd4d5858fc88a7857a82ba246",
     "deploy/whatsapp-bridge/server.mjs": "c4b7b8c0650793d34b12cd8a3dc9e144d4c47960f1912527baafa089e2abb37f",
     "development/tools/project-dashboard/src/owner-whatsapp.jsx": "6ea7de651bbf88fe1d03a7ad689a2031c3e685ef939e2754028a656e06df8f2a"
+  },
+  "ownerClarification": {
+    "at": "2026-10-16T18:41:52.369506+00:00",
+    "required": "Live WhatsApp calls to a separate Eva account/number; voice messages alone do not meet the requirement.",
+    "personalPairing": "Disabled before any account was paired.",
+    "liveCallingImplemented": false
   }
 }

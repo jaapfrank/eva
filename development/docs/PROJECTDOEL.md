@@ -69,10 +69,11 @@ adapters en hun bediening geïnstalleerd met bestaande identiteit/geheugen/actie
 De externe account is daarmee niet aangesloten of bewezen; eigen API-sleutel,
 expliciete controle en selectie zijn optioneel. Astra voor achtergrondwerk en
 initiatief en de bestaande spraakverbinding blijven behouden. E2.6 heeft de optionele
-WhatsApp Web-adapter en QR-bediening geïnstalleerd. Tekst en spraakberichten sluiten
-aan op dezelfde kern en bestaande mediaverwerking; een echte accountkoppeling en
-gebruik blijven open tot de eigenaar de QR scant. Live WhatsApp-bellen is geen
-onderdeel van deze aansluiting.
+WhatsApp Web-berichtenadapter en QR-bediening geïnstalleerd. De eigenaar bedoelt
+echter ook live bellen naar Eva op haar eigen WhatsApp-nummer. De berichtenadapter
+is daarvoor slechts deelwerk; live bellen is nog niet geïmplementeerd. De persoonlijke
+QR-aanmelding is uitgezet. Bevestig eerst een geschikte belroute en accountvereisten;
+de bestaande gespreks-/spraakroute blijft leidend en bij de spraakuitvoerder.
 Gebruik bestaande adapters/installatieonderdelen en ondersteunde aanmeldmethoden.
 Gebrek aan een niet-gekozen externe account blokkeert de andere vier uitkomsten niet.
 

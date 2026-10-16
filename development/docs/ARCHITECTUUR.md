@@ -138,8 +138,11 @@ Een achtergrondresultaat wordt bij zijn exact bewezen oorspronkelijke bericht
 teruggebracht; een onzekere verzending wordt niet blind herhaald. De adapter krijgt
 alleen een kort resultaatfragment; volledig resultaat op verzoek. Spraakberichten
 gebruiken de bestaande STT/TTS-poorten met audioconversie in de kanaaladapter, zonder
-nieuwe speakerroute. De geïnstalleerde adapter wacht nog op echte accountkoppeling en
-gebruik. Een niet-gekozen account hoeft niet te worden ingericht om Eva te gebruiken.
+nieuwe speakerroute. De eigenaar vraagt ook live WhatsApp-bellen naar een eigen
+Eva-account/nummer. Dat biedt de berichtenadapter nog niet. De persoonlijke
+QR-aanmelding staat uit; Calling API-toegang en overdracht naar de bestaande
+spraakroute moeten eerst worden bevestigd. Een niet-gekozen account hoeft niet te
+worden ingericht om Eva te gebruiken.
 
 Een optionele module krijgt een herkenbaar manifest: naam/versie, aangeboden
 mogelijkheden, benodigde verbinding/bevoegdheden, configuratie- en contractversies,

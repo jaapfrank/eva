@@ -124,7 +124,10 @@ niet gemaakte gewenste adapters blijven expliciet bouwstatus, geen "alleen inlog
 E2.6 heeft de WhatsApp-adapter en QR-/verbindingsbediening geïnstalleerd. Protocol-,
 database-, audioconversie- en geïnstalleerde browsercontroles zijn geslaagd. De echte
 accountkoppeling, tekst-/spraakuitwisseling en oorspronkelijke terugmelding blijven
-als concrete gebruiksstap zichtbaar; de kaart is daardoor nog niet afgerond.
+onbewezen. De eigenaar verduidelijkt dat live bellen naar een eigen Eva-nummer nodig
+is; spraakberichten alleen voldoen niet. De persoonlijke QR-aanmelding staat uit.
+Bevestig eerst de belroute en accountvereisten, stem de bestaande spraakoverdracht af
+en vraag pas daarna de benodigde accountactie. E2.6 is niet afgerond.
 
 ## E3 — Alle bestanden beoordeelbaar maken
 

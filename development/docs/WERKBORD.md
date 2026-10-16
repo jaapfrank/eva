@@ -4,9 +4,9 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-WhatsApp geïnstalleerd · QR koppelen
+WhatsApp met eigen Eva-nummer en live bellen
 
-WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.
+Berichtenadapter gebouwd en geïnstalleerd, maar dat beantwoordt de gevraagde live-belfunctie niet. Persoonlijke QR-aanmelding is uitgezet; er is geen WhatsApp-account gekoppeld. Nog te realiseren: live bellen naar Eva op een eigen WhatsApp-nummer. Eerst Calling API-toegang/geschiktheid en actuele voorwaarden vaststellen en de audio-overdracht met de bestaande spraakuitvoerder afstemmen. Geen account- of QR-handeling gevraagd.
 
 Klaar wanneer: WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.
 
@@ -97,7 +97,7 @@ Klaar wanneer: WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Ev
 | E2.3 · Gesprekken, opdrachten en resultaten samen tonen | ✓ Afgerond | Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek. |
 | E2.4 · Initiatief, dromen en verbeteringen inzichtelijk maken | ✓ Afgerond | De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties. |
 | E2.5 · Extra modelproviders optioneel aansluiten | ✓ Afgerond | De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter. |
-| E2.6 · WhatsApp als optioneel kanaal aansluiten | ● Open | WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers. |
+| E2.6 · WhatsApp met eigen Eva-nummer en live bellen | ● Open | WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers. |
 | E3.1 · Alle bestanden en hun rol registreren | ● Open | Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review. |
 | E3.2 · Actieve kerncode inhoudelijk beoordelen | ● Open | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
 | E3.3 · Adapters, installatie en dynamisch gebruik beoordelen | ● Open | Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit. |
@@ -110,7 +110,7 @@ Klaar wanneer: WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Ev
 
 ## Van jou
 
-Scan de QR en probeer een echt bericht. Tekstantwoord, achtergrondresultaat bij de juiste vraag en spraakbericht moeten nog via het gekoppelde account worden bevestigd; E2.6 is daarom niet afgerond.
+Je hoeft jouw persoonlijke WhatsApp niet te koppelen. Codex bevestigt eerst de belroute voor een eigen Eva-nummer.
 
 ## Historie
 
