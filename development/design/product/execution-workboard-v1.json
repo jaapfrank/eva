@@ -1635,6 +1635,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Voice · Geheugen, snelheid en audiobegin hersteld",
+            "state": "installed",
+            "checkedAt": "2026-10-16T11:43:33.901391+00:00",
+            "summary": "GPU-afhankelijkheid geheugen verwijderd. Inventaris19,3s tegenover55,8s; korte vervolgvraag5,6s. Zacht audiobegin behouden;109 gerichte tests geslaagd. Beide speakeraansluitingen gereed.",
+            "remaining": "Hoorbare speakerproef eigenaar open. Gelijktijdige geheugenopvragen8,5–10,5s; geen algemene claim van directe respons.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/reliability-20261016.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "smallTaskCountsUnchanged": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "E2.2 · Personen en geheugen bedienen geïnstalleerd",
             "state": "installed",
             "checkedAt": "2026-10-16T11:28:21.773727+00:00",
@@ -8367,6 +8379,18 @@
       "familyAcceptance": false,
       "wholeProjectComplete": false,
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
+    },
+    "subscriptionVoice20261013": {
+      "reliability20261016": {
+        "status": "installed_owner_audio_acceptance_pending",
+        "checkedAt": "2026-10-16T11:43:33.901391+00:00",
+        "scope": "Voice inventory latency, GPU-independent memory recall, bounded quiet speech onset preservation",
+        "memory": "Same model on CPU, no GPU device prerequisite; two successful cold starts, concurrent same-fact recall verified. CPU2 concurrent recall8.5–10.5s.",
+        "latency": "Installed inventory19.323s vs55.836s before; one source call, two model calls, all108 entries. Simple follow-up5.569s.",
+        "audio": "Quiet onset truncation reproduced then repaired;34 tests pass; both speaker bindings ready. Two generated audio turns succeed. Physical owner test pending.",
+        "evidence": "development/evidence/product/subscription-voice-20261013/reliability-20261016.json",
+        "acceptance": false
+      }
     }
   },
   "updatedAt": "2026-10-16T11:28:21.773727+00:00",

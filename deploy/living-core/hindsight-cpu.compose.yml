@@ -1,0 +1,13 @@
+# Reliable existing-model inference when the host cannot guarantee GPU access.
+# Keep the pinned image, weights, batching, volumes and credentials.
+# Reset the CDI request too: a CPU process must also start without a GPU.
+services:
+  hindsight:
+    devices: !reset []
+    environment:
+      HINDSIGHT_API_EMBEDDINGS_LOCAL_FORCE_CPU: "true"
+      HINDSIGHT_API_RERANKER_LOCAL_FORCE_CPU: "true"
+      HINDSIGHT_API_RERANKER_LOCAL_FP16: "false"
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+      HINDSIGHT_API_RERANKER_LOCAL_MAX_CONCURRENT: "2"

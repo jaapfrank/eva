@@ -22,7 +22,7 @@ LEGACY_SOURCE_RESPONSE_FIELDS = ("success", "http_status", "truncated", "selecti
                                 "request_sent", "response_sha256", "external_state_verified")
 SOURCE_RESPONSE_FIELDS = (*LEGACY_SOURCE_RESPONSE_FIELDS,
                           "section", "area_id", "domain", "captured_at", "snapshot_sha256",
-                          "offset", "total", "has_more", "next_offset")
+                          "offset", "total", "has_more", "next_offset", "selected_fields", "absent_fields", "page_size")
 
 
 class ConnectorSelectionError(ConversationConflict):

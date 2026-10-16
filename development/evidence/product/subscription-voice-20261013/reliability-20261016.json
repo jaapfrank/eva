@@ -1,0 +1,242 @@
+{
+  "checkedAt": "2026-10-16T11:43:33.901391+00:00",
+  "status": "installed_technical_repairs_owner_audio_acceptance_pending",
+  "scope": "Voice inventory latency, GPU-independent memory recall, bounded quiet speech onset preservation",
+  "runtime": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:c73e90c1b741ade87ed5e9babb1d03d75796a3bada15d29b9fe4ad5c3e11b55e",
+      "running": true,
+      "health": "healthy",
+      "config": "/var/lib/eva2/voice-session/reliability-20261016/core.candidate.json"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:bd62108d13b713cf0a0e45818638f377feea0a8e5fbb3cb288a8ae098381900b",
+      "running": true,
+      "health": "healthy",
+      "config": "/var/lib/eva2/voice-session/reliability-20261016/core.candidate.json"
+    },
+    "eva2-managed-b-slot3-hindsight-1": {
+      "image": "sha256:fc1efcd7102e753673b7e0e6fd613f107d58d1c769d015a2d9ef10ca8dd7995d",
+      "running": true,
+      "health": "healthy",
+      "config": "/var/lib/eva2/voice-session/reliability-20261016/memory.cpu2.json"
+    },
+    "eva2-household-speaker-1": {
+      "image": "sha256:31b9890fbb00f9957205e2f41311033ef0089b6a3e15150ed30ad9a20952aa12",
+      "running": true,
+      "health": null,
+      "config": "/var/lib/eva2/voice-session/reliability-20261016/speaker.candidate.json"
+    },
+    "eva2-owner-voice-media-1": {
+      "image": "sha256:e526173ba4dbc7fb5f4b7e33f8032807d111fa0ded8f346d99e71f0f494c0e47",
+      "running": true,
+      "health": null,
+      "config": "/var/lib/eva2/voice-session/reliability-20261016/media.candidate.json"
+    }
+  },
+  "installedSourceChecks": [
+    {
+      "container": "eva2-managed-b-slot3-core",
+      "file": "adapters/connectors/home_assistant_admin.py",
+      "sha256": "a1a35b20a9087804c43e369609631703e9abb15d175da62a745d73bb2d0a150b",
+      "matches": true
+    },
+    {
+      "container": "eva2-managed-b-slot3-core",
+      "file": "adapters/postgres/connector_results.py",
+      "sha256": "bd8372d78e4b420f32f3e3c83d80584a336fc4d9b3ee940f7faac98b4830baf8",
+      "matches": true
+    },
+    {
+      "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "file": "adapters/connectors/home_assistant_admin.py",
+      "sha256": "a1a35b20a9087804c43e369609631703e9abb15d175da62a745d73bb2d0a150b",
+      "matches": true
+    },
+    {
+      "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "file": "adapters/postgres/connector_results.py",
+      "sha256": "bd8372d78e4b420f32f3e3c83d80584a336fc4d9b3ee940f7faac98b4830baf8",
+      "matches": true
+    },
+    {
+      "container": "eva2-household-speaker-1",
+      "file": "voice_service/codex_speaker_audio.py",
+      "sha256": "b923d9ef2f3b41a88776065356091cbbbeecd75226a09749a3be3897786f721a",
+      "matches": true
+    },
+    {
+      "container": "eva2-owner-voice-media-1",
+      "file": "voice_service/codex_speaker_audio.py",
+      "sha256": "b923d9ef2f3b41a88776065356091cbbbeecd75226a09749a3be3897786f721a",
+      "matches": true
+    }
+  ],
+  "memory": {
+    "sameModelAndWeights": true,
+    "forceCpu": true,
+    "gpuDeviceRequirementRemoved": true,
+    "threads": 2,
+    "maxConcurrent": 2,
+    "hostGpuDriverRepaired": false,
+    "cpu4WarmRecallMs": [
+      2444,
+      2144,
+      1884
+    ],
+    "cpu2SerialRecallMs": 6747,
+    "cpu2ConcurrentRecallMs": [
+      10531,
+      8494
+    ],
+    "concurrentFactsEqual": true,
+    "coldStartsVerified": 2,
+    "privateConfig": "/var/lib/eva2/voice-session/reliability-20261016/memory.cpu2.json"
+  },
+  "inventory": {
+    "previousBackendMs": 55836,
+    "candidateBackendMs": 19959,
+    "installedProfile": [
+      {
+        "stage": "active_context",
+        "elapsed_ms": 925
+      },
+      {
+        "stage": "recall_for_presence_fast",
+        "elapsed_ms": 6670
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 4074,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 5267,
+          "output_tokens": 53
+        },
+        "timing": {
+          "first_content_ms": null,
+          "completed_ms": 3623
+        },
+        "action": "read_home_assistant_inventory"
+      },
+      {
+        "stage": "execute",
+        "elapsed_ms": 447
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 6627,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 6964,
+          "output_tokens": 132
+        },
+        "timing": {
+          "first_content_ms": 1977,
+          "completed_ms": 6323
+        },
+        "action": null
+      },
+      {
+        "stage": "case",
+        "elapsed_ms": 19323,
+        "index": 0,
+        "completed": true,
+        "answer_characters": 559,
+        "actions": [
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          }
+        ]
+      },
+      {
+        "stage": "active_context",
+        "elapsed_ms": 1000
+      },
+      {
+        "stage": "recall_for_presence_fast",
+        "elapsed_ms": 3049
+      },
+      {
+        "stage": "contact_model",
+        "elapsed_ms": 1341,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 5130,
+          "output_tokens": 8
+        },
+        "timing": {
+          "first_content_ms": 1095,
+          "completed_ms": 1265
+        },
+        "action": null
+      },
+      {
+        "stage": "case",
+        "elapsed_ms": 5569,
+        "index": 1,
+        "completed": true,
+        "answer_characters": 13,
+        "actions": []
+      }
+    ],
+    "sourceEntries": 108,
+    "sourceCalls": 1,
+    "modelCalls": 2,
+    "includesPhysicalAudio": false
+  },
+  "audio": {
+    "oldCodeRegression": "quiet prefix byte preservation failed",
+    "testsPassed": 34,
+    "quietPrefixBoundMs": 300,
+    "digitalSilenceLeadMs": 60,
+    "stopAndAckRetained": true,
+    "generatedAudioProbe": {
+      "ready_seconds": 9.704,
+      "turns": [
+        {
+          "first_audio_ms": 1522,
+          "samples": 30240,
+          "session_open": true
+        },
+        {
+          "first_audio_ms": 714,
+          "samples": 47040,
+          "session_open": true
+        }
+      ],
+      "physical_audio": false,
+      "microphone_used": false,
+      "speaker_ack_simulated": false,
+      "voice_requests": 2
+    },
+    "physicalAcceptance": false,
+    "limitations": [
+      "Entirely subthreshold speech does not open the existing amplitude gate.",
+      "Bounded onset repair does not establish the cause of the owner-reported missing words."
+    ]
+  },
+  "tests": {
+    "inventoryPassed": 75,
+    "inventoryDeselected": 2,
+    "deselectionReason": "Previously reproduced baseline test_real_conversation_receives_read_error_and_finishes_following_service fixture failures",
+    "audioPassed": 34
+  },
+  "independentReview": {
+    "reviewer": "review_cursor",
+    "blockingFindings": 0,
+    "notes": "Quiet prefix buffer may retain 300ms of silence for one frame when last nonzero sample is evicted. CPU concurrency remains slower than warm serial recall."
+  },
+  "remaining": [
+    "Owner audible speaker test pending.",
+    "Concurrent memory recall still takes 8.5–10.5 seconds; measured inventory19.3 seconds is not an instant response."
+  ],
+  "privacy": "No private answers, memory text, credentials or raw source inventories included."
+}
