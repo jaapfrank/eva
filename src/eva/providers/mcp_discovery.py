@@ -40,7 +40,9 @@ _MAX_ARGUMENT_BYTES = 65_536
 _USE_DESCRIPTOR = ConversationToolDescriptor(
     name=_USE_ACTION,
     description=(
-        "Gebruik een geregistreerd gereedschap van een gekoppelde dienst. Kies tool_id "
+        "Lees een aangeboden eva-stored-result lokaal met het bijbehorende readerschema, "
+        "of gebruik een geregistreerd gereedschap van een gekoppelde dienst. In een gedeeld "
+        "huishoudelijk gesprek is alleen het lokale lezen van resultaten uit deze beurt toegestaan. Kies tool_id "
         "uit de ontdekte catalogus en geef arguments_json als JSON-object volgens precies "
         "het getoonde invoerschema. De geregistreerde bevoegdheden blijven leidend."
     ),

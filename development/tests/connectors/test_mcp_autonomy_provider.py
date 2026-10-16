@@ -182,7 +182,7 @@ def test_factory_reuses_two_durable_ports_without_registration_io(monkeypatch, w
     names = {tool.name for tool in contribution.conversation_tools}
     assert {"connect_service", "discover_connector_tools", "use_connector_tool"} <= names
     assert len(contribution.external_tools) == 2
-    browser = contribution.external_tools[1]._provider._browser_autostart
+    browser = contribution.external_tools[1]._private._provider._browser_autostart
     if with_browser:
         assert browser.connector_id == module.connector_id_for(
             Authority.owner_key, "https://browser.example/mcp")
@@ -192,6 +192,16 @@ def test_factory_reuses_two_durable_ports_without_registration_io(monkeypatch, w
     assert records[0][0] is engine and records[0][1] == Authority.scope
     assert records[0][2] == "owner"
     assert all(port.available_for(source_turn()) for port in contribution.external_tools)
+    from dataclasses import replace
+    from tests.connectors.test_scoped_connector_results import household
+    shared = replace(source_turn(), audience=household("owner"), project_id=None,
+        conversation_id="household:home:conversation:test",
+        message_id="household:home:conversation:test:message")
+    offered = {name for port in contribution.external_tools if port.available_for(shared)
+               for name in port.action_names}
+    assert offered == {"use_connector_tool"}
+    assert not contribution.external_tools[1].available_for(replace(shared, installation_id="other"))
+
     assert all(not port.available_for(ConversationTurn.private("tenant", "installation", "other",
         "chat", "message", "hello", "2026-09-09T12:00:00Z")) for port in contribution.external_tools)
 
@@ -286,7 +296,7 @@ def test_configured_browser_catalog_shares_direct_owner_session(monkeypatch):
         McpRegistrationConfig(catalog.base_url,'registration-token'),configured_catalog=catalog,
         browser_autostart=module.BrowserAutostartConfig('https://browser.example/mcp',client))
     contribution=module.McpAutonomyProviderFactory.build(settings,sa.create_engine('postgresql+psycopg://unused:unused@localhost/unused'))
-    browser=contribution.external_tools[1]._provider._browser_autostart
+    browser=contribution.external_tools[1]._private._provider._browser_autostart
     direct=direct_browser_owner_binding('a'*64,catalog.base_url,client.origin)
     assert browser.matches('configured-browser') and browser.session_binding('configured-browser')==direct
     assert managed_browser_session_id('gateway-token',browser.session_binding('configured-browser'),7)==managed_browser_session_id('gateway-token',direct,7)

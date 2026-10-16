@@ -1113,10 +1113,22 @@ class LivingConversation:
                 "stop_own_initiative", "give_initiative_feedback",
                 "schedule_digital_work", "schedule_work_resume", "list_scheduled_work", "cancel_scheduled_work", "cancel_work_chain",
             }
+            def contact_receipt(receipt):
+                # Reading already captured bytes adds no external operation.
+                # Keep the original model only while the ENTIRE history remains
+                # ordinary contact/read work; a real work action still escalates.
+                return receipt.call.name in contact_receipts or (
+                    receipt.call.name == "use_connector_tool"
+                    and isinstance(receipt.call.arguments.get("tool_id"), str)
+                    and receipt.call.arguments["tool_id"].startswith("eva-stored-result:")
+                    and receipt.output.get("source") == "stored_connector_result"
+                    and receipt.output.get("external_state_verified") is False
+                    and receipt.output.get("status") in {"verified", "selection_invalid"})
+
             model = (contact_model
                      if contact_model is not None
-                     and (completed is None or completed.call.name in contact_receipts)
-                     and all(item.call.name in contact_receipts for item in receipts)
+                     and (completed is None or contact_receipt(completed))
+                     and all(contact_receipt(item) for item in receipts)
                      else self._model)
             individual_requests = getattr(model, "journals_provider_requests", False) is True
             request_id = (None if model_journal is None or individual_requests

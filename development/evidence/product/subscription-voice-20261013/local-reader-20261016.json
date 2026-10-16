@@ -1,0 +1,417 @@
+{
+  "checkedAt": "2026-10-16T11:03:39.066971+00:00",
+  "scope": "Existing household voice saved-result access and unnecessary model escalation",
+  "finding": "Actual household offered_actions excluded use_connector_tool even when HA receipts advertised its local reader. Private MCP owner authority correctly denied shared audience but also hid same-turn saved bytes.",
+  "changes": [
+    "Single scoped action wrapper: unchanged private dispatch; household local-only reads bound to exact turn/audience/execution",
+    "Local-only pending refuses external admissions; stop checks protect fresh reads, replay and correction",
+    "Ordinary contact history plus verified local saved-byte reads stays on contact model; prior true work still escalates",
+    "Invalid local field selection can be corrected under existing continuation budget"
+  ],
+  "security": {
+    "remote_connector_rights_added": false,
+    "private_owner_impersonation": false,
+    "source_proofs_changed": false,
+    "scope_boundary_tests": true,
+    "independent_review": "review_cursor reviewed route, routing and recovery; no remaining blockers; recommended interrupted-resume/namespace/stop/negative routing tests included"
+  },
+  "tests": {
+    "focused_passed": 129,
+    "final_recovery_assertions_passed": 1,
+    "warning_count": 1
+  },
+  "runs": {
+    "local_reader_work_model": {
+      "case": {
+        "stage": "case",
+        "elapsed_ms": 87055,
+        "index": 0,
+        "completed": true,
+        "answer_characters": 729,
+        "actions": [
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          }
+        ]
+      },
+      "preparation": [
+        {
+          "stage": "active_context",
+          "elapsed_ms": 1094
+        },
+        {
+          "stage": "recall_for_presence_fast",
+          "elapsed_ms": 5519
+        }
+      ],
+      "model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 4082,
+          "first_content_ms": null,
+          "input_tokens": 5309,
+          "output_tokens": 42,
+          "requested_action": true
+        },
+        {
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 4768,
+          "first_content_ms": null,
+          "input_tokens": 8450,
+          "output_tokens": 194,
+          "requested_action": true
+        },
+        {
+          "phase_index": 2,
+          "receipt_count": 2,
+          "elapsed_ms": 3608,
+          "first_content_ms": null,
+          "input_tokens": 8387,
+          "output_tokens": 78,
+          "requested_action": true
+        },
+        {
+          "phase_index": 3,
+          "receipt_count": 3,
+          "elapsed_ms": 7264,
+          "first_content_ms": null,
+          "input_tokens": 8938,
+          "output_tokens": 336,
+          "requested_action": true
+        },
+        {
+          "phase_index": 4,
+          "receipt_count": 4,
+          "elapsed_ms": 7283,
+          "first_content_ms": null,
+          "input_tokens": 9671,
+          "output_tokens": 141,
+          "requested_action": true
+        },
+        {
+          "phase_index": 5,
+          "receipt_count": 5,
+          "elapsed_ms": 10110,
+          "first_content_ms": null,
+          "input_tokens": 12447,
+          "output_tokens": 142,
+          "requested_action": true
+        },
+        {
+          "phase_index": 6,
+          "receipt_count": 6,
+          "elapsed_ms": 9946,
+          "first_content_ms": null,
+          "input_tokens": 13427,
+          "output_tokens": 142,
+          "requested_action": true
+        },
+        {
+          "phase_index": 7,
+          "receipt_count": 7,
+          "elapsed_ms": 7969,
+          "first_content_ms": null,
+          "input_tokens": 16226,
+          "output_tokens": 143,
+          "requested_action": true
+        },
+        {
+          "phase_index": 8,
+          "receipt_count": 8,
+          "elapsed_ms": 18229,
+          "first_content_ms": 3487,
+          "input_tokens": 17782,
+          "output_tokens": 207,
+          "requested_action": false
+        }
+      ],
+      "input_tokens": 100637,
+      "output_tokens": 1425
+    },
+    "routing_failed_selection": {
+      "case": {
+        "stage": "case",
+        "elapsed_ms": 32297,
+        "index": 0,
+        "completed": true,
+        "answer_characters": 436,
+        "actions": [
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "selection_invalid"
+          }
+        ]
+      },
+      "preparation": [
+        {
+          "stage": "active_context",
+          "elapsed_ms": 1364
+        },
+        {
+          "stage": "recall_for_presence_fast",
+          "elapsed_ms": 5788
+        }
+      ],
+      "model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 4063,
+          "first_content_ms": null,
+          "input_tokens": 5473,
+          "output_tokens": 42,
+          "requested_action": true
+        },
+        {
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 7099,
+          "first_content_ms": null,
+          "input_tokens": 8193,
+          "output_tokens": 194,
+          "requested_action": true
+        },
+        {
+          "phase_index": 2,
+          "receipt_count": 2,
+          "elapsed_ms": 5468,
+          "first_content_ms": null,
+          "input_tokens": 9359,
+          "output_tokens": 146,
+          "requested_action": true
+        },
+        {
+          "phase_index": 3,
+          "receipt_count": 3,
+          "elapsed_ms": 6215,
+          "first_content_ms": 1354,
+          "input_tokens": 8159,
+          "output_tokens": 111,
+          "requested_action": false
+        }
+      ],
+      "input_tokens": 31184,
+      "output_tokens": 493
+    },
+    "final_candidate": {
+      "case": {
+        "stage": "case",
+        "elapsed_ms": 55836,
+        "index": 0,
+        "completed": true,
+        "answer_characters": 523,
+        "actions": [
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "read_home_assistant_inventory",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          },
+          {
+            "name": "use_connector_tool",
+            "status": "verified"
+          }
+        ]
+      },
+      "preparation": [
+        {
+          "stage": "active_context",
+          "elapsed_ms": 1170
+        },
+        {
+          "stage": "recall_for_presence_fast",
+          "elapsed_ms": 4792
+        }
+      ],
+      "model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 3524,
+          "first_content_ms": null,
+          "input_tokens": 5548,
+          "output_tokens": 42,
+          "requested_action": true
+        },
+        {
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 3605,
+          "first_content_ms": null,
+          "input_tokens": 8586,
+          "output_tokens": 99,
+          "requested_action": true
+        },
+        {
+          "phase_index": 2,
+          "receipt_count": 2,
+          "elapsed_ms": 3411,
+          "first_content_ms": null,
+          "input_tokens": 8607,
+          "output_tokens": 79,
+          "requested_action": true
+        },
+        {
+          "phase_index": 3,
+          "receipt_count": 3,
+          "elapsed_ms": 4621,
+          "first_content_ms": null,
+          "input_tokens": 8983,
+          "output_tokens": 167,
+          "requested_action": true
+        },
+        {
+          "phase_index": 4,
+          "receipt_count": 4,
+          "elapsed_ms": 7519,
+          "first_content_ms": null,
+          "input_tokens": 8842,
+          "output_tokens": 143,
+          "requested_action": true
+        },
+        {
+          "phase_index": 5,
+          "receipt_count": 5,
+          "elapsed_ms": 4382,
+          "first_content_ms": null,
+          "input_tokens": 11619,
+          "output_tokens": 144,
+          "requested_action": true
+        },
+        {
+          "phase_index": 6,
+          "receipt_count": 6,
+          "elapsed_ms": 5061,
+          "first_content_ms": null,
+          "input_tokens": 13494,
+          "output_tokens": 142,
+          "requested_action": true
+        },
+        {
+          "phase_index": 7,
+          "receipt_count": 7,
+          "elapsed_ms": 4960,
+          "first_content_ms": null,
+          "input_tokens": 16292,
+          "output_tokens": 143,
+          "requested_action": true
+        },
+        {
+          "phase_index": 8,
+          "receipt_count": 8,
+          "elapsed_ms": 7277,
+          "first_content_ms": 1462,
+          "input_tokens": 17847,
+          "output_tokens": 126,
+          "requested_action": false
+        }
+      ],
+      "input_tokens": 99818,
+      "output_tokens": 1085
+    }
+  },
+  "comparison": {
+    "previous_incomplete_reader_route_ms": 54027,
+    "reader_with_unnecessary_work_escalation_ms": 87055,
+    "final_reader_with_contact_continuation_ms": 55836,
+    "general_speed_claim": false,
+    "note": "Single synthetic backend question, no microphone/audio latency. Final answer qualifies duplicate/group/unavailable inventory entries; no complete device-by-device factual audit."
+  },
+  "installation": {
+    "status": "installed_verified",
+    "config": "/var/lib/eva2/voice-session/local-reader-20261016/candidate.json",
+    "base_images": {
+      "core": "sha256:309c7e871d09901cf85dddc73e824a455cfd248eb04b2ddf10a2d71cfb1c01f5",
+      "worker": "sha256:33757b4250bd04f05140665a8af0724840866fc6fe8a462ef681507a4534e185"
+    },
+    "source_sha256": {
+      "src/eva/adapters/postgres/scoped_connector_results.py": "3cc610125af6b6bdeafa7e227567f12e872f8ff27da6db1b5352ca196a51de6b",
+      "src/eva/providers/mcp_autonomy.py": "f513f7c01eaebb34d81ea815e28feb64bcd14ccc66200ef542f7cff0088cd14f",
+      "src/eva/providers/mcp_discovery.py": "128ef0ed5a85a39e0f06d129d920753d85eb3604a07cdf8f62572c05aacba5bc",
+      "src/eva/application/conversation.py": "139ed675b77466490281cd9d109c0833bb2f49c0efcc04591c39399b21feefdd"
+    },
+    "images": {
+      "eva2-managed-b-slot3-core": "sha256:d32b449696914d07da93945dcc94a3151907785c267f94c6ef0e5e51a82e73b3",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:caaeb5774376991f4091776993c074049e6ac3d47d2895240a02b129033f8d90"
+    },
+    "source_matches_tested_candidate": true,
+    "speaker_bindings_ready": [
+      true,
+      true
+    ],
+    "healthz_http_status": 200,
+    "both_services_healthy": true
+  },
+  "remaining": [
+    "Full voice latency remains high",
+    "Recurrent Hindsight CUDA failure root cause unresolved",
+    "Missing first spoken words requires physical observation",
+    "Family acceptance not complete"
+  ],
+  "usage": {
+    "development_model_tokens": null,
+    "credits": null,
+    "runtime_usage": "Measured per run above; no synthetic cost estimate"
+  }
+}

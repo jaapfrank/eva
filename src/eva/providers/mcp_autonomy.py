@@ -177,12 +177,26 @@ class McpAutonomyProviderFactory:
             browser=ManagedBrowserAutostart(settings.browser_autostart,
                 connector_id_for(authority.owner_key,settings.browser_autostart.endpoint),session_aliases=aliases)
         discovery = McpDiscoveryToolAdapter(registry, browser_autostart=browser)
+        from eva.adapters.postgres.scoped_connector_results import ScopedConnectorResults
+
+        def authorize_local(turn):
+            # This grants no external operation or owner identity. The saved-byte
+            # reader additionally binds every read to this exact turn and audience.
+            if (turn.audience.kind != "household"
+                    or turn.audience.principal_id != turn.principal_id
+                    or external_timeline_scope(turn.tenant_id, turn.installation_id,
+                                               "local result scope is required") != authority.scope):
+                raise ConversationConflict("local result belongs to another audience or installation")
+
+        registration_route, discovery_route = (
+            PostgresExternalConversationTools(
+                engine, adapter.planner(), adapter, authorize_turn=authority.authorize_turn,
+            ) for adapter in (registration, discovery))
         return ProviderContribution(
             provider_id="mcp_autonomy",
             conversation_tools=registration.conversation_tools() + discovery.conversation_tools(),
-            external_tools=tuple(PostgresExternalConversationTools(
-                engine, adapter.planner(), adapter, authorize_turn=authority.authorize_turn,
-            ) for adapter in (registration, discovery)),
+            external_tools=(registration_route,
+                ScopedConnectorResults.build(engine, discovery_route, authorize_local)),
         )
 
 

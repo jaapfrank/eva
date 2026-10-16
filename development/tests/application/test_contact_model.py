@@ -579,3 +579,35 @@ def test_current_work_can_plan_requested_followup_without_polling(replayed, plan
     assert actions.executed == ([] if replayed else ["start_digital_work"]) + (
         ["schedule_digital_work"] if planning_available else [])
     assert ("opgeslagen" in reply.text) is planning_available
+
+
+@pytest.mark.parametrize("remote_first,reader_id,status,source,expected_work,external_verified", [
+    (False, "eva-stored-result:" + "a"*64 + ":" + "b"*64, "verified", "stored_connector_result", 0, False),
+    (False, "eva-stored-result:" + "a"*64 + ":" + "b"*64, "selection_invalid", "stored_connector_result", 0, False),
+    (False, "remote:tool", "verified", "stored_connector_result", 1, False),
+    (False, "eva-stored-result:reference", "failed", "stored_connector_result", 1, False),
+    (False, "eva-stored-result:reference", "verified", "external_provider", 1, False),
+    (True, "eva-stored-result:reference", "verified", "stored_connector_result", 2, False),
+    (False, "eva-stored-result:reference", "verified", "stored_connector_result", 1, True),
+    (False, "eva-stored-result:reference", "verified", "stored_connector_result", 1, None),
+])
+def test_saved_byte_read_preserves_contact_only_without_prior_work(
+    remote_first, reader_id, status, source, expected_work, external_verified,
+):
+    class ReadActions(Actions):
+        action_names = ("inspect_item", "use_connector_tool")
+        def execute_step(self, turn, call, *, step_index):
+            return self.execute(turn, call)
+        def execute(self, turn, call):
+            return ConversationActionReceipt(call, {"status": status, "source": source,
+                "external_state_verified": external_verified, "result": {"text": "saved bytes"}})
+    def choose(t, k):
+        latest = k["completed_action"]
+        if latest is None and remote_first:
+            return ConversationActionCall("remote", "inspect_item", {})
+        if latest is None or latest.call.name == "inspect_item":
+            return ConversationActionCall("saved", "use_connector_tool", {"tool_id": reader_id})
+        return "Gelezen."
+    contact, work = Model(choose), Model(choose)
+    LivingConversation(_Memory(), work, IDENTITY, ReadActions(), contact_model=contact).respond(turn())
+    assert len(work.calls) == expected_work
