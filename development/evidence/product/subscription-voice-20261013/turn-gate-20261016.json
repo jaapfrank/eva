@@ -1,0 +1,61 @@
+{
+  "checkedAt": "2026-10-16T12:35:07.928035+00:00",
+  "status": "installed_owner_retest_pending",
+  "ownerObservation": "After previous repair, first words still intermittently missing during a short conversation. Owner suspects listen-to-answer transition.",
+  "observedSignalFramesSuppressedAtAnswerStart": [
+    32,
+    34,
+    4,
+    0,
+    19
+  ],
+  "observedLastSuppressedSignalAgeMs": [
+    11,
+    5,
+    11,
+    null,
+    16
+  ],
+  "diagnosis": "Normal user turn unconditionally muted independent RTP until delayed assistant turn event; observed maximum34 frames corresponds to680ms at20ms per frame.",
+  "repair": "Only mute actual interrupted output, or retain existing explicit STOP. Ordinary listening no longer drops RTP awaiting assistant turn.created. Clear queue, retired identity checks, handle cancellation and explicit STOP unchanged.",
+  "tests": {
+    "passed": 41,
+    "newCases": 7,
+    "oldImageRegression": "Normal reply prefix test fails on previous image.",
+    "coverage": [
+      "Two successive normal replies,34 audio frames preceding assistant event",
+      "Active assistant interruption",
+      "Greeting interruption",
+      "Speaking offer interruption",
+      "Native active audio",
+      "Browser queued audio",
+      "Explicit STOP and retired assistant event"
+    ]
+  },
+  "runtime": {
+    "eva2-household-speaker-1": {
+      "image": "sha256:e48af888031abc6fc6fa607c2256b491dace08eb022a5eb8cc161b6c70dd551e",
+      "running": true
+    },
+    "eva2-owner-voice-media-1": {
+      "image": "sha256:e2c334747a6751daf11237f82aebddf11e8fcd331dd9d8784070a6aacc70febf",
+      "running": true
+    }
+  },
+  "installedSourceSha256": "ea06d4d9bdda0d730735af1bed1d580c69717f8cf41a958bd63de77209d1002b",
+  "bothInstalledHashesVerified": true,
+  "speakerBindingsReady": [
+    true,
+    true
+  ],
+  "independentReview": {
+    "reviewer": "review_cursor",
+    "blockingFindings": 0
+  },
+  "physicalAcceptance": false,
+  "limitations": [
+    "RTP has no bound turn identity; audio preceding even usercreated can still be classified as interruption.",
+    "Owner must confirm audible improvement after this installation."
+  ],
+  "privacy": "Only timing/count/state diagnostics recorded; no conversation transcripts or audio."
+}

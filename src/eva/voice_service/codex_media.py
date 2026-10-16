@@ -1,0 +1,616 @@
+"""WebRTC media relay preserving existing LiveKit clients and EVA core binding."""
+from __future__ import annotations
+import asyncio
+import json
+import re
+import time
+from pathlib import Path
+from types import SimpleNamespace
+from uuid import uuid4
+from aiortc import RTCPeerConnection, RTCSessionDescription, AudioStreamTrack
+from av import AudioFrame, AudioResampler
+from livekit import rtc
+from eva.voice_service.codex_backend import EvaVoiceBackend
+from eva.voice_service.codex_session import CodexVoiceSession
+
+VOICE_PROMPT = '''You are Eva's Dutch conversational voice. Speak naturally and briefly.
+The attached backend is Eva: it owns personality, memory, reasoning, permissions,
+ongoing work and tools. You are the same Eva, not a separate assistant.
+Respond directly and warmly to social greetings and courtesy questions about how
+you are, without delegation, lookup claims, waiting phrases or a fictional biography.
+A question about your actual day, past activity, memories or work is different:
+delegate it to Eva immediately and let her consult her own authorized context.
+Do not answer such a question from your own lack of memory.
+When the user ends the conversation, say a brief warm goodbye without delegation
+or a new question. Never say you will look up a greeting or a farewell.
+Delegate every substantive question, personal-history question,
+correction and action request to it. Do not invent remembered facts or action results.
+For live information (including weather and forecasts), personal memory and all
+requested actions, actually invoke delegation immediately. Saying you will check
+is not delegation. Never say work has started unless a delegation is sent. Continue
+until you have delivered the result or an explicit failure. Greet and chat briefly
+without delegation only for self-contained small talk. A short wake greeting may
+already have played locally; do not repeat it unless the user greets you again.
+You can acknowledge someone and ask a short clarifying question while work runs.
+Only say an action succeeded when Eva's backend confirms it. A spoken interruption
+stops speech, not already accepted work; explicit requests to cancel work go to Eva.
+Use Dutch unless the speaker chooses another language. Preserve uncertainty and
+qualifications in backend replies. Do not announce internal protocols or tools.'''
+
+
+def access_lease(path):
+    """Read the same protected, rotating access lease already used by EVA."""
+    import os
+    import stat
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        info = os.fstat(descriptor)
+        if not stat.S_ISREG(info.st_mode) or info.st_uid != 1000 or info.st_gid != 65532 or stat.S_IMODE(info.st_mode) != 0o640:
+            raise ValueError('EVA model access lease permissions differ')
+        with os.fdopen(descriptor, 'r', closefd=False) as stream:
+            value = json.loads(stream.read(16385))
+    finally:
+        os.close(descriptor)
+    if set(value) != {'contract','access_token','account_id','source_sha256'} or value['contract'] != 'EvaModelAccessLease/v1':
+        raise ValueError('EVA model access lease contract differs')
+    import re
+    if not isinstance(value['source_sha256'],str) or not re.fullmatch(r'[0-9a-f]{64}',value['source_sha256']):
+        raise ValueError('EVA model access lease source binding differs')
+    if not all(isinstance(value[k],str) and value[k] for k in ('access_token','account_id')):
+        raise ValueError('EVA model access lease unavailable')
+    return value['access_token'], value['account_id']
+
+
+class MicrophoneTrack(AudioStreamTrack):
+    def __init__(self, on_overrun=None):
+        super().__init__()
+        # Native capture starts immediately after the wakeword, before ICE and
+        # account negotiation. Retain at most 45 seconds (~4.3 MB) during setup.
+        self.frames = asyncio.Queue(maxsize=2250)
+        self.catching_up = True
+        self.started = None
+        self.samples = 0
+        self.enabled = False
+        self.dropped_frames = 0
+        self.on_overrun = on_overrun
+        self._last_overrun_report = None
+
+    async def recv(self):
+        if self.started is None:
+            self.started = time.monotonic()
+        await asyncio.sleep(max(0,self.started + self.samples/48000 - time.monotonic()))
+        data = None
+        if self.enabled:
+            if self.catching_up:
+                import struct
+                # Preserve speech captured during connection setup. Catch up only
+                # across quiet frames, never by discarding the opening utterance.
+                while self.frames.qsize()>3:
+                    values=struct.unpack('<960h',self.frames._queue[0])
+                    if max(abs(v) for v in values)>40:break
+                    self.frames.get_nowait()
+                if self.frames.qsize()<=3:self.catching_up=False
+            try:data = self.frames.get_nowait()
+            except asyncio.QueueEmpty:pass
+        frame = AudioFrame(format='s16',layout='mono',samples=960)
+        frame.planes[0].update(data if data is not None else bytes(1920))
+        frame.sample_rate=48000
+        from fractions import Fraction
+        frame.time_base=Fraction(1,48000);frame.pts=self.samples;self.samples+=960
+        return frame
+
+    def push(self, frame):
+        data=bytes(frame.data)
+        if frame.sample_rate!=48000 or frame.num_channels!=1 or len(data)!=1920:
+            raise ValueError('Microphone format differs')
+        # A short capture/transport scheduling burst must not terminate the
+        # conversation. Bound live latency by dropping the oldest queued frame,
+        # keeping the newest microphone audio. Startup speech remains buffered.
+        limit = 10 if self.enabled and not self.catching_up else self.frames.maxsize
+        dropped = False
+        while self.frames.qsize() >= limit:
+            self.frames.get_nowait()
+            self.dropped_frames += 1
+            dropped = True
+        self.frames.put_nowait(data)
+        now = time.monotonic()
+        if dropped and self.on_overrun is not None and (
+                self._last_overrun_report is None or now-self._last_overrun_report >= 1):
+            self._last_overrun_report = now
+            self.on_overrun(self.dropped_frames, self.frames.qsize())
+
+
+class OfferedSpeech:
+    def __init__(self, on_interrupt=lambda:None):
+        self.task=None
+        self.on_interrupt=on_interrupt
+        # Offering context does not prove physical playback. Never claim otherwise.
+        self.interrupted=True
+        self.chat_items=[]
+    def done(self):return self.task is not None and self.task.done()
+    def interrupt(self, *, notify_provider=True):
+        if self.task and not self.task.done():
+            try:
+                if notify_provider:self.on_interrupt()
+            finally:self.task.cancel()
+
+
+class AudioInputPort:
+    def __init__(self,session):self.session=session;self._audio=None;self.capture=None
+    @property
+    def audio(self):return self._audio
+    @audio.setter
+    def audio(self,value):
+        self._audio=value;self.restart()
+    def restart(self):
+        if self.capture:self.capture.cancel();self.capture=None
+        if self._audio is not None and self.session.microphone is not None and self.session.capture_ready:
+            self.capture=self.session.task(self.session.capture_native(self._audio))
+
+
+class CodexMediaSession:
+    def __init__(self, config, state, check):
+        self.config,self.state,self.check=config,state,check
+        self.handlers={};self.tasks=set();self.closed=False
+        self.input=AudioInputPort(self)
+        self.output=SimpleNamespace(audio=None)
+        self.speech_handles=set()
+        self.output_turn_done=asyncio.Event()
+        self._speech_lock=asyncio.Lock()
+        self._speech_waiter=None
+        self._speaking_handle=None
+        self._speech_turn=None
+        self._assistant_turns=set()
+        self._ended_assistant_turns={}
+        self._assistant_idle=asyncio.Event();self._assistant_idle.set()
+        self.output_suppressed=False
+        self.last_activity=time.monotonic()
+        self.peer=None;self.voice=None;self.bridge=None;self.room=None
+        self.prepared=None;self.channel=None
+        self.capture_ready=False
+        self.source=None;self.microphone=None;self.owner_track=None
+        self.started=asyncio.Event();self._closing=None
+        self._heard_ids={}
+        self.opened_at=time.monotonic()
+        self.audio_received=0;self.audio_suppressed=0
+        self.suppressed_signal_frames=0
+        self.last_suppressed_signal_at=None
+        self.output_gate_opened_at=None
+        self.turn_first_audio=False
+        self.first_audio=False
+        self.greeting=None
+        self._farewell_task=None
+        self._farewell_done=None
+        self._farewell_turn=None
+
+    def diagnostic(self, stage, **fields):
+        print(json.dumps({'event':'eva_voice_media',
+            'session':getattr(self.state,'session_id',None), 'stage':stage,
+            'elapsed_ms':round((time.monotonic()-self.opened_at)*1000), **fields}),flush=True)
+
+    def transport_diagnostic(self, stage):
+        # Only protocol state enums: never SDP, addresses, tokens or provider text.
+        allowed={'new','checking','connecting','connected','completed',
+                 'disconnected','failed','closed','stable','have-local-offer',
+                 'have-remote-offer','have-local-pranswer','have-remote-pranswer'}
+        fields={}
+        for name in ('connectionState','iceConnectionState','signalingState'):
+            value=getattr(self.peer,name,None)
+            fields[name]=value if isinstance(value,str) and value in allowed else 'unknown'
+        self.diagnostic(stage,**fields)
+
+    def on(self, name, callback=None):
+        def register(fn):self.handlers.setdefault(name,[]).append(fn);return fn
+        return register(callback) if callback else register
+
+    def emit(self,name,**fields):
+        for callback in self.handlers.get(name,[]):callback(SimpleNamespace(**fields))
+
+    def current(self):
+        if self.closed:raise ValueError('Voice media closed')
+        self.check()
+
+    def task(self, awaitable):
+        task=asyncio.create_task(awaitable);self.tasks.add(task)
+        def finished(t):
+            self.tasks.discard(t)
+            if not t.cancelled() and t.exception() is not None and not self.closed:
+                self.transport_diagnostic('task_transport_failure')
+                self.diagnostic('task_failed', task=t.get_coro().__qualname__, error_type=type(t.exception()).__name__)
+                asyncio.create_task(self.aclose())
+        task.add_done_callback(finished)
+        return task
+
+    def prewarm(self):
+        """Gather network candidates while waiting for a local wakeword.
+
+        This opens no model session and reads no microphone or account lease.
+        """
+        if self.peer is not None:return
+        self.peer=RTCPeerConnection();self.microphone=MicrophoneTrack(
+            lambda dropped, queued: self.diagnostic('microphone_overrun',
+                dropped_frames=dropped, queued_frames=queued))
+        self.peer.addTrack(self.microphone)
+        self.channel=self.peer.createDataChannel('oai-events')
+        async def gather():
+            self.current()
+            await self.peer.setLocalDescription(await self.peer.createOffer())
+            self.diagnostic('ice_ready')
+        self.prepared=self.task(gather())
+
+    def retire_interrupted_output(self):
+        # Mute locally now, but keep the provider busy until its terminal event.
+        # appendSpeech during that interval can extend the old response instead
+        # of creating a fresh turn, even after a stop instruction was accepted.
+        self._ended_assistant_turns.update(dict.fromkeys(self._assistant_turns,True))
+        while len(self._ended_assistant_turns)>128:
+            self._ended_assistant_turns.pop(next(iter(self._ended_assistant_turns)))
+
+    def end_assistant_turn(self, identity):
+        if isinstance(identity,str) and identity:
+            self._ended_assistant_turns[identity]=True
+            if len(self._ended_assistant_turns)>128:
+                self._ended_assistant_turns.pop(next(iter(self._ended_assistant_turns)))
+            self._assistant_turns.discard(identity)
+        if not self._assistant_turns:self._assistant_idle.set()
+
+    def provider_message(self, raw):
+        try:
+            event=json.loads(raw)
+            self.current()
+            kind=event.get('type')
+            if kind in {'session.started','input_transcript.added','output_transcript.added','turn.created'}:
+                self.last_activity=time.monotonic()
+            if kind in {'session.started','turn.created','turn.done','error','session.closed','delegation.created','delegation.context.appended'}:
+                self.diagnostic('provider_event', kind=kind, role=event.get('turn',{}).get('role'))
+            if kind=='session.started':
+                self.started.set();self.microphone.enabled=True
+                self.emit('agent_state_changed',new_state='listening')
+            elif kind in {'error','session.closed'}:
+                self.task(self.aclose())
+            elif kind=='turn.created':
+                turn=event.get('turn',{})
+                if turn.get('role')=='user':
+                    if self._farewell_task and not self._farewell_task.done():
+                        self.diagnostic('farewell_cancelled_by_speech')
+                        self._farewell_task.cancel()
+                    self._farewell_done=None
+                    self._farewell_turn=None
+                    # RTP audio and turn events travel independently. A normal
+                    # listening turn must not mute a reply arriving before its
+                    # turn.created event. Keep the gate for actual interruptions
+                    # and preserve an explicit STOP until a fresh assistant turn.
+                    interrupted=(bool(self._assistant_turns)
+                        or bool(self.greeting and not self.greeting.done())
+                        or self._speaking_handle is not None
+                        or bool(getattr(self.source,'active',False))
+                        or getattr(self.source,'queued_duration',0)>0)
+                    if self.greeting and not self.greeting.done():self.greeting.cancel()
+                    if self.source:self.source.clear_queue()
+                    self.output_suppressed=self.output_suppressed or interrupted
+                    self.diagnostic('user_turn_output_gate',
+                        interrupted=interrupted, suppressed=self.output_suppressed)
+                    self.retire_interrupted_output()
+                    for handle in list(self.speech_handles):handle.interrupt(notify_provider=False)
+                    self.emit('user_state_changed',new_state='speaking')
+                elif turn.get('role')=='assistant':
+                    identity=turn.get('id')
+                    if identity in self._ended_assistant_turns:return
+                    if isinstance(identity,str) and identity:
+                        self._assistant_turns.add(identity);self._assistant_idle.clear()
+                        if self._farewell_done is not None and self._farewell_turn is None:
+                            self._farewell_turn=identity
+                        if self._speech_waiter is not None and self._speech_turn is None:
+                            self._speech_turn=identity
+                    now=time.monotonic()
+                    self.diagnostic('output_gate_open',
+                        suppressed_signal_frames=self.suppressed_signal_frames,
+                        last_suppressed_signal_age_ms=(None if self.last_suppressed_signal_at is None
+                            else round((now-self.last_suppressed_signal_at)*1000)))
+                    self.suppressed_signal_frames=0;self.last_suppressed_signal_at=None
+                    self.output_gate_opened_at=now;self.turn_first_audio=False
+                    self.output_suppressed=False
+                    self.emit('agent_state_changed',new_state='speaking')
+            elif kind=='turn.done':
+                turn=event.get('turn',{})
+                role=turn.get('role');text=turn.get('transcript','')
+                if isinstance(text,str) and text:
+                    self.task(self.caption(role,text,str(turn.get('id',uuid4()))))
+                if role=='user':
+                    if isinstance(text,str):self.user_transcript(text)
+                    self.emit('user_state_changed',new_state='listening')
+                    self.emit('user_input_transcribed',is_final=True)
+                elif role=='assistant':
+                    identity=turn.get('id')
+                    self.end_assistant_turn(identity)
+                    if self._farewell_done is not None and identity==self._farewell_turn:
+                        self._farewell_done.set()
+                    if (self._speech_waiter is not None and not self._speech_waiter.done()
+                            and identity is not None and identity==self._speech_turn):
+                        self._speech_waiter.set_result(None)
+                    self.output_turn_done.set()
+                    self.emit('agent_state_changed',new_state='listening')
+        except (ValueError,TypeError,AttributeError):self.task(self.aclose())
+
+    def user_transcript(self, text):
+        # Session controls match a complete standalone utterance, never a word
+        # inside a question, quotation, cancellation of work or longer sentence.
+        normalized=re.sub(r"[.!?,]+$", "", text.strip().casefold()).strip()
+        if not re.fullmatch(r"(?:doei|tot ziens|tot later|tot morgen|bye|goodbye)(?:[, ]+eva)?", normalized):
+            return
+        if self._farewell_task and not self._farewell_task.done():return
+        self.diagnostic('farewell_detected')
+        self._farewell_done=asyncio.Event()
+        current=self._assistant_turns-self._ended_assistant_turns.keys()
+        self._farewell_turn=next(iter(current)) if len(current)==1 else None
+        marker=self.source.playback_marker() if hasattr(self.source,'playback_marker') else None
+        self._farewell_task=self.task(self.finish_farewell(self._farewell_done,marker))
+
+    async def finish_farewell(self, completed, marker):
+        # Give the provider its farewell turn and let the audio finish before
+        # releasing the microphone. A new utterance cancels this pending close.
+        try:
+            await asyncio.wait_for(completed.wait(),10)
+        except TimeoutError:
+            self.diagnostic('farewell_response_timeout')
+        else:
+            try:
+                # Once the short farewell turn is terminal, missing audio or a
+                # missing device ACK must not leave the microphone open for 15s.
+                async with asyncio.timeout(3):
+                    if marker is not None:
+                        confirmed=await self.source.confirm_playout(marker)
+                        self.diagnostic('farewell_playout',confirmed=confirmed)
+                    else:
+                        await asyncio.sleep(.5)
+                        await self.source.wait_for_playout()
+            except TimeoutError:
+                self.diagnostic('farewell_playout_timeout')
+        self.diagnostic('farewell_session_close')
+        await self.aclose()
+
+    async def start(self, agent, *, room=None, room_options=None):
+        self.current();self.room=room
+        self.opened_at=time.monotonic()
+        self.last_activity=self.opened_at
+        if self.state is None:self.state=agent.state
+        self.bridge=await EvaVoiceBackend(self.state.backend,self.state.session_id,self.current,
+            self.state.notify,state=self.state,refresh_context=agent.refresh_saved_context).open()
+        self.voice=CodexVoiceSession(self.config['codex_executable'],
+            lambda:access_lease(self.config['codex_auth_file']),self.bridge)
+        self.prewarm()
+        self.channel.on('message', self.provider_message)
+        @self.peer.on('track')
+        def output(track):self.task(self.play(track))
+        @self.peer.on('connectionstatechange')
+        def connection():
+            self.transport_diagnostic('connection_state')
+            if self.peer.connectionState in {'failed','closed','disconnected'} and not self.closed:
+                self.task(self.aclose())
+        @self.peer.on('iceconnectionstatechange')
+        def ice_connection():self.transport_diagnostic('ice_state')
+        if room is None:
+            if self.output.audio is None:raise ValueError('Speaker output missing')
+            from eva.voice_service.codex_speaker_audio import SpeakerSource
+            self.source=SpeakerSource(self.output.audio,self.diagnostic)
+            self.capture_ready=True
+            self.input.restart()
+            if self.config.get('wake_greeting',False):
+                self.greeting=self.task(self.greet())
+        else:
+            self.source=rtc.AudioSource(48000,1,queue_size_ms=80)
+            track=rtc.LocalAudioTrack.create_audio_track('Eva',self.source)
+            self.output_publication = await room.local_participant.publish_track(track,rtc.TrackPublishOptions(source=rtc.TrackSource.SOURCE_MICROPHONE))
+            @room.on('track_subscribed')
+            def subscribed(track,publication,participant):
+                if participant.identity=='owner' and track.kind==rtc.TrackKind.KIND_AUDIO:
+                    if self.owner_track is not None:
+                        self.task(self.aclose());return
+                    self.owner_track=track
+                    self.task(self.capture(track))
+            async def typed(reader,participant_identity):
+                if participant_identity!='owner':return
+                text=await reader.read_all()
+                if not isinstance(text,str) or not 1<=len(text)<=4096:return
+                self.current()
+                # Typed messages go directly to the same core, never a second model.
+                answer=await self.bridge.dispatch(text,uuid4().hex)
+                self.say(answer)
+            room.register_text_stream_handler('lk.chat',lambda reader,participant_identity:self.task(typed(reader,participant_identity)))
+        # Drain native capture before account negotiation: the provisioned wire
+        # intentionally permits only two seconds of unread microphone audio.
+        self.diagnostic('account_start')
+        await self.voice.__aenter__()
+        self.diagnostic('account_ready')
+        await self.prepared
+        self.current()
+        answer=await self.voice.start(self.peer.localDescription.sdp,prompt=VOICE_PROMPT)
+        self.diagnostic('voice_answer_ready')
+        await self.peer.setRemoteDescription(RTCSessionDescription(sdp=answer,type='answer'))
+        await asyncio.wait_for(self.started.wait(),15)
+        self.diagnostic('media_ready')
+        self.task(self.watch_voice())
+        self.task(self.watch_lifetime())
+
+    async def greet(self):
+        import secrets
+        import wave
+        paths=sorted((Path(__file__).parent/'greetings').glob('*.wav'))
+        if not paths:return
+        with wave.open(str(secrets.choice(paths)),'rb') as recording:
+            if (recording.getframerate(),recording.getnchannels(),recording.getsampwidth()) != (48000,1,2):
+                raise ValueError('Wake greeting format differs')
+            self.diagnostic('wake_greeting_started')
+            while data:=recording.readframes(960):
+                self.current()
+                await self.source.capture_frame(rtc.AudioFrame(data,48000,1,len(data)//2))
+            self.output.audio.flush()
+            await self.output.audio.wait_for_playout()
+            self.diagnostic('wake_greeting_finished')
+
+    async def watch_lifetime(self):
+        started=time.monotonic()
+        while True:
+            await asyncio.sleep(1)
+            self.current()
+            now=time.monotonic()
+            # Waiting for an admitted foreground answer is not user inactivity.
+            # The absolute session limit and authority checks still apply.
+            if getattr(self.state, 'active', None):
+                self.last_activity=now
+            if now-started>=1800 or now-self.last_activity>=120:
+                self.diagnostic('lifetime_expired',
+                    reason='session_limit' if now-started>=1800 else 'idle_timeout',
+                    idle_ms=round((now-self.last_activity)*1000))
+                await self.aclose();return
+
+    async def watch_voice(self):
+        while True:
+            event=await self.voice.events.get()
+            if event['method'] in {'thread/realtime/error','thread/realtime/closed'}:
+                self.diagnostic('codex_terminal', kind=event['method'])
+                self.transport_diagnostic('codex_terminal_transport')
+                await self.aclose();return
+
+    async def capture(self,track):
+        stream=rtc.AudioStream(track,sample_rate=48000,num_channels=1,frame_size_ms=20)
+        try:
+            async for event in stream:
+                self.current();self.microphone.push(event.frame)
+        finally:
+            await stream.aclose()
+
+    async def play(self,track):
+        if self.greeting:
+            try:await asyncio.shield(self.greeting)
+            except asyncio.CancelledError:
+                if self.closed or not self.greeting.cancelled():raise
+        resampler=AudioResampler(format='s16',layout='mono',rate=48000)
+        while True:
+            frame=await track.recv();self.current()
+            for pcm in resampler.resample(frame):
+                self.audio_received+=1
+                output=rtc.AudioFrame(bytes(pcm.planes[0])[:pcm.samples*2],48000,1,pcm.samples)
+                signal=max((abs(v) for v in output.data),default=0)>80
+                if self.output_suppressed:
+                    self.audio_suppressed+=1
+                    if signal:
+                        self.suppressed_signal_frames+=1
+                        self.last_suppressed_signal_at=time.monotonic()
+                if not self.output_suppressed:
+                    if signal and not self.turn_first_audio:
+                        self.turn_first_audio=True
+                        self.diagnostic('turn_first_output_audio',gate_to_audio_ms=(
+                            None if self.output_gate_opened_at is None else
+                            round((time.monotonic()-self.output_gate_opened_at)*1000)))
+                    if not self.first_audio and max((abs(v) for v in output.data),default=0)>200:
+                        self.first_audio=True
+                        self.diagnostic('first_output_audio')
+                    await self.source.capture_frame(output)
+
+    async def caption(self,role,text,identity):
+        self.current()
+        if self.room is None:return
+        participant='owner' if role=='user' else 'eva'
+        track_id=self.owner_track.sid if role=='user' and self.owner_track is not None else self.output_publication.sid
+        await self.room.local_participant.publish_transcription(rtc.Transcription(participant_identity=participant,
+            track_sid=track_id,segments=[rtc.TranscriptionSegment(id=identity,text=text,start_time=0,end_time=0,final=True,language='nl')]))
+
+    def say(self,text,**_):
+        def interrupted():
+            # Revoking a saved result must stop its media, not just its waiter.
+            # Cancelling a queued offer must not silence somebody else's answer.
+            if self._speaking_handle is handle:self.stop_current_audio()
+        handle=OfferedSpeech(interrupted)
+        async def send():
+            confirmed=True;offered=False
+            async def part(value):
+                nonlocal confirmed,offered
+                for offset in range(0,len(value),1500):
+                    self.current();offered=True
+                    await asyncio.wait_for(self._assistant_idle.wait(),30)
+                    marker=(self.source.playback_marker()
+                        if hasattr(self.source,'playback_marker') else None)
+                    self._speech_turn=None
+                    self._speech_waiter=asyncio.get_running_loop().create_future()
+                    try:
+                        self._speaking_handle=handle
+                        await self.voice.say(value[offset:offset+1500])
+                        await asyncio.wait_for(self._speech_waiter,30)
+                        played=False
+                        if marker is not None:
+                            try:played=await asyncio.wait_for(self.source.confirm_playout(marker),10)
+                            except TimeoutError:pass
+                        confirmed=confirmed and played
+                    finally:
+                        self._speech_waiter=None;self._speech_turn=None
+                        self._speaking_handle=None
+            # One request owns its response identity. A stale completion cannot
+            # advance a new part or an independently queued saved result.
+            async with self._speech_lock:
+                try:
+                    if isinstance(text,str):await part(text)
+                    else:
+                        async for value in text:await part(value)
+                    if offered and confirmed:handle.interrupted=False
+                finally:self._speaking_handle=None
+        handle.task=self.task(send());self.speech_handles.add(handle)
+        handle.task.add_done_callback(lambda _:self.speech_handles.discard(handle))
+        return handle
+
+    def clear_user_turn(self):
+        if self.microphone:
+            while not self.microphone.frames.empty():self.microphone.frames.get_nowait()
+
+    def stop_current_audio(self):
+        self.output_suppressed=True
+        self.retire_interrupted_output()
+        if self.source:self.source.clear_queue()
+        if self.voice and not self.closed:
+            self.task(self.voice.request('thread/realtime/appendText',{
+                'threadId':self.voice.thread,'role':'developer',
+                'text':'Stop speaking now and listen. Previously accepted backend work remains active.'}))
+
+    def interrupt(self):
+        self.stop_current_audio()
+        for handle in list(self.speech_handles):handle.interrupt(notify_provider=False)
+
+    async def capture_native(self, source):
+        resampler=AudioResampler(format='s16',layout='mono',rate=48000)
+        pending=bytearray()
+        async for frame in source:
+            self.current()
+            value=AudioFrame(format='s16',layout='mono',samples=frame.samples_per_channel)
+            value.sample_rate=frame.sample_rate;value.planes[0].update(bytes(frame.data))
+            for pcm in resampler.resample(value):
+                pending.extend(bytes(pcm.planes[0])[:pcm.samples*2])
+                while len(pending)>=1920:
+                    self.microphone.push(rtc.AudioFrame(bytes(pending[:1920]),48000,1,960))
+                    del pending[:1920]
+
+    async def aclose(self):
+        if self._closing is None:
+            self.transport_diagnostic('closing_transport')
+            self.diagnostic('closing', audio_received=self.audio_received, audio_suppressed=self.audio_suppressed)
+            self.closed=True
+            self.capture_ready=False
+            if self.microphone:self.microphone.enabled=False;self.microphone.stop()
+            if self.source:self.source.clear_queue()
+            current=asyncio.current_task()
+            owned=[task for task in self.tasks if task is not current]
+            for task in owned:task.cancel()
+            async def cleanup():
+                await asyncio.gather(*owned,return_exceptions=True)
+                try:
+                    if self.voice:await self.voice.close()
+                finally:
+                    try:
+                        if self.peer:await self.peer.close()
+                    finally:
+                        try:
+                            if self.bridge:await self.bridge.close()
+                        finally:
+                            if self.source:await self.source.aclose()
+                            self.emit('close')
+            self._closing=asyncio.create_task(cleanup())
+        if self._closing is not asyncio.current_task():await asyncio.shield(self._closing)

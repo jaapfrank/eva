@@ -1635,6 +1635,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Voice · Overgang luisteren naar antwoorden gerepareerd",
+            "state": "installed",
+            "checkedAt": "2026-10-16T12:35:07.928035+00:00",
+            "summary": "Gesprekslogs tonen tot680ms weggegooide spraak vóór het vertraagde startbericht. Gewoon luisteren blokkeert die audio nu niet meer; onderbreken en STOP blijven behouden.41 tests geslaagd; beide bindings gereed.",
+            "remaining": "Eigenaar meldde eerdere reparatie onvoldoende. Nieuwe hoorbare gespreksproef nodig; niet als geaccepteerd gemarkeerd.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/turn-gate-20261016.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "smallTaskCountsUnchanged": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "Voice · Geheugen, snelheid en audiobegin hersteld",
             "state": "installed",
             "checkedAt": "2026-10-16T11:43:33.901391+00:00",
@@ -8382,14 +8394,15 @@
     },
     "subscriptionVoice20261013": {
       "reliability20261016": {
-        "status": "installed_owner_audio_acceptance_pending",
-        "checkedAt": "2026-10-16T11:43:33.901391+00:00",
+        "status": "installed_owner_retest_pending",
+        "checkedAt": "2026-10-16T12:35:07.928035+00:00",
         "scope": "Voice inventory latency, GPU-independent memory recall, bounded quiet speech onset preservation",
         "memory": "Same model on CPU, no GPU device prerequisite; two successful cold starts, concurrent same-fact recall verified. CPU2 concurrent recall8.5–10.5s.",
         "latency": "Installed inventory19.323s vs55.836s before; one source call, two model calls, all108 entries. Simple follow-up5.569s.",
-        "audio": "Quiet onset truncation reproduced then repaired;34 tests pass; both speaker bindings ready. Two generated audio turns succeed. Physical owner test pending.",
+        "audio": "Owner reported intermittent missing words after quiet-prefix repair. Actual logs show up to680ms RTP dropped awaiting assistant event. Normal listening gate repaired;41 tests; both bindings ready; audible retest pending.",
         "evidence": "development/evidence/product/subscription-voice-20261013/reliability-20261016.json",
-        "acceptance": false
+        "acceptance": false,
+        "audioFollowupEvidence": "development/evidence/product/subscription-voice-20261013/turn-gate-20261016.json"
       }
     }
   },
