@@ -1,0 +1,189 @@
+{
+  "contract": "EvaRepositoryRegistrationOutcome/v1",
+  "card": "E3.1",
+  "checkedAt": "2026-10-16T23:06:04.003274+00:00",
+  "status": "completed_registration_only",
+  "manifest": {
+    "path": "development/docs/eva-repository-inventory.generated.json",
+    "sha256": "5f1d3ac9be606c07cc3dcbda1c8ead05f82bb95772e58bd47b48c60f7f9c3339",
+    "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+    "capturedAt": "2026-10-16T23:03:52.411175+00:00",
+    "sourceDigest": "7445a26ee97992922f875a37c3fd28e9b1ba0f45c5d3bbb3ffd62e2cb7c8ba76",
+    "bytes": 2703634
+  },
+  "summary": {
+    "files": 4896,
+    "present": 4896,
+    "tracked": 4789,
+    "untracked": 107,
+    "ignoredProjectFiles": 6,
+    "reviewStatuses": {
+      "excluded_by_policy": 18,
+      "enumerated": 4351,
+      "exact_prior_full_read": 447,
+      "protected_metadata_only": 80
+    },
+    "categories": {
+      "repository-config": 5,
+      "documentation": 20,
+      "deployment": 493,
+      "historical-reference": 404,
+      "design-or-fixture": 90,
+      "historical-evidence": 2567,
+      "verification": 652,
+      "development-tool": 228,
+      "optional-connector": 19,
+      "product-runtime": 406,
+      "generated-build-output": 4,
+      "vendored-source": 8
+    },
+    "excludedDirectories": 113,
+    "tombstones": 0
+  },
+  "hashedFiles": 4877,
+  "coverage": {
+    "allTrackedPathsPresent": true,
+    "ignoredProjectDocumentationSearched": true,
+    "scopeIncludesConcurrentUncommittedFiles": true,
+    "rolesArePathPolicyDeclarations": true,
+    "semanticReviewsOrRemovalDecisionsCompleted": false,
+    "previousInventoryRecoverable": {
+      "revision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "path": "development/docs/eva-repository-inventory.generated.json",
+      "sha256": "699c084fa3c3ec1c63212c7660a85cc03c0e5a0f0d3ae0fa2755d819b4a4eb05"
+    }
+  },
+  "runtime": {
+    "evidence": "development/evidence/reassessment/e31-installed-source-20261017.json",
+    "evidenceSha256": "2242df32d37e1423c80f3b767be4735518fb37dadb7fd52e7929577be58db17d",
+    "servicesRegistered": 20,
+    "coreProjectFiles": 383,
+    "workerProjectFiles": 374,
+    "differentSharedPaths": [
+      "src/eva/adapters/api/app.py",
+      "src/eva/adapters/api/dashboard_conversation.py",
+      "src/eva/adapters/api/dashboard_initiatives.py",
+      "src/eva/adapters/api/dashboard_memory.py",
+      "src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json",
+      "src/eva/adapters/api/dashboard_static/index.html",
+      "src/eva/adapters/api/dashboard_work.py",
+      "src/eva/adapters/api/dashboard_work_return_client.py",
+      "src/eva/adapters/model/openai_codex_provider.py",
+      "src/eva/adapters/postgres/people_memory_overview.py",
+      "src/eva/adapters/postgres/private_work_return.py",
+      "src/eva/adapters/postgres/scheduled_work_failure.py",
+      "src/eva/adapters/projection/hindsight.py",
+      "src/eva/application/memory_background.py",
+      "src/eva/bootstrap/dashboard_work.py",
+      "src/eva/bootstrap/household_initiative.py",
+      "src/eva/bootstrap/household_initiative_delivery.py",
+      "src/eva/providers/document_completion.py"
+    ],
+    "coreOnlyPaths": [
+      "src/eva/adapters/api/dashboard_conversation_work_client.py",
+      "src/eva/adapters/api/dashboard_model_providers.py",
+      "src/eva/adapters/api/dashboard_static/assets/index-DANnjSm4.css",
+      "src/eva/adapters/api/dashboard_static/assets/index-DRYk4khw.js",
+      "src/eva/adapters/api/dashboard_whatsapp.py",
+      "src/eva/adapters/model/optional_backends.py",
+      "src/eva/adapters/postgres/initiative_context.py",
+      "src/eva/application/channel_routes.py",
+      "src/eva/bootstrap/dashboard_learning.py",
+      "src/eva/bootstrap/dashboard_memory.py",
+      "src/eva/bootstrap/dashboard_work_context.py",
+      "src/eva/bootstrap/dashboard_work_overview.py",
+      "src/eva/bootstrap/optional_model_providers.py",
+      "src/eva/bootstrap/whatsapp_context.py",
+      "src/eva/operations/model_provider_settings.py"
+    ],
+    "workerOnlyPaths": [
+      "src/eva/adapters/api/dashboard_static/assets/index-BqTPqto5.css",
+      "src/eva/adapters/api/dashboard_static/assets/index-Bu0OdK_w.css",
+      "src/eva/adapters/api/dashboard_static/assets/index-C5NanmYk.js",
+      "src/eva/adapters/api/dashboard_static/assets/index-CSF_X1Gm.js",
+      "src/eva/adapters/api/dashboard_static/assets/index-DQjzKK6d.css",
+      "src/eva/adapters/api/dashboard_static/assets/index-tAuP6j_c.js"
+    ],
+    "interpretation": "Source differences are registered, not automatically defects. Actual consumer/sourcepin judgment is existing E3.2–E3.3 work."
+  },
+  "tests": {
+    "passed": 5,
+    "seconds": 0.21,
+    "modelCalls": 0
+  },
+  "independentReview": "development/reviews/e31-file-register-20261017.json",
+  "postSnapshotDelta": {
+    "changes": {
+      "added": [],
+      "removed": [],
+      "changed": [
+        "development/design/product/execution-workboard-v1.json",
+        "development/docs/WERKBORD.md"
+      ]
+    },
+    "records": [
+      {
+        "path": "development/design/product/execution-workboard-v1.json",
+        "snapshotSha256": "e7bc074010304256943809e812a02c6e92393acfc34b61312e5bcc2b44cb6dea",
+        "current": {
+          "path": "development/design/product/execution-workboard-v1.json",
+          "gitState": "tracked",
+          "present": true,
+          "ignored": false,
+          "contentSha256": "46b885627a2a64b5e39ce71a648b762dfe0aaca9b31886ce4a193d4e348110ec",
+          "bytes": 551405,
+          "sourceState": "modified",
+          "role": "design-or-fixture",
+          "owner": "development-records",
+          "roleBasis": "path_policy_not_semantic_review",
+          "reviewStatus": "enumerated",
+          "readingEvidence": null,
+          "decision": "pending_review",
+          "reviewCard": "E3.4",
+          "consumerStatus": "not_yet_verified",
+          "hashExclusion": null,
+          "installedIn": []
+        },
+        "reason": "Delivery metadata after independently reviewed snapshot"
+      },
+      {
+        "path": "development/docs/WERKBORD.md",
+        "snapshotSha256": "023cd167f7826f8df4bd04b41c023f944828eec180e22af1c350bc3a27e5adee",
+        "current": {
+          "path": "development/docs/WERKBORD.md",
+          "gitState": "tracked",
+          "present": true,
+          "ignored": false,
+          "contentSha256": "653e1c89b71644cebc4648f27c4289828637c28c1ac294623be9c45139e106b2",
+          "bytes": 19920,
+          "sourceState": "modified",
+          "role": "documentation",
+          "owner": "project-documentation",
+          "roleBasis": "path_policy_not_semantic_review",
+          "reviewStatus": "enumerated",
+          "readingEvidence": null,
+          "decision": "pending_review",
+          "reviewCard": "E3.4",
+          "consumerStatus": "not_yet_verified",
+          "hashExclusion": null,
+          "installedIn": []
+        },
+        "reason": "Delivery metadata after independently reviewed snapshot"
+      }
+    ],
+    "reason": "Keep the independently reviewed snapshot immutable; explain later delivery metadata and any concurrent changes with exact current hashes."
+  },
+  "usage": {
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeToolCalls": 0,
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null
+  },
+  "nonclaims": [
+    "No new family function or general quality lead claimed.",
+    "No code removed/refactored or deployment restarted.",
+    "No voice-owned source/configuration/API/installation changed.",
+    "Enumerated is not fully read; only exact-hash full-reading evidence is reused."
+  ],
+  "wholeProjectCompleted": false
+}

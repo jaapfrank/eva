@@ -1,0 +1,35 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "card": "E3.1",
+  "checkedAt": "2026-10-16T23:06:04.003274+00:00",
+  "decision": "GO_ORIGINAL_E31_REGISTRATION_ONLY",
+  "independentReviewer": "/root/i12_completion_review",
+  "scope": "Read-only review of the new registration tool/test source, exact original E3.1 criteria and bounded independent metadata checks. No semantic E3.2–E3.4 completion claimed.",
+  "snapshotSha256": "5f1d3ac9be606c07cc3dcbda1c8ead05f82bb95772e58bd47b48c60f7f9c3339",
+  "toolSha256": "b72ad66b2ed6af2c9ea9f1fe4741108c2a7fd521e17769e7a156c98971bc83e3",
+  "independentChecks": [
+    "All4789 Git-tracked paths are represented.",
+    "deploy/gateway/README.md bytes match recorded SHA256 and exact prior fullContentCovered reading evidence.",
+    "Runtime artifact hash matches the manifest binding.",
+    "Generated build outputs, exclusions, pending consumer decisions and protected metadata remain explicit."
+  ],
+  "finding": {
+    "priority": "P2",
+    "status": "fixed_and_rechecked",
+    "description": "Direct metadata reads originally checked only the leaf symlink; an ancestor link could escape the repository.",
+    "fix": "One ancestor/leaf refusal helper guards reading registers, previous manifest, runtime artifact/hash and CLI reads/writes. Dedicated fifth test covers the metadata ancestor path."
+  },
+  "coordinatorTests": {
+    "passed": 5,
+    "seconds": 0.21,
+    "file": "development/tests/tools/test_repository_inventory.py",
+    "observed": "pytest result reported in the task; reviewer read test source."
+  },
+  "permittedPostSnapshotDelta": "Only delivery metadata in canonical workboard and generated WERKBORD changes after snapshot; exact delta is attached to the outcome. Other newly changed files must be disclosed.",
+  "limitations": [
+    "No runtime behavior, source-pin correctness, code necessity, household value or general competitor superiority proven.",
+    "No protected case contents, private conversations, secret values or runtime data published.",
+    "No voice source, configuration, API or installation changed."
+  ],
+  "reviewerEvaModelCalls": 0
+}
