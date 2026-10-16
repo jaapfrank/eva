@@ -1,0 +1,121 @@
+{
+  "contract": "EvaE21OwnerNavigationOutcome/v1",
+  "taskId": "E2.1",
+  "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+  "status": "completed_installed",
+  "taskCompleted": true,
+  "originalCriteriaUnchanged": true,
+  "familyAcceptance": false,
+  "wholeProjectComplete": false,
+  "result": "Eén geïnstalleerde productingang met zes duidelijke secties gebruikt Eva’s bestaande gesprek-, personen-/geheugen-, taak-, initiatief- en verbindingsroutes. Het projectdashboard blijft apart.",
+  "userAccess": {
+    "url": "http://127.0.0.1:44711/internal/v1/dashboard",
+    "access": "Existing local owner gateway, no manually entered dashboard token",
+    "conversation": "Gesprek → Open gesprek; existing return link opens the product home"
+  },
+  "backendRoutes": {
+    "status": {
+      "httpStatus": 200,
+      "contract": "EvaDashboardStatus/v1"
+    },
+    "identity": {
+      "httpStatus": 200,
+      "contract": "EvaDashboardIdentity/v1"
+    },
+    "people-memory": {
+      "httpStatus": 200,
+      "contract": "EvaPeopleMemoryOverview/v1"
+    },
+    "memory-sources": {
+      "httpStatus": 200,
+      "contract": "EvaOwnerMemorySources/v1"
+    },
+    "work": {
+      "httpStatus": 200,
+      "contract": "EvaDelegatedWorkOwnerResult/v1"
+    },
+    "initiatives": {
+      "httpStatus": 200,
+      "contract": "EvaOwnerInitiatives/v1"
+    },
+    "components": {
+      "httpStatus": 200,
+      "contract": "EvaComponentObservations/v1"
+    },
+    "conversation": {
+      "httpStatus": 200,
+      "existingConversationAndReturnLink": true
+    }
+  },
+  "changes": {
+    "frontendSources": [
+      "development/tools/project-dashboard/src/main.jsx",
+      "development/tools/project-dashboard/src/style.css",
+      "development/tools/project-dashboard/src/owner-navigation.mjs"
+    ],
+    "reusedComponents": [
+      "MemorySources",
+      "OwnerWork",
+      "OwnerInitiatives",
+      "OwnerHealth",
+      "OwnerBrowser"
+    ],
+    "newBackendOrChatEngine": false,
+    "projectBuildReplaced": false,
+    "speechCodeOrConfigurationChanged": false
+  },
+  "validation": {
+    "isolatedBrowser": "passed: six sections, Back/reload, scoped503, private-source unmount,390px",
+    "installedBrowser": "passed: six sections, Back/reload,390px, real backend access",
+    "javascriptErrors": 0,
+    "externalBrowserRequests": 0,
+    "actualBackendRoutes200": 8,
+    "sealedAssetsEqual": true,
+    "windowsLocalEntry200": true,
+    "ownerAcceptance": false
+  },
+  "installation": {
+    "coreImage": "sha256:d7424e83432950d86c6f5101ebbceaf19b0c191c13558bd23c4e9471cc59d8c2",
+    "previousCoreImage": "sha256:645c4431c4dd9a44455c92329fab00c5f1b3ec04cdb77cd7542104f3a8db5ba7",
+    "changedServices": [
+      "core"
+    ],
+    "assetOnlyOverlay": true,
+    "workerImageUnchanged": true,
+    "runtimeUserEnvironmentAndMountsRetained": true,
+    "coreAndWorkerHealthy": true,
+    "dispatchCount": 1,
+    "rollbackPerformed": false
+  },
+  "usage": {
+    "evaVerificationModelRequests": 0,
+    "evaVerificationModelTokens": 0,
+    "taskMutations": 0,
+    "independentReviewers": 1,
+    "developmentCredits": null,
+    "developmentModelTokens": null,
+    "measuredLastFrontendBuildSeconds": 0.812,
+    "note": "The last source cleanup rebuilt byte-identical assets; no second installation. Ordinary autonomous Eva usage is separate from this navigation verification."
+  },
+  "buildPreparationFailures": [
+    "The minimal installed image has no cat binary; asset inspection was changed to its existing Python interpreter before installation.",
+    "Old asset cleanup initially ran as the nonroot runtime user and was denied; build-only root cleanup was used, restoring exactly the same runtime user. Existing installation remained unchanged until the one successful dispatch."
+  ],
+  "privateReviewSha256": "045771e76f332c60b95b1f8f4e0db31cb3f33da91dc8c7538dceb20fd8463ec8",
+  "privateEvidenceSha256": {
+    "installation-receipt.private.json": "c422bd2abde52769607bac95187d32a8208177b3630fa84e0f52140f1a0cac3f",
+    "installation-verification.private.json": "76869382851fd995cc0b7a0354b0fef339d364eda576709bb60794fa35a013bc",
+    "installed-http-probe.private.json": "9978fc1b83939d51458eac07fbac467a93b98a4652b3b7eca79a5292a9fd7a3a",
+    "isolated-browser-result.private.json": "f627fd2889d0e1c3e7477a8ba30326fa3f69ce4b288bfc34ef1df844f9262ebc",
+    "installed-browser-result.private.json": "e472bf024c42149a6c562dca8e9e6d9c1351a40095a40c9a8f905a0debfda97a"
+  },
+  "independentReview": "development/reviews/e21-owner-navigation-review-20261016.json",
+  "limitations": [
+    "This closes product navigation E2.1 only; E2.2 through E2.6 remain open.",
+    "Conversation links to the existing bound conversation page with its return link; no new chat engine or voice route was built.",
+    "People currently shows the real coarse account/sharing/memory-processing overview and existing own source controls, not a complete person-profile or derived-memory browser.",
+    "Initiatives uses existing review/contribution data; full reflection, feedback, candidate, evaluation and applied-improvement history is not yet connected.",
+    "Connections shows current real observations; unknown remains unknown. Extra provider/WhatsApp configuration is not available yet.",
+    "Browser checks used no paid model/conversation request and no task mutation; navigation proves usable presentation/backend read access, not accepted everyday family use."
+  ]
+}

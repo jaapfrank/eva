@@ -66,3 +66,25 @@ article h3 { text-transform: capitalize; }
 .component-health .component-ready { border-left-color:#28704f; }
 .component-health .component-attention { border-left-color:#b74432; }
 .component-health .component-not_configured { border-left-color:#ad8432; }
+
+/* One owner product entry; development progress stays in the project build. */
+.owner-shell { display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: 100vh; background: #f5f7f2; }
+.owner-sidebar { background: #20342c; color: #d6e2d9; padding: 2rem 1.2rem; }
+.owner-brand { display: flex; align-items: center; gap: .9rem; color: #fff; text-decoration: none; margin-bottom: 2rem; }
+.owner-brand > span { background: #deebaf; color: #20342c; border-radius: 15px; font: italic 2.5rem Georgia,serif; width: 48px; height: 48px; text-align: center; }
+.owner-brand strong { font-size: 1.5rem; }.owner-brand small { display: block; font-size: .75rem; color: #c5d4c6; font-weight: 400; }
+.owner-sidebar nav { display: grid; gap: .5rem; }.owner-sidebar nav a { display: flex; gap: .8rem; padding: .8rem; border-radius: 10px; color: #dbe5dc; text-decoration: none; }
+.owner-sidebar nav a[aria-current="page"] { background: #3b5143; color: #f0f8ca; }.owner-sidebar nav a:hover { background: #31483b; }
+.owner-sidebar > p { margin-top: 2.5rem; color: #b9cbbe; font-size: .85rem; line-height: 1.5; }
+.owner-dashboard header { gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }.owner-dashboard h1 { font-size: clamp(1.8rem,3vw,2.5rem); }
+.owner-intro { color: #52635d; font-size: 1.1rem; }
+.owner-shortcuts { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: 1rem; margin-top: 1.5rem; }
+.owner-shortcuts > a { padding: 1.4rem; background: white; color: #20342c; border: 1px solid #d8e2d5; border-radius: 16px; text-decoration: none; }
+.owner-shortcuts > a:hover { border-color: #557552; }.owner-shortcuts h2 { font-size: 1.15rem; }.owner-shortcuts p { color: #52635d; line-height: 1.55; }
+.owner-shortcut-icon { background: #edf2df; color: #365c43; padding: .55rem .7rem; border-radius: 10px; font-size: 1.3rem; }
+.owner-panel { margin: 1.2rem 0; padding: 1.5rem; background: white; border: 1px solid #d8e2d5; border-radius: 16px; line-height: 1.6; }
+.owner-panel h2 { margin-top: 0; }.owner-primary { display: inline-block; background: #284c3a; color: #fff; padding: .75rem 1.1rem; border-radius: 10px; text-decoration: none; }
+.owner-facts { display: grid; grid-template-columns: minmax(9rem,1fr) 2fr; max-width: 600px; gap: .7rem; }.owner-facts dd { margin: 0; }
+.owner-shell a:focus-visible, .owner-shell button:focus-visible { outline: 3px solid #739555; outline-offset: 4px; }
+@media(max-width:850px) { .owner-shell { grid-template-columns: 1fr; }.owner-sidebar { padding: 1rem; }.owner-brand { margin-bottom: 1rem; }.owner-sidebar nav { grid-template-columns: repeat(3,minmax(0,1fr)); }.owner-sidebar nav a { font-size: .85rem; padding: .65rem; gap: .4rem; }.owner-sidebar > p { margin: 1rem 0 0; } }
+@media(max-width:480px) { .owner-sidebar nav { grid-template-columns: repeat(2,minmax(0,1fr)); }.owner-facts { grid-template-columns: 1fr; }.owner-facts dt { font-weight: 700; } }

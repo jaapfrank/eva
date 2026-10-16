@@ -2,20 +2,20 @@
   "contract": "EvaDashboardAssets/v1",
   "entry": "index.html",
   "files": {
-    "assets/index-BqTPqto5.css": {
-      "sha256": "44189c0d43e62b09fdb304cbed04af46fbcc86948635d99e2287a9fb1d9937f4",
-      "size": 49969
+    "assets/index-6ptTifQu.css": {
+      "sha256": "79f4155e1164dcf6466bb895cef88930eee01d481a2dac884c6d65a641172f0b",
+      "size": 63912
     },
-    "assets/index-CSF_X1Gm.js": {
-      "sha256": "1fe92129ec1080e71f5440e68cb392a40c634dc36097e7d041c70abaab8467ea",
-      "size": 842903
+    "assets/index-CBWBWx1z.js": {
+      "sha256": "b499595f11ea6fa12f113597c6211c37945b1a15a9ba5c90458d2bd71da31911",
+      "size": 846726
     },
     "index.html": {
-      "sha256": "4b4cf4671e66a8dc3e3871ad60779a28ad0112646a58fa8e6a763af63146fd3f",
+      "sha256": "e4fd044ff172428fcd8761bc8167fc8e0022b6f390b32240b88653eb04972e4e",
       "size": 435
     }
   },
-  "package_lock_sha256": "0d047dc7e6ed303c4b9deb5f768577732072f2761919a483afcee7a8d2ff11f4",
+  "package_lock_sha256": "f9224012ffda153c49955e571cfd9cc4ba9311c0b29baadd26ad0b7d7ad94e09",
   "react_admin": "5.15.1",
   "schema_version": 1
 }

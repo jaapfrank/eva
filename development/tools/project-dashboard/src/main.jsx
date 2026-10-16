@@ -2,10 +2,8 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Admin,
-  Layout,
   Resource,
   memoryStore,
-  useGetList,
   useGetOne,
 } from 'react-admin';
 import './style.css';
@@ -13,6 +11,7 @@ import OwnerInitiatives from './owner-initiatives.jsx';
 import OwnerBrowser from './owner-browser.jsx';
 import OwnerWork from './owner-work.jsx';
 import OwnerHealth from './owner-health.jsx';
+import { ownerSections, ownerSection, ownerSectionHref } from './owner-navigation.mjs';
 import ProjectDashboard, { ProjectLayout, projectProvider } from './project-dashboard.jsx';
 
 const STATUS = '/internal/v1/dashboard/status';
@@ -344,49 +343,80 @@ function MemorySources() {
   </section>;
 }
 
+function PeopleOverview() {
+  const [state, setState] = React.useState({ data: null, error: false });
+  React.useEffect(() => {
+    const controller = new AbortController();
+    readJson('/internal/v1/dashboard/people-memory', { signal: controller.signal }).then(data => {
+      const labels = {
+        dynamic_account: { extra_account_linked: 'Extra account gekoppeld', no_extra_account: 'Geen extra account gekoppeld', unavailable: 'Niet beschikbaar' },
+        sharing: { private_only: 'Alleen privé', group_active: 'Gedeelde groep actief', expires_soon: 'Groepsdeling verloopt binnenkort', unavailable: 'Niet beschikbaar' },
+        memory: { no_signals: 'Nog geen bronnen', up_to_date: 'Bijgewerkt', processing: 'Wordt verwerkt', retrying: 'Verwerking wordt hervat', needs_help: 'Hulp nodig', unavailable: 'Niet beschikbaar' },
+      };
+      if (data.contract !== 'EvaPeopleMemoryOverview/v1' || data.read_only !== true
+        || data.contains_raw_content !== false || !Object.hasOwn(labels.dynamic_account, data.people?.dynamic_account)
+        || !Object.hasOwn(labels.sharing, data.sharing?.state) || !Object.hasOwn(labels.memory, data.memory?.state)) throw new Error();
+      if (!controller.signal.aborted) setState({ data: {
+        account: labels.dynamic_account[data.people.dynamic_account], sharing: labels.sharing[data.sharing.state], memory: labels.memory[data.memory.state],
+      }, error: false });
+    }).catch(() => { if (!controller.signal.aborted) setState({ data: null, error: true }); });
+    return () => controller.abort();
+  }, []);
+  return <section className="owner-panel" aria-label="Personen en geheugentoegang">
+    <h2>Personen en geheugentoegang</h2>
+    {state.error && <p role="alert">Dit personenoverzicht is nu niet beschikbaar. Je geheugenbronnen worden afzonderlijk opgehaald.</p>}
+    {!state.data && !state.error && <p role="status">Personenoverzicht ophalen…</p>}
+    {state.data && <dl className="owner-facts"><dt>Accounts</dt><dd>{state.data.account}</dd><dt>Delen</dt><dd>{state.data.sharing}</dd><dt>Geheugenverwerking</dt><dd>{state.data.memory}</dd></dl>}
+    <p>Dit bestaande overzicht toont toegangs- en verwerkingsstatus. Namen, persoonsprofielen en afgeleide herinneringen worden hier nog niet getoond.</p>
+  </section>;
+}
+
 function Dashboard() {
   const status = useGetOne('status', { id: 'runtime' });
   const identity = useGetOne('identity', { id: 'current' });
-  const work = useGetList('workboard', {
-    pagination: { page: 1, perPage: 64 },
-  });
-  if (status.isPending || identity.isPending || work.isPending) {
-    return <main className="owner-dashboard"><p>Eva ophalen…</p></main>;
-  }
-  if (status.error || identity.error || work.error) {
-    return <main className="owner-dashboard"><h1>Eva</h1><p role="alert">Het volledige overzicht is niet beschikbaar.</p><OwnerHealth /></main>;
-  }
-  const cards = work.data || [];
-  return <main className="owner-dashboard">
-    <header>
-      <div><p className="eyebrow">Eigenaarsoverzicht</p><h1>{identity.data.identity.display_name}</h1></div>
-      <span className={status.data.runtime.ready ? 'ready' : 'attention'}>
-        {status.data.runtime.ready ? 'Kern bereikbaar' : 'Kern vraagt aandacht'}
-      </span>
-    </header>
-    <OwnerHealth />
-    <OwnerWork />
-    <OwnerInitiatives />
-    <OwnerBrowser />
-    <MemorySources />
-    <section>
-      <h2>Werkbord</h2>
-      <p>{cards.length} duurzame {cards.length === 1 ? 'taak' : 'taken'}</p>
-      <div className="board">
-        {Object.entries({ todo: 'Te doen', doing: 'Bezig', attention: 'Aandacht', review: 'Controleren', done: 'Klaar' }).map(([column, label]) => <article key={column}>
-          <h3>{label}</h3>
-          {cards.filter((card) => card.column === column).map((card) => <div className="card" key={card.id}>
-            <strong>{card.title}</strong><p>{card.summary}</p>
-            <small>{card.worker_health} · {card.result_status}</small>
-          </div>)}
-        </article>)}
-      </div>
-    </section>
-  </main>;
+  const [selected, setSelected] = React.useState(() => ownerSection(window.location.hash));
+  React.useEffect(() => {
+    const change = () => setSelected(ownerSection(window.location.hash));
+    window.addEventListener('hashchange', change);
+    return () => window.removeEventListener('hashchange', change);
+  }, []);
+  const name = identity.data?.identity.display_name || 'Eva';
+  return <div className="owner-shell">
+    <aside className="owner-sidebar">
+      <a className="owner-brand" href={ownerSectionHref('overview')} aria-label="Eva overzicht"><span>e</span><strong>{name}<small>Jouw huisgenoot</small></strong></a>
+      <nav aria-label="Eva beheer">{ownerSections.map(item => <a key={item.id} href={ownerSectionHref(item.id)}
+        aria-current={selected === item.id ? 'page' : undefined}><span aria-hidden="true">{item.icon}</span>{item.label}</a>)}</nav>
+      <p>Dit is Eva’s productbediening. Het aparte projectdashboard toont de bouwvoortgang.</p>
+    </aside>
+    <main className="owner-dashboard" id="owner-content">
+      <header><div><p className="eyebrow">Dagelijks Eva-gebruik</p><h1>{ownerSections.find(item => item.id === selected).label}</h1></div>
+        <span className={status.data?.runtime.ready ? 'ready' : 'attention'}>{status.error ? 'Status niet beschikbaar' : status.isPending ? 'Status ophalen…' : status.data?.runtime.ready ? 'Kern bereikbaar' : 'Kern vraagt aandacht'}</span></header>
+      {identity.error && <p role="alert">Eva’s actuele identiteit kon niet worden opgehaald. De andere secties blijven afzonderlijk beschikbaar.</p>}
+      {selected === 'overview' && <>
+        <p className="owner-intro">Volg wat {name} doet en beheer wat ze van jou onthoudt.</p>
+        <div className="owner-shortcuts">{ownerSections.filter(item => item.id !== 'overview').map(item => <a key={item.id} href={ownerSectionHref(item.id)}>
+          <span className="owner-shortcut-icon" aria-hidden="true">{item.icon}</span><h2>{item.label}</h2><p>{item.description}</p><strong>Openen →</strong></a>)}</div>
+      </>}
+      {selected === 'conversation' && <section className="owner-panel" aria-label="Gesprek met Eva">
+        <h2>Praat met {name}</h2><p>Open je bestaande privégesprek. Je kunt daar schrijven, antwoorden volgen en een opdracht stoppen. Geheugen en opdrachten gebruiken dezelfde kern.</p>
+        <a className="owner-primary" href="/internal/v1/dashboard/conversation">Open gesprek →</a>
+        <p>Met ‘Terug naar cockpit’ kom je weer bij dit beheer. Telegram blijft dezelfde Eva.</p>
+      </section>}
+      {selected === 'memory' && <><PeopleOverview /><MemorySources /></>}
+      {selected === 'work' && <OwnerWork />}
+      {selected === 'initiative' && <><OwnerInitiatives /><section className="owner-panel" aria-label="Leerhistorie">
+        <h2>Leren en dromen</h2><p>De laatste werkelijke initiatiefafweging en bijdragen staan hierboven. De volledige reflectie-, feedback- en verbeterhistorie wordt nog aangesloten; een afweging is geen bewijs van toegepaste verbetering.</p>
+      </section></>}
+      {selected === 'connections' && <><OwnerHealth /><section className="owner-panel"><h2>Optionele verbindingen</h2>
+        <p>Hierboven staat de huidige backendstatus. Aanmelden, providerkeuze en extra kanalen worden nog aangesloten. Claude en WhatsApp zijn hier nog geen werkende aansluitopties.</p>
+      </section><OwnerBrowser /></>}
+    </main>
+  </div>;
 }
 
-function OwnerLayout(props) {
-  return <Layout {...props} sx={{ minWidth: 0, '& .RaLayout-content': { minWidth: 0 } }} />;
+function OwnerLayout({ children }) {
+  // React-admin keeps authentication/data access; product navigation owns layout.
+  return <>{children}</>;
 }
 
 createRoot(document.getElementById('root')).render(

@@ -1,16 +1,16 @@
-# React-admin dashboard candidate
+# Eva product and project dashboards
 
-This is the source and browser fixture for Eva's packaged, read-only
-React-admin dashboard candidate. The hand-written cockpit presentation has
-been removed from the source candidate, but this build is not yet live in the
-managed Eva route.
+This directory maintains two separate builds: the packaged owner product UI
+(`dist/`, served by Eva) and the development project dashboard (`project-dist/`,
+port44712). The owner product UI is installed in the existing core image. It
+reuses Eva's real owner API; it is not a second application backend.
 
 The candidate uses React-admin's data and authentication providers above Eva's
 existing owner-only API. Eva remains the authority for people, privacy,
 permissions, work state, evidence and every mutation. The browser stores no
 credential or UI state, and React-admin telemetry is disabled.
 
-## Why this candidate won the bake-off
+## Historical initial library selection
 
 | Candidate | Exact line tested | Result |
 | --- | --- | --- |
@@ -24,25 +24,47 @@ without peer overrides and already supplies the admin, data, authentication,
 routing, forms and access-control building blocks required by later dashboard
 slices.
 
-## Reproduce
+## Product navigation — E2.1
+
+Open `http://127.0.0.1:44711/internal/v1/dashboard` on the Eva computer through
+its existing local owner gateway. No token needs to be entered in this local UI.
+The core retains its existing owner access boundary.
+
+The six sections are Overview, Conversation, People & memory, Work & results,
+Initiative & learning, and Connections. Conversation opens the existing bound
+conversation page; its return link opens this product entry again. Other sections
+reuse the current people-memory status, memory source controls, delegated work,
+initiative and component observation APIs. Only the selected section is mounted;
+private source content is cleared by unmounting when leaving memory.
+
+This E2.1 delivery does not claim completed person profiles/derived-memory views,
+conversation-to-work association, full reflection/improvement history, extra
+provider settings or WhatsApp. Those remain the existing E2.2–E2.6 tasks. Unknown
+connection observations stay unknown. The project workboard is not runtime data.
+
+## Reproduce the product build
+
+Run from the repository root with the existing locked development dependencies:
 
 ```sh
-npm ci --ignore-scripts
-npm audit --json
-npm run build
-cd ../..
+npm --prefix development/tools/project-dashboard run build
 python3 src/tools/build_dashboard_assets.py --materialize
 python3 src/tools/build_dashboard_assets.py --check
 EVA_DASHBOARD_PLAYWRIGHT_PACKAGE=/absolute/path/to/playwright \
 EVA_DASHBOARD_CHROMIUM=/absolute/path/to/chromium \
-  npm --prefix experiments/react-admin-dashboard-v1 run verify:browser
+  node development/tools/project-dashboard/verify-owner-navigation.cjs
 ```
 
-The browser proof uses only a synthetic same-origin server. It requires no Eva
-secret and performs no live mutation. The packaged static route, CSP tests and
-removal of the old presentation are now part of the source candidate.
-Promotion still requires the normal immutable image build, scan and managed
-A/B cycle.
+The navigation proof uses a synthetic same-origin server, including a scoped
+503 failure and private-panel unmount check. For a read-only installed check,
+set `EVA_DASHBOARD_ORIGIN=http://127.0.0.1:44711`; it uses the existing owner
+gateway. Both modes verify navigation, refresh/Back,390px layout and absence
+of JavaScript errors or external requests. They send no conversation/model
+request or task mutation. An isolated fixture is not evidence of live backend data.
+
+Package assets are sealed by hash/size. Installation uses the current actual core
+image as an asset-only overlay and retains configuration, mounts and the worker.
+The project build is not replaced by a normal product build.
 
 ## Personal Chrome entry
 

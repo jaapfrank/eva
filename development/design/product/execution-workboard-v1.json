@@ -838,20 +838,20 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-15T22:10:53.727800+00:00",
+  "lastUpdated": "2026-10-16T10:44:14.870759+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E2.1",
+  "activeTaskId": "E2.2",
   "currentWork": {
-    "id": "E2.1",
-    "title": "Eén Eva-beheeromgeving aansluiten",
+    "id": "E2.2",
+    "title": "Personen en geheugen bekijken en bijwerken",
     "status": "planned",
-    "doneWhen": "Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart.",
-    "nextAction": "E2.1: controleer bestaande productpagina’s en echte API’s en verbind ze tot één Eva-beheeromgeving voor gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Projectdashboard blijft apart; geen spraakbouw.",
+    "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
+    "nextAction": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-15T22:10:53.727800+00:00",
-    "outcome": "Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart.",
-    "area": "product management interface",
+    "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+    "outcome": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
+    "area": "people and memory controls",
     "countedAsProductTask": true
   },
   "historicalWorkboard": {
@@ -949,7 +949,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "E2.1: controleer bestaande productpagina’s en echte API’s en verbind ze tot één Eva-beheeromgeving voor gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Projectdashboard blijft apart; geen spraakbouw.",
+      "priorityDecision": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1635,6 +1635,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E2.1 · Eén Eva-beheeromgeving geïnstalleerd",
+            "state": "installed",
+            "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+            "summary": "Geïnstalleerd en onafhankelijk afgerond: één Eva-beheeromgeving met zes secties en echte bestaande backenddata. Gesprek opent de bestaande privéroute; geheugen, opdrachten, initiatief en verbindingsstatus zijn afzonderlijk bereikbaar. Projectbord blijft apart. Geen extra provider of volledige leerhistorie geclaimd.",
+            "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e21-owner-navigation-installed-20261016.json",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E2.1"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "maintenanceRepair": false,
+            "familyAcceptance": false,
+            "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard",
+            "completionScope": "E2.1 product navigation only"
+          },
+          {
             "title": "I1.2 · Ongevraagde berichten wachten tijdens gesprek en nachtrust",
             "state": "installed",
             "checkedAt": "2026-10-15T22:10:53.727800+00:00",
@@ -1987,52 +2004,56 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "I1.2 · Ongevraagde berichten wachten tijdens gesprek en nachtrust",
+          "title": "E2.1 · Eén Eva-beheeromgeving geïnstalleerd",
           "state": "installed",
-          "checkedAt": "2026-10-15T22:10:53.727800+00:00",
-          "summary": "Geïnstalleerd en onafhankelijk afgerond: ongevraagde huisberichten wachten tijdens lopend voorgrondgesprek en nachtrust. Ook het gat na de laatste broncontrole is dicht. Echte eerdere timing-/hinderfeedback blijft behouden; inhoud was niet nuttig voor deze eigenaar. Geen werkelijk slapend/druk gezin of algemene gezinsacceptatie bewezen.",
-          "remaining": "Herhaald spontaan gezinsnut en volledige gezinsacceptatie blijven open. Volgende bouwtaak: één Eva-beheeromgeving E2.1. Geen handeling van Jaap nodig.",
-          "source": "/home/administrator/project/Eva2/development/evidence/product/i12-quiet-attention-installed-20261016.json",
+          "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+          "summary": "Geïnstalleerd en onafhankelijk afgerond: één Eva-beheeromgeving met zes secties en echte bestaande backenddata. Gesprek opent de bestaande privéroute; geheugen, opdrachten, initiatief en verbindingsstatus zijn afzonderlijk bereikbaar. Projectbord blijft apart. Geen extra provider of volledige leerhistorie geclaimd.",
+          "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/e21-owner-navigation-installed-20261016.json",
           "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "I1.2"
+            "E2.1"
           ],
           "smallTaskCountsUnchanged": false,
           "maintenanceRepair": false,
           "familyAcceptance": false,
-          "completionScope": "I1.2 technical with retained genuine owner feedback"
+          "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard",
+          "completionScope": "E2.1 product navigation only"
         },
         "now": {
-          "taskId": "E2.1",
-          "title": "Eén Eva-beheeromgeving aansluiten",
+          "taskId": "E2.2",
+          "title": "Personen en geheugen bekijken en bijwerken",
           "state": "Gereed om op te pakken",
           "phase": "ready_to_start",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "E2.1: controleer bestaande productpagina’s en echte API’s en verbind ze tot één Eva-beheeromgeving voor gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Projectdashboard blijft apart; geen spraakbouw.",
-          "doneWhen": "Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart.",
+          "summary": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
+          "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-15T22:10:53.727800+00:00",
+          "checkedAt": "2026-10-16T10:44:14.870759+00:00",
           "status": "planned"
         },
         "next": {
-          "title": "Samenhangende gegevens en correctiebediening",
-          "state": "Na E2.1: E2.2",
-          "summary": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
+          "title": "Gesprekken, opdrachten en resultaten samen tonen",
+          "state": "Na E2.2: E2.3",
+          "summary": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Eva2 staat zelfstandig aan; Eva1 is gestopt",
-          "detail": "Gewone Telegramvragen gaan naar Eva2. Je hoeft niets te activeren of dezelfde proef opnieuw te doen. Nieuwe nuttige bijdragen en timing worden afzonderlijk beoordeeld.",
-          "steps": [],
+          "title": "Eva-beheer staat klaar",
+          "detail": "Open http://127.0.0.1:44711/internal/v1/dashboard en kies een sectie. De bestaande lokale toegang vraagt geen dashboardtoken. Geen verplichte herhaalproef; uitgebreide profielen, leerhistorie en extra verbindingen staan nog open.",
+          "steps": [
+            "Open http://127.0.0.1:44711/internal/v1/dashboard",
+            "Kies links Gesprek, Personen & geheugen, Opdrachten & resultaten, Initiatief & leren of Verbindingen."
+          ],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-15T22:10:53.727800+00:00",
-        "reviewedAt": "2026-10-15T22:10:53.727800+00:00",
+        "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+        "reviewedAt": "2026-10-16T10:44:14.870759+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-15T22:10:53.727800+00:00",
-      "checkedAt": "2026-10-15T22:10:53.727800+00:00",
+      "reviewedAt": "2026-10-16T10:44:14.870759+00:00",
+      "checkedAt": "2026-10-16T10:44:14.870759+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2046,10 +2067,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-15T22:10:53.727800+00:00",
+        "checkedAt": "2026-10-16T10:44:14.870759+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
-        "headline": "E1 technisch afgerond: bronnen, vervolg-aandacht, eigen bijdrage en stilte. Volgende: één Eva-beheeromgeving.",
-        "note": "49 van 70 geregistreerde kleine taken afgerond; 21 open. I1.2 is de nieuwe technische afronding. Geen productpercentage of volledige gezinsacceptatie.",
+        "headline": "E1 technisch afgerond; E2.1 beheeromgeving geïnstalleerd. Volgende: personen en geheugen samen bedienen.",
+        "note": "50 van 70 geregistreerde kleine taken afgerond; 20 open. E2.1 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2151,7 +2172,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-15T22:10:53.727800+00:00",
+      "lastUpdatedAt": "2026-10-16T10:44:14.870759+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2185,7 +2206,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-15T22:10:53.727800+00:00",
+      "updatedAt": "2026-10-16T10:44:14.870759+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2194,7 +2215,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E2.1",
+        "currentStep": "E2.2",
         "steps": [
           {
             "number": 1,
@@ -4102,7 +4123,7 @@
             "phaseId": "E2",
             "dependsOn": [],
             "outcome": "Eén Eva-beheeromgeving en optionele verbindingen",
-            "status": "planned",
+            "status": "in_progress",
             "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
             "endCondition": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten.",
             "dashboardComponent": "finalization-E2",
@@ -4111,14 +4132,14 @@
               {
                 "id": "E2.1",
                 "title": "Eén Eva-beheeromgeving aansluiten",
-                "status": "planned",
+                "status": "completed",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Chat, diverse beheerpagina’s en API’s bestaan.",
                 "gap": "Dagelijks Eva-beheer is nog geen samenhangend geheel.",
-                "nextAction": "Inventariseer de huidige productroutes en verbind ze met één consistente navigatie; hergebruik bestaande bediening.",
+                "nextAction": "Gebruik de bestaande productingang. Vervolg E2.2: personen en geheugen bekijken en bijwerken; geen nieuwe geheugenbank.",
                 "files": [
                   "src/eva/adapters/api",
                   "development/tools/project-dashboard/src"
@@ -4128,13 +4149,22 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-16T10:44:14.870759+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                  "steps": [],
+                  "availableNow": true,
+                  "readyWhen": "De beheeromgeving is geïnstalleerd. Je hoeft niets aan te melden om de bestaande lokale bediening te openen.",
+                  "steps": [
+                    "Open http://127.0.0.1:44711/internal/v1/dashboard",
+                    "Kies links Gesprek, Personen & geheugen, Opdrachten & resultaten, Initiatief & leren of Verbindingen."
+                  ],
                   "blocksIndependentWork": false
-                }
+                },
+                "completedAt": "2026-10-16T10:44:14.870759+00:00",
+                "completionEvidence": "development/evidence/product/e21-owner-navigation-installed-20261016.json",
+                "latestEvidence": "development/evidence/product/e21-owner-navigation-installed-20261016.json",
+                "independentReview": "development/reviews/e21-owner-navigation-review-20261016.json",
+                "result": "Geïnstalleerd en onafhankelijk afgerond: één Eva-beheeromgeving met zes secties en echte bestaande backenddata. Gesprek opent de bestaande privéroute; geheugen, opdrachten, initiatief en verbindingsstatus zijn afzonderlijk bereikbaar. Projectbord blijft apart. Geen extra provider of volledige leerhistorie geclaimd.",
+                "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6."
               },
               {
                 "id": "E2.2",
@@ -4659,7 +4689,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E2.1: controleer bestaande productpagina’s en echte API’s en verbind ze tot één Eva-beheeromgeving voor gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Projectdashboard blijft apart; geen spraakbouw.",
+        "nextAction": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -4668,10 +4698,10 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-15T22:10:53.727800+00:00",
+        "updatedAt": "2026-10-16T10:44:14.870759+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-15T22:10:53.727800+00:00",
+          "updatedAt": "2026-10-16T10:44:14.870759+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -4696,7 +4726,7 @@
             {
               "id": "E2",
               "title": "Eén Eva-beheeromgeving en optionele verbindingen",
-              "status": "planned",
+              "status": "in_progress",
               "finish": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten.",
               "taskIds": [
                 "E2.1",
@@ -4710,7 +4740,8 @@
                 "C3.1",
                 "C4.1",
                 "C4.3"
-              ]
+              ],
+              "currentGap": "E2.1 productnavigatie is geïnstalleerd en gebruikt met de echte backend. Personen-/geheugenbediening, gesprek-/taaksamenhang, volledige leerhistorie, extra providers en WhatsApp blijven E2.2–E2.6."
             },
             {
               "id": "E3",
@@ -4755,7 +4786,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E2.1",
+      "currentStep": "E2.2",
       "steps": [
         {
           "number": 1,
@@ -6663,7 +6694,7 @@
           "phaseId": "E2",
           "dependsOn": [],
           "outcome": "Eén Eva-beheeromgeving en optionele verbindingen",
-          "status": "planned",
+          "status": "in_progress",
           "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
           "endCondition": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten.",
           "dashboardComponent": "finalization-E2",
@@ -6672,14 +6703,14 @@
             {
               "id": "E2.1",
               "title": "Eén Eva-beheeromgeving aansluiten",
-              "status": "planned",
+              "status": "completed",
               "kind": "bouwen / afmaken",
               "doneWhen": "Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Chat, diverse beheerpagina’s en API’s bestaan.",
               "gap": "Dagelijks Eva-beheer is nog geen samenhangend geheel.",
-              "nextAction": "Inventariseer de huidige productroutes en verbind ze met één consistente navigatie; hergebruik bestaande bediening.",
+              "nextAction": "Gebruik de bestaande productingang. Vervolg E2.2: personen en geheugen bekijken en bijwerken; geen nieuwe geheugenbank.",
               "files": [
                 "src/eva/adapters/api",
                 "development/tools/project-dashboard/src"
@@ -6689,13 +6720,22 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-16T10:44:14.870759+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "De beheeromgeving is geïnstalleerd. Je hoeft niets aan te melden om de bestaande lokale bediening te openen.",
+                "steps": [
+                  "Open http://127.0.0.1:44711/internal/v1/dashboard",
+                  "Kies links Gesprek, Personen & geheugen, Opdrachten & resultaten, Initiatief & leren of Verbindingen."
+                ],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-10-16T10:44:14.870759+00:00",
+              "completionEvidence": "development/evidence/product/e21-owner-navigation-installed-20261016.json",
+              "latestEvidence": "development/evidence/product/e21-owner-navigation-installed-20261016.json",
+              "independentReview": "development/reviews/e21-owner-navigation-review-20261016.json",
+              "result": "Geïnstalleerd en onafhankelijk afgerond: één Eva-beheeromgeving met zes secties en echte bestaande backenddata. Gesprek opent de bestaande privéroute; geheugen, opdrachten, initiatief en verbindingsstatus zijn afzonderlijk bereikbaar. Projectbord blijft apart. Geen extra provider of volledige leerhistorie geclaimd.",
+              "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6."
             },
             {
               "id": "E2.2",
@@ -7220,7 +7260,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E2.1: controleer bestaande productpagina’s en echte API’s en verbind ze tot één Eva-beheeromgeving voor gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Projectdashboard blijft apart; geen spraakbouw.",
+      "nextAction": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7229,10 +7269,10 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-15T22:10:53.727800+00:00",
+      "updatedAt": "2026-10-16T10:44:14.870759+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-15T22:10:53.727800+00:00",
+        "updatedAt": "2026-10-16T10:44:14.870759+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -7257,7 +7297,7 @@
           {
             "id": "E2",
             "title": "Eén Eva-beheeromgeving en optionele verbindingen",
-            "status": "planned",
+            "status": "in_progress",
             "finish": "Gesprekken, personen, geheugen, opdrachten/resultaten, initiatief, dromen en verbeteringen samen zichtbaar; optionele providers/kanalen begrijpelijk aansluiten.",
             "taskIds": [
               "E2.1",
@@ -7271,7 +7311,8 @@
               "C3.1",
               "C4.1",
               "C4.3"
-            ]
+            ],
+            "currentGap": "E2.1 productnavigatie is geïnstalleerd en gebruikt met de echte backend. Personen-/geheugenbediening, gesprek-/taaksamenhang, volledige leerhistorie, extra providers en WhatsApp blijven E2.2–E2.6."
           },
           {
             "id": "E3",
@@ -8275,9 +8316,21 @@
       "familyAcceptance": false,
       "wholeProjectComplete": false,
       "checkedAt": "2026-10-15T22:10:53.727800+00:00"
+    },
+    "e21OwnerNavigation20261016": {
+      "status": "completed_installed",
+      "taskId": "E2.1",
+      "evidence": "development/evidence/product/e21-owner-navigation-installed-20261016.json",
+      "review": "development/reviews/e21-owner-navigation-review-20261016.json",
+      "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard",
+      "taskCompleted": true,
+      "evaVerificationModelRequests": 0,
+      "familyAcceptance": false,
+      "wholeProjectComplete": false,
+      "checkedAt": "2026-10-16T10:44:14.870759+00:00"
     }
   },
-  "updatedAt": "2026-10-15T22:10:53.727800+00:00",
+  "updatedAt": "2026-10-16T10:44:14.870759+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
