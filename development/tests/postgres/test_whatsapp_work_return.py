@@ -42,7 +42,10 @@ def test_whatsapp_result_claim_authority_original_quote_and_other_contact(delega
     from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
     PostgresConversationJournal(delegated_engine, service.conversation_scope).admit(turn)
     # Actual foreground command key is bound to this exact original ingress.
-    spec = start(service, turn, key=service.command_key(turn))
+    from eva.adapters.postgres.delegated_work_actions import PostgresDelegatedWorkActions
+    request_key = (PostgresDelegatedWorkActions._thread_id(turn, 2)
+        if separate_conversation_scope else service.command_key(turn))
+    spec = start(service, turn, key=request_key)
     saved = succeed(service.store, spec)
     at[0] += timedelta(seconds=4)
     result = service.private_return(turn, 'poll')['result']

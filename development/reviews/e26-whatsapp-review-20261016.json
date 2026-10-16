@@ -102,5 +102,12 @@
     "targeted_fix": "Dockerfile now runs UID65532:GID65532 and seeds /var/lib/eva-whatsapp with UID65532:GID65532 and mode0700. README runtime ownership matches. No SDK, transport or voice logic changed.",
     "validation_boundary": "Source ownership directives inspected. Actual installed startup and retained volume ownership still require coordinator verification; the original failed attempt remains evidence.",
     "followup_observation": "Coordinator subsequently reports the rebuilt bridge healthy and awaiting_qr, with media_available true. No external message or completed pairing is claimed. Reviewer independently observed the final core healthy and exact helper source bytes."
+  },
+  "coordinatorAdditionalCoverage": {
+    "at": "2026-10-16T17:38:55.752505+00:00",
+    "description": "Broadened the separated-conversation-scope PostgreSQL case to use the real model-action admission key at step2, in addition to the direct command key case. No runtime code changed after independent approval.",
+    "result": "3 PostgreSQL tests passed in3.83s",
+    "testSha256": "1bbdad89c1abe56f17ca0decd03eff934474fc774263b4068c048a7aea1e583e",
+    "independentSourceReviewUnchanged": true
   }
 }

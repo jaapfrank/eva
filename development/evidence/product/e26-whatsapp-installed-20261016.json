@@ -26,7 +26,9 @@
       "passed": 3,
       "disposableDatabase": true,
       "separateConversationAndStorageScope": true,
-      "providerCalls": 0
+      "providerCalls": 0,
+      "modelActionAdmissionKeyCovered": true,
+      "finalElapsedSeconds": 3.83
     },
     "transport": {
       "passed": 16,
