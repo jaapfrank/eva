@@ -83,3 +83,45 @@ def install_dashboard_memory(app, *, access, runtime):
             raise HTTPException(422, "memory correction is invalid", headers=headers)
         return JSONResponse(invoke("dashboard_correct_memory_source", source_id, payload["text"]),
                             status_code=202, headers=headers)
+
+    # Browser input selects text/source only; host settings bind person and installation.
+    @app.get("/internal/v1/dashboard/memory-view")
+    def view(request: Request):
+        access.require(request)
+        if request.query_params: raise HTTPException(422, "memory view scope is server-bound", headers=headers)
+        from eva.bootstrap.dashboard_memory import memory_view
+        try: return JSONResponse(memory_view(runtime), headers=headers)
+        except Exception: raise HTTPException(503, "owner memory view unavailable", headers=headers) from None
+
+    @app.post("/internal/v1/dashboard/memory-view/search")
+    def search(request: Request, payload: dict):
+        access.require(request)
+        if request.query_params or set(payload) != {"text"}: raise HTTPException(422, "memory search is invalid", headers=headers)
+        if request.headers.get("origin") not in {None, str(request.base_url).rstrip("/")}: raise HTTPException(403, "memory search origin differs", headers=headers)
+        from eva.bootstrap.dashboard_memory import memory_view
+        try: return JSONResponse(memory_view(runtime, payload["text"]), headers=headers)
+        except ValueError: raise HTTPException(422, "memory search is invalid", headers=headers) from None
+        except Exception: raise HTTPException(503, "owner memory search unavailable", headers=headers) from None
+
+    @app.get("/internal/v1/dashboard/memory-view/sources/{source_id}")
+    def source_presentation(request: Request, source_id: str):
+        require_source(request, source_id)
+        from eva.bootstrap.dashboard_memory import source_view
+        try: return JSONResponse(source_view(runtime, source_id), headers=headers)
+        except LookupError: raise HTTPException(404, "owner source unavailable", headers=headers) from None
+        except Exception: raise HTTPException(503, "owner source view unavailable", headers=headers) from None
+
+    @app.post("/internal/v1/dashboard/memory-view/sources/{source_id}/{operation}")
+    def source_change(request: Request, source_id: str, operation: str, payload: dict):
+        require_source(request, source_id)
+        from eva.bootstrap.dashboard_memory import correct_source, forget_source
+        if ((operation == "forget" and (payload != {"confirm": True} or type(payload.get("confirm")) is not bool))
+            or (operation == "correct" and set(payload) != {"text"}) or operation not in {"correct", "forget"}):
+            raise HTTPException(422, "memory change is invalid", headers=headers)
+        try:
+            result = forget_source(runtime, source_id) if operation == "forget" else correct_source(runtime, source_id, payload["text"])
+            return JSONResponse(result, status_code=202 if operation == "correct" else 200, headers=headers)
+        except LookupError: raise HTTPException(404, "owner source unavailable", headers=headers) from None
+        except ValueError: raise HTTPException(422, "memory change is invalid", headers=headers) from None
+        except ConversationConflict: raise HTTPException(409, "memory change could not be applied; refresh before retrying", headers=headers) from None
+        except Exception: raise HTTPException(503, "memory change could not be confirmed; refresh before retrying", headers=headers) from None

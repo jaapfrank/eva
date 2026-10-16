@@ -99,6 +99,28 @@ class PostgresOwnerMemorySources:
             raise LookupError("owner memory source unavailable")
         return found
 
+    def document_reference(self, principal_id, source_ref, evidence_ref, *, now):
+        """Resolve a semantic result to its exact current private source ID."""
+        values = (principal_id, source_ref, evidence_ref)
+        if any(not isinstance(v, str) or not v or len(v) > 1024 for v in values):
+            raise ValueError("memory reference is invalid")
+        return self._read(now=now, limit=1, _reference_lookup=values)
+
+    def owner_identity(self, *, now):
+        """Only the configured person; never enumerate another person's profile."""
+        with self._engine.connect() as conn:
+            with conn.begin():
+                conn.exec_driver_sql("SET TRANSACTION READ ONLY")
+                PostgresOperationalTimeline(self._engine, self._authority_scope)._scope(conn)
+                require_private_owner_binding(conn, scope=self._authority_scope,
+                    owner=self._owner, binding=self._binding, now=now)
+                people = metadata.tables["eva_core.principals"]
+                name = conn.execute(sa.select(people.c.display_name).where(
+                    people.c.tenant_id == self._authority_scope.tenant_id,
+                    people.c.principal_id == self._owner)).scalar_one()
+                return {"display_name": name[:120] if isinstance(name, str) and name else "Jij",
+                        "scope": "own_private_memory"}
+
     def recent_other_channel(self, turn, *, now, after=None):
         """Read one retained private exchange across the verified owner bridge."""
         alias = None if self._bindings is None else self._bindings.private_bridge_principal(
@@ -347,7 +369,8 @@ class PostgresOwnerMemorySources:
               context_voice=False, exclude_conversation=None, history_query=None,
               selected_refs=None, selected_query: RecallCurrentFacts | None = None,
               _connection=None, _learning_document: bool = False,
-              _follow_learning_revisions: bool = True, _recent_learning: bool = False):
+              _follow_learning_revisions: bool = True, _recent_learning: bool = False,
+              _reference_lookup=None):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -508,6 +531,10 @@ class PostgresOwnerMemorySources:
                     else:
                         query = query.distinct(ingress.c.event_id).order_by(
                             ingress.c.event_id, e.occurred_at.desc(), e.event_id.desc())
+                if _reference_lookup is not None:
+                    query = query.where(data["principal_id"].astext == _reference_lookup[0],
+                        data["source_ref"].astext == _reference_lookup[1],
+                        data["evidence_ref"].astext == _reference_lookup[2])
                 if source_id is not None:
                     query = query.where(e.event_id == UUID(source_id))
                 if cursor:
@@ -580,6 +607,8 @@ class PostgresOwnerMemorySources:
                                 continue
                         sources.append(source)
                         continue
+                    if _reference_lookup is not None:
+                        return str(row.event_id), doc, state
                     if history_query is not None:
                         sources.append((doc, state))
                         continue
@@ -596,7 +625,7 @@ class PostgresOwnerMemorySources:
                     return tuple(sorted(sources, key=lambda item: order[(item["principal_id"], item["source_ref"])]))
                 if history_query is not None:
                     return tuple(sources)
-                if source_id is not None or context_conversations is not None:
+                if source_id is not None or context_conversations is not None or _reference_lookup is not None:
                     return None
                 next_cursor = None
                 if len(rows) > limit:

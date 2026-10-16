@@ -9,6 +9,7 @@ const sections = ['Gesprek', 'Personen & geheugen', 'Opdrachten & resultaten', '
 const fixtures = {
   status: { contract: 'EvaDashboardStatus/v1', read_only: true, runtime: { ready: true, state: 'ready' } },
   identity: { contract: 'EvaDashboardIdentity/v1', read_only: true, identity: { display_name: 'Eva', identity_id: 'synthetic', language: 'nl', pack_sha256: '0'.repeat(64), pack_version: 1, state: 'current', temperament: ['warm'], voice_style: { maximum_paragraphs: 3, name: 'warm', qualities: ['helder'] } } },
+  'memory-view': { contract: 'EvaOwnerMemoryView/v1', owner: { display_name: 'Jij' }, mentioned_names: [], memories: [], complete_directory: false },
   'people-memory': { contract: 'EvaPeopleMemoryOverview/v1', read_only: true, contains_raw_content: false, people: { dynamic_account: 'no_extra_account' }, sharing: { state: 'private_only' }, memory: { state: 'up_to_date' } },
   'memory-sources': { contract: 'EvaOwnerMemorySources/v1', read_only: true, meaning: 'Synthetic sources', sources: [{ source_id: '00000000-0000-0000-0000-000000000001', occurred_at: '2026-10-16T00:00:00Z', excerpt: 'Synthetic private source', truncated: false, retention_state: 'retained' }], next_cursor: null },
   work: { contract: 'EvaDelegatedWorkOwnerResult/v1', operation: 'list', jobs: [], truncated: false },
@@ -34,7 +35,7 @@ const fixtures = {
       }
       if (req.method !== 'GET') { res.writeHead(405); res.end(); return; }
       const resource = url.pathname.slice(base.length + 1);
-      if (denyPeople && resource === 'people-memory') { res.writeHead(503); res.end('{}'); return; }
+      if (denyPeople && resource === 'memory-view') { res.writeHead(503); res.end('{}'); return; }
       if (!fixtures[resource]) { res.writeHead(404); res.end('{}'); return; }
       res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(fixtures[resource]));
     });
@@ -76,7 +77,7 @@ const fixtures = {
     if (server) {
       denyPeople = true;
       await nav.getByRole('link', { name: 'Personen & geheugen', exact: true }).click();
-      await page.getByText(/Dit personenoverzicht is nu niet beschikbaar/).waitFor();
+      await page.getByText(/Dit geheugenoverzicht is nu niet beschikbaar/).waitFor();
       await page.getByText('Synthetic private source', { exact: true }).waitFor();
       await nav.getByRole('link', { name: 'Opdrachten & resultaten', exact: true }).click();
       await page.getByRole('region', { name: 'Mijn hulpopdrachten', exact: true }).waitFor();

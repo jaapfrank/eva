@@ -11,6 +11,7 @@ import OwnerInitiatives from './owner-initiatives.jsx';
 import OwnerBrowser from './owner-browser.jsx';
 import OwnerWork from './owner-work.jsx';
 import OwnerHealth from './owner-health.jsx';
+import OwnerMemoryView from './owner-memory-view.jsx';
 import { ownerSections, ownerSection, ownerSectionHref } from './owner-navigation.mjs';
 import ProjectDashboard, { ProjectLayout, projectProvider } from './project-dashboard.jsx';
 
@@ -18,6 +19,7 @@ const STATUS = '/internal/v1/dashboard/status';
 const IDENTITY = '/internal/v1/dashboard/identity';
 const WORKBOARD = '/internal/v1/dashboard/workboard';
 const MEMORY_SOURCES = '/internal/v1/dashboard/memory-sources';
+const MEMORY_VIEW = '/internal/v1/dashboard/memory-view';
 const MEMORY_PAGE_SIZE = 20;
 
 async function readJson(url, { signal } = {}) {
@@ -198,7 +200,7 @@ function memorySourcesPayload(value) {
   return payload;
 }
 
-function MemorySourceControl({ sourceId, generation, onClose, onChanged }) {
+function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelectSource }) {
   const [detail, setDetail] = React.useState(null);
   const [text, setText] = React.useState('');
   const [mode, setMode] = React.useState('view');
@@ -207,9 +209,9 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged }) {
   React.useEffect(() => {
     const controller = new AbortController();
     setDetail(null); setError('');
-    readJson(`${MEMORY_SOURCES}/${sourceId}`, { signal: controller.signal }).then(value => {
-      exactObject(value, ['contract', 'source_id', 'content', 'occurred_at', 'retention_state', 'origin'], 'geheugenbron');
-      if (value.contract !== 'EvaOwnerMemorySource/v1' || value.source_id !== sourceId
+    readJson(`${MEMORY_VIEW}/sources/${sourceId}`, { signal: controller.signal }).then(value => {
+      exactObject(value, ['contract', 'source_id', 'content', 'occurred_at', 'retention_state', 'origin', 'kind', 'trust', 'learning', 'current_learning', 'current_source_id', 'can_forget', 'erasure_scope'], 'geheugenbron');
+      if (value.contract !== 'EvaOwnerMemorySourceView/v1' || value.source_id !== sourceId
         || typeof value.content !== 'string' || !value.content || value.content.length > 1048576
         || !['retained', 'pending', 'needs_help'].includes(value.retention_state)
         || typeof value.origin !== 'string' || value.origin.length > 80) throw new Error();
@@ -221,7 +223,7 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged }) {
     if (busy) return;
     setBusy(true); setError('');
     try {
-      const response = await fetch(`${MEMORY_SOURCES}/${sourceId}/${action}`, {
+      const response = await fetch(`${MEMORY_VIEW}/sources/${sourceId}/${action}`, {
         method: 'POST', credentials: 'same-origin', cache: 'no-store', redirect: 'error',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(action === 'forget' ? { confirm: true } : { text }),
@@ -232,7 +234,7 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged }) {
       exactObject(value, ['contract', 'source_id', 'state'], 'geheugenwijziging');
       if (value.contract !== 'EvaOwnerMemoryChange/v1' || value.source_id !== sourceId
         || !(action === 'forget' ? ['erased', 'erasure_requested'] : ['correction_queued']).includes(value.state)) throw new Error();
-      onChanged({ erased: 'Deze bron en het daarvan afgeleide geheugen zijn gewist.',
+      onChanged({ erased: detail?.erasure_scope === 'memory_document' ? 'Deze geheugenbron of afleiding is vergeten. Het oorspronkelijke gesprek blijft bewaard.' : 'Deze bron en het daarvan afgeleide geheugen zijn gewist.',
         erasure_requested: 'Wissen is aangevraagd. De bron verdwijnt uit deze lijst zodra de verwerking klaar is.',
         correction_queued: 'Je correctie is ontvangen. De nieuwe bron staat in de lijst; Verwerkt verschijnt zodra Eva haar geheugen heeft bijgewerkt.' }[value.state]);
     } catch {
@@ -245,21 +247,29 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged }) {
     {!detail && !error && <p role="status">Volledige bron ophalen…</p>}
     {detail && <>
       <p>{detail.origin} · {new Date(detail.occurred_at).toLocaleString('nl-NL')}</p>
+      <p className={`memory-kind ${detail.kind}`}>{detail.kind === 'inference' ? 'Afleiding van Eva · geen vastgesteld feit' : detail.kind === 'legacy' ? 'Oude bron · niet bevestigd' : 'Broninformatie · wat is gezegd of waargenomen'}</p>
       <div className="memory-full-content">{detail.content}</div>
+      {detail.learning && <div className="memory-learning"><p>Soort: {detail.learning.kind === 'expectation' ? 'Verwachting' : 'Persoonsaanname'} · beoordeling: {({open:'Open',confirmed:'Bevestigd',refuted:'Weerlegd',unknown:'Onbekend'})[detail.learning.outcome]}</p>
+        <p>Onzekerheid: {detail.learning.uncertainty_reason}</p>
+        {detail.current_learning && <><h4>Actuele herziening</h4><p>{detail.current_learning.interpretation}</p>
+          <p>Een bevestigde beoordeling van een aanname maakt haar nog geen onafhankelijk vastgesteld feit.</p></>}
+        {!detail.current_learning && <p>Een actuele herziening is nog niet beschikbaar; vernieuw na verwerking. Deze historische bron is niet automatisch actueel.</p>}
+      </div>}
+      {detail.current_source_id && detail.current_source_id !== sourceId && <button onClick={() => onSelectSource(detail.current_source_id)}>Open actuele herziening</button>}
       {mode === 'view' && <div className="memory-actions">
-        <button onClick={() => setMode('correct')}>Informatie corrigeren</button>
-        <button disabled={detail.retention_state !== 'retained'} onClick={() => setMode('forget')}>Deze bron vergeten</button>
+        <button disabled={detail.learning && detail.current_source_id !== sourceId} onClick={() => setMode('correct')}>Informatie corrigeren</button>
+        <button disabled={!detail.can_forget} onClick={() => setMode('forget')}>Deze bron vergeten</button>
       </div>}
       {mode === 'correct' && <form onSubmit={event => { event.preventDefault(); change('correct'); }}>
         <label htmlFor="memory-correction">Wat moet Eva voortaan onthouden?</label>
-        <textarea id="memory-correction" value={text} maxLength={12000} rows={4} required disabled={busy}
+        <textarea id="memory-correction" value={text} maxLength={detail.learning ? 1600 : 12000} rows={4} required disabled={busy}
           onChange={event => setText(event.target.value)} placeholder="Bijvoorbeeld: mijn favoriete kleur is nu groen." />
         <p>Schrijf de nieuwe informatie volledig op. Eva verwerkt dit als actuele correctie. De eerdere uitspraak blijft als historische bron zichtbaar; met Vergeten kun je die bron wissen.</p>
         <button type="submit" disabled={busy || !text.trim()}>Correctie doorgeven</button>
         <button type="button" disabled={busy} onClick={() => setMode('view')}>Annuleren</button>
       </form>}
       {mode === 'forget' && <div>
-        <p>Deze gespreksbron en het daarvan afgeleide geheugen worden gewist. Andere gesprekken waarin je hetzelfde vertelde blijven bestaan. Dit verwijdert geen berichten uit Telegram zelf.</p>
+        <p>{detail.erasure_scope === 'memory_document' ? 'Deze geselecteerde geheugenbron of afleiding en het daarop steunende geheugen worden vergeten. Het oorspronkelijke gesprek blijft bewaard.' : 'Deze gespreksbron en het daarvan afgeleide geheugen worden gewist. Andere gesprekken waarin je hetzelfde vertelde blijven bestaan. Dit verwijdert geen berichten uit Telegram zelf.'}</p>
         <button disabled={busy} onClick={() => change('forget')}>Bevestigen: deze bron vergeten</button>
         <button disabled={busy} onClick={() => setMode('view')}>Annuleren</button>
       </div>}
@@ -269,10 +279,11 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged }) {
   </section>;
 }
 
-function MemorySources() {
+function MemorySources({ selectedSource, onMemoryChanged }) {
   // Keep only the visible page in component memory, never in a persistent store
   // or the shared query cache. Changing page/access first clears old content.
   const [selected, setSelected] = React.useState(null);
+  React.useEffect(() => { if (selectedSource) setSelected(selectedSource.id); }, [selectedSource]);
   const [generation, revalidateDetail] = React.useReducer(value => value + 1, 0);
   const [notice, setNotice] = React.useState('');
   const [cursors, setCursors] = React.useState([null]);
@@ -319,8 +330,8 @@ function MemorySources() {
       <p>Eigen gespreksbronnen voor het geheugen — niet alle afgeleide herinneringen. Alleen jij kunt deze bronnen hier bekijken.</p></div>
       <button onClick={() => { setResult({ state: 'loading', page: null }); refresh(); }}>Vernieuwen</button></div>
     {notice && <p role="status">{notice}</p>}
-    {selected && <MemorySourceControl key={selected} sourceId={selected} generation={generation} onClose={() => setSelected(null)}
-      onChanged={message => { setNotice(message); setSelected(null); refresh(); }} />}
+    {selected && <MemorySourceControl key={selected} sourceId={selected} generation={generation} onClose={() => setSelected(null)} onSelectSource={setSelected}
+      onChanged={message => { setNotice(message); setSelected(null); refresh(); onMemoryChanged?.(); }} />}
     {result.state === 'loading' && <p role="status">Geheugenbronnen ophalen…</p>}
     {result.state === 'denied' && <p role="alert">Je eigenaarstoegang is niet meer geldig. De bronnen zijn verborgen.</p>}
     {result.state === 'error' && <p role="alert">Geheugenbronnen zijn nu niet beschikbaar. Probeer opnieuw; eerdere inhoud is verborgen.</p>}
@@ -375,6 +386,8 @@ function Dashboard() {
   const status = useGetOne('status', { id: 'runtime' });
   const identity = useGetOne('identity', { id: 'current' });
   const [selected, setSelected] = React.useState(() => ownerSection(window.location.hash));
+  const [selectedSource, setSelectedSource] = React.useState(null);
+  const [memoryRevision, memoryChanged] = React.useReducer(n => n + 1, 0);
   React.useEffect(() => {
     const change = () => setSelected(ownerSection(window.location.hash));
     window.addEventListener('hashchange', change);
@@ -402,7 +415,7 @@ function Dashboard() {
         <a className="owner-primary" href="/internal/v1/dashboard/conversation">Open gesprek →</a>
         <p>Met ‘Terug naar cockpit’ kom je weer bij dit beheer. Telegram blijft dezelfde Eva.</p>
       </section>}
-      {selected === 'memory' && <><PeopleOverview /><MemorySources /></>}
+      {selected === 'memory' && <><OwnerMemoryView revision={memoryRevision} onSource={id => setSelectedSource({ id, revision: Date.now() })} /><MemorySources selectedSource={selectedSource} onMemoryChanged={memoryChanged} /></>}
       {selected === 'work' && <OwnerWork />}
       {selected === 'initiative' && <><OwnerInitiatives /><section className="owner-panel" aria-label="Leerhistorie">
         <h2>Leren en dromen</h2><p>De laatste werkelijke initiatiefafweging en bijdragen staan hierboven. De volledige reflectie-, feedback- en verbeterhistorie wordt nog aangesloten; een afweging is geen bewijs van toegepaste verbetering.</p>

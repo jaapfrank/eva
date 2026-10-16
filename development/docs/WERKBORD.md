@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Personen en geheugen bekijken en bijwerken
+Gesprekken, opdrachten en resultaten samen tonen
 
-E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.
+Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.
 
-Klaar wanneer: De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.
+Klaar wanneer: Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.
 
 ## Afmaakvolgorde
 
@@ -27,7 +27,7 @@ Klaar wanneer: De juiste persoon ziet bekende personen en eigen geheugen met bro
 | Eigen initiatief | E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd | Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie; samenhangende bediening volgt in E2. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open. |
 
-50 van 70 geregistreerde kleine taken afgerond; 20 open. E2.1 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.
+51 van 70 geregistreerde kleine taken afgerond;19 open. E2.2 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.
 
 ## Alle geregistreerde kleine taken
 
@@ -93,7 +93,7 @@ Klaar wanneer: De juiste persoon ziet bekende personen en eigen geheugen met bro
 | E1.2 · Zelf de volgende aandacht kiezen | ✓ Afgerond | Eva kiest en bewaart een passende volgende aandacht op basis van situatie of lopende bedoeling. Die komt na onderbreking terug via dezelfde route, wijkt voor gesprek en veroorzaakt geen losse modelaanvraag per sensorwijziging. |
 | E1.3 · Een dagelijkse aanleiding zelfstandig afhandelen | ✓ Afgerond | De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven. |
 | E2.1 · Eén Eva-beheeromgeving aansluiten | ✓ Afgerond | Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart. |
-| E2.2 · Personen en geheugen bekijken en bijwerken | ● Open | De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon. |
+| E2.2 · Personen en geheugen bekijken en bijwerken | ✓ Afgerond | De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon. |
 | E2.3 · Gesprekken, opdrachten en resultaten samen tonen | ● Open | Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek. |
 | E2.4 · Initiatief, dromen en verbeteringen inzichtelijk maken | ● Open | De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties. |
 | E2.5 · Extra modelproviders optioneel aansluiten | ● Open | De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter. |
@@ -110,7 +110,7 @@ Klaar wanneer: De juiste persoon ziet bekende personen en eigen geheugen met bro
 
 ## Van jou
 
-Open http://127.0.0.1:44711/internal/v1/dashboard en kies een sectie. De bestaande lokale toegang vraagt geen dashboardtoken. Geen verplichte herhaalproef; uitgebreide profielen, leerhistorie en extra verbindingen staan nog open.
+Geen verplichte handeling. Open Eva-beheer → Personen & geheugen; zoek een naam of onderwerp en open de bron om te bekijken, corrigeren of vergeten. Geen privégesprekken van anderen.
 
 ## Historie
 

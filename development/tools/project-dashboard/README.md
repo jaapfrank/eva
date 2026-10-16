@@ -37,10 +37,36 @@ reuse the current people-memory status, memory source controls, delegated work,
 initiative and component observation APIs. Only the selected section is mounted;
 private source content is cleared by unmounting when leaving memory.
 
-This E2.1 delivery does not claim completed person profiles/derived-memory views,
-conversation-to-work association, full reflection/improvement history, extra
-provider settings or WhatsApp. Those remain the existing E2.2–E2.6 tasks. Unknown
+This E2.1 delivery establishes navigation. Conversation-to-work association,
+full reflection/improvement history, extra provider settings and WhatsApp remain
+the existing E2.3–E2.6 tasks. Unknown
 connection observations stay unknown. The project workboard is not runtime data.
+
+## People and memory controls — E2.2
+
+Choose **Personen & geheugen**. The existing private Hindsight recall presents
+up to twelve relevant memories and the names/topics mentioned in those memories.
+Search by name or topic, then open **Bron bekijken en aanpassen**. Every result
+must resolve to an exact currently accessible private source. This is a ranked
+selection of the owner's memory, not an exhaustive directory or access to another
+person's private account. Source information, Eva's inferences and unverified
+legacy information have separate labels. A confirmed assessment of an inference
+does not turn it into an independently verified fact.
+
+Corrections reuse the existing journal, human-understanding revision chain and
+coldpath processing. A typed correction links to the current head; stale heads
+must be opened before correction. The UI says queued until storage processing
+finishes. Forgetting reuses document erasure: for a derived/document source, the
+original conversation or work result remains; for an exchange source, the existing
+exchange-erasure semantics apply. The confirmation describes that difference.
+The original paginated private source list remains independently accessible.
+
+Run `verify-owner-memory.cjs` with the same Playwright/Chromium variables below.
+Synthetic mode checks correction, the current revision, erasure, named search,
+failure clearing and mobile layout. Set `EVA_DASHBOARD_ORIGIN` for a read-only
+installed check. Installed mode reads an actual memory and exact source and never
+corrects or forgets household data. Scoped recall may use the existing embedding
+backend; no conversational model is invoked by these UI operations.
 
 ## Reproduce the product build
 
@@ -63,7 +89,7 @@ of JavaScript errors or external requests. They send no conversation/model
 request or task mutation. An isolated fixture is not evidence of live backend data.
 
 Package assets are sealed by hash/size. Installation uses the current actual core
-image as an asset-only overlay and retains configuration, mounts and the worker.
+image with only the selected backend/UI files and retains configuration, mounts and the worker.
 The project build is not replaced by a normal product build.
 
 ## Personal Chrome entry

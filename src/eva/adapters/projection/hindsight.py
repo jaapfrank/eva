@@ -644,7 +644,7 @@ class HindsightMemoryEngine:
                 "tags": list(person_tag) if isinstance(person_tag, tuple) else [person_tag],
                 "tags_match": "any_strict" if isinstance(person_tag, tuple) else "all_strict",
                 "include": {
-                    "entities": None,
+                    "entities": {"max_tokens": 256} if query.query_purpose == "owner_memory_view" else None,
                     "chunks": None,
                     # Hindsight observations intentionally omit document metadata.
                     # A small bounded source-fact envelope lets Eva preserve the
@@ -1798,6 +1798,9 @@ class HindsightMemoryEngine:
                             if raw.get("mentioned_at") else None
                         ),
                         "text": text,
+                        **({"mentioned_names": [name for name in (raw["entities"] if isinstance(raw.get("entities"), list) else [])
+                            if isinstance(name, str) and 0 < len(name) <= 120][:32]}
+                           if query.query_purpose == "owner_memory_view" else {}),
                         **({"observation_source_refs": observation_refs} if observation_refs else {}),
                         **({"reference_provenance": reference_provenance}
                            if reference_provenance else {}),

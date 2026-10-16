@@ -1,0 +1,149 @@
+{
+  "contract": "EvaE22OwnerMemoryOutcome/v1",
+  "taskId": "E2.2",
+  "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+  "status": "completed_installed",
+  "taskCompleted": true,
+  "originalCriteriaUnchanged": true,
+  "familyAcceptance": false,
+  "wholeProjectComplete": false,
+  "result": "Personen/onderwerpen en eigen herinneringen zijn in één geïnstalleerde privébediening te zoeken, met exact bronbewijs, aparte labels voor bron/afleiding/legacy, huidige mensbegripherzieningen en bestaande correctie-/vergeetroutes.",
+  "userAccess": {
+    "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=memory",
+    "steps": [
+      "Kies Personen & geheugen.",
+      "Zoek een naam of onderwerp; kies Bron bekijken en aanpassen.",
+      "Kies Informatie corrigeren of Deze bron vergeten. De bevestiging zegt wat behouden blijft."
+    ],
+    "access": "Existing local owner gateway; no manually entered dashboard token"
+  },
+  "reused": [
+    "Current owner binding/private audience and PostgreSQL outbox source readers",
+    "Hindsight current scoped recall (UI-only bounded entity names)",
+    "Existing journal + HumanUnderstandingActions linked revision + coldpath retention",
+    "Existing exact document/exchange erasure and paginated own source list"
+  ],
+  "newMemoryBankOrPersonRegistry": false,
+  "validation": {
+    "focusedPostgresAndProjectionTests": 8,
+    "testDatabase": "Separately named disposable database on existing PostgreSQL18.6; no production memory mutation",
+    "isolatedBrowser": {
+      "contract": "EvaOwnerMemoryBrowserProof/v1",
+      "status": "passed",
+      "mode": "isolated",
+      "exactSourceRead": true,
+      "syntheticCorrectionAndErasure": true,
+      "namedSearch": true,
+      "mobileWidth": 390,
+      "sourceUnmount": true,
+      "hiddenAndRevokedViewClears": true,
+      "javascriptErrors": 0,
+      "externalRequests": 0,
+      "conversationalModelCalls": 0
+    },
+    "installedBrowser": {
+      "contract": "EvaOwnerMemoryBrowserProof/v1",
+      "status": "passed",
+      "mode": "installed-read-only",
+      "exactSourceRead": true,
+      "syntheticCorrectionAndErasure": false,
+      "namedSearch": false,
+      "mobileWidth": 390,
+      "sourceUnmount": true,
+      "hiddenAndRevokedViewClears": false,
+      "javascriptErrors": 0,
+      "externalRequests": 0,
+      "conversationalModelCalls": 0
+    },
+    "candidateActualScopedRead": {
+      "mentionedNamesOrTopics": 7,
+      "uniqueExactSourceBoundMemories": 2,
+      "exhaustiveDirectory": false
+    },
+    "installedExactSourceRead": true,
+    "windowsProductHttpStatus": 200,
+    "windowsProjectHttpStatus": 200,
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "workerImageUnchanged": true,
+    "workerContainerUnchanged": true,
+    "userUnchanged": true,
+    "environmentUnchanged": true,
+    "mountsUnchanged": true,
+    "sourceBytesMatch": true,
+    "navigationRegression": {
+      "contract": "EvaOwnerNavigationBrowserProof/v1",
+      "status": "passed",
+      "sections": 6,
+      "reloadAndBack": true,
+      "mobileWidth": 390,
+      "scopedFailureChecked": true,
+      "sourceUnmountChecked": true,
+      "javascriptErrors": 0,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "mode": "isolated"
+    }
+  },
+  "installation": {
+    "coreImage": "sha256:45c6ee2d8a15a097652ea7e9233b2159c3b4027ccdbf5592d09be17c6355a010",
+    "previousCoreImage": "sha256:d32b449696914d07da93945dcc94a3151907785c267f94c6ef0e5e51a82e73b3",
+    "workerImage": "sha256:caaeb5774376991f4091776993c074049e6ac3d47d2895240a02b129033f8d90",
+    "changedServices": [
+      "core"
+    ],
+    "dispatchCount": 2,
+    "secondDispatchReason": "One independent review finding: private semantic content must clear on tab hiding and revalidate authority on return. Final assets-only fix; no rollback or discarded backend work.",
+    "rollbackPerformed": false,
+    "speechCodeOrConfigurationChanged": false,
+    "othersChangesRetained": true
+  },
+  "usage": {
+    "evaConversationalModelRequests": 0,
+    "evaConversationalModelTokens": 0,
+    "productionCorrectionOrErasureMutations": 0,
+    "independentReviewers": 1,
+    "developmentCredits": null,
+    "developmentModelTokens": null,
+    "memoryRetrievalBackendUsage": null,
+    "note": "Existing memory search/embedding backend was used for actual read verification; this usage was not separately metered. No paid conversation/benchmark was started."
+  },
+  "preparationFailures": [
+    "Focused test runner initially used wrong DSN environment variable; corrected before disposable database tests.",
+    "Synthetic unmount assertion initially ran before navigation had rendered; waited for the destination heading.",
+    "Independent review caught typed submission-method mismatch, document-erasure copy scope and hidden-tab privacy clearing; all corrected and specifically checked."
+  ],
+  "limitations": [
+    "Names can be persons or topics from own admissible memories. Ranked selection plus name/topic search is not an exhaustive person directory or access to another family member’s private account.",
+    "Correct/forget proven against actual existing PostgreSQL routes in an isolated disposable database; installed household data was read only, never mutated for demonstration.",
+    "Typed correction remains a provisional inference and is queued until retention finishes. Pending or stale revision heads are not silently corrected.",
+    "Document erasure preserves original ingress/work artifacts; exchange erasure retains its existing broader exchange semantics. Other independently sourced memories may remain.",
+    "This completes E2.2 controls only; E2.3–E2.6, daily household acceptance and whole-project delivery stay separate."
+  ],
+  "sourceSha256": {
+    "src/eva/adapters/projection/hindsight.py": "2910ef79d1e8ef4d9a1298054e647c96310307c1cc750eb7d007d6e00c9ad6b2",
+    "src/eva/adapters/postgres/people_memory_overview.py": "f37786097bf6a774574ec80fccef8fd14f57c76ac84fb08dc4bf8f18e4e03c77",
+    "src/eva/adapters/api/dashboard_memory.py": "4ebc968bed1037d1d6621b9ade72605b042063b928aa7156c4c5e599f74f05a7",
+    "src/eva/bootstrap/dashboard_memory.py": "58f37e5634eb17a99befe668ef5078c02b1bb5d181794fd3a3621a67c3a3136e",
+    "src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json": "34e17e87a64cdb6e2eceaebc3bc9aaa9781fb1c5812cdd4bceb63825a4d37a48",
+    "development/tools/project-dashboard/src/main.jsx": "abcd73cc9df9ac725194f76ec124ace3bc0148c06cbe092e7a63b2769978a0a4",
+    "development/tools/project-dashboard/src/style.css": "617813bc798dec79d67f0b0e573d95ceb30ba63f5bc9960d7de33b31f6b0abf5",
+    "development/tools/project-dashboard/src/owner-memory-view.jsx": "031ad9dbcf00a9b774d76554e4614f0a58b9aa4599e47b58209257958d2a6bc4",
+    "development/tools/project-dashboard/verify-owner-memory.cjs": "49a8932811df7002f8f36231ca2b9fb170a8e74a7d0680569e78f23d75adda4a",
+    "development/tests/postgres/test_owner_memory_management.py": "65ea1d10d322f50eabb8828217d11fb7b7cbd2d99554089a875b43323533f84e",
+    "development/tests/projection/test_owner_memory_entities.py": "cd6706a34d364e881718a77bbcd6efe4174773377c1f3ffc61da6b30c14633f8",
+    "development/tools/project-dashboard/verify-owner-navigation.cjs": "2d2e45f35b4293524f49ebfaeffcf74467e02ab96523c33dc378c0cb3f17c877"
+  },
+  "privateEvidenceSha256": {
+    "focused-tests.private.txt": "da6905f6e0a134a88b14dfef3635be34df86e9f32657261f7a6c54126e8e028a",
+    "isolated-browser.private.txt": "d181d2985d5dc23540c7277455cee2590141d4e5feb80c29c53e01b213031ab0",
+    "installed-browser.private.txt": "44e7575820a3918b5868ec6e5c3867bf9877e8875c1d9062e20f3af4be7eec25",
+    "candidate-real-read.private.json": "b5f99e03a07ae150858c96e680dc18052e8f43ab5c22b79a4004f3027c527034",
+    "installation-receipt.private.json": "305d330cba7c34f2ae4f842adad96af799a6c96d7751131c5e742f417d79b392",
+    "privacy-installation-receipt.private.json": "6aefdc76246cd1b172b33767421831c558b96711906db5de2de0533f474d27dc",
+    "installation-verification.private.json": "53ee4e0c17a484a25406470d1f1465e0472e5d3c3309bcbfdf41b776a239d5c8",
+    "navigation-regression.private.txt": "9c18b04b9915f8526c7b1d254804547375ee21c8a45db004e8649b431d80cd0e"
+  },
+  "independentReview": "development/reviews/e22-owner-memory-review-20261016.json",
+  "privateReviewSha256": "3ffdb9c4793017b26b1fcf008b6bcc38fbbd9a748aaeb3803231dfe6ccc8c62f"
+}

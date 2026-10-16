@@ -838,20 +838,20 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-16T10:44:14.870759+00:00",
+  "lastUpdated": "2026-10-16T11:28:21.773727+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E2.2",
+  "activeTaskId": "E2.3",
   "currentWork": {
-    "id": "E2.2",
-    "title": "Personen en geheugen bekijken en bijwerken",
+    "id": "E2.3",
+    "title": "Gesprekken, opdrachten en resultaten samen tonen",
     "status": "planned",
-    "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
-    "nextAction": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
+    "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
+    "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-16T10:44:14.870759+00:00",
-    "outcome": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
-    "area": "people and memory controls",
+    "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+    "outcome": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
+    "area": "conversation and task result presentation",
     "countedAsProductTask": true
   },
   "historicalWorkboard": {
@@ -949,7 +949,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
+      "priorityDecision": "E2.2 is geïnstalleerd en onafhankelijk afgerond. Volgende: E2.3 verbind bestaande gesprekken, opdrachten en resultaten in één gebruiksstroom; geen tweede taakstore of spraakwijziging.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1635,6 +1635,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E2.2 · Personen en geheugen bedienen geïnstalleerd",
+            "state": "installed",
+            "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+            "summary": "E2.2 geïnstalleerd en onafhankelijk afgerond: eigen namen/onderwerpen en herinneringen zoeken, exact bronbewijs zien, bron en afleiding onderscheiden, huidige herziening bekijken, corrigeren en gericht vergeten. Bestaande opslag; privégegevens blijven bij de juiste persoon.",
+            "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e22-owner-memory-installed-20261016.json",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E2.2"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "maintenanceRepair": false,
+            "familyAcceptance": false,
+            "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=memory",
+            "completionScope": "E2.2 own people/memory controls only"
+          },
+          {
             "title": "E2.1 · Eén Eva-beheeromgeving geïnstalleerd",
             "state": "installed",
             "checkedAt": "2026-10-16T10:44:14.870759+00:00",
@@ -2004,56 +2021,57 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E2.1 · Eén Eva-beheeromgeving geïnstalleerd",
+          "title": "E2.2 · Personen en geheugen bedienen geïnstalleerd",
           "state": "installed",
-          "checkedAt": "2026-10-16T10:44:14.870759+00:00",
-          "summary": "Geïnstalleerd en onafhankelijk afgerond: één Eva-beheeromgeving met zes secties en echte bestaande backenddata. Gesprek opent de bestaande privéroute; geheugen, opdrachten, initiatief en verbindingsstatus zijn afzonderlijk bereikbaar. Projectbord blijft apart. Geen extra provider of volledige leerhistorie geclaimd.",
-          "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6.",
-          "source": "/home/administrator/project/Eva2/development/evidence/product/e21-owner-navigation-installed-20261016.json",
+          "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+          "summary": "E2.2 geïnstalleerd en onafhankelijk afgerond: eigen namen/onderwerpen en herinneringen zoeken, exact bronbewijs zien, bron en afleiding onderscheiden, huidige herziening bekijken, corrigeren en gericht vergeten. Bestaande opslag; privégegevens blijven bij de juiste persoon.",
+          "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/e22-owner-memory-installed-20261016.json",
           "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "E2.1"
+            "E2.2"
           ],
           "smallTaskCountsUnchanged": false,
           "maintenanceRepair": false,
           "familyAcceptance": false,
-          "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard",
-          "completionScope": "E2.1 product navigation only"
+          "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=memory",
+          "completionScope": "E2.2 own people/memory controls only"
         },
         "now": {
-          "taskId": "E2.2",
-          "title": "Personen en geheugen bekijken en bijwerken",
-          "state": "Gereed om op te pakken",
-          "phase": "ready_to_start",
+          "taskId": "E2.3",
+          "title": "Gesprekken, opdrachten en resultaten samen tonen",
+          "state": "Klaar om te beginnen",
+          "phase": "next",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
-          "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
+          "summary": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
+          "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+          "checkedAt": "2026-10-16T11:28:21.773727+00:00",
           "status": "planned"
         },
         "next": {
           "title": "Gesprekken, opdrachten en resultaten samen tonen",
-          "state": "Na E2.2: E2.3",
+          "state": "Volgende: E2.3",
           "summary": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Eva-beheer staat klaar",
-          "detail": "Open http://127.0.0.1:44711/internal/v1/dashboard en kies een sectie. De bestaande lokale toegang vraagt geen dashboardtoken. Geen verplichte herhaalproef; uitgebreide profielen, leerhistorie en extra verbindingen staan nog open.",
+          "title": "Personen en geheugen bekijken",
+          "detail": "Geen verplichte handeling. Open Eva-beheer → Personen & geheugen; zoek een naam of onderwerp en open de bron om te bekijken, corrigeren of vergeten. Geen privégesprekken van anderen.",
           "steps": [
-            "Open http://127.0.0.1:44711/internal/v1/dashboard",
-            "Kies links Gesprek, Personen & geheugen, Opdrachten & resultaten, Initiatief & leren of Verbindingen."
+            "Open http://127.0.0.1:44711/internal/v1/dashboard en kies Personen & geheugen.",
+            "Zoek een naam of onderwerp en kies Bron bekijken en aanpassen.",
+            "Kies Informatie corrigeren of Deze bron vergeten; de bevestiging vermeldt wat behouden blijft."
           ],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-16T10:44:14.870759+00:00",
-        "reviewedAt": "2026-10-16T10:44:14.870759+00:00",
+        "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+        "reviewedAt": "2026-10-16T11:28:21.773727+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-16T10:44:14.870759+00:00",
-      "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+      "reviewedAt": "2026-10-16T11:28:21.773727+00:00",
+      "checkedAt": "2026-10-16T11:28:21.773727+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2067,10 +2085,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+        "checkedAt": "2026-10-16T11:28:21.773727+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
-        "headline": "E1 technisch afgerond; E2.1 beheeromgeving geïnstalleerd. Volgende: personen en geheugen samen bedienen.",
-        "note": "50 van 70 geregistreerde kleine taken afgerond; 20 open. E2.1 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.",
+        "headline": "E1 technisch afgerond; E2.1 en E2.2 geïnstalleerd. Volgende: gesprekken, opdrachten en resultaten samen tonen.",
+        "note": "51 van 70 geregistreerde kleine taken afgerond;19 open. E2.2 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2087,7 +2105,7 @@
             "name": "Geheugen",
             "state": "incomplete",
             "label": "Geheugenbasis geaccepteerd · correctie en uitkomst toegepast",
-            "result": "Geaccepteerde geheugenbasis en Eva1-import behouden. Werkuitkomsten en feedback worden opgeslagen. Bij een nieuwe opdracht in een andere sessie paste Eva de eerdere norm én vorm toe zonder herhaling: 8 over, 1 tekort tegen de norm van 9, drie korte bullets met vervolgstap. Werkelijk bestand apart teruggelezen; beide oude bestanden ongewijzigd. Installatie en beperkte toepassing onafhankelijk beoordeeld. HUE1.1/HUE3.1: persoonsaanname en verwachting herzien, vervolgens gebruikt in een nieuw gesprek zonder recente historie; onafhankelijk beoordeeld. HUE6: persoonlijke stijl tijdens rust gegrond bijgesteld en in een later gesprek gebruikt.",
+            "result": "Geaccepteerde geheugenbasis en Eva1-import behouden. Werkuitkomsten en feedback worden opgeslagen. Bij een nieuwe opdracht in een andere sessie paste Eva de eerdere norm én vorm toe zonder herhaling: 8 over, 1 tekort tegen de norm van 9, drie korte bullets met vervolgstap. Werkelijk bestand apart teruggelezen; beide oude bestanden ongewijzigd. Installatie en beperkte toepassing onafhankelijk beoordeeld. HUE1.1/HUE3.1: persoonsaanname en verwachting herzien, vervolgens gebruikt in een nieuw gesprek zonder recente historie; onafhankelijk beoordeeld. HUE6: persoonlijke stijl tijdens rust gegrond bijgesteld en in een later gesprek gebruikt. E2.2: eigen personen/onderwerpen en herinneringen met exacte bron zoeken, corrigeren en vergeten via bestaande opslag; afzonderlijke labels voor bron en afleiding.",
             "remaining": "HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw.",
             "evidencePaths": [
               "development/design/product/execution-workboard-v1.json",
@@ -2104,9 +2122,10 @@
               "development/evidence/product/learning-feedback-source-installed-20261011.json",
               "development/evidence/product/hue-learning-later-use-result-20261013.json",
               "development/reviews/hue-learning-later-use-review-20261013.json",
-              "development/evidence/product/hue6-quiet-learning-outcome-20261014.json"
+              "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
+              "development/evidence/product/e22-owner-memory-installed-20261016.json"
             ],
-            "checkedAt": "2026-10-14T03:14:08.630849+00:00"
+            "checkedAt": "2026-10-16T11:28:21.773727+00:00"
           },
           {
             "name": "Eigen initiatief",
@@ -2172,7 +2191,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-16T10:44:14.870759+00:00",
+      "lastUpdatedAt": "2026-10-16T11:28:21.773727+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2206,7 +2225,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-16T10:44:14.870759+00:00",
+      "updatedAt": "2026-10-16T11:28:21.773727+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2215,7 +2234,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E2.2",
+        "currentStep": "E2.3",
         "steps": [
           {
             "number": 1,
@@ -4169,14 +4188,14 @@
               {
                 "id": "E2.2",
                 "title": "Personen en geheugen bekijken en bijwerken",
-                "status": "planned",
+                "status": "completed",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Geheugenbeheer, persoonsgrenzen en bron-API’s bestaan en hebben eerder bewijs.",
                 "gap": "Personen en afgeleid geheugen zijn nog niet samen begrijpelijk bedienbaar.",
-                "nextAction": "Sluit de bestaande persoons-/geheugenlezers en correctieacties op de productbediening aan; geen nieuwe geheugenbank.",
+                "nextAction": "Gebruik de geïnstalleerde personen-/geheugenbediening. Volgende: E2.3 gesprekken, opdrachten en resultaten samen tonen.",
                 "files": [
                   "src/eva/adapters/api",
                   "src/eva/adapters/postgres/people_memory_overview.py",
@@ -4189,13 +4208,23 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-16T11:28:21.773727+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                  "steps": [],
+                  "availableNow": true,
+                  "readyWhen": "Geïnstalleerd en onafhankelijk technisch afgerond; geen verplichte herhaalproef.",
+                  "steps": [
+                    "Open http://127.0.0.1:44711/internal/v1/dashboard en kies Personen & geheugen.",
+                    "Zoek een naam of onderwerp en kies Bron bekijken en aanpassen.",
+                    "Kies Informatie corrigeren of Deze bron vergeten; de bevestiging vermeldt wat behouden blijft."
+                  ],
                   "blocksIndependentWork": false
-                }
+                },
+                "completedAt": "2026-10-16T11:28:21.773727+00:00",
+                "completionEvidence": "development/evidence/product/e22-owner-memory-installed-20261016.json",
+                "latestEvidence": "development/evidence/product/e22-owner-memory-installed-20261016.json",
+                "independentReview": "development/reviews/e22-owner-memory-review-20261016.json",
+                "result": "E2.2 geïnstalleerd en onafhankelijk afgerond: eigen namen/onderwerpen en herinneringen zoeken, exact bronbewijs zien, bron en afleiding onderscheiden, huidige herziening bekijken, corrigeren en gericht vergeten. Bestaande opslag; privégegevens blijven bij de juiste persoon.",
+                "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open."
               },
               {
                 "id": "E2.3",
@@ -4689,7 +4718,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
+        "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -4698,10 +4727,10 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T10:44:14.870759+00:00",
+        "updatedAt": "2026-10-16T11:28:21.773727+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-16T10:44:14.870759+00:00",
+          "updatedAt": "2026-10-16T11:28:21.773727+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -4741,7 +4770,7 @@
                 "C4.1",
                 "C4.3"
               ],
-              "currentGap": "E2.1 productnavigatie is geïnstalleerd en gebruikt met de echte backend. Personen-/geheugenbediening, gesprek-/taaksamenhang, volledige leerhistorie, extra providers en WhatsApp blijven E2.2–E2.6."
+              "currentGap": "E2.1 productnavigatie en E2.2 personen-/geheugenbediening geïnstalleerd en onafhankelijk afgerond. Gesprek-/taaksamenhang, leerhistorie, extra providers en WhatsApp blijven E2.3–E2.6."
             },
             {
               "id": "E3",
@@ -4786,7 +4815,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E2.2",
+      "currentStep": "E2.3",
       "steps": [
         {
           "number": 1,
@@ -6740,14 +6769,14 @@
             {
               "id": "E2.2",
               "title": "Personen en geheugen bekijken en bijwerken",
-              "status": "planned",
+              "status": "completed",
               "kind": "bouwen / afmaken",
               "doneWhen": "De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Geheugenbeheer, persoonsgrenzen en bron-API’s bestaan en hebben eerder bewijs.",
               "gap": "Personen en afgeleid geheugen zijn nog niet samen begrijpelijk bedienbaar.",
-              "nextAction": "Sluit de bestaande persoons-/geheugenlezers en correctieacties op de productbediening aan; geen nieuwe geheugenbank.",
+              "nextAction": "Gebruik de geïnstalleerde personen-/geheugenbediening. Volgende: E2.3 gesprekken, opdrachten en resultaten samen tonen.",
               "files": [
                 "src/eva/adapters/api",
                 "src/eva/adapters/postgres/people_memory_overview.py",
@@ -6760,13 +6789,23 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-16T11:28:21.773727+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Geïnstalleerd en onafhankelijk technisch afgerond; geen verplichte herhaalproef.",
+                "steps": [
+                  "Open http://127.0.0.1:44711/internal/v1/dashboard en kies Personen & geheugen.",
+                  "Zoek een naam of onderwerp en kies Bron bekijken en aanpassen.",
+                  "Kies Informatie corrigeren of Deze bron vergeten; de bevestiging vermeldt wat behouden blijft."
+                ],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-10-16T11:28:21.773727+00:00",
+              "completionEvidence": "development/evidence/product/e22-owner-memory-installed-20261016.json",
+              "latestEvidence": "development/evidence/product/e22-owner-memory-installed-20261016.json",
+              "independentReview": "development/reviews/e22-owner-memory-review-20261016.json",
+              "result": "E2.2 geïnstalleerd en onafhankelijk afgerond: eigen namen/onderwerpen en herinneringen zoeken, exact bronbewijs zien, bron en afleiding onderscheiden, huidige herziening bekijken, corrigeren en gericht vergeten. Bestaande opslag; privégegevens blijven bij de juiste persoon.",
+              "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open."
             },
             {
               "id": "E2.3",
@@ -7260,7 +7299,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E2.2: sluit de bestaande persoons- en geheugenlezers aan zodat je bekende personen, eigen bron/afleiding en correctie/vergeten samen kunt gebruiken. Hergebruik de huidige opslag en persoonsgrenzen; geen spraakbouw.",
+      "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7269,10 +7308,10 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T10:44:14.870759+00:00",
+      "updatedAt": "2026-10-16T11:28:21.773727+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-16T10:44:14.870759+00:00",
+        "updatedAt": "2026-10-16T11:28:21.773727+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -7312,7 +7351,7 @@
               "C4.1",
               "C4.3"
             ],
-            "currentGap": "E2.1 productnavigatie is geïnstalleerd en gebruikt met de echte backend. Personen-/geheugenbediening, gesprek-/taaksamenhang, volledige leerhistorie, extra providers en WhatsApp blijven E2.2–E2.6."
+            "currentGap": "E2.1 productnavigatie en E2.2 personen-/geheugenbediening geïnstalleerd en onafhankelijk afgerond. Gesprek-/taaksamenhang, leerhistorie, extra providers en WhatsApp blijven E2.3–E2.6."
           },
           {
             "id": "E3",
@@ -8330,7 +8369,7 @@
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
     }
   },
-  "updatedAt": "2026-10-16T10:44:14.870759+00:00",
+  "updatedAt": "2026-10-16T11:28:21.773727+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
