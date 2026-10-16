@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 WhatsApp met eigen Eva-nummer en live bellen
 
-Berichtenadapter gebouwd en geïnstalleerd, maar dat beantwoordt de gevraagde live-belfunctie niet. Persoonlijke QR-aanmelding is uitgezet; er is geen WhatsApp-account gekoppeld. Nog te realiseren: live bellen naar Eva op een eigen WhatsApp-nummer. Eerst Calling API-toegang/geschiktheid en actuele voorwaarden vaststellen en de audio-overdracht met de bestaande spraakuitvoerder afstemmen. Geen account- of QR-handeling gevraagd.
+Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.
 
 Klaar wanneer: WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.
 
@@ -110,7 +110,7 @@ Klaar wanneer: WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Ev
 
 ## Van jou
 
-Je hoeft jouw persoonlijke WhatsApp niet te koppelen. Codex bevestigt eerst de belroute voor een eigen Eva-nummer.
+Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.
 
 ## Historie
 

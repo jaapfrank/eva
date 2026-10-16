@@ -130,19 +130,33 @@ verstuurt de inhoud niet stil naar een andere provider. Achtergrondwerk, native
 research en initiatief behouden Astra; de bestaande spraakroute blijft ongewijzigd.
 De geïnstalleerde SDK-proeven gebruiken lokaal testtransport; een externe account
 is niet aangesloten of bewezen. De API-sleutel en een eigen controle blijven een
-optionele eigenaarhandeling. WhatsApp is in E2.6 een apart optioneel Baileys-transport
-met private sessieopslag, QR-aanmelding en aan-/uitschakeling. Alleen het gekozen
-privécontact wordt aan de actuele eigenaar gebonden; geen groeps- of historie-import.
-De gewone gesprekskern en bestaande taak-/resultaatjournalen blijven leidend.
-Een achtergrondresultaat wordt bij zijn exact bewezen oorspronkelijke bericht
-teruggebracht; een onzekere verzending wordt niet blind herhaald. De adapter krijgt
-alleen een kort resultaatfragment; volledig resultaat op verzoek. Spraakberichten
-gebruiken de bestaande STT/TTS-poorten met audioconversie in de kanaaladapter, zonder
-nieuwe speakerroute. De eigenaar vraagt ook live WhatsApp-bellen naar een eigen
-Eva-account/nummer. Dat biedt de berichtenadapter nog niet. De persoonlijke
-QR-aanmelding staat uit; Calling API-toegang en overdracht naar de bestaande
-spraakroute moeten eerst worden bevestigd. Een niet-gekozen account hoeft niet te
-worden ingericht om Eva te gebruiken.
+optionele eigenaarhandeling. WhatsApp gebruikt in E2.6 één optionele, gepinde
+Hypermeow/Meowcaller-client met private SQLite-opslag en QR-bediening. Deze
+onofficiële protocolimplementatie is geen Meta Business Calling API. Eva's aparte
+accountnummer en het toegestane bellernummer blijven afzonderlijk; geen zelfchat,
+groeps-, video- of historie-import. De gewone Eva-kern en bestaande taak-/
+resultaatjournalen blijven leidend. Een tekstresultaat komt bij het bewezen
+originele bericht terug, standaard als kort fragment. Onzekere verzending wordt
+niet blind herhaald; volledig resultaat blijft op verzoek beschikbaar.
+
+`eva.whatsapp_service` is uitsluitend een optioneel PCM-audiotransport. Het vraagt
+voor de actuele eigenaar een bestaande `/session/leased` aan, publiceert de
+WhatsApp-microfoon als LiveKit-owner en stuurt Eva's audiotrack terug naar de beller.
+Het gebruikt dezelfde spraakservice, identiteit en taken; geen eigen STT, TTS,
+modelkeuze of geheugen. Specifiek verlengen en sluiten behouden de bestaande
+sessieafspraken, waaronder de huidige 1800-secondenlimiet van de spraakdienst.
+Een wijziging daarvan hoort bij de spraakuitvoerder, niet bij dit transport.
+Audio wordt niet opgenomen. Stoppen, ongeldige actuele bevoegdheid of verbroken
+verbinding sluiten de eigen oproep en sessie. Gereedheid controleert de echte
+spraakdienst, niet alleen het draaiende proces. De helper luistert uitsluitend op
+de private Docker-gateway; bestaande speakerinstallaties blijven ongewijzigd.
+
+De eerdere ongekoppelde Baileys-verbinding wordt vervangen; haar oude private volume
+blijft behouden en draait niet als tweede WhatsApp-client. De gekozen route vereist
+een afzonderlijk gewoon WhatsApp-account voor Eva. Dat ontbreekt nog; echte
+handsetoproepen, platforminteroperabiliteit en accountkoppeling zijn daarmee niet
+bewezen. Spraakberichten worden door deze beladapter niet verwerkt. Een niet-gekozen
+account hoeft niet te worden ingericht om de rest van Eva te gebruiken.
 
 Een optionele module krijgt een herkenbaar manifest: naam/versie, aangeboden
 mogelijkheden, benodigde verbinding/bevoegdheden, configuratie- en contractversies,

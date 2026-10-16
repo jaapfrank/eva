@@ -1,0 +1,188 @@
+{
+  "contract": "EvaOptionalWhatsAppCallingDelivery/v1",
+  "card": "E2.6",
+  "checkedAt": "2026-10-16T21:03:33.706722+00:00",
+  "status": "installed_awaiting_separate_eva_number_and_real_call",
+  "scope": "Incoming live WhatsApp calls and text on Eva’s separate account, using the installed shared Eva voice service and ordinary core. Not voice notes or self-chat.",
+  "route": {
+    "transport": "One pinned Hypermeow/Meowcaller client",
+    "meowcallerCommit": "c48c3e2a243c672c942cbf0c941d14161720d540",
+    "hypermeowCommit": "90f9e4ec2c88",
+    "goImage": "sha256:4c57efc93597720bb6038618c982e35f1de814a79dc9b536e9b75bff52e9a83e",
+    "officialBusinessPlatformAPI": false,
+    "businessPlatformAccountRequiredBySelectedAdapter": false,
+    "separateEvaNumberRequired": true,
+    "newSubscriptionsPurchased": false
+  },
+  "reused": [
+    "Existing owner authority and ordinary private Eva text/work runtime",
+    "Exact existing ingress/result bindings and short original-message returns",
+    "Existing voice /session/leased, renew, room-specific end and LiveKit owner/Eva audio tracks",
+    "Existing provider route and private owner token files"
+  ],
+  "added": [
+    "Optional incoming-call protocol transport with real SDK codec and native PCM source/sink",
+    "Optional transport-only PCM/LiveKit participant; no STT, TTS, memory or model engine",
+    "Separate Eva-account/caller controls and live-call status on existing Connections page",
+    "Exact trusted CallID+peer alternate-phone evidence for first LID calls, bounded and ephemeral",
+    "Expired pairing QR clearing and explicit retry; no personal self-chat fallback"
+  ],
+  "checks": {
+    "coreApi": {
+      "passed": 14,
+      "modelCalls": 0
+    },
+    "mediaLeaseAndProtocol": {
+      "passed": 5,
+      "modelCalls": 0
+    },
+    "goTransport": {
+      "passed": 11,
+      "raceDetector": true,
+      "seconds": 1.419,
+      "sourceBoundCallIdentitySubcases": 5
+    },
+    "upstreamMLow": {
+      "passed": true,
+      "seconds": 0.124,
+      "scope": "Actual pinned codec fixture/tone tests, not a handset call"
+    },
+    "actualPCM": {
+      "passed": true,
+      "sampleRate": 16000,
+      "channels": 1,
+      "simultaneousDistinctToneFrequenciesHz": [
+        440,
+        880
+      ],
+      "heartbeatAndRoomSpecificCleanup": true,
+      "isolatedLiveKitRoom": true,
+      "modelCalls": 0
+    },
+    "installedReadiness": {
+      "existingVoiceReady": true,
+      "controlConnection": "disabled",
+      "accountPaired": false,
+      "callerConfigured": false,
+      "qrVisible": false,
+      "features": {
+        "live_calls": true,
+        "text": true,
+        "voice_messages": false
+      },
+      "mediaReady": true
+    },
+    "installedBrowser": {
+      "status": "passed",
+      "installed_panel": true,
+      "qr_visible": false,
+      "browser_errors": 0,
+      "mutating_requests": 0
+    },
+    "architecture": {
+      "newHelperViolations": 0,
+      "wholeRepositoryPassed": false,
+      "otherRecordedViolations": 129,
+      "scope": "Existing repository-wide boundary debt remains recorded; not modified to make the gate green."
+    }
+  },
+  "installation": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:4d43ea288f44f790e58e9af3ba639bed51be3e1beb421fc5507ecdb4b9d5122d",
+      "state": "running",
+      "health": "healthy",
+      "user": "65532:65532"
+    },
+    "eva2-whatsapp": {
+      "image": "sha256:4c57efc93597720bb6038618c982e35f1de814a79dc9b536e9b75bff52e9a83e",
+      "state": "running",
+      "health": "healthy",
+      "user": "65532:65532"
+    },
+    "eva2-whatsapp-media": {
+      "image": "sha256:539b82a3aead8f83b30e5906e5d6d09b5784268233da4f7f8e6aec6e2d1d0994",
+      "state": "running",
+      "health": null,
+      "user": "65532:65532"
+    },
+    "eva2-owner-voice-media-1": {
+      "image": "sha256:52a56600329bca113b3d3e8888234cad5e8728aca3290eff08e3d20c4722ebc1",
+      "state": "running",
+      "health": null,
+      "user": "65532:65532"
+    },
+    "eva2-owner-voice-livekit-1": {
+      "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "state": "running",
+      "health": null,
+      "user": "65532:65532"
+    }
+  },
+  "existingVoiceContainerAndImageUnchanged": true,
+  "oldUnpairedBaileysVolumeRetained": true,
+  "oldBaileysProcessReplaced": true,
+  "independentReview": "development/reviews/e26-whatsapp-calling-review-20261016.json",
+  "limitations": [
+    "No separate Eva phone number/account exists yet; no real pairing, incoming WhatsApp handset call, intelligibility or original WhatsApp message delivery has been observed.",
+    "Tests prove transport/codecs/PCM/session interfaces; they do not prove platform interoperability or household acceptance.",
+    "The existing voice service still ends a session at1800 seconds. This transport adds no separate call-duration cap and does not change speech-owned code.",
+    "One configured current-owner caller, one call, no groups/video/voice notes. Missing authenticated caller evidence rejects the call.",
+    "Official Meta Calling API account eligibility and tariffs were not confirmed; that API is not the selected route. No general platform authorization claim is made."
+  ],
+  "usage": {
+    "evaRuntimeModelCallsStartedByTechnicalChecks": 0,
+    "externalWhatsAppCallsAndMessagesStartedByChecks": 0,
+    "developmentCreditCost": null,
+    "evaRuntimeCreditCost": null
+  },
+  "preservedEngineeringFindings": [
+    "The legacy Docker builder rejected COPY --chmod; final image uses a correctly seeded private directory and COPY --chown.",
+    "Coordinator corrected distroless build execution and UI text/encoding; final installed UI was independently reviewed and browser checked.",
+    "Review identified initial RTP silence requirements, current-offer LID/PN evidence and stale QR lifecycle; final focused tests cover those corrections."
+  ],
+  "sources": [
+    {
+      "topic": "Official API exists; not selected",
+      "url": "https://whatsappbusiness.com/blog/whatsapp-business-calling-api/"
+    },
+    {
+      "topic": "Selected pinned protocol/media source",
+      "url": "https://github.com/purpshell/meowcaller/tree/c48c3e2a243c672c942cbf0c941d14161720d540"
+    },
+    {
+      "topic": "Selected pinned WhatsApp SDK",
+      "url": "https://github.com/polymorfa/hypermeow/tree/90f9e4ec2c88"
+    }
+  ],
+  "ownerAction": {
+    "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections",
+    "next": "Regel een apart nummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account.",
+    "afterNumber": "Bewaar jouw eigen toegestane bellernummer, zet live bellen aan en scan vanuit Eva’s account. Daarna één echte inkomende belproef en oorspronkelijke tekstterugmelding controleren.",
+    "personalAccountMustNotBePaired": true
+  },
+  "sourceSha256": {
+    "src/eva/whatsapp_service/__init__.py": "888ec54058070fd5a00f51022bab83d4175ade22d328fd95b9656d1d1e88f0d3",
+    "src/eva/whatsapp_service/server.py": "82c903c50d4692381f350b3002c2454bcd231f8b41475ea9713c4f36f18a5c51",
+    "src/eva/adapters/api/dashboard_whatsapp.py": "62fa846beb4099f240c90bec93ccaa1425a8f16299cc609975550eb31153e464",
+    "development/tools/project-dashboard/src/owner-whatsapp.jsx": "748935f6811a14f5b2483cb0ef50b1766896691af4f3e65e917ee71b0b579d02",
+    "deploy/living-core/whatsapp.compose.yml": "a5b6e0430baa7d8022d4743e62b607793ca033432586f1fdf2d7a8ff027a3428",
+    "deploy/whatsapp-calling/core.go": "6a337a30376bbbdc2f96c7564de74a9d41dfb510bf2405a1d3ed46c54bd3320e",
+    "deploy/whatsapp-calling/.dockerignore": "55432bd5450338b4eeee50858a8a03f51b5df9cf1c8289517f3446765b6c37e1",
+    "deploy/whatsapp-calling/Dockerfile.media": "8f0944f0955b0ba87d81b6fa4259ea47102d7c3a9d6d00bd01272f2f53255fa9",
+    "deploy/whatsapp-calling/go.mod": "91af58d26bc1d9814ed2751b73f9fd44f27e3909ed0363d3fe7ba8ed7b6aa708",
+    "deploy/whatsapp-calling/calls.go": "4ae18bcf8455ce9cc39c4ab25bca1ceaafd2e4f553deac2729c28ae0752b8a11",
+    "deploy/whatsapp-calling/bridge.go": "defd3b973e6bcb0919c525e3d500b3928ea71417f205ce10207626acf3adb605",
+    "deploy/whatsapp-calling/go.sum": "94005290fe27e14ce8bb6d615078f535d76291e1edf6d56e3b77153993aa87d5",
+    "deploy/whatsapp-calling/main.go": "54b6b4dce7f9bf7358f5bf803b3aaca55a6c384f22eb25845704a44e76f5e452",
+    "deploy/whatsapp-calling/.gitignore": "753fb0b2244584478884aa22f2bdfdb7c2c136e09d0e56e966a6d711305e2d2b",
+    "deploy/whatsapp-calling/Dockerfile": "ccffb1f2fe7dc94d22bf4ed1281a3c9fa7dacf0f7c1dd1530fb326818d07e359",
+    "deploy/whatsapp-calling/state.go": "79f397914fb534104e01e9deeecefc25114dba1a14fa367fd1322959d8a749c3",
+    "deploy/whatsapp-calling/README.md": "ca424c6b49284cecc8d683efb65514751276e30280f4d98b5b11ef4a7176c44f",
+    "deploy/whatsapp-calling/call_identity.go": "394cb6c9dc0371a7b151a4a2b5f94031ed31abfa8f98399f6710fe8e7a809562",
+    "deploy/whatsapp-calling/transport_test.go": "fef11a904d022ffd73e54ab7dae7b5681432732c374b63873f23e8a3c25fbce5",
+    "deploy/whatsapp-calling/messages.go": "00cc13e28d3cb904d07f80fe290268b29c58d931ee61f6468b6bfe4dd75c0340"
+  },
+  "originalDoneWhenUnchanged": true,
+  "cardCompleted": false,
+  "wholeProjectCompleted": false
+}

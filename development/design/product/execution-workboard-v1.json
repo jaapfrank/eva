@@ -845,18 +845,23 @@
   "currentWork": {
     "id": "E2.6",
     "title": "WhatsApp met eigen Eva-nummer en live bellen",
-    "status": "in_progress",
+    "status": "blocked",
     "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
-    "nextAction": "Bevestig een geschikte belroute en accountvereisten; sluit de kanaalaudio aan op de bestaande spraakroute zonder nieuw spraakplatform.",
-    "ownerActionRequired": false,
-    "checkedAt": "2026-10-16T18:41:52.369506+00:00",
-    "result": "Berichtenadapter gebouwd en geïnstalleerd, maar dat beantwoordt de gevraagde live-belfunctie niet. Persoonlijke QR-aanmelding is uitgezet; er is geen WhatsApp-account gekoppeld.",
-    "completionEvidence": "development/evidence/product/e26-whatsapp-installed-20261016.json",
-    "independentReview": "development/reviews/e26-whatsapp-review-20261016.json",
+    "nextAction": "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
+    "ownerActionRequired": true,
+    "checkedAt": "2026-10-16T21:04:23.438825+00:00",
+    "result": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
+    "completionEvidence": "development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
+    "independentReview": "development/reviews/e26-whatsapp-calling-review-20261016.json",
     "area": "optional WhatsApp channel",
     "outcome": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
     "countedAsProductTask": true,
-    "startedAt": "2026-10-16T17:18:19.193007+00:00"
+    "startedAt": "2026-10-16T17:18:19.193007+00:00",
+    "existing": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
+    "gap": "Werkelijke accountkoppeling, inkomend handsetgesprek en tekst-/resultaatterugmelding zijn nog niet bevestigd.",
+    "technicalChecks": "14 API-controles, 11 Go-transportcontroles met racecontrole (+5 bellerbewijsgevallen), 2 echte codecproeven, 5 mediasessiecontroles en gelijktijdige echte LiveKit-PCM-overdracht geslaagd. Geïnstalleerde gereedheid en browser gecontroleerd; geen modeloproepen.",
+    "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk.",
+    "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren."
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1639,6 +1644,19 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E2.6 · WhatsApp-beltransport geïnstalleerd; eigen Eva-nummer nog nodig",
+            "state": "installed",
+            "checkedAt": "2026-10-16T21:04:23.438825+00:00",
+            "summary": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
+            "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
+            "maintenanceRepair": false,
+            "newProductFunctionCompleted": false,
+            "smallTaskCountsUnchanged": true,
+            "familyAcceptance": false,
+            "completionScope": "Installed optional live-call transport and existing-voice interface. No actual WhatsApp account/call evidence."
+          },
+          {
             "title": "Voice · Eigen activiteiten en hoorbare tussenreacties",
             "state": "installed",
             "checkedAt": "2026-10-16T17:37:04.612829+00:00",
@@ -2181,34 +2199,37 @@
         "now": {
           "taskId": "E2.6",
           "title": "WhatsApp met eigen Eva-nummer en live bellen",
-          "state": "Belroute nog te realiseren",
-          "status": "in_progress",
-          "phase": "calling_route_required",
+          "state": "Eigen nummer nodig",
+          "status": "blocked",
+          "phase": "installed_awaiting_number",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "Berichtenadapter gebouwd en geïnstalleerd, maar dat beantwoordt de gevraagde live-belfunctie niet. Persoonlijke QR-aanmelding is uitgezet; er is geen WhatsApp-account gekoppeld. Nog te realiseren: live bellen naar Eva op een eigen WhatsApp-nummer. Eerst Calling API-toegang/geschiktheid en actuele voorwaarden vaststellen en de audio-overdracht met de bestaande spraakuitvoerder afstemmen. Geen account- of QR-handeling gevraagd.",
+          "summary": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
           "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
-          "ownerActionNeeded": false,
-          "checkedAt": "2026-10-16T18:41:52.369506+00:00"
+          "ownerActionNeeded": true,
+          "checkedAt": "2026-10-16T21:04:23.438825+00:00"
         },
         "next": {
-          "title": "E2.6 · Live bellen op eigen Eva-nummer",
-          "state": "Technische aansluiting open",
-          "summary": "Nog te realiseren: live bellen naar Eva op een eigen WhatsApp-nummer. Eerst Calling API-toegang/geschiktheid en actuele voorwaarden vaststellen en de audio-overdracht met de bestaande spraakuitvoerder afstemmen. Geen account- of QR-handeling gevraagd.",
-          "ownerActionNeeded": false
+          "title": "Eva-account koppelen en echt bellen",
+          "state": "Jouw nummer/account nodig",
+          "summary": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
+          "ownerActionNeeded": true
         },
         "ownerAction": {
-          "title": "Nog geen WhatsApp-accountactie nodig",
-          "detail": "Je hoeft jouw persoonlijke WhatsApp niet te koppelen. Codex bevestigt eerst de belroute voor een eigen Eva-nummer.",
-          "steps": [],
+          "title": "Eva heeft nog een eigen nummer nodig",
+          "detail": "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
+          "steps": [
+            "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
+            "Open Verbindingen, bewaar jouw eigen toegestane bellernummer en zet live bellen aan. Scan de koppelcode vanuit Eva’s aparte account."
+          ],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-16T18:41:52.369506+00:00",
+        "checkedAt": "2026-10-16T21:04:23.438825+00:00",
         "reviewedAt": "2026-10-16T17:36:14.550321+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-16T16:23:00.574395+00:00",
-      "checkedAt": "2026-10-16T16:23:00.574395+00:00",
+      "checkedAt": "2026-10-16T21:04:23.438825+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2329,7 +2350,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-16T16:23:00.574395+00:00",
+      "lastUpdatedAt": "2026-10-16T21:04:23.438825+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2363,7 +2384,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-16T16:23:00.574395+00:00",
+      "updatedAt": "2026-10-16T21:04:23.438825+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -4494,14 +4515,14 @@
               {
                 "id": "E2.6",
                 "title": "WhatsApp met eigen Eva-nummer en live bellen",
-                "status": "in_progress",
+                "status": "blocked",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
-                "owner": "Codex",
-                "ownerActionRequired": false,
-                "existing": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
-                "gap": "Nog te realiseren: live bellen naar Eva op een eigen WhatsApp-nummer. Eerst Calling API-toegang/geschiktheid en actuele voorwaarden vaststellen en de audio-overdracht met de bestaande spraakuitvoerder afstemmen. Geen account- of QR-handeling gevraagd.",
-                "nextAction": "Bevestig een geschikte belroute en accountvereisten; sluit de kanaalaudio aan op de bestaande spraakroute zonder nieuw spraakplatform.",
+                "owner": "Jaap · nummer/account; Codex · echte aansluitproef",
+                "ownerActionRequired": true,
+                "existing": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
+                "gap": "Werkelijke accountkoppeling, inkomend handsetgesprek en tekst-/resultaatterugmelding zijn nog niet bevestigd.",
+                "nextAction": "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
                 "files": [
                   "src/eva/adapters/connectors",
                   "src/eva/adapters/api",
@@ -4515,20 +4536,23 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-16T18:41:52.369506+00:00",
+                "checkedAt": "2026-10-16T21:04:23.438825+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Nog niets aanmaken of scannen. Codex bevestigt eerst de vereiste belroute en geeft daarna één concrete accountinstructie.",
-                  "steps": [],
+                  "availableNow": true,
+                  "readyWhen": "Na registratie van een eigen Eva-nummer kan de echte WhatsApp-koppeling worden uitgevoerd.",
+                  "steps": [
+                    "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
+                    "Open Verbindingen, bewaar jouw eigen toegestane bellernummer en zet live bellen aan. Scan de koppelcode vanuit Eva’s aparte account."
+                  ],
                   "blocksIndependentWork": false
                 },
                 "ownerScopeExtension": "Live WhatsApp-bellen naar een eigen Eva-account/nummer. Bestaande Eva-identiteit, gesprekskern en spraakroute hergebruiken; live-audio-integratie afstemmen met de spraakuitvoerder.",
-                "result": "Berichtenadapter gebouwd en geïnstalleerd, maar dat beantwoordt de gevraagde live-belfunctie niet. Persoonlijke QR-aanmelding is uitgezet; er is geen WhatsApp-account gekoppeld.",
+                "result": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
                 "installationState": "installed",
-                "technicalChecks": "13 API + 16 transport + 3 echte PostgreSQL-controles geslaagd; geïnstalleerd dashboard toont QR zonder browserfouten.",
-                "completionEvidence": "development/evidence/product/e26-whatsapp-installed-20261016.json",
-                "independentReview": "development/reviews/e26-whatsapp-review-20261016.json",
-                "remaining": "Nog te realiseren: live bellen naar Eva op een eigen WhatsApp-nummer. Eerst Calling API-toegang/geschiktheid en actuele voorwaarden vaststellen en de audio-overdracht met de bestaande spraakuitvoerder afstemmen. Geen account- of QR-handeling gevraagd.",
+                "technicalChecks": "14 API-controles, 11 Go-transportcontroles met racecontrole (+5 bellerbewijsgevallen), 2 echte codecproeven, 5 mediasessiecontroles en gelijktijdige echte LiveKit-PCM-overdracht geslaagd. Geïnstalleerde gereedheid en browser gecontroleerd; geen modeloproepen.",
+                "completionEvidence": "development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
+                "independentReview": "development/reviews/e26-whatsapp-calling-review-20261016.json",
+                "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
                 "scopeClarifications": [
                   {
                     "at": "2026-10-16T18:41:52.369506+00:00",
@@ -4538,13 +4562,21 @@
                 ],
                 "callingResearch": {
                   "confirmed": "Meta biedt WhatsApp Business Calling API voor inkomende en uitgaande gesprekken. De geïnstalleerde adapter heeft uitsluitend tekst-/spraakberichtafhandeling, geen live-audio-belsessie.",
-                  "source": "https://whatsappbusiness.com/blog/whatsapp-business-calling-api/",
+                  "source": "https://github.com/purpshell/meowcaller/tree/c48c3e2a243c672c942cbf0c941d14161720d540",
                   "open": [
-                    "Exacte account-/nummergeschiktheid en eventuele activeringsvoorwaarden",
-                    "Toepasselijke actuele platformvoorwaarden en eventuele kosten voor deze Eva-opzet",
-                    "Overdracht van live-audio aan de bestaande spraakuitvoerder"
-                  ]
-                }
+                    "Eigen nummer/account en echte WhatsApp-oproep ontbreken; platforminteroperabiliteit en verstaanbaarheid nog niet aangetoond."
+                  ],
+                  "ownerNumberAvailable": false,
+                  "selectedRoute": "Eén geïnstalleerde, gepinde Hypermeow/Meowcaller-client; apart gewoon WhatsApp-account voor Eva. Geen Business Platform-account nodig voor dit protocoltransport."
+                },
+                "voiceIntegration": {
+                  "existing": "De geïnstalleerde spraakservice biedt /session/leased, LiveKit-room/owner-token, verlengen en gericht stoppen; CodexMediaSession voert dezelfde Eva-gesprekken.",
+                  "boundary": "WhatsApp levert/ontvangt audio als transportdeelnemer. Geen nieuw STT/TTS-model, identiteit, geheugen of speakerwijziging.",
+                  "coordination": "Bestaande spraakinterface en huidige installatie gecontroleerd; bron- en installatiegrens onafhankelijk gereviewd. Geen actieve spraakchat geïdentificeerd; de vraag wie de huidige spraakuitvoerder is blijft onbeantwoord. Geen spraakcode of speaker gewijzigd.",
+                  "installed": "Optioneel PCM-transport gebruikt /session/leased, bestaande LiveKit-owner/Eva-tracks, verlengen en gericht sluiten. Werkelijke /ready bevestigd; spraakcontainer-ID en image ongewijzigd.",
+                  "inheritedLimit": "De bestaande spraakdienst sluit sessies na1800 seconden; een wijziging blijft bij de spraakuitvoerder. Geen extra eigen oproeplimiet toegevoegd."
+                },
+                "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk."
               }
             ]
           },
@@ -4925,7 +4957,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Bevestig een geschikte belroute en accountvereisten; sluit de kanaalaudio aan op de bestaande spraakroute zonder nieuw spraakplatform.",
+        "nextAction": "E2.6 wacht alleen op eigen nummer/account en echte aansluitproef. De optionele account blokkeert de verdere afronding niet.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -4934,7 +4966,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T18:41:52.369506+00:00",
+        "updatedAt": "2026-10-16T21:04:23.438825+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -7144,14 +7176,14 @@
             {
               "id": "E2.6",
               "title": "WhatsApp met eigen Eva-nummer en live bellen",
-              "status": "in_progress",
+              "status": "blocked",
               "kind": "bouwen / afmaken",
               "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
-              "owner": "Codex",
-              "ownerActionRequired": false,
-              "existing": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
-              "gap": "Nog te realiseren: live bellen naar Eva op een eigen WhatsApp-nummer. Eerst Calling API-toegang/geschiktheid en actuele voorwaarden vaststellen en de audio-overdracht met de bestaande spraakuitvoerder afstemmen. Geen account- of QR-handeling gevraagd.",
-              "nextAction": "Bevestig een geschikte belroute en accountvereisten; sluit de kanaalaudio aan op de bestaande spraakroute zonder nieuw spraakplatform.",
+              "owner": "Jaap · nummer/account; Codex · echte aansluitproef",
+              "ownerActionRequired": true,
+              "existing": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
+              "gap": "Werkelijke accountkoppeling, inkomend handsetgesprek en tekst-/resultaatterugmelding zijn nog niet bevestigd.",
+              "nextAction": "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
               "files": [
                 "src/eva/adapters/connectors",
                 "src/eva/adapters/api",
@@ -7165,20 +7197,23 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-16T18:41:52.369506+00:00",
+              "checkedAt": "2026-10-16T21:04:23.438825+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Nog niets aanmaken of scannen. Codex bevestigt eerst de vereiste belroute en geeft daarna één concrete accountinstructie.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Na registratie van een eigen Eva-nummer kan de echte WhatsApp-koppeling worden uitgevoerd.",
+                "steps": [
+                  "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
+                  "Open Verbindingen, bewaar jouw eigen toegestane bellernummer en zet live bellen aan. Scan de koppelcode vanuit Eva’s aparte account."
+                ],
                 "blocksIndependentWork": false
               },
               "ownerScopeExtension": "Live WhatsApp-bellen naar een eigen Eva-account/nummer. Bestaande Eva-identiteit, gesprekskern en spraakroute hergebruiken; live-audio-integratie afstemmen met de spraakuitvoerder.",
-              "result": "Berichtenadapter gebouwd en geïnstalleerd, maar dat beantwoordt de gevraagde live-belfunctie niet. Persoonlijke QR-aanmelding is uitgezet; er is geen WhatsApp-account gekoppeld.",
+              "result": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
               "installationState": "installed",
-              "technicalChecks": "13 API + 16 transport + 3 echte PostgreSQL-controles geslaagd; geïnstalleerd dashboard toont QR zonder browserfouten.",
-              "completionEvidence": "development/evidence/product/e26-whatsapp-installed-20261016.json",
-              "independentReview": "development/reviews/e26-whatsapp-review-20261016.json",
-              "remaining": "Nog te realiseren: live bellen naar Eva op een eigen WhatsApp-nummer. Eerst Calling API-toegang/geschiktheid en actuele voorwaarden vaststellen en de audio-overdracht met de bestaande spraakuitvoerder afstemmen. Geen account- of QR-handeling gevraagd.",
+              "technicalChecks": "14 API-controles, 11 Go-transportcontroles met racecontrole (+5 bellerbewijsgevallen), 2 echte codecproeven, 5 mediasessiecontroles en gelijktijdige echte LiveKit-PCM-overdracht geslaagd. Geïnstalleerde gereedheid en browser gecontroleerd; geen modeloproepen.",
+              "completionEvidence": "development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
+              "independentReview": "development/reviews/e26-whatsapp-calling-review-20261016.json",
+              "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
               "scopeClarifications": [
                 {
                   "at": "2026-10-16T18:41:52.369506+00:00",
@@ -7188,13 +7223,21 @@
               ],
               "callingResearch": {
                 "confirmed": "Meta biedt WhatsApp Business Calling API voor inkomende en uitgaande gesprekken. De geïnstalleerde adapter heeft uitsluitend tekst-/spraakberichtafhandeling, geen live-audio-belsessie.",
-                "source": "https://whatsappbusiness.com/blog/whatsapp-business-calling-api/",
+                "source": "https://github.com/purpshell/meowcaller/tree/c48c3e2a243c672c942cbf0c941d14161720d540",
                 "open": [
-                  "Exacte account-/nummergeschiktheid en eventuele activeringsvoorwaarden",
-                  "Toepasselijke actuele platformvoorwaarden en eventuele kosten voor deze Eva-opzet",
-                  "Overdracht van live-audio aan de bestaande spraakuitvoerder"
-                ]
-              }
+                  "Eigen nummer/account en echte WhatsApp-oproep ontbreken; platforminteroperabiliteit en verstaanbaarheid nog niet aangetoond."
+                ],
+                "ownerNumberAvailable": false,
+                "selectedRoute": "Eén geïnstalleerde, gepinde Hypermeow/Meowcaller-client; apart gewoon WhatsApp-account voor Eva. Geen Business Platform-account nodig voor dit protocoltransport."
+              },
+              "voiceIntegration": {
+                "existing": "De geïnstalleerde spraakservice biedt /session/leased, LiveKit-room/owner-token, verlengen en gericht stoppen; CodexMediaSession voert dezelfde Eva-gesprekken.",
+                "boundary": "WhatsApp levert/ontvangt audio als transportdeelnemer. Geen nieuw STT/TTS-model, identiteit, geheugen of speakerwijziging.",
+                "coordination": "Bestaande spraakinterface en huidige installatie gecontroleerd; bron- en installatiegrens onafhankelijk gereviewd. Geen actieve spraakchat geïdentificeerd; de vraag wie de huidige spraakuitvoerder is blijft onbeantwoord. Geen spraakcode of speaker gewijzigd.",
+                "installed": "Optioneel PCM-transport gebruikt /session/leased, bestaande LiveKit-owner/Eva-tracks, verlengen en gericht sluiten. Werkelijke /ready bevestigd; spraakcontainer-ID en image ongewijzigd.",
+                "inheritedLimit": "De bestaande spraakdienst sluit sessies na1800 seconden; een wijziging blijft bij de spraakuitvoerder. Geen extra eigen oproeplimiet toegevoegd."
+              },
+              "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk."
             }
           ]
         },
@@ -7575,7 +7618,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Bevestig een geschikte belroute en accountvereisten; sluit de kanaalaudio aan op de bestaande spraakroute zonder nieuw spraakplatform.",
+      "nextAction": "E2.6 wacht alleen op eigen nummer/account en echte aansluitproef. De optionele account blokkeert de verdere afronding niet.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7584,7 +7627,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T18:41:52.369506+00:00",
+      "updatedAt": "2026-10-16T21:04:23.438825+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -8683,7 +8726,7 @@
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
     }
   },
-  "updatedAt": "2026-10-16T16:23:00.574395+00:00",
+  "updatedAt": "2026-10-16T21:04:23.438825+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

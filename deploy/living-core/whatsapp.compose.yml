@@ -16,6 +16,7 @@ services:
     environment:
       EVA_WHATSAPP_CORE_URL: http://core:8080
       EVA_WHATSAPP_CONTROL_TOKEN_FILE: /run/secrets/dashboard_access_token
+      EVA_WHATSAPP_CALL_MEDIA_URL: ws://${EVA_WHATSAPP_MEDIA_BIND:?private Docker gateway required}:44731/call-audio
     volumes:
       - type: volume
         source: whatsapp-data
@@ -27,10 +28,39 @@ services:
     networks:
       eva-core:
         aliases: [eva2-whatsapp]
+  whatsapp-media:
+    image: ${EVA_WHATSAPP_MEDIA_IMAGE:?exact existing-voice-based image ID required}
+    container_name: eva2-whatsapp-media
+    user: "65532:65532"
+    network_mode: host
+    command: ["--host", "${EVA_WHATSAPP_MEDIA_BIND:?private Docker gateway required}", "--port", "44731"]
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      EVA_WHATSAPP_CALL_CONFIG: /run/eva/whatsapp-call.json
+    volumes:
+      - type: bind
+        source: ${EVA_WHATSAPP_MEDIA_CONFIG_FILE:?private media configuration required}
+        target: /run/eva/whatsapp-call.json
+        read_only: true
+      - type: bind
+        source: ${EVA_WHATSAPP_TOKEN_FILE:?existing owner token file required}
+        target: /run/secrets/dashboard_access_token
+        read_only: true
+      - type: bind
+        source: ${EVA_WHATSAPP_VOICE_TOKEN_FILE:?existing voice token file required}
+        target: /run/secrets/voice_token
+        read_only: true
 networks:
   eva-core:
     external: true
     name: ${EVA_INSTALLATION_NETWORK:?existing core network required}
 volumes:
   whatsapp-data:
-    name: eva2-whatsapp-data
+    # The superseded, unpaired Baileys volume remains retained separately.
+    name: eva2-whatsapp-calling-data

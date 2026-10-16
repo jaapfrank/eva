@@ -155,3 +155,15 @@ def test_audio_disabled_during_upload_never_starts_stt(setup):
     response = client.post('/internal/v1/whatsapp/transcribe', content=body(),
         headers={'content-type': 'audio/pcm', 'x-eva-contact': PHONE})
     assert response.status_code == 503 and media.audio is None
+
+
+def test_live_call_status_uses_current_voice_readiness_and_separates_accounts(setup):
+    client, _, control, _ = setup
+    control.value.update(features={'live_calls': True, 'text': True, 'voice_messages': False, 'secret': True},
+        account_phone='31600000000', call_state='idle', media_ready=False)
+    value = client.get('/internal/v1/dashboard/whatsapp').json()
+    assert value['features'] == {'live_calls': True, 'text': True, 'voice_messages': False}
+    assert value['account_phone'] != value['contact_phone']
+    assert value['media_ready'] is False and value['media_available'] is False
+    control.value['media_ready'] = True
+    assert client.get('/internal/v1/dashboard/whatsapp').json()['media_available'] is True

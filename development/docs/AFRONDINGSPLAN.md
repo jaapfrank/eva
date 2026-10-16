@@ -121,13 +121,17 @@ installatiestap. Werkende tekst-/fotogesprekken blijven behouden.
 een modulemanifest bewijst geen ondersteund model of echt berichttransport. Nog
 niet gemaakte gewenste adapters blijven expliciet bouwstatus, geen "alleen inloggen".
 
-E2.6 heeft de WhatsApp-adapter en QR-/verbindingsbediening geïnstalleerd. Protocol-,
-database-, audioconversie- en geïnstalleerde browsercontroles zijn geslaagd. De echte
-accountkoppeling, tekst-/spraakuitwisseling en oorspronkelijke terugmelding blijven
-onbewezen. De eigenaar verduidelijkt dat live bellen naar een eigen Eva-nummer nodig
-is; spraakberichten alleen voldoen niet. De persoonlijke QR-aanmelding staat uit.
-Bevestig eerst de belroute en accountvereisten, stem de bestaande spraakoverdracht af
-en vraag pas daarna de benodigde accountactie. E2.6 is niet afgerond.
+E2.6 richt zich op live bellen naar Eva's eigen WhatsApp-nummer. De optionele
+Hypermeow/Meowcaller-client en het PCM-audiotransport hergebruiken de bestaande
+Eva-/LiveKit-spraakdienst en oorspronkelijke tekst-/resultaatbinding. Protocol-,
+codec- en geïsoleerde echte PCM-controles zijn technisch bewijs; geen bewijs van
+een echte WhatsApp-oproep. Eerst is een apart nummer nodig dat een verificatie-sms
+of oproep kan ontvangen. De eigenaar heeft dit nog niet. Daarna wordt Eva's account
+vanaf haar telefoon via de private koppelpagina aangemeld en wordt één inkomend
+gesprek vanaf het toegestane eigen contact gecontroleerd. Geen persoonlijke
+zelfchat, geen extra Business Platform-abonnement en geen wijzigingen aan speakers.
+E2.6 blijft open tot de werkelijke account-/belroute en oorspronkelijke tekst-
+terugmelding zijn bevestigd. Dit optionele account blokkeert het andere werk niet.
 
 ## E3 — Alle bestanden beoordeelbaar maken
 

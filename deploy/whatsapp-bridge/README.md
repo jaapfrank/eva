@@ -1,3 +1,8 @@
+> Superseded transport: retained as the earlier text/voice-note implementation.
+> The active optional incoming-call connection is `../whatsapp-calling` and uses
+> `../living-core/whatsapp.compose.yml`. Do not run both clients for Eva's account.
+> No account was paired with this older bridge; its private volume is retained.
+
 # Optional WhatsApp transport
 
 This process connects one owner-authorized WhatsApp account to the existing Eva core.

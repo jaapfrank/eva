@@ -218,6 +218,15 @@
         "uvicorn",
         "verify_source_bindings"
       ]
+    },
+    "whatsapp_service": {
+      "path": "src/eva/whatsapp_service",
+      "allowedLocalImports": [],
+      "allowedExternalImports": [
+        "fastapi",
+        "httpx",
+        "livekit"
+      ]
     }
   },
   "isolatedRoots": {

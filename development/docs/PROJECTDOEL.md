@@ -68,12 +68,14 @@ mogelijkheden in het plan. E2.5 heeft Anthropic- en OpenAI-compatibele privétek
 adapters en hun bediening geïnstalleerd met bestaande identiteit/geheugen/acties.
 De externe account is daarmee niet aangesloten of bewezen; eigen API-sleutel,
 expliciete controle en selectie zijn optioneel. Astra voor achtergrondwerk en
-initiatief en de bestaande spraakverbinding blijven behouden. E2.6 heeft de optionele
-WhatsApp Web-berichtenadapter en QR-bediening geïnstalleerd. De eigenaar bedoelt
-echter ook live bellen naar Eva op haar eigen WhatsApp-nummer. De berichtenadapter
-is daarvoor slechts deelwerk; live bellen is nog niet geïmplementeerd. De persoonlijke
-QR-aanmelding is uitgezet. Bevestig eerst een geschikte belroute en accountvereisten;
-de bestaande gespreks-/spraakroute blijft leidend en bij de spraakuitvoerder.
+initiatief en de bestaande spraakverbinding blijven behouden. E2.6 heeft het optionele
+WhatsApp-beltransport als apart optioneel onderdeel. Eén gepinde Hypermeow/Meowcaller-
+client vervangt de ongekoppelde berichtenadapter. Live audio gebruikt de bestaande
+spraakservice via haar sessie-/LiveKit-interface; geen tweede gespreks- of spraakengine.
+Eva krijgt een eigen nummer/account; de eigenaar heeft dat nummer nog niet. Echte
+accountkoppeling, inkomend bellen en gebruik met het gezin blijven daarom open, ook
+als de transportcontroles slagen. Geen persoonlijke zelfchat of verplicht Business
+Platform-account voor deze gekozen route. De spraakuitvoerder behoudt de spraakcode.
 Gebruik bestaande adapters/installatieonderdelen en ondersteunde aanmeldmethoden.
 Gebrek aan een niet-gekozen externe account blokkeert de andere vier uitkomsten niet.
 

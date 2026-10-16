@@ -39,24 +39,25 @@ export default function OwnerWhatsApp() {
     return () => { mounted.current = false; clearInterval(interval); controller.current?.abort(); document.removeEventListener('visibilitychange', hide); };
   }, [load]);
   return <section aria-labelledby="whatsapp-heading" style={{ border: '1px solid #ccd8d0', borderRadius: 16, padding: 24, margin: '24px 0' }}>
-    <h2 id="whatsapp-heading">WhatsApp · optioneel</h2>
-    <p>Dezelfde Eva, geheugen en opdrachten. Je bestaande chat en Telegram blijven bruikbaar zonder WhatsApp-account.</p>
+    <h2 id="whatsapp-heading">WhatsApp · Eva’s eigen nummer</h2>
+    <p>Bel en chat met dezelfde Eva via haar eigen WhatsApp-account. Hiervoor heeft Eva een apart telefoonnummer nodig dat een verificatie-sms of oproep kan ontvangen.</p>
     {error && <p role="alert">{error}</p>}
     {page && <>
       <p role="status" style={{ color: page.connection === 'connected' ? '#176438' : '#855800', fontWeight: 700 }}>{states[page.connection]}</p>
-      <p>{page.contact_phone ? `Privécontact: +${page.contact_phone}` : 'Nog geen privécontact ingesteld.'} Alleen dit contact wordt verwerkt; geen groepen of oude chatgeschiedenis.</p>
+      <p><strong>Eva’s nummer:</strong> {page.account_phone ? `+${page.account_phone}` : 'Nog niet gekoppeld'}. <strong>Jouw toegestane nummer:</strong> {page.contact_phone ? `+${page.contact_phone}` : 'Nog niet ingesteld'}.</p>
+      <p>1. Registreer Eva’s aparte nummer in WhatsApp op een telefoon. 2. Bewaar hieronder jouw eigen nummer als toegestaan contact. 3. Zet live bellen aan en verbind. Scan de code vanuit <strong>Eva’s account</strong>. Een WhatsApp Business Platform-account is voor deze koppeling niet nodig.</p>
       <form onSubmit={event => { event.preventDefault(); void load('configure', { contact_phone: phone.replace(/^\+/, ''), audio_enabled: audio }); }}>
         <label>Jouw WhatsApp-nummer met landcode <input aria-label="WhatsApp-nummer" type="tel" autoComplete="off" value={phone} placeholder="31612345678" onChange={event => { dirty.current = true; setPhone(event.target.value); }} required pattern="\+?[1-9][0-9]{6,14}" /></label>
-        <p><label><input type="checkbox" checked={audio} onChange={event => { dirty.current = true; setAudio(event.target.checked); }} /> Spraakberichten ontvangen en gesproken antwoorden gebruiken</label></p>
-        <button disabled={busy} type="submit">Contact en spraakkeuze bewaren</button>
+        <p><label><input type="checkbox" checked={audio} onChange={event => { dirty.current = true; setAudio(event.target.checked); }} /> Live bellen met Eva toestaan</label></p>
+        <button disabled={busy} type="submit">Contact en belkeuze bewaren</button>
       </form>
-      <p>Spraak staat {page.audio_enabled ? 'aan' : 'uit'}. Bestaande spraakverwerking is {page.media_available ? 'beschikbaar' : 'nu niet beschikbaar'}; audio wordt niet als opname bewaard. Dit zijn spraakberichten, geen live WhatsApp-telefoongesprekken.</p>
-      <p><button disabled={busy || page.enabled} onClick={() => void load('enable', {})}>WhatsApp verbinden</button>{' '}
+      <p><strong>Bellen:</strong> {page.audio_enabled ? 'toegestaan' : 'uitgeschakeld'} · {page.call_state === 'active' ? 'Gesprek actief' : page.call_state === 'connecting' ? 'Gesprek verbinden…' : page.media_ready ? 'Bestaande Eva-spraakservice beschikbaar' : 'Spraakservice nu niet beschikbaar'}. {page.features?.live_calls !== true && 'Deze adapter ondersteunt nog geen live gesprekken.'}</p>
+      <p><button disabled={busy || page.enabled || !page.contact_phone} onClick={() => void load('enable', {})}>WhatsApp verbinden</button>{' '}
         <button disabled={busy || !page.enabled} onClick={() => void load('disable', {})}>Uitschakelen</button>{' '}
         <button disabled={busy} onClick={() => void load('logout', {})}>Afmelden en koppeling wissen</button></p>
-      {page.qr_data_url && <div><p>Open WhatsApp op de telefoon die je als Eva-verbinding wilt gebruiken: <strong>Instellingen → Gekoppelde apparaten → Apparaat koppelen</strong>. Scan deze code. Zonder vooraf ingesteld contact wordt je eigen gekoppelde nummer gekozen; je kunt Eva dan in je chat met jezelf aanspreken.</p><img alt="WhatsApp-koppelcode" src={page.qr_data_url} width="280" height="280" /></div>}
-      {page.connection === 'connected' && <p>Stuur je vraag vanaf het ingestelde privécontact. Gebruik je hetzelfde account, stuur dan een bericht in je chat met jezelf. Eva antwoordt bij de oorspronkelijke vraag en brengt achtergrondresultaten daar terug.</p>}
-      <p>QR-koppeling gebruikt de opensource WhatsApp Web-adapter Baileys. Dit is geen officiële Meta Business API. Uitschakelen stopt nieuwe verwerking en verzending; reeds begonnen werk blijft zichtbaar bij Opdrachten.</p>
+      {page.qr_data_url && <div><p>Open WhatsApp met <strong>Eva’s aparte account</strong>: <strong>Instellingen → Gekoppelde apparaten → Apparaat koppelen</strong>. Scan deze code. Scan niet met je persoonlijke account: Eva moet een eigen contact zijn.</p><img alt="WhatsApp-koppelcode" src={page.qr_data_url} width="280" height="280" /></div>}
+      {page.connection === 'connected' && <p>Bel Eva’s nummer vanaf jouw ingestelde contact, of stuur haar een bericht. Eva gebruikt haar bestaande gesprek, geheugen en achtergrondwerk. Achtergrondresultaten komen als korte samenvatting terug bij de oorspronkelijke vraag.</p>}
+      <p>Deze optionele koppeling gebruikt de opensourcebibliotheken Hypermeow en Meowcaller en is geen officiële Meta Business API. Alleen jouw ingestelde contact wordt verwerkt; geen groepen, video of oude chatgeschiedenis. Uitschakelen beëindigt ook een lopend gesprek. Reeds begonnen achtergrondwerk blijft zichtbaar bij Opdrachten.</p>
     </>}
   </section>;
 }

@@ -1,0 +1,7 @@
+# Reuse the actually installed voice SDK/runtime; add only a PCM transport.
+ARG EVA_VOICE_MEDIA_BASE
+FROM ${EVA_VOICE_MEDIA_BASE}
+COPY --chown=65532:65532 src/eva/whatsapp_service/ /app/eva/whatsapp_service/
+COPY --chown=65532:65532 src/eva/whatsapp_service/ /opt/eva/src/eva/whatsapp_service/
+USER 65532:65532
+ENTRYPOINT ["/usr/local/bin/python", "-m", "uvicorn", "eva.whatsapp_service.server:create_app", "--factory", "--no-access-log"]

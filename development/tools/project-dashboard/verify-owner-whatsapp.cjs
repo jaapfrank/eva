@@ -15,11 +15,13 @@ const { chromium } = require(process.env.EVA_DASHBOARD_PLAYWRIGHT_PACKAGE);
       return route.continue();
     });
     await page.goto(origin + '/internal/v1/dashboard#/?section=connections');
-    const panel = page.getByRole('region', { name: 'WhatsApp · optioneel', exact: true });
+    const panel = page.getByRole('region', { name: 'WhatsApp · Eva’s eigen nummer', exact: true });
     await panel.getByRole('status').waitFor();
     await panel.getByRole('button', { name: 'WhatsApp verbinden', exact: true }).waitFor();
     assert.equal(await panel.getByLabel('WhatsApp-nummer', { exact: true }).count(), 1);
     const qrVisible = await panel.getByRole('img', { name: 'WhatsApp-koppelcode', exact: true }).count() === 1;
+    assert.equal(await panel.getByText('Live bellen met Eva toestaan', {exact: true}).count(), 1);
+    assert.equal(await panel.getByText(/in je chat met jezelf/).count(), 0);
     assert.deepEqual(errors, []); assert.deepEqual(mutations, []);
     if (process.env.EVA_EXPECT_WHATSAPP_QR === '1') assert(qrVisible);
     console.log(JSON.stringify({ status: 'passed', installed_panel: true, qr_visible: qrVisible,

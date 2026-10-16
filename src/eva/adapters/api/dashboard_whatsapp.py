@@ -91,8 +91,14 @@ def install_dashboard_whatsapp(app, *, access, runtime, media=None, control=None
         keys = {"contract", "enabled", "connection", "contact_phone", "qr_data_url",
                 "audio_enabled", "last_error"}
         result = {key: value.get(key) for key in keys}
-        result["media_available"] = media is not None
-        if media is not None:
+        features = value.get("features", {})
+        result["features"] = {key: features.get(key) is True for key in ("live_calls", "text", "voice_messages")}
+        account = value.get("account_phone")
+        result["account_phone"] = account if isinstance(account, str) and PHONE.fullmatch(account) else None
+        result["call_state"] = value.get("call_state") if value.get("call_state") in {"idle", "connecting", "active"} else "idle"
+        result["media_ready"] = value.get("media_ready") is True
+        result["media_available"] = result["media_ready"] if result["features"]["live_calls"] else media is not None
+        if media is not None and not result["features"]["live_calls"]:
             try:
                 media.check(media.issue_session())
             except Exception:
