@@ -36,6 +36,28 @@ def install_dashboard_work(app, *, access, runtime):
             raise HTTPException(403, "private return unavailable") from None
         return JSONResponse(result, headers={"Cache-Control": "no-store"})
 
+    @app.get("/internal/v1/dashboard/conversation/work")
+    def conversation_work(request: Request):
+        access.require(request)
+        if request.query_params: raise HTTPException(422, "conversation scope is server-bound")
+        from eva.bootstrap.dashboard_work_context import conversation_jobs
+        try: result = conversation_jobs(runtime)
+        except Exception: raise HTTPException(503, "conversation work unavailable") from None
+        return JSONResponse(result, headers={"Cache-Control": "no-store"})
+
+    @app.post("/internal/v1/dashboard/work/context")
+    def context(request: Request, payload: dict):
+        access.require(request)
+        if request.query_params or set(payload) != {"work_id"} or not isinstance(payload["work_id"], str) or not 1 <= len(payload["work_id"]) <= 240:
+            raise HTTPException(422, "work context request is invalid")
+        if request.headers.get("origin") not in {None, str(request.base_url).rstrip("/")}:
+            raise HTTPException(403, "work context origin differs")
+        from eva.bootstrap.dashboard_work_context import work_context
+        try: result = work_context(runtime, payload["work_id"])
+        except LookupError: raise HTTPException(404, "work context unavailable") from None
+        except Exception: raise HTTPException(503, "work context unavailable") from None
+        return JSONResponse(result, headers={"Cache-Control": "no-store"})
+
     @app.get("/internal/v1/dashboard/work")
     def jobs(request: Request):
         access.require(request)

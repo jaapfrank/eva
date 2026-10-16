@@ -61,10 +61,24 @@ async function request(operation, workId, signal, search) {
       : ['schedule_cancel', 'schedule_cancel_chain', 'revise_digital'].includes(operation) ? typeof data.status !== 'string' : !validWork(data.work, true) || (operation !== 'resume' && data.work.work_id !== workId))) {
     throw new Error('Het werkantwoord kon niet worden gelezen. Vernieuw het overzicht.');
   }
+  if (['get', 'result', 'stop', 'resume'].includes(operation)) {
+    const response = await fetch(`${endpoint}/context`, { method: 'POST', credentials: 'same-origin',
+      cache: 'no-store', redirect: 'error', signal, headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ work_id: data.work.work_id }) });
+    if (!response.ok) throw new Error('Gespreksbron niet beschikbaar. Vernieuw de opgeslagen toestand.');
+    const value = await response.json();
+    if (value.contract !== 'EvaOwnerWorkContext/v1' || value.work_id !== data.work.work_id
+      || !['available', 'unavailable'].includes(value.origin?.state)
+      || (value.origin.state === 'available' && (typeof value.origin.input !== 'string'
+        || typeof value.origin.message_id !== 'string' || typeof value.origin.channel !== 'string'
+        || (value.origin.reply !== null && typeof value.origin.reply !== 'string')))) throw new Error('Ongeldige gespreksbron.');
+    data.work.origin = value.origin;
+  }
   return data;
 }
 
-export default function OwnerWork() {
+export default function OwnerWork({ initialWorkId = null }) {
+  const [showFullResult, setShowFullResult] = React.useState(false);
   const [filter, setFilter] = React.useState('');
   const [correction, setCorrection] = React.useState('');
   const detailRef = React.useRef(null);
@@ -77,7 +91,7 @@ export default function OwnerWork() {
   const commands = React.useRef(() => {});
   React.useEffect(() => {
     if (detail) detailRef.current?.focus({ preventScroll: false });
-    setCorrection('');
+    setCorrection(''); setShowFullResult(false);
   }, [detail?.work_id]);
   React.useEffect(() => {
     let mounted = true, running = false, halted = false, pending = null;
@@ -216,18 +230,20 @@ export default function OwnerWork() {
     }
     function visibilityChanged() {
       clearTimeout(timer);
-      if (!document.hidden) enqueue('list');
+      if (document.hidden) { ++revision; clearPrivate(); setShowFullResult(false); }
+      else if (initialWorkId) enqueue('get', initialWorkId, true);
+      else enqueue('list');
     }
     commands.current = enqueue;
     document.addEventListener('visibilitychange', visibilityChanged);
-    if (!document.hidden) enqueue('list', undefined, true);
+    if (!document.hidden) enqueue(initialWorkId ? 'get' : 'list', initialWorkId || undefined, true);
     return () => {
       mounted = false;
       clearTimeout(timer);
       controller.abort();
       document.removeEventListener('visibilitychange', visibilityChanged);
     };
-  }, []);
+  }, [initialWorkId]);
   const refresh = () => commands.current('list', undefined, true);
   const act = (operation, workId) => commands.current(operation, workId, true);
   const visible = page?.operation === 'search' ? page.jobs : (page?.jobs || []).filter(job => job.task_preview.toLocaleLowerCase('nl-NL').includes(filter.toLocaleLowerCase('nl-NL')));
@@ -318,6 +334,18 @@ export default function OwnerWork() {
     {detail && <article ref={detailRef} tabIndex={-1} aria-label="Geopende hulpopdracht" className="card work-detail">
       <button disabled={busy} onClick={() => act('related', detail.work_id)}>Bekijk samenhangende opdrachten</button>
       <h3>Opdracht</h3><p style={{ whiteSpace: 'pre-wrap' }}>{detail.task}</p>
+      <section className="work-conversation" aria-label="Oorspronkelijk gesprek">
+        <h4>Oorspronkelijk gesprek</h4>
+        {detail.origin?.state === 'available' ? <>
+          <p>{detail.origin.channel} · {timestamp(detail.origin.occurred_at)}</p>
+          <p className="message user" style={{ whiteSpace: 'pre-wrap' }}>Jij: {detail.origin.input}</p>
+          {detail.origin.input_truncated && <small>Fragment van de oorspronkelijke vraag.</small>}
+          {detail.origin.reply && <p className="message eva" style={{ whiteSpace: 'pre-wrap' }}>Eva: {detail.origin.reply}</p>}
+          {detail.origin.reply_truncated && <small>Fragment van het oorspronkelijke antwoord.</small>}
+          {!detail.origin.reply && <p>Geen opgeslagen eerste antwoord beschikbaar.</p>}
+        </> : <p>{detail.origin?.reason || 'Geen toegankelijke exacte gespreksbron beschikbaar.'}</p>}
+        <a href="/internal/v1/dashboard/conversation">Verder praten met Eva</a>
+      </section>
       {Array.isArray(detail.corrections) && detail.corrections.length > 0 && <section aria-label="Bewaarde bijsturing">
         <h4>Bewaarde bijsturing</h4>
         <p>Deze aanwijzingen gaan mee bij hervatting. Het oorspronkelijke werk en eerdere resultaten blijven bewaard.</p>
@@ -373,10 +401,12 @@ export default function OwnerWork() {
         <p>Bij hervatten blijft dit plan beschikbaar. Het plan zelf start geen nieuwe poging.</p>
       </section>}
       <h3>Opgeslagen resultaat</h3>
-      {detail.result_available && detail.result && <button onClick={downloadResult}>Resultaat downloaden</button>}
-      {detail.result_available && detail.result
-        ? <pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{readable(detail.result.output)}</pre>
-        : <p>Geen afgerond resultaat beschikbaar.</p>}
+      {detail.result_available && detail.result ? <>
+        <p style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{readable(detail.result.output).slice(0, 600)}{readable(detail.result.output).length > 600 ? '…' : ''}</p>
+        <button onClick={() => setShowFullResult(value => !value)}>{showFullResult ? 'Volledig resultaat verbergen' : 'Volledig resultaat tonen'}</button>
+        {showFullResult && <><pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{readable(detail.result.output)}</pre>
+          <button onClick={downloadResult}>Resultaat downloaden</button></>}
+      </> : <p>Geen afgerond resultaat beschikbaar.</p>}
     </article>}
   </section>;
 }

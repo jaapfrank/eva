@@ -1,0 +1,137 @@
+{
+  "contract": "EvaE23ConversationWorkOutcome/v1",
+  "taskId": "E2.3",
+  "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+  "status": "completed_installed",
+  "taskCompleted": true,
+  "originalCriteriaUnchanged": true,
+  "familyAcceptance": false,
+  "wholeProjectComplete": false,
+  "result": "Het bestaande privégesprek toont zijn eigen echte achtergrondopdrachten. Een link opent taak, voortgang, opgeslagen resultaat en waar beschikbaar het exacte oorspronkelijke gesprek. Stoppen/hervatten gebruiken de bestaande dienst; standaard een korte terugmelding, volledig resultaat op verzoek.",
+  "userAccess": {
+    "conversationUrl": "http://127.0.0.1:44711/internal/v1/dashboard/conversation",
+    "workUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=work",
+    "steps": [
+      "Open Gesprek; onder het gesprek staan Opdrachten bij dit gesprek.",
+      "Open Voortgang, gesprek en resultaat openen bij de gewenste opdracht.",
+      "Gebruik Stop deze hulpopdracht of Hervatten met nieuwe poging.",
+      "Kies Volledig resultaat tonen wanneer je meer dan het korte fragment wilt zien."
+    ]
+  },
+  "existingReused": [
+    "Server-bound owner/binding and existing private_episode",
+    "Scoped PostgreSQL work store; original source loader and ingress SHA256",
+    "Existing Telegram admission-destination sidecar for legacy exact origins",
+    "Existing owner-work controls, progress, immutable result and private return transport"
+  ],
+  "newTaskStorePlannerOrAgent": false,
+  "originPolicy": {
+    "digital": "Exact original source/hash and existing loader; resumed attempts preserve the gen1 source.",
+    "legacyTelegram": "Exact validated original admission destination, not a nearest-message guess.",
+    "legacyWebsite": "Episode binds conversation only; absent exact message remains unavailable.",
+    "erased": "No reconstruction from task text or surviving output."
+  },
+  "validation": {
+    "focusedTests": 11,
+    "postgreSql": "Existing PostgreSQL18.6; explicitly named disposable E23 test database; no production writes",
+    "isolatedBrowser": {
+      "contract": "EvaOwnerWorkContextBrowserProof/v1",
+      "status": "passed",
+      "mode": "isolated",
+      "conversationWorkLink": true,
+      "storedDetailAndOriginRead": true,
+      "stopResumeExactSelection": true,
+      "fullResultOnlyOnRequest": true,
+      "hiddenRevokedDataCleared": true,
+      "mobileWidth": 390,
+      "javascriptErrors": 0,
+      "externalRequests": 0,
+      "conversationalModelCalls": 0
+    },
+    "installedBrowser": {
+      "contract": "EvaOwnerWorkContextBrowserProof/v1",
+      "status": "passed",
+      "mode": "installed-read-only",
+      "conversationWorkLink": true,
+      "storedDetailAndOriginRead": true,
+      "stopResumeExactSelection": false,
+      "fullResultOnlyOnRequest": false,
+      "hiddenRevokedDataCleared": false,
+      "mobileWidth": 390,
+      "javascriptErrors": 0,
+      "externalRequests": 0,
+      "conversationalModelCalls": 0
+    },
+    "actualConversationJobCount": 4,
+    "actualTwoLatestOverallOrigins": [
+      "unavailable",
+      "unavailable"
+    ],
+    "windowsConversationPageHttp": 200,
+    "windowsConversationWorkHttp": 200,
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "workerImageUnchanged": true,
+    "workerContainerUnchanged": true,
+    "userUnchanged": true,
+    "environmentUnchanged": true,
+    "mountsUnchanged": true,
+    "sourceBytesMatch": true
+  },
+  "installation": {
+    "coreImage": "sha256:736704cf57fda4a23228442d9abdc94bbb1e100302080e4b5487d5d89c3d4bf2",
+    "previousCoreImage": "sha256:c73e90c1b741ade87ed5e9babb1d03d75796a3bada15d29b9fe4ad5c3e11b55e",
+    "workerImage": "sha256:bd62108d13b713cf0a0e45818638f377feea0a8e5fbb3cb288a8ae098381900b",
+    "changedServices": [
+      "core"
+    ],
+    "dispatchCount": 1,
+    "rollbackPerformed": false,
+    "speechCodeOrConfigurationChanged": false,
+    "otherExecutorChangesPreserved": true
+  },
+  "usage": {
+    "verificationConversationalModelRequests": 0,
+    "verificationConversationalModelTokens": 0,
+    "productionTaskCreationStopResumeOrResultClaimMutations": 0,
+    "independentReviewers": 1,
+    "developmentCredits": null,
+    "developmentModelTokens": null,
+    "ordinaryAutonomousRuntimeUsage": "Separate; not attributed to this read-only verification."
+  },
+  "preparationFailures": [
+    "New test import initially named a table not exported by current_catalog; reused the existing fixture table binding.",
+    "The reused memory-test teardown attempted a protected downgrade of current delegated private data to the old episode schema. Product tests passed, cleanup failed only in the disposable DB. A dedicated named E23 disposable DB is now dropped without changing migration protections."
+  ],
+  "sourceSha256": {
+    "src/eva/adapters/api/dashboard_work.py": "0bfc94c138866a5086acc7541eb89dd152a9136cdbb8628d1dcbe712bc98eef6",
+    "src/eva/adapters/api/dashboard_conversation.py": "33e2e240dea5a3fbfd61901cfb7ae513fd08ae1fe90321737bd23fd56bedffe0",
+    "src/eva/adapters/api/dashboard_work_return_client.py": "5d6f4132ca4ae123238f460fe8926847cded3e56934aba1bcc077c9fdf1199a9",
+    "src/eva/adapters/api/dashboard_conversation_work_client.py": "3d41717a71ed79ec2c7cf2104da605374ca4c5536dea1e53d7ccd1c167aec04b",
+    "src/eva/bootstrap/dashboard_work_context.py": "de218da4b190266fa0a8caedceef4bf020f5fe41c7b6bf06801a08d44b3c2c25",
+    "src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json": "94c2ea19b083b3f4a2ebf0f407a14d4ceed1a29dcc9ab78c342226244b51b19d",
+    "development/tools/project-dashboard/src/main.jsx": "8883a3de5870528ecf1e60a7720104d0f92398da0ff79e699bcedd530e696cf8",
+    "development/tools/project-dashboard/src/owner-work.jsx": "2cb0bb655e17dd9673f0e37bec964e3ae280961bf987eb32d5559cb8b82f4967",
+    "development/tools/project-dashboard/verify-owner-work-context.cjs": "38268bd2ef489dd49cae4c5288905f9220eecab75892c089c9859259e48e551d",
+    "development/tests/postgres/test_dashboard_work_context.py": "af5c2c808bdeb2f861b0b26e93e38daf70e467a7f8e62a82836794420977a8df",
+    "development/tests/api/test_dashboard_work_context.py": "b703f3397246bdf7899366ef7701c618d46e7727499896a64427aa080e8b9ea7"
+  },
+  "privateEvidenceSha256": {
+    "focused-tests.private.txt": "ad4afe646e5864e7824e387e78dd32f1b243b59a22e568ddda2b9e2bcb73f589",
+    "api-context-tests.private.txt": "9a1ef16cfd5ac024699ce60d45e408c7d12b6f9f9eb1bc6d2b8666a473c67bb6",
+    "isolated-browser.private.txt": "0fa46188bcddf8f3a72ecfdcd2406890e4a83d267a9f83208f790b33cbf63d4d",
+    "installed-browser.private.txt": "b887883893dfe13d0d4e58e805f3943c022a0a77d23e2a271134bc1e072a412c",
+    "candidate-real-read.private.json": "ec0b57473166370145cd73e7c58a7482597696b35e30c2d66a489b6a3efbc49b",
+    "installation-receipt.private.json": "d2aa4712682bd2ec9c4e33779999c53e3748965e3278456c59dfffb1ee3783c1",
+    "installation-verification.private.json": "1af2fe92f143ecd0afedb369f90de0152c08d2bbd20a1b441952cd7798fc8b7f"
+  },
+  "limitations": [
+    "Existing legacy website jobs without an exact source message keep unknown provenance. Conversation binding is still exact via the existing episode. No invented historical questions.",
+    "Worker progress remains its own notes; verified output, delivery state and human acceptance are separate.",
+    "Stop/resume and full-output disclosure were checked in isolated real-store/browser tests. Installed household work was only read; automatic return claiming was suppressed during the browser proof.",
+    "Original input/reply presentation is bounded to4096 characters each and marks truncation. Current conversation list is bounded to20 with visible truncation; general work search remains available.",
+    "E2.3 only; E2.4–E2.6, the full phase and family acceptance remain open."
+  ],
+  "independentReview": "development/reviews/e23-conversation-work-review-20261016.json",
+  "privateReviewSha256": "497fee084361bd608f0af89d5b07400395da8399fa27a9196ff23d7f15aca351"
+}

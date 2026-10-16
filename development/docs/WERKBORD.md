@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Gesprekken, opdrachten en resultaten samen tonen
+Initiatief, dromen en verbeteringen inzichtelijk maken
 
-Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.
+Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.
 
-Klaar wanneer: Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.
+Klaar wanneer: De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.
 
 ## Afmaakvolgorde
 
@@ -27,7 +27,7 @@ Klaar wanneer: Een gesprek toont de bijbehorende echte opdracht, voortgang, opge
 | Eigen initiatief | E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd | Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie; samenhangende bediening volgt in E2. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open. |
 
-51 van 70 geregistreerde kleine taken afgerond;19 open. E2.2 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.
+52 van 70 geregistreerde kleine taken afgerond; 18 open. E2.3 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.
 
 ## Alle geregistreerde kleine taken
 
@@ -94,7 +94,7 @@ Klaar wanneer: Een gesprek toont de bijbehorende echte opdracht, voortgang, opge
 | E1.3 · Een dagelijkse aanleiding zelfstandig afhandelen | ✓ Afgerond | De gewone geïnstalleerde cyclus leest benodigde context, kiest zelf een passende bijdrage of actie, controleert en levert werkelijk resultaat bij de juiste ontvanger. Een nieuwe nuttige of onbruikbare bijdrage en echte feedback blijven onderscheiden van bewust stilblijven. Geen door Codex gekozen voorbeeldfunctie of herhaling van afgesloten HUE-proeven. |
 | E2.1 · Eén Eva-beheeromgeving aansluiten | ✓ Afgerond | Eén productingang biedt begrijpelijke navigatie naar gesprek, personen/geheugen, opdrachten/resultaten, initiatief/leren en verbindingen. Iedere sectie gebruikt de echte bestaande backend; het projectdashboard blijft apart. |
 | E2.2 · Personen en geheugen bekijken en bijwerken | ✓ Afgerond | De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon. |
-| E2.3 · Gesprekken, opdrachten en resultaten samen tonen | ● Open | Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek. |
+| E2.3 · Gesprekken, opdrachten en resultaten samen tonen | ✓ Afgerond | Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek. |
 | E2.4 · Initiatief, dromen en verbeteringen inzichtelijk maken | ● Open | De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties. |
 | E2.5 · Extra modelproviders optioneel aansluiten | ● Open | De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter. |
 | E2.6 · WhatsApp als optioneel kanaal aansluiten | ● Open | WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers. |
@@ -110,7 +110,7 @@ Klaar wanneer: Een gesprek toont de bijbehorende echte opdracht, voortgang, opge
 
 ## Van jou
 
-Geen verplichte handeling. Open Eva-beheer → Personen & geheugen; zoek een naam of onderwerp en open de bron om te bekijken, corrigeren of vergeten. Geen privégesprekken van anderen.
+Geen verplichte handeling. Open Gesprek en kies een opdracht onder Opdrachten bij dit gesprek; bekijk voortgang of gebruik stoppen/hervatten. Het volledige resultaat verschijnt alleen na Volledig resultaat tonen.
 
 ## Historie
 

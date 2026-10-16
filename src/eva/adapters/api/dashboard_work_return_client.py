@@ -112,8 +112,8 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
       warning.textContent='';
       const node=document.createElement('div'); node.className='message eva';
       const title=document.createElement('strong');title.textContent=workReturnHeading(result);
-      const body=document.createElement('div');body.textContent=readableWorkResult(result.output);
-      const link=document.createElement('a');link.href='/internal/v1/dashboard';link.textContent='Opgeslagen opdrachten bekijken';
+      const body=document.createElement('div');const text=readableWorkResult(result.output);body.textContent=text.slice(0,600)+(text.length>600?'…':'');
+      const link=document.createElement('a');link.href='/internal/v1/dashboard#/?section=work&work_id='+encodeURIComponent(result.work_id);link.textContent='Opdracht en volledig resultaat bekijken';
       node.append(title,body,link);chat.append(node);nodes.push(node);
       if(nodes.length>20) nodes.shift().remove();
     },

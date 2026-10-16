@@ -838,20 +838,20 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-16T11:28:21.773727+00:00",
+  "lastUpdated": "2026-10-16T12:49:32.967702+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E2.3",
+  "activeTaskId": "E2.4",
   "currentWork": {
-    "id": "E2.3",
-    "title": "Gesprekken, opdrachten en resultaten samen tonen",
+    "id": "E2.4",
+    "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
     "status": "planned",
-    "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
-    "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
+    "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
+    "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-16T11:28:21.773727+00:00",
-    "outcome": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
-    "area": "conversation and task result presentation",
+    "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+    "outcome": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
+    "area": "initiative learning and improvement presentation",
     "countedAsProductTask": true
   },
   "historicalWorkboard": {
@@ -949,7 +949,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "E2.2 is geïnstalleerd en onafhankelijk afgerond. Volgende: E2.3 verbind bestaande gesprekken, opdrachten en resultaten in één gebruiksstroom; geen tweede taakstore of spraakwijziging.",
+      "priorityDecision": "E2.3 geïnstalleerd en onafhankelijk afgerond. Volgende: E2.4 initiatief, reflecties/dromen en toegepaste verbeteringen vanuit bestaande registraties tonen; geen afgesloten proef herhalen.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1635,6 +1635,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E2.3 · Gesprekken, opdrachten en resultaten verbonden",
+            "state": "installed",
+            "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+            "summary": "E2.3 geïnstalleerd en onafhankelijk afgerond: het privégesprek toont zijn eigen opdrachten; een werklink opent echte voortgang, opgeslagen resultaat en beschikbare exacte gespreksbron. Stoppen/hervatten via bestaande bediening. Korte terugmelding; volledig resultaat alleen op verzoek.",
+            "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e23-conversation-work-installed-20261016.json",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E2.3"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "maintenanceRepair": false,
+            "familyAcceptance": false,
+            "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard/conversation",
+            "completionScope": "E2.3 conversation/work/result presentation only"
+          },
+          {
             "title": "Voice · Overgang luisteren naar antwoorden gerepareerd",
             "state": "installed",
             "checkedAt": "2026-10-16T12:35:07.928035+00:00",
@@ -2045,57 +2062,58 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E2.2 · Personen en geheugen bedienen geïnstalleerd",
+          "title": "E2.3 · Gesprekken, opdrachten en resultaten verbonden",
           "state": "installed",
-          "checkedAt": "2026-10-16T11:28:21.773727+00:00",
-          "summary": "E2.2 geïnstalleerd en onafhankelijk afgerond: eigen namen/onderwerpen en herinneringen zoeken, exact bronbewijs zien, bron en afleiding onderscheiden, huidige herziening bekijken, corrigeren en gericht vergeten. Bestaande opslag; privégegevens blijven bij de juiste persoon.",
-          "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open.",
-          "source": "/home/administrator/project/Eva2/development/evidence/product/e22-owner-memory-installed-20261016.json",
+          "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+          "summary": "E2.3 geïnstalleerd en onafhankelijk afgerond: het privégesprek toont zijn eigen opdrachten; een werklink opent echte voortgang, opgeslagen resultaat en beschikbare exacte gespreksbron. Stoppen/hervatten via bestaande bediening. Korte terugmelding; volledig resultaat alleen op verzoek.",
+          "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/e23-conversation-work-installed-20261016.json",
           "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "E2.2"
+            "E2.3"
           ],
           "smallTaskCountsUnchanged": false,
           "maintenanceRepair": false,
           "familyAcceptance": false,
-          "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=memory",
-          "completionScope": "E2.2 own people/memory controls only"
+          "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard/conversation",
+          "completionScope": "E2.3 conversation/work/result presentation only"
         },
         "now": {
-          "taskId": "E2.3",
-          "title": "Gesprekken, opdrachten en resultaten samen tonen",
+          "taskId": "E2.4",
+          "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
           "state": "Klaar om te beginnen",
           "phase": "next",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
-          "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
+          "summary": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+          "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+          "checkedAt": "2026-10-16T12:49:32.967702+00:00",
           "status": "planned"
         },
         "next": {
-          "title": "Gesprekken, opdrachten en resultaten samen tonen",
-          "state": "Volgende: E2.3",
-          "summary": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
+          "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
+          "state": "Volgende: E2.4",
+          "summary": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Personen en geheugen bekijken",
-          "detail": "Geen verplichte handeling. Open Eva-beheer → Personen & geheugen; zoek een naam of onderwerp en open de bron om te bekijken, corrigeren of vergeten. Geen privégesprekken van anderen.",
+          "title": "Gesprek en opdrachten samen gebruiken",
+          "detail": "Geen verplichte handeling. Open Gesprek en kies een opdracht onder Opdrachten bij dit gesprek; bekijk voortgang of gebruik stoppen/hervatten. Het volledige resultaat verschijnt alleen na Volledig resultaat tonen.",
           "steps": [
-            "Open http://127.0.0.1:44711/internal/v1/dashboard en kies Personen & geheugen.",
-            "Zoek een naam of onderwerp en kies Bron bekijken en aanpassen.",
-            "Kies Informatie corrigeren of Deze bron vergeten; de bevestiging vermeldt wat behouden blijft."
+            "Open http://127.0.0.1:44711/internal/v1/dashboard/conversation",
+            "Open Voortgang, gesprek en resultaat openen bij de gewenste opdracht.",
+            "Gebruik Stop deze hulpopdracht of Hervatten met nieuwe poging.",
+            "Kies Volledig resultaat tonen wanneer je meer dan het korte fragment wilt zien."
           ],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-16T11:28:21.773727+00:00",
-        "reviewedAt": "2026-10-16T11:28:21.773727+00:00",
+        "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+        "reviewedAt": "2026-10-16T12:49:32.967702+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-16T11:28:21.773727+00:00",
-      "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+      "reviewedAt": "2026-10-16T12:49:32.967702+00:00",
+      "checkedAt": "2026-10-16T12:49:32.967702+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2109,10 +2127,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+        "checkedAt": "2026-10-16T12:49:32.967702+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
-        "headline": "E1 technisch afgerond; E2.1 en E2.2 geïnstalleerd. Volgende: gesprekken, opdrachten en resultaten samen tonen.",
-        "note": "51 van 70 geregistreerde kleine taken afgerond;19 open. E2.2 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.",
+        "headline": "E1 technisch afgerond; E2.1–E2.3 geïnstalleerd. Volgende: initiatief, dromen en verbeteringen volgen.",
+        "note": "52 van 70 geregistreerde kleine taken afgerond; 18 open. E2.3 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2176,7 +2194,7 @@
             "name": "Zelfstandig werk",
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
-            "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst. Volledig opgeslagen resultaat nu werkelijk bij de oorspronkelijke Telegramvraag geleverd; bytes teruggelezen. Standaard geen bijlage. HUE6 technisch afgerond: agentvariant werkelijk beoordeeld; gelijkspel, dus referentie behouden en later gebruikt. Bestaande codewinst/toepassing/later gebruik behouden.",
+            "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst. Volledig opgeslagen resultaat nu werkelijk bij de oorspronkelijke Telegramvraag geleverd; bytes teruggelezen. Standaard geen bijlage. HUE6 technisch afgerond: agentvariant werkelijk beoordeeld; gelijkspel, dus referentie behouden en later gebruikt. Bestaande codewinst/toepassing/later gebruik behouden. E2.3: gesprekgebonden opdrachten met voortgang, beschikbare oorspronkelijke gespreksbron en opgeslagen resultaat zijn bedienbaar; stoppen/hervatten via bestaande dienst, volledig resultaat op verzoek.",
             "remaining": "E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open.",
             "evidencePaths": [
               "development/evidence/product/p2-published-results-20261006.json",
@@ -2209,13 +2227,14 @@
               "development/evidence/product/native-work-completion-cause-diagnosis-20261012.json",
               "development/evidence/product/native-budget-context-correction-installed-20261012.json",
               "development/evidence/product/full-saved-result-delivery-installed-20261013.json",
-              "development/evidence/product/hue6-quiet-learning-outcome-20261014.json"
+              "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
+              "development/evidence/product/e23-conversation-work-installed-20261016.json"
             ],
-            "checkedAt": "2026-10-15T22:10:53.727800+00:00"
+            "checkedAt": "2026-10-16T12:49:32.967702+00:00"
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-16T11:28:21.773727+00:00",
+      "lastUpdatedAt": "2026-10-16T12:49:32.967702+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2249,7 +2268,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-16T11:28:21.773727+00:00",
+      "updatedAt": "2026-10-16T12:49:32.967702+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2258,7 +2277,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E2.3",
+        "currentStep": "E2.4",
         "steps": [
           {
             "number": 1,
@@ -4253,14 +4272,14 @@
               {
                 "id": "E2.3",
                 "title": "Gesprekken, opdrachten en resultaten samen tonen",
-                "status": "planned",
+                "status": "completed",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Gespreks- en taakregistratie, stoppen/hervatten en resultaatbinding bestaan.",
                 "gap": "Het verband tussen gesprek, opdracht en opgeslagen resultaat is niet in één gebruiksstroom zichtbaar.",
-                "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
+                "nextAction": "Gebruik Gesprek → Opdrachten bij dit gesprek → Voortgang, gesprek en resultaat openen. Volgende: E2.4 initiatief, dromen en verbeteringen inzichtelijk maken.",
                 "files": [
                   "src/eva/adapters/api/dashboard_work.py",
                   "src/eva/adapters/api",
@@ -4273,13 +4292,24 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-16T12:49:32.967702+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                  "steps": [],
+                  "availableNow": true,
+                  "readyWhen": "Geïnstalleerd en onafhankelijk technisch afgerond; geen verplichte herhaalproef.",
+                  "steps": [
+                    "Open Gesprek; onder het gesprek staan Opdrachten bij dit gesprek.",
+                    "Open Voortgang, gesprek en resultaat openen bij de gewenste opdracht.",
+                    "Gebruik Stop deze hulpopdracht of Hervatten met nieuwe poging.",
+                    "Kies Volledig resultaat tonen wanneer je meer dan het korte fragment wilt zien."
+                  ],
                   "blocksIndependentWork": false
-                }
+                },
+                "completedAt": "2026-10-16T12:49:32.967702+00:00",
+                "completionEvidence": "development/evidence/product/e23-conversation-work-installed-20261016.json",
+                "latestEvidence": "development/evidence/product/e23-conversation-work-installed-20261016.json",
+                "independentReview": "development/reviews/e23-conversation-work-review-20261016.json",
+                "result": "E2.3 geïnstalleerd en onafhankelijk afgerond: het privégesprek toont zijn eigen opdrachten; een werklink opent echte voortgang, opgeslagen resultaat en beschikbare exacte gespreksbron. Stoppen/hervatten via bestaande bediening. Korte terugmelding; volledig resultaat alleen op verzoek.",
+                "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open."
               },
               {
                 "id": "E2.4",
@@ -4742,7 +4772,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
+        "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -4751,10 +4781,10 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T11:28:21.773727+00:00",
+        "updatedAt": "2026-10-16T12:49:32.967702+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-16T11:28:21.773727+00:00",
+          "updatedAt": "2026-10-16T12:49:32.967702+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -4794,7 +4824,7 @@
                 "C4.1",
                 "C4.3"
               ],
-              "currentGap": "E2.1 productnavigatie en E2.2 personen-/geheugenbediening geïnstalleerd en onafhankelijk afgerond. Gesprek-/taaksamenhang, leerhistorie, extra providers en WhatsApp blijven E2.3–E2.6."
+              "currentGap": "E2.1 navigatie, E2.2 personen/geheugen en E2.3 gesprek-/taaksamenhang geïnstalleerd en onafhankelijk afgerond. Volledige leerhistorie, extra providers en WhatsApp blijven E2.4–E2.6."
             },
             {
               "id": "E3",
@@ -4839,7 +4869,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E2.3",
+      "currentStep": "E2.4",
       "steps": [
         {
           "number": 1,
@@ -6834,14 +6864,14 @@
             {
               "id": "E2.3",
               "title": "Gesprekken, opdrachten en resultaten samen tonen",
-              "status": "planned",
+              "status": "completed",
               "kind": "bouwen / afmaken",
               "doneWhen": "Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Gespreks- en taakregistratie, stoppen/hervatten en resultaatbinding bestaan.",
               "gap": "Het verband tussen gesprek, opdracht en opgeslagen resultaat is niet in één gebruiksstroom zichtbaar.",
-              "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
+              "nextAction": "Gebruik Gesprek → Opdrachten bij dit gesprek → Voortgang, gesprek en resultaat openen. Volgende: E2.4 initiatief, dromen en verbeteringen inzichtelijk maken.",
               "files": [
                 "src/eva/adapters/api/dashboard_work.py",
                 "src/eva/adapters/api",
@@ -6854,13 +6884,24 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-16T12:49:32.967702+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Geïnstalleerd en onafhankelijk technisch afgerond; geen verplichte herhaalproef.",
+                "steps": [
+                  "Open Gesprek; onder het gesprek staan Opdrachten bij dit gesprek.",
+                  "Open Voortgang, gesprek en resultaat openen bij de gewenste opdracht.",
+                  "Gebruik Stop deze hulpopdracht of Hervatten met nieuwe poging.",
+                  "Kies Volledig resultaat tonen wanneer je meer dan het korte fragment wilt zien."
+                ],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-10-16T12:49:32.967702+00:00",
+              "completionEvidence": "development/evidence/product/e23-conversation-work-installed-20261016.json",
+              "latestEvidence": "development/evidence/product/e23-conversation-work-installed-20261016.json",
+              "independentReview": "development/reviews/e23-conversation-work-review-20261016.json",
+              "result": "E2.3 geïnstalleerd en onafhankelijk afgerond: het privégesprek toont zijn eigen opdrachten; een werklink opent echte voortgang, opgeslagen resultaat en beschikbare exacte gespreksbron. Stoppen/hervatten via bestaande bediening. Korte terugmelding; volledig resultaat alleen op verzoek.",
+              "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open."
             },
             {
               "id": "E2.4",
@@ -7323,7 +7364,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Verbind de bestaande gespreks-, taak- en resultaatweergaven zonder een tweede taakstore.",
+      "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7332,10 +7373,10 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T11:28:21.773727+00:00",
+      "updatedAt": "2026-10-16T12:49:32.967702+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-16T11:28:21.773727+00:00",
+        "updatedAt": "2026-10-16T12:49:32.967702+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -7375,7 +7416,7 @@
               "C4.1",
               "C4.3"
             ],
-            "currentGap": "E2.1 productnavigatie en E2.2 personen-/geheugenbediening geïnstalleerd en onafhankelijk afgerond. Gesprek-/taaksamenhang, leerhistorie, extra providers en WhatsApp blijven E2.3–E2.6."
+            "currentGap": "E2.1 navigatie, E2.2 personen/geheugen en E2.3 gesprek-/taaksamenhang geïnstalleerd en onafhankelijk afgerond. Volledige leerhistorie, extra providers en WhatsApp blijven E2.4–E2.6."
           },
           {
             "id": "E3",
@@ -7673,6 +7714,19 @@
         "ownerUsefulDeliveryConfirmed": false,
         "ownerActionRequired": false,
         "detail": "Jaap meldt geen nuttige bijdrage ontvangen. HUE5.1 blijft werk voor Codex; oude technische bewijsstatus is geen nieuwe gezinsacceptatie."
+      }
+    },
+    "subscriptionVoice20261013": {
+      "reliability20261016": {
+        "status": "installed_owner_retest_pending",
+        "checkedAt": "2026-10-16T12:35:07.928035+00:00",
+        "scope": "Voice inventory latency, GPU-independent memory recall, bounded quiet speech onset preservation",
+        "memory": "Same model on CPU, no GPU device prerequisite; two successful cold starts, concurrent same-fact recall verified. CPU2 concurrent recall8.5–10.5s.",
+        "latency": "Installed inventory19.323s vs55.836s before; one source call, two model calls, all108 entries. Simple follow-up5.569s.",
+        "audio": "Owner reported intermittent missing words after quiet-prefix repair. Actual logs show up to680ms RTP dropped awaiting assistant event. Normal listening gate repaired;41 tests; both bindings ready; audible retest pending.",
+        "evidence": "development/evidence/product/subscription-voice-20261013/reliability-20261016.json",
+        "acceptance": false,
+        "audioFollowupEvidence": "development/evidence/product/subscription-voice-20261013/turn-gate-20261016.json"
       }
     },
     "aideRetainedResume20261013": {
@@ -8391,22 +8445,9 @@
       "familyAcceptance": false,
       "wholeProjectComplete": false,
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
-    },
-    "subscriptionVoice20261013": {
-      "reliability20261016": {
-        "status": "installed_owner_retest_pending",
-        "checkedAt": "2026-10-16T12:35:07.928035+00:00",
-        "scope": "Voice inventory latency, GPU-independent memory recall, bounded quiet speech onset preservation",
-        "memory": "Same model on CPU, no GPU device prerequisite; two successful cold starts, concurrent same-fact recall verified. CPU2 concurrent recall8.5–10.5s.",
-        "latency": "Installed inventory19.323s vs55.836s before; one source call, two model calls, all108 entries. Simple follow-up5.569s.",
-        "audio": "Owner reported intermittent missing words after quiet-prefix repair. Actual logs show up to680ms RTP dropped awaiting assistant event. Normal listening gate repaired;41 tests; both bindings ready; audible retest pending.",
-        "evidence": "development/evidence/product/subscription-voice-20261013/reliability-20261016.json",
-        "acceptance": false,
-        "audioFollowupEvidence": "development/evidence/product/subscription-voice-20261013/turn-gate-20261016.json"
-      }
     }
   },
-  "updatedAt": "2026-10-16T11:28:21.773727+00:00",
+  "updatedAt": "2026-10-16T12:49:32.967702+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

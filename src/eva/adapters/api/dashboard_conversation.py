@@ -15,6 +15,7 @@ from eva.application.conversation_receipt import RECEIVED_INPUT_TEXT
 from eva.adapters.model.contracts import ConversationModelRateLimited
 
 from eva.adapters.api.dashboard_work_return_client import DASHBOARD_WORK_RETURN_CLIENT_JS
+from eva.adapters.api.dashboard_conversation_work_client import DASHBOARD_CONVERSATION_WORK_JS
 
 from eva.application.conversation import (
     ConversationTurn,
@@ -112,6 +113,7 @@ DASHBOARD_CONVERSATION_HTML = """<!doctype html><html lang="nl"><head>
   <div class="notice">Je kunt een opdracht stoppen. Een stap die al in behandeling is, kan nog afronden; Eva start daarna geen vervolgstappen.</div>
   <section class="notice" aria-label="Stemgesprek"><button id="voice-toggle" type="button">Praten met Eva</button> <button id="voice-interrupt" type="button">Onderbreek Eva</button><p id="voice-state" role="status">Microfoon uit. Je browser vraagt toestemming wanneer je begint.</p></section>
   <section id="chat" class="chat" aria-live="polite"><div class="state">Klaar voor een privébericht.</div></section>
+  <section id="conversation-work" aria-label="Opdrachten bij dit gesprek"></section>
   <form id="form"><label for="text">Jouw bericht</label><textarea id="text" maxlength="4096" required placeholder="Schrijf iets aan Eva…"></textarea><button id="send" type="submit">Verstuur</button><button id="stop" type="button">Stop deze opdracht</button></form>
   <p><a href="/internal/v1/dashboard">Terug naar cockpit</a></p>
 </main><script>
@@ -155,6 +157,7 @@ async function submitMessage(text,clearInput=true){
       draft+=delta;pending.className='message eva';pending.textContent=draft+'\\n\\nEva schrijft…';
     });
     const saved=message('eva',data.text,data.message_id,userNode);pending.replaceWith(saved);
+    userNode.dataset.messageId=data.message_id;window.dispatchEvent(new Event('eva-reply-saved'));
   } catch(_error) {
     pending.textContent=(draft?draft+'\\n\\n':'')+(_error.message==='provider_rate_limited'?'De modelprovider weigert momenteel aanvragen wegens een gebruiks- of snelheidslimiet. Er is geen nieuw antwoord beschikbaar.':'Dit antwoord is niet bevestigd. Bekijk de taakstatus voordat je een opdracht opnieuw verstuurt.');
     pending.classList.add('error');
@@ -169,7 +172,7 @@ stop.addEventListener('click',async()=>{
   try {await submitMessage('Stop deze opdracht.',false);}
   finally {stop.disabled=false;}
 });
-</script>""" + "<script>" + DASHBOARD_WORK_RETURN_CLIENT_JS + "</script>" + """<script src="/internal/v1/dashboard/conversation/voice-client.js" defer></script></body></html>
+</script>""" + "<script>" + DASHBOARD_WORK_RETURN_CLIENT_JS + "</script>" + "<script>" + DASHBOARD_CONVERSATION_WORK_JS + "</script>" + """<script src="/internal/v1/dashboard/conversation/voice-client.js" defer></script></body></html>
 """
 
 

@@ -37,9 +37,9 @@ reuse the current people-memory status, memory source controls, delegated work,
 initiative and component observation APIs. Only the selected section is mounted;
 private source content is cleared by unmounting when leaving memory.
 
-This E2.1 delivery establishes navigation. Conversation-to-work association,
-full reflection/improvement history, extra provider settings and WhatsApp remain
-the existing E2.3–E2.6 tasks. Unknown
+The E2.1 navigation, E2.2 memory controls and E2.3 conversation/work links are
+installed. Full reflection/improvement history, extra provider settings and
+WhatsApp remain the existing E2.4–E2.6 tasks. Unknown
 connection observations stay unknown. The project workboard is not runtime data.
 
 ## People and memory controls — E2.2
@@ -67,6 +67,33 @@ failure clearing and mobile layout. Set `EVA_DASHBOARD_ORIGIN` for a read-only
 installed check. Installed mode reads an actual memory and exact source and never
 corrects or forgets household data. Scoped recall may use the existing embedding
 backend; no conversational model is invoked by these UI operations.
+
+## Conversation, work and results — E2.3
+
+The existing text conversation page shows **Opdrachten bij dit gesprek**. It uses
+only the server-bound private episode, including resumed attempts. Open its work
+link to see the saved task, state, worker progress and original conversation.
+Stop and resume use the existing owner-work service. A resumed attempt preserves
+the original source; it does not replace it with the resume instruction.
+
+Digital sources reuse the exact original source/hash reader; retained Telegram
+admission destinations provide an exact source for older task formats. Where a
+legacy website job has only an episode, its exact message stays unavailable.
+The UI never guesses a question from similar text, timestamps or a nearby chat.
+Forgotten ingress remains unavailable even when its independent result survives.
+
+Returns show a short excerpt and a link. Work detail also defaults to a short
+excerpt. Choose **Volledig resultaat tonen** or then **Resultaat downloaden** to
+request the full stored output. Progress remains worker notes; delivery state and
+verified outcome remain separate. Hidden tabs clear private task/source views;
+returning rechecks current authority. No conversation/model request is needed for
+these work controls. This closes E2.3 presentation, not family acceptance.
+
+`verify-owner-work-context.cjs` checks the isolated conversation-to-work link,
+exact stop/resume selection, original source, progress, result disclosure on click,
+privacy clearing and390px layout. It takes `EVA_CONVERSATION_FIXTURE` with the
+exported current conversation HTML. Installed mode uses `EVA_DASHBOARD_ORIGIN`
+and only reads existing own work; it never starts, stops or resumes household work.
 
 ## Reproduce the product build
 

@@ -386,10 +386,12 @@ function Dashboard() {
   const status = useGetOne('status', { id: 'runtime' });
   const identity = useGetOne('identity', { id: 'current' });
   const [selected, setSelected] = React.useState(() => ownerSection(window.location.hash));
+  const workIdFromHash = () => { const id = new URLSearchParams(window.location.hash.split('?')[1] || '').get('work_id'); return id && id.length <= 240 ? id : null; };
+  const [selectedWork, setSelectedWork] = React.useState(workIdFromHash);
   const [selectedSource, setSelectedSource] = React.useState(null);
   const [memoryRevision, memoryChanged] = React.useReducer(n => n + 1, 0);
   React.useEffect(() => {
-    const change = () => setSelected(ownerSection(window.location.hash));
+    const change = () => { setSelected(ownerSection(window.location.hash)); setSelectedWork(workIdFromHash()); };
     window.addEventListener('hashchange', change);
     return () => window.removeEventListener('hashchange', change);
   }, []);
@@ -416,7 +418,7 @@ function Dashboard() {
         <p>Met ‘Terug naar cockpit’ kom je weer bij dit beheer. Telegram blijft dezelfde Eva.</p>
       </section>}
       {selected === 'memory' && <><OwnerMemoryView revision={memoryRevision} onSource={id => setSelectedSource({ id, revision: Date.now() })} /><MemorySources selectedSource={selectedSource} onMemoryChanged={memoryChanged} /></>}
-      {selected === 'work' && <OwnerWork />}
+      {selected === 'work' && <OwnerWork key={selectedWork || 'all'} initialWorkId={selectedWork} />}
       {selected === 'initiative' && <><OwnerInitiatives /><section className="owner-panel" aria-label="Leerhistorie">
         <h2>Leren en dromen</h2><p>De laatste werkelijke initiatiefafweging en bijdragen staan hierboven. De volledige reflectie-, feedback- en verbeterhistorie wordt nog aangesloten; een afweging is geen bewijs van toegepaste verbetering.</p>
       </section></>}
