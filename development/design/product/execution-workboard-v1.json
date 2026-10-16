@@ -838,20 +838,24 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-16T16:23:00.574395+00:00",
+  "lastUpdated": "2026-10-16T23:26:42.505625+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E3.2",
   "currentWork": {
     "id": "E3.2",
     "title": "Actieve kerncode inhoudelijk beoordelen",
-    "status": "in_progress",
+    "status": "completed",
     "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
+    "nextAction": "Gebruik de vastgelegde E3.2-besluiten bij E3.3/E3.4 en bestaande E4.2/E4.4; geen herhaling van deze volledige kernlezing zonder relevante bronwijziging.",
     "ownerActionRequired": false,
-    "nextAction": "Inhoudelijke review van de 136 vaste kernbestanden in application/contracts/domain/bootstrap, inclusief actuele delta en echte consumers. Leg alleen eindige vereenvoudigingsbesluiten vast; geen spraakwijzigingen of featurebouw.",
-    "checkedAt": "2026-10-16T23:14:55.796386+00:00",
-    "area": "core code review",
-    "outcome": "Hashgebonden inhoudelijke kernbeoordeling met echte consumers, eindige E4-besluiten en gebundelde onafhankelijke review.",
+    "checkedAt": "2026-10-16T23:26:42.505625+00:00",
+    "completedAt": "2026-10-16T23:26:42.505625+00:00",
+    "completionEvidence": "development/evidence/reassessment/e32-core-review-20261017.json",
+    "independentReview": "development/reviews/e32-core-review-20261017.json",
+    "result": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
+    "area": "core semantic review",
+    "outcome": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
     "countedAsProductTask": false
   },
   "historicalWorkboard": {
@@ -1635,6 +1639,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E3.2 · Actieve kerncode inhoudelijk beoordeeld",
+            "state": "investigated",
+            "checkedAt": "2026-10-16T23:26:42.505625+00:00",
+            "summary": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
+            "remaining": "De negen vastgelegde vereenvoudigingsbesluiten zijn nog niet uitgevoerd; ze horen bij de bestaande E4-kaarten. E3.3/E3.4 en gezinsacceptatie blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e32-core-review-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e32-core-review-20261017.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [
+              "E3.2"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "familyAcceptance": false,
+            "completionScope": "136-file semantic core review only; source quality and household behavior not automatically accepted."
+          },
+          {
             "title": "E3.1 · Alle bestanden en hun rol geregistreerd",
             "state": "investigated",
             "checkedAt": "2026-10-16T23:06:04.003274+00:00",
@@ -2187,46 +2208,47 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E3.1 · Alle bestanden en hun rol geregistreerd",
+          "title": "E3.2 · Actieve kerncode inhoudelijk beoordeeld",
           "state": "investigated",
-          "checkedAt": "2026-10-16T23:06:04.003274+00:00",
-          "summary": "E3.1 afgerond:4.896 paden geregistreerd met bronstand, hash of expliciete uitsluiting, categorie, rol en lees-/reviewstatus. Alle4.789 tracked paden zijn aanwezig;447 exacte eerdere lezingen hergebruikt. Dit is registratie, geen inhoudelijke codekwaliteitsschouw.",
-          "remaining": "",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e31-file-register-20261017.json",
+          "checkedAt": "2026-10-16T23:26:42.505625+00:00",
+          "summary": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
+          "remaining": "De negen vastgelegde vereenvoudigingsbesluiten zijn nog niet uitgevoerd; ze horen bij de bestaande E4-kaarten. E3.3/E3.4 en gezinsacceptatie blijven open.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e32-core-review-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e32-core-review-20261017.json",
           "maintenanceRepair": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [
-            "E3.1"
+            "E3.2"
           ],
           "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "File registration only; E3.2–E3.4 semantic review and cleanup remain separate."
+          "completionScope": "136-file semantic core review only; source quality and household behavior not automatically accepted."
         },
         "now": {
-          "title": "E3.2 · Actieve kerncode inhoudelijk beoordelen",
+          "title": "E3.2 · Actieve kerncode inhoudelijk beoordeeld",
           "taskId": "E3.2",
-          "status": "in_progress",
-          "summary": "Nu bezig:136 kernbestanden inhoudelijk beoordelen, echte consumers vastleggen en concrete vereenvoudigingsbesluiten aan bestaande E4-kaarten koppelen. Geen spraakwijzigingen.",
+          "status": "completed",
+          "summary": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
           "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur."
         },
         "next": {
-          "title": "E3.3 · Adapters en installatie beoordelen",
-          "state": "Na E3.2",
-          "summary": "Vervolg met de bestaande E3.3-kaart; geen nieuwe taken of bouwfase.",
+          "title": "E3.3 · Adapters en installatie inhoudelijk beoordelen",
+          "state": "Eerstvolgende uitvoerbare taak",
+          "summary": "Gebruik de kernbesluiten en beoordeel de resterende adapters, frontend, installatie- en buildconsumenten. Geen nieuwe plannen of kernherlezing.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
           "title": "Geen handeling nodig",
-          "detail": "Het eigen WhatsApp-nummer komt later. Codex gaat door met E3.1; spraak blijft bij de andere uitvoerder.",
+          "detail": "E3.2 is afgerond. E3.3 is de volgende taak voor Codex. Het eigen WhatsApp-nummer komt later; spraak blijft bij de andere uitvoerder.",
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-16T23:06:04.003274+00:00",
+        "checkedAt": "2026-10-16T23:26:42.505625+00:00",
         "reviewedAt": "2026-10-16T17:36:14.550321+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-16T16:23:00.574395+00:00",
-      "checkedAt": "2026-10-16T23:08:48.419108+00:00",
+      "checkedAt": "2026-10-16T23:26:42.505625+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2347,7 +2369,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-16T23:08:48.419108+00:00",
+      "lastUpdatedAt": "2026-10-16T23:26:42.505625+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2381,7 +2403,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-16T23:08:48.419108+00:00",
+      "updatedAt": "2026-10-16T23:26:42.505625+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2390,7 +2412,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E2.6",
+        "currentStep": "E3.2",
         "steps": [
           {
             "number": 1,
@@ -4604,7 +4626,7 @@
             "phaseId": "E3",
             "dependsOn": [],
             "outcome": "Alle bestanden inventariseren en beoordelen",
-            "status": "planned",
+            "status": "in_progress",
             "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
             "endCondition": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden.",
             "dashboardComponent": "finalization-E3",
@@ -4651,14 +4673,14 @@
               {
                 "id": "E3.2",
                 "title": "Actieve kerncode inhoudelijk beoordelen",
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "afronden",
                 "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Kernroutes en eerdere modulegrensbevindingen zijn bekend.",
                 "gap": "Een complete actuele beoordeling met besluit per actief kernbestand ontbreekt. Bij E2.5 vastgesteld: de huidige core en werker verschillen al in openai_codex_provider.py en daarmee in gedelegeerde bronbinding. Onderzoek dit verschil gericht; overschrijf geen werk van de spraakuitvoerder.",
-                "nextAction": "Inhoudelijke review van de 136 vaste kernbestanden in application/contracts/domain/bootstrap, inclusief actuele delta en echte consumers. Leg alleen eindige vereenvoudigingsbesluiten vast; geen spraakwijzigingen of featurebouw.",
+                "nextAction": "Gebruik de vastgelegde E3.2-besluiten bij E3.3/E3.4 en bestaande E4.2/E4.4; geen herhaling van deze volledige kernlezing zonder relevante bronwijziging.",
                 "files": [
                   "src/eva/application",
                   "src/eva/contracts",
@@ -4670,19 +4692,10 @@
                 ],
                 "assignment": {
                   "coordinator": "Codex",
-                  "activeWorkers": [
-                    {
-                      "id": "e32_application_review",
-                      "scope": "src/eva/application (review only)"
-                    },
-                    {
-                      "id": "e32_bootstrap_review",
-                      "scope": "src/eva/bootstrap (review only)"
-                    }
-                  ]
+                  "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-16T23:14:55.796386+00:00",
+                "checkedAt": "2026-10-16T23:26:42.505625+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -4734,6 +4747,30 @@
                   "estimate": "136 geregistreerde kernbestanden, verdeeld over drie afzonderlijke reviewverantwoordelijkheden; geen modelruntimeproef, installatie of concurrentenserie. Ontwikkeltokens/creditkosten onbekend.",
                   "sourceSnapshot": "development/docs/eva-repository-inventory.generated.json",
                   "startedAt": "2026-10-16T23:14:55.796386+00:00"
+                },
+                "completedAt": "2026-10-16T23:26:42.505625+00:00",
+                "completionEvidence": "development/evidence/reassessment/e32-core-review-20261017.json",
+                "independentReview": "development/reviews/e32-core-review-20261017.json",
+                "result": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
+                "semanticReview": {
+                  "files": 136,
+                  "fullContentRead": 136,
+                  "scopeDelta": [],
+                  "sourceFilesChanged": 0,
+                  "decisionIds": [
+                    "APP-01",
+                    "APP-02",
+                    "APP-03",
+                    "APP-04",
+                    "APP-05",
+                    "B01",
+                    "B02",
+                    "B03",
+                    "B04"
+                  ],
+                  "deletionApproved": [],
+                  "technicalOnly": true,
+                  "familyAcceptance": false
                 }
               },
               {
@@ -4767,6 +4804,16 @@
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
+                },
+                "reviewInput": {
+                  "source": "development/evidence/reassessment/e32-core-review-20261017.json",
+                  "crossInterfaceDecisions": [
+                    "APP-05",
+                    "B02",
+                    "B03"
+                  ],
+                  "scope": "Beoordeel de resterende adapters/frontend/build/migratiebestanden en werkelijke consumers. Gebruik de vastgelegde identityresource- en workerbuildbevindingen; voer geen nieuwe kernschouw uit.",
+                  "newTasks": 0
                 }
               },
               {
@@ -4879,6 +4926,20 @@
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
+                },
+                "reviewInput": {
+                  "source": "development/evidence/reassessment/e32-core-review-20261017.json",
+                  "decisions": [
+                    "APP-01",
+                    "APP-02",
+                    "APP-03",
+                    "APP-04",
+                    "B01",
+                    "B02",
+                    "B04"
+                  ],
+                  "implementationStarted": false,
+                  "newTasks": 0
                 }
               },
               {
@@ -4910,6 +4971,11 @@
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
+                },
+                "reviewInput": {
+                  "source": "development/evidence/reassessment/e32-core-review-20261017.json",
+                  "measuredRuntimeImprovement": false,
+                  "note": "E3.2 levert geen token-/snelheidswinst. Gebruik alleen concrete gewijzigde E4-routes voor relevante voor/na-metingen; geen nieuwe concurrentenmatrix."
                 }
               },
               {
@@ -4943,6 +5009,15 @@
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
+                },
+                "reviewInput": {
+                  "source": "development/evidence/reassessment/e32-core-review-20261017.json",
+                  "decisions": [
+                    "APP-05",
+                    "B03"
+                  ],
+                  "implementationStarted": false,
+                  "newTasks": 0
                 }
               }
             ]
@@ -5017,7 +5092,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E3.2 · Actieve kern inhoudelijk beoordelen, te beginnen bij bestaande kern-/werkerbronverschillen. WhatsApp-nummer blijft uitgesteld; spraak blijft bij andere uitvoerder.",
+        "nextAction": "E3.3 · Adapters, frontend en installatie inhoudelijk beoordelen. E3.2 is afgerond; negen concrete besluiten blijven bij bestaande E4.2/E4.4. Spraak blijft bij de andere uitvoerder.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5026,7 +5101,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T23:14:55.796386+00:00",
+        "updatedAt": "2026-10-16T23:26:42.505625+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -5167,7 +5242,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E2.6",
+      "currentStep": "E3.2",
       "steps": [
         {
           "number": 1,
@@ -7381,7 +7456,7 @@
           "phaseId": "E3",
           "dependsOn": [],
           "outcome": "Alle bestanden inventariseren en beoordelen",
-          "status": "planned",
+          "status": "in_progress",
           "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
           "endCondition": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden.",
           "dashboardComponent": "finalization-E3",
@@ -7428,14 +7503,14 @@
             {
               "id": "E3.2",
               "title": "Actieve kerncode inhoudelijk beoordelen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "afronden",
               "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Kernroutes en eerdere modulegrensbevindingen zijn bekend.",
               "gap": "Een complete actuele beoordeling met besluit per actief kernbestand ontbreekt. Bij E2.5 vastgesteld: de huidige core en werker verschillen al in openai_codex_provider.py en daarmee in gedelegeerde bronbinding. Onderzoek dit verschil gericht; overschrijf geen werk van de spraakuitvoerder.",
-              "nextAction": "Inhoudelijke review van de 136 vaste kernbestanden in application/contracts/domain/bootstrap, inclusief actuele delta en echte consumers. Leg alleen eindige vereenvoudigingsbesluiten vast; geen spraakwijzigingen of featurebouw.",
+              "nextAction": "Gebruik de vastgelegde E3.2-besluiten bij E3.3/E3.4 en bestaande E4.2/E4.4; geen herhaling van deze volledige kernlezing zonder relevante bronwijziging.",
               "files": [
                 "src/eva/application",
                 "src/eva/contracts",
@@ -7447,19 +7522,10 @@
               ],
               "assignment": {
                 "coordinator": "Codex",
-                "activeWorkers": [
-                  {
-                    "id": "e32_application_review",
-                    "scope": "src/eva/application (review only)"
-                  },
-                  {
-                    "id": "e32_bootstrap_review",
-                    "scope": "src/eva/bootstrap (review only)"
-                  }
-                ]
+                "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-16T23:14:55.796386+00:00",
+              "checkedAt": "2026-10-16T23:26:42.505625+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -7511,6 +7577,30 @@
                 "estimate": "136 geregistreerde kernbestanden, verdeeld over drie afzonderlijke reviewverantwoordelijkheden; geen modelruntimeproef, installatie of concurrentenserie. Ontwikkeltokens/creditkosten onbekend.",
                 "sourceSnapshot": "development/docs/eva-repository-inventory.generated.json",
                 "startedAt": "2026-10-16T23:14:55.796386+00:00"
+              },
+              "completedAt": "2026-10-16T23:26:42.505625+00:00",
+              "completionEvidence": "development/evidence/reassessment/e32-core-review-20261017.json",
+              "independentReview": "development/reviews/e32-core-review-20261017.json",
+              "result": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
+              "semanticReview": {
+                "files": 136,
+                "fullContentRead": 136,
+                "scopeDelta": [],
+                "sourceFilesChanged": 0,
+                "decisionIds": [
+                  "APP-01",
+                  "APP-02",
+                  "APP-03",
+                  "APP-04",
+                  "APP-05",
+                  "B01",
+                  "B02",
+                  "B03",
+                  "B04"
+                ],
+                "deletionApproved": [],
+                "technicalOnly": true,
+                "familyAcceptance": false
               }
             },
             {
@@ -7544,6 +7634,16 @@
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
+              },
+              "reviewInput": {
+                "source": "development/evidence/reassessment/e32-core-review-20261017.json",
+                "crossInterfaceDecisions": [
+                  "APP-05",
+                  "B02",
+                  "B03"
+                ],
+                "scope": "Beoordeel de resterende adapters/frontend/build/migratiebestanden en werkelijke consumers. Gebruik de vastgelegde identityresource- en workerbuildbevindingen; voer geen nieuwe kernschouw uit.",
+                "newTasks": 0
               }
             },
             {
@@ -7656,6 +7756,20 @@
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
+              },
+              "reviewInput": {
+                "source": "development/evidence/reassessment/e32-core-review-20261017.json",
+                "decisions": [
+                  "APP-01",
+                  "APP-02",
+                  "APP-03",
+                  "APP-04",
+                  "B01",
+                  "B02",
+                  "B04"
+                ],
+                "implementationStarted": false,
+                "newTasks": 0
               }
             },
             {
@@ -7687,6 +7801,11 @@
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
+              },
+              "reviewInput": {
+                "source": "development/evidence/reassessment/e32-core-review-20261017.json",
+                "measuredRuntimeImprovement": false,
+                "note": "E3.2 levert geen token-/snelheidswinst. Gebruik alleen concrete gewijzigde E4-routes voor relevante voor/na-metingen; geen nieuwe concurrentenmatrix."
               }
             },
             {
@@ -7720,6 +7839,15 @@
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
+              },
+              "reviewInput": {
+                "source": "development/evidence/reassessment/e32-core-review-20261017.json",
+                "decisions": [
+                  "APP-05",
+                  "B03"
+                ],
+                "implementationStarted": false,
+                "newTasks": 0
               }
             }
           ]
@@ -7794,7 +7922,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E3.2 · Actieve kern inhoudelijk beoordelen, te beginnen bij bestaande kern-/werkerbronverschillen. WhatsApp-nummer blijft uitgesteld; spraak blijft bij andere uitvoerder.",
+      "nextAction": "E3.3 · Adapters, frontend en installatie inhoudelijk beoordelen. E3.2 is afgerond; negen concrete besluiten blijven bij bestaande E4.2/E4.4. Spraak blijft bij de andere uitvoerder.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7803,7 +7931,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T23:14:55.796386+00:00",
+      "updatedAt": "2026-10-16T23:26:42.505625+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -8953,9 +9081,16 @@
       "familyAcceptance": false,
       "wholeProjectComplete": false,
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
+    },
+    "e32CoreReview20261017": {
+      "evidence": "development/evidence/reassessment/e32-core-review-20261017.json",
+      "review": "development/reviews/e32-core-review-20261017.json",
+      "summary": "136/136 inhoudelijk beoordeeld;9 eindige E4-besluiten. Geen runtimecode, installatie, spraak of taakomvang gewijzigd.",
+      "sourceDigest": "66c89749314074774ff64d2931c935172ff0566e6c4853ec316a6284c4203bfd",
+      "newProductFunctionCompleted": false
     }
   },
-  "updatedAt": "2026-10-16T23:14:55.796386+00:00",
+  "updatedAt": "2026-10-16T23:26:42.505625+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

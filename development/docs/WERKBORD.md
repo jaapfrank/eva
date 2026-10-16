@@ -4,9 +4,9 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E3.2 · Actieve kerncode inhoudelijk beoordelen
+E3.2 · Actieve kerncode inhoudelijk beoordeeld
 
-Nu bezig:136 kernbestanden inhoudelijk beoordelen, echte consumers vastleggen en concrete vereenvoudigingsbesluiten aan bestaande E4-kaarten koppelen. Geen spraakwijzigingen.
+136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.
 
 Klaar wanneer: Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.
 
@@ -99,7 +99,7 @@ Klaar wanneer: Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk b
 | E2.5 · Extra modelproviders optioneel aansluiten | ✓ Afgerond | De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter. |
 | E2.6 · WhatsApp met eigen Eva-nummer en live bellen | Geparkeerd | WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers. |
 | E3.1 · Alle bestanden en hun rol registreren | ✓ Afgerond | Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review. |
-| E3.2 · Actieve kerncode inhoudelijk beoordelen | ● Open | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
+| E3.2 · Actieve kerncode inhoudelijk beoordelen | ✓ Afgerond | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
 | E3.3 · Adapters, installatie en dynamisch gebruik beoordelen | ● Open | Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit. |
 | E3.4 · Tests, documentatie en historie op noodzaak beoordelen | ● Open | Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd. |
 | E4.1 · Bewezen dode en dubbele bestanden opruimen | ● Open | De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen. |
@@ -110,7 +110,7 @@ Klaar wanneer: Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk b
 
 ## Van jou
 
-Het eigen WhatsApp-nummer komt later. Codex gaat door met E3.1; spraak blijft bij de andere uitvoerder.
+E3.2 is afgerond. E3.3 is de volgende taak voor Codex. Het eigen WhatsApp-nummer komt later; spraak blijft bij de andere uitvoerder.
 
 ## Historie
 

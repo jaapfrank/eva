@@ -1,0 +1,4007 @@
+{
+  "contract": "EvaCoreSemanticReviewOutcome/v1",
+  "card": "E3.2",
+  "status": "completed_semantic_review_only",
+  "checkedAt": "2026-10-16T23:25:06.624563+00:00",
+  "startedAt": "2026-10-16T23:14:55.796386+00:00",
+  "originalDoneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
+  "sourceRevision": "a6cba2a1231343735a552535a5df5bd4d72302f4",
+  "inventory": {
+    "path": "development/docs/eva-repository-inventory.generated.json",
+    "sha256": "5f1d3ac9be606c07cc3dcbda1c8ead05f82bb95772e58bd47b48c60f7f9c3339",
+    "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+    "immutable": true
+  },
+  "scope": {
+    "paths": [
+      "src/eva/application",
+      "src/eva/contracts",
+      "src/eva/domain",
+      "src/eva/bootstrap"
+    ],
+    "registeredFiles": 136,
+    "fullyReadFiles": 136,
+    "filesByModule": {
+      "application": 63,
+      "contracts": 21,
+      "domain": 2,
+      "bootstrap": 50
+    },
+    "priorReadingsReused": 0,
+    "sourceDeltaFromE31": [],
+    "sourceFilesChanged": 0,
+    "additionalAdapterCallSites": "Inspected only as interface consumers; full adapter/install/front-end/operations review remains E3.3.",
+    "metadataDelta": "This dated review adds only its reports, consumer map, diagnostics, summary and canonical board projection. Original E3.1 bytes remain unchanged; metadata is not new runtime code."
+  },
+  "reports": [
+    {
+      "path": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "sha256": "d883510e3b792126030a78507baee7bc3025e4efff8d5597eb32dd88c9cb0da0",
+      "files": 63
+    },
+    {
+      "path": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "sha256": "ce0c5ecc1be7423b5bb2bc9e4cfe0645f650beedb6f3c374fcc01a00c69a2c95",
+      "files": 23
+    },
+    {
+      "path": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "sha256": "0f1d6194ee9437b54f98b545dfc6da38b1698d34b1327a8c95922f93dc316778",
+      "files": 50
+    }
+  ],
+  "consumerMap": {
+    "path": "development/evidence/reassessment/e32-core-consumers-20261017.json",
+    "sha256": "5de8f8d95f26b71720921c3ca77b90d86afcc4af25e7cfad17a1454b4c36c1de",
+    "resolvedImportEdges": 4627,
+    "uniqueConsumerSites": 2642,
+    "staticImportIsNotExecution": true
+  },
+  "files": [
+    {
+      "path": "src/eva/application/__init__.py",
+      "sha256": "1c038ae45e088c112125188e4b0188adb05ba1858af69c76f37b74e6ca675a52",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Package ownership marker; no state or composition.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "package-loading",
+          "location": "pyproject.toml:31",
+          "detail": "Setuptools eva* discovery; Python imports child modules through this package."
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/action_chain.py",
+      "sha256": "dff0a1208153e824acd4a55b21354728e706f96d1fcd84f429a990bfa0c28f88",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Validate bounded plans against complete host catalog, policy hashes and dependent read/effect steps.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/action_chain_read_authorizer.py:36",
+          "symbol": "ActionToolCatalog"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/action_chain_read_authorizer.py:36",
+          "symbol": "action_chain_step_operation_id"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/action_chain_read_executor.py:17",
+          "symbol": "ActionToolCatalog"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/action_chain_effect_advances.py",
+      "sha256": "25e6261ad4ad385d9137b38686c639f0d9c9bd21d600ea567894d94a8f46862a",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Compare sealed expected projection with fresh retained effect readback; canonical type-sensitive verification.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_advance_validation.py:12",
+          "symbol": "VerifiedActionChainEffectProof"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_advance_validation.py:12",
+          "symbol": "verify_action_chain_effect_proof"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_action_chain_effect_advances.py:7",
+          "symbol": "ActionChainEffectProofError"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/action_chain_effect_readback_results.py",
+      "sha256": "b87a67417c40987a599eab82f12b5f7fffcdcfd30900d788ed62eef938ce2e9f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Bind provider readback, receipts, observations and evidence to the exact effect; accepted does not mean physically verified.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_readback_validation.py:37",
+          "symbol": "project_action_chain_effect_readback"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/support/postgres_action_chain_effect_readback_results.py:33",
+          "symbol": "project_action_chain_effect_readback"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/action_chain_effect_results.py",
+      "sha256": "98cdbed3885834480aecff316d734d4cf61be7d60dcf9e36bd154f84afa17bef",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Project claimed effect exchange to durable intent/attempt states, evidence and optional receipt; ambiguity retained.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_result_validation.py:44",
+          "symbol": "ProjectedActionChainEffectResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_result_validation.py:44",
+          "symbol": "project_action_chain_effect_result"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_results.py:35",
+          "symbol": "ProjectedActionChainEffectResult"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/action_chain_provider_claims.py",
+      "sha256": "bc16fcd29261512c6cf25f76da8d3e122be4110ad9e5eff47e73a3429eb41ade",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Structural already-claimed provider authority ports prevent persistence from importing dispatch implementations.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_results.py:34",
+          "symbol": "ActionChainEffectClaim"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_read_results.py:39",
+          "symbol": "ActionChainReadClaim"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/action_chain_read_results.py",
+      "sha256": "80adcebe92a7fbac441d68efef8a81ab9a060886131596cb11e31bb4a61c9171",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Project sealed read/readback outcomes into durable read attempts, observations and provenance.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_read_result_validation.py:22",
+          "symbol": "ProjectedActionChainReadResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_read_result_validation.py:22",
+          "symbol": "project_action_chain_read_result"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_read_results.py:40",
+          "symbol": "ProjectedActionChainReadResult"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/audio_playback.py",
+      "sha256": "cdf242eb7e3db03ca32a192891ac0e1ab7a900146a9cd7f2ff68366ae0253bdc",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Validate frame-level output evidence separately from human hearing/identity; speech owner retains changes.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/native_voice.py:27",
+          "symbol": "AudioPlaybackResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/native_voice.py:27",
+          "symbol": "PlaybackConflict"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/voice_requests.py:21",
+          "symbol": "AudioPlaybackResult"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/background_execution.py",
+      "sha256": "59bab1c9e4a8abb34f9c628f370415891ed3209c238e13513aa50b84dc985d2f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Bind admitted work namespace, dispatch guard and remaining time/model allowance to the exact source turn.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/saved_artifact_application.py:88",
+          "symbol": "BackgroundExecutionScope"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/saved_artifact_application.py:88",
+          "symbol": "background_execution"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_result_reader.py:2",
+          "symbol": "authorize_background_dispatch"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/cancellation.py",
+      "sha256": "b97ab6117742a0a09367b77ac8293ad7297e271c1e5a79ab7ec101765f9963c4",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Cooperative cancellation across thread/async ports; own cleanup without claiming effect rollback.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:1047",
+          "symbol": "check_cancellation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/native_voice.py:15",
+          "symbol": "check_cancellation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/native_voice.py:15",
+          "symbol": "run_in_cancellation_thread"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/channel_routes.py",
+      "sha256": "bd074eccf3c3b6a7eb1c1af89d37f0fb8d605b6d97ddf001ba88dd81c7badd79",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Recognize structural WhatsApp conversation IDs without granting authority; shared result consumers.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/document_completion.py:17",
+          "symbol": "is_whatsapp_conversation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/private_work_return.py:55",
+          "symbol": "is_whatsapp_conversation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/scheduled_work_failure.py:14",
+          "symbol": "is_whatsapp_conversation"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/commerce.py",
+      "sha256": "11b1ece31dfd3a80636137e24372ff1815b1bbb02d59cb98c7743bb7a522758d",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Existing optional Stripe/EUR-bound publication approvals, paid-order and fulfillment data; neutral docstring overstates provider neutrality.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:133",
+          "symbol": "CommerceError"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:133",
+          "symbol": "DigitalFulfillmentDownload"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:133",
+          "symbol": "ProductPublicationApproval"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/component_development.py",
+      "sha256": "41f8ff63e255a0521ddfeb4bfd522b7ead64448e0436ff35c1b156b6398511ad",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Rank measured variants under identical frozen development criteria; ties/loss retain baseline; not final approval.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/component_development.py:13",
+          "symbol": "validate_development_criteria"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/component_work_execution.py:76",
+          "symbol": "make_scoped_component_evaluation_binding"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/component_improvement_actions.py:7",
+          "symbol": "WORK_STRATEGY_EVALUATION_PATH"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/component_improvements.py",
+      "sha256": "0f1838b308347d6da0d4f7ef962ee07b4aadf17c7422f0ef4dbeedec80c4dd19",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Read bounded components, draft exact lineage-bound patches and prepare reviewable release candidates.",
+      "decision": "simplify",
+      "decisionIds": [
+        "APP-03"
+      ],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/component_final_assessment.py:11",
+          "symbol": "bind_selected_release"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/component_work_execution.py:77",
+          "symbol": "read_component"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/component_improvement_actions.py:11",
+          "symbol": "read_component"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/conversation.py",
+      "sha256": "c30a21c6ba3ec78a954ea10f8677fcc7471b9a0723bfbba2a617376d97d1c743",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "One channel-neutral turn with admitted memory, receipt replay, contact/work routing and guarded final reply.",
+      "decision": "simplify",
+      "decisionIds": [
+        "APP-02"
+      ],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/initiative_execution.py:9",
+          "symbol": "ConversationConflict"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/initiative_execution.py:9",
+          "symbol": "ConversationTurn"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:15",
+          "symbol": "ConversationTurn"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/conversation_media.py",
+      "sha256": "921ed4e4cb922e9d7302df6b4c6a59b1b80dbfeda7471edfc24b3999f287c971",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Uncertain media analysis bound separately from a person's own words and source provenance.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:19",
+          "symbol": "ConversationMediaContext"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/app.py:1281",
+          "symbol": "ConversationMediaContext"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/scheduled_work.py:73",
+          "symbol": "ConversationMediaContext"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/conversation_receipt.py",
+      "sha256": "a834e6491e77657eff16e4f3d5355ef55a0680f37399754d1a3722c44e8c9dc6",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Authenticated input reception presentation; never proof of work admission/completion or retained model output.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/voice_service/agent.py:14",
+          "symbol": "RECEIVED_INPUT_TEXT"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/dashboard_conversation.py:14",
+          "symbol": "RECEIVED_INPUT_TEXT"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/native_voice.py:405",
+          "symbol": "RECEIVED_INPUT_TEXT"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/default_identity_pack.json",
+      "sha256": "025984c019714d7107803258959fcbddd94d0700acaef15beeac26f05a645798",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Signed default identity resource loaded by path; retain exact bytes and register package ownership.",
+      "decision": "retain",
+      "decisionIds": [
+        "APP-05"
+      ],
+      "consumerEvidence": [
+        {
+          "kind": "resource",
+          "location": "src/eva/adapters/objects/identity_verifier.py:46",
+          "detail": "Path-based default pack loader"
+        },
+        {
+          "kind": "installer-default",
+          "location": "src/eva/bootstrap/installer_wizard_cli.py:307",
+          "detail": "Default pack path"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/default_identity_pack_trust.json",
+      "sha256": "1ab9b15da48a18149b519c3cb6270535f52f679a837f3715e8a8499321ffa1ae",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Non-secret public trust resource for default identity; retain exact bytes and register package ownership.",
+      "decision": "retain",
+      "decisionIds": [
+        "APP-05"
+      ],
+      "consumerEvidence": [
+        {
+          "kind": "resource",
+          "location": "src/eva/application/identity_verifier.py:111",
+          "detail": "Path-based default trust loader"
+        },
+        {
+          "kind": "installer-default",
+          "location": "src/eva/bootstrap/installer_wizard_cli.py:308",
+          "detail": "Default trust path"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/delegated_work_delivery.py",
+      "sha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Current private Telegram destination, original ingress and exact work/result identity; explicitly channel-specific.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_owner_service.py:10",
+          "symbol": "PrivateWorkDestination"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_delivery.py:14",
+          "symbol": "PrivateWorkDestination"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/document_completion.py:9",
+          "symbol": "PrivateWorkDestination"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/delegated_work_memory.py",
+      "sha256": "4eb7e708772546ddb35591db57718704a54b213040a8ecc5ae3a9e6208aa3b07",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Project terminal private work into existing person memory while preserving failure and unconfirmed worker output.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_memory.py:17",
+          "symbol": "outcome_document"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_memory.py:17",
+          "symbol": "document_binding_sha256"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_delegated_work_memory.py:12",
+          "symbol": "outcome_document"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/delegated_work_owner.py",
+      "sha256": "a58cbbbf8ab1b3c952bba979215eb1a8b60875e8c14e551699669394ac6e17ba",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Owner-authorized delegated work command port; runtime composition remains outside application.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/delegated_work_actions.py:22",
+          "symbol": "DelegatedWorkOwnerPort"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/delivery.py",
+      "sha256": "da297003505c94c0bfa456cb12bedaa915e61f053f4d55abd4b5a5e882aaf88f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Bounded fan-out request/receipt contracts and readback-before-deliver worker; distinct from original-recipient task return.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "execution",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:2373",
+          "detail": "Existing fan-out worker"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:33",
+          "symbol": "FanoutDeliveryRequest"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:33",
+          "symbol": "FanoutDeliveryResult"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/durable_goals.py",
+      "sha256": "db7320fc31db350d63313d3d1bca32c841f86895dac5cc616795e97549e69f62",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Existing bounded wake/evidence/effect/follow-up/delivery lifecycle; document-goal consumers require v1/v2 state compatibility.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "execution",
+          "location": "src/eva/providers/document_goals.py:185",
+          "detail": "Document goals use existing orchestrator"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/durable_goal_worker.py:18",
+          "symbol": "DurableGoalWorker"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/document_goal_worker.py:4",
+          "symbol": "DurableGoalWorker"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/effect_verification.py",
+      "sha256": "8736560b557f90555d464317cc38381d34b87ac7ac54d56668c2a8fb16389ff9",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Declarative expected/observed JSON Pointer projection; canonical comparison distinguishes boolean/integer.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/action_chain.py:10",
+          "symbol": "EffectVerificationError"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/action_chain.py:10",
+          "symbol": "EffectVerificationProjection"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/action_chain_effect_advances.py:10",
+          "symbol": "EffectVerificationError"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/episode_repository.py",
+      "sha256": "37aec644c2cef670b9603fc6d08cf4a7510af972b6d85649e3e8b3e88dc377cb",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Transaction-scoped episode port and explicit concurrency/transaction errors used by Postgres scope/timeline.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/scope.py:13",
+          "symbol": "TransactionRequired"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/scope.py:13",
+          "symbol": "TransactionScopeMismatch"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/operational_timeline.py:17",
+          "symbol": "TransactionRequired"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/file_batches.py",
+      "sha256": "486f6699b168ec103f40b1325d25e1dfa25f3a97b6b274e94574edf4e426f96c",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Bounded text-batch plans/results and retryable failure classes; local-files and conversation consumers remain.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:65",
+          "symbol": "BatchFilePlan"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:65",
+          "symbol": "TextBatchPlan"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:65",
+          "symbol": "TextBatchPort"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/free_will.py",
+      "sha256": "d4b96fcc56926cf9c3369cd5938dec2c725cd922eaa2313bd972b6b5ed3922d1",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Durable sensory/admission/foreground decisions, native source-outcome context and proactive expression delivery.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:2083",
+          "detail": "Current sensory decision worker"
+        },
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:2115",
+          "detail": "Existing shared audience worker class"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_initiative.py:10",
+          "symbol": "SensoryDecisionWorker"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/household_initiative.py",
+      "sha256": "849ebd7d79e65bd1e9c6135c811b0a9180a0c20b1a169f9864ec3653c3237327",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Host-bound shared household observations, attention provenance and strictly shared authorized recall.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_initiative.py:11",
+          "symbol": "HouseholdInitiativeBinding"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_initiative.py:11",
+          "symbol": "HouseholdInitiativeContext"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_initiative_delivery.py:15",
+          "symbol": "HouseholdInitiativeBinding"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/human_understanding.py",
+      "sha256": "a2ea900bb07c27e983bd8b1bdce88966a19a8dfb5a9ad0eb140e4e1a8d5e180c",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Canonical provisional hypotheses/expectations and validated predecessor chains in existing memory; not later-use proof.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/dashboard_memory.py:5",
+          "symbol": "is_human_understanding_reference"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/dashboard_memory.py:5",
+          "symbol": "parse_human_understanding_record"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/human_understanding_actions.py:10",
+          "symbol": "build_human_understanding_document"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/identity_drafts.py",
+      "sha256": "897112958115700a6e6660db311bebbb90d6d4758335f54d972b542d03a208f4",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Exact-base identity draft validation and deterministic presentation-only diff; activation separate.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/soul_markdown.py:15",
+          "symbol": "identity_presentation_diff"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/identity_pack_lifecycle.py:24",
+          "symbol": "identity_presentation_diff"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/identity_pack_lifecycle.py:24",
+          "symbol": "validate_identity_draft_base"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/identity_verifier.py",
+      "sha256": "3e77927c3cb850464ce358980713970820256da6bdb63ad59d928f8ae8831c71",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Canonical signed pack verification against explicit non-secret trust binding; injected crypto.",
+      "decision": "retain",
+      "decisionIds": [
+        "APP-05"
+      ],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/identity_pack_lifecycle.py:29",
+          "symbol": "IdentityPackTrustBinding"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_identity_lifecycle.py:24",
+          "symbol": "IdentityPackTrustBinding"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_identity_lifecycle.py:24",
+          "symbol": "load_identity_pack_trust_binding"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/initiative_execution.py",
+      "sha256": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Ephemeral host guard links native initiative turns to current durable authority; no model text grant.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:872",
+          "symbol": "require_initiative_context"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/personal_interests.py:253",
+          "symbol": "NativeInitiativeDelegation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/saved_artifact_application.py:184",
+          "symbol": "initiative_execution"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/installer.py",
+      "sha256": "4d32b4cc74d782441f8d6cdab1cab5a5d3984f1fbaa53f4ab4e777e421db126e",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Neutral installer workflow ports, view shapes, provider probe and verification outcomes; no duplicate concrete workflow.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_profile_workflow.py:20",
+          "symbol": "InstallerUseCaseError"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_profile_workflow.py:20",
+          "symbol": "InstallerUserInputError"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_provider_verification.py:22",
+          "symbol": "InstallerProviderProbe"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/installer_restore.py",
+      "sha256": "39a4f20b9e8b74763b1087a7acd035bfa7da35b9a307358dc4497f89d81a79fb",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Restore port and explicit retained-material recovery metadata; preserve partial/ambiguous state.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/installer_wizard_cli.py:13",
+          "symbol": "InstallerRestorePort"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/installer_wizard.py:5",
+          "symbol": "InstallerRestorePort"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/installer_restore_api.py:11",
+          "symbol": "InstallerRestorePort"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/memory.py",
+      "sha256": "07fedf412eb4463d788b669fbd6269286425acd603dc91b0bbd4c2a9e68fc2fb",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Authoritative memory write/recall, budgeted semantic writer and replaceable provider ports; no second store.",
+      "decision": "simplify",
+      "decisionIds": [
+        "APP-04"
+      ],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/human_understanding.py:10",
+          "symbol": "ConversationMemoryDocument"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:17",
+          "symbol": "PresenceMemory"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:17",
+          "symbol": "RecallCurrentFacts"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/memory_audience.py",
+      "sha256": "4aef5ec9ca0b6467d67a1531bfe7dee2f09a99a48cd2cfdb378325ac5828c9fa",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Closed private/group/household audience and consent provenance across ingress/memory/work.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:18",
+          "symbol": "MemoryAudience"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:21",
+          "symbol": "MemoryAudience"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/delegated_work_memory.py:12",
+          "symbol": "memory_audience_to_wire"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/memory_background.py",
+      "sha256": "e974fc5e4c90744fff80064c5c481e9ca436582c2da215422d8de8e603c80e3a",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Existing retention outbox, erasure, reflection and serialized service callbacks; distinct durable authorities.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:2280",
+          "detail": "Cold worker constructed with existing callbacks"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:124",
+          "symbol": "HindsightColdPathWorker"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_memory_background.py:23",
+          "symbol": "HindsightColdPathWorker"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/objects.py",
+      "sha256": "63274614c68516f3a69b18c015419ec15cce7a0c31d34415f2af0ce8f4311d6c",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Encrypted candidate preparation, durable binding commit, readback and selected-object authentication; CAS is not DB selection.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/portable_objects.py:8",
+          "symbol": "CasInstallStatus"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/objects/envelope.py:13",
+          "symbol": "EncryptedObjectCandidate"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/objects/envelope.py:13",
+          "symbol": "ObjectBinding"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/orchestration.py",
+      "sha256": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Proof-first execution/resume through existing timeline, provider observation and bounded recovery.",
+      "decision": "simplify",
+      "decisionIds": [
+        "APP-01",
+        "APP-02"
+      ],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/document_task_actions.py:5",
+          "symbol": "ToolProofObservation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/document_task_actions.py:5",
+          "symbol": "ToolDispatchResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/mcp_registration.py:21",
+          "symbol": "ToolRequest"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/people_memory_overview.py",
+      "sha256": "2aa3cecd6ea6454408089a303c3ed1ceb0a9b5487ced0fe73047fbb7f5332184",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Privacy-safe coarse owner status and authorized source excerpt pages; not all derived memory.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:108",
+          "symbol": "PeopleMemoryOverview"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:108",
+          "symbol": "PeopleMemoryOverviewPort"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/dashboard_memory.py:40",
+          "symbol": "MemorySourcePage"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/personal_interests.py",
+      "sha256": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Existing interest exploration, prototype/release artifacts and memory projection; native mode reuses executor.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:2064",
+          "detail": "Interest worker reuses native executor"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/commerce.py:10",
+          "symbol": "PersonalProductReleaseArtifact"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:125",
+          "symbol": "PersonalInterestWorker"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/portable_archive.py",
+      "sha256": "34e261c44434b2b9a16eb70a72359be60312d7811c3944a3e3d37c4a28035c61",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Sealed canonical portable row transformation/redaction and safe archive publication; preserve archive-specific semantics.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/portable_restore_authority.py:25",
+          "symbol": "canonical_json_bytes"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/tools/portable_runtime_archive.py:18",
+          "symbol": "canonical_json_bytes"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/tools/portable_runtime_archive.py:18",
+          "symbol": "encode_jsonl_records"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/portable_objects.py",
+      "sha256": "13da4e660e8ef6ddc5c1bf3837733c919bbb1b6ca14d6a02b42fcf97b3fdf821",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Restore/CAS materialization hand-off receipt used by existing restore tools.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/tools/portable_object_materializer.py:28",
+          "symbol": "MaterializedPortableObject"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/tools/portable_restore.py:22",
+          "symbol": "MaterializedPortableObject"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/presence.py",
+      "sha256": "5bae5ab4e7d8022525954837b09b78f14e08093513dd71038afbde93b8e82c9d",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Admitted episode PresenceContext and reply planner input construction; only public test/reference consumers found.",
+      "decision": "retain-reference",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "reference-only",
+          "location": "development/tests/application/test_presence.py:6",
+          "detail": "Only tests import this context builder; no src dynamic name reference found"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_presence.py:6",
+          "symbol": "PresenceContextError"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_presence.py:6",
+          "symbol": "PresenceTurn"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/procedure_references.py",
+      "sha256": "99762c1178a8ac8a9471cf34d09367e6559582c26e16e70d63342fbbbf9046fc",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Reusable artifact designation bound to verified saves and reauthorized source/current bytes; no new memory.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/procedure_reference_actions.py:6",
+          "symbol": "ProcedureReferences"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/procedure_reference_actions.py:6",
+          "symbol": "ProcedureScope"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/procedure_reference_actions.py:6",
+          "symbol": "ProcedureReferenceRejected"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/related_work.py",
+      "sha256": "b5018777c8aa94e0d75863f4cd07a976bf6b5a60b2979abb65cb8a06ae50d3cc",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Bounded task-family view and explicit linked stop through current authorities; no new scheduler or permanent admission ban.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_owner_service.py:233",
+          "symbol": "stop_related_work"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_owner_service.py:245",
+          "symbol": "related_work"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_work.py:411",
+          "symbol": "stop_related_work"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/repository_improvements.py",
+      "sha256": "552f8c9ecc103a2676a24f396c396bb89c416ed7edb1d95bfc53154e08288255",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Repository inspection/proposal/result interfaces with frozen checks and unchanged unrelated files.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/model/pydantic_conversation.py:86",
+          "symbol": "RepositoryImprovementProposal"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/model/pydantic_conversation.py:86",
+          "symbol": "RepositorySnapshot"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:77",
+          "symbol": "RepositoryCheck"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/research.py",
+      "sha256": "22dd4658fc0bde89e828029ae04efa31764fbce2c65f5dff61c0ed5cff1a3bb7",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Bounded cited research artifact and current research-mode contract, separate from tool-free output.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:132",
+          "symbol": "ResearchArtifact"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/model/pydantic_conversation.py:85",
+          "symbol": "ResearchArtifact"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/model/pydantic_conversation.py:85",
+          "symbol": "ResearchSource"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/resident_attention.py",
+      "sha256": "9bac918ca4a3eb1b121a0321c0dab1f97d90f5c6f2ba7876c8c8ecf0528af47b",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Active NextAttention provenance plus retained tested temperature/camera policy reference; no production policy construction found.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "active-provenance",
+          "location": "src/eva/adapters/postgres/initiative_attention.py:5",
+          "detail": "NextAttention and validator active"
+        },
+        {
+          "kind": "reference-only",
+          "location": "development/tests/application/test_resident_attention.py:5",
+          "detail": "Temperature/camera policy tested; no production constructor found"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/household_initiative.py:77",
+          "symbol": "validate_attention_reference"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/schema_validation.py",
+      "sha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Shared closed admitted tool-argument schema subset; intentionally not a complete JSON Schema implementation.",
+      "decision": "simplify",
+      "decisionIds": [
+        "APP-01"
+      ],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/procedure_reference_actions.py:9",
+          "symbol": "validate_schema_value"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/mcp_discovery.py:28",
+          "symbol": "validate_schema_value"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/mcp_gateway.py:36",
+          "symbol": "validate_schema_value"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/sensory.py",
+      "sha256": "3abb3558cd93e1fe6d79accf41305d3fdb359a722a2eb56d0f69514c1a8ac589",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Normalized events and existing bounded ingestion thread; connector I/O outside database retention.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/resident_attention.py:16",
+          "symbol": "SensoryEvent"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/household_initiative.py:17",
+          "symbol": "SensoryEvent"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/free_will.py:12",
+          "symbol": "SensoryEvent"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/soul_markdown.py",
+      "sha256": "ba5cc2773ebd8835648cb7fb29ee04765817459bba534d6c4cb8bfb1c8498c73",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Presentation-only SOUL import/export to exact-base staged draft; voice normalization deliberately asserted by current tests.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_identity_lifecycle.py:28",
+          "symbol": "soul_markdown_sha256"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_identity_lifecycle.py:28",
+          "symbol": "soul_markdown_to_draft"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/installer_wizard.py:72",
+          "symbol": "SoulMarkdownError"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/telegram_canary.py",
+      "sha256": "01911471d153be239bac219ddc6b5661075d4222283971ba6ba12b03b528adc5",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Existing runtime/API trusted Telegram bridge and per-person group consent; stale Eva1 wording does not prove an active Eva1.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:1686",
+          "detail": "Still instantiated by current runtime/API"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:118",
+          "symbol": "TelegramCanaryAdmission"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:118",
+          "symbol": "TelegramCanaryBridge"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/telegram_group_consent.py",
+      "sha256": "85d4b7f98da7a6e25c4cdad1878cba850a933825315bbc4a7be362adc6618670",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Bounded per-person group sharing/revocation and private command responder reused by both ingresses.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:16",
+          "symbol": "TelegramGroupConsentResponder"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_canary.py:11",
+          "symbol": "TelegramGroupConsentResponder"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_canary.py:11",
+          "symbol": "TelegramGroupConsentStorePort"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/telegram_ingress.py",
+      "sha256": "42a675c2129c65f3cd7ff251b8607d9fb35c0a1990977a5e0c1624e1ca368606",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Ordered authenticated intake, stop lookahead, provisional drafts and crash-bounded final delivery; uncertainty retained.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/delegated_work_delivery.py:10",
+          "symbol": "TelegramPrincipalBindings"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/telegram_ingress.py:29",
+          "symbol": "TelegramIngressWorker"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/telegram_ingress.py:29",
+          "symbol": "TelegramPrincipalBinding"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/telegram_pairing.py",
+      "sha256": "6ffe7b646b6f902a6a6f1fe3bd57cf50d5931175af9404b19349dcd66f88d61a",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Two-sided expiring account pairing and deterministic secret-derived challenge; chat authorization remains separate.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:17",
+          "symbol": "TelegramDynamicBindingResolverPort"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:17",
+          "symbol": "TelegramPairingResponder"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/telegram_ingress.py:35",
+          "symbol": "TelegramPairingResponder"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/validated_edits.py",
+      "sha256": "786756929d8f8c9abff7dcbf9686f1c5290b7595f7d94181ce2dff3f6a766f1f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Single bounded edit and focused validation/rollback contracts; initially green manifest differs from repository improvement.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:70",
+          "symbol": "FocusedAssertionResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:70",
+          "symbol": "FocusedValidationResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:70",
+          "symbol": "ValidatedTextEditPlan"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/voice.py",
+      "sha256": "638f15938e841d5345176f924655cbe8633cf638c06bbe63f7499cafc436a22f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Thin final voice-turn admission and generation-bound playback/interruption; ordinary ConversationTurn and no effect rollback.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/dashboard_voice.py:26",
+          "symbol": "SpeechAudioChunk"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/dashboard_voice.py:26",
+          "symbol": "admit_final_voice_turn"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/connectors/home_assistant_voice.py:20",
+          "symbol": "SpeechAudioChunk"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/voice_context.py",
+      "sha256": "e8f690d06d10ab0666e702d7ba2f505557be38614a891ebc9822f0a494065889",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Transient voice identity-request, explicit work-stop and first-part callbacks through ordinary conversation; speech owner scope.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:1114",
+          "symbol": "current_voice_context"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:1114",
+          "symbol": "STOP_VOICE_WORK"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:1114",
+          "symbol": "SPEAK_AND_CONTINUE"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/work_context.py",
+      "sha256": "128277e278abaa40d7e4fcc10a7df5e54ec9842121316596b9bb078f3fc8dc99",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Compact already-authorized task metadata shared by private/household composition; no cross-scope query.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_owner_service.py:428",
+          "symbol": "work_context_metadata"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_work.py:339",
+          "symbol": "work_context_metadata"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_work_context_times.py:3",
+          "symbol": "work_context_metadata"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/work_failure_notice.py",
+      "sha256": "3948d023507601f05c79bc3d582ffdac0d1e4ae02401434911991a2bd77c484d",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Honest failed/ambiguous terminal notice under existing destination checks; explicit stop suppresses notice.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/native_work_delivery.py:12",
+          "symbol": "FAILURE_STATES"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_work.py:8",
+          "symbol": "delivery_outcome"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/delegated_work_delivery.py:10",
+          "symbol": "delivery_outcome"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/application/work_result_presentation.py",
+      "sha256": "92b0c64e37922cd75739b373d3cd1828a6e1052d220b327fbcf7abcabc767264",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "responsibility": "Lossless known-result formatting and incomplete/failure wording shared across result consumers.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/work_failure_notice.py:5",
+          "symbol": "work_failure_description"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/voice_service/agent.py:15",
+          "symbol": "readable_work_result"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/native_work_delivery.py:11",
+          "symbol": "readable_work_result"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/__init__.py",
+      "sha256": "cbece12d003c6dca5248aef7b90ee7c2035b7fe22ae734d6c403a34127f26caa",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Lazy public runtime exports prevent eager core dependencies in unrelated sidecars.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "development/tests/api/test_dashboard_work_context.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        },
+        {
+          "path": "development/tests/api/test_dashboard_work_context.py",
+          "line": 25,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        },
+        {
+          "path": "development/tests/bootstrap/test_delegated_research_composition.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/action_chain_effect_controls.py",
+      "sha256": "4de9ca1a3adebcb6c5613cc7b49118ab5d71af2723561d54e4cba60aa9986fc1",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Owner-bound pre-dispatch cancellation versus truthful post-call stop request and required readback.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 67,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.action_chain_effect_controls"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_controls.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.action_chain_effect_controls"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/background_browser_context.py",
+      "sha256": "3c841b8902f3d2127b0940fda3199fb44b0ba652ea3da11b3442e439053be7e6",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Current managed-browser availability and owner-control/recovery context, never an action receipt.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.background_browser_context"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/background_research.py",
+      "sha256": "a71afbac8bab6fb505b50593d568c4552cb114080495df51acce9c8fa9442179",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Native research consumes the same admitted task journal/bounds and preserves measured failure/deadline usage.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_runner.py",
+          "line": 673,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.background_research"
+        },
+        {
+          "path": "development/tests/postgres/test_background_research.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.background_research"
+        },
+        {
+          "path": "development/tests/postgres/test_background_research_deadline.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.background_research"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/completed_contributions.py",
+      "sha256": "2b7e75412edf2c75e7002e1e21ab75ac1b5c8bdb7ff61099bcf6e72efc903e90",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Register exact verified saved own contribution through the existing initiative/private delivery lifecycle.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 200,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.completed_contributions"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1812,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.completed_contributions"
+        },
+        {
+          "path": "development/tests/bootstrap/test_completed_contribution_composition.py",
+          "line": 3,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.completed_contributions"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/component_observations.py",
+      "sha256": "53d2da6010f21288957a0999d115f926a6d7fcd0e86f4d231cfb05b49a9b254f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Bounded read-only channel probes and worker liveness with original observation time and honest readiness limits.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 2338,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.component_observations"
+        },
+        {
+          "path": "development/tests/bootstrap/test_component_observations.py",
+          "line": 1,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.component_observations"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/contact_catalog.py",
+      "sha256": "2a27f9d3bb3b310c63d124faf57d235265c88f14abb04d9b2cfe8c24c1494c81",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Defer only duplicate schemas discoverable under the exact same provider configuration/authority.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1960,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.contact_catalog"
+        },
+        {
+          "path": "development/tests/bootstrap/test_contact_catalog.py",
+          "line": 3,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.contact_catalog"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_learning.py",
+      "sha256": "de120c3bb348b1840d145c5471c1e4f0dde377c52ebdc8a465c043b51219c113",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Owner projection of initiative/reflection/later-context/component receipts; distinguishes proposal/evaluation/application from behavior improvement.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/api/dashboard_initiatives.py",
+          "line": 25,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_learning"
+        },
+        {
+          "path": "development/tests/postgres/test_dashboard_learning.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_learning"
+        },
+        {
+          "path": "development/tests/postgres/test_dashboard_learning.py",
+          "line": 18,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_learning"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_memory.py",
+      "sha256": "58f37e5634eb17a99befe668ef5078c02b1bb5d181794fd3a3621a67c3a3136e",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Owner original-source/inference views and current-head correction/erasure over existing memory paths.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/api/dashboard_memory.py",
+          "line": 92,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_memory"
+        },
+        {
+          "path": "src/eva/adapters/api/dashboard_memory.py",
+          "line": 101,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_memory"
+        },
+        {
+          "path": "development/tests/postgres/test_owner_memory_management.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_memory"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_voice.py",
+      "sha256": "161c7f83d0c44fd4673ab1a16718b18930a0cbdc2a9fb889567698364d88043f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Optional dashboard media composition under current owner/origin/identity/provider authority; voice executor owns changes.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 66,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_voice"
+        },
+        {
+          "path": "src/tools/eva2_quiescent_cutover.py",
+          "line": 840,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_voice"
+        },
+        {
+          "path": "development/tests/bootstrap/test_dashboard_voice_bootstrap.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_voice"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_work.py",
+      "sha256": "2ea9cd510a5a4739d4fca7c95dbbe234dce684ed3ea1d5f39b5cc37eb071cbeb",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Fixed server-bound dashboard owner operations forwarded to one shared durable task service.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 858,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_work"
+        },
+        {
+          "path": "development/tests/bootstrap/test_dashboard_work_bootstrap.py",
+          "line": 3,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_work"
+        },
+        {
+          "path": "development/tests/postgres/test_dashboard_work_overview.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_work"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_work_context.py",
+      "sha256": "de218da4b190266fa0a8caedceef4bf020f5fe41c7b6bf06801a08d44b3c2c25",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Exact retained original task ingress and dashboard jobs, with ancestry/hash checks and no invented erased origin.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/api/dashboard_model_providers.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_work_context"
+        },
+        {
+          "path": "src/eva/adapters/api/dashboard_whatsapp.py",
+          "line": 54,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_work_context"
+        },
+        {
+          "path": "development/tests/api/test_dashboard_model_providers.py",
+          "line": 16,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_work_context"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_work_overview.py",
+      "sha256": "1866d5b84ad19e1c354079f26c50a512bed414a7f0deeb802520d4c725e3855c",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Current owner counts/open jobs and linked scheduled outcomes selected before bounded historical card limits.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/dashboard_work.py",
+          "line": 38,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_work_overview"
+        },
+        {
+          "path": "src/eva/bootstrap/dashboard_work.py",
+          "line": 41,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.dashboard_work_overview"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_digital_composition.py",
+      "sha256": "3d942e6cb080cc300a585c4d91d1a03412d668dd63c091f5a9fe42ac3e845750",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Shared host-selected digital catalog/configuration/source fingerprint and runner wiring; narrow unrelated runtime dependencies.",
+      "decision": "targeted_simplification",
+      "decisionIds": [
+        "B01"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 346,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_composition"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 442,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_composition"
+        },
+        {
+          "path": "development/tests/application/test_component_document_completion.py",
+          "line": 6,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_composition"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_digital_profile.py",
+      "sha256": "e5cc98dfb27ccda6df02d0bd2945b5e7c72247abc231c5618a20666320f5dbdc",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Sealed versioned digital grant/spec/release and exact historical read compatibility, without old-grant upgrades.",
+      "decision": "targeted_simplification",
+      "decisionIds": [
+        "B01"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 9,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_profile"
+        },
+        {
+          "path": "development/tests/application/test_delegated_digital_runner.py",
+          "line": 19,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_profile"
+        },
+        {
+          "path": "development/tests/application/test_delegated_work_memory.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_profile"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "48012f6997381bafdf0b28467f6847ac38bbf9d9b30598067dce564e10432618",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "One LivingConversation execution loop with current dispatch, metering, cancellation/deadlines and receipt evidence; move adapter protocol completion knowledge out.",
+      "decision": "targeted_simplification",
+      "decisionIds": [
+        "B02"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 186,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_runner"
+        },
+        {
+          "path": "src/eva/operations/component_native_work_producer.py",
+          "line": 610,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_runner"
+        },
+        {
+          "path": "development/tests/application/test_component_document_completion.py",
+          "line": 5,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_digital_runner"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_research.py",
+      "sha256": "dc322d11141873e602cf552c9fa16d3d15623fd7c3ae93dbf53c98c23744cdae",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Sealed public/household research profile and one native sourced research request on the existing task lifecycle.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 209,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_research"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 392,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_research"
+        },
+        {
+          "path": "development/tests/bootstrap/test_delegated_research_composition.py",
+          "line": 9,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_commands.py",
+      "sha256": "ad62690fe6b7ed0125250a6e5ba9005d8d5f83d315002dedf92fb7583c885cae",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Legacy private Telegram phrase compatibility uses shared owner lifecycle rather than a second planner/store.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 151,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_commands"
+        },
+        {
+          "path": "src/eva/bootstrap/telegram_ingress.py",
+          "line": 40,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_commands"
+        },
+        {
+          "path": "development/tests/api/test_telegram_helper_stop_race.py",
+          "line": 16,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_commands"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_delivery.py",
+      "sha256": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Trusted original private recipient and completion/status/document-source wiring; sending and reading delivery status remain distinct.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1658,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_delivery"
+        },
+        {
+          "path": "development/tests/bootstrap/test_private_return_composition.py",
+          "line": 7,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_delivery"
+        },
+        {
+          "path": "development/tests/bootstrap/test_private_return_composition.py",
+          "line": 52,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_delivery"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_memory.py",
+      "sha256": "2d4a72a7599b869b5640c430388df95747a90e209e77a5d92fedd1a82233f20b",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Project completed private work once into existing memory outbox with activation/source/erasure markers preventing resurrection.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 2268,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_memory"
+        },
+        {
+          "path": "development/tests/application/test_delegated_work_memory.py",
+          "line": 97,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_memory"
+        },
+        {
+          "path": "development/tests/application/test_delegated_work_memory.py",
+          "line": 133,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_memory"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+      "sha256": "a80386b92028bad9552232c3dac57f139046e08edb69df376f839399c851c43f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "One private owner admission/read/stop/resume/correction/schedule/result service with deterministic IDs and immutable original grants.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 187,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_owner_service"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_commands.py",
+          "line": 15,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_owner_service"
+        },
+        {
+          "path": "development/tests/api/test_telegram_helper_stop_race.py",
+          "line": 15,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_owner_service"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_provider.py",
+      "sha256": "9e3715e5a84895aa366d60d33a6aed95708420ab4448e92c1bbaeec8d5683215",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Closed tool-free model/access-lease/dependency release and independent usage attestation; reconcile stale dedicated worker build pins.",
+      "decision": "targeted_simplification",
+      "decisionIds": [
+        "B03"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 120,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_provider"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_research.py",
+          "line": 25,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_provider"
+        },
+        {
+          "path": "development/tests/bootstrap/test_delegated_work_provider.py",
+          "line": 17,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_result_reader.py",
+      "sha256": "7120f58a9894e85f9784b7fd0936aa0572482de4c46ed70a9783825936e2993b",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Fresh authorized predecessor result reads under current retention and background dispatch allowance, never completion proof.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_result_reader"
+        },
+        {
+          "path": "src/eva/operations/component_native_work_producer.py",
+          "line": 1266,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_result_reader"
+        },
+        {
+          "path": "development/tests/postgres/test_background_result_reader.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_result_reader"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_service.py",
+      "sha256": "c8a4eb235355919ce10d75bf3b01aec3945405a71aebc482575702b647c15b6b",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "One process with bounded joined worker lanes, signals, readiness and runner composition; avoid broad runtime settings import.",
+      "decision": "targeted_simplification",
+      "decisionIds": [
+        "B01",
+        "B03"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_research.py",
+          "line": 328,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_service"
+        },
+        {
+          "path": "development/tests/bootstrap/test_delegated_research_composition.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        },
+        {
+          "path": "development/tests/bootstrap/test_delegated_research_composition.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.delegated_work_service"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/document_goal_worker.py",
+      "sha256": "e7805f7803e731e7fdc6051d707d0ac54234a8bc24e4994da5fd96348ead3ac9",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Explicit unique host document plan/pool composition on existing durable-goal worker, with current source/mandate checks.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "development/tests/postgres/test_document_task_actions.py",
+          "line": 105,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.document_goal_worker"
+        },
+        {
+          "path": "development/tests/postgres/test_document_task_actions.py",
+          "line": 167,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.document_goal_worker"
+        },
+        {
+          "path": "development/tests/postgres/test_document_task_dynamic.py",
+          "line": 67,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.document_goal_worker"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_continuity.py",
+      "sha256": "63e8c6bcc94f3283e77ea56bc52f6fbe90631dbd3c6fa9cad9d0651d69a25f63",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Bounded authorized public household history/activity from canonical journals, preserving pre-personal identity boundary and playback uncertainty.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1203,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_continuity"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 2332,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_continuity"
+        },
+        {
+          "path": "development/tests/postgres/test_household_conversation_context.py",
+          "line": 9,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_continuity"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_digital_work.py",
+      "sha256": "ab97928765aa3e4bcd82b27186d4c49a769b6f9e854a0495198a6255f3dc5d96",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Household device/HA authority and exact source/admission/resume over existing digital lifecycle; current execution differs from historical reads.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 238,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_digital_work"
+        },
+        {
+          "path": "src/eva/bootstrap/household_work.py",
+          "line": 406,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_digital_work"
+        },
+        {
+          "path": "development/tests/bootstrap/test_delegated_digital_composition.py",
+          "line": 275,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_digital_work"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_initiative.py",
+      "sha256": "283d54b46ee6aadd6cb9428912793e43f48c477cec7712866a36e4a9bbbb545a",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Shared sensory review/output under current household authority, foreground/quiet window and configured output without recent-session requirement.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 2253,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_initiative"
+        },
+        {
+          "path": "development/tests/bootstrap/test_household_initiative_loop.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        },
+        {
+          "path": "development/tests/bootstrap/test_initiative_quiet_delivery.py",
+          "line": 6,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_initiative_delivery.py",
+      "sha256": "033b8495db400ec5bad68e8102f41428306aa8dbdebadabe3ce4d6d50d1c3ad4",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "One durable authorized unsolicited HA announcement with late attention rechecks and offered/interrupted/ambiguous/no-replay semantics.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/household_initiative.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_initiative_delivery"
+        },
+        {
+          "path": "development/tests/bootstrap/test_initiative_quiet_delivery.py",
+          "line": 7,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_research_policy.py",
+      "sha256": "f71a26202abd021d3b620bd89ced0880a272a7be84fe40b01d318d925da4c120",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Typed owner-derived public-research authority binds voice parent, provider/budget and exact current/retained-read specs.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/household_work_composition.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_research_policy"
+        },
+        {
+          "path": "development/tests/postgres/test_household_digital_work.py",
+          "line": 134,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_research_policy"
+        },
+        {
+          "path": "development/tests/postgres/test_household_model_policy_migration.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_research_policy"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_voice.py",
+      "sha256": "eb584247c64e61cc80d7cfd7760856c7138275efdb81176dd0cf00f8759b72a5",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Revocable device/token/identity household voice consent and responder composition; shared device actor is not private owner.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 191,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_voice"
+        },
+        {
+          "path": "src/eva/bootstrap/household_research_policy.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_voice"
+        },
+        {
+          "path": "development/tests/bootstrap/test_delegated_digital_composition.py",
+          "line": 85,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_voice"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_work.py",
+      "sha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Household session/origin task facade and durable delivery claims, legitimately separate authority over the same store/worker.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/scoped_delegated_work_actions.py",
+          "line": 6,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_work"
+        },
+        {
+          "path": "src/eva/bootstrap/native_work_delivery.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_work"
+        },
+        {
+          "path": "development/tests/application/test_work_context_times.py",
+          "line": 35,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_work"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_work_composition.py",
+      "sha256": "5d8e928f31caa2fe37b5f99c98ea18d282251ce5451e06d9c2887c261e3c34e0",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Explicit shared core/worker household policy/identity/budget/lease composition; model cannot infer grants.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 396,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_work_composition"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 430,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_work_composition"
+        },
+        {
+          "path": "development/tests/bootstrap/test_household_worker_configuration.py",
+          "line": 6,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/household_work_corrections.py",
+      "sha256": "e9ec446fe36df07295a79d82a54ac985a93d819f699ae7aa66225e386b5b7078",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Common stop-correct-resume plus household audience adapter reuses existing scheduler and preserves uncertain acknowledgement.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+          "line": 132,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_work_corrections"
+        },
+        {
+          "path": "src/eva/bootstrap/household_work.py",
+          "line": 399,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_work_corrections"
+        },
+        {
+          "path": "development/tests/postgres/test_household_digital_work.py",
+          "line": 158,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.household_work_corrections"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/idle_capacity.py",
+      "sha256": "62f3bebcab2bd8a3c8b4af73d4e08afe1f74134129ba56f243988181b60bf3d0",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Read-only real CPU/current model/budget/no-pending-work admission; idle compute does not mean free subscription credits.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 2275,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.idle_capacity"
+        },
+        {
+          "path": "development/tests/bootstrap/test_idle_capacity.py",
+          "line": 3,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.idle_capacity"
+        },
+        {
+          "path": "development/tests/bootstrap/test_subscription_initiative_admission.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.idle_capacity"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/installer_wizard_cli.py",
+      "sha256": "708041b9c7af2b3ee9e8854f46176bc33c9ba243eff2be58fc86479cfc510bb2",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Loopback installer composition binds persisted selected workflows/private workspaces to existing confirmed installation action.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_prepared_restore.py",
+          "line": 7,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.installer_wizard_cli"
+        },
+        {
+          "path": "src/tools/installer_restore_wizard.py",
+          "line": 12,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.installer_wizard_cli"
+        },
+        {
+          "path": "development/tests/api/test_installer_provider_api.py",
+          "line": 18,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.installer_wizard_cli"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/native_initiative_work.py",
+      "sha256": "03c6db8d3848a26f742470b9fc6d89a1b355e202753273a29f31e5e44f295471",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Atomic native intent-to-digital-queue handoff and authority-bound review admission separate subscription authority from quota.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/completed_contributions.py",
+          "line": 9,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_initiative_work"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 230,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_initiative_work"
+        },
+        {
+          "path": "development/tests/bootstrap/test_subscription_initiative_admission.py",
+          "line": 12,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_initiative_work"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/native_voice.py",
+      "sha256": "5f17eb1da947c0b12ea9dd03d69ce340a6ccd0acf23aba37bc8bcf28fcf6fb5a",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Authenticated native device input uses ordinary shared Eva runtime conversation with exact request/consent binding.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/api/household_voice_session.py",
+          "line": 7,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_voice"
+        },
+        {
+          "path": "src/eva/bootstrap/household_voice.py",
+          "line": 106,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_voice"
+        },
+        {
+          "path": "development/tests/bootstrap/test_native_household_responder.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_voice"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/native_work_delivery.py",
+      "sha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Once-only original or explicit household output via announce/event; idle rechecks and offered-versus-heard distinction remain.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/household_initiative_delivery.py",
+          "line": 16,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_work_delivery"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 2242,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_work_delivery"
+        },
+        {
+          "path": "development/tests/bootstrap/test_native_work_delivery_sessions.py",
+          "line": 9,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.native_work_delivery"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/optional_model_providers.py",
+      "sha256": "99e2e880a7e7ea2ec3ffbf9dffcc58d0bfa6edb597e3e90b405eb312644c5666",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Explicit optional private-text provider uses baseline context/actions/journal with no silent fallback; initiative/research/voice remain baseline.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/api/dashboard_model_providers.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.optional_model_providers"
+        },
+        {
+          "path": "development/tests/api/test_dashboard_model_providers.py",
+          "line": 15,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.optional_model_providers"
+        },
+        {
+          "path": "development/tests/api/test_dashboard_model_providers.py",
+          "line": 41,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.optional_model_providers"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/private_continuity.py",
+      "sha256": "4a15f1af1c6a38e70e055a016c89035931dca057ad29b607109aa100e208fb37",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Bounded same-owner cross-channel retained source/reply and history search, preserving model-output uncertainty rather than new memory store.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1201,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.private_continuity"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1975,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.private_continuity"
+        },
+        {
+          "path": "development/tests/postgres/test_private_history_reply_search.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.private_continuity"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/private_conversation_resources.py",
+      "sha256": "1f1b505d098a5d9e0bc3305c8439b4e4218dbe06c21a240554fd71cdee11a111",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Shared signed identity and authorized Hindsight alias/source/memory wiring with fresh source permission checks.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 188,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.private_conversation_resources"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1699,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.private_conversation_resources"
+        },
+        {
+          "path": "development/tests/bootstrap/test_delegated_digital_composition.py",
+          "line": 84,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.private_conversation_resources"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/public_lookup.py",
+      "sha256": "5486b484dbe5c8f6b657a4f03e10f1b2af7a6c49aab25dd46a4f1d973bc2ac72",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Short sourced public lookup with durable request metering/direct reply guard; correct substantive work model selection inherited from contact Sol.",
+      "decision": "targeted_simplification",
+      "decisionIds": [
+        "B04"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1844,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.public_lookup"
+        },
+        {
+          "path": "development/tests/application/test_public_lookup_contact.py",
+          "line": 54,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.public_lookup"
+        },
+        {
+          "path": "development/tests/bootstrap/test_public_lookup.py",
+          "line": 5,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.public_lookup"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/recent_activity.py",
+      "sha256": "af757c496c64424a689cf40052182ecf2cf70a7ab6c993e4153a1a1435f3addf",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "On-demand public activity binds exact retained ingress/tool receipt timestamps and coverage; requests/tool names are not actions.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/household_continuity.py",
+          "line": 151,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.recent_activity"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1847,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.recent_activity"
+        },
+        {
+          "path": "development/tests/postgres/test_recent_activity.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.recent_activity"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/runtime.py",
+      "sha256": "6445b842758a3543fb594ae618c3399703953cbb3c881475b59749c079d4a2c1",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Core settings/facade and full conversation/memory/task/initiative/UI/voice composition; worker currently imports broad settings and pins whole file.",
+      "decision": "targeted_simplification",
+      "decisionIds": [
+        "B01",
+        "B04"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/__init__.py",
+          "line": 15,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.runtime"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 387,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.runtime"
+        },
+        {
+          "path": "development/tests/api/test_telegram_helper_stop_race.py",
+          "line": 17,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.runtime"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/scheduled_admission.py",
+      "sha256": "720723959ba23557ba6a9bc22ed6362256aa145ee357c22f25aa9ef7ce64d34c",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Scheduled creation time distinguishes never-admitted reservations from existing-attempt replay; deadlines cannot refresh.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+          "line": 296,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.scheduled_admission"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+          "line": 353,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.scheduled_admission"
+        },
+        {
+          "path": "src/eva/bootstrap/household_digital_work.py",
+          "line": 170,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.scheduled_admission"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/telegram_ingress.py",
+      "sha256": "0485127ea0526cbcd9e7c7eef29f33b65d54a9109f16bf6a551da9fa99daaedb",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Opt-in Eva2 Telegram polling/pairing/consent/current bindings/core handoff plus legacy input compatibility, not Eva1-agent import.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 190,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.telegram_ingress"
+        },
+        {
+          "path": "src/eva/bootstrap/private_conversation_resources.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.telegram_ingress"
+        },
+        {
+          "path": "development/tests/application/test_free_will.py",
+          "line": 279,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.telegram_ingress"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/voice_identity.py",
+      "sha256": "55b56c549421998b1cc50e9b59e98ec897d7e8d5686aebf1f30bd8c8bd497761",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Temporary speaker private identity through current owner Telegram confirmation; pre-confirmation ingress stays shared; voice executor owns changes.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 2353,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.voice_identity"
+        },
+        {
+          "path": "development/tests/postgres/test_voice_identity.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.voice_identity"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/whatsapp_context.py",
+      "sha256": "792b4694dda091942038af0b75fa1aff197027d0e13c036b9f715883b9f9408b",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Exact original WhatsApp result source including unique deterministic legacy ancestry; never guess recipient from task text/recency.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/api/dashboard_whatsapp.py",
+          "line": 175,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.whatsapp_context"
+        },
+        {
+          "path": "development/tests/postgres/test_whatsapp_work_return.py",
+          "line": 12,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.whatsapp_context"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/bootstrap/worker_liveness.py",
+      "sha256": "177489d1bdfaf78c85c4ca2e2ddd50a6ebb1435f91681bfe6e6d6f31c30f39d1",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "responsibility": "Bounded internal loop/lane health without principal/task details; no claim of credentials, useful progress or task success.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 284,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.worker_liveness"
+        },
+        {
+          "path": "development/tests/bootstrap/test_worker_liveness.py",
+          "line": 7,
+          "kind": "python_import",
+          "importedModule": "eva.bootstrap.worker_liveness"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/__init__.py",
+      "sha256": "3966d3a382ed5d48e68b2d14560c73bbf37472168ef52e22f6af108185b0e3ae",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Closed portable registry and canonical-reader public exports; package marker/discovery for domain.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/tools/generate_contract_schemas.py",
+          "line": 20,
+          "kind": "python_import",
+          "importedModule": "eva.contracts"
+        },
+        {
+          "path": "development/tests/application/test_noor_4d.py",
+          "line": 44,
+          "kind": "python_import",
+          "importedModule": "eva.contracts"
+        },
+        {
+          "path": "development/tests/support/noor_4d.py",
+          "line": 17,
+          "kind": "python_import",
+          "importedModule": "eva.contracts"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/base.py",
+      "sha256": "578c72f40bb2cf4794cfb8b7eede54b56db4416d9dfef92aafabe936b480279a",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Strict immutable wire/version primitives, JSON limits, normalized Unicode, safe paths and timestamps. No provider or I/O.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/conversation.py",
+          "line": 20,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.base"
+        },
+        {
+          "path": "src/eva/application/schema_validation.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.base"
+        },
+        {
+          "path": "src/eva/application/action_chain.py",
+          "line": 14,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.base"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/canonical_json.py",
+      "sha256": "ac3f8e1fa2e1ca130b5a7aa116eac9b3fdbc6ff3da265953d7ad65f230f18822",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Canonical byte codec/hash and closed registry reader; rejects repeated keys, floats, invalid Unicode and oversized payloads.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/human_understanding.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.canonical_json"
+        },
+        {
+          "path": "src/eva/application/action_chain_effect_results.py",
+          "line": 13,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.canonical_json"
+        },
+        {
+          "path": "src/eva/application/delegated_work_delivery.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.canonical_json"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/capability.py",
+      "sha256": "247a8c55176d22cb63bd65a96f4878e82bc1d2011b58338421f7713c480c4c60",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Exact read-only MCP import contract used by closed schema registry and connector fixtures; not an autonomous MCP runtime.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/contracts/registry.py",
+          "line": 9,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.capability"
+        },
+        {
+          "path": "development/tests/fixtures/mcp.py",
+          "line": 21,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.capability"
+        },
+        {
+          "path": "development/tests/contract/test_capability.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.capability"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/connector.py",
+      "sha256": "85759b27725f34b7255e4bbabf67b7754253827a1f3bf1fe28ebad1133413c5b",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Connector manifest/envelope/typed outcomes; binds actual request bytes and separates provider acceptance from verified readback and ambiguity.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/action_chain_effect_results.py",
+          "line": 14,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.connector"
+        },
+        {
+          "path": "src/eva/application/presence.py",
+          "line": 14,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.connector"
+        },
+        {
+          "path": "src/eva/application/action_chain_read_results.py",
+          "line": 14,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.connector"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/connector_rpc.py",
+      "sha256": "1cc9548526e76858462f0cf6dca21d7c89cc5d3cd7841d83dee5d825cf39338f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Pure framing and cross-message manifest/grant/request/proof validation. No process or provider I/O; protocol consumers require closed versions.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/action_chain_effect_results.py",
+          "line": 19,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.connector_rpc"
+        },
+        {
+          "path": "src/eva/application/action_chain_read_results.py",
+          "line": 20,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.connector_rpc"
+        },
+        {
+          "path": "src/eva/application/action_chain_effect_readback_results.py",
+          "line": 11,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.connector_rpc"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/delegated_digital_work.py",
+      "sha256": "e0d52a30d0161231ba72450dec6a8ce5655d32728354acfa040a8c550899ab37",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Explicit host meta-action authority and private/shared/native origins; original recipient and partially measured cost stay bound. Not a recipe per family example.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/delegated_work_memory.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.delegated_digital_work"
+        },
+        {
+          "path": "src/eva/contracts/delegated_work.py",
+          "line": 234,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.delegated_digital_work"
+        },
+        {
+          "path": "src/eva/contracts/delegated_work.py",
+          "line": 237,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.delegated_digital_work"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/delegated_work.py",
+      "sha256": "4cdbf26a3c0b64d4ad54786d0e647b5daf66b53cd943400236104d4214938141",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Durable worker spec/grant/result/usage and current version dispatch. First tool-free slice remains compatibility, not the limit of current general execution.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/contracts/registry.py",
+          "line": 19,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.delegated_work"
+        },
+        {
+          "path": "src/eva/contracts/delegated_digital_work.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.delegated_work"
+        },
+        {
+          "path": "src/eva/operations/delegated_work_worker.py",
+          "line": 19,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.delegated_work"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/evidence.py",
+      "sha256": "e16a43dd77cdb422d2b25515dabd5280f03e26586b4ca4a261932bd5975241a8",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Content/object/provenance binding, evidence sequence and acceptance metadata. A declared envelope does not itself prove human acceptance.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/action_chain_effect_results.py",
+          "line": 26,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.evidence"
+        },
+        {
+          "path": "src/eva/application/action_chain_read_results.py",
+          "line": 27,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.evidence"
+        },
+        {
+          "path": "src/eva/application/action_chain_effect_readback_results.py",
+          "line": 12,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.evidence"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/execution.py",
+      "sha256": "c821f5aa8324ffeb981497b6fbcf59c2e2ccce560e621500b05df59efa4f5d56",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Authority, read/effect state, evidence and delivery-ACK protocol. Signature verification and transactional challenge claims are explicit host ports.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/action_chain_effect_results.py",
+          "line": 27,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.execution"
+        },
+        {
+          "path": "src/eva/application/presence.py",
+          "line": 15,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.execution"
+        },
+        {
+          "path": "src/eva/application/action_chain_read_results.py",
+          "line": 28,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.execution"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/identity.py",
+      "sha256": "5fbeb3d1f4da1180a6986dc4016333ddd745fa874cbb013f39b3b8f26ef5a937",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Signed presentation identity versus separately owned policy/effect/budget declarations. Identity itself grants no effects.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/conversation.py",
+          "line": 21,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.identity"
+        },
+        {
+          "path": "src/eva/application/soul_markdown.py",
+          "line": 14,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.identity"
+        },
+        {
+          "path": "src/eva/application/action_chain.py",
+          "line": 16,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.identity"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/ingress.py",
+      "sha256": "55273ad13533754ab4a87690f8737b3340871832ad7d1e7b7c4bd5a09773c7ef",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Authenticated original input identity, duplicate/conflict states and exact offer/ACK-key binding, preserving wire versions.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/contracts/execution.py",
+          "line": 23,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.ingress"
+        },
+        {
+          "path": "src/eva/contracts/registry.py",
+          "line": 51,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.ingress"
+        },
+        {
+          "path": "development/tests/application/test_noor_4d.py",
+          "line": 52,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.ingress"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/lifecycle.py",
+      "sha256": "543cce202294e9a19e79ab5b26788ddcd101706bc1ab15aeed33b97a31b1bfd5",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Durable episode/generation, promises and attention/lease state. v2 adds delegated work without changing stored v1 bytes.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/episode_repository.py",
+          "line": 8,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.lifecycle"
+        },
+        {
+          "path": "src/eva/domain/episode.py",
+          "line": 15,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.lifecycle"
+        },
+        {
+          "path": "src/eva/contracts/registry.py",
+          "line": 59,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.lifecycle"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/memory.py",
+      "sha256": "ffcec8ae52874cea85622d81f4eec010759d4f476acf8a1734cbe9e8138ec51f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Source/correction/trust/recall metadata plus staged improvement candidates; declared improvement is not later application evidence.",
+      "decision": "retain_with_focused_interface_followup",
+      "decisionIds": [
+        "APP-04"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/presence.py",
+          "line": 22,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.memory"
+        },
+        {
+          "path": "src/eva/application/memory.py",
+          "line": 17,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.memory"
+        },
+        {
+          "path": "src/eva/contracts/registry.py",
+          "line": 60,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.memory"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/planning.py",
+      "sha256": "ff3ff1883d06740995da9cb9383c760a9cfbfd9399dbb7ccf92ec86a0c26ab07",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Purpose-scoped context, plan DAG, outcomes and reply proof metadata. Unverified memory must remain visibly uncertain.",
+      "decision": "retain_with_focused_interface_followup",
+      "decisionIds": [
+        "APP-04"
+      ],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/presence.py",
+          "line": 23,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.planning"
+        },
+        {
+          "path": "src/eva/application/action_chain.py",
+          "line": 17,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.planning"
+        },
+        {
+          "path": "src/eva/application/memory.py",
+          "line": 23,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.planning"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/platform.py",
+      "sha256": "ef966d84bb2dc4891ec2d6f86e140e9d05cada2131344dcf2eec825b487b9d0f",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Versioned sealed platform locks, release/install/export/restore declarations and evidence; active preflight selects v3/v4 while compatibility remains readable.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/contracts/registry.py",
+          "line": 79,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.platform"
+        },
+        {
+          "path": "src/eva/operations/installer_preflight.py",
+          "line": 23,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.platform"
+        },
+        {
+          "path": "development/tests/operations/test_installer_preflight.py",
+          "line": 10,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.platform"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/registry.py",
+      "sha256": "89ed864d7553fb3f779e553845d8311d57e69a4c929e200af3d00350d26c38b4",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Immutable whitelist of portable wire contracts. Current API and worker versions use specialized loaders; absence here alone is not a bug.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/contracts/__init__.py",
+          "line": 25,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.registry"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/runtime_budget.py",
+      "sha256": "23a42ca1c66149401d525c2440ad47adef57e5a8e3a7012073f32c61f7880109",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Canonical owner-confirmed installation resource budget and unknown-spend policy, distinct from per-attempt grants and measured usage.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/installer_runtime_budget.py",
+          "line": 7,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.runtime_budget"
+        },
+        {
+          "path": "src/eva/bootstrap/household_research_policy.py",
+          "line": 18,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.runtime_budget"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_research.py",
+          "line": 130,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.runtime_budget"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/timestamps.py",
+      "sha256": "dbf596830f37530f3e3e121740bcc0af15c9c69bad458e5b3c27e765680ad8ca",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Shared UTC whole-second helpers; strict validation, formatting and normalization have deliberately distinct semantics.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/action_chain_effect_results.py",
+          "line": 4,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.timestamps"
+        },
+        {
+          "path": "src/eva/application/action_chain_effect_results.py",
+          "line": 5,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.timestamps"
+        },
+        {
+          "path": "src/eva/application/action_chain_effect_results.py",
+          "line": 6,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.timestamps"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/voice.py",
+      "sha256": "5c83ea6495d6b66017192ba63bbe52424f4314193869fc90e5c6a9512424e368",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Private final-transcript/session/playback interruption contract; no audio engine and no tool-effect cancellation. Other executor owns voice implementation.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/voice.py",
+          "line": 17,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.voice"
+        },
+        {
+          "path": "src/eva/bootstrap/dashboard_voice.py",
+          "line": 25,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.voice"
+        },
+        {
+          "path": "src/eva/adapters/api/dashboard_voice.py",
+          "line": 27,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.voice"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/contracts/workboard.py",
+      "sha256": "128c92d0ed8162649d941811c6481256c89f32d42cc9b1703c8c05f06dc65771",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Minimized runtime task/usage projection with explicit unknown counters, distinct from the project development board.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 112,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.workboard"
+        },
+        {
+          "path": "src/eva/adapters/api/app.py",
+          "line": 59,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.workboard"
+        },
+        {
+          "path": "src/eva/adapters/postgres/delegated_work.py",
+          "line": 29,
+          "kind": "python_import",
+          "importedModule": "eva.contracts.workboard"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/domain/__init__.py",
+      "sha256": "eb7f7a09cc5025f147d362b3d4786859d368e3adc5570847e4c472882cf65f63",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Closed portable registry and canonical-reader public exports; package marker/discovery for domain.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    },
+    {
+      "path": "src/eva/domain/episode.py",
+      "sha256": "006c5a083426ec16860e401a53bda7277d1648418dcd5b167c22155b0c1c98c6",
+      "fullContentRead": true,
+      "reviewReport": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "responsibility": "Pure accepted-to-planning revision/hash transition, used by episode repository port and preserved atomicity checks; not a second full daily task state machine.",
+      "decision": "retain",
+      "decisionIds": [],
+      "consumerEvidence": [
+        {
+          "path": "src/eva/application/episode_repository.py",
+          "line": 9,
+          "kind": "python_import",
+          "importedModule": "eva.domain.episode"
+        },
+        {
+          "path": "development/tests/dbos/conftest.py",
+          "line": 28,
+          "kind": "python_import",
+          "importedModule": "eva.domain.episode"
+        },
+        {
+          "path": "development/tests/support/episode_repository.py",
+          "line": 24,
+          "kind": "python_import",
+          "importedModule": "eva.domain.episode"
+        }
+      ],
+      "completeImportConsumers": "development/evidence/reassessment/e32-core-consumers-20261017.json"
+    }
+  ],
+  "finiteDecisions": [
+    {
+      "id": "APP-01",
+      "card": "E4.2",
+      "title": "Keep proof and sealed schema equality JSON-type-sensitive",
+      "source": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "files": [
+        "src/eva/application/orchestration.py",
+        "src/eva/application/schema_validation.py"
+      ],
+      "status": "required_not_implemented"
+    },
+    {
+      "id": "APP-02",
+      "card": "E4.2",
+      "title": "Give existing tool/provider boundaries one owner of protocol guidance and deadlines",
+      "source": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "files": [
+        "src/eva/application/conversation.py",
+        "src/eva/application/orchestration.py"
+      ],
+      "status": "required_not_implemented"
+    },
+    {
+      "id": "APP-03",
+      "card": "E4.2",
+      "title": "Move saved-artifact target validation to its neutral boundary",
+      "source": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "files": [
+        "src/eva/application/component_improvements.py",
+        "src/eva/operations/component_evaluation.py"
+      ],
+      "status": "required_not_implemented"
+    },
+    {
+      "id": "APP-04",
+      "card": "E4.2",
+      "title": "Preserve semantic trust in MemoryAuthority context",
+      "source": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "files": [
+        "src/eva/application/memory.py"
+      ],
+      "status": "required_not_implemented"
+    },
+    {
+      "id": "APP-05",
+      "card": "E4.4",
+      "title": "Bind default identity JSON to package/install ownership",
+      "source": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "files": [
+        "src/eva/application/default_identity_pack.json",
+        "src/eva/application/default_identity_pack_trust.json",
+        "pyproject.toml"
+      ],
+      "status": "required_not_implemented"
+    },
+    {
+      "id": "B01",
+      "card": "E4.2",
+      "title": "Separate worker settings and execution pins from core UI/voice composition",
+      "source": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "files": [
+        "src/eva/bootstrap/runtime.py",
+        "src/eva/bootstrap/delegated_work_service.py",
+        "src/eva/bootstrap/delegated_digital_profile.py",
+        "src/eva/bootstrap/delegated_digital_composition.py"
+      ],
+      "status": "required_not_implemented"
+    },
+    {
+      "id": "B02",
+      "card": "E4.2",
+      "title": "Adapter-owned completion/readback evidence for the generic digital worker",
+      "source": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "files": [
+        "src/eva/bootstrap/delegated_digital_runner.py"
+      ],
+      "status": "required_not_implemented"
+    },
+    {
+      "id": "B03",
+      "card": "E4.4",
+      "title": "Reconcile delegated provider pins and dedicated worker build metadata",
+      "source": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "files": [
+        "src/eva/bootstrap/delegated_work_provider.py",
+        "src/eva/bootstrap/delegated_work_service.py"
+      ],
+      "status": "required_not_implemented"
+    },
+    {
+      "id": "B04",
+      "card": "E4.2",
+      "title": "Keep contact-only Sol separate from substantive public-source lookup",
+      "source": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "files": [
+        "src/eva/bootstrap/public_lookup.py",
+        "src/eva/bootstrap/runtime.py"
+      ],
+      "status": "required_not_implemented"
+    }
+  ],
+  "retention": {
+    "deletionApproved": [],
+    "reason": "Named current consumers or explicit package/schema/test/reference purposes remain. No deletion or new general split is justified by file size, age or import count. E3.3/E3.4 establish remaining adapter/history transitions.",
+    "sealedContracts": "Old wire versions and specialized current worker/API loaders have distinct consumers; retain original bytes/closed criteria.",
+    "notCurrentRuntimeClaims": [
+      "application/presence.py and the temperature/camera reference evaluator are not proof of current household behavior.",
+      "A staged candidate/reflective record does not prove later learning or spontaneous useful initiative."
+    ]
+  },
+  "runtime": {
+    "evidence": "development/evidence/reassessment/e32-core-diagnostics-20261017.json",
+    "evidenceSha256": "2f4410e2e9ef3d9c13b9af40ca1e08bc1a467baf2a28613375d70921b54b33ce",
+    "imagesAndContainersUnchangedSinceE31": true,
+    "installedPydanticAI": "2.37.0 on both core and worker; dedicated old build pin/path discrepancy is not a current outage.",
+    "knownSourceDifference": "Core and worker have genuinely different provider/source bytes from E3.1. Preserve exact pins; coordinate one supported source/configuration handoff in existing E4.2, not cosmetic hash alignment.",
+    "mutations": 0,
+    "runtimeModelCalls": 0,
+    "voiceChanges": 0,
+    "installationRequired": false,
+    "reason": "Review records and live project dashboard update only; no product artifact was built to install."
+  },
+  "diagnostics": {
+    "path": "development/evidence/reassessment/e32-core-diagnostics-20261017.json",
+    "architectureGatePassed": false,
+    "allDiagnosticFindings": 129,
+    "coreDiagnosticFindings": 17,
+    "interpretation": "Signals are classified by semantic review; not 129 independent defects or new tasks. Existing gate/policy not weakened.",
+    "localSemanticDiagnostic": "APP-01 reproduced once locally without service/model calls. No household incident claimed."
+  },
+  "usage": {
+    "development": {
+      "elapsedSecondsAtBundle": 610.8,
+      "tokens": null,
+      "credits": null,
+      "toolCalls": null,
+      "measurement": "Wall time measured. Development token/credit/global tool totals not provided by runtime tools. Application reviewer reports37 visible command attempts; exact per-reviewer metadata retained."
+    },
+    "evaRuntime": {
+      "modelCalls": 0,
+      "providerCalls": 0,
+      "toolEffects": 0,
+      "modelTokens": 0,
+      "credits": null
+    }
+  },
+  "independentReview": "development/reviews/e32-core-review-20261017.json",
+  "newTasks": 0,
+  "wholeProjectCompleted": false,
+  "familyAcceptance": false,
+  "nextExistingTask": "E3.3",
+  "taskAdmission": "The canonical board admits task completion only after independent GO; review report is referenced separately, not self-approved."
+}

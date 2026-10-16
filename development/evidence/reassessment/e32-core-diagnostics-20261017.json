@@ -1,0 +1,176 @@
+{
+  "contract": "EvaCoreReviewDiagnostics/v1",
+  "checkedAt": "2026-10-16T23:20:20.589411+00:00",
+  "architectureCheck": {
+    "command": "PYTHONPATH=src python3 -B -m tools.check_architecture",
+    "exitCode": 1,
+    "ok": false,
+    "pythonFilesChecked": 547,
+    "allFindings": 129,
+    "coreFindings": [
+      {
+        "code": "local_import_boundary",
+        "detail": "eva.operations.component_evaluation",
+        "line": 124,
+        "path": "src/eva/application/component_improvements.py"
+      },
+      {
+        "code": "local_import_boundary",
+        "detail": "eva.operations.component_evaluation",
+        "line": 166,
+        "path": "src/eva/application/component_improvements.py"
+      },
+      {
+        "code": "provider_specific_core_debt_new_file",
+        "detail": "7 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/application/conversation.py"
+      },
+      {
+        "code": "provider_specific_core_debt_new_file",
+        "detail": "9 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/bootstrap/component_observations.py"
+      },
+      {
+        "code": "provider_specific_core_debt_new_file",
+        "detail": "9 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/bootstrap/dashboard_voice.py"
+      },
+      {
+        "code": "external_import_boundary",
+        "detail": "pydantic",
+        "line": 15,
+        "path": "src/eva/bootstrap/dashboard_voice.py"
+      },
+      {
+        "code": "provider_specific_core_debt_new_file",
+        "detail": "9 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/bootstrap/delegated_digital_composition.py"
+      },
+      {
+        "code": "provider_specific_core_debt_new_file",
+        "detail": "8 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/bootstrap/delegated_digital_runner.py"
+      },
+      {
+        "code": "provider_specific_core_debt_new_file",
+        "detail": "4 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/bootstrap/household_digital_work.py"
+      },
+      {
+        "code": "external_import_boundary",
+        "detail": "httpx2",
+        "line": 12,
+        "path": "src/eva/bootstrap/household_initiative_delivery.py"
+      },
+      {
+        "code": "external_import_boundary",
+        "detail": "pydantic",
+        "line": 10,
+        "path": "src/eva/bootstrap/household_research_policy.py"
+      },
+      {
+        "code": "external_import_boundary",
+        "detail": "pydantic",
+        "line": 15,
+        "path": "src/eva/bootstrap/household_voice.py"
+      },
+      {
+        "code": "provider_specific_core_debt_new_file",
+        "detail": "3 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/bootstrap/household_work.py"
+      },
+      {
+        "code": "external_import_boundary",
+        "detail": "httpx2",
+        "line": 8,
+        "path": "src/eva/bootstrap/native_work_delivery.py"
+      },
+      {
+        "code": "external_import_boundary",
+        "detail": "pydantic",
+        "line": 67,
+        "path": "src/eva/bootstrap/optional_model_providers.py"
+      },
+      {
+        "code": "provider_specific_core_debt_increase",
+        "detail": "4>0 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/bootstrap/runtime.py"
+      },
+      {
+        "code": "provider_specific_core_debt_new_file",
+        "detail": "5 provider-specific identifiers",
+        "line": 1,
+        "path": "src/eva/contracts/delegated_digital_work.py"
+      }
+    ],
+    "policy": "development/design/architecture/package-boundaries-v1.json",
+    "policySha256": "5c67fef0b81382b1cdd31b3a4886c8a45482808a8b850a45e31620534a908d05",
+    "interpretation": "Existing diagnostic findings, not 129 proven runtime defects. Composition-specific provider names and contract capability IDs require semantic judgment. No policy or counter baseline modified."
+  },
+  "runtimeIdentity": {
+    "checkedAt": "2026-10-16T23:17:58.540664+00:00",
+    "source": "development/evidence/reassessment/e31-installed-source-20261017.json",
+    "services": [
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "container": "a5b28ded811e11b25cad970c618a5ba5b30377b0c1b5b2214a3119de01e6671f",
+        "image": "sha256:4d43ea288f44f790e58e9af3ba639bed51be3e1beb421fc5507ecdb4b9d5122d",
+        "running": true,
+        "imageUnchangedSinceE31": true,
+        "containerUnchangedSinceE31": true
+      },
+      {
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "container": "b8bc1635f2700f2af5689a4d3ea4d40f5c9316e5ce46f189d450e410e4911d6e",
+        "image": "sha256:f9d8cdc1d5da9c0164e222090607e420fdf82a85649828d580c440395cf3f2a7",
+        "running": true,
+        "imageUnchangedSinceE31": true,
+        "containerUnchangedSinceE31": true
+      }
+    ],
+    "scope": "Image identity only, no environment or runtime calls"
+  },
+  "runtimeMutations": 0,
+  "runtimeModelCalls": 0,
+  "sourceChanges": 0,
+  "staticGraph": {
+    "resolvedImportEdges": 4627,
+    "parseErrors": 0,
+    "limitations": "Imports establish code consumers, not execution, absence of dynamic use or deletion safety."
+  },
+  "localSemanticDiagnostic": {
+    "commandScope": "One isolated local call to existing schema validator plus JSON proof equality; no service/model/network calls.",
+    "result": {
+      "const_true_accepted_integer_one": true,
+      "python_proof_equal": true,
+      "canonical_proof_equal": false
+    },
+    "finding": "APP-01",
+    "interpretation": "Reproduces bool/int equality collision in current source; does not prove a historical household action was incorrectly accepted."
+  },
+  "runtimeInstalledVersions": {
+    "method": "Read distribution metadata only; no model/provider or speech import/call",
+    "results": [
+      {
+        "service": "eva2-managed-b-slot3-core",
+        "distribution": "pydantic-ai-slim",
+        "version": "2.37.0",
+        "exitCode": 0
+      },
+      {
+        "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "distribution": "pydantic-ai-slim",
+        "version": "2.37.0",
+        "exitCode": 0
+      }
+    ]
+  }
+}

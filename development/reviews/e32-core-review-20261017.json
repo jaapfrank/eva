@@ -1,0 +1,152 @@
+{
+  "contract": "EvaIndependentCoreReview/v1",
+  "card": "E3.2",
+  "verdict": "GO",
+  "reviewedAt": "2026-10-16T23:26:11.757216+00:00",
+  "scope": "Approval of the concrete 136-file semantic review registration and finite E4 decisions only.",
+  "artifacts": [
+    {
+      "path": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "sha256": "d883510e3b792126030a78507baee7bc3025e4efff8d5597eb32dd88c9cb0da0"
+    },
+    {
+      "path": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "sha256": "ce0c5ecc1be7423b5bb2bc9e4cfe0645f650beedb6f3c374fcc01a00c69a2c95"
+    },
+    {
+      "path": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "sha256": "0f1d6194ee9437b54f98b545dfc6da38b1698d34b1327a8c95922f93dc316778"
+    },
+    {
+      "path": "development/evidence/reassessment/e32-core-review-20261017.json",
+      "sha256": "8667802cc01cf34a839b901dc53309c4049e04777bec29604a32e72dd1ffbca3"
+    },
+    {
+      "path": "development/docs/e32-core-review-20261017.md",
+      "sha256": "b69fa33bf84db003d8b1010425cdff9239893d58c494afc3745c2dbdbafbff9e"
+    },
+    {
+      "path": "development/evidence/reassessment/e32-core-consumers-20261017.json",
+      "sha256": "5de8f8d95f26b71720921c3ca77b90d86afcc4af25e7cfad17a1454b4c36c1de"
+    },
+    {
+      "path": "development/evidence/reassessment/e32-core-diagnostics-20261017.json",
+      "sha256": "2f4410e2e9ef3d9c13b9af40ca1e08bc1a467baf2a28613375d70921b54b33ce"
+    }
+  ],
+  "checks": {
+    "exactScope": 136,
+    "filesByModule": {
+      "application": 63,
+      "bootstrap": 50,
+      "contracts": 21,
+      "domain": 2
+    },
+    "uniquePaths": 136,
+    "allCurrentAndE31HashesMatch": true,
+    "allFullContentReadAttestationsPresent": true,
+    "perFileResponsibilityAndDecision": true,
+    "allFilesHaveConcreteConsumersOrExplicitReferenceInBoundSubreport": true,
+    "finiteDecisions": 9,
+    "existingCardsOnly": [
+      "E4.2",
+      "E4.4"
+    ],
+    "allDecisionReferencesResolve": true,
+    "immutableE31ManifestAndTwoE31EvidenceFiles": true,
+    "newProductSourceChanges": 0,
+    "speechChangesByReviewers": 0,
+    "installationRequired": false
+  },
+  "independence": {
+    "reviewer": "e32_application_review",
+    "applicationAuthorship": "This reviewer authored the 63-file application subreport and does not independently approve its own semantic findings.",
+    "rootApplicationCheck": "Coordinator independently checked all 63 application hashes/consumers and APP source findings; APP-01 was independently reproduced once in bound diagnostics.",
+    "independentWorkHere": "This reviewer checked the root contracts/domain report, bootstrap report and merged scope/hash/consumer/decision integrity, and inspected the concrete source/consumer samples below.",
+    "methodLimit": "Full-content reading is attested by each assigned author; this bundled review performs targeted source sampling, not a second full re-read of all 136 files."
+  },
+  "sourceSamples": [
+    {
+      "paths": [
+        "src/eva/contracts/registry.py:98",
+        "src/eva/contracts/__init__.py:25",
+        "src/eva/contracts/delegated_work.py:233"
+      ],
+      "conclusion": "Closed registry and specialized current loaders have distinct uses. Retaining old wire shapes is justified; registry omission alone is not a fault."
+    },
+    {
+      "paths": [
+        "src/eva/contracts/planning.py:38",
+        "src/eva/contracts/memory.py:119",
+        "src/eva/application/memory.py:348",
+        "src/eva/adapters/model/pydantic_conversation.py:4074"
+      ],
+      "conclusion": "APP-04 correctly confines trust-projection issue to MemoryAuthority; ordinary Hindsight semantic qualifier remains explicit. Preserve wire contract."
+    },
+    {
+      "paths": [
+        "src/eva/domain/episode.py:47",
+        "src/eva/application/episode_repository.py:9"
+      ],
+      "conclusion": "Episode transition/repository port retains a concrete consumer/reference purpose; no second full daily task engine claimed."
+    },
+    {
+      "paths": [
+        "src/eva/bootstrap/delegated_work_service.py:387",
+        "src/eva/bootstrap/delegated_work_service.py:441",
+        "src/eva/bootstrap/delegated_digital_profile.py:29"
+      ],
+      "conclusion": "B01 has a real broad RuntimeSettings import and whole runtime source pin. Change must retain all actually executed source bindings and old grants."
+    },
+    {
+      "paths": [
+        "src/eva/bootstrap/delegated_digital_runner.py:352",
+        "src/eva/bootstrap/delegated_digital_runner.py:366",
+        "src/eva/bootstrap/delegated_digital_runner.py:424"
+      ],
+      "conclusion": "B02 accurately identifies provider/protocol-specific completion handling in generic worker; transport status must not replace rich readback evidence."
+    },
+    {
+      "paths": [
+        "deploy/delegated-work/Dockerfile:10",
+        "deploy/delegated-work/Dockerfile:13",
+        "src/eva/bootstrap/delegated_work_provider.py:91"
+      ],
+      "conclusion": "B03 copied lock path and install path differ. Static legacy build debt is distinct from current installed runtime; bundle explicitly records actual 2.37.0 metadata."
+    },
+    {
+      "paths": [
+        "src/eva/bootstrap/public_lookup.py:181",
+        "src/eva/bootstrap/public_lookup.py:190",
+        "src/eva/adapters/model/public_lookup.py:7",
+        "development/tests/bootstrap/test_public_lookup.py:30"
+      ],
+      "conclusion": "B04 substantive source interpretation uses contact settings. Current owner policy requires separate work selection; remediation stays coordinated with speech owner."
+    }
+  ],
+  "blockers": [],
+  "evidenceLimits": [
+    "GO closes only E3.2 review scope, not E3.3/E3.4/E4/project or family acceptance.",
+    "All nine required E4 decisions remain not implemented. No source quality green claim is implied.",
+    "Static imports/resources and installed-byte metadata are not proof every route ran or daily household usefulness.",
+    "Architecture gate remains failed with 129 diagnostic signals; semantic classification neither erases nor multiplies those into 129 proven defects.",
+    "No secret/private conversations/protected final cases read; old criteria, source hashes, grants and failure evidence preserved.",
+    "No product tests, new matrix, install or runtime model/provider request performed in this independent review.",
+    "Pre-existing dirty speech/integration files are preserved; source equality is measured against the E3.1 snapshot rather than clean Git HEAD.",
+    "Domain package marker's aggregate entry has no import consumer; its bound subreport explicitly records setuptools package discovery. This is explained reference ownership, not missing review coverage."
+  ],
+  "usage": {
+    "scope": "development independent review after application authoring",
+    "functionsExecCalls": 13,
+    "modelRequests": null,
+    "tokens": null,
+    "credits": null,
+    "runtimeModelCalls": 0,
+    "runtimeToolEffects": 0,
+    "testsRun": 0,
+    "installations": 0,
+    "time": "Exact start unavailable; review timestamp recorded, duration not fabricated.",
+    "counting": "Visible functions.exec calls in this independent-review assignment through final metadata correction; separate from prior application authoring and coordination tools."
+  },
+  "wholeProjectCompleted": false
+}

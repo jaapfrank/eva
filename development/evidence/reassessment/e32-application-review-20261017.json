@@ -1,0 +1,2626 @@
+{
+  "contract": "EvaApplicationContentReview/v1",
+  "card": "E3.2",
+  "status": "complete_for_application_scope_with_finite_E4_decisions",
+  "checkedAt": "2026-10-16T23:21:22.035431+00:00",
+  "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+  "currentHead": "a6cba2a1231343735a552535a5df5bd4d72302f4",
+  "scope": {
+    "prefix": "src/eva/application",
+    "inventoryCount": 63,
+    "currentCount": 63,
+    "currentDelta": [],
+    "pythonLineCount": 14543
+  },
+  "authorityRead": [
+    "AGENTS.md",
+    "development/docs/PROJECTDOEL.md",
+    "development/docs/ARCHITECTUUR.md",
+    "development/docs/AFRONDINGSPLAN.md",
+    "development/design/architecture/package-boundaries-v1.json"
+  ],
+  "reviewPrecondition": {
+    "alreadyWorking": "Existing conversation/memory/durable work/initiative/delivery/AIDE route remains the installed baseline.",
+    "gap": "E3.1 enumeration was not full content review or consumer/decision assessment.",
+    "existingRoute": "Current application boundaries and actual composition/resources/consumers.",
+    "doneWhen": "All 63 current files fully read, exact hashes bound, responsibility/consumers/decision and bounded E4 actions recorded.",
+    "userUse": "Reconcile E3.2 inventory and execute only finite E4 decisions; this review is no new household feature."
+  },
+  "consumerGraph": {
+    "source": "private sibling .eva2-artifacts/e32-core-review-20261017/consumer-graph.json",
+    "sha256": "8efdc614fc9367defb28f612f5a27c17ae3c880b3b78e603b0e937137fdbb855",
+    "edges": 4627,
+    "parseErrors": [],
+    "limitation": "Static imports reused from coordinator; dynamic/resource/composition paths separately checked. All external consumer files have not been fully read here."
+  },
+  "files": [
+    {
+      "path": "src/eva/application/__init__.py",
+      "sha256": "1c038ae45e088c112125188e4b0188adb05ba1858af69c76f37b74e6ca675a52",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "1c038ae45e088c112125188e4b0188adb05ba1858af69c76f37b74e6ca675a52",
+      "sourceDelta": false,
+      "bytes": 42,
+      "lineCount": 1,
+      "fullContentRead": true,
+      "responsibility": "Package ownership marker; no state or composition.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "package-loading",
+          "location": "pyproject.toml:31",
+          "detail": "Setuptools eva* discovery; Python imports child modules through this package."
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Package ownership marker; no state or composition. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 1,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/action_chain.py",
+      "sha256": "dff0a1208153e824acd4a55b21354728e706f96d1fcd84f429a990bfa0c28f88",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "dff0a1208153e824acd4a55b21354728e706f96d1fcd84f429a990bfa0c28f88",
+      "sourceDelta": false,
+      "bytes": 24228,
+      "lineCount": 594,
+      "fullContentRead": true,
+      "responsibility": "Validate bounded plans against complete host catalog, policy hashes and dependent read/effect steps.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/action_chain_read_authorizer.py:36",
+          "symbol": "ActionToolCatalog"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/action_chain_read_authorizer.py:36",
+          "symbol": "action_chain_step_operation_id"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/action_chain_read_executor.py:17",
+          "symbol": "ActionToolCatalog"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Validate bounded plans against complete host catalog, policy hashes and dependent read/effect steps. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 62,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/action_chain_effect_advances.py",
+      "sha256": "25e6261ad4ad385d9137b38686c639f0d9c9bd21d600ea567894d94a8f46862a",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "25e6261ad4ad385d9137b38686c639f0d9c9bd21d600ea567894d94a8f46862a",
+      "sourceDelta": false,
+      "bytes": 2891,
+      "lineCount": 86,
+      "fullContentRead": true,
+      "responsibility": "Compare sealed expected projection with fresh retained effect readback; canonical type-sensitive verification.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_advance_validation.py:12",
+          "symbol": "VerifiedActionChainEffectProof"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_advance_validation.py:12",
+          "symbol": "verify_action_chain_effect_proof"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_action_chain_effect_advances.py:7",
+          "symbol": "ActionChainEffectProofError"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Compare sealed expected projection with fresh retained effect readback; canonical type-sensitive verification. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 4,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/action_chain_effect_readback_results.py",
+      "sha256": "b87a67417c40987a599eab82f12b5f7fffcdcfd30900d788ed62eef938ce2e9f",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "b87a67417c40987a599eab82f12b5f7fffcdcfd30900d788ed62eef938ce2e9f",
+      "sourceDelta": false,
+      "bytes": 4909,
+      "lineCount": 122,
+      "fullContentRead": true,
+      "responsibility": "Bind provider readback, receipts, observations and evidence to the exact effect; accepted does not mean physically verified.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_readback_validation.py:37",
+          "symbol": "project_action_chain_effect_readback"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/support/postgres_action_chain_effect_readback_results.py:33",
+          "symbol": "project_action_chain_effect_readback"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Bind provider readback, receipts, observations and evidence to the exact effect; accepted does not mean physically verified. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 2,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/action_chain_effect_results.py",
+      "sha256": "98cdbed3885834480aecff316d734d4cf61be7d60dcf9e36bd154f84afa17bef",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "98cdbed3885834480aecff316d734d4cf61be7d60dcf9e36bd154f84afa17bef",
+      "sourceDelta": false,
+      "bytes": 13006,
+      "lineCount": 338,
+      "fullContentRead": true,
+      "responsibility": "Project claimed effect exchange to durable intent/attempt states, evidence and optional receipt; ambiguity retained.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_result_validation.py:44",
+          "symbol": "ProjectedActionChainEffectResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_result_validation.py:44",
+          "symbol": "project_action_chain_effect_result"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_results.py:35",
+          "symbol": "ProjectedActionChainEffectResult"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Project claimed effect exchange to durable intent/attempt states, evidence and optional receipt; ambiguity retained. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 6,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/action_chain_provider_claims.py",
+      "sha256": "bc16fcd29261512c6cf25f76da8d3e122be4110ad9e5eff47e73a3429eb41ade",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "bc16fcd29261512c6cf25f76da8d3e122be4110ad9e5eff47e73a3429eb41ade",
+      "sourceDelta": false,
+      "bytes": 1403,
+      "lineCount": 42,
+      "fullContentRead": true,
+      "responsibility": "Structural already-claimed provider authority ports prevent persistence from importing dispatch implementations.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_effect_results.py:34",
+          "symbol": "ActionChainEffectClaim"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_read_results.py:39",
+          "symbol": "ActionChainReadClaim"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Structural already-claimed provider authority ports prevent persistence from importing dispatch implementations. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 2,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/action_chain_read_results.py",
+      "sha256": "80adcebe92a7fbac441d68efef8a81ab9a060886131596cb11e31bb4a61c9171",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "80adcebe92a7fbac441d68efef8a81ab9a060886131596cb11e31bb4a61c9171",
+      "sourceDelta": false,
+      "bytes": 14407,
+      "lineCount": 367,
+      "fullContentRead": true,
+      "responsibility": "Project sealed read/readback outcomes into durable read attempts, observations and provenance.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_read_result_validation.py:22",
+          "symbol": "ProjectedActionChainReadResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_read_result_validation.py:22",
+          "symbol": "project_action_chain_read_result"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/action_chain_read_results.py:40",
+          "symbol": "ProjectedActionChainReadResult"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Project sealed read/readback outcomes into durable read attempts, observations and provenance. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 6,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/audio_playback.py",
+      "sha256": "cdf242eb7e3db03ca32a192891ac0e1ab7a900146a9cd7f2ff68366ae0253bdc",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "cdf242eb7e3db03ca32a192891ac0e1ab7a900146a9cd7f2ff68366ae0253bdc",
+      "sourceDelta": false,
+      "bytes": 2475,
+      "lineCount": 53,
+      "fullContentRead": true,
+      "responsibility": "Validate frame-level output evidence separately from human hearing/identity; speech owner retains changes.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/native_voice.py:27",
+          "symbol": "AudioPlaybackResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/native_voice.py:27",
+          "symbol": "PlaybackConflict"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/voice_requests.py:21",
+          "symbol": "AudioPlaybackResult"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Validate frame-level output evidence separately from human hearing/identity; speech owner retains changes. The listed consumers need an explicit migrated interface before removal.",
+      "speechBoundary": "read-only; speech executor owns edits/install",
+      "consumerEvidenceTotal": 16,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/background_execution.py",
+      "sha256": "59bab1c9e4a8abb34f9c628f370415891ed3209c238e13513aa50b84dc985d2f",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "59bab1c9e4a8abb34f9c628f370415891ed3209c238e13513aa50b84dc985d2f",
+      "sourceDelta": false,
+      "bytes": 4113,
+      "lineCount": 105,
+      "fullContentRead": true,
+      "responsibility": "Bind admitted work namespace, dispatch guard and remaining time/model allowance to the exact source turn.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/saved_artifact_application.py:88",
+          "symbol": "BackgroundExecutionScope"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/saved_artifact_application.py:88",
+          "symbol": "background_execution"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_result_reader.py:2",
+          "symbol": "authorize_background_dispatch"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Bind admitted work namespace, dispatch guard and remaining time/model allowance to the exact source turn. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 102,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/cancellation.py",
+      "sha256": "b97ab6117742a0a09367b77ac8293ad7297e271c1e5a79ab7ec101765f9963c4",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "b97ab6117742a0a09367b77ac8293ad7297e271c1e5a79ab7ec101765f9963c4",
+      "sourceDelta": false,
+      "bytes": 4061,
+      "lineCount": 125,
+      "fullContentRead": true,
+      "responsibility": "Cooperative cancellation across thread/async ports; own cleanup without claiming effect rollback.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:1047",
+          "symbol": "check_cancellation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/native_voice.py:15",
+          "symbol": "check_cancellation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/native_voice.py:15",
+          "symbol": "run_in_cancellation_thread"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Cooperative cancellation across thread/async ports; own cleanup without claiming effect rollback. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 58,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/channel_routes.py",
+      "sha256": "bd074eccf3c3b6a7eb1c1af89d37f0fb8d605b6d97ddf001ba88dd81c7badd79",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "bd074eccf3c3b6a7eb1c1af89d37f0fb8d605b6d97ddf001ba88dd81c7badd79",
+      "sourceDelta": false,
+      "bytes": 229,
+      "lineCount": 6,
+      "fullContentRead": true,
+      "responsibility": "Recognize structural WhatsApp conversation IDs without granting authority; shared result consumers.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/document_completion.py:17",
+          "symbol": "is_whatsapp_conversation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/private_work_return.py:55",
+          "symbol": "is_whatsapp_conversation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/scheduled_work_failure.py:14",
+          "symbol": "is_whatsapp_conversation"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Recognize structural WhatsApp conversation IDs without granting authority; shared result consumers. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 3,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/commerce.py",
+      "sha256": "11b1ece31dfd3a80636137e24372ff1815b1bbb02d59cb98c7743bb7a522758d",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "11b1ece31dfd3a80636137e24372ff1815b1bbb02d59cb98c7743bb7a522758d",
+      "sourceDelta": false,
+      "bytes": 13477,
+      "lineCount": 367,
+      "fullContentRead": true,
+      "responsibility": "Existing optional Stripe/EUR-bound publication approvals, paid-order and fulfillment data; neutral docstring overstates provider neutrality.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:133",
+          "symbol": "CommerceError"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:133",
+          "symbol": "DigitalFulfillmentDownload"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:133",
+          "symbol": "ProductPublicationApproval"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Existing optional Stripe/EUR-bound publication approvals, paid-order and fulfillment data; neutral docstring overstates provider neutrality. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 38,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/component_development.py",
+      "sha256": "41f8ff63e255a0521ddfeb4bfd522b7ead64448e0436ff35c1b156b6398511ad",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "41f8ff63e255a0521ddfeb4bfd522b7ead64448e0436ff35c1b156b6398511ad",
+      "sourceDelta": false,
+      "bytes": 9653,
+      "lineCount": 166,
+      "fullContentRead": true,
+      "responsibility": "Rank measured variants under identical frozen development criteria; ties/loss retain baseline; not final approval.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/component_development.py:13",
+          "symbol": "validate_development_criteria"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/component_work_execution.py:76",
+          "symbol": "make_scoped_component_evaluation_binding"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/component_improvement_actions.py:7",
+          "symbol": "WORK_STRATEGY_EVALUATION_PATH"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Rank measured variants under identical frozen development criteria; ties/loss retain baseline; not final approval. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 16,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/component_improvements.py",
+      "sha256": "0f1838b308347d6da0d4f7ef962ee07b4aadf17c7422f0ef4dbeedec80c4dd19",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "0f1838b308347d6da0d4f7ef962ee07b4aadf17c7422f0ef4dbeedec80c4dd19",
+      "sourceDelta": false,
+      "bytes": 11873,
+      "lineCount": 199,
+      "fullContentRead": true,
+      "responsibility": "Read bounded components, draft exact lineage-bound patches and prepare reviewable release candidates.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/component_final_assessment.py:11",
+          "symbol": "bind_selected_release"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/component_work_execution.py:77",
+          "symbol": "read_component"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/component_improvement_actions.py:11",
+          "symbol": "read_component"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "simplify",
+      "reason": "Apply only the exact finite finding(s) APP-03; preserve current consumers, hashes/provenance and public interfaces.",
+      "findingIds": [
+        "APP-03"
+      ],
+      "replacement": [
+        {
+          "finding": "APP-03",
+          "card": "E4.2",
+          "action": "Move the existing pure closed-shape validator into an appropriate existing application/contract boundary; application and operations consume the same definition. Preserve exact hashes, retention and source/current-authority checks. No weakened gate, hidden-criteria change or alias back to operations."
+        }
+      ],
+      "removalConsequence": "Would remove Read bounded components, draft exact lineage-bound patches and prepare reviewable release candidates. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 21,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/conversation.py",
+      "sha256": "c30a21c6ba3ec78a954ea10f8677fcc7471b9a0723bfbba2a617376d97d1c743",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "c30a21c6ba3ec78a954ea10f8677fcc7471b9a0723bfbba2a617376d97d1c743",
+      "sourceDelta": false,
+      "bytes": 66213,
+      "lineCount": 1431,
+      "fullContentRead": true,
+      "responsibility": "One channel-neutral turn with admitted memory, receipt replay, contact/work routing and guarded final reply.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/initiative_execution.py:9",
+          "symbol": "ConversationConflict"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/initiative_execution.py:9",
+          "symbol": "ConversationTurn"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:15",
+          "symbol": "ConversationTurn"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "simplify",
+      "reason": "Apply only the exact finite finding(s) APP-02; preserve current consumers, hashes/provenance and public interfaces.",
+      "findingIds": [
+        "APP-02"
+      ],
+      "replacement": [
+        {
+          "finding": "APP-02",
+          "card": "E4.2",
+          "action": "Move the existing HA protocol paragraph to existing provider tool guidance and define the admitted timeout bound once in the existing preparation/request translation. Preserve conversation routing, tool names, durable budgets and wire behavior. No provider framework or whole-module rewrite."
+        }
+      ],
+      "removalConsequence": "Would remove One channel-neutral turn with admitted memory, receipt replay, contact/work routing and guarded final reply. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 858,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/conversation_media.py",
+      "sha256": "921ed4e4cb922e9d7302df6b4c6a59b1b80dbfeda7471edfc24b3999f287c971",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "921ed4e4cb922e9d7302df6b4c6a59b1b80dbfeda7471edfc24b3999f287c971",
+      "sourceDelta": false,
+      "bytes": 1896,
+      "lineCount": 43,
+      "fullContentRead": true,
+      "responsibility": "Uncertain media analysis bound separately from a person's own words and source provenance.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:19",
+          "symbol": "ConversationMediaContext"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/app.py:1281",
+          "symbol": "ConversationMediaContext"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/scheduled_work.py:73",
+          "symbol": "ConversationMediaContext"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Uncertain media analysis bound separately from a person's own words and source provenance. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 4,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/conversation_receipt.py",
+      "sha256": "a834e6491e77657eff16e4f3d5355ef55a0680f37399754d1a3722c44e8c9dc6",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "a834e6491e77657eff16e4f3d5355ef55a0680f37399754d1a3722c44e8c9dc6",
+      "sourceDelta": false,
+      "bytes": 281,
+      "lineCount": 7,
+      "fullContentRead": true,
+      "responsibility": "Authenticated input reception presentation; never proof of work admission/completion or retained model output.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/voice_service/agent.py:14",
+          "symbol": "RECEIVED_INPUT_TEXT"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/dashboard_conversation.py:14",
+          "symbol": "RECEIVED_INPUT_TEXT"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/native_voice.py:405",
+          "symbol": "RECEIVED_INPUT_TEXT"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Authenticated input reception presentation; never proof of work admission/completion or retained model output. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 5,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/default_identity_pack.json",
+      "sha256": "025984c019714d7107803258959fcbddd94d0700acaef15beeac26f05a645798",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "025984c019714d7107803258959fcbddd94d0700acaef15beeac26f05a645798",
+      "sourceDelta": false,
+      "bytes": 1517,
+      "lineCount": 1,
+      "fullContentRead": true,
+      "responsibility": "Signed default identity resource loaded by path; retain exact bytes and register package ownership.",
+      "owner": "eva.application",
+      "category": "packaged-runtime-data",
+      "consumerEvidence": [
+        {
+          "kind": "resource",
+          "location": "src/eva/adapters/objects/identity_verifier.py:46",
+          "detail": "Path-based default pack loader"
+        },
+        {
+          "kind": "installer-default",
+          "location": "src/eva/bootstrap/installer_wizard_cli.py:307",
+          "detail": "Default pack path"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [
+        "APP-05"
+      ],
+      "replacement": [
+        {
+          "finding": "APP-05",
+          "card": "E4.4",
+          "action": "E3.3 confirms actual build/install ownership; E4.4 explicitly packages the two exact signed resources or documents/enforces the chosen non-wheel source delivery contract. Keep pack and public trust bytes unchanged."
+        }
+      ],
+      "removalConsequence": "Would remove Signed default identity resource loaded by path; retain exact bytes and register package ownership. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 2,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/default_identity_pack_trust.json",
+      "sha256": "1ab9b15da48a18149b519c3cb6270535f52f679a837f3715e8a8499321ffa1ae",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "1ab9b15da48a18149b519c3cb6270535f52f679a837f3715e8a8499321ffa1ae",
+      "sourceDelta": false,
+      "bytes": 303,
+      "lineCount": 1,
+      "fullContentRead": true,
+      "responsibility": "Non-secret public trust resource for default identity; retain exact bytes and register package ownership.",
+      "owner": "eva.application",
+      "category": "packaged-runtime-data",
+      "consumerEvidence": [
+        {
+          "kind": "resource",
+          "location": "src/eva/application/identity_verifier.py:111",
+          "detail": "Path-based default trust loader"
+        },
+        {
+          "kind": "installer-default",
+          "location": "src/eva/bootstrap/installer_wizard_cli.py:308",
+          "detail": "Default trust path"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [
+        "APP-05"
+      ],
+      "replacement": [
+        {
+          "finding": "APP-05",
+          "card": "E4.4",
+          "action": "E3.3 confirms actual build/install ownership; E4.4 explicitly packages the two exact signed resources or documents/enforces the chosen non-wheel source delivery contract. Keep pack and public trust bytes unchanged."
+        }
+      ],
+      "removalConsequence": "Would remove Non-secret public trust resource for default identity; retain exact bytes and register package ownership. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 2,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/delegated_work_delivery.py",
+      "sha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52",
+      "sourceDelta": false,
+      "bytes": 6666,
+      "lineCount": 141,
+      "fullContentRead": true,
+      "responsibility": "Current private Telegram destination, original ingress and exact work/result identity; explicitly channel-specific.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_owner_service.py:10",
+          "symbol": "PrivateWorkDestination"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_delivery.py:14",
+          "symbol": "PrivateWorkDestination"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/document_completion.py:9",
+          "symbol": "PrivateWorkDestination"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Current private Telegram destination, original ingress and exact work/result identity; explicitly channel-specific. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 11,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/delegated_work_memory.py",
+      "sha256": "4eb7e708772546ddb35591db57718704a54b213040a8ecc5ae3a9e6208aa3b07",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "4eb7e708772546ddb35591db57718704a54b213040a8ecc5ae3a9e6208aa3b07",
+      "sourceDelta": false,
+      "bytes": 4950,
+      "lineCount": 89,
+      "fullContentRead": true,
+      "responsibility": "Project terminal private work into existing person memory while preserving failure and unconfirmed worker output.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_memory.py:17",
+          "symbol": "outcome_document"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_memory.py:17",
+          "symbol": "document_binding_sha256"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_delegated_work_memory.py:12",
+          "symbol": "outcome_document"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Project terminal private work into existing person memory while preserving failure and unconfirmed worker output. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 5,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/delegated_work_owner.py",
+      "sha256": "a58cbbbf8ab1b3c952bba979215eb1a8b60875e8c14e551699669394ac6e17ba",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "a58cbbbf8ab1b3c952bba979215eb1a8b60875e8c14e551699669394ac6e17ba",
+      "sourceDelta": false,
+      "bytes": 819,
+      "lineCount": 17,
+      "fullContentRead": true,
+      "responsibility": "Owner-authorized delegated work command port; runtime composition remains outside application.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/delegated_work_actions.py:22",
+          "symbol": "DelegatedWorkOwnerPort"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Owner-authorized delegated work command port; runtime composition remains outside application. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 1,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/delivery.py",
+      "sha256": "da297003505c94c0bfa456cb12bedaa915e61f053f4d55abd4b5a5e882aaf88f",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "da297003505c94c0bfa456cb12bedaa915e61f053f4d55abd4b5a5e882aaf88f",
+      "sourceDelta": false,
+      "bytes": 10516,
+      "lineCount": 280,
+      "fullContentRead": true,
+      "responsibility": "Bounded fan-out request/receipt contracts and readback-before-deliver worker; distinct from original-recipient task return.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "execution",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:2373",
+          "detail": "Existing fan-out worker"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:33",
+          "symbol": "FanoutDeliveryRequest"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:33",
+          "symbol": "FanoutDeliveryResult"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Bounded fan-out request/receipt contracts and readback-before-deliver worker; distinct from original-recipient task return. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 21,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/durable_goals.py",
+      "sha256": "db7320fc31db350d63313d3d1bca32c841f86895dac5cc616795e97549e69f62",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "db7320fc31db350d63313d3d1bca32c841f86895dac5cc616795e97549e69f62",
+      "sourceDelta": false,
+      "bytes": 21578,
+      "lineCount": 553,
+      "fullContentRead": true,
+      "responsibility": "Existing bounded wake/evidence/effect/follow-up/delivery lifecycle; document-goal consumers require v1/v2 state compatibility.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "execution",
+          "location": "src/eva/providers/document_goals.py:185",
+          "detail": "Document goals use existing orchestrator"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/durable_goal_worker.py:18",
+          "symbol": "DurableGoalWorker"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/document_goal_worker.py:4",
+          "symbol": "DurableGoalWorker"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Existing bounded wake/evidence/effect/follow-up/delivery lifecycle; document-goal consumers require v1/v2 state compatibility. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 75,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/effect_verification.py",
+      "sha256": "8736560b557f90555d464317cc38381d34b87ac7ac54d56668c2a8fb16389ff9",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "8736560b557f90555d464317cc38381d34b87ac7ac54d56668c2a8fb16389ff9",
+      "sourceDelta": false,
+      "bytes": 7932,
+      "lineCount": 213,
+      "fullContentRead": true,
+      "responsibility": "Declarative expected/observed JSON Pointer projection; canonical comparison distinguishes boolean/integer.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/action_chain.py:10",
+          "symbol": "EffectVerificationError"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/action_chain.py:10",
+          "symbol": "EffectVerificationProjection"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/action_chain_effect_advances.py:10",
+          "symbol": "EffectVerificationError"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Declarative expected/observed JSON Pointer projection; canonical comparison distinguishes boolean/integer. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 21,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/episode_repository.py",
+      "sha256": "37aec644c2cef670b9603fc6d08cf4a7510af972b6d85649e3e8b3e88dc377cb",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "37aec644c2cef670b9603fc6d08cf4a7510af972b6d85649e3e8b3e88dc377cb",
+      "sourceDelta": false,
+      "bytes": 1936,
+      "lineCount": 66,
+      "fullContentRead": true,
+      "responsibility": "Transaction-scoped episode port and explicit concurrency/transaction errors used by Postgres scope/timeline.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/scope.py:13",
+          "symbol": "TransactionRequired"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/scope.py:13",
+          "symbol": "TransactionScopeMismatch"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/operational_timeline.py:17",
+          "symbol": "TransactionRequired"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Transaction-scoped episode port and explicit concurrency/transaction errors used by Postgres scope/timeline. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 19,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/file_batches.py",
+      "sha256": "486f6699b168ec103f40b1325d25e1dfa25f3a97b6b274e94574edf4e426f96c",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "486f6699b168ec103f40b1325d25e1dfa25f3a97b6b274e94574edf4e426f96c",
+      "sourceDelta": false,
+      "bytes": 2904,
+      "lineCount": 88,
+      "fullContentRead": true,
+      "responsibility": "Bounded text-batch plans/results and retryable failure classes; local-files and conversation consumers remain.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:65",
+          "symbol": "BatchFilePlan"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:65",
+          "symbol": "TextBatchPlan"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:65",
+          "symbol": "TextBatchPort"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Bounded text-batch plans/results and retryable failure classes; local-files and conversation consumers remain. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 7,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/free_will.py",
+      "sha256": "d4b96fcc56926cf9c3369cd5938dec2c725cd922eaa2313bd972b6b5ed3922d1",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "d4b96fcc56926cf9c3369cd5938dec2c725cd922eaa2313bd972b6b5ed3922d1",
+      "sourceDelta": false,
+      "bytes": 28593,
+      "lineCount": 613,
+      "fullContentRead": true,
+      "responsibility": "Durable sensory/admission/foreground decisions, native source-outcome context and proactive expression delivery.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:2083",
+          "detail": "Current sensory decision worker"
+        },
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:2115",
+          "detail": "Existing shared audience worker class"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_initiative.py:10",
+          "symbol": "SensoryDecisionWorker"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Durable sensory/admission/foreground decisions, native source-outcome context and proactive expression delivery. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 77,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/household_initiative.py",
+      "sha256": "849ebd7d79e65bd1e9c6135c811b0a9180a0c20b1a169f9864ec3653c3237327",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "849ebd7d79e65bd1e9c6135c811b0a9180a0c20b1a169f9864ec3653c3237327",
+      "sourceDelta": false,
+      "bytes": 12998,
+      "lineCount": 216,
+      "fullContentRead": true,
+      "responsibility": "Host-bound shared household observations, attention provenance and strictly shared authorized recall.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_initiative.py:11",
+          "symbol": "HouseholdInitiativeBinding"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_initiative.py:11",
+          "symbol": "HouseholdInitiativeContext"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_initiative_delivery.py:15",
+          "symbol": "HouseholdInitiativeBinding"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Host-bound shared household observations, attention provenance and strictly shared authorized recall. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 9,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/human_understanding.py",
+      "sha256": "a2ea900bb07c27e983bd8b1bdce88966a19a8dfb5a9ad0eb140e4e1a8d5e180c",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "a2ea900bb07c27e983bd8b1bdce88966a19a8dfb5a9ad0eb140e4e1a8d5e180c",
+      "sourceDelta": false,
+      "bytes": 8178,
+      "lineCount": 155,
+      "fullContentRead": true,
+      "responsibility": "Canonical provisional hypotheses/expectations and validated predecessor chains in existing memory; not later-use proof.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/dashboard_memory.py:5",
+          "symbol": "is_human_understanding_reference"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/dashboard_memory.py:5",
+          "symbol": "parse_human_understanding_record"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/human_understanding_actions.py:10",
+          "symbol": "build_human_understanding_document"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Canonical provisional hypotheses/expectations and validated predecessor chains in existing memory; not later-use proof. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 34,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/identity_drafts.py",
+      "sha256": "897112958115700a6e6660db311bebbb90d6d4758335f54d972b542d03a208f4",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "897112958115700a6e6660db311bebbb90d6d4758335f54d972b542d03a208f4",
+      "sourceDelta": false,
+      "bytes": 2416,
+      "lineCount": 81,
+      "fullContentRead": true,
+      "responsibility": "Exact-base identity draft validation and deterministic presentation-only diff; activation separate.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/soul_markdown.py:15",
+          "symbol": "identity_presentation_diff"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/identity_pack_lifecycle.py:24",
+          "symbol": "identity_presentation_diff"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/identity_pack_lifecycle.py:24",
+          "symbol": "validate_identity_draft_base"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Exact-base identity draft validation and deterministic presentation-only diff; activation separate. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 9,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/identity_verifier.py",
+      "sha256": "3e77927c3cb850464ce358980713970820256da6bdb63ad59d928f8ae8831c71",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "3e77927c3cb850464ce358980713970820256da6bdb63ad59d928f8ae8831c71",
+      "sourceDelta": false,
+      "bytes": 5879,
+      "lineCount": 158,
+      "fullContentRead": true,
+      "responsibility": "Canonical signed pack verification against explicit non-secret trust binding; injected crypto.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/identity_pack_lifecycle.py:29",
+          "symbol": "IdentityPackTrustBinding"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_identity_lifecycle.py:24",
+          "symbol": "IdentityPackTrustBinding"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_identity_lifecycle.py:24",
+          "symbol": "load_identity_pack_trust_binding"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [
+        "APP-05"
+      ],
+      "replacement": [
+        {
+          "finding": "APP-05",
+          "card": "E4.4",
+          "action": "E3.3 confirms actual build/install ownership; E4.4 explicitly packages the two exact signed resources or documents/enforces the chosen non-wheel source delivery contract. Keep pack and public trust bytes unchanged."
+        }
+      ],
+      "removalConsequence": "Would remove Canonical signed pack verification against explicit non-secret trust binding; injected crypto. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 27,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/initiative_execution.py",
+      "sha256": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "33057992771a08104f33eb1a4791197e8dcc94b06148c38650746706f53156b0",
+      "sourceDelta": false,
+      "bytes": 1852,
+      "lineCount": 56,
+      "fullContentRead": true,
+      "responsibility": "Ephemeral host guard links native initiative turns to current durable authority; no model text grant.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:872",
+          "symbol": "require_initiative_context"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/personal_interests.py:253",
+          "symbol": "NativeInitiativeDelegation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/saved_artifact_application.py:184",
+          "symbol": "initiative_execution"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Ephemeral host guard links native initiative turns to current durable authority; no model text grant. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 52,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/installer.py",
+      "sha256": "4d32b4cc74d782441f8d6cdab1cab5a5d3984f1fbaa53f4ab4e777e421db126e",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "4d32b4cc74d782441f8d6cdab1cab5a5d3984f1fbaa53f4ab4e777e421db126e",
+      "sourceDelta": false,
+      "bytes": 10829,
+      "lineCount": 374,
+      "fullContentRead": true,
+      "responsibility": "Neutral installer workflow ports, view shapes, provider probe and verification outcomes; no duplicate concrete workflow.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_profile_workflow.py:20",
+          "symbol": "InstallerUseCaseError"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_profile_workflow.py:20",
+          "symbol": "InstallerUserInputError"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_provider_verification.py:22",
+          "symbol": "InstallerProviderProbe"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Neutral installer workflow ports, view shapes, provider probe and verification outcomes; no duplicate concrete workflow. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 57,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/installer_restore.py",
+      "sha256": "39a4f20b9e8b74763b1087a7acd035bfa7da35b9a307358dc4497f89d81a79fb",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "39a4f20b9e8b74763b1087a7acd035bfa7da35b9a307358dc4497f89d81a79fb",
+      "sourceDelta": false,
+      "bytes": 2048,
+      "lineCount": 40,
+      "fullContentRead": true,
+      "responsibility": "Restore port and explicit retained-material recovery metadata; preserve partial/ambiguous state.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/installer_wizard_cli.py:13",
+          "symbol": "InstallerRestorePort"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/installer_wizard.py:5",
+          "symbol": "InstallerRestorePort"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/installer_restore_api.py:11",
+          "symbol": "InstallerRestorePort"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Restore port and explicit retained-material recovery metadata; preserve partial/ambiguous state. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 10,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/memory.py",
+      "sha256": "07fedf412eb4463d788b669fbd6269286425acd603dc91b0bbd4c2a9e68fc2fb",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "07fedf412eb4463d788b669fbd6269286425acd603dc91b0bbd4c2a9e68fc2fb",
+      "sourceDelta": false,
+      "bytes": 19169,
+      "lineCount": 515,
+      "fullContentRead": true,
+      "responsibility": "Authoritative memory write/recall, budgeted semantic writer and replaceable provider ports; no second store.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/human_understanding.py:10",
+          "symbol": "ConversationMemoryDocument"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:17",
+          "symbol": "PresenceMemory"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:17",
+          "symbol": "RecallCurrentFacts"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "simplify",
+      "reason": "Apply only the exact finite finding(s) APP-04; preserve current consumers, hashes/provenance and public interfaces.",
+      "findingIds": [
+        "APP-04"
+      ],
+      "replacement": [
+        {
+          "finding": "APP-04",
+          "card": "E4.2",
+          "action": "Preserve original semantic trust in the existing context/value representation consistently with Hindsight, or filter unsupported inferred facts at this adapter. Keep source provenance, audience and current ConfirmedFact wire enum; any incompatible enum change needs versioned transition."
+        }
+      ],
+      "removalConsequence": "Would remove Authoritative memory write/recall, budgeted semantic writer and replaceable provider ports; no second store. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 120,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/memory_audience.py",
+      "sha256": "4aef5ec9ca0b6467d67a1531bfe7dee2f09a99a48cd2cfdb378325ac5828c9fa",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "4aef5ec9ca0b6467d67a1531bfe7dee2f09a99a48cd2cfdb378325ac5828c9fa",
+      "sourceDelta": false,
+      "bytes": 11306,
+      "lineCount": 282,
+      "fullContentRead": true,
+      "responsibility": "Closed private/group/household audience and consent provenance across ingress/memory/work.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:18",
+          "symbol": "MemoryAudience"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:21",
+          "symbol": "MemoryAudience"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/delegated_work_memory.py:12",
+          "symbol": "memory_audience_to_wire"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Closed private/group/household audience and consent provenance across ingress/memory/work. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 116,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/memory_background.py",
+      "sha256": "e974fc5e4c90744fff80064c5c481e9ca436582c2da215422d8de8e603c80e3a",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "e974fc5e4c90744fff80064c5c481e9ca436582c2da215422d8de8e603c80e3a",
+      "sourceDelta": false,
+      "bytes": 30401,
+      "lineCount": 713,
+      "fullContentRead": true,
+      "responsibility": "Existing retention outbox, erasure, reflection and serialized service callbacks; distinct durable authorities.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:2280",
+          "detail": "Cold worker constructed with existing callbacks"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:124",
+          "symbol": "HindsightColdPathWorker"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_memory_background.py:23",
+          "symbol": "HindsightColdPathWorker"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Existing retention outbox, erasure, reflection and serialized service callbacks; distinct durable authorities. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 11,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/objects.py",
+      "sha256": "63274614c68516f3a69b18c015419ec15cce7a0c31d34415f2af0ce8f4311d6c",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "63274614c68516f3a69b18c015419ec15cce7a0c31d34415f2af0ce8f4311d6c",
+      "sourceDelta": false,
+      "bytes": 23158,
+      "lineCount": 625,
+      "fullContentRead": true,
+      "responsibility": "Encrypted candidate preparation, durable binding commit, readback and selected-object authentication; CAS is not DB selection.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/portable_objects.py:8",
+          "symbol": "CasInstallStatus"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/objects/envelope.py:13",
+          "symbol": "EncryptedObjectCandidate"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/objects/envelope.py:13",
+          "symbol": "ObjectBinding"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Encrypted candidate preparation, durable binding commit, readback and selected-object authentication; CAS is not DB selection. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 41,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/orchestration.py",
+      "sha256": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "ef13b46a1c84bd10d49bb17ea1a726661400e2922087d0d4dc03eb09426ead88",
+      "sourceDelta": false,
+      "bytes": 19094,
+      "lineCount": 513,
+      "fullContentRead": true,
+      "responsibility": "Proof-first execution/resume through existing timeline, provider observation and bounded recovery.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/document_task_actions.py:5",
+          "symbol": "ToolProofObservation"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/document_task_actions.py:5",
+          "symbol": "ToolDispatchResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/mcp_registration.py:21",
+          "symbol": "ToolRequest"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "simplify",
+      "reason": "Apply only the exact finite finding(s) APP-01, APP-02; preserve current consumers, hashes/provenance and public interfaces.",
+      "findingIds": [
+        "APP-01",
+        "APP-02"
+      ],
+      "replacement": [
+        {
+          "finding": "APP-01",
+          "card": "E4.2",
+          "action": "Reuse existing canonical JSON equality semantics for observed/expected proof and const/enum membership; preserve result/state contracts and the documented schema subset. No new verification framework."
+        },
+        {
+          "finding": "APP-02",
+          "card": "E4.2",
+          "action": "Move the existing HA protocol paragraph to existing provider tool guidance and define the admitted timeout bound once in the existing preparation/request translation. Preserve conversation routing, tool names, durable budgets and wire behavior. No provider framework or whole-module rewrite."
+        }
+      ],
+      "removalConsequence": "Would remove Proof-first execution/resume through existing timeline, provider observation and bounded recovery. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 100,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/people_memory_overview.py",
+      "sha256": "2aa3cecd6ea6454408089a303c3ed1ceb0a9b5487ced0fe73047fbb7f5332184",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "2aa3cecd6ea6454408089a303c3ed1ceb0a9b5487ced0fe73047fbb7f5332184",
+      "sourceDelta": false,
+      "bytes": 5436,
+      "lineCount": 164,
+      "fullContentRead": true,
+      "responsibility": "Privacy-safe coarse owner status and authorized source excerpt pages; not all derived memory.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:108",
+          "symbol": "PeopleMemoryOverview"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:108",
+          "symbol": "PeopleMemoryOverviewPort"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/dashboard_memory.py:40",
+          "symbol": "MemorySourcePage"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Privacy-safe coarse owner status and authorized source excerpt pages; not all derived memory. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 24,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/personal_interests.py",
+      "sha256": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+      "sourceDelta": false,
+      "bytes": 19391,
+      "lineCount": 561,
+      "fullContentRead": true,
+      "responsibility": "Existing interest exploration, prototype/release artifacts and memory projection; native mode reuses executor.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:2064",
+          "detail": "Interest worker reuses native executor"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/commerce.py:10",
+          "symbol": "PersonalProductReleaseArtifact"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:125",
+          "symbol": "PersonalInterestWorker"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Existing interest exploration, prototype/release artifacts and memory projection; native mode reuses executor. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 81,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/portable_archive.py",
+      "sha256": "34e261c44434b2b9a16eb70a72359be60312d7811c3944a3e3d37c4a28035c61",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "34e261c44434b2b9a16eb70a72359be60312d7811c3944a3e3d37c4a28035c61",
+      "sourceDelta": false,
+      "bytes": 20234,
+      "lineCount": 507,
+      "fullContentRead": true,
+      "responsibility": "Sealed canonical portable row transformation/redaction and safe archive publication; preserve archive-specific semantics.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/portable_restore_authority.py:25",
+          "symbol": "canonical_json_bytes"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/tools/portable_runtime_archive.py:18",
+          "symbol": "canonical_json_bytes"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/tools/portable_runtime_archive.py:18",
+          "symbol": "encode_jsonl_records"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Sealed canonical portable row transformation/redaction and safe archive publication; preserve archive-specific semantics. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 72,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/portable_objects.py",
+      "sha256": "13da4e660e8ef6ddc5c1bf3837733c919bbb1b6ca14d6a02b42fcf97b3fdf821",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "13da4e660e8ef6ddc5c1bf3837733c919bbb1b6ca14d6a02b42fcf97b3fdf821",
+      "sourceDelta": false,
+      "bytes": 579,
+      "lineCount": 23,
+      "fullContentRead": true,
+      "responsibility": "Restore/CAS materialization hand-off receipt used by existing restore tools.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/tools/portable_object_materializer.py:28",
+          "symbol": "MaterializedPortableObject"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/tools/portable_restore.py:22",
+          "symbol": "MaterializedPortableObject"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Restore/CAS materialization hand-off receipt used by existing restore tools. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 2,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/presence.py",
+      "sha256": "5bae5ab4e7d8022525954837b09b78f14e08093513dd71038afbde93b8e82c9d",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "5bae5ab4e7d8022525954837b09b78f14e08093513dd71038afbde93b8e82c9d",
+      "sourceDelta": false,
+      "bytes": 8674,
+      "lineCount": 250,
+      "fullContentRead": true,
+      "responsibility": "Admitted episode PresenceContext and reply planner input construction; only public test/reference consumers found.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "reference-only",
+          "location": "development/tests/application/test_presence.py:6",
+          "detail": "Only tests import this context builder; no src dynamic name reference found"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_presence.py:6",
+          "symbol": "PresenceContextError"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_presence.py:6",
+          "symbol": "PresenceTurn"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain-reference",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Admitted episode PresenceContext and reply planner input construction; only public test/reference consumers found. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 9,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/procedure_references.py",
+      "sha256": "99762c1178a8ac8a9471cf34d09367e6559582c26e16e70d63342fbbbf9046fc",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "99762c1178a8ac8a9471cf34d09367e6559582c26e16e70d63342fbbbf9046fc",
+      "sourceDelta": false,
+      "bytes": 11063,
+      "lineCount": 216,
+      "fullContentRead": true,
+      "responsibility": "Reusable artifact designation bound to verified saves and reauthorized source/current bytes; no new memory.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/procedure_reference_actions.py:6",
+          "symbol": "ProcedureReferences"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/procedure_reference_actions.py:6",
+          "symbol": "ProcedureScope"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/procedure_reference_actions.py:6",
+          "symbol": "ProcedureReferenceRejected"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Reusable artifact designation bound to verified saves and reauthorized source/current bytes; no new memory. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 25,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/related_work.py",
+      "sha256": "b5018777c8aa94e0d75863f4cd07a976bf6b5a60b2979abb65cb8a06ae50d3cc",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "b5018777c8aa94e0d75863f4cd07a976bf6b5a60b2979abb65cb8a06ae50d3cc",
+      "sourceDelta": false,
+      "bytes": 4439,
+      "lineCount": 100,
+      "fullContentRead": true,
+      "responsibility": "Bounded task-family view and explicit linked stop through current authorities; no new scheduler or permanent admission ban.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_owner_service.py:233",
+          "symbol": "stop_related_work"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_owner_service.py:245",
+          "symbol": "related_work"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_work.py:411",
+          "symbol": "stop_related_work"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Bounded task-family view and explicit linked stop through current authorities; no new scheduler or permanent admission ban. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 4,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/repository_improvements.py",
+      "sha256": "552f8c9ecc103a2676a24f396c396bb89c416ed7edb1d95bfc53154e08288255",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "552f8c9ecc103a2676a24f396c396bb89c416ed7edb1d95bfc53154e08288255",
+      "sourceDelta": false,
+      "bytes": 6216,
+      "lineCount": 179,
+      "fullContentRead": true,
+      "responsibility": "Repository inspection/proposal/result interfaces with frozen checks and unchanged unrelated files.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/model/pydantic_conversation.py:86",
+          "symbol": "RepositoryImprovementProposal"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/model/pydantic_conversation.py:86",
+          "symbol": "RepositorySnapshot"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:77",
+          "symbol": "RepositoryCheck"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Repository inspection/proposal/result interfaces with frozen checks and unchanged unrelated files. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 18,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/research.py",
+      "sha256": "22dd4658fc0bde89e828029ae04efa31764fbce2c65f5dff61c0ed5cff1a3bb7",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "22dd4658fc0bde89e828029ae04efa31764fbce2c65f5dff61c0ed5cff1a3bb7",
+      "sourceDelta": false,
+      "bytes": 3524,
+      "lineCount": 97,
+      "fullContentRead": true,
+      "responsibility": "Bounded cited research artifact and current research-mode contract, separate from tool-free output.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:132",
+          "symbol": "ResearchArtifact"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/model/pydantic_conversation.py:85",
+          "symbol": "ResearchArtifact"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/model/pydantic_conversation.py:85",
+          "symbol": "ResearchSource"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Bounded cited research artifact and current research-mode contract, separate from tool-free output. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 22,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/resident_attention.py",
+      "sha256": "9bac918ca4a3eb1b121a0321c0dab1f97d90f5c6f2ba7876c8c8ecf0528af47b",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "9bac918ca4a3eb1b121a0321c0dab1f97d90f5c6f2ba7876c8c8ecf0528af47b",
+      "sourceDelta": false,
+      "bytes": 15585,
+      "lineCount": 398,
+      "fullContentRead": true,
+      "responsibility": "Active NextAttention provenance plus retained tested temperature/camera policy reference; no production policy construction found.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "active-provenance",
+          "location": "src/eva/adapters/postgres/initiative_attention.py:5",
+          "detail": "NextAttention and validator active"
+        },
+        {
+          "kind": "reference-only",
+          "location": "development/tests/application/test_resident_attention.py:5",
+          "detail": "Temperature/camera policy tested; no production constructor found"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/household_initiative.py:77",
+          "symbol": "validate_attention_reference"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Active NextAttention provenance plus retained tested temperature/camera policy reference; no production policy construction found. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 18,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/schema_validation.py",
+      "sha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "ce2f5534f96fb406df48d5405bda7a8ccd423da31a20e693c94ffb0a915de61e",
+      "sourceDelta": false,
+      "bytes": 4137,
+      "lineCount": 109,
+      "fullContentRead": true,
+      "responsibility": "Shared closed admitted tool-argument schema subset; intentionally not a complete JSON Schema implementation.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/procedure_reference_actions.py:9",
+          "symbol": "validate_schema_value"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/mcp_discovery.py:28",
+          "symbol": "validate_schema_value"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/providers/mcp_gateway.py:36",
+          "symbol": "validate_schema_value"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "simplify",
+      "reason": "Apply only the exact finite finding(s) APP-01; preserve current consumers, hashes/provenance and public interfaces.",
+      "findingIds": [
+        "APP-01"
+      ],
+      "replacement": [
+        {
+          "finding": "APP-01",
+          "card": "E4.2",
+          "action": "Reuse existing canonical JSON equality semantics for observed/expected proof and const/enum membership; preserve result/state contracts and the documented schema subset. No new verification framework."
+        }
+      ],
+      "removalConsequence": "Would remove Shared closed admitted tool-argument schema subset; intentionally not a complete JSON Schema implementation. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 11,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/sensory.py",
+      "sha256": "3abb3558cd93e1fe6d79accf41305d3fdb359a722a2eb56d0f69514c1a8ac589",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "3abb3558cd93e1fe6d79accf41305d3fdb359a722a2eb56d0f69514c1a8ac589",
+      "sourceDelta": false,
+      "bytes": 2383,
+      "lineCount": 82,
+      "fullContentRead": true,
+      "responsibility": "Normalized events and existing bounded ingestion thread; connector I/O outside database retention.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/resident_attention.py:16",
+          "symbol": "SensoryEvent"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/household_initiative.py:17",
+          "symbol": "SensoryEvent"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/free_will.py:12",
+          "symbol": "SensoryEvent"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Normalized events and existing bounded ingestion thread; connector I/O outside database retention. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 29,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/soul_markdown.py",
+      "sha256": "ba5cc2773ebd8835648cb7fb29ee04765817459bba534d6c4cb8bfb1c8498c73",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "ba5cc2773ebd8835648cb7fb29ee04765817459bba534d6c4cb8bfb1c8498c73",
+      "sourceDelta": false,
+      "bytes": 6336,
+      "lineCount": 172,
+      "fullContentRead": true,
+      "responsibility": "Presentation-only SOUL import/export to exact-base staged draft; voice normalization deliberately asserted by current tests.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_identity_lifecycle.py:28",
+          "symbol": "soul_markdown_sha256"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/operations/installer_identity_lifecycle.py:28",
+          "symbol": "soul_markdown_to_draft"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/installer_wizard.py:72",
+          "symbol": "SoulMarkdownError"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Presentation-only SOUL import/export to exact-base staged draft; voice normalization deliberately asserted by current tests. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 14,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/telegram_canary.py",
+      "sha256": "01911471d153be239bac219ddc6b5661075d4222283971ba6ba12b03b528adc5",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "01911471d153be239bac219ddc6b5661075d4222283971ba6ba12b03b528adc5",
+      "sourceDelta": false,
+      "bytes": 6304,
+      "lineCount": 190,
+      "fullContentRead": true,
+      "responsibility": "Existing runtime/API trusted Telegram bridge and per-person group consent; stale Eva1 wording does not prove an active Eva1.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "composition",
+          "location": "src/eva/bootstrap/runtime.py:1686",
+          "detail": "Still instantiated by current runtime/API"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:118",
+          "symbol": "TelegramCanaryAdmission"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/runtime.py:118",
+          "symbol": "TelegramCanaryBridge"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Existing runtime/API trusted Telegram bridge and per-person group consent; stale Eva1 wording does not prove an active Eva1. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 6,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/telegram_group_consent.py",
+      "sha256": "85d4b7f98da7a6e25c4cdad1878cba850a933825315bbc4a7be362adc6618670",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "85d4b7f98da7a6e25c4cdad1878cba850a933825315bbc4a7be362adc6618670",
+      "sourceDelta": false,
+      "bytes": 5425,
+      "lineCount": 150,
+      "fullContentRead": true,
+      "responsibility": "Bounded per-person group sharing/revocation and private command responder reused by both ingresses.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:16",
+          "symbol": "TelegramGroupConsentResponder"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_canary.py:11",
+          "symbol": "TelegramGroupConsentResponder"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_canary.py:11",
+          "symbol": "TelegramGroupConsentStorePort"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Bounded per-person group sharing/revocation and private command responder reused by both ingresses. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 15,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/telegram_ingress.py",
+      "sha256": "42a675c2129c65f3cd7ff251b8607d9fb35c0a1990977a5e0c1624e1ca368606",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "42a675c2129c65f3cd7ff251b8607d9fb35c0a1990977a5e0c1624e1ca368606",
+      "sourceDelta": false,
+      "bytes": 25279,
+      "lineCount": 648,
+      "fullContentRead": true,
+      "responsibility": "Ordered authenticated intake, stop lookahead, provisional drafts and crash-bounded final delivery; uncertainty retained.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/delegated_work_delivery.py:10",
+          "symbol": "TelegramPrincipalBindings"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/telegram_ingress.py:29",
+          "symbol": "TelegramIngressWorker"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/telegram_ingress.py:29",
+          "symbol": "TelegramPrincipalBinding"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Ordered authenticated intake, stop lookahead, provisional drafts and crash-bounded final delivery; uncertainty retained. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 84,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/telegram_pairing.py",
+      "sha256": "6ffe7b646b6f902a6a6f1fe3bd57cf50d5931175af9404b19349dcd66f88d61a",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "6ffe7b646b6f902a6a6f1fe3bd57cf50d5931175af9404b19349dcd66f88d61a",
+      "sourceDelta": false,
+      "bytes": 5010,
+      "lineCount": 150,
+      "fullContentRead": true,
+      "responsibility": "Two-sided expiring account pairing and deterministic secret-derived challenge; chat authorization remains separate.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:17",
+          "symbol": "TelegramDynamicBindingResolverPort"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/telegram_ingress.py:17",
+          "symbol": "TelegramPairingResponder"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/telegram_ingress.py:35",
+          "symbol": "TelegramPairingResponder"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Two-sided expiring account pairing and deterministic secret-derived challenge; chat authorization remains separate. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 18,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/validated_edits.py",
+      "sha256": "786756929d8f8c9abff7dcbf9686f1c5290b7595f7d94181ce2dff3f6a766f1f",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "786756929d8f8c9abff7dcbf9686f1c5290b7595f7d94181ce2dff3f6a766f1f",
+      "sourceDelta": false,
+      "bytes": 5074,
+      "lineCount": 145,
+      "fullContentRead": true,
+      "responsibility": "Single bounded edit and focused validation/rollback contracts; initially green manifest differs from repository improvement.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:70",
+          "symbol": "FocusedAssertionResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:70",
+          "symbol": "FocusedValidationResult"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/conversation_actions.py:70",
+          "symbol": "ValidatedTextEditPlan"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Single bounded edit and focused validation/rollback contracts; initially green manifest differs from repository improvement. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 9,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/voice.py",
+      "sha256": "638f15938e841d5345176f924655cbe8633cf638c06bbe63f7499cafc436a22f",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "638f15938e841d5345176f924655cbe8633cf638c06bbe63f7499cafc436a22f",
+      "sourceDelta": false,
+      "bytes": 12376,
+      "lineCount": 319,
+      "fullContentRead": true,
+      "responsibility": "Thin final voice-turn admission and generation-bound playback/interruption; ordinary ConversationTurn and no effect rollback.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/dashboard_voice.py:26",
+          "symbol": "SpeechAudioChunk"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/api/dashboard_voice.py:26",
+          "symbol": "admit_final_voice_turn"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/connectors/home_assistant_voice.py:20",
+          "symbol": "SpeechAudioChunk"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Thin final voice-turn admission and generation-bound playback/interruption; ordinary ConversationTurn and no effect rollback. The listed consumers need an explicit migrated interface before removal.",
+      "speechBoundary": "read-only; speech executor owns edits/install",
+      "consumerEvidenceTotal": 7,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/voice_context.py",
+      "sha256": "e8f690d06d10ab0666e702d7ba2f505557be38614a891ebc9822f0a494065889",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "e8f690d06d10ab0666e702d7ba2f505557be38614a891ebc9822f0a494065889",
+      "sourceDelta": false,
+      "bytes": 7518,
+      "lineCount": 135,
+      "fullContentRead": true,
+      "responsibility": "Transient voice identity-request, explicit work-stop and first-part callbacks through ordinary conversation; speech owner scope.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:1114",
+          "symbol": "current_voice_context"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:1114",
+          "symbol": "STOP_VOICE_WORK"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/conversation.py:1114",
+          "symbol": "SPEAK_AND_CONTINUE"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Transient voice identity-request, explicit work-stop and first-part callbacks through ordinary conversation; speech owner scope. The listed consumers need an explicit migrated interface before removal.",
+      "speechBoundary": "read-only; speech executor owns edits/install",
+      "consumerEvidenceTotal": 34,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/work_context.py",
+      "sha256": "128277e278abaa40d7e4fcc10a7df5e54ec9842121316596b9bb078f3fc8dc99",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "128277e278abaa40d7e4fcc10a7df5e54ec9842121316596b9bb078f3fc8dc99",
+      "sourceDelta": false,
+      "bytes": 1022,
+      "lineCount": 18,
+      "fullContentRead": true,
+      "responsibility": "Compact already-authorized task metadata shared by private/household composition; no cross-scope query.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/delegated_work_owner_service.py:428",
+          "symbol": "work_context_metadata"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_work.py:339",
+          "symbol": "work_context_metadata"
+        },
+        {
+          "kind": "source-import",
+          "location": "development/tests/application/test_work_context_times.py:3",
+          "symbol": "work_context_metadata"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Compact already-authorized task metadata shared by private/household composition; no cross-scope query. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 3,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/work_failure_notice.py",
+      "sha256": "3948d023507601f05c79bc3d582ffdac0d1e4ae02401434911991a2bd77c484d",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "3948d023507601f05c79bc3d582ffdac0d1e4ae02401434911991a2bd77c484d",
+      "sourceDelta": false,
+      "bytes": 2457,
+      "lineCount": 56,
+      "fullContentRead": true,
+      "responsibility": "Honest failed/ambiguous terminal notice under existing destination checks; explicit stop suppresses notice.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/native_work_delivery.py:12",
+          "symbol": "FAILURE_STATES"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/household_work.py:8",
+          "symbol": "delivery_outcome"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/adapters/postgres/delegated_work_delivery.py:10",
+          "symbol": "delivery_outcome"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Honest failed/ambiguous terminal notice under existing destination checks; explicit stop suppresses notice. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 11,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    },
+    {
+      "path": "src/eva/application/work_result_presentation.py",
+      "sha256": "92b0c64e37922cd75739b373d3cd1828a6e1052d220b327fbcf7abcabc767264",
+      "sourceRevision": "b00c407aa0c13cef90decb0f98754816dc49b731",
+      "inventorySha256": "92b0c64e37922cd75739b373d3cd1828a6e1052d220b327fbcf7abcabc767264",
+      "sourceDelta": false,
+      "bytes": 2156,
+      "lineCount": 34,
+      "fullContentRead": true,
+      "responsibility": "Lossless known-result formatting and incomplete/failure wording shared across result consumers.",
+      "owner": "eva.application",
+      "category": "application-source",
+      "consumerEvidence": [
+        {
+          "kind": "source-import",
+          "location": "src/eva/application/work_failure_notice.py:5",
+          "symbol": "work_failure_description"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/voice_service/agent.py:15",
+          "symbol": "readable_work_result"
+        },
+        {
+          "kind": "source-import",
+          "location": "src/eva/bootstrap/native_work_delivery.py:11",
+          "symbol": "readable_work_result"
+        }
+      ],
+      "consumerScope": "Concrete representative source imports and investigated resource/composition/reference paths; import is not executed runtime proof.",
+      "decision": "retain",
+      "reason": "Retain this responsibility and its concrete consumers. No redundant execution or safe replacement established; size/age/import count are not deletion evidence.",
+      "findingIds": [],
+      "replacement": [],
+      "removalConsequence": "Would remove Lossless known-result formatting and incomplete/failure wording shared across result consumers. The listed consumers need an explicit migrated interface before removal.",
+      "consumerEvidenceTotal": 7,
+      "completeStaticConsumersRef": "consumerGraph (coordinator hash-bound graph); these are max 3 representative checked locations."
+    }
+  ],
+  "finiteE4Decisions": [
+    {
+      "id": "APP-01",
+      "card": "E4.2",
+      "priority": "required",
+      "kind": "correctness",
+      "title": "Keep proof and sealed schema equality JSON-type-sensitive",
+      "sourceEvidence": [
+        "src/eva/application/orchestration.py:341",
+        "src/eva/application/schema_validation.py:22",
+        "src/eva/application/schema_validation.py:25",
+        "src/eva/application/effect_verification.py:108"
+      ],
+      "finding": "Python equality accepts True == 1, also inside dictionaries/lists. Orchestration can therefore commit STATE_VERIFIED with differently typed observation bytes. const/enum have the same coercion before schema type validation (integer schema with const true admits integer 1). Existing effect projection already compares canonical digests correctly.",
+      "replacement": "Reuse existing canonical JSON equality semantics for observed/expected proof and const/enum membership; preserve result/state contracts and the documented schema subset. No new verification framework.",
+      "files": [
+        "src/eva/application/orchestration.py",
+        "src/eva/application/schema_validation.py"
+      ],
+      "risk": "False success/admission for differently typed provider evidence. Source-level finding, not an observed household incident.",
+      "verificationRequired": "During E4 only: focused boolean/integer/nested mismatch checks plus existing success and schema regression routes. No test or provider execution in this review."
+    },
+    {
+      "id": "APP-02",
+      "card": "E4.2",
+      "priority": "required",
+      "kind": "responsibility",
+      "title": "Give existing tool/provider boundaries one owner of protocol guidance and deadlines",
+      "sourceEvidence": [
+        "src/eva/application/conversation.py:630",
+        "src/eva/application/conversation.py:1082",
+        "src/eva/application/conversation.py:1088",
+        "src/eva/application/orchestration.py:116",
+        "src/eva/application/conversation.py:560"
+      ],
+      "finding": "Channel-neutral conversation embeds Home Assistant REST return_response/body protocol instructions. ConversationToolPreparation and ToolRequest separately special-case the same research.public_sources 125-second timeout. Protocol/deadline ownership is duplicated in general turn/orchestration boundaries.",
+      "replacement": "Move the existing HA protocol paragraph to existing provider tool guidance and define the admitted timeout bound once in the existing preparation/request translation. Preserve conversation routing, tool names, durable budgets and wire behavior. No provider framework or whole-module rewrite.",
+      "files": [
+        "src/eva/application/conversation.py",
+        "src/eva/application/orchestration.py"
+      ],
+      "risk": "Adapter protocol fixes or deadline changes can drift across validators and prompt. Token/cost benefit unmeasured.",
+      "verificationRequired": "Existing HA preparation/guidance and current-state read plus durable research admission; preserve behavior before claiming simplification. E4.3 measures usage only when relevant; no optimization trial now."
+    },
+    {
+      "id": "APP-03",
+      "card": "E4.2",
+      "priority": "required",
+      "kind": "boundary",
+      "title": "Move saved-artifact target validation to its neutral boundary",
+      "sourceEvidence": [
+        "src/eva/application/component_improvements.py:124",
+        "src/eva/application/component_improvements.py:166",
+        "src/eva/operations/component_evaluation.py:89",
+        "development/design/architecture/package-boundaries-v1.json:29"
+      ],
+      "finding": "Pure application draft/release construction imports operations.component_evaluation for a host-resolved saved-artifact target validator. This reverses the declared application import boundary and loads the operational evaluator module on a pure artifact construction path.",
+      "replacement": "Move the existing pure closed-shape validator into an appropriate existing application/contract boundary; application and operations consume the same definition. Preserve exact hashes, retention and source/current-authority checks. No weakened gate, hidden-criteria change or alias back to operations.",
+      "files": [
+        "src/eva/application/component_improvements.py",
+        "src/eva/operations/component_evaluation.py"
+      ],
+      "risk": "Evaluation implementation coupling and future duplicate target definitions; exact wire bytes must remain compatible.",
+      "verificationRequired": "Existing saved-artifact draft/release and evaluator interface checks during E4; protected final cases remain independent."
+    },
+    {
+      "id": "APP-04",
+      "aliases": [
+        "E32-A04-memory-trust-projection"
+      ],
+      "card": "E4.2",
+      "priority": "required",
+      "kind": "trust-provenance",
+      "title": "Preserve semantic trust in MemoryAuthority context",
+      "sourceEvidence": [
+        "src/eva/application/memory.py:348",
+        "src/eva/application/memory.py:462",
+        "src/eva/application/memory.py:470",
+        "src/eva/adapters/projection/hindsight.py:1795",
+        "src/eva/adapters/model/pydantic_conversation.py:4074",
+        "src/tools/run_legacy_memory_trial.py:275",
+        "src/eva/operations/component_native_work_producer.py:1310"
+      ],
+      "finding": "MemoryAuthority maps inferred/legacy facts to ConfirmedFact.host_policy and copies value unchanged. Unlike Hindsight it does not add semantic_trust consumed by the model's uncertainty qualifier. RecalledFact retains original trust but does not supply that model-visible qualifier. Direct current constructors found are legacy trial and isolated component evaluation; ordinary Hindsight already preserves semantic_trust. No claim that all household responses lose uncertainty.",
+      "replacement": "Preserve original semantic trust in the existing context/value representation consistently with Hindsight, or filter unsupported inferred facts at this adapter. Keep source provenance, audience and current ConfirmedFact wire enum; any incompatible enum change needs versioned transition.",
+      "files": [
+        "src/eva/application/memory.py"
+      ],
+      "risk": "Legacy/evaluation or future MemoryAuthority consumer can omit intended uncertainty qualifier. Scope is this adapter boundary, not a proven ordinary Hindsight runtime failure.",
+      "verificationRequired": "Focused MemoryAuthority-to-model inferred/legacy/direct context cases and retained Hindsight behavior during E4; no new memory or private/protected evaluation reads."
+    },
+    {
+      "id": "APP-05",
+      "card": "E4.4",
+      "relatedCard": "E3.3",
+      "priority": "required",
+      "kind": "package-resource-interface",
+      "title": "Bind default identity JSON to package/install ownership",
+      "sourceEvidence": [
+        "src/eva/application/identity_verifier.py:109",
+        "src/eva/adapters/objects/identity_verifier.py:46",
+        "src/eva/bootstrap/installer_wizard_cli.py:307",
+        "pyproject.toml:36",
+        "deploy/living-core/Dockerfile:24",
+        "deploy/living-core/Dockerfile:27"
+      ],
+      "finding": "Default pack/trust loaders read JSON beside application modules. Explicit setuptools package-data lists voice/model/API resources but not application/*.json. Current Docker source COPY supplies bytes separately and does not prove wheel resource completeness. No wheel failure executed.",
+      "replacement": "E3.3 confirms actual build/install ownership; E4.4 explicitly packages the two exact signed resources or documents/enforces the chosen non-wheel source delivery contract. Keep pack and public trust bytes unchanged.",
+      "files": [
+        "src/eva/application/default_identity_pack.json",
+        "src/eva/application/default_identity_pack_trust.json",
+        "pyproject.toml"
+      ],
+      "risk": "Isolated installed-package default identity can fail despite working source checkout/Docker; no production outage asserted.",
+      "verificationRequired": "One package-resource/identity-load interface check within existing E3.3/E4.4 install route; no blanket image rebuild or private identity change."
+    }
+  ],
+  "verification": {
+    "reviewOnly": true,
+    "testsRun": 0,
+    "installations": 0,
+    "providerCalls": 0,
+    "hashCheck": "All 63 current hashes equal E3.1 after full reading; report creation aborts on delta.",
+    "sourceChanges": "Only this report written; no commits/board/source edits by reviewer."
+  },
+  "usage": {
+    "kind": "development-review",
+    "toolCalls": null,
+    "toolCallStatus": "Will finalize visible count after report completion; failed calls count too.",
+    "modelCalls": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "credits": null,
+    "runtimeModelCalls": 0,
+    "runtimeToolCalls": 0,
+    "exactStartTime": null,
+    "endedAt": "2026-10-16T23:21:22.035431+00:00",
+    "toolCallMeasurement": "Manually counted 37 visible functions.exec/exec_command attempts through this write, including one process rejected for command length; coordination messages/parent tools excluded. Total backend tool/model telemetry unavailable.",
+    "modelCallReason": "Backend request/retry telemetry unavailable; no Eva runtime model calls.",
+    "startedAtApprox": "2026-10-17T01:05:00+02:00",
+    "elapsedSeconds": null,
+    "timeMeasurement": "Exact start telemetry unavailable; approximate start only, no fabricated duration.",
+    "functionsExecCalls": 37,
+    "execCommandAttempts": 37,
+    "execCommandProcessesStarted": 36
+  },
+  "nonclaims": [
+    "No feature newly built/installed/used.",
+    "No whole E3/E4/project completion.",
+    "No model-cost savings, general superiority or family acceptance.",
+    "No observed household incident inferred from source defect."
+  ],
+  "wholeProjectCompleted": false,
+  "retentionDecisions": {
+    "deletion": "No application deletion approved. Imports/resources/tests/reference purposes exist; size, age and low import counts do not establish safe removal.",
+    "cohesion": "No general split of conversation/free_will/memory_background/objects/personal_interests proposed. Repeated authority checks on admission/result/recovery are different boundaries, not duplicate execution.",
+    "references": [
+      "presence.py has only public test/reference consumers; not current runtime evidence.",
+      "resident_attention NextAttention is active. Tested temperature/camera reference evaluator has no production construction found; no installed household monitoring claim.",
+      "soul_markdown style normalization is asserted by existing public tests; preserve deliberate current behavior.",
+      "commerce.py is concrete optional Stripe/EUR functionality despite the neutral docstring; do not build a new generic commerce layer."
+    ],
+    "scope": "Speech files were only read; speech executor owns source and installation. No private conversation/secret/protected final evaluation data read.",
+    "priorEvidence": "Current PROJECTDOEL/ARCHITECTUUR/AFRONDINGSPLAN and declared package boundaries were read; closed HUE trials were not restarted. Frozen criteria/failure evidence untouched."
+  },
+  "readingMethod": "Complete actual source of all 63 files displayed/read in batches. Truncated middles explicitly re-read; AST/summary did not substitute. Final hashes all equal E3.1. Speech only read."
+}
