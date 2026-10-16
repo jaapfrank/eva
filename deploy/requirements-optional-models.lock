@@ -1,0 +1,4 @@
+# Optional model adapters; base dependencies remain pinned by requirements-4d.lock.
+# Install with: pip install --require-hashes -r deploy/requirements-4d.lock -r deploy/requirements-optional-models.lock
+anthropic==1.15.0 --hash=sha256:10189a7993c5c71a0a2d4bb80020ca6a2fd27679f51e627405da37251d15ff49
+docstring-parser==0.18.0 --hash=sha256:b3fcbed555c47d8479be0796ef7e19c2670d428d72e96da63f3a40122860374b

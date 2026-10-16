@@ -655,6 +655,8 @@ def create_app(
     install_dashboard_initiatives(app, access=dashboard_access, runtime=runtime)
     install_dashboard_work(app, access=dashboard_access, runtime=runtime)
     install_dashboard_memory(app, access=dashboard_access, runtime=runtime)
+    from eva.adapters.api.dashboard_model_providers import install_dashboard_model_providers
+    install_dashboard_model_providers(app, access=dashboard_access, runtime=runtime)
     install_dashboard_voice(app, access=dashboard_access, runtime=runtime, config=dashboard_voice)
     from eva.adapters.api.voice_turns import install_voice_turns
     install_voice_turns(app, access=dashboard_access, runtime=runtime, config=dashboard_voice)

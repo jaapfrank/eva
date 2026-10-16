@@ -1,0 +1,57 @@
+{
+  "contract": "EvaE25OptionalModelsInstalled/v1",
+  "taskId": "E2.5",
+  "checkedAt": "2026-10-16T16:22:25+00:00",
+  "status": "installed_and_technically_completed",
+  "scope": "Optional private website/Telegram model connections through the existing Eva conversation, memory, journal and action contracts",
+  "existing": ["PydanticConversationModel backend port", "Subscription route and owner authority", "InstallerSecretStore and private canonical artifacts"],
+  "added": ["Upstream Anthropic and OpenAI-compatible adapters", "Explicit configure, tool-shaped check, selection, default and disable controls", "Restart-safe private configuration and separate credential storage", "Optional hashed dependency lock and Docker build flag"],
+  "installation": {
+    "coreHealthy": true,
+    "workerHealthy": true,
+    "exactCandidateImages": true,
+    "retainedUserEnvironmentAndMounts": true,
+    "verifiedSourceAndManifestFiles": 8,
+    "selectedOptionalProvider": null,
+    "configuredExternalAccounts": 0,
+    "bothAdaptersInstalled": true,
+    "workerChange": "Only the matching provider capability guard; default behavior retained. No optional SDK or voice changes.",
+    "initialFailure": "The existing root-owned work volume prevented creation of the new optional settings directory. The failure evidence is retained.",
+    "correction": "Prepared only the new empty private runtime-owned directory. Unchosen storage is now lazy and does not block default startup. One settings-module correction was installed without rollback."
+  },
+  "verification": {
+    "focusedTests": 12,
+    "focusedSeconds": 6.29,
+    "existingModelRegressions": 5,
+    "existingModelSeconds": 1.66,
+    "bothSdkProtocolsChecked": true,
+    "bothConversationActionAndReceiptFlowsChecked": true,
+    "languageRepairTwoJournaledPhases": true,
+    "rejectedCredentialsNotRetried": true,
+    "disableAndLateRevocationPreventDispatch": true,
+    "syntheticBrowserLifecycle": true,
+    "installedReadOnlyBrowser": true,
+    "mobileWidth": 390,
+    "javascriptErrors": 0,
+    "installedSdkLocalProtocolChecks": 2
+  },
+  "limits": [
+    "No external account or API key configured. Real provider access remains visibly disconnected and untested.",
+    "Selection applies to private text. Background work, native research, initiative and voice retain their existing routes.",
+    "No quality, speed, cost advantage or full family acceptance claimed.",
+    "Already dispatched requests may finish after disabling; no silent provider fallback.",
+    "A pre-existing core/worker divergence in adapters/model/openai_codex_provider.py is preserved and registered under E3.2. No overall background-worker compatibility claim."
+  ],
+  "consumption": {
+    "externalProviderRequests": 0,
+    "productionConfigurationWrites": 0,
+    "developmentModelTokens": null,
+    "developmentCredits": null,
+    "meaning": "Local SDK protocol fixtures are not real provider usage. Development account usage is unavailable."
+  },
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/e25-optional-models-20261016",
+  "independentReview": "development/reviews/e25-optional-models-review-20261016.json",
+  "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections",
+  "familyAcceptance": false,
+  "wholeProjectComplete": false
+}

@@ -64,9 +64,12 @@ werk; een mooi projectbord is geen vervanging van Eva-productbediening.
 Optionele instellingen laten modelverbindingen en communicatiekanalen toevoegen,
 aanmelden, controleren, selecteren en uitschakelen. Claude/Anthropic en andere
 modelproviders, en WhatsApp naast chat/Telegram, horen als gewenste optionele
-mogelijkheden in het plan. Gebruik bestaande adapters/installatieonderdelen waar
-mogelijk. Ondersteunde aanmeldmethoden en externe vereisten worden bij concrete
-realisatie gecontroleerd; het plan claimt geen reeds gebouwde adapter of toegang.
+mogelijkheden in het plan. E2.5 heeft Anthropic- en OpenAI-compatibele privétekst-
+adapters en hun bediening geïnstalleerd met bestaande identiteit/geheugen/acties.
+De externe account is daarmee niet aangesloten of bewezen; eigen API-sleutel,
+expliciete controle en selectie zijn optioneel. Astra voor achtergrondwerk en
+initiatief en de bestaande spraakverbinding blijven behouden. WhatsApp blijft E2.6.
+Gebruik bestaande adapters/installatieonderdelen en ondersteunde aanmeldmethoden.
 Gebrek aan een niet-gekozen externe account blokkeert de andere vier uitkomsten niet.
 
 Alle kanalen en providers gebruiken dezelfde identiteit, het persoonsgebonden

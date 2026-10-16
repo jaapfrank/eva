@@ -121,11 +121,17 @@ modelselectie en gemeten gebruik. Een kanaaladapter verzorgt ontvangst, werkelij
 persoon/gespreksbinding, eventuele media en aflevering bij de oorspronkelijke
 ontvanger. Beide zijn vervangbaar zonder nieuwe identiteit, geheugenbank of uitvoerder.
 
-Claude/Anthropic, andere modelproviders en WhatsApp zijn gewenste optionele
-verbindingen. De huidige providers en installatie-/beheeronderdelen worden eerst
-onderzocht op hergebruik. Ondersteunde externe API's en aanmeldmethoden worden bij
-realisatie geverifieerd; deze tekst claimt geen werkende adapter of externe toegang.
-Een niet-gekozen account hoeft niet te worden ingericht om Eva te gebruiken.
+E2.5 levert optionele Anthropic- en OpenAI-compatibele adapters via PydanticAI
+voor privétekstgesprekken op website/Telegram. Dezelfde identiteit, context,
+geheugenopslag, requestjournal en actie-uitvoerder blijven gelden. Instellingen
+hergebruiken de private artifact-/secretopslag; controle, selectie en uitschakeling
+zijn expliciet en blijven na herstart bewaard. Een mislukte geselecteerde provider
+verstuurt de inhoud niet stil naar een andere provider. Achtergrondwerk, native
+research en initiatief behouden Astra; de bestaande spraakroute blijft ongewijzigd.
+De geïnstalleerde SDK-proeven gebruiken lokaal testtransport; een externe account
+is niet aangesloten of bewezen. De API-sleutel en een eigen controle blijven een
+optionele eigenaarhandeling. WhatsApp blijft E2.6. Een niet-gekozen account hoeft
+niet te worden ingericht om Eva te gebruiken.
 
 Een optionele module krijgt een herkenbaar manifest: naam/versie, aangeboden
 mogelijkheden, benodigde verbinding/bevoegdheden, configuratie- en contractversies,

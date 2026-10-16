@@ -189,3 +189,41 @@ Run `verify-owner-learning.cjs` and `verify-owner-work-overview.cjs` with the sa
 Playwright/Chromium variables as the navigation check. The learning script supports
 `EVA_DASHBOARD_ORIGIN` for an installed read-only check; synthetic feedback is
 submitted only to its isolated local fixture.
+
+### Optional model connections (E2.5)
+
+`Verbindingen` offers the existing subscription route plus optional Anthropic and
+OpenAI-compatible text backends. Add a workspace API key, exact model ID and
+provider endpoint, explicitly check one small tool-shaped response, then select
+the connection. Selection and disable are persisted in the existing work volume
+under a private `model-providers` directory. Credentials use InstallerSecretStore;
+GET responses never return them. Reading status or saving configuration makes no
+provider call. Checks may incur provider usage and are never automatically retried.
+
+Selection applies to private website/Telegram model generations through the same
+conversation, memory, journal and action contracts. Durable background work, native
+research and initiative retain their configured Astra subscription route. Voice
+uses the existing connection unchanged. A failed selected provider does not resend
+family context to a fallback provider. Disable blocks the next admission; already
+dispatched work may finish. Remote endpoints require HTTPS.
+
+For packaged installs use the `optional-models` project extra. Reproducible Docker
+builds accept `--build-arg INSTALL_OPTIONAL_MODELS=1` with the two extra wheels from
+`deploy/requirements-optional-models.lock` in the normal wheelhouse. Without the
+extra, status accurately shows the missing Anthropic adapter. This does not reuse
+Claude subscription credentials or create another agent. Run
+`verify-owner-model-providers.cjs` with the existing Playwright variables; setting
+`EVA_DASHBOARD_ORIGIN` uses installed read-only verification.
+
+Existing root-owned work volumes need only a new empty private
+`/var/lib/eva/work/model-providers` directory owned by runtime UID/GID65532, mode700.
+The current installation has been prepared without changing existing files. Fresh
+named volumes inherit this directory from the image. Missing unchosen storage
+never blocks default Eva startup; a configure operation reports an unavailable
+write instead of silently switching providers.
+
+Official protocol/authentication sources checked for this implementation:
+[Anthropic authentication](https://platform.claude.com/docs/en/manage-claude/authentication),
+[OpenAI authentication](https://developers.openai.com/api/reference/overview),
+[PydanticAI Anthropic](https://pydantic.dev/docs/ai/models/anthropic/) and
+[PydanticAI OpenAI](https://pydantic.dev/docs/ai/models/openai/).

@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Initiatief, dromen en verbeteringen inzichtelijk maken
+Extra modelproviders optioneel aansluiten
 
-E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.
+E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.
 
-Klaar wanneer: De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.
+Klaar wanneer: De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter.
 
 ## Afmaakvolgorde
 
@@ -27,7 +27,7 @@ Klaar wanneer: De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, 
 | Eigen initiatief | E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd | Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie; samenhangende bediening volgt in E2. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open. |
 
-53 van 70 geregistreerde kleine taken afgerond; 17 open. E2.4 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.
+54 van 70 geregistreerde kleine taken afgerond; 16 open. E2.5 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.
 
 ## Alle geregistreerde kleine taken
 
@@ -96,7 +96,7 @@ Klaar wanneer: De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, 
 | E2.2 · Personen en geheugen bekijken en bijwerken | ✓ Afgerond | De juiste persoon ziet bekende personen en eigen geheugen met bron en onderscheid tussen feit en afleiding, en kan bekijken, corrigeren en vergeten via de bestaande opslag. Privé-inhoud blijft bij de juiste persoon. |
 | E2.3 · Gesprekken, opdrachten en resultaten samen tonen | ✓ Afgerond | Een gesprek toont de bijbehorende echte opdracht, voortgang, opgeslagen resultaat en korte terugmelding. Stoppen en legitiem hervatten werken via bestaande bediening; volledig resultaat blijft op verzoek. |
 | E2.4 · Initiatief, dromen en verbeteringen inzichtelijk maken | ✓ Afgerond | De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties. |
-| E2.5 · Extra modelproviders optioneel aansluiten | ● Open | De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter. |
+| E2.5 · Extra modelproviders optioneel aansluiten | ✓ Afgerond | De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter. |
 | E2.6 · WhatsApp als optioneel kanaal aansluiten | ● Open | WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers. |
 | E3.1 · Alle bestanden en hun rol registreren | ● Open | Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review. |
 | E3.2 · Actieve kerncode inhoudelijk beoordelen | ● Open | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
@@ -110,7 +110,7 @@ Klaar wanneer: De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, 
 
 ## Van jou
 
-Geen verplichte handeling. De geïnstalleerde pagina toont echte registraties en hun bewijsgrenzen.
+Geen verplichte handeling. De bestaande modelroute blijft gekozen; alleen voor een extra provider is eigen API-toegang nodig.
 
 ## Historie
 

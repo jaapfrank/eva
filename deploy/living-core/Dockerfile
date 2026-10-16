@@ -17,10 +17,13 @@ LABEL io.eva2.source-commit=${SOURCE_COMMIT} \
       io.eva2.source-refresh="git-archive-v1"
 
 COPY deploy/requirements-4d.lock ./deploy/requirements-4d.lock
+COPY deploy/requirements-optional-models.lock ./deploy/requirements-optional-models.lock
+ARG INSTALL_OPTIONAL_MODELS=0
 COPY wheelhouse ./wheelhouse
 COPY pyproject.toml ./pyproject.toml
 COPY src ./src
 RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r deploy/requirements-4d.lock \
+    && if [ "$INSTALL_OPTIONAL_MODELS" = "1" ]; then python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r deploy/requirements-optional-models.lock; fi \
     && python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation . \
     && python -c "from eva.providers.bundled import bundled_provider_factories; factories=bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway' for factory in factories)" \
     && python -m pip check \
@@ -60,6 +63,9 @@ COPY --from=build /opt/eva /opt/eva
 # come from the separately pinned Python 3.12 runtime-libraries stage.
 COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libffi.so.8* /usr/lib/x86_64-linux-gnu/
 COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libz.so.1* /usr/lib/x86_64-linux-gnu/
+
+# Fresh named work volumes inherit this private optional-settings directory.
+RUN ["/usr/local/bin/python", "-c", "from pathlib import Path; import os; p=Path('/var/lib/eva/work/model-providers'); p.mkdir(mode=0o700, parents=True, exist_ok=True); os.chown(p,65532,65532)"]
 
 USER 65532:65532
 EXPOSE 8080

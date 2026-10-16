@@ -2024,7 +2024,7 @@ class PydanticConversationModel:
                     strict=True,
                     # The owned provider defers full definitions in namespaces.
                     # Injected backends retain their framework-native discovery.
-                    defer_loading=injected_backend is not None,
+                    defer_loading=injected_backend is not None and getattr(injected_backend, "supports_deferred_loading", True),
                 )
                 for tool in tools
             ]

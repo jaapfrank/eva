@@ -1,0 +1,73 @@
+{
+  "contract": "EvaE25IndependentCompletionReview/v1",
+  "taskId": "E2.5",
+  "checkedAt": "2026-10-16T16:22:36.459404+00:00",
+  "verdict": "GO",
+  "originalTaskCompleted": true,
+  "originalCriteriaUnchanged": true,
+  "doneWhen": "De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter.",
+  "completionScope": "Technically installed optional Anthropic and OpenAI-compatible API-key adapters for private website/Telegram text conversations; existing identity, memory and durable action execution retained",
+  "privateReviewSha256": "e9c020c364a1e62fe83e9a38c142f20d2829c8493db46fa7e4d8442f1ceba70d",
+  "sourceSha256": {
+    "src/eva/operations/model_provider_settings.py": "5e40fe7cd74d051a9cbabca216bd4e3b20f7628bf49e5c874206c0d1efb42714",
+    "src/eva/adapters/model/optional_backends.py": "12d5891d1288f9a2b32dc87c06ff44aadc9b09a09d11a1b6dbecc0a9ae97e531",
+    "src/eva/bootstrap/optional_model_providers.py": "1edec419b1b170c2f753c1536ae3f1396df49079a091ece7582ed4fc141e969e",
+    "src/eva/adapters/api/dashboard_model_providers.py": "6e7d419fee4e510bc1db4364e8f219317d9d61e4967c8f945905729908e17a6d",
+    "src/eva/adapters/api/app.py": "0f5ee145c42a1f65eff4fa020ca3323022876583ccb0e485515d7ae6ccf7395d",
+    "development/tools/project-dashboard/src/main.jsx": "b76b0d3af0f0504c0d3dc88eaef644189af79b298c7189b289e2cc604bad762e",
+    "development/tools/project-dashboard/src/owner-model-providers.jsx": "bb25247a3ca56bbaa3f0c1e35e5e3e15b3ba399a5ee7b7b0ed147418cd6a6599",
+    "development/tools/project-dashboard/verify-owner-model-providers.cjs": "a728ef0e6a31bd3b9f4e3c4edfe29a926eb7752836c9157df70245a43f3b2f83",
+    "development/tests/model/test_optional_model_providers.py": "e579ffae73bcae0072d9b1401f271aa29ad8eeab19be14ff57525c97ca177fe4",
+    "development/tests/api/test_dashboard_model_providers.py": "508f772bea239be128ac6f16de77831b3f870b71a6f5f7177cdc17d0d859aebe",
+    "deploy/requirements-optional-models.lock": "db7092a045e18795368a8b3398d92b8a851cd8a6f3028b985d5d9c00b99badc5",
+    "pyproject.toml": "e9142ab80a34ee4f7b254bdbefd5af0ff34646aa238893a9d5e9db72bdeeea39",
+    "deploy/living-core/Dockerfile": "ebb2648b8d3a574674918c061e904d592be0cd6c6433dc4202eb0ce63b958333",
+    "src/eva/adapters/model/pydantic_conversation.py": "c5a4f19996884d9163b2dc61d772226c14593da64c26ab0b683bceb20f9c7c0e",
+    "src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json": "c55f04de3d5f0881b609bde8c4ed8dc419c290a867da1cb7e5562551c1ddff63"
+  },
+  "crossReview": {
+    "backendAndIntegration": "Root-authored settings, adapters, owner API and narrow integration reviewed independently by child reviewer",
+    "frontend": "Child-authored two frontend files reviewed independently GO by root"
+  },
+  "verified": [
+    "Both real SDK/model protocols perform the existing conversation, deferred action, same saved receipt and answer through synthetic transports. No second identity, memory, agent or executor.",
+    "Adding API-key access, explicit single tool-aware check, selection, default route and disabling are implemented. Saving alone is not a verified connection. Missing external access is shown honestly.",
+    "HTTPS for remote endpoints; official Anthropic URL explicitly bound; workspace header supported; SDK retries disabled. Request errors never expose credential or provider body; missing usage stays unknown.",
+    "Current owner authority is rechecked after intake and directly before probe dispatch; late revocation causes zero requests. Selection/disable is rechecked before each new provider phase.",
+    "Twelve focused tests and five existing-model regressions passed. Actual language repair uses two fresh clients and two measured journal entries.",
+    "Synthetic browser lifecycle passed: two adapter forms, explicit failed/successful checks, select/default/disable, no key echo/storage, hidden/unmount/error clearing,390px and zero external requests or JavaScript errors.",
+    "Installed read-only product browser passed at390px with no model calls or writes. Production remains on its existing default with zero configured optional connections and both adapters installed.",
+    "Installed SDKs exercised both check/select/disable paths in temporary isolated storage with two mock protocol requests, zero external provider requests and zero production configuration writes.",
+    "Exact core/worker images healthy; user, environment and mounts retained. Eight installed source/manifest byte checks passed; sealed asset contents match the manifest. Worker changes are limited to the default-compatible shared capability guard.",
+    "Initial startup PermissionError is retained with its incomplete receipt and logs. Only the new private settings directory was provisioned; lazy absent-storage reads now do not write or block the unchosen option. Follow-up core settings and worker updates succeeded without configuration rollback."
+  ],
+  "dependencies": {
+    "lock": "deploy/requirements-optional-models.lock",
+    "baseLock": "deploy/requirements-4d.lock",
+    "installed": {
+      "anthropic": "1.15.0",
+      "docstring-parser": "0.18.0",
+      "pydantic-ai-slim": "2.37.0"
+    },
+    "openaiSdkPin": "3.6.0 in existing base/4d dependency contract"
+  },
+  "installedImages": {
+    "core": "sha256:0c4dbf034f153c5f743482072e491321f5fd01b8822ffbd9f67c9ba7620e0f22",
+    "delegatedWorkWorker": "sha256:31fb31c4a3ec88648cfbffa86b844d320922a46411cde14c241d79cd0b8aadd5"
+  },
+  "externalAccountConfigured": false,
+  "externalProviderAccessProven": false,
+  "familyAcceptance": false,
+  "wholeProjectComplete": false,
+  "limitations": [
+    "Optional scope is private website and Telegram text; background work/initiative/Astra and voice retain existing routes",
+    "No actual Anthropic/OpenAI-compatible external account or paid model use was attempted; lack of external access remains visible, not marked verified",
+    "Supports API-key sign-in; no Claude subscription OAuth/Code-agent route",
+    "Synthetic SDK protocol tests are integration proof, not proof of upstream credentials or broad model compatibility",
+    "Not full family acceptance or whole project completion",
+    "Pre-existing core/worker research-source divergence must be tracked on existing E3 work; E2.5 makes no general research-execution/coherence claim.",
+    "Final installed browser only read actual metadata; add/check/select/disable and private-input/error paths were exercised through isolated browser fixtures and installed SDKs in TemporaryDirectory with MockTransport, not real provider credentials or production settings writes."
+  ],
+  "modelCallsDuringReview": 0,
+  "productionWritesDuringReview": 0
+}
