@@ -169,3 +169,23 @@ trials. Search and All/Open/Completed filters do not change the workboard. Open 
 row for its finish condition, owner, blocker and recorded trial steps. The normal
 five-second source refresh updates the list; child completion is never inferred
 from its parent's state. This is independent of the nine product-component counter.
+
+### Initiative and learning history (E2.4)
+
+`Initiatief & leren` reads `/internal/v1/dashboard/initiatives/history` through
+the existing owner binding. It shows adopted reasons, saved short results, real
+feedback and requested full contributions. Memory reflections, later exact context
+bindings and component candidate/evaluation/reference/application receipts are
+separate facts. A saved reflection or supplied context is not a proven behavior
+improvement; missing per-contribution later-use evidence is explicitly unknown.
+Reading this section never starts a model, experiment or application.
+
+The work section counts current owner work before the history limit. Open work
+and waiting start agreements appear first; closed failed/uncertain attempts and
+dispatched agreements remain accessible as history. Closing a presentation lane
+does not change any task outcome or retry work.
+
+Run `verify-owner-learning.cjs` and `verify-owner-work-overview.cjs` with the same
+Playwright/Chromium variables as the navigation check. The learning script supports
+`EVA_DASHBOARD_ORIGIN` for an installed read-only check; synthetic feedback is
+submitted only to its isolated local fixture.

@@ -13,7 +13,7 @@ const fixtures = {
   'people-memory': { contract: 'EvaPeopleMemoryOverview/v1', read_only: true, contains_raw_content: false, people: { dynamic_account: 'no_extra_account' }, sharing: { state: 'private_only' }, memory: { state: 'up_to_date' } },
   'memory-sources': { contract: 'EvaOwnerMemorySources/v1', read_only: true, meaning: 'Synthetic sources', sources: [{ source_id: '00000000-0000-0000-0000-000000000001', occurred_at: '2026-10-16T00:00:00Z', excerpt: 'Synthetic private source', truncated: false, retention_state: 'retained' }], next_cursor: null },
   work: { contract: 'EvaDelegatedWorkOwnerResult/v1', operation: 'list', jobs: [], truncated: false },
-  initiatives: { contract: 'EvaOwnerInitiatives/v1', cards: [], checked_at: '2026-10-16T00:00:00Z', latest_review: { updated_at: '2026-10-16T00:00:00Z', phase: 'review', state: 'silence', reason: 'Synthetic deliberate silence', blocker: null, intent_id: null } },
+  'initiatives/history': { contract: 'EvaOwnerInitiativeHistory/v1', learning: { reflections: [], components: [], current_styles: [] }, cards: [], checked_at: '2026-10-16T00:00:00Z', latest_review: { updated_at: '2026-10-16T00:00:00Z', phase: 'review', state: 'silence', reason: 'Synthetic deliberate silence', blocker: null, intent_id: null } },
   components: { contract: 'EvaComponentObservations/v1', checked_at: '2026-10-16T00:00:00Z', components: [{ id: 'telegram', label: 'Telegram', state: 'unknown', detail: 'Not measured', observed_at: null }] },
   browser: { state: 'stopped' },
 };

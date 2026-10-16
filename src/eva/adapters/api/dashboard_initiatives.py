@@ -18,6 +18,15 @@ def install_dashboard_initiatives(app, *, access, runtime):
         except Exception as error:
             raise HTTPException(503, "owner initiatives unavailable") from error
 
+    @app.get("/internal/v1/dashboard/initiatives/history")
+    def history(request: Request):
+        access.require(request)
+        if request.query_params:raise HTTPException(422,"initiative history scope is server-bound")
+        from eva.bootstrap.dashboard_learning import initiative_history
+        try:result=initiative_history(runtime)
+        except Exception:raise HTTPException(503,"initiative history unavailable") from None
+        return JSONResponse(result,headers={"Cache-Control":"no-store","X-Content-Type-Options":"nosniff"})
+
     @app.get("/internal/v1/dashboard/initiatives")
     def initiatives(request: Request):
         access.require(request)

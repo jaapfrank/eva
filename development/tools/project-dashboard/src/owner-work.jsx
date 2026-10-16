@@ -2,11 +2,11 @@ import React from 'react';
 
 const endpoint = '/internal/v1/dashboard/work';
 const labels = { admitted: 'Ingepland', call_started: 'Bezig', stopped: 'Gestopt',
-  succeeded: 'Resultaat klaar', verified: 'Resultaat gecontroleerd', failed: 'Mislukt',
-  needs_help: 'Hulp nodig', ambiguous: 'Uitkomst onzeker', expired: 'Verlopen' };
+  succeeded: 'Afgesloten · resultaat ontvangen', verified: 'Afgesloten · resultaat gecontroleerd', failed: 'Afgesloten · mislukt',
+  needs_help: 'Afgesloten · hulp nodig', ambiguous: 'Afgesloten · uitkomst onzeker', expired: 'Afgesloten · verlopen' };
 const lanes = [
-  ['active', 'Bezig & ingepland', ['admitted', 'call_started']],
-  ['attention', 'Aandacht nodig', ['failed', 'needs_help', 'ambiguous', 'expired']],
+  ['active', 'Open opdrachten', ['admitted', 'call_started']],
+  ['attention', 'Afgesloten met fout of onzekerheid', ['failed', 'needs_help', 'ambiguous', 'expired']],
   ['done', 'Resultaten', ['succeeded', 'verified']],
   ['stopped', 'Gestopt', ['stopped']],
 ];
@@ -27,6 +27,44 @@ function validWork(work, detail = false) {
 }
 function measured(value) {
   return Number.isSafeInteger(value) && value >= 0 ? value.toLocaleString('nl-NL') : 'Niet gemeten';
+}
+function validOverview(value) {
+  const count = n => Number.isSafeInteger(n) && n >= 0;
+  return value?.contract === 'EvaOwnerWorkOverview/v1'
+    && count(value.open_count) && count(value.closed_count) && count(value.total_count)
+    && value.open_count + value.closed_count === value.total_count
+    && value.state_counts && typeof value.state_counts === 'object' && !Array.isArray(value.state_counts)
+    && Object.entries(value.state_counts).every(([state, n]) => Object.hasOwn(labels, state) && count(n))
+    && Object.values(value.state_counts).reduce((sum, n) => sum + n, 0) === value.total_count;
+}
+function WorkPlanning({ planning, busy, act }) {
+  if (!Array.isArray(planning?.schedules) || !planning.schedules.length) return null;
+  const current = planning.schedules.filter(item => ['scheduled', 'launching', 'stop_pending'].includes(item.state));
+  const history = planning.schedules.filter(item => !['scheduled', 'launching', 'stop_pending'].includes(item.state));
+  const card = item => <article className="card" key={item.schedule_id}>
+    <h4>{item.task || 'Eerdere opdracht hervatten'}</h4>
+    <p>{timestamp(item.run_at)} · {({ scheduled: 'Wacht op startmoment', launching: 'Wordt ingepland',
+      dispatched: 'Start overgedragen', cancelled: 'Start geannuleerd', blocked: 'Start geblokkeerd',
+      stop_pending: 'Reeksstop wordt verwerkt', chain_stopped: 'Reeksstop vastgelegd' })[item.state] || 'Onbekend'}</p>
+    {item.linked_work && <p>Opdracht: {labels[item.linked_work.state] || 'Toestand niet beschikbaar'}.</p>}
+    {item.block_reason && <p role="status">{item.block_reason}</p>}
+    {item.dependency?.state === 'waiting' && <p>Wacht ook op het resultaat van de vorige stap.</p>}
+    {item.dependency?.state === 'ready' && <p>Het vorige resultaat is beschikbaar voor deze vervolgstap.</p>}
+    {item.dependency?.state === 'blocked' && <p role="status">{item.dependency.reason}</p>}
+    {item.after_work_id && <button disabled={busy} onClick={() => act('get', item.after_work_id)}>Vorige opdracht openen</button>}
+    {item.can_cancel && <button disabled={busy} onClick={() => act('schedule_cancel', item.schedule_id)}>Annuleren</button>}
+    {(['scheduled', 'launching', 'stop_pending'].includes(item.state) || item.linked_work?.closed === false)
+      && <button disabled={busy} onClick={() => act('schedule_cancel_chain', item.schedule_id)}>Stop deze stap en vervolg</button>}
+    {item.work_id && <button disabled={busy} onClick={() => act('get', item.work_id)}>Opdracht openen</button>}
+  </article>;
+  return <section aria-label="Geplande startmomenten">
+    <h3>Startafspraken</h3>
+    <p>Een start overdragen is iets anders dan een opdracht uitvoeren. De gekoppelde opdracht toont haar eigen actuele uitkomst.</p>
+    {current.length ? current.map(card) : <p>Geen wachtende startafspraak in deze selectie.</p>}
+    {history.length > 0 && <details><summary>Historische startafspraken ({history.length})</summary>{history.map(card)}</details>}
+    {planning.current_truncated && <p>Er zijn meer dan twintig wachtende startafspraken. Open de bijbehorende opdracht om gericht verder te kijken.</p>}
+    {planning.truncated && <p>Deze selectie bevat maximaal twintig recente historische startafspraken; oudere afspraken blijven bij hun opdrachten opvraagbaar.</p>}
+  </section>;
 }
 function timestamp(value) {
   const time = typeof value === 'string' ? Date.parse(value) : NaN;
@@ -52,6 +90,10 @@ async function request(operation, workId, signal, search) {
   });
   if (!response.ok) throw new Error('Werkoverzicht niet beschikbaar. Vernieuw om de opgeslagen toestand op te halen.');
   const data = await response.json();
+  if (data.overview !== undefined && (!validOverview(data.overview)
+    || !Array.isArray(data.open_jobs) || data.open_jobs.length > 20
+    || !data.open_jobs.every(job => validWork(job) && ['admitted', 'call_started'].includes(job.state))
+    || typeof data.open_truncated !== 'boolean')) throw new Error('De actuele werktelling kon niet worden gelezen.');
   if (data.contract !== 'EvaDelegatedWorkOwnerResult/v1' || data.operation !== operation
     || (operation === 'stop_related' && !['stop_recorded', 'partial_stop'].includes(data.status))
     || (operation === 'search' && (typeof data.query !== 'string'
@@ -79,6 +121,7 @@ async function request(operation, workId, signal, search) {
 
 export default function OwnerWork({ initialWorkId = null }) {
   const [showFullResult, setShowFullResult] = React.useState(false);
+  const [showHistory, setShowHistory] = React.useState(false);
   const [filter, setFilter] = React.useState('');
   const [correction, setCorrection] = React.useState('');
   const detailRef = React.useRef(null);
@@ -103,7 +146,7 @@ export default function OwnerWork({ initialWorkId = null }) {
       work.delivery?.state, work.delivery?.description, work.usage]);
     function clearPrivate() {
       selected = null; currentDetail = null; pending = null;
-      setPage(null); setDetail(null); setNotice(''); setRelated(null); relatedRoot = null;
+      setPage(null); setDetail(null); setNotice(''); setRelated(null); setShowHistory(false); relatedRoot = null;
     }
     function schedule() {
       clearTimeout(timer);
@@ -246,7 +289,11 @@ export default function OwnerWork({ initialWorkId = null }) {
   }, [initialWorkId]);
   const refresh = () => commands.current('list', undefined, true);
   const act = (operation, workId) => commands.current(operation, workId, true);
-  const visible = page?.operation === 'search' ? page.jobs : (page?.jobs || []).filter(job => job.task_preview.toLocaleLowerCase('nl-NL').includes(filter.toLocaleLowerCase('nl-NL')));
+  const searching = page?.operation === 'search';
+  const openJobs = page?.open_jobs || (page?.jobs || []).filter(job => ['admitted', 'call_started'].includes(job.state));
+  const closedJobs = (page?.jobs || []).filter(job => !['admitted', 'call_started'].includes(job.state));
+  const candidates = searching ? page.jobs : [...openJobs, ...(showHistory ? closedJobs : [])];
+  const visible = candidates.filter(job => searching || job.task_preview.toLocaleLowerCase('nl-NL').includes(filter.toLocaleLowerCase('nl-NL')));
   function downloadResult() {
     if (!detail?.result_available || !detail.result) return;
     const url = URL.createObjectURL(new Blob([readable(detail.result.output)], { type: 'text/plain;charset=utf-8' }));
@@ -263,26 +310,21 @@ export default function OwnerWork({ initialWorkId = null }) {
     {error && <p role="alert">{error}</p>}
     {notice && <p role="status">{notice}</p>}
     {busy && <p role="status">Werk ophalen…</p>}
-    {Array.isArray(page?.planning?.schedules) && page.planning.schedules.length > 0 && <section aria-label="Geplande startmomenten">
-      <h3>Later aan het werk</h3>
-      <p>Een bewaarde afspraak voor één start of hervatting. Tot dat moment draait hiervoor geen model.</p>
-      {page.planning.schedules.map(item => <article className="card" key={item.schedule_id}>
-        <h4>{item.task || 'Eerdere opdracht hervatten'}</h4>
-        <p>{timestamp(item.run_at)} · {({ scheduled: 'Wacht op startmoment', launching: 'Wordt ingepland', dispatched: 'Overgedragen aan werker', cancelled: 'Geannuleerd', blocked: 'Start geblokkeerd; vraag Eva om bijsturing', stop_pending: 'Reeksstop wordt verwerkt', chain_stopped: 'Reeksstop vastgelegd' })[item.state] || 'Onbekend'}</p>
-        {item.block_reason && <p role="status">{item.block_reason}</p>}
-        {item.dependency?.state === 'waiting' && <p>Wacht ook op het resultaat van de vorige stap.</p>}
-        {item.dependency?.state === 'ready' && <p>Het vorige resultaat is beschikbaar voor deze vervolgstap.</p>}
-        {item.dependency?.state === 'blocked' && <p role="status">{item.dependency.reason}</p>}
-        {item.after_work_id && <button disabled={busy} onClick={() => act('get', item.after_work_id)}>Vorige opdracht openen</button>}
-        {item.can_cancel && <button disabled={busy} onClick={() => act('schedule_cancel', item.schedule_id)}>Annuleren</button>}
-        <button disabled={busy} onClick={() => act('schedule_cancel_chain', item.schedule_id)}>Stop deze stap en vervolg</button>
-        {item.work_id && <button disabled={busy} onClick={() => act('get', item.work_id)}>Opdracht openen</button>}
-      </article>)}
-      {page.planning.truncated && <p>De twintig meest recente of open afspraken worden getoond.</p>}
-    </section>}
+    {page?.overview && <div role="status" aria-label="Actuele werktelling">
+      <p><strong>{page.overview.open_count} open opdrachten</strong> · {page.overview.closed_count} afgesloten pogingen.</p>
+      <p>Afgesloten betekent dat een poging niet meer loopt: er kan een resultaat, fout, stop of onzekere uitkomst zijn.</p>
+    </div>}
+    <WorkPlanning planning={page?.planning} busy={busy} act={act} />
+    {page && !searching && <>
+      {openJobs.length === 0 && <p>Er staat nu geen opdracht open{page.overview ? '.' : ' in deze zichtbare selectie.'} Eerdere uitkomsten blijven opvraagbaar en doorzoekbaar.</p>}
+      {closedJobs.length > 0 && <button aria-expanded={showHistory} onClick={() => setShowHistory(value => !value)}>
+        {showHistory ? 'Recente afgesloten opdrachten verbergen' : 'Recente afgesloten opdrachten tonen'}
+      </button>}
+      {page.open_truncated && <p>Er staan meer dan twintig opdrachten open; zoek op onderwerp om gericht verder te kijken.</p>}
+    </>}
     {page?.operation === 'search' && <p>Zoeken naar “{page.query}” in bewaarde titels, opdrachten en resultaten. Dit is zoeken op tekst, niet alleen in de zichtbare kaarten.</p>}
-    {page && !page.jobs.length && <p>{page.operation === 'search' ? 'Geen bewaarde opdracht gevonden met deze tekst.' : 'Nog geen hulpopdracht beschikbaar.'}</p>}
-    {page && <div className="work-kanban">{lanes.map(([id, title, states]) => {
+    {searching && !page.jobs.length && <p>Geen bewaarde opdracht gevonden met deze tekst.</p>}
+    {page && <div className="work-kanban">{(searching || showHistory ? lanes : lanes.filter(([id]) => id === 'active')).map(([id, title, states]) => {
       const jobs = visible.filter(job => states.includes(job.state));
       return <section className={`work-lane ${id}`} key={id} aria-label={title}>
         <h3>{title} <span>{jobs.length}</span></h3>
@@ -298,27 +340,14 @@ export default function OwnerWork({ initialWorkId = null }) {
     })}</div>}
     {page?.truncated && (page.operation === 'search'
       ? <button disabled={busy} onClick={() => act('search_next', page.next_before_work_id)}>Volgende zoekresultaten</button>
-      : <p>Er worden maximaal twintig opdrachten getoond, met lopend werk eerst. Zoek op onderwerp om eerdere taken te vinden.</p>)}
+      : <p>Er worden maximaal twintig recente historische opdrachten getoond. Zoek op onderwerp om eerdere taken en resultaten te vinden.</p>)}
     {related && <section className="card" aria-label="Samenhangende opdrachten">
       <h3>Samenhangende opdrachten</h3>
       <p>{related.jobs.length} opgeslagen taken en pogingen · wordt elke vijf seconden bijgewerkt.</p>
       <p>{Object.entries(related.counts || {}).map(([state, count]) => `${labels[state] || state}: ${count}`).join(' · ')}</p>
       <p>Dit toont oorspronkelijke opdrachten, hervattingen, vervolgonderzoek en gekoppelde planning. Losstaande afspraken staan hierboven; dit is geen voltooiingspercentage van een project.</p>
       {related.truncated && <p role="status">Dit overzicht is onvolledig: een grens is bereikt of een eerdere opdracht is niet meer beschikbaar.</p>}
-      {Array.isArray(related.planning?.schedules) && related.planning.schedules.length > 0 && <section aria-label="Gekoppelde vervolgstappen">
-        <h4>Geplande stappen in dit geheel</h4>
-        {related.planning.schedules.map(item => <article key={item.schedule_id}>
-          <strong>{item.task || 'Eerdere opdracht hervatten'}</strong>
-          <p>{timestamp(item.run_at)} · {({ scheduled: 'Wacht op startmoment of voorganger', launching: 'Wordt ingepland',
-            dispatched: 'Gestart', cancelled: 'Geannuleerd', blocked: 'Geblokkeerd',
-            stop_pending: 'Stoppen wordt verwerkt', chain_stopped: 'Gestopt' })[item.state] || 'Onbekend'}</p>
-          {item.dependency?.state === 'waiting' && <p>Wacht op het resultaat van de vorige stap.</p>}
-          {item.block_reason && <p role="status">{item.block_reason}</p>}
-          {item.after_work_id && <button disabled={busy} onClick={() => act('get', item.after_work_id)}>Voorganger openen</button>}
-          {item.work_id && <button disabled={busy} onClick={() => act('get', item.work_id)}>Gestarte opdracht openen</button>}
-          {item.can_cancel && <button disabled={busy} onClick={() => act('schedule_cancel_chain', item.schedule_id)}>Stop deze stap en vervolg</button>}
-        </article>)}
-      </section>}
+      <WorkPlanning planning={related.planning} busy={busy} act={act} />
       <p>Deze bediening stopt de oorspronkelijke opdracht met haar gekoppelde hervattingen en planning. Resultaten blijven bewaard; begonnen acties kunnen nog afronden.</p>
       <button disabled={busy} onClick={() => act('stop_related', related.selected_work_id)}>
         Stop deze hele gekoppelde reeks

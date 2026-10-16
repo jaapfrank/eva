@@ -34,5 +34,11 @@ def dashboard_delegated_work(service, *, tenant_id, installation_id,
         result = service.execute(operation, turn, search=search, request_key=turn.message_id)
     else:
         result = service.execute(operation, turn, work_id=work_id, request_key=turn.message_id)
+    if operation in {"list", "search"}:
+        from eva.bootstrap.dashboard_work_overview import owner_work_overview
+        result = owner_work_overview(service, turn, result)
+    elif operation == "related" and isinstance(result.get("planning"), dict):
+        from eva.bootstrap.dashboard_work_overview import planning_work_status
+        result = {**result, "planning": planning_work_status(service, result["planning"])}
     service.validate_authority(turn)
     return result

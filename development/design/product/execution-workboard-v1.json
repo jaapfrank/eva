@@ -838,21 +838,24 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-16T12:49:32.967702+00:00",
+  "lastUpdated": "2026-10-16T13:33:11.133399+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E2.4",
   "currentWork": {
     "id": "E2.4",
     "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
-    "status": "planned",
+    "status": "completed",
     "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
-    "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+    "nextAction": "Gebruik Initiatief & leren. Volgende geplande taak: E2.5 optionele modelproviders.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+    "checkedAt": "2026-10-16T13:33:11.133399+00:00",
     "outcome": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
     "area": "initiative learning and improvement presentation",
-    "countedAsProductTask": true
+    "countedAsProductTask": true,
+    "result": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
+    "completionEvidence": "development/evidence/product/e24-initiative-learning-installed-20261016.json",
+    "independentReview": "development/reviews/e24-initiative-learning-review-20261016.json"
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -949,7 +952,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "E2.3 geïnstalleerd en onafhankelijk afgerond. Volgende: E2.4 initiatief, reflecties/dromen en toegepaste verbeteringen vanuit bestaande registraties tonen; geen afgesloten proef herhalen.",
+      "priorityDecision": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten. E2.5: extra modelproviders via bestaande providergrens optioneel aansluiten; geen ongevraagde betaalde route.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1635,6 +1638,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E2.4 · Initiatief en leren zichtbaar; actuele werkvoorraad gescheiden",
+            "state": "installed",
+            "checkedAt": "2026-10-16T13:33:11.133399+00:00",
+            "summary": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
+            "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e24-initiative-learning-installed-20261016.json",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E2.4"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "maintenanceRepair": false,
+            "familyAcceptance": false,
+            "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+            "completionScope": "E2.4 presentation and actual open-work/history clarification"
+          },
+          {
             "title": "Voice · Opstartstilte, afscheid en dagcontext",
             "state": "installed",
             "checkedAt": "2026-10-16T13:20:06.079193+00:00",
@@ -2074,58 +2094,58 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E2.3 · Gesprekken, opdrachten en resultaten verbonden",
+          "title": "E2.4 · Initiatief en leren zichtbaar; actuele werkvoorraad gescheiden",
           "state": "installed",
-          "checkedAt": "2026-10-16T12:49:32.967702+00:00",
-          "summary": "E2.3 geïnstalleerd en onafhankelijk afgerond: het privégesprek toont zijn eigen opdrachten; een werklink opent echte voortgang, opgeslagen resultaat en beschikbare exacte gespreksbron. Stoppen/hervatten via bestaande bediening. Korte terugmelding; volledig resultaat alleen op verzoek.",
-          "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open.",
-          "source": "/home/administrator/project/Eva2/development/evidence/product/e23-conversation-work-installed-20261016.json",
+          "checkedAt": "2026-10-16T13:33:11.133399+00:00",
+          "summary": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
+          "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/e24-initiative-learning-installed-20261016.json",
           "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "E2.3"
+            "E2.4"
           ],
           "smallTaskCountsUnchanged": false,
           "maintenanceRepair": false,
           "familyAcceptance": false,
-          "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard/conversation",
-          "completionScope": "E2.3 conversation/work/result presentation only"
+          "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+          "completionScope": "E2.4 presentation and actual open-work/history clarification"
         },
         "now": {
           "taskId": "E2.4",
           "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
-          "state": "Klaar om te beginnen",
-          "phase": "next",
+          "state": "Afgerond en geïnstalleerd",
+          "status": "completed",
+          "phase": "delivered",
           "activeExecution": false,
           "nativeRunning": false,
-          "summary": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+          "summary": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
           "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
           "ownerActionNeeded": false,
-          "checkedAt": "2026-10-16T12:49:32.967702+00:00",
-          "status": "planned"
+          "checkedAt": "2026-10-16T13:33:11.133399+00:00"
         },
         "next": {
-          "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
-          "state": "Volgende: E2.4",
-          "summary": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
+          "title": "Extra modelproviders optioneel aansluiten",
+          "state": "Volgende: E2.5",
+          "summary": "E2.5: extra modelproviders via bestaande providergrens optioneel aansluiten; geen ongevraagde betaalde route.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Gesprek en opdrachten samen gebruiken",
-          "detail": "Geen verplichte handeling. Open Gesprek en kies een opdracht onder Opdrachten bij dit gesprek; bekijk voortgang of gebruik stoppen/hervatten. Het volledige resultaat verschijnt alleen na Volledig resultaat tonen.",
+          "title": "Initiatief en leerhistorie bekijken",
+          "detail": "Geen verplichte handeling. De geïnstalleerde pagina toont echte registraties en hun bewijsgrenzen.",
           "steps": [
-            "Open http://127.0.0.1:44711/internal/v1/dashboard/conversation",
-            "Open Voortgang, gesprek en resultaat openen bij de gewenste opdracht.",
-            "Gebruik Stop deze hulpopdracht of Hervatten met nieuwe poging.",
-            "Kies Volledig resultaat tonen wanneer je meer dan het korte fragment wilt zien."
+            "Open http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+            "Lees een eigen bijdrage met aanleiding en bewaarde feedback; geef desgewenst Feedback bewaren.",
+            "Bekijk Leren en dromen voor reflecties, beoordelingen en toepassingen. Volledige bijdrage alleen op verzoek.",
+            "Bij Opdrachten & resultaten staat de actuele open telling. Kies Recente afgesloten opdrachten tonen voor historie en fouten."
           ],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-16T12:49:32.967702+00:00",
-        "reviewedAt": "2026-10-16T12:49:32.967702+00:00",
+        "checkedAt": "2026-10-16T13:33:11.133399+00:00",
+        "reviewedAt": "2026-10-16T13:33:11.133399+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-16T12:49:32.967702+00:00",
-      "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+      "reviewedAt": "2026-10-16T13:33:11.133399+00:00",
+      "checkedAt": "2026-10-16T13:33:11.133399+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2139,10 +2159,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+        "checkedAt": "2026-10-16T13:33:11.133399+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
-        "headline": "E1 technisch afgerond; E2.1–E2.3 geïnstalleerd. Volgende: initiatief, dromen en verbeteringen volgen.",
-        "note": "52 van 70 geregistreerde kleine taken afgerond; 18 open. E2.3 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.",
+        "headline": "E1 technisch afgerond; E2.1–E2.4 geïnstalleerd. Volgende: optionele modelproviders.",
+        "note": "53 van 70 geregistreerde kleine taken afgerond; 17 open. E2.4 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2246,7 +2266,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-16T12:49:32.967702+00:00",
+      "lastUpdatedAt": "2026-10-16T13:33:11.133399+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2280,7 +2300,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-16T12:49:32.967702+00:00",
+      "updatedAt": "2026-10-16T13:33:11.133399+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -4326,14 +4346,14 @@
               {
                 "id": "E2.4",
                 "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
-                "status": "planned",
+                "status": "completed",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Initiatief-, reflectie- en AIDE²-registraties bestaan; HUE5/HUE6 blijven afgerond.",
                 "gap": "Die registraties zijn nog niet gezamenlijk inzichtelijk in dagelijks Eva-beheer.",
-                "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+                "nextAction": "Gebruik Initiatief & leren. Volgende geplande taak: E2.5 optionele modelproviders.",
                 "files": [
                   "src/eva/adapters/api/dashboard_initiatives.py",
                   "src/eva/adapters/api",
@@ -4346,13 +4366,24 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-16T13:33:11.133399+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                  "steps": [],
+                  "availableNow": true,
+                  "readyWhen": "Geïnstalleerd en onafhankelijk technisch afgerond; geen verplichte herhaalproef.",
+                  "steps": [
+                    "Open http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+                    "Lees een eigen bijdrage met aanleiding en bewaarde feedback; geef desgewenst Feedback bewaren.",
+                    "Bekijk Leren en dromen voor reflecties, beoordelingen en toepassingen. Volledige bijdrage alleen op verzoek.",
+                    "Bij Opdrachten & resultaten staat de actuele open telling. Kies Recente afgesloten opdrachten tonen voor historie en fouten."
+                  ],
                   "blocksIndependentWork": false
-                }
+                },
+                "completedAt": "2026-10-16T13:33:11.133399+00:00",
+                "completionEvidence": "development/evidence/product/e24-initiative-learning-installed-20261016.json",
+                "latestEvidence": "development/evidence/product/e24-initiative-learning-installed-20261016.json",
+                "independentReview": "development/reviews/e24-initiative-learning-review-20261016.json",
+                "result": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
+                "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open."
               },
               {
                 "id": "E2.5",
@@ -4784,7 +4815,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+        "nextAction": "E2.5: extra modelproviders via bestaande providergrens optioneel aansluiten; geen ongevraagde betaalde route.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -4793,10 +4824,10 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T12:49:32.967702+00:00",
+        "updatedAt": "2026-10-16T13:33:11.133399+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-16T12:49:32.967702+00:00",
+          "updatedAt": "2026-10-16T13:33:11.133399+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -4836,7 +4867,7 @@
                 "C4.1",
                 "C4.3"
               ],
-              "currentGap": "E2.1 navigatie, E2.2 personen/geheugen en E2.3 gesprek-/taaksamenhang geïnstalleerd en onafhankelijk afgerond. Volledige leerhistorie, extra providers en WhatsApp blijven E2.4–E2.6."
+              "currentGap": "E2.1–E2.4 navigatie, personen/geheugen, gesprek/werk/resultaat en initiatief/leren geïnstalleerd en onafhankelijk afgerond. E2.5 extra providers en E2.6 WhatsApp blijven open."
             },
             {
               "id": "E3",
@@ -6918,14 +6949,14 @@
             {
               "id": "E2.4",
               "title": "Initiatief, dromen en verbeteringen inzichtelijk maken",
-              "status": "planned",
+              "status": "completed",
               "kind": "bouwen / afmaken",
               "doneWhen": "De gebruiker ziet aanleiding, eigen besluit, bijdrage/resultaat, echte feedback en later gebruik. Reflectie, kandidaat, beoordeling, referentiebehoud en werkelijk toegepaste verbetering zijn afzonderlijk zichtbaar vanuit echte registraties.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Initiatief-, reflectie- en AIDE²-registraties bestaan; HUE5/HUE6 blijven afgerond.",
               "gap": "Die registraties zijn nog niet gezamenlijk inzichtelijk in dagelijks Eva-beheer.",
-              "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+              "nextAction": "Gebruik Initiatief & leren. Volgende geplande taak: E2.5 optionele modelproviders.",
               "files": [
                 "src/eva/adapters/api/dashboard_initiatives.py",
                 "src/eva/adapters/api",
@@ -6938,13 +6969,24 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-16T13:33:11.133399+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
-                "steps": [],
+                "availableNow": true,
+                "readyWhen": "Geïnstalleerd en onafhankelijk technisch afgerond; geen verplichte herhaalproef.",
+                "steps": [
+                  "Open http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+                  "Lees een eigen bijdrage met aanleiding en bewaarde feedback; geef desgewenst Feedback bewaren.",
+                  "Bekijk Leren en dromen voor reflecties, beoordelingen en toepassingen. Volledige bijdrage alleen op verzoek.",
+                  "Bij Opdrachten & resultaten staat de actuele open telling. Kies Recente afgesloten opdrachten tonen voor historie en fouten."
+                ],
                 "blocksIndependentWork": false
-              }
+              },
+              "completedAt": "2026-10-16T13:33:11.133399+00:00",
+              "completionEvidence": "development/evidence/product/e24-initiative-learning-installed-20261016.json",
+              "latestEvidence": "development/evidence/product/e24-initiative-learning-installed-20261016.json",
+              "independentReview": "development/reviews/e24-initiative-learning-review-20261016.json",
+              "result": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
+              "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open."
             },
             {
               "id": "E2.5",
@@ -7376,7 +7418,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak de bestaande uitleesroutes en productweergaven compleet; voer geen afgesloten verbeterproef opnieuw uit.",
+      "nextAction": "E2.5: extra modelproviders via bestaande providergrens optioneel aansluiten; geen ongevraagde betaalde route.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7385,10 +7427,10 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T12:49:32.967702+00:00",
+      "updatedAt": "2026-10-16T13:33:11.133399+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-16T12:49:32.967702+00:00",
+        "updatedAt": "2026-10-16T13:33:11.133399+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -7428,7 +7470,7 @@
               "C4.1",
               "C4.3"
             ],
-            "currentGap": "E2.1 navigatie, E2.2 personen/geheugen en E2.3 gesprek-/taaksamenhang geïnstalleerd en onafhankelijk afgerond. Volledige leerhistorie, extra providers en WhatsApp blijven E2.4–E2.6."
+            "currentGap": "E2.1–E2.4 navigatie, personen/geheugen, gesprek/werk/resultaat en initiatief/leren geïnstalleerd en onafhankelijk afgerond. E2.5 extra providers en E2.6 WhatsApp blijven open."
           },
           {
             "id": "E3",
@@ -8461,7 +8503,7 @@
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
     }
   },
-  "updatedAt": "2026-10-16T12:49:32.967702+00:00",
+  "updatedAt": "2026-10-16T13:33:11.133399+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

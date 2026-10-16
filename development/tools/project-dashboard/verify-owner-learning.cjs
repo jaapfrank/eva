@@ -1,0 +1,31 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),http=require('node:http'),path=require('node:path');
+const {chromium}=require(process.env.EVA_DASHBOARD_PLAYWRIGHT_PACKAGE);
+const base='/internal/v1/dashboard',dist=process.env.EVA_DASHBOARD_DIST||path.join(__dirname,'dist');
+const at='2026-10-16T12:00:00Z',meaning='Opgeslagen registratie; geen bewezen gedragsverbetering.';
+const card={intent_id:'personal-interest:'+'a'.repeat(64),title:'Synthetic contribution',status:'done',motivation:'Een echte aanleiding',question:'Eigen besluit',adopted_at:at,result_at:at,result_preview:'Korte bijdrage',has_artifact:true,can_stop:false,feedback:null,feedback_later_use:'Later gedrag nog niet afzonderlijk bewezen.'};
+const history={contract:'EvaOwnerInitiativeHistory/v1',cards:[card],latest_review:null,checked_at:at,learning:{current_styles:[{state:'available',content:'Synthetic derived style',meaning}],reflections:[{id:'reflection',at,changed:true,content_sha256:'a'.repeat(64),source_fact_count:2,later_context_at:at,meaning}],components:[{id:'kept',at,stage:'selection',state:'baseline_retained',reference_retained:true,applied:false,work_id:'work:synthetic',meaning},{id:'request',at,stage:'application_request',state:'queued',applied:false,work_id:'work:synthetic',meaning},{id:'applied',at,stage:'application_status',state:'completed',applied:true,work_id:'work:synthetic',meaning}]}};
+(async()=>{let server,origin=process.env.EVA_DASHBOARD_ORIGIN,denied=false,artifactReads=0,writes=0;const errors=[],external=[];
+if(!origin){server=http.createServer((req,res)=>{const u=new URL(req.url,'http://localhost');res.setHeader('Cache-Control','no-store');
+if(u.pathname===base||u.pathname===base+'/'){res.setHeader('Content-Type','text/html');return res.end(fs.readFileSync(path.join(dist,'index.html')));}
+if(u.pathname.startsWith(base+'/assets/')){const f=path.join(dist,'assets',path.basename(u.pathname));res.setHeader('Content-Type',f.endsWith('.js')?'text/javascript':'text/css');return res.end(fs.readFileSync(f));}
+res.setHeader('Content-Type','application/json');
+if(u.pathname===base+'/initiatives/history'){if(denied){res.writeHead(503);return res.end('{}');}return res.end(JSON.stringify(history));}
+if(u.pathname.endsWith('/artifact')){artifactReads++;return res.end('Full synthetic contribution');}
+if(u.pathname===base+'/initiatives/feedback'&&req.method==='POST'){let body='';req.on('data',x=>body+=x);req.on('end',()=>{const p=JSON.parse(body);assert.equal(p.intent_id,card.intent_id);card.feedback=p.feedback;writes++;res.end(JSON.stringify({status:'recorded',intent_id:p.intent_id}));});return;}
+if(u.pathname===base+'/status')return res.end(JSON.stringify({contract:'EvaDashboardStatus/v1',read_only:true,runtime:{ready:true,state:'ready'}}));
+if(u.pathname===base+'/identity')return res.end(JSON.stringify({contract:'EvaDashboardIdentity/v1',read_only:true,identity:{display_name:'Eva',identity_id:'synthetic',language:'nl',pack_sha256:'0'.repeat(64),pack_version:1,state:'current',temperament:[],voice_style:{maximum_paragraphs:3,name:'warm',qualities:[]}}}));
+res.writeHead(404);res.end('{}');});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
+const browser=await chromium.launch({executablePath:process.env.EVA_DASHBOARD_CHROMIUM,headless:true,args:['--no-sandbox','--disable-gpu']});
+try{const context=await browser.newContext({viewport:{width:1440,height:1000}});await context.route('**/*',route=>{if(route.request().url().startsWith(origin+'/'))return route.continue();external.push(route.request().url());return route.abort();});
+const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(12000);
+await page.goto(origin+base+'#/?section=initiative');await page.getByRole('heading',{name:'Leren en dromen',exact:true}).waitFor();
+if(server){await page.getByText('Korte bijdrage',{exact:true}).waitFor();assert.equal(artifactReads,0);await page.getByRole('button',{name:'Volledige bijdrage tonen'}).click();await page.getByText('Full synthetic contribution',{exact:true}).waitFor();assert.equal(artifactReads,1);
+await page.getByLabel('Feedback: Synthetic contribution',{exact:true}).fill('Dit is bruikbaar');await page.getByRole('button',{name:'Feedback bewaren'}).click();await page.getByText('Dit is bruikbaar',{exact:true}).waitFor();assert.equal(writes,1);
+await page.getByText('Werkelijk geïnstalleerd volgens het ontvangstbewijs',{exact:true}).waitFor();await page.getByText('Toepassing aangevraagd',{exact:true}).waitFor();await page.getByText('Referentie behouden',{exact:true}).first().waitFor();
+assert.match(await page.getByRole('region',{name:'Leerhistorie'}).innerText(),/Later als gesprekscontext aangeboden/);}
+if(process.env.EVA_DASHBOARD_SCREENSHOT)await page.screenshot({path:process.env.EVA_DASHBOARD_SCREENSHOT,fullPage:true});
+await page.setViewportSize({width:390,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
+if(server){denied=true;await page.getByRole('button',{name:'Vernieuwen',exact:true}).click();await page.getByRole('alert').waitFor();assert.equal(await page.getByText('Synthetic derived style',{exact:true}).count(),0);assert.equal(await page.getByText('Full synthetic contribution',{exact:true}).count(),0);}
+assert.deepEqual(errors,[]);assert.deepEqual(external,[]);console.log(JSON.stringify({contract:'EvaOwnerLearningBrowserProof/v1',status:'passed',mode:server?'isolated':'installed',feedbackWrite:server?1:0,artifactOnRequest:!!server,mobileWidth:390,authorityFailureClears:!!server,modelCalls:0,javascriptErrors:0}));
+}finally{await browser.close();if(server)await new Promise(r=>server.close(r));}
+})().catch(e=>{console.error(e.stack);process.exitCode=1;});

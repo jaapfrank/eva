@@ -419,9 +419,7 @@ function Dashboard() {
       </section>}
       {selected === 'memory' && <><OwnerMemoryView revision={memoryRevision} onSource={id => setSelectedSource({ id, revision: Date.now() })} /><MemorySources selectedSource={selectedSource} onMemoryChanged={memoryChanged} /></>}
       {selected === 'work' && <OwnerWork key={selectedWork || 'all'} initialWorkId={selectedWork} />}
-      {selected === 'initiative' && <><OwnerInitiatives /><section className="owner-panel" aria-label="Leerhistorie">
-        <h2>Leren en dromen</h2><p>De laatste werkelijke initiatiefafweging en bijdragen staan hierboven. De volledige reflectie-, feedback- en verbeterhistorie wordt nog aangesloten; een afweging is geen bewijs van toegepaste verbetering.</p>
-      </section></>}
+      {selected === 'initiative' && <OwnerInitiatives />}
       {selected === 'connections' && <><OwnerHealth /><section className="owner-panel"><h2>Optionele verbindingen</h2>
         <p>Hierboven staat de huidige backendstatus. Aanmelden, providerkeuze en extra kanalen worden nog aangesloten. Claude en WhatsApp zijn hier nog geen werkende aansluitopties.</p>
       </section><OwnerBrowser /></>}

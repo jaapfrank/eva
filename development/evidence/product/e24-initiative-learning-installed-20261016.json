@@ -1,0 +1,108 @@
+{
+  "contract": "EvaE24InitiativeLearningInstalled/v1",
+  "taskId": "E2.4",
+  "checkedAt": "2026-10-16T13:32:38.863261+00:00",
+  "status": "installed_and_technically_completed",
+  "scope": "Present existing initiative, feedback, reflection and component-improvement receipts; clarify actual open work versus closed history.",
+  "existing": [
+    "Owner initiative/result/feedback storage and control",
+    "Memory reflection and exact later context bindings",
+    "Owner-bound component improvement receipts and reference decisions",
+    "Existing delegated work and scheduled-start lifecycle"
+  ],
+  "added": [
+    "Server-bound read projection across existing stores, without model calls or a second store",
+    "Initiative explanation, short result, actual feedback and requested full result",
+    "Reflection/context-use and candidate/evaluation/selection/reference/application stages distinctly shown",
+    "Actual full-scope open-work count before the history limit; pending starts separate from dispatched history"
+  ],
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "changedServices": [
+      "core"
+    ],
+    "checks": {
+      "core_image": true,
+      "core_healthy": true,
+      "worker_unchanged": true,
+      "worker_healthy": true,
+      "user_unchanged": true,
+      "env_unchanged": true,
+      "mounts_unchanged": true,
+      "installed_bytes": true,
+      "actual_work_counts_present": true
+    },
+    "sourceBytes": {
+      "bootstrap/dashboard_learning.py": true,
+      "bootstrap/dashboard_work.py": true,
+      "bootstrap/dashboard_work_overview.py": true,
+      "adapters/api/dashboard_initiatives.py": true,
+      "adapters/api/dashboard_static/eva-dashboard-assets.json": true
+    },
+    "dataRetained": true,
+    "workerRetained": true,
+    "voiceCodeModified": false
+  },
+  "actualRead": {
+    "initiatives": 14,
+    "reflections": 1,
+    "componentStages": 12,
+    "currentStyles": 2,
+    "work": {
+      "contract": "EvaOwnerWorkOverview/v1",
+      "checked_at": "2026-10-16T13:31:39+00:00",
+      "open_count": 0,
+      "closed_count": 182,
+      "total_count": 182,
+      "state_counts": {
+        "ambiguous": 54,
+        "failed": 52,
+        "stopped": 5,
+        "succeeded": 71
+      }
+    },
+    "productionWorkMutations": 0,
+    "productionFeedbackWrites": 0
+  },
+  "verification": {
+    "postgresLearning": {
+      "passed": 2,
+      "seconds": 2.85
+    },
+    "workOverviewAndBootstrap": {
+      "passed": 7,
+      "seconds": 4.93
+    },
+    "browser": [
+      "isolated learning, exact feedback write/readback and on-request result",
+      "isolated current work/history and closed uncertain states",
+      "existing E2.3 conversation/work/result regression",
+      "six-section navigation regression",
+      "installed read-only initiative/learning and actual work/history",
+      "390px mobile and no JavaScript errors"
+    ]
+  },
+  "limits": [
+    "A reflection or supplied memory context does not prove improved behavior.",
+    "No per-contribution later behavior receipt exists; absence is explicit instead of inferred.",
+    "Current style is a derived profile, not an independently confirmed personal fact.",
+    "No newly installed improvement was invented or executed for this display.",
+    "Historical failed/ambiguous attempts retain their actual outcome; no mass retry or success relabel.",
+    "History selections are bounded and labelled; no exhaustive lifetime claim.",
+    "No full family acceptance or competitive lead claimed."
+  ],
+  "consumption": {
+    "evaRuntimeModelCalls": 0,
+    "newPaidRoutes": 0,
+    "developmentCredits": null,
+    "developmentModelTokens": null,
+    "developmentToolCount": null,
+    "elapsedSeconds": 909,
+    "meaning": "Runtime read-only proof; development account costs not available.",
+    "startedAt": "2026-10-16T13:17:29.573279+00:00"
+  },
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/e24-initiative-learning-20261016",
+  "independentReview": "development/reviews/e24-initiative-learning-review-20261016.json",
+  "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+  "familyAcceptance": false
+}

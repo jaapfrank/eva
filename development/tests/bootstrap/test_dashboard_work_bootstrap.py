@@ -35,7 +35,11 @@ def test_revoked_authority_blocks_saved_result():
             owner_principal_id=UUID(int=1), principal_binding_id=UUID(int=2), operation="get", work_id="work:test")
 
 
-def test_http_runtime_and_existing_service_share_saved_stop_and_private_result():
+def test_http_runtime_and_existing_service_share_saved_stop_and_private_result(monkeypatch):
+    # This HTTP/service test isolates storage; current SQL counts have their own
+    # disposable PostgreSQL tests. Keep its fake store focused on control paths.
+    monkeypatch.setattr("eva.bootstrap.dashboard_work_overview.owner_work_overview",
+                        lambda service, turn, result: result)
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from eva.adapters.api.dashboard_access import DashboardAccess
@@ -56,10 +60,13 @@ def test_http_runtime_and_existing_service_share_saved_stop_and_private_result()
             row.state = "stopped"
             return row
 
+    monkeypatch.setattr("eva.adapters.postgres.scheduled_work.ScheduledOwnerWork",
+                        lambda service: SimpleNamespace(list=lambda: {"schedules": [], "truncated": False}))
     store = Store()
     store.owned_work = [store._work()]
     service = DelegatedWorkOwnerService(store, owner_principal_id=OWNER,
-        principal_binding_id=BINDING, clock=lambda: NOW)
+        principal_binding_id=BINDING, clock=lambda: NOW,
+        delivery_status_loader=lambda identifier: "blocked")
     # The real constructor and real owner service are used. Storage is isolated;
     # existing Postgres lifecycle tests cover its durable implementation.
     runtime = PostgresHindsightMemoryRuntime(
