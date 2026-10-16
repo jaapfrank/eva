@@ -66,6 +66,9 @@ class SpeakerSource:
                 if not audible:
                     self._buffer_leading(output);continue
                 self.max_gap_ms=0;self.max_capture_ms=0;self.segment_samples=0
+                # Prime the physical playback path before any spoken samples.
+                # Silence is transmitted, not slept away; STOP still fences it.
+                if not await deliver(rtc.AudioFrame(bytes(4800),24000,1,2400)):return
                 leading_samples=sum(previous.samples_per_channel for previous in self.leading)
                 for previous in tuple(self.leading):
                     if not await deliver(previous):return

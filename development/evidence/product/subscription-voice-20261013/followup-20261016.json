@@ -1,0 +1,121 @@
+{
+  "checkedAt": "2026-10-16T13:20:06.079193+00:00",
+  "status": "installed_owner_retest_pending",
+  "ownerFeedback": "Audio much improved but not100%; suggested100ms delay. Uncertainty about own day; doei/dankje doei not ending as expected.",
+  "changes": {
+    "audio": "100ms zero PCM before native spoken segment; no words discarded; STOP epoch fence retained. Real sink splits large PCM frames into bounded wire chunks.",
+    "farewell": "Exact thanks+farewell phrases recognized. Playback marker saved at user-turn start, before early reply audio. Already completed assistant farewell remembered; stale/missing IDs cannot complete fresh farewell.",
+    "dayContext": "Original validated UTC timestamps now retained in model recent-message formatting. No new memory store or invented activities."
+  },
+  "observedBefore": {
+    "suppressedSignalFrames": 0,
+    "farewellDetected": true,
+    "farewellPlaybackTimeoutSeconds": 3,
+    "farewellEventuallyClosed": true,
+    "dayAnswerUncertainWhetherInventoryToday": true
+  },
+  "validation": {
+    "audioTestsPassed": 56,
+    "modelTestsPassed": 103,
+    "dayBeforeBackendMs": 11107,
+    "dayAfterBackendMs": 13119,
+    "dayAfterAnswer": "Correctly places recorded inventory discussion and voice test today, while limiting claims about additional activities.",
+    "dayRuntimeModelCalls": 2,
+    "dayRuntimeToolCalls": 0,
+    "speakerBindingsReady": [
+      true,
+      true
+    ],
+    "physicalAcceptance": false,
+    "installedAudioProbe": {
+      "ready_seconds": 9.032,
+      "turns": [
+        {
+          "first_audio_ms": 826,
+          "samples": 44144,
+          "session_open": true
+        },
+        {
+          "first_audio_ms": 730,
+          "samples": 41760,
+          "session_open": true
+        }
+      ],
+      "physical_audio": false,
+      "microphone_used": false,
+      "speaker_ack_simulated": false,
+      "voice_requests": 2
+    }
+  },
+  "runtime": [
+    {
+      "name": "eva2-household-speaker-1",
+      "project": "eva2-household-speaker",
+      "service": "speaker",
+      "slug": "speaker",
+      "base": "sha256:e48af888031abc6fc6fa607c2256b491dace08eb022a5eb8cc161b6c70dd551e",
+      "tag": "eva2-voice-followup-speaker:20261016",
+      "hashes": {
+        "voice_service/codex_media.py": "6d5dec3a6315768769d0f3261e4a19dbc82b80168f43fa8213113825991167ca",
+        "voice_service/codex_speaker_audio.py": "3bee05b0c2537eaa062be96b95c96a7493288523a7ea94a3be3356961def2a01"
+      },
+      "installedImage": "sha256:4f3ed96ac2488b798403d208bbca6856dcb03bacfb28f3d61af3a92200e7ad90",
+      "running": true,
+      "installedHashesVerified": true
+    },
+    {
+      "name": "eva2-owner-voice-media-1",
+      "project": "eva2-owner-voice",
+      "service": "media",
+      "slug": "media",
+      "base": "sha256:e2c334747a6751daf11237f82aebddf11e8fcd331dd9d8784070a6aacc70febf",
+      "tag": "eva2-voice-followup-media:20261016",
+      "hashes": {
+        "voice_service/codex_media.py": "6d5dec3a6315768769d0f3261e4a19dbc82b80168f43fa8213113825991167ca",
+        "voice_service/codex_speaker_audio.py": "3bee05b0c2537eaa062be96b95c96a7493288523a7ea94a3be3356961def2a01"
+      },
+      "installedImage": "sha256:ad3e5b80efdad09bd463190c07c89b8969871f869d6afd544c99604420f1c07f",
+      "running": true,
+      "installedHashesVerified": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "project": "eva2-managed-b-slot3",
+      "service": "core",
+      "slug": "core",
+      "base": "sha256:736704cf57fda4a23228442d9abdc94bbb1e100302080e4b5487d5d89c3d4bf2",
+      "tag": "eva2-voice-followup-core:20261016",
+      "hashes": {
+        "adapters/model/pydantic_conversation.py": "408a3b0966e28c498ba227d9d21c1fa3742ad18c34108c03c1bb05da3059d5cc"
+      },
+      "installedImage": "sha256:f5a35145d7c35090e5176da38fb79fda015af5fb563b92ea802926c9cc368180",
+      "running": true,
+      "installedHashesVerified": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "project": "eva2-managed-b-slot3",
+      "service": "delegated-work-worker",
+      "slug": "worker",
+      "base": "sha256:bd62108d13b713cf0a0e45818638f377feea0a8e5fbb3cb288a8ae098381900b",
+      "tag": "eva2-voice-followup-worker:20261016",
+      "hashes": {
+        "adapters/model/pydantic_conversation.py": "408a3b0966e28c498ba227d9d21c1fa3742ad18c34108c03c1bb05da3059d5cc"
+      },
+      "installedImage": "sha256:7455c64028d861b92ffc19245390cf06d7d8a8772a0aa622b77d430fe5b3415e",
+      "running": true,
+      "installedHashesVerified": true
+    }
+  ],
+  "review": {
+    "reviewer": "review_cursor",
+    "blockingFindings": 0,
+    "followupsApplied": [
+      "Guard missing assistant identity",
+      "Test late stale completion",
+      "Handle completion before user transcript"
+    ]
+  },
+  "remaining": "Owner audible retest of100ms priming and farewell needed. Recent context is bounded and not an exhaustive day activity ledger.",
+  "privacy": "No private transcripts, answers, audio or credentials stored here."
+}

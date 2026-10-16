@@ -154,7 +154,8 @@ def _recent_message_line(message: RecentConversationMessage, source_label: int |
         "unconfirmed": "afspelen niet bevestigd; neem niet aan dat deze tekst is gehoord",
     }
     # Completion order may differ from question order; retain journal provenance.
-    source = "" if source_label is None else f" [beurt {source_label}]"
+    source = ("" if source_label is None else f" [beurt {source_label}]")
+    source += f" [berichttijd UTC: {message.occurred_at}]"
     if message.playback_status is None:
         return f"{message.role}{source}: {message.text}"
     return (f"{message.role}{source} [gegenereerd antwoord; {descriptions[message.playback_status]}]: "

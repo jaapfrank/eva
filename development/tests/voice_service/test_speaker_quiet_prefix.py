@@ -27,7 +27,8 @@ def test_quiet_onset_matches_resampled_source_byte_for_byte():
             pcm.sample_rate=48000; pcm.planes[0].update(bytes(value.data))
             expected.extend(bytes(p.planes[0])[:p.samples*2] for p in reference.resample(pcm))
             await source.capture_frame(value)
-        assert b''.join(sink.frames)==b''.join(expected)
+        assert sink.frames[0]==bytes(4800)
+        assert b''.join(sink.frames[1:])==b''.join(expected)
     asyncio.run(run())
 
 
@@ -39,7 +40,7 @@ def test_leading_audio_is_duration_bounded_and_silence_stays_short():
             assert not sink.frames
             assert sum(f.samples_per_channel for f in source.leading)==limit
             await source.capture_frame(frame(700))
-            assert sum(len(f)//2 for f in sink.frames)==limit+480
+            assert sum(len(f)//2 for f in sink.frames)==2400+limit+480
     asyncio.run(run())
 
 
@@ -52,7 +53,7 @@ def test_stop_discards_buffered_quiet_prefix():
         # Drain the resampler's small filter tail with new silence after STOP.
         for _ in range(20): await source.capture_frame(frame(0))
         await source.capture_frame(frame(700))
-        assert sum(len(f)//2 for f in sink.frames)<=1920
+        assert sum(len(f)//2 for f in sink.frames)<=2400+1920
     asyncio.run(run())
 
 

@@ -1635,6 +1635,18 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Voice · Opstartstilte, afscheid en dagcontext",
+            "state": "installed",
+            "checkedAt": "2026-10-16T13:20:06.079193+00:00",
+            "summary": "100ms opstartstilte; dankje doei herkend; afscheid wacht niet op al voltooide audio. Oorspronkelijke berichttijden behouden zodat Eva vandaag kan onderscheiden.159 tests geslaagd.",
+            "remaining": "Hoorbare herproef nodig; dagcontext blijft een begrensde selectie.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/followup-20261016.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "smallTaskCountsUnchanged": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "E2.3 · Gesprekken, opdrachten en resultaten verbonden",
             "state": "installed",
             "checkedAt": "2026-10-16T12:49:32.967702+00:00",
@@ -7719,14 +7731,16 @@
     "subscriptionVoice20261013": {
       "reliability20261016": {
         "status": "installed_owner_retest_pending",
-        "checkedAt": "2026-10-16T12:35:07.928035+00:00",
+        "checkedAt": "2026-10-16T13:20:06.079193+00:00",
         "scope": "Voice inventory latency, GPU-independent memory recall, bounded quiet speech onset preservation",
         "memory": "Same model on CPU, no GPU device prerequisite; two successful cold starts, concurrent same-fact recall verified. CPU2 concurrent recall8.5–10.5s.",
         "latency": "Installed inventory19.323s vs55.836s before; one source call, two model calls, all108 entries. Simple follow-up5.569s.",
-        "audio": "Owner reported intermittent missing words after quiet-prefix repair. Actual logs show up to680ms RTP dropped awaiting assistant event. Normal listening gate repaired;41 tests; both bindings ready; audible retest pending.",
+        "audio": "Owner reports substantial improvement, not full acceptance.100ms priming installed. Thanks+farewell recognition and early audio/terminal ordering fixed;56 tests. Both bindings ready.",
         "evidence": "development/evidence/product/subscription-voice-20261013/reliability-20261016.json",
         "acceptance": false,
-        "audioFollowupEvidence": "development/evidence/product/subscription-voice-20261013/turn-gate-20261016.json"
+        "audioFollowupEvidence": "development/evidence/product/subscription-voice-20261013/turn-gate-20261016.json",
+        "followupEvidence": "development/evidence/product/subscription-voice-20261013/followup-20261016.json",
+        "dayContext": "UTC source timestamps preserved; live answer now places recorded activity today.103 model tests."
       }
     },
     "aideRetainedResume20261013": {

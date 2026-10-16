@@ -182,6 +182,9 @@ class CodexMediaSession:
         self._farewell_task=None
         self._farewell_done=None
         self._farewell_turn=None
+        self._user_playback_marker=None
+        self._user_assistant_turn=None
+        self._user_assistant_done=False
 
     def diagnostic(self, stage, **fields):
         print(json.dumps({'event':'eva_voice_media',
@@ -271,6 +274,7 @@ class CodexMediaSession:
             elif kind=='turn.created':
                 turn=event.get('turn',{})
                 if turn.get('role')=='user':
+                    self._user_assistant_turn=None;self._user_assistant_done=False
                     if self._farewell_task and not self._farewell_task.done():
                         self.diagnostic('farewell_cancelled_by_speech')
                         self._farewell_task.cancel()
@@ -287,6 +291,8 @@ class CodexMediaSession:
                         or getattr(self.source,'queued_duration',0)>0)
                     if self.greeting and not self.greeting.done():self.greeting.cancel()
                     if self.source:self.source.clear_queue()
+                    self._user_playback_marker=(self.source.playback_marker()
+                        if hasattr(self.source,'playback_marker') else None)
                     self.output_suppressed=self.output_suppressed or interrupted
                     self.diagnostic('user_turn_output_gate',
                         interrupted=interrupted, suppressed=self.output_suppressed)
@@ -298,6 +304,7 @@ class CodexMediaSession:
                     if identity in self._ended_assistant_turns:return
                     if isinstance(identity,str) and identity:
                         self._assistant_turns.add(identity);self._assistant_idle.clear()
+                        self._user_assistant_turn=identity;self._user_assistant_done=False
                         if self._farewell_done is not None and self._farewell_turn is None:
                             self._farewell_turn=identity
                         if self._speech_waiter is not None and self._speech_turn is None:
@@ -323,7 +330,9 @@ class CodexMediaSession:
                 elif role=='assistant':
                     identity=turn.get('id')
                     self.end_assistant_turn(identity)
-                    if self._farewell_done is not None and identity==self._farewell_turn:
+                    if isinstance(identity,str) and identity and identity==self._user_assistant_turn:
+                        self._user_assistant_done=True
+                    if self._farewell_done is not None and identity and identity==self._farewell_turn:
                         self._farewell_done.set()
                     if (self._speech_waiter is not None and not self._speech_waiter.done()
                             and identity is not None and identity==self._speech_turn):
@@ -336,14 +345,20 @@ class CodexMediaSession:
         # Session controls match a complete standalone utterance, never a word
         # inside a question, quotation, cancellation of work or longer sentence.
         normalized=re.sub(r"[.!?,]+$", "", text.strip().casefold()).strip()
-        if not re.fullmatch(r"(?:doei|tot ziens|tot later|tot morgen|bye|goodbye)(?:[, ]+eva)?", normalized):
+        if not re.fullmatch(r"(?:(?:dank\s*je(?:\s*wel)?|bedankt)[,\s.!]+)?(?:doei|tot ziens|tot later|tot morgen|bye|goodbye)(?:[, ]+eva)?", normalized):
             return
         if self._farewell_task and not self._farewell_task.done():return
         self.diagnostic('farewell_detected')
         self._farewell_done=asyncio.Event()
         current=self._assistant_turns-self._ended_assistant_turns.keys()
-        self._farewell_turn=next(iter(current)) if len(current)==1 else None
-        marker=self.source.playback_marker() if hasattr(self.source,'playback_marker') else None
+        self._farewell_turn=next(iter(current)) if len(current)==1 else self._user_assistant_turn
+        if self._user_assistant_done and self._farewell_turn==self._user_assistant_turn:
+            self._farewell_done.set()
+        # Reply audio may already precede the final user transcript. Measure
+        # from user-turn start, so its early prefix counts toward device ACK.
+        marker=self._user_playback_marker
+        if marker is None and hasattr(self.source,'playback_marker'):
+            marker=self.source.playback_marker()
         self._farewell_task=self.task(self.finish_farewell(self._farewell_done,marker))
 
     async def finish_farewell(self, completed, marker):
