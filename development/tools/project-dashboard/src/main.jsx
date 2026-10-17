@@ -356,34 +356,6 @@ function MemorySources({ selectedSource, onMemoryChanged }) {
   </section>;
 }
 
-function PeopleOverview() {
-  const [state, setState] = React.useState({ data: null, error: false });
-  React.useEffect(() => {
-    const controller = new AbortController();
-    readJson('/internal/v1/dashboard/people-memory', { signal: controller.signal }).then(data => {
-      const labels = {
-        dynamic_account: { extra_account_linked: 'Extra account gekoppeld', no_extra_account: 'Geen extra account gekoppeld', unavailable: 'Niet beschikbaar' },
-        sharing: { private_only: 'Alleen privé', group_active: 'Gedeelde groep actief', expires_soon: 'Groepsdeling verloopt binnenkort', unavailable: 'Niet beschikbaar' },
-        memory: { no_signals: 'Nog geen bronnen', up_to_date: 'Bijgewerkt', processing: 'Wordt verwerkt', retrying: 'Verwerking wordt hervat', needs_help: 'Hulp nodig', unavailable: 'Niet beschikbaar' },
-      };
-      if (data.contract !== 'EvaPeopleMemoryOverview/v1' || data.read_only !== true
-        || data.contains_raw_content !== false || !Object.hasOwn(labels.dynamic_account, data.people?.dynamic_account)
-        || !Object.hasOwn(labels.sharing, data.sharing?.state) || !Object.hasOwn(labels.memory, data.memory?.state)) throw new Error();
-      if (!controller.signal.aborted) setState({ data: {
-        account: labels.dynamic_account[data.people.dynamic_account], sharing: labels.sharing[data.sharing.state], memory: labels.memory[data.memory.state],
-      }, error: false });
-    }).catch(() => { if (!controller.signal.aborted) setState({ data: null, error: true }); });
-    return () => controller.abort();
-  }, []);
-  return <section className="owner-panel" aria-label="Personen en geheugentoegang">
-    <h2>Personen en geheugentoegang</h2>
-    {state.error && <p role="alert">Dit personenoverzicht is nu niet beschikbaar. Je geheugenbronnen worden afzonderlijk opgehaald.</p>}
-    {!state.data && !state.error && <p role="status">Personenoverzicht ophalen…</p>}
-    {state.data && <dl className="owner-facts"><dt>Accounts</dt><dd>{state.data.account}</dd><dt>Delen</dt><dd>{state.data.sharing}</dd><dt>Geheugenverwerking</dt><dd>{state.data.memory}</dd></dl>}
-    <p>Dit bestaande overzicht toont toegangs- en verwerkingsstatus. Namen, persoonsprofielen en afgeleide herinneringen worden hier nog niet getoond.</p>
-  </section>;
-}
-
 function Dashboard() {
   const status = useGetOne('status', { id: 'runtime' });
   const identity = useGetOne('identity', { id: 'current' });

@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Bewezen dode en dubbele bestanden opruimen
+Omslachtige code en modulegrenzen vereenvoudigen
 
-E2.7 werkend geïnstalleerd en technisch afgerond. Hierna de bestaande eindige E3-verwijderbesluiten uitvoeren.
+E4.1 afgerond. Hierna de vastgelegde E3-vereenvoudigingsclusters uitvoeren; spraak blijft bij de andere uitvoerder.
 
-Klaar wanneer: De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen.
+Klaar wanneer: De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite.
 
 ## Afmaakvolgorde
 
@@ -103,7 +103,7 @@ Klaar wanneer: De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd
 | E3.2 · Actieve kerncode inhoudelijk beoordelen | ✓ Afgerond | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
 | E3.3 · Adapters, installatie en dynamisch gebruik beoordelen | ✓ Afgerond | Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit. |
 | E3.4 · Tests, documentatie en historie op noodzaak beoordelen | ✓ Afgerond | Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd. |
-| E4.1 · Bewezen dode en dubbele bestanden opruimen | ● Open | De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen. |
+| E4.1 · Bewezen dode en dubbele bestanden opruimen | ✓ Afgerond | De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen. |
 | E4.2 · Omslachtige code en modulegrenzen vereenvoudigen | ● Open | De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite. |
 | E4.3 · Runtime-efficiëntie verbeteren zonder dommer gedrag | ● Open | Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend. |
 | E4.4 · Modules en updates onderhoudbaar opleveren | ● Open | Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten. |
@@ -112,7 +112,7 @@ Klaar wanneer: De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd
 
 ## Van jou
 
-Vraag Eva in je privéchat wat ze vandaag gedaan en geleerd heeft. Geen verplichte nieuwe proef. Voor optioneel WhatsApp volgt jouw eigen Eva-nummer later.
+De opgeruimde code was onbereikbaar. De gewone Eva-bediening blijft bruikbaar; voor optioneel WhatsApp volgt jouw eigen Eva-nummer later.
 
 ## Historie
 

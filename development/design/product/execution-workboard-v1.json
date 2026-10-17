@@ -838,17 +838,17 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-17T10:39:00.807444+00:00",
+  "lastUpdated": "2026-10-17T10:56:30.393935+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.1",
+  "activeTaskId": "E4.2",
   "currentWork": {
-    "id": "E4.1",
-    "title": "Bewezen dode en dubbele bestanden opruimen",
+    "id": "E4.2",
+    "title": "Omslachtige code en modulegrenzen vereenvoudigen",
     "status": "planned",
-    "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen.",
-    "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
-    "checkedAt": "2026-10-17T10:39:00.807444+00:00",
+    "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite.",
+    "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
+    "checkedAt": "2026-10-17T10:56:30.393935+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,6 +1632,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E4.1 · Vaste lijst met dode code afgewerkt",
+            "state": "installed",
+            "checkedAt": "2026-10-17T10:56:30.393935+00:00",
+            "summary": "Alleen bewezen onbereikbare PeopleOverview verwijderd:28 regels, geen volledige bestanden. Werkende personen-/geheugenbediening behouden. Eén build geslaagd; alle6 uitvoerbestanden bytegelijk en HTML/assets gelijk aan de draaiende installatie. Onafhankelijke review GO.",
+            "remaining": "E4.2–E4.5 en gezamenlijke gezinsacceptatie blijven open. Deze onderhoudstaak is geen nieuwe gezinsfunctie.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e41-proven-dead-code-cleanup-review-20261017.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [
+              "E4.1"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "familyAcceptance": false,
+            "completionScope": "Fixed C01/UI-01 source cleanup only; running assets already byte-equivalent, no restart needed."
+          },
+          {
             "title": "E2.7 · Eva vindt haar eigen geschiedenis samen terug",
             "state": "installed",
             "checkedAt": "2026-10-17T10:39:00.807444+00:00",
@@ -2266,46 +2283,46 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E2.7 · Eva vindt haar eigen geschiedenis samen terug",
+          "title": "E4.1 · Vaste lijst met dode code afgewerkt",
           "state": "installed",
-          "checkedAt": "2026-10-17T10:39:00.807444+00:00",
-          "summary": "Gewone privéchat leest bewaarde gesprekken/toolhandelingen, werk, planning, eigen initiatief/interesses en leerregistraties via dezelfde bestaande route. Tijd, bronherkomst, status, paginering en persoonsgrenzen behouden.42 gerichte routecontroles en echte opgeslagen chat geslaagd; onafhankelijke review GO.",
-          "remaining": "Antwoord duurde ongeveer25s met42.952 invoertokens; gerichte efficiëntie volgt binnen bestaande E4.3. Gezinsacceptatie blijft apart; optioneel WhatsApp wacht op eigen nummer.",
-          "source": "/home/administrator/project/Eva2/development/evidence/product/e27-own-activity-history-installed-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e27-own-activity-history-review-20261017.json",
-          "maintenanceRepair": false,
-          "newProductFunctionCompleted": true,
+          "checkedAt": "2026-10-17T10:56:30.393935+00:00",
+          "summary": "Alleen bewezen onbereikbare PeopleOverview verwijderd:28 regels, geen volledige bestanden. Werkende personen-/geheugenbediening behouden. Eén build geslaagd; alle6 uitvoerbestanden bytegelijk en HTML/assets gelijk aan de draaiende installatie. Onafhankelijke review GO.",
+          "remaining": "E4.2–E4.5 en gezamenlijke gezinsacceptatie blijven open. Deze onderhoudstaak is geen nieuwe gezinsfunctie.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e41-proven-dead-code-cleanup-review-20261017.json",
+          "maintenanceRepair": true,
+          "newProductFunctionCompleted": false,
           "completedTaskIds": [
-            "E2.7"
+            "E4.1"
           ],
           "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "Installed private text history composition; not whole-project or family acceptance."
+          "completionScope": "Fixed C01/UI-01 source cleanup only; running assets already byte-equivalent, no restart needed."
         },
         "now": {
-          "taskId": "E4.1",
-          "title": "Bewezen dode en dubbele bestanden opruimen",
+          "taskId": "E4.2",
+          "title": "Omslachtige code en modulegrenzen vereenvoudigen",
           "status": "planned",
-          "summary": "E2.7 werkend geïnstalleerd en technisch afgerond. Hierna de bestaande eindige E3-verwijderbesluiten uitvoeren.",
-          "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen."
+          "summary": "E4.1 afgerond. Hierna de vastgelegde E3-vereenvoudigingsclusters uitvoeren; spraak blijft bij de andere uitvoerder.",
+          "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite."
         },
         "next": {
-          "title": "E4.2 · Gerichte codevereenvoudiging",
-          "state": "Na E4.1",
-          "summary": "Alleen de vastgelegde E3-correctieclusters.",
+          "title": "E4.3 · Efficiëntie verbeteren",
+          "state": "Na E4.2",
+          "summary": "Bestaande concrete verbruiks- en prestatiebevindingen aanpakken met behoud van kwaliteit.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "E2.7 kun je gewoon gebruiken",
-          "detail": "Vraag Eva in je privéchat wat ze vandaag gedaan en geleerd heeft. Geen verplichte nieuwe proef. Voor optioneel WhatsApp volgt jouw eigen Eva-nummer later.",
+          "title": "Geen handeling nodig voor E4.1",
+          "detail": "De opgeruimde code was onbereikbaar. De gewone Eva-bediening blijft bruikbaar; voor optioneel WhatsApp volgt jouw eigen Eva-nummer later.",
           "required": false
         },
-        "checkedAt": "2026-10-17T10:39:00.807444+00:00",
-        "reviewedAt": "2026-10-17T10:39:00.807444+00:00",
+        "checkedAt": "2026-10-17T10:56:30.393935+00:00",
+        "reviewedAt": "2026-10-17T10:56:30.393935+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-17T10:39:00.807444+00:00",
-      "checkedAt": "2026-10-17T10:39:00.807444+00:00",
+      "reviewedAt": "2026-10-17T10:56:30.393935+00:00",
+      "checkedAt": "2026-10-17T10:56:30.393935+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2469,7 +2486,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.1",
+        "currentStep": "E4.2",
         "steps": [
           {
             "number": 1,
@@ -5127,7 +5144,7 @@
               "FE3"
             ],
             "outcome": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-            "status": "planned",
+            "status": "in_progress",
             "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
             "endCondition": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
             "dashboardComponent": "finalization-E4",
@@ -5136,14 +5153,14 @@
               {
                 "id": "E4.1",
                 "title": "Bewezen dode en dubbele bestanden opruimen",
-                "status": "planned",
+                "status": "completed",
                 "kind": "afronden",
                 "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Er is al een eerdere gerichte historische opruiming.",
-                "gap": "Eén bewezen opruiming: ongebruikte lokale PeopleOverview. Geen verwijderbewijs voor overige historie/tests; oude resultaten en criteria blijven behouden.",
-                "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
+                "gap": "",
+                "nextAction": "Afgerond. Vervolg de bestaande E4.2-refactorlijst.",
                 "files": [
                   "src",
                   "deploy",
@@ -5156,12 +5173,12 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+                "checkedAt": "2026-10-17T10:56:30.393935+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "availableNow": true,
                   "steps": [],
-                  "blocksIndependentWork": false
+                  "blocksIndependentWork": false,
+                  "readyWhen": "Geen handeling nodig; huidige personen- en geheugenbediening blijft bruikbaar."
                 },
                 "reviewInput": {
                   "E3.3": {
@@ -5184,6 +5201,25 @@
                     "newTasks": 0,
                     "implementationStarted": false
                   }
+                },
+                "completedAt": "2026-10-17T10:56:30.393935+00:00",
+                "completionEvidence": "development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json",
+                "independentReview": "development/reviews/e41-proven-dead-code-cleanup-review-20261017.json",
+                "result": "Vaste E3-verwijderlijst volledig afgewerkt: één bewezen dode component/28 regels verwijderd; huidige bediening en gegevens behouden. Productie-uitvoer exact gelijk aan de al draaiende versie.",
+                "cleanupExecution": {
+                  "fixedListComplete": true,
+                  "clusters": [
+                    {
+                      "id": "C01",
+                      "sourceDecision": "E3.3:UI-01",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json"
+                    }
+                  ],
+                  "removedWholeFiles": 0,
+                  "removedSourceLines": 28,
+                  "runningAssetsByteEquivalent": true,
+                  "newTasks": 0
                 }
               },
               {
@@ -5534,7 +5570,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
+        "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5543,7 +5579,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T10:39:00.807444+00:00",
+        "updatedAt": "2026-10-17T10:56:30.393935+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-17T10:01:27.869694+00:00",
@@ -5608,7 +5644,7 @@
             {
               "id": "E4",
               "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-              "status": "planned",
+              "status": "in_progress",
               "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
               "taskIds": [
                 "E4.1",
@@ -5616,7 +5652,8 @@
                 "E4.3",
                 "E4.4",
                 "E4.5"
-              ]
+              ],
+              "currentGap": "E4.1 vaste verwijderlijst afgerond. E4.2–E4.5 blijven open; uitsluitend bestaande clusters en zelfstandige onderhoudsuitkomst uitvoeren."
             },
             {
               "id": "E5",
@@ -5720,7 +5757,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.1",
+      "currentStep": "E4.2",
       "steps": [
         {
           "number": 1,
@@ -8378,7 +8415,7 @@
             "FE3"
           ],
           "outcome": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-          "status": "planned",
+          "status": "in_progress",
           "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
           "endCondition": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
           "dashboardComponent": "finalization-E4",
@@ -8387,14 +8424,14 @@
             {
               "id": "E4.1",
               "title": "Bewezen dode en dubbele bestanden opruimen",
-              "status": "planned",
+              "status": "completed",
               "kind": "afronden",
               "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Er is al een eerdere gerichte historische opruiming.",
-              "gap": "Eén bewezen opruiming: ongebruikte lokale PeopleOverview. Geen verwijderbewijs voor overige historie/tests; oude resultaten en criteria blijven behouden.",
-              "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
+              "gap": "",
+              "nextAction": "Afgerond. Vervolg de bestaande E4.2-refactorlijst.",
               "files": [
                 "src",
                 "deploy",
@@ -8407,12 +8444,12 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+              "checkedAt": "2026-10-17T10:56:30.393935+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "availableNow": true,
                 "steps": [],
-                "blocksIndependentWork": false
+                "blocksIndependentWork": false,
+                "readyWhen": "Geen handeling nodig; huidige personen- en geheugenbediening blijft bruikbaar."
               },
               "reviewInput": {
                 "E3.3": {
@@ -8435,6 +8472,25 @@
                   "newTasks": 0,
                   "implementationStarted": false
                 }
+              },
+              "completedAt": "2026-10-17T10:56:30.393935+00:00",
+              "completionEvidence": "development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json",
+              "independentReview": "development/reviews/e41-proven-dead-code-cleanup-review-20261017.json",
+              "result": "Vaste E3-verwijderlijst volledig afgewerkt: één bewezen dode component/28 regels verwijderd; huidige bediening en gegevens behouden. Productie-uitvoer exact gelijk aan de al draaiende versie.",
+              "cleanupExecution": {
+                "fixedListComplete": true,
+                "clusters": [
+                  {
+                    "id": "C01",
+                    "sourceDecision": "E3.3:UI-01",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json"
+                  }
+                ],
+                "removedWholeFiles": 0,
+                "removedSourceLines": 28,
+                "runningAssetsByteEquivalent": true,
+                "newTasks": 0
               }
             },
             {
@@ -8785,7 +8841,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
+      "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8794,7 +8850,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T10:39:00.807444+00:00",
+      "updatedAt": "2026-10-17T10:56:30.393935+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-17T10:01:27.869694+00:00",
@@ -8859,7 +8915,7 @@
           {
             "id": "E4",
             "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-            "status": "planned",
+            "status": "in_progress",
             "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
             "taskIds": [
               "E4.1",
@@ -8867,7 +8923,8 @@
               "E4.3",
               "E4.4",
               "E4.5"
-            ]
+            ],
+            "currentGap": "E4.1 vaste verwijderlijst afgerond. E4.2–E4.5 blijven open; uitsluitend bestaande clusters en zelfstandige onderhoudsuitkomst uitvoeren."
           },
           {
             "id": "E5",
@@ -10025,7 +10082,7 @@
       "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-17T10:39:00.807444+00:00",
+  "updatedAt": "2026-10-17T10:56:30.393935+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

@@ -1,0 +1,99 @@
+{
+  "contract": "EvaE41ProvenCleanupOutcome/v1",
+  "taskId": "E4.1",
+  "checkedAt": "2026-10-17T10:56:30.393935+00:00",
+  "status": "completed",
+  "scope": "Entire fixed E3 deletion list: C01/E3.3:UI-01 only. This is a source cleanup.",
+  "reusedSources": [
+    {
+      "path": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+      "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086"
+    },
+    {
+      "path": "development/evidence/reassessment/e34-tests-docs-history-review-20261017.json",
+      "sha256": "e31962e51f20ae44c406a0fb9176381378317149f6b84757e56c43a65285163c"
+    },
+    {
+      "path": "development/evidence/reassessment/e34-finite-cleanup-decisions-20261017.json",
+      "sha256": "2bde42357dbf33cddf0ebca6918528e9c95745f9434ad1c247f02e21d43efa90"
+    }
+  ],
+  "fixedList": [
+    {
+      "cluster": "C01",
+      "decision": "E3.3:UI-01",
+      "disposition": "removed_unreachable_local_component",
+      "component": "PeopleOverview",
+      "referenceRevision": "d845dc494221f2e1aa8aae8ed4ad6812ddcad21a",
+      "path": "development/tools/project-dashboard/src/main.jsx",
+      "beforeSha256": "535a57f3bdcffdd55f548f395d28a3a780b3f4404772d4e226d2e174ed59c713",
+      "afterSha256": "34acd6e6b9759f4fee3985633018d3b2758cae8bb1b9af16864b80eab7580688",
+      "removedFragmentSha256": "1114583f353015dcf037c1949f5976764ba429aba16224a9dafd37c5be806d8f",
+      "removedOriginalLines": [
+        359,
+        386
+      ],
+      "removedLineCount": 28,
+      "wholeFileDeleted": false,
+      "exactPureDeletion": true,
+      "originalRetainedExactlyByGit": true
+    }
+  ],
+  "fixedListComplete": true,
+  "removedWholeFiles": 0,
+  "removedComponents": 1,
+  "removedSourceLines": 28,
+  "consumerVerification": {
+    "before": "Local, unexported component with no invocation or reference in complete current frontend source.",
+    "after": "No PeopleOverview or old people-memory endpoint reference in current frontend source. Active memory branch still renders OwnerMemoryView and MemorySources.",
+    "backend": "Retained: a dead local component alone does not prove an unused API, contract or backend store.",
+    "history": "Original reviews, criteria, failure/UNKNOWN evidence and exact previous source remain retained."
+  },
+  "verification": {
+    "buildRuns": 1,
+    "buildSucceeded": true,
+    "outputFileCount": 6,
+    "allBuildBytesUnchanged": true,
+    "outputHashes": {
+      "index.html": "d55b70e2178b0d9e8d9a75f0a233efcf4fddb4dfaf9450d01baf562a44142242",
+      "asset-manifest.json": "bcf7b8e38ba8ba8be224931c60d82d974b9efa6dbbc78d8f963580735739f18d",
+      "results/au008-storingschecklist.html": "ac15973dcfffe3c86740b7d63f01996b50a6eb7c3556137fe31634d5b5195796",
+      "results/au007-beoordelingskaart.html": "543e181a91100a9c720e0bed52803493cb66ecb9fd3e8a4751d2a8978c308f84",
+      "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
+      "assets/index-DRYk4khw.js": "01c999c575185d458ef28bf67a6d4b60f0c71f5e173c69f60f734fd75d65715c"
+    },
+    "liveRoute": {
+      "htmlUnchanged": true,
+      "htmlEqualsCleanBuild": true,
+      "servedAssetsUnchanged": true,
+      "servedAssetsMatchCleanBuild": true,
+      "servedAssetCount": 2,
+      "source": {
+        "PeopleOverviewRemaining": false,
+        "activeMemoryViewPreserved": true
+      }
+    },
+    "independentReview": "development/reviews/e41-proven-dead-code-cleanup-review-20261017.json"
+  },
+  "activation": {
+    "disposition": "already_installed_byte_equivalent",
+    "reason": "The production bundler already eliminated the unreachable component. The rebuilt HTML and both served assets exactly match the running owner dashboard.",
+    "containerRestartRequired": false,
+    "containerRecreated": false,
+    "speechChanges": false,
+    "dataChanges": false
+  },
+  "usage": {
+    "runtimeModelCalls": 0,
+    "runtimeToolActions": 0,
+    "newModelTests": 0,
+    "developmentTokens": null,
+    "creditCost": null
+  },
+  "limits": [
+    "No runtime speed, token or bundle-size improvement claimed: executable output is byte-identical.",
+    "This closes the fixed E4.1 cleanup scope, not E4.2–E4.5 or whole-project/family acceptance.",
+    "No deletion outside the proved fixed list; pending unrelated work remains untouched."
+  ],
+  "nextExistingTask": "E4.2"
+}
