@@ -59,7 +59,7 @@ def _fragment(text, maximum):
     return text if len(text) <= maximum else text[:maximum-len(suffix)] + suffix
 
 
-def _exchange_content(runtime, doc):
+def _exchange_content(runtime, doc, *, before=None, before_exclusive=False):
     """Pair one authorized memory source with its exact retained assistant reply.
 
     The memory projection already admits the current private owner, source,
@@ -79,7 +79,10 @@ def _exchange_content(runtime, doc):
         # Missing, erased or invalid replies must not obstruct ordinary speech.
         _LOG.debug("Private cross-channel reply unavailable")
         reply = None
-    if reply is None:
+    reply_time = (None if reply is None else datetime.strptime(
+        reply.generated_at, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC))
+    if reply is None or (before is not None and (
+            reply_time >= before if before_exclusive else reply_time > before)):
         return _fragment(doc.content, 1800)
     user = _fragment(doc.content, 900)
     label = ("\nEerdere reactie van Eva (modeluitvoer, geen geverifieerd feit; "

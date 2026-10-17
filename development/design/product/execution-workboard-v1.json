@@ -838,17 +838,17 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-17T10:08:30.732228+00:00",
+  "lastUpdated": "2026-10-17T10:39:00.807444+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E2.7",
+  "activeTaskId": "E4.1",
   "currentWork": {
-    "id": "E2.7",
-    "title": "Eva laat haar eigen geschiedenis correct terugvinden",
+    "id": "E4.1",
+    "title": "Bewezen dode en dubbele bestanden opruimen",
     "status": "planned",
-    "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.",
-    "nextAction": "Verbind de ontbrekende persoonsgebonden geschiedenisreaders; hergebruik de al bestaande openbare dagselectie.",
-    "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+    "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen.",
+    "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
+    "checkedAt": "2026-10-17T10:39:00.807444+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,6 +1632,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E2.7 · Eva vindt haar eigen geschiedenis samen terug",
+            "state": "installed",
+            "checkedAt": "2026-10-17T10:39:00.807444+00:00",
+            "summary": "Gewone privéchat leest bewaarde gesprekken/toolhandelingen, werk, planning, eigen initiatief/interesses en leerregistraties via dezelfde bestaande route. Tijd, bronherkomst, status, paginering en persoonsgrenzen behouden.42 gerichte routecontroles en echte opgeslagen chat geslaagd; onafhankelijke review GO.",
+            "remaining": "Antwoord duurde ongeveer25s met42.952 invoertokens; gerichte efficiëntie volgt binnen bestaande E4.3. Gezinsacceptatie blijft apart; optioneel WhatsApp wacht op eigen nummer.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/e27-own-activity-history-installed-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e27-own-activity-history-review-20261017.json",
+            "maintenanceRepair": false,
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E2.7"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "familyAcceptance": false,
+            "completionScope": "Installed private text history composition; not whole-project or family acceptance."
+          },
+          {
             "title": "Initiatiefbeoordeling hervat; oude blokkade opgelost",
             "state": "installed",
             "checkedAt": "2026-10-17T10:08:30.732228+00:00",
@@ -2249,43 +2266,46 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Initiatiefbeoordeling hervat; oude blokkade opgelost",
+          "title": "E2.7 · Eva vindt haar eigen geschiedenis samen terug",
           "state": "installed",
-          "checkedAt": "2026-10-17T10:08:30.732228+00:00",
-          "summary": "Oude vastgelopen beoordeling via bestaande herstelroute afgesloten; onbekend verbruik behouden, niets herhaald. Daarna heeft Eva zelf een nieuwe gewone afweging afgerond en bewust stilte gekozen. Geen spraak- of codewijziging.",
-          "remaining": "Dit bewijst hervatte afweging, geen nieuwe nuttige bijdrage of gezinsacceptatie. E2.7 en de bestaande E4-correcties blijven open.",
-          "source": "/home/administrator/project/Eva2/development/evidence/product/initiative-review-recovery-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/initiative-review-recovery-20261017.json",
-          "maintenanceRepair": true,
-          "newProductFunctionCompleted": false,
-          "smallTaskCountsUnchanged": true,
+          "checkedAt": "2026-10-17T10:39:00.807444+00:00",
+          "summary": "Gewone privéchat leest bewaarde gesprekken/toolhandelingen, werk, planning, eigen initiatief/interesses en leerregistraties via dezelfde bestaande route. Tijd, bronherkomst, status, paginering en persoonsgrenzen behouden.42 gerichte routecontroles en echte opgeslagen chat geslaagd; onafhankelijke review GO.",
+          "remaining": "Antwoord duurde ongeveer25s met42.952 invoertokens; gerichte efficiëntie volgt binnen bestaande E4.3. Gezinsacceptatie blijft apart; optioneel WhatsApp wacht op eigen nummer.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/e27-own-activity-history-installed-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e27-own-activity-history-review-20261017.json",
+          "maintenanceRepair": false,
+          "newProductFunctionCompleted": true,
+          "completedTaskIds": [
+            "E2.7"
+          ],
+          "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "Operational recovery of one failed review; ordinary autonomous evaluation resumed. No software installation was needed."
+          "completionScope": "Installed private text history composition; not whole-project or family acceptance."
         },
         "now": {
-          "taskId": "E2.7",
-          "title": "Eva laat haar eigen geschiedenis correct terugvinden",
+          "taskId": "E4.1",
+          "title": "Bewezen dode en dubbele bestanden opruimen",
           "status": "planned",
-          "summary": "Initiatiefblokkade opgelost; gewone afweging heeft weer zelfstandig gedraaid. Volgende bouwuitkomst: eigen geschiedenis samen terugvinden.",
-          "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw."
+          "summary": "E2.7 werkend geïnstalleerd en technisch afgerond. Hierna de bestaande eindige E3-verwijderbesluiten uitvoeren.",
+          "doneWhen": "De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen."
         },
         "next": {
-          "title": "Bestaande E4-correcties",
-          "state": "Na E2.7",
-          "summary": "Voer alleen de begrensde correcties uit de afgeronde E3-beoordeling uit.",
+          "title": "E4.2 · Gerichte codevereenvoudiging",
+          "state": "Na E4.1",
+          "summary": "Alleen de vastgelegde E3-correctieclusters.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Geen handeling nodig voor de initiatiefblokkade",
-          "detail": "Hersteld en gewone afweging hervat. Het oude verbruik blijft onbekend. Een eigen WhatsApp-nummer blijft een losse optionele eigenaaractie.",
+          "title": "E2.7 kun je gewoon gebruiken",
+          "detail": "Vraag Eva in je privéchat wat ze vandaag gedaan en geleerd heeft. Geen verplichte nieuwe proef. Voor optioneel WhatsApp volgt jouw eigen Eva-nummer later.",
           "required": false
         },
-        "checkedAt": "2026-10-17T10:08:30.732228+00:00",
-        "reviewedAt": "2026-10-17T10:08:30.732228+00:00",
+        "checkedAt": "2026-10-17T10:39:00.807444+00:00",
+        "reviewedAt": "2026-10-17T10:39:00.807444+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-17T10:08:30.732228+00:00",
-      "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+      "reviewedAt": "2026-10-17T10:39:00.807444+00:00",
+      "checkedAt": "2026-10-17T10:39:00.807444+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2449,7 +2469,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E2.7",
+        "currentStep": "E4.1",
         "steps": [
           {
             "number": 1,
@@ -4658,14 +4678,14 @@
               {
                 "id": "E2.7",
                 "title": "Eva laat haar eigen geschiedenis correct terugvinden",
-                "status": "planned",
+                "status": "completed",
                 "kind": "bouwen",
                 "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "De bestaande openbare activiteitreader heeft inmiddels optionele lokale kalenderdagselectie (bewijs17oktober van andere uitvoerder); standaard24h blijft beschikbaar. Afzonderlijke privéwerk-, initiatief- en leerreaders bestaan. Geen nieuwe dagfilter nodig.",
                 "gap": "De gezamenlijke persoonsgebonden leesroute over privéwerk, initiatief, interesses en leer-/verbeteruitkomsten ontbreekt nog. Hergebruik de al geïnstalleerde openbare kalenderdagselectie en behoud bron-/persoonsgrenzen.",
-                "nextAction": "Na E3.3/E3.4 de werkelijk ontbrekende reader-/portoverdracht realiseren, met hergebruik van bestaande bronnen, bronhashes en authority; eerst één gewone tekstvraag correct afmaken.",
+                "nextAction": "Gebruik je gewone privéchat om te vragen wat Eva vandaag gedaan en geleerd heeft.",
                 "files": [
                   "src/eva/bootstrap/recent_activity.py",
                   "src/eva/adapters/postgres",
@@ -4679,15 +4699,18 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "continuous-development-20261017",
-                "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+                "checkedAt": "2026-10-17T10:39:00.807444+00:00",
                 "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
                 "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
                 "effort": "Middelgroot; verbind bestaande readers. Omvang hangt af van E3.3-brondekking; geen token- of creditbelofte.",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "steps": [],
+                  "availableNow": true,
+                  "steps": [
+                    "Vraag in je gewone privéchat: Wat heb je vandaag gedaan en geleerd?",
+                    "Vraag desgewenst een bepaalde dag of periode."
+                  ],
                   "blocksIndependentWork": false,
-                  "readyWhen": "Nog bouwtaak. Na oplevering kun je in je gewone chat vragen wat Eva vandaag werkelijk heeft gedaan; geen aparte spraakproef nodig."
+                  "readyWhen": "Geïnstalleerd en via gewone chat gebruikt; geen aparte spraakproef nodig."
                 },
                 "reviewInput": {
                   "E3.4": {
@@ -4696,9 +4719,21 @@
                     "decision": "Reuse already installed optional local-day public reader; no rebuilding or owner voice test. Full E2.7 criteria unchanged.",
                     "newTasks": 0
                   }
+                },
+                "completedAt": "2026-10-17T10:39:00.807444+00:00",
+                "completionEvidence": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
+                "independentReview": "development/reviews/e27-own-activity-history-review-20261017.json",
+                "result": "Geïnstalleerde gezamenlijke eigen geschiedenis, via gewone privéchat werkelijk gebruikt; tijd/status/bron/paginering en persoonsgrenzen gecontroleerd.",
+                "progress": {
+                  "built": true,
+                  "installed": true,
+                  "ordinaryChatVerified": true,
+                  "independentReview": "GO",
+                  "ownerAcceptance": false
                 }
               }
-            ]
+            ],
+            "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
           },
           {
             "id": "FE3",
@@ -5234,6 +5269,14 @@
                     "newTasks": 0,
                     "implementationStarted": false
                   }
+                },
+                "e27RuntimeFinding": {
+                  "source": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
+                  "questionInputTokens": 42952,
+                  "questionOutputTokens": 246,
+                  "modelAttempts": 3,
+                  "questionClientSeconds": 25.19,
+                  "consequence": "Reduce existing catalog/context/provider overhead here; preserve quality, coverage and privacy. No new task or comparison series."
                 }
               },
               {
@@ -5429,7 +5472,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Verbind de ontbrekende persoonsgebonden geschiedenisreaders; hergebruik de al bestaande openbare dagselectie.",
+        "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5438,7 +5481,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T10:08:30.732228+00:00",
+        "updatedAt": "2026-10-17T10:39:00.807444+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-17T10:01:27.869694+00:00",
@@ -5482,7 +5525,7 @@
                 "C4.1",
                 "C4.3"
               ],
-              "currentGap": "E2.1–E2.5 technisch afgerond. E2.7 gezamenlijke persoonsgebonden activiteit/geschiedenis is de volgende bouwuitkomst; openbare kalenderdagselectie bestaat al. OptioneelE2.6 wacht op eigen Eva-nummer/account. Spraak blijft bij andere uitvoerder."
+              "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. Alleen optioneel WhatsApp E2.6 wacht op eigen Eva-nummer en echte belproef; blokkeert kernwerk niet."
             },
             {
               "id": "E3",
@@ -5615,7 +5658,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E2.7",
+      "currentStep": "E4.1",
       "steps": [
         {
           "number": 1,
@@ -7824,14 +7867,14 @@
             {
               "id": "E2.7",
               "title": "Eva laat haar eigen geschiedenis correct terugvinden",
-              "status": "planned",
+              "status": "completed",
               "kind": "bouwen",
               "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "De bestaande openbare activiteitreader heeft inmiddels optionele lokale kalenderdagselectie (bewijs17oktober van andere uitvoerder); standaard24h blijft beschikbaar. Afzonderlijke privéwerk-, initiatief- en leerreaders bestaan. Geen nieuwe dagfilter nodig.",
               "gap": "De gezamenlijke persoonsgebonden leesroute over privéwerk, initiatief, interesses en leer-/verbeteruitkomsten ontbreekt nog. Hergebruik de al geïnstalleerde openbare kalenderdagselectie en behoud bron-/persoonsgrenzen.",
-              "nextAction": "Na E3.3/E3.4 de werkelijk ontbrekende reader-/portoverdracht realiseren, met hergebruik van bestaande bronnen, bronhashes en authority; eerst één gewone tekstvraag correct afmaken.",
+              "nextAction": "Gebruik je gewone privéchat om te vragen wat Eva vandaag gedaan en geleerd heeft.",
               "files": [
                 "src/eva/bootstrap/recent_activity.py",
                 "src/eva/adapters/postgres",
@@ -7845,15 +7888,18 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "continuous-development-20261017",
-              "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+              "checkedAt": "2026-10-17T10:39:00.807444+00:00",
               "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
               "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
               "effort": "Middelgroot; verbind bestaande readers. Omvang hangt af van E3.3-brondekking; geen token- of creditbelofte.",
               "ownerInstructions": {
-                "availableNow": false,
-                "steps": [],
+                "availableNow": true,
+                "steps": [
+                  "Vraag in je gewone privéchat: Wat heb je vandaag gedaan en geleerd?",
+                  "Vraag desgewenst een bepaalde dag of periode."
+                ],
                 "blocksIndependentWork": false,
-                "readyWhen": "Nog bouwtaak. Na oplevering kun je in je gewone chat vragen wat Eva vandaag werkelijk heeft gedaan; geen aparte spraakproef nodig."
+                "readyWhen": "Geïnstalleerd en via gewone chat gebruikt; geen aparte spraakproef nodig."
               },
               "reviewInput": {
                 "E3.4": {
@@ -7862,9 +7908,21 @@
                   "decision": "Reuse already installed optional local-day public reader; no rebuilding or owner voice test. Full E2.7 criteria unchanged.",
                   "newTasks": 0
                 }
+              },
+              "completedAt": "2026-10-17T10:39:00.807444+00:00",
+              "completionEvidence": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
+              "independentReview": "development/reviews/e27-own-activity-history-review-20261017.json",
+              "result": "Geïnstalleerde gezamenlijke eigen geschiedenis, via gewone privéchat werkelijk gebruikt; tijd/status/bron/paginering en persoonsgrenzen gecontroleerd.",
+              "progress": {
+                "built": true,
+                "installed": true,
+                "ordinaryChatVerified": true,
+                "independentReview": "GO",
+                "ownerAcceptance": false
               }
             }
-          ]
+          ],
+          "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
         },
         {
           "id": "FE3",
@@ -8400,6 +8458,14 @@
                   "newTasks": 0,
                   "implementationStarted": false
                 }
+              },
+              "e27RuntimeFinding": {
+                "source": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
+                "questionInputTokens": 42952,
+                "questionOutputTokens": 246,
+                "modelAttempts": 3,
+                "questionClientSeconds": 25.19,
+                "consequence": "Reduce existing catalog/context/provider overhead here; preserve quality, coverage and privacy. No new task or comparison series."
               }
             },
             {
@@ -8595,7 +8661,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Verbind de ontbrekende persoonsgebonden geschiedenisreaders; hergebruik de al bestaande openbare dagselectie.",
+      "nextAction": "Voer alleen bewezen E3-besluiten per samenhangend cluster uit en verwijder vervangen routes nadat hun consumers zijn overgezet.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8604,7 +8670,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T10:08:30.732228+00:00",
+      "updatedAt": "2026-10-17T10:39:00.807444+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-17T10:01:27.869694+00:00",
@@ -8648,7 +8714,7 @@
               "C4.1",
               "C4.3"
             ],
-            "currentGap": "E2.1–E2.5 technisch afgerond. E2.7 gezamenlijke persoonsgebonden activiteit/geschiedenis is de volgende bouwuitkomst; openbare kalenderdagselectie bestaat al. OptioneelE2.6 wacht op eigen Eva-nummer/account. Spraak blijft bij andere uitvoerder."
+            "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. Alleen optioneel WhatsApp E2.6 wacht op eigen Eva-nummer en echte belproef; blokkeert kernwerk niet."
           },
           {
             "id": "E3",
@@ -9810,7 +9876,7 @@
       "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-17T10:08:30.732228+00:00",
+  "updatedAt": "2026-10-17T10:39:00.807444+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

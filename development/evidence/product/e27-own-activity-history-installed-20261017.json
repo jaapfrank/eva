@@ -1,0 +1,182 @@
+{
+  "contract": "EvaE27OwnActivityHistoryOutcome/v1",
+  "taskId": "E2.7",
+  "checkedAt": "2026-10-17T10:38:37.392240+00:00",
+  "status": "installed_and_technically_completed",
+  "existing": [
+    "Public calendar-day selector and authorized household activity helper",
+    "Owner/Telegram bridge authority, memory outbox and exact journal replies",
+    "Owned task store, scheduling, initiative timelines, reflection and component-action readers"
+  ],
+  "added": [
+    "Same read_recent_activity action available in admitted private text conversations",
+    "Separate paginated conversation/work/initiative/learning sources with original timestamps and source hashes",
+    "Exact foreground receipts including completions of earlier requests; current work state and planned events distinguished",
+    "Retained private source validation, erasure rechecks, current-authority and bridge recheck; bounded result previews",
+    "Calendar-end reply clipping, shared result-fragment budget and set-based archive selection"
+  ],
+  "newStorage": false,
+  "newAgent": false,
+  "newComparisonSeries": false,
+  "speechComponentOrConfigurationChanges": false,
+  "sourceHashes": {
+    "src/eva/bootstrap/private_activity.py": "c8c0642af4a7637e92358a0dd91f32d35d7593ae93e908e9ae5ca4a290299517",
+    "src/eva/bootstrap/recent_activity.py": "2f49860157d4aedf7d6970607296bc6b86e723df07b0780d1534fe9df40b7385",
+    "src/eva/bootstrap/private_continuity.py": "4b94c670a28ff475cd73a4d4d9110addf6c223b96fe95690881ff2fee09c29ac",
+    "development/tests/postgres/test_private_activity.py": "5d664f1d7206c654161ee6d794486ffc5860ca3bb205a506e10ac684c785ee26"
+  },
+  "compositionChange": "Only the existing RecentActivityActions construction is extended with a lazy PrivateActivityHistory reader. Other uncommitted runtime work is preserved.",
+  "verification": {
+    "distinctTargetedRouteTests": 42,
+    "finalPrivateQueryTests": 11,
+    "boundaryTest": 1,
+    "testCountsAreNotAdditive": true,
+    "skips": 0,
+    "independentReview": "development/reviews/e27-own-activity-history-review-20261017.json",
+    "installedSources": {
+      "checkedAt": "2026-10-17T10:36:50.092962+00:00",
+      "services": {
+        "core": {
+          "image": "sha256:ef5c974bee436f02760478bfd5e80cbb8557cda9b78e317a5617c94933970a78",
+          "running": true,
+          "health": "healthy",
+          "restartCount": 0,
+          "sourceHashes": {
+            "runtime.py": "43788d28dccbd390a321027e197ebff3ef1b25c6a524667e165b880562630849",
+            "private_activity.py": "c8c0642af4a7637e92358a0dd91f32d35d7593ae93e908e9ae5ca4a290299517",
+            "recent_activity.py": "2f49860157d4aedf7d6970607296bc6b86e723df07b0780d1534fe9df40b7385",
+            "private_continuity.py": "4b94c670a28ff475cd73a4d4d9110addf6c223b96fe95690881ff2fee09c29ac"
+          },
+          "expectedSourcesMatch": true
+        },
+        "worker": {
+          "image": "sha256:c91be5a306cf317478ec5c7244e03f7b500f2a7048ffae61bfee763f5de4d842",
+          "running": true,
+          "health": "healthy",
+          "restartCount": 0,
+          "sourceHashes": {
+            "runtime.py": "43788d28dccbd390a321027e197ebff3ef1b25c6a524667e165b880562630849",
+            "private_activity.py": "c8c0642af4a7637e92358a0dd91f32d35d7593ae93e908e9ae5ca4a290299517",
+            "recent_activity.py": "2f49860157d4aedf7d6970607296bc6b86e723df07b0780d1534fe9df40b7385",
+            "private_continuity.py": "4b94c670a28ff475cd73a4d4d9110addf6c223b96fe95690881ff2fee09c29ac"
+          },
+          "expectedSourcesMatch": true
+        }
+      }
+    },
+    "realSourceRead": {
+      "forcedModelCalls": 0,
+      "sourceTimings": {
+        "conversations": {
+          "seconds": 0.27,
+          "records": 0,
+          "nextOffset": null
+        },
+        "work": {
+          "seconds": 0.122,
+          "records": 0,
+          "nextOffset": null
+        },
+        "initiative": {
+          "seconds": 0.702,
+          "records": 5,
+          "nextOffset": null
+        },
+        "learning": {
+          "seconds": 0.153,
+          "records": 0,
+          "nextOffset": null
+        }
+      }
+    },
+    "ordinaryChat": {
+      "contract": "EvaDashboardGroundedReply/v1",
+      "savedReply": true,
+      "responseSha256": "936467ed0a30a6e143d559d0f33002a1305c2de6b611b634ceb086688690b3cd",
+      "reportedClientSeconds": 25.19,
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "contentAssessment": "PASS within returned coverage: deliberate silence distinguished from completed research or learning; old abandoned evaluation and unknown usage retained; no fabricated action or success.",
+      "ownerAcceptance": false
+    }
+  },
+  "failureEvidence": [
+    {
+      "issue": "Initial ordinary read scanned retained conversations with a correlated tool-history query and did not finish.",
+      "handling": "Cancelled only the identified SELECT; preserved the failed call record. Replaced repeated correlation with one exact-key set and verified current retained data without model calls before one changed-cause retry."
+    },
+    {
+      "issue": "A diagnostic attempt to create a second full runtime process exited137.",
+      "handling": "No extra daemon or model call was used; discarded and replaced by minimal read-only composition."
+    }
+  ],
+  "runtimeConsumptionByAttempt": [
+    {
+      "finalSuccessfulQuestion": true,
+      "admitted": 3,
+      "savedReply": true,
+      "recordedUsage": [
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 10338,
+          "output_tokens": 65,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 11789,
+          "output_tokens": 49,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 20825,
+          "output_tokens": 132,
+          "model_attempts": 1
+        }
+      ]
+    },
+    {
+      "finalSuccessfulQuestion": false,
+      "admitted": 1,
+      "savedReply": false,
+      "recordedUsage": [
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 10845,
+          "output_tokens": 65,
+          "model_attempts": 1
+        }
+      ]
+    }
+  ],
+  "consumption": {
+    "successfulQuestion": {
+      "modelAttempts": 3,
+      "toolCalls": 2,
+      "inputTokens": 42952,
+      "outputTokens": 246,
+      "measurement": "measured"
+    },
+    "failedQuestion": {
+      "modelAttempts": 1,
+      "toolCalls": 1,
+      "inputTokens": 10845,
+      "outputTokens": 65,
+      "measurement": "measured"
+    },
+    "developmentTokens": null,
+    "creditCost": null,
+    "queryMeasurementModelCalls": 0
+  },
+  "limitations": [
+    "A day/range recap covers retained authorized sources, not a complete life log; read each requested day and each named next_offset.",
+    "Source/page bounds, retention, erasure and current task state remain explicit. Component receipts retain the existing bounded mapper and truncation marker.",
+    "A reflection/candidate/request is not demonstrated improved behavior. No family acceptance or competitor/efficiency superiority is claimed.",
+    "The real answer took about25 seconds and42952 input tokens; existing E4.3 must reduce context/provider overhead without reducing quality.",
+    "WhatsApp activation still awaits an optional separate Eva number; it does not block this installed text outcome."
+  ]
+}

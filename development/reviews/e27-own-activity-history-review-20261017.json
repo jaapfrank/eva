@@ -1,0 +1,18 @@
+{
+  "contract": "EvaIndependentDeliveryReview/v1",
+  "checkedAt": "2026-10-17T10:38:37.392240+00:00",
+  "reviewer": "/root/e33_interface_adapters",
+  "source": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
+  "sourceSha256": "ab2363a28d2e684d867fd8a4bb6c1132ae2eb16898effd1f401e726603cdcfb3",
+  "verdict": "GO",
+  "scope": "Read-only code review and supplied targeted PostgreSQL, current-source, installation and ordinary-chat evidence. Reviewer did not execute a new experiment.",
+  "resolvedFindings": [
+    "Older source with an action in the selected day remains eligible.",
+    "Missing or erased exact work source cannot reconstruct title/task content.",
+    "Completed work remains in its original completion day despite later updates.",
+    "Exclusive calendar midnight and a shared content-fragment budget are enforced.",
+    "Set-based query retains exact owner/source binding; work SQL filtering retains component eligibility."
+  ],
+  "conclusion": "E2.7 technically completed, installed and actually used through the ordinary owner chat; no family acceptance or efficiency win claimed.",
+  "retainedFailureEvidence": true
+}

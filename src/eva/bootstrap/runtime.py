@@ -1830,7 +1830,9 @@ def create_runtime_app() -> FastAPI:
     learning_tools = (() if human_understanding_actions is None
                       else human_understanding_actions.conversation_tools())
     from eva.bootstrap.recent_activity import RecentActivityActions, RECENT_ACTIVITY
-    activity_actions = RecentActivityActions(lambda: runtime._household_conversation_context)
+    from eva.bootstrap.private_activity import PrivateActivityHistory
+    activity_actions = RecentActivityActions(lambda: runtime._household_conversation_context,
+        private_reader=PrivateActivityHistory(lambda: runtime))
     activity_tools = (RECENT_ACTIVITY,)
     model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
