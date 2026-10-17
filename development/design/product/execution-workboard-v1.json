@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-17T12:16:51.042915+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.5",
+  "activeTaskId": "E5.1",
   "currentWork": {
-    "id": "E4.5",
-    "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
+    "id": "E5.1",
+    "title": "Het volledige actuele geheel opleveren en laten beoordelen",
     "status": "planned",
-    "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering.",
-    "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
-    "checkedAt": "2026-10-17T12:16:51.042915+00:00",
+    "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
+    "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
+    "checkedAt": "2026-10-17T13:23:36.139042+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,6 +1632,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E4.5 · Eigen softwareverbetering automatisch geïnstalleerd en later gebruikt",
+            "state": "installed",
+            "checkedAt": "2026-10-17T13:23:36.139042+00:00",
+            "summary": "Eva schreef één echte parserverbetering: ontwikkeling19/26→26/26, onafhankelijk51/106→106/106. Automatisch gepubliceerd/geïnstalleerd, gedrag op beide services bevestigd en later in een gewone native taak gebruikt.128 gerichte tests en onafhankelijke review GO; actuele gegevens en ander WSL-werk behouden.",
+            "remaining": "E5.1, gezamenlijk gezinsgebruik en afzonderlijke acceptatie blijven open. Eén vooraf toegelaten klasse bewezen; geen algemene autonomie- of concurrentieclaim.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+            "maintenanceRepair": false,
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E4.5"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "familyAcceptance": false,
+            "completionScope": "One Eva-authored reversible code class through independent quality selection, actual installation, behavior verification and later native use; isolated recovery proof, no family acceptance."
+          },
+          {
             "title": "E4.4 · Module- en installatiegaten afgewerkt",
             "state": "installed",
             "checkedAt": "2026-10-17T12:16:51.042915+00:00",
@@ -2373,42 +2390,42 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.4 · Module- en installatiegaten afgewerkt",
+          "title": "E4.5 · Eigen softwareverbetering automatisch geïnstalleerd en later gebruikt",
           "state": "installed",
-          "checkedAt": "2026-10-17T12:16:51.042915+00:00",
-          "summary": "Identiteit/schemabronnen compleet verpakt; export hersteld met oorspronkelijke pins. Eén buildbasis voor kern/worker, helper los van acceptatietest en actuele modeldefaults. Kern/worker gezond, bestaande hostoperator live gecontroleerd; gerichte tests en onafhankelijke review akkoord.",
-          "remaining": "E4.5 en gezamenlijke E5-/gezinsacceptatie blijven open. Fotoafhankelijkheid onderbouwd behouden; optioneel WhatsApp wacht op eigen nummer.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e44-module-maintenance-review-20261017.json",
-          "maintenanceRepair": true,
-          "newProductFunctionCompleted": false,
+          "checkedAt": "2026-10-17T13:23:36.139042+00:00",
+          "summary": "Eva schreef één echte parserverbetering: ontwikkeling19/26→26/26, onafhankelijk51/106→106/106. Automatisch gepubliceerd/geïnstalleerd, gedrag op beide services bevestigd en later in een gewone native taak gebruikt.128 gerichte tests en onafhankelijke review GO; actuele gegevens en ander WSL-werk behouden.",
+          "remaining": "E5.1, gezamenlijk gezinsgebruik en afzonderlijke acceptatie blijven open. Eén vooraf toegelaten klasse bewezen; geen algemene autonomie- of concurrentieclaim.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+          "maintenanceRepair": false,
+          "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "E4.4"
+            "E4.5"
           ],
           "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "Fixed C10–C12 maintenance and installed/operator boundaries; no new family ability, photo replacement, full optional installation or speech claim."
+          "completionScope": "One Eva-authored reversible code class through independent quality selection, actual installation, behavior verification and later native use; isolated recovery proof, no family acceptance."
         },
         "now": {
-          "taskId": "E4.5",
-          "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
+          "taskId": "E5.1",
+          "title": "Het volledige actuele geheel opleveren en laten beoordelen",
           "status": "planned",
-          "summary": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
-          "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering."
+          "summary": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
+          "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2."
         },
         "next": {
-          "title": "E5.1 · Gezamenlijke eindkandidaat",
-          "state": "Na E4.5",
-          "summary": "Bestaande gezamenlijke oplevering en onafhankelijke eindreview; gezinsgebruik/acceptatie blijven apart.",
+          "title": "F2 · Gezamenlijk gebruik en jouw oordeel",
+          "state": "Na E5.1",
+          "summary": "Bestaande gezinsproef en afzonderlijke eigenaaracceptatie; technische afronding is geen menselijk oordeel.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Geen handeling nodig voor E4.4/E4.5",
-          "detail": "E4.4 draait. Zelfstandige softwareverbetering E4.5 volgt; spraak blijft bij Codex in WSL. Eigen WhatsApp-nummer kan later.",
+          "title": "Geen handeling nodig voor E4.5",
+          "detail": "E4.5 draait en is later gebruikt. Volgend is gezamenlijke E5.1-oplevering. Spraak blijft bij Codex in WSL; eigen WhatsApp-nummer kan later.",
           "required": false
         },
-        "checkedAt": "2026-10-17T12:16:51.042915+00:00",
-        "reviewedAt": "2026-10-17T12:16:51.042915+00:00",
+        "checkedAt": "2026-10-17T13:23:36.139042+00:00",
+        "reviewedAt": "2026-10-17T13:23:36.139042+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-17T11:16:40.392200+00:00",
@@ -2426,10 +2443,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-16T16:23:00.574395+00:00",
+        "checkedAt": "2026-10-17T13:23:36.139042+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
-        "headline": "E1 technisch afgerond; E2.1–E2.5 geïnstalleerd. Volgende: optioneel WhatsApp.",
-        "note": "54 van 70 geregistreerde kleine taken afgerond; 16 open. E2.5 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.",
+        "headline": "E4.1–E4.5 afgerond; volgende: één gezamenlijke eindkandidaat.",
+        "note": "64 van 72 geregistreerde kleine taken afgerond; 8 open. E4.5 is nieuw afgerond; geen productpercentage of volledige gezinsacceptatie.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2493,7 +2510,7 @@
             "name": "Zelfstandig werk",
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
-            "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst. Volledig opgeslagen resultaat nu werkelijk bij de oorspronkelijke Telegramvraag geleverd; bytes teruggelezen. Standaard geen bijlage. HUE6 technisch afgerond: agentvariant werkelijk beoordeeld; gelijkspel, dus referentie behouden en later gebruikt. Bestaande codewinst/toepassing/later gebruik behouden. E2.3: gesprekgebonden opdrachten met voortgang, beschikbare oorspronkelijke gespreksbron en opgeslagen resultaat zijn bedienbaar; stoppen/hervatten via bestaande dienst, volledig resultaat op verzoek.",
+            "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst. Volledig opgeslagen resultaat nu werkelijk bij de oorspronkelijke Telegramvraag geleverd; bytes teruggelezen. Standaard geen bijlage. HUE6 technisch afgerond: agentvariant werkelijk beoordeeld; gelijkspel, dus referentie behouden en later gebruikt. Bestaande codewinst/toepassing/later gebruik behouden. E2.3: gesprekgebonden opdrachten met voortgang, beschikbare oorspronkelijke gespreksbron en opgeslagen resultaat zijn bedienbaar; stoppen/hervatten via bestaande dienst, volledig resultaat op verzoek. E4.5: één eigen codeverbetering onafhankelijk gemeten, automatisch toegepast en later in echte taakverwerking gebruikt; geen onbeperkte zelfwijzigingsclaim.",
             "remaining": "E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open.",
             "evidencePaths": [
               "development/evidence/product/p2-published-results-20261006.json",
@@ -2527,7 +2544,8 @@
               "development/evidence/product/native-budget-context-correction-installed-20261012.json",
               "development/evidence/product/full-saved-result-delivery-installed-20261013.json",
               "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
-              "development/evidence/product/e23-conversation-work-installed-20261016.json"
+              "development/evidence/product/e23-conversation-work-installed-20261016.json",
+              "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json"
             ],
             "checkedAt": "2026-10-16T12:49:32.967702+00:00"
           }
@@ -2576,7 +2594,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.2",
+        "currentStep": "E5.1",
         "steps": [
           {
             "number": 1,
@@ -5386,7 +5404,7 @@
               "FE3"
             ],
             "outcome": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-            "status": "in_progress",
+            "status": "completed",
             "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
             "endCondition": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
             "dashboardComponent": "finalization-E4",
@@ -5815,14 +5833,14 @@
               {
                 "id": "E4.5",
                 "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
-                "status": "planned",
+                "status": "completed",
                 "kind": "bouwen",
                 "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
-                "existing": "ComponentImprovementActions, onafhankelijke FinalComponentAssessments, releasepublisher, ReviewedComponentApplications, ComponentApplicationRuntime en de image-updater zijn al verbonden. Bestaande capability-/agentverbeterproeven houden hun oorspronkelijke beperkte bewijs.",
-                "gap": "De gehele automatische software-onderhoudsketen is niet bewezen. De updater bewaart bij fouten incomplete_inspect_retained_installation maar herstelt de productie-installatie niet automatisch; lokale repositoryrollback is iets anders. E4.4 beschrijft onderhoud/updatecontracten, niet deze zelfstandige eindgebruikersuitkomst.",
-                "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+                "existing": "Eva schreef één echte parserverbetering: ontwikkeling19/26→26/26, onafhankelijk51/106→106/106. Automatisch gepubliceerd/geïnstalleerd, gedrag op beide services bevestigd en later in een gewone native taak gebruikt.128 gerichte tests en onafhankelijke review GO; actuele gegevens en ander WSL-werk behouden.",
+                "gap": "Geen resterende bouw binnen deze vooraf toegelaten klasse. Breder autonoom wijzigen en dagelijks gezinsnut zijn hiermee niet bewezen; gezamenlijke eindkandidaat/acceptatie blijft E5/F2.",
+                "nextAction": "Hergebruik deze geïnstalleerde keten en het vaste bewijs in E5.1; geen herhaling van deze kandidaatproef.",
                 "files": [
                   "src/eva/operations/component_final_assessment.py",
                   "src/eva/operations/component_release_publisher.py",
@@ -5837,7 +5855,7 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "continuous-development-20261017",
-                "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+                "checkedAt": "2026-10-17T13:23:36.139042+00:00",
                 "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
                 "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
                 "effort": "Middelgroot tot groot; bestaande keten hergebruiken. Eén wijzigingsklasse, geen onbeperkte automatische installatie of nieuwe vergelijkingsserie. Kosten onbekend.",
@@ -5849,10 +5867,10 @@
                   "Ruimer automatisch updatebereik is later gebruik/vervolg, geen eindeloze voorwaarde voor deze kaart."
                 ],
                 "ownerInstructions": {
-                  "availableNow": false,
+                  "availableNow": true,
                   "steps": [],
                   "blocksIndependentWork": false,
-                  "readyWhen": "Nog bouwtaak. Geen handmatige patch of installatiestap van jou gevraagd; eventueel ontbrekend opgeslagen bereik wordt één keer begrijpelijk ingesteld."
+                  "readyWhen": "Geen handeling nodig. Eva kan binnen de toegelaten klasse zelf een gemeten codeverbetering laten toepassen; geen algemene toestemming voor willekeurige wijzigingen afgeleid."
                 },
                 "reviewInput": {
                   "E3.3": {
@@ -5860,7 +5878,11 @@
                     "note": "Existing component evaluation/application chain retained; constrained strategies do not prove complete autonomous upgrades. Preserve original E4.5 full-cycle criterion.",
                     "newTasks": 0
                   }
-                }
+                },
+                "completedAt": "2026-10-17T13:23:36.139042+00:00",
+                "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+                "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+                "completionKind": "bounded_installed_autonomous_software_improvement"
               }
             ]
           },
@@ -5936,7 +5958,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+        "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5945,7 +5967,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T12:16:51.042915+00:00",
+        "updatedAt": "2026-10-17T13:23:36.139042+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-17T12:16:51.042915+00:00",
@@ -6010,7 +6032,7 @@
             {
               "id": "E4",
               "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-              "status": "in_progress",
+              "status": "completed",
               "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
               "taskIds": [
                 "E4.1",
@@ -6019,7 +6041,10 @@
                 "E4.4",
                 "E4.5"
               ],
-              "currentGap": "E4.1–E4.4 afgerond. E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open. Bestaande fotoafhankelijkheid onderbouwd behouden; geen volledige autonome software-installatie uit onderhoud afgeleid."
+              "currentGap": "E4.1–E4.5 technisch afgerond binnen vaste scope en expliciete beperkingen. Volgend: één gezamenlijke kandidaat E5.1, daarna F2-gebruik/acceptatie.",
+              "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+              "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+              "completionKind": "bounded_technical_phase"
             },
             {
               "id": "E5",
@@ -6123,7 +6148,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.2",
+      "currentStep": "E5.1",
       "steps": [
         {
           "number": 1,
@@ -8933,7 +8958,7 @@
             "FE3"
           ],
           "outcome": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-          "status": "in_progress",
+          "status": "completed",
           "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
           "endCondition": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
           "dashboardComponent": "finalization-E4",
@@ -9362,14 +9387,14 @@
             {
               "id": "E4.5",
               "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
-              "status": "planned",
+              "status": "completed",
               "kind": "bouwen",
               "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering.",
               "owner": "Codex",
               "ownerActionRequired": false,
-              "existing": "ComponentImprovementActions, onafhankelijke FinalComponentAssessments, releasepublisher, ReviewedComponentApplications, ComponentApplicationRuntime en de image-updater zijn al verbonden. Bestaande capability-/agentverbeterproeven houden hun oorspronkelijke beperkte bewijs.",
-              "gap": "De gehele automatische software-onderhoudsketen is niet bewezen. De updater bewaart bij fouten incomplete_inspect_retained_installation maar herstelt de productie-installatie niet automatisch; lokale repositoryrollback is iets anders. E4.4 beschrijft onderhoud/updatecontracten, niet deze zelfstandige eindgebruikersuitkomst.",
-              "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+              "existing": "Eva schreef één echte parserverbetering: ontwikkeling19/26→26/26, onafhankelijk51/106→106/106. Automatisch gepubliceerd/geïnstalleerd, gedrag op beide services bevestigd en later in een gewone native taak gebruikt.128 gerichte tests en onafhankelijke review GO; actuele gegevens en ander WSL-werk behouden.",
+              "gap": "Geen resterende bouw binnen deze vooraf toegelaten klasse. Breder autonoom wijzigen en dagelijks gezinsnut zijn hiermee niet bewezen; gezamenlijke eindkandidaat/acceptatie blijft E5/F2.",
+              "nextAction": "Hergebruik deze geïnstalleerde keten en het vaste bewijs in E5.1; geen herhaling van deze kandidaatproef.",
               "files": [
                 "src/eva/operations/component_final_assessment.py",
                 "src/eva/operations/component_release_publisher.py",
@@ -9384,7 +9409,7 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "continuous-development-20261017",
-              "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+              "checkedAt": "2026-10-17T13:23:36.139042+00:00",
               "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
               "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
               "effort": "Middelgroot tot groot; bestaande keten hergebruiken. Eén wijzigingsklasse, geen onbeperkte automatische installatie of nieuwe vergelijkingsserie. Kosten onbekend.",
@@ -9396,10 +9421,10 @@
                 "Ruimer automatisch updatebereik is later gebruik/vervolg, geen eindeloze voorwaarde voor deze kaart."
               ],
               "ownerInstructions": {
-                "availableNow": false,
+                "availableNow": true,
                 "steps": [],
                 "blocksIndependentWork": false,
-                "readyWhen": "Nog bouwtaak. Geen handmatige patch of installatiestap van jou gevraagd; eventueel ontbrekend opgeslagen bereik wordt één keer begrijpelijk ingesteld."
+                "readyWhen": "Geen handeling nodig. Eva kan binnen de toegelaten klasse zelf een gemeten codeverbetering laten toepassen; geen algemene toestemming voor willekeurige wijzigingen afgeleid."
               },
               "reviewInput": {
                 "E3.3": {
@@ -9407,7 +9432,11 @@
                   "note": "Existing component evaluation/application chain retained; constrained strategies do not prove complete autonomous upgrades. Preserve original E4.5 full-cycle criterion.",
                   "newTasks": 0
                 }
-              }
+              },
+              "completedAt": "2026-10-17T13:23:36.139042+00:00",
+              "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+              "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+              "completionKind": "bounded_installed_autonomous_software_improvement"
             }
           ]
         },
@@ -9483,7 +9512,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+      "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -9492,7 +9521,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T12:16:51.042915+00:00",
+      "updatedAt": "2026-10-17T13:23:36.139042+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-17T12:16:51.042915+00:00",
@@ -9557,7 +9586,7 @@
           {
             "id": "E4",
             "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-            "status": "in_progress",
+            "status": "completed",
             "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
             "taskIds": [
               "E4.1",
@@ -9566,7 +9595,10 @@
               "E4.4",
               "E4.5"
             ],
-            "currentGap": "E4.1–E4.4 afgerond. E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open. Bestaande fotoafhankelijkheid onderbouwd behouden; geen volledige autonome software-installatie uit onderhoud afgeleid."
+            "currentGap": "E4.1–E4.5 technisch afgerond binnen vaste scope en expliciete beperkingen. Volgend: één gezamenlijke kandidaat E5.1, daarna F2-gebruik/acceptatie.",
+            "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+            "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+            "completionKind": "bounded_technical_phase"
           },
           {
             "id": "E5",
@@ -10841,9 +10873,17 @@
       ],
       "implementationStarted": false,
       "nextExistingTask": "E3.3"
+    },
+    "e45AutonomousSoftwareMaintenance20261017": {
+      "status": "installed_and_later_used",
+      "checkedAt": "2026-10-17T13:23:36.139042+00:00",
+      "evidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+      "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+      "candidateSha256": "cea4d09fe29bb17b599a05d30ea9c24875e82b7401c0b16c806ac6529c1ca4ad",
+      "familyAcceptance": false
     }
   },
-  "updatedAt": "2026-10-17T12:16:51.042915+00:00",
+  "updatedAt": "2026-10-17T13:23:36.139042+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -10880,5 +10920,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-17T12:16:51.042915+00:00"
+  "lastUpdatedAt": "2026-10-17T13:23:36.139042+00:00"
 }

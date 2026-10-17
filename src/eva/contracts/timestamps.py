@@ -17,6 +17,20 @@ def require_utc_now_second(value: datetime) -> None:
 
 
 def parse_utc_timestamp(value: str) -> datetime:
+    if (
+        len(value) != 20
+        or value[4] != "-"
+        or value[7] != "-"
+        or value[10] != "T"
+        or value[13] != ":"
+        or value[16] != ":"
+        or value[19] != "Z"
+        or any(
+            not "0" <= value[index] <= "9"
+            for index in (0, 1, 2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18)
+        )
+    ):
+        raise ValueError("timestamp must use YYYY-MM-DDTHH:MM:SSZ")
     return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 

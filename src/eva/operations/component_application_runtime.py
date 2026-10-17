@@ -447,7 +447,7 @@ class ComponentApplicationRuntime:
 
     def __init__(self, config, *, run=subprocess.run):
         if (not isinstance(config, dict) or not {"core_container", "scope_sha256"} <= set(config)
-                or set(config) - {"core_container", "scope_sha256", "physical_usage_attestation"}
+                or set(config) - {"core_container", "scope_sha256", "physical_usage_attestation", "behavior_verifiers"}
                 or not isinstance(config["core_container"], str)
                 or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}", config["core_container"])
                 or not isinstance(config["scope_sha256"], str)
@@ -455,6 +455,15 @@ class ComponentApplicationRuntime:
             raise ValueError("invalid trusted application runtime")
         if "physical_usage_attestation" in config:
             _load_physical_usage_attestation(config["physical_usage_attestation"])
+        probes = config.get("behavior_verifiers", {})
+        if not isinstance(probes, dict):
+            raise ValueError("runtime behavior bindings differ")
+        from eva.operations.reviewed_component_application import _verified_behavior_source
+        from eva.operations.component_release_import import ALLOWED_PATHS
+        for source_path, binding in probes.items():
+            if source_path not in ALLOWED_PATHS:
+                raise ValueError("runtime behavior source is outside the existing class")
+            _verified_behavior_source(binding)
         self.config, self.run = dict(config), run
 
     def ready_to_apply(self, task_id):
@@ -560,8 +569,48 @@ class ComponentApplicationRuntime:
                     or result["stdout_truncated"] or result["stderr_truncated"]):
                 raise RuntimeError("reviewed update command did not complete")
             return result["stdout"]
-        return update_runtime(project=release["project"], installed=release["installed"],
-                              candidate=release["candidate"], receipt=release["receipt"], run=command)
+        verifier = self._behavior_verifier(release)
+        try:
+            return update_runtime(project=release["project"], installed=release["installed"],
+                                  candidate=release["candidate"], receipt=release["receipt"], run=command,
+                                  **({"verify_behavior": verifier} if verifier is not None else {}))
+        except Exception:
+            if verifier is None or not release["receipt"].exists():
+                raise
+            from eva.operations.runtime_image_update import recover_runtime
+            return recover_runtime(project=release["project"], installed=release["installed"],
+                candidate=release["candidate"], receipt=release["receipt"],
+                verify_behavior=verifier, run=command,
+                before_recovery_dispatch=lambda: self.ready_to_apply(release["task_id"]) == "ready")
+
+    def _behavior_verifier(self, release):
+        binding = release.get("behavior_verifier")
+        expected_binding = self.config.get("behavior_verifiers", {}).get(release.get("source_path"))
+        if binding != expected_binding:
+            raise ValueError("runtime behavior verifier authority differs")
+        if binding is None:
+            return None
+        from eva.operations.reviewed_component_application import _verified_behavior_source
+        path, raw = _verified_behavior_source(binding)
+        namespace = {"__file__": str(path), "__name__": "eva_host_behavior_verifier"}
+        exec(compile(raw, str(path), "exec"), namespace)
+        def verify(observation):
+            expected = release["candidate_source_sha256"] if observation["target"] == "candidate" else release["baseline_source_sha256"]
+            from eva.operations.runtime_image_update import _command
+            value = namespace["verify"](observation, source_sha256=expected, run=_command)
+            if not isinstance(value, dict):
+                raise ValueError("behavior verifier result differs")
+            return {**value, "verifier_sha256": binding["sha256"]}
+        return verify
+
+    def inspect_release(self, release):
+        verifier = self._behavior_verifier(release)
+        if verifier is None:
+            return None
+        from eva.operations.runtime_image_update import recover_runtime
+        return recover_runtime(project=release["project"], installed=release["installed"],
+            candidate=release["candidate"], receipt=release["receipt"], verify_behavior=verifier,
+            before_recovery_dispatch=lambda: self.ready_to_apply(release["task_id"]) == "ready")
 
     def _apply_saved_artifact(self, release):
         from eva.operations.reviewed_component_application import _save
@@ -591,4 +640,5 @@ def configured_component_applications(config):
         raise ValueError("invalid reviewed application configuration")
     runtime = ComponentApplicationRuntime(config["runtime"])
     return ReviewedComponentApplications(config["queue"], ready_to_apply=runtime.ready_to_apply,
-                                         apply_release=runtime.apply_release)
+                                         apply_release=runtime.apply_release,
+                                         inspect_release=runtime.inspect_release)

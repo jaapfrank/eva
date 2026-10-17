@@ -20,7 +20,7 @@ from eva.operations.image_update import image_update_services
 
 _ID = re.compile(r"[0-9a-f]{64}\Z")
 _WAITING = {"queued", "waiting", "interrupted_before_dispatch"}
-_TERMINAL = {"cancelled", "rejected", "completed", "unconfirmed"}
+_TERMINAL = {"cancelled", "rejected", "completed", "unconfirmed", "recovered"}
 _ARTIFACTS = {"package", "review", "source_import", "build", "installed", "candidate"}
 
 
@@ -58,7 +58,7 @@ def _verify_release(review_id, release):
         from eva.operations.saved_artifact_application import verify_saved_release
         return verify_saved_release(review_id, release)
     if (not isinstance(release, dict)
-            or set(release) != _ARTIFACTS | {"project", "update_receipt"}
+            or set(release) - {"behavior_verifier"} != _ARTIFACTS | {"project", "update_receipt"}
             or not isinstance(release["project"], str) or not release["project"]):
         raise ValueError("reviewed release configuration differs")
     paths, data = {}, {}
@@ -118,10 +118,31 @@ def _verify_release(review_id, release):
     info = parent.stat()
     if not parent.is_dir() or info.st_uid != os.geteuid() or stat.S_IMODE(info.st_mode) & 0o022:
         raise ValueError("updater receipt directory must be host-owned")
+    behavior = {}
+    if "behavior_verifier" in release:
+        binding = release["behavior_verifier"]
+        _verified_behavior_source(binding)
+        if build.get("behavior_verifier") != binding:
+            raise ValueError("build behavior verifier binding differs")
+        behavior = {"behavior_verifier": binding,
+                    "baseline_source_sha256": package["baseline_sha256"],
+                    "candidate_source_sha256": package["candidate_sha256"]}
     return {"review_id": review_id, "project": release["project"],
             "installed": paths["installed"], "candidate": paths["candidate"],
             "receipt": receipt, "candidate_images": after,
-            "accepted_review_sha256": digest(canonical(review))}
+            "accepted_review_sha256": digest(canonical(review)), "source_path": package["path"], **behavior}
+
+
+def _verified_behavior_source(binding):
+    """Read a host-owned probe once; candidate content supplies no host program."""
+    if not isinstance(binding, dict) or set(binding) != {"path", "sha256"}:
+        raise ValueError("behavior verifier binding differs")
+    _identifier(binding["sha256"])
+    path = _path(binding["path"])
+    raw = path.read_bytes()
+    if len(raw) > 65536 or digest(raw) != binding["sha256"]:
+        raise ValueError("behavior verifier source differs")
+    return path, raw
 
 
 def _save(path, value, *, initial=False):
@@ -144,10 +165,27 @@ def _save(path, value, *, initial=False):
             temporary.unlink()
 
 
+def _behavior_confirms(proof, *, release, configuration, images, containers, target):
+    from eva.contracts.canonical_json import canonical_sha256
+    return (isinstance(proof, dict)
+        and proof.get("contract") == "EvaImageBehaviorVerification/v1"
+        and proof.get("project") == release["project"]
+        and proof.get("configuration_sha256") == canonical_sha256(configuration)
+        and proof.get("target") == target
+        and proof.get("images") == images
+        and set(containers) == set(images)
+        and all(isinstance(value, str) and value for value in containers.values())
+        and proof.get("containers") == containers
+        and proof.get("verified") is True
+        and isinstance(proof.get("evidence"), dict)
+        and proof["evidence"].get("verified") is True
+        and proof["evidence"].get("verifier_sha256") == release["behavior_verifier"]["sha256"])
+
+
 class ReviewedComponentApplications:
     """One host dispatcher; request IDs and originating task are adapter-bound."""
 
-    def __init__(self, config, *, ready_to_apply, apply_release):
+    def __init__(self, config, *, ready_to_apply, apply_release, inspect_release=None):
         if (not isinstance(config, dict)
                 or set(config) - {"receipt_root", "releases", "poll_seconds"}
                 or not {"receipt_root", "releases"} <= config.keys()
@@ -183,6 +221,7 @@ class ReviewedComponentApplications:
             self._lock_file.close()
             raise ValueError("another application dispatcher owns these receipts") from None
         self.ready_to_apply, self.apply_release = ready_to_apply, apply_release
+        self.inspect_release = inspect_release
         self.condition = threading.Condition()
         self.closed = False
         self.jobs = {}
@@ -297,15 +336,17 @@ class ReviewedComponentApplications:
             if len(matches) != 1:
                 raise ValueError("accepted review has ambiguous application receipts")
             job = matches[0]
-            if job["state"] in {"dispatching", "unconfirmed"}:
-                self._reconcile(job)
+            if job["state"] in {"dispatching", "unconfirmed"} or (
+                    job["state"] == "completed" and "behavior_verifier" in release):
+                self._reconcile(job, inspect=True)
             return self._result(job)
 
     def status(self, request_id, *, task_id):
         with self.condition:
             job = self._owned(request_id, task_id)
-            if job["state"] in {"dispatching", "unconfirmed"}:
-                self._reconcile(job)
+            if job["state"] in {"dispatching", "unconfirmed"} or (
+                    job["state"] == "completed" and "behavior_verifier" in self.releases.get(job["review_id"], {})):
+                self._reconcile(job, inspect=True)
             return self._result(job)
 
     def cancel(self, request_id, *, task_id):
@@ -317,14 +358,22 @@ class ReviewedComponentApplications:
                 self.condition.notify_all()
             return self._result(job)
 
-    def _reconcile(self, job):
+    def _reconcile(self, job, *, inspect=False):
         release = self.releases.get(job["review_id"])
         if release is None or digest(canonical(release)) != job["release_sha256"]:
             return
         path = _path(release["update_receipt"], exists=False)
         if not path.exists():
+            if "behavior_verifier" in release:
+                job.update(state="unconfirmed", reason="behavior_verification_unconfirmed")
+                self._persist(job)
             return
         try:
+            if (inspect and job["state"] in {"completed", "unconfirmed"}
+                    and "behavior_verifier" in release and self.inspect_release is not None):
+                update = _verify_release(job["review_id"], release)
+                update["task_id"] = job["task_id"]
+                self.inspect_release(update)
             receipt = load_object(_path(path))
             if release.get("kind") == "saved_artifact":
                 from eva.operations.saved_artifact_application import receipt_confirms_application
@@ -341,18 +390,44 @@ class ReviewedComponentApplications:
             images = {name: candidate["services"][name]["image"]
                       for name in ("core", "delegated-work-worker")}
             services = receipt.get("services", {})
+            behavior_required = "behavior_verifier" in release
+            if behavior_required and receipt.get("status") == "baseline_recovered_with_retained_mounts":
+                baseline = _artifact(release["installed"])[1]
+                baseline_images = {name: baseline["services"][name]["image"] for name in images}
+                restored = receipt.get("recovery", {}).get("behavior_verification", {})
+                if (receipt.get("contract") != "EvaImageUpdate/v1"
+                        or receipt.get("project") != release["project"]
+                        or set(services) != set(images)
+                        or any(services[name].get("previous_image") != image for name, image in baseline_images.items())
+                        or not _behavior_confirms(restored, release=release,
+                            configuration=baseline, images=baseline_images,
+                            containers=receipt.get("recovery", {}).get("current_containers", {}),
+                            target="baseline")):
+                    raise ValueError("baseline recovery behavior evidence differs")
+                job.update(state="recovered", reason="candidate_failed_baseline_preserved")
+                self._persist(job)
+                return
+            behavior = receipt.get("behavior_verification", {})
+            verified_behavior = (not behavior_required or _behavior_confirms(behavior,
+                release=release, configuration=candidate, images=images,
+                containers={name: row.get("current_container") for name, row in services.items()},
+                target="candidate"))
             success = (receipt.get("contract") == "EvaImageUpdate/v1"
                        and receipt.get("project") == release["project"]
-                       and receipt.get("status") == "running_with_retained_mounts"
+                       and (receipt.get("status") == "behavior_verified_with_retained_mounts" and verified_behavior
+                            if behavior_required else receipt.get("status") == "running_with_retained_mounts")
                        and set(services) == set(images)
                        and all(services[name].get("candidate_image") == image
                                and services[name].get("current_container")
                                for name, image in images.items()))
-        except (ValueError, OSError, KeyError, TypeError):
+        except (ValueError, OSError, KeyError, TypeError, RuntimeError):
             success = False
         if success:
             job["state"] = "completed"
             job.pop("reason", None)
+            self._persist(job)
+        elif "behavior_verifier" in release:
+            job.update(state="unconfirmed", reason="behavior_verification_unconfirmed")
             self._persist(job)
 
     def _run(self):
@@ -402,8 +477,7 @@ class ReviewedComponentApplications:
                     if digest(canonical(release)) != job["release_sha256"]:
                         raise ValueError("registered release changed")
                     update = _verify_release(job["review_id"], release)
-                    if update.get("kind") == "saved_artifact":
-                        update["task_id"] = job["task_id"]
+                    update["task_id"] = job["task_id"]
                     if update["receipt"].exists():
                         raise ValueError("an updater receipt already exists")
                 except Exception:

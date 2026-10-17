@@ -1,0 +1,240 @@
+{
+  "contract": "EvaBoundedAutonomousSoftwareImprovementOutcome/v1",
+  "taskId": "E4.5",
+  "status": "installed_and_later_used",
+  "checkedAt": "2026-10-17T13:22:50.677090+00:00",
+  "familyAcceptance": false,
+  "newTasks": 0,
+  "userOutcome": "Eva kan binnen een vooraf toegelaten klasse zelf code verbeteren, meetbare winst laten beoordelen, automatisch publiceren en installeren, het gedrag controleren en de verbetering later in gewone taakverwerking gebruiken.",
+  "existing": "Bestaande componenttools, developmentselectie, afzonderlijke FinalComponentAssessments, publisher, toepassingsqueue en image-updater hergebruikt. Geen tweede agentplatform of vergelijkingsserie.",
+  "added": [
+    "Hashgebonden controle van het geraakte gedrag op beide echte services.",
+    "Inspectie van onzekere toepassing en latere regressie; één compensatie naar referentie-images met behoud van actuele gegevens, uitsluitend bij huidige rust en geldige binding.",
+    "Exacte bron/configuratie/opslagcontrole met behoud van actuele images van andere uitvoerders.",
+    "Eén onafhankelijk vastgelegde canonical-timestamp klasse en door Eva geschreven kandidaat; vaste hostverifier buiten kandidaatbereik."
+  ],
+  "candidate": {
+    "path": "contracts/timestamps.py",
+    "baseline_sha256": "dbf596830f37530f3e3e121740bcc0af15c9c69bad458e5b3c27e765680ad8ca",
+    "candidate_sha256": "cea4d09fe29bb17b599a05d30ea9c24875e82b7401c0b16c806ac6529c1ca4ad",
+    "package_sha256": "0177f4968876034db1881e8e58042475ed7aebb0a59b5568c877452dece77e72",
+    "authoredBy": "Eva via existing installed component tools; no Codex-written candidate patch",
+    "candidateCount": 1,
+    "scope": "Only parse_utc_timestamp body; all other module bytes identical",
+    "sourceCommit": "110f736f2b06854ffab19179c9acf0bc4a7f037d"
+  },
+  "quality": {
+    "development": {
+      "baselinePassed": 19,
+      "candidatePassed": 26,
+      "cases": 26
+    },
+    "independentFinal": {
+      "baselinePassed": 51,
+      "candidatePassed": 106,
+      "cases": 106,
+      "candidateFailures": 0
+    },
+    "registration_sha256": "925945dba9ab5a43000e1dfdfebee1318fbea5cfcacacdd654e25e701df9b41e",
+    "criteriaSealedBeforeCandidate": true,
+    "protectedCasesNotReadByBuilder": true,
+    "comparisonSeriesStarted": false,
+    "latencyOrTokenSuperiorityClaimed": false
+  },
+  "installation": {
+    "automaticHandoffAfterPrepare": true,
+    "reviewId": "0177f4968876034db1881e8e58042475ed7aebb0a59b5568c877452dece77e72",
+    "requestId": "2a601fccc61106656cf0e9591182269c1b19ac859b535ca97190427b3795a3a1",
+    "originalUpdateStatus": "behavior_verified_with_retained_mounts",
+    "originalApplicationCompleted": true,
+    "behaviorVerifiedOnBothServices": true,
+    "images": {
+      "core": {
+        "changed_sources_in_our_overlay": [
+          "contracts/timestamps.py"
+        ],
+        "baseline_source_count": 382,
+        "candidate_source_count": 382,
+        "reviewed_image": "sha256:1379485748e0bf5709fd3d6829fcba6e3e1448d3675c231c29e3d225bc387ab3",
+        "current_image": "sha256:3845005761721b000b1fa2e6ad747a0d392c7ecb326f9be074b07620888c3cb8",
+        "container_id": "7a7f771facf21a3aaa898e876f3d709a02a92e9dc4b4f82917b30a1f5ccf3216",
+        "current_candidate_source_preserved": true,
+        "running": true,
+        "health": "healthy",
+        "later_overlay_present": true,
+        "manifest_sha256": [
+          "b9f4b27ad2c54484631ab6327d5c06de98ce33d3c5b38b76ff216bd4b579abf7",
+          "b7c69ff75f37f344c42543e480473f4bd22fef3f8f386adc761889fd4b98f260"
+        ]
+      },
+      "delegated-work-worker": {
+        "changed_sources_in_our_overlay": [
+          "contracts/timestamps.py"
+        ],
+        "baseline_source_count": 369,
+        "candidate_source_count": 369,
+        "reviewed_image": "sha256:f482cd1baf857aa7be1256b9922c4c147abe67fb4b71999f8dc8ec9312886c3f",
+        "current_image": "sha256:f482cd1baf857aa7be1256b9922c4c147abe67fb4b71999f8dc8ec9312886c3f",
+        "container_id": "71da381af8c30802d130372ed2468790d30266ae7aefe58ca5c9146874c6ef5a",
+        "current_candidate_source_preserved": true,
+        "running": true,
+        "health": "healthy",
+        "later_overlay_present": false,
+        "manifest_sha256": [
+          "60efed464a0bab08c56f4d639c734afd1d6fa7aebc748ce2812241dbbc02c5dd",
+          "2ee027dea95fcd442e1e527b897d1a73c7ac3e672ca1f8ad19ef393344ed50e6"
+        ]
+      }
+    },
+    "dataVolumesRetained": true,
+    "databaseRestorePerformed": false,
+    "houseActionReplayed": false,
+    "candidateRebuildOrRedispatchAfterRunnerFix": false
+  },
+  "laterUse": {
+    "workId": "work:eva-chat:c450a552-a201-56c7-a199-4797d9d81ab1",
+    "state": "succeeded",
+    "completedAt": "2026-10-17T13:20:02Z",
+    "resultSha256": "585e3d0a61a1600ed14e2dafe1b3797481865ac76412e48054d5a0bf09b8dafc",
+    "route": "Existing private digital worker; fresh read_own_component_source of installed parser; normal task deadline and result timestamp parsing",
+    "evidenceStrength": "Installed source hashes and unconditional normal-runner/success call sites plus successful real task; not live function-call instrumentation",
+    "familyTrial": false
+  },
+  "recovery": {
+    "mode": "Isolated helper and runtime-handoff tests; no artificial household outage",
+    "preserved": [
+      "current volumes and mounts",
+      "new conversations",
+      "original effect receipt and dispatch fence",
+      "unknown usage",
+      "foreground/stop boundary"
+    ],
+    "failureAndRegressionCases": "candidate behavior failure, partial update, explicit regression, UNKNOWN, current image/config/storage shift, already-recovered baseline, no repeat after uncertain recovery dispatch",
+    "limitations": [
+      "Cannot compensate when current readiness cannot be established, including a dead core; retain inspect-needed state.",
+      "A process crash before dispatch return remains UNKNOWN; do not assume effects stopped or replay them.",
+      "Later independently changed images are not silently treated as the original reviewed image or overwritten."
+    ]
+  },
+  "verification": {
+    "finalRegression": {
+      "exit_code": 0,
+      "elapsed_seconds": 9.951,
+      "summary": [
+        "128 passed in 9.27s"
+      ]
+    },
+    "assessmentModelCalls": 0,
+    "productionFailureInjected": false
+  },
+  "runtimeUsage": {
+    "measurement": "partial: recorded model counts/tokens known, credits and cost unknown",
+    "construction": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 7,
+      "tool_calls": 6,
+      "input_tokens": 85098,
+      "output_tokens": 1098,
+      "total_tokens": 86196,
+      "cost_usd_micros": null
+    },
+    "laterReadOnlyContextAttemptFailed": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 1,
+      "input_tokens": 16987,
+      "output_tokens": 112,
+      "total_tokens": 17099,
+      "cost_usd_micros": null
+    },
+    "laterSuccessfulNativeTask": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 1,
+      "input_tokens": 15367,
+      "output_tokens": 104,
+      "total_tokens": 15471,
+      "cost_usd_micros": null
+    },
+    "rejectedInitialContacts": {
+      "modelResponses": 4,
+      "inputTokens": 37786,
+      "outputTokens": 1487,
+      "totalTokens": 39273
+    },
+    "knownTotalModelResponses": 15,
+    "knownTotalTokens": 158039,
+    "creditCost": null,
+    "developmentCodexUsage": "not measured here; not included in Eva runtime counters",
+    "modelProfile": "model:conversation:gpt-6-astra"
+  },
+  "limitations": [
+    "One bounded canonical timestamp improvement proves this chain, not unrestricted self-development of every app/provider.",
+    "Initial ordinary chat admission failed twice; owner-service initial admission was operator-assisted. No manual candidate creation or step-by-step package transfer after prepare.",
+    "The first post-install probe had a runner-signature TypeError; preserved as failure evidence, fixed in host adapter, then same existing installation inspected without rebuild/rollback.",
+    "The first later-use task only read predecessor context and failed the existing completion-evidence rule; retained, not counted as successful. A fresh current-source-read task succeeded.",
+    "A later speech-executor core overlay retains the exact accepted parser; it is a different image, not falsely certified as the original release.",
+    "Natural multi-day family usefulness and final whole-project acceptance remain E5/F2; speech implementation untouched."
+  ],
+  "evidence": {
+    "candidatePackage": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0177f4968876034db1881e8e58042475ed7aebb0a59b5568c877452dece77e72/package.json",
+      "sha256": "eb1bfbccef67ac8e7251bcd0397de1c69e65b38ccbeaf74e31d9f3f809a21fc4"
+    },
+    "independentDecision": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0177f4968876034db1881e8e58042475ed7aebb0a59b5568c877452dece77e72/decision.json",
+      "sha256": "b023b3f9a6af6ca245d45f4221270d0fc2ae830b4e3d5c39786d835643b60784"
+    },
+    "sourceImport": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0177f4968876034db1881e8e58042475ed7aebb0a59b5568c877452dece77e72/source-import.json",
+      "sha256": "64dfeff4a990aee392d77a14cb26f2c8f07c7abeb4198e4b95ab8d175c0955dc"
+    },
+    "build": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0177f4968876034db1881e8e58042475ed7aebb0a59b5568c877452dece77e72/build.json",
+      "sha256": "e03630ef228c02aab480746514942a3a6fc1eecbb4556f1966ca832f6fc2f6f8"
+    },
+    "originalUpdateReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/l3-final-handoff-20261007/final-receipts/0177f4968876034db1881e8e58042475ed7aebb0a59b5568c877452dece77e72/update.private.json",
+      "sha256": "c0e30823857830b0dbc880e204d06b88e3dfb9fa71b39467c60a9bee8980d736"
+    },
+    "applicationInspection": {
+      "path": "/home/administrator/project/.eva2-artifacts/e45-20261017/application-inspected.private.json",
+      "sha256": "092c2eadefcf8b6f28ca6f0fefcb13ffc89c5e3dffd3674b60421cf7f1fb0009"
+    },
+    "sourcePreservation": {
+      "path": "/home/administrator/project/.eva2-artifacts/e45-20261017/installed-source-preservation.metadata.json",
+      "sha256": "09bbeaa59a40334316db969a368fb9a10ae75d66712035f6c4f1f669ccddf000"
+    },
+    "laterSuccessfulUse": {
+      "path": "/home/administrator/project/.eva2-artifacts/e45-20261017/later-success-status.private.json",
+      "sha256": "8cceefca779b8d584e69f84d96e7c519f458d84958a81d297d7b084b8605ef98"
+    },
+    "failedLaterContextRead": {
+      "path": "/home/administrator/project/.eva2-artifacts/e45-20261017/later-use-status.private.json",
+      "sha256": "99b65cb8188f9dc3d932f32859fb58ae9e5d39edb88a117d435df957af0b76db"
+    },
+    "historicalApplicationRecords": {
+      "path": "/home/administrator/project/.eva2-artifacts/e45-20261017/application-history-retained.json",
+      "sha256": "02d55bfff0f5d12b0807ce7fb0f00d803d9452f1868a26a2ddbd4e4630406b16"
+    },
+    "regressionTests": {
+      "path": "/home/administrator/project/.eva2-artifacts/e45-20261017/final-regression.metadata.json",
+      "sha256": "5540205ce4c42ee26300198309223c56179cdc9b2880e35d1b07ea0f7337f990"
+    },
+    "finalIndependentReview": {
+      "path": "/home/administrator/project/.eva2-artifacts/e45-deployment-20261017/final-bounded-go-review.json",
+      "sha256": "fc9660225104358b89db85e5334c0e28c2763ccc0050dab95690bc9038fb546b"
+    },
+    "runtimeModelProvenance": {
+      "path": "/home/administrator/project/.eva2-artifacts/e45-20261017/runtime-model-provenance.metadata.json",
+      "sha256": "0af302ecf021a1893ce30c369c402e6fdb6cd1e88c201dee9d13525bc500e149"
+    }
+  },
+  "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json"
+}

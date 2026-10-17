@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken
+Het volledige actuele geheel opleveren en laten beoordelen
 
-Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.
+Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.
 
-Klaar wanneer: Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering.
+Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.
 
 ## Afmaakvolgorde
 
@@ -27,7 +27,7 @@ Klaar wanneer: Eén echte, omkeerbare softwareverbetering binnen een vooraf toeg
 | Eigen initiatief | E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd | Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie; samenhangende bediening volgt in E2. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open. |
 
-54 van 70 geregistreerde kleine taken afgerond; 16 open. E2.5 is de nieuwe afronding; geen productpercentage of volledige gezinsacceptatie.
+64 van 72 geregistreerde kleine taken afgerond; 8 open. E4.5 is nieuw afgerond; geen productpercentage of volledige gezinsacceptatie.
 
 ## Alle geregistreerde kleine taken
 
@@ -107,12 +107,12 @@ Klaar wanneer: Eén echte, omkeerbare softwareverbetering binnen een vooraf toeg
 | E4.2 · Omslachtige code en modulegrenzen vereenvoudigen | ✓ Afgerond | De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite. |
 | E4.3 · Runtime-efficiëntie verbeteren zonder dommer gedrag | ✓ Afgerond | Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend. |
 | E4.4 · Modules en updates onderhoudbaar opleveren | ✓ Afgerond | Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten. |
-| E4.5 · Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken | ● Open | Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering. |
+| E4.5 · Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken | ✓ Afgerond | Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering. |
 | E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ● Open | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
 
 ## Van jou
 
-E4.4 draait. Zelfstandige softwareverbetering E4.5 volgt; spraak blijft bij Codex in WSL. Eigen WhatsApp-nummer kan later.
+E4.5 draait en is later gebruikt. Volgend is gezamenlijke E5.1-oplevering. Spraak blijft bij Codex in WSL; eigen WhatsApp-nummer kan later.
 
 ## Historie
 

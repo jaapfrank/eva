@@ -11,7 +11,8 @@ from eva.operations.image_update import image_update_services
 class ComponentReleasePublisher:
     def __init__(self, config, *, run=subprocess.run):
         if (not isinstance(config, dict)
-                or set(config) != {"repository", "integration_commit", "installed", "project", "reviewer"}
+                or not {"repository", "integration_commit", "installed", "project", "reviewer"} <= set(config)
+                or set(config) - {"repository", "integration_commit", "installed", "project", "reviewer", "follow_current_images", "behavior_verifiers"}
                 or not re.fullmatch(r"[0-9a-f]{40}", config["integration_commit"])
                 or not isinstance(config["reviewer"], str) or not config["reviewer"].strip()):
             raise ValueError("invalid trusted release publisher configuration")
@@ -20,6 +21,17 @@ class ComponentReleasePublisher:
         if not self.repository.is_absolute() or self.repository.resolve() != self.repository:
             raise ValueError("release repository must be an exact host path")
         _artifact(config["installed"])
+        if type(config.get("follow_current_images", False)) is not bool:
+            raise ValueError("publisher current-image policy differs")
+        probes = config.get("behavior_verifiers", {})
+        if not isinstance(probes, dict):
+            raise ValueError("publisher behavior bindings differ")
+        from eva.operations.reviewed_component_application import _verified_behavior_source
+        from eva.operations.component_release_import import ALLOWED_PATHS
+        for path, probe in probes.items():
+            if path not in ALLOWED_PATHS:
+                raise ValueError("publisher behavior source is outside the existing class")
+            _verified_behavior_source(probe)
 
     def _command(self, argv, directory):
         # No candidate commands run on the host. All argv come from this fixed code.
@@ -31,6 +43,45 @@ class ComponentReleasePublisher:
             log.chmod(0o600)
             raise RuntimeError("trusted release publication failed")
         return result.stdout.strip()
+
+    def _current_installation(self, installed, package, directory):
+        """Follow only image changes; never adopt new settings, storage or source."""
+        if not self.config.get("follow_current_images", False):
+            return installed
+        from eva.operations.runtime_image_update import require_current_storage
+        selected = json.loads(json.dumps(installed))
+        observed = {}
+        prefix = ["docker", "compose", "--project-name", self.config["project"],
+                  "--file", self.config["installed"]["path"], "--profile", "*"]
+        for service in ("core", "delegated-work-worker"):
+            ids = self._command([*prefix, "ps", "--all", "-q", service], directory).split()
+            if len(ids) != 1:
+                raise ValueError("publisher requires one current service")
+            current = json.loads(self._command(["docker", "inspect", ids[0]], directory))[0]
+            labels = current["Config"].get("Labels", {})
+            if (labels.get("com.docker.compose.project") != self.config["project"]
+                    or labels.get("com.docker.compose.service") != service
+                    or not re.fullmatch(r"sha256:[0-9a-f]{64}", current["Image"])):
+                raise ValueError("publisher current installation differs")
+            require_current_storage(installed, service, current)
+            selected["services"][service]["image"] = current["Image"]
+            observed[service] = current
+            destination = "/opt/eva/src/eva/" + package["path"]
+            actual = self._command(["docker", "run", "--rm", "--network", "none", "--read-only",
+                "--entrypoint", "python", current["Image"], "-I", "-c",
+                "import hashlib,pathlib,sys;print(hashlib.sha256(pathlib.Path(sys.argv[1]).read_bytes()).hexdigest())",
+                destination], directory)
+            if actual != package["baseline_sha256"]:
+                raise ValueError("publisher current source baseline differs")
+        snapshot = directory / "current-installed-compose.private.json"
+        _save(snapshot, selected, initial=True)
+        for service, current in observed.items():
+            command = ["docker", "compose", "--project-name", self.config["project"],
+                       "--file", str(snapshot), "--profile", "*", "config", "--hash", service]
+            hashed = self._command(command, directory).split()
+            if (hashed != [service, current["Config"]["Labels"].get("com.docker.compose.config-hash")]):
+                raise ValueError("publisher current configuration differs beyond images")
+        return selected
 
     def __call__(self, package, assessment, directory):
         if (assessment["decision"] != "accept"
@@ -74,6 +125,7 @@ class ComponentReleasePublisher:
             "Apply independently measured component improvement", "--", relative], directory)
         commit = self._command(["git", "-C", str(checkout), "rev-parse", "HEAD"], directory)
         _, installed = _artifact(self.config["installed"])
+        installed = self._current_installation(installed, package, directory)
         before_images = {name: installed["services"][name]["image"]
                          for name in ("core", "delegated-work-worker")}
         images = {}
@@ -110,6 +162,9 @@ class ComponentReleasePublisher:
         build = {"installed": False, "before": before_images, "images": images,
                  "sourceHashes": {package["path"]: package["candidate_sha256"]},
                  "source_commit": commit, "source_branch": branch}
+        probe = self.config.get("behavior_verifiers", {}).get(package["path"])
+        if probe is not None:
+            build["behavior_verifier"] = probe
         _save(directory / "build.json", build, initial=True)
         files = {"package": "package.json", "review": "review.json", "source_import": "source-import.json",
                  "build": "build.json", "installed": "installed-compose.private.json",
@@ -118,5 +173,7 @@ class ComponentReleasePublisher:
                         "sha256": digest((directory / filename).read_bytes())}
                    for key, filename in files.items()}
         release.update(project=self.config["project"], update_receipt=str(directory / "update.private.json"))
+        if probe is not None:
+            release["behavior_verifier"] = probe
         _verify_release(review_id, release)
         return release
