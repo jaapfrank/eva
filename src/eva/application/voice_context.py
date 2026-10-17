@@ -24,10 +24,6 @@ STOP_DESCRIPTOR = ConversationToolDescriptor(
                          "de gewone tools voor het aangepaste doel."),
 )
 
-class VoicePreparationUnavailable(RuntimeError):
-    """An optional preparation reaction produced no publishable speech."""
-
-
 SPEAK_AND_CONTINUE = "speak_and_continue"
 SPEAK_DESCRIPTOR = ConversationToolDescriptor(
     name=SPEAK_AND_CONTINUE,

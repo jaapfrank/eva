@@ -299,6 +299,53 @@ async def test_user_interruption_cancels_old_offer_without_poisoning_next_offer(
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize('rpc_acknowledged', [False, True])
+@pytest.mark.parametrize('interruption', ['input', 'stop', 'revoke'])
+async def test_interruption_before_render_turn_identity_fences_next_offer(
+        rpc_acknowledged, interruption):
+    sent=asyncio.Queue();rpc_pending=asyncio.Event()
+    class Voice:
+        thread='test'
+        async def say(self,text):
+            await sent.put(text)
+            if text=='Old' and not rpc_acknowledged:await rpc_pending.wait()
+        async def request(self,*args):pass
+        async def close(self):pass
+    renderer=CodexMediaSession({},None,lambda:None,render_only=True)
+    renderer.voice=Voice();renderer.started.set()
+    listener=CodexMediaSession({},None,lambda:None);listener.renderer=renderer
+    old=renderer.say('Old')
+    assert await asyncio.wait_for(sent.get(),1)=='Old'
+    if interruption=='input':
+        listener.input_event({'type':'turn.created','turn':{'id':'user-next','role':'user'}})
+    elif interruption=='stop':listener.interrupt()
+    else:old.interrupt()
+    await asyncio.gather(old.task,return_exceptions=True)
+    new=renderer.say('New')
+    for _ in range(5):await asyncio.sleep(0)
+    assert sent.empty() and renderer.output_suppressed
+    # An unrelated terminal event cannot release a render whose identity has
+    # not arrived. The delayed old turn must remain muted until its own end.
+    provider_turn(renderer,'turn.done','unrelated')
+    provider_turn(renderer,'turn.created','old-delayed')
+    for _ in range(5):await asyncio.sleep(0)
+    assert sent.empty() and renderer.output_suppressed
+    assert renderer._speech_turn is None and not new.done()
+    provider_turn(renderer,'turn.done','old-delayed')
+    assert await asyncio.wait_for(sent.get(),1)=='New'
+    # Keep the existing early-RTP route for this freshly admitted offer.
+    assert not renderer.output_suppressed
+    provider_turn(renderer,'turn.created','new')
+    assert renderer._speech_turn=='new'
+    provider_turn(renderer,'turn.done','old-delayed')
+    assert not new.done()
+    provider_turn(renderer,'turn.done','new')
+    await asyncio.wait_for(new.task,1)
+    assert not renderer.closed
+    await listener.aclose()
+
+
+@pytest.mark.asyncio
 async def test_native_playout_requires_new_audio_and_its_device_ack():
     acknowledged=asyncio.Event()
     class Sink:
@@ -342,11 +389,61 @@ async def test_speech_handle_finishes_only_after_current_native_playout_confirma
     handle=session.say('Confirmed only after audio')
     await sent.wait()
     provider_turn(session,'turn.created','answer')
-    provider_turn(session,'turn.done','answer')
+    provider_turn(session,'turn.done','answer',text='Confirmed only after audio')
     await asyncio.sleep(0)
     assert not handle.done() and handle.interrupted
     ack.set();await asyncio.wait_for(handle.task,1)
     assert handle.done() and not handle.interrupted
+    await session.aclose()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('transcript,matched,state', [
+    ('éva het is NIET verstuurd!',True,'present'),
+    ('Éva, het is verstuurd.',False,'present'),
+    ('Éva, het is niet verstuurd. Ik wacht nog even.',False,'present'),
+    ('',False,'missing'),
+    (None,False,'missing'),
+    ('x'*16001,False,'over_limit'),
+])
+async def test_render_confirmation_requires_own_matching_words_and_device_ack(
+        transcript, matched, state):
+    sent=asyncio.Event();ack=asyncio.Event();diagnostics=[]
+    class Voice:
+        async def say(self,text):sent.set()
+        async def close(self):pass
+    class Source:
+        def playback_marker(self):return (3,4)
+        async def confirm_playout(self,marker):
+            assert marker==(3,4)
+            await ack.wait();return True
+        def clear_queue(self):pass
+        async def aclose(self):pass
+    session=CodexMediaSession({},None,lambda:None,render_only=True)
+    session.started.set();session.voice=Voice();session.source=Source()
+    session.diagnostic=lambda stage,**fields:diagnostics.append((stage,fields))
+    approved='Éva, het is niet verstuurd.'
+    handle=session.say(approved);await sent.wait()
+    provider_turn(session,'turn.created','current')
+    # Another turn's perfectly matching transcript cannot attest this offer.
+    provider_turn(session,'turn.done','older',text=approved)
+    assert not session._speech_waiter.done()
+    assert not any(stage=='render_fidelity' for stage,_ in diagnostics)
+    provider_turn(session,'turn.done','current',text=transcript)
+    for _ in range(3):await asyncio.sleep(0)
+    assert not handle.done() and handle.interrupted
+    ack.set();await asyncio.wait_for(handle.task,1)
+    assert handle.interrupted is not matched
+    assert session._speech_text is None
+    checks=[fields for stage,fields in diagnostics if stage=='render_fidelity']
+    assert checks==[{'matched':matched,'transcript_state':state,
+                    'expected_words':5,'actual_words':None if state!='present' else len(transcript.split())}]
+    assert approved not in repr(diagnostics)
+    if isinstance(transcript,str) and transcript:assert transcript not in repr(diagnostics)
+    # A stale duplicate with different wording cannot revise settled evidence.
+    provider_turn(session,'turn.done','current',text='Different stale text')
+    assert len([1 for stage,_ in diagnostics if stage=='render_fidelity'])==1
+    assert handle.interrupted is not matched
     await session.aclose()
 
 
@@ -588,7 +685,9 @@ async def test_long_speech_uses_sentence_boundaries_and_each_completion():
     class Voice:
         async def say(self,text):
             sent.append(text)
-            asyncio.get_running_loop().call_soon(session._speech_waiter.set_result,None)
+            identity='part-'+str(len(sent))
+            provider_turn(session,'turn.created',identity)
+            asyncio.get_running_loop().call_soon(provider_turn,session,'turn.done',identity)
         async def close(self):pass
     session.voice=Voice()
     text='Een complete zin met haar oorspronkelijke spaties.  '*70
@@ -598,3 +697,44 @@ async def test_long_speech_uses_sentence_boundaries_and_each_completion():
         assert len(sent)>1 and ''.join(sent)==text
         assert all(part.rstrip().endswith('.') for part in sent)
     finally:await session.aclose()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('early_terminal', [False, True])
+async def test_retired_render_without_matching_terminal_closes_before_next_offer(
+        monkeypatch, early_terminal):
+    sent = asyncio.Queue()
+    closed = asyncio.Event()
+    class Voice:
+        thread = 'test'
+        async def say(self, text): await sent.put(text)
+        async def request(self, *args): pass
+        async def close(self): closed.set()
+    renderer = CodexMediaSession({}, None, lambda: None, render_only=True)
+    renderer.voice = Voice()
+    renderer.started.set()
+    old = renderer.say('Old')
+    assert await asyncio.wait_for(sent.get(), 1) == 'Old'
+    old.interrupt()
+    await asyncio.gather(old.task, return_exceptions=True)
+    if early_terminal:
+        # A terminal whose created identity was never bound cannot release the
+        # pending admission; its subsequently delayed created is stale as well.
+        provider_turn(renderer, 'turn.done', 'old-delayed')
+        provider_turn(renderer, 'turn.created', 'old-delayed')
+    assert not renderer._assistant_idle.is_set()
+    assert renderer.output_suppressed
+    original_wait_for = asyncio.wait_for
+    async def bounded_wait_for(awaitable, timeout):
+        frame = getattr(awaitable, 'cr_frame', None)
+        if timeout == 30 and frame is not None and frame.f_locals.get('self') is renderer._assistant_idle:
+            timeout = .01  # Exercise the real timeout branch without a 30s test.
+        return await original_wait_for(awaitable, timeout)
+    monkeypatch.setattr(asyncio, 'wait_for', bounded_wait_for)
+    new = renderer.say('New')
+    with pytest.raises(TimeoutError):
+        await original_wait_for(new.task, 1)
+    await original_wait_for(closed.wait(), 1)
+    assert renderer.closed and renderer.output_suppressed
+    assert sent.empty()
+    await renderer.aclose()

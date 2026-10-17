@@ -183,6 +183,9 @@ class CodexMediaSession:
         self._speech_waiter=None
         self._speaking_handle=None
         self._speech_turn=None
+        self._speech_text=None
+        self._awaiting_speech_turn=False
+        self._pending_speech_retired=False
         self._assistant_turns=set()
         self._ended_assistant_turns={}
         self._assistant_idle=asyncio.Event();self._assistant_idle.set()
@@ -273,6 +276,7 @@ class CodexMediaSession:
         # appendSpeech during that interval can extend the old response instead
         # of creating a fresh turn, even after a stop instruction was accepted.
         self._ended_assistant_turns.update(dict.fromkeys(self._assistant_turns,True))
+        if self._awaiting_speech_turn:self._pending_speech_retired=True
         while len(self._ended_assistant_turns)>128:
             self._ended_assistant_turns.pop(next(iter(self._ended_assistant_turns)))
 
@@ -282,7 +286,24 @@ class CodexMediaSession:
             if len(self._ended_assistant_turns)>128:
                 self._ended_assistant_turns.pop(next(iter(self._ended_assistant_turns)))
             self._assistant_turns.discard(identity)
-        if not self._assistant_turns:self._assistant_idle.set()
+        if not self._assistant_turns and not self._awaiting_speech_turn:
+            self._assistant_idle.set()
+
+    def speech_fidelity(self, transcript):
+        """Check the current render's words without retaining provider content.
+
+        This is confirmation provenance, not an acoustic verifier or a buffer:
+        a mismatch cannot undo audio already played by the streaming transport.
+        """
+        expected=re.findall(r'\w+', (self._speech_text or '').casefold())
+        state=('missing' if not isinstance(transcript,str)
+               else 'over_limit' if len(transcript)>16000
+               else 'present' if transcript.strip() else 'missing')
+        actual=re.findall(r'\w+',transcript.casefold()) if state=='present' else None
+        matched=bool(expected) and actual==expected
+        self.diagnostic('render_fidelity',matched=matched,transcript_state=state,
+            expected_words=len(expected),actual_words=None if actual is None else len(actual))
+        return matched
 
     def provider_message(self, raw):
         try:
@@ -334,6 +355,16 @@ class CodexMediaSession:
                     if identity in self._ended_assistant_turns:return
                     if isinstance(identity,str) and identity:
                         self._assistant_turns.add(identity);self._assistant_idle.clear()
+                        if self._awaiting_speech_turn:
+                            self._awaiting_speech_turn=False
+                            if self._pending_speech_retired:
+                                # A local interruption can beat turn.created.
+                                # This is still the old admitted render, never
+                                # the next queued offer's response identity.
+                                self._pending_speech_retired=False
+                                self._ended_assistant_turns[identity]=True
+                                self.diagnostic('retired_output_turn_started')
+                                return
                         self._user_assistant_turn=identity;self._user_assistant_done=False
                         if self._farewell_done is not None and self._farewell_turn is None:
                             self._farewell_turn=identity
@@ -367,7 +398,7 @@ class CodexMediaSession:
                         self._farewell_done.set()
                     if (self._speech_waiter is not None and not self._speech_waiter.done()
                             and identity is not None and identity==self._speech_turn):
-                        self._speech_waiter.set_result(None)
+                        self._speech_waiter.set_result(self.speech_fidelity(text))
                     self.output_turn_done.set()
                     self.emit('agent_state_changed',new_state='listening')
         except (ValueError,TypeError,AttributeError):self.task(self.aclose())
@@ -757,22 +788,30 @@ class CodexMediaSession:
                     marker=(self.source.playback_marker()
                         if hasattr(self.source,'playback_marker') else None)
                     self._speech_turn=None
+                    self._speech_text=speech
                     self._speech_waiter=asyncio.get_running_loop().create_future()
                     try:
                         self._speaking_handle=handle
+                        # RPC admission precedes turn.created and its RTP. An
+                        # interruption in that gap must still fence the next
+                        # append until the old provider turn actually ends.
+                        self._awaiting_speech_turn=True
+                        self._pending_speech_retired=False
+                        self._assistant_idle.clear()
                         # Renderer receives no user audio; open before RPC so
                         # early RTP cannot clip the first words.
                         self.output_suppressed=False
                         await self.voice.say(speech)
-                        await asyncio.wait_for(self._speech_waiter,
+                        faithful=await asyncio.wait_for(self._speech_waiter,
                             max(30,min(180,len(speech)/8+10)))
                         played=False
                         if marker is not None:
                             try:played=await asyncio.wait_for(self.source.confirm_playout(marker),10)
                             except TimeoutError:pass
-                        confirmed=confirmed and played
+                        confirmed=confirmed and faithful is True and played
                     finally:
                         self._speech_waiter=None;self._speech_turn=None
+                        self._speech_text=None
                         self._speaking_handle=None
             # One request owns its response identity. A stale completion cannot
             # advance a new part or an independently queued saved result.

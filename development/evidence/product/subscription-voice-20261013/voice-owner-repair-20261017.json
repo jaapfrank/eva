@@ -1,0 +1,496 @@
+{
+  "contract": "EvaVoiceOwnerRepair/v1",
+  "recordedAt": "2026-10-17T12:36:05.001690+00:00",
+  "status": "installed_targeted_checks_passed_latency_and_owner_acceptance_open",
+  "ownerReport": "First conversation stopped; microphone off/on needed. Social questions were slow and spoken answers did not fit.",
+  "baselineFindings": {
+    "outage": {
+      "firstVoiceSessionClosedUTC": "2026-10-17T12:14:54.975Z",
+      "coreReplacementStartedUTC": "2026-10-17T12:15:04.566Z",
+      "connectionFailuresThroughUTC": "2026-10-17T12:15:10.804Z",
+      "reason": "Core replacement overlapped the live conversation. First failed five-second lease refresh closed capture and output; endpoint subsequently retried connections. No stuck input guard or rejected audio ACK evidenced."
+    },
+    "core": {
+      "observedSocialTurns": 2,
+      "modelCallsPerTurn": [
+        2,
+        2
+      ],
+      "initialRecallMs": [
+        3247,
+        3881
+      ],
+      "preparationMs": [
+        5414,
+        3916
+      ],
+      "firstPreparationDelayAfterMemoryReadyMs": 2167,
+      "savedFinalAnswersRelevant": true,
+      "actualSpokenOwnerTranscriptAvailable": false
+    },
+    "renderer": {
+      "isolatedSyntheticBaseline": {
+        "ready_ms": 8649,
+        "turns": [
+          {
+            "word_sequence_equal": true,
+            "signal_samples": 128640,
+            "first_audio_ms": 2132,
+            "elapsed_ms": 6916,
+            "playback_unconfirmed": true
+          },
+          {
+            "word_sequence_equal": false,
+            "signal_samples": 124800,
+            "first_audio_ms": 770,
+            "elapsed_ms": 5749,
+            "playback_unconfirmed": true
+          },
+          {
+            "word_sequence_equal": true,
+            "signal_samples": 71040,
+            "first_audio_ms": 1019,
+            "elapsed_ms": 4597,
+            "playback_unconfirmed": true
+          }
+        ],
+        "physical_audio": false,
+        "microphone_used": false,
+        "device_ack_simulated": false,
+        "provider_sessions": 1,
+        "speech_requests": 3
+      },
+      "counterexample": {
+        "approvedText": "Even denken.",
+        "providerTranscript": "Even denken hoor, het hangt er een beetje van af."
+      },
+      "pendingTurnRace": {
+        "network": "none",
+        "model_calls": 0,
+        "physical_audio": false,
+        "baseline_requests_before_old_terminal": 2,
+        "baseline_new_offer_bound_to_old_turn": true,
+        "baseline_old_turn_reopened_audio": true
+      }
+    }
+  },
+  "changes": [
+    "Remove separate preparation-model phase and its obsolete adapter API. Preserve full scoped memory, durable corrections/style, ordinary contact model and normal SPEAK tool for genuine continuation work.",
+    "Check cancellation after ordinary model accounting and before dispatching a tool or speech update.",
+    "Bind every rendered script with a per-offer literal developer instruction followed by the existing appendSpeech request; preserve same voice/provider.",
+    "Fence an admitted but not yet identified render before RPC; canceled late-created output stays muted until its own terminal event, without advancing the next offer.",
+    "Confirm offered speech only when its matching provider transcript has the same normalized word sequence and physical delivery ACK succeeds. Emit only word counts/state/bool, never transcript contents.",
+    "Check for zero active live-voice work leases immediately before each service replacement; refuse this deployment while a live voice lease exists."
+  ],
+  "verification": {
+    "coreChecks": {
+      "passed": 212,
+      "initialRunPassed": 209,
+      "initialRunFailed": 3,
+      "failure": "New test fixtures used empty identity principles, rejected before exercising the route. Fixed to valid existing identity contract; only three failed tests repeated and passed."
+    },
+    "mediaChecks": {
+      "passed": 96,
+      "network": "none",
+      "suites": [
+        "test_codex_media.py",
+        "test_single_core_voice.py"
+      ]
+    },
+    "transportChecks": {
+      "passed": 8,
+      "network": "none",
+      "suites": [
+        "test_codex_literal_speech.py",
+        "test_codex_session.py"
+      ]
+    },
+    "distinctPassedInTheseThreeGroups": 316,
+    "additionalCatalogChecks": {
+      "passed": 16,
+      "overlapWithCoreGroup": true,
+      "notAddedToDistinctTotal": true
+    },
+    "rejectedVariant": "Developer appendText alone produced no response and timed out; never installed.",
+    "literalPerOfferProbe": {
+      "ready_ms": 8783,
+      "turns": [
+        {
+          "word_sequence_equal": true,
+          "signal_samples": 119040,
+          "first_audio_ms": 767,
+          "elapsed_ms": 5093,
+          "playback_unconfirmed": true
+        },
+        {
+          "word_sequence_equal": true,
+          "signal_samples": 40320,
+          "first_audio_ms": 1118,
+          "elapsed_ms": 4020,
+          "playback_unconfirmed": true
+        },
+        {
+          "word_sequence_equal": true,
+          "signal_samples": 67200,
+          "first_audio_ms": 936,
+          "elapsed_ms": 4599,
+          "playback_unconfirmed": true
+        },
+        {
+          "word_sequence_equal": true,
+          "signal_samples": 77760,
+          "first_audio_ms": 869,
+          "elapsed_ms": 4442,
+          "playback_unconfirmed": true
+        }
+      ],
+      "physical_audio": false,
+      "microphone_used": false,
+      "device_ack_simulated": false,
+      "provider_sessions": 1,
+      "speech_requests": 4
+    },
+    "combinedProbe": {
+      "ready_ms": 8996,
+      "turns": [
+        {
+          "word_sequence_equal": true,
+          "signal_samples": 28800,
+          "first_audio_ms": 2425,
+          "elapsed_ms": 5216,
+          "playback_unconfirmed": true
+        },
+        {
+          "word_sequence_equal": true,
+          "signal_samples": 90240,
+          "first_audio_ms": 996,
+          "elapsed_ms": 5204,
+          "playback_unconfirmed": true
+        },
+        {
+          "word_sequence_equal": true,
+          "signal_samples": 48960,
+          "first_audio_ms": 843,
+          "elapsed_ms": 4009,
+          "playback_unconfirmed": true
+        },
+        {
+          "word_sequence_equal": true,
+          "signal_samples": 71040,
+          "first_audio_ms": 966,
+          "elapsed_ms": 4397,
+          "playback_unconfirmed": true
+        },
+        {
+          "after_interruption": true,
+          "word_sequence_equal": true,
+          "signal_samples": 71040,
+          "first_audio_ms": 8038,
+          "elapsed_ms": 11592,
+          "playback_unconfirmed": true
+        }
+      ],
+      "physical_audio": false,
+      "microphone_used": false,
+      "device_ack_simulated": false,
+      "provider_sessions": 1,
+      "speech_requests": 6
+    },
+    "coreProbe": {
+      "initialRecallMs": 2977,
+      "modelElapsedMs": 3438,
+      "answerReadyMs": 6415,
+      "calls": 1,
+      "toolCalls": 0,
+      "answerWords": 13,
+      "scope": "Unpersisted synthetic social question through actual scoped memory and contact model; actions disabled, no physical device, no durable turn or retention."
+    },
+    "independentReview": "Removal/cancellation, pending render fence, literal request error/cancellation boundaries, fidelity provenance and actual installed readiness reviewed within coordinator plus two workers.",
+    "focusedCommitChecks": {
+      "passed": 13,
+      "network": "none",
+      "scope": "HEAD source tree plus only the three focused application/model changes and their own tests; unrelated working changes excluded. Overlaps earlier tests, not added to distinct total."
+    }
+  },
+  "installation": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "slug": "core",
+      "files": [
+        "application/conversation.py",
+        "application/voice_context.py",
+        "adapters/model/pydantic_conversation.py"
+      ],
+      "prefix": "/opt/eva/src/eva/",
+      "project": "eva2-managed-b-slot3",
+      "service": "core",
+      "base": "sha256:5f76724821f45908ef48b81e9a7fd37119eb4605c339993b070e3f5a341a7d0f",
+      "candidate": "sha256:a55182970f9a9b3d0fee4cc7927fc8b93d303e05704c3121a0fcd7932f73eba6",
+      "hashes": {
+        "application/conversation.py": "5cf0caf5d34820251f7c469c356d19c941650a704ccedfe0901cedd64e7841e5",
+        "application/voice_context.py": "2137b921cbb299be21d6dbd3b850d388ebf7100d55b3fe7943c7201be6852469",
+        "adapters/model/pydantic_conversation.py": "eb58de167f416d58830767e90796e9b130c15c986cb80761edf26e593808dd1e"
+      },
+      "original_hashes": {
+        "application/conversation.py": "f209ff09b5cc6b312dca0eacf1ca9004bfa7e837fa610ae9061137bbaf4bc260",
+        "application/voice_context.py": "44c5d436a72afb512bfe45310f6ad1a21cbd74661fb333bde04d04595d43a888",
+        "adapters/model/pydantic_conversation.py": "1f209a0e8bb7606d644f0fa77385a21fbe1081d1ac40a12413465c072349fea7"
+      },
+      "compose_files": "/var/lib/eva2/e44-maintenance-20261017/candidate.private.json",
+      "pre_install_voice_guard": {
+        "active_voice_work_leases": 0
+      },
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "slug": "worker",
+      "files": [
+        "application/conversation.py",
+        "application/voice_context.py",
+        "adapters/model/pydantic_conversation.py"
+      ],
+      "prefix": "/opt/eva/src/eva/",
+      "project": "eva2-managed-b-slot3",
+      "service": "delegated-work-worker",
+      "base": "sha256:18ace54d71f92c321ad6190a4158c7e779d3e5c3bbadbb37151dd52ee9c6e54e",
+      "candidate": "sha256:6c7c12bf5b885e5587b81f6de4146c9fddfb290954a4898790bca94aa4945afd",
+      "hashes": {
+        "application/conversation.py": "5cf0caf5d34820251f7c469c356d19c941650a704ccedfe0901cedd64e7841e5",
+        "application/voice_context.py": "2137b921cbb299be21d6dbd3b850d388ebf7100d55b3fe7943c7201be6852469",
+        "adapters/model/pydantic_conversation.py": "eb58de167f416d58830767e90796e9b130c15c986cb80761edf26e593808dd1e"
+      },
+      "original_hashes": {
+        "application/conversation.py": "f209ff09b5cc6b312dca0eacf1ca9004bfa7e837fa610ae9061137bbaf4bc260",
+        "application/voice_context.py": "44c5d436a72afb512bfe45310f6ad1a21cbd74661fb333bde04d04595d43a888",
+        "adapters/model/pydantic_conversation.py": "1f209a0e8bb7606d644f0fa77385a21fbe1081d1ac40a12413465c072349fea7"
+      },
+      "compose_files": "/var/lib/eva2/e44-maintenance-20261017/candidate.private.json",
+      "pre_install_voice_guard": {
+        "active_voice_work_leases": 0
+      },
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true
+    },
+    {
+      "name": "eva2-household-speaker-1",
+      "slug": "speaker",
+      "files": [
+        "voice_service/codex_media.py",
+        "voice_service/codex_session.py"
+      ],
+      "prefix": "/app/eva/",
+      "project": "eva2-household-speaker",
+      "service": "speaker",
+      "base": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+      "candidate": "sha256:b07e2dccf49d3d51070e36eee0c951567fa48da477f4d794b51c315b89ba81e4",
+      "hashes": {
+        "voice_service/codex_media.py": "3543bea6d5683ea2057d24f9acec7c15afbda14d9b9e17b9332677ef2742411d",
+        "voice_service/codex_session.py": "909a118c6a5915ae51532845f228689de56d6c9ce9762a8a0da41baa2225f3e2"
+      },
+      "original_hashes": {
+        "voice_service/codex_media.py": "e135ad901ed169cbb0e272271708c6712921d4a041cea15a783208052122837d",
+        "voice_service/codex_session.py": "180cdd56e7b0d7fc0f1a3b2d5ed745717a6b3430f54c1a01950547c22b842c48"
+      },
+      "compose_files": "/var/lib/eva2/voice-session/regression-fallback-20261017/speaker.candidate.json",
+      "pre_install_voice_guard": {
+        "active_voice_work_leases": 0
+      },
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true
+    },
+    {
+      "name": "eva2-owner-voice-media-1",
+      "slug": "media",
+      "files": [
+        "voice_service/codex_media.py",
+        "voice_service/codex_session.py"
+      ],
+      "prefix": "/app/eva/",
+      "project": "eva2-owner-voice",
+      "service": "media",
+      "base": "sha256:70f78914727e57e6eb98bce8aa2f7a43e5a18bee1eeff085a2f7a3f31300d088",
+      "candidate": "sha256:6e37427debd93bb8921a2405b1fce9fa962b5c7c3ee5b711c2fd51dc1a2333cc",
+      "hashes": {
+        "voice_service/codex_media.py": "3543bea6d5683ea2057d24f9acec7c15afbda14d9b9e17b9332677ef2742411d",
+        "voice_service/codex_session.py": "909a118c6a5915ae51532845f228689de56d6c9ce9762a8a0da41baa2225f3e2"
+      },
+      "original_hashes": {
+        "voice_service/codex_media.py": "e135ad901ed169cbb0e272271708c6712921d4a041cea15a783208052122837d",
+        "voice_service/codex_session.py": "180cdd56e7b0d7fc0f1a3b2d5ed745717a6b3430f54c1a01950547c22b842c48"
+      },
+      "compose_files": "/var/lib/eva2/voice-session/regression-fallback-20261017/media.candidate.json",
+      "pre_install_voice_guard": {
+        "active_voice_work_leases": 0
+      },
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true
+    }
+  ],
+  "readiness": {
+    "recorded_at": "2026-10-17T12:34:34.331861+00:00",
+    "services": {
+      "core": {
+        "image": "sha256:a55182970f9a9b3d0fee4cc7927fc8b93d303e05704c3121a0fcd7932f73eba6",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 0,
+        "imports": {
+          "application/conversation.py": {
+            "import_path": "/opt/eva/src/eva/application/conversation.py",
+            "sha256": "5cf0caf5d34820251f7c469c356d19c941650a704ccedfe0901cedd64e7841e5"
+          },
+          "application/voice_context.py": {
+            "import_path": "/opt/eva/src/eva/application/voice_context.py",
+            "sha256": "2137b921cbb299be21d6dbd3b850d388ebf7100d55b3fe7943c7201be6852469"
+          },
+          "adapters/model/pydantic_conversation.py": {
+            "import_path": "/opt/eva/src/eva/adapters/model/pydantic_conversation.py",
+            "sha256": "eb58de167f416d58830767e90796e9b130c15c986cb80761edf26e593808dd1e"
+          }
+        },
+        "matches_manifest": true
+      },
+      "worker": {
+        "image": "sha256:6c7c12bf5b885e5587b81f6de4146c9fddfb290954a4898790bca94aa4945afd",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 0,
+        "imports": {
+          "application/conversation.py": {
+            "import_path": "/opt/eva/src/eva/application/conversation.py",
+            "sha256": "5cf0caf5d34820251f7c469c356d19c941650a704ccedfe0901cedd64e7841e5"
+          },
+          "application/voice_context.py": {
+            "import_path": "/opt/eva/src/eva/application/voice_context.py",
+            "sha256": "2137b921cbb299be21d6dbd3b850d388ebf7100d55b3fe7943c7201be6852469"
+          },
+          "adapters/model/pydantic_conversation.py": {
+            "import_path": "/opt/eva/src/eva/adapters/model/pydantic_conversation.py",
+            "sha256": "eb58de167f416d58830767e90796e9b130c15c986cb80761edf26e593808dd1e"
+          }
+        },
+        "matches_manifest": true
+      },
+      "speaker": {
+        "image": "sha256:b07e2dccf49d3d51070e36eee0c951567fa48da477f4d794b51c315b89ba81e4",
+        "running": true,
+        "health": "not_configured",
+        "restart_count": 0,
+        "imports": {
+          "voice_service/codex_media.py": {
+            "import_path": "/app/eva/voice_service/codex_media.py",
+            "sha256": "3543bea6d5683ea2057d24f9acec7c15afbda14d9b9e17b9332677ef2742411d"
+          },
+          "voice_service/codex_session.py": {
+            "import_path": "/app/eva/voice_service/codex_session.py",
+            "sha256": "909a118c6a5915ae51532845f228689de56d6c9ce9762a8a0da41baa2225f3e2"
+          }
+        },
+        "matches_manifest": true
+      },
+      "media": {
+        "image": "sha256:6e37427debd93bb8921a2405b1fce9fa962b5c7c3ee5b711c2fd51dc1a2333cc",
+        "running": true,
+        "health": "not_configured",
+        "restart_count": 0,
+        "imports": {
+          "voice_service/codex_media.py": {
+            "import_path": "/app/eva/voice_service/codex_media.py",
+            "sha256": "3543bea6d5683ea2057d24f9acec7c15afbda14d9b9e17b9332677ef2742411d"
+          },
+          "voice_service/codex_session.py": {
+            "import_path": "/app/eva/voice_service/codex_session.py",
+            "sha256": "909a118c6a5915ae51532845f228689de56d6c9ce9762a8a0da41baa2225f3e2"
+          }
+        },
+        "matches_manifest": true
+      }
+    },
+    "scope": {
+      "read_only": true,
+      "provider_calls": 0,
+      "physical_audio": false,
+      "microphone_started": false
+    },
+    "speakers": {
+      "configured_devices": 2,
+      "bindings_ready": [
+        true,
+        true
+      ],
+      "listener_sockets": 1,
+      "established_transport_sockets": 2
+    },
+    "browser_readiness": {
+      "http_status": 200,
+      "ready": true
+    }
+  },
+  "usage": {
+    "developmentTextModelRequests": 1,
+    "developmentInputTokens": 3372,
+    "developmentOutputTokens": 22,
+    "developmentKnownTextTokens": 3394,
+    "developmentVoiceProviderSessions": 4,
+    "developmentVoiceSayAttempts": 14,
+    "developmentVoiceSpeechAppends": 13,
+    "developmentVoiceTokens": null,
+    "developmentVoiceCredits": null,
+    "developmentSpeechSessionsExplanation": "baseline3 offers; rejected instruction-only1 attempt; per-offer instruction4 offers; combined6 offers including one interrupted old render.",
+    "observedOwnerRuntimeModelRequests": 4,
+    "observedOwnerRuntimeUsage": [
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 2519,
+        "output_tokens": 28,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 6337,
+        "output_tokens": 19,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 2599,
+        "output_tokens": 24,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 6465,
+        "output_tokens": 15,
+        "model_attempts": 1
+      }
+    ],
+    "runtimeUsageIsDevelopmentUsage": false,
+    "otherAutomaticRuntimeUsage": "not measured"
+  },
+  "limitations": [
+    "Owner acoustic acceptance remains false. Ready sockets, source hashes and isolated synthetic audio do not prove how the physical conversation feels.",
+    "Core greeting probe still took6.415s including2.977s memory and3.438s model. Removing the extra preparation prevents its proven regression but does not solve remaining response latency.",
+    "After pending-render interruption the next synthetic first audio took8.038s while the old provider turn terminated; new words were correct. This remains a latency limitation.",
+    "Per-offer literal instructions passed the measured cases; the generative renderer is not deterministic TTS. Developer context may have server effects before a canceled RPC; no protocol-level atomicity is claimed.",
+    "Fidelity compares normalized word order, ignoring punctuation and symbols. It cannot verify acoustics or undo already streamed speech. No buffering/retry or hidden duplicate response added.",
+    "Core outage longer than the valid work lease still closes the session. No authority lease weakened, automatic mic reactivation introduced, or firmware wake-recovery claim made.",
+    "Native echo guard remains half-duplex; ordinary speech over Eva is still unavailable. Separate wake/STOP/MUTE behavior retained.",
+    "Idle deployment preflight is a point-in-time check, not a permanent maintenance lock or a change to another installer."
+  ],
+  "ownerAccepted": false,
+  "physicalAudioPlayed": false,
+  "microphoneRecordingStarted": false,
+  "syntheticConversationRetained": false,
+  "reference": "https://developers.openai.com/api/docs/guides/live-conversations",
+  "referenceScope": "Official current guidance supports checking generated wording/playback and warns context may be paraphrased. Exact pinned Codex wire mapping was not inferred; candidate behavior was measured on installed protocol."
+}

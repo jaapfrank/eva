@@ -2788,9 +2788,9 @@
                 "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                 "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                 "blocker": null,
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
-                "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                 "ownerTrial": {
                   "status": "continuous_conversation_works_fluency_gap",
                   "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -2798,7 +2798,7 @@
                   "blocksIndependentWork": false,
                   "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                 },
-                "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
+                "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": true,
@@ -2820,9 +2820,9 @@
                     "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                     "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                     "blocker": null,
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
-                    "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                    "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                    "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                    "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                     "ownerTrial": {
                       "status": "continuous_conversation_works_fluency_gap",
                       "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -2830,7 +2830,7 @@
                       "blocksIndependentWork": false,
                       "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                     },
-                    "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
+                    "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                     "ownerActionRequired": true,
                     "ownerInstructions": {
                       "availableNow": true,
@@ -2852,7 +2852,7 @@
                       "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "installed_contextual_thinking_physical_acceptance_open"
+                    "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open"
                   },
                   {
                     "title": "Doorpraten via tweede speaker",
@@ -2860,7 +2860,7 @@
                     "kind": "aansluiten",
                     "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                     "owner": "Codex",
-                    "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
+                    "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                     "ownerActionRequired": true,
                     "ownerInstructions": {
                       "availableNow": true,
@@ -2872,9 +2872,9 @@
                       ]
                     },
                     "blocker": null,
-                    "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
-                    "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
+                    "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                    "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -2886,7 +2886,7 @@
                       "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "installed_contextual_thinking_physical_acceptance_open"
+                    "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open"
                   }
                 ],
                 "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -2898,7 +2898,7 @@
                   "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                   "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                 },
-                "technicalStatus": "installed_contextual_thinking_physical_acceptance_open",
+                "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open",
                 "ownerRegression20261017": {
                   "reportedAt": "2026-10-17T10:55:16.617204+00:00",
                   "status": "regression_corrections_installed_quality_open",
@@ -2933,6 +2933,27 @@
                     "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
                     "knownDevelopmentTokens": 55852,
                     "unknownUsageAttempts": 5
+                  },
+                  "ownerRepair20261017": {
+                    "startedAt": "2026-10-17T12:23:03.569339+00:00",
+                    "status": "installed_verified_owner_acceptance_and_latency_open",
+                    "ownerAccepted": false,
+                    "existing": "Eén Eva-kern en volledige scopedmemory; snelle lokale begroeting en native echobescherming.",
+                    "gap": "Kernherstart verbrak eerste gesprek; extra voorbereidingsmodel vertraagt gewone vragen; gesproken inhoud wijkt volgens eigenaar af van passende opgeslagen kernantwoorden.",
+                    "routes": [
+                      "existing core preparation and ordinary speech control",
+                      "native session authority and Codex speech rendering"
+                    ],
+                    "doneWhen": "Extra onnodige voorbereidingsronde verwijderd; aangetoonde renderer/lifecyclefouten gericht hersteld, gereviewd, getest en in actuele installatie aangebracht. Reële luisteracceptatie apart en geen fictieve snelheidsclaim.",
+                    "ownerActionRequired": false,
+                    "updatedAt": "2026-10-17T12:36:35.370029+00:00",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                    "result": "Extra voorbereidingsmodel verwijderd; letterlijke tekstoverdracht per spraakaanbod en fence tegen laat oud antwoord geïnstalleerd. Juiste kernantwoorden en vijf opeenvolgende/onderbroken renderercontroles vastgesteld;316 verschillende gerichte softwarechecks geslaagd. Vier diensten en beide speakers operationeel.",
+                    "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
+                    "deployment": "Actieve live-voice leases voor elke dienstvervanging geteld: steeds nul. Dit is een preflight, geen permanente onderhoudslock.",
+                    "knownDevelopmentTextTokens": 3394,
+                    "developmentVoiceSessions": 4,
+                    "developmentVoiceUsageKnown": false
                   }
                 }
               },
@@ -2976,7 +2997,7 @@
                 "kind": "verbeteren",
                 "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                 "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
                 "ownerTrial": {
                   "status": "partial_with_false_interruptions_and_stop_failure",
                   "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -2986,15 +3007,15 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
+                "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                   "steps": []
                 },
-                "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
+                "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                 "assignment": {
                   "activeWorkers": []
                 },
@@ -3005,7 +3026,7 @@
                     "kind": "verbeteren",
                     "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                     "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
                     "ownerTrial": {
                       "status": "partial_with_false_interruptions_and_stop_failure",
                       "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -3015,15 +3036,15 @@
                       "currentCandidateStatus": "not_yet_assessed",
                       "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                     },
-                    "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
+                    "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                     "ownerActionRequired": false,
                     "ownerInstructions": {
                       "availableNow": false,
                       "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                       "steps": []
                     },
-                    "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                    "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
+                    "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                    "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -3035,7 +3056,7 @@
                       "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "limited_native_half_duplex"
+                    "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open"
                   },
                   {
                     "title": "Onderbreken op tweede speaker",
@@ -3043,22 +3064,22 @@
                     "kind": "verbeteren",
                     "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
                     "owner": "Codex /root",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
                     "ownerTrial": {
                       "status": "deferred_until_woonkamer_works",
                       "steps": [],
                       "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                       "blocksIndependentWork": false
                     },
-                    "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
+                    "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                     "ownerActionRequired": false,
                     "ownerInstructions": {
                       "availableNow": false,
                       "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                       "steps": []
                     },
-                    "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                    "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
+                    "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                    "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -3070,7 +3091,7 @@
                       "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "limited_native_half_duplex"
+                    "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open"
                   }
                 ],
                 "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -3080,7 +3101,7 @@
                   "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
                   "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                 },
-                "technicalStatus": "limited_native_half_duplex",
+                "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open",
                 "ownerRegression20261017": {
                   "reportedAt": "2026-10-17T10:55:16.617204+00:00",
                   "status": "regression_corrections_installed_quality_open",
@@ -3115,6 +3136,27 @@
                     "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
                     "knownDevelopmentTokens": 55852,
                     "unknownUsageAttempts": 5
+                  },
+                  "ownerRepair20261017": {
+                    "startedAt": "2026-10-17T12:23:03.569339+00:00",
+                    "status": "installed_verified_owner_acceptance_and_latency_open",
+                    "ownerAccepted": false,
+                    "existing": "Eén Eva-kern en volledige scopedmemory; snelle lokale begroeting en native echobescherming.",
+                    "gap": "Kernherstart verbrak eerste gesprek; extra voorbereidingsmodel vertraagt gewone vragen; gesproken inhoud wijkt volgens eigenaar af van passende opgeslagen kernantwoorden.",
+                    "routes": [
+                      "existing core preparation and ordinary speech control",
+                      "native session authority and Codex speech rendering"
+                    ],
+                    "doneWhen": "Extra onnodige voorbereidingsronde verwijderd; aangetoonde renderer/lifecyclefouten gericht hersteld, gereviewd, getest en in actuele installatie aangebracht. Reële luisteracceptatie apart en geen fictieve snelheidsclaim.",
+                    "ownerActionRequired": false,
+                    "updatedAt": "2026-10-17T12:36:35.370029+00:00",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                    "result": "Extra voorbereidingsmodel verwijderd; letterlijke tekstoverdracht per spraakaanbod en fence tegen laat oud antwoord geïnstalleerd. Juiste kernantwoorden en vijf opeenvolgende/onderbroken renderercontroles vastgesteld;316 verschillende gerichte softwarechecks geslaagd. Vier diensten en beide speakers operationeel.",
+                    "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
+                    "deployment": "Actieve live-voice leases voor elke dienstvervanging geteld: steeds nul. Dit is een preflight, geen permanente onderhoudslock.",
+                    "knownDevelopmentTextTokens": 3394,
+                    "developmentVoiceSessions": 4,
+                    "developmentVoiceUsageKnown": false
                   }
                 }
               },
@@ -6243,9 +6285,9 @@
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
               "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
               "blocker": null,
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
-              "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-              "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+              "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+              "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
               "ownerTrial": {
                 "status": "continuous_conversation_works_fluency_gap",
                 "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -6253,7 +6295,7 @@
                 "blocksIndependentWork": false,
                 "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
+              "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -6275,9 +6317,9 @@
                   "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                   "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                   "blocker": null,
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
-                  "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                  "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                  "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                  "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                   "ownerTrial": {
                     "status": "continuous_conversation_works_fluency_gap",
                     "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -6285,7 +6327,7 @@
                     "blocksIndependentWork": false,
                     "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                   },
-                  "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
+                  "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                   "ownerActionRequired": true,
                   "ownerInstructions": {
                     "availableNow": true,
@@ -6307,7 +6349,7 @@
                     "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "installed_contextual_thinking_physical_acceptance_open"
+                  "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open"
                 },
                 {
                   "title": "Doorpraten via tweede speaker",
@@ -6315,7 +6357,7 @@
                   "kind": "aansluiten",
                   "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                   "owner": "Codex",
-                  "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
+                  "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                   "ownerActionRequired": true,
                   "ownerInstructions": {
                     "availableNow": true,
@@ -6327,9 +6369,9 @@
                     ]
                   },
                   "blocker": null,
-                  "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
-                  "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
+                  "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                  "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6341,7 +6383,7 @@
                     "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "installed_contextual_thinking_physical_acceptance_open"
+                  "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open"
                 }
               ],
               "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -6353,7 +6395,7 @@
                 "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                 "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
               },
-              "technicalStatus": "installed_contextual_thinking_physical_acceptance_open",
+              "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open",
               "ownerRegression20261017": {
                 "reportedAt": "2026-10-17T10:55:16.617204+00:00",
                 "status": "regression_corrections_installed_quality_open",
@@ -6388,6 +6430,27 @@
                   "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
                   "knownDevelopmentTokens": 55852,
                   "unknownUsageAttempts": 5
+                },
+                "ownerRepair20261017": {
+                  "startedAt": "2026-10-17T12:23:03.569339+00:00",
+                  "status": "installed_verified_owner_acceptance_and_latency_open",
+                  "ownerAccepted": false,
+                  "existing": "Eén Eva-kern en volledige scopedmemory; snelle lokale begroeting en native echobescherming.",
+                  "gap": "Kernherstart verbrak eerste gesprek; extra voorbereidingsmodel vertraagt gewone vragen; gesproken inhoud wijkt volgens eigenaar af van passende opgeslagen kernantwoorden.",
+                  "routes": [
+                    "existing core preparation and ordinary speech control",
+                    "native session authority and Codex speech rendering"
+                  ],
+                  "doneWhen": "Extra onnodige voorbereidingsronde verwijderd; aangetoonde renderer/lifecyclefouten gericht hersteld, gereviewd, getest en in actuele installatie aangebracht. Reële luisteracceptatie apart en geen fictieve snelheidsclaim.",
+                  "ownerActionRequired": false,
+                  "updatedAt": "2026-10-17T12:36:35.370029+00:00",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                  "result": "Extra voorbereidingsmodel verwijderd; letterlijke tekstoverdracht per spraakaanbod en fence tegen laat oud antwoord geïnstalleerd. Juiste kernantwoorden en vijf opeenvolgende/onderbroken renderercontroles vastgesteld;316 verschillende gerichte softwarechecks geslaagd. Vier diensten en beide speakers operationeel.",
+                  "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
+                  "deployment": "Actieve live-voice leases voor elke dienstvervanging geteld: steeds nul. Dit is een preflight, geen permanente onderhoudslock.",
+                  "knownDevelopmentTextTokens": 3394,
+                  "developmentVoiceSessions": 4,
+                  "developmentVoiceUsageKnown": false
                 }
               }
             },
@@ -6431,7 +6494,7 @@
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
               "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
               "ownerTrial": {
                 "status": "partial_with_false_interruptions_and_stop_failure",
                 "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6441,15 +6504,15 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
+              "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                 "steps": []
               },
-              "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-              "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
+              "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+              "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
               "assignment": {
                 "activeWorkers": []
               },
@@ -6460,7 +6523,7 @@
                   "kind": "verbeteren",
                   "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                   "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
                   "ownerTrial": {
                     "status": "partial_with_false_interruptions_and_stop_failure",
                     "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6470,15 +6533,15 @@
                     "currentCandidateStatus": "not_yet_assessed",
                     "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                   },
-                  "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
+                  "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                   "ownerActionRequired": false,
                   "ownerInstructions": {
                     "availableNow": false,
                     "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                     "steps": []
                   },
-                  "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                  "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
+                  "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                  "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6490,7 +6553,7 @@
                     "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "limited_native_half_duplex"
+                  "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open"
                 },
                 {
                   "title": "Onderbreken op tweede speaker",
@@ -6498,22 +6561,22 @@
                   "kind": "verbeteren",
                   "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
                   "owner": "Codex /root",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
                   "ownerTrial": {
                     "status": "deferred_until_woonkamer_works",
                     "steps": [],
                     "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                     "blocksIndependentWork": false
                   },
-                  "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
+                  "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
                   "ownerActionRequired": false,
                   "ownerInstructions": {
                     "availableNow": false,
                     "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                     "steps": []
                   },
-                  "checkedAt": "2026-10-17T12:12:23.378466+00:00",
-                  "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
+                  "checkedAt": "2026-10-17T12:36:35.370029+00:00",
+                  "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6525,7 +6588,7 @@
                     "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "limited_native_half_duplex"
+                  "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open"
                 }
               ],
               "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -6535,7 +6598,7 @@
                 "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
                 "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
               },
-              "technicalStatus": "limited_native_half_duplex",
+              "technicalStatus": "installed_targeted_repairs_acceptance_and_latency_open",
               "ownerRegression20261017": {
                 "reportedAt": "2026-10-17T10:55:16.617204+00:00",
                 "status": "regression_corrections_installed_quality_open",
@@ -6570,6 +6633,27 @@
                   "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
                   "knownDevelopmentTokens": 55852,
                   "unknownUsageAttempts": 5
+                },
+                "ownerRepair20261017": {
+                  "startedAt": "2026-10-17T12:23:03.569339+00:00",
+                  "status": "installed_verified_owner_acceptance_and_latency_open",
+                  "ownerAccepted": false,
+                  "existing": "Eén Eva-kern en volledige scopedmemory; snelle lokale begroeting en native echobescherming.",
+                  "gap": "Kernherstart verbrak eerste gesprek; extra voorbereidingsmodel vertraagt gewone vragen; gesproken inhoud wijkt volgens eigenaar af van passende opgeslagen kernantwoorden.",
+                  "routes": [
+                    "existing core preparation and ordinary speech control",
+                    "native session authority and Codex speech rendering"
+                  ],
+                  "doneWhen": "Extra onnodige voorbereidingsronde verwijderd; aangetoonde renderer/lifecyclefouten gericht hersteld, gereviewd, getest en in actuele installatie aangebracht. Reële luisteracceptatie apart en geen fictieve snelheidsclaim.",
+                  "ownerActionRequired": false,
+                  "updatedAt": "2026-10-17T12:36:35.370029+00:00",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+                  "result": "Extra voorbereidingsmodel verwijderd; letterlijke tekstoverdracht per spraakaanbod en fence tegen laat oud antwoord geïnstalleerd. Juiste kernantwoorden en vijf opeenvolgende/onderbroken renderercontroles vastgesteld;316 verschillende gerichte softwarechecks geslaagd. Vier diensten en beide speakers operationeel.",
+                  "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
+                  "deployment": "Actieve live-voice leases voor elke dienstvervanging geteld: steeds nul. Dit is een preflight, geen permanente onderhoudslock.",
+                  "knownDevelopmentTextTokens": 3394,
+                  "developmentVoiceSessions": 4,
+                  "developmentVoiceUsageKnown": false
                 }
               }
             },
@@ -9806,17 +9890,17 @@
       },
       "ownerRegression20261017": {
         "reportedAt": "2026-10-17T10:55:16.617204+00:00",
-        "status": "regression_corrections_installed_quality_open",
+        "status": "targeted_owner_repairs_installed_latency_open",
         "originalStatus": "owner_rejected_installed_conversation",
         "report": "Eigenaar meldt het slechtste gesprek tot nu toe: zeer traag, slechte antwoorden en antwoorden die niet bij de vragen passen.",
-        "latestOwnerRequest": "Geen computerachtige betrouwbaarheidsverklaringen; eenvoudige onzekerheid en passende, gevarieerde denkreacties tijdens wachten.",
-        "updatedAt": "2026-10-17T11:22:17.788805+00:00",
+        "latestOwnerRequest": "Eerste gesprek stopte meteen, microfoon uit/aan nodig; simpele sociale vragen zeer traag en gesproken antwoorden passen niet.",
+        "updatedAt": "2026-10-17T12:36:35.370029+00:00",
         "qualityAccepted": false,
-        "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+        "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
         "installed": "Native bescherming tegen eigen afspeelspraak, herstel gedeelde geheugenbronselectie, expliciete herkomst per gesprek en natuurlijke formulering/denkreactie met intacte geheugenzoeking.",
         "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
         "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
-        "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
+        "nextAction": "Beoordeel normaal eigenaargesprek met letterlijke overdracht en zonder extra voorbereidingsronde; resterende geheugen/modelvertraging en wachten op oude providerbeurt gericht aanpakken. Geen volledige acceptatieclaim op basis van tests.",
         "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie.",
         "followthrough20261017": {
           "startedAt": "2026-10-17T11:32:38.031782+00:00",
@@ -9838,6 +9922,27 @@
           "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
           "knownDevelopmentTokens": 55852,
           "unknownUsageAttempts": 5
+        },
+        "ownerRepair20261017": {
+          "startedAt": "2026-10-17T12:23:03.569339+00:00",
+          "status": "installed_verified_owner_acceptance_and_latency_open",
+          "ownerAccepted": false,
+          "existing": "Eén Eva-kern en volledige scopedmemory; snelle lokale begroeting en native echobescherming.",
+          "gap": "Kernherstart verbrak eerste gesprek; extra voorbereidingsmodel vertraagt gewone vragen; gesproken inhoud wijkt volgens eigenaar af van passende opgeslagen kernantwoorden.",
+          "routes": [
+            "existing core preparation and ordinary speech control",
+            "native session authority and Codex speech rendering"
+          ],
+          "doneWhen": "Extra onnodige voorbereidingsronde verwijderd; aangetoonde renderer/lifecyclefouten gericht hersteld, gereviewd, getest en in actuele installatie aangebracht. Reële luisteracceptatie apart en geen fictieve snelheidsclaim.",
+          "ownerActionRequired": false,
+          "updatedAt": "2026-10-17T12:36:35.370029+00:00",
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+          "result": "Extra voorbereidingsmodel verwijderd; letterlijke tekstoverdracht per spraakaanbod en fence tegen laat oud antwoord geïnstalleerd. Juiste kernantwoorden en vijf opeenvolgende/onderbroken renderercontroles vastgesteld;316 verschillende gerichte softwarechecks geslaagd. Vier diensten en beide speakers operationeel.",
+          "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
+          "deployment": "Actieve live-voice leases voor elke dienstvervanging geteld: steeds nul. Dit is een preflight, geen permanente onderhoudslock.",
+          "knownDevelopmentTextTokens": 3394,
+          "developmentVoiceSessions": 4,
+          "developmentVoiceUsageKnown": false
         }
       }
     },
