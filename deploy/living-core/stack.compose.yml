@@ -34,8 +34,8 @@ services:
     environment:
       HINDSIGHT_ENABLE_CP: "false"
       HINDSIGHT_API_LLM_PROVIDER: openai-codex
-      HINDSIGHT_API_LLM_MODEL: gpt-5.6-luna
-      HINDSIGHT_API_LLM_REASONING_EFFORT: low
+      HINDSIGHT_API_LLM_MODEL: gpt-6-astra
+      HINDSIGHT_API_LLM_REASONING_EFFORT: medium
       # The bundled local BGE-small model is English-only and missed Dutch
       # corrections on the low-latency recall path. Reuse the same read-only,
       # rotating Codex consumer lease for multilingual cloud embeddings.
@@ -170,7 +170,7 @@ services:
     environment:
       EVA_COLD_PATH_IDLE_SECONDS: ${EVA_COLD_PATH_IDLE_SECONDS:-300}
       EVA_CONVERSATION_AUTH_FILE: /run/eva/model-lease/auth.json
-      EVA_CONVERSATION_MODEL: ${EVA_CONVERSATION_MODEL:-gpt-5.4-mini}
+      EVA_CONVERSATION_MODEL: ${EVA_CONVERSATION_MODEL:-gpt-6-astra}
       EVA_CONVERSATION_REASONING_EFFORT: ${EVA_CONVERSATION_REASONING_EFFORT:-medium}
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
       EVA_HINDSIGHT_BANK_NAMESPACE: ${EVA_HINDSIGHT_BANK_NAMESPACE:-eva2}

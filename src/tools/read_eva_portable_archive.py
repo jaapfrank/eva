@@ -679,7 +679,7 @@ def _load_schema_registry(
     root: int, manifest: dict[str, Any]
 ) -> tuple[dict[str, dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     registry: dict[str, dict[str, Any]] = {}
-    contract_manifest_raw = _read_regular(root, "deploy/schemas/contracts/manifest.json")
+    contract_manifest_raw = _read_regular(root, "schemas/contracts/manifest.json")
     contract_manifest_hash = hashlib.sha256(contract_manifest_raw).hexdigest()
     if contract_manifest_hash != CONTRACT_MANIFEST_SHA256:
         raise ArchiveValidationError("contract manifest differs from pinned authority")
@@ -687,14 +687,14 @@ def _load_schema_registry(
         raise ArchiveValidationError("archive contract schema manifest hash differs")
     contract_manifest = _load_canonical_object(
         contract_manifest_raw,
-        label="deploy/schemas/contracts/manifest.json",
+        label="schemas/contracts/manifest.json",
         allow_trailing_lf=True,
     )
     schemas = contract_manifest.get("schemas")
     if not isinstance(schemas, dict) or len(schemas) != 64:
         raise ArchiveValidationError("contract schema manifest is not the bound 64-set")
     profile_raw = _read_regular(
-        root, "deploy/schemas/contracts/canonical-json-profile-v1.json"
+        root, "schemas/contracts/canonical-json-profile-v1.json"
     )
     profile_hash = hashlib.sha256(profile_raw).hexdigest()
     if profile_hash != CANONICAL_PROFILE_SHA256:
@@ -703,7 +703,7 @@ def _load_schema_registry(
         raise ArchiveValidationError("contract manifest profile pin differs")
     profile = _load_canonical_object(
         profile_raw,
-        label="deploy/schemas/contracts/canonical-json-profile-v1.json",
+        label="schemas/contracts/canonical-json-profile-v1.json",
         allow_trailing_lf=True,
     )
     if profile.get("profile") != "EvaCanonicalJSON/v1":
@@ -712,12 +712,12 @@ def _load_schema_registry(
         relative = f"schemas/contracts/{contract.replace('/', '-')}.schema.json"
         _load_schema(root, relative, expected_hash, registry, allow_trailing_lf=True)
 
-    portable_raw = _read_regular(root, "deploy/schemas/portable/manifest.json")
+    portable_raw = _read_regular(root, "schemas/portable/manifest.json")
     portable_manifest_hash = hashlib.sha256(portable_raw).hexdigest()
     if portable_manifest_hash != PORTABLE_MANIFEST_SHA256:
         raise ArchiveValidationError("portable manifest differs from pinned authority")
     portable_manifest = _load_canonical_object(
-        portable_raw, label="deploy/schemas/portable/manifest.json"
+        portable_raw, label="schemas/portable/manifest.json"
     )
     portable_entries = portable_manifest.get("schemas")
     if not isinstance(portable_entries, list) or len(portable_entries) != 39:
@@ -731,11 +731,11 @@ def _load_schema_registry(
             entry["record_schema_sha256"],
             registry,
         )
-    reader_raw = _read_regular(root, "deploy/schemas/readback/manifest.json")
+    reader_raw = _read_regular(root, "schemas/readback/manifest.json")
     if hashlib.sha256(reader_raw).hexdigest() != READER_MANIFEST_SHA256:
         raise ArchiveValidationError("reader manifest differs from pinned authority")
     reader_manifest = _load_canonical_object(
-        reader_raw, label="deploy/schemas/readback/manifest.json"
+        reader_raw, label="schemas/readback/manifest.json"
     )
     if (
         reader_manifest.get("portableRecordSchemaManifestSha256")
@@ -752,7 +752,7 @@ def _load_schema_registry(
         raise ArchiveValidationError("object schema differs from pinned authority")
     _load_schema(
         root,
-        "deploy/schemas/portable/object-manifest-record-v1.schema.json",
+        "schemas/portable/object-manifest-record-v1.schema.json",
         object_schema_sha256,
         registry,
     )
@@ -1843,11 +1843,11 @@ def _expected_payload_paths(
     object_paths: set[str],
 ) -> set[str]:
     expected = {
-        "deploy/schemas/contracts/manifest.json",
-        "deploy/schemas/contracts/canonical-json-profile-v1.json",
-        "deploy/schemas/portable/manifest.json",
-        "deploy/schemas/portable/object-manifest-record-v1.schema.json",
-        "deploy/schemas/readback/manifest.json",
+        "schemas/contracts/manifest.json",
+        "schemas/contracts/canonical-json-profile-v1.json",
+        "schemas/portable/manifest.json",
+        "schemas/portable/object-manifest-record-v1.schema.json",
+        "schemas/readback/manifest.json",
         "objects/manifest-v1.jsonl",
     }
     expected.update(
@@ -2550,8 +2550,8 @@ def _validate_and_derive_open(
         checksums_hash,
     )
     contract_manifest = _load_canonical_object(
-        _read_regular(archive_root, "deploy/schemas/contracts/manifest.json"),
-        label="deploy/schemas/contracts/manifest.json",
+        _read_regular(archive_root, "schemas/contracts/manifest.json"),
+        label="schemas/contracts/manifest.json",
         allow_trailing_lf=True,
     )
     expected_payloads = _expected_payload_paths(

@@ -175,7 +175,11 @@ def _require_sha256(raw: bytes, expected: str, *, label: str) -> None:
         raise PortableArchiveError(f"{label} differs from pinned authority")
 
 
-def _schema_payloads(schema_root: Path) -> dict[str, bytes]:
+def _schema_payloads(schema_root: Path | None = None) -> dict[str, bytes]:
+    if schema_root is None:
+        from eva.resources.portable_v1 import schema_resources
+        with schema_resources() as packaged_root:
+            return _schema_payloads(packaged_root)
     payloads: dict[str, bytes] = {}
     v1_contract_root = schema_root / "portable" / "v1" / "contracts"
     with (
@@ -205,24 +209,24 @@ def _schema_payloads(schema_root: Path) -> dict[str, bytes]:
 
         contract_raw = include(
             "manifest.json",
-            "deploy/schemas/contracts/manifest.json",
+            "schemas/contracts/manifest.json",
             CONTRACT_MANIFEST_SHA256,
             source_descriptor=v1_contract_descriptor,
         )
         profile_raw = include(
             "canonical-json-profile-v1.json",
-            "deploy/schemas/contracts/canonical-json-profile-v1.json",
+            "schemas/contracts/canonical-json-profile-v1.json",
             CANONICAL_PROFILE_SHA256,
             source_descriptor=v1_contract_descriptor,
         )
         portable_raw = include(
             "portable/record-schema-manifest-v1.json",
-            "deploy/schemas/portable/manifest.json",
+            "schemas/portable/manifest.json",
             PORTABLE_MANIFEST_SHA256,
         )
         reader_raw = include(
             "portable/generic-reader-output-schema-manifest-v1.json",
-            "deploy/schemas/readback/manifest.json",
+            "schemas/readback/manifest.json",
             READER_MANIFEST_SHA256,
         )
 
@@ -246,7 +250,7 @@ def _schema_payloads(schema_root: Path) -> dict[str, bytes]:
         for entry in portable_entries:
             archive_path = entry["recordSchemaRelativePath"]
             include(
-                archive_path.removeprefix("deploy/schemas/"),
+                archive_path.removeprefix("schemas/"),
                 archive_path,
                 entry["record_schema_sha256"],
             )
@@ -264,7 +268,7 @@ def _schema_payloads(schema_root: Path) -> dict[str, bytes]:
             raise PortableArchiveError("reader object schema authority differs")
         include(
             "portable/object-manifest-record-v1.schema.json",
-            "deploy/schemas/portable/object-manifest-record-v1.schema.json",
+            "schemas/portable/object-manifest-record-v1.schema.json",
             object_schema_sha256,
         )
         reader_entries = reader_manifest.get("schemas")
@@ -273,7 +277,7 @@ def _schema_payloads(schema_root: Path) -> dict[str, bytes]:
         for entry in reader_entries:
             archive_path = entry["schemaRelativePath"]
             local_path = "portable/readback/" + archive_path.removeprefix(
-                "deploy/schemas/readback/"
+                "schemas/readback/"
             )
             include(local_path, archive_path, entry["record_schema_sha256"])
     return payloads
@@ -592,7 +596,7 @@ def publish_portable_archive(
     if destination.exists() or destination.is_symlink():
         raise PortableArchiveError("archive destination already exists")
     records = _records_by_table(record_sets)
-    payloads = _schema_payloads(schema_root or (_eva2_root() / "schemas"))
+    payloads = _schema_payloads(schema_root)
     for item in record_sets:
         if item.relative_path in payloads:
             raise PortableArchiveError("record path collides with schema payload")
@@ -611,10 +615,10 @@ def publish_portable_archive(
         created_at=created_at,
         checksums_sha256=checksums_sha256,
         contract_manifest_sha256=hashlib.sha256(
-            payloads["deploy/schemas/contracts/manifest.json"]
+            payloads["schemas/contracts/manifest.json"]
         ).hexdigest(),
         object_manifest_schema_sha256=hashlib.sha256(
-            payloads["deploy/schemas/portable/object-manifest-record-v1.schema.json"]
+            payloads["schemas/portable/object-manifest-record-v1.schema.json"]
         ).hexdigest(),
     )
     staging = destination.parent / f".{destination.name}.staging-{uuid4()}"
@@ -623,7 +627,7 @@ def publish_portable_archive(
         (staging / "checksums.sha256").write_bytes(checksums)
         (staging / "archive.json").write_bytes(canonical_json_bytes(manifest))
         required_validator = _standalone_validator(
-            _eva2_root() / "tools" / "read_eva_portable_archive.py"
+            Path(__file__).with_name("read_eva_portable_archive.py")
         )
 
         def validate_before_publication(candidate: Path) -> None:

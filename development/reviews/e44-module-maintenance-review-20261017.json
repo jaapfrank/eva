@@ -1,0 +1,215 @@
+{
+  "contract": "EvaE44BundledMaintenanceReview/v1",
+  "taskId": "E4.4",
+  "checkedAt": "2026-10-17T12:16:51.042915+00:00",
+  "decision": "GO_bounded_installed_maintenance",
+  "C10IndependentReview": {
+    "contract": "EvaE44IndependentC10PackageReview/v1",
+    "checkedAt": "2026-10-17T12:09:19.937211+00:00",
+    "verdict": "GO_for_reviewed_source_changes_build_and_install_evidence_still_separate",
+    "findings": [],
+    "files": [
+      {
+        "path": "pyproject.toml",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "e9142ab80a34ee4f7b254bdbefd5af0ff34646aa238893a9d5e9db72bdeeea39",
+        "afterSha256": "d1bd869d8332977edba96851227d8711a9c51920ac4d92b67353d06ce333efaa"
+      },
+      {
+        "path": "src/eva/bootstrap/runtime_settings.py",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "d606ea3cd120d1e3384788d1e07c2e4a33ec10eb6316c6339d2cd772eb541546",
+        "afterSha256": "fe42218ac045bc27248c133d66d65f0f6aac2ee6ab649d289217352de1bd4115"
+      },
+      {
+        "path": "deploy/living-core/stack.compose.yml",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "7843d933a41575f9d4c81200e6dbbfc4a790ec3929088d67864745d8a3938a2a",
+        "afterSha256": "56384cf87318d2fef75529f9aa6d4dfff36a90ec6715e940ce1a8565071e8076"
+      },
+      {
+        "path": "deploy/living-core/managed-b.compose.yml",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "037a2461d74683e144912777979a56904c63cc07fd50105704aad124f6f9e349",
+        "afterSha256": "1f3464af8bcc1e09f0cfdc83d9bcfd8369f92e59263f2fe8bd32f81e8e3fe6d8"
+      },
+      {
+        "path": "deploy/living-core/hindsight.compose.yml",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "7db217669ddbf6ab8ee5ab48a4fc10f0f78f07878be9a4d0dd6424d52627dd31",
+        "afterSha256": "f40efd843c3bd39157a3cd27a8dff414eb0d9cf8ad3a551ff70402d40f005cf9"
+      },
+      {
+        "path": "deploy/living-core/workspace-create-only/Dockerfile",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "retained_HEAD_baseline",
+        "beforeSha256": "c9746c4a44e0dfb746416e621d809eb678c69d00b1956bfc4a3a67117faa4332",
+        "afterSha256": "68deadce7713ab1bf58ba938c9194efce97d33a804c6ce0a7893796ea9490acb"
+      },
+      {
+        "path": "deploy/delegated-work/Dockerfile",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "d23199057ea23357f6998aa785e0d649830dacd09c91fb55dab5eb231ba8187b",
+        "afterSha256": "1ce2e2560d186a9c41591c139082aaf3e20725a857f4a37b8510b9f702fad573"
+      },
+      {
+        "path": "deploy/delegated-work/Dockerfile.source-refresh",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "92cb5a4509f142033c04f20e90f185de2c7f0034ea933b0bd33d29fa14ad9c78",
+        "afterSha256": "0c42e9265c2be07308c3e8c5f4bfc92d7cbe2e73fa70798f6e32cda36e95c017"
+      },
+      {
+        "path": "deploy/delegated-work/README.md",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "new_file",
+        "beforeSha256": null,
+        "afterSha256": "fe0a853eac953f580494785caf40b8bda0b5da218d81201b24f4d447b59f3833"
+      },
+      {
+        "path": "development/tests/operations/test_delegated_work_image.py",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "85b7340a9f337055ab71d18fa5eca8d8502e77e33806e0a4a469a49ee308ce7f",
+        "afterSha256": "7bc4939f56ff381337d14e60b5798b42c3b337ebf997e6380bc7fdd02fe7f5b4"
+      },
+      {
+        "path": "development/docs/ARCHITECTUUR.md",
+        "reviewMode": "full_changed_content_and_relevant_consumer_boundary",
+        "beforeMode": "private_prechange_snapshot",
+        "beforeSha256": "f338fee13bef44af23ef1f7a7fba46ca86ff438c24d1f158e75a9f0e4382b190",
+        "afterSha256": "0f12bb41a556f3e9d053a5ce58eac5c4df8089cc953ebe7e36c261db1ea48ba2"
+      }
+    ],
+    "referenceMetadata": [
+      {
+        "path": "deploy/living-core/Dockerfile",
+        "sha256": "ebb2648b8d3a574674918c061e904d592be0cd6c6433dc4202eb0ce63b958333"
+      },
+      {
+        "path": "src/eva/bootstrap/delegated_work_provider.py",
+        "sha256": "9e3715e5a84895aa366d60d33a6aed95708420ab4448e92c1bbaeec8d5683215"
+      },
+      {
+        "path": "deploy/living-core/workspace-create-only/start-atomic-workspace.sh",
+        "sha256": "ac269b06979c8299bb44548759d3b034e27c7d18aa76c6608f40c0111566d868"
+      },
+      {
+        "path": "deploy/living-core/workspace-create-only/mcp-server.mjs",
+        "sha256": "18ff641e229eead227cf1b4b4bffffc85d01a145c24c4b44f83fb468531e6a76"
+      },
+      {
+        "path": "deploy/requirements-4d.lock",
+        "sha256": "036e2463be9fea6b3adb8528e8e0288b0985f65f958d4abdbf371c21d828693e"
+      },
+      {
+        "path": "deploy/requirements-delegated-work.lock",
+        "sha256": "24b2ac80e15e33dab5368fe79d255cb1bf23fe947c9e151b5056412f31f556fb"
+      },
+      {
+        "path": "deploy/release/delegated-work-dependency-roots.in",
+        "sha256": "444368eab524b2c7a3a00abb22f753c4c4f887c62596e18cd8785c6fe09dca55"
+      },
+      {
+        "path": "src/eva/application/default_identity_pack.json",
+        "sha256": "025984c019714d7107803258959fcbddd94d0700acaef15beeac26f05a645798"
+      },
+      {
+        "path": "src/eva/application/default_identity_pack_trust.json",
+        "sha256": "1ab9b15da48a18149b519c3cb6270535f52f679a837f3715e8a8499321ffa1ae"
+      }
+    ],
+    "conclusions": [
+      "The two signed default identity JSON files are byte-identical to HEAD and now explicitly package data; current mounted identity is unchanged by this declaration.",
+      "Portable resource package exists with __init__.py; its schema-freeze/provenance/recursive schema JSON package patterns match the state-agent resource producer. Independent frozen-schema semantics are outside this C10 crossreview.",
+      "RuntimeSettings changes exactly the two substantive default model strings to Astra; three selected future Compose defaults use Astra/medium, with the simple-contact policy unchanged. No live model configuration or provider request was inferred.",
+      "Workspace Dockerfile installs the selected runtime files under /opt/eva2/atomic, matching unchanged launcher, broker path and absolute MCP SDK imports. Actual base SDK availability is reported by coordinator, not rerun.",
+      "Worker inherits selected CORE_IMAGE dependencies/source, changes only process entrypoint/healthcheck, verifies existing sealed provider versions, remains non-root and resolves no second lock. Host must record actual immutable parent ID as documented.",
+      "Provider dependency lock hash already equals unchanged requirements-4d.lock036e2463… and expected versions openai3.6.0/pydantic-ai-slim2.37.0 match coordinator version metadata. Old worker lock and roots remain exact historical inputs.",
+      "Source-refresh has no implicit obsolete parent and remains source-only with no RUN/ADD.",
+      "Architecture table states real module contracts/configuration/data ownership/on-off behavior; preserves existing E4.5 and conditional photo-library retain decision."
+    ],
+    "verificationBoundary": {
+      "newTestsRun": false,
+      "newBuildOrInstallRun": false,
+      "modelOrProviderCalls": false,
+      "reusedEvidence": "Coordinator ordinary static recipe tests and base dependency/SDK metadata; actual offline worker build/import and package artifact smoke still forthcoming at review time.",
+      "notClaimed": [
+        "successful new worker build",
+        "installed future Compose modeldefaults",
+        "operational optional browser/workspace module",
+        "closed E4.5 self-development chain",
+        "family acceptance",
+        "cost or speed improvement"
+      ]
+    },
+    "developmentCredits": "unknown"
+  },
+  "C11IndependentReview": {
+    "decision": "GO",
+    "checkedAt": "2026-10-17T12:15:31.363230+00:00",
+    "scope": "C11 independent coordinator review; coordinator did not implement resource fixes",
+    "originalFreezeBlobVerified": "e563e695bc2e4fb15f521e515d185b45b7a73295",
+    "originalPinsUnchanged": true,
+    "oldDesignDeployAndCatalogHashesUnchanged": {
+      "development/design/vertical/noor-4d-schema-export-freeze-v1.json": "2bb23d486038dcdaf26607ad2dba9c38b13b4cc799a6644cd1fffb1bb20a626a",
+      "deploy/schemas/portable/record-schema-manifest-v1.json": "44ad41ecd42f98c1226eacb2c09d0f63e21c63096ffe9144495f229fede0c9d2",
+      "deploy/schemas/portable/generic-reader-output-schema-manifest-v1.json": "656cd93989ed3bc90fb68bc68266d5e55ec57d61543bf8017a90deba4895c801",
+      "src/eva/adapters/postgres/catalog_generated.py": "ac40abb7faa532cae9759bd4ef9936d33d8cc4abf090642f7f7e61ed24e75039"
+    },
+    "checked": "Reviewed exact patch;116original archivepaths and mandatory sibling stdlibvalidator;117resourcehashes; current catalog exact and explicit39pathmetadata mapping; wheel on actualPython3.12.14 and outside-checkout generator verified.",
+    "limits": [
+      "Root owns package metadata, offline wheel/build, installation and independent review; no installed outcome claimed by this executor.",
+      "No new live PostgreSQL v2 export/restore: unchanged V2 consumer transfer reviewed; frozen-v1 boundary is exercised end-to-end by existing crypto tests.",
+      "Old test_portable_p1_regressions additionally pins a different historical current-registry hash889d, while existing current deploy/contracts manifest is5d023; no blind repin, no assertion relaxation. That unrelated old snapshot is not included as green.",
+      "Existing modified design/deploy reference resources remain untouched; explicit override to incompatible old resources still fails original authority checks.",
+      "No protected criteria/endcases altered, no model/provider calls, no real family/archive data or restore, no Git commit/board/deploy by this executor."
+    ]
+  },
+  "C12IndependentReview": {
+    "decision": "GO",
+    "sourceReview": "Selected19functions AST-exact except neutral exception renaming; transport strings and no-adoption tests verified; no acceptance criteria imported.",
+    "functions": 19,
+    "operationalSourceSha256": "303d09cd005587abc61643ffe6e0e8210339bd5ae25e1c69d628d00acc1fa68a",
+    "providerRequestsInitiated": 0
+  },
+  "crossBoundaryVerification": {
+    "sameExecutionSources": 68,
+    "twoByteIdenticalWheelBuilds": true,
+    "actualPython31214PackageExecution": true,
+    "operatorLiveReadiness": true,
+    "installedServicesHealthy": true,
+    "allUnownedRuntimeSourcePreserved": true,
+    "retainedMounts": true,
+    "ownerReadRoutes200": 3,
+    "speechUntouchedByThisTask": true
+  },
+  "limitations": [
+    "E4.4 is bounded maintenance, not a new household ability or full project/family acceptance. E4.5 still proves autonomous software apply/recovery/later-use.",
+    "No dependency upgrade: existing OpenAI3.6.0/PydanticAI2.37.0 and4dlock preserved. Two deterministic wheels verified; no bit-identical full-OCI rebuild or clean installation of all optional services claimed.",
+    "Current core/worker use a one-file settings overlay preserving385/372other source files and current configuration. Operators stay in the existing host checkout and package; only their own source location is updated. The pure-Python package was separately installed/executed with Python3.12.14.",
+    "C11 preserves all original pins and modified old design/deploy authorities. Two existing authenticated whole-archive tests pass; no new live private database v2/v3 export/restore or family data restore performed.",
+    "One unrelated historical portable P1 regression fixture pins889d while existing current deploy/contracts manifest is5d023. Preserved without repin/criterion relaxation; not counted as passed or new release failure.",
+    "The atomic workspace candidate Dockerfile path now matches its launcher/broker/SDK; SDK import was executed in the existing parent. No new atomic broker binary or optional provider installed. Existing active filesystem and gateway remained in place and passed actual read-only checks.",
+    "Temporary photo-provider library retained under existing conditional decision; equivalent native photo replacement not proven. Eva1 agent remains outside this task and is not modified or restarted.",
+    "No new model/comparison series, private data publication, license change, speech modification or speaker restart by this task. Actual ordinary runtime autonomy consumption is separate and unmeasured."
+  ],
+  "outcome": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
+  "selectedCommitVerification": {
+    "tree": "5a9d16ad616a57c82a087253316254a4526640df",
+    "exitCode": 0,
+    "uniqueCasesPassed": 95,
+    "firstRun": "93passed;2could not read fixture omitted from projection, no product failure",
+    "targetedFollowup": "2 passed in 3.98s",
+    "followupSeconds": 4.532,
+    "fixture": "Unchanged tracked ordinary empty-archive fixture supplied to exact commit projection. No criteria change.",
+    "reason": "Verify exact selected commit excluding unrelated WSL voice work; repeat only missing fixture-dependent two cases.",
+    "providerCalls": 0
+  }
+}

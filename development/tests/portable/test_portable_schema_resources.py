@@ -6,9 +6,7 @@ import json
 from pathlib import Path
 
 
-EVA2_ROOT = Path(__file__).resolve().parents[3]
-FREEZE = EVA2_ROOT / "development/design" / "vertical" / "noor-4d-schema-export-freeze-v1.json"
-PORTABLE_ROOT = EVA2_ROOT / "deploy/schemas" / "portable"
+from tools.materialize_4d_schema_artifacts import FREEZE_PATH as FREEZE, PORTABLE_ROOT
 
 
 def test_materialized_portable_schemas_are_the_exact_sealed_bytes() -> None:

@@ -1,0 +1,707 @@
+{
+  "contract": "EvaE44MaintenanceDelta/v1",
+  "referenceRevision": "8a1f4c2007492ea788bd81a99e057cfbe96c9d7e",
+  "files": [
+    {
+      "path": "pyproject.toml",
+      "sha256": "d1bd869d8332977edba96851227d8711a9c51920ac4d92b67353d06ce333efaa",
+      "bytes": 1592
+    },
+    {
+      "path": "src/eva/bootstrap/runtime_settings.py",
+      "sha256": "fe42218ac045bc27248c133d66d65f0f6aac2ee6ab649d289217352de1bd4115",
+      "bytes": 22787
+    },
+    {
+      "path": "deploy/living-core/stack.compose.yml",
+      "sha256": "56384cf87318d2fef75529f9aa6d4dfff36a90ec6715e940ce1a8565071e8076",
+      "bytes": 8167
+    },
+    {
+      "path": "deploy/living-core/managed-b.compose.yml",
+      "sha256": "1f3464af8bcc1e09f0cfdc83d9bcfd8369f92e59263f2fe8bd32f81e8e3fe6d8",
+      "bytes": 23284
+    },
+    {
+      "path": "deploy/living-core/hindsight.compose.yml",
+      "sha256": "f40efd843c3bd39157a3cd27a8dff414eb0d9cf8ad3a551ff70402d40f005cf9",
+      "bytes": 3198
+    },
+    {
+      "path": "deploy/living-core/workspace-create-only/Dockerfile",
+      "sha256": "68deadce7713ab1bf58ba938c9194efce97d33a804c6ce0a7893796ea9490acb",
+      "bytes": 578
+    },
+    {
+      "path": "deploy/delegated-work/Dockerfile",
+      "sha256": "1ce2e2560d186a9c41591c139082aaf3e20725a857f4a37b8510b9f702fad573",
+      "bytes": 694
+    },
+    {
+      "path": "deploy/delegated-work/Dockerfile.source-refresh",
+      "sha256": "0c42e9265c2be07308c3e8c5f4bfc92d7cbe2e73fa70798f6e32cda36e95c017",
+      "bytes": 380
+    },
+    {
+      "path": "deploy/delegated-work/README.md",
+      "sha256": "fe0a853eac953f580494785caf40b8bda0b5da218d81201b24f4d447b59f3833",
+      "bytes": 2214
+    },
+    {
+      "path": "development/tests/operations/test_delegated_work_image.py",
+      "sha256": "7bc4939f56ff381337d14e60b5798b42c3b337ebf997e6380bc7fdd02fe7f5b4",
+      "bytes": 1344
+    },
+    {
+      "path": "development/docs/ARCHITECTUUR.md",
+      "sha256": "0f12bb41a556f3e9d053a5ce58eac5c4df8089cc953ebe7e36c261db1ea48ba2",
+      "bytes": 21961
+    },
+    {
+      "path": "src/tools/portable_export.py",
+      "sha256": "a1a2eb6b3fcff9be2ee2271d520a54a157e912eee5a34ff1c642c21d5305b6d6",
+      "bytes": 25202
+    },
+    {
+      "path": "src/tools/portable_v2_export.py",
+      "sha256": "f5fcceffae37c5b5f51ce87751831d1abd0fccb18f4832194bd784607a26811e",
+      "bytes": 10464
+    },
+    {
+      "path": "src/tools/read_eva_portable_archive.py",
+      "sha256": "cc582f0d9a1075b639fbbcc48536c5f8a12b47467ddd262e5f2421a0be0cacd3",
+      "bytes": 115077
+    },
+    {
+      "path": "src/tools/materialize_4d_schema_artifacts.py",
+      "sha256": "9a71f94b5ded19adb4ff4f744aae075d3ff405607a0437d00c673713ff85f1a2",
+      "bytes": 8859
+    },
+    {
+      "path": "development/tests/portable/test_packaged_schema_resources.py",
+      "sha256": "66b5cb0697dfe12a3f9220fa918b9997c0dac204608c0fc7bf892486619aada8",
+      "bytes": 3684
+    },
+    {
+      "path": "development/tests/portable/test_portable_schema_resources.py",
+      "sha256": "d3a21c74d25568aa46117818e3f248d6b5a6f65f2f25ecd5b16cf04f398640df",
+      "bytes": 2387
+    },
+    {
+      "path": "src/eva/resources/__init__.py",
+      "sha256": "6d52115c5947b6edeef17bf84bebbdcdedb6ce43ed55ace6d92703afbd908daa",
+      "bytes": 54
+    },
+    {
+      "path": "src/eva/resources/portable_v1/__init__.py",
+      "sha256": "6b68f50993c2abf6e64ba9c8d580030879da24fd4e3ee68e0434c59868df377b",
+      "bytes": 407
+    },
+    {
+      "path": "src/eva/resources/portable_v1/provenance.json",
+      "sha256": "363f061a692f3221fb947de56eadf63b6b0ac092d8a0e84ad37513c241ea50a5",
+      "bytes": 19095
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schema-freeze-v1.json",
+      "sha256": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
+      "bytes": 1106768
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/generic-reader-output-schema-manifest-v1.json",
+      "sha256": "5b26d3b51a556b4b214b4d2d1cd664fb5532064d5eb0c7c7db70e833c320e876",
+      "bytes": 2770
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/object-manifest-record-v1.schema.json",
+      "sha256": "1e951976fa1021893bb5bc3812a98997560b7fcf636d0e69573e4444ec4930a8",
+      "bytes": 2306
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/readback/generic-reader-conversation-v1.schema.json",
+      "sha256": "91e6dfe949dbf6598125b37de9d4ede51dcd48e0b639e4256a3defbf24018679",
+      "bytes": 938
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/readback/generic-reader-effect-v1.schema.json",
+      "sha256": "a482d2531b9cc73797ccdcfda8f1d65b7c1bc1e2fb2a7b87de567c3362d8b055",
+      "bytes": 2698
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/readback/generic-reader-episode-v1.schema.json",
+      "sha256": "3841c0ca031256bd768fe8fe09cc2c0108118522a290b67f6ce460fb66e86bad",
+      "bytes": 2746
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/readback/generic-reader-evidence-v1.schema.json",
+      "sha256": "2fc7c5211d6def22e455928cbc4643d4fd77c97790906fcc6b8f68afa63e34eb",
+      "bytes": 1158
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/readback/generic-reader-identity-v1.schema.json",
+      "sha256": "7eeb1d245e8ee799075be537e0dbd517802daa614d757f88b19a7d37bb6cd378",
+      "bytes": 792
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/readback/generic-reader-memory-v1.schema.json",
+      "sha256": "b8450d4ce82dfd2835b6587600b11c1c3cd4b90dbacc40b2b3a96d892abfb242",
+      "bytes": 1753
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/readback/generic-reader-pending-work-v1.schema.json",
+      "sha256": "2055587b753ac1e771f4502cb9e4073da171bd02d5a8afa5c9d70b4248ac5e26",
+      "bytes": 5825
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/readback/generic-reader-summary-v1.schema.json",
+      "sha256": "a9e1902e2b5bd55ed56834c057c123b47196365afca5ada19535d8e634bbc2f4",
+      "bytes": 32158
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/record-schema-manifest-v1.json",
+      "sha256": "de2e302c8d260707563a8c16af1a6dfc2a3932507013dddb79d7780a3e36dc68",
+      "bytes": 20211
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/001-core-tenants-v1.schema.json",
+      "sha256": "19d23fa1ee6c798b97ef16b13f00e0a85d1e064f04b2343e22f7d532d6f0f87b",
+      "bytes": 1911
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/002-core-installations-v1.schema.json",
+      "sha256": "a69ae2db2cdff021b604f75bae30d2ee3f6cbf6e4dfe7f65df8fe8f214c11253",
+      "bytes": 3462
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/003-core-identity-pack-versions-v1.schema.json",
+      "sha256": "e4ea419251b2239a281a2e0955d02de8437bc2012a07b33ca3d346ef5f5c7dbc",
+      "bytes": 3187
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/004-core-policy-pack-versions-v1.schema.json",
+      "sha256": "2a303782e8aa5f1cfecc8ed69ac305728722b64ae99517f8ddbe3639454bebdc",
+      "bytes": 3312
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/005-core-principals-v1.schema.json",
+      "sha256": "9e04f446c9270a78b0e818876549f0234e30c701dc4c3832e2e142a4f6fd1613",
+      "bytes": 2440
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/006-core-principal-bindings-v1.schema.json",
+      "sha256": "53d26620e975b45d56b0a37f974901ea9db793b7abfd7d87902dd21428c2c53c",
+      "bytes": 2965
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/007-core-relationships-v1.schema.json",
+      "sha256": "eef30c97ebcedd2012fac016238dd623a0bd9503af1d1af9cec09ab8caa398c8",
+      "bytes": 4839
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/008-core-conversations-v1.schema.json",
+      "sha256": "dbc79eb3a8cd921fcb71d4a55393b9606cc0c97a33b7ee7fd067a4c14610da29",
+      "bytes": 3229
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/009-core-messages-v1.schema.json",
+      "sha256": "448e474946dcf92b71c1695dd9ca3c09a3bfa34e2360763126e28bf6306eaa3c",
+      "bytes": 4720
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/010-core-ingress-requests-v1.schema.json",
+      "sha256": "4de287e437d206bc4924bf9845c8bc089b304c74940ddfb46e8b20be3a1ee59c",
+      "bytes": 6007
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/011-core-episodes-v1.schema.json",
+      "sha256": "0633869e943f79dc94b7a729c1206e8ccc674bc36fd5d9ff006df48d1f620431",
+      "bytes": 3847
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/012-core-episode-generations-v1.schema.json",
+      "sha256": "052d117dae70cd3932d3ab9353bf50d5f6307d76e33542543ab0d0e7cd9e35f2",
+      "bytes": 3835
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/013-core-episode-events-v1.schema.json",
+      "sha256": "3cddafbe7ddc6b4e5378115b762f7837bc18060e58c28b1772e51889b9ef039d",
+      "bytes": 4257
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/014-core-episode-outcomes-v1.schema.json",
+      "sha256": "27fd16c29daee579c0352e7d3a8a5046fe1249f9150592f6fbb0855abcac0d1a",
+      "bytes": 3072
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/015-core-commitments-v1.schema.json",
+      "sha256": "254229ce3e898673334ceea4cf947f8359c28eec6ed01419d7da4a60485dbb07",
+      "bytes": 3879
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/016-core-consent-grants-v1.schema.json",
+      "sha256": "6c02bec7db2bb170f5d7f4dcdb52c05d9cbdc3982058214168ff181984ff7756",
+      "bytes": 4427
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/017-core-model-attempts-v1.schema.json",
+      "sha256": "24648c9d55946e958e69b5c437ee7e39bb4d1fe1ec37e3e2aedfba7b17555fac",
+      "bytes": 7901
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/018-core-plans-v1.schema.json",
+      "sha256": "4749dbdb7b8359979a0ad10e9a5a0df213bf069fdb3354ac15b009d2c371d3b7",
+      "bytes": 3663
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/019-core-plan-steps-v1.schema.json",
+      "sha256": "17bb159d1c0946d89dee17fdcb80acc5af858b4590ece02c41422fc9686b1f93",
+      "bytes": 4315
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/020-core-attention-items-v1.schema.json",
+      "sha256": "97266ae6213ab47fb0a9bcc456f54ee7595abba859de4904a35d7dbddf3e04ca",
+      "bytes": 3990
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/021-core-connector-bindings-v1.schema.json",
+      "sha256": "c84bd71f5dfc2b4fbd9e6e5c2256a9fab9d15b9d4988085a34238f29c65786eb",
+      "bytes": 6896
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/022-core-capability-manifests-v1.schema.json",
+      "sha256": "ba1631d5f253ebb68dd2fd04c0a11ab561683d4b977a98794f304639e8543360",
+      "bytes": 3905
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/023-core-capability-activations-v1.schema.json",
+      "sha256": "3b875717811e3ac8b37461f66651c7acf0905f3f84189ec7e8340e59ac53ef55",
+      "bytes": 4250
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/024-effects-read-intents-v1.schema.json",
+      "sha256": "a2b62b1c6506a236cd9e1c62d33ff86cc10746d164606c43d826ef11a0d55810",
+      "bytes": 4424
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/025-effects-read-attempts-v1.schema.json",
+      "sha256": "ec99e1556b920f5db44a7e9da16b8f400f0134a1cd663aece5b04d2cc96e1bdd",
+      "bytes": 7125
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/026-effects-read-observations-v1.schema.json",
+      "sha256": "9a7252edd34ef97e4451a9800d4f947fffcb4e045d372ba1be46bc8b94928f88",
+      "bytes": 3649
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/027-effects-effect-intents-v1.schema.json",
+      "sha256": "0bce3ee6ac1e6a2df9410fc8593e90f326b42f4e9a4ed8f4f77dd244f7c66349",
+      "bytes": 5097
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/028-effects-effect-attempts-v1.schema.json",
+      "sha256": "ae5b62a1aedbc08b242592699037145382369181bfb8cb27d47ef01f167d35e5",
+      "bytes": 8883
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/029-effects-effect-receipts-v1.schema.json",
+      "sha256": "9827a9cb5816c92ea4d2a5d530709b1cc688bf052f3467b4ec3c00f48e19b137",
+      "bytes": 3527
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/030-effects-effect-readbacks-v1.schema.json",
+      "sha256": "eeb471cfea8b8506d404f6980b0815b9877a91e75a0c4ed7450321b7eaaeb221",
+      "bytes": 3597
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/031-effects-deliveries-v1.schema.json",
+      "sha256": "d98cdd9eb877acefb24985f9365b4385cc7d7bf2d899a9d531339989a12b4e54",
+      "bytes": 6347
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/032-effects-circuit-breakers-v1.schema.json",
+      "sha256": "aaeb609ac7bccb5e8985271a39921d9883fe1dc5254db7ec763e4c22de53fa4c",
+      "bytes": 4688
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/033-memory-source-events-v1.schema.json",
+      "sha256": "a63509500d9757b795bd0d67b84c19ce462734c9f487766f8e5a27c9da265e30",
+      "bytes": 5203
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/034-memory-fact-assertions-v1.schema.json",
+      "sha256": "b0d4953e73ca07c735ace206d511b97978c9224bcf8953d8adc18479c6250a0b",
+      "bytes": 5110
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/035-memory-current-facts-v1.schema.json",
+      "sha256": "43799039c8110b08d83cb0531c30055e4c3bf7b7597ca67ad830683147221386",
+      "bytes": 3356
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/036-memory-erasure-tombstones-v1.schema.json",
+      "sha256": "7b8a01b589ef8f62f1247e1c3ef98404f1b3813b208e979fee100fe7c0e35cc5",
+      "bytes": 7614
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/037-evidence-evidence-envelopes-v1.schema.json",
+      "sha256": "b73c03b660e1872b8f7442f59ca4983f613f7cfc4383e6a024514bd0d34aa228",
+      "bytes": 3868
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/038-evidence-evidence-links-v1.schema.json",
+      "sha256": "9fcb7f1c7ce8e44559b5aeb710032f88b283fd0c10ed2628f092e1b22a8618a8",
+      "bytes": 2790
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/records/039-evidence-object-refs-v1.schema.json",
+      "sha256": "512b8fbd6663381a7b348a13453776491817d7a14981f34063cc24a47a202728",
+      "bytes": 4423
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/AttentionWake-v1.schema.json",
+      "sha256": "79d91bec82cf0c2f18fe3ed6c2bf95d714842a2ac499a2d1ea6aca11bc5a7cbc",
+      "bytes": 2189
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/CapabilityGrant-v1.schema.json",
+      "sha256": "095105cd438b334a00fa437a4d6bc6d29b4daef8c297bfa295e600888f5aff52",
+      "bytes": 2618
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/CapabilityManifest-v1.schema.json",
+      "sha256": "03f3f3271a396d7177a35cb2372bc512f6fef8e96f5d6623bc5386e5a5aafd65",
+      "bytes": 1980
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ClaimEvidenceBinding-v1.schema.json",
+      "sha256": "c79ca8055eaa0d02b0efec6de69e5d8ee895485db86513dcf0c5a778b2791356",
+      "bytes": 1440
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/Commitment-v1.schema.json",
+      "sha256": "99a9df25ba1a4c8f9bf465d8bbdfb890d9e5a179d04d31a9650a1ba8723608aa",
+      "bytes": 1657
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorBinding-v1.schema.json",
+      "sha256": "2ccfa720e8b6d7001405616918111c3d8287ff099fa016fc849644100e3ab546",
+      "bytes": 2500
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorCandidate-v1.schema.json",
+      "sha256": "f9c229b530c33e678da0bc6ba9735f16fd2731f0f3f611b9b6a6a7e436625117",
+      "bytes": 1693
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorEnvelope-v1.schema.json",
+      "sha256": "85c1a1605dc0e389189316426490657cf951fef0037b48c6fa282531d731e5e1",
+      "bytes": 3565
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorErrorResponse-v1.schema.json",
+      "sha256": "c92d3ae2f080051acd27d917c436aa3be988559e8c68b9f9da83c39cbcdcc32f",
+      "bytes": 3653
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorInitializeRequest-v1.schema.json",
+      "sha256": "3829ce8f057b9bd2126f250be98c370ed6f5d3ea59f27b3f34ddcc69fc1cddf8",
+      "bytes": 11252
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorInitializeSuccess-v1.schema.json",
+      "sha256": "9c407882c411dc9bbbc7a09beaa8e58e2032c3c95425d4e0852ea35248b5bd41",
+      "bytes": 2756
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorInvokeRequest-v1.schema.json",
+      "sha256": "a4c8dbbe301ea2a04952dfa2c3f14872454b045a5c0751f2911bb4375eff8c4c",
+      "bytes": 4275
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorInvokeSuccess-v1.schema.json",
+      "sha256": "4547a1a62af3ec74c9678b76df725a3256820f459d66712c8e485ecb1bb662f7",
+      "bytes": 14254
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorManifest-v1.schema.json",
+      "sha256": "351c9975aa94443cbc56770c12d273f5124c333be34c386e7b001da14c747a69",
+      "bytes": 2722
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorProtocolFailure-v1.schema.json",
+      "sha256": "e5d29f14af2f94defab97b9c00102b1636a73eaeacc0e60d74fc1fde7861b532",
+      "bytes": 1916
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConnectorResult-v1.schema.json",
+      "sha256": "c70be9f0b0eace86078f3e567987d7e9c725f76997f17becc973c5c87a728cf6",
+      "bytes": 13696
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ConsentGrant-v1.schema.json",
+      "sha256": "2d84c6fcd3b4b83c45c8c330c272f69eaefe680cc992e661e11886abf8716450",
+      "bytes": 3007
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ContextSelection-v1.schema.json",
+      "sha256": "f007875310950a2a06bf6599172b2020ef1914cd994415aff4568c356ca31762",
+      "bytes": 1720
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/CredentialGrant-v1.schema.json",
+      "sha256": "a213efc4d855927f376969cf310341001586d2f350df050c7caf9f435952a751",
+      "bytes": 2256
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/DeliveryIntent-v1.schema.json",
+      "sha256": "80a711781f59606b2bcf1d41929630cb0f7f1cdd3445cfe40d039c66af2769a5",
+      "bytes": 1942
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/DeliveryOffer-v1.schema.json",
+      "sha256": "7463c031304ac3230c498007a35f5fd3b00a00916dd68b1fcb6e47ba895d6a64",
+      "bytes": 2963
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/DeliveryOffer-v2.schema.json",
+      "sha256": "6a6a3f3e8fd8989a1d288f1dbcc56faf974e3facb3f8821f1d5d6b0479cf80de",
+      "bytes": 2539
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/DeliveryReceipt-v1.schema.json",
+      "sha256": "035a300bd35fec29c85b8c1edc9a039491c8a2e2ca8b1d1fe89e68ff29368a0f",
+      "bytes": 4281
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/DeliveryReceipt-v2.schema.json",
+      "sha256": "ec66a9e190645e576e18601ecf2a3e8b4a9f46e464010aa3a3ff1c0b52a5a983",
+      "bytes": 3177
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/DocumentDraft-v1.schema.json",
+      "sha256": "3e10c39219e0adea23f3368a25147f22c67ea51d613a2aab48eecf10ec48a5d5",
+      "bytes": 1718
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/DocumentationSnapshot-v1.schema.json",
+      "sha256": "45423e23d2cacfe453704ed46b6303a0a6a39744348b0e05c462731f390db4cc",
+      "bytes": 2085
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EffectAttempt-v1.schema.json",
+      "sha256": "a5568a92d3325533d9e2b1f47683eb4732d69a38bb67ddbcd30e1811655e6906",
+      "bytes": 4258
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EffectIntent-v1.schema.json",
+      "sha256": "ccc8abcd0f6d9b4c9fab9aa0dcbdfc7096c45478361253c593a6170eaae512ff",
+      "bytes": 2987
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EffectReadback-v1.schema.json",
+      "sha256": "4a3482084db7a03a593337a3f46cabf564356c6d7a3e37125087263cf3c03b5e",
+      "bytes": 1958
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EffectReceipt-v1.schema.json",
+      "sha256": "586420704c94099e173f9b26f37b26ad8db5d05b8ff30078838e5a82edbfbe43",
+      "bytes": 1919
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EpisodeState-v1.schema.json",
+      "sha256": "f23a9eafdd1ee35d5f3d6cee67e6fe4779b943201ccc6f9f3df3377a55dd2832",
+      "bytes": 1951
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EvaAcceptanceEvidenceBundle-v1.schema.json",
+      "sha256": "5ffb1427e276ad1a5e73bf56d20b2e668294c996322112a0005c40f84fd77fe7",
+      "bytes": 3275
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EvaPortableArchive-v1.schema.json",
+      "sha256": "c0af93e3e83a83b7a1d9dddcb280f5a02516924546efbdc30fd9cce28534561c",
+      "bytes": 5288
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EvidenceEnvelope-v1.schema.json",
+      "sha256": "992377cfb7a0e8c71cf001dd839bb79f784f374ccc296b03737372c64fd6cf72",
+      "bytes": 2455
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/EvidenceEnvelope-v2.schema.json",
+      "sha256": "cb27dd6623e654cd5a8e55d40affdbedb1dc303ed0fe1ce4bb16d2240054cd03",
+      "bytes": 3447
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ExperienceSourceEvent-v1.schema.json",
+      "sha256": "0fd68c48cacd174b5ad01c3d066547e0c0ea17748007316d8ea731a54b456d46",
+      "bytes": 4192
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/IdentityPack-v1.schema.json",
+      "sha256": "17c6b835b6f4a68bf02ccffe718fd74bf036acf1211d76e35e7de994e59c390b",
+      "bytes": 4588
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ImprovementCandidate-v1.schema.json",
+      "sha256": "99387c38be6a6075f454a26b7417f1243623ff5aa1fe45e724647e9cedebdbb9",
+      "bytes": 4368
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/IngressClaim-v1.schema.json",
+      "sha256": "d6b692d1ea585fb8f1bac2d8d5c364d9b55068f2cc9719c276c2f2a64b3dc1b8",
+      "bytes": 1464
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/IngressOutcome-v1.schema.json",
+      "sha256": "cb1fdb59fd08c822e6114db333152776a506ce7b5d724b097ca842fa29a76426",
+      "bytes": 2779
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/IngressRequest-v1.schema.json",
+      "sha256": "b39f56e6884ab6a53f77271a9636e10af54a4af657f9f1bffe15fa7aa17bd603",
+      "bytes": 1736
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/InstallationManifest-v1.schema.json",
+      "sha256": "9eab8ca61858edb642562cc9d6a4abd8cc09865f1ac7c7fb9f30013cf8697d38",
+      "bytes": 3577
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/InstallationRemap-v1.schema.json",
+      "sha256": "ebf1cf1d2bac3d58cd3a3f071ecd293cc7b3893cc9563a1f355a1185b1c647a8",
+      "bytes": 2529
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/MemoryFact-v1.schema.json",
+      "sha256": "a3eeb6b53d6895577d9321e77f2c4a4eed19d72998f152a6fecc01bca8a8aeba",
+      "bytes": 3369
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/MemoryRecall-v1.schema.json",
+      "sha256": "823a766e5fbda0ed25ddd29142041455b5a09b5564f74d1de2d500ec85b71c3c",
+      "bytes": 3403
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ModelAttempt-v1.schema.json",
+      "sha256": "be5cd7c230f85e19e5df5f04ff1cd08328b801e50c51ba5099b64bb1845a4b8f",
+      "bytes": 3565
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ModelDecision-v1.schema.json",
+      "sha256": "168e27ac9fc5661844ba895c99717a6bedb457b61b0100275980a7998893c59e",
+      "bytes": 3677
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ObjectRef-v1.schema.json",
+      "sha256": "7ffede58e8f81108283d74408cb4d740e9e7cd18f1c5a2868dd0e7a5bfb0b065",
+      "bytes": 1465
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ObjectStore-v1.schema.json",
+      "sha256": "85f0a37087ae7349bfa98d4fb4c4889bec744753b99ea6de1932a61289729fb0",
+      "bytes": 2231
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/OutcomeView-v1.schema.json",
+      "sha256": "731dd386be6d7bdffa60656e5beb18725a2a659377ec17b58ce0d235f185c526",
+      "bytes": 2842
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/PlannerRequest-v1.schema.json",
+      "sha256": "1b41a09d6dd8551c526f04e66060732a8528168d4ad2d8f23c936961a4a6ecef",
+      "bytes": 54250
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/PlatformLock-v1.schema.json",
+      "sha256": "e1ee7267ade22c7ee0b7d5ab7248f554fd8e5d905d48260ced4a02054f8f195e",
+      "bytes": 6121
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/PolicyPack-v1.schema.json",
+      "sha256": "e3e08c1b666e1351adf292655008f7c5be6fef8241df5cf4f23a16aa3ab4d292",
+      "bytes": 3561
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/PresenceContext-v1.schema.json",
+      "sha256": "b9cc131a9f40ea51f30ed6b08d8c725ea71dc9a82ca21a377b6844c5428d2188",
+      "bytes": 41903
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/PresenceReply-v1.schema.json",
+      "sha256": "b758c291a6f6489b77ed3073fc0ab31656d38aed3589f007b498ea441befc756",
+      "bytes": 2852
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/PromotionDecision-v1.schema.json",
+      "sha256": "6e48ee7122840ba428b8599beef3a0f2b743aaf6bacf5b87a6afffb39e4e170a",
+      "bytes": 1959
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ReadAttempt-v1.schema.json",
+      "sha256": "48def3deebc0fcb5aea0073940075104af09917de7bf9cede38cfd1c071c4a68",
+      "bytes": 2205
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ReadIntent-v1.schema.json",
+      "sha256": "12a366b1851ec5c5ab91ad3701c16a0805ae8b3e8860107476b63385ea51ffba",
+      "bytes": 3119
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ReadObservation-v1.schema.json",
+      "sha256": "ea8930c94171baabda39f904c27d0ab3800e008a3c71afd81b9d30785c9e8805",
+      "bytes": 2102
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/RelationshipBinding-v1.schema.json",
+      "sha256": "4f8132f7da4752c846251e1727032d30e98cb8c72c16fddd6d649b013d50be3c",
+      "bytes": 3551
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ReleaseManifest-v1.schema.json",
+      "sha256": "b449f2e7301497d9767b14bb0e9dea3f5b87339705ef67d160841f5765f733c2",
+      "bytes": 3293
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ReplyCandidate-v1.schema.json",
+      "sha256": "028ed5bbde13ac99508f3809df64937b32497db9576750138ea6cdf93c7ed3d3",
+      "bytes": 1553
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/TurnEnvelope-v1.schema.json",
+      "sha256": "7a2f24945463b0b24ce57a591b939fa441e60060d4bedbe55bff440b2e18e242",
+      "bytes": 2227
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/ValidatedPlan-v1.schema.json",
+      "sha256": "4dedc3ed26ca7361ab38ab7c84607f848382db083c65ad30b26300bf63b6e684",
+      "bytes": 2848
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/canonical-json-profile-v1.json",
+      "sha256": "d3cd8347c77de4a57c4ad7834b8ba170516b420c9abd5079dac1442d0a9d0ad9",
+      "bytes": 482
+    },
+    {
+      "path": "src/eva/resources/portable_v1/schemas/portable/v1/contracts/manifest.json",
+      "sha256": "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5",
+      "bytes": 9064
+    },
+    {
+      "path": "src/tools/provision_workspace_provider.py",
+      "sha256": "7bf304f403642509ff9842a758d2ee1d667412ce0068fb8b34d82725d9b1fe07",
+      "bytes": 16517
+    },
+    {
+      "path": "src/tools/workspace_provider_operations.py",
+      "sha256": "303d09cd005587abc61643ffe6e0e8210339bd5ae25e1c69d628d00acc1fa68a",
+      "bytes": 13822
+    },
+    {
+      "path": "development/tests/operations/test_workspace_provider_operations.py",
+      "sha256": "f47d6b54d7ea3f11514ce6c6fc8bb58aefce55a71624aed90b1fb0f23f5e5cd8",
+      "bytes": 9360
+    }
+  ],
+  "scope": "Only C10–C12 and active module/update contract; no protected criteria, frozen old authorities or speech changes."
+}

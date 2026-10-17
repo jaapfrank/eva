@@ -168,6 +168,41 @@ eindfase, geen claim dat elk bestaand manifest deze velden al implementeert.
 Verwijderen/uitzetten stopt nieuwe toelating en maakt lopend werk en behouden
 gegevens zichtbaar; het wist niet stilletjes andermans geheugen of resultaten.
 
+## Actieve module- en onderhoudscontracten
+
+Deze tabel concretiseert de bestaande componentcatalogus en bovenstaande eigenaars;
+zij voegt geen modulemanager, statusbron of nieuwe producttaak toe. Contractnamen
+verwijzen naar de bestaande validatie. Configuratie is installatiegebonden; een
+contractversie is geen claim dat elke losse Pythonfile een eigen API nodig heeft.
+
+| Module / grens | Contract en configuratie | Gegevensbezit en aan-/uitgedrag |
+| --- | --- | --- |
+| Persoon en gesprek | Getekend `IdentityPack/v1`, `RuntimeSettings`, dezelfde gesprek-/actiejournalen. | PostgreSQL bewaart persoon en gesprek. Kern is verplicht; provider-/kanaalwissel maakt geen nieuwe Eva. De twee standaardidentiteitsbestanden zijn onveranderd wheel-package-data; de huidige installatie-identiteit blijft apart gemount. |
+| Geheugen en zoekprojectie | Bestaande bron-/factcontracten, persoonsbinding en Hindsight-bankconfiguratie. | PostgreSQL is bron; Hindsight een herbouwbare persoonsgebonden projectie. Projectie uitval verandert bronherkomst of toegang niet. Geen ongevraagde database- of embeddingmigratie. |
+| Initiatief en aandacht | `SensoryEvent`, `FreeWillDecision`, bestaande mandaten en geplande aandacht. | Eigen beslissingen, vervolg en feedback blijven in dezelfde database. Uitschakelen van achtergrondwerk stopt nieuwe cycli; onzeker/lopend werk en gegevens blijven zichtbaar. |
+| Zelfstandig werk en leren | Bestaande versiegebonden work/grant/receipt- en componentbeoordelingscontracten. | Kern en worker delen exact dezelfde source-/dependencyrelease. Bestaande toelating, stoppen, resultaatbinding en bewaarbeleid blijven gelden. E4.5 bewijst de zelfstandige software-installatieketen apart. |
+| Modeladapters | Bestaande providerinstellingen, optionele-modellenlock, huidige lease-/secretbestanden. | Alleen geselecteerde adapter krijgt toegelaten context. Uitgeschakeld betekent geen nieuwe toelating; gegevens blijven in Eva. Astra minimaal medium voor inhoud, Sol/none alleen eenvoudig contact. Geen stille providerfallback. |
+| Kanaaladapters | Bestaande request-/actor-/replybinding; website/Telegram en optioneel WhatsApp. | Kanaal heeft alleen transport/accountstate; geheugen en opdrachten blijven in de kern. Uitschakelen behoudt oorspronkelijke ontvanger en onzeker afleverwerk. WhatsApp-account/belproef blijft optioneel open. |
+| Externe mogelijkheden | Bestaande MCP-/API-catalogus en connector-/effect-/readbackcontracten. | De gekoppelde dienst bezit haar eigen gegevens, Eva de bewijsreceipts. Toegang is optioneel; uitschakelen stopt nieuwe toelating zonder verborgen verwijdering of dubbele actie. |
+| Browser/workspace-installatie | Bestaande provision-plannen en exact gepinde `tools.workspace_provider_operations`. | Host bezit configuratie en secretbestanden; externe volumes bewaren werk. Geen import of uitvoering van onafhankelijke acceptatiecriteria. Een gewijzigd helperhash maakt een oud plan niet vanzelf geldig. |
+| Portable/export en schemageneratie | Bestaande portable-v1/v2/v3-profielen en hashpins; `eva.resources.portable_v1` bevat exact herleidbare oorspronkelijke v1-bronnen. | Export is een kopie, geen tweede geheugen. Standalone validatie blijft verplicht; source freeze en archiefpaden behouden hun oorspronkelijke betekenis. Huidige schema's en oorspronkelijke fouten blijven behouden. |
+| Spraak | Bestaande sessie-/audiocontracten van de andere uitvoerder. | Alleen optioneel transport naar dezelfde kern; deze onderhoudsoplevering wijzigt of herstart geen spraakdienst. |
+| Installatie en onderhoud | Bestaande installer, `EvaImageUpdate/v1`, huidige Compose-configuratie, locks en migraties. | Eén ondersteunde corebuild met workerrol; update bewaart actuele mounts en configuratie. Een build of gezond proces vervangt geen gezinsacceptatie. |
+
+De tijdelijk behouden oude fotoprovider is een specifieke bibliotheekafhankelijkheid,
+geen Eva1-agent. Er is binnen E4.4 geen bewezen gelijkwaardige vervanging aangetoond;
+het onderbouwde behoudsbesluit blijft gelden. Verwijderen zonder behoud van foto-,
+persoons-, ontvanger- en verbruiksbinding zou kwaliteit verliezen.
+
+Upstream-onderhoud begint bij een concrete correctie, ontbrekende mogelijkheid of
+ondersteunings-/veiligheidsreden. Behoud de huidige locks totdat de geselecteerde
+versie, compatibiliteit, configuratie- en gegevensovergang gericht zijn gecontroleerd.
+Leg oude/nieuwe bron- en lockhash, reden, geraakte contracten, controles en werkelijk
+geïnstalleerde image vast. Deze kaart introduceert geen dependency-upgrade: bestaande
+OpenAI/PydanticAI-versies worden coherent verpakt; geen laatste-versieonderzoek,
+nieuwe providerroute of concurrentenmatrix. De reproduceerbare workerbouw staat in
+[de bestaande deploymap](../../deploy/delegated-work/README.md).
+
 ## Wat gericht moet worden vereenvoudigd
 
 De [herbeoordeling van 13 oktober](project-reassessment-20261013.md) beschrijft

@@ -1,7 +1,7 @@
 """Prepare a durable private workspace provider without enabling any Eva core.
 
-The pinned, previously exercised upstream helpers perform Docker and gateway
-API operations. Existing resources are never deleted or silently adopted.
+The pinned tools-owned operational helpers perform Docker and gateway API
+operations without importing acceptance machinery. Existing resources are never deleted or silently adopted.
 """
 from __future__ import annotations
 
@@ -22,8 +22,8 @@ ROOT = Path(__file__).resolve().parents[2]
 HOST_ROOT = Path("/var/lib/eva2/workspace-provider")
 MANIFEST = ROOT / "deploy/living-core/workspace-provider.compose.yml"
 STARTER = ROOT / "deploy/gateway/start-contextforge.sh"
-HELPER = ROOT / "development/validation/release-acceptance/v2/run_physical_acceptance.py"
-HELPER_SHA256 = "a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be"
+HELPER = Path(__file__).with_name("workspace_provider_operations.py")
+HELPER_SHA256 = "303d09cd005587abc61643ffe6e0e8210339bd5ae25e1c69d628d00acc1fa68a"
 GATEWAY_IMAGE = "ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
 FILESYSTEM_IMAGE = "eva2.local/workspace-filesystem@sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4"
 GATEWAY = "eva2-mcp-gateway"
@@ -38,8 +38,8 @@ def _digest(path: Path) -> str:
 
 def _helper():
     if _digest(HELPER) != HELPER_SHA256:
-        raise RuntimeError("workspace upstream helper binding differs")
-    spec = importlib.util.spec_from_file_location("workspace_upstream_operator", HELPER)
+        raise RuntimeError("workspace operational helper binding differs")
+    spec = importlib.util.spec_from_file_location("workspace_provider_operator", HELPER)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module

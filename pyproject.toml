@@ -34,6 +34,8 @@ where = ["src"]
 include = ["eva*", "tools*", "connector_sdk*"]
 
 [tool.setuptools.package-data]
+"eva.application" = ["default_identity_pack.json", "default_identity_pack_trust.json"]
+"eva.resources.portable_v1" = ["schema-freeze-v1.json", "provenance.json", "schemas/**/*.json"]
 "eva.voice_service" = ["client.html"]
 "eva.adapters.model" = ["tokenizer_data/*"]
 "eva.adapters.api" = [

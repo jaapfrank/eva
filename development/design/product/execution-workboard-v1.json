@@ -838,17 +838,17 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-17T11:45:59.861234+00:00",
+  "lastUpdated": "2026-10-17T12:16:51.042915+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.4",
+  "activeTaskId": "E4.5",
   "currentWork": {
-    "id": "E4.4",
-    "title": "Modules en updates onderhoudbaar opleveren",
+    "id": "E4.5",
+    "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
     "status": "planned",
-    "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten.",
-    "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
-    "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+    "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering.",
+    "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+    "checkedAt": "2026-10-17T12:16:51.042915+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,6 +1632,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E4.4 · Module- en installatiegaten afgewerkt",
+            "state": "installed",
+            "checkedAt": "2026-10-17T12:16:51.042915+00:00",
+            "summary": "Identiteit/schemabronnen compleet verpakt; export hersteld met oorspronkelijke pins. Eén buildbasis voor kern/worker, helper los van acceptatietest en actuele modeldefaults. Kern/worker gezond, bestaande hostoperator live gecontroleerd; gerichte tests en onafhankelijke review akkoord.",
+            "remaining": "E4.5 en gezamenlijke E5-/gezinsacceptatie blijven open. Fotoafhankelijkheid onderbouwd behouden; optioneel WhatsApp wacht op eigen nummer.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e44-module-maintenance-review-20261017.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [
+              "E4.4"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "familyAcceptance": false,
+            "completionScope": "Fixed C10–C12 maintenance and installed/operator boundaries; no new family ability, photo replacement, full optional installation or speech claim."
+          },
+          {
             "title": "E4.3 · Verliesloze contextvoorbereiding versneld",
             "state": "installed",
             "checkedAt": "2026-10-17T11:45:59.861234+00:00",
@@ -2356,46 +2373,46 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.3 · Verliesloze contextvoorbereiding versneld",
+          "title": "E4.4 · Module- en installatiegaten afgewerkt",
           "state": "installed",
-          "checkedAt": "2026-10-17T11:45:59.861234+00:00",
-          "summary": "Gemeten voorbereiding878→21ms en31→18ms met bytegelijke modelinvoer. Korte context geen winst; geen token-/totale antwoordwinst bewezen. C09-headergrens vóór lezen. Kern/worker gezond geïnstalleerd,145 tests en onafhankelijke review geslaagd.",
-          "remaining": "E4.4/E4.5 en gezamenlijke gezinsacceptatie blijven open. Bestaand portable schemapadprobleem staat concreet bij E4.4.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e43-runtime-efficiency-review-20261017.json",
+          "checkedAt": "2026-10-17T12:16:51.042915+00:00",
+          "summary": "Identiteit/schemabronnen compleet verpakt; export hersteld met oorspronkelijke pins. Eén buildbasis voor kern/worker, helper los van acceptatietest en actuele modeldefaults. Kern/worker gezond, bestaande hostoperator live gecontroleerd; gerichte tests en onafhankelijke review akkoord.",
+          "remaining": "E4.5 en gezamenlijke E5-/gezinsacceptatie blijven open. Fotoafhankelijkheid onderbouwd behouden; optioneel WhatsApp wacht op eigen nummer.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e44-module-maintenance-review-20261017.json",
           "maintenanceRepair": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [
-            "E4.3"
+            "E4.4"
           ],
           "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "Measured deterministic preparation and header-read efficiency; no model quality lead, billed saving, whole-archive restore or physical speech claim."
+          "completionScope": "Fixed C10–C12 maintenance and installed/operator boundaries; no new family ability, photo replacement, full optional installation or speech claim."
         },
         "now": {
-          "taskId": "E4.4",
-          "title": "Modules en updates onderhoudbaar opleveren",
+          "taskId": "E4.5",
+          "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
           "status": "planned",
-          "summary": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
-          "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten."
+          "summary": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+          "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering."
         },
         "next": {
-          "title": "E4.5 · Eigen verbetering zelfstandig installeren",
-          "state": "Na E4.4",
-          "summary": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+          "title": "E5.1 · Gezamenlijke eindkandidaat",
+          "state": "Na E4.5",
+          "summary": "Bestaande gezamenlijke oplevering en onafhankelijke eindreview; gezinsgebruik/acceptatie blijven apart.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Geen handeling nodig voor E4.3/E4.4",
-          "detail": "Gerichte efficiëntieverbetering draait. Spraak blijft bij Codex in WSL. Eigen WhatsApp-nummer kan later.",
+          "title": "Geen handeling nodig voor E4.4/E4.5",
+          "detail": "E4.4 draait. Zelfstandige softwareverbetering E4.5 volgt; spraak blijft bij Codex in WSL. Eigen WhatsApp-nummer kan later.",
           "required": false
         },
-        "checkedAt": "2026-10-17T11:45:59.861234+00:00",
-        "reviewedAt": "2026-10-17T11:45:59.861234+00:00",
+        "checkedAt": "2026-10-17T12:16:51.042915+00:00",
+        "reviewedAt": "2026-10-17T12:16:51.042915+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-17T11:16:40.392200+00:00",
-      "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+      "checkedAt": "2026-10-17T12:16:51.042915+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2516,7 +2533,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-17T11:45:59.861234+00:00",
+      "lastUpdatedAt": "2026-10-17T12:16:51.042915+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2550,7 +2567,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-17T11:45:59.861234+00:00",
+      "updatedAt": "2026-10-17T12:16:51.042915+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -5595,14 +5612,14 @@
               {
                 "id": "E4.4",
                 "title": "Modules en updates onderhoudbaar opleveren",
-                "status": "planned",
+                "status": "completed",
                 "kind": "afronden",
                 "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Bestaande installer, locks, adapters en runtime-updatepad worden hergebruikt.",
-                "gap": "Drie clusters: package/build/modeldefaults; portable/schemaresources en exacte provenance; operationele helper los van testchecker met juiste bronbinding. Tijdelijke fotobibliotheek pas vervangen na bewezen gelijke werking; geen Eva1-agent.",
-                "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
+                "gap": "",
+                "nextAction": "Afgerond. Vervolg uitsluitend bestaande E4.5: één zelfstandig toegepaste softwareverbetering met herstel en later gebruik.",
                 "files": [
                   "src/eva/contracts",
                   "src/eva/bootstrap",
@@ -5617,10 +5634,10 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+                "checkedAt": "2026-10-17T12:16:51.042915+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "availableNow": true,
+                  "readyWhen": "Geen handeling nodig. Bestaande Eva en installatieroutes gebruiken de bijgewerkte bron; spraak blijft bij Codex in WSL.",
                   "steps": [],
                   "blocksIndependentWork": false
                 },
@@ -5630,7 +5647,7 @@
                     "APP-05",
                     "B03"
                   ],
-                  "implementationStarted": false,
+                  "implementationStarted": true,
                   "newTasks": 0,
                   "E3.3": {
                     "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
@@ -5643,7 +5660,7 @@
                       "SU-03",
                       "SU-04"
                     ],
-                    "implementationStarted": false,
+                    "implementationStarted": true,
                     "newTasks": 0
                   },
                   "E3.4": {
@@ -5657,7 +5674,7 @@
                       "C12"
                     ],
                     "newTasks": 0,
-                    "implementationStarted": false
+                    "implementationStarted": true
                   }
                 },
                 "existingSchemaLayoutFinding": {
@@ -5665,7 +5682,42 @@
                   "function": "src/tools/portable_export.py::_schema_payloads",
                   "failure": "Two existing portable whole-archive tests fail before encryption because default root schemas path is absent; actual resources are development/schemas.",
                   "scope": "Reuse existing C10/C11 packaging/schema-resource repair; no new product task.",
-                  "status": "open"
+                  "status": "resolved",
+                  "resolution": "Default resources now belong to sealed eva.resources.portable_v1; original hash authority and schemas/ archive paths restored, existing whole-archive crypto tests pass. Current checkout deploy/schemas remains unchanged."
+                },
+                "result": "C10–C12 afgewerkt: identiteit en exacte schemabronnen verpakt, export/reader hersteld zonder repins, helper los van acceptatietest, één core/worker-buildbasis en actuele modeldefaults. Geïnstalleerde kern/worker gezond; hostoperator gebruikt echte gateway/werkmap. Module-/updatecontracten vastgelegd; tests en onafhankelijke review akkoord.",
+                "completionEvidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
+                "independentReview": "development/reviews/e44-module-maintenance-review-20261017.json",
+                "conditionalPhotoDependency": {
+                  "decision": "retained_with_existing_evidence",
+                  "reason": "No equivalent native replacement demonstrated; prevent photo regression, no second Eva agent.",
+                  "source": "development/evidence/reassessment/e33-photo-runtime-metadata-20261017.json"
+                },
+                "completedAt": "2026-10-17T12:16:51.042915+00:00",
+                "cleanupExecution": {
+                  "fixedListComplete": true,
+                  "clusters": [
+                    {
+                      "id": "C10",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json"
+                    },
+                    {
+                      "id": "C11",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json"
+                    },
+                    {
+                      "id": "C12",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json"
+                    }
+                  ],
+                  "newTasks": 0,
+                  "installedCoreWorker": true,
+                  "hostOperatorUpdated": true,
+                  "speechChanged": false,
+                  "familyAcceptance": false
                 }
               },
               {
@@ -5792,7 +5844,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
+        "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5801,10 +5853,10 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T11:45:59.861234+00:00",
+        "updatedAt": "2026-10-17T12:16:51.042915+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-17T11:45:59.861234+00:00",
+          "updatedAt": "2026-10-17T12:16:51.042915+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -5875,7 +5927,7 @@
                 "E4.4",
                 "E4.5"
               ],
-              "currentGap": "E4.1–E4.3 afgerond. E4.4/E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open. De gemeten CPU-winst bewijst geen lagere tokens of totale antwoordtijd."
+              "currentGap": "E4.1–E4.4 afgerond. E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open. Bestaande fotoafhankelijkheid onderbouwd behouden; geen volledige autonome software-installatie uit onderhoud afgeleid."
             },
             {
               "id": "E5",
@@ -9015,14 +9067,14 @@
             {
               "id": "E4.4",
               "title": "Modules en updates onderhoudbaar opleveren",
-              "status": "planned",
+              "status": "completed",
               "kind": "afronden",
               "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Bestaande installer, locks, adapters en runtime-updatepad worden hergebruikt.",
-              "gap": "Drie clusters: package/build/modeldefaults; portable/schemaresources en exacte provenance; operationele helper los van testchecker met juiste bronbinding. Tijdelijke fotobibliotheek pas vervangen na bewezen gelijke werking; geen Eva1-agent.",
-              "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
+              "gap": "",
+              "nextAction": "Afgerond. Vervolg uitsluitend bestaande E4.5: één zelfstandig toegepaste softwareverbetering met herstel en later gebruik.",
               "files": [
                 "src/eva/contracts",
                 "src/eva/bootstrap",
@@ -9037,10 +9089,10 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+              "checkedAt": "2026-10-17T12:16:51.042915+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "availableNow": true,
+                "readyWhen": "Geen handeling nodig. Bestaande Eva en installatieroutes gebruiken de bijgewerkte bron; spraak blijft bij Codex in WSL.",
                 "steps": [],
                 "blocksIndependentWork": false
               },
@@ -9050,7 +9102,7 @@
                   "APP-05",
                   "B03"
                 ],
-                "implementationStarted": false,
+                "implementationStarted": true,
                 "newTasks": 0,
                 "E3.3": {
                   "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
@@ -9063,7 +9115,7 @@
                     "SU-03",
                     "SU-04"
                   ],
-                  "implementationStarted": false,
+                  "implementationStarted": true,
                   "newTasks": 0
                 },
                 "E3.4": {
@@ -9077,7 +9129,7 @@
                     "C12"
                   ],
                   "newTasks": 0,
-                  "implementationStarted": false
+                  "implementationStarted": true
                 }
               },
               "existingSchemaLayoutFinding": {
@@ -9085,7 +9137,42 @@
                 "function": "src/tools/portable_export.py::_schema_payloads",
                 "failure": "Two existing portable whole-archive tests fail before encryption because default root schemas path is absent; actual resources are development/schemas.",
                 "scope": "Reuse existing C10/C11 packaging/schema-resource repair; no new product task.",
-                "status": "open"
+                "status": "resolved",
+                "resolution": "Default resources now belong to sealed eva.resources.portable_v1; original hash authority and schemas/ archive paths restored, existing whole-archive crypto tests pass. Current checkout deploy/schemas remains unchanged."
+              },
+              "result": "C10–C12 afgewerkt: identiteit en exacte schemabronnen verpakt, export/reader hersteld zonder repins, helper los van acceptatietest, één core/worker-buildbasis en actuele modeldefaults. Geïnstalleerde kern/worker gezond; hostoperator gebruikt echte gateway/werkmap. Module-/updatecontracten vastgelegd; tests en onafhankelijke review akkoord.",
+              "completionEvidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
+              "independentReview": "development/reviews/e44-module-maintenance-review-20261017.json",
+              "conditionalPhotoDependency": {
+                "decision": "retained_with_existing_evidence",
+                "reason": "No equivalent native replacement demonstrated; prevent photo regression, no second Eva agent.",
+                "source": "development/evidence/reassessment/e33-photo-runtime-metadata-20261017.json"
+              },
+              "completedAt": "2026-10-17T12:16:51.042915+00:00",
+              "cleanupExecution": {
+                "fixedListComplete": true,
+                "clusters": [
+                  {
+                    "id": "C10",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json"
+                  },
+                  {
+                    "id": "C11",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json"
+                  },
+                  {
+                    "id": "C12",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json"
+                  }
+                ],
+                "newTasks": 0,
+                "installedCoreWorker": true,
+                "hostOperatorUpdated": true,
+                "speechChanged": false,
+                "familyAcceptance": false
               }
             },
             {
@@ -9212,7 +9299,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
+      "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -9221,10 +9308,10 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T11:45:59.861234+00:00",
+      "updatedAt": "2026-10-17T12:16:51.042915+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-17T11:45:59.861234+00:00",
+        "updatedAt": "2026-10-17T12:16:51.042915+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -9295,7 +9382,7 @@
               "E4.4",
               "E4.5"
             ],
-            "currentGap": "E4.1–E4.3 afgerond. E4.4/E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open. De gemeten CPU-winst bewijst geen lagere tokens of totale antwoordtijd."
+            "currentGap": "E4.1–E4.4 afgerond. E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open. Bestaande fotoafhankelijkheid onderbouwd behouden; geen volledige autonome software-installatie uit onderhoud afgeleid."
           },
           {
             "id": "E5",
@@ -10526,7 +10613,7 @@
       "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-17T11:45:59.861234+00:00",
+  "updatedAt": "2026-10-17T12:16:51.042915+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -10563,5 +10650,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-17T11:45:59.861234+00:00"
+  "lastUpdatedAt": "2026-10-17T12:16:51.042915+00:00"
 }

@@ -1,0 +1,585 @@
+{
+  "contract": "EvaE44InstalledMaintenance/v1",
+  "taskId": "E4.4",
+  "status": "installed_bounded_maintenance_complete",
+  "checkedAt": "2026-10-17T12:16:51.042915+00:00",
+  "referenceRevision": "8a1f4c2007492ea788bd81a99e057cfbe96c9d7e",
+  "fileManifest": "development/evidence/reassessment/e44-maintenance-file-delta-20261017.json",
+  "clusters": [
+    {
+      "id": "C10",
+      "status": "completed",
+      "decisions": [
+        "APP-05",
+        "B03",
+        "OP-03"
+      ],
+      "result": "Signed default identity packaged unchanged; worker derives exact shared core release rather than conflicting historical resolver; current/default model roles coherent; optional atomic recipe path corrected.",
+      "wheelBuild": {
+        "wheelSha256": "841dc9a980634d9ff3d62a94b12eb66f63824a6a0905297b9aeb6da2253d665b",
+        "byteIdenticalBuilds": 2,
+        "sourceDateEpoch": 1792237624,
+        "resourceJsonCountIncludingProvenance": 118,
+        "identityBytesUnchanged": true,
+        "helperAndReaderPackaged": true,
+        "wheel": "/home/administrator/project/.eva2-artifacts/e44-20261017/wheel-1/eva2_living_core-0.0.0-py3-none-any.whl",
+        "source": "Tracked HEAD src plus listed E4.4-owned deltas; unrelated uncommitted voice code excluded.",
+        "modelCalls": 0
+      },
+      "installedPackageExecution": {
+        "python": "3.12.14",
+        "identityVerified": true,
+        "providerVersionsVerified": true,
+        "portableSchemaPayloads": 116,
+        "materializationCurrent": true,
+        "stdlibGeneratorOutsideCheckout": "4D schema outputs are current",
+        "helperLoadWithoutAcceptance": true,
+        "installedOutsideCheckout": true
+      },
+      "actualOfflineWorkerRecipeBuild": {
+        "coreParent": "sha256:7b2c76d5d3488eeef7d1e8d6acf2cc5d10c0915061ef65dd568eaf2a72a23a80",
+        "network": "none",
+        "providerCheckPassed": true,
+        "seconds": 15.686,
+        "image": "sha256:9ab4616833ef52ca698b5c7fbb551744dd3fca0ac7770460b6f51fd1dcb6cb53",
+        "installed": "No; existing worker receives its own image-preserving overlay."
+      },
+      "runtimeSettingsTests": {
+        "passed": 57,
+        "seconds": 2.54
+      },
+      "recipeContractTests": {
+        "passed": 2,
+        "seconds": 0.07
+      }
+    },
+    {
+      "id": "C11",
+      "status": "completed",
+      "decisions": [
+        "STATE-01",
+        "PORTABLE-01",
+        "SU-01"
+      ],
+      "preInstallationImplementationReport": {
+        "contract": "EvaE44PortableResourceOwnership/v1",
+        "scope": "Fixed C11 / STATE-01 / PORTABLE-01 / SU-01 only",
+        "status": "implemented_focused_checks_pass_pending_root_package_install_and_review",
+        "sourceRevision": "8a1f4c2007492ea788bd81a99e057cfbe96c9d7e",
+        "ownedManifest": "owned-files.json",
+        "ownCodePatch": "own-code.patch",
+        "provenance": "resource-provenance.json and src/eva/resources/portable_v1/provenance.json",
+        "decisions": [
+          "Recovered original exact freeze Git blob e563e695bc2e4fb15f521e515d185b45b7a73295, SHA f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38; original pins unchanged.",
+          "Recovered original portable manifest de2e302c and reader manifest 5b26d3b5; generated schemas decoded from individually length/hash-bound freeze bytes; no schema or criterion edits.",
+          "Packaged supported v1 resources independently of current checkout design/deploy reference files. Existing exact 64-contract/profile bundle verified before copy.",
+          "Generator loads packaged original freeze and reproduces current catalog bytes exactly by explicit schemas/ to deploy/schemas/ mapping of only39 portableExport.recordSchemaRelativePath fields. Catalog source bytes remain ac40abb7faa532cae9759bd4ef9936d33d8cc4abf090642f7f7e61ed24e75039.",
+          "Portable exporter default schemas come from importlib.resources; explicit overrides remain strictly hash checked. Original supported schemas/ archive paths restored in exporter/reader without changing original hash pins.",
+          "Mandatory standalone validator binds sibling reader using __file__, remaining independent stdlib executable under python -I; no validation bypass.",
+          "V2 exporter existing frozen-v1 canonical-subarchive call inherits fixed defaults; no V2 export source edit.",
+          "Existing schema-byte regression fixture follows new sealed resource owner; assertions/hash pins unchanged."
+        ],
+        "resources": {
+          "package": "eva.resources.portable_v1",
+          "dataFiles": 117,
+          "dataBytes": 1666400,
+          "archivePayloads": 116,
+          "freezeSha256": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
+          "packageDataPatterns": [
+            "schema-freeze-v1.json",
+            "provenance.json",
+            "schemas/portable/*.json",
+            "schemas/portable/records/*.json",
+            "schemas/portable/readback/*.json",
+            "schemas/portable/v1/contracts/*.json"
+          ]
+        },
+        "verification": {
+          "firstRun": {
+            "result": "9 passed in5.02s",
+            "metadata": {
+              "command": [
+                "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+                "-m",
+                "pytest",
+                "-q",
+                "-p",
+                "no:cacheprovider",
+                "development/tests/portable/test_packaged_schema_resources.py",
+                "development/tests/portable/test_portable_transport.py::test_valid_portable_archive_round_trips_as_authenticated_whole_transport",
+                "development/tests/portable/test_portable_transport.py::test_wrong_passphrase_or_changed_ciphertext_never_publishes_restored_archive"
+              ],
+              "exitCode": 0,
+              "elapsedSeconds": 5.445237575011561
+            },
+            "includes": "New package schema/override tests + both existing authenticated whole-archive roundtrip tests previously blocked during E4.3."
+          },
+          "secondRun": {
+            "result": "9 passed in0.47s",
+            "metadata": {
+              "command": [
+                "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+                "-m",
+                "pytest",
+                "-q",
+                "-p",
+                "no:cacheprovider",
+                "development/tests/portable/test_packaged_schema_resources.py",
+                "development/tests/portable/test_portable_schema_resources.py"
+              ],
+              "exitCode": 0,
+              "elapsedSeconds": 0.7817300489987247
+            },
+            "includes": "Final package tests plus existing materialized-schema exact-byte test; added generator -I --check outside checkout after making generator stdlib-only."
+          },
+          "uniqueOrdinaryCasesPassed": 11,
+          "catalogByteIdentical": true,
+          "fullRegistrySchemaValidation": "64 contracts,39 canonical records,8 readback schemas loaded from default116 archivepayloads outside checkout.",
+          "legacyCryptoQuality": "Whole archive validates through actual standalone reader under -I; correct passphrase roundtrip succeeds; wrong passphrase/tampered ciphertext fail publication, existing test unchanged.",
+          "callables": [
+            "tools.portable_export._schema_payloads()",
+            "tools.materialize_4d_schema_artifacts.materialize(check=True) returns[]",
+            "python -I <tools/materialize_4d_schema_artifacts.py> --check",
+            "python -I <tools/read_eva_portable_archive.py> --help"
+          ]
+        },
+        "unchangedAuthorityHashes": {
+          "development/design/vertical/noor-4d-schema-export-freeze-v1.json": "2bb23d486038dcdaf26607ad2dba9c38b13b4cc799a6644cd1fffb1bb20a626a",
+          "deploy/schemas/portable/record-schema-manifest-v1.json": "44ad41ecd42f98c1226eacb2c09d0f63e21c63096ffe9144495f229fede0c9d2",
+          "deploy/schemas/portable/generic-reader-output-schema-manifest-v1.json": "656cd93989ed3bc90fb68bc68266d5e55ec57d61543bf8017a90deba4895c801",
+          "src/eva/adapters/postgres/catalog_generated.py": "ac40abb7faa532cae9759bd4ef9936d33d8cc4abf090642f7f7e61ed24e75039"
+        },
+        "limits": [
+          "Root owns package metadata, offline wheel/build, installation and independent review; no installed outcome claimed by this executor.",
+          "No new live PostgreSQL v2 export/restore: unchanged V2 consumer transfer reviewed; frozen-v1 boundary is exercised end-to-end by existing crypto tests.",
+          "Old test_portable_p1_regressions additionally pins a different historical current-registry hash889d, while existing current deploy/contracts manifest is5d023; no blind repin, no assertion relaxation. That unrelated old snapshot is not included as green.",
+          "Existing modified design/deploy reference resources remain untouched; explicit override to incompatible old resources still fails original authority checks.",
+          "No protected criteria/endcases altered, no model/provider calls, no real family/archive data or restore, no Git commit/board/deploy by this executor."
+        ],
+        "usage": {
+          "providerCalls": 0,
+          "installationActions": 0,
+          "developmentCredits": "unknown",
+          "runtimeCredits": 0
+        }
+      },
+      "installationResolvedBy": "installation and hostOperatorCheck in this same final outcome"
+    },
+    {
+      "id": "C12",
+      "status": "completed",
+      "decisions": [
+        "SU-03",
+        "SU-04"
+      ],
+      "preInstallationImplementationReport": {
+        "contract": "EvaE44OperationalHelperMigration/v1",
+        "createdAt": "2026-10-17T12:06:40.111318+00:00",
+        "cluster": "C12",
+        "findings": [
+          "SU-03",
+          "SU-04"
+        ],
+        "status": "implemented_targeted_tests_passed_pending_independent_review_and_package_installation",
+        "scope": [
+          {
+            "path": "src/tools/provision_workspace_provider.py",
+            "beforeSha256": "e088f7790e46e6b2fb901173e53b97c65e3c8e92101328f4439a2d7f0348e794",
+            "afterSha256": "7bf304f403642509ff9842a758d2ee1d667412ce0068fb8b34d82725d9b1fe07",
+            "bytes": 16517
+          },
+          {
+            "path": "src/tools/workspace_provider_operations.py",
+            "beforeSha256": null,
+            "afterSha256": "303d09cd005587abc61643ffe6e0e8210339bd5ae25e1c69d628d00acc1fa68a",
+            "bytes": 13822
+          },
+          {
+            "path": "development/tests/operations/test_workspace_provider_operations.py",
+            "beforeSha256": null,
+            "afterSha256": "f47d6b54d7ea3f11514ce6c6fc8bb58aefce55a71624aed90b1fb0f23f5e5cd8",
+            "bytes": 9360
+          }
+        ],
+        "manifestSha256": "e30b7381e2318cfe907a2703ccc6fe6d05389948a5e489d492ca07cecc33db38",
+        "patchSha256": "231436bcea90f3fac10a19ed21e9ed3d3b5eaf6056d8683b598a50655b93377c",
+        "sourceProvenance": {
+          "checkedAt": "2026-10-17T12:05:15.493831+00:00",
+          "source": "development/validation/release-acceptance/v2/run_physical_acceptance.py",
+          "sourceSha256": "e733a44871860fb48cbc91dc89372272bb06c0a3c6872ec0c2efb44c3992b589",
+          "selectedRanges": [
+            {
+              "start": 73,
+              "end": 84,
+              "sha256": "7d74ce979db58913615ffd5c2ab61a597bdda0d0c959b5e9437aeda6a80f759d"
+            },
+            {
+              "start": 120,
+              "end": 172,
+              "sha256": "7c756ba2316a8139d1428c4434f62aa7166ff4b576576b33e38bd87057f51cf4"
+            },
+            {
+              "start": 476,
+              "end": 557,
+              "sha256": "bd584cd71c5a38ce7f64bc7a81aefedafac664fddfe8d0e8f6bff9d4be470f00"
+            },
+            {
+              "start": 642,
+              "end": 669,
+              "sha256": "1aa42e305163662e9413ba43768d5e4afc57f224da7b9464696f26e1890d69aa"
+            },
+            {
+              "start": 692,
+              "end": 898,
+              "sha256": "27ca6c4d3cfb245e1b7c2f7e8529361286bccb4fb6cdd0f9bf7a3c6e5f9e1d4a"
+            }
+          ],
+          "originalConsumerSha256": "e088f7790e46e6b2fb901173e53b97c65e3c8e92101328f4439a2d7f0348e794",
+          "priorStaleConsumerPin": "a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be",
+          "protectedChecker": {
+            "path": "development/validation/release-acceptance/v2/check_acceptance.py",
+            "sha256": "cfdadecd6d2140c7f802d167ec4ace5b938d061c33deb3fa4b8ac8bc08d172c6",
+            "mode": "hash_metadata_only_no_content_review"
+          },
+          "fullHistoricalSourceRead": false
+        },
+        "closure": [
+          {
+            "name": "WorkspaceProviderOperationError",
+            "line": 19,
+            "endLine": 20,
+            "sha256": "52cbf36465bc16822adcc36c1aed32885b063d8373666a751e0ceb5e84c43f45"
+          },
+          {
+            "name": "_canonical",
+            "line": 23,
+            "endLine": 30,
+            "sha256": "864030980868f3ee398243a35c87c9af17058e4002bb61fb0a65c6f89dd199a9"
+          },
+          {
+            "name": "_run",
+            "line": 33,
+            "endLine": 55,
+            "sha256": "04b6215d5e805eb835382a5ef66db677b6aeb70a1acb2551308506d805c82acc"
+          },
+          {
+            "name": "_docker",
+            "line": 58,
+            "endLine": 60,
+            "sha256": "38c823021ac64341d7199080084e251ca812145f4defa46b60ce9a7c736d5870"
+          },
+          {
+            "name": "_docker_json",
+            "line": 63,
+            "endLine": 68,
+            "sha256": "1c99a7095a2f2a434392d60fc48b9dcfe4710d1e061bc603a8102a46df1a0074"
+          },
+          {
+            "name": "_require_docker_resource_absent",
+            "line": 71,
+            "endLine": 76,
+            "sha256": "ee3306fa9af88f9a1a4063d0298dede2267e8433aa7192918090e5edc80e7b28"
+          },
+          {
+            "name": "_is_absent_inspection",
+            "line": 79,
+            "endLine": 85,
+            "sha256": "fad0db49c251bae02ad6b7e967ee70440c00d78e0e37baef64b476cf4ac84aff"
+          },
+          {
+            "name": "_resource_arguments",
+            "line": 88,
+            "endLine": 94,
+            "sha256": "cdee463ddf629efa740d1f5710346ac0b31a8af1abaabaf1f953e2a2d82e0e1d"
+          },
+          {
+            "name": "_init_volume",
+            "line": 97,
+            "endLine": 169,
+            "sha256": "ae57ac33da8115cfa3a6ceb2fee702c1fe8653219acb3ebc48403a56bafd42c8"
+          },
+          {
+            "name": "_wait_filesystem_mcp",
+            "line": 189,
+            "endLine": 199,
+            "sha256": "2c600400ad8405d1488999e3226abdcde8fc063d3e10121b8e7910af59829044"
+          },
+          {
+            "name": "_gateway_request",
+            "line": 228,
+            "endLine": 256,
+            "sha256": "55b36ff1547c13504b82d926d6209884c2f23c2620698d34f2d8577b5eea328d"
+          },
+          {
+            "name": "_wait_contextforge",
+            "line": 259,
+            "endLine": 268,
+            "sha256": "83c54f42370ded427c96a43749b15735d7d18587233e12b3433972df5743f56d"
+          },
+          {
+            "name": "_login_contextforge",
+            "line": 271,
+            "endLine": 281,
+            "sha256": "f0ff6f2cfe71d067e8b4280c45a90f44350d9538da5d36b1e2e61bf52e6262bc"
+          },
+          {
+            "name": "_list_tools",
+            "line": 284,
+            "endLine": 298,
+            "sha256": "b9a3591d71614088ce73ed97becd4af9a0fcac02d08fffca7694a2578c05b1c9"
+          },
+          {
+            "name": "_row_id",
+            "line": 301,
+            "endLine": 305,
+            "sha256": "5b510bc46db506d4e37a6a59d2b77a851feacd67baa60766beaeb713efd833ea"
+          },
+          {
+            "name": "_row_gateway_id",
+            "line": 308,
+            "endLine": 310,
+            "sha256": "a323f155d28390ec65a2de9ae7529ff0e0df7d2bdbdca5bc64d82ef6ccd4314e"
+          },
+          {
+            "name": "_original_name",
+            "line": 313,
+            "endLine": 315,
+            "sha256": "29dd0a432e5897db0a11eeeee1169fb665fb7ac9ab954fbb66e647c43ad128da"
+          },
+          {
+            "name": "_register_gateway",
+            "line": 318,
+            "endLine": 340,
+            "sha256": "e0c8b30134a56742f5fa66545887bef802391de5b99b89f06fb53aeedbbde06d"
+          },
+          {
+            "name": "_wait_gateway_tool",
+            "line": 343,
+            "endLine": 366,
+            "sha256": "0ae1061c2b22381578f6ae7ee8e381d0c06610fdb69d4cd4f36cf5557b568504"
+          },
+          {
+            "name": "_make_tool_public",
+            "line": 369,
+            "endLine": 408,
+            "sha256": "0fb59bce1294ac543520b712fa26c919e8c48c2b26f0beaa9b61471af515dde9"
+          }
+        ],
+        "changes": [
+          "Extract exactly19reviewed operationalfunctions+1exceptionclass+2bounded transport constants into tools.workspace_provider_operations",
+          "Retain exact function ASTs and fixed scripts after only exceptionclass/docstring rename;22totalselected ASTnodes",
+          "Consumer resolves helper beside its own packaged module and checks new complete source hash before executing it",
+          "Keep existing _helper entrypoint shared by workspace_provider_access,prepare_mcp_autonomy_access and installer_browser_gateway; no consumer API changes",
+          "New helper hash and changed operator hash invalidate old plan equality, preserving no automatic adoption/replay",
+          "Independent acceptance runner/checker remain byteexact and no longer required at production helper import"
+        ],
+        "verification": {
+          "targetedTests": "37 passed in1.54s;0skip",
+          "command": [
+            "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "-q",
+            "development/tests/operations/test_workspace_provider_operations.py",
+            "development/tests/operations/test_provision_workspace_provider.py",
+            "development/tests/operations/test_installer_browser_gateway.py"
+          ],
+          "env": {
+            "PYTHONPATH": "src:development",
+            "PYTHONDONTWRITEBYTECODE": "1"
+          },
+          "exactSelectedASTPreserved": true,
+          "historicalRunnerAndCheckerHashesUnchanged": true,
+          "coverage": [
+            "sourcepinrejection before import",
+            "real new helper load withoutacceptance/effects",
+            "definite Dockerresourceabsence vs existing/daemonfailure",
+            "credentialstdin and single dispatch no retries",
+            "provider errorbodynotexposed",
+            "isolated native fileinitializer O_EXCL/permissions preserved using synthetic temporarydata",
+            "readiness90/120attemptbounds",
+            "exactgatewaytoolduplicate rejection",
+            "existingbrowserpreparation with actual new loader and no operations",
+            "oldhelperplan not silently migrated"
+          ],
+          "notPerformed": [
+            "Dockercommandexecution",
+            "gateway/provider requests",
+            "model calls",
+            "deployments",
+            "Gitcommits",
+            "board edits",
+            "speechchanges",
+            "criteria/casescontentreview or changes"
+          ]
+        },
+        "runtimeInstallation": "not performed by this executor; package module is ordinary tools .py discovered by existing package rules",
+        "developmentCredits": "unknown",
+        "familyAcceptance": false
+      },
+      "installationResolvedBy": "installation and hostOperatorCheck in this same final outcome"
+    }
+  ],
+  "installation": {
+    "checkedAt": "2026-10-17T12:15:45.521199+00:00",
+    "status": "running_with_retained_mounts",
+    "services": [
+      {
+        "role": "core",
+        "image": "sha256:5f76724821f45908ef48b81e9a7fd37119eb4605c339993b070e3f5a341a7d0f",
+        "healthy": true,
+        "allSourceHashesMatchVerifiedCandidate": true,
+        "sourceCount": 386,
+        "startedAt": "2026-10-17T12:15:04.566795946Z"
+      },
+      {
+        "role": "worker",
+        "image": "sha256:18ace54d71f92c321ad6190a4158c7e779d3e5c3bbadbb37151dd52ee9c6e54e",
+        "healthy": true,
+        "allSourceHashesMatchVerifiedCandidate": true,
+        "sourceCount": 373,
+        "startedAt": "2026-10-17T12:15:16.116115875Z"
+      }
+    ],
+    "retainedMountsVerifiedByUpdater": true,
+    "sameCoreWorkerExecutionSources": 68,
+    "speechModifiedByThisTask": false,
+    "speechReadOnlySnapshot": [
+      {
+        "name": "eva2-owner-voice-media-1",
+        "image": "sha256:70f78914727e57e6eb98bce8aa2f7a43e5a18bee1eeff085a2f7a3f31300d088",
+        "startedAt": "2026-10-17T11:25:16.599364634Z"
+      },
+      {
+        "name": "eva2-household-speaker-1",
+        "image": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+        "startedAt": "2026-10-17T11:25:13.317527174Z"
+      }
+    ],
+    "hostOperatorCheck": {
+      "operatorLoadedFromCurrentInstalledCheckout": true,
+      "helperSha256": "303d09cd005587abc61643ffe6e0e8210339bd5ae25e1c69d628d00acc1fa68a",
+      "actualGatewayHealth": "healthy",
+      "actualFilesystemMcpInitialize": "ready",
+      "operationKind": "read_only_health_and_MCP_initialize",
+      "newDockerResourcesCreated": 0,
+      "acceptanceCheckerImported": false,
+      "portablePayloads": 116,
+      "materializationCurrent": true,
+      "modelsCalled": 0,
+      "seconds": 0.883
+    },
+    "ownerReadRoutes": [
+      {
+        "path": "/internal/v1/dashboard/components",
+        "status": 200,
+        "contract": "EvaComponentObservations/v1"
+      },
+      {
+        "path": "/internal/v1/dashboard/memory-sources",
+        "status": 200,
+        "contract": "EvaOwnerMemorySources/v1"
+      },
+      {
+        "path": "/internal/v1/dashboard/work",
+        "status": 200,
+        "contract": "EvaDelegatedWorkOwnerResult/v1"
+      }
+    ]
+  },
+  "sourcePreservation": {
+    "pairs": [
+      {
+        "role": "core",
+        "base": "sha256:2af889484cf728bc98c4625b4b89177158f52d167540b004d1d32b7f478747dd",
+        "image": "sha256:5f76724821f45908ef48b81e9a7fd37119eb4605c339993b070e3f5a341a7d0f",
+        "ownFilesExact": 1,
+        "unownedFilesPreserved": 385,
+        "offlineChecks": {
+          "workDefaultAstraMedium": true,
+          "dependencyCheck": true
+        }
+      },
+      {
+        "role": "worker",
+        "base": "sha256:7f1a6fb0ea8b1ef143fae47869087b2b2160a2dcd6037b9393a2e9e3ade558e8",
+        "image": "sha256:18ace54d71f92c321ad6190a4158c7e779d3e5c3bbadbb37151dd52ee9c6e54e",
+        "ownFilesExact": 1,
+        "unownedFilesPreserved": 372,
+        "offlineChecks": {
+          "workDefaultAstraMedium": true,
+          "dependencyCheck": true
+        }
+      }
+    ],
+    "sameCoreWorkerExecutionSources": 68,
+    "operatorInstallation": "Existing host checkout updated; actual Python3.12.14 wheel install/execution checked separately. Narrow runtime deliberately excludes operator toolchain.",
+    "modelsCalled": 0
+  },
+  "moduleContract": "development/docs/ARCHITECTUUR.md#actieve-module--en-onderhoudscontracten",
+  "workerBuildContract": "deploy/delegated-work/README.md",
+  "independentReview": "development/reviews/e44-module-maintenance-review-20261017.json",
+  "conditionalRetentions": {
+    "photoProvider": "Existing library retained until equivalent photo metadata/person/recipient/usage behavior is proven; no Eva1-agent alias.",
+    "historicalLocksAndFrozenReferences": "Unmodified old worker lock/roots, acceptance criteria, design freeze and schema manifests retained as exact historical evidence."
+  },
+  "developmentAdjustments": [
+    {
+      "recordedAt": "2026-10-17T12:11:27.155891+00:00",
+      "action": "Interrupted isolated candidate build before installation",
+      "reason": "Use one sparse owned-source COPY instead of126 individual COPY layers; retain current image and all unowned source. No running services changed.",
+      "interruptedBuildPids": [
+        3041423
+      ],
+      "modelCalls": 0
+    },
+    {
+      "reason": "Host test venv is3.12.3 while package intentionally requires3.12.14; initial install refused. Re-ran installation on actual pinned3.12.14 with no ignored Python requirement.",
+      "productChange": false
+    },
+    {
+      "reason": "Speech executor changed shared core/worker images during task; rebased on its actual images and preserved all non-E4.4 source.",
+      "productRollback": false
+    },
+    {
+      "reason": "First broad operator overlay exposed missing host-only dependencies in narrow runtime. Candidate never installed. Operator helpers/resources remain on existing host/package boundary; runtime receives only settings patch.",
+      "productionChangedByRejectedCandidate": false
+    }
+  ],
+  "accounting": {
+    "experimentPaidProviderRequests": 0,
+    "experimentPaidProviderTokens": null,
+    "modelCallsForQualityCheck": 0,
+    "liveExternalChecks": "Read-only gateway health and MCP initialize; owner API GETs. No household effects or new Docker resource provisioning.",
+    "developmentCredits": null,
+    "developmentModelTokens": null,
+    "developmentToolCalls": null,
+    "ordinaryRuntimeModelUsage": "Unmeasured, separate from deterministic maintenance verification."
+  },
+  "limitations": [
+    "E4.4 is bounded maintenance, not a new household ability or full project/family acceptance. E4.5 still proves autonomous software apply/recovery/later-use.",
+    "No dependency upgrade: existing OpenAI3.6.0/PydanticAI2.37.0 and4dlock preserved. Two deterministic wheels verified; no bit-identical full-OCI rebuild or clean installation of all optional services claimed.",
+    "Current core/worker use a one-file settings overlay preserving385/372other source files and current configuration. Operators stay in the existing host checkout and package; only their own source location is updated. The pure-Python package was separately installed/executed with Python3.12.14.",
+    "C11 preserves all original pins and modified old design/deploy authorities. Two existing authenticated whole-archive tests pass; no new live private database v2/v3 export/restore or family data restore performed.",
+    "One unrelated historical portable P1 regression fixture pins889d while existing current deploy/contracts manifest is5d023. Preserved without repin/criterion relaxation; not counted as passed or new release failure.",
+    "The atomic workspace candidate Dockerfile path now matches its launcher/broker/SDK; SDK import was executed in the existing parent. No new atomic broker binary or optional provider installed. Existing active filesystem and gateway remained in place and passed actual read-only checks.",
+    "Temporary photo-provider library retained under existing conditional decision; equivalent native photo replacement not proven. Eva1 agent remains outside this task and is not modified or restarted.",
+    "No new model/comparison series, private data publication, license change, speech modification or speaker restart by this task. Actual ordinary runtime autonomy consumption is separate and unmeasured."
+  ],
+  "newProductTasks": 0,
+  "nextTask": "E4.5",
+  "fullProjectCompleted": false,
+  "selectedCommitVerification": {
+    "tree": "5a9d16ad616a57c82a087253316254a4526640df",
+    "exitCode": 0,
+    "uniqueCasesPassed": 95,
+    "firstRun": "93passed;2could not read fixture omitted from projection, no product failure",
+    "targetedFollowup": "2 passed in 3.98s",
+    "followupSeconds": 4.532,
+    "fixture": "Unchanged tracked ordinary empty-archive fixture supplied to exact commit projection. No criteria change.",
+    "reason": "Verify exact selected commit excluding unrelated WSL voice work; repeat only missing fixture-dependent two cases.",
+    "providerCalls": 0
+  }
+}

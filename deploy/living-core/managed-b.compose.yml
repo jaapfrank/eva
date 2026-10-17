@@ -212,8 +212,8 @@ services:
       HINDSIGHT_API_DATABASE_URL_FILE: /run/secrets/hindsight_database_dsn
       HINDSIGHT_ENABLE_CP: "false"
       HINDSIGHT_API_LLM_PROVIDER: openai-codex
-      HINDSIGHT_API_LLM_MODEL: gpt-5.6-luna
-      HINDSIGHT_API_LLM_REASONING_EFFORT: low
+      HINDSIGHT_API_LLM_MODEL: gpt-6-astra
+      HINDSIGHT_API_LLM_REASONING_EFFORT: medium
       # Provider connectivity is checked by an explicit bounded operation after
       # readiness. Do not let Hindsight's upstream five-minute verification
       # call hold the local database and memory API hostage during a cold boot.
@@ -291,7 +291,7 @@ services:
       EVA_BACKGROUND_WORK_ENABLED: ${EVA_BACKGROUND_WORK_ENABLED:-false}
       EVA_COLD_PATH_IDLE_SECONDS: ${EVA_COLD_PATH_IDLE_SECONDS:-300}
       EVA_CONVERSATION_AUTH_FILE: /run/eva/model-lease/auth.json
-      EVA_CONVERSATION_MODEL: ${EVA_CONVERSATION_MODEL:-gpt-5.4-mini}
+      EVA_CONVERSATION_MODEL: ${EVA_CONVERSATION_MODEL:-gpt-6-astra}
       EVA_CONVERSATION_REASONING_EFFORT: ${EVA_CONVERSATION_REASONING_EFFORT:-medium}
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
       EVA_DASHBOARD_ACCESS_TOKEN_FILE: /run/secrets/dashboard_access_token

@@ -1,4 +1,5 @@
-ARG PROVEN_WORKER_IMAGE=eva2/delegated-work-clean@sha256:170f9e6b0fdf01aba499c8820c581167b586c4e3e1c70609e85fc47f6c46ef36
+# Source-only update: explicitly select the actual current immutable worker.
+ARG PROVEN_WORKER_IMAGE
 FROM ${PROVEN_WORKER_IMAGE}
 
 ARG SOURCE_COMMIT

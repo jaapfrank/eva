@@ -16,13 +16,18 @@ from pathlib import Path
 from typing import Any
 
 
+
 ROOT = Path(__file__).resolve().parents[2]
-FREEZE_PATH = ROOT / "development/design/vertical/noor-4d-schema-export-freeze-v1.json"
+# The supported v1 authority is recovered byte-for-byte from its original Git
+# blob. Relocated design copies are historical references, not generator input.
+PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+RESOURCE_ROOT = PACKAGE_ROOT / "eva/resources/portable_v1"
+FREEZE_PATH = RESOURCE_ROOT / "schema-freeze-v1.json"
 EXPECTED_FREEZE_SHA256 = (
     "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38"
 )
-CATALOG_PATH = ROOT / "src/eva/adapters/postgres/catalog_generated.py"
-PORTABLE_ROOT = ROOT / "deploy/schemas/portable"
+CATALOG_PATH = PACKAGE_ROOT / "eva/adapters/postgres/catalog_generated.py"
+PORTABLE_ROOT = RESOURCE_ROOT / "schemas/portable"
 
 
 class MaterializationError(RuntimeError):
@@ -69,7 +74,9 @@ def _catalog_bytes(freeze: dict[str, Any]) -> bytes:
     generated = freeze["portableExport"]["generatedPortableRecordSchemas"]
     export_by_table = {
         item["table"]: {
-            key: value
+            # Preserve the current generated catalog's layout metadata exactly;
+            # the original v1 archive/resource paths stay sealed as schemas/.
+            key: ("deploy/" + value if key == "recordSchemaRelativePath" else value)
             for key, value in item.items()
             if key
             in {
@@ -151,12 +158,12 @@ def _portable_outputs(freeze: dict[str, Any]) -> dict[Path, bytes]:
     outputs: dict[Path, bytes] = {}
     for item in generated["schemas"]:
         relative = Path(item["recordSchemaRelativePath"])
-        expected_prefix = Path("deploy/schemas/portable/records")
+        expected_prefix = Path("schemas/portable/records")
         if relative.parent != expected_prefix:
             raise MaterializationError(
                 f"record schema escapes sealed output root: {relative}"
             )
-        outputs[ROOT / relative] = _decode_bound_bytes(
+        outputs[RESOURCE_ROOT / relative] = _decode_bound_bytes(
             item, hash_key="record_schema_sha256"
         )
 
@@ -175,7 +182,7 @@ def _portable_outputs(freeze: dict[str, Any]) -> dict[Path, bytes]:
     reader_manifest = freeze["genericReader"]["outputSchemaManifest"]
     for item in reader_manifest["schemas"]:
         relative = Path(item["schemaRelativePath"])
-        expected_prefix = Path("deploy/schemas/readback")
+        expected_prefix = Path("schemas/readback")
         if relative.parent != expected_prefix:
             raise MaterializationError(
                 f"reader schema escapes sealed output root: {relative}"

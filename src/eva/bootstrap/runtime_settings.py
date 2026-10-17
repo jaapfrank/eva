@@ -80,7 +80,7 @@ class RuntimeSettings:
     identity_pack_file: str | None = None
     identity_pack_trust_file: str | None = None
     conversation_auth_file: str = "/run/eva/codex/auth.json"
-    conversation_model: str = "gpt-5.4-mini"
+    conversation_model: str = "gpt-6-astra"
     conversation_maximum_requests: int = 32
     conversation_reasoning_effort: str = "medium"
     conversation_contact_model: str | None = None
@@ -200,7 +200,7 @@ class RuntimeSettings:
             "EVA_CONVERSATION_AUTH_FILE", "/run/eva/codex/auth.json"
         )
         conversation_model = _environment_value(
-            "EVA_CONVERSATION_MODEL", "gpt-5.4-mini"
+            "EVA_CONVERSATION_MODEL", "gpt-6-astra"
         )
         conversation_reasoning_effort = _environment_value(
             "EVA_CONVERSATION_REASONING_EFFORT", "medium"
