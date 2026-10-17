@@ -2771,9 +2771,9 @@
                 "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                 "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                 "blocker": null,
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
-                "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
                 "ownerTrial": {
                   "status": "continuous_conversation_works_fluency_gap",
                   "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -2781,7 +2781,7 @@
                   "blocksIndependentWork": false,
                   "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                 },
-                "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
+                "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": true,
@@ -2803,9 +2803,9 @@
                     "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                     "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                     "blocker": null,
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
-                    "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                    "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                    "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                    "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
                     "ownerTrial": {
                       "status": "continuous_conversation_works_fluency_gap",
                       "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -2813,7 +2813,7 @@
                       "blocksIndependentWork": false,
                       "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                     },
-                    "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
+                    "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
                     "ownerActionRequired": true,
                     "ownerInstructions": {
                       "availableNow": true,
@@ -2835,7 +2835,7 @@
                       "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "installed_regression_corrections_quality_open"
+                    "technicalStatus": "installed_contextual_thinking_physical_acceptance_open"
                   },
                   {
                     "title": "Doorpraten via tweede speaker",
@@ -2843,7 +2843,7 @@
                     "kind": "aansluiten",
                     "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                     "owner": "Codex",
-                    "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
+                    "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
                     "ownerActionRequired": true,
                     "ownerInstructions": {
                       "availableNow": true,
@@ -2855,9 +2855,9 @@
                       ]
                     },
                     "blocker": null,
-                    "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
-                    "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
+                    "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                    "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -2869,7 +2869,7 @@
                       "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "installed_regression_corrections_quality_open"
+                    "technicalStatus": "installed_contextual_thinking_physical_acceptance_open"
                   }
                 ],
                 "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -2881,7 +2881,7 @@
                   "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                   "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                 },
-                "technicalStatus": "installed_regression_corrections_quality_open",
+                "technicalStatus": "installed_contextual_thinking_physical_acceptance_open",
                 "ownerRegression20261017": {
                   "reportedAt": "2026-10-17T10:55:16.617204+00:00",
                   "status": "regression_corrections_installed_quality_open",
@@ -2895,7 +2895,28 @@
                   "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
                   "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
                   "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
-                  "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+                  "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie.",
+                  "followthrough20261017": {
+                    "startedAt": "2026-10-17T11:32:38.031782+00:00",
+                    "status": "thinking_installed_barge_in_requires_physical_evidence",
+                    "ownerInstruction": "Ga de andere problemen oplossen.",
+                    "outcome": "Kortere stiltes, natuurlijke vraaggerichte tussenreacties en gewone gesproken onderbreking zonder eigen-spraakecho via dezelfde Eva.",
+                    "existing": "Eén kern/geheugen/werkroute; reparaties vorige ronde geïnstalleerd; native output tijdelijk halfduplex.",
+                    "routes": [
+                      "initial memory preparation and contact model/tool continuation",
+                      "native speaker capture/render and physical delivery acknowledgements"
+                    ],
+                    "doneWhen": "Gerichte proeven tonen kortere voorbereiding, werkelijk modelgekozen denkreacties en echoverwerping met behoud van nieuwe spraak; werkende wijzigingen geïnstalleerd met ongewijzigde persoons- en stopgrenzen. Fysieke gezinsacceptatie apart.",
+                    "updatedAt": "2026-10-17T12:12:23.378466+00:00",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                    "ownerAccepted": false,
+                    "result": "Vraaggerichte korte denkreacties beschikbaar via dezelfde Eva; volledige scopedmemory blijft vereist vóór inhoud. Gewone native onderbreking is nog niet hersteld: offlinecandidate verloor zachte spraak en is afgewezen.",
+                    "remaining": "Fysiek gesprek op natuurlijk ritme en relevante antwoorden beoordelen; voor barge-in ontbreekt een gecontroleerde vergelijking van microfoon en afspeelreferentie.",
+                    "audioEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                    "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
+                    "knownDevelopmentTokens": 55852,
+                    "unknownUsageAttempts": 5
+                  }
                 }
               },
               {
@@ -2938,7 +2959,7 @@
                 "kind": "verbeteren",
                 "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                 "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
                 "ownerTrial": {
                   "status": "partial_with_false_interruptions_and_stop_failure",
                   "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -2948,15 +2969,15 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                   "steps": []
                 },
-                "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
+                "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
                 "assignment": {
                   "activeWorkers": []
                 },
@@ -2967,7 +2988,7 @@
                     "kind": "verbeteren",
                     "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                     "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
                     "ownerTrial": {
                       "status": "partial_with_false_interruptions_and_stop_failure",
                       "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -2977,15 +2998,15 @@
                       "currentCandidateStatus": "not_yet_assessed",
                       "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                     },
-                    "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                    "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
                     "ownerActionRequired": false,
                     "ownerInstructions": {
                       "availableNow": false,
                       "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                       "steps": []
                     },
-                    "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                    "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
+                    "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                    "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -3005,22 +3026,22 @@
                     "kind": "verbeteren",
                     "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
                     "owner": "Codex /root",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
                     "ownerTrial": {
                       "status": "deferred_until_woonkamer_works",
                       "steps": [],
                       "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                       "blocksIndependentWork": false
                     },
-                    "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                    "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
                     "ownerActionRequired": false,
                     "ownerInstructions": {
                       "availableNow": false,
                       "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                       "steps": []
                     },
-                    "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                    "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
+                    "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                    "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -3056,7 +3077,28 @@
                   "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
                   "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
                   "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
-                  "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+                  "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie.",
+                  "followthrough20261017": {
+                    "startedAt": "2026-10-17T11:32:38.031782+00:00",
+                    "status": "thinking_installed_barge_in_requires_physical_evidence",
+                    "ownerInstruction": "Ga de andere problemen oplossen.",
+                    "outcome": "Kortere stiltes, natuurlijke vraaggerichte tussenreacties en gewone gesproken onderbreking zonder eigen-spraakecho via dezelfde Eva.",
+                    "existing": "Eén kern/geheugen/werkroute; reparaties vorige ronde geïnstalleerd; native output tijdelijk halfduplex.",
+                    "routes": [
+                      "initial memory preparation and contact model/tool continuation",
+                      "native speaker capture/render and physical delivery acknowledgements"
+                    ],
+                    "doneWhen": "Gerichte proeven tonen kortere voorbereiding, werkelijk modelgekozen denkreacties en echoverwerping met behoud van nieuwe spraak; werkende wijzigingen geïnstalleerd met ongewijzigde persoons- en stopgrenzen. Fysieke gezinsacceptatie apart.",
+                    "updatedAt": "2026-10-17T12:12:23.378466+00:00",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                    "ownerAccepted": false,
+                    "result": "Vraaggerichte korte denkreacties beschikbaar via dezelfde Eva; volledige scopedmemory blijft vereist vóór inhoud. Gewone native onderbreking is nog niet hersteld: offlinecandidate verloor zachte spraak en is afgewezen.",
+                    "remaining": "Fysiek gesprek op natuurlijk ritme en relevante antwoorden beoordelen; voor barge-in ontbreekt een gecontroleerde vergelijking van microfoon en afspeelreferentie.",
+                    "audioEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                    "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
+                    "knownDevelopmentTokens": 55852,
+                    "unknownUsageAttempts": 5
+                  }
                 }
               },
               {
@@ -6149,9 +6191,9 @@
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
               "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
               "blocker": null,
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
-              "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-              "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+              "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+              "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
               "ownerTrial": {
                 "status": "continuous_conversation_works_fluency_gap",
                 "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -6159,7 +6201,7 @@
                 "blocksIndependentWork": false,
                 "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
+              "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -6181,9 +6223,9 @@
                   "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                   "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                   "blocker": null,
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
-                  "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                  "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                  "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                  "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
                   "ownerTrial": {
                     "status": "continuous_conversation_works_fluency_gap",
                     "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -6191,7 +6233,7 @@
                     "blocksIndependentWork": false,
                     "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                   },
-                  "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
+                  "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
                   "ownerActionRequired": true,
                   "ownerInstructions": {
                     "availableNow": true,
@@ -6213,7 +6255,7 @@
                     "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "installed_regression_corrections_quality_open"
+                  "technicalStatus": "installed_contextual_thinking_physical_acceptance_open"
                 },
                 {
                   "title": "Doorpraten via tweede speaker",
@@ -6221,7 +6263,7 @@
                   "kind": "aansluiten",
                   "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                   "owner": "Codex",
-                  "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
+                  "nextAction": "Voer een kort gewoon gesprek; beoordeel aansluiting en variatie van tussenreacties. Eerste geheugenlezing kan nog seconden duren.",
                   "ownerActionRequired": true,
                   "ownerInstructions": {
                     "availableNow": true,
@@ -6233,9 +6275,9 @@
                     ]
                   },
                   "blocker": null,
-                  "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
-                  "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
+                  "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                  "remaining": "Geïnstalleerde natuurlijke denkreacties en volledige geheugengang moeten in een echt gesprek op ritme en relevantie worden beoordeeld.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6247,7 +6289,7 @@
                     "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "installed_regression_corrections_quality_open"
+                  "technicalStatus": "installed_contextual_thinking_physical_acceptance_open"
                 }
               ],
               "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -6259,7 +6301,7 @@
                 "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                 "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
               },
-              "technicalStatus": "installed_regression_corrections_quality_open",
+              "technicalStatus": "installed_contextual_thinking_physical_acceptance_open",
               "ownerRegression20261017": {
                 "reportedAt": "2026-10-17T10:55:16.617204+00:00",
                 "status": "regression_corrections_installed_quality_open",
@@ -6273,7 +6315,28 @@
                 "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
                 "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
                 "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
-                "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+                "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie.",
+                "followthrough20261017": {
+                  "startedAt": "2026-10-17T11:32:38.031782+00:00",
+                  "status": "thinking_installed_barge_in_requires_physical_evidence",
+                  "ownerInstruction": "Ga de andere problemen oplossen.",
+                  "outcome": "Kortere stiltes, natuurlijke vraaggerichte tussenreacties en gewone gesproken onderbreking zonder eigen-spraakecho via dezelfde Eva.",
+                  "existing": "Eén kern/geheugen/werkroute; reparaties vorige ronde geïnstalleerd; native output tijdelijk halfduplex.",
+                  "routes": [
+                    "initial memory preparation and contact model/tool continuation",
+                    "native speaker capture/render and physical delivery acknowledgements"
+                  ],
+                  "doneWhen": "Gerichte proeven tonen kortere voorbereiding, werkelijk modelgekozen denkreacties en echoverwerping met behoud van nieuwe spraak; werkende wijzigingen geïnstalleerd met ongewijzigde persoons- en stopgrenzen. Fysieke gezinsacceptatie apart.",
+                  "updatedAt": "2026-10-17T12:12:23.378466+00:00",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                  "ownerAccepted": false,
+                  "result": "Vraaggerichte korte denkreacties beschikbaar via dezelfde Eva; volledige scopedmemory blijft vereist vóór inhoud. Gewone native onderbreking is nog niet hersteld: offlinecandidate verloor zachte spraak en is afgewezen.",
+                  "remaining": "Fysiek gesprek op natuurlijk ritme en relevante antwoorden beoordelen; voor barge-in ontbreekt een gecontroleerde vergelijking van microfoon en afspeelreferentie.",
+                  "audioEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                  "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
+                  "knownDevelopmentTokens": 55852,
+                  "unknownUsageAttempts": 5
+                }
               }
             },
             {
@@ -6316,7 +6379,7 @@
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
               "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
               "ownerTrial": {
                 "status": "partial_with_false_interruptions_and_stop_failure",
                 "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6326,15 +6389,15 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+              "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                 "steps": []
               },
-              "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-              "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
+              "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+              "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
               "assignment": {
                 "activeWorkers": []
               },
@@ -6345,7 +6408,7 @@
                   "kind": "verbeteren",
                   "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                   "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
                   "ownerTrial": {
                     "status": "partial_with_false_interruptions_and_stop_failure",
                     "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6355,15 +6418,15 @@
                     "currentCandidateStatus": "not_yet_assessed",
                     "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                   },
-                  "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                  "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
                   "ownerActionRequired": false,
                   "ownerInstructions": {
                     "availableNow": false,
                     "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                     "steps": []
                   },
-                  "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                  "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
+                  "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                  "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6383,22 +6446,22 @@
                   "kind": "verbeteren",
                   "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
                   "owner": "Codex /root",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
                   "ownerTrial": {
                     "status": "deferred_until_woonkamer_works",
                     "steps": [],
                     "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                     "blocksIndependentWork": false
                   },
-                  "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                  "nextAction": "Gecoördineerde korte fysieke meting voorbereiden zodra eigenaar bij de speaker kan testen; huidige echobescherming actief houden.",
                   "ownerActionRequired": false,
                   "ownerInstructions": {
                     "availableNow": false,
                     "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
                     "steps": []
                   },
-                  "checkedAt": "2026-10-17T11:22:17.788805+00:00",
-                  "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
+                  "checkedAt": "2026-10-17T12:12:23.378466+00:00",
+                  "remaining": "Gewone gesproken onderbreking vereist fysieke echo/double-talkmeting; zachte spraak faalt in offlinecandidate. Bestaande wekwoord/STOP/MUTE behouden.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6434,7 +6497,28 @@
                 "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
                 "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
                 "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
-                "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+                "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie.",
+                "followthrough20261017": {
+                  "startedAt": "2026-10-17T11:32:38.031782+00:00",
+                  "status": "thinking_installed_barge_in_requires_physical_evidence",
+                  "ownerInstruction": "Ga de andere problemen oplossen.",
+                  "outcome": "Kortere stiltes, natuurlijke vraaggerichte tussenreacties en gewone gesproken onderbreking zonder eigen-spraakecho via dezelfde Eva.",
+                  "existing": "Eén kern/geheugen/werkroute; reparaties vorige ronde geïnstalleerd; native output tijdelijk halfduplex.",
+                  "routes": [
+                    "initial memory preparation and contact model/tool continuation",
+                    "native speaker capture/render and physical delivery acknowledgements"
+                  ],
+                  "doneWhen": "Gerichte proeven tonen kortere voorbereiding, werkelijk modelgekozen denkreacties en echoverwerping met behoud van nieuwe spraak; werkende wijzigingen geïnstalleerd met ongewijzigde persoons- en stopgrenzen. Fysieke gezinsacceptatie apart.",
+                  "updatedAt": "2026-10-17T12:12:23.378466+00:00",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+                  "ownerAccepted": false,
+                  "result": "Vraaggerichte korte denkreacties beschikbaar via dezelfde Eva; volledige scopedmemory blijft vereist vóór inhoud. Gewone native onderbreking is nog niet hersteld: offlinecandidate verloor zachte spraak en is afgewezen.",
+                  "remaining": "Fysiek gesprek op natuurlijk ritme en relevante antwoorden beoordelen; voor barge-in ontbreekt een gecontroleerde vergelijking van microfoon en afspeelreferentie.",
+                  "audioEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+                  "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
+                  "knownDevelopmentTokens": 55852,
+                  "unknownUsageAttempts": 5
+                }
               }
             },
             {
@@ -9646,7 +9730,28 @@
         "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
         "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
         "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
-        "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+        "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie.",
+        "followthrough20261017": {
+          "startedAt": "2026-10-17T11:32:38.031782+00:00",
+          "status": "thinking_installed_barge_in_requires_physical_evidence",
+          "ownerInstruction": "Ga de andere problemen oplossen.",
+          "outcome": "Kortere stiltes, natuurlijke vraaggerichte tussenreacties en gewone gesproken onderbreking zonder eigen-spraakecho via dezelfde Eva.",
+          "existing": "Eén kern/geheugen/werkroute; reparaties vorige ronde geïnstalleerd; native output tijdelijk halfduplex.",
+          "routes": [
+            "initial memory preparation and contact model/tool continuation",
+            "native speaker capture/render and physical delivery acknowledgements"
+          ],
+          "doneWhen": "Gerichte proeven tonen kortere voorbereiding, werkelijk modelgekozen denkreacties en echoverwerping met behoud van nieuwe spraak; werkende wijzigingen geïnstalleerd met ongewijzigde persoons- en stopgrenzen. Fysieke gezinsacceptatie apart.",
+          "updatedAt": "2026-10-17T12:12:23.378466+00:00",
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+          "ownerAccepted": false,
+          "result": "Vraaggerichte korte denkreacties beschikbaar via dezelfde Eva; volledige scopedmemory blijft vereist vóór inhoud. Gewone native onderbreking is nog niet hersteld: offlinecandidate verloor zachte spraak en is afgewezen.",
+          "remaining": "Fysiek gesprek op natuurlijk ritme en relevante antwoorden beoordelen; voor barge-in ontbreekt een gecontroleerde vergelijking van microfoon en afspeelreferentie.",
+          "audioEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+          "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
+          "knownDevelopmentTokens": 55852,
+          "unknownUsageAttempts": 5
+        }
       }
     },
     "aideRetainedResume20261013": {

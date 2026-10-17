@@ -543,11 +543,26 @@ def _codex_compatible_request(
         names = {tool["name"] for tool in tools if tool.get("type") == "function"}
         if names:
             body["tools"], namespaces = deferred_namespaces(tools)
-            if not any(tool.get("type") == "tool_search" for tool in tools):
+            has_deferred = any(
+                tool.get("defer_loading") is True
+                or (tool.get("type") == "namespace" and any(
+                    child.get("defer_loading") is True
+                    for child in tool.get("tools", [])
+                ))
+                for tool in body["tools"]
+            )
+            if not has_deferred:
+                body["tools"] = [
+                    tool for tool in body["tools"] if tool.get("type") != "tool_search"
+                ]
+            elif not any(tool.get("type") == "tool_search" for tool in body["tools"]):
                 body["tools"].insert(0, {"type": "tool_search"})
             for item in projected_input:
                 if item.get("type") == "function_call" and item.get("name") in names:
-                    item["namespace"] = namespaces[item["name"]]
+                    if item["name"] in namespaces:
+                        item["namespace"] = namespaces[item["name"]]
+                    else:
+                        item.pop("namespace", None)
     encoded = canonical_json_bytes(body)
     headers = dict(request.headers)
     headers.pop("content-length", None)

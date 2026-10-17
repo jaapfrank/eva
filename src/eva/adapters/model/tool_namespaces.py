@@ -34,6 +34,11 @@ _GROUPS = (
 _BY_FUNCTION = {name: (namespace, description) for namespace, description, names in _GROUPS for name in names}
 
 
+def function_defer_loading(name):
+    """Keep immediate voice reactions available without a discovery round."""
+    return name != "speak_and_continue"
+
+
 def deferred_namespaces(tools):
     """Preserve every definition and native tool; return replay namespace mapping."""
     names = {tool["name"] for tool in tools if tool.get("type") == "function"}
@@ -44,6 +49,11 @@ def deferred_namespaces(tools):
             result.append(tool)
             continue
         name = tool["name"]
+        if not function_defer_loading(name):
+            # Direct functions do not need a discovery namespace. Keep their
+            # native flat shape, including when replaying a retained tool call.
+            result.append({**tool, "defer_loading": False})
+            continue
         namespace, description = _BY_FUNCTION.get(name, (name, name.replace("_", " ")))
         if namespace != name and namespace in occupied:
             namespace, description = name, name.replace("_", " ")

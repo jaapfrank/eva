@@ -1,0 +1,640 @@
+{
+  "recordedAt": "2026-10-17T12:12:23.232728+00:00",
+  "status": "installed_thinking_improvement_physical_acceptance_open",
+  "ownerAccepted": false,
+  "outcome": "Context-dependent thinking speech through the same Eva core, with full scoped memory retained before substantive answers; ordinary native spoken interruption remains unresolved.",
+  "changes": [
+    "speak_and_continue is offered directly when authorized; activity and memory guidance allow a short thinking reaction before a factual answer/source read.",
+    "Slow initial recall overlaps one optional control-only decision from the same contact model/identity/recent authorized history; no second assistant or canned phrase rotation.",
+    "Recall starts immediately and is fully awaited. No substantive action/final preview may escape preparation. A valid short reaction becomes the existing SPEAK receipt and cannot be duplicated in that turn.",
+    "Existing exact speech descriptor, provider admission, budgets, usage accounting and STOP/cancellation remain active. Invalid or unavailable optional speech is silent; integrity/admission failures still propagate.",
+    "Provider discovery is omitted for catalogs containing only directly offered functions; mixed catalogs keep discovery and exact descriptor validation.",
+    "Everyday uncertainty and first-person activity language replace defensive explanations of missing source coverage."
+  ],
+  "bounds": {
+    "recallWaitBeforeOptionalDecisionSeconds": 0.75,
+    "requestedPreparationDeadlineSeconds": 4,
+    "maximumPreparationWords": 8,
+    "maximumPreparationCharacters": 256,
+    "fastRecallSkipsExtraRequest": true,
+    "pendingActionReplaySkipsPreparation": true,
+    "crashExactlyOnceSpeechClaimed": false,
+    "semanticFactFreeSpeechGuaranteedBySchema": false,
+    "deadlineIsRequestedNotPhysicalLatencyGuarantee": true,
+    "failedPhaseCleanupCanExceedRequestedDeadline": true
+  },
+  "qualitativeDevelopmentProbes": [
+    {
+      "scenario": "own day",
+      "speech": "Even terugdenken over vandaag.",
+      "elapsedMs": 3444
+    },
+    {
+      "scenario": "following the thought",
+      "selectedAction": "read_recent_activity",
+      "elapsedMs": 2133
+    },
+    {
+      "scenario": "different recent thought",
+      "speech": "Gisteren… even terugdenken.",
+      "elapsedMs": 1651
+    }
+  ],
+  "integratedReadOnlyProbes": [
+    {
+      "scenario": "read_only_memory_preparation_integrated",
+      "stages": [
+        {
+          "event": "initial_recall_started",
+          "elapsed_ms": 0
+        },
+        {
+          "event": "preparation_model_started",
+          "elapsed_ms": 751
+        },
+        {
+          "event": "preparation_unavailable",
+          "elapsed_ms": 2755,
+          "usage": null
+        },
+        {
+          "event": "initial_recall_finished",
+          "elapsed_ms": 6143
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 6144
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 8134,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 3329,
+            "output_tokens": 27
+          },
+          "action": "speak_and_continue"
+        },
+        {
+          "event": "spoken_update",
+          "elapsed_ms": 8135,
+          "text": "Even denken welke kleur we hadden gekozen."
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 8135
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 11167,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 3297,
+            "output_tokens": 47
+          },
+          "action": "search_personal_memory"
+        },
+        {
+          "event": "explicit_recall_started",
+          "elapsed_ms": 11168
+        },
+        {
+          "event": "explicit_recall_finished",
+          "elapsed_ms": 15938
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 15939
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 17290,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 2355,
+            "output_tokens": 20
+          },
+          "action": null
+        },
+        {
+          "event": "reply_finished",
+          "elapsed_ms": 17291,
+          "usage": {
+            "measurement": "unmeasured",
+            "model_attempts": null,
+            "tool_calls": null,
+            "input_tokens": null,
+            "output_tokens": null
+          },
+          "nonempty_answer": true
+        }
+      ],
+      "durable_turn_created": false,
+      "retention_called": false,
+      "physical_audio": false,
+      "requestedPreparationDeadlineSeconds": 2
+    },
+    {
+      "scenario": "read_only_memory_preparation_integrated",
+      "stages": [
+        {
+          "event": "initial_recall_started",
+          "elapsed_ms": 1
+        },
+        {
+          "event": "preparation_model_started",
+          "elapsed_ms": 751
+        },
+        {
+          "event": "preparation_unavailable",
+          "elapsed_ms": 5083,
+          "usage": null
+        },
+        {
+          "event": "initial_recall_finished",
+          "elapsed_ms": 10065
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 10066
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 11370,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 3329,
+            "output_tokens": 26
+          },
+          "action": "speak_and_continue"
+        },
+        {
+          "event": "spoken_update",
+          "elapsed_ms": 11370,
+          "text": "Even denken welke kleur dat was."
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 11370
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 14140,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 3295,
+            "output_tokens": 47
+          },
+          "action": "search_personal_memory"
+        },
+        {
+          "event": "explicit_recall_started",
+          "elapsed_ms": 14141
+        },
+        {
+          "event": "explicit_recall_finished",
+          "elapsed_ms": 21874
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 21875
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 23537,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 2353,
+            "output_tokens": 20
+          },
+          "action": null
+        },
+        {
+          "event": "reply_finished",
+          "elapsed_ms": 23537,
+          "usage": {
+            "measurement": "unmeasured",
+            "model_attempts": null,
+            "tool_calls": null,
+            "input_tokens": null,
+            "output_tokens": null
+          },
+          "nonempty_answer": true
+        }
+      ],
+      "durable_turn_created": false,
+      "retention_called": false,
+      "physical_audio": false,
+      "requestedPreparationDeadlineSeconds": 3
+    },
+    {
+      "scenario": "read_only_memory_preparation_integrated",
+      "stages": [
+        {
+          "event": "initial_recall_started",
+          "elapsed_ms": 1
+        },
+        {
+          "event": "preparation_model_started",
+          "elapsed_ms": 751
+        },
+        {
+          "event": "preparation_unavailable",
+          "elapsed_ms": 5768,
+          "usage": null
+        },
+        {
+          "event": "initial_recall_finished",
+          "elapsed_ms": 9898
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 9899
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 11692,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 3329,
+            "output_tokens": 27
+          },
+          "action": "speak_and_continue"
+        },
+        {
+          "event": "spoken_update",
+          "elapsed_ms": 11692,
+          "text": "Even denken welke kleur we hadden gekozen."
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 11692
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 14036,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 3297,
+            "output_tokens": 47
+          },
+          "action": "search_personal_memory"
+        },
+        {
+          "event": "explicit_recall_started",
+          "elapsed_ms": 14036
+        },
+        {
+          "event": "explicit_recall_finished",
+          "elapsed_ms": 18595
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 18595
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 19983,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 2355,
+            "output_tokens": 20
+          },
+          "action": null
+        },
+        {
+          "event": "reply_finished",
+          "elapsed_ms": 19983,
+          "usage": {
+            "measurement": "unmeasured",
+            "model_attempts": null,
+            "tool_calls": null,
+            "input_tokens": null,
+            "output_tokens": null
+          },
+          "nonempty_answer": true
+        }
+      ],
+      "durable_turn_created": false,
+      "retention_called": false,
+      "physical_audio": false,
+      "requestedPreparationDeadlineSeconds": 4
+    },
+    {
+      "scenario": "read_only_memory_preparation_warm_process",
+      "stages": [
+        {
+          "event": "initial_recall_started",
+          "elapsed_ms": 1
+        },
+        {
+          "event": "preparation_model_started",
+          "elapsed_ms": 751
+        },
+        {
+          "event": "preparation_model_finished",
+          "elapsed_ms": 2122,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 1230,
+            "output_tokens": 28
+          }
+        },
+        {
+          "event": "spoken_update",
+          "elapsed_ms": 2123,
+          "text": "Even kijken welke kleur we toen kozen."
+        },
+        {
+          "event": "initial_recall_finished",
+          "elapsed_ms": 6786
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 6787
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 8618,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 3299,
+            "output_tokens": 47
+          },
+          "action": "search_personal_memory"
+        },
+        {
+          "event": "explicit_recall_started",
+          "elapsed_ms": 8618
+        },
+        {
+          "event": "explicit_recall_finished",
+          "elapsed_ms": 12496
+        },
+        {
+          "event": "substantive_model_started",
+          "elapsed_ms": 12497
+        },
+        {
+          "event": "substantive_model_finished",
+          "elapsed_ms": 14227,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 2357,
+            "output_tokens": 21
+          },
+          "action": null
+        },
+        {
+          "event": "reply_finished",
+          "elapsed_ms": 14228,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 3,
+            "tool_calls": 2,
+            "input_tokens": 6886,
+            "output_tokens": 96
+          },
+          "nonempty_answer": true
+        }
+      ],
+      "durable_turn_created": false,
+      "retention_called": false,
+      "physical_audio": false,
+      "requestedPreparationDeadlineSeconds": 4
+    }
+  ],
+  "isolatedAndWarmupDiagnostics": [
+    {
+      "scenario": "isolated_preparation_diagnostic_10s_not_production",
+      "elapsed_ms": 3532,
+      "usage": {
+        "measurement": "measured",
+        "model_attempts": 1,
+        "tool_calls": 1,
+        "input_tokens": 1230,
+        "output_tokens": 29
+      }
+    },
+    {
+      "scenario": "preparation_warmup_diagnostic_10s",
+      "elapsed_ms": 6323,
+      "usage": {
+        "measurement": "measured",
+        "model_attempts": 1,
+        "tool_calls": 1,
+        "input_tokens": 1230,
+        "output_tokens": 26
+      }
+    }
+  ],
+  "latencyConclusion": {
+    "warmProcessSpokenEventMs": 2123,
+    "sameTurnFullMemoryReadyMs": 6786,
+    "sameTurnFinalReplyMs": 14228,
+    "scope": "One real read-only full recall in an already-used process: control overlaps recall and substantive work follows complete memory. Event timing excludes audio.",
+    "coldProcessTrials": "Requested 2, 3 and 4 second control limits timed out; no early-speech benefit in those fresh-process trials. Existing full-memory answer path continued.",
+    "totalLatencySpeedupClaimed": false
+  },
+  "verification": {
+    "finalCandidateTests": {
+      "passed": 301,
+      "seconds": 18.39,
+      "scope": "Conversation, contact-model, thinking, preparation, exact catalog and provider transport; installed current baseline with reviewed overlays; network none"
+    },
+    "focusedCommitIsolation": {
+      "passed": 40,
+      "seconds": 10.14,
+      "scope": "Only this change transplanted onto HEAD plus existing installed support modules; all four new test files pass"
+    },
+    "countsOverlapEarlierRuns": true,
+    "baselineRegressions": {
+      "eagerThinkingCatalog": 2,
+      "realBudgetPreparationDescriptor": 1,
+      "allEagerDiscovery": 4
+    },
+    "independentReview": "Two workers: audio candidate rejection, core cancellation and focused source staging reviewed. STOP race and oversize control corrected before installation."
+  },
+  "diagnosis": {
+    "memoryRerankerSeconds": [
+      4.064,
+      4.161,
+      4.522,
+      4.965
+    ],
+    "candidateCount": 32,
+    "gpu": "Windows GPU appears present; WSL nvidia-smi reports GPU access blocked by operating system. No driver/OS change made.",
+    "inferenceDecision": "No ONNX adapter or batch-size configuration change installed: limited same-score offline comparisons showed modest/variable gains, insufficient evidence for another runtime path.",
+    "memoryScopeOrContextReduced": false
+  },
+  "rejectedAudioCandidate": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+  "readiness": {
+    "recorded_at": "2026-10-17T11:56:36.836335+00:00",
+    "services": {
+      "speaker": {
+        "image_sha256": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+        "running": true,
+        "health": "not_configured",
+        "restart_count": 0,
+        "started_at": "2026-10-17T11:25:13.317527174Z"
+      },
+      "media": {
+        "image_sha256": "sha256:70f78914727e57e6eb98bce8aa2f7a43e5a18bee1eeff085a2f7a3f31300d088",
+        "running": true,
+        "health": "not_configured",
+        "restart_count": 0,
+        "started_at": "2026-10-17T11:25:16.599364634Z",
+        "browser_readiness": {
+          "http_status": 200,
+          "ready": true
+        }
+      }
+    },
+    "scope": {
+      "read_only": true,
+      "physical_audio_played": false,
+      "microphone_recording_started": false,
+      "provider_or_model_calls": false,
+      "physical_session_started": false,
+      "acoustic_quality_verified": false
+    },
+    "speakers": {
+      "configured_devices": 2,
+      "bindings": [
+        {
+          "ready": true
+        },
+        {
+          "ready": true
+        }
+      ],
+      "listener_sockets": 1,
+      "established_transport_sockets": 2
+    },
+    "completed_at": "2026-10-17T11:56:39.444935+00:00"
+  },
+  "usage": {
+    "developmentMeasuredModelRequests": 21,
+    "developmentKnownInputTokens": 55187,
+    "developmentKnownOutputTokens": 665,
+    "developmentKnownTotalTokens": 55852,
+    "additionalProviderAttemptsWithoutUsage": 5,
+    "developmentCredits": null,
+    "automaticEvaRuntimeUsage": "not measured by these developer probes; not claimed zero",
+    "scope": "Only development probes for this followthrough. Initial seven tone calls and subsequent integrated calls; HTTP400 and timed-out attempts remain unmeasured. No new paid route.",
+    "physicalPlayback": false,
+    "microphoneRecording": false,
+    "durableDiagnosticTurnsCreated": 0,
+    "memoryRetentionCalls": 0
+  },
+  "limits": [
+    "Initial full recall can still take several seconds; no hardware/inference acceleration claimed.",
+    "The optional decision adds one provider attempt on slow fresh voice turns and may itself time out or abstain.",
+    "A slow active-context read delays the preparation decision; 750 ms is not a first-speech guarantee.",
+    "Core event timings exclude TTS, network speaker buffering and acoustic delivery; no physical family acceptance claimed.",
+    "Ordinary native spoken barge-in remains disabled by the existing echo guard. Separate wakeword/STOP/MUTE controls remain."
+  ],
+  "installation": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "slug": "core",
+      "project": "eva2-managed-b-slot3",
+      "service": "core",
+      "base": "sha256:539f4d389577285b758f0852205e3eabce578f23419e27df66876d52cb8d33e3",
+      "candidate": "sha256:2af889484cf728bc98c4625b4b89177158f52d167540b004d1d32b7f478747dd",
+      "hashes": {
+        "application/conversation.py": "f209ff09b5cc6b312dca0eacf1ca9004bfa7e837fa610ae9061137bbaf4bc260",
+        "application/voice_context.py": "44c5d436a72afb512bfe45310f6ad1a21cbd74661fb333bde04d04595d43a888",
+        "adapters/model/pydantic_conversation.py": "1f209a0e8bb7606d644f0fa77385a21fbe1081d1ac40a12413465c072349fea7",
+        "adapters/model/tool_namespaces.py": "a2b044147496ac7bd240acd3e72fa374159c0540521bd665fc74724000ee04fd",
+        "bootstrap/recent_activity.py": "539951959862587fd3b933bf995b84fc709db907d9f1c6a465a60038263ae6b0",
+        "adapters/model/openai_codex_provider.py": "ff927f65935cd217b8217b823d87b2bf8496726d77b42d6c8681c094a7eb92f1"
+      },
+      "original_hashes": {
+        "application/conversation.py": "4668132ed2fa0887375399d70d499915dbf1438a07ddb61285ddccb06afc2895",
+        "application/voice_context.py": "198169c26bad2a6fde6589cbf663e7421cb6fa08a463e74b5289de13e60ea15d",
+        "adapters/model/pydantic_conversation.py": "8e4bf71ea4b7354077f7a7fd8d818a8bba55e99bac6d69af2b436485568d856f",
+        "adapters/model/tool_namespaces.py": "ba0195c737daa41e605ee39ff4d1f269a85fe11b0b465059157dcccc327158f0",
+        "bootstrap/recent_activity.py": "2f49860157d4aedf7d6970607296bc6b86e723df07b0780d1534fe9df40b7385",
+        "adapters/model/openai_codex_provider.py": "d33da35a67e0acbee14e25f875e0e3e87fb5f41f62e2d87163c903620008f134"
+      },
+      "compose_files": "/var/lib/eva2/e43-efficiency-20261017/candidate.private.json",
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "slug": "worker",
+      "project": "eva2-managed-b-slot3",
+      "service": "delegated-work-worker",
+      "base": "sha256:e0a0e2833ec779cbd9f96af1bf0da90009cd84a370f913d57470a3d8ba45ea21",
+      "candidate": "sha256:7f1a6fb0ea8b1ef143fae47869087b2b2160a2dcd6037b9393a2e9e3ade558e8",
+      "hashes": {
+        "application/conversation.py": "f209ff09b5cc6b312dca0eacf1ca9004bfa7e837fa610ae9061137bbaf4bc260",
+        "application/voice_context.py": "44c5d436a72afb512bfe45310f6ad1a21cbd74661fb333bde04d04595d43a888",
+        "adapters/model/pydantic_conversation.py": "1f209a0e8bb7606d644f0fa77385a21fbe1081d1ac40a12413465c072349fea7",
+        "adapters/model/tool_namespaces.py": "a2b044147496ac7bd240acd3e72fa374159c0540521bd665fc74724000ee04fd",
+        "bootstrap/recent_activity.py": "539951959862587fd3b933bf995b84fc709db907d9f1c6a465a60038263ae6b0",
+        "adapters/model/openai_codex_provider.py": "abd8d963b0ec3e6de784f0261d5f8c62ddee307d2aa65138d2a57ced7716e7bc"
+      },
+      "original_hashes": {
+        "application/conversation.py": "4668132ed2fa0887375399d70d499915dbf1438a07ddb61285ddccb06afc2895",
+        "application/voice_context.py": "198169c26bad2a6fde6589cbf663e7421cb6fa08a463e74b5289de13e60ea15d",
+        "adapters/model/pydantic_conversation.py": "8e4bf71ea4b7354077f7a7fd8d818a8bba55e99bac6d69af2b436485568d856f",
+        "adapters/model/tool_namespaces.py": "ba0195c737daa41e605ee39ff4d1f269a85fe11b0b465059157dcccc327158f0",
+        "bootstrap/recent_activity.py": "2f49860157d4aedf7d6970607296bc6b86e723df07b0780d1534fe9df40b7385",
+        "adapters/model/openai_codex_provider.py": "d92aa95e5e423df2c041f2c75a8c05d12a651a004189f3a6b71c74aa4c597070"
+      },
+      "compose_files": "/var/lib/eva2/e43-efficiency-20261017/candidate.private.json",
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true
+    }
+  ],
+  "health": {
+    "recordedAt": "2026-10-17T12:12:23.162615+00:00",
+    "services": [
+      {
+        "service": "core",
+        "image": "sha256:2af889484cf728bc98c4625b4b89177158f52d167540b004d1d32b7f478747dd",
+        "running": true,
+        "health": "healthy",
+        "restartCount": 0,
+        "startedAt": "2026-10-17T12:11:39.884030677Z"
+      },
+      {
+        "service": "worker",
+        "image": "sha256:7f1a6fb0ea8b1ef143fae47869087b2b2160a2dcd6037b9393a2e9e3ade558e8",
+        "running": true,
+        "health": "healthy",
+        "restartCount": 0,
+        "startedAt": "2026-10-17T12:11:54.2709108Z"
+      }
+    ]
+  }
+}

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager, nullcontext
 from contextvars import ContextVar, copy_context
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as PreparationTimeout
 from dataclasses import dataclass, field, replace
 from datetime import datetime
 import hashlib
@@ -22,6 +22,7 @@ from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.identity import IdentityPack
 
 MEMORY_SEARCH_ACTION = "search_personal_memory"
+_VOICE_PREPARATION_DELAY_SECONDS = 0.75
 
 _INITIAL_MEMORY_TIMING_LOG = logging.getLogger(__name__ + ".initial_memory_timing")
 _INITIAL_MEMORY_TIMING_LOG.setLevel(logging.INFO)
@@ -1016,6 +1017,12 @@ class LivingConversation:
                 )
             else:
                 available_names = continuation_names(completed)
+        from eva.application.voice_context import (
+            current_voice_context, STOP_VOICE_WORK, SPEAK_AND_CONTINUE,
+            VoicePreparationUnavailable,
+        )
+        voice = current_voice_context()
+
         def initial_memory():
             memory_started_at = monotonic()
             memory_outcome = "failed"
@@ -1030,12 +1037,77 @@ class LivingConversation:
                 }, separators=(",", ":")))
             return memory
 
-        if self._actions is None:
+        def offer_preparation_reaction(context):
+            from eva.application.cancellation import check_cancellation
+            nonlocal completed
+            checkpoint()
+            check_cancellation()
+            individual_requests = getattr(contact_model, "journals_provider_requests", False) is True
+            request_id = (None if model_journal is None or individual_requests
+                          else model_journal.begin_model_request(turn))
+            started = monotonic()
+            try:
+                # This is a control phase of the same turn/model. It cannot
+                # publish a final preview or dispatch an external action.
+                with observe_model_requests(turn, model_journal if individual_requests else None), \
+                        stream_conversation_text(lambda _delta: None):
+                    reaction = prepare_voice(
+                        turn, self._identity, recent_messages,
+                        self_context=(*context, *voice.instructions()),
+                    )
+            except VoicePreparationUnavailable as error:
+                usage = getattr(error, "model_usage", None)
+                if not isinstance(usage, ConversationModelUsage):
+                    usage = ConversationModelUsage.unmeasured()
+                usages.append(usage)
+                timings.append(ConversationModelTiming(None, round((monotonic() - started) * 1000)))
+                if request_id is not None:
+                    model_journal.complete_model_request(turn, request_id, usage, outcome="failed")
+                return
+            usages.append(reaction.usage)
+            timings.append(reaction.timing)
+            if request_id is not None:
+                model_journal.complete_model_request(turn, request_id, reaction.usage)
+            checkpoint()
+            # If recall failed meanwhile, do not speak over its error. When it
+            # is still pending the reaction remains strictly non-factual.
+            if memory_future.done():
+                memory_future.result()
+            check_cancellation()
+            call = reaction.action_call
+            if call is None or call.name != SPEAK_AND_CONTINUE:
+                return
+            text = call.arguments.get("text")
+            if (set(call.arguments) != {"text"} or not isinstance(text, str)
+                    or len(text) > 256 or not 1 <= len(text.split()) <= 8):
+                return
+            completed = voice.speak_and_continue(call)
+            receipts.append(completed)
+
+        preparation_started_at = monotonic()
+        prepare_voice = getattr(contact_model, "generate_voice_preparation", None)
+        if voice is not None and completed is None and callable(prepare_voice):
+            # Start the same complete, scoped recall immediately. A slow recall
+            # may overlap one short thinking reaction; it is never skipped and
+            # all substantive decisions still wait for its validated result.
+            with ThreadPoolExecutor(max_workers=2, thread_name_prefix="eva-context") as preparation:
+                memory_future = preparation.submit(copy_context().run, initial_memory)
+                context_future = (None if self._actions is None else
+                                  preparation.submit(copy_context().run, self._actions.active_context, turn))
+                self_context = () if context_future is None else context_future.result()
+                remaining = max(0.0, _VOICE_PREPARATION_DELAY_SECONDS - (monotonic() - preparation_started_at))
+                try:
+                    memory = memory_future.result(timeout=remaining)
+                except PreparationTimeout:
+                    if memory_future.done():
+                        memory = memory_future.result()
+                    else:
+                        offer_preparation_reaction(self_context)
+                        memory = memory_future.result()
+        elif self._actions is None:
             self_context = ()
             memory = initial_memory()
         else:
-            # Both reads remain owned by this turn, including on failure. Carry
-            # cancellation, voice and background authority into the read lane.
             with ThreadPoolExecutor(max_workers=1, thread_name_prefix="eva-context") as preparation:
                 context = preparation.submit(copy_context().run, self._actions.active_context, turn)
                 memory = initial_memory()
@@ -1074,11 +1146,10 @@ class LivingConversation:
                 "Use start_background_research for explicit public-source research, with only "
                 "the public question, never private context or recalled memories. Confirm durable "
                 "admission, remain available, and use existing task controls for status/stop/resume.")
-        from eva.application.voice_context import current_voice_context, STOP_VOICE_WORK, SPEAK_AND_CONTINUE
-        voice = current_voice_context()
         if voice is not None:
             self_context = (*self_context, *voice.instructions())
-            available_names = (*available_names, SPEAK_AND_CONTINUE)
+            if not any(item.call.name == SPEAK_AND_CONTINUE for item in receipts):
+                available_names = (*available_names, SPEAK_AND_CONTINUE)
             if voice.active_work:
                 available_names = (*available_names, STOP_VOICE_WORK)
         if initiative is not None:

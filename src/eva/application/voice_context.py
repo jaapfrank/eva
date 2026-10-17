@@ -24,6 +24,10 @@ STOP_DESCRIPTOR = ConversationToolDescriptor(
                          "de gewone tools voor het aangepaste doel."),
 )
 
+class VoicePreparationUnavailable(RuntimeError):
+    """An optional preparation reaction produced no publishable speech."""
+
+
 SPEAK_AND_CONTINUE = "speak_and_continue"
 SPEAK_DESCRIPTOR = ConversationToolDescriptor(
     name=SPEAK_AND_CONTINUE,
@@ -90,8 +94,9 @@ class VoiceContext:
             "aangeboden: dat bevat directe handelingen én de taaklijst. Gebruik anders de beschikbare "
             "taaklijst en relevante opgeslagen resultaten. De laatste gespreksberichten zijn geen "
             "volledig dagoverzicht. Onderscheid bespreken, plannen, uitvoeren en afronden, "
-            "met de oorspronkelijke tijdstippen. Benoem alleen een concrete ontbrekende "
-            "periode of bron, niet standaard dat je niet weet wat je hebt gedaan. "
+            "met de oorspronkelijke tijdstippen. Lees ontbrekende daggegevens eerst; "
+            "vertel daarna wat je weet en wat je eventueel niet meer weet. Leg het ophalen "
+            "van herinneringen niet uit alsof je gegevens van iemand anders raadpleegt. "
             "Vertel wat je deed, ontdekte en wat nog loopt; vertaal technische bronlabels naar "
             "gewone taal zonder onzekerheid weg te laten. Verzin geen belevenissen of gevoelens. "
             "Sluit aan op wat de ander net vertelde; stel alleen een vervolgvraag als het antwoord "

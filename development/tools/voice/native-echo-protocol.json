@@ -1,0 +1,85 @@
+{
+  "recordedAt": "2026-10-17",
+  "purpose": "Reproduce the rejected server-side APM candidate without opening a microphone, playing audio, or calling Eva/providers.",
+  "harness": "development/tools/voice/replay_native_echo.py",
+  "defaultMode": "offline_only",
+  "physicalModeImplemented": false,
+  "dependencies": "Only NumPy, PyAV, LiveKit RTC and the bundled Silero model already present in the speaker image; no package installation or automatic download.",
+  "image": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+  "fixturePathsMustBeExplicit": true,
+  "publicFixtures": [
+    {
+      "role": "far",
+      "name": "pc_quality_smoke_test_alice_source.wav",
+      "sha256": "bc3c3cacc16a603361e5fe927346f97eef7ae23f2cc9d12daad43b451c3668f4",
+      "provenance": "https://webrtc.googlesource.com/src/+/refs/heads/main/resources/pc_quality_smoke_test_alice_source.wav.sha1",
+      "download": "https://storage.googleapis.com/chromium-webrtc-resources/28738955a60b9559b58b232e4d2d9cb7a1dd9b2a",
+      "excerptSeconds": [1, 4]
+    },
+    {
+      "role": "near",
+      "name": "pc_quality_smoke_test_bob_source.wav",
+      "sha256": "002ae38b132806de58f16cf2533b21a4de57c92b1bb847cf8bfcddfade7413d8",
+      "provenance": "https://webrtc.googlesource.com/src/+/refs/heads/main/resources/pc_quality_smoke_test_bob_source.wav.sha1",
+      "download": "https://storage.googleapis.com/chromium-webrtc-resources/b18e0d654b84e6150dc79140f40dac3f8e675e7d",
+      "excerptSeconds": [0, 1]
+    }
+  ],
+  "installedInputs": {
+    "greeting": "/app/eva/voice_service/greetings/0.wav",
+    "vadModel": "/usr/local/lib/python3.12/site-packages/livekit/plugins/silero/resources/silero_vad.onnx",
+    "note": "Hashes are recorded in every output. A different greeting or model is a different measurement."
+  },
+  "dockerArgvTemplate": [
+    "docker", "run", "--rm", "--network", "none", "--user", "0", "--entrypoint", "python",
+    "--mount", "type=bind,src=<absolute fixture directory>,dst=/fixtures,readonly",
+    "--mount", "type=bind,src=<absolute harness path>,dst=/replay_native_echo.py,readonly",
+    "--mount", "type=bind,src=<absolute private output directory>,dst=/results",
+    "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+    "/replay_native_echo.py",
+    "--far-wav", "/fixtures/pc_quality_smoke_test_alice_source.wav",
+    "--near-wav", "/fixtures/pc_quality_smoke_test_bob_source.wav",
+    "--greeting-wav", "/app/eva/voice_service/greetings/0.wav",
+    "--vad-model", "/usr/local/lib/python3.12/site-packages/livekit/plugins/silero/resources/silero_vad.onnx",
+    "--output", "/results/native-echo-result.json"
+  ],
+  "fixedReplay": {
+    "sampleRate": 16000,
+    "apmFrameMilliseconds": 10,
+    "sourceNormalizationRms": 2500,
+    "speechDurationSeconds": 7,
+    "greetingToAnswerGapSeconds": 1,
+    "nearSpeechAfterAnswerMilliseconds": 200,
+    "echoTaps": [[120, 0.65], [147, 0.22], [181, -0.13]],
+    "nonlinearCase": "Clip playback waveform to +/-2200 before the echo path; reference remains original output.",
+    "nearGains": [0, 1, 0.2],
+    "automaticGainVariants": [false, true],
+    "vad": {"minimumSpeechSeconds": 0.2, "minimumSilenceSeconds": 0.45, "activationThreshold": 0.7},
+    "detectorFittingAllowed": false,
+    "output": "Twelve fixed combinations; event timings, RMS and input/code/model hashes only. No audio or transcript saved. Exit zero means measurement completed, not candidate accepted."
+  },
+  "acceptanceBoundaries": [
+    "Echo-only speech detection or a missed/delayed soft interruption excludes enabling this candidate in production.",
+    "Passing this synthetic replay alone does not prove first-word recognition, physical echo cancellation or ordinary barge-in.",
+    "Production reference timing, clipping/AGC, STOP/FINISHED receipt boundaries, stale frames, reconnection and missing metadata still require evidence before replacing the guard."
+  ],
+  "physicalFollowup": {
+    "status": "not_executed_no_capture_exporter_added",
+    "existingManualMechanism": "The owner's normal local wakeword conversation and separate STOP/MUTE controls. Existing source diagnostics record lifecycle timing but not paired microphone/reference PCM.",
+    "missingMechanism": "No reviewed passive paired-PCM export was established in this task. This harness has no device access or capture/playback mode.",
+    "nextEvidence": [
+      "Coordinator agrees a short explicit measurement window and device with the owner; no unattended household capture.",
+      "Keep the installed echo guard active. If an existing reviewed manual export mechanism is identified, bind capture and render reference to one authorized session, packet sequence and monotone clock, with a fixed maximum duration and local STOP ending capture.",
+      "Compare output-only echo, a normal early interruption and a soft early interruption at the actual installed volume; include first consonants and a post-STOP utterance.",
+      "Measure capture/render delay, clipping and residual echo before selecting a firmware/channel or software change. Queue acceptance is not proof of DAC timing.",
+      "Any explicitly authorized raw measurement stays in a private temporary directory (0700, files 0600); publish only sanitized metrics, never household speech, credentials or device identifiers."
+    ],
+    "firmwareFlashAuthorizedByThisProtocol": false,
+    "guardDisableAuthorizedByThisProtocol": false
+  },
+  "primaryReferences": [
+    "https://docs.livekit.io/reference/python/livekit/rtc/apm.html",
+    "https://github.com/livekit/python-sdks/blob/main/livekit-rtc/livekit/rtc/media_devices.py",
+    "https://github.com/esphome/voice-kit-xmos-firmware/blob/v1.3.1/src/ffva/src/app_conf.h"
+  ]
+}

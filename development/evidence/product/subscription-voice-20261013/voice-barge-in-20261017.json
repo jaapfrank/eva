@@ -1,0 +1,201 @@
+{
+  "recordedAt": "2026-10-17T11:53:43.429959+00:00",
+  "status": "offline_candidate_rejected_native_barge_in_still_open",
+  "ownerAccepted": false,
+  "scope": "Follow-up to the real self-speech regression: assess restoring ordinary native spoken interruption without removing the installed echo guard.",
+  "baseline": {
+    "speakerImage": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+    "mediaImage": "sha256:70f78914727e57e6eb98bce8aa2f7a43e5a18bee1eeff085a2f7a3f31300d088",
+    "nativeInput": "16 kHz mono PCM16; 20 ms packets, monotone sequence and bounded two-second receive queue.",
+    "nativeOutput": "24 kHz mono PCM16; existing wire confirms acceptance and FINISHED/STOPPED, not continuous DAC position.",
+    "greetingAndRepliesShareSpeakerSource": true,
+    "availableProcessing": "Installed local LiveKit WebRTC AudioProcessingModule; no new dependency or voice platform required for offline replay.",
+    "firmwareSourceChecked": {
+      "scope": "Retained primary-device wrapper and generated source, matching October installation manifest; not a fresh runtime DSP register read.",
+      "wrapperSha256": "070f725dd32c916adfcf19f806a0f8288b03747e98c40ceca7ce4bfbf3eab75b",
+      "xmosVersion": "1.3.1",
+      "channel0": "AGC after AEC and noise suppression; native capture",
+      "channel1": "Noise suppression; local wakeword",
+      "obviousAecBypassProven": false,
+      "directDigitalLoopbackProven": false
+    }
+  },
+  "delivered": {
+    "harness": "development/tools/voice/replay_native_echo.py",
+    "protocol": "development/tools/voice/native-echo-protocol.json",
+    "default": "Offline only, explicit local file paths, fixed public fixture hashes, fixed detector parameters, no audio saved.",
+    "physicalCaptureImplementationAdded": false
+  },
+  "verification": {
+    "network": "none",
+    "existingSpeakerImage": true,
+    "productionSourceOverlay": false,
+    "completedFixedMeasurements": 12,
+    "elapsedSeconds": 9.41,
+    "versions": {
+      "livekit": "1.1.17",
+      "livekit-plugins-silero": "1.8.0",
+      "av": "17.1.0",
+      "numpy": "2.5.3"
+    },
+    "sha256": {
+      "harness": "e660b9f80cc8c0aa65403b4675c22dd736a140760e8ae10ae2cadad7a3041357",
+      "far": "bc3c3cacc16a603361e5fe927346f97eef7ae23f2cc9d12daad43b451c3668f4",
+      "near": "002ae38b132806de58f16cf2533b21a4de57c92b1bb847cf8bfcddfade7413d8",
+      "greeting": "244543876a63436091169ee939ea7b5db4556bb53f7ced594671b5e4a18b6975",
+      "vad_model": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+      "protocol": "39029919d1322d205dc6708a9c478cfecbffcbe1c172483001a6c1434eb7f3b9"
+    },
+    "normalEarlyInterruptionAddedDetectionMilliseconds": 32,
+    "echoOnlySpeechStartsAcrossFourEchoCases": 0,
+    "softEarlyLinearEchoCase": {
+      "withoutAutomaticGain": "No confirmed speech start; clean reference starts at 3.200 seconds.",
+      "withAutomaticGain": "First confirmed speech start at 7.200 seconds, four seconds later than the clean reference."
+    },
+    "caseTimingEvidence": [
+      {
+        "automaticGain": false,
+        "nearGain": 0,
+        "clipped": false,
+        "processedSpeechStarts": [],
+        "cleanSpeechStarts": []
+      },
+      {
+        "automaticGain": false,
+        "nearGain": 0,
+        "clipped": true,
+        "processedSpeechStarts": [],
+        "cleanSpeechStarts": []
+      },
+      {
+        "automaticGain": false,
+        "nearGain": 1,
+        "clipped": false,
+        "processedSpeechStarts": [
+          3.2
+        ],
+        "cleanSpeechStarts": [
+          3.168
+        ]
+      },
+      {
+        "automaticGain": false,
+        "nearGain": 0.2,
+        "clipped": false,
+        "processedSpeechStarts": [],
+        "cleanSpeechStarts": [
+          3.2
+        ]
+      },
+      {
+        "automaticGain": false,
+        "nearGain": 1,
+        "clipped": true,
+        "processedSpeechStarts": [
+          3.2
+        ],
+        "cleanSpeechStarts": [
+          3.168
+        ]
+      },
+      {
+        "automaticGain": false,
+        "nearGain": 0.2,
+        "clipped": true,
+        "processedSpeechStarts": [
+          3.2
+        ],
+        "cleanSpeechStarts": [
+          3.2
+        ]
+      },
+      {
+        "automaticGain": true,
+        "nearGain": 0,
+        "clipped": false,
+        "processedSpeechStarts": [],
+        "cleanSpeechStarts": []
+      },
+      {
+        "automaticGain": true,
+        "nearGain": 0,
+        "clipped": true,
+        "processedSpeechStarts": [],
+        "cleanSpeechStarts": []
+      },
+      {
+        "automaticGain": true,
+        "nearGain": 1,
+        "clipped": false,
+        "processedSpeechStarts": [
+          3.2,
+          5.248
+        ],
+        "cleanSpeechStarts": [
+          3.168
+        ]
+      },
+      {
+        "automaticGain": true,
+        "nearGain": 0.2,
+        "clipped": false,
+        "processedSpeechStarts": [
+          7.2
+        ],
+        "cleanSpeechStarts": [
+          3.2
+        ]
+      },
+      {
+        "automaticGain": true,
+        "nearGain": 1,
+        "clipped": true,
+        "processedSpeechStarts": [
+          3.2
+        ],
+        "cleanSpeechStarts": [
+          3.168
+        ]
+      },
+      {
+        "automaticGain": true,
+        "nearGain": 0.2,
+        "clipped": true,
+        "processedSpeechStarts": [
+          3.2,
+          6.24,
+          9.504
+        ],
+        "cleanSpeechStarts": [
+          3.2
+        ]
+      }
+    ],
+    "checksMean": "Measurements completed successfully; the candidate failed an essential soft-interruption condition. This is not a passing product test count."
+  },
+  "conclusion": "Do not enable this simple APM candidate or disable the existing native echo guard. Ordinary native spoken barge-in remains unresolved; separate wakeword/STOP/MUTE controls remain the installed route.",
+  "limits": [
+    "The local Silero detector is a proxy, not the production listener or word-accuracy proof.",
+    "Synthetic delay, linear reverberation and clipping do not establish the actual device/room echo path or hardware AGC behavior.",
+    "Existing greeting warms the same APM state in the replay, but does not eliminate the soft-interruption failure.",
+    "Exploratory far16/near16 fixtures were not established as independent talkers. The retained harness uses separately pinned Alice/Bob active speech excerpts and avoids their original alternating silent regions.",
+    "Continuous DAC timing, first-word preservation, STOP races, reconnect and missing-reference handling were not implemented or verified in a production AEC adapter."
+  ],
+  "nextEvidenceGap": "A coordinator-approved bounded physical comparison needs the actual render reference, captured signal and timing from one manually started authorized session. No reviewed passive paired-PCM exporter was established; the JSON protocol explicitly does not start capture or playback. Keep the production guard active until a concrete candidate passes.",
+  "usage": {
+    "externalModelOrProviderCalls": 0,
+    "localVadOnPublicFixtures": true,
+    "physicalPlayback": false,
+    "productionRecording": false,
+    "firmwareChanges": 0,
+    "productionCodeChanges": 0,
+    "deployments": 0
+  },
+  "privacy": "No credentials, raw household audio/transcripts, private source IDs or device identifiers are included. Only public fixture hashes, installed synthetic greeting/model hashes and sanitized timings are published.",
+  "primarySources": [
+    "https://docs.livekit.io/reference/python/livekit/rtc/apm.html",
+    "https://github.com/livekit/python-sdks/blob/main/livekit-rtc/livekit/rtc/media_devices.py",
+    "https://github.com/esphome/voice-kit-xmos-firmware/blob/v1.3.1/src/ffva/src/app_conf.h",
+    "https://webrtc.googlesource.com/src/+/refs/heads/main/resources/"
+  ]
+}

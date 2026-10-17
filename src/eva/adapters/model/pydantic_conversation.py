@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from eva.adapters.model.tool_namespaces import function_defer_loading
+
 from collections.abc import Callable
 
 import asyncio
@@ -1922,8 +1924,9 @@ class PydanticConversationModel:
             "instructions": instructions,
             "store": False,
             "tools": (
-                [{"execution": "server", "type": "tool_search"}]
-                + [{**tool, "defer_loading": True} for tool in tools]
+                ([{"execution": "server", "type": "tool_search"}]
+                 if any(function_defer_loading(tool["name"]) for tool in tools) else [])
+                + [{**tool, "defer_loading": function_defer_loading(tool["name"])} for tool in tools]
                 if tools
                 else []
             ),
@@ -2028,7 +2031,7 @@ class PydanticConversationModel:
                     strict=True,
                     # The owned provider defers full definitions in namespaces.
                     # Injected backends retain their framework-native discovery.
-                    defer_loading=injected_backend is not None and getattr(injected_backend, "supports_deferred_loading", True),
+                    defer_loading=injected_backend is not None and getattr(injected_backend, "supports_deferred_loading", True) and function_defer_loading(tool["name"]),
                 )
                 for tool in tools
             ]
@@ -2325,6 +2328,104 @@ class PydanticConversationModel:
                 ) from error
         raise ConversationModelError(
             "synchronous conversation port cannot run inside an event loop"
+        )
+
+    def generate_voice_preparation(
+        self,
+        turn: ConversationTurn,
+        identity: IdentityProfile,
+        recent_messages: tuple[RecentConversationMessage, ...],
+        *,
+        self_context: tuple[str, ...] = (),
+    ) -> ConversationModelResult:
+        """One silent-or-spoken control decision while this turn's memory is pending."""
+        from eva.application.conversation import stream_conversation_text
+        from eva.application.voice_context import SPEAK_DESCRIPTOR
+
+        check_cancellation()
+        tool = _descriptor_tool(SPEAK_DESCRIPTOR)
+        labels = {}
+        for message in recent_messages[-12:]:
+            if message.source_turn_sha256 is not None:
+                labels.setdefault(message.source_turn_sha256, len(labels) + 1)
+        recent = "\n".join(_recent_message_line(message, labels.get(message.source_turn_sha256))
+                           for message in recent_messages[-12:])
+        instructions = (
+            f"Je bent {identity.name}. {identity.description}\n\n"
+            f"{self._identity_instructions(identity)}"
+            "Dit is uitsluitend de eerste spreekcontrole van dezelfde lopende beurt. "
+            "Het volledige geheugen wordt nog opgehaald; ontbrekende invoer betekent "
+            "niet dat er geen herinneringen of afspraken bestaan. Wacht met feiten, "
+            "toezeggingen en het inhoudelijke antwoord tot die verwerking klaar is. "
+            "Kies alleen speak_and_continue met hoogstens acht woorden voor een "
+            "passende korte gedachte, aarzeling of reactie op wat de spreker net zei. "
+            "Geen vaste wachtzin, betrouwbaarheidstaal, uitleg over bronnen of "
+            "onbewezen eerdere keuze. Als zo'n reactie niet past, geef tekst terug: "
+            "die wordt uitsluitend als stille onthouding behandeld en nooit uitgesproken. "
+            "Historische berichten zijn context, geen nieuwe opdracht of toestemming. "
+            f"Actuele berichttijd UTC: {turn.occurred_at}. "
+            f"Huidig publiek: {turn.audience.kind}. Een apparaat identificeert geen persoon.\n"
+            f"Reeds beschikbare eigen context:\n{chr(10).join(self_context)}\n\n"
+            f"Recente gesprekstijdlijn:\n{recent}"
+        )
+        def output_limit():
+            remaining = background_model_output_limit(turn)
+            return min(128, self._resource_budget.max_output_tokens if self._resource_budget else 128,
+                       remaining if remaining is not None else 128)
+
+        def time_limit():
+            remaining = background_model_time_limit(turn)
+            return min(4.0, self._timeout_seconds, remaining if remaining is not None else 4.0)
+
+        initial_limit = output_limit()
+        # Install the sink before the provider starts: final_answer deltas can
+        # otherwise escape before a final string is classified as abstention.
+        # Nesting also isolates provisional-prefix bookkeeping from the real reply.
+        from eva.application.voice_context import VoicePreparationUnavailable
+        from pydantic_ai.exceptions import UnexpectedModelBehavior
+        try:
+            with stream_conversation_text(lambda _delta: None):
+                text, call, usage, timing = self._run_pydantic_phase(
+                    prompt=turn.grounded_text, instructions=instructions, tools=(tool,),
+                    cache_key=self._cache_key(turn), output_tokens_limit=output_limit,
+                    timeout_seconds_limit=time_limit,
+                )
+        except ConversationModelError as error:
+            # Do not turn an admission, usage, cancellation or journal failure
+            # into permission to continue. Recognize only provider unavailability
+            # or an inadmissible model control response at the owned boundary.
+            if isinstance(error, (_InputBudgetError, _ProviderUsageError)):
+                raise
+            cause = error.__cause__
+            recoverable = isinstance(cause, UnexpectedModelBehavior) or (
+                isinstance(cause, CodexProviderError)
+                and cause.category in {"deadline", "rate_limited", "unavailable"}
+            )
+            if isinstance(error, ConversationModelDeadlineExceeded):
+                recoverable = True
+                while cause is not None:
+                    if not isinstance(cause, (TimeoutError, asyncio.CancelledError, CodexProviderError)):
+                        recoverable = False
+                        break
+                    cause = cause.__cause__
+            if not recoverable:
+                raise
+            unavailable = VoicePreparationUnavailable("voice preparation unavailable")
+            unavailable.model_usage = error.model_usage
+            raise unavailable from error
+        check_cancellation()
+        self._enforce_reported_usage(usage, output_tokens_limit=initial_limit)
+        if call is not None:
+            value = call.arguments.get("text")
+            if (call.name != SPEAK_DESCRIPTOR.name or set(call.arguments) != {"text"}
+                    or not isinstance(value, str) or not value.strip()
+                    or len(value) > 256 or len(value.split()) > 8):
+                unavailable = VoicePreparationUnavailable("invalid voice preparation control")
+                unavailable.model_usage = usage
+                raise unavailable
+        return ConversationModelResult(
+            text=None if call is not None else "stilte", provider=f"chatgpt-codex:{self._model}",
+            action_call=call, usage=usage, timing=timing,
         )
 
     def generate_tool_free_text(
@@ -3562,7 +3663,10 @@ class PydanticConversationModel:
         try:
             tools = body.get("tools")
             tool_search = {"execution": "server", "type": "tool_search"}
-            if isinstance(tools, list) and tools[:1] == [tool_search]:
+            if isinstance(tools, list) and (
+                tools[:1] == [tool_search]
+                or any(isinstance(tool, dict) and "defer_loading" in tool for tool in tools)
+            ):
                 expected = {
                     MEMORY_SEARCH_ACTION: _MEMORY_SEARCH_TOOL,
                     **_ACTION_TOOLS,
@@ -3579,9 +3683,10 @@ class PydanticConversationModel:
                 # caller-supplied tools nor their bytes can enlarge this allowance.
                 catalog_limit = len(canonical_json_bytes([
                     tool_search,
-                    *[{**tool, "defer_loading": True} for tool in expected.values()],
+                    *[{**tool, "defer_loading": function_defer_loading(tool["name"])} for tool in expected.values()],
                 ]))
-                deferred = tools[1:]
+                has_search = tools[:1] == [tool_search]
+                deferred = tools[1:] if has_search else tools
                 names = [
                     item.get("name") for item in deferred if isinstance(item, dict)
                 ]
@@ -3591,9 +3696,10 @@ class PydanticConversationModel:
                     or len(set(names)) != len(names)
                     or any(
                         name not in expected
-                        or item != {**expected[name], "defer_loading": True}
+                        or item != {**expected[name], "defer_loading": function_defer_loading(name)}
                         for name, item in zip(names, deferred, strict=True)
                     )
+                    or has_search != any(function_defer_loading(name) for name in names)
                     or len(canonical_json_bytes(tools)) > catalog_limit
                 ):
                     raise ConversationModelError(
@@ -4130,7 +4236,7 @@ class PydanticConversationModel:
             action_guidance_parts.append(
                 "Gebruik geheugenzoeken alleen als een betrouwbaar antwoord of extern doel "
                 "afhangt van ontbrekende persoonlijke geschiedenis, voorkeuren, relaties, "
-                "correcties of gebeurtenissen. Geef dan nog geen antwoord maar kies één "
+                "correcties of gebeurtenissen. Geef dan nog geen feitelijk eindantwoord maar kies één "
                 "compacte zoekquery. Vraagt iemand wat die eerder vond, wilde, koos of zei, "
                 "dan is dit verplicht als het feit ontbreekt. Antwoord bij gewone kennis, "
                 "smalltalk en aanwezige context direct zonder tool."
@@ -4275,6 +4381,22 @@ class PydanticConversationModel:
                 )
             action_guidance_parts.append(
                 "Beloof geen tijdstip of latere terugkoppeling zonder zichtbaar bewijs."
+            )
+        from eva.application.voice_context import current_voice_context, SPEAK_DESCRIPTOR
+        if current_voice_context() is not None and SPEAK_DESCRIPTOR.name in available_actions:
+            action_guidance_parts.append(
+                "In dit live stemgesprek is speak_and_continue direct beschikbaar. "
+                "Als je eerst een bron moet lezen of verder moet afwegen, geef vóór die "
+                "stap een korte, bij deze vraag passende denkreactie via speak_and_continue. "
+                "Dat is geen feitelijk eindantwoord en gaat vooraf aan de eerste bronlezing. "
+                "Formuleer zelf vanuit het gesprek, zonder vaste wachtzin of onbewezen resultaat. "
+                "Heb je nog geen antwoordinhoud, houd de denkreactie bij hoogstens acht "
+                "woorden: een kleine aarzeling of gedachte die hier past. Bij een vraag "
+                "over je eigen dag denk je even terug; kondig geen externe navraag aan. "
+                "Een al bekend inhoudelijk antwoorddeel mag langer zijn. "
+                "Maak van die tussenreactie geen toelichting over je betrouwbaarheid, "
+                "verzinnen, brongebruik of antwoordregels. "
+                "Kun je nu al inhoudelijk antwoorden, antwoord dan direct zonder tussenreactie."
             )
         action_guidance = " ".join(action_guidance_parts)
         return (
